@@ -1,0 +1,780 @@
+{
+  "title": "Market Community L2/L3 ordinary learner draft application proof",
+  "date": "2026-10-05",
+  "base": "bde761b33dc4f587746d60b5fe77d881f29b80ca",
+  "branch": "codex/regional-market-learner-completion-20261005",
+  "state": "uncommitted local application; awaiting parent diff review",
+  "authorityPacket": "This durable packet retains all 37 accepted changed targets, four unchanged tuples and 21 bounded repair reasons. The temporary /tmp candidate packet is no longer available.",
+  "baseline": "MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-BASELINE-2026-10-05.json",
+  "scope": {
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "lessonIds": [
+      "market-community-l2",
+      "market-community-l3"
+    ],
+    "changedFields": 36,
+    "unchangedReviewedTargetsRetained": 5,
+    "fullBodies": 6,
+    "paragraphsPerBody": 12,
+    "boundedRepairs": 25
+  },
+  "checks": {
+    "all41SourceCurrentTuplesRevalidatedAtNewBase": true,
+    "canonicalLessonsEqualBaseline": true,
+    "sixBodyFieldsReconstructedInSourceOrder": true,
+    "all72ParagraphsChecked": true,
+    "allUnlistedBodyParagraphsExact": true,
+    "quizCorrectIndicesPreserved": true,
+    "reviewStatusMachineDraft": true,
+    "fluentApproval": false,
+    "canonicalEnglishChanged": false,
+    "mediaOrAudioChanged": false,
+    "temporaryCandidatePacketAvailable": false,
+    "durableSourceCurrentFinalTuplesVerified": true,
+    "all36ProposedTargetsResolveAsDraft": true,
+    "all36CanonicalSourcesExact": true,
+    "fullRegionalLessonRecordsEqualBaselinePlus36Targets": true,
+    "finalDistractorMatchesPriorTarget": true
+  },
+  "bodyRows": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        3,
+        5,
+        6,
+        8
+      ],
+      "unlistedParagraphs": [
+        0,
+        1,
+        2,
+        4,
+        7,
+        9,
+        10,
+        11
+      ],
+      "unlistedParagraphsPreserved": true
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        1,
+        2,
+        6,
+        8,
+        10,
+        11
+      ],
+      "unlistedParagraphs": [
+        0,
+        3,
+        4,
+        5,
+        7,
+        9
+      ],
+      "unlistedParagraphsPreserved": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        3,
+        5,
+        8,
+        9,
+        10
+      ],
+      "unlistedParagraphs": [
+        0,
+        1,
+        2,
+        4,
+        6,
+        7,
+        11
+      ],
+      "unlistedParagraphsPreserved": true
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        1,
+        2,
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "unlistedParagraphs": [
+        0,
+        3,
+        4,
+        5,
+        9
+      ],
+      "unlistedParagraphsPreserved": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        2,
+        3,
+        5,
+        6,
+        8,
+        10,
+        11
+      ],
+      "unlistedParagraphs": [
+        0,
+        1,
+        4,
+        7,
+        9
+      ],
+      "unlistedParagraphsPreserved": true
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "sourceParagraphCount": 12,
+      "currentParagraphCount": 12,
+      "finalParagraphCount": 12,
+      "changedParagraphs": [
+        0,
+        1,
+        2,
+        6,
+        7,
+        8,
+        10,
+        11
+      ],
+      "unlistedParagraphs": [
+        3,
+        4,
+        5,
+        9
+      ],
+      "unlistedParagraphsPreserved": true
+    }
+  ],
+  "fields": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nDirect selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nQala ka what you can reliably supply le seo bareki ba se batlang.\n\nSheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nGarden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "appliedTarget": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nHo rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.\n\nQala ka seo o ka reliably supply le seo bareki ba se batlang.\n\nSheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nSebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na income e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgolang method, conditions le result so others can judge whether it may suit their land.\n\nBatla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+      "appliedTarget": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.\n\nNgola crop, variety, source le collection date. Rera isolation, selection, drying le storage tse loketseng crop e nngwe le e nngwe.\n\nHo arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka boyona. Hlahloba identity le germination pele o itshetleha ka shared seed. Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.\n\nHo arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.\n\nPompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.\n\nHo sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.\n\nTshwara produce ka bonolo mme o boloke moriti o loketseng, packaging le storage nakong yohle ya delivery.\n\nMoreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.\n\nBapisa tjhelete e amohetsweng ka mora fees, transport le spoilage bakeng sa option e nngwe le e nngwe. O se ke wa nka hore nearest buyer ka mehla o fana ka best return.\n\nBaahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.\n\nNgola method, conditions le result hore ba bang ba kgone ho ahlola hore na e ka tshwanela naha ya bona.\n\nKopa qualified advice bakeng sa unfamiliar disease kapa technical problems. Shared experience le specialist help di ka sebetsa mmoho.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nDirect selling can retain more of the sale price, fhedzi zwi dzhia tshifhinga, packing, transport na customer care.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga contents, price, payment, na uri hu itea mini when crops are short. Regular orders a thusa u pulana only when customers and growers can keep the agreement.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi, zwone fhedzi, a zwi anganyeli income. Ringetani arrangement ine na nga kona u i langula, ni ṅwale results.\n\nArali production i tshi shanduka vhege nga vhege, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and tendelanani nga clear terms na vharengi.\n\nṰalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "appliedTarget": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nU rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, packing, transport na customer care.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga box contents, mutengo, payment na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi customers na growers vha tshi kona u tevhedza agreement.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.\n\nArali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.\n\nṊetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.\n\nṰalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani suitable isolation, selection, drying and storage kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda. Keep suitable shade, packaging and storage through delivery.\n\nMukengi wa tsini a nga fhungudza lwendo, fhedzi losses and selling costs still need measuring.\n\nVhambedzani money received after fees, transport and spoilage kha option iṅwe na iṅwe. Ni songo humbula uri the nearest buyer always gives the best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions and result so others can judge whether it may suit their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+      "appliedTarget": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani isolation, selection, drying na storage zwo teaho kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.\n\nMutengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi tea u pimiwa.\n\nVhambedzani money received nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions na result uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease kana technical problems. Shared experience na specialist help zwi nga shuma khathihi.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body",
+      "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.\n\nPimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nDirect selling can retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport na ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi contents, price, payment na leswi humelelaka loko crops are short. Tioda ta nkarhi na nkarhi ti pfuna ku pulana only when customers and growers can keep the agreement.\n\nSungula hi what you can reliably supply na leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbi mali leyi nghenaka. Ringeta arrangement leyi u nga kotaka ku yi lawula, kutani u tsala results.\n\nLoko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nOffer surplus leyi u nga na yona kutani mi twanana hi terms leti nga erivaleni ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi vutshembeki. Loko u nga se tirhisa label, kambisisa any certification or claim the buyer requires.",
+      "appliedTarget": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.\n\nPimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nKu xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport ni ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi box contents, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa agreement.\n\nSungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.\n\nLoko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nNyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body",
+      "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Vaakelani va nga avelana different varieties and the work of saving seed.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana suitable isolation, selection, drying and storage eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce gently, u hlayisa shade, packaging ni storage leswi faneleke ku fikela loko yi yisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses and selling costs still need measuring.\n\nPimanisa money received after fees, transport and spoilage eka ndlela yin’wana ni yin’wana. Do not assume the nearest buyer always gives the best return.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions na result so others can judge whether it may suit their land.\n\nLavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+      "appliedTarget": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions ni result leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentTarget": "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+      "appliedTarget": "Ngola seed identity, source le quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentTarget": "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+      "appliedTarget": "Bapisa tjhelete e amohetsweng ka mora fees, transport, dihlahiswa tse sa rekiswang le tahlehelo.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentTarget": "Ṅwalani seed identity, source and quality, nahone ni sedze arali permission i tshi ṱoḓea musi ni sa athu u kovhelana.",
+      "appliedTarget": "Ṅwalani seed identity, source na quality, nahone ni sedze arali permission i tshi ṱoḓea ni sa athu u kovhelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentTarget": "Measure losses and net returns kha selling route iṅwe na iṅwe.",
+      "appliedTarget": "Pimani losses na net returns kha selling route iṅwe na iṅwe.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.q",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "currentTarget": "Vhahura vha ṱoḓa u kovhelana saved seed. What helps make the shared seed useful?",
+      "appliedTarget": "Vhahura vha ṱoḓa u kovhelana saved seed. Ndi mini tshi nga thusa uri seed yo kovhelanaho i shume zwavhuḓi?",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.options.2",
+      "sourceEnglish": "Assume sharing automatically improves every seed lot",
+      "currentTarget": "Humbulani uri sharing automatically improves every seed lot.",
+      "appliedTarget": "Humbulani uri u kovhelana hu khwinifhadza seed lot iṅwe na iṅwe nga u tou ita zwenezwo.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentTarget": "Vhambedzani money received after fees, transport, unsold produce and losses.",
+      "appliedTarget": "Vhambedzani money received nga murahu ha fees, transport, unsold produce na losses.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentTarget": "Distance affects costs, but it is not the only factor. Shumisani actual returns and losses u vhambedza options.",
+      "appliedTarget": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.0",
+      "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
+      "currentTarget": "Tsala seed identity, source and quality, kutani check if permission is needed before sharing.",
+      "appliedTarget": "Tsala seed identity, source ni quality, kutani u kambisisa loko permission yi laveka u nga si avelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.2",
+      "sourceEnglish": "Measure losses and net returns for each selling route",
+      "currentTarget": "Pima losses and net returns for each selling route.",
+      "appliedTarget": "Pima losses ni net returns eka selling route yin’wana ni yin’wana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "keyPoints.3",
+      "sourceEnglish": "Combine shared experience with qualified help when needed",
+      "currentTarget": "Hlanganisa shared experience with qualified help when needed.",
+      "appliedTarget": "Hlanganisa shared experience ni qualified help loko swi laveka.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.options.1",
+      "sourceEnglish": "Agree seed-quality checks and check whether permission is needed to share the variety",
+      "currentTarget": "Pfumelelana hi seed-quality checks naswona check whether permission is needed to share the variety.",
+      "appliedTarget": "Pfumelelana hi seed-quality checks ni ku kambisisa loko permission yi laveka ku avelana variety.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.2",
+      "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
+      "currentTarget": "Pimanisa money received after fees, transport, unsold produce and losses.",
+      "appliedTarget": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport, unsold produce ni losses.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.options.3",
+      "sourceEnglish": "Assume joining a group removes all costs",
+      "currentTarget": "Assume leswaku joining a group removes all costs.",
+      "appliedTarget": "Ehleketa leswaku ku nghena eka group ku susa costs hinkwato.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.rationale",
+      "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+      "currentTarget": "Distance affects costs, kambe it is not the only factor. Tirhisa actual returns and losses to compare the options.",
+      "appliedTarget": "Ku leha ka riendzo ku khumba costs, kambe a hi xona ntsena lexi faneleke ku kambisiwa. Tirhisa actual returns ni losses ku pimanisa options.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentTarget": "Formal market stall e hlokang consistent weekly supply.",
+      "appliedTarget": "Formal market stall e hlokang supply e tsitsitseng beke le beke.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentTarget": "Formal market stall ine ya ṱoḓa consistent weekly supply.",
+      "appliedTarget": "Formal market stall ine ya ṱoḓa supply yo fulufhedzeaho ya vhege iṅwe na iṅwe.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "A formal market stall needing consistent weekly supply",
+      "currentTarget": "Formal market stall leyi lavaka consistent weekly supply.",
+      "appliedTarget": "Formal market stall leyi lavaka supply leyi tshamisekeke vhiki ni vhiki.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "appliedTarget": "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage le germination checks. Ditshekatsheko tseo ha di netefatse permission ya ho fapanyetsana protected variety; hlahloba applicable rights pele o arolelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "appliedTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].rationale",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "appliedTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].question",
+      "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
+      "currentTarget": "Vaakelani va lava ku avelana saved seed. Xana i yini lexi pfunaka leswaku shared seed yi va useful?",
+      "appliedTarget": "Vaakelani va lava ku avelana mbewu leyi va yi hlayiseke. I yini lexi nga endla leswaku mbewu leyi avelaniweke yi pfuna?",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].options[3]",
+      "sourceEnglish": "Rely only on the size of the group",
+      "currentTarget": "Tshemba ntsena eka size of the group.",
+      "appliedTarget": "Tshemba ntsena eka vukulu bya group.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "currentTarget": "Mulimi u khou vhambedza distant market na nearby customers. Ndi mini tshine tsha tea u livhisa phetho?",
+      "appliedTarget": "Mulimi u khou vhambedza market i re kule na vharengi vha re tsini. Ndi mini ine ya tea u livhisa phetho?",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].question",
+      "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
+      "currentTarget": "Murimi u pimanisa distant market na nearby customers. Xana i yini lexi faneleke ku kongomisa xiboho?",
+      "appliedTarget": "Murimi u pimanisa makete wa le kule ni vaxavi va le kusuhi. Xana xiboho xi fanele ku kongomisiwa hi yini?",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Khetha kamehla highest headline price.",
+      "appliedTarget": "Khetha kamehla headline price e phahameng ka ho fetisisa.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Khethani tshifhinga tshoṱhe highest headline price.",
+      "appliedTarget": "Khethani tshifhinga tshoṱhe headline price ya nṱhesa.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Always hlawula the highest headline price.",
+      "appliedTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentTarget": "Khetha kamehla shortest journey.",
+      "appliedTarget": "Khetha kamehla tsela e kgutshwane ka ho fetisisa.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentTarget": "Always hlawula the shortest journey.",
+      "appliedTarget": "Nkarhi hinkwawu hlawula the shortest journey.",
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    }
+  ],
+  "unchangedProvenance": [
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Box schemes let you charge extra for packaging",
+      "currentTarget": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+      "reason": "Accepted reviewed target already equals current resolved target; no edit."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "title",
+      "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+      "currentTarget": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+      "reason": "Accepted reviewed target already equals current resolved target; no edit."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "title",
+      "sourceEnglish": "Building Community Food Networks: Strength in Numbers",
+      "currentTarget": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+      "reason": "Accepted reviewed target already equals current resolved target; no edit."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "sourceEnglish": "Always choose the shortest journey",
+      "currentTarget": "Khethani tshifhinga tshoṱhe shortest journey.",
+      "reason": "Accepted reviewed target already equals current resolved target; no edit."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].options[0]",
+      "sourceEnglish": "Mix all varieties without labels",
+      "currentTarget": "Hlanganisa all varieties without labels.",
+      "reason": "Independent final review restores the exact prior all-varieties-without-labels target; candidate revised away from baseline is rejected."
+    }
+  ],
+  "boundedRepairs": [
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.5",
+      "reviewedTarget": "Dumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.",
+      "reason": "“Contents” is the agreed contents of the box; “box contents” anchors that scope rather than broad goods to be sold. Crop-shortage and only-when agreement conditions remain."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.5",
+      "reviewedTarget": "Tendelani nga box contents, mutengo, payment na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi customers na growers vha tshi kona u tevhedza agreement.",
+      "reason": "“Contents” refers to what goes in the box; keep “box contents” rather than broadening to all goods sold. Crop-shortage, regular-order, only-when, both-party and can-meet-agreement conditions remain."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.5",
+      "reviewedTarget": "Pfumelelanani hi box contents, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa agreement.",
+      "reason": "“Contents” refers to the agreed box contents, not simply all goods sold. Keep that phrase and retain shortage, both parties, ability and only-when conditions."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.2",
+      "reviewedTarget": "U kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.",
+      "reason": "The source is seed exchange, distinct from general sharing. Keep “Before exchanging seed” exact; identity/germination checks still precede reliance on shared seed."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.10",
+      "reviewedTarget": "Ṅwalani method, conditions na result uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.",
+      "reason": "The local “shango” may mean country or land here. Keep exact “their land”; “may” remains in “nga fanela.”"
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.10",
+      "reviewedTarget": "Tsala method, conditions ni result leswaku van’wana va kota ku kambela whether it may suit their land.",
+      "reason": "The source modal is explicitly “may.” Keep “whether it may suit their land” exact while retaining the localized record/method framing."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.1.rationale",
+      "reviewedTarget": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+      "reason": "The proposed “U sa tshimbila” means not travelling/avoiding a trip, not distance. Keep the exact source distance clause; ordinary compare-returns framing remains in Tshivenda."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.rationale",
+      "reviewedTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "reason": "Preserve seed exchange distinctly from sharing and retain that quality checks do not grant rights. The exact “permission to exchange a protected variety” anchor keeps the legal relation clear."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz.0.rationale",
+      "reviewedTarget": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "reason": "Preserve the distinction between exchanging a protected variety and general sharing, and the explicit negation that seed-quality checks do not establish permission."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "title",
+      "reviewedTarget": "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers",
+      "reason": "The idiom means strength gained through numbers; “Vhuthihi vhu na maanḓa” shifts the meaning to unity. Keep the idiom exact and retain localized title framing."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "title",
+      "reviewedTarget": "Ku aka network ya swakudya swa muganga: Strength in Numbers",
+      "reason": "The idiom means strength gained through numbers; “Matimba ya vun’we” shifts the meaning to unity. Keep the idiom exact and retain localized title framing."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "quiz[1].options[1]",
+      "reviewedTarget": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+      "reason": "“Ku hakela mali yo engetela” may mean the seller pays extra. Preserve current “charge extra” wording so the distractor does not reverse who pays."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "reviewedTarget": "Khethani tshifhinga tshoṱhe shortest journey.",
+      "reason": "The proposed superlative is uncertain; keep exact “shortest journey” so the always/shortest distractor extremity is clear."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.8",
+      "reviewedTarget": "Sebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na income e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.",
+      "reason": "The source technical finance concept is income. The earlier “tjhelete ... e tla ba bokae” says how much money there will be and can broaden or blur income. Keep “income” as the exact English anchor while localizing the rest of the sentence."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.0",
+      "reviewedTarget": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.",
+      "reason": "The source refers specifically to seed varieties. “Tinxaka to hambana” may broaden varieties to types or species; retain “different varieties” while keeping the neighbor/can-share and seed-saving-work framing. No extra actor or task is added."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.8",
+      "reviewedTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "reason": "“Ka ha ri khale” introduces temporal wording (“recently/not long ago”) that is not in the source. Retain the exact clause “does not predict income”; garden/customer-count limitation, manageable arrangement and recording-results framing remain."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "reviewedTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "reason": "The source distractor says always choose the highest headline price. Keep the superlative exact because “ya le henhla swinene” may mean very high rather than highest."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "reviewedTarget": "Nkarhi hinkwawu hlawula the shortest journey.",
+      "reason": "The source distractor says always choose the shortest journey. Keep the superlative exact because “ro koma swinene” may mean very short rather than shortest."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.3",
+      "reviewedTarget": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+      "reason": "“Karolo e kgolo” may describe a large portion rather than the source comparative “retain more.” Keep the comparative phrase “retain more of the sale price”; retain can, the localized direct-selling framing and the listed time/packing/transport/customer-care costs."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.3",
+      "reviewedTarget": "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, packing, transport na customer care.",
+      "reason": "“Tshipiḓa tshihulwane” may describe a big portion without preserving the source comparative “retain more.” Keep “retain more of the sale price”; retain can, the localized direct-selling framing and listed costs."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l2",
+      "fieldPath": "body.paragraphs.3",
+      "reviewedTarget": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport ni ku khathalela vaxavi.",
+      "reason": "“Xiphemu lexikulu” may describe a large portion without preserving the source comparative “retain more.” Keep “retain more of the sale price”; retain can, localized direct-selling framing and listed costs."
+    },
+    {
+      "language": "st",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.8",
+      "reviewedTarget": "Bapisa tjhelete e amohetsweng ka mora fees, transport le spoilage bakeng sa option e nngwe le e nngwe. O se ke wa nka hore nearest buyer ka mehla o fana ka best return.",
+      "reason": "2026-10-05 independent review: preserve nearest-buyer superlative as exact English subject anchor; keep the negated always/best-return assumption."
+    },
+    {
+      "language": "ve",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.8",
+      "reviewedTarget": "Vhambedzani money received nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.",
+      "reason": "2026-10-05 independent review: preserve nearest-buyer superlative as exact English subject anchor; keep the negated always/best-return assumption."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "body.paragraphs.8",
+      "reviewedTarget": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+      "reason": "2026-10-05 independent review: preserve nearest-buyer superlative as exact English subject anchor; keep the negated always/best-return assumption."
+    },
+    {
+      "language": "ts",
+      "lessonId": "market-community-l3",
+      "fieldPath": "quiz[0].options[0]",
+      "reviewedTarget": "Hlanganisa all varieties without labels.",
+      "reason": "2026-10-05 independent review: preserve all varieties without labels exactly; do not narrow the distractor to writing labels or broaden varieties to types."
+    }
+  ],
+  "verification": {
+    "typecheck": "passed locally, Node 26.5.0",
+    "focusedLearnerTests": "final six scoped tests passed; prior broader 49 learner tests passed",
+    "fullSuite": "final original npm test: 4672 tests, 4671 pass, 0 fail, 1 existing shape-sync TODO; 85040.549417 ms; exit 0",
+    "visualReview": "not inspected by this implementer",
+    "fluentReview": "not performed",
+    "canonicalAndMediaScope": "only three regional Market learner registry targets changed; no canonical, audio, media or PLAN_VERSION changes",
+    "whitespace": "git diff --check passed after full suite",
+    "baselineNativeCheck": "All three L2/L3 baseline records match separately imported native registry snapshots from bde761b33dc4f587746d60b5fe77d881f29b80ca."
+  }
+}

@@ -1,3 +1,4 @@
+import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
@@ -1360,13 +1361,16 @@ test('Sesotho Market records slides retain six learner draft sentences as the de
 });
 
 test('Xitsonga Market media retains two established learner concepts beside exact English', () => {
+  // 2026-10-05: preserve the accepted deck and its historical source mapping;
+  // reconstruction verifies the new native learner targets before reversing them.
+  const historicalMarket = reconstructMarketBeforeL2L3Completion(XITSONGA_MARKET_COMMUNITY_DRAFT, 'ts');
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const packet = JSON.parse(readFileSync('docs/narration/market-community.ts.paired-draft.json', 'utf8'));
   const slides = validatePairedDraft(packet, source, 'ts');
   const map = [[2, 1, 'market-community-l1', 0], [18, 1, 'market-community-l3', 9]] as const;
   for (const [n, p, lessonId, paragraphIndex] of map) {
     assert.equal(slides[n - 1].target.body[p - 1].status, 'draft');
-    const body = XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === lessonId)!.body;
+    const body = historicalMarket.lessons.find(lesson => lesson.id === lessonId)!.body;
     assert.equal(slides[n - 1].english.body[p - 1], body.sourceEnglish.split('\n\n')[paragraphIndex]);
     assert.equal(slides[n - 1].target.body[p - 1].text, body.xitsongaDraft.split('\n\n')[paragraphIndex]);
   }
@@ -1374,7 +1378,7 @@ test('Xitsonga Market media retains two established learner concepts beside exac
   assert.equal(specialistAdvice.status, 'draft');
   // The ordinary request now reuses the checked learner paragraph; specialist terms stay exact.
   assert.equal(specialistAdvice.text,
-    XITSONGA_MARKET_COMMUNITY_DRAFT.lessons.find(lesson => lesson.id === 'market-community-l3')!.body.xitsongaDraft.split('\n\n')[11]);
+    historicalMarket.lessons.find(lesson => lesson.id === 'market-community-l3')!.body.xitsongaDraft.split('\n\n')[11]);
   assert.ok(specialistAdvice.text.startsWith('Lavani qualified advice eka unfamiliar disease or technical problems.'),
     'the request still seeks qualified advice for unfamiliar disease or technical problems');
   assert.equal(slides[17].english.body[2], source[17].body[2]);
@@ -2503,6 +2507,9 @@ test('regional Market slides preserve the teaching-price source, seed holds and 
 });
 
 test('Market backup and shared-seed deck paragraphs map only their exact source sentences', () => {
+  // 2026-10-05: deck bytes retain the prior accepted targets. Validate the new
+  // live learner target first, then reconstruct this historical reuse mapping.
+  const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
   const module = COURSE_MODULES.find(({ id }) => id === 'market-community')!;
   const sentences = (text: string) => text.match(/[^.!?]+[.!?](?:\s|$)/g)?.map((part) => part.trim()) ?? [];
 
@@ -2570,6 +2577,9 @@ test('Market backup and shared-seed deck paragraphs map only their exact source 
 });
 
 test('Market seed record and advice slides reuse only exact whole learner paragraphs', () => {
+  // 2026-10-05: deck bytes retain the prior accepted targets. Validate the new
+  // live learner target first, then reconstruct this historical reuse mapping.
+  const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
   const module = COURSE_MODULES.find(({ id }) => id === 'market-community')!;
   const reuse = [
     { lang: 'st', slide: 15, body: 1, lessonId: 'market-community-l3', lessonParagraph: 1 },

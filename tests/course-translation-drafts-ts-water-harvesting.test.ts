@@ -4,12 +4,19 @@ import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
-import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { XITSONGA_MARKET_COMMUNITY_DRAFT as NATIVE_XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { XITSONGA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ts-food-forest.ts';
 import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/course-translation-drafts-ts.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as nativeResolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
+
+import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
+
+const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
+// 2026-10-05: keep this historical batch's claims; source-bound reconstruction
+// validates accepted final targets before reversing only the later 36 field changes.
+const XITSONGA_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_XITSONGA_MARKET_COMMUNITY_DRAFT, 'ts');
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];

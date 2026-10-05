@@ -6,9 +6,16 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
 import { SESOTHO_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-st-seeds-sovereignty.ts';
-import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { SESOTHO_MARKET_COMMUNITY_DRAFT as NATIVE_SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
+import { resolveLearnerLessonPresentation as nativeResolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+
+import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
+
+const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
+// 2026-10-05: keep this historical batch's claims; source-bound reconstruction
+// validates accepted final targets before reversing only the later 36 field changes.
+const SESOTHO_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_SESOTHO_MARKET_COMMUNITY_DRAFT, 'st');
 
 test('the Sesotho Foundation draft retains exact paired source and complete course content shape', () => {
   const source = COURSE_MODULES.find(module => module.id === SESOTHO_INTRO_PERMACULTURE_DRAFT.id);

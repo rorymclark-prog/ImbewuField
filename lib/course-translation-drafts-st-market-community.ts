@@ -132,12 +132,12 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.",
           "Bapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.",
           "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
-          "Direct selling can retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
+          "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, packing, transport le customer care.",
           "Mokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.",
-          "Dumellanang ka contents, price, payment le what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
-          "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+          "Dumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.",
+          "Qala ka seo o ka reliably supply le seo bareki ba se batlang.",
           "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
-          "Garden area or customer count alone does not predict income. Leka mokgwa o ka laolehang mme o ngole diphetho.",
+          "Sebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na income e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.",
           "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.",
           "Fana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.",
           "Hlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
@@ -156,7 +156,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         {
           question: machineDraft('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?', 'Molemi ea nang le polasi e nyenyane o na le tlhahiso e sa tšoaneng beke le beke — ho ba le masalla libekeng tse ling, ’me ho be le ho fokolang libekeng tse ling. Ke channel efe e mo loketseng ka ho fetisisa?'),
           options: [
-            machineDraft('A formal market stall needing consistent weekly supply', 'Formal market stall e hlokang consistent weekly supply.'),
+            machineDraft('A formal market stall needing consistent weekly supply', "Formal market stall e hlokang supply e tsitsitseng beke le beke."),
             machineDraft('A box scheme needing the same produce weekly', 'Box scheme e hlokang produce e tshwanang beke le beke.'),
             machineDraft('An informal market or neighbour sales with no fixed commitment', 'Informal market kapa thekiso ho baahisani ntle le fixed commitment.'),
             machineDraft('A daily-delivery school contract', 'Konteraka ya sekolo e hlokang ho tlisa letsatsi le letsatsi.'),
@@ -204,23 +204,23 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
         ].join('\n\n'),
         [
           'Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.',
-          'Ngola crop, variety, source le collection date. Rera suitable isolation, selection, drying le storage bakeng sa crop e nngwe le e nngwe.',
-          'Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.',
+          "Ngola crop, variety, source le collection date. Rera isolation, selection, drying le storage tse loketseng crop e nngwe le e nngwe.",
+          "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka boyona. Hlahloba identity le germination pele o itshetleha ka shared seed. Pele o fapanyetsana peo, hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.",
           'Ho arolelana lisebelisoa ho etsa hore sehlopha se khone ho sebelisa lisebelisoa tse turang.',
           'Pompo ea metsi kapa leloala la mabele li ka ’na tsa feta chelete eo lelapa le le leng le ka e khonang.',
           'Ho sebelisa lisebelisoa hammoho ho abela sehlopha sohle molemo oa tsona, ’me ho thusa polasi ka ’ngoe ho etsa mosebetsi oo e neng e ke ke ea khona ho o etsa e le ’ngoe.',
-          'Tshwarang dihlahiswa ka bonolo, mme le boloke suitable shade, packaging and storage through delivery.',
+          "Tshwara produce ka bonolo mme o boloke moriti o loketseng, packaging le storage nakong yohle ya delivery.",
           'Moreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.',
-          'Bapisa money received after fees, transport and spoilage bakeng sa kgetho ka nngwe. O se ke wa nka hore moreki ya haufi ka ho fetisisa kamehla o fana ka best return.',
+          "Bapisa tjhelete e amohetsweng ka mora fees, transport le spoilage bakeng sa option e nngwe le e nngwe. O se ke wa nka hore nearest buyer ka mehla o fana ka best return.",
           'Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.',
-          'Ngolang method, conditions le result so others can judge whether it may suit their land.',
-          'Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.',
+          "Ngola method, conditions le result hore ba bang ba kgone ho ahlola hore na e ka tshwanela naha ya bona.",
+          "Kopa qualified advice bakeng sa unfamiliar disease kapa technical problems. Shared experience le specialist help di ka sebetsa mmoho.",
         ].join('\n\n'),
       ),
       keyPoints: [
         machineDraft(
           "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "Ngola seed identity, source and quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
+          "Ngola seed identity, source le quality, mme o hlahlobe hore na permission e a hlokahala pele o arolelana.",
         ),
         machineDraft(
           'Agree care, booking and repair responsibilities for shared tools',
@@ -260,7 +260,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             ),
           ],
           sourceCorrectIndex: 1,
-          rationale: machineDraft('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.', 'Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.'),
+          rationale: machineDraft('Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.', "Boleng ba peo bo itshetlehile ka crop-specific isolation, selection, labelling, storage le germination checks. Ditshekatsheko tseo ha di netefatse permission ya ho fapanyetsana protected variety; hlahloba applicable rights pele o arolelana."),
         },
         {
           question: machineDraft(
@@ -270,15 +270,15 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           options: [
             machineDraft(
               "Always choose the highest headline price",
-              "Khetha kamehla highest headline price.",
+              "Khetha kamehla headline price e phahameng ka ho fetisisa.",
             ),
             machineDraft(
               "Always choose the shortest journey",
-              "Khetha kamehla shortest journey.",
+              "Khetha kamehla tsela e kgutshwane ka ho fetisisa.",
             ),
             machineDraft(
               "Compare money received after fees, transport, unsold produce and losses",
-              "Bapisa money received ka mora fees, transport, unsold produce le losses.",
+              "Bapisa tjhelete e amohetsweng ka mora fees, transport, dihlahiswa tse sa rekiswang le tahlehelo.",
             ),
             machineDraft(
               "Assume joining a group removes all costs",

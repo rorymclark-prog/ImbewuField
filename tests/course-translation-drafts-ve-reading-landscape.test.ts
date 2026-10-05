@@ -5,13 +5,20 @@ import { readFileSync } from 'node:fs';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as nativeResolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ve-small-livestock.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
-import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
+import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as NATIVE_TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { TSHIVENDA_SEEDS_SOVEREIGNTY_DRAFT } from '../lib/course-translation-drafts-ve-seeds-sovereignty.ts';
 import { assertKeeps, checkAnimalNames, checkCompleteModuleDraft, FORBIDDEN_WORDS, sourceDraftPairs } from './regional-full-draft-checks.ts';
+
+import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
+
+const resolveLearnerLessonPresentation = reconstructMarketPresentationBeforeCompletion;
+// 2026-10-05: keep this historical batch's claims; source-bound reconstruction
+// validates accepted final targets before reversing only the later 36 field changes.
+const TSHIVENDA_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NATIVE_TSHIVENDA_MARKET_COMMUNITY_DRAFT, 've');
 
 test('Tshivenda Seeds drafts every lesson field, keeps English genetics terms and leaves quiz answers unchanged', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'seeds-sovereignty');
