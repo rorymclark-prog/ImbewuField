@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '967c77fd', changes: [
+    'Soil and Water slides have fuller regional unreviewed drafts beside exact English.',
+    'Four water construction and sanitation phrases retain precise English wording.',
+  ], tour: [
+    { title: 'Compare Soil and Water slide drafts',
+      where: 'Study → Soil Health or Water Harvesting → Open slides',
+      detail: 'Read the silent draft deck beside English, or save its slide-only pack.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'cb3482af', changes: [
     'Soil and Water silent slides add fuller unreviewed regional drafts beside English.',
     'Terms such as swale, spillway and mulch stay in English inside the drafts.',
