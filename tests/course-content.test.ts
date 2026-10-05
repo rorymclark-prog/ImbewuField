@@ -486,8 +486,11 @@ test('owner-authorized isiZulu drafts remain labelled drafts after their English
     'long isiZulu body paragraphs must remain separated for low-literacy reading');
 
   const soilHealthL3 = COURSE_TRANSLATION_DRAFTS['soil-health-l3'];
-  assert.match(soilHealthL3.body, /Uma imvula ishaya i-mulch .* ingxenye enkulu yamandla amaconsi emvula ingadamba/,
-    'the mulch claim stays conditional on rain hitting the cover');
+  // The earlier guard pinned an extra raindrop-energy explanation from narration.
+  // This learner source gives three possible mulch effects, without that added mechanism.
+  assert.equal(soilHealthL3.body.split('\n\n')[1],
+    'I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwamaconsi emvula futhi icindezele ukhula.',
+    'the learner mulch paragraph keeps possible evaporation, rain-impact and weed effects without adding narration advice');
   assert.match(soilHealthL3.body, /Uma amanzi egeleza phezu kwensimu, angathwala umhlabathi osuxegisiwe/,
     'the spring rain passage separates soil impact from conditional runoff transport');
   assert.match(soilHealthL3.body, /Uketshezi oluphuma ngokwemvelo emgqonyeni wemisundu lubizwa nge-leachate/,
