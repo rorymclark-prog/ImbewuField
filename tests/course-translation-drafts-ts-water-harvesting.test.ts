@@ -1,3 +1,4 @@
+import { marketAcceptedTarget, checkMarketTeachingExample, checkMarketPriceQuestion, checkMarketGapQuestion } from './market-l1-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -76,7 +77,7 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
     const draftParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(draftParagraphs.length, sourceParagraphs.length);
     // Reviewed L1 and L3 market framing joins the drafts; untranslated technical holds stay exact.
-    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+    const translatedIndices = draftLesson.id === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
       : draftLesson.id === 'market-community-l2' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         : draftLesson.id === 'market-community-l3' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
           : [0, 3, 4, 5, 7, 8, 9, 10];
@@ -148,7 +149,7 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
       // Checked ordinary destinations/months/price framing replaces its holds; decision safeguards remain exact.
       for (const index of [8, 9, 11, 15, 16]) assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
         `approved ordinary paragraph ${index + 1} is paired as a draft`);
-      assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the R18/R15 numeric worked example remains exact English');
+      checkMarketTeachingExample('ts', draftParagraphs[12], sourceParagraphs[12]);
       assert.ok(draftParagraphs[8].includes('best yield per bed') && draftParagraphs[8].includes('the most return for each hour of work'), 'the best/most comparison stays exact');
       assert.ok(draftParagraphs[11].includes('production, packing and selling costs'), 'the cost categories remain named in English');
       assert.ok(draftParagraphs[15].includes('swiyimo swa ku byala') && draftParagraphs[15].includes('nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona'), 'planting conditions and expected harvest time stay explicit in learner wording');
@@ -160,9 +161,7 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
         'both quiz answer keys remain in canonical order');
       const priceQuestion = draftLesson.quiz[0];
       assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
-      assert.ok(priceQuestion.question.xitsongaDraft.startsWith(
-        'In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'),
-      'the numerical premise remains exact while the question tail is localized');
+      checkMarketPriceQuestion('ts', priceQuestion.question.xitsongaDraft);
       assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), sourceLesson.quiz[0].options);
       assert.ok(priceQuestion.options.every(option => option.reviewStatus === 'machine-draft'));
       assert.ok(priceQuestion.rationale.xitsongaDraft.includes('le hansi ka cost') &&
@@ -174,20 +173,19 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
       assert.equal(gapQuestion.sourceCorrectIndex, 1);
       assert.deepEqual(gapQuestion.options.map(option => option.sourceEnglish), gapSource.options,
         'translated choices preserve the original option order');
-      assert.ok(gapQuestion.question.xitsongaDraft.startsWith("A farmer's records show she's short of vegetables every June and July."),
-        'the recurring June/July shortage wording stays exact');
+      checkMarketGapQuestion('ts', gapQuestion.question.xitsongaDraft);
       assert.ok(gapQuestion.options[1].xitsongaDraft.includes('swibyariwa leswi lulameleke ndhawu ya wena') &&
         gapQuestion.options[1].xitsongaDraft.includes('nkarhi wa swona wa ntshovelo'),
         'the keyed action retains locally suitable crops and harvest timing');
-      assert.ok(gapQuestion.rationale.xitsongaDraft.startsWith('Records identify the gap.') &&
+      assert.ok(gapQuestion.rationale.xitsongaDraft.startsWith('Tirhekhodo ti komba ku pfumaleka.') &&
         gapQuestion.rationale.xitsongaDraft.includes('local climate') &&
         gapQuestion.rationale.xitsongaDraft.includes('mati') &&
-        gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu languteriweke wa ntshovelo'),
+        gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu ntshovelo wu languteriweke'),
         'the rationale retains local climate, water and expected harvest-time conditions');
       assert.equal(gapQuestion.options[3].reviewStatus, 'machine-draft',
         'ordinary records framing is drafted while the soil-fertility diagnosis stays an exact English anchor');
-      assert.equal(gapQuestion.options[3].xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
-      assert.ok(gapQuestion.options[3].xitsongaDraft.endsWith('soil fertility problem'));
+      assert.equal(gapQuestion.options[3].xitsongaDraft, marketAcceptedTarget('ts', 'quiz[1].options[3]'));
+      assert.ok(gapQuestion.options[3].xitsongaDraft.includes('xiphiqo xa soil fertility'));
       assert.equal(gapQuestion.sourceCorrectIndex, 1,
         'the soil-fertility statement remains the same false distractor');
 

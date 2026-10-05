@@ -1,3 +1,4 @@
+import { marketAcceptedTarget, checkMarketTeachingExample, checkMarketPriceQuestion, checkMarketGapQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -222,7 +223,7 @@ test('Sesotho Market L1 records four destinations while keeping units and busine
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index],
       `body paragraph ${index + 1}: checked ordinary framing is drafted beside its source`);
   }
-  assert.equal(draftParagraphs[12], sourceParagraphs[12], 'the numerical teaching example stays exact English');
+  checkMarketTeachingExample('st', draftParagraphs[12], sourceParagraphs[12]);
 
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
@@ -311,7 +312,7 @@ test('Sesotho Market L1 keeps the source-aligned season, sale and harvest safegu
   assert.equal(pair.reviewStatus, 'machine-draft');
   assert.equal(paragraphs.length, canonical.length, 'paragraph positions carry the lesson safeguards');
   for (const index of changed) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} has localized framing`);
-  assert.equal(paragraphs[12], canonical[12], 'the example remains exact English, including R18 cost and R15 sale price');
+  checkMarketTeachingExample('st', paragraphs[12], canonical[12]);
   assert.ok(paragraphs[13].includes('ha e tiise thekiso'), 'the price review keeps its no-guarantee condition');
   assert.ok(paragraphs[15].includes('maemo a ho jala') && paragraphs[15].includes('nako e lebelletsweng ya kotulo'), 'planting advice keeps its site and timing qualification');
   assert.ok(paragraphs[16].includes('Letsatsi le sebetsang polasing e nngwe'), 'the timing comparison remains local to this farm');
@@ -367,7 +368,7 @@ test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment s
     if (changed.has(index)) assert.notEqual(paragraphs[index], canonical[index], `approved paragraph ${index + 1} is localized`);
   }
   assert.ok(paragraphs[5].includes('mukhuva lowu wo olova'), 'the simple-habit guidance stays paired and localized');
-  assert.equal(paragraphs[12], canonical[12], 'R18/R15 example remains exact English');
+  checkMarketTeachingExample('ts', paragraphs[12], canonical[12]);
   assert.ok(paragraphs[13].includes('a wu tiyisisi'), 'the no-guarantee condition remains explicit');
   assert.deepEqual(draft.keyPoints.map(item => item.sourceEnglish), source.keyPoints);
   assert.ok(draft.keyPoints.every(item => item.reviewStatus === 'machine-draft'),
@@ -376,7 +377,7 @@ test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment s
   const priceQuestion = draft.quiz[0];
   assert.equal(priceQuestion.sourceCorrectIndex, source.quiz[0].correct);
   assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
-  assert.ok(priceQuestion.question.xitsongaDraft.startsWith('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'), 'the financial premise and figures remain exact');
+  checkMarketPriceQuestion('ts', priceQuestion.question.xitsongaDraft);
   assert.ok(priceQuestion.rationale.xitsongaDraft.startsWith('Nxavo wa xikombiso wu le hansi ka cost'), 'the example still states that price is below cost');
   assert.deepEqual(priceQuestion.options.map(item => item.sourceEnglish), source.quiz[0].options, 'price example options remain in canonical order beside their source');
   assert.ok(priceQuestion.options.every(item => item.reviewStatus === 'machine-draft'), 'ordinary options remain visibly unreviewed');
@@ -386,23 +387,22 @@ test('New Xitsonga Market L1 prose keeps the simple-habit draft and assessment s
   assert.equal(gapQuestion.sourceCorrectIndex, 1);
   assert.equal(gapQuestion.question.sourceEnglish, gapSource.q);
   assert.equal(gapQuestion.question.reviewStatus, 'machine-draft');
-  assert.ok(gapQuestion.question.xitsongaDraft.startsWith("A farmer's records show she's short of vegetables every June and July."),
-    'the recurring June/July shortage statement remains exact');
+  checkMarketGapQuestion('ts', gapQuestion.question.xitsongaDraft);
   assert.deepEqual(gapQuestion.options.map(item => item.sourceEnglish), gapSource.options,
     'the new wording stays paired with each answer in canonical order');
   assert.equal(gapQuestion.options[3].reviewStatus, 'machine-draft',
     'the records framing is drafted while the soil-fertility diagnosis stays an exact English anchor');
-  assert.equal(gapQuestion.options[3].xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
-  assert.equal(gapQuestion.options[3].xitsongaDraft.endsWith('soil fertility problem'), true);
+  assert.equal(gapQuestion.options[3].xitsongaDraft, marketAcceptedTarget('ts', 'quiz[1].options[3]'));
+  assert.equal(gapQuestion.options[3].xitsongaDraft.includes('xiphiqo xa soil fertility'), true);
   assert.equal(gapQuestion.sourceCorrectIndex, 1,
     'the false diagnosis remains at its original distractor position');
   assert.ok(gapQuestion.options[1].xitsongaDraft.includes('swibyariwa leswi lulameleke ndhawu ya wena') &&
     gapQuestion.options[1].xitsongaDraft.includes('nkarhi wa swona wa ntshovelo'),
     'the keyed action retains locally suitable crops and harvest timing');
-  assert.ok(gapQuestion.rationale.xitsongaDraft.startsWith('Records identify the gap.') &&
+  assert.ok(gapQuestion.rationale.xitsongaDraft.startsWith('Tirhekhodo ti komba ku pfumaleka.') &&
     gapQuestion.rationale.xitsongaDraft.includes('local climate') &&
     gapQuestion.rationale.xitsongaDraft.includes('mati') &&
-    gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu languteriweke wa ntshovelo'),
+    gapQuestion.rationale.xitsongaDraft.includes('nkarhi lowu ntshovelo wu languteriweke'),
     'the rationale retains the gap, local climate, water and expected harvest-time conditions');
   assert.deepEqual(gapQuestion.options.map(item => item.reviewStatus), ['machine-draft', 'machine-draft', 'machine-draft', 'machine-draft']);
 

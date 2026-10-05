@@ -69,7 +69,7 @@
           },
           {
             "status": "draft",
-            "text": "Shumisani mafhungo ayo u tsireledza zwiḽiwa zwa muṱa na u dzhia better business decisions.",
+            "text": "Shumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
@@ -173,12 +173,12 @@
           },
           {
             "status": "draft",
-            "text": "Rekhodani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo, ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
+            "text": "Ṅwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Shumisani nḓowelo iyi yo leluwaho kha zwiḽiwa zwi re hayani, zwibveledzwa zwo rengiswaho, zwe zwa ṋewa vhaṅwe, na zwe zwa vhewa kha compost.",
+            "text": "Shumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
@@ -210,22 +210,22 @@
         "body": [
           {
             "status": "draft",
-            "text": "Khalaṅwaha nthihi ya rekhodo i fhindula mbudziso dzine dza thusa.",
+            "text": "Rekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.",
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "Ndi zwifhio zwimela zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return for each hour of work?",
+            "text": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Ndi zwifhio zwimela zwine zwa shumisa mbeu, maḓi na compost nnzhi u fhira zwine zwa zwi bveledza?",
+            "text": "Ndi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa tea u renga zwiḽiwa.",
+            "text": "Rekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.",
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           }
         ]
@@ -251,15 +251,17 @@
         "body": [
           {
             "status": "draft",
-            "text": "Musi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.",
+            "text": "Musi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.",
+            "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
@@ -285,17 +287,17 @@
         "body": [
           {
             "status": "draft",
-            "text": "Shumisani rekhodo yaṋu u wana uri zwiḽiwa zwa muṱa zwi ṱhaela lini.",
+            "text": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "Nangani crops dzine dza tea fhethu haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Sedzani nyimele dza u ṱavha na tshifhinga tshine khaṋo ya lavhelelwa u swika ngatsho.",
+            "text": "Nangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Datumu ine ya shuma kha ḽiṅwe bulasi i nga sa shuma hafha. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+            "text": "Ḓuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]

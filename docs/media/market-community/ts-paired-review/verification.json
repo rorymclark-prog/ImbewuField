@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.ts.paired-draft.json",
-  "pairedSourceSha256": "9659e8f1e2dfd68505528575eddce6a4fc70908974aeb3fe377a4f7f5572d98f",
+  "pairedSourceSha256": "68bcf3aed5a37f32229f59286add03b19dcbb478ce148a91d82d904de7fe7454",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,15 +14,15 @@
       "slide": 1,
       "path": "public/course-decks/market-community/ts/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 322864,
-      "sha256": "3c4e429e4650cd3e44c67c10c3ce18f8bc35f257150216f765adee0a84e9b6a8"
+      "bytes": 314122,
+      "sha256": "961f58a4cbd20f6d0d706b8622003e72b533dab261b684e19f96fa9b4f830b49"
     },
     {
       "slide": 2,
       "path": "public/course-decks/market-community/ts/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 228810,
-      "sha256": "1955c9a968a3e317870deb015f88f9473465e8912eb5ba1366cb9e66f94634fa"
+      "bytes": 232738,
+      "sha256": "eec172f0f99c8024c565aa99c2dbd5b91dc4349adfb6d39e1f4c1bc7aaa7a2e8"
     },
     {
       "slide": 3,
@@ -42,29 +42,29 @@
       "slide": 5,
       "path": "public/course-decks/market-community/ts/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 385252,
-      "sha256": "c67ca45b9ab6ff64e79a7a544dc42c99cec7f2ef7924fab8b36d1e2c3f77f7d6"
+      "bytes": 388230,
+      "sha256": "744cc28f658009aaaf9d4c2529a869795a23a897c4c054e21f06b7119bab80e5"
     },
     {
       "slide": 6,
       "path": "public/course-decks/market-community/ts/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 259060,
-      "sha256": "9da6660d2170a78047f2b125ca58d4249dddbe8360d7d77ba7141fd91740663a"
+      "bytes": 259068,
+      "sha256": "4be0060669bfbb2f943d0ce7fde7c97709dc6e0ac78d0fd3943db52061775926"
     },
     {
       "slide": 7,
       "path": "public/course-decks/market-community/ts/slide-07.webp",
       "pixels": "1440x5400",
-      "bytes": 540584,
-      "sha256": "8230a04572c63276f116086620c7995b3ec66e50bdddf3c4814f3d741965e36b"
+      "bytes": 533820,
+      "sha256": "c81cccac9ba8f70c8ca8deef922ecaabe5a697c2ac81bdd68112696fcdb70d7a"
     },
     {
       "slide": 8,
       "path": "public/course-decks/market-community/ts/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 266682,
-      "sha256": "3e1b378d4debf50d3116711968f86c8b7498d736344f916c686582db1884c04e"
+      "bytes": 267530,
+      "sha256": "c8276c3cede3a8d3a8a0ba9cdc135a5cebdb4a0b8cb87994a3b5958538e3296b"
     },
     {
       "slide": 9,
@@ -220,6 +220,6 @@
       "sha256": "11cd2ae6f64237083a856783693fc3ea87c3f9554d08c6b0ce58ba6d140a6b3b"
     }
   ],
-  "draftPassageCount": 81,
-  "note": "All 20 silent Xitsonga frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+  "draftPassageCount": 62,
+  "note": "All 20 silent Xitsonga frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The L1 teaching-price example is now a source-bound machine draft; the L3 protected-variety permission passage remains an exact English hold. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
 }

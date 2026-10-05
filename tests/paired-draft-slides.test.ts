@@ -124,7 +124,7 @@ test('Market record slides reuse L1 wording and keep quantity and destination an
     { slide: 5, body: 3, lesson: 6 },
   ];
   const newlyDrafted = [
-    { slide: 2, body: 2, source: 'Use that information to protect household food and make better business decisions.', anchors: ['better business decisions'] },
+    { slide: 2, body: 2, source: 'Use that information to protect household food and make better business decisions.', anchors: { st: ['kgwebo'], ve: ['bindu'], ts: ['bindzu'] } },
     { slide: 5, body: 1, source: 'Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.', anchors: ['kilograms', 'dozens', 'bundles'] },
     { slide: 5, body: 2, source: 'Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.', anchors: ['compost'] },
   ];
@@ -149,12 +149,106 @@ test('Market record slides reuse L1 wording and keep quantity and destination an
       assert.equal(part.status, 'draft', `${language} slide ${item.slide}: expose the source-bound unreviewed draft`);
       assert.ok(part.text && part.text !== item.source);
       assert.ok(part.provenance?.includes('unreviewed'));
-      for (const anchor of item.anchors) assert.ok(part.text.includes(anchor), `${language} keeps the ${anchor} anchor`);
+      for (const anchor of (item.anchors as Record<string, string[]>)[language] ?? item.anchors as string[]) {
+        assert.ok(part.text.includes(anchor), `${language} keeps the ${anchor} meaning anchor`);
+      }
     }
     assert.ok(slides[1].target.body.every((part: any) => part.status === 'draft'),
       `${language} pairs each ordinary harvest-use explanation with its exact English source`);
     assert.ok(slides[4].target.body.every((part: any) => part.status === 'draft'),
       `${language} records every harvest while retaining quantity and destination wording`);
+  }
+});
+
+test('Market L1 paired-deck repairs bind complete approved clauses and preserve other slide scopes', () => {
+  const proof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/MARKET-COMMUNITY-L1-PAIRED-DECK-APPLIED-2026-10-05.json', 'utf8'));
+  const module = COURSE_MODULES.find(({ id }) => id === 'market-community')!;
+  const lesson = module.lessons.find(({ id }) => id === 'market-community-l1')!;
+  const canonical = lesson.body.split('\n\n');
+  const expectedChangedFrames = {
+    st: [1, 2, 5, 7, 8],
+    ve: [2, 5, 6, 7, 8],
+    ts: [1, 2, 5, 6, 7, 8],
+  } as const;
+  const sha256 = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+  const sha256File = (file: string) => createHash('sha256').update(readFileSync(file)).digest('hex');
+  const assetProof = JSON.parse(readFileSync(
+    'docs/media/market-community/l1-completion-20261005/assets-proof.json', 'utf8'));
+
+  for (const language of ['st', 've', 'ts'] as const) {
+    const languageProof = proof.languages[language];
+    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${language}.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, marketSource, language);
+    assert.equal(packet.reviewStatus, 'unreviewed');
+    assert.equal(languageProof.bodyFields.length, 17);
+    assert.deepEqual(languageProof.changedFrames, expectedChangedFrames[language]);
+
+    const seen = new Set<number>();
+    for (const field of languageProof.bodyFields) {
+      const slide = slides[field.slide - 1];
+      assert.equal(field.canonicalBodySource, canonical[field.paragraphIndex]);
+      assert.equal(field.sourceEnglish, canonical[field.paragraphIndex],
+        `${language} L1 paragraph ${field.paragraphIndex}: approved target remains bound to its complete canonical source`);
+      assert.equal(slide.english.body[field.slideBodyIndex], canonical[field.paragraphIndex]);
+      assert.equal(slide.target.body[field.slideBodyIndex].status, field.afterTarget.status);
+      assert.equal(slide.target.body[field.slideBodyIndex].text, field.afterTarget.text);
+      assert.ok(slide.target.body[field.slideBodyIndex].text !== field.sourceEnglish,
+        `${language} L1 paragraph ${field.paragraphIndex}: localized draft does not silently remain English`);
+      seen.add(field.paragraphIndex);
+    }
+    assert.deepEqual([...seen].sort((a, b) => a - b), canonical.map((_, i) => i),
+      `${language}: each complete L1 body paragraph is bound once`);
+
+    const numericExample = languageProof.bodyFields.find((field: any) => field.paragraphIndex === 12)!;
+    assert.equal(numericExample.beforeTarget.status, 'english-hold');
+    assert.equal(numericExample.afterTarget.status, 'draft');
+    assert.match(numericExample.afterTarget.provenance, /unreviewed.*exact English source paired.*no fluent approval/i);
+    assert.match(numericExample.afterTarget.text, /R18/);
+    assert.match(numericExample.afterTarget.text, /R15/);
+
+    const title = slides[0];
+    assert.equal(title.english.heading, module.title);
+    assert.equal(title.target.heading.text, languageProof.cardTitle.afterTarget.text);
+    assert.equal(title.target.heading.status, languageProof.cardTitle.afterTarget.status);
+    assert.notEqual(title.english.body[1], module.description,
+      `${language}: slide-1 description paraphrase is not an exact module-description source field`);
+    assert.deepEqual(title.target.body[1], languageProof.cardDescription.target,
+      `${language}: preserve the nonmatching slide-1 description field`);
+
+    const preserved = languageProof.preservedOutOfScopeFrames
+      .map((number: number) => ({ slide: number, target: packet.slides[number - 1].target }));
+    assert.equal(sha256(preserved), languageProof.preservedOutOfScopeTargetSha256,
+      `${language}: composite/out-of-scope targets remain byte-stable across this L1 application`);
+    assert.ok(languageProof.preservedOutOfScopeFrames.includes(3));
+    assert.ok(languageProof.preservedOutOfScopeFrames.includes(4));
+    assert.ok(languageProof.preservedOutOfScopeFrames.includes(9));
+    assert.ok(languageProof.preservedOutOfScopeFrames.includes(14));
+    assert.ok(languageProof.preservedOutOfScopeFrames.includes(19));
+
+    const languageAssetProof = assetProof.languages[language];
+    const manifest = JSON.parse(readFileSync(languageAssetProof.manifestPath, 'utf8'));
+    assert.equal(manifest.pairedSourceSha256, sha256File(`docs/narration/market-community.${language}.paired-draft.json`),
+      `${language}: rendered-asset manifest is bound to the applied paired source`);
+    assert.deepEqual(languageAssetProof.expectedChangedFrames, expectedChangedFrames[language]);
+    assert.equal(languageAssetProof.assets.length, expectedChangedFrames[language].length);
+    for (const rendered of languageAssetProof.assets) {
+      const asset = readFileSync(rendered.path);
+      const manifestEntry = manifest.slides.find((entry: any) => entry.slide === rendered.slide);
+      assert.equal(manifestEntry.sha256, sha256File(rendered.path),
+        `${language} slide ${rendered.slide}: manifest checksum matches the installed WebP`);
+      assert.equal(manifestEntry.bytes, asset.byteLength);
+      assert.equal(manifestEntry.pixels, '1440x5400');
+    }
+    assert.match(manifest.note, /L1 teaching-price example is now a source-bound machine draft/);
+    assert.match(manifest.note, /L3 protected-variety permission passage remains an exact English hold/);
+    assert.equal(manifest.humanLanguageReview, false);
+    assert.equal(manifest.localFarmingReview, false);
+    if (Object.hasOwn(manifest, 'draftPassageCount')) {
+      assert.equal(manifest.draftPassageCount,
+        slides.reduce((count: number, slide: any) => count + slide.target.body.filter((part: any) => part.status === 'draft').length, 0),
+        `${language}: the draft-passage count includes the now-translated teaching example`);
+    }
   }
 });
 
@@ -1578,7 +1672,7 @@ test('Intro integration noun updates preserve paired conditions and leave Sesoth
 test('regional Study frames draft screened observations while risky advice stays in exact English', () => {
   const cases = [
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:2', '8:3', '8:4', '8:5', '8:6', '9:1'], held: [], mixed: ['2:4'] },
-    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '18:1', '18:3'], held: ['7:2', '15:4'] },
+    { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '7:2', '18:1', '18:3'], held: ['15:4'] },
     // Full soil paragraphs are now reused only at byte-exact canonical matches; the dedicated Soil test checks resolver equality and keeps safety claims paired.
     { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '4:1', '4:2', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '5:4', '20:4'] },
     { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3'] },
@@ -2266,12 +2360,17 @@ test('Reading Landscape next15 drafts keep frost limits, observation times and A
   }
 });
 
-test('regional Market slides preserve exact price and seed holds plus conditions inside unreviewed drafts', () => {
+test('regional Market slides preserve the teaching-price source, seed holds and conditions inside unreviewed drafts', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   const safetyAnchors = {
     st: { beforePrice: 'Pele o beha theko', noGuarantee: 'ha e tiise thekiso', agreement: 'feela ha', beforeBoxes: 'pele o tshepisa' },
-    ve: { beforePrice: 'Musi ni sa athu', noGuarantee: 'a u fulufhedzisi', agreement: 'only when customers and growers can keep the agreement', beforeBoxes: 'musi ni sa athu fulufhedzisa' },
+    ve: { beforePrice: 'Musi ni sa athu', noGuarantee: 'a u khwaṱhisedzi', agreement: 'only when customers and growers can keep the agreement', beforeBoxes: 'musi ni sa athu fulufhedzisa' },
     ts: { beforePrice: 'U nga si veka', noGuarantee: 'a wu tiyisisi', agreement: 'ntsena loko', beforeBoxes: 'u nga si tiyisekisa' },
+  } as const;
+  const teachingLabels = {
+    st: 'Mohlala ona ke wa ho ruta, eseng theko ya mmaraka',
+    ve: 'Tsumbo iyi ndi ya u funza, a si mutengo wa makete',
+    ts: 'Lexi i xikombiso xo dyondzisa, a hi nxavo wa makete',
   } as const;
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
@@ -2280,6 +2379,19 @@ test('regional Market slides preserve exact price and seed holds plus conditions
     for (const [slideNumber, paragraphIndex] of [[7, 1], [15, 3]] as const) {
       const slide = slides[slideNumber - 1];
       const held = slide.target.body[paragraphIndex];
+      if (slideNumber === 7 && paragraphIndex === 1) {
+        // The reviewed source-matched L1 candidate now translates this complete teaching example.
+        // Keep the historic exact English source, R18-before-R15 order, per-kilogram units and
+        // explicit teaching label; the separate L3 permission clause below remains an English hold.
+        assert.equal(slide.english.body[paragraphIndex], source[slideNumber - 1].body[paragraphIndex]);
+        assert.equal(held.status, 'draft', `${lang}: the checked teaching example is now a source-bound draft`);
+        assert.deepEqual(held.text.match(/R\d+/g), ['R18', 'R15'], `${lang}: preserve the stated cost-before-sale order`);
+        assert.equal((held.text.match(/kilogram/gi) ?? []).length, 2, `${lang}: retain both per-kilogram units`);
+        assert.ok(held.text.startsWith(teachingLabels[lang]),
+          `${lang}: keep the explicit teaching-example label so the amounts are not presented as current market prices`);
+        assert.ok(held.provenance?.includes('no fluent approval'));
+        continue;
+      }
       const laterField = approvedStudyOutcome('market-community', lang, slideNumber, paragraphIndex);
       if (laterField) {
         assert.equal(slide.english.body[paragraphIndex], source[slideNumber - 1].body[paragraphIndex]);
@@ -2342,8 +2454,12 @@ test('Market backup and shared-seed deck paragraphs map only their exact source 
     assert.equal(sourceSentences.length, 2);
     assert.equal(targetSentences.length, 2);
     assert.notEqual(targetSentences[0], sourceSentences[0], 'retain the existing localized may-not clause');
-    assert.ok(targetSentences[0].includes('nga sa shuma'), 'keep the condition that another farm’s date may not work here');
-    assert.equal(targetSentences[1], sentences(learnerParagraph).at(-1), 'reuse the exact learner backup sentence');
+    assert.ok(targetSentences[0].includes('nga kha ḽi sa shumi'), 'keep the condition that another farm’s date may not work here');
+    const appliedProof = JSON.parse(readFileSync(
+      'docs/study-translation-reviews/MARKET-COMMUNITY-L1-PAIRED-DECK-APPLIED-2026-10-05.json', 'utf8'));
+    const approvedParagraph = appliedProof.languages.ve.bodyFields.find((field: any) => field.paragraphIndex === 16)!.afterTarget.text;
+    assert.equal(target.text, approvedParagraph,
+      'the field keeps the exact full-clause target accepted for this source instead of a stale earlier wording');
     for (const condition of ['backup plan', 'mvula', 'maḓi', 'zwimela']) assert.ok(target.text.includes(condition));
     assert.ok(!target.text.includes('Before exchanging seed'), 'do not add unrelated source content');
     const changedSource = structuredClone(marketSource);

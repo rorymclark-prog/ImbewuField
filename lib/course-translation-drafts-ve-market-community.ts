@@ -18,8 +18,8 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
   language: 've',
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'business' },
-  title: hold('Market Gardening & Community'),
-  description: hold('Record-keeping, selling surplus and building local food networks.'),
+  title: pair('Market Gardening & Community', "U Ṱavha Zwimela U Itela Maraga na Vhadzulapo"),
+  description: pair('Record-keeping, selling surplus and building local food networks.', "U vhulunga rekhodo, u rengisa zwo salaho, na u fhaṱa local food networks."),
   lessons: [
     {
       "id": "market-community-l1",
@@ -31,18 +31,18 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi crops dzifhio dzine dza shumisa seeds, water na compost zwinzhi u fhira zwine dza vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani production, packing and selling costs, hu tshi katelwa mushumo na transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani crops dzine dza tea vhupo haṋu, ni pulane ni tshi vhalela murahu ni tshi bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nA date that works on another farm may not work here. Engedzani a backup plan musi mvula, maḓi kana zwimela zwi tshi kundelwa.",
+        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Record harvest amounts and destinations separately from cash",
-          "tshivendaDraft": "Ṅwalani harvest amounts and destinations nga u fhambana na cash",
+          "tshivendaDraft": "Ṅwalani harvest amounts na hune khaṋo ya ya hone, nga u fhambana na cash.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Include production and selling costs when assessing a price",
-          "tshivendaDraft": "Katelani production na selling costs musi ni tshi sedza price.",
+          "tshivendaDraft": "Katelani masheleni a u bveledza na u rengisa musi ni tshi sedza mutengo.",
           "reviewStatus": 'machine-draft'
         },
         {
@@ -60,7 +60,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "tshivendaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+            "tshivendaDraft": "Kha tsumbo iyi ya u funza, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
             "reviewStatus": 'machine-draft'
           },
           "options": [
@@ -81,24 +81,24 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Apply for a subsidy to cover the gap",
-              "tshivendaDraft": "Apply for subsidy u vala gap.",
+              "tshivendaDraft": "Iteni khumbelo ya subsidy u lifha phambano.",
               "reviewStatus": 'machine-draft'
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "tshivendaDraft": "Mutengo wa tsumbo u re fhasi ha cost yo ambiwaho. Sedzani phambano na customer demand musi ni sa athu dzhia tsheo ya production i tevhelaho.",
+            "tshivendaDraft": "Mutengo wa tsumbo u fhasi ha cost yo ambiwaho. Sedzani phambano na zwine vharengi vha zwi ṱoḓa ni sa athu dzhia tsheo ya u bveledza hu tevhelaho.",
             "reviewStatus": 'machine-draft'
           }
         },
         {
-          "question": pair("A farmer's records show she's short of vegetables every June and July. What's the useful action here?", "A farmer's records show she's short of vegetables every June and July. Ndi vhukando vhufhio vhune ha thusa?"),
+          "question": pair("A farmer's records show she's short of vegetables every June and July. What's the useful action here?", "Rekhodo dza mulimi dzi sumbedza uri u na miroho i sa eḓanaho nga June na July ṅwaha muṅwe na muṅwe. Ndi vhukando vhufhio vhune ha thusa?"),
           "options": [
             pair("Buy vegetables at market each June and July", "Rengani miroho makete nga June na July ṅwaha muṅwe na muṅwe."),
             {
               "sourceEnglish": "Work backwards from the food gap using suitable local crops and their harvest timing",
-              "tshivendaDraft": "Pulani ni tshi humela murahu u bva kha food gap ni tshi shumisa suitable local crops na their harvest timing",
+              "tshivendaDraft": "Pulani ni tshi humela murahu u bva kha tshikhala tsha zwiḽiwa, ni tshi shumisa zwimela zwi fanelaho vhupo ha henefho na tshifhinga tshazwo tsha u kaṋa.",
               "reviewStatus": "machine-draft"
             },
             pair("Accept her farm can't produce in winter", "Tanganedzani uri bulasi ḽawe a ḽi nga bveledzi zwimela nga vhuria."),
