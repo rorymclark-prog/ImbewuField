@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: 'eab3e362', changes: [
+    'Water lesson and slide drafts clarify demand, low stores and when to stop reuse.',
+    'Exact English stays beside unreviewed drafts; selected saved slides refresh once.',
+  ], tour: [
+    { title: 'Review Water lesson and slide drafts',
+      where: 'Study → Water Harvesting → Open lessons or slides',
+      detail: 'Compare regional drafts with English and save the refreshed silent slides.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'b3020088', changes: [
     'Regional lessons start without narration when their own recording is unavailable.',
     'Choose English source narration to listen, or keep reading silently.',

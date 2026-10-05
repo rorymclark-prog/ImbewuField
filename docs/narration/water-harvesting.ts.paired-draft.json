@@ -249,8 +249,8 @@
           },
           {
             "status": "draft",
-            "text": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet kumbe unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }
@@ -411,7 +411,9 @@
             "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa spillway yi nga pfaleki naswona hlayisa bank cover leyi boxiweke eka design. U nga byali mirhi ehenhla ka earth dam wall.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -456,7 +458,9 @@
             "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "An annual total does not tell you how much water will be available during a dry spell. Pimanisa supply na ku tirhisiwa ka mati loku u ku pulaneke.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }
@@ -481,11 +485,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Roof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Roof runoff yi nga rhwala ntshuri, droppings na other contamination. First-flush diverter yi hambukisa mati man’wana ya runoff yo sungula leswaku ma nga ngheni etankini.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati lama faneleke ku hambukisiwa ya titshege hi roof na system. Tirhisa the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -550,13 +556,13 @@
           },
           {
             "status": "draft",
-            "text": "Tsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Tsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa demand ya wona na supply hi tinguva.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
-            "text": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. Vito ra province ntsena a ri ku byeli tank size leyi u yi lavaka.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }
@@ -581,11 +587,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Hlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Hlayisa thanki yi funengetiwile. Screen openings against insects, naswona hlayisa roof, gutters na diverter. Keep rainwater separate from drinking-water pipes.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati lama vonakaka ma basile ma nga ha va na germs kumbe chemicals. Vutisa local health authority hi testing na treatment leswi fambisanaka na intended use.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -717,7 +725,9 @@
             ]
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "If a reuse system is already operating and the water smells bad, pools or harms plants, tshika ku ma tirhisa kutani u lava ndzayo ya qualified local adviser.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }

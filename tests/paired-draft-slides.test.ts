@@ -1,3 +1,5 @@
+import { waterDeckBeforeReviewedPrecision } from './water-reviewed-deck-history-checks.ts';
+import { checkWaterReviewedPrecision, waterBodyBeforeReviewedPrecision } from './water-reviewed-precision-checks.ts';
 import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -267,6 +269,7 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
   // 2026-10-05 learner-only completion leaves the Claude-owned deck files as historical exact
   // reuses. First require the new whole learner body to resolve exactly, then compare old deck
   // rows against the dated pre-completion body stored in the applied proof.
+  checkWaterReviewedPrecision();
   const historicalCheckedParagraphs = new Map<string, Array<{ text: string; status: string; lessonId: string; index: number }>>();
   for (const field of learnerApplication.applicationAudit.verifiedCandidateFields.filter((item: any) =>
     item.field === 'body' && item.currentTarget !== item.proposedTarget)) {
@@ -276,8 +279,8 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
       `${field.language}/${field.lessonId}: historical draft is bound to the exact unchanged canonical body`);
     const currentResolution = resolveLearnerLessonPresentation(lesson, field.language as 'st' | 've' | 'ts');
     assert.equal(currentResolution.status, 'draft', `${field.language}/${field.lessonId}: completed learner body remains a draft`);
-    assert.equal(currentResolution.content.body, field.proposedTarget,
-      `${field.language}/${field.lessonId}: current resolver equals the newly applied complete learner body`);
+    assert.equal(waterBodyBeforeReviewedPrecision(currentResolution.content.body, field.language, field.lessonId), field.proposedTarget,
+      `${field.language}/${field.lessonId}: current resolver reconstructs the dated completion only after validating the nine later precision repairs`);
     const sourceParagraphs = field.sourceEnglish.split('\n\n');
     const historicalParagraphs = field.currentTarget.split('\n\n');
     assert.equal(historicalParagraphs.length, sourceParagraphs.length,
@@ -295,7 +298,7 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
     for (const lesson of waterModule.lessons) {
       const resolved = resolveLearnerLessonPresentation(lesson, language);
       const sourceParagraphs = lesson.body.split('\n\n');
-      const resolvedParagraphs = resolved.content.body.split('\n\n');
+      const resolvedParagraphs = waterBodyBeforeReviewedPrecision(resolved.content.body, language, lesson.id).split('\n\n');
       assert.equal(resolvedParagraphs.length, sourceParagraphs.length,
         `${language} ${lesson.id}: learner resolver keeps paragraph boundaries`);
       sourceParagraphs.forEach((sourceParagraph, index) => {
@@ -380,7 +383,7 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
   const statusCounts: Record<string, number> = {};
   assert.equal(waterSource.length, 24);
   for (const language of ['st', 've', 'ts'] as const) {
-    const packet = JSON.parse(readFileSync(`docs/narration/water-harvesting.${language}.paired-draft.json`, 'utf8'));
+    const packet = waterDeckBeforeReviewedPrecision(JSON.parse(readFileSync(`docs/narration/water-harvesting.${language}.paired-draft.json`, 'utf8')), language);
     const slides = validatePairedDraft(packet, waterSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     assert.equal(slides.length, 24);

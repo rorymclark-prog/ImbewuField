@@ -1,3 +1,4 @@
+import { mediaSHAForEarlierSoilProof } from './water-reviewed-deck-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -70,6 +71,6 @@ test('only the thirty-four selected Soil frames redraw and all other course medi
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
   for (const row of media.preserved) {
-    assert.equal(sha(readFileSync(row.path)), row.sha256, `${row.path}: preserve existing offline media`);
+    assert.equal(mediaSHAForEarlierSoilProof(row.path), row.sha256, `${row.path}: preserve existing offline media or validate its later reviewed Water replacement`);
   }
 });
