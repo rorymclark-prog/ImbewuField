@@ -1,0 +1,527 @@
+{
+  "generatedAt": "2026-10-05T08:18:34.377Z",
+  "module": "market-community",
+  "sourceProof": "docs/study-translation-reviews/MARKET-COMMUNITY-L1-PAIRED-DECK-APPLIED-2026-10-05.json",
+  "sourcePacketHashes": {
+    "st": "8a869555cfbd372d6dc3c58f94a082b3a10c5cd54bd3f733463472c73d58ea66",
+    "ve": "643390831cbefb8654126bf79a0d9e5775a28d5b57e64afb48b1419d4898da80",
+    "ts": "68bcf3aed5a37f32229f59286add03b19dcbb478ce148a91d82d904de7fe7454"
+  },
+  "languages": {
+    "st": {
+      "manifestPath": "docs/media/market-community/st-paired-review/verification.json",
+      "oldManifestFields": {
+        "pairedSourceSha256": "4d2d7645e975004ec3829d15ebb3044dea3c8ee60a65d0747f5406b432f0bee0",
+        "draftPassageCount": 81,
+        "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+      },
+      "newManifestFields": {
+        "pairedSourceSha256": "8a869555cfbd372d6dc3c58f94a082b3a10c5cd54bd3f733463472c73d58ea66",
+        "draftPassageCount": 62,
+        "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The L1 teaching-price example is now a source-bound machine draft; the L3 protected-variety permission passage remains an exact English hold. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+      },
+      "expectedChangedFrames": [
+        1,
+        2,
+        5,
+        7,
+        8
+      ],
+      "assets": [
+        {
+          "slide": 1,
+          "path": "public/course-decks/market-community/st/slide-01.webp",
+          "beforeAsset": {
+            "bytes": 308138,
+            "sha256": "f7e443fabc444a910048e42ca24f7904d20bc948c13946a5eb01ad429359a9fc"
+          },
+          "afterAsset": {
+            "bytes": 301922,
+            "sha256": "c7306ff6f0dd9ccd5521fc7d1c00cff5a040d7ed8827eb72cb83055fffa8c297"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-st-20261005/slide-01.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/st/slide-01.webp",
+          "oldManifestEntry": {
+            "slide": 1,
+            "path": "public/course-decks/market-community/st/slide-01.webp",
+            "pixels": "1440x5400",
+            "bytes": 308138,
+            "sha256": "f7e443fabc444a910048e42ca24f7904d20bc948c13946a5eb01ad429359a9fc"
+          },
+          "newManifestEntry": {
+            "slide": 1,
+            "path": "public/course-decks/market-community/st/slide-01.webp",
+            "pixels": "1440x5400",
+            "bytes": 301922,
+            "sha256": "c7306ff6f0dd9ccd5521fc7d1c00cff5a040d7ed8827eb72cb83055fffa8c297"
+          }
+        },
+        {
+          "slide": 2,
+          "path": "public/course-decks/market-community/st/slide-02.webp",
+          "beforeAsset": {
+            "bytes": 228666,
+            "sha256": "9028d7b7d6b9bce972278a7ea87e63c3632a880c9de89893b79d95cfaee09bf9"
+          },
+          "afterAsset": {
+            "bytes": 229892,
+            "sha256": "58f7c79e8c47cf2a32193624587900864bfa6fdce0149b7c0818bf8bf8db0875"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-st-20261005/slide-02.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/st/slide-02.webp",
+          "oldManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/st/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 228666,
+            "sha256": "9028d7b7d6b9bce972278a7ea87e63c3632a880c9de89893b79d95cfaee09bf9"
+          },
+          "newManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/st/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 229892,
+            "sha256": "58f7c79e8c47cf2a32193624587900864bfa6fdce0149b7c0818bf8bf8db0875"
+          }
+        },
+        {
+          "slide": 5,
+          "path": "public/course-decks/market-community/st/slide-05.webp",
+          "beforeAsset": {
+            "bytes": 383372,
+            "sha256": "ecb3bccf8ffe1112ddf90f18a1b6b8223be62242f276eaab00cabd6085ad46e4"
+          },
+          "afterAsset": {
+            "bytes": 383718,
+            "sha256": "60efc522ba76d97a5f74e5538b9439ad108b2088f98d3248b67ee84f88da6827"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-st-20261005/slide-05.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/st/slide-05.webp",
+          "oldManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/st/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 383372,
+            "sha256": "ecb3bccf8ffe1112ddf90f18a1b6b8223be62242f276eaab00cabd6085ad46e4"
+          },
+          "newManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/st/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 383718,
+            "sha256": "60efc522ba76d97a5f74e5538b9439ad108b2088f98d3248b67ee84f88da6827"
+          }
+        },
+        {
+          "slide": 7,
+          "path": "public/course-decks/market-community/st/slide-07.webp",
+          "beforeAsset": {
+            "bytes": 533028,
+            "sha256": "e5594342c333fdeb3fd1a7dc853ad55119b35373eda0f50323c07b064589fb5a"
+          },
+          "afterAsset": {
+            "bytes": 524266,
+            "sha256": "6d097282df6cfd92f7ef55becc5c4d3319422c2c87d564f56b2207968a0ee174"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-st-20261005/slide-07.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/st/slide-07.webp",
+          "oldManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/st/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 533028,
+            "sha256": "e5594342c333fdeb3fd1a7dc853ad55119b35373eda0f50323c07b064589fb5a"
+          },
+          "newManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/st/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 524266,
+            "sha256": "6d097282df6cfd92f7ef55becc5c4d3319422c2c87d564f56b2207968a0ee174"
+          }
+        },
+        {
+          "slide": 8,
+          "path": "public/course-decks/market-community/st/slide-08.webp",
+          "beforeAsset": {
+            "bytes": 251262,
+            "sha256": "d8a886d34a9e6d14fc46dee49a751f278bebf71406555e1cb84312109a27d7f7"
+          },
+          "afterAsset": {
+            "bytes": 248978,
+            "sha256": "7c50f690c6351125638c1cd953d22985be9e028a4afb9bd4a033e5140a9d205a"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-st-20261005/slide-08.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/st/slide-08.webp",
+          "oldManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/st/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 251262,
+            "sha256": "d8a886d34a9e6d14fc46dee49a751f278bebf71406555e1cb84312109a27d7f7"
+          },
+          "newManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/st/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 248978,
+            "sha256": "7c50f690c6351125638c1cd953d22985be9e028a4afb9bd4a033e5140a9d205a"
+          }
+        }
+      ]
+    },
+    "ve": {
+      "manifestPath": "docs/media/market-community/ve-paired-review/verification.json",
+      "oldManifestFields": {
+        "pairedSourceSha256": "8687272a7bea21bc048bb3c7ca9122481ef3a035a9a4b2eb6b66d58bc69dad34",
+        "note": "All 20 silent frames are source-paired. Only passages marked draft appear beside their exact English source. Slides with no target draft show one English source block labelled Tshivenda translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No Tshivenda narration, fluent review or local farming approval is claimed."
+      },
+      "newManifestFields": {
+        "pairedSourceSha256": "643390831cbefb8654126bf79a0d9e5775a28d5b57e64afb48b1419d4898da80",
+        "note": "All 20 silent frames are source-paired. Only passages marked draft appear beside their exact English source. Slides with no target draft show one English source block labelled Tshivenda translation pending. The L1 teaching-price example is now a source-bound machine draft; the L3 protected-variety permission passage remains an exact English hold. Difficult English terms remain within some draft passages. No Tshivenda narration, fluent review or local farming approval is claimed."
+      },
+      "expectedChangedFrames": [
+        2,
+        5,
+        6,
+        7,
+        8
+      ],
+      "assets": [
+        {
+          "slide": 2,
+          "path": "public/course-decks/market-community/ve/slide-02.webp",
+          "beforeAsset": {
+            "bytes": 229698,
+            "sha256": "c5f13199f60a6cb40a2b99f7f64e5f20b695ded2142976c12f02dc6f900ebce1"
+          },
+          "afterAsset": {
+            "bytes": 229028,
+            "sha256": "13b2135cb5455ec086f2585c0d0a3582eb63514962a66fb1bbafccadb2d90144"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ve-20261005/slide-02.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ve/slide-02.webp",
+          "oldManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/ve/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 229698,
+            "sha256": "c5f13199f60a6cb40a2b99f7f64e5f20b695ded2142976c12f02dc6f900ebce1"
+          },
+          "newManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/ve/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 229028,
+            "sha256": "13b2135cb5455ec086f2585c0d0a3582eb63514962a66fb1bbafccadb2d90144"
+          }
+        },
+        {
+          "slide": 5,
+          "path": "public/course-decks/market-community/ve/slide-05.webp",
+          "beforeAsset": {
+            "bytes": 383468,
+            "sha256": "633df46b937fc064bf00fd4d384afb47efe614885d7bae8332732ea994d29f43"
+          },
+          "afterAsset": {
+            "bytes": 386256,
+            "sha256": "923f46114ffe290eaf6dcd6ee8f84f3069ee6351aa9ba7db991017d1bd6e28f5"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ve-20261005/slide-05.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ve/slide-05.webp",
+          "oldManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/ve/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 383468,
+            "sha256": "633df46b937fc064bf00fd4d384afb47efe614885d7bae8332732ea994d29f43"
+          },
+          "newManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/ve/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 386256,
+            "sha256": "923f46114ffe290eaf6dcd6ee8f84f3069ee6351aa9ba7db991017d1bd6e28f5"
+          }
+        },
+        {
+          "slide": 6,
+          "path": "public/course-decks/market-community/ve/slide-06.webp",
+          "beforeAsset": {
+            "bytes": 258770,
+            "sha256": "8a969496c9b8c50cb388a2ff9c3849b7caafff482e96bc4dd98fd2b06b53852d"
+          },
+          "afterAsset": {
+            "bytes": 259402,
+            "sha256": "ded86afd92d7c829560d96edcdf7d9b258981cde04d3417de76663cab32e436a"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ve-20261005/slide-06.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ve/slide-06.webp",
+          "oldManifestEntry": {
+            "slide": 6,
+            "path": "public/course-decks/market-community/ve/slide-06.webp",
+            "pixels": "1440x5400",
+            "bytes": 258770,
+            "sha256": "8a969496c9b8c50cb388a2ff9c3849b7caafff482e96bc4dd98fd2b06b53852d"
+          },
+          "newManifestEntry": {
+            "slide": 6,
+            "path": "public/course-decks/market-community/ve/slide-06.webp",
+            "pixels": "1440x5400",
+            "bytes": 259402,
+            "sha256": "ded86afd92d7c829560d96edcdf7d9b258981cde04d3417de76663cab32e436a"
+          }
+        },
+        {
+          "slide": 7,
+          "path": "public/course-decks/market-community/ve/slide-07.webp",
+          "beforeAsset": {
+            "bytes": 541536,
+            "sha256": "5c62a206bc1f173cf9d741587d0ec22efb68486f6122356f0f1303c5659717a0"
+          },
+          "afterAsset": {
+            "bytes": 531396,
+            "sha256": "b88abf473649e6fb7e37ab6a7aeac786e127b2df476c1457d7139bbf84e2c3b1"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ve-20261005/slide-07.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ve/slide-07.webp",
+          "oldManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/ve/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 541536,
+            "sha256": "5c62a206bc1f173cf9d741587d0ec22efb68486f6122356f0f1303c5659717a0"
+          },
+          "newManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/ve/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 531396,
+            "sha256": "b88abf473649e6fb7e37ab6a7aeac786e127b2df476c1457d7139bbf84e2c3b1"
+          }
+        },
+        {
+          "slide": 8,
+          "path": "public/course-decks/market-community/ve/slide-08.webp",
+          "beforeAsset": {
+            "bytes": 276932,
+            "sha256": "4da60b89376d5acbeae1941b771a127e799c7d9ee1f745d5e774a3847853aceb"
+          },
+          "afterAsset": {
+            "bytes": 262260,
+            "sha256": "d1af4fe065780f9766aed70ad13c1d85e5f506ed3879cf9ca0e4ce24df49f703"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ve-20261005/slide-08.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ve/slide-08.webp",
+          "oldManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/ve/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 253504,
+            "sha256": "8f95fbd4926076e23d18eb047c68483d9f73ab3f545e6eccda0d2efd5b81b2de"
+          },
+          "newManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/ve/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 262260,
+            "sha256": "d1af4fe065780f9766aed70ad13c1d85e5f506ed3879cf9ca0e4ce24df49f703"
+          }
+        }
+      ]
+    },
+    "ts": {
+      "manifestPath": "docs/media/market-community/ts-paired-review/verification.json",
+      "oldManifestFields": {
+        "pairedSourceSha256": "9659e8f1e2dfd68505528575eddce6a4fc70908974aeb3fe377a4f7f5572d98f",
+        "draftPassageCount": 81,
+        "note": "All 20 silent Xitsonga frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+      },
+      "newManifestFields": {
+        "pairedSourceSha256": "68bcf3aed5a37f32229f59286add03b19dcbb478ce148a91d82d904de7fe7454",
+        "draftPassageCount": 62,
+        "note": "All 20 silent Xitsonga frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The L1 teaching-price example is now a source-bound machine draft; the L3 protected-variety permission passage remains an exact English hold. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+      },
+      "expectedChangedFrames": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8
+      ],
+      "assets": [
+        {
+          "slide": 1,
+          "path": "public/course-decks/market-community/ts/slide-01.webp",
+          "beforeAsset": {
+            "bytes": 322864,
+            "sha256": "3c4e429e4650cd3e44c67c10c3ce18f8bc35f257150216f765adee0a84e9b6a8"
+          },
+          "afterAsset": {
+            "bytes": 314122,
+            "sha256": "961f58a4cbd20f6d0d706b8622003e72b533dab261b684e19f96fa9b4f830b49"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-01.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-01.webp",
+          "oldManifestEntry": {
+            "slide": 1,
+            "path": "public/course-decks/market-community/ts/slide-01.webp",
+            "pixels": "1440x5400",
+            "bytes": 322864,
+            "sha256": "3c4e429e4650cd3e44c67c10c3ce18f8bc35f257150216f765adee0a84e9b6a8"
+          },
+          "newManifestEntry": {
+            "slide": 1,
+            "path": "public/course-decks/market-community/ts/slide-01.webp",
+            "pixels": "1440x5400",
+            "bytes": 314122,
+            "sha256": "961f58a4cbd20f6d0d706b8622003e72b533dab261b684e19f96fa9b4f830b49"
+          }
+        },
+        {
+          "slide": 2,
+          "path": "public/course-decks/market-community/ts/slide-02.webp",
+          "beforeAsset": {
+            "bytes": 228810,
+            "sha256": "1955c9a968a3e317870deb015f88f9473465e8912eb5ba1366cb9e66f94634fa"
+          },
+          "afterAsset": {
+            "bytes": 232738,
+            "sha256": "eec172f0f99c8024c565aa99c2dbd5b91dc4349adfb6d39e1f4c1bc7aaa7a2e8"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-02.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-02.webp",
+          "oldManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/ts/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 228810,
+            "sha256": "1955c9a968a3e317870deb015f88f9473465e8912eb5ba1366cb9e66f94634fa"
+          },
+          "newManifestEntry": {
+            "slide": 2,
+            "path": "public/course-decks/market-community/ts/slide-02.webp",
+            "pixels": "1440x5400",
+            "bytes": 232738,
+            "sha256": "eec172f0f99c8024c565aa99c2dbd5b91dc4349adfb6d39e1f4c1bc7aaa7a2e8"
+          }
+        },
+        {
+          "slide": 5,
+          "path": "public/course-decks/market-community/ts/slide-05.webp",
+          "beforeAsset": {
+            "bytes": 385252,
+            "sha256": "c67ca45b9ab6ff64e79a7a544dc42c99cec7f2ef7924fab8b36d1e2c3f77f7d6"
+          },
+          "afterAsset": {
+            "bytes": 388230,
+            "sha256": "744cc28f658009aaaf9d4c2529a869795a23a897c4c054e21f06b7119bab80e5"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-05.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-05.webp",
+          "oldManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/ts/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 385252,
+            "sha256": "c67ca45b9ab6ff64e79a7a544dc42c99cec7f2ef7924fab8b36d1e2c3f77f7d6"
+          },
+          "newManifestEntry": {
+            "slide": 5,
+            "path": "public/course-decks/market-community/ts/slide-05.webp",
+            "pixels": "1440x5400",
+            "bytes": 388230,
+            "sha256": "744cc28f658009aaaf9d4c2529a869795a23a897c4c054e21f06b7119bab80e5"
+          }
+        },
+        {
+          "slide": 6,
+          "path": "public/course-decks/market-community/ts/slide-06.webp",
+          "beforeAsset": {
+            "bytes": 259060,
+            "sha256": "9da6660d2170a78047f2b125ca58d4249dddbe8360d7d77ba7141fd91740663a"
+          },
+          "afterAsset": {
+            "bytes": 259068,
+            "sha256": "4be0060669bfbb2f943d0ce7fde7c97709dc6e0ac78d0fd3943db52061775926"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-06.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-06.webp",
+          "oldManifestEntry": {
+            "slide": 6,
+            "path": "public/course-decks/market-community/ts/slide-06.webp",
+            "pixels": "1440x5400",
+            "bytes": 259060,
+            "sha256": "9da6660d2170a78047f2b125ca58d4249dddbe8360d7d77ba7141fd91740663a"
+          },
+          "newManifestEntry": {
+            "slide": 6,
+            "path": "public/course-decks/market-community/ts/slide-06.webp",
+            "pixels": "1440x5400",
+            "bytes": 259068,
+            "sha256": "4be0060669bfbb2f943d0ce7fde7c97709dc6e0ac78d0fd3943db52061775926"
+          }
+        },
+        {
+          "slide": 7,
+          "path": "public/course-decks/market-community/ts/slide-07.webp",
+          "beforeAsset": {
+            "bytes": 540584,
+            "sha256": "8230a04572c63276f116086620c7995b3ec66e50bdddf3c4814f3d741965e36b"
+          },
+          "afterAsset": {
+            "bytes": 533820,
+            "sha256": "c81cccac9ba8f70c8ca8deef922ecaabe5a697c2ac81bdd68112696fcdb70d7a"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-07.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-07.webp",
+          "oldManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/ts/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 540584,
+            "sha256": "8230a04572c63276f116086620c7995b3ec66e50bdddf3c4814f3d741965e36b"
+          },
+          "newManifestEntry": {
+            "slide": 7,
+            "path": "public/course-decks/market-community/ts/slide-07.webp",
+            "pixels": "1440x5400",
+            "bytes": 533820,
+            "sha256": "c81cccac9ba8f70c8ca8deef922ecaabe5a697c2ac81bdd68112696fcdb70d7a"
+          }
+        },
+        {
+          "slide": 8,
+          "path": "public/course-decks/market-community/ts/slide-08.webp",
+          "beforeAsset": {
+            "bytes": 266682,
+            "sha256": "3e1b378d4debf50d3116711968f86c8b7498d736344f916c686582db1884c04e"
+          },
+          "afterAsset": {
+            "bytes": 267530,
+            "sha256": "c8276c3cede3a8d3a8a0ba9cdc135a5cebdb4a0b8cb87994a3b5958538e3296b"
+          },
+          "renderedPng": "/tmp/imbewu-market-l1-render-ts-20261005/slide-08.png",
+          "stagedWebp": "/tmp/imbewu-market-l1-webp-stage-20261005/ts/slide-08.webp",
+          "oldManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/ts/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 266682,
+            "sha256": "3e1b378d4debf50d3116711968f86c8b7498d736344f916c686582db1884c04e"
+          },
+          "newManifestEntry": {
+            "slide": 8,
+            "path": "public/course-decks/market-community/ts/slide-08.webp",
+            "pixels": "1440x5400",
+            "bytes": 267530,
+            "sha256": "c8276c3cede3a8d3a8a0ba9cdc135a5cebdb4a0b8cb87994a3b5958538e3296b"
+          }
+        }
+      ]
+    }
+  },
+  "reviewScope": "Only frames whose paired target pixels changed were regenerated. The separate changed-frame contact sheet includes those changed frames only. No fluent-language or local-farming approval is claimed.",
+  "contactSheet": "docs/media/market-community/l1-completion-20261005/changed-frames-contact-sheet.jpg"
+}

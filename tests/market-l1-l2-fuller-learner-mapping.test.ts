@@ -1,3 +1,4 @@
+import { marketCompletionRows, checkMarketTeachingExample } from './market-l1-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
@@ -69,6 +70,16 @@ test('Market L1/L2 regional wording changes only approved source-paired paragrap
           `${language}/${lessonId}/${row.bodyIndexZeroBased}: baseline is the reviewed prior learner wording`);
         expectedParagraphs[row.bodyIndexZeroBased] = row.approvedFinalLearnerText;
       }
+      // Later authorized L1 completion follows the historical18-row batch. Check each
+      // applied before/source/after edge before composing it; untouched L1/L2 paragraphs stay exact.
+      if (lessonId === 'market-community-l1') {
+        for (const row of marketCompletionRows.filter(row => row.language === language && row.field.startsWith('body.paragraphs['))) {
+          const index = Number(row.field.match(/\[(\d+)\]/)![1]);
+          assert.equal(expectedParagraphs[index], row.currentTarget, 'Completion starts from the historical reconstructed target');
+          assert.equal(sourceParagraphs[index], row.sourceEnglish, 'Completion is bound to the same ordered canonical paragraph');
+          expectedParagraphs[index] = row.repairedTarget;
+        }
+      }
       assert.deepEqual(actualParagraphs, expectedParagraphs,
         `${language}/${lessonId}: only approved replacements change; all unselected paragraphs remain exact`);
 
@@ -85,9 +96,7 @@ test('Market L1/L2 regional wording changes only approved source-paired paragrap
 test('Market learner wording keeps quantities, sale risks, crop meaning and planting conditions distinct', () => {
   for (const language of ['st', 've', 'ts'] as const) {
     const l1 = draftBody(language, 'market-community-l1').split('\n\n');
-    assert.equal(l1[12], COURSE_MODULES.find(module => module.id === 'market-community')!
-      .lessons.find(lesson => lesson.id === 'market-community-l1')!.body.split('\n\n')[12],
-    `${language}: the R18/kg cost and R15/kg sale teaching example remains exact English`);
+    checkMarketTeachingExample(language, l1[12], COURSE_MODULES.find(module => module.id === 'market-community')!.lessons[0].body.split('\n\n')[12]);
   }
 
   const sesotho = draftBody('st', 'market-community-l1').split('\n\n');
@@ -101,9 +110,9 @@ test('Market learner wording keeps quantities, sale risks, crop meaning and plan
     'Sesotho preserves possibility and the rain, water and crop failure triggers');
 
   const tshivendaL1 = draftBody('ve', 'market-community-l1').split('\n\n');
-  assert.match(tshivendaL1[11], /mutengo.*production, packing and selling costs.*mushumo na transport/,
+  assert.match(tshivendaL1[11], /mutengo.*masheleni a u bveledza, u paka na u rengisa.*mushumo na transport/,
     'Tshivenda keeps price distinct from its enumerated costs');
-  assert.match(tshivendaL1[13], /mutengo wa nṱha.*a u fulufhedzisi uri hu ḓo rengiswa/,
+  assert.match(tshivendaL1[13], /mutengo wa nṱha.*a u khwaṱhisedzi uri zwi ḓo rengiswa/,
     'Tshivenda preserves the no-guaranteed-sale qualification');
   const tshivendaL2 = draftBody('ve', 'market-community-l2').split('\n\n');
   assert.match(tshivendaL2[2], /milayo ya market.*a hu na milayo kana costs/,

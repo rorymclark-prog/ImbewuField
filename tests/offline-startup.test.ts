@@ -164,7 +164,7 @@ test('updates preserve one old build and lesson downloads while preferring the n
   assert.match(await (await h.request('/unvisited', true))!.text(), /home.js/);
 });
 
-test('worker activation retires the old ST/VE/TS Reading slides and preserves other saved downloads', async () => {
+test('worker activation retires replaced Reading and Market cards while preserving other saved downloads', async () => {
   const h = harness();
   const course = await h.caches.open('imbewu-course-v1');
   const old = ['st', 've', 'ts'].flatMap(language => Array.from({ length: 21 }, (_, index) =>
@@ -179,13 +179,19 @@ test('worker activation retires the old ST/VE/TS Reading slides and preserves ot
     '/course-decks/reading-landscape/zu/slide-01.jpg',
     '/course-audio/reading-landscape/en/slide-01.mp3',
     '/course-audio/reading-landscape/st/slide-01.mp3',
-    '/course-decks/market-community/st/slide-01.webp',
+    // Market L1 now replaces ST1; preserve unchanged ST6 and VE1 instead of pinning that old card.
+    '/course-decks/market-community/st/slide-06.webp',
+    '/course-decks/market-community/ve/slide-01.webp',
   ];
-  for (const path of [...old, ...queryVariants, ...kept]) await course.put(path, new Response(path));
+  const marketReplaced = [
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-decks/market-community/ts/slide-07.webp?revision=old',
+  ];
+  for (const path of [...old, ...queryVariants, ...marketReplaced, ...kept]) await course.put(path, new Response(path));
 
   await h.lifecycle('activate');
 
-  for (const path of [...old, ...queryVariants]) {
+  for (const path of [...old, ...queryVariants, ...marketReplaced]) {
     assert.equal(await course.match(path), undefined, `${path} must be retired on activation`);
   }
   for (const path of kept) assert.ok(await course.match(path), `${path} must remain downloaded`);

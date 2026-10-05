@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/market-community.st.paired-draft.json",
-  "pairedSourceSha256": "4d2d7645e975004ec3829d15ebb3044dea3c8ee60a65d0747f5406b432f0bee0",
+  "pairedSourceSha256": "8a869555cfbd372d6dc3c58f94a082b3a10c5cd54bd3f733463472c73d58ea66",
   "englishSource": "docs/narration/market-community.en.md",
   "englishSourceSha256": "3a8ea6cdc78eadb556744a09df2037cb9924443d9f10992be90bab7d0d8825d4",
   "slides": [
@@ -14,15 +14,15 @@
       "slide": 1,
       "path": "public/course-decks/market-community/st/slide-01.webp",
       "pixels": "1440x5400",
-      "bytes": 308138,
-      "sha256": "f7e443fabc444a910048e42ca24f7904d20bc948c13946a5eb01ad429359a9fc"
+      "bytes": 301922,
+      "sha256": "c7306ff6f0dd9ccd5521fc7d1c00cff5a040d7ed8827eb72cb83055fffa8c297"
     },
     {
       "slide": 2,
       "path": "public/course-decks/market-community/st/slide-02.webp",
       "pixels": "1440x5400",
-      "bytes": 228666,
-      "sha256": "9028d7b7d6b9bce972278a7ea87e63c3632a880c9de89893b79d95cfaee09bf9"
+      "bytes": 229892,
+      "sha256": "58f7c79e8c47cf2a32193624587900864bfa6fdce0149b7c0818bf8bf8db0875"
     },
     {
       "slide": 3,
@@ -42,8 +42,8 @@
       "slide": 5,
       "path": "public/course-decks/market-community/st/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 383372,
-      "sha256": "ecb3bccf8ffe1112ddf90f18a1b6b8223be62242f276eaab00cabd6085ad46e4"
+      "bytes": 383718,
+      "sha256": "60efc522ba76d97a5f74e5538b9439ad108b2088f98d3248b67ee84f88da6827"
     },
     {
       "slide": 6,
@@ -56,15 +56,15 @@
       "slide": 7,
       "path": "public/course-decks/market-community/st/slide-07.webp",
       "pixels": "1440x5400",
-      "bytes": 533028,
-      "sha256": "e5594342c333fdeb3fd1a7dc853ad55119b35373eda0f50323c07b064589fb5a"
+      "bytes": 524266,
+      "sha256": "6d097282df6cfd92f7ef55becc5c4d3319422c2c87d564f56b2207968a0ee174"
     },
     {
       "slide": 8,
       "path": "public/course-decks/market-community/st/slide-08.webp",
       "pixels": "1440x5400",
-      "bytes": 251262,
-      "sha256": "d8a886d34a9e6d14fc46dee49a751f278bebf71406555e1cb84312109a27d7f7"
+      "bytes": 248978,
+      "sha256": "7c50f690c6351125638c1cd953d22985be9e028a4afb9bd4a033e5140a9d205a"
     },
     {
       "slide": 9,
@@ -220,6 +220,6 @@
       "sha256": "6915d3dbe6c2974373906a6a50ce78d682722f16d4c89a8a17bddc635d78b83d"
     }
   ],
-  "draftPassageCount": 81,
-  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The price example and protected-variety permission passage remain exact English holds. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
+  "draftPassageCount": 62,
+  "note": "All 20 silent Sesotho frames use the paired packet. Only passages marked draft appear beside their exact English source. Slides with no draft show one English source card labelled translation pending. The L1 teaching-price example is now a source-bound machine draft; the L3 protected-variety permission passage remains an exact English hold. Difficult English terms remain within some draft passages. No regional narration, fluent review or local farming approval is claimed."
 }

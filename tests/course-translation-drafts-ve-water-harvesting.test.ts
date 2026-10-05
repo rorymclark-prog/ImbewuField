@@ -21,8 +21,10 @@ test('regional Study cards distinguish English module copy from available lesson
     'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 'ts'),
     'English module · 3 lesson drafts available');
+  // 2026-10-05 phone QA found Market's checked card draft missing from the registry.
+  // Its registered card now carries the draft badge; Soil TS still exercises English fallback.
   assert.equal(regionalModuleDraftBadge(source('market-community'), 've'),
-    'English module · 3 lesson drafts available');
+    'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 've'),
     'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge({ ...source('soil-health'), lessons: [] }, 'ts'),

@@ -17,7 +17,7 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ho lema serapeng bakeng sa mmaraka le setjhaba",
+          "text": "Temo ya Marakeng le Setjhaba",
           "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
         },
         "body": [
@@ -69,7 +69,7 @@
           },
           {
             "status": "draft",
-            "text": "Sebelisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa better business decisions.",
+            "text": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
@@ -173,12 +173,12 @@
           },
           {
             "status": "draft",
-            "text": "Rekota kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe o ngola hore e nngwe le e nngwe e ile hokae.",
+            "text": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Sebelisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekiswang, tse fanwang e le mpho, le tse kenngwang compost.",
+            "text": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
@@ -253,11 +253,13 @@
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
-            "text": "Hlahloba theko, ditjeo le next planting. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+            "text": "Hlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
@@ -283,12 +285,12 @@
         "body": [
           {
             "status": "draft",
-            "text": "Sebedisa rekoto ya hao ho fumana hore na dijo tsa lelapa di haella neng.",
+            "text": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
             "status": "draft",
-            "text": "Kgetha dijalo tse loketseng sebaka sa heno, mme o bale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebeletsweng ya ho fihla kotulong.",
+            "text": "Khetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.",
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {

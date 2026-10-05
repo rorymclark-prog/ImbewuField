@@ -1,3 +1,4 @@
+import { checkMarketPriceQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -62,7 +63,7 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
     const shownParagraphs: string[] = shown.content.body.split('\n\n');
     assert.equal(shownParagraphs.length, originalParagraphs.length);
     // Checked household and community framing is now drafted; source-bound seed and advice holds stay exact.
-    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]
+    const translatedIndices = lessonId === 'market-community-l1' ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
       : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     for (const [index, paragraph] of originalParagraphs.entries()) {
       if (translatedIndices.includes(index)) assert.notEqual(shownParagraphs[index], paragraph);
@@ -75,15 +76,13 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
       const priceQuestion = draft.quiz[0];
       assert.equal(priceQuestion.sourceCorrectIndex, 2);
       assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
-      assert.ok(priceQuestion.question.tshivendaDraft.startsWith(
-        'In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'),
-      'the question must not reverse costs and sale price or present the example as a market price');
+      checkMarketPriceQuestion('ve', priceQuestion.question.tshivendaDraft);
       assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), source.quiz[0].options);
       assert.ok(priceQuestion.options.every(option => option.reviewStatus === 'machine-draft'));
       assert.ok(priceQuestion.options[2].tshivendaDraft.includes('tshi nga netshedza return i khwine'),
         'the correct answer still compares another crop conditionally rather than promising a better return');
       assert.ok(priceQuestion.rationale.tshivendaDraft.includes('fhasi ha cost') &&
-        priceQuestion.rationale.tshivendaDraft.includes('musi ni sa athu dzhia tsheo'),
+        priceQuestion.rationale.tshivendaDraft.includes('ni sa athu dzhia tsheo'),
       'cost comparison and review before the next production decision remain explicit');
 
       const gapQuestion = draft.quiz[1];
@@ -91,14 +90,14 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
       assert.equal(gapQuestion.sourceCorrectIndex, 1);
       assert.equal(gapQuestion.question.sourceEnglish, gapSource.q);
       assert.equal(gapQuestion.question.reviewStatus, 'machine-draft');
-      assert.ok(gapQuestion.question.tshivendaDraft.includes('June and July'),
+      assert.ok(gapQuestion.question.tshivendaDraft.includes('June na July ṅwaha muṅwe na muṅwe'),
         'the repeated June/July household shortage remains exact');
       assert.deepEqual(gapQuestion.options.map(option => option.sourceEnglish), gapSource.options,
         'the translated choices retain the exact source order');
       assert.equal(gapQuestion.options[1].reviewStatus, 'machine-draft');
-      assert.ok(gapQuestion.options[1].tshivendaDraft.startsWith('Pulani ni tshi humela murahu u bva kha food gap'),
+      assert.ok(gapQuestion.options[1].tshivendaDraft.startsWith('Pulani ni tshi humela murahu u bva kha tshikhala tsha zwiḽiwa'),
         'the keyed answer still works backwards from the food gap');
-      for (const technicalAnchor of ['suitable local crops', 'their harvest timing']) {
+      for (const technicalAnchor of ['zwimela zwi fanelaho vhupo ha henefho', 'tshifhinga tshazwo tsha u kaṋa']) {
         assert.ok(gapQuestion.options[1].tshivendaDraft.includes(technicalAnchor),
           `the keyed answer retains the source-bound ${technicalAnchor} condition`);
       }
@@ -138,7 +137,7 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
       assert.equal(shownParagraphs[14], 'Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.',
         'the household food-gap prompt is screened while crop and price decisions stay in English');
       assert.deepEqual(draft.keyPoints.map(point => point.sourceEnglish), market.lessons[0].keyPoints);
-      assert.ok(draft.keyPoints[1].tshivendaDraft.includes('production na selling costs'),
+      assert.ok(draft.keyPoints[1].tshivendaDraft.includes('masheleni a u bveledza na u rengisa'),
         'the price assessment still includes both production and selling costs');
       assert.ok(draft.keyPoints[2].tshivendaDraft.includes('costs dzaṋu dza vhukuma'),
         'decisions must use actual costs rather than the teaching example');

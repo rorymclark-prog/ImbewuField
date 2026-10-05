@@ -11,13 +11,13 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
   },
   "title": {
     "sourceEnglish": "Market Gardening & Community",
-    "xitsongaDraft": "Market Gardening & Community",
-    "reviewStatus": "hold"
+    "xitsongaDraft": "Market Gardening Ni Vaaki",
+    "reviewStatus": "machine-draft"
   },
   "description": {
     "sourceEnglish": "Record-keeping, selling surplus and building local food networks.",
-    "xitsongaDraft": "Record-keeping, selling surplus and building local food networks.",
-    "reviewStatus": "hold"
+    "xitsongaDraft": "Ku hlayisa tirhekhodo, ku xavisa leswi saleke, ni ku aka local food networks.",
+    "reviewStatus": "machine-draft"
   },
   "lessons": [
     {
@@ -30,7 +30,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka seeds, water na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -41,7 +41,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Include production and selling costs when assessing a price",
-          "xitsongaDraft": "Katsa production ni selling costs loko u kambisisa price.",
+          "xitsongaDraft": "Katsa mali ya ku humesa ni ku xavisa loko u kambisisa nxavo.",
           "reviewStatus": 'machine-draft'
         },
         {
@@ -59,13 +59,13 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "xitsongaDraft": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. Murimi u fanele a kambisisa yini?",
+            "xitsongaDraft": "Eka xikombiso lexi xo dyondzisa, matamatisi ya xavisiwa hi R15/kg naswona ya durha R18/kg ku ma humesa. Murimi u fanele a kambisisa yini?",
             "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
-              "xitsongaDraft": "Tshama u xavisa hi R15 — short-term loss yi aka vuxaka.",
+              "xitsongaDraft": "Hambeta u xavisa hi R15 — ku lahlekeriwa ka nkarhi wo koma ku aka vuxaka.",
               "reviewStatus": 'machine-draft'
             },
             {
@@ -75,26 +75,26 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
-              "xitsongaDraft": "Selling price, costs ni loko xibyariwa xin’wana xi nga nyika return yo antswa.",
+              "xitsongaDraft": "Nxavo wa ku xavisa, mali leyi tirhisiweke, ni loko xibyariwa xin’wana xi nga vuyisa mbuyelo wo antswa.",
               "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Apply for a subsidy to cover the gap",
-              "xitsongaDraft": "Endla xikombelo xa subsidy ku pfala gap.",
+              "xitsongaDraft": "Endla xikombelo xa subsidy ku hakela ku hambana.",
               "reviewStatus": 'machine-draft'
             }
           ],
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Languta ku hambana ni customer demand u nga se endla xiboho xa production leyi landzelaka.",
+            "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa production leyi landzelaka.",
             "reviewStatus": 'machine-draft'
           }
         },
         {
           "question": {
             "sourceEnglish": "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
-            "xitsongaDraft": "A farmer's records show she's short of vegetables every June and July. Hi rihi goza leri pfunaka?",
+            "xitsongaDraft": "Tirhekhodo ta murimi ti komba leswaku matsavu a ma enelanga hi June na July lembe rin’wana ni rin’wana. Hi rihi goza leri pfunaka?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -115,14 +115,14 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           },
             {
             "sourceEnglish": "The records show a soil fertility problem",
-            "xitsongaDraft": "Tirhekhodo ti komba leswaku ku na soil fertility problem",
+            "xitsongaDraft": "Tirhekhodo ti komba leswaku ku na xiphiqo xa soil fertility.",
             "reviewStatus": "machine-draft"
           }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Records identify the gap. Crop choice and sowing dates must then match the local climate, water and expected harvest time.",
-            "xitsongaDraft": "Records identify the gap. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu languteriweke wa ntshovelo.",
+            "xitsongaDraft": "Tirhekhodo ti komba ku pfumaleka. Ku hlawula swibyariwa ni masiku yo byala swi fanele swi fambisana ni local climate, mati ni nkarhi lowu ntshovelo wu languteriweke.",
             "reviewStatus": "machine-draft"
           }
         }

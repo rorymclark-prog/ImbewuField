@@ -1,3 +1,4 @@
+import { marketAcceptedTarget, checkMarketTeachingExample } from './market-l1-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -15,10 +16,10 @@ test('Market L1–L2 assessment drafts preserve answer order, false-claim polari
   const recordPoint = veL1.keyPoints[0];
   assert.equal(recordPoint.sourceEnglish, 'Record harvest amounts and destinations separately from cash');
   assert.equal(recordPoint.reviewStatus, 'machine-draft');
-  assert.equal(recordPoint.tshivendaDraft, 'Ṅwalani harvest amounts and destinations nga u fhambana na cash');
-  assert.ok(recordPoint.tshivendaDraft.includes('harvest amounts and destinations'),
-    'the recorded categories stay exact English while record/separate framing is drafted');
-  assert.ok(recordPoint.tshivendaDraft.endsWith('cash'), 'cash remains a separate accounting category');
+  assert.equal(recordPoint.tshivendaDraft, marketAcceptedTarget('ve', 'keyPoints[0]'));
+  assert.ok(recordPoint.tshivendaDraft.includes('harvest amounts na hune khaṋo ya ya hone'),
+    'physical harvest amounts stay English while their destination and separate-from-cash framing are drafted');
+  assert.ok(recordPoint.tshivendaDraft.endsWith('cash.'), 'cash remains a separate accounting category');
   assert.equal(resolveLearnerLessonPresentation(veL1Source, 've').content.keyPoints[0], recordPoint.tshivendaDraft);
   const changedRecordSource = {
     ...veL1Source,
@@ -33,8 +34,8 @@ test('Market L1–L2 assessment drafts preserve answer order, false-claim polari
   assert.equal(veGap.sourceCorrectIndex, 1);
   assert.equal(veGap.options[1].reviewStatus, 'machine-draft');
   assert.equal(veGap.options[1].tshivendaDraft,
-    'Pulani ni tshi humela murahu u bva kha food gap ni tshi shumisa suitable local crops na their harvest timing');
-  for (const anchor of ['food gap', 'suitable local crops', 'their harvest timing']) {
+    marketAcceptedTarget('ve', 'quiz[1].options[1]'));
+  for (const anchor of ['tshikhala tsha zwiḽiwa', 'zwimela zwi fanelaho vhupo ha henefho', 'tshifhinga tshazwo tsha u kaṋa']) {
     assert.ok(veGap.options[1].tshivendaDraft.includes(anchor), `the correct answer retains ${anchor}`);
   }
   assert.equal(resolveLearnerLessonPresentation(veL1Source, 've').content.quiz[1].correct, 1,
@@ -95,8 +96,8 @@ test('Market L1–L2 assessment drafts preserve answer order, false-claim polari
   assert.equal(tsL1.quiz[1].sourceCorrectIndex, 1);
   assert.equal(soilClaim.sourceEnglish, 'The records show a soil fertility problem');
   assert.equal(soilClaim.reviewStatus, 'machine-draft');
-  assert.equal(soilClaim.xitsongaDraft, 'Tirhekhodo ti komba leswaku ku na soil fertility problem');
-  assert.ok(soilClaim.xitsongaDraft.endsWith('soil fertility problem'),
+  assert.equal(soilClaim.xitsongaDraft, marketAcceptedTarget('ts', 'quiz[1].options[3]'));
+  assert.ok(soilClaim.xitsongaDraft.includes('xiphiqo xa soil fertility'),
     'the false soil-diagnosis claim remains explicit while its exact technical anchor stays English');
   assert.equal(resolveLearnerLessonPresentation(tsL1Source, 'ts').content.quiz[1].correct, 1,
     'the false soil-fertility claim remains a distractor');
@@ -146,12 +147,12 @@ test('Tshivenda Market L1 body keeps record examples and sale limits paired to t
   assert.equal(paragraphs.length, 17);
   assert.equal(paragraphs[6], 'Musi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.');
   assert.ok(paragraphs[13].startsWith('Sedzani mutengo, costs na u ṱavha hu tevhelaho.'));
-  assert.ok(paragraphs[13].includes('mutengo wa nṱha une na u humbela a u fulufhedzisi uri hu ḓo rengiswa.'), 'higher prices remain explicitly non-guaranteed');
+  assert.ok(paragraphs[13].includes('mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.'), 'higher prices remain explicitly non-guaranteed');
   assert.notEqual(paragraphs[15], sourceParagraphs[15], 'ordinary crop and work-backwards framing is paired as a draft');
-  assert.ok(paragraphs[15].includes('crops') && paragraphs[15].includes('harvest') && paragraphs[15].includes('Ṱolani nyimele dza u zwala') && paragraphs[15].includes('tshifhinga tsho lavhelelwaho tsha u kaṋa'), 'crop choice and backwards planning keep planting conditions and expected harvest timing');
-  assert.equal(paragraphs[12], sourceParagraphs[12], 'preserve the teaching-example disclaimer and exact R18/R15 comparison');
-  assert.ok(paragraphs[16].startsWith('A date that works on another farm may not work here.'), 'preserve the may-not comparison');
-  assert.ok(paragraphs[16].includes('musi mvula, maḓi kana zwimela zwi tshi kundelwa'), 'the backup plan is triggered when rain, water or crops fail');
+  assert.ok(paragraphs[15].includes('zwimela') && paragraphs[15].includes('harvest') && paragraphs[15].includes('Ṱolani nyimele dza u zwala') && paragraphs[15].includes('tshifhinga tsho lavhelelwaho tsha u kaṋa'), 'crop choice and backwards planning keep planting conditions and expected harvest timing');
+  checkMarketTeachingExample('ve', paragraphs[12], sourceParagraphs[12]);
+  assert.ok(paragraphs[16].includes('Ḓuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano.'), 'preserve the may-not comparison');
+  assert.ok(paragraphs[16].includes('arali mvula, maḓi kana zwimela zwa kundelwa') && paragraphs[16].includes('a backup plan'), 'the backup plan is triggered when rain, water or crops fail');
   const shown = resolveLearnerLessonPresentation(source, 've');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.tshivendaDraft);

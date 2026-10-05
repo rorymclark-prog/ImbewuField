@@ -1,3 +1,4 @@
+import { checkMarketTeachingExample, checkMarketPriceQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -227,7 +228,7 @@ test('Sesotho Seeds prose stays paired to English while genetics assessment rema
   }
 });
 
-test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky guidance held', () => {
+test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps source-bound business safeguards', () => {
   const sourceModule = COURSE_MODULES.find(module => module.id === 'market-community');
   assert.ok(sourceModule);
   const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'market-community-l1');
@@ -252,8 +253,8 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   const sourceParagraphs = sourceLesson.body.split('\n\n');
   const draftParagraphs = lesson.body.sesothoDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
-  // Checked ordinary prose now replaces whole-paragraph holds; the worked price example remains exact.
-  assert.equal(draftParagraphs[12], sourceParagraphs[12], 'R18 cost and R15 sale teaching example remain exact English');
+  // Checked ordinary prose now replaces whole-paragraph holds; the teaching-price disclaimer and cost/sale roles remain source-bound.
+  checkMarketTeachingExample('st', draftParagraphs[12], sourceParagraphs[12]);
   assert.ok(draftParagraphs[13].includes('ha e tiise thekiso'), 'the sale remains explicitly non-guaranteed');
   for (const index of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16]) {
     assert.notEqual(draftParagraphs[index], sourceParagraphs[index], `selected record-keeping paragraph ${index + 1} should be a visible draft`);
@@ -273,9 +274,9 @@ test('Sesotho Market L1 pairs the unit-preserving harvest line and keeps risky g
   assert.equal(lesson.quiz.length, sourceLesson.quiz.length);
   const priceQuestion = lesson.quiz[0];
   assert.equal(priceQuestion.question.sourceEnglish, sourceLesson.quiz[0].q);
-  assert.ok(priceQuestion.question.sesothoDraft.startsWith('In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce.'), 'the R15/R18 premise remains exact while the ordinary question is drafted');
+  checkMarketPriceQuestion('st', priceQuestion.question.sesothoDraft);
   assert.equal(priceQuestion.question.reviewStatus, 'machine-draft');
-  assert.ok(priceQuestion.rationale.sesothoDraft.startsWith('The example price is below the stated cost.'), 'the numeric conclusion remains exact while ordinary review wording is drafted');
+  assert.match(priceQuestion.rationale.sesothoDraft, /Theko ya mohlaleng e ka tlase ho ditjeo tse boletsweng.*pele o etsa qeto ya tlhahiso e latelang/, 'Below stated cost and review before the next production decision remain explicit in localized ordinary wording');
   assert.equal(priceQuestion.rationale.reviewStatus, 'machine-draft');
   assert.deepEqual(priceQuestion.options.map(option => option.sourceEnglish), sourceLesson.quiz[0].options,
     'price-example answer wording remains paired in canonical order');
