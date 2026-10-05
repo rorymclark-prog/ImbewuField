@@ -55,7 +55,8 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
   const numberTokens = (text: string) => text.match(/\d+(?:[.,]\d+)?/g) ?? [];
   const titles: Record<string, string> = {
     'water-harvesting': 'U Kuvhanganya Maḓi',
-    'water-harvesting-l1': 'Mikubo (Swales) na Ṱhanga dza Mavu (Berms): U Fhungudza Luvhilo lwa Maḓi kha U Sendama ha Mavu',
+    // 2026-10-05 source-bound title candidate: retain the formal English technical terms and the checked Tshivenda subtitle.
+    'water-harvesting-l1': 'Swales and Berms: U Fhungudza Luvhilo lwa Maḓi kha U Sendama ha Mavu',
     'water-harvesting-l2': 'Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo',
   };
   const checkPair = (pair: { sourceEnglish: string; tshivendaDraft: string; reviewStatus: string }, english: string, path: string) => {
@@ -124,40 +125,43 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         assert.notEqual(paragraph, sourceParagraphs[paragraphIndex],
           `${path}.body paragraph ${paragraphIndex + 1}: an English-only hold must not be marked translated`);
       });
-      assert.ok(bodyParagraphs[0].startsWith('One kind of swale is a level trench on contour.'),
-        `${path}.body: preserve exact contour geometry in English`);
+      assert.ok(bodyParagraphs[0].startsWith('Lushaka luthihi lwa swale ndi a level trench on contour.'),
+        `${path}.body: retain the source-specific level trench geometry`);
       assert.ok(bodyParagraphs[0].includes('Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet.'),
         `${path}.body: preserve the alternative graded design and safe outlet`);
-      assert.ok(bodyParagraphs[0].includes('Have a trained local adviser check the line, overflow and receiving point before digging.'),
+      assert.ok(bodyParagraphs[0].includes('Musi ni sa athu u bwa, humbelani trained local adviser uri a sedze line, overflow na receiving point.'),
         `${path}.body: adviser must check line, overflow and receiver before digging`);
-      assert.ok(bodyParagraphs[1].includes('berm on the downhill side') &&
-        bodyParagraphs[1].includes('trees can be planted when the site design is suitable'),
-      `${path}.body: retain berm direction and conditional tree planting`);
-      assert.ok(bodyParagraphs[2].includes('may draw on moisture stored in the soil after rain, depending on the site'),
+      assert.ok(bodyParagraphs[1].includes('berm nga thungo ya le downhill') &&
+        bodyParagraphs[1].includes('miri ya nga ṱavhiwa arali site design yo tea'),
+        `${path}.body: retain berm direction and conditional tree planting`);
+      assert.ok(bodyParagraphs[2].includes('Miri yo ṱavhiwaho henefho i nga shumisa moisture yo vhulungwaho mavuni') &&
+        bodyParagraphs[2].includes('zwi tshi ya nga site'),
         `${path}.body: preserve the conditional moisture benefit`);
-      assert.ok(bodyParagraphs[3].startsWith('Pula khulwane i nga ḓadza swale nga u ṱavhanya u fhira u dzhena ha maḓi mavuni') &&
-        bodyParagraphs[3].includes('Plan a safe overflow before digging'),
-      `${path}.body: preserve the can-risk and overflow-before-digging instruction`);
-      assert.ok(bodyParagraphs[4].includes('A downstream swale or dam must be able to receive it safely'),
-      `${path}.body: preserve the erosion/neighbour prohibition and safe downstream capacity`);
-      assert.ok(bodyParagraphs[5].includes('Ask a trained local adviser to assess the soil, slope and storm flow') &&
+      assert.ok(bodyParagraphs[3].startsWith('Heavy rain can fill a swale faster than water soaks into the soil.') &&
+        bodyParagraphs[3].includes('Pulani safe overflow ni sa athu u bwa'),
+        `${path}.body: preserve the can-risk and overflow-before-digging instruction`);
+      assert.ok(bodyParagraphs[4].includes('Route a i tei u erode slope kana u rumela damaging water kha neighbour') &&
+        bodyParagraphs[4].includes('Swale kana dam ya fhasi i tea u kona u ṱanganedza maḓi ayo nga vhuḓi'),
+        `${path}.body: preserve the erosion/neighbour prohibition and safe downstream capacity`);
+      assert.ok(bodyParagraphs[5].includes('Humbelani trained local adviser uri a assess soil, slope na storm flow') &&
         bodyParagraphs[5].includes('Tshifanyiso a si construction design'),
-      `${path}.body: retain the adviser request and translate the picture/design limitation`);
+        `${path}.body: retain the adviser request and translate the picture/design limitation`);
       assert.ok(bodyParagraphs[6].startsWith('Slope fhedzi a i sumbedzi arali swale i suitable'),
         `${path}.body: translate that slope alone is insufficient`);
       assert.ok(bodyParagraphs[7].includes('Keep good ground cover.') &&
-        bodyParagraphs[7].includes('Wanani local assessment before digging on steep, wet or unstable land') &&
-        bodyParagraphs[7].includes('Grass barriers na terraces na zwone zwi ṱoḓa a design suited to the site'),
-      `${path}.body: retain the imperative and all pre-dig site conditions`);
+        bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha fhethu ha steep, wet kana unstable') &&
+        bodyParagraphs[7].includes('Grass barriers na terraces na zwone zwi ṱoḓa design yo teaho site'),
+        `${path}.body: retain the imperative and all pre-dig site conditions`);
       assert.ok(bodyParagraphs[0].includes('I fhungudza luvhilo na u phaḓaladza runoff, uri maḓi maṅwe a kone u dzhena kha suitable soil'),
         `${path}.body: translate runoff slowing/spreading and preserve possibility and suitable soil`);
-      assert.ok(bodyParagraphs[1].startsWith('Mavu o excavated a vhumba berm on the downhill side'),
+      assert.ok(bodyParagraphs[1].startsWith('Mavu o excavated a vhumba berm nga thungo ya le downhill'),
         `${path}.body: translate berm formation while preserving direction`);
-      assert.ok(bodyParagraphs[2].startsWith('Miri yo ṱavhiwaho henefho'),
-        `${path}.body: translate the planted-tree subject while keeping the conditional in English`);
+      assert.ok(bodyParagraphs[2].startsWith('Miri yo ṱavhiwaho henefho') &&
+        bodyParagraphs[2].includes('zwi tshi ya nga site'),
+        `${path}.body: translate the planted-tree subject while preserving its site-dependent qualification`);
       assert.ok(bodyParagraphs[4].startsWith('Route a i tei u erode slope kana u rumela damaging water kha neighbour'),
         `${path}.body: express the prohibition while preserving routing terms`);
-      assert.ok(bodyParagraphs[7].includes('Wanani local assessment before digging on steep, wet or unstable land'),
+      assert.ok(bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha fhethu ha steep, wet kana unstable'),
         `${path}.body: preserve the local-assessment-before-digging condition`);
       assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, sourceParagraphs.length,
         `${path}.body: preserve all eight source paragraph boundaries`);
@@ -184,15 +188,16 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
           `${path}.body paragraph ${paragraphIndex + 1}: an English-only hold must not be marked translated`);
       });
       assert.ok(bodyParagraphs[0].startsWith('Dam kana pond i nga vhulunga runoff') &&
-        bodyParagraphs[0].includes('amount i re hone i bva kha local rain, catchment, losses'),
+        bodyParagraphs[0].includes('maḓi ane a wanala a bva kha mvula ya henefho, catchment, losses') &&
+        bodyParagraphs[0].includes('uri ni shumisa maḓi mangana'),
       `${path}.body: retain possibility and local supply dependencies`);
       const existingRainfallSentence = 'Tshifhinga tsha mvula tshi a fhambana u mona na Afurika Tshipembe.';
       assert.ok(bodyParagraphs[1].startsWith(`${existingRainfallSentence} Shumisani local records`),
         `${path}.body: preserve the existing localized rainfall sentence byte-for-byte`);
       assert.ok(bodyParagraphs[1].includes('dry periods') && bodyParagraphs[1].includes('dam yo ḓalaho a yo khwaṱhisedzwi'),
         `${path}.body: keep dry-period planning and the no-guarantee qualifier`);
-      assert.ok(bodyParagraphs[2].startsWith('Musi ni sa athu shandula watercourse kana u fhaṱa storage works') &&
-        bodyParagraphs[2].includes('check the required authorisation with the water authority'),
+      assert.ok(bodyParagraphs[2].startsWith('Musi ni sa athu u shandula watercourse kana u fhaṱa storage works') &&
+        bodyParagraphs[2].includes('ṱolani authorisation ine ya ṱoḓea kha water authority'),
       `${path}.body: keep the authority check before either regulated activity`);
       assert.ok(bodyParagraphs[3].includes('Dam i ṱoḓa site investigation na design yo itwaho nga suitably qualified person') &&
         bodyParagraphs[3].includes('Catchment runoff, soil, foundations, downstream risk na safe spillway'),
@@ -200,17 +205,17 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
       assert.ok(bodyParagraphs[4].startsWith('Ni songo humbula uri annual rainfall i ni vhudza size ya flood'),
         `${path}.body: preserve the warning against inferring flood/storage from annual rainfall`);
       assert.ok(bodyParagraphs[5].startsWith('Overflow i songo langiwaho i nga erode na breach wall') &&
-        bodyParagraphs[5].includes('Plan safe route ya excess water before construction'),
+        bodyParagraphs[5].includes('Pulani safe route ya excess water ni sa athu u thoma construction'),
       `${path}.body: preserve possible overflow damage and the before-construction safe route`);
       assert.ok(bodyParagraphs[6].startsWith('Maḓi a nga xela nga evaporation na seepage') &&
-        bodyParagraphs[6].includes('Check water level') && bodyParagraphs[6].includes('leaks kana erosion'),
+        bodyParagraphs[6].includes('Sedzani water level') && bodyParagraphs[6].includes('ṱole leaks kana erosion'),
       `${path}.body: preserve possible losses and the inspection steps`);
-      assert.ok(bodyParagraphs[7].startsWith('Keep spillway i clear') &&
-        bodyParagraphs[7].includes('maintain bank cover yo bulwaho kha design') &&
-        bodyParagraphs[7].includes('Do not plant trees on earth dam wall'),
+      assert.ok(bodyParagraphs[7].startsWith('Keep the spillway clear') &&
+        bodyParagraphs[7].includes('maintain the bank cover specified in the design') &&
+        bodyParagraphs[7].includes('Ni songo ṱavha trees kha earth dam wall'),
       `${path}.body: retain clear spillway, design-specified bank cover and wall prohibition`);
       assert.ok(bodyParagraphs[8].startsWith('Animals can damage banks and add manure to the water.') &&
-        bodyParagraphs[8].includes('U vha hone hazwi iti uri maḓi a vhe clean kana safe'),
+        bodyParagraphs[8].includes('U vha hone hadzo a hu iti uri maḓi a vhe clean kana safe'),
       `${path}.body: keep animal scope exact and translate the no-cleanliness/safety inference`);
       const changedWallRule = {
         ...original,
@@ -228,7 +233,9 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         `${path}.body: retain collection possibility and all yield factors`);
       assert.ok(bodyParagraphs[2].includes('misses the gutter, is diverted or overflows a full tank'),
         `${path}.body: account for each collection-loss path`);
-      assert.ok(bodyParagraphs[3].includes('Tshivhalo tsha ṅwaha woṱhe') && bodyParagraphs[3].includes('during a dry spell'),
+      assert.ok(bodyParagraphs[3].includes('Tshivhalo tsha ṅwaha woṱhe a tshi ni vhudzi') &&
+        bodyParagraphs[3].includes('kha dry spell') && bodyParagraphs[3].includes('Vhambedzani supply') &&
+        bodyParagraphs[3].includes('mishumo ine na pulana'),
         `${path}.body: annual rainfall cannot imply dry-spell availability`);
       assert.ok(bodyParagraphs[4].includes('maṅwe maḓi a first runoff'),
         `${path}.body: preserve that only some first runoff is diverted`);
@@ -238,7 +245,9 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
       assert.ok(bodyParagraphs[10].includes('screen openings against insects') &&
         bodyParagraphs[10].includes('Keep rainwater separate from drinking-water pipes'),
         `${path}.body: preserve insect screening and separate drinking-water plumbing`);
-      assert.ok(bodyParagraphs[11].startsWith('Water that looks clear may still contain germs or chemicals.'),
+      assert.ok(bodyParagraphs[11].includes('Maḓi ane a vhonala o kuna a nga kha ḓi vha na germs kana chemicals') &&
+        bodyParagraphs[11].includes('local health authority') && bodyParagraphs[11].includes('testing na treatment') &&
+        bodyParagraphs[11].includes('intended use'),
         `${path}.body: clear-looking water is not proof of safety`);
       assert.ok(bodyParagraphs[12].includes('Basic filter fhedzi a si drinking-water guarantee') &&
         bodyParagraphs[12].includes('food crops') && bodyParagraphs[12].includes('safety assessment'),
@@ -249,8 +258,23 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
       assert.equal(fallback.content.body, changedSource.body);
     } else if (lesson.id === 'water-harvesting-l4') {
       assert.equal(lesson.body.reviewStatus, 'machine-draft', `${path}.body: unreviewed regional prose is visibly a draft`);
-      assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, original.body.split('\n\n').length,
+      const bodyParagraphs = lesson.body.tshivendaDraft.split('\n\n');
+      assert.equal(bodyParagraphs.length, original.body.split('\n\n').length,
         `${path}.body: retain all five canonical safety paragraphs`);
+      assert.ok(bodyParagraphs[1].includes('Ni songo katela toilet water') &&
+        bodyParagraphs[1].includes('water from nappies') && bodyParagraphs[1].includes('washing animals') &&
+        bodyParagraphs[1].includes('Ni songo dovha na shumisa maḓi a re na harmful chemicals'),
+      `${path}.body: retain every excluded water source and harmful-chemical prohibition`);
+      assert.ok(bodyParagraphs[2].includes('Before any reuse') && bodyParagraphs[2].includes('municipality') &&
+        bodyParagraphs[2].includes('qualified local sanitation adviser') && bodyParagraphs[2].includes('exact source') &&
+        bodyParagraphs[2].includes('water na sanitation services') && bodyParagraphs[2].includes('intended use na site') &&
+        bodyParagraphs[2].includes('Arali nyeletshedzo iyi i siho kana i unclear') &&
+        bodyParagraphs[2].includes('ni songo shumisa maḓi hafhu'),
+      `${path}.body: require the authority/adviser checks, with no reuse if advice is missing or unclear`);
+      assert.ok(bodyParagraphs[4].includes('reuse system i tshi khou shuma nahone the water smells bad') &&
+        bodyParagraphs[4].includes('pools or harms plants') && bodyParagraphs[4].includes('litshani u a shumisa') &&
+        bodyParagraphs[4].includes('qualified local advice'),
+      `${path}.body: preserve the operating AND symptom OR stop trigger and qualified-advice action`);
     } else {
       assert.equal(lesson.body.reviewStatus, Object.keys(bodySentences).length ? 'machine-draft' : 'hold',
         `${path}: only screened concept sentences are translated`);
@@ -293,9 +317,9 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         }
         assert.equal(question.options[1].sourceEnglish, originalQuestion.options[originalQuestion.correct],
           `${path}.quiz[${j}]: correct answer stays at its original index`);
-        assert.ok(question.rationale.tshivendaDraft.includes('zwi thusa dam u shuma u ya nga design'),
+        assert.ok(question.rationale.tshivendaDraft.startsWith('A clear spillway and maintained banks help the dam work as designed.'),
           `${path}.quiz[${j}].rationale: preserve the source's direct help claim`);
-        assert.ok(question.rationale.tshivendaDraft.includes('Trees should not be planted on an earth dam wall'),
+        assert.ok(question.rationale.tshivendaDraft.includes('Trees a dzi tei u ṱavhiwa kha earth dam wall'),
           `${path}.quiz[${j}].rationale: preserve the earth-dam-wall tree prohibition`);
       }
     }
@@ -310,7 +334,7 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
     }
     if (lesson.id === 'water-harvesting-l3') {
       assert.deepEqual(lesson.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
-      assert.ok(lesson.quiz[1].options[1].tshivendaDraft.includes('dzine dza nga contaminate edible crops'),
+      assert.ok(lesson.quiz[1].options[1].tshivendaDraft.includes('dzine dza nga contaminate crops dzine dza ḽiwa'),
         'retain can-contaminate modality and edible-crop exposure');
       assert.ok(lesson.quiz[1].rationale.tshivendaDraft.includes('zwi nga fhungudza contamination') &&
         lesson.quiz[1].rationale.tshivendaDraft.includes('a zwi khwaṱhisedzi') &&
@@ -321,16 +345,18 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
       const paragraphs = lesson.body.tshivendaDraft.split('\n\n');
       assert.equal(original.body.split('\n\n').length, 5, `${path}.body: canonical safety lesson has five paragraphs`);
       assert.equal(paragraphs.length, 5, `${path}.body: preserve every canonical safety paragraph`);
+      // 2026-10-05: the previously held exclusion and advice paragraphs now contain checked
+      // mixed-language text. Their clauses are asserted above; keep source-exact operational
+      // controls and the symptom trigger where the candidate still preserves those sentences.
       for (const exactClause of [
-        'Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.',
-        "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
         'Soil and mulch do not disinfect wastewater.',
-        'Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.',
-        'If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.',
+        'Keep wastewater away from drinking-water plumbing and prevent contact with people or animals.',
+        'Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.',
+        'the water smells bad, pools or harms plants, litshani u a shumisa ni humbele qualified local advice.',
       ]) assert.ok(lesson.body.tshivendaDraft.includes(exactClause), `${path}.body retains safety clause: ${exactClause}`);
-      assert.ok(paragraphs[0].startsWith('Maḓi o shumiswaho hayani') && paragraphs[0].includes('maḓi a u ṱanzwa zwiambaro'),
+      assert.ok(paragraphs[0].startsWith('Maḓi o shumiswaho hayani') && paragraphs[0].includes('kitchen water na laundry water'),
         `${path}.body: source-paired ordinary introduction retains household and laundry scope`);
-      assert.ok(paragraphs[3].startsWith('A generic picture a si farm design.'),
+      assert.ok(paragraphs[3].startsWith('Tshifanyiso tshi angaredzaho a si farm design.'),
         `${path}.body: keep the generic-picture limitation tied to farm design`);
       assert.deepEqual(lesson.quiz.map(item => item.sourceCorrectIndex), [1, 1],
         `${path}: preserve both canonical answer indices`);
@@ -342,8 +368,8 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         original.quiz[0].options[original.quiz[0].correct], `${path}: correct reuse option stays exact English`);
       assert.ok(lesson.quiz[0].question.tshivendaDraft.includes('before any household washwater is reused'),
         `${path}: mixed question preserves the exact washwater topic and timing`);
-      assert.ok(lesson.quiz[1].options[1].tshivendaDraft.includes('Water composition and product effects vary') &&
-        lesson.quiz[1].options[1].tshivendaDraft.includes('the actual source and products need assessment'),
+      assert.ok(lesson.quiz[1].options[1].tshivendaDraft.includes('Water composition na effects dza products zwi a fhambana') &&
+        lesson.quiz[1].options[1].tshivendaDraft.includes('source ya vhukuma na products zwi ṱoḓa assessment'),
         `${path}: preserve exact source-composition and product-assessment claims around the Tshivenda connective`);
     }
   }
@@ -351,8 +377,8 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
   const held = [draft.description, ...draft.lessons.flatMap(l => [l.body, ...l.keyPoints, ...l.quiz.flatMap(q => [q.question, ...q.options, q.rationale])])]
     .filter(p => p.reviewStatus === 'hold' || p.sourceEnglish !== p.tshivendaDraft)
     .map(p => `${p.sourceEnglish}\n${p.tshivendaDraft}`).join('\n');
-  for (const criticalClaim of ['safe overflow', 'earth dam wall', 'first-flush diverter', 'not make the remaining water safe to drink', 'qualified local sanitation adviser', 'soil and mulch do not disinfect', 'Do not include toilet water', 'If this advice is unavailable or unclear, do not reuse the water', 'Do not spray it, let it pool', 'water smells bad, pools or harms plants']) {
-    assert.ok(held.toLowerCase().includes(criticalClaim.toLowerCase()), `critical claim stays held in English: ${criticalClaim}`);
+  for (const criticalClaim of ['safe overflow', 'earth dam wall', 'first-flush diverter', 'not make the remaining water safe to drink', 'qualified local sanitation adviser', 'soil and mulch do not disinfect', 'Do not spray it, let it pool', 'water smells bad, pools or harms plants']) {
+    assert.ok(held.toLowerCase().includes(criticalClaim.toLowerCase()), `critical technical anchor remains source-paired: ${criticalClaim}`);
   }
 });
 

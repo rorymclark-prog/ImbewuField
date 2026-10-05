@@ -1,0 +1,45 @@
+{
+  "task": "Read-only independent audit of Water learner implementation against accepted final candidates",
+  "date": "2026-10-05",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "branch": "codex/regional-water-learner-completion-20261005",
+  "baseAndAuditedHead": "64d728a02f4c7051b4d860e64000b5142653a048",
+  "candidatePacket": "/tmp/imbewu-water-learner-remaining-final-candidates-20261005.json",
+  "nativeBaseline": "/tmp/imbewu-water-native-baseline-20261005.json",
+  "coverage": {
+    "sourceBoundFieldsChecked": 44,
+    "packetCandidateFields": 43,
+    "additionalVeL1Title": 1,
+    "intendedChanges": 41,
+    "candidateFieldsEqualCurrentAndUnchanged": 3,
+    "lessonCount": 12,
+    "completeBodyFieldsChecked": 12,
+    "removedTsActiveHolds": 7
+  },
+  "checks": {
+    "canonicalSourceExactForAllBindings": true,
+    "prechangeCurrentTargetExactAgainstBase": true,
+    "actualTargetsMatchAcceptedPacket": true,
+    "fullRegistryReconstructionMatchesBaselinePlusIntendedChangesAndSevenHoldRemovals": true,
+    "unlistedFieldsPreserved": true,
+    "unlistedBodyParagraphsPreserved": true,
+    "bodyParagraphCountsAndOrderPreserved": true,
+    "lessonOrderPreserved": true,
+    "quizCorrectIndicesPreserved": true,
+    "allLessonResolverStatusesDraft": true,
+    "allTargetedFieldStatusesMachineDraft": true,
+    "repositoryEditsByAuditor": false
+  },
+  "removedTsHoldsArchive": {
+    "status": "verified-exact",
+    "datedProof": "docs/study-translation-reviews/WATER-HARVESTING-LEARNER-ORDINARY-COMPLETION-2026-10-05.json",
+    "proofSection": "applicationAudit.supersededHistoricalTsHolds",
+    "removedHoldCount": 7,
+    "archivedHoldCount": 7,
+    "allSourceTextAndOriginalReasonsExact": true,
+    "allDispositionsDated": true,
+    "mismatches": []
+  },
+  "fluentApproval": false,
+  "semanticRedraft": false
+}
