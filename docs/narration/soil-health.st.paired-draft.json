@@ -26,11 +26,13 @@
           },
           {
             "status": "draft",
-            "text": "Ke sebaka se phelang se fepang crops, se tshwarang metsi, mme se jereng kotulo ya hao."
+            "text": "Ke sebaka se phelang se fepang dijalo, se tshwarang metsi, mme se jereng kotulo ya hao.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
-            "text": "Mojulung ona, ithute ho bala soil, ho etsa safe compost, ho sireletsa bare ground, le ho sebedisa cover crops le worm farms."
+            "text": "Mojuleng ona, ithute ho bala mobu, ho etsa compost e bolokehileng, ho sireletsa mobu o sa kwahelwang, le ho sebedisa cover crops le mapolasi a diboko.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -58,7 +60,8 @@
           },
           {
             "status": "draft",
-            "text": "Repeated bare ground, compaction and loss of organic matter can damage it. Mmala feela ha o bolele pale yohle."
+            "text": "Mobu o sa kwahelwang ka makgetlo a mangata, ho thatafala ha mobu (compaction) le tahlehelo ya organic matter di ka o senya. Mmala feela ha o bolele pale yohle.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -91,10 +94,14 @@
             "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Sebedisa nkho ho hlahloba soil texture, ha o ntse o lemoha mefokolo ya yona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlokomela qubu ya compost, sireletsa mobu o sa kwahelwang, mme o kgetholle worm castings le mokedikedi o rothang.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -113,7 +120,8 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Mobu oa phela"
+          "text": "Mobu o a phela",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -127,29 +135,9 @@
             "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "status": "draft",
-                "sourceEnglish": "Look at roots, ",
-                "text": "Sheba metso, ",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "english-hold",
-                "sourceEnglish": "soil structure"
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": " and water movement as well as ",
-                "text": " le motsamao wa metsi hammoho le ",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "english-hold",
-                "sourceEnglish": "visible soil life."
-              }
-            ]
+            "status": "draft",
+            "text": "Sheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
           }
         ]
       }
@@ -169,7 +157,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Bala Mobu wa Hao",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -178,7 +168,8 @@
           },
           {
             "status": "draft",
-            "text": "Pele, sheba soil structure. Ha o le tshimong, utlwa hore karolo ya mobu o mongobo e arohana jwang."
+            "text": "Pele, sheba sebopeho sa mobu. Ha o le tshimong, utlwa hore karolo ya mobu o mongobo e arohana jwang.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -189,41 +180,9 @@
             "text": "Sheba se kwahetseng bokahodimo. Mohlala o mong o kwahetswe ke mulch e hlephileng."
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "status": "draft",
-                "sourceEnglish": "Use several clues together. ",
-                "text": "Sebelisa matshwao a mmalwa mmoho. ",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": "Colour alone cannot tell you ",
-                "text": "Mmala feela o ke ke wa o bolella ka ",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "english-hold",
-                "sourceEnglish": "soil health."
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": " Check ",
-                "text": "Hlahloba ",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              },
-              {
-                "status": "english-hold",
-                "sourceEnglish": "moisture,"
-              },
-              {
-                "status": "draft",
-                "sourceEnglish": " plant growth and how water enters the ground.",
-                "text": " kgolo ya dimela le tsela eo metsi a kenang ka yona mobung.",
-                "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
-              }
-            ]
+            "status": "draft",
+            "text": "Sebedisa matshwao a mmalwa mmoho. Mmala feela ha o kgone ho o bolella ka bophelo ba mobu. Hlahloba mongobo, kgolo ya dimela le tsela eo metsi a kenang ka yona mobung.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -241,7 +200,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlahloba Soil Texture ka Nkho",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -275,7 +236,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Bala Nkho ka Hloko",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -309,7 +272,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Batlisisa Pele o Alafa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -343,7 +308,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Compost e Fepa Mobu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -376,14 +343,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Aha Qubu ya Compost",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Aha qubu ka thepa e sootho e omileng le thepa e tala e ntjha.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Boloka malera a le mongobo, e seng a metsi, hore moya le decomposers di kgone ho sebetsa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -401,7 +374,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Lekanyetsa Tse Sootho le Tse Tala",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -435,7 +410,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Motjheso Feela Ha se Tekolo ya Polokeho",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -469,7 +446,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Boloka Makgapha a Peo le Tshilafalo Kantle",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -502,7 +481,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Shebella: Mobu o Sa Kwahelwang le Mulch",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -510,7 +491,9 @@
             "text": "Bapisa mobu o sa kwahelwang le mobu o kwahetsweng ka mulch."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha pula e otla mulch ho e-na le mobu o sa kwahelwang, bongata ba matla a marothodi a pula bo a nyamela. Setshwantsho sena se bontsha feela mohopolo ona wa tshusumetso ya bokahodimo; ha se bolele esale pele hore metsi a tla tsamaya jwang sebakeng se itseng.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -528,7 +511,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mulch e Sireletsa Mobu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -538,7 +523,8 @@
           },
           {
             "status": "draft",
-            "text": "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka."
+            "text": "Mulch e ka fokotsa ho fetoha mouwane ha metsi, ya fokotsa matla ao pula e otlang mobu ka wona, hape ya fokotsa mefoka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -561,7 +547,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Cover Crops Pakeng tsa Dihla",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -595,7 +583,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Worm Castings le Mokedikedi o Rothang",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -630,12 +620,15 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sireletsa Mobu Selemo Kaofela",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya maize e tobana le dikotsi tse pedi tse kgolo."
+            "text": "Tshimo ya Highveld e siilweng e sa kwahelwa ka mora kotulo ya poone (maize) e tobana le dikotsi tse pedi tse ka sehloohong.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -671,26 +664,19 @@
         },
         "body": [
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Inspect soil in a working area. ",
-                "status": "draft",
-                "text": "Hlahloba mobu sebakeng sa mosebetsi. "
-              },
-              {
-                "sourceEnglish": "Record colour, structure, roots, moisture and any worm channels.",
-                "status": "english-hold"
-              }
-            ],
-            "provenance": "Ordinary inspection framing is an independently checked unreviewed machine draft; complete technical checklist held exact English."
+            "status": "draft",
+            "text": "Hlahloba mobu sebakeng sa mosebetsi. Ngola mmala, sebopeho, metso, mongobo le meselana efe kapa efe e entsweng ke diboko.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
-            "text": "Bapisa sebaka se seng, mme o ele hloko boemo ba lehodimo ba morao tjena le management."
+            "text": "Bapisa sebaka se seng, mme o ngole boemo ba lehodimo ba morao tjena le tsamaiso.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Leka boikwetliso ba nkho. Ngola seo bo se bontshang, seo o se nang bonnete ka sona, le hore na laboratory test kapa moeletsi wa sebakeng sa heno di ka thusa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -716,14 +702,18 @@
         "body": [
           {
             "status": "draft",
-            "text": "Qala ketso e le 'ngoe ea soil-building ho tsoa mojulung ona.",
-            "provenance": "Independently checked unreviewed machine draft; one action from this module preserved and technical soil-building retained English."
+            "text": "Qala ketso e le nngwe ya ho aha mobu ho tswa mojuleng ona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Kwahela mobu o sa kwahelwang ka mulch, qala qubu ya compost e leka-lekaneng, jala cover crop e loketseng, kapa lokisa polasi ya diboko.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Ha compost ya hao e nkha ammonia mme e utlwahala e boreledi e kang mamina (slimy), eketsa carbon e omileng jwalo ka mahlaka a omileng (straw) mme o e phethole.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -734,10 +724,14 @@
     }
   ],
   "provenance": {
-    "newDrafts": "New unreviewed L3 concept drafts: slide 15 body[1] and slide 18 body[0–3]. Each keeps its exact English source beside the target draft; mulch, Highveld, maize, topsoil, cover crops and organic matter remain in English where needed. No procedures, crop examples, worm/leachate safety, nitrogen claims or quizzes were translated.",
-    "holds": "All other target passages remain exact English holds; no audio or local farming approval is claimed."
+    "newDrafts": "Every Soil Health heading and paragraph now carries an unreviewed target draft beside its exact English source. The drafts come from earlier unreviewed layers (the L3 concept drafts and the 3 October 2026 source-paired batch) and the 4–5 October 2026 bounded ordinary-prose completion, in which separate AI agents drafted, blind back-translated and semantically checked each change, with adjudicated repairs of flagged units. Each target field records its own provenance.",
+    "reusedDrafts": "Complete current learner paragraphs are reused only where the paired English source is byte-identical (33 paragraphs). They are not edited in the deck.",
+    "holds": "No whole heading or paragraph remains an English hold. Difficult technical terms (for example compost, mulch, cover crops, organic matter, soil texture, worm castings, topsoil and decomposers) stay in English inside translated sentences. All remaining English, including English inherited from reused learner paragraphs, is inventoried in docs/study-translation-reviews/SOIL-WATER-ORDINARY-SLIDES-2026-10-05.json (remainingEnglish)."
   },
   "reviewNotes": [
-    "The new L3 concept passages are unreviewed machine drafts only. A fluent speaker and local farming practitioner must review them before learner use."
+    "Every target is an unreviewed machine draft or reused unreviewed learner wording. Facilitator review follows publication; no fluent-speaker, comprehension or local farming approval is claimed.",
+    "South African Sesotho orthography. Check first: slide 13 heading 'Makgapha a Peo' for seed pods, slide 20 body[2] native renderings of slimy and straw, and slide 19 body[0] 'meselana e entsweng ke diboko' for worm channels.",
+    "Reused learner paragraphs keep their own English clauses and terms. Those need learner-text edits outside this deck-only batch (remainingEnglish.inheritedLearnerWording).",
+    "Silent still frames only: no narration or audio was generated for this language; English narration remains optional."
   ]
 }
