@@ -16,6 +16,8 @@ import {
 import { resolveNarrationLang, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { resolveIsiZuluDeckSourcePair } from '@/lib/course-deck-source-bindings';
+import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 import COURSE_DECK_ART from '@/docs/course-deck-art.json' with { type: 'json' };
 import { useLanguage } from '@/lib/i18n-context';
@@ -261,6 +263,8 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   // Resolved up here, not after the early return below, because the play-through effects need it.
   const audioForCurrent = current && spokenLang ? slideAudioUrl(moduleId, spokenLang.lang, current.slide) : null;
+  const narrationRevisionHold = spokenLang?.lang === 'zu' && current &&
+    (!!isiZuluDeckReviewHold(moduleId, current.slide) || !resolveIsiZuluDeckSourcePair(moduleId, current.slide));
   const timedTour = !!current && !!animationUrls(moduleId, current.slide, slideChoice)?.narrationTimed;
   const followNarration = useCallback(() => {
     const audio = audioRef.current;
@@ -387,9 +391,11 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const SILENT_SLIDE_MS = 7000;
   useEffect(() => {
     if (!running || audioForCurrent) return;
+    // A withheld instruction needs deliberate reading, not a seven-second automatic skip.
+    if (narrationRevisionHold) { setRunning(false); return; }
     const t = setTimeout(onNarrationEnded, SILENT_SLIDE_MS);
     return () => clearTimeout(t);
-  }, [running, audioForCurrent, onNarrationEnded]);
+  }, [running, audioForCurrent, narrationRevisionHold, onNarrationEnded]);
 
   const onDeckKeyDown = useCallback((e: React.KeyboardEvent<HTMLDialogElement>) => {
     if (expanded && e.key === 'Escape') { e.preventDefault(); exitExpanded(); return; }
@@ -428,13 +434,25 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const anim = animationUrls(moduleId, current.slide, slideChoice);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
-  const heading = track ? trackTitle(track, slideChoice) : current.title;
+  const zuluPair = slideChoice === 'zu' ? resolveIsiZuluDeckSourcePair(
+    moduleId, current.slide, undefined,
+    track ? { en: trackTitle(track, 'en'), zu: trackTitle(track, 'zu') } : undefined,
+  ) : null;
+  const zuluHold = slideChoice === 'zu' ? isiZuluDeckReviewHold(moduleId, current.slide) : null;
+  const zuluSource = slideChoice === 'zu' ? COURSE_TRANSCRIPTS[moduleId]?.en?.[current.slide] : null;
+  const heading = slideChoice === 'zu' && (zuluHold || !zuluPair)
+    ? track ? trackTitle(track, 'en') : current.title
+    : track ? trackTitle(track, slideChoice) : current.title;
   const isPlaying = playing.has(current.slide);
 
   const slideRatio = anim?.aspectRatio ?? deck.slideAspectRatioByLanguage?.[img?.lang ?? slideLang.lang] ?? 16 / 9;
   const artModule = (COURSE_DECK_ART as Record<string, Record<string, { layout: string }>>)[moduleId];
   const art = artModule?.[current.slide];
-  const presentationPoints = transcript ? slidePoints(transcript) : [];
+  // The reading follows the selected deck, independently of an optional English voice.
+  const visibleTranscript = slideChoice === 'zu'
+    ? zuluHold || !zuluPair ? zuluSource : [...zuluPair.recordedTarget]
+    : transcript;
+  const presentationPoints = visibleTranscript ? slidePoints([...visibleTranscript]) : [];
   const showReflowedSlide = expanded && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
   const fittedWidth = expanded && viewportSize.width && viewportSize.height
     ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
@@ -470,7 +488,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                   key={code}
                   type="button"
                   onClick={() => {
-                    if (!regionalSlidesSelected) {
+                    if (!regionalSlidesSelected && appLang !== 'zu') {
                       setPlaying(new Set());
                       setSlideChoice(code);
                     }
@@ -677,6 +695,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </p>
       )}
 
+      {slideChoice === 'zu' && (
+        <p role="status" style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: MUTED }}>
+          {zuluHold
+            ? `English source shown. This isiZulu slide and recording need revision: ${zuluHold} Choose English narration explicitly if wanted.`
+            : !zuluPair
+              ? 'English source shown. The isiZulu source comparison has changed; its recording is unavailable until checked.'
+              : 'Unreviewed isiZulu machine draft. Exact English source is available below; language and farming approval are pending.'}
+        </p>
+      )}
+
       {img && !img.exact && (
         // Only on the slide it is actually true of. A localized deck can have one missing asset,
         // so saying "these slides are in English" across the whole module would be false for the
@@ -774,7 +802,28 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </button>
       </div>
 
-      {transcript && (
+      {slideChoice === 'zu' && zuluSource && (
+        <details className={`${styles.transcript} ${styles.sourcePair}`} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
+          <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
+            {zuluHold || !zuluPair
+              ? 'Read slide · English source / isiZulu revision pending'
+              : 'Read slide · unreviewed isiZulu draft / exact English source'}
+          </summary>
+          {zuluPair && !zuluHold && (
+            <section lang="zu" aria-label="Unreviewed isiZulu draft">
+              <h4>isiZulu · unreviewed machine draft</h4>
+              <h5>{zuluPair.registeredZuluTitle}</h5>
+              {zuluPair.recordedTarget.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+            </section>
+          )}
+          <section lang="en" aria-label="Exact English source">
+            <h4>Exact English source</h4>
+            <h5>{zuluPair?.sourceHeading ?? heading}</h5>
+            {(zuluPair?.source ?? zuluSource).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
+          </section>
+        </details>
+      )}
+      {transcript && slideChoice !== 'zu' && (
         <details className={styles.transcript} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
             {t('courseDeckReadSlide').replace('{language}', langName(spokenLang!.lang, uiLang))}

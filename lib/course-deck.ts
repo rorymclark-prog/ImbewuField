@@ -12,6 +12,7 @@
 // player can be tested without a browser.
 
 import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-audio';
+import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
 
 export interface DeckAnimation {
   /** Silent clip — narration plays over it. Some clips contain labels in the deck language. */
@@ -414,7 +415,10 @@ export function slideImageFor(
   lang: string,
   slide: number,
 ): { url: string; lang: string; exact: boolean } | null {
-  const own = slideImageUrl(moduleId, lang, slide);
+  const hasIsiZuluSnapshot = lang === 'zu'
+    && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId);
+  const isiZuluPairUnavailable = hasIsiZuluSnapshot && trackUrl(moduleId, 'zu', slide) === null;
+  const own = isiZuluPairUnavailable ? null : slideImageUrl(moduleId, lang, slide);
   if (own) return { url: own, lang, exact: true };
   const fallback = lang === 'en' ? null : slideImageUrl(moduleId, 'en', slide);
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
@@ -422,6 +426,9 @@ export function slideImageFor(
 
 export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number; aspectRatio?: number; narrationTimed?: boolean; playOnce?: boolean } | null {
   const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
+  const hasIsiZuluSnapshot = lang === 'zu'
+    && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId);
+  if (hasIsiZuluSnapshot && trackUrl(moduleId, 'zu', slide) === null) return null;
   if (!base || base.unavailableLanguages?.includes(lang)) return null;
   const a = base.byLang?.[lang] ?? base;
   return {

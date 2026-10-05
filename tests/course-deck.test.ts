@@ -10,6 +10,7 @@ import {
   COURSE_DECKS, animationUrls, deckAnimationBytes, deckFor, deckSlideCount, formatBytes,
   hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
 } from '@/lib/course-deck';
+import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
@@ -501,16 +502,20 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
       .map((s) => ({ n: s.slide, r: slideImageFor('seeds-sovereignty', 'zu', s.slide) }))
       .filter((x) => x.r && !x.r.exact)
       .map((x) => x.n);
-    assert.deepEqual(inexact, [13], 'only the declared slide falls back');
+    // Independently flagged wording now also falls back; a synthetic gap must add
+    // only its own slide to that set, without withdrawing any other accepted draft.
+    const held = deck.slides.filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide)).map(s => s.slide);
+    assert.deepEqual(inexact, [...held, 13].sort((a, b) => a - b), 'only held slides and the declared gap fall back');
   } finally {
     deck.missingSlides = saved;
   }
 
-  // With nothing declared missing, which is the state Seeds is actually in, nothing falls back.
+  // The source review now withholds specific faulty words even though every raw asset exists.
   const stillInexact = deck.slides
-    .map((s) => slideImageFor('seeds-sovereignty', 'zu', s.slide))
-    .filter((r) => r && !r.exact);
-  assert.deepEqual(stillInexact, [], 'Seeds is complete in isiZulu — no slide should fall back');
+    .filter(s => !slideImageFor('seeds-sovereignty', 'zu', s.slide)?.exact)
+    .map(s => s.slide);
+  assert.deepEqual(stillInexact, deck.slides.filter(s => isiZuluDeckReviewHold('seeds-sovereignty', s.slide)).map(s => s.slide),
+    'without a synthetic gap, only independently flagged wording is withheld');
 
   // The new regional files are source-paired review frames, so selection must not fall back to
   // a bare English picture or let an animation poster obscure their comparison panels.
@@ -636,7 +641,12 @@ test('carried prunings play with the slide that describes carrying them, after t
 test('isiZulu guild slides, audio and labelled video are delivered in the selected language', () => {
   for (const slide of deckFor('plant-guilds')!.slides) {
     assert.ok(onDisk(slideImageUrl('plant-guilds', 'zu', slide.slide)!));
-    assert.ok(onDisk(slideAudioUrl('plant-guilds', 'zu', slide.slide)!));
+    const held = isiZuluDeckReviewHold('plant-guilds', slide.slide);
+    const audio = slideAudioUrl('plant-guilds', 'zu', slide.slide);
+    if (held) assert.equal(audio, null, 'a known instruction error must not be spoken');
+    else assert.ok(audio && onDisk(audio));
+    assert.ok(onDisk(`/course-audio/plant-guilds/zu/slide-${String(slide.slide).padStart(2, '0')}.mp3`),
+      'withholding playback preserves the recorded asset for later review');
     const animation = animationUrls('plant-guilds', slide.slide, 'zu');
     if (animation) {
       assert.ok(onDisk(animation.video));
@@ -1172,5 +1182,47 @@ test('a timed tour follows the voice after late loading, pause and seeking, then
     video.ended = true;
     act(() => clip.props.onEnded());
     assert.equal(view.root.findByType('h3').children.join(''), 'Prepare a Manageable First Area');
+  } finally { act(() => view.unmount()); }
+});
+
+// A voice selection must not hide the language draft being compared; a known
+// instruction error must stop narration rather than masquerade as a missing file.
+test('isiZulu deck source remains visible with English voice and withheld recordings stay silent', async () => {
+  const componentUrl = new URL('../components/course/DeckPlayer.tsx', import.meta.url).href;
+  const hooks = registerHooks({ load(url, context, nextLoad) {
+    if (url === componentUrl) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+      fileName: 'DeckPlayer.tsx', compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
+    }).outputText };
+    if (url === DECK_PLAYER_CSS_URL) return { format: 'module', shortCircuit: true, source: DECK_PLAYER_CSS_STUB };
+    return nextLoad(url, context);
+  } });
+  const { default: DeckPlayer } = await import('../components/course/DeckPlayer.tsx');
+  hooks.deregister();
+  const audioDevice = { currentTime: 0, pause() {}, play: () => Promise.resolve() };
+  let view!: ReactTestRenderer;
+  act(() => { view = create(createElement(DeckPlayer, { moduleId: 'seeds-sovereignty', lang: 'zu' }), {
+    createNodeMock: element => element.type === 'audio' ? audioDevice : null,
+  }); });
+  try {
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Exact English source' }).length, 1);
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 1);
+    const picture = () => view.root.findAllByType('img')[0];
+    const voices = () => view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
+    act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
+    assert.match(picture().props.src, /seeds-sovereignty\/zu\/slide-01.jpg$/);
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 1);
+    assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-01.mp3$/);
+    act(() => voices().find(button => button.children.join('') === 'isiZulu')!.props.onClick());
+    for (let index = 0; index < 10; index++) {
+      act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
+    }
+    assert.match(picture().props.src, /seeds-sovereignty\/en\/slide-11.jpg$/);
+    assert.equal(view.root.findAllByType('audio').length, 0, 'boil-versus-ferment recording cannot play');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Unreviewed isiZulu draft' }).length, 0);
+    assert.equal(view.root.findAllByProps({ 'aria-label': 'Exact English source' }).length, 1);
+    assert.match(view.root.findAllByType('p').map(p => p.children.join('')).join(' '), /recording need revision/);
+    act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
+    assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-11.mp3$/);
   } finally { act(() => view.unmount()); }
 });

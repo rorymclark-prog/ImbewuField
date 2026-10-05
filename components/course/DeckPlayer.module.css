@@ -450,3 +450,17 @@
   }
   .expanded .presentationSlide footer { grid-column: 1 / -1; }
 }
+
+/* Source comparison stays readable in the expanded player without covering its controls. */
+.sourcePair { color: #20190F; font-size: 16px; line-height: 1.65; }
+.expanded .sourcePair {
+  display: block;
+  position: absolute;
+  z-index: 5;
+  inset: auto 12px 110px;
+  max-height: min(55dvh, calc(100dvh - 230px));
+  overflow: auto;
+  padding: 12px;
+  border-radius: 12px;
+  background: #FFFEFA;
+}
