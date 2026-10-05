@@ -1,0 +1,1027 @@
+{
+ "baseline": "51463f1ca61729e543cecee05a84b5e0e768fbf3",
+ "renderer": "scripts/make-lesson-slides.mjs --paired-draft",
+ "webp": {
+  "quality": 88,
+  "method": 6
+ },
+ "narration": null,
+ "decks": [
+  {
+   "module": "soil-health",
+   "language": "st",
+   "pairedSource": "docs/narration/soil-health.st.paired-draft.json",
+   "pairedSourceSha256": "4611fd5e1876a2ceda7bba00024baad6fe283bd5200a3e3d3dd5d3b0a999142a",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/soil-health/st/slide-01.webp",
+     "sha256": "ccbdee2c3f51900fc10e8ebf48bf5b987ea0c1ea58d0ead07138ae2e0ef25cc7",
+     "baselineSha256": "c8a1ecd8af4ec996de8baff9b33d10126032c5bdf511dae6ed8b17776f3755fc",
+     "bytes": 299876
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-02.webp",
+     "sha256": "fc04f153830640201ccec9e5f8bedb4d252734ecbb57a3b0cb89b721e4fc8cc4",
+     "baselineSha256": "b498da74a840a6120c750d587da15e668dfa5406f4e9cab3660ccfb43e49ec3f",
+     "bytes": 213992
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-03.webp",
+     "sha256": "eeb6f83351cdb412fbc545738a75ed33115fc3d1c05a8ea2aa333abd717f3ecf",
+     "baselineSha256": "e02dd6969d85e9518e09438825b36404dedef0e9bfdf76c2420dbe1c5320c81d",
+     "bytes": 195624
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-04.webp",
+     "sha256": "de4ce2c271abf0783b9dde7018c8f3e9f390ef565922dd5bd0894197f403bc1d",
+     "baselineSha256": "c5db01bde209ff682be20a4522d4e43a0a6a62382d067cad7c28cf490e5a29c7",
+     "bytes": 231038
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-05.webp",
+     "sha256": "f3a91a0d57e54026c65c35d619e7a0b0ca8792739bb6bbd70b6b55f5b43f99e6",
+     "baselineSha256": "e6b758800347eb78f7663109f6c2ca37520fe2f6cb7af2c3af6fba82444a2c93",
+     "bytes": 492856
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-06.webp",
+     "sha256": "395ad020996018fef5d53e2d6b4eee0518c4e146294b31e0147481d0a2c2adac",
+     "baselineSha256": "8f16ace6f7334777bb8492166e2af04cfa3b8c38eab951aeb7f2f2c86784695d",
+     "bytes": 390046
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-07.webp",
+     "sha256": "fbb03f47c337b07446e20bfb092902c8b08097032ff2d70429e1bc8697e410c0",
+     "baselineSha256": "debc002485552e3275c395e6c5cc0da2064f24fdcd6b7b1e871676e94dd256a4",
+     "bytes": 233104
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-08.webp",
+     "sha256": "d656247a5d64e48260113619baff23cca66f103708fa86b2261b631b4de03d6d",
+     "baselineSha256": "5aa82741fe1d871653987dc27076b0c0451a403a96cba4efd5c2944863a0d316",
+     "bytes": 569956
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-09.webp",
+     "sha256": "acac4a1c445d04734cea0c0b7344f4095ad78cd1f75034663c88fa38f6c8bd13",
+     "baselineSha256": "7dcd973267e9a96dbe2be019b42621f7d36f92b9be33ce8a7ae4eef537d69bb0",
+     "bytes": 259698
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-10.webp",
+     "sha256": "7771905ed9729779ef47b229a8616fc389706f52a493ac8d5dbb73db7b25d5a4",
+     "baselineSha256": "4733af1941c88e94ff29152975645c63f187f86b6e2428a60438cb2795c90d70",
+     "bytes": 180012
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-11.webp",
+     "sha256": "0db11e0f1b5ec4286009faea667e627c44cb6754282458de3c503e077a422384",
+     "baselineSha256": "763909b0896302b4284d13843a18457bb1036b57a453c3313c852315dd91392c",
+     "bytes": 562024
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-12.webp",
+     "sha256": "8421b39451fc0418449c60c5bd57b7e3d5d7eefdaf6ef285d029743bb248bc93",
+     "baselineSha256": "61169167206912229106c645f15e76e2799b1d5cdeff44be4bf5ce67a1c5af59",
+     "bytes": 302856
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-13.webp",
+     "sha256": "0b7f74e6b3c6898fd118a94fcbc892c4b553f74830dfef7f6f4d35046a05e4b4",
+     "baselineSha256": "3b8be95b763fe2f4e98f0c447d0f5f775382d6c387e925228fb5763a6e2549f7",
+     "bytes": 274320
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-14.webp",
+     "sha256": "7c404f34ce2ec5c02934f93365653652650beca0b020028463bb548398307678",
+     "baselineSha256": "da2ad348a5f179d9cad3e1b173c7c6d20da9577695629b5a1bff128137da5950",
+     "bytes": 241006
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-15.webp",
+     "sha256": "9d31839e848d382ed800a6d2f2c67dfb30378a2f5b3f135ed8ad4e0fae7a7e0c",
+     "baselineSha256": "5ac5f9c9b79a1982ea03ab46d6d3116e6555a8f855db29eb07e6df8c42c3a933",
+     "bytes": 526480
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-16.webp",
+     "sha256": "61a170ac7cbe64e059c5ddd92152130a14589c624996d25b28f27681cf5756f4",
+     "baselineSha256": "d215bc559b6de22243dd996e256d41874678f9761546ee010d7a547da6746c36",
+     "bytes": 544534
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-17.webp",
+     "sha256": "59695ea5a0c4ada842de82f4d705c315d2533fa1346161775893cb45526a3adf",
+     "baselineSha256": "fc9b41903e45bd919376718dc8173e9b29915ce07354c7312451356df648dea7",
+     "bytes": 524432
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-18.webp",
+     "sha256": "ffbde828b00402b9af88a878cf11d14ba9cce4e2c744d770520ce5ae30af6f27",
+     "baselineSha256": "d53b6b6683ec22b14cbdf4a6211e55ecb7a91065e8636642958a19be2ea11305",
+     "bytes": 498406
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-19.webp",
+     "sha256": "0191256f02d12ca3a87ce79ef13248a44da93ebc847f38b525614a3b554aa086",
+     "baselineSha256": "f0e77562d1a9f9332674ff381cd610c3fa9ce426299ac82bfa3e513f80fb84a9",
+     "bytes": 235338
+    },
+    {
+     "path": "public/course-decks/soil-health/st/slide-20.webp",
+     "sha256": "830fa7e82b773ad32713066831f81a7aea31512c280196a88c9752b086784745",
+     "baselineSha256": "6e8d4c78826440ccc923269f84c4495ebe18bfa341e4f4fc8b1eba8bdd881e62",
+     "bytes": 246546
+    }
+   ],
+   "preserved": [],
+   "contactSheet": "docs/media/soil-health/qa/st-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/soil-health/qa/st-ordinary-20261005-slide-12-390.jpg",
+    "docs/media/soil-health/qa/st-ordinary-20261005-slide-18-390.jpg"
+   ]
+  },
+  {
+   "module": "soil-health",
+   "language": "ve",
+   "pairedSource": "docs/narration/soil-health.ve.paired-draft.json",
+   "pairedSourceSha256": "770173d8147f2df96961d66b1d09d69e2569480ea94049b82e62a96cdd8d2a20",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/soil-health/ve/slide-01.webp",
+     "sha256": "fdd12c3ae40ee832f7204527c2324b19f3357337d6cf626dc29ba13224100b56",
+     "baselineSha256": "0feac139a5d6069592dca67d1e3b159aa0ffdc4a58b5870aef5c71002de8067c",
+     "bytes": 304900
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-02.webp",
+     "sha256": "bf5c9574fd83d055f429f092bd2e7e689aef2f2ea1c6694aa38ee904e97f6b52",
+     "baselineSha256": "759789f447b4cf73548832b20a23c77532ed9fba5e7d74c829cb9607a9a1c464",
+     "bytes": 212744
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-03.webp",
+     "sha256": "e627506aa6c24d54ca34e8287ad3d234eea3127f978b7bf12cebafd730f09efb",
+     "baselineSha256": "52be080e4c4f85fc4a5a2aa04b070f977593f083271ce5ededf71371b305026b",
+     "bytes": 198032
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-04.webp",
+     "sha256": "f721c0f0fe146db83995aded32adc21751bd280e28d7c3b9dbef6e10ee0e2aee",
+     "baselineSha256": "3d4d7f3f00f37ff5c8cbb80fcd33b180c75f0ca5abf674fed052914b79a9884b",
+     "bytes": 223374
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-05.webp",
+     "sha256": "3780825b1691bc702326c004ecaf93240666a8e6f8a48141333f2cbff47ad0b1",
+     "baselineSha256": "b47db4a412c289d14a5d5347459bcd62b6099c03879dc814500029609fa35f89",
+     "bytes": 504504
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-06.webp",
+     "sha256": "63344474bf2f3f90ccd54abb7ff3b02331d9fc1f108dbe30eb058467c279b421",
+     "baselineSha256": "74c9830d88970bc5d2c7c5e481fb20604b71d7ddbe0ea339a306bae139171fe6",
+     "bytes": 378722
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-07.webp",
+     "sha256": "da7576a4993defc364ad301b539321d84833099a4078d6b890e47e67fdeccf5e",
+     "baselineSha256": "919341e28ef7374f976276504819e770539438cfd3a79384118ca0ee80ae2417",
+     "bytes": 238486
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-08.webp",
+     "sha256": "5351e8d43d405c460009dc488578321851491c54d31dbc92eb858e1407f55f52",
+     "baselineSha256": "8f711accfe49b6dfa5b224d74d0cebe9190cf78422c40f363cd9b37e17906213",
+     "bytes": 559596
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-09.webp",
+     "sha256": "08b526639d18ed13eb0428404f013d2fa051175d2870268021fe221aeaaec8eb",
+     "baselineSha256": "f42ca5efe8a8db55b0706d42b70e7927d500a0efb0f930264d2ae9daaf429bc9",
+     "bytes": 274484
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-10.webp",
+     "sha256": "6913feb1df325fcd1167915b4490a8874fa680a25838414577b3d774af59ab70",
+     "baselineSha256": "d4b5ec6481e436f97a05302114346b88efb09d51767b689aed7ea24c34ec544b",
+     "bytes": 180842
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-11.webp",
+     "sha256": "653bce5562b27692903a27276e75d77f14627138fb454cdbde0fea7d9e6a93ec",
+     "baselineSha256": "5b5ae641ddc6ebf59ec555e0112dd7aadbfa41a39b9d70a1207e7a8a6660f1b6",
+     "bytes": 557042
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-12.webp",
+     "sha256": "8d8e7dc3869518c2a59171c60f8084db078c4451e228729318a5bbc8b8291964",
+     "baselineSha256": "71c03a898b0808986bbe73f57f880c7fc9d4fc310ab9181aef994646aa5bbf39",
+     "bytes": 295682
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-13.webp",
+     "sha256": "e5e36fa17bf628ee4413ade81635769af32ebee3e34a4af2c26a96a6d93d00c3",
+     "baselineSha256": "a7be9db3b0473c0266a77d5edf6092abee162cfb0c2e65aa8a51688e4c2baf58",
+     "bytes": 265866
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-14.webp",
+     "sha256": "eb450e6c059a4c3262546930fd0b8e72fca00dbb5ac2f457a8aa71ec84e37a0b",
+     "baselineSha256": "cc45b976bff1b147378ac43b49f1e06234c8f00aabce198616e6278cb7751535",
+     "bytes": 244806
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-15.webp",
+     "sha256": "099ec5dc2f26907da432533d28daacc8a81a64f87aaa6d1dd4d9d94952195b85",
+     "baselineSha256": "eb7beace1545fb30d1f547613e422dac6f938d80c48579e1cb7fd9861147215d",
+     "bytes": 524774
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-16.webp",
+     "sha256": "42e7cf6f307c30eee8af3d9e089ffc1908b91bd688b7f09899c434f505c7b759",
+     "baselineSha256": "050c18a4aca127c5098c508978996748d15ee1263e2d27612463803cef69dc79",
+     "bytes": 543042
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-17.webp",
+     "sha256": "035901ab14564e15273704bb444e73ea48938142958f51fa5609b2a834db9f48",
+     "baselineSha256": "c7b3f583518dc4d8fac6dc88aa72cd38fbd2287b429e4a0161bbb5784eba641a",
+     "bytes": 510914
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-18.webp",
+     "sha256": "cdfcebb8f6a80ffdc80af740d99f27111aa809d160190cf37017a79abaf21577",
+     "baselineSha256": "243ba6d0bdd36b0205f07f90cd8ffd51d69fcecacb9815d7f0629910a5e536a5",
+     "bytes": 494946
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-19.webp",
+     "sha256": "b181c5aa0f8813b36f015edb893138e28b8b8db3ca6a6facd76bdd31106b7a78",
+     "baselineSha256": "0014ac66b2b3f6c1f72344e3e62a198c9fc5bdfd6cd644bbf8bc2eb687dea096",
+     "bytes": 234648
+    },
+    {
+     "path": "public/course-decks/soil-health/ve/slide-20.webp",
+     "sha256": "16e9f4fef7d1a2ea68c1081cd0a7bb5f469ccab923f6bbd9ea871399ca92aa1f",
+     "baselineSha256": "012ec4dae579f0bb768ae71c1ab72dac436c468e02b8a189daaf7f85ce02e9fb",
+     "bytes": 241828
+    }
+   ],
+   "preserved": [],
+   "contactSheet": "docs/media/soil-health/qa/ve-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/soil-health/qa/ve-ordinary-20261005-slide-05-390.jpg",
+    "docs/media/soil-health/qa/ve-ordinary-20261005-slide-18-390.jpg"
+   ]
+  },
+  {
+   "module": "soil-health",
+   "language": "ts",
+   "pairedSource": "docs/narration/soil-health.ts.paired-draft.json",
+   "pairedSourceSha256": "e2bd0575a69082cbc812ea20b3a88d1c44b3797068f79e2c1b3a37e261aa0035",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/soil-health/ts/slide-01.webp",
+     "sha256": "587ae1dbab5415e5c03b7c4faf6447939407fd0fe56dcb1860b39f7d84608e8a",
+     "baselineSha256": "d66511853ab5374a7ff4bf30ccdc336b254229a1469b298b000f3969636bfbb0",
+     "bytes": 328238
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-02.webp",
+     "sha256": "64343ec1bea40bbb557924c56b90cc936297f350a52bdf1b8c0a9172ec489490",
+     "baselineSha256": "3c1d47777a37f8521f44320b3127973e60d947008785dfdbc8527e61d14797d0",
+     "bytes": 220570
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-03.webp",
+     "sha256": "db7959418399793e55297bcfa9b74d744705ac33f4909d94041a8f44c6a5e49c",
+     "baselineSha256": "94ee5cf98b1f6b2a85f0ee098df3f8c1143bc9bd43d6fd90be425793a36092ab",
+     "bytes": 212774
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-04.webp",
+     "sha256": "4d0a81958f76f79611a786142612c68b34cb15b123429f90065b7d0c9055bb67",
+     "baselineSha256": "f435b3bbff8beffc7f4781423e05f602f0192cf284550a3542365ddb8333357e",
+     "bytes": 229248
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-05.webp",
+     "sha256": "94ee9987e4ece8e24ac9e04af5854ff11331c2b2fe99cf96f695d69f6d1c6293",
+     "baselineSha256": "f75898c08245f784f9fe7f74562f4717513d4b9439452b9485a2190eb1cc24f4",
+     "bytes": 519272
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-06.webp",
+     "sha256": "1b57d064ffd29d5055a9f170bdc1a7f9a0210ffe1ad662e55188dfff4424886a",
+     "baselineSha256": "a3ea4bf9b95111709b72fa91c26e976a2d325830e1cac7ce1017c1007c2cafe8",
+     "bytes": 391604
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-07.webp",
+     "sha256": "9d712724b643b0363bc8ed63c32591e58cc52eec2bd2d9ecf99d34f4f0fce833",
+     "baselineSha256": "a65f734b07f98a25b37e095ea3b06ec67811328f56b8e952b77f1987388414c8",
+     "bytes": 242046
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-08.webp",
+     "sha256": "c256b2a58504e45195a8c0a9d37a9ce520f8d07433535c450a228cc7f116687b",
+     "baselineSha256": "2c16f52c2cd2449e58435f0b1a3502f5b0913c5821bded35735c77180f0c5c15",
+     "bytes": 572552
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-09.webp",
+     "sha256": "ca8e80f3409d238b5e92314830696452d136f98e7dd8bc92c9acbd9f97359741",
+     "baselineSha256": "c0f91ac5a4e3170252eebc5d5946fb1ded66c5e24f0d6edd9dec9782647f4273",
+     "bytes": 256124
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-10.webp",
+     "sha256": "225916dba8e3caf987334724678f352dc46115024f01dc9f3a126a07850645a0",
+     "baselineSha256": "1c6edafc5a02004ad8d627bb61f2a1ccf34a05e40608eff6ede18266b7171574",
+     "bytes": 185830
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-11.webp",
+     "sha256": "e51db02f04971f2d5d3e5c806a4f94c0972ae6aaa703b91004bb4fc140c78401",
+     "baselineSha256": "da91b3d7df4a8d62a8a5d0f13d94d876e6e36e2d487a4a303be5d5ed858e01f4",
+     "bytes": 554524
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-12.webp",
+     "sha256": "13d979fb2abb9ae8c67d737868d1a275d4ac3b188c67ad999df35aca1a905d3a",
+     "baselineSha256": "67853937cc52674ff3c07b88e7b24064c57e112e0f4fee238776d18c846a19b4",
+     "bytes": 291934
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-13.webp",
+     "sha256": "0eb4fe4deabc97a2369a474b12a7bdcb6e7ce40fffe17085e46cc0290b3c689a",
+     "baselineSha256": "b09c04ab3c55b26bd05ccfa726118b4c0219652508f3cfad24f20096f2746516",
+     "bytes": 260774
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-14.webp",
+     "sha256": "012a89e3fbb5a9f3651ae7226c9f33d4b8901247cdee2667565fdac5306f8047",
+     "baselineSha256": "f7a484058d1dc2aa6e62386f4e5cbf7c2b8e15c32949e7307f9e2b8e4adb3f12",
+     "bytes": 248740
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-15.webp",
+     "sha256": "4701b742b0da935521c82ef7a2f496af1a6f1924ab38f42e4e9939979856d438",
+     "baselineSha256": "1864d7d91fc1e3a2d922d6fa3d734a1b739b3c2dc455069eda83f06b0e8a2646",
+     "bytes": 543442
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-16.webp",
+     "sha256": "66be1be892181414a1d2feb2401efe7485dc79c637cbbfc2636926bdf735a208",
+     "baselineSha256": "08327d775dd9f49eb3fb0a4466e793bb750226e42b3d3991490766534a0d45ef",
+     "bytes": 550472
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-17.webp",
+     "sha256": "52db95e50afcb229b599949183a51d09862aca7079ffa2ba09ff9ba88b7a6245",
+     "baselineSha256": "44f1cc84eb985eaef6452b27c09e59b0caa7dfd970167f4a75e9455864cde810",
+     "bytes": 513322
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-18.webp",
+     "sha256": "73f06004d0850d07abe7257f79c92d7face0a67355d5954bf25020a51c72eed6",
+     "baselineSha256": "612c51f183fa27d1ee5ab9272b9af8f2c9c4b2fad72ad5f1869a407002d3b362",
+     "bytes": 517038
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-19.webp",
+     "sha256": "ed1ce4d8e9cdf5e0562a8e3cbf512dc3f89d163e86051d4db9bbb161ac940d79",
+     "baselineSha256": "a1c11ef8523af7026fda03d260a6a85856ece3b317069d2d0fb048f59dac9821",
+     "bytes": 234794
+    },
+    {
+     "path": "public/course-decks/soil-health/ts/slide-20.webp",
+     "sha256": "cfb211752952b94b880d2eb7cc493d48dc15cd70b422362450921f2be62e3137",
+     "baselineSha256": "6f67535b74ea318efa3129c7bbe5de203d9519054b5e226ecc6c82d66076e808",
+     "bytes": 258350
+    }
+   ],
+   "preserved": [],
+   "contactSheet": "docs/media/soil-health/qa/ts-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/soil-health/qa/ts-ordinary-20261005-slide-05-390.jpg",
+    "docs/media/soil-health/qa/ts-ordinary-20261005-slide-18-390.jpg"
+   ]
+  },
+  {
+   "module": "water-harvesting",
+   "language": "st",
+   "pairedSource": "docs/narration/water-harvesting.st.paired-draft.json",
+   "pairedSourceSha256": "cfc4a0c95e3a6b5bb9e89a1646ca87db9164bd5a5e3586bb85d07475a622c882",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-01.webp",
+     "sha256": "ace251cc015cc610491ebace0b0d69f775882671642f7899fac1a99053cee0ce",
+     "baselineSha256": "0267aa7476343ae47ea3da0e76748dfa46ce11caa5e7d9dcea2c91adfe680f76",
+     "bytes": 173020
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-02.webp",
+     "sha256": "c08497480c77d3cd1510bb48e37a3e40ec6cc86058a15bb6b3d034ae49ac1731",
+     "baselineSha256": "d0369d5d68bbf45eb2a3a9dd75875ad04fde212519f5f2e96be1e0454c44522c",
+     "bytes": 299150
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-03.webp",
+     "sha256": "86d15125f41b52268958e11ffc49ef4cd11adc52e04ce02da5be8e70dd11fd2e",
+     "baselineSha256": "1267fd081abaed4f756ff23efe9afd5d74d1a917a4ba27b3710a29cc19a4dbe1",
+     "bytes": 313638
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-04.webp",
+     "sha256": "3a207e45b9e92149e08029191a824532909fe654fbffd026f1e3c1cdc20ab0ff",
+     "baselineSha256": "6f6f2791ff955be3d51523d7fc2304058e328216367b1a3a350026bd507569dd",
+     "bytes": 240812
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-05.webp",
+     "sha256": "c2dca9636de4fbf2b24e5f6b4311492751bb7d96916da44152f35d373cee510d",
+     "baselineSha256": "524ce4897c66d133871c6824c5d0de25765b3f15d185e7c8447acab1739bee41",
+     "bytes": 204328
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-06.webp",
+     "sha256": "9f8ef4d87af6c30c86b87c3a638cf9635f31a31887482291271f70b547c03aa6",
+     "baselineSha256": "914e8aad281fc9930a44709e26f9b06f01b719983ea6f76662914e736e5a0637",
+     "bytes": 279122
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-07.webp",
+     "sha256": "dff056b42a67be03785aa514d775a90d3b3b403edd34c41e0b1b79abd1e9e23c",
+     "baselineSha256": "babdd7febff39c2a293a5ade7a94fa1bb0bcf396305f404c4613171628587eae",
+     "bytes": 248700
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-09.webp",
+     "sha256": "8489f1d091c5e3d78940ac34c63a1d93f77d144d46c8dedd6e989aa21be1acbb",
+     "baselineSha256": "4c79e39c4adbb0a369579e73bb4c0a1bd43cff682e45795f0a64b1001b5a86db",
+     "bytes": 177388
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-10.webp",
+     "sha256": "cfcc98a59b109f2d97f781b6b00cf4f1853f1b5789265d90bbc66a47529b1b1b",
+     "baselineSha256": "89212843eebb5f55b06e43a4c6f5907b432fa94df91a821e0d384250a534b386",
+     "bytes": 309990
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-11.webp",
+     "sha256": "d814875e0a746cd7ae9bb9f72b3c1076418a9434b38f8c925421199eea42af2c",
+     "baselineSha256": "9f0ef08c58b7447e31a954e36db18d4bd3b275cfa861751bc1654e34e9ada4f6",
+     "bytes": 311980
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-12.webp",
+     "sha256": "d6d705181edd5700b40febedcb4b04c7140e52c117f4c627f76975b19344fdf2",
+     "baselineSha256": "db21fdf472811c6717eec12070c6cfcfbcca48cdbe8f3c2ec2d5941974b55119",
+     "bytes": 238282
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-13.webp",
+     "sha256": "79908e087a673d1cb41349b0846253e93064b327fbdaa27eb1acd3119eeb4b28",
+     "baselineSha256": "9e736ea8b7e2b9386877edd5bc936eafaf409cea2e1ce4de8dedff5aba602672",
+     "bytes": 263922
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-15.webp",
+     "sha256": "360590c60e3bc6213eea395b41df5d3aeed689efed9d85ee1ff13e7de61592b3",
+     "baselineSha256": "d702df9184aab21bd91e4bdc176851b1fc9e6e46870c69e37c798666aaeaf26b",
+     "bytes": 352780
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-16.webp",
+     "sha256": "cc3303eed397215599b65bb16d6bf890157eb82387b818b34bef3bb9e985d13a",
+     "baselineSha256": "345e3eadd3740659fb70a7da3155af48ae6031cc545ad87b9a806ed8df8f02f1",
+     "bytes": 177996
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-17.webp",
+     "sha256": "72d331f592b379d1de15fe7a0c1acbe34f213b2d604017a889785175404aafda",
+     "baselineSha256": "4e31e9957c985aa37cbf714e0f196f8a95934b2f5a6c182a44bb42feffbc61b4",
+     "bytes": 263000
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-18.webp",
+     "sha256": "ce7f76b99f8ab4071932e8940a158a5b1c9ada90d58f8f8b65c3a19fb55c6146",
+     "baselineSha256": "7a46a2045c3e1598e9652451c97dc58c1521f21c0ee0760d300b68aa52e1889d",
+     "bytes": 582908
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-19.webp",
+     "sha256": "c9779465ad6df5d747cb3056d2b2518f44bd18d52142144b9db0da444ad098ad",
+     "baselineSha256": "b34d715b72f8dbe928f3cde3212d14d594504da11e163cb4c4795726d2111029",
+     "bytes": 305544
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-20.webp",
+     "sha256": "89379a2bcf68927407867131ecf43d700d30937c8cd2517849ece274d64c9817",
+     "baselineSha256": "242b5cb2637e88c69c1d8f455d98ba5d0cf6042ff6b1d476e43f5901f589b16a",
+     "bytes": 271534
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-21.webp",
+     "sha256": "d7aed70ebb1de45d29fb3cfbf22175909d7ec9616e8718976689f7b5fc452500",
+     "baselineSha256": "53e99ad69727611aa40ef0c2ee4fbd2713bcf49ca13a61019cf8300a9e222fe9",
+     "bytes": 226806
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-22.webp",
+     "sha256": "06563154c4f90dd62501f7088cb9a21af8f65f92234ea138c85ef0fb2ffb92dc",
+     "baselineSha256": "be5f4a4f5ba981fb0e46d1e9efec3d54f9ef86c9c391c2a1fd0a37be3984e1d7",
+     "bytes": 297128
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-23.webp",
+     "sha256": "1c458435503b0c1deaacd970c673d23a5fe5d8cc050dcdab250bed4223b28707",
+     "baselineSha256": "dc2d8e80f8a2099253fa5ce8c8e0470dc44407b5ed9ec48a2a759f893c4875d3",
+     "bytes": 185980
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-24.webp",
+     "sha256": "4345485b31c12202173a0db6998a53e6aa5910b774b8c351fce80e970b32c0a1",
+     "baselineSha256": "e245dc5cafbc077635d8491ac7191ebdada363a543248b680d308b5c3c69d12e",
+     "bytes": 223622
+    }
+   ],
+   "preserved": [
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-08.webp",
+     "sha256": "3ab1f7dd8bda5e9048203a8c0741bb57c27aa554e4b25cc0917afb9e486295fc",
+     "baselineSha256": "3ab1f7dd8bda5e9048203a8c0741bb57c27aa554e4b25cc0917afb9e486295fc",
+     "bytes": 195426
+    },
+    {
+     "path": "public/course-decks/water-harvesting/st/slide-14.webp",
+     "sha256": "2c7e3d651dea325d9e3beab3b2f78bbe4617a6dfd23d898e7611bd7104612cd7",
+     "baselineSha256": "2c7e3d651dea325d9e3beab3b2f78bbe4617a6dfd23d898e7611bd7104612cd7",
+     "bytes": 465476
+    }
+   ],
+   "contactSheet": "docs/media/water-harvesting/qa/st-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/water-harvesting/qa/st-ordinary-20261005-slide-11-390.jpg",
+    "docs/media/water-harvesting/qa/st-ordinary-20261005-slide-22-390.jpg"
+   ]
+  },
+  {
+   "module": "water-harvesting",
+   "language": "ve",
+   "pairedSource": "docs/narration/water-harvesting.ve.paired-draft.json",
+   "pairedSourceSha256": "465b72211f98d7adfc82341d77062fe1df1549c57dcfdfa1404d6b9b5af4ce53",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-01.webp",
+     "sha256": "effbbdaca81e8fd16b78a0985100e2b73b70b3e5a3cc090ce6b4ae1f2dd8552e",
+     "baselineSha256": "fa050111792222243e8a50d1325c269107d5320d5b013e25087201ae408e0e5a",
+     "bytes": 171380
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-02.webp",
+     "sha256": "c5e5c0ff1139de546c8e846c382f9c59683e202a6d98a064b89b48581d242578",
+     "baselineSha256": "0916b45b7b615c9f56287b2ec31a1b48d428569182e13db09b9ee73367aca8af",
+     "bytes": 295694
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-03.webp",
+     "sha256": "5f19b8dca5ca0a9c6be218398b374b550fde271a9428fda8b21d6ab440f76d63",
+     "baselineSha256": "45c52e6f4c3c446f7b586f27dcaf011fd26f05548ca8db0c7083841dbc33dd46",
+     "bytes": 323180
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-04.webp",
+     "sha256": "677c7918934af08c5f318ddfba3e9d52ed9c0c2dc630712cdcd79fe6d5ad30ec",
+     "baselineSha256": "6845e983d24f579e330b49178c9a5dfbc925b2c5506cc45ea6de369384898ff9",
+     "bytes": 241794
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-05.webp",
+     "sha256": "1c6bda249871fedff6d9e9040b23326260b8420d87e1e937851e4b277f172387",
+     "baselineSha256": "b284553b3f6242aa239e7a9baa498da503198274598765d5da6a4d673f0c9fcb",
+     "bytes": 203574
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-06.webp",
+     "sha256": "5730ef7e286bb33c80bf1a6b05b77f84c2f415f509370cc6a08774e001ec1cbb",
+     "baselineSha256": "3747847ac1124f2426f7319db8853fdfdd649a6f085765c6864d62ce8df2f9a5",
+     "bytes": 266160
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-07.webp",
+     "sha256": "caf18cf01ff7e95ec047504b2d629ccf0180c0d1f813ee8310d6bd735158b245",
+     "baselineSha256": "494d67af390464c4d7a259970cae5ae286b0685c33391ae9bf81d49769cb5ac9",
+     "bytes": 249048
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-09.webp",
+     "sha256": "46453ed37ca5e9704240c16810b674ba8f061ac944ea226097c02fa1f9955b11",
+     "baselineSha256": "b3a224dd189f5eda311e1727f579d89bcc63f2489f061b02ab082edfb67a2143",
+     "bytes": 177530
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-10.webp",
+     "sha256": "c5c212ca3cc0c676f13146b78d19027c042cd2ffbcd95a847b63b16ffa51588c",
+     "baselineSha256": "91136975a93be75366341d165df26f9cdf6185eae3614811cbef1ea6687bb26c",
+     "bytes": 283906
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-11.webp",
+     "sha256": "0dc937ca11448ba45ca5a2e62ff942e40f7dac5b36ef38adfaafb7df15efc3c5",
+     "baselineSha256": "12d806fbefba5647061b7bd3f057d4b6141f8833d38d795510f3f5e746a336d1",
+     "bytes": 283798
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-12.webp",
+     "sha256": "54f4697271d562ad2e730d3f924fbe776f678c40acda6325dcbcad27713c1a5d",
+     "baselineSha256": "e8dc344ad4146cf4c089ec24ba7e91b3b46b5b7f85ebbefe276280be3def367a",
+     "bytes": 245078
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-13.webp",
+     "sha256": "5e2f275161fed700452bb185335751d7d121a0e274b6b6a75a72f85437ec0e48",
+     "baselineSha256": "4a685693f92ff415abd3283c39c9aa75c9b0593d6858a5d9f25675586f9b5c2d",
+     "bytes": 245168
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-15.webp",
+     "sha256": "7931a770bf4200d5a6b01bd11981d2d7c86ef35a5d82eee8a862fbc2094a9ed7",
+     "baselineSha256": "fa2a9dc9e507174ab7856b2f8ba24afbc961fd47e0f6d8a0260506c26ac76877",
+     "bytes": 353050
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-16.webp",
+     "sha256": "97370ffe0c4301c2156eb2a54fd91b1298261db2d436e955282ef5bdf3fe0d02",
+     "baselineSha256": "df23516d18cdf252562a9b227d1350dda9b5debd5a2f394a25770ce41042d3fc",
+     "bytes": 174272
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-17.webp",
+     "sha256": "a066b6e5e8ad024b824ba582328df67f2148b183bd1e47a82019e987a4d887b8",
+     "baselineSha256": "cd6109f25805b6401941199f667d713ce8afe300fb05f9df9db709cc5d9feae1",
+     "bytes": 269588
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-18.webp",
+     "sha256": "48705042d7443e422c4554105a43d33b3004ea0eab09e97c3dd4b07036b3ab3e",
+     "baselineSha256": "e803dae3a817b0dfac6b33be939e1e5eafe0b813bec0d476448c2994ec910c98",
+     "bytes": 567946
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-19.webp",
+     "sha256": "c565f418547aafe83b592dec6be6a5775c48f2daea5d27c9376c6737e0788429",
+     "baselineSha256": "43ce10b688fcbaaf640f195bc09a01b7ab90f56ca58e9772097af65b8a3762b0",
+     "bytes": 302370
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-20.webp",
+     "sha256": "72d38e6408455e8bfb9f06966a9dd0a69f7a22a3be630421f030c654fe3df84e",
+     "baselineSha256": "6551482303c983a1e226efa3eded9e01794c1ce8c7b14e883370ec2c5bcbc021",
+     "bytes": 274566
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-21.webp",
+     "sha256": "9e071cf00f866f9dc449d2c598cf54ad946d322e7b84469093f5d4cbdd319dd9",
+     "baselineSha256": "76974b5172ec86b266a586b3970f7fd663d6c716d828cbc9265984ca1c55d799",
+     "bytes": 237774
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-22.webp",
+     "sha256": "1d9107eede5a5cbcaa147b88050ddda0e804a08cde8b8f7b6ea7dc1b2c486cc4",
+     "baselineSha256": "d30c5a72b78f79e6c95b2151fe8013e581c4a0ff0cbe22d11e6240f3bea8e02b",
+     "bytes": 315952
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-23.webp",
+     "sha256": "18819e7f8880f10605a4fcb5c6f15532d6a536ec87105633fc67b31fea0d1023",
+     "baselineSha256": "29b4163b2da528e87271bba98ba047415b9efb55ba4d88f8bc5e5c411cc681b0",
+     "bytes": 192920
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-24.webp",
+     "sha256": "8eae11724d204c13defd16b8ea9525e4b722aa5da220e5b5cbb492353c26e6dc",
+     "baselineSha256": "c98ccd7009406ec0d98e667ea26b579c9a62d83cd178e0405bda8c4b621995cc",
+     "bytes": 225864
+    }
+   ],
+   "preserved": [
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-08.webp",
+     "sha256": "0040e5b4e05d376c2da98d83e113b167f0361cde740332bff2bb201bf1b303fe",
+     "baselineSha256": "0040e5b4e05d376c2da98d83e113b167f0361cde740332bff2bb201bf1b303fe",
+     "bytes": 198138
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ve/slide-14.webp",
+     "sha256": "5f05e4b2c32ea4ee9da07aca2eb0d823bd3fcc309cbf79a02fb85da1b3d5a6ef",
+     "baselineSha256": "5f05e4b2c32ea4ee9da07aca2eb0d823bd3fcc309cbf79a02fb85da1b3d5a6ef",
+     "bytes": 462564
+    }
+   ],
+   "contactSheet": "docs/media/water-harvesting/qa/ve-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/water-harvesting/qa/ve-ordinary-20261005-slide-03-390.jpg",
+    "docs/media/water-harvesting/qa/ve-ordinary-20261005-slide-19-390.jpg"
+   ]
+  },
+  {
+   "module": "water-harvesting",
+   "language": "ts",
+   "pairedSource": "docs/narration/water-harvesting.ts.paired-draft.json",
+   "pairedSourceSha256": "a995ccc0501daa5ae09acd9642f3d1908d32068c76e0623945a13b3ec8745414",
+   "changedSlides": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ],
+   "changed": [
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-01.webp",
+     "sha256": "14b3d140b5a3bb2ec6b7233b1d4fa3960d6694ec6688de555ffb191b33faa1fc",
+     "baselineSha256": "21ce3f5cf187f504217511e2b6aee409db94089dccb6b36555347076b4dba5c4",
+     "bytes": 178446
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-02.webp",
+     "sha256": "6637851d3d689245a655b06f1acbb614ce73fcc772e5ea6e7a04b47d98782dad",
+     "baselineSha256": "48525fe63c9a188df38311809ab60f02fd047fb0a36a064ddd07fd2a00d18b2c",
+     "bytes": 302936
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-03.webp",
+     "sha256": "f843d59879fad8bbe8bb0d530acb75caa0de700d05292cc012f4bc7689eed71e",
+     "baselineSha256": "1e9a1d07ee1effb0989be2154b635f6f29232efa466ad6a7193df665e852842e",
+     "bytes": 346198
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-04.webp",
+     "sha256": "bbe76e7f41a27bc1e676008f364ddffb38e1fb437db2bf8314b53d3c49fd6fc4",
+     "baselineSha256": "42485e6f00ef136f149315bd0b25f70e3731f0d3ef9382b4ad8a7f494c4b4104",
+     "bytes": 248998
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-05.webp",
+     "sha256": "48bc38315141281399aeb7ecc33f11571f744c1853c4c3734838202b5586e386",
+     "baselineSha256": "8ba90d6f18ab577248d917e2a7713fc2f5206cfa9cdd3159cc67b6f009fa7241",
+     "bytes": 212932
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-06.webp",
+     "sha256": "b2839f5d3d999dc9d9e49d5b988b8253dd1f53c8a4096ef8877da86907ffe7f1",
+     "baselineSha256": "25a897ae58e59630fcaa225511d9d7319e8d76a3ccf07ab7494402f031bb65f9",
+     "bytes": 302454
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-07.webp",
+     "sha256": "4df0135b84145b2e142be7b6adfb2edae6e3ec446339a88e7abb472a67dc4c76",
+     "baselineSha256": "8416aa26f549d244443c321a8c2555c749e801c3d6ac9aafed06323bdc7c5931",
+     "bytes": 253826
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-09.webp",
+     "sha256": "d4921db8810492c1dde8711a190db5a284a5ce4f2779a4ce8f996f1243244e67",
+     "baselineSha256": "3704ce4a7dfef584495592b8ddeea8f446276636610994a2d1fcdd8ea9d70617",
+     "bytes": 213954
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-11.webp",
+     "sha256": "88405ac1359dc4c8953bd7bb38156fc4ab18a0531fd39be48a0c26b2b5e310bf",
+     "baselineSha256": "054982cc3a45a0d15cff628c633747746fb4613a2ad52387cce12d4ed6703b6e",
+     "bytes": 293028
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-12.webp",
+     "sha256": "a0ad95e1d57f0cfbb953c92f7b0504744af779a609e229eb46c0e849177acea3",
+     "baselineSha256": "254414d3cbba6cd7344705a4c100415663a3c665344ff512859307f9546bcf0f",
+     "bytes": 254518
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-13.webp",
+     "sha256": "40b336c31105106d6c1c3260d561d7768078e86a43dac89866ac7c27dfec1e7f",
+     "baselineSha256": "ea755caae5844594c96d85d97387bb5b16f1d8f3f0a6652c696ea1339963f22c",
+     "bytes": 271356
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-15.webp",
+     "sha256": "b3a4872cf93ffa7c05bb164ce3ceba35b5e72899386111f2315ee2bfa8ee730f",
+     "baselineSha256": "8c22c41d0bfda7e99e8607aad299a56ca4eb3f5928cab6b30da05ade8d2574ac",
+     "bytes": 358914
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-16.webp",
+     "sha256": "46098ca7c6d4fc33e4645adb05f8309bda1b5c8a09a94418fe479a3066d791a8",
+     "baselineSha256": "924112b0b0f29c221689adf646dc7adfca39a3b7d5b01b01e9fafb3334f5cfee",
+     "bytes": 185354
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-17.webp",
+     "sha256": "9a1c4fb78a236ff2a5fc3c0e557fd97408ad3283965d6633f34d3b1ac26b0681",
+     "baselineSha256": "cbe74345c32d4f6e8841c2f87eec7b79b1797ec4547e9b0fbd960b83c014e11f",
+     "bytes": 268190
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-18.webp",
+     "sha256": "efb050164bec0c43cb6d76723b32c0a2ce863c8adb2c249264b91ba82b245e85",
+     "baselineSha256": "b00f54f523c1fc02922f972dc3102d10df57666fc6dff89eb73e307cbab8ea2a",
+     "bytes": 583616
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-19.webp",
+     "sha256": "a6300337a01263b21a42a5b07958a2e9bac15684d95df5dd49c02aea24513548",
+     "baselineSha256": "70d37d95dda4cd4d8ff2bc39fd5f2bd14eee6f15dc5841412026c09391e99609",
+     "bytes": 301264
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-20.webp",
+     "sha256": "9255d739e4f59b6b53ef8fea35e8ff0597bec1853cb199d75b8cab28acd618f1",
+     "baselineSha256": "95688d8b953da91b8e72efa1fb7642d38b118e98c3fde02fa10e04e6e6c1d88c",
+     "bytes": 285632
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-21.webp",
+     "sha256": "46e523b8cf6ecb8ec31108206fd96687f2a734030bbff99e59810a8559b0c2ad",
+     "baselineSha256": "9ff14f9ff5c854e6d1790a25c3ff880ef8807166c438f7551629cff568447ab6",
+     "bytes": 246064
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-22.webp",
+     "sha256": "993746657d470017bf8d72e270815a73c55292a3acee7e8b884d09666b3e0ee6",
+     "baselineSha256": "230e960ab78bbac58d0073e869e1dc9454e2a52d319895bfd244b9d5c065da85",
+     "bytes": 283264
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-23.webp",
+     "sha256": "32a1d6fdf74d9ff7774851cd201f05d23b074a7525473884c9309271aadc0218",
+     "baselineSha256": "958afee79f8d8ff79580e400764f0e3eb18f0ac5bb20abc56995a7ef63a7485a",
+     "bytes": 192088
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-24.webp",
+     "sha256": "63d43f8df67ccfc9e2f0101a44643f315742bee23f37bfc11f172435cb511a6c",
+     "baselineSha256": "45e6f03ba5e86b9eab413733b4a2308dc52ca036313520ce350505511187efdb",
+     "bytes": 243226
+    }
+   ],
+   "preserved": [
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-08.webp",
+     "sha256": "a22a8cf842beda246402ed930418ef55a8c76c3f85b4e4b9e7e2f6e41d941b82",
+     "baselineSha256": "a22a8cf842beda246402ed930418ef55a8c76c3f85b4e4b9e7e2f6e41d941b82",
+     "bytes": 214548
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-10.webp",
+     "sha256": "4522da87bf9c08c3b0b3bed8d6117da46d0c1049bffda8d6e7e5769f39380562",
+     "baselineSha256": "4522da87bf9c08c3b0b3bed8d6117da46d0c1049bffda8d6e7e5769f39380562",
+     "bytes": 251686
+    },
+    {
+     "path": "public/course-decks/water-harvesting/ts/slide-14.webp",
+     "sha256": "c8bf15f13ebc2c07ab08ec006c61ebbf3e0f43c7e77f2c4158e8f54afce9a184",
+     "baselineSha256": "c8bf15f13ebc2c07ab08ec006c61ebbf3e0f43c7e77f2c4158e8f54afce9a184",
+     "bytes": 476710
+    }
+   ],
+   "contactSheet": "docs/media/water-harvesting/qa/ts-ordinary-20261005-contact-sheet.jpg",
+   "phoneSamples": [
+    "docs/media/water-harvesting/qa/ts-ordinary-20261005-slide-03-390.jpg",
+    "docs/media/water-harvesting/qa/ts-ordinary-20261005-slide-06-390.jpg"
+   ]
+  }
+ ]
+}
