@@ -20,6 +20,24 @@ import { createIsiZuluSilentDeckDraftRegistry, resolveIsiZuluSilentDeckDraft } f
 import { resolveIsiZuluSilentDeckDraft as resolveRegisteredSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 import { collectTranscripts } from '../scripts/gen-course-transcripts.mjs';
 
+const readingFullDeckProof = JSON.parse(readFileSync(
+  new URL('../docs/study-translation-reviews/READING-FULL-DECK-APPLIED-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
+const readingFullLearnerProof = JSON.parse(readFileSync(
+  new URL('../docs/study-translation-reviews/READING-FULL-LEARNER-APPLIED-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
+
+function learnerProofField(lesson: any, field: string): { source: string; target: string } | null {
+  if (field === 'body') return { source: lesson.body, target: lesson.body };
+  const keyPoint = field.match(/^keyPoints\[(\d+)\]$/);
+  if (keyPoint) return { source: lesson.keyPoints[Number(keyPoint[1])], target: lesson.keyPoints[Number(keyPoint[1])] };
+  const quizField = field.match(/^quiz\[(\d+)\]\.(question|rationale|options\[(\d+)\])$/);
+  if (!quizField) return null;
+  const question = lesson.quiz[Number(quizField[1])];
+  const selected = quizField[2] === 'question' ? question.q
+    : quizField[2] === 'rationale' ? question.rationale
+      : question.options[Number(quizField[3])];
+  return { source: selected, target: selected };
+}
+
 const PUBLIC = new URL('../public/', import.meta.url);
 const DECK_PLAYER_CSS_URL = new URL('../components/course/DeckPlayer.module.css', import.meta.url).href;
 const DECK_PLAYER_CSS_STUB = "export default { controlStrip: 'controlStrip', playControl: 'playControl', backControl: 'backControl', nextControl: 'nextControl', progress: 'progress', slideStage: 'slideStage' };";
@@ -1046,6 +1064,26 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
   const lesson = COURSE_MODULES.flatMap((module) => module.lessons).find((item) => item.id === 'reading-landscape-l4');
   assert.ok(lesson);
 
+  assert.equal(readingFullLearnerProof.status.startsWith('learner fields applied'), true);
+  assert.equal(readingFullLearnerProof.entries.length, 47);
+  for (const entry of readingFullLearnerProof.entries) {
+    const sourceLesson = COURSE_MODULES.flatMap((module) => module.lessons)
+      .find((item) => item.id === entry.lessonId);
+    assert.ok(sourceLesson, `${entry.lessonId}: learner proof lesson exists`);
+    const sourceField = learnerProofField(sourceLesson, entry.field);
+    assert.ok(sourceField, `${entry.lessonId}/${entry.field}: supported learner field is identified`);
+    assert.equal(sourceField.source, entry.exactSource,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: learner field stays bound to its exact canonical source`);
+    const currentLesson = resolveLearnerLessonPresentation(sourceLesson, entry.languageCode);
+    assert.equal(currentLesson.status, 'draft');
+    const currentField = learnerProofField(currentLesson.content, entry.field);
+    assert.ok(currentField, `${entry.lessonId}/${entry.field}: resolved learner field exists`);
+    assert.equal(currentField.target, entry.appliedTarget,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: current learner target matches its applied proof before historical checks`);
+    assert.match(entry.reviewStatus, /unreviewed/i,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: the review draft remains visibly unreviewed`);
+  }
+
   for (const item of bodyRows) {
     const pairedPath = new URL(`../docs/narration/reading-landscape.${item.lang}.paired-draft.json`, import.meta.url);
     const paired = JSON.parse(readFileSync(pairedPath, 'utf8')) as {
@@ -1069,8 +1107,15 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
 
     const resolved = resolveLearnerLessonPresentation(lesson, item.lang);
     assert.equal(resolved.status, 'draft');
-    assert.ok(resolved.content.body.includes(item.learnerText ?? item.text),
-      'localized clauses must come from the matching current learner draft');
+    const learnerChange = readingFullLearnerProof.entries.find((entry: any) =>
+      entry.lessonId === 'reading-landscape-l4' && entry.languageCode === item.lang && entry.field === 'body');
+    assert.ok(learnerChange, `${item.lang}: the full-deck learner proof records this exact body`);
+    assert.equal(learnerChange.exactSource, lesson.body,
+      `${item.lang}: learner proof remains bound to the complete canonical lesson body`);
+    assert.equal(resolved.content.body, learnerChange.appliedTarget,
+      `${item.lang}: current learner output matches the independently checked applied field`);
+    assert.ok(learnerChange.currentTarget.includes(item.learnerText ?? item.text),
+      'the earlier localized clauses are checked against the learner before-state recorded by the applied proof');
     if (item.lang === 've' && item.index === 0) {
       assert.ok(item.learnerText);
       assert.equal(item.text, item.learnerText.replace('tsha u tshimbila muvuni waṋu.', 'tsha u tshimbila kha land yaṋu.'),
@@ -1086,10 +1131,18 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
       assert.ok(item.condition);
       assert.match(item.text, item.condition,
         'the checked-distance condition must survive the reuse');
+      const body2Change = readingFullDeckProof.records.find((record: any) =>
+        record.identity.language === item.lang && record.identity.slide === 16
+          && record.identity.field === 'body' && record.identity.index === 2);
+      assert.ok(body2Change, `${item.lang}: the full-deck proof records the following paragraph update`);
       const expectedBody2 = unchangedBody2[item.lang as keyof typeof unchangedBody2];
-      assert.equal(slide.target.body[2].status, 'draft');
-      assert.equal(slide.target.body[2].text, expectedBody2,
-        'the following patterns paragraph stays untouched');
+      assert.equal(body2Change.sourceEnglish, slide.english.body[2]);
+      assert.deepEqual(body2Change.before, { status: 'draft', text: expectedBody2 },
+        'the recorded before-state preserves the paragraph that this earlier test expected');
+      assert.deepEqual(slide.target.body[2], body2Change.after,
+        'the later full-deck pass translates the ordinary map-design framing in the following paragraph');
+      assert.equal(slide.target.body[2].status, body2Change.after.status,
+        'the follow-up keeps its recorded draft or mixed review state');
       assert.equal(slide.english.body[2], 'Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.');
     }
   }

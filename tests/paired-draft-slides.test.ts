@@ -55,6 +55,30 @@ const studyOutcomeFields = studyOutcomesProof.changedFiles.flatMap((file: any) =
 const approvedStudyOutcome = (moduleId: string, language: string, slide: number, bodyIndex: number) =>
   studyOutcomeFields.find((field: any) => field.moduleId === moduleId && field.language === language
     && field.slide === slide && field.bodyIndexZeroBased === bodyIndex);
+const readingFullDeckProof = JSON.parse(readFileSync(
+  'docs/study-translation-reviews/READING-FULL-DECK-APPLIED-CANDIDATES-2026-10-05.json', 'utf8'));
+const readingFullDeckRecords = readingFullDeckProof.records;
+const restorePreFullReadingDeck = (packet: any, language: string) => {
+  assert.equal(readingFullDeckProof.reviewStatus, 'unreviewed');
+  assert.equal(readingFullDeckProof.canonicalEnglishUnchanged, true,
+    'the full-deck change leaves canonical English untouched');
+  const fields = readingFullDeckRecords.filter((record: any) => record.identity.language === language);
+  assert.equal(fields.length, language === 'st' ? 19 : language === 've' ? 30 : 27,
+    `${language}: restore every field recorded by the full-deck application`);
+  for (const record of fields) {
+    const { slide, field, index } = record.identity;
+    const row = packet.slides[slide - 1];
+    const source = field === 'heading' ? row.english.heading : row.english.body[index];
+    assert.equal(source, record.sourceEnglish,
+      `${language}:${slide}:${field}:${index ?? ''}: the applied field still names its exact English source`);
+    const live = field === 'heading' ? row.target.heading : row.target.body[index];
+    assert.deepEqual(live, record.after,
+      `${language}:${slide}:${field}:${index ?? ''}: current target must match the recorded applied field before historical reconstruction`);
+    if (field === 'heading') row.target.heading = record.before;
+    else row.target.body[index] = record.before;
+  }
+  return fields;
+};
 const assertCurrentStudyOutcome = (target: any, field: any, label: string) => {
   assert.ok(field, `${label}: later approved source-bound field is recorded`);
   assert.equal(target.status, field.targetStatus, `${label}: retain approved visible status`);
@@ -1741,6 +1765,10 @@ test('Reading Landscape drafts keep exact sources, field-safety conditions and d
   const outcomes = studyOutcomesProof.changedFiles.flatMap((file: any) => file.changedBodyFields);
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    // The newer 76-field Reading batch translated ordinary framing around exact technical holds.
+    // Verify its live targets against the applied proof, then restore its before-values so the
+    // older 20-field preservation snapshot below still tests the historical deck state.
+    restorePreFullReadingDeck(packet, language);
     // Reconstruct the earlier 20-field snapshot across later authorized batches.
     // The frozen outcomes proof carries exact before-target objects for these newer fields.
     for (const change of outcomes.filter((item: any) => item.moduleId === 'reading-landscape' && item.language === language)) {
@@ -1882,6 +1910,9 @@ test('Reading observation drafts preserve exact sources, unlisted fields and sea
   const expectedChangedFields = new Set<string>();
   for (const language of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    // Recreate the proof's immediately preceding snapshot only after confirming every current
+    // field still equals the recorded full-deck result.
+    restorePreFullReadingDeck(packet, language);
     for (const change of outcomes.filter((item: any) => item.moduleId === 'reading-landscape' && item.language === language)) {
       packet.slides[change.slide - 1].target.body[change.bodyIndexZeroBased] = change.beforeTarget;
     }
@@ -2104,10 +2135,26 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
   const frames = proof.renderedFrames as Array<{ module: string; language: string; slide: number; path: string; bytes: number; sha256: string }>;
   assert.equal(frames.length, 9);
   assert.deepEqual(new Set(frames.map(frame => `${frame.module}:${frame.language}:${frame.slide}`)), frameKeys);
+  const fullDeckRenderProof = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/READING-FULL-DECK-RENDER-PROOF-2026-10-05.json', 'utf8'));
   for (const frame of frames) {
     const bytes = readFileSync(frame.path);
-    assert.equal(bytes.byteLength, frame.bytes, `${frame.path}: manifest byte count matches the still`);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), frame.sha256, `${frame.path}: manifest hash matches the still`);
+    const digest = createHash('sha256').update(bytes).digest('hex');
+    const currentRender = fullDeckRenderProof.assets.find((asset: any) =>
+      asset.url === frame.path.replace(/^public/, ''));
+    if (currentRender) {
+      // The later full-deck batch changed the two Reading slide-14 stills after this older
+      // outcomes render. Tie the old hash to the new render's before-hash, then verify current bytes.
+      assert.equal(currentRender.beforeSha256, frame.sha256,
+        `${frame.path}: later redraw starts from the frozen outcomes still`);
+      assert.equal(bytes.byteLength, currentRender.bytes,
+        `${frame.path}: current redraw byte count matches the full-deck render proof`);
+      assert.equal(digest, currentRender.sha256,
+        `${frame.path}: current redraw hash matches the full-deck render proof`);
+    } else {
+      assert.equal(bytes.byteLength, frame.bytes, `${frame.path}: manifest byte count matches the still`);
+      assert.equal(digest, frame.sha256, `${frame.path}: manifest hash matches the still`);
+    }
   }
 });
 
@@ -2844,6 +2891,9 @@ test('Reading frost wording sync matches its independent source-bound seven-fiel
   const changed = new Set<string>();
   for (const language of ['st', 've', 'ts'] as const) {
     const pair = JSON.parse(readFileSync(`docs/narration/reading-landscape.${language}.paired-draft.json`, 'utf8'));
+    // This seven-field review predates the full-deck pass. Check the live applied targets first,
+    // then restore its recorded before-fields to inspect the historical seven-field composition.
+    restorePreFullReadingDeck(pair, language);
     const snapshots = JSON.parse(readFileSync(
       `docs/study-translation-reviews/READING-BODY-DECK-SYNC-BEFORE-${language.toUpperCase()}-2026-10-05.json`, 'utf8'));
     const fields = proof.pairedFields[language].changedFields;

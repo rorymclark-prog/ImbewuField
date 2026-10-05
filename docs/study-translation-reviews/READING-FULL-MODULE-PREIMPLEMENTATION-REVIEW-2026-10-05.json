@@ -1,0 +1,33 @@
+{
+  "revision": "ee62279c19b198c93c7bfe7943b0958e1cde87c0",
+  "branch": "codex/regional-reading-ordinary-completion-20261005",
+  "status": "preimplementation machine-packet review; no learner or media changes",
+  "learnerPacketSha256AtReview": "f7946fe418e7083bf45898de6ce7d3c53332d65fa0cb07d7111050f85ccf233f",
+  "findings": [
+    {
+      "id": "reading-packet-001",
+      "scope": "deck candidate packet",
+      "disposition": "rejected for direct application; drafter consolidating and independent reviewer checking",
+      "reason": "Supplemental clause rows reuse whole-field identities and cannot replace whole target records. Whole-English candidates can regress existing mixed localized prose."
+    },
+    {
+      "id": "reading-packet-002",
+      "scope": "Tshivenda learner L3 quiz1 question and rationale",
+      "disposition": "rejected; repair requested",
+      "reason": "Candidate contains Xitsonga phrases hi ku, leswaku, swin’we ni xitsundzuxo, and Ku famba ka moya ni dyambu. Current learner fields not changed."
+    },
+    {
+      "id": "reading-packet-003",
+      "scope": "Sesotho learner L2 paragraph3",
+      "disposition": "repair required",
+      "reason": "Candidate citrus tse nyane risks changing young citrus to small citrus. English young citrus retained unless age meaning independently secured."
+    },
+    {
+      "id": "reading-packet-004",
+      "scope": "learner whole-body candidates",
+      "disposition": "independent semantic review required",
+      "reason": "Some candidates restyle existing accurate prose or remove helpful technical glosses; these are not completion evidence. Preserve accurate prefixes and source conditions."
+    }
+  ],
+  "acceptance": "Full-source-bound unique identities, no regression of accurate translations, independently repaired language/meaning, exact English visible and unreviewed labels; then runtime and publication gates."
+}

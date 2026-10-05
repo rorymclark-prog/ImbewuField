@@ -47,8 +47,8 @@ test('Reading the Landscape keeps its Tshivenda draft source-paired and held ans
   // The walking action is now translated; safety afterward and the farmer's own land remain binding.
   assert.ok(heldWater.content.body.includes('Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu.'),
     'the translated land walk must still be safe afterward and limited to the farmer’s own land');
-  // Ordinary wording is now drafted; the assessment condition still precedes digging.
-  assert.ok(heldWater.content.body.includes('Ni sa athu u bwa a swale, dam, kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe.'),
+  // The fuller draft uses the checked digging verb; assessment still precedes every named or other structure.
+  assert.ok(heldWater.content.body.includes('Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe.'),
     'site assessment remains required before digging the named or other structure');
   const heldAFrameAnswer = heldWater.content.quiz[0];
   assert.equal(draft.lessons[0].quiz[0].options[0].reviewStatus, 'hold');

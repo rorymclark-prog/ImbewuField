@@ -42,14 +42,14 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       body: pair(
         "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
-        "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha your property. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nAn A-frame level i nga ni thusa u mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Ni sa athu u bwa a swale, dam, kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Soil, slope, drainage, storm flow na safe overflow route zwoṱhe ndi zwa ndeme. Vhudzisani a trained local adviser.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Nangani water works u ya nga tshitentsi nahone ni pulane nḓila yo tsireledzeaho ya maḓi a re manzhisa.",
+        "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha tshitentsi tshaṋu. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nLevel ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani any water works for the site nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
       ),
       keyPoints: [
         pair(
           "Watch from a safe place during rain, then walk the land when it is safe",
           "Sedzani ni fhethu ho tsireledzeaho musi hu tshi na mvula, nahone ni tshimbile muvuni musi zwo no tsireledzea",
         ),
-        pair("An A-frame can mark points at the same height, but it does not show whether earthworks are suitable", "A-frame i nga thusa u maka points at the same height, fhedzi a i sumbedzi whether earthworks are suitable.", 'machine-draft'),
+        pair("An A-frame can mark points at the same height, but it does not show whether earthworks are suitable", "A-frame i nga swaya points at the same height, fhedzi a i sumbedzi arali earthworks dzi tshi tea naa.", 'machine-draft'),
         pair(
           "Water works and safe overflow routes need a site assessment",
           "Mishumo ya maḓi na nḓila dzo tsireledzeaho dza u bva ha maḓi a tsalelo (safe overflow routes) zwi ṱoḓa u toliwa ha tshitentsi",
@@ -73,9 +73,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
               "Whether a swale is safe to build on this slope",
               "Arali swale yo tsireledzea u fhaṱwa kha fhethu heyi ho sendamaho (slope)",
             ),
-            hold(
-"How much stormwater the soil can absorb",
-      ),
+            pair("How much stormwater the soil can absorb", "Uri mavu a nga nwa stormwater zwingafhani", "machine-draft"),
             pair(
               "Where a dam spillway should be built",
               "Hune tshiitavhuyo (spillway) tsha damu tsha fanela u fhaṱwa hone",
@@ -84,13 +82,13 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           sourceCorrectIndex: 0,
           rationale: pair(
             "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "A-frame i nga ni thusa u swaya points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
+            "A-frame i nga thusa u swaya points at the same height. A i toli mavu, nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu, kana uri earthworks dzi a fanelea naa.",
           ),
         },
         {
           question: pair(
             "You observe fast runoff on a sloped KZN site. What should you do before digging a water structure?",
-            "Ni vhona u elela ha maḓi ho ṱavhanyaho kha tshitentsi tsho sendamaho ngei KZN. Ni fanela u ita mini musi ni sa athu gweva tshifhaṱo tsha maḓi?",
+            "Ni vhona u elela ha maḓi ho ṱavhanyaho kha tshitentsi tsho sendamaho ngei KZN. Ni fanela u ita mini musi ni sa athu bwa tshivhumbeo tsha maḓi?",
           ),
           options: [
             pair(
@@ -99,7 +97,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "Check the soil, slope, drainage and storm flow, and plan a safe overflow with a trained local adviser",
-              "Tolani mavu, u sendama ha mavu (slope), u bva ha maḓi na u elela ha dumbu, nahone ni pulane nḓila yo tsireledzeaho ya u bva ha maḓi (safe overflow) na mutoli wa henefho o gudiswaho (trained local adviser)",
+              "Tolani mavu, u sendama ha mavu (slope), nḓila ine maḓi a bva ngayo na storm flow; pulanani nḓila yo tsireledzeaho ya maḓi manzhisa (safe overflow) ni tshi shumisana na mueletshedzi wa henefho o gudiswaho (trained local adviser).",
             ),
             pair(
               "Put it wherever water first appears",
@@ -130,7 +128,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       body: pair(
         "In much of South Africa, especially in winter, the sun is to the north. Its path changes with the season and your location. North-facing slopes often receive more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles. Watch your own site before choosing where to plant tender crops or place buildings.\n\nWinter sun is lower and farther north than summer sun. A wall or shade cloth can shade a bed longer in winter than in summer. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nPawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting.",
-        "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw and young citrus are sensitive to frost. Ni songo vhea tender plants kha known low frost pockets. Ṱhogomelani tshando tsha henefho musi ni sa athu ṱavha.",
+        "Kha zwipiḓa zwinzhi zwa South Africa, zwiholisesa vhuria (winter), ḓuvha ḽi vha ḽi devhula (north). Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu. U sendama ho lavhelesaho devhula (north-facing slopes) lunzhi hu wana ḓuvha ḽinzhisa nahone hu nga duderana ha dovha ha oma. U sendama ho lavhelesaho tshipembe (south-facing slopes) lunzhi hu fhola ha vha na vhunyisi. Tshando (frost) tshi nga kuvhangana kha milindi i re fhasi hune muya wo rotholaho wa dzula hone. Ṱhogomelani tshitentsi tshaṋu musi ni sa athu nanga hune na ḓo ṱavha zwimela zwi sa konḓeleliho tshando (tender crops) kana u vhea zwifhaṱo.\n\nḒuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.\n\nPawpaw na young citrus zwi a kwamea nga frost nga u leluwa. Ni songo vhea zwimela zwi sa konḓeleliho known low frost pockets. Sedzani frost ya henefho musi ni sa athu ṱavha.",
       ),
       keyPoints: [
         pair(
@@ -147,14 +145,14 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "Check local frost before placing tender pawpaw or young citrus",
-          "Tolani tshando (frost) tsha henefho musi ni sa athu vhea pawpaw i sa konḓeleliho kana citrus ṱhukhu",
+          "Tolani tshando (frost) tsha henefho musi ni sa athu vhea pawpaw i sa konḓeleliho kana young citrus",
         ),
       ],
       quiz: [
         {
           question: pair(
             "Where should a farmer first look for a frost-tender young pawpaw on a Highveld smallholding?",
-            "Mulimi u fanela u thoma u sedza ngafhi u itela pawpaw ṱhukhu i sa konḓeleliho tshando (frost-tender) kha tshitentsi tshiṱuku tsha Highveld?",
+            "Mulimi u fanela u thoma u sedza ngafhi u itela young pawpaw i sa konḓeleliho tshando (frost-tender) kha tshitentsi tshiṱuku tsha Highveld?",
           ),
           options: [
             pair(
@@ -223,16 +221,14 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       body: pair(
 "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-"Muya u nga tshinyadza zwimela kha smallholding. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha shango nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani local weather records musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Frost patterns zwi dovha zwa ya nga site. Vhambedzani candidate places through the local frost season. Ṱolani local minimum-temperature records hune dzi wanala hone. Arali records dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise a local agriculture adviser ni sa athu nanga a permanent home for tender seedlings.\n\nFrost ndi ice that forms on a cold surface. Mist fhedzi a i sumbedzi uri ice has formed, nahone frost damage can happen without visible ice. Ṱolani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.\n\nFor tomatoes troubled by late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too."
+"Muya u nga tshinyadza zwimela kha shamba ḽiṱuku. Thungo na maanḓa a muya wa tshinyadzaho zwi shanduka u ya nga vhupo, khalaṅwaha, na your site's ridges and gaps. Tshimbilani kha land nga maḓuvha a re na muya. Ṅwalani hune muya wa bva hone na zwine wa kwama. Sedzani rekhodo dza mutsho wa henefho musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone.\n\nVhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.\n\nFrost ndi ice ine ya vhumbwa kha surface yo rotholaho. Mist fhedzi a i sumbedzi uri ice yo vhumbwa, nahone frost damage i nga itea hu si na ice ine ya vhonala. Sedzani ice na u tshinyala ha zwimela, ni vhambedze fhethu hu re fhasi na u sendama ha mavu, nahone ni tole minimum temperatures hune zwa konadzea. Swayani fhethu hune u rothola kana tshinyalo zwa dzula lwa tshifhinga tshilapfusesa. Keep sensitive plants away from the cold pockets dzine na dzi vhona.\n\nKha matamatisi a re na thaidzo ya late blight, u elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga bvela phanḓa u phaḓalala musi hu tshi dzula ho rothola nahone hu na vhunyisi lwa tshifhinga tshilapfu. U sudzisa bed fhedzi a zwi nga i langi; ṱoḓani na nyeletshedzo ya mutakalo wa zwimela ya henefho."
       ),
       keyPoints: [
         pair(
           "Observe damaging wind direction on your site before placing shelter",
           "Ṱhogomelani thungo ya muya u tshinyadzaho kha tshitentsi tshaṋu musi ni sa athu vhea tsireledzo",
         ),
-        hold(
-"Cold air can drain downhill on clear, still nights and collect in low ground",
-      ),
+        pair("Cold air can drain downhill on clear, still nights and collect in low ground", "Muya wo rotholaho u nga elela u tshi ya fhasi nga vhusiku vhu sa na makole, ho dzikaho, wa kuvhangana fhethu ho tsaho.", "machine-draft"),
         pair(
           "Compare cold-night plant damage and temperatures across your site; visible frost is not the only sign",
           "Vhambedzani tshenyo ya zwimela ya vhusiku vhu rotholaho na mufhiso kha tshitentsi tshaṋu; tshando (frost) tshi vhonalaho a si tshone fhedzi tshiswayo",
@@ -246,7 +242,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
         {
           question: pair(
             "Where should a farmer first look when placing a frost-sensitive seedling nursery on a Highveld smallholding?",
-            "Mulimi u fanela u thoma u sedza ngafhi musi a tshi vhea vhudzulo ha mbeu dzi sa konḓeleliho tshando kha tshitentsi tshiṱuku tsha Highveld?",
+            "Mulimi u fanela u thoma u sedza ngafhi musi a tshi vhea frost-sensitive seedling nursery kha tshitentsi tshiṱuku tsha Highveld?",
           ),
           options: [
             pair(
@@ -269,7 +265,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           sourceCorrectIndex: 2,
           rationale: pair(
             "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "Cold air can settle in low places kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani candidate nursery sites through the local frost season. Ṱolani local minimum-temperature records kana ni vhudzise a local agriculture adviser ni sa athu dzhia a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+            "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
           ),
         },
         {
@@ -298,7 +294,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           sourceCorrectIndex: 1,
           rationale: pair(
             "Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
-            "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.",
+            "U elela ha muya na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. Late blight i nga engedzea kha mutsho wa u rothola na vhunyisi ha tshifhinga tshilapfu, nahone u sudzula bed fhedzi a si pulane yo fhelelaho ya u langa vhulwadze.",
           ),
         },
       ],
@@ -315,7 +311,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       body: pair(
         "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
-        "Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila muvuni waṋu. Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, mitsheto. Olani misevhe ya muya wa tshilimo na wa vhuria, maitele a murunzi, na hune maḓi a elela hone musi hu tshi na mvula.\n\nṰhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.\n\nVheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo nakiswaho yo olwaho luthihi fhedzi.",
+        "Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila muvuni waṋu. Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, fences. Olani misevhe ya muya wa tshilimo na wa vhuria, maitele a murunzi, na hune maḓi a elela hone musi hu tshi na mvula.\n\nṰhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.\n\nVheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo nakiswaho yo olwaho luthihi fhedzi.",
       ),
       keyPoints: [
         pair(
@@ -328,7 +324,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
             "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
-            "Swayani hune khakibos kana blackjack zwa mela zwo tsitsikana, uri ni tole mavu nga vhuronwane; it does not prove compaction.",
+            "Swayani hune khakibos kana blackjack zwa mela zwo tsitsikana uri ni tole mavu nga vhuronwane; zwenezwi a zwi sumbedzi uri mavu o tsitsikana.",
           ),
         pair(
           "Overlay zones and sectors on your base map to complete the design skeleton",
@@ -362,7 +358,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           sourceCorrectIndex: 2,
           rationale: pair(
             "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design.",
-            "Blackjack i nga mela kha mavu o vhilinganywaho, fhedzi u vha hone hayo hu hoṱhe a zwi sumbedzi u tsitsikana ha mavu (compaction). Ṱhogomelani nahone ni tole mavu musi ni sa athu dzhia tsheo ya uri tsinde ḽenelo ḽi amba mini kha nyolo yaṋu.",
+            "Blackjack i nga mela kha mavu o vhilinganywaho, fhedzi u vha hone hayo hu hoṱhe a zwi sumbedzi u tsitsikana ha mavu (compaction). Ṱhogomelani nahone ni tole mavu musi ni sa athu dzhia tsheo ya uri patch i amba mini kha design yaṋu.",
           ),
         },
         {
@@ -375,7 +371,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
               "Wind direction never changes in SA",
               "Thungo ya muya a i shanduki na kathihi kha SA",
             ),
-            pair("They can come from different directions, changing where windbreaks and tender crops should go", "Thungo dza hone dzi nga fhambana; changing where windbreaks and tender crops should go.", 'machine-draft'),
+            pair("They can come from different directions, changing where windbreaks and tender crops should go", "Zwi nga bva thungo dzo fhambanaho, zwa shandula hune windbreaks na zwimela zwi sa konḓeleliho zwa fanela u vhewa hone.", 'machine-draft'),
             pair(
               "Wind only matters in winter on the Highveld",
               "Muya u vha wa ndeme fhedzi vhuria ngei Highveld",
@@ -388,7 +384,7 @@ export const TSHIVENDA_READING_LANDSCAPE_DRAFT: TshivendaCourseModuleDraft = {
           sourceCorrectIndex: 1,
           rationale: pair(
             "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately.",
-            "U shanduka ha muya kha khalaṅwaha zwi amba uri tshithivhela-muya (windbreak) kana u vhewa ha zwimela hune ha shuma kha iṅwe khalaṅwaha zwi nga vha zwo khakhea kha iṅwe — ngauralo zwoṱhe zwi fanela u swaywa thungo.",
+            "U shanduka ha muya kha khalaṅwaha zwi amba uri tshithivhela-muya (windbreak) kana u vhewa ha zwimela hune ha shuma kha iṅwe khalaṅwaha zwi nga vha zwo khakhea kha iṅwe — ngauralo swayani muya wa tshilimo na wa vhuria nga u fhambanya.",
           ),
         },
       ],
