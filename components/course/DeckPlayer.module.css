@@ -464,3 +464,11 @@
   border-radius: 12px;
   background: #FFFEFA;
 }
+
+/* Wrapped voice choices must not sit beneath the image zoom tools. */
+.expanded .zoomBar,
+.expanded .zoomLink {
+  top: calc(max(8px, env(safe-area-inset-top)) + var(--deck-header-height, 150px) + 8px);
+}
+.expanded:has(.sourcePair[open]) .zoomBar,
+.expanded:has(.sourcePair[open]) .zoomLink { display: none; }

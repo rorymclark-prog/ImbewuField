@@ -137,6 +137,18 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [imageZoom, setImageZoom] = useState(1);
   const [viewportSize, setViewportSize] = useState({ width: 0, height: 0 });
   const playerRef = useRef<HTMLDialogElement | null>(null);
+  const playerHeaderRef = useRef<HTMLDivElement | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(150);
+  useEffect(() => {
+    if (!expanded || !playerHeaderRef.current) return;
+    const header = playerHeaderRef.current;
+    const measure = () => setHeaderHeight(header.getBoundingClientRect().height);
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, [expanded, narrationChoice, appLang]);
   const imageViewerRef = useRef<HTMLDialogElement | null>(null);
   const imageButtonRef = useRef<HTMLButtonElement | null>(null);
   const imageCloseRef = useRef<HTMLButtonElement | null>(null);
@@ -473,8 +485,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       onKeyDown={onDeckKeyDown}
       onCancel={(event) => { event.preventDefault(); exitExpanded(); }}
       className={`${styles.player} ${expanded ? styles.expanded : ''} ${showReflowedSlide ? styles.textSlide : ''} ${expanded && !chromeVisible ? styles.chromeHidden : ''}`}
+      style={{ '--deck-header-height': `${headerHeight}px` } as CSSProperties}
     >
-      <div className={styles.playerHeader}>
+      <div ref={playerHeaderRef} className={styles.playerHeader}>
         <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.06em', color: MUTED, textTransform: 'uppercase' }}>
           {index + 1} / {total}
         </span>

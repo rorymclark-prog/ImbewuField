@@ -30,12 +30,14 @@ rejected on second check; its full isiZulu clause retains major digging work.
 | STUDY-ZU-006 | Registered recordings/artwork contain independently identified wording errors. | Playback withheld; corrections remain open | 24 scoped review holds use English still/source and omit the affected isiZulu voice. Whole continuous narration is withheld where it contains a held clip. English voice requires explicit selection. Files remain intact. Source drift also withdraws the paired ZU presentation. |
 | STUDY-ZU-007 | Offline downloads could include the faulty voice or a different still from the displayed fallback. | Implemented; needs verification | Packs follow resolved images and central voice URLs. No automatic English audio, asset eviction or fetching. Verify changed pack selection and cached bytes on phone. |
 
+| STUDY-ZU-008 | Expanded image zoom controls covered the wrapped No narration choice on a 390px phone. | Implemented; needs final preview verification | Root observed on 897e741. Measured header height moves zoom controls below voice choices; source reading hides image-only zoom tools. |
+
 ## Verification
 
 - Typecheck: passed after all implementation edits.
 - Full suite: 4624 tests, 4623 pass, zero failures, one unchanged shape-sync TODO. Historical URL expectations now require exactly the playable clips and displayed stills; raw-media coverage is retained.
 - Whitespace: passed.
-- Output inspected: component interactions tested; actual 390px layout pending.
+- Output inspected: root viewed actual 897e741 Intro1 normal and expanded source reading at DOM390×844. Source/English scroll worked; wrapped header control overlap was reproduced and repaired. Final preview and other modules/offline remain pending.
 - Limits: machine checks do not establish fluent pronunciation, local farming approval or Shangani comprehension. No media regeneration or cold-start offline claim.
 
 This changes the picture for held slides by displaying the English source still.
