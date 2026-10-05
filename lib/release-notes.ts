@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '74ccf8e6', changes: [
+    'isiZulu slides now offer exact English beside visibly unreviewed draft wording.',
+    'Slides with wording errors show English and pause their isiZulu recordings.',
+    'Offline packs include the displayed slides without adding English audio automatically.',
+  ], tour: [
+    { title: 'Compare slide wording',
+      where: 'Study → isiZulu slides',
+      detail: 'Open Read slide for English; choose English narration when a recording is withheld.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'aa5271b1', changes: [
     'Study isiZulu drafts now show exact English for lessons, key points and answers.',
     'Checked sources and terminology repairs keep the same answers and existing audio.',
