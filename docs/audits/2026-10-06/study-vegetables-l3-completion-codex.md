@@ -1,7 +1,7 @@
 # Vegetables L3 ordinary assessment completion audit — 2026-10-06
 
 - Auditor: Codex; separate first and second semantic reviewers, followed by root review.
-- Reviewed revision: `3f90e94905ccc45de6b1d740591c8f9984e1df49`, branch `codex/regional-vegetables-l3-completion-20261006`, uncommitted learner/test/document changes.
+- Reviewed revision: content `26b40a845def85b1a7862a40d4ea41d305c41c05` from base `3f90e94905ccc45de6b1d740591c8f9984e1df49`; history merge `9b345bb470218f78c6824ec75a32e5181aa86d94` includes main `4b73918596f192c1d662103a36063329ea071dd7` on `codex/regional-vegetables-l3-completion-20261006`.
 - Deployment inspected: none for this L3 batch.
 - Previous audit: [Vegetables L4 ordinary drafts](../2026-10-05/study-vegetables-l4-ordinary-codex.md); carries `STUDY-RES-002` and the already verified `STUDY-VEG-001` forward.
 - Scope: ST/VE/TS Vegetables L3 learner metadata, key points and assessments; preservation checks for all existing bodies and paired slides12–14.
@@ -27,16 +27,16 @@ The final layer changes30 target leaves (ST1, VE16, TS13) and their local Englis
 
 - Typecheck: original `npx tsc --noEmit` passed.
 - Focused tests:38 passed,0 failed. Six new meaningful rules run through the existing registered Sesotho Vegetables test; no package registration changes.
-- Full suite: root gate pending after actual diff review.
+- Full suite: original `npm test` passed after the history merge: 4,696 tests, 4,695 passed, 0 failed, 1 existing TODO; exit 0. Root also reviewed the actual content/test diff and all 34 accepted strings before committing.
 - Whitespace: `git diff --check` passed.
 - All34 canonical/native/current/resolver bindings matched before application. Whole-module projection and rewind match every source, body, localized prefix and unlisted field exactly.
 - All34 changed-source cases plus both answer-index mutations withdraw stale learner drafts. Tests retain young-leaf age, after-root/early-water timing, grain/vine/pole and half-below-ground composition, staple/only/multiple-years identity, seed possibilities and negatives, always, no cultivation, wetter-than-maize and exact would/niche precision holds.
 - All48 whole-source paragraph reuse matches on regional slides12–14 already have identical visible learner wording. Their current schemas, source cards, headings and file hashes remain exact. No render, asset change or SW migration is needed.
 - Historical L1/L2/L4 whole-module tests layer in the documented30 leaves with dated reasons while keeping their entire preservation assertions. Older TS hold-only assertions reconstruct the prior layer only after checking every current source/target/status and actual resolver output. No assertion coverage was deleted.
-- Canonical English, saved geometry, species, numbers, PLAN_VERSION, media, narration, SW/offline files and release notes are unchanged.
+- Canonical English, saved geometry, species, numbers, PLAN_VERSION, media, narration and SW/offline files are unchanged by the Vegetables layer. Farmer-facing notes bind the actual history merge.
 - Output inspected: root inspected the existing unchanged illustration before authorization. No new phone preview, learner feedback, pronunciation or fluent/local-farming approval is claimed. This changes learner text, with no slide-picture change.
 - The original VE conceptual-review record is historical; its former hold inventory is not a claim that the new learner assessments remain held.
 
 ## Next continuation
 
-Root reviews the actual uncommitted diff and whole-module proof, then runs the original ordered full gates and writes farmer-facing notes. Require exact-head CI and native build-info, actual390px learner/source/alt/keypoint and B,B feedback evidence before publication. English narration remains optional; no new pack or media render follows from this learner-only change. Preserve the visibly unreviewed status and exact source pairing; no fluent approval is invented as a mandatory prepublication gate.
+Root has reviewed the actual content/test diff and whole-module proof; the original ordered gates passed after integration. Farmer-facing notes await root review before push. Require exact-head CI and native build-info, actual390px learner/source/alt/keypoint and B,B feedback evidence before publication. English narration remains optional; no new pack or media render follows from this learner-only change. Preserve the visibly unreviewed status and exact source pairing; no fluent approval is invented as a mandatory prepublication gate.

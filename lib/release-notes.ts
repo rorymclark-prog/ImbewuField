@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '9b345bb4', changes: [
+    'Regional staple crop lessons add unreviewed key points and answer drafts.',
+    'Exact English stays beside drafts; uncertain crop and seed terms remain precise.',
+  ], tour: [
+    { title: 'Compare staple crop drafts',
+      where: 'Study → Vegetables → Staple Crops',
+      detail: 'Read regional key points and answer feedback beside exact English.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: 'eab3e362', changes: [
     'Water lesson and slide drafts clarify demand, low stores and when to stop reuse.',
     'Exact English stays beside unreviewed drafts; selected saved slides refresh once.',
