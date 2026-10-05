@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { resolveCourseModulePresentation, regionalModuleDraftBadge } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT as st } from '../lib/course-translation-drafts-st-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as ts } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as ve } from '../lib/course-translation-drafts-ve-market-community.ts';
@@ -100,5 +101,28 @@ test('Market L2/L3, illustration descriptions and every other registry property 
     delete actual.title; delete actual.description; delete prior.title; delete prior.description;
     (actual.lessons as unknown[])[0] = null; prior.lessons[0] = null;
     assert.deepEqual(actual, prior, 'Module identity, source metadata and unreviewed classification are preserved');
+  }
+});
+
+// Phone review found the card registry omitted VE/TS Market even though lesson drafts were registered.
+// Test the learner-facing resolver and its source guards, not only the saved translation strings.
+test('Market cards expose the registered regional title and description only for the exact source', () => {
+  for (const entry of entries) {
+    const language = entry.code as 'st' | 'ts' | 've';
+    const shown = resolveCourseModulePresentation(canonical, language);
+    assert.equal(shown.status, 'draft');
+    assert.equal(shown.title, target(entry.module.title, entry.key));
+    assert.equal(shown.description, target(entry.module.description, entry.key));
+    assert.match(regionalModuleDraftBadge(canonical, language), /AI draft.*review pending/);
+    for (const changed of [
+      { ...canonical, title: canonical.title + ' changed' },
+      { ...canonical, description: canonical.description + ' changed' },
+      { ...canonical, durationMins: canonical.durationMins + 1 },
+      { ...canonical, category: 'foundation' as const },
+    ]) {
+      const fallback = resolveCourseModulePresentation(changed, language);
+      assert.deepEqual(fallback, { title: changed.title, description: changed.description, status: 'english-fallback' },
+        'A changed canonical module must withdraw its old paired card draft');
+    }
   }
 });
