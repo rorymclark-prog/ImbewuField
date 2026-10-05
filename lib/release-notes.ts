@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '96d4cf4d', changes: [
+    'Succession lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Exact English stays beside unreviewed drafts and difficult technical terms.',
+    'Six silent cards match the lesson and refresh in saved slide packs.',
+  ], tour: [
+    { title: 'Compare Succession drafts',
+      where: 'Study → Vegetables → Succession Planting and Intercropping',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 8–10.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'c4d5c68c', changes: [
     'Vegetables pest lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
     'Exact English stays beside unreviewed drafts and difficult treatment terms.',
