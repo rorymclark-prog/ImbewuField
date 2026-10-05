@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '5 October 2026', sha: '74ccf8e6', changes: [
+  { when: '5 October 2026', sha: '2e18e52f', changes: [
     'isiZulu slides now offer exact English beside visibly unreviewed draft wording.',
     'Slides with wording errors show English and pause their isiZulu recordings.',
     'Offline packs include the displayed slides without adding English audio automatically.',
