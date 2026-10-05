@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '96e45c79', changes: [
+    'Study pictures have 32 unreviewed isiZulu descriptions beside exact English.',
+    'Difficult image terms stay in English for facilitator explanation.',
+  ], tour: [
+    { title: 'Compare picture descriptions',
+      where: 'Study → Open a lesson → Lesson picture',
+      detail: 'Read the isiZulu draft description beside its English source.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '96d4cf4d', changes: [
     'Succession lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
     'Exact English stays beside unreviewed drafts and difficult technical terms.',
