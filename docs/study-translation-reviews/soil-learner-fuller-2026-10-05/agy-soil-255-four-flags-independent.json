@@ -1,0 +1,263 @@
+{
+  "title": "Independent bounded review of four Agy Soil biological-breakdown flags",
+  "date": "2026-10-05",
+  "reviewedHead": "7a64e5cd4b61710b18f1fc89e059e5fb022be7d5",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "flagPacket": "/tmp/agy-soil-255-material-flags.json",
+  "flagPacketSha256": "f0c0a184613f58747bd1498b7a1de34dfd20cffaa2f2ba996feb129bb15a2f2d",
+  "scope": "Four exact native paragraphs and every complete-source-exact deck reuse; no re-audit of all 255 rows.",
+  "decision": "All four process predicates warrant an exact English source-bound break down/broken down hold as the safest bounded repair. Agy’s local alternatives remain unapproved candidates.",
+  "materialClaimBoundary": "Agree that biological decomposition must remain distinguishable from physical fragmentation. Do not independently certify Agy’s stronger claim that each word specifically requires violent mechanical destruction or that biochemical readings are impossible in context.",
+  "independentSourceReasoning": "Bacteria/fungi cycling organic matter and compost under managed conditions establish biological decomposition in these supplied source sentences. No new agronomic fact or procedure is introduced by keeping their exact English predicate.",
+  "lexicalEvidence": [
+    {
+      "language": "st",
+      "source": "Mabille Sesuto-English Dictionary, archived by University of Cape Town eMandulo",
+      "url": "https://emandulo.apc.uct.ac.za/collection/FHYA%20Depot/Mabille_Adolphe_Sesuto_English_Dictionary.pdf",
+      "boundedSupport": "Historical qhaqholla entry includes undo/demolition senses, supporting concern about dismantling. Historical spelling and senses do not certify all modern contextual usage."
+    },
+    {
+      "language": "ve/ts",
+      "source": "Independent machine lexical reading of exact supplied targets",
+      "boundedSupport": "Mechanical-breaking readings are plausible, but no authoritative modern botanical/agronomic usage approval was established in this bounded check."
+    }
+  ],
+  "scopeChecks": {
+    "allFourNativeSourcesAndDraftsExact": true,
+    "allFourDeckReusesExact": true,
+    "affectedNativeBodyFields": 4,
+    "affectedDeckFields": 4,
+    "eachRepairReplacesOnePredicateOnly": true,
+    "canonicalEnglishPreserved": true,
+    "otherParagraphsPreserved": true,
+    "statusesRemainUnreviewed": true
+  },
+  "rows": [
+    {
+      "id": "soil-health/st/soil-health-l1/body/paragraph[0]",
+      "language": "st",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "agyProposal": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho bodisa organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "independentCurrentReading": "Soil has many types of living things. Bacteria and fungi assist in taking apart organic matter and circulating nutrients.",
+      "meaningDisposition": "repair-ambiguous-process-with-exact-source-technical-hold",
+      "reason": "The source is about bacterial/fungal biological breakdown or managed compost decomposition. This target predicate admits a physical dismantling/crushing/fragmentation reading. That ambiguity can misdescribe the process, so preserve the exact source predicate rather than introduce another unreviewed local technical term. Context may support a figurative reading; this is not a claim that every fluent reader would misunderstand it.",
+      "agyProposalDisposition": "unreviewed decomposition-term candidate; not automatically accepted",
+      "agyProposalAssessment": "The proposed local rot/decompose causative appears intended to distinguish biological decomposition, but this check does not establish fluent technical usage, agreement, aspect or local farming comprehension. Retain it as an optional facilitator-review candidate.",
+      "proposedTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "minimalReplacement": {
+        "old": "qhaqha",
+        "new": "break down",
+        "occurrences": 1,
+        "sourceEnglishExactTechnicalTerm": true
+      },
+      "proposedCompleteLearnerBody": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.\n\nFungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.\n\nSheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.\n\nKenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.\n\nSand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.\n\nEna ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.\n\nLera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.\n\nBapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.\n\nNgola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.\n\nHo thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.\n\nMmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.\n\nBatla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "allOtherNativeParagraphsUnchanged": true,
+      "nativeSourceExact": true,
+      "nativeDraftExact": true,
+      "nativeReviewStatus": "machine-draft",
+      "proposedNativeReviewStatus": "machine-draft",
+      "matchingDeckFields": [
+        {
+          "slide": 4,
+          "bodyIndex": 0,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "targetObject": {
+            "status": "draft",
+            "text": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          "currentTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+          "targetEqualsFlagDraft": true
+        }
+      ],
+      "affectedDeckFieldCount": 1,
+      "deckSynchronizationRequired": true,
+      "sourceOrCanonicalEditRequired": false,
+      "sourceGeometrySpeciesNumbersChanges": false,
+      "retainedTechnicalHolds": [
+        {
+          "text": "break down",
+          "reason": "Exact source biological-process predicate retained to avoid interpreting microbial decomposition as mechanical fragmentation; pairing and unreviewed notice remain."
+        }
+      ],
+      "fluentApproval": false,
+      "localFarmingApproval": false,
+      "shanganiApproval": false
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[0]",
+      "language": "st",
+      "lessonId": "soil-health-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "currentTarget": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+      "agyProposal": "Compost ke organic matter e bodisitsweng tlas'a maemo a laolwang.",
+      "independentCurrentReading": "Compost is organic material being dismantled/undone in a controlled manner.",
+      "meaningDisposition": "repair-ambiguous-process-with-exact-source-technical-hold",
+      "reason": "The source is about bacterial/fungal biological breakdown or managed compost decomposition. This target predicate admits a physical dismantling/crushing/fragmentation reading. That ambiguity can misdescribe the process, so preserve the exact source predicate rather than introduce another unreviewed local technical term. Context may support a figurative reading; this is not a claim that every fluent reader would misunderstand it.",
+      "agyProposalDisposition": "unreviewed decomposition-term candidate; not automatically accepted",
+      "agyProposalAssessment": "The proposed local rot/decompose causative appears intended to distinguish biological decomposition, but this check does not establish fluent technical usage, agreement, aspect or local farming comprehension. Retain it as an optional facilitator-review candidate.",
+      "proposedTarget": "Compost ke organic matter e broken down ka tsela e laolwang.",
+      "minimalReplacement": {
+        "old": "qhaqhollwang",
+        "new": "broken down",
+        "occurrences": 1,
+        "sourceEnglishExactTechnicalTerm": true
+      },
+      "proposedCompleteLearnerBody": "Compost ke organic matter e broken down ka tsela e laolwang.\n\nCompost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.\n\nNako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.\n\nKopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.\n\nHa qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.\n\nHlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.\n\nKarolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.\n\nBoloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.\n\nU se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.\n\nBoloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.\n\nSebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.\n\nHlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+      "allOtherNativeParagraphsUnchanged": true,
+      "nativeSourceExact": true,
+      "nativeDraftExact": true,
+      "nativeReviewStatus": "machine-draft",
+      "proposedNativeReviewStatus": "machine-draft",
+      "matchingDeckFields": [
+        {
+          "slide": 9,
+          "bodyIndex": 0,
+          "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+          "targetObject": {
+            "status": "draft",
+            "text": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          "currentTarget": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+          "targetEqualsFlagDraft": true
+        }
+      ],
+      "affectedDeckFieldCount": 1,
+      "deckSynchronizationRequired": true,
+      "sourceOrCanonicalEditRequired": false,
+      "sourceGeometrySpeciesNumbersChanges": false,
+      "retainedTechnicalHolds": [
+        {
+          "text": "broken down",
+          "reason": "Exact source biological-process predicate retained to avoid interpreting microbial decomposition as mechanical fragmentation; pairing and unreviewed notice remain."
+        }
+      ],
+      "fluentApproval": false,
+      "localFarmingApproval": false,
+      "shanganiApproval": false
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[0]",
+      "language": "ve",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+      "agyProposal": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u sinisa organic matter na u cycle nutrients.",
+      "independentCurrentReading": "Soil has many kinds of living organisms; bacteria and fungi assist in breaking/crushing organic matter and cycling nutrients.",
+      "meaningDisposition": "repair-ambiguous-process-with-exact-source-technical-hold",
+      "reason": "The source is about bacterial/fungal biological breakdown or managed compost decomposition. This target predicate admits a physical dismantling/crushing/fragmentation reading. That ambiguity can misdescribe the process, so preserve the exact source predicate rather than introduce another unreviewed local technical term. Context may support a figurative reading; this is not a claim that every fluent reader would misunderstand it.",
+      "agyProposalDisposition": "unreviewed decomposition-term candidate; not automatically accepted",
+      "agyProposalAssessment": "The proposed local rot/decompose causative appears intended to distinguish biological decomposition, but this check does not establish fluent technical usage, agreement, aspect or local farming comprehension. Retain it as an optional facilitator-review candidate.",
+      "proposedTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+      "minimalReplacement": {
+        "old": "kwashekanya",
+        "new": "break down",
+        "occurrences": 1,
+        "sourceEnglishExactTechnicalTerm": true
+      },
+      "proposedCompleteLearnerBody": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.\n\nHezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.\n\nPale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.\n\nSedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+      "allOtherNativeParagraphsUnchanged": true,
+      "nativeSourceExact": true,
+      "nativeDraftExact": true,
+      "nativeReviewStatus": "machine-draft",
+      "proposedNativeReviewStatus": "machine-draft",
+      "matchingDeckFields": [
+        {
+          "slide": 4,
+          "bodyIndex": 0,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "targetObject": {
+            "status": "draft",
+            "text": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          "currentTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+          "targetEqualsFlagDraft": true
+        }
+      ],
+      "affectedDeckFieldCount": 1,
+      "deckSynchronizationRequired": true,
+      "sourceOrCanonicalEditRequired": false,
+      "sourceGeometrySpeciesNumbersChanges": false,
+      "retainedTechnicalHolds": [
+        {
+          "text": "break down",
+          "reason": "Exact source biological-process predicate retained to avoid interpreting microbial decomposition as mechanical fragmentation; pairing and unreviewed notice remain."
+        }
+      ],
+      "fluentApproval": false,
+      "localFarmingApproval": false,
+      "shanganiApproval": false
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[0]",
+      "language": "ts",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+      "agyProposal": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku bolisa organic matter ni ku cycle nutrients.",
+      "independentCurrentReading": "Earth has many kinds of living things; bacteria and fungi help crumble/break organic matter and cycle nutrients.",
+      "meaningDisposition": "repair-ambiguous-process-with-exact-source-technical-hold",
+      "reason": "The source is about bacterial/fungal biological breakdown or managed compost decomposition. This target predicate admits a physical dismantling/crushing/fragmentation reading. That ambiguity can misdescribe the process, so preserve the exact source predicate rather than introduce another unreviewed local technical term. Context may support a figurative reading; this is not a claim that every fluent reader would misunderstand it.",
+      "agyProposalDisposition": "unreviewed decomposition-term candidate; not automatically accepted",
+      "agyProposalAssessment": "The proposed local rot/decompose causative appears intended to distinguish biological decomposition, but this check does not establish fluent technical usage, agreement, aspect or local farming comprehension. Retain it as an optional facilitator-review candidate.",
+      "proposedTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+      "minimalReplacement": {
+        "old": "fayelela",
+        "new": "break down",
+        "occurrences": 1,
+        "sourceEnglishExactTechnicalTerm": true
+      },
+      "proposedCompleteLearnerBody": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.\n\nFungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.\n\nLanguta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.\n\nChela misava na mati eka jar leyi u vonaka leswi nga endzeni ka yona, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.\n\nSand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended nkarhi wo leha swinene.\n\nLowu i ntoloveto wo dyondza wo ringanyeta. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka soil texture leyi pimiweke kahle.\n\nThick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.\n\nFananisa settled layers, kutani u twa misava ensin'wini.\n\nTsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.\n\nCompaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.\n\nMuhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.\n\nLanguta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+      "allOtherNativeParagraphsUnchanged": true,
+      "nativeSourceExact": true,
+      "nativeDraftExact": true,
+      "nativeReviewStatus": "machine-draft",
+      "proposedNativeReviewStatus": "machine-draft",
+      "matchingDeckFields": [
+        {
+          "slide": 4,
+          "bodyIndex": 0,
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "targetObject": {
+            "status": "draft",
+            "text": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; unreviewed machine draft, no fluent/local farming approval."
+          },
+          "currentTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+          "targetEqualsFlagDraft": true
+        }
+      ],
+      "affectedDeckFieldCount": 1,
+      "deckSynchronizationRequired": true,
+      "sourceOrCanonicalEditRequired": false,
+      "sourceGeometrySpeciesNumbersChanges": false,
+      "retainedTechnicalHolds": [
+        {
+          "text": "break down",
+          "reason": "Exact source biological-process predicate retained to avoid interpreting microbial decomposition as mechanical fragmentation; pairing and unreviewed notice remain."
+        }
+      ],
+      "fluentApproval": false,
+      "localFarmingApproval": false,
+      "shanganiApproval": false
+    }
+  ],
+  "limits": [
+    "Read-only; no repository files edited, render, commit, push or publication.",
+    "No fluent, local farming, institutional qualification or Shangani approval.",
+    "Repair proposals preserve existing surrounding wording. Broader stylistic or condition-aspect refinements are excluded.",
+    "Native/deck source strings are unchanged. The four target reuses must be kept aligned if root implements them and their rendered output must be inspected."
+  ]
+}

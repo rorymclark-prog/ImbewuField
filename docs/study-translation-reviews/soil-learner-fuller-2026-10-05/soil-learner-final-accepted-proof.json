@@ -1,0 +1,58 @@
+{
+  "title": "Final Soil learner decomposition-hold layer",
+  "historicalPacketSha256": "5728a9b2899c4e18562e3b716bdea53e9dabaf5524509c382910457aa911a84f",
+  "finalPacketSha256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+  "counts": {
+    "fields": 153,
+    "changedFields": 77,
+    "units": 255,
+    "changedUnits": 141
+  },
+  "changes": [
+    {
+      "id": "soil-health/st/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "before": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho qhaqha organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "after": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "oldTerm": "qhaqha",
+      "exactEnglishHold": "break down"
+    },
+    {
+      "id": "soil-health/st/soil-health-l2/body/paragraph[0]",
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "before": "Compost ke organic matter e qhaqhollwang ka tsela e laolwang.",
+      "after": "Compost ke organic matter e broken down ka tsela e laolwang.",
+      "oldTerm": "qhaqhollwang",
+      "exactEnglishHold": "broken down"
+    },
+    {
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "before": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.",
+      "after": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+      "oldTerm": "kwashekanya",
+      "exactEnglishHold": "break down"
+    },
+    {
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "before": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku fayelela organic matter ni ku cycle nutrients.",
+      "after": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+      "oldTerm": "fayelela",
+      "exactEnglishHold": "break down"
+    },
+    {
+      "id": "soil-health/st/soil-health-l3/body/paragraph[7]",
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "before": "Mokelikeli o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+      "after": "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+      "oldTerm": "Mokelikeli",
+      "regionalSpellingRepair": "Mokedikedi",
+      "authority": "Root authorized SA orthography repair; existing heading and checkSouthAfricanSesotho agree."
+    }
+  ],
+  "allOriginalSourceCurrentTuplesPreserved": true,
+  "allOtherUnitsUnchanged": true,
+  "nativeChecks": "Current tests bind all153 canonical source and final targets; native whole-object rewind preserves all unlisted properties.",
+  "scope": "Four independently confirmed decomposition term holds and one root-authorized SA Sesotho spelling repair, preserving all other unit targets."
+}

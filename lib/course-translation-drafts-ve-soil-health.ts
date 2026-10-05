@@ -30,7 +30,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
-        "tshivendaDraft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u kwashekanya organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani soil na water kha clear jar, ni engedze little suitable dispersing detergent. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i settles pele. Silt i settles nga murahu, ngeno clay i tshi nga sala i suspended much longer.\n\nHezwi ndi rough learning exercise. Clumps na clay i sa athu settled zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani zwipiḓa zwe zwa dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na loss ya organic matter zwi nga limit midzi na soil life.\n\nPale colour kana few worms a zwi prove uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga moisture na season.\n\nSedzani patterns tsimuni. Sedzani management history, drainage na u aluwa ha plants ni sa athu khetha remedy.",
+        "tshivendaDraft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.\n\nHezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.\n\nPale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.\n\nSedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -65,7 +65,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "The soil definitely needs less water",
-              "tshivendaDraft": "Mavu a ṱoḓa less water nga ngoho",
+              "tshivendaDraft": "Mavu a ṱoḓa maḓi o fhungudzeaho nga ngoho",
               "reviewStatus": "machine-draft"
             },
             {
@@ -80,14 +80,14 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "The crop definitely needs gypsum",
-              "tshivendaDraft": "Crop i ṱoḓa gypsum nga ngoho",
+              "tshivendaDraft": "Tshimela tshi ṱoḓa gypsum nga ngoho",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
-            "tshivendaDraft": "Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana right treatment.",
+            "tshivendaDraft": "Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana treatment yo teaho.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -105,12 +105,12 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Add a treatment without checking the site",
-              "tshivendaDraft": "Engedzani treatment ni sa athu ṱola site",
+              "tshivendaDraft": "Engedzani treatment ni songo ṱola fhethu.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Check drainage, roots, moisture and management history",
-              "tshivendaDraft": "Ṱolani drainage, midzi, moisture na management history",
+              "tshivendaDraft": "Ṱolani drainage, midzi, vhunyunyu na management history",
               "reviewStatus": "machine-draft"
             },
             {
@@ -122,7 +122,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
-            "tshivendaDraft": "U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga conditions, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.",
+            "tshivendaDraft": "U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga zwiimo, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -138,28 +138,28 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
-        "tshivendaDraft": "Compost ndi organic matter yo broken down nga fhasi ha managed conditions.\n\nCompost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u contribute nutrients.\n\nTshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.\n\nTanganyani dry browns na fresh greens. Avoid thick, wet layers that keep air out.\n\nArali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.\n\nSedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; recipe nthihi a i lulameli mutanganyo muṅwe na muṅwe wa materials.\n\nHot centre a i khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Time, temperature na management zwoṱhe zwi na ndeme.\n\nIledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi simple household system.\n\nNi songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.\n\nIledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. An ordinary heap may not make every seed non-viable.\n\nShumisani fhedzi clean, untreated materials. Bark breaks down slowly; dzina layo fhedzi a si proof ya uri a i na contamination.\n\nSedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. Keep it moist, hu si waterlogged.",
+        "tshivendaDraft": "Compost ndi organic matter yo broken down nga fhasi ha zwiimo zwi langulwaho.\n\nCompost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u engedza nutrients.\n\nTshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.\n\nTanganyani dry browns na fresh greens. Iledzani thick, wet layers dzi thivhelaho muya u dzhena.\n\nArali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.\n\nSedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; nḓila nthihi ya u ṱanganya a i lulameli muṱanganyo muṅwe na muṅwe wa zwishumiswa.\n\nVhukati ho fhisaho a vhu khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Tshifhinga, temperature na ndangulo zwoṱhe zwi na ndeme.\n\nIledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi nḓila i leluwaho ya muṱani.\n\nNi songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.\n\nIledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. Thulwi yo ḓoweleaho i nga kha ḓi sa ita uri mbeu iṅwe na iṅwe i vhe non-viable.\n\nShumisani zwishumiswa zwo kunaho, zwi songo treated fhedzi. Bark i a sina nga u ongowa; dzina layo fhedzi a si vhuṱanzi ha uri a i na contamination.\n\nSedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. I vhulungeni i na vhunyunyu, hu si waterlogged.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Balance browns, greens, moisture and air",
-          "tshivendaDraft": "Linganyisani browns, greens, moisture na air.",
+          "tshivendaDraft": "Linganyisani browns, greens, vhunyunyu na muya.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
-          "tshivendaDraft": "Vhukati ho fhisaho a vhu sumbedzi uri heap yoṱhe yo sanitised.",
+          "tshivendaDraft": "Vhukati ho fhisaho a vhu sumbedzi uri thulwi yoṱhe yo sanitised.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Keep seed pods and contaminated materials out",
-          "tshivendaDraft": "Siyani seed pods na contaminated materials nnḓa ha heap.",
+          "tshivendaDraft": "Siyani seed pods na contaminated materials nnḓa ha thulwi.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
-          "tshivendaDraft": "Ṱolani uri compost yo lugela nga condition yayo; ni songo shumisa fixed regional timetable.",
+          "tshivendaDraft": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa regional timetable yo vhewaho.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -167,7 +167,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
-            "tshivendaDraft": "Heap ya compost ya mulimi i nukha ammonia nga maanḓa nahone i wet na slimy. Ndi mini zwine zwa nga lugisa?",
+            "tshivendaDraft": "Thulwi ya compost ya mulimi i nukha ammonia nga maanḓa nahone i na maḓi na slimy. Ndi mini zwine zwa nga lugisa?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -178,12 +178,12 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
-              "tshivendaDraft": "Engedzani dry carbon material i ngaho straw nahone ni i rembuluse.",
+              "tshivendaDraft": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Stop turning it and let it cool",
-              "tshivendaDraft": "Litshani u rembulusa heap, ni i tende i rothole.",
+              "tshivendaDraft": "Litshani u rembulusa thulwi, ni i tende i rothole.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -195,25 +195,25 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
-            "tshivendaDraft": "A wet, slimy heap may need more air and drier material. Engedzani dry browns ni i rembuluse heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+            "tshivendaDraft": "Thulwi i re na maḓi na slimy i nga ṱoḓa muya wo engedzeaho na zwishumiswa zwo omaho u fhira zwa zwino. Engedzani dry browns ni rembuluse thulwi uri i vulee. Munukho wa ammonia u nga dovha wa sumbedza uri hu na nitrogen-rich material nnzhi nga maanḓa. Sedzani uri thulwi i dzule i na vhunyunyu, hu si soggy.",
             "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
-            "tshivendaDraft": "Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha ordinary compost heap?",
+            "tshivendaDraft": "Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha thulwi ya compost yo ḓoweleaho?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Bark makes every heap too hot",
-              "tshivendaDraft": "Bark i ita uri heap iṅwe na iṅwe i fhise nga maanḓa",
+              "tshivendaDraft": "Bark i ita uri thulwi iṅwe na iṅwe i fhise nga maanḓa",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Some seeds may survive and spread when the compost is used",
-              "tshivendaDraft": "Dziṅwe seeds dzi nga survive nahone dza phaḓalala musi compost i tshi shumiswa",
+              "tshivendaDraft": "Dziṅwe seeds dzi nga tshila nahone dza phaḓalala musi compost i tshi shumiswa",
               "reviewStatus": "machine-draft"
             },
             {
@@ -223,14 +223,14 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Pods release a gas that kills every soil organism",
-              "tshivendaDraft": "Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa soil",
+              "tshivendaDraft": "Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa mavu",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
-            "tshivendaDraft": "An ordinary heap may not expose every seed to conditions that make it non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.",
+            "tshivendaDraft": "Thulwi yo ḓoweleaho i nga kha ḓi sa swikisa mbeu iṅwe na iṅwe kha zwiimo zwine zwa ita uri i vhe non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -246,13 +246,13 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
-        "tshivendaDraft": "Fukedzani mavu a songo fukwaho nga mulch yo kunaho, yo teaho, u fana na straw, hatsi ho omaho kana wood chips.\n\nMulch i nga fhungudza evaporation; i nga soften the impact of rain; i nga suppress weeds.\n\nKeep it clear of trunks and stems. Sedzani moisture nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.\n\nCover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na next planting.\n\nTsumbo dza course dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.\n\nLegumes dzi ṱoḓa bacteria dzo teaho na growth conditions dzo teaho u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.\n\nWorm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani bin, ni songo lavhelela fixed harvest date.\n\nLiquid that drains naturally from a worm bin i vhidzwa leachate. A si tshithu tshithihi na prepared worm-casting tea.\n\nLeachate i nga vha na harmful organisms kana substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nField ya Highveld yo salaho i songo fukedzwa nga murahu ha harvest ya maize i sedzana na risks mbili khulwane.\n\nMhepo ya winter i nga hwala topsoil yo omaho ya i bvisa.\n\nStorm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha field, a nga hwala loosened soil a a bvisa.\n\nCover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila.",
+        "tshivendaDraft": "Fukedzani mavu a songo fukwaho nga mulch yo kunaho, yo teaho, u fana na straw, hatsi ho omaho kana wood chips.\n\nMulch i nga fhungudza evaporation; i nga fhungudza u rwa ha mvula; i nga thivhela weeds.\n\nI vhetseni kule na trunks and stems. Sedzani vhunyunyu nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.\n\nCover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na u zwala hu tevhelaho.\n\nTsumbo dza ngudo dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.\n\nLegumes dzi ṱoḓa bacteria dzo teaho na zwiimo zwo teaho zwa u mela u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.\n\nWorm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani tshifaredzi, ni songo lavhelela ḓuvha ḽo vhewaho ḽa u kaṋa.\n\nLiquid i elelaho nga mvelo i tshi bva kha worm bin i vhidzwa leachate. A si tshithu tshithihi na worm-casting tea yo lugiswaho.\n\nLeachate i nga vha na harmful organisms kana zwithu zwi re na khombo. Ni songo i shumisa kha edible plants kana u humbula uri dilution i ita uri i vhe yo tsireledzeaho.\n\nTsimu ya Highveld yo salaho i songo fukedzwa nga murahu ha u kaṋa maize i sedzana na khombo mbili khulwane.\n\nMhepo ya vhuria i nga hwala topsoil yo omaho ya i bvisa.\n\nStorm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.\n\nCover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Protect exposed soil with suitable cover",
-          "tshivendaDraft": "Tsireledzani exposed soil nga cover yo teaho.",
+          "tshivendaDraft": "Tsireledzani mavu a songo fukedzwaho nga zwithu zwo teaho zwa u fukedza.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -267,7 +267,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
-          "tshivendaDraft": "Worm-bin leachate a i sokou vha safe fertiliser; i vhetseni kule na edible plants.",
+          "tshivendaDraft": "Worm-bin leachate a i sokou vha fertiliser yo tsireledzeaho; i vhetseni kule na edible plants.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -275,13 +275,13 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
-            "tshivendaDraft": "Mulimi wa Highveld u kaṋa maize nga April a sia field i songo fukedzwaho all winter. Ndi khombo dzifhio mbili khulwane?",
+            "tshivendaDraft": "Mulimi wa Highveld u kaṋa maize nga April a sia tsimu i songo fukedzwaho vhuria hoṱhe. Ndi khombo dzifhio mbili khulwane?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
-              "tshivendaDraft": "U fhisa nga maanḓa fhasi ha ḓuvha ḽa winter na waterlogging from rain",
+              "tshivendaDraft": "U fhisa nga maanḓa fhasi ha ḓuvha ḽa vhuria na waterlogging i bvaho kha mvula",
               "reviewStatus": "machine-draft"
             },
             {
@@ -303,25 +303,25 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
-            "tshivendaDraft": "Mavu a songo fukedzwaho a vha khagala kha wind ya winter, ine ya nga hwala dry topsoil ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; where water runs over the field, it can carry loosened soil away.",
+            "tshivendaDraft": "Mavu a songo fukedzwaho a vha khagala kha mhepo ya vhuria, ine ya nga hwala topsoil yo omaho ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; hune maḓi a elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.",
             "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
-            "tshivendaDraft": "Ni fanela u humbula mini nga liquid draining from a worm bin?",
+            "tshivendaDraft": "Ni fanela u humbula mini nga liquid i elelaho i tshi bva kha worm bin?",
             "reviewStatus": "machine-draft"
           },
           "options": [
             {
               "sourceEnglish": "It is always safe on salad leaves",
-              "tshivendaDraft": "I dzula yo safe tshifhinga tshoṱhe kha salad leaves",
+              "tshivendaDraft": "I dzula yo tsireledzea tshifhinga tshoṱhe kha salad leaves",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
-              "tshivendaDraft": "I nga vha na harmful organisms kana substances; dilution a si safety guarantee",
+              "tshivendaDraft": "I nga vha na harmful organisms kana zwithu zwi re na khombo; dilution a si safety guarantee",
               "reviewStatus": "machine-draft"
             },
             {
@@ -331,14 +331,14 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "A fixed dilution makes every liquid safe",
-              "tshivendaDraft": "Fixed dilution i ita uri liquid iṅwe na iṅwe i vhe safe",
+              "tshivendaDraft": "Dilution yo vhewaho i ita uri liquid iṅwe na iṅwe i vhe yo tsireledzeaho",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
-            "tshivendaDraft": "Leachate ndi liquid that drains naturally from a worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo safe kha edible crops.",
+            "tshivendaDraft": "Leachate ndi liquid i elelaho nga mvelo i tshi bva kha worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo tsireledzea kha edible crops.",
             "reviewStatus": "machine-draft"
           }
         }

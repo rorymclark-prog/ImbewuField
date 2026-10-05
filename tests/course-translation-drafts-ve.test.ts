@@ -3,9 +3,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, type QuizQuestion } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
-import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
+// Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
+import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as learnerVegetablesDraft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 
 test('the Tshivenda Introduction draft stays paired to the English Study source', () => {

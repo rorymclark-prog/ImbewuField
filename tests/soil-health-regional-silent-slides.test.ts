@@ -49,6 +49,8 @@ const evidence = JSON.parse(readFileSync('docs/study-translation-reviews/SOIL-HE
 const latestEvidence = JSON.parse(readFileSync('docs/study-translation-reviews/SOIL-SOURCE-PAIRED-SLIDES-RENDER-VERIFICATION-2026-10-03.json', 'utf8')) as LatestEvidence;
 const ordinaryEvidence = JSON.parse(readFileSync('docs/study-translation-reviews/SOIL-WATER-ORDINARY-SLIDES-2026-10-05.json', 'utf8')) as OrdinaryEvidence;
 const frameProof = JSON.parse(readFileSync('docs/media/soil-water-ordinary-2026-10-05/frames.json', 'utf8')) as FrameProof;
+const fullerEvidence = JSON.parse(readFileSync('docs/study-translation-reviews/SOIL-DECK-FULLER-LEARNER-REUSE-2026-10-05.json', 'utf8')) as LatestEvidence;
+const fullerFrames = JSON.parse(readFileSync('docs/media/soil-learner-fuller-2026-10-05/frames.json', 'utf8')) as { changed: LatestEvidence['changed']; preserved: Array<{ path: string; sha256: string; bytes: number }>; pairedSourceHashes: Record<string, string> };
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 // Headings and paragraphs changed by the 4–5 October ordinary-prose completion (see the review README).
 const ordinarySoilFields = { st: 34, ve: 36, ts: 40 } as const;
@@ -69,6 +71,16 @@ test('Soil slide drafts remain paired to the exact narration and preserve every 
     // batch, then the original fifteen drafts. Each layer's recorded value is checked against the state the newer layers
     // leave behind, so every authorized edit is bound to its exact source and no other target cell can move.
     const restored = structuredClone(packet.slides);
+    // The later fuller-learner batch superseded 69 dated targets. Verify current values first, then reconstruct
+    // the prior reviewed state so historical untouched-cell coverage remains able to catch regressions.
+    const fullerRows = fullerEvidence.targetFieldChanges.filter((row) => row.language === lang);
+    assert.equal(fullerRows.length, { st: 17, ve: 25, ts: 27 }[lang]);
+    for (const row of fullerRows) {
+      const slide = restored[row.slide - 1];
+      assert.equal(slide.english.body[row.bodyIndex], row.sourceEnglish);
+      assert.deepEqual(slide.target.body[row.bodyIndex], row.currentTarget);
+      slide.target.body[row.bodyIndex] = structuredClone(row.previousTarget);
+    }
     const ordinaryRows = ordinaryEvidence.targetFieldChanges.filter((row) => row.module === 'soil-health' && row.language === lang);
     assert.equal(ordinaryRows.length, ordinarySoilFields[lang],
       `${lang}: verify each ordinary-prose field recorded for this language`);
@@ -137,8 +149,15 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
   const untouched = new Map(soilDecks.flatMap((deck) => deck.preserved).map((row) => [row.path, row]));
   assert.equal(redrawn.size + untouched.size, 60, 'the ordinary-prose render accounts for every regional Soil frame once');
   for (const deck of soilDecks) {
-    assert.equal(deck.pairedSourceSha256, sha(readFileSync(deck.pairedSource)),
-      `${deck.language}: the redrawn frames come from the current paired draft`);
+    const packet = JSON.parse(readFileSync(deck.pairedSource, 'utf8'));
+    assert.equal(sha(readFileSync(deck.pairedSource)), fullerFrames.pairedSourceHashes[deck.language],
+      `${deck.language}: latest rendered frames bind the actual paired draft`);
+    for (const row of fullerEvidence.targetFieldChanges.filter((row) => row.language === deck.language)) {
+      assert.deepEqual(packet.slides[row.slide - 1].target.body[row.bodyIndex], row.currentTarget);
+      packet.slides[row.slide - 1].target.body[row.bodyIndex] = structuredClone(row.previousTarget);
+    }
+    assert.equal(deck.pairedSourceSha256, sha(JSON.stringify(packet, null, 2) + '\n'),
+      `${deck.language}: the newer layer reconstructs the prior paired input exactly`);
   }
 
   for (const row of latestEvidence.changed) {
@@ -147,18 +166,32 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
   for (const row of latestEvidence.preservedAssetProof) {
     assert.equal(row.sha256, row.baselineSha256, `${row.path}: untargeted regional frame remained byte-identical on 3 October`);
   }
+  const fullerRedrawn = new Map(fullerFrames.changed.map((row) => [row.path, row]));
+  const fullerPreserved = new Map(fullerFrames.preserved.map((row) => [row.path, row]));
+  assert.equal(fullerRedrawn.size, 34);
   for (const row of [...latestEvidence.changed, ...latestEvidence.preservedAssetProof]) {
     const bytes = readFileSync(row.path);
     const later = redrawn.get(row.path);
+    const final = fullerRedrawn.get(row.path);
+    const priorSha = later?.sha256 ?? row.sha256;
+    const priorBytes = later?.bytes ?? row.bytes;
+    if (final) {
+      assert.equal(final.baselineSha256, priorSha, `${row.path}: fuller redraw starts from prior reviewed bytes`);
+      assert.notEqual(final.sha256, final.baselineSha256);
+      assert.equal(sha(bytes), final.sha256);
+      assert.equal(bytes.length, final.bytes);
+    } else {
+      assert.equal(fullerPreserved.get(row.path)?.sha256, priorSha);
+      assert.equal(sha(bytes), priorSha);
+      assert.equal(bytes.length, priorBytes);
+    }
     if (later) {
       assert.equal(later.baselineSha256, row.sha256, `${row.path}: the redraw starts from the 3 October proof`);
       assert.notEqual(later.sha256, later.baselineSha256, `${row.path}: a changed target redraws its frame`);
-      assert.equal(sha(bytes), later.sha256, `${row.path}: retain the visually inspected redrawn bytes`);
-      assert.equal(bytes.length, later.bytes, `${row.path}: retain the inspected file size`);
+      // Current bytes were checked above; this assertion preserves the historical render chain.
     } else {
       assert.equal(untouched.get(row.path)?.sha256, row.sha256, `${row.path}: the ordinary-prose render left this frame alone`);
-      assert.equal(sha(bytes), row.sha256, `${row.path}: retain the reviewed rendered bytes`);
-      assert.equal(bytes.length, row.bytes, `${row.path}: retain the reviewed file size`);
+      // Current bytes were checked above, including every untargeted frame.
     }
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
