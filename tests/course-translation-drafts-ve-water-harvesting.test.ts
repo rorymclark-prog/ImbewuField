@@ -142,7 +142,7 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         bodyParagraphs[3].includes('Pulani safe overflow ni sa athu u bwa'),
         `${path}.body: preserve the can-risk and overflow-before-digging instruction`);
       assert.ok(bodyParagraphs[4].includes('Route a i tei u erode slope kana u rumela damaging water kha neighbour') &&
-        bodyParagraphs[4].includes('Swale kana dam ya fhasi i tea u kona u ṱanganedza maḓi ayo nga vhuḓi'),
+        bodyParagraphs[4].includes('A downstream swale or dam must be able to receive it safely'),
         `${path}.body: preserve the erosion/neighbour prohibition and safe downstream capacity`);
       assert.ok(bodyParagraphs[5].includes('Humbelani trained local adviser uri a assess soil, slope na storm flow') &&
         bodyParagraphs[5].includes('Tshifanyiso a si construction design'),
@@ -150,7 +150,7 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
       assert.ok(bodyParagraphs[6].startsWith('Slope fhedzi a i sumbedzi arali swale i suitable'),
         `${path}.body: translate that slope alone is insufficient`);
       assert.ok(bodyParagraphs[7].includes('Keep good ground cover.') &&
-        bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha fhethu ha steep, wet kana unstable') &&
+        bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha steep, wet kana unstable land') &&
         bodyParagraphs[7].includes('Grass barriers na terraces na zwone zwi ṱoḓa design yo teaho site'),
         `${path}.body: retain the imperative and all pre-dig site conditions`);
       assert.ok(bodyParagraphs[0].includes('I fhungudza luvhilo na u phaḓaladza runoff, uri maḓi maṅwe a kone u dzhena kha suitable soil'),
@@ -162,7 +162,7 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         `${path}.body: translate the planted-tree subject while preserving its site-dependent qualification`);
       assert.ok(bodyParagraphs[4].startsWith('Route a i tei u erode slope kana u rumela damaging water kha neighbour'),
         `${path}.body: express the prohibition while preserving routing terms`);
-      assert.ok(bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha fhethu ha steep, wet kana unstable'),
+      assert.ok(bodyParagraphs[7].includes('Wanani local assessment ni sa athu u bwa kha steep, wet kana unstable land'),
         `${path}.body: preserve the local-assessment-before-digging condition`);
       assert.equal(lesson.body.tshivendaDraft.split('\n\n').length, sourceParagraphs.length,
         `${path}.body: preserve all eight source paragraph boundaries`);
@@ -272,7 +272,7 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
         bodyParagraphs[2].includes('Arali nyeletshedzo iyi i siho kana i unclear') &&
         bodyParagraphs[2].includes('ni songo shumisa maḓi hafhu'),
       `${path}.body: require the authority/adviser checks, with no reuse if advice is missing or unclear`);
-      assert.ok(bodyParagraphs[4].includes('reuse system i tshi khou shuma nahone the water smells bad') &&
+      assert.ok(bodyParagraphs[4].includes('reuse system is already operating and the water smells bad') &&
         bodyParagraphs[4].includes('pools or harms plants') && bodyParagraphs[4].includes('litshani u a shumisa') &&
         bodyParagraphs[4].includes('qualified local advice'),
       `${path}.body: preserve the operating AND symptom OR stop trigger and qualified-advice action`);

@@ -1,3 +1,4 @@
+import { checkWaterReviewedPrecision } from './water-reviewed-precision-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -134,10 +135,10 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
     'the stop rule applies to an operating system when any listed symptom occurs');
   assert.ok(draftParagraphs[4].startsWith('Haeba reuse system e se e sebetsa '),
     'translate the ordinary operating-system lead-in while preserving the conditional safety clause');
-  assert.ok(draftParagraphs[4].includes('e se e sebetsa mme metsi') &&
-    draftParagraphs[4].includes('metsi a nkha hampe, a etsa letamo kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.') &&
-    draftParagraphs[4].indexOf('e se e sebetsa') < draftParagraphs[4].indexOf('mme metsi') &&
-    draftParagraphs[4].indexOf('mme metsi') < draftParagraphs[4].indexOf('a nkha hampe'),
+  assert.ok(draftParagraphs[4].includes('e se e sebetsa mme the water') &&
+    draftParagraphs[4].includes('the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.') &&
+    draftParagraphs[4].indexOf('e se e sebetsa') < draftParagraphs[4].indexOf('mme the water') &&
+    draftParagraphs[4].indexOf('mme the water') < draftParagraphs[4].indexOf('smells bad'),
     'preserve the AND operating condition, OR symptom trigger and qualified-advice action exactly');
 
   const greywaterVisible = resolveLearnerLessonPresentation(greywaterSource, 'st');
@@ -258,3 +259,5 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.ok(quiz1Question.sesothoDraft.includes('mobung o moepa'));
   assert.ok(quiz1Question.sesothoDraft.includes('pele se tjheka'));
 });
+
+test('Water precision repairs retain exact predicates and withdraw on source change while preserving every unlisted native field', checkWaterReviewedPrecision);
