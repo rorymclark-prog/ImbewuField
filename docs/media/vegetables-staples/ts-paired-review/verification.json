@@ -6,7 +6,7 @@
   "localFarmingReview": false,
   "narration": null,
   "pairedSource": "docs/narration/vegetables-staples.ts.paired-draft.json",
-  "pairedSourceSha256": "3725c8fc7ea1ebc03efd9c8d203aee28449b74288631690a00ab809ffa8b261d",
+  "pairedSourceSha256": "ba1c3369abde2fc254d78fd10e6c0490f588b3cea5c912ff4e2a9a86697445d7",
   "englishSource": "docs/narration/vegetables-staples.en.md",
   "englishSourceSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
   "slides": [
@@ -35,29 +35,29 @@
       "slide": 4,
       "path": "public/course-decks/vegetables-staples/ts/slide-04.webp",
       "pixels": "1440x5400",
-      "bytes": 688026,
-      "sha256": "c699037cb955e1bbc99bfe5b9555319dbdff89806aba9ee270d8cc9d7be70b6c"
+      "bytes": 727924,
+      "sha256": "f16438bb4765c452573c56e8da5f7c07465085c8075156fe1af86b8131b77971"
     },
     {
       "slide": 5,
       "path": "public/course-decks/vegetables-staples/ts/slide-05.webp",
       "pixels": "1440x5400",
-      "bytes": 400092,
-      "sha256": "393e3b61088c7132b472bb45cef77358e0abf09aa04a894c8a18f0fe78705d4c"
+      "bytes": 418732,
+      "sha256": "31f24655c4de1b2e52bb96456b791b324e1186fa94628b05eb74a6144b8f5624"
     },
     {
       "slide": 6,
       "path": "public/course-decks/vegetables-staples/ts/slide-06.webp",
       "pixels": "1440x5400",
-      "bytes": 585066,
-      "sha256": "6eaed5023f8c59d555f9c3f9683edb5eaee97a812be0198f7e56a433c025efc1"
+      "bytes": 614190,
+      "sha256": "dd236aad3b2a840888e9a30bd667e4ec21e9725a9479eccd4393ae436c07d8e5"
     },
     {
       "slide": 7,
       "path": "public/course-decks/vegetables-staples/ts/slide-07.webp",
       "pixels": "1440x5400",
-      "bytes": 698220,
-      "sha256": "784a5ad73721d69bc60ce1b66b60c9466ce102e3cf6628ce7472375f99ad1ab6"
+      "bytes": 689922,
+      "sha256": "c7b23020d45cafc542245d428277267fd1c5e64f19afb1911c173eabf0952fb6"
     },
     {
       "slide": 8,
@@ -176,5 +176,5 @@
       "sha256": "92850a132661c4169dfc44161d51825656f903974b82cc69d01396d9e7cde089"
     }
   ],
-  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7–18 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
+  "note": "The opening six frames now show source-paired unreviewed framing drafts and exact-source reuses; frames 7\u201318 remain unchanged. No regional narration, fluent review, or local farming approval is claimed."
 }

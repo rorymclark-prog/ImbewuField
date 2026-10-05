@@ -259,16 +259,50 @@
             "text": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
           },
           {
-            "status": "draft",
-            "text": "Tsireledzo ndi yo leluwaho. Permanent paths, and a bed narrow enough to reach into from both sides."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The protection is simple. ",
+                "status": "draft",
+                "text": "Tsireledzo ndi yo leluwaho. "
+              },
+              {
+                "sourceEnglish": "Permanent paths",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                "status": "draft",
+                "text": ", na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One metre to one point two metres wide.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                "status": "draft",
+                "text": " Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami "
+              },
+              {
+                "sourceEnglish": "growing area",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " na luthihi."
+              }
+            ]
           },
           {
             "status": "draft",
-            "text": "One metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. At that width you can reach the centre from either path, and your feet never touch the growing area."
-          },
-          {
-            "status": "draft",
-            "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati without stepping inside? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+            "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
           }
         ]
       }
@@ -298,28 +332,157 @@
             "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
           },
           {
-            "status": "draft",
-            "text": "Thomani nga least disturbance that solves your problem."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Start with the ",
+                "status": "draft",
+                "text": "Thomani nga "
+              },
+              {
+                "sourceEnglish": "least disturbance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that solves your problem.",
+                "status": "draft",
+                "text": " ine ya tandulula thaidzo yaṋu."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility on top."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "No-dig suits most garden soils.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Leave the structure alone and build fertility on top.",
+                "status": "draft",
+                "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Ni songo bwa wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Do not dig ",
+                "status": "draft",
+                "text": "Ni songo bwa "
+              },
+              {
+                "sourceEnglish": "wet clay",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". If ",
+                "status": "draft",
+                "text": ". Arali "
+              },
+              {
+                "sourceEnglish": "compaction",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " or ",
+                "status": "draft",
+                "text": " kana "
+              },
+              {
+                "sourceEnglish": "poor drainage",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                "status": "draft",
+                "text": " zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha "
+              },
+              {
+                "sourceEnglish": "deeper cultivation",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": "."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Raised beds suit wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Raised beds",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " suit ",
+                "status": "draft",
+                "text": " dzi tea "
+              },
+              {
+                "sourceEnglish": "wet ground",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", where water needs somewhere to drain away to.",
+                "status": "draft",
+                "text": ", hune maḓi a ṱoḓa fhethu ha u bva hone."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Sunken beds suit dry ground, hune na ṱoḓa u catch and hold mvula ine na i wana."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sunken beds",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " suit ",
+                "status": "draft",
+                "text": " dzi tea "
+              },
+              {
+                "sourceEnglish": "dry ground",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", where you want to catch and hold what rain you get.",
+                "status": "draft",
+                "text": ", hune na ṱoḓa u fara na u vhulunga mvula ine na i wana."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a run off ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice u sa athu khetha bed."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look after ",
+                "status": "draft",
+                "text": "Musi "
+              },
+              {
+                "sourceEnglish": "heavy rain",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+                "status": "draft",
+                "text": " yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na "
+              },
+              {
+                "sourceEnglish": "soil and drainage advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " before choosing the bed.",
+                "status": "draft",
+                "text": " ni sa athu khetha bed."
+              }
+            ]
           }
         ]
       }
@@ -341,16 +504,114 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better sown straight where they'll grow. Beans, carrots na maize zwi wela kha tshigwada itsho."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                "status": "draft",
+                "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+              },
+              {
+                "sourceEnglish": "They do better",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " sown straight where they'll grow. ",
+                "status": "draft",
+                "text": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+              },
+              {
+                "sourceEnglish": "Beans, carrots",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "maize",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong in that group.",
+                "status": "draft",
+                "text": " zwi wela kha tshigwada itsho."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Zwimela zwiṅwe zwi ita zwavhuḓi arali zwi thoma zwi tshi tsireledzwa nursery, then transplanting. Tomatoes na brassicas zwi wela henefho."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. ",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": "Tomatoes",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "brassicas",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " belong there.",
+                "status": "draft",
+                "text": " zwi wela henefho."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Shumisani spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use ",
+                "status": "draft",
+                "text": "Shumisani "
+              },
+              {
+                "sourceEnglish": "spacing guidance",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " for the ",
+                "status": "draft",
+                "text": " ya "
+              },
+              {
+                "sourceEnglish": "crop, variety",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "local conditions",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Check the packet and ",
+                "status": "draft",
+                "text": ". Sedzani packet na "
+              },
+              {
+                "sourceEnglish": "local grower advice",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ". Watch for crowding as plants develop.",
+                "status": "draft",
+                "text": ". Sedzani crowding musi zwimela zwi tshi aluwa."
+              }
+            ]
           }
         ]
       }
@@ -384,12 +645,42 @@
             "text": "One point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed)."
           },
           {
-            "status": "draft",
-            "text": "Shumisani zwipiki na thambo. Swayani rectangle, and mark both access paths."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use pegs and string. Mark the ",
+                "status": "draft",
+                "text": "Shumisani zwipiki na thambo. Swayani "
+              },
+              {
+                "sourceEnglish": "rectangle",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", and mark both access paths.",
+                "status": "draft",
+                "text": ", nahone ni swaye paths dzoṱhe mbili dza u swikelela bed."
+              }
+            ]
           },
           {
-            "status": "draft",
-            "text": "Nga murahu ni lugiselele u ya nga mavu aṋu — no-dig first, and dig deeper only if your ground genuinely needs it."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then prepare for your own soil — ",
+                "status": "draft",
+                "text": "Nga murahu ni lugiselele u ya nga mavu aṋu — thomani nga "
+              },
+              {
+                "sourceEnglish": "no-dig",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                "status": "draft",
+                "text": ", nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma."
+              }
+            ]
           },
           {
             "status": "draft",

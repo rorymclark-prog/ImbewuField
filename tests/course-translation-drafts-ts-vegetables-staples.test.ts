@@ -1,3 +1,4 @@
+import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
@@ -142,10 +143,11 @@ test('Vegetables & Staple Crops L3 preserves the one-failure scope and the minim
   assert.match(paragraphs[15], /mati, misava na tinguva/);
 });
 
-// L1 now has a body draft; the remaining farming and assessment fields remain exact-source holds.
+// Historical L1 before-state keeps its original holds; the 5 October fuller batch is verified before reconstruction.
 test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions and withdraw on source drift', () => {
   const source = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
-  const matches = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.filter(lesson => lesson.id === source.id);
+  // 5 October: the original holds are historical, while source-bound full current targets are validated before inversion.
+  const matches = vegetablesBeforeFuller('ts', XITSONGA_VEGETABLES_STAPLES_DRAFT).lessons.filter(lesson => lesson.id === source.id);
   assert.equal(matches.length, 1);
   const draft = matches[0];
   const paragraphs = draft.body.xitsongaDraft.split('\n\n');
@@ -208,16 +210,17 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
   assert.equal(draft.quiz[1].question.xitsongaDraft, 'Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?');
   assert.equal(draft.quiz[1].question.reviewStatus, 'machine-draft');
   assert.equal(draft.quiz[1].sourceCorrectIndex, 2);
+  const current = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
   const shown = resolveLearnerLessonPresentation(source, 'ts');
   assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.body, draft.body.xitsongaDraft);
-  assert.equal(shown.content.keyPoints[0], source.keyPoints[0]);
-  assert.equal(shown.content.quiz[0].q, draft.quiz[0].question.xitsongaDraft);
-  assert.equal(shown.content.quiz[0].options[0], draft.quiz[0].options[0].xitsongaDraft);
-  assert.equal(shown.content.quiz[0].options[1], source.quiz[0].options[1]);
-  assert.equal(shown.content.quiz[0].options[3], draft.quiz[0].options[3].xitsongaDraft);
-  assert.equal(shown.content.quiz[0].rationale, draft.quiz[0].rationale.xitsongaDraft);
-  assert.equal(shown.content.quiz[1].q, draft.quiz[1].question.xitsongaDraft);
+  assert.equal(shown.content.body, current.body.xitsongaDraft);
+  assert.equal(shown.content.keyPoints[0], current.keyPoints[0].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].q, current.quiz[0].question.xitsongaDraft);
+  assert.equal(shown.content.quiz[0].options[0], current.quiz[0].options[0].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].options[1], current.quiz[0].options[1].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].options[3], current.quiz[0].options[3].xitsongaDraft);
+  assert.equal(shown.content.quiz[0].rationale, current.quiz[0].rationale.xitsongaDraft);
+  assert.equal(shown.content.quiz[1].q, current.quiz[1].question.xitsongaDraft);
   const changed = { ...source, body: source.body + ' Changed planting condition.' };
   assert.equal(resolveLearnerLessonPresentation(changed, 'ts').status, 'english-fallback');
 });

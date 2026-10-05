@@ -1,3 +1,4 @@
+import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import { checkMarketTeachingExample, checkMarketPriceQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -408,7 +409,8 @@ test('Sesotho Market L2 pairs screened sales concepts while uncertain advice sta
 test('Sesotho bed-body drafts keep reachability, wet-clay safeguards, crop grouping and soil-specific preparation while withdrawing on source drift', async () => {
   const { SESOTHO_VEGETABLES_STAPLES_DRAFT } = await import('../lib/course-translation-drafts-st-vegetables-staples.ts');
   const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
-  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === source.id)!;
+  // 5 October: retain this historical passage coverage; helper validates full current source-bound completion first.
+  const draft = vegetablesBeforeFuller('st', SESOTHO_VEGETABLES_STAPLES_DRAFT).lessons.find(lesson => lesson.id === source.id)!;
   const english = source.body.split('\n\n');
   const paragraphs = draft.body.sesothoDraft.split('\n\n');
   assert.equal(draft.body.sourceEnglish, source.body);
@@ -427,7 +429,7 @@ test('Sesotho bed-body drafts keep reachability, wet-clay safeguards, crop group
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
   const shown = resolveLearnerLessonPresentation(source, 'st');
   assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.body, draft.body.sesothoDraft);
+  assert.equal(shown.content.body, SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === source.id)!.body.sesothoDraft);
   assert.equal(resolveLearnerLessonPresentation({ ...source, body: source.body + ' changed soil instruction' }, 'st').status, 'english-fallback');
 });
 

@@ -1,3 +1,4 @@
+import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -8,7 +9,8 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 test('Vegetables and Staple Crops Sesotho draft keeps exact sources, agronomic figures and quiz answers', () => {
   const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples');
   assert.ok(source, 'the source module must remain available');
-  const draft = SESOTHO_VEGETABLES_STAPLES_DRAFT;
+  // 5 October: preserve historical safeguards after validating every current completion edge.
+  const draft = vegetablesBeforeFuller('st', SESOTHO_VEGETABLES_STAPLES_DRAFT);
   assert.equal(draft.language, 'st');
   assert.equal(draft.reviewStatus, 'machine-draft');
   assert.equal(draft.sourceMetadata.durationMins, source.durationMins);

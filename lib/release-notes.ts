@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'ecf7e73c', changes: [
+    'Vegetables bed lessons have fuller Sesotho, Tshivenda and Xitsonga drafts.',
+    'Silent cards match the lessons; exact English stays beside unreviewed drafts.',
+    'Offline packs refresh twelve changed cards without adding narration.',
+  ], tour: [
+    { title: 'Compare bed preparation drafts',
+      where: 'Study → Vegetables → Bed Preparation',
+      detail: 'Read lesson and answer drafts beside English; compare silent cards 4–7.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: 'b9f8248c', changes: [
     'Market records have fuller Sesotho, Tshivenda and Xitsonga draft lessons and silent cards.',
     'Teaching prices stay labelled examples; exact English remains beside unreviewed drafts.',

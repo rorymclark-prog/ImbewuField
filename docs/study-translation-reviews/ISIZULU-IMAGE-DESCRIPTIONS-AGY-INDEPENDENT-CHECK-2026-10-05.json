@@ -1,0 +1,180 @@
+{
+  "title": "Independent follow-up check of proposed isiZulu infographic alt refinements",
+  "date": "2026-10-05",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "branch": "codex/regional-vegetables-l1-fuller-20261005",
+  "head": "439557a0c6a4922e3f7d0256f13e14545163c913",
+  "candidatePacket": "/tmp/imbewu-zulu-image-description-root-repaired-20261005.json",
+  "scope": "Read-only semantic/source fidelity review of six bounded target proposals; no repo edits, learner wiring, media changes, or publication approval.",
+  "summary": {
+    "acceptedForUnreviewedDraft": 4,
+    "rejected": 2,
+    "holdsPreserveExactSourceMeaning": 2,
+    "canonicalAndImageBindingsMatchPacket": true
+  },
+  "reviewLimit": "Source-fidelity check only; does not certify idiomatic isiZulu, learner comprehension, or fluent-speaker/local-farming approval.",
+  "records": [
+    {
+      "id": "small-livestock|zu|small-livestock-l3|lesson.imageDescription",
+      "moduleId": "small-livestock",
+      "lessonId": "small-livestock-l3",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "Bought feed enters the farm. Animals produce manure, some nutrients return to the growing area through fully composted manure, and food and other products leave the farm.",
+      "sourceSha256": "16181441bce81b6f1a48df3829f6c380a206ff259808080ff0ade6475eb6ae03",
+      "originalCandidateTarget": "Ukudla kwezilwane okuthengiwe kungena epulazini. Izilwane zikhiqiza umquba; ezinye izakhamzimba zibuyela endaweni yokutshala ngomquba osuvundiswe ngokuphelele nge-compost. Ukudla neminye imikhiqizo kuphuma epulazini.",
+      "proposedTarget": "Ukudla kwezilwane okuthengiwe kungena epulazini. Izilwane zikhiqiza umquba; ezinye izakhamzimba zibuyela endaweni yokutshala through fully composted manure. Ukudla neminye imikhiqizo kuphuma epulazini.",
+      "decision": "accept",
+      "independentMeaningCheck": "The exact English anchor keeps “fully composted” attached to manure itself and preserves the route by which nutrients return. It avoids saying manure is enriched or rotted by compost and adds no amount or outcome guarantee.",
+      "notes": "The previous wording could attach “through” to compost as a process applied to manure; replacement is more source-faithful.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/small-livestock/small-livestock-l3.jpg",
+        "repositoryPath": "public/course-images/small-livestock/small-livestock-l3.jpg",
+        "gitBlobOid": "7f368bfc1e4477a8f8a6cc803e4082c8a3266a8e",
+        "bytes": 137569,
+        "bytesSha256": "96be6c45ef998d1ebceaf47cfc6929d0132474f2094e0246dc23e8f6cd2c2e76"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    },
+    {
+      "id": "seeds-sovereignty|zu|seeds-sovereignty-l1|lesson.imageDescription",
+      "moduleId": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l1",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "Two seed packets above a simplified comparison: five similar-looking plants on the left and five varied plants on the right. Actual offspring depend on variety and pollination.",
+      "sourceSha256": "2832fa4d0a6bed1c6a41b29855283adc78eb6aa9fbfc2b2bcc17e856f1b37d0c",
+      "originalCandidateTarget": "Amaphakethe embewu amabili ngaphezu kokuqhathanisa okulula: izitshalo ezinhlanu ezibukeka zifana ngakwesobunxele, nezitshalo ezinhlanu ezihlukahlukene ngakwesokudla. Actual offspring depend on variety and pollination.",
+      "proposedTarget": "Amaphakethe embewu amabili ngaphezu kokuqhathanisa okulula: izitshalo ezinhlanu ezibukeka zifana ngakwesobunxele, nezitshalo ezinhlanu ezihlukahlukene ngakwesokudla. Inzalo yangempela incike ku-variety kanye ne-pollination.",
+      "decision": "accept",
+      "independentMeaningCheck": "This preserves that actual offspring depend on both variety and pollination. “Inzalo yangempela” carries actual offspring; the technical conditions remain explicit. Counts and left/right placement stay intact.",
+      "notes": "Bounded fuller phrase appears source-faithful as an unreviewed candidate; it does not establish fluent-speaker approval.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
+        "repositoryPath": "public/course-images/seeds-sovereignty/seeds-sovereignty-l1.jpg",
+        "gitBlobOid": "5f1dfeb426552438f35c81c65349035391a5089e",
+        "bytes": 71069,
+        "bytesSha256": "4ca6d7421fb00398c6fc6bc7cc127c9608605d85c4def84b07f8ee1e152fae47"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    },
+    {
+      "id": "food-forest|zu|food-forest-l3|lesson.imageDescription",
+      "moduleId": "food-forest",
+      "lessonId": "food-forest-l3",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "The same patch of ground at four stages, left to right: loose mulch being spread over cardboard on soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+      "sourceSha256": "ed7ec9777da4d11a25fdc5abf156cb417cf0d817630a775546a77ec6c5f2dbe4",
+      "originalCandidateTarget": "Isiqephu esifanayo somhlaba siboniswe ngezigaba ezine ukusuka kwesobunxele kuya kwesokudla: i-mulch exegayo isatshalaliswa phezu kwekhadibhodi emhlabathini; kulandelwe izitshalo zokuqala eziphansi nezikhula masinyane; bese kuba young canopy trees nezinye izendlalelo ezingaphansi ezigcwalisayo; kugcine sekuyindawo yokutshala enezendlalelo ezizinzile.",
+      "proposedTarget": "Isiqephu esifanayo somhlaba siboniswe ngezigaba ezine ukusuka kwesobunxele kuya kwesokudla: i-mulch exegayo isatshalaliswa phezu kwekhadibhodi emhlabathini; kulandelwe izitshalo zokuqala eziphansi nezikhula masinyane; bese kuba izihlahla ezisencane ze-canopy nezinye izendlalelo ezingaphansi ezigcwalisayo; kugcine sekuyindawo yokutshala enezendlalelo ezizinzile.",
+      "decision": "accept",
+      "independentMeaningCheck": "“Izihlahla ezisencane” preserves young trees; retaining “canopy” avoids substituting “shade” or losing the structural role. The four stages and their order remain intact.",
+      "notes": "Bounded phrase retains the qualifier and technical structure term.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg",
+        "repositoryPath": "public/course-images/food-forest/food-forest-l3-mulch-layer-corrected.jpg",
+        "gitBlobOid": "a04598a025b880a53255cc60150a53c6ac8dc849",
+        "bytes": 302363,
+        "bytesSha256": "6e2d15499c2118137af622ba38b685681e3b24908ae74ab133f47518f494d507"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    },
+    {
+      "id": "reading-landscape|zu|reading-landscape-l3|lesson.imageDescription",
+      "moduleId": "reading-landscape",
+      "lessonId": "reading-landscape-l3",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "A farm from above with arrows showing wind direction, cold air draining downhill into a frost hollow, and the direction of the slope.",
+      "sourceSha256": "84bcfaacb25fedab29ca53e7177cbb688f386e855914bbd06ac409de113ff5ec",
+      "originalCandidateTarget": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka.",
+      "proposedTarget": "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, umoya obandayo owehlela phansi e-frost hollow, nendlela yomthambeka.",
+      "decision": "accept",
+      "independentMeaningCheck": "It names cold air as the moving subject and says it descends into the frost hollow, preserving the separate cold-air drainage relation alongside wind direction and slope direction. The image/source relationship is unchanged.",
+      "notes": "Use only if the final clause remains explicitly about cold-air descent into the hollow, separate from wind arrows. The current exact-English clause is also faithful.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/reading-landscape/reading-landscape-l3.jpg",
+        "repositoryPath": "public/course-images/reading-landscape/reading-landscape-l3.jpg",
+        "gitBlobOid": "155ce5ca91f8d6a29cb07dadf92fb37aa0057451",
+        "bytes": 820409,
+        "bytesSha256": "97010984fd8cba92143d1c10e6517352ece444d86d235d2f967b0ec1a9e32583"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    },
+    {
+      "id": "vegetables-staples|zu|vegetables-staples-l3|lesson.imageDescription",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
+      "sourceSha256": "ff4e32e04c4a871f72450c58cb2d4fb70c4f5d886d23c651dd8583d352662d06",
+      "originalCandidateTarget": "Izitshalo ezintathu zokudla okuyisisekelo zihlangene: uhlanga olude lokusanhlamvu, umvini okhuphuka esigxotsheni, nesitshalo sempande esiboniswe half below the ground.",
+      "proposedTarget": "Izitshalo ezintathu zokudla okuyisisekelo zihlangene: uhlanga olude lokusanhlamvu, umvini okhuphuka esigxotsheni, nesitshalo sempande esiboniswe half below the ground.",
+      "decision": "reject",
+      "independentMeaningCheck": "The English source says “half,” an exact one-half qualifier. The suggested “ingxenye” can mean a portion and does not reliably preserve that fraction. Retaining the exact English phrase avoids ambiguity.",
+      "notes": "Agy suggestion is rejected. This is an intentional exact-English hold; it preserves meaning rather than omitting it.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        "repositoryPath": "public/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+        "gitBlobOid": "90b634aa00c767d07fa378280e0af2014cf810f3",
+        "bytes": 651032,
+        "bytesSha256": "71a675e5a42d902a0096040d0485223ef8c54cd8efd01ef6f36055c2541e5821"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    },
+    {
+      "id": "seeds-sovereignty|zu|seeds-sovereignty-l3|lesson.imageDescription",
+      "moduleId": "seeds-sovereignty",
+      "lessonId": "seeds-sovereignty-l3",
+      "field": "lesson.imageDescription",
+      "canonicalEnglishSource": "Seed envelopes stored in a sealed container, kept cool, dark and dry. Beside it, ten seeds on a damp cloth — some sprouted, some not — as a germination test.",
+      "sourceSha256": "57489709af2cbd276ff6e69e3d961c0b157658d697830d1c6a5c6709bffd763b",
+      "originalCandidateTarget": "Amaphakethe embewu agcinwe esitsheni esivaliwe, endaweni epholile, emnyama neyomile. Eceleni kunezinhlamvu eziyishumi on a damp cloth — ezinye sezihlumile, ezinye azikahlumi — njengokuhlola ukuhluma.",
+      "proposedTarget": "Amaphakethe embewu agcinwe esitsheni esivaliwe, endaweni epholile, emnyama neyomile. Eceleni kunezinhlamvu eziyishumi on a damp cloth — ezinye sezihlumile, ezinye azikahlumi — njengokuhlola ukuhluma.",
+      "decision": "reject",
+      "independentMeaningCheck": "“Damp” is not interchangeable with fully wet/saturated. “Amanzi” or a generic wet cloth would lose the degree qualifier. Exact English holds that distinction while preserving ten seeds and mixed outcomes.",
+      "notes": "Agy suggestion is rejected. This is an intentional exact-English hold; it preserves meaning rather than omitting it.",
+      "candidateStatus": "unreviewed-localized-alt-candidate",
+      "image": {
+        "url": "/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+        "repositoryPath": "public/course-images/seeds-sovereignty/seeds-sovereignty-l3.jpg",
+        "gitBlobOid": "9560c0b1c1ebc2592dd4d4873ee6106b836ddc16",
+        "bytes": 68568,
+        "bytesSha256": "882f2e86f3141a80ac42cbbd59f279daec644e40ad22c21dc0ccbe88cc9f538b"
+      },
+      "sourceAndImageBinding": {
+        "sourceHashMatchesPacket": true,
+        "imageAssetExists": true,
+        "imageBytesMatchPacket": true,
+        "imageHashMatchPacket": true
+      }
+    }
+  ]
+}
