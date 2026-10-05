@@ -1,0 +1,235 @@
+{
+  "title": "Water nine native precision application proof",
+  "date": "2026-10-05",
+  "baseHead": "f3b75a58b390c9312e5fa1df35e81fd40e2cb051",
+  "acceptedPacket": "docs/study-translation-reviews/WATER-LEARNER-REVIEWED-PRECISION-2026-10-05.json",
+  "acceptedPacketSHA256": "6aaa85c5437e73dec869992de7b37b2752d4427423aed759d8ddf84235508136",
+  "nativeSHAs": {
+    "st": "6c0bfaca11680029511e224e318abfc6f26472b48242ff1a8c019fb9d09b3ef5",
+    "ve": "5e4b578d242215a0d173bdac6c31dc4bb4f303f137432716c21856e1538090d9",
+    "ts": "a720e47d991d60757d9edb19818015705f43ed476b15b8851a7538a7056cad0c"
+  },
+  "fullBodyCompositions": [
+    {
+      "language": "st",
+      "lessonId": "water-harvesting-l1",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 8,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "water-harvesting-l2",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 9,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "water-harvesting-l3",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 13,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "st",
+      "lessonId": "water-harvesting-l4",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 5,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "water-harvesting-l1",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 8,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "water-harvesting-l2",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 9,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "water-harvesting-l3",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 13,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ve",
+      "lessonId": "water-harvesting-l4",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 5,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "water-harvesting-l1",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 8,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "water-harvesting-l2",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 9,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "water-harvesting-l3",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 13,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    },
+    {
+      "language": "ts",
+      "lessonId": "water-harvesting-l4",
+      "fullSourceExact": true,
+      "fullResolvedBodyExact": true,
+      "paragraphCount": 5,
+      "reviewStatus": "machine-draft",
+      "resolverStatus": "draft"
+    }
+  ],
+  "unchangedFiles": [
+    {
+      "path": "lib/course-modules.ts",
+      "byteExactToBase": true,
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+    },
+    {
+      "path": "lib/course-audio.ts",
+      "byteExactToBase": true,
+      "sha256": "9b8629033f883c12854a928b0bc186b60b2177af57dc1566393c0c823edad6a2"
+    },
+    {
+      "path": "docs/narration/water-harvesting.st.paired-draft.json",
+      "byteExactToBase": true,
+      "sha256": "cfc4a0c95e3a6b5bb9e89a1646ca87db9164bd5a5e3586bb85d07475a622c882"
+    },
+    {
+      "path": "docs/narration/water-harvesting.ve.paired-draft.json",
+      "byteExactToBase": true,
+      "sha256": "465b72211f98d7adfc82341d77062fe1df1549c57dcfdfa1404d6b9b5af4ce53"
+    },
+    {
+      "path": "docs/narration/water-harvesting.ts.paired-draft.json",
+      "byteExactToBase": true,
+      "sha256": "a995ccc0501daa5ae09acd9642f3d1908d32068c76e0623945a13b3ec8745414"
+    },
+    {
+      "path": "lib/course-translation-drafts-st.ts",
+      "byteExactToBase": true,
+      "sha256": "259c32040f8af912df4b87ef134d6c35cc29ee0c24bcd89f654a1d39706f51a8",
+      "scope": "Contains the Sesotho Intro registry; entire file preserved."
+    }
+  ],
+  "exactChanges": [
+    {
+      "id": "water-harvesting/st/water-harvesting-l3/body/paragraph[8]",
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "previousTarget": "Ngola intended uses mme o hakanye demand ya tsona o sebedisa records tsa hao. Bapisa phepelo le ditshebediso tseo ho pholletsa le dihla.",
+      "appliedTarget": "Ngola intended uses mme o hakanye demand ya tsona o sebedisa records tsa hao. Bapisa demand ya tsona le phepelo ho pholletsa le dihla."
+    },
+    {
+      "id": "water-harvesting/st/water-harvesting-l3/body/paragraph[9]",
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "previousTarget": "Rala seo o tla se etsa ha metsi a bolokilweng a fokotseha. Lebitso la provense feela ha le bolele boholo ba tank boo o bo hlokang.",
+      "appliedTarget": "Rala seo o tla se etsa ha stored water runs low. Lebitso la provense feela ha le bolele boholo ba tank boo o bo hlokang."
+    },
+    {
+      "id": "water-harvesting/st/water-harvesting-l4/body/paragraph[4]",
+      "sourceEnglish": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "previousTarget": "Haeba reuse system e se e sebetsa mme metsi a nkha hampe, a etsa letamo kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+      "appliedTarget": "Haeba reuse system e se e sebetsa mme the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser."
+    },
+    {
+      "id": "water-harvesting/ve/water-harvesting-l1/body/paragraph[4]",
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "previousTarget": "Route a i tei u erode slope kana u rumela damaging water kha neighbour. Swale kana dam ya fhasi i tea u kona u ṱanganedza maḓi ayo nga vhuḓi.",
+      "appliedTarget": "Route a i tei u erode slope kana u rumela damaging water kha neighbour. A downstream swale or dam must be able to receive it safely."
+    },
+    {
+      "id": "water-harvesting/ve/water-harvesting-l1/body/paragraph[7]",
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "previousTarget": "Keep good ground cover. Wanani local assessment ni sa athu u bwa kha fhethu ha steep, wet kana unstable. Grass barriers na terraces na zwone zwi ṱoḓa design yo teaho site.",
+      "appliedTarget": "Keep good ground cover. Wanani local assessment ni sa athu u bwa kha steep, wet kana unstable land. Grass barriers na terraces na zwone zwi ṱoḓa design yo teaho site."
+    },
+    {
+      "id": "water-harvesting/ve/water-harvesting-l3/body/paragraph[8]",
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "previousTarget": "Ṅwalani intended uses nahone ni anganyele demand yayo ni tshi shumisa records dzaṋu. Vhambedzani na supply u mona na seasons.",
+      "appliedTarget": "Ṅwalani intended uses nahone ni anganyele demand yayo ni tshi shumisa records dzaṋu. Vhambedzani demand yayo na supply u mona na seasons."
+    },
+    {
+      "id": "water-harvesting/ve/water-harvesting-l3/body/paragraph[9]",
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "previousTarget": "Pulannani zwine na ḓo ita musi maḓi o vhulungwaho a tshi fhungudzea. Dzina ḽa province ḽiṱhihi a ḽi ni vhudzi tank size ine na i ṱoḓa.",
+      "appliedTarget": "Pulannani zwine na ḓo ita musi stored water runs low. Dzina ḽa province fhedzi a ḽi ni vhudzi tank size ine na i ṱoḓa."
+    },
+    {
+      "id": "water-harvesting/ve/water-harvesting-l4/body/paragraph[4]",
+      "sourceEnglish": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "previousTarget": "Arali reuse system i tshi khou shuma nahone the water smells bad, pools or harms plants, litshani u a shumisa ni humbele qualified local advice.",
+      "appliedTarget": "If a reuse system is already operating and the water smells bad, pools or harms plants, litshani u a shumisa ni humbele qualified local advice."
+    },
+    {
+      "id": "water-harvesting/ts/water-harvesting-l3/body/paragraph[8]",
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "previousTarget": "Tsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa supply na ku tirhisiwa ka wona hi tinguva.",
+      "appliedTarget": "Tsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa demand ya wona na supply hi tinguva."
+    }
+  ],
+  "reviewStatus": "unreviewed-machine-draft",
+  "fluentApproval": false,
+  "localFarmingApproval": false,
+  "shanganiApproval": false,
+  "verification": {
+    "typecheck": "npx tsc --noEmit: passed",
+    "fullSuite": {
+      "command": "npm test",
+      "exitCode": 0,
+      "tests": 4682,
+      "passed": 4681,
+      "failed": 0,
+      "todo": 1,
+      "knownTodo": "Existing shape-sync-loss.test.ts explicitly records the known multi-browser whole-collection write defect; unchanged."
+    },
+    "diffCheck": "git diff --check: passed",
+    "nativePreservation": "Exact deep comparison after rewinding only nine accepted paragraphs is enforced by water-reviewed-precision-checks.ts.",
+    "sourceWithdrawal": "Each accepted source paragraph is mutated independently; complete native draft must withdraw to English.",
+    "focusedCurrentChecks": {
+      "tests": 62,
+      "passed": 62,
+      "failed": 0
+    }
+  }
+}

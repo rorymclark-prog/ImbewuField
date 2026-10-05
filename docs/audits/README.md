@@ -67,6 +67,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 | Date | Area and record |
 | --- | --- |
 | 2026-10-06 | [Vegetables L3 ordinary assessment completion — Codex](2026-10-06/study-vegetables-l3-completion-codex.md) |
+| 2026-10-06 | [Water regional learner and slide precision — Codex](2026-10-06/study-water-reviewed-precision-codex.md) |
 | 2026-10-05 | [Study explicit narration choice — Codex](2026-10-05/study-explicit-narration-choice-codex.md) |
 | 2026-10-05 | [Soil learner fuller regional drafts — Codex](2026-10-05/study-soil-learner-fuller-codex.md) |
 | 2026-10-05 | [Market L2/L3 ordinary learner completion — Codex](2026-10-05/study-market-l2-l3-ordinary-codex.md) |

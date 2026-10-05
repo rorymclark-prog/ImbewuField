@@ -179,8 +179,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rera safe overflow pele o tjheka.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rala tsela e bolokehileng ya overflow pele o tjheka.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -407,8 +407,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Metsi a ka lahleha ka evaporation and seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Metsi a ka lahleha ka evaporation le seepage. Hlahloba water level mme o batle dibaka tse dutlang kapa kgoholeho.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -459,8 +459,8 @@
           },
           {
             "status": "draft",
-            "text": "An annual total does not tell you how much water will be available during a dry spell. Bapisa phepelo le tshebediso eo o e rerileng.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Palo ya pula ya selemo kaofela ha e o bolelle hore na metsi a makae a tla fumaneha nakong ya dry spell. Bapisa phepelo le ditshebediso tseo o di rerileng.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }
@@ -717,8 +717,8 @@
           },
           {
             "status": "draft",
-            "text": "Haeba reuse system e se e sebetsa and the water smells bad, pools or harms plants, emisa ho e sebedisa mme seek qualified local advice.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Haeba reuse system e se e sebetsa mme the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
           }
         ]
       }
