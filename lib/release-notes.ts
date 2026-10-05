@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: '69a51ffa', changes: [
+    'isiZulu slide image zoom now includes the unreviewed draft and exact English.',
+    'Source text stays at reading size while you zoom the image.',
+  ], tour: [
+    { title: 'Read the source beside a slide',
+      where: 'Study → isiZulu slides → View slide image',
+      detail: 'Scroll below the image to compare the draft and exact English.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '96e45c79', changes: [
     'Study pictures have 32 unreviewed isiZulu descriptions beside exact English.',
     'Difficult image terms stay in English for facilitator explanation.',
