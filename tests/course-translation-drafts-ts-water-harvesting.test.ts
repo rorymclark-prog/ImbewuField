@@ -219,7 +219,7 @@ test('Xitsonga Market drafts retain exact sources, conditional sales and unchang
   }
 });
 
-test('Water L1-L4 show source-paired Xitsonga drafts with exact-source English holds', () => {
+test('Water L1-L4 show source-paired Xitsonga drafts while retained technical holds stay exact', () => {
   const module = resolveCourseModulePresentation(source, 'ts');
   assert.equal(module.status, 'draft');
   assert.equal(module.title, 'Ku hlengeleta Mati');
@@ -306,7 +306,7 @@ test('Water Harvesting Xitsonga data retains all canonical sources, lesson shape
   }
 });
 
-test('Water Harvesting held wording remains exact where dam, water-law and reuse claims need local review', () => {
+test('2026-10-05 Xitsonga holds remain exact and superseded whole-paragraph holds retain safety checks', () => {
   assert.ok(draft.holds.length > 0);
   for (const hold of draft.holds) {
     const pair = pairForHold(hold);
@@ -335,9 +335,17 @@ test('Water Harvesting held wording remains exact where dam, water-law and reuse
     assert.ok(hold.reason.length > 0);
   }
 
-  const exactHolds = draft.holds.map(hold => hold.sourceText);
-  assert.ok(exactHolds.some(held => held.includes('Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees')),
-    'retain the high-consequence earth-dam restriction as exact English');
+  // 2026-10-05: these seven previous exact-paragraph holds now have checked mixed-language
+  // learner text. Their full source/target/provenance remains in the dated applied packet;
+  // the assertions below protect the same safety and quantity meanings at clause level.
+  for (const [lessonId, field] of [
+    ['water-harvesting-l2', 'body[7]'],
+    ['water-harvesting-l3', 'body[3]'], ['water-harvesting-l3', 'body[5]'], ['water-harvesting-l3', 'body[11]'],
+    ['water-harvesting-l4', 'body[1]'], ['water-harvesting-l4', 'body[2]'], ['water-harvesting-l4', 'body[4]'],
+  ]) {
+    assert.equal(draft.holds.some(hold => hold.lessonId === lessonId && hold.field === field), false,
+      `${lessonId} ${field}: replaced exact-paragraph hold must not mask the checked learner wording`);
+  }
 });
 
 test('Water L2 Xitsonga exposes the checked heading and assessment draft while retaining marked technical holds', () => {
@@ -393,19 +401,28 @@ test('Water L3 Xitsonga keeps roof losses, first-flush limits and water-safety c
   assert.deepEqual(paired.keyPoints.map(point => point.sourceEnglish), canonical.keyPoints);
   assert.equal(paragraphs[0], 'Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.');
   assert.ok(paragraphs[2].includes('Then allow for water that misses the gutter, is diverted or overflows a full tank.'));
-  assert.ok(paragraphs[3].startsWith('An annual total does not tell you how much water will be available during a dry spell.'));
-  assert.ok(paragraphs[4].includes('some of the first runoff'));
-  assert.equal(paragraphs[5], sourceParagraphs[5]);
+  assert.ok(paragraphs[3].includes('a wu ku byeli') && paragraphs[3].includes('dry spell') &&
+    paragraphs[3].includes('supply') && paragraphs[3].includes('loku u ku pulaneke'),
+  'annual totals do not promise dry-spell supply, and users compare it with planned use');
+  assert.ok(paragraphs[4].includes('mati man’wana ya runoff yo sungula') &&
+    paragraphs[4].includes('yi hambukisa') && paragraphs[4].includes('ma nga ngheni etankini'),
+  'divert only some first runoff away from the tank');
+  assert.ok(paragraphs[5].includes('supplier ya sizing na maintenance') &&
+    paragraphs[5].includes('a ku na volume yin’we') && paragraphs[5].includes('roof yin’wana na yin’wana'),
+  'follow supplier sizing and maintenance; no single diversion volume fits every roof');
   assert.ok(paragraphs[6].includes('Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.'));
   assert.ok(paragraphs[10].toLowerCase().includes('screen openings against insects'));
   assert.ok(paragraphs[10].includes('Keep rainwater separate from drinking-water pipes.'));
-  assert.ok(paragraphs[11].startsWith('Water that looks clear may still contain germs or chemicals.'));
+  assert.ok(paragraphs[11].includes('Mati lama vonakaka ma basile ma nga ha va') &&
+    paragraphs[11].includes('germs kumbe chemicals') && paragraphs[11].includes('local health authority') &&
+    paragraphs[11].includes('testing na treatment') && paragraphs[11].includes('intended use'),
+  'clear appearance does not establish safety; testing and treatment follow intended use');
   assert.ok(paragraphs[12].includes('Basic filter ntsena a yi tiyisisi') &&
     paragraphs[12].includes('food crops') && paragraphs[12].includes('safety assessment'),
   'retain filter no-guarantee and food-crop safety assessment');
   const irrigationQuiz = paired.quiz[1];
   assert.equal(irrigationQuiz.sourceCorrectIndex, 1);
-  assert.ok(irrigationQuiz.options[1].xitsongaDraft.includes('leti nga contaminate edible crops'),
+  assert.ok(irrigationQuiz.options[1].xitsongaDraft.includes('leti nga contaminate crops leti dyiwaka'),
     'retain the can-contaminate modality and edible-crop exposure');
   assert.ok(irrigationQuiz.rationale.xitsongaDraft.includes('swi nga hunguta contamination') &&
     irrigationQuiz.rationale.xitsongaDraft.includes('a swi tiyisisi') &&
@@ -426,11 +443,11 @@ test('Water L1 Xitsonga keeps infiltration possible and requires assessment for 
   const paragraphs = paired.body.xitsongaDraft.split('\n\n');
   assert.equal(paragraphs.length, canonical.body.split('\n\n').length);
   // The earlier wording made infiltration an outcome and narrowed steep land to very steep.
-  assert.ok(paragraphs[0].includes('so some water can soak into suitable soil'),
+  assert.ok(paragraphs[0].includes('some water can soak into suitable soil'),
     'keep can and suitable soil: slowing runoff does not guarantee infiltration');
   assert.ok(paragraphs[0].includes('Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava'),
     'distinguish the site from soil when selecting a design');
-  assert.ok(paragraphs[7].includes('Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land'),
+  assert.ok(paragraphs[7].includes('Kuma nkambelo wa laha kaya u nga si cela eka steep, wet kumbe unstable land'),
     'assessment must precede digging on every source land condition');
   assert.ok(!paragraphs[7].includes('rhelela ngopfu'),
     'do not narrow the steep-land assessment warning to very steep land');
@@ -441,7 +458,7 @@ test('Water L1 Xitsonga keeps infiltration possible and requires assessment for 
   assert.equal(shown.content.body, changed.body);
 });
 
-test('Water L2 Xitsonga preserves dry periods, overflow sequence and exact safety holds', () => {
+test('Water L2 Xitsonga preserves dry periods, overflow sequence and dam safeguards', () => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   assert.equal(paired.body.sourceEnglish, canonical.body);
@@ -450,24 +467,28 @@ test('Water L2 Xitsonga preserves dry periods, overflow sequence and exact safet
   const paragraphs = paired.body.xitsongaDraft.split('\n\n');
   assert.equal(paragraphs.length, 9);
   assert.equal(sourceParagraphs.length, paragraphs.length);
-  assert.ok(paragraphs[1].includes('plan for dry periods') && paragraphs[1].includes('damu leri teleke a ri tiyisiwangi'),
+  assert.ok(paragraphs[1].includes('plan for dry periods') && paragraphs[1].includes('damu leri teleke a ri tiyisisiwi'),
     'retain the wider dry-period meaning and no-guarantee condition');
-  assert.ok(paragraphs[1].startsWith('Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo.'),
+  assert.ok(paragraphs[1].startsWith('Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro.'),
     'preserve the established localized South Africa sentence exactly');
-  assert.ok(paragraphs[2].includes('Loko u nga si cinca watercourse') && paragraphs[2].includes('authorisation') && paragraphs[2].includes('water authority'),
+  assert.ok(paragraphs[2].startsWith('U nga si cinca watercourse') && paragraphs[2].includes('authorisation') && paragraphs[2].includes('water authority'),
     'keep the water-authority check before either regulated activity');
   assert.ok(paragraphs[3].includes('site investigation') && paragraphs[3].includes('design hi munhu loyi a nga na suitable qualifications') &&
     paragraphs[3].includes('Catchment runoff') && paragraphs[3].includes('downstream risk') && paragraphs[3].includes('safe spillway'),
   'retain the site investigation, qualified designer and listed dam-safety factors');
-  assert.ok(paragraphs[5].startsWith('An uncontrolled overflow can erode and breach the wall.') &&
+  assert.ok(paragraphs[5].includes('can erode and breach the wall') &&
     paragraphs[5].includes('Kunguhatela ndlela leyi hlayisekeke') && paragraphs[5].includes('u nga si sungula ku aka'),
   'retain overflow/breach meaning and plan the safe route before construction');
-  assert.ok(paragraphs[6].startsWith('Mati ma nga lahleka hi evaporation and seepage.') &&
-    paragraphs[6].includes('Kamba xiyimo xa mati') && paragraphs[6].includes('ku lutla'),
+  assert.ok(paragraphs[6].startsWith('Mati ma nga lahleka hi evaporation na seepage.') &&
+    paragraphs[6].includes('Kamba mpimo wa mati') && paragraphs[6].includes('ku huma ka mati') &&
+    paragraphs[6].includes('ku kukuleka ka misava'),
   'keep evaporation distinct from steam and preserve the existing checks');
-  assert.equal(paragraphs[7], sourceParagraphs[7], 'keep the high-consequence spillway, bank-cover and tree restrictions exact English');
-  assert.ok(paragraphs[8].startsWith('Animals can damage banks and add manure to the water.') &&
-    paragraphs[8].includes('a swi endli mati ma basa kumbe ku hlayiseka'),
+  assert.ok(paragraphs[7].includes('spillway yi nga pfaleki') &&
+    paragraphs[7].includes('bank cover leyi boxiweke eka design') &&
+    paragraphs[7].includes('U nga byali mirhi') && paragraphs[7].includes('earth dam wall'),
+  'keep the spillway clear, use the design-specified bank cover and prohibit trees on the earth dam wall');
+  assert.ok(paragraphs[8].startsWith('Swiharhi swi nga onha tibangi ta damu') &&
+    paragraphs[8].includes('a swi endli mati ma basa kumbe ma hlayiseka'),
   'preserve all-animal scope and the no-cleanliness/no-safety inference');
   const changed = { ...canonical, body: canonical.body.replace('dry periods', 'drought only') };
   assert.notEqual(changed.body, canonical.body);
@@ -486,22 +507,45 @@ test('Water L4 Xitsonga preserves source scope, sanitation gates, prohibitions a
   assert.equal(candidateParagraphs.length, 5);
   assert.equal(paired.body.sourceEnglish, canonical.body);
   assert.equal(paired.body.reviewStatus, 'machine-draft');
-  assert.ok(candidateParagraphs[0].includes('ni other substances'), 'preserve the full harmful-substance scope');
-  assert.equal(candidateParagraphs[1], sourceParagraphs[1], 'keep all excluded source waters and chemical prohibition exact');
-  assert.equal(candidateParagraphs[2], sourceParagraphs[2], 'keep the before-any-reuse local-authority and no-advice rule exact');
-  assert.ok(candidateParagraphs[3].startsWith('Xifaniso xa ntolovelo'), 'draft the ordinary framing sentence');
+  assert.ok(candidateParagraphs[0].includes('germs, salts, cleaning products ni swilo swin’wana'),
+    'preserve the full household-water contaminant scope');
+  assert.ok(candidateParagraphs[1].includes('U nga katsi mati ya toilet') &&
+    candidateParagraphs[1].includes('nappies') && candidateParagraphs[1].includes('munhu loyi a vabyaka') &&
+    candidateParagraphs[1].includes('mati yo hlantswa swiharhi') &&
+    candidateParagraphs[1].includes('U nga tirhisi nakambe') && candidateParagraphs[1].includes('harmful chemicals'),
+  'exclude every source water in the list and prohibit reuse of chemically harmful water');
+  assert.ok(candidateParagraphs[2].includes('Before any reuse') && candidateParagraphs[2].includes('municipality') &&
+    candidateParagraphs[2].includes('qualified local sanitation adviser') && candidateParagraphs[2].includes('source') &&
+    candidateParagraphs[2].includes('vukorhokeri bya mati na sanitation') && candidateParagraphs[2].includes('intended use na site') &&
+    candidateParagraphs[2].includes('Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni') &&
+    candidateParagraphs[2].includes('u nga ma tirhisi nakambe'),
+  'require municipal and qualified local sanitation checks before reuse; unclear or unavailable advice means no reuse');
+  assert.ok(candidateParagraphs[3].startsWith('A generic picture a hi pulani ya purasi.'),
+    'retain the exact design-limit sentence while other ordinary clauses are paired');
   for (const clause of [
     'Soil and mulch do not disinfect wastewater.',
-    'Keep it away from drinking-water plumbing and prevent contact with people or animals.',
+    'Keep wastewater away from drinking-water plumbing and prevent contact with people or animals.',
     'Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.',
   ]) assert.ok(candidateParagraphs[3].includes(clause), `retain exact operational clause: ${clause}`);
-  assert.equal(candidateParagraphs[4], sourceParagraphs[4], 'keep the full AND/OR stop trigger and advice action exact');
+  const stopTrigger = candidateParagraphs[4];
+  assert.ok(stopTrigger.includes('Loko reuse system yi ri karhi yi tirha') &&
+    stopTrigger.includes('naswona') && stopTrigger.includes('mati ma nunha') &&
+    stopTrigger.includes('ma yima kumbe ma onha swimilana') &&
+    stopTrigger.includes('tshika ku ma tirhisa') && stopTrigger.includes('qualified local adviser') &&
+    stopTrigger.indexOf('yi ri karhi yi tirha') < stopTrigger.indexOf('naswona') &&
+    stopTrigger.indexOf('naswona') < stopTrigger.indexOf('mati ma nunha') &&
+    stopTrigger.indexOf('kumbe ma onha swimilana') < stopTrigger.indexOf('tshika ku ma tirhisa'),
+  'when a system is operating, any listed bad-water sign means stop use and seek qualified local advice');
   assert.ok(paired.title.xitsongaDraft.startsWith('Greywater:'), 'retain the exact technical title term');
   assert.deepEqual(paired.keyPoints.map(point => point.sourceEnglish), canonical.keyPoints);
   assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), canonical.quiz.map(item => item.correct));
   assert.deepEqual(paired.quiz.map(item => item.sourceCorrectIndex), [1, 1]);
   assert.equal(paired.quiz[0].options[1].xitsongaDraft, canonical.quiz[0].options[1], 'keep the correct local-check instruction exact');
-  assert.ok(paired.quiz[1].rationale.xitsongaDraft.includes('Neither clear appearance, lack of smell nor mulch proves'),
+  assert.ok(paired.quiz[1].rationale.xitsongaDraft.includes('ma nga va na germs, salts na chemicals') &&
+    paired.quiz[1].rationale.xitsongaDraft.includes('Ku vonaka ma clear') &&
+    paired.quiz[1].rationale.xitsongaDraft.includes('ku pfumaleka ka nun’hwelo') &&
+    paired.quiz[1].rationale.xitsongaDraft.includes('kumbe mulch') &&
+    paired.quiz[1].rationale.xitsongaDraft.includes('a swi tiyisisi'),
     'clear-looking water and lack of smell do not establish safety');
 
   const shown = resolveLearnerLessonPresentation(canonical, 'ts');

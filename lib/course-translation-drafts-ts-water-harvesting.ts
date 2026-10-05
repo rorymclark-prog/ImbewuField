@@ -34,7 +34,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
-        "xitsongaDraft": "Muxaka wun'we wa xisele (swale) i mugodi wo leha lowu ringaneke, lowu celiweke eka khanthura. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, so some water can soak into suitable soil. Swisele swin'wana swi dizayiniwa swi rhelela katsongo hi ndlela leyi lawulekaka, leswaku swi yisa mati lama taleke hi ku nonoka eka ndhawu leyi hlayisekeke yo huma. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela layini, ndlela ya mati lama taleke na ndhawu leyi ma yaka kona u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet or unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+        "xitsongaDraft": "Muxaka wun'we wa xisele (swale) i a level trench on contour. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku some water can soak into suitable soil. Swisele swin'wana swi dizayiniwa with a slight, controlled grade to carry excess water slowly to a safe outlet. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela line, overflow na receiving point u nga si cela.\n\nMisava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi, laha mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.\n\nMirhi leyi byariweke kona yi nga tirhisa ku tsakama loku hlayisiweke emisaveni endzhaku ka mpfula, swi ya hi ndhawu.\n\nMpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.\n\nNdlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. A downstream swale or dam must be able to receive it safely.\n\nKombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.\n\nKu rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.\n\nHlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet kumbe unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -146,7 +146,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
-        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.\n\nLoko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.\n\nDamu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nAn uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.\n\nMati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+        "xitsongaDraft": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.\n\nTinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisisiwi.\n\nU nga si cinca watercourse kumbe ku aka storage works, kambela authorisation leyi lavekaka eka water authority.\n\nDamu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.\n\nU nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.\n\nAn uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si sungula ku aka.\n\nMati ma nga lahleka hi evaporation na seepage. Kamba mpimo wa mati naswona lavisisa ku huma ka mati kumbe ku kukuleka ka misava.\n\nHlayisa spillway yi nga pfaleki naswona hlayisa bank cover leyi boxiweke eka design. U nga byali mirhi ehenhla ka earth dam wall.\n\nSwiharhi swi nga onha tibangi ta damu na ku engetela vulongo ematini. Ku va kona ka swona a swi endli mati ma basa kumbe ma hlayiseka.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -162,12 +162,12 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Check required water authorisations before building",
-          "xitsongaDraft": "Kamba authorisations ta mati leti lavekaka u nga si aka.",
+          "xitsongaDraft": "Kambela authorisations ya mati leyi lavekaka u nga si aka.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
-          "xitsongaDraft": "Hlayisa bank cover naswona do not plant trees on an earth dam wall.",
+          "xitsongaDraft": "Hlayisa bank cover naswona u nga byali mirhi ehenhla ka earth dam wall.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -175,7 +175,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
-            "xitsongaDraft": "Murimi u aka dam wall with no spillway. After an exceptional storm it overflows. What is the likely result?",
+            "xitsongaDraft": "Murimi u aka dam wall leyi nga riki na spillway. Endzhaku ka exceptional storm, damu ri khapakhapa. What is the likely result?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -221,7 +221,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
-              "xitsongaDraft": "Hlayisa bank cover leyi design yi yi hlamuselaka naswona u endla leswaku spillway yi nga pfaleki.",
+              "xitsongaDraft": "Hlayisa bank cover leyi boxiweke hi design naswona u endla leswaku spillway yi nga pfaleki.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -238,7 +238,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
-            "xitsongaDraft": "Spillway leyi nga pfaleki na banks leti hlayisiweke swi pfuna damu ku tirha hi ndlela leyi design yi yi hlamuselaka. Trees should not be planted on an earth dam wall.",
+            "xitsongaDraft": "Spillway leyi nga pfalekangiki na tibangi leti hlayisiweke swi pfuna damu ku tirha hi ndlela leyi design yi hlamuselaka. Mirhi a yi fanelanga ku byariwa ehenhla ka earth dam wall.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -258,13 +258,13 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
-        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. First-flush diverter yi endla leswaku some of the first runoff yi nga ngheni etankini.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nDiverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.\n\nSayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.\n\nTsala intended uses kutani u estimate demand ya wona u tirhisa tirhekhodo ta wena n'wini. Compare that with supply through the seasons.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. A province name alone cannot tell you the tank size you need.\n\nHlayisa thanki yi funengetiwile. Screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nBasic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+        "xitsongaDraft": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.\n\nKamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.\n\nTirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nNtsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta kumeka mati yo tala ku fikela kwihi hi nkarhi wa dry spell. Pimanisa supply na ku tirhisiwa ka mati loku u ku pulaneke.\n\nRoof runoff yi nga rhwala ntshuri, droppings na other contamination. First-flush diverter yi hambukisa mati man’wana ya runoff yo sungula leswaku ma nga ngheni etankini.\n\nMati lama faneleke ku hambukisiwa ya titshege hi roof na system. Tirhisa milawu ya supplier ya sizing na maintenance; a ku na volume yin’we ya roof yin’wana na yin’wana.\n\nDiverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.\n\nSayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.\n\nTsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa supply na ku tirhisiwa ka wona hi tinguva.\n\nKunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. Vito ra province ntsena a ri ku byeli tank size leyi u yi lavaka.\n\nHlayisa thanki yi funengetiwile. Screen openings against insects, naswona hlayisa roof, gutters na diverter. Keep rainwater separate from drinking-water pipes.\n\nMati lama vonakaka ma basile ma nga ha va na germs kumbe chemicals. Vutisa local health authority hi testing na treatment leswi fambisanaka na intended use.\n\nBasic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
-          "xitsongaDraft": "Vukulu bya lwangu, mpfula, xilaveko xa mati na ku lahleka ka mati swi lawula ku hlayisiwa ka mati lama nga tirhisiwaka.",
+          "xitsongaDraft": "Vukulu bya lwangu, mpfula, xilaveko xa mati na losses swi lawula mati lama nga hlayisiwaka leswaku ma tirhisiwa.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -274,12 +274,12 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Clear water can still contain germs or chemicals",
-          "xitsongaDraft": "Clear water ya ha nga va na germs kumbe chemicals.",
+          "xitsongaDraft": "Mati lama vonakaka ma clear ma nga ha va na germs kumbe chemicals.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Testing and treatment must match the intended use",
-          "xitsongaDraft": "Testing na treatment swi fanele swi fambisana na intended use.",
+          "xitsongaDraft": "Testing na treatment swi fanele ku fambisana na intended use.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -298,7 +298,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
-              "xitsongaDraft": "Vukulu bya lwangu, pattern ya mpfula, xilaveko xa mati na ku lahleka ka mati loko ma hlengeletiwa.",
+              "xitsongaDraft": "Vukulu bya roof, pattern ya mpfula, xilaveko xa mati na losses ta ku hlengeleta mati.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -315,7 +315,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
-            "xitsongaDraft": "Ku pulana tank swi fanele ku pimanisa supply leyi nga tirhisiwaka na demand hi nkarhi wa wet na dry periods. Sayizi yin'we leyi vekiweke ya region a yi nge endli tano.",
+            "xitsongaDraft": "Ku pulana tank swi fanele ku pimanisa supply leyi nga tirhisiwaka na demand hi nkarhi wa wet na dry periods. Sayizi yin’we leyi vekiweke ya region a yi nge endli tano.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -328,12 +328,12 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "options": [
             {
               "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
-              "xitsongaDraft": "A yi na nkoka eka irrigation; i ya drinking water ntsena.",
+              "xitsongaDraft": "It doesn't matter for irrigation, only drinking water",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
-              "xitsongaDraft": "First flush yi rhwala concentrated droppings, dust na pathogens leti nga contaminate edible crops.",
+              "xitsongaDraft": "First flush yi rhwala concentrated droppings, dust na pathogens leti nga contaminate crops leti dyiwaka.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -350,7 +350,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
-            "xitsongaDraft": "Ku hambukisa early runoff swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ya hlayisekile. Kambela quality hi ku landza intended use.",
+            "xitsongaDraft": "Ku hambukisa early runoff swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela quality hi ku landza intended use.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -365,7 +365,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        "xitsongaDraft": "Mati lama tirhisiweke ekaya ma nga va na germs, salts, cleaning products ni other substances. Swiletelo a swi hlamuseli swihlovo hinkwaswo hi ndlela yin’we. Swiletelo swa Afrika-Dzonga swa hambana hi mati ya le khixini ni mati yo hlantswa swiambalo.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nXifaniso xa ntolovelo a hi pulani ya purasi. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+        "xitsongaDraft": "Mati lama tirhisiweke ekaya ma nga va na germs, salts, cleaning products ni swilo swin’wana. Swiletelo a swi hlamuseli swihlovo hinkwato hi ndlela yin’we. Swiletelo swa Afrika-Dzonga swi hambana hi mati ya le khixini ni mati yo hlantswa swiambalo.\n\nU nga katsi mati ya toilet, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka reuse plan. U nga tirhisi nakambe mati lama nga na harmful chemicals.\n\nBefore any reuse, kombela municipality na qualified local sanitation adviser ku kambela source leyi kongomeke, vukorhokeri bya mati na sanitation bya household, intended use na site. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.\n\nA generic picture a hi pulani ya purasi. Soil and mulch do not disinfect wastewater. Keep wastewater away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nLoko reuse system yi ri karhi yi tirha naswona mati ma nunha, ma yima kumbe ma onha swimilana, tshika ku ma tirhisa kutani u lava ndzayo ya qualified local adviser.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -422,14 +422,14 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
-            "xitsongaDraft": "Swiletelo swi hambana hi swihlovo swin’wana swa mati ni hi swiyimo swa vukorhokeri leswi faneleke leswaku mati ma tlhela ma tirhisiwa. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+            "xitsongaDraft": "Swiletelo swi hambana hi swihlovo swin’wana swa mati ni hi swiyimo swa vukorhokeri leswi faneleke leswaku mati ma tirhisiwa nakambe. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
             "reviewStatus": "machine-draft"
           }
         },
         {
           "question": {
             "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
-            "xitsongaDraft": "Hi mhaka muni u fanele ku check the exact water source and cleaning products before considering reuse?",
+            "xitsongaDraft": "Hi mhaka muni u fanele ku kambela exact water source na cleaning products u nga si anakanya hi reuse?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -440,7 +440,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
-              "xitsongaDraft": "Water composition and product effects vary, kutani the actual source and products need assessment.",
+              "xitsongaDraft": "Water composition na effects ta products swa hambana; hikokwalaho source ya xiviri na products swi lava assessment.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -457,7 +457,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
-            "xitsongaDraft": "Mati lama tirhisiweke ma nga va na germs, salts ni chemicals to hambana. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+            "xitsongaDraft": "Mati lama tirhisiweke ma nga va na germs, salts na chemicals to hambana. Ku vonaka ma clear, ku pfumaleka ka nun’hwelo kumbe mulch a swi tiyisisi leswaku ma hlayisekile kumbe ma faneleka.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -551,12 +551,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
     },
     {
       "lessonId": "water-harvesting-l2",
-      "field": "body[7]",
-      "sourceText": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
-      "reason": "The design-specified bank cover and earth-dam tree prohibition remain exact English while the rest of this body is paired to localized text."
-    },
-    {
-      "lessonId": "water-harvesting-l2",
       "field": "keyPoints[1]",
       "sourceText": "Design a safe spillway before construction",
       "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
@@ -608,42 +602,6 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       "field": "infographicAlt",
       "sourceText": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
       "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[3]",
-      "sourceText": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
-      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[5]",
-      "sourceText": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
-      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
-    },
-    {
-      "lessonId": "water-harvesting-l3",
-      "field": "body[11]",
-      "sourceText": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
-      "reason": "Retained as an exact English source hold where this batch leaves the field untranslated."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[1]",
-      "sourceText": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
-      "reason": "Explicit exclusion list and harmful-chemical prohibition are safety-critical; needs fluent Xitsonga and local sanitation review before translation."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[2]",
-      "sourceText": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
-      "reason": "The hold preserves the mandatory municipality plus qualified local sanitation adviser check and the no-advice/no-reuse rule. Do not use until reviewed."
-    },
-    {
-      "lessonId": "water-harvesting-l4",
-      "field": "body[4]",
-      "sourceText": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-      "reason": "Keep the full conditional trigger together: an operating system AND (bad smell OR pooling OR plant harm) means stop and seek qualified local advice. No unreviewed Xitsonga wording for the pooling condition."
     },
     {
       "lessonId": "water-harvesting-l4",

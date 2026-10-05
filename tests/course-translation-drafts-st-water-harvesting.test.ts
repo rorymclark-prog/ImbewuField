@@ -112,22 +112,32 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.equal(draftParagraphs.length, sourceParagraphs.length, 'keep each source stage in its own paragraph');
   assert.ok(draftParagraphs[0].includes('Afrika Borwa') && draftParagraphs[0].endsWith('kitchen water le laundry water.'),
     'retain the exact technical distinction between kitchen and laundry water');
-  assert.equal(draftParagraphs[1], sourceParagraphs[1],
-    'all prohibited sources and harmful-chemical water remain exact English');
-  assert.equal(draftParagraphs[2], sourceParagraphs[2],
-    'the qualified local adviser and no-advice-means-no-reuse instruction remain exact');
+  // 2026-10-05: checked source-paired framing now translates the exclusions and decision gate.
+  // Keep the negative scope and no-advice/no-reuse condition observable after that change.
+  assert.ok(draftParagraphs[1].startsWith('O se ke wa kenya toilet water, water from nappies,') &&
+    draftParagraphs[1].includes('a ho hlatswa motho ya kulang') &&
+    draftParagraphs[1].includes('a ho hlatswa diphoofolo moralong wa reuse') &&
+    draftParagraphs[1].includes('O se ke wa sebedisa hape metsi a nang le harmful chemicals'),
+  'retain each excluded water source and the harmful-chemical prohibition');
+  assert.ok(draftParagraphs[2].startsWith('Pele ho reuse efe kapa efe, kopa municipality le qualified local sanitation adviser') &&
+    draftParagraphs[2].includes('source e tobileng') && draftParagraphs[2].includes('intended use le site') &&
+    draftParagraphs[2].endsWith('Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.'),
+  'keep the municipality/adviser checks and block reuse when advice is missing or unclear');
   for (const safetyClause of [
-    'Soil and mulch do not disinfect wastewater.',
-    'Keep it away from drinking-water plumbing and prevent contact with people or animals.',
-    'Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.',
+    'Soil le mulch ha di disinfect wastewater.',
+    'Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo.',
+    'O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.',
   ]) {
-    assert.ok(draftParagraphs[3].includes(safetyClause), `retain exact wastewater safety clause: ${safetyClause}`);
+    assert.ok(draftParagraphs[3].includes(safetyClause), `retain the checked wastewater safety rule: ${safetyClause}`);
   }
   assert.match(sourceParagraphs[4], /already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice\.$/,
     'the stop rule applies to an operating system when any listed symptom occurs');
   assert.ok(draftParagraphs[4].startsWith('Haeba reuse system e se e sebetsa '),
     'translate the ordinary operating-system lead-in while preserving the conditional safety clause');
-  assert.ok(draftParagraphs[4].endsWith('and the water smells bad, pools or harms plants, emisa ho e sebedisa mme seek qualified local advice.'),
+  assert.ok(draftParagraphs[4].includes('e se e sebetsa mme metsi') &&
+    draftParagraphs[4].includes('metsi a nkha hampe, a etsa letamo kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.') &&
+    draftParagraphs[4].indexOf('e se e sebetsa') < draftParagraphs[4].indexOf('mme metsi') &&
+    draftParagraphs[4].indexOf('mme metsi') < draftParagraphs[4].indexOf('a nkha hampe'),
     'preserve the AND operating condition, OR symptom trigger and qualified-advice action exactly');
 
   const greywaterVisible = resolveLearnerLessonPresentation(greywaterSource, 'st');
@@ -161,21 +171,23 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
     'show the exact source-paired Sesotho body as a visibly unreviewed learner draft');
   assert.ok(waterL2Paragraphs[1].includes('dry periods') && waterL2Paragraphs[1].includes('ha le a tiisetswa'),
     'keep dry periods broader than drought and retain the no-guarantee qualifier');
-  assert.ok(waterL2Paragraphs[6].startsWith('Metsi a ka lahleha ka evaporation and seepage.') &&
+  assert.ok(waterL2Paragraphs[6].startsWith('Metsi a ka lahleha ka evaporation le seepage.') &&
     waterL2Paragraphs[6].includes('Hlahloba boemo ba metsi') && waterL2Paragraphs[6].includes('kgoholeho'),
   'retain the correct evaporation/seepage terms and preserve the checks');
   const waterL2ProtectionQuiz = waterL2Draft.quiz[1];
   assert.equal(waterL2ProtectionQuiz.sourceCorrectIndex, waterL2Source.quiz[1].correct);
   assert.ok(waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft.includes('keep the spillway clear'),
     'the correct protection option must say the spillway stays unobstructed, not merely clean');
-  assert.ok(waterL2ProtectionQuiz.rationale.sesothoDraft.includes('A clear spillway (spillway e sa thibehang)'),
+  assert.ok(waterL2ProtectionQuiz.rationale.sesothoDraft.startsWith('Spillway e sa thibehang') &&
+    waterL2ProtectionQuiz.rationale.sesothoDraft.includes('earth dam'),
     'the feedback must preserve the spillway-clear requirement');
   assert.equal(waterL2Visible.content.quiz[1].options[waterL2ProtectionQuiz.sourceCorrectIndex],
     waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft);
   assert.equal(waterL2Visible.content.quiz[1].rationale, waterL2ProtectionQuiz.rationale.sesothoDraft);
-  assert.ok(waterL2Paragraphs[7].startsWith('Keep the spillway clear and maintain the bank cover specified in the design.') &&
-    waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la letamo la mobu.'),
-  'preserve unobstructed spillway and design-specified cover, plus the existing tree prohibition');
+  assert.ok(waterL2Paragraphs[7].startsWith('Boloka spillway e sa thibehang') &&
+    waterL2Paragraphs[7].includes('bank cover e boletsweng design') &&
+    waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la earth dam.'),
+    'preserve unobstructed spillway and design-specified cover, plus the existing tree prohibition');
   const changedWaterL2 = {
     ...waterL2Source,
     body: waterL2Source.body.replace('dry periods', 'drought only'),
@@ -205,16 +217,16 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
     'level trench on contour',
     'slight, controlled grade',
     'safe outlet',
-    'Pele o tjheka, trained local adviser a hlahlobe line, overflow le receiving point',
-    'downhill side',
-    'di ka nka moisture e bolokilweng mobung ka mora pula, ho ya ka site',
+    'Pele o tjheka, kopa trained local adviser hore a hlahlobe line, overflow le receiving point',
+    'berm ka lehlakoreng le theohelang',
+    'di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka site',
     'e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung',
-    'Rera safe overflow pele o tjheka',
-    'ha e a tshwanela ho senya slope ka erosion',
+    'Rala tsela e bolokehileng ya overflow pele o tjheka',
+    'Tsela ha e a lokela ho baka erosion moepeng',
     'metsi a senyang ho moahisani',
-    'Downstream swale kapa dam e lokela ho kgona ho amohela metsi ao ka polokeho',
-    'Slope feela ha e bolele',
-    'local assessment pele o tjheka mobung o steep, wet kapa unstable',
+    'A downstream swale or dam must be able to receive it safely',
+    'Slope feela ha e bolele hore swale e loketse',
+    'local assessment pele o tjheka sebakeng se steep, wet kapa unstable',
   ]) {
     assert.ok(body.sesothoDraft.includes(requiredMeaning),
       `the body must retain this source condition or technical distinction: ${requiredMeaning}`);

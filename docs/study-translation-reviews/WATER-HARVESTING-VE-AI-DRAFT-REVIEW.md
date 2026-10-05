@@ -1,5 +1,7 @@
 # Water Harvesting — Tshivenda machine draft
 
+> **2026-10-05 update:** The current source-paired learner fields are recorded in [the ordinary-completion proof](WATER-HARVESTING-LEARNER-ORDINARY-COMPLETION-2026-10-05.json). Its 14 changed Tshivenda fields, including the source-bound L1 title, remain `machine-draft`; canonical English and quiz answer indexes are unchanged. The earlier field inventory below describes the preceding batch. No fluent or local technical approval is claimed.
+
 - **Status:** Agy `gemini-3.6-flash-low` generated the module and first three lesson headings; an independent Agy `gemini-3.1-pro-low` heading check caught and corrected two word-choice errors. L1 and L2 body drafts have separate source-paired review records. No fluent Tshivenda speaker or local farming, water or sanitation adviser has reviewed or approved this draft.
 - **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `water-harvesting` (all four lessons).
 - **Paired data:** [`lib/course-translation-drafts-ve-water-harvesting.ts`](../../lib/course-translation-drafts-ve-water-harvesting.ts). Learner drafts are wired beside exact English. This batch changes no slides or audio.
