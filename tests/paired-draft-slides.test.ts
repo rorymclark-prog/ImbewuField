@@ -260,6 +260,35 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
     ts: { 2: 'Leswi u nga ta swi dyondza', 23: 'Ntirho wa le nsinini' },
   };
   const waterModule = COURSE_MODULES.find(({ id }) => id === 'water-harvesting')!;
+  const learnerApplication = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/WATER-HARVESTING-LEARNER-ORDINARY-COMPLETION-2026-10-05.json', 'utf8'));
+  assert.equal(learnerApplication.applicationAudit.baseHead, '64d728a02f4c7051b4d860e64000b5142653a048');
+  // 2026-10-05 learner-only completion leaves the Claude-owned deck files as historical exact
+  // reuses. First require the new whole learner body to resolve exactly, then compare old deck
+  // rows against the dated pre-completion body stored in the applied proof.
+  const historicalCheckedParagraphs = new Map<string, Array<{ text: string; status: string; lessonId: string; index: number }>>();
+  for (const field of learnerApplication.applicationAudit.verifiedCandidateFields.filter((item: any) =>
+    item.field === 'body' && item.currentTarget !== item.proposedTarget)) {
+    const lesson = waterModule.lessons.find(item => item.id === field.lessonId);
+    assert.ok(lesson, `${field.language}/${field.lessonId}: historical body must name a current canonical lesson`);
+    assert.equal(field.sourceEnglish, lesson.body,
+      `${field.language}/${field.lessonId}: historical draft is bound to the exact unchanged canonical body`);
+    const currentResolution = resolveLearnerLessonPresentation(lesson, field.language as 'st' | 've' | 'ts');
+    assert.equal(currentResolution.status, 'draft', `${field.language}/${field.lessonId}: completed learner body remains a draft`);
+    assert.equal(currentResolution.content.body, field.proposedTarget,
+      `${field.language}/${field.lessonId}: current resolver equals the newly applied complete learner body`);
+    const sourceParagraphs = field.sourceEnglish.split('\n\n');
+    const historicalParagraphs = field.currentTarget.split('\n\n');
+    assert.equal(historicalParagraphs.length, sourceParagraphs.length,
+      `${field.language}/${field.lessonId}: the saved prior learner body retains source paragraph count`);
+    historicalParagraphs.forEach((text: string, index: number) => {
+      const key = `${field.language}\0${sourceParagraphs[index]}`;
+      historicalCheckedParagraphs.set(key, [
+        ...(historicalCheckedParagraphs.get(key) ?? []),
+        { text, status: 'draft', lessonId: field.lessonId, index },
+      ]);
+    });
+  }
   const exactLessonParagraphs = new Map<string, Array<{ status: string; text: string }>>();
   for (const language of ['st', 've', 'ts'] as const) {
     for (const lesson of waterModule.lessons) {
@@ -294,6 +323,9 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
       backTranslation: string;
     }>;
   };
+  const materialRepairs = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/SOIL-WATER-MATERIAL-REPAIRS-2026-10-05.json', 'utf8')).repairs;
+  assert.equal(materialRepairs.length, 4, 'four independently identified technical clauses retain exact English');
   const ordinaryProvenance = 'Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026)';
   const formerHoldAnchors: Record<string, Record<'st' | 've' | 'ts', RegExp[]>> = {
     // learning outcomes: level contour on a suitable site, assessed spillway, tank safety check, greywater separation
@@ -340,7 +372,8 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
   const separateProhibitions = { st: /o se ke wa/gi, ve: /ni songo/gi } as const;
 
   const reusedParagraphRows: string[] = [];
-  const exactEnglishResolverRows: string[] = [];
+  const historicallyCheckedReuseRows: string[] = [];
+  const preservedHistoricalEnglishHoldRows: string[] = [];
   const machineDraftRows: string[] = [];
   const existingHeadingRows: string[] = [];
   const statusCounts: Record<string, number> = {};
@@ -375,22 +408,41 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
         const matches = exactLessonParagraphs.get(`${language}\0${sourceParagraph}`) ?? [];
         if (part.status === 'english-hold') {
           assert.equal(part.text, undefined);
-          if (matches.length > 0) {
-            assert.ok(matches.every(({ text }) => text === sourceParagraph),
-              `${language} slide ${slide.n} body ${index}: an exact resolver English fallback stays held`);
-            exactEnglishResolverRows.push(`${language}:${slide.n}:${index}`);
+          const historicalMatches = historicalCheckedParagraphs.get(`${language}\0${sourceParagraph}`) ?? [];
+          if (historicalMatches.some(({ text }) => text === sourceParagraph)) {
+            preservedHistoricalEnglishHoldRows.push(`${language}:${slide.n}:${index}`);
           }
+          if (matches.length > 0) {
+            assert.ok(matches.every(({ status, text }) =>
+              status === 'english-fallback' ? text === sourceParagraph : status === 'draft' && text !== sourceParagraph),
+            `${language} slide ${slide.n} body ${index}: a hold stays exact source whether its learner lesson is still fallback or has a paired draft`);
+          }
+          continue;
+        }
+        if (part.status === 'mixed') {
+          const repair = materialRepairs.find((row: any) => row.language === language && row.slide === slide.n && row.bodyIndex === index);
+          assert.ok(repair, `${language} slide ${slide.n}: every mixed repair has an exact source record`);
+          assert.equal(repair.sourceEnglish, sourceParagraph);
+          assert.deepEqual(part, repair.currentTarget);
+          assert.equal(part.segments.map((segment: any) => segment.sourceEnglish).join(''), sourceParagraph);
+          assert.deepEqual(part.segments.filter((segment: any) => segment.status === 'english-hold').map((segment: any) => segment.sourceEnglish), [repair.heldEnglish]);
+          machineDraftRows.push(`${language}:${slide.n}:${index}`);
           continue;
         }
         assert.ok(part.text && part.text !== sourceParagraph,
           `${language} slide ${slide.n} body ${index}: a draft must contain target text, not an English copy`);
 
         if (part.provenance?.startsWith('Complete byte-exact English source learner paragraph reused;')) {
-          assert.ok(matches.length > 0, `${language} slide ${slide.n} body ${index}: reused paragraph has an exact canonical source match`);
-          assert.ok(matches.every(({ text }) => text === part.text),
-            `${language} slide ${slide.n} body ${index}: reuse equals the current resolver paragraph byte for byte`);
-          assert.ok(matches.every(({ status }) => status === 'draft'),
-            `${language} slide ${slide.n} body ${index}: reused resolver paragraph is a draft`);
+          const historicalMatches = historicalCheckedParagraphs.get(`${language}\0${sourceParagraph}`) ?? [];
+          assert.ok(matches.length > 0 || historicalMatches.length > 0,
+            `${language} slide ${slide.n} body ${index}: reused paragraph has an exact current or dated source-bound learner match`);
+          if (matches.length > 0 && matches.every(({ text }) => text === part.text) && matches.every(({ status }) => status === 'draft')) {
+            // The deck reuses the current learner resolver byte for byte.
+          } else {
+            assert.ok(historicalMatches.some(({ text, status }) => text === part.text && status === 'draft'),
+              `${language} slide ${slide.n} body ${index}: older reuse must equal the dated source-paired learner target byte for byte`);
+            historicallyCheckedReuseRows.push(`${language}:${slide.n}:${index}`);
+          }
           reusedParagraphRows.push(`${language}:${slide.n}:${index}`);
         } else if (part.provenance?.startsWith('Bounded deck-only machine draft')) {
           machineDraftRows.push(`${language}:${slide.n}:${index}`);
@@ -405,7 +457,11 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
     for (const [unit, anchors] of Object.entries(formerHoldAnchors)) {
       const [slideNumber, index] = unit.split('.').map(Number);
       const slide = slides[slideNumber - 1];
-      const part = slide.target.body[index];
+      const livePart = slide.target.body[index];
+      const repair = materialRepairs.find((row: any) => row.language === language && row.slide === slideNumber && row.bodyIndex === index);
+      // Rewind only the four later technical holds before checking the original blind review and safety anchors.
+      // Live mixed segments are separately checked above; historical review evidence must remain unchanged.
+      const part = repair ? repair.previousTarget : livePart;
       assert.equal(slide.english.body[index], waterSource[slideNumber - 1].body[index]);
       assert.equal(part.status, 'draft', `${language} slide ${slideNumber} body ${index}: the former hold is now a labeled draft`);
       assert.ok(part.provenance.startsWith(ordinaryProvenance) && /Unreviewed; not fluent or local farming approval/.test(part.provenance),
@@ -472,15 +528,17 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
   // Rewritten 5 October 2026 (ordinary-prose completion): 119 former exact-English holds are now bounded machine
   // drafts. Only the six learner-English holds remain English; they stay outside this deck-only scope.
   assert.equal(reusedParagraphRows.length, 78,
-    'all 78 target-language reuses are exact full paragraphs from current canonical learner resolution');
-  assert.equal(exactEnglishResolverRows.length, 6,
-    'the six exact-source resolver paragraphs that remain English are labeled holds, not translations');
+    'all 78 target-language reuses are exact full paragraphs from a source-paired learner authority');
+  assert.ok(historicallyCheckedReuseRows.length > 0,
+    'when a whole-body learner draft is later completed, deck reuse is checked against its dated prior target');
+  assert.equal(preservedHistoricalEnglishHoldRows.length, 6,
+    'the six paragraphs that were exact English holds before learner completion remain exact English holds in the unchanged deck');
   assert.equal(machineDraftRows.length, 168,
-    'new deck-only prose remains a bounded, separately labeled unreviewed draft');
+    'all 168 deck-only headings and paragraphs remain bounded unreviewed drafts, including four source-paired technical holds');
   assert.equal(existingHeadingRows.length, 6,
     'the two established generic headings per language remain unchanged');
-  assert.deepEqual(statusCounts, { 'english-hold': 6, draft: 252 },
-    'only the six learner-English holds stay exact English; the other 252 panels are clearly marked drafts');
+  assert.deepEqual(statusCounts, { 'english-hold': 6, draft: 248, mixed: 4 },
+    'six historical learner holds remain exact English; four technical repairs retain explicit source-paired holds inside unreviewed drafts');
 });
 
 // Added 5 October 2026: the Sesotho Soil and Water passages drafted in the ordinary-prose completion use the South

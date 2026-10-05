@@ -662,7 +662,7 @@
    "module": "water-harvesting",
    "language": "ve",
    "pairedSource": "docs/narration/water-harvesting.ve.paired-draft.json",
-   "pairedSourceSha256": "7bd3f4f4a92356686ba2af5840f06a94089939f8b7e63a15af0fa2270b599fcc",
+   "pairedSourceSha256": "465b72211f98d7adfc82341d77062fe1df1549c57dcfdfa1404d6b9b5af4ce53",
    "changedSlides": [
     1,
     2,
@@ -708,9 +708,9 @@
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-04.webp",
-     "sha256": "b135d2c4701e76a240f7ed931887d3370ad67398eb0f3da2a474ba38b60682ed",
+     "sha256": "677c7918934af08c5f318ddfba3e9d52ed9c0c2dc630712cdcd79fe6d5ad30ec",
      "baselineSha256": "6845e983d24f579e330b49178c9a5dfbc925b2c5506cc45ea6de369384898ff9",
-     "bytes": 236960
+     "bytes": 241794
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-05.webp",
@@ -750,9 +750,9 @@
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-12.webp",
-     "sha256": "65f0803f88524114b3cce5f5c2cff808dba9945c747e0cf4a0f16b0a426729cf",
+     "sha256": "54f4697271d562ad2e730d3f924fbe776f678c40acda6325dcbcad27713c1a5d",
      "baselineSha256": "e8dc344ad4146cf4c089ec24ba7e91b3b46b5b7f85ebbefe276280be3def367a",
-     "bytes": 240926
+     "bytes": 245078
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-13.webp",
@@ -792,9 +792,9 @@
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-20.webp",
-     "sha256": "91abd98622c2f168a2a09dba1ec153bc148f3fe55c653858408a2fbb3b800141",
+     "sha256": "72d38e6408455e8bfb9f06966a9dd0a69f7a22a3be630421f030c654fe3df84e",
      "baselineSha256": "6551482303c983a1e226efa3eded9e01794c1ce8c7b14e883370ec2c5bcbc021",
-     "bytes": 271488
+     "bytes": 274566
     },
     {
      "path": "public/course-decks/water-harvesting/ve/slide-21.webp",
@@ -845,7 +845,7 @@
    "module": "water-harvesting",
    "language": "ts",
    "pairedSource": "docs/narration/water-harvesting.ts.paired-draft.json",
-   "pairedSourceSha256": "327389b77d8e4e4b2ba03c0ac5e1bf8f9e9028160a340d5d37bf5f9633cb0f74",
+   "pairedSourceSha256": "a995ccc0501daa5ae09acd9642f3d1908d32068c76e0623945a13b3ec8745414",
    "changedSlides": [
     1,
     2,
@@ -980,9 +980,9 @@
     },
     {
      "path": "public/course-decks/water-harvesting/ts/slide-22.webp",
-     "sha256": "6e6dda199b38740c2118d1f29c94fb23888f748ffc64e8f198485d5e4d82d329",
+     "sha256": "993746657d470017bf8d72e270815a73c55292a3acee7e8b884d09666b3e0ee6",
      "baselineSha256": "230e960ab78bbac58d0073e869e1dc9454e2a52d319895bfd244b9d5c065da85",
-     "bytes": 280642
+     "bytes": 283264
     },
     {
      "path": "public/course-decks/water-harvesting/ts/slide-23.webp",

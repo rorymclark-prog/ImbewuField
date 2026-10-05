@@ -703,9 +703,18 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Sivela vanhu kumbe swiharhi ku khumbana ni mati lama tirhisiweke ku hlantswa. U nga hlanganiseli mati lawa eka tiphayiphi ta mati yo nwa, u nga ma hangalasi emoyeni, u nga pfumeleli leswaku ma hlengeletana, kumbe ma khulukela ehandle ka ndhawu ya wena eka ndlela, mugerwana kumbe nambu.",
-            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "text": "Sivela vanhu kumbe swiharhi ku khumbana ni mati lama tirhisiweke ku hlantswa. U nga hlanganiseli mati lawa eka tiphayiphi ta mati yo nwa, u nga ma hangalasi emoyeni, u nga pfumeleli leswaku ma hlengeletana, kumbe ma khulukela ehandle ka ndhawu ya wena eka ndlela, mugerwana kumbe ",
+                "sourceEnglish": "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "watercourse."
+              }
+            ]
           },
           {
             "status": "english-hold"

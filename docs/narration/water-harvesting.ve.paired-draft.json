@@ -122,9 +122,18 @@
             "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "draft",
-            "text": "A tshi sumbedzi uri maḓi a dzhena fhasi hani kha mavu aṋu tsimuni yaṋu. Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
-            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "english-hold",
+                "sourceEnglish": "It does not show how deep moisture reaches on your land."
+              },
+              {
+                "status": "draft",
+                "text": " Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
+                "sourceEnglish": " Check the soil, slope and overflow route before building."
+              }
+            ]
           }
         ]
       }
@@ -380,9 +389,23 @@
             "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "draft",
-            "text": "Runoff ya catchment ndi tshithu tshithihi tshine tsha dzhielwa nṱha kha muvhumbekanyo. Muthu o gudelaho nga nḓila i eneleaho u fanela u ṱola fhethu, muvhumbekanyo wa damu na wa spillway musi ni sa athu u fhaṱa.",
-            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "text": "Runoff ya catchment ndi tshithu tshithihi tshine tsha dzhielwa nṱha kha muvhumbekanyo. ",
+                "sourceEnglish": "Catchment runoff is one input. "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "A suitably qualified person"
+              },
+              {
+                "status": "draft",
+                "text": " u fanela u ṱola fhethu, muvhumbekanyo wa damu na wa spillway musi ni sa athu u fhaṱa.",
+                "sourceEnglish": " must assess the site, dam and spillway design before construction."
+              }
+            ]
           }
         ]
       }
@@ -651,9 +674,23 @@
         },
         "body": [
           {
-            "status": "draft",
-            "text": "Phanḓa ha u shumisa maḓi hafhu, vhudzisani mmasipala na mueletshedzi wa sanitation wa henefho o gudedzwaho uri vha ṱole tshiko tshone, mishumo ya maḓi na sanitation ya muṱa, mushumisele une na khou humbula na fhethu hone.",
-            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "text": "Phanḓa ha u shumisa maḓi hafhu, vhudzisani mmasipala na ",
+                "sourceEnglish": "Before any reuse, ask the municipality and a "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "qualified local sanitation adviser"
+              },
+              {
+                "status": "draft",
+                "text": " uri vha ṱole tshiko tshone, mishumo ya maḓi na sanitation ya muṱa, mushumisele une na khou humbula na fhethu hone.",
+                "sourceEnglish": " to check the exact source, the household's water and sanitation services, the intended use and the site."
+              }
+            ]
           },
           {
             "status": "draft",

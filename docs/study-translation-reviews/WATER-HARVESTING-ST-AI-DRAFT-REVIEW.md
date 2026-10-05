@@ -1,5 +1,7 @@
 # Water Harvesting — Sesotho machine draft
 
+> **2026-10-05 update:** The current source-paired learner fields are recorded in [the ordinary-completion proof](WATER-HARVESTING-LEARNER-ORDINARY-COMPLETION-2026-10-05.json). Its 6 Sesotho fields remain `machine-draft`; canonical English and quiz answer indexes are unchanged. The earlier field inventory below describes the preceding batch. No fluent or local technical approval is claimed.
+
 - **Status:** Earlier fields came from Agy drafts and independent model checks. The 2 October L1 body and question batch, and the L2 body completion, came from bounded machine drafting with independent semantic checks and root review. No fluent Sesotho speaker or local water/sanitation adviser has approved it.
 - **Source:** [`lib/course-modules.ts`](../../lib/course-modules.ts), module `water-harvesting` (four lessons).
 - **Paired data:** [`lib/course-translation-drafts-st-water-harvesting.ts`](../../lib/course-translation-drafts-st-water-harvesting.ts). The draft has a learner review notice. Existing silent source-paired regional slides and optional English narration are unchanged by this body/question batch.
