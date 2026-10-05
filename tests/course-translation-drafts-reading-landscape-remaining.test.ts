@@ -7,6 +7,68 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
+import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+
+const firstObservationsProof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-IMPLEMENTATION-2026-10-05.json', import.meta.url), 'utf8')) as {
+  pairedFieldsApplied: Array<{
+    language: 'st' | 've' | 'ts';
+    slide: number;
+    field: 'body';
+    index: number;
+    sourceEnglish: string;
+    segments: Array<{ sourceEnglish: string; status: 'draft' | 'english-hold'; text?: string }>;
+    target: string;
+  }>;
+};
+
+test('Reading first observations stay exact-source, scoped, and visibly mixed while safeguards remain held', () => {
+  const rawEnglish = readFileSync(new URL('../docs/narration/reading-landscape.en.md', import.meta.url), 'utf8');
+  const source = englishSlideRecords(rawEnglish);
+  const selected = new Set(['st:2:1', 'st:5:0', 'st:6:0', 'st:6:1', 've:5:0', 've:6:0', 've:6:1', 'ts:2:1', 'ts:5:0', 'ts:6:0', 'ts:6:1']);
+  assert.equal(firstObservationsProof.pairedFieldsApplied.length, selected.size);
+  assert.deepEqual(new Set(firstObservationsProof.pairedFieldsApplied.map(row => `${row.language}:${row.slide}:${row.index}`)), selected,
+    'only the independently accepted eleven prose fields are released');
+
+  for (const language of ['st', 've', 'ts'] as const) {
+    const paired = JSON.parse(readFileSync(new URL(`../docs/narration/reading-landscape.${language}.paired-draft.json`, import.meta.url), 'utf8'));
+    const checked = validatePairedDraft(paired, source, language);
+    for (const row of firstObservationsProof.pairedFieldsApplied.filter(item => item.language === language)) {
+      const slide = checked[row.slide - 1];
+      const field = slide.target.body[row.index];
+      assert.equal(slide.english.body[row.index], row.sourceEnglish,
+        `${language} slide ${row.slide} body ${row.index}: exact English stays bound`);
+      assert.equal(field.status, 'mixed', `${language} slide ${row.slide}: draft and held technical phrase remain visibly distinct`);
+      assert.deepEqual(field.segments, row.segments);
+      assert.equal(field.segments.map((segment: { sourceEnglish: string }) => segment.sourceEnglish).join(''), row.sourceEnglish);
+      assert.equal(field.segments.map((segment: { sourceEnglish: string; text?: string }) => segment.text ?? segment.sourceEnglish).join(''), row.target);
+    }
+    const waterObservation = firstObservationsProof.pairedFieldsApplied.find(row => row.language === language && row.slide === 5)!;
+    const waterText = waterObservation.target;
+    assert.equal(waterObservation.sourceEnglish,
+      'The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.',
+      `${language}: the five observed movements remain source-bound and ordered`);
+    assert.equal(waterObservation.segments.find(segment => segment.sourceEnglish === 'sinks')?.status, 'english-hold',
+      `${language}: the ambiguous infiltration term remains exact English`);
+    assert.doesNotMatch(waterText, /valley|phuleng|decreases|decrease/i,
+      `${language}: the observed route gains no valley destination or water-decrease claim`);
+    const geometry = firstObservationsProof.pairedFieldsApplied.filter(row => row.language === language && row.slide === 6);
+    assert.match(geometry.find(row => row.index === 0)!.target, /A-frame level from three poles and a weighted string/,
+      `${language}: the tool parts and count remain source-exact`);
+    const traceText = geometry.find(row => row.index === 1)!.target;
+    assert.match(traceText, /points at the same height/);
+    if (language === 'st' || language === 've') assert.match(traceText, /these points/);
+    if (language === 'ts') assert.match(traceText, /tipoyinti leti/,
+      'TS connects the same point referent with its localized demonstrative');
+    assert.match(traceText, /to trace a contour line/,
+      `${language}: the same-height geometry and contour purpose remain exact English anchors`);
+    if (language === 've') {
+      assert.deepEqual(checked[1].target.body[1], { status: 'english-hold' },
+        'the unresolved already/aspect paragraph stays in English');
+    }
+    assert.deepEqual(checked[5].target.body[2], { status: 'english-hold' },
+      `${language}: assessment, earthworks, overflow, and trained-adviser safeguards stay exact`);
+  }
+});
 
 const packet = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-REMAINING-ORDINARY-CANDIDATES-2026-10-04.json', import.meta.url), 'utf8'));
 const candidates = packet.candidateFields as Array<{

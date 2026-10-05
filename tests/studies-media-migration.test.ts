@@ -11,7 +11,8 @@ test('the nine updated Study stills refresh once without evicting other slides o
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateStudyOutcomesResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
-  assert.match(source, /then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(migrateStudyOutcomesResidualStills\)\.then/);
+  assert.match(source, /then\(migrateReadingLandscapeFrostBodySyncStills\)\.then\(migrateReadingLandscapeFirstObservationStills\)\.then\(migrateStudyOutcomesResidualStills\)\.then/,
+    'the newer Reading observation migration stays ahead of the existing Study cleanup');
 
   const origin = 'https://field.test';
   const changed = [
@@ -2559,4 +2560,67 @@ test('Reading frost wording refresh retires only the four changed regional frame
   assert.equal(await rows.get(laterDownload)!.text(), 'replacement chosen by the learner after activation');
   for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
   assert.equal(puts, 1, 'later activations leave the selected replacement untouched');
+});
+
+test('Reading first observations retire only the eight refreshed frames and all cached URL variants once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateReadingLandscapeFirstObservationStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assertActivationOrder(source, 'migrateReadingLandscapeFrostBodySyncStills', 'migrateReadingLandscapeFirstObservationStills',
+    'the first-observation refresh runs after the previous Reading frame migrations');
+
+  const origin = 'https://field.test';
+  const changedSlides = { st: [2, 5, 6], ve: [5, 6], ts: [2, 5, 6] };
+  const changed = Object.entries(changedSlides).flatMap(([language, slides]) => slides.map(slide =>
+    `/course-decks/reading-landscape/${language}/slide-${String(slide).padStart(2, '0')}.webp`
+  ));
+  assert.equal(changed.length, 8, 'only the approved source-paired stills are retired');
+  const obsoleteUrls = changed.flatMap(path => [
+    new URL(path, origin).href,
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preserved = [
+    ...(['st', 've', 'ts'] as const).flatMap(language => Array.from({ length: 21 }, (_, index) =>
+      `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.webp`
+    ).filter(path => !changed.includes(path))),
+    ...(['en', 'zu'] as const).flatMap(language => Array.from({ length: 21 }, (_, index) =>
+      `/course-decks/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.jpg`
+    )),
+    ...(['st', 've', 'ts', 'en', 'zu'] as const).flatMap(language => [
+      ...Array.from({ length: 21 }, (_, index) =>
+        `/course-audio/reading-landscape/${language}/slide-${String(index + 1).padStart(2, '0')}.mp3`),
+      `/course-audio/reading-landscape/${language}/full.mp3`,
+    ]),
+    '/course-animations/reading-landscape/flow-a-frame.mp4',
+    '/course-decks/vegetables-staples/ve/slide-14.webp',
+  ];
+  const preservedUrls = [...new Set(preserved)].map(path => new URL(path + '?keep=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...obsoleteUrls.map(url => [url, new Response('superseded Reading first-observation frame')] as const),
+    ...preservedUrls.map(url => [url, new Response('preserve other Reading frames and media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  for (const url of obsoleteUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/reading-landscape/.regional-first-observation-stills-20261005';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the migration marker remains with preserved cache entries');
+  assert.equal(puts, 1);
+
+  const learnerDownload = new URL(changed[0], origin).href;
+  rows.set(learnerDownload, new Response('replacement still selected and downloaded later'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(learnerDownload)!.text(), 'replacement still selected and downloaded later');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activation leaves replacement bytes alone');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'the worker retires stale URLs but leaves replacement downloads to the learner');
 });

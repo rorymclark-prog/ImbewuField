@@ -70,7 +70,38 @@
             "text": "Purasi rin’wana ni rin’wana ri ni mavumbeko lama se ma tirhaka hi nkarhi lowu hi nga si engetela xin’wana."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Rain already follows lines across the land.",
+                "status": "draft",
+                "text": "Mpfula se yi landzelela milayeni ehenhla ka land."
+              },
+              {
+                "sourceEnglish": " The sun already warms some places more than others.",
+                "status": "draft",
+                "text": " Dyambu se ri kufumeta tindhawu tin’wana ku tlula tin’wana."
+              },
+              {
+                "sourceEnglish": " Wind already finds ",
+                "status": "draft",
+                "text": " Moya se wu kuma "
+              },
+              {
+                "sourceEnglish": "gaps and ridges.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Cold air already settles in ",
+                "status": "draft",
+                "text": " Moya wo titimela se wu hlengeletana eka "
+              },
+              {
+                "sourceEnglish": "hollows.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "english-hold"
@@ -202,7 +233,39 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The picture shows rain moving downhill.",
+                "status": "draft",
+                "text": "Xifaniso xi komba mpfula yi ri karhi yi rhelela yi ya ehansi."
+              },
+              {
+                "sourceEnglish": " Follow where it ",
+                "status": "draft",
+                "text": " Landzelela laha yi "
+              },
+              {
+                "sourceEnglish": "speeds up, ",
+                "status": "draft",
+                "text": "hatlisaka, "
+              },
+              {
+                "sourceEnglish": "spreads, ",
+                "status": "draft",
+                "text": "hangalaka, "
+              },
+              {
+                "sourceEnglish": "sinks",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ", gathers, and leaves the land.",
+                "status": "draft",
+                "text": ", yi hlengeletanaka, naswona yi suka ehenhla ka land."
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           }
         ]
       }
@@ -225,10 +288,43 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Build ",
+                "status": "draft",
+                "text": "Aka "
+              },
+              {
+                "sourceEnglish": "an A-frame level from three poles and a weighted string.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk it across the land to find ",
+                "status": "draft",
+                "text": "Famba nayo ehenhla ka land leswaku u kuma "
+              },
+              {
+                "sourceEnglish": "points at the same height.",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Join these points",
+                "status": "draft",
+                "text": " Hlanganisa tipoyinti leti"
+              },
+              {
+                "sourceEnglish": " to trace a contour line.",
+                "status": "english-hold"
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
           },
           {
             "status": "english-hold"
