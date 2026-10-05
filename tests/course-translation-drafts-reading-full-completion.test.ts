@@ -33,6 +33,23 @@ const checkPair = (pairValue: unknown, sourceEnglish: string, entry: DraftEntry,
   if (pair.reviewStatus === 'hold') assert.equal(target, sourceEnglish, `${entry.code} ${path}: a whole-field hold stays exact`);
 };
 
+test('An A-frame suitability warning covers earthworks and storm flow rather than only digging or hail', () => {
+  const lesson = XITSONGA_READING_LANDSCAPE_DRAFT.lessons.find(item => item.id === 'reading-landscape-l1')!;
+  const point = lesson.keyPoints[1];
+  const rationale = lesson.quiz[0].rationale;
+  assert.ok(point.sourceEnglish.includes('earthworks'));
+  assert.match(point.xitsongaDraft, /earthworks/,
+    'Keep the broad engineered-work scope when a local term would narrow it to digging soil');
+  assert.doesNotMatch(point.xitsongaDraft, /ku cela misava/);
+  for (const condition of ['drainage', 'storm flow', 'earthworks']) {
+    assert.ok(rationale.sourceEnglish.includes(condition));
+    assert.ok(rationale.xitsongaDraft.includes(condition),
+      `The A-frame does not assess ${condition}; the technical condition must remain explicit`);
+  }
+  assert.doesNotMatch(rationale.xitsongaDraft, /mpfula ya xihangu/,
+    'Storm flow is not restricted to hailstorm water');
+});
+
 test('Reading full learner drafts keep all fields source-bound, ordered, withdrawable and semantically bounded', () => {
   const source = COURSE_MODULES.find(module => module.id === 'reading-landscape');
   assert.ok(source);

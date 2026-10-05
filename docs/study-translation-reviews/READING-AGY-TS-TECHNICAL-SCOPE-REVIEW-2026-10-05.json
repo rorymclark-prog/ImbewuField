@@ -1,0 +1,40 @@
+{
+  "conversation": "fa172948-c400-4efb-80f4-fb6dbb46a47b",
+  "observedVia": "native Antigravity accessibility response, 2026-10-05",
+  "model": "Gemini 3.7 Flash High",
+  "scope": "text-only independent review, no repository edits",
+  "headReviewed": "999d598d5f19db5e8fe955efb9cffdefeb62a3a0",
+  "claimsNotAuthority": true,
+  "findings": [
+    {
+      "field": "reading-landscape-l1.keyPoints[1]",
+      "claim": "ku cela misava describes digging soil rather than broad earthworks",
+      "suggestedConservativeRepair": "retain earthworks English",
+      "rootDecision": "await independent source/meaning check"
+    },
+    {
+      "field": "reading-landscape-l1.quiz[0].rationale",
+      "claim": "mpfula ya xihangu may narrow storm flow to hailstorm; drainage phrase broadly means water flowing",
+      "suggestedConservativeRepair": "retain drainage, storm flow English",
+      "rootDecision": "await independent source/meaning check"
+    },
+    {
+      "field": "reading-landscape-l1.quiz[0].options[0]",
+      "claim": "intentional exact English geometry hold preserved",
+      "rootDecision": "preserve"
+    },
+    {
+      "field": "reading-landscape-l1.quiz[1].rationale",
+      "claim": "minor modality/structure register uncertainty",
+      "rootDecision": "no speculative replacement; independently check if material"
+    }
+  ],
+  "fluentApproval": false,
+  "independentCheck": "Codex read-only check against actual current source/registry confirms digging narrows earthworks and hail narrows storm flow.",
+  "appliedRepairs": {
+    "keyPoints[1]": "A-frame yi nga fungha points at the same height, kambe a yi kombisi loko earthworks ti fanerile",
+    "quiz[0].rationale": "A-frame yi nga ku pfuna ku fungha points at the same height. A yi kambeli misava, drainage, storm flow, kumbe loko earthworks ti fanerile."
+  },
+  "sourceIndicesMediaUnchanged": true,
+  "rootDecision": "Apply two narrow technical English repairs; do not adopt speculative modality/style rewrites."
+}

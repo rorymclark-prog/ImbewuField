@@ -470,7 +470,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "An A-frame can mark points at the same height, but it does not show whether earthworks are suitable",
-          "xitsongaDraft": "A-frame yi nga fungha points at the same height, kambe a yi kombisi loko ku cela misava ku fanerile",
+          "xitsongaDraft": "A-frame yi nga fungha points at the same height, kambe a yi kombisi loko earthworks ti fanerile",
               "reviewStatus": "machine-draft"
         },
         {
@@ -516,7 +516,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "An A-frame can help mark points at the same height. It does not assess soil, drainage, storm flow, or whether earthworks are suitable.",
-            "xitsongaDraft": "A-frame yi nga ku pfuna ku fungha points at the same height. A yi kambeli misava, ku khuluka ka mati, mati lama fambaka loko ku na mpfula ya xihangu, kumbe loko earthworks ti fanerile.",
+            "xitsongaDraft": "A-frame yi nga ku pfuna ku fungha points at the same height. A yi kambeli misava, drainage, storm flow, kumbe loko earthworks ti fanerile.",
               "reviewStatus": "machine-draft"
           }
         },
@@ -1002,6 +1002,24 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       "field": "keyPoints[1]",
       "sourceText": "A-frame",
       "reason": "Exact source-bound technical English retained in a mixed unreviewed draft; surrounding ordinary prose independently checked. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "keyPoints[1]",
+      "sourceText": "earthworks",
+      "reason": "Retain broad earthworks scope; digging soil alone narrows the source suitability warning. Independent semantic review accepted this technical English repair, not fluent approval."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "drainage",
+      "reason": "Retain the specific site-drainage assessment condition rather than general water movement. Facilitator review remains pending."
+    },
+    {
+      "lessonId": "reading-landscape-l1",
+      "field": "quiz[0].rationale",
+      "sourceText": "storm flow",
+      "reason": "Storm flow must not be narrowed to water during hailstorms. Independent semantic review accepted this technical English repair, not fluent approval."
     },
     {
       "lessonId": "reading-landscape-l1",

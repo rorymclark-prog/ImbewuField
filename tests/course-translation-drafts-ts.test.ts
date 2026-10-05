@@ -541,7 +541,9 @@ test('Reading Landscape L1 assessment drafts keep the A-frame limit and safe-ove
   assert.equal(q1.options[1].reviewStatus, 'machine-draft');
   assert.ok(q0.rationale.xitsongaDraft.startsWith('A-frame yi nga ku pfuna'));
   assert.ok(q0.rationale.xitsongaDraft.includes('points at the same height'));
-  assert.ok(q0.rationale.xitsongaDraft.includes('A yi kambeli misava, ku khuluka ka mati') &&
+  // The broader water-flow phrase and hailstorm wording narrowed the source conditions.
+  // Keep each technical assessment limit explicit rather than pinning the old translation.
+  assert.ok(q0.rationale.xitsongaDraft.includes('A yi kambeli misava, drainage, storm flow') &&
     q0.rationale.xitsongaDraft.includes('kumbe loko earthworks ti fanerile'));
   assert.ok(q1.options[1].xitsongaDraft.startsWith('Kambela misava, ndhawu leyi rhelelaka') &&
     q1.options[1].xitsongaDraft.includes('storm flow'));
