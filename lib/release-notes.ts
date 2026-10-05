@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 October 2026', sha: 'cb3482af', changes: [
+    'Soil and Water silent slides add fuller unreviewed regional drafts beside English.',
+    'Terms such as swale, spillway and mulch stay in English inside the drafts.',
+    'No Sesotho, Tshivenda or Xitsonga narration was added.',
+  ], tour: [
+    { title: 'Review the Soil and Water drafts',
+      where: 'Study → Soil Health and Water Harvesting slides',
+      detail: 'Compare drafts with English and save the refreshed slide-only pack.',
+      href: '/student' },
+  ] },
   { when: '5 October 2026', sha: '69a51ffa', changes: [
     'isiZulu slide image zoom now includes the unreviewed draft and exact English.',
     'Source text stays at reading size while you zoom the image.',
