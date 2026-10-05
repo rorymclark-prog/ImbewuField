@@ -35,6 +35,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Izitshalo ezisekelayo nazo zidinga izinsiza nokunakekelwa. Bheka ukukhula nokuncintisana, bese ulungisa.",
       },
     ],
+    infographicAlt: "Umfanekiso wokufundisa nge-plant guild; qinisekisa uhlobo lwesitshalo ngesiqondiso esithembekile se-botany.",
   },
   "plant-guilds-l2": {
     title: "Izitshalo Ze-mulch Nezinambuzane Eziwusizo",
@@ -69,6 +70,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Izimbali zinganikeza izinambuzane izinto ezizidingayo, kodwa ukuba khona kwazo akuqinisekisi ukulawulwa kwezinambuzane ezilimazayo.",
       },
     ],
+    infographicAlt: "Umfanekiso wokufundisa nge-plant guild; qinisekisa uhlobo lwesitshalo ngesiqondiso esithembekile se-botany.",
   },
   "plant-guilds-l3": {
     title: "Hlela I-guild Bese Uyilungisa Njengoba Ikhula",
@@ -103,6 +105,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Khetha okumboza umhlabathi ngokwendawo. Shiya indlela nendawo yesiqu kuvulekile, uqhubeke ubheka umuthi omncane.",
       },
     ],
+    infographicAlt: "Umfanekiso wokufundisa nge-plant guild; qinisekisa uhlobo lwesitshalo ngesiqondiso esithembekile se-botany.",
   },
   "seeds-sovereignty-l1": {
     title: "Kungani Ukulondoloza Imbewu Kubalulekile",
@@ -137,6 +140,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Ukhetha izici ofuna ziqhubekele esizukulwaneni esilandelayo. Impilo namandla esitshalo kubalulekile esikhathini eside kunokuvuna isithelo esisodwa esikhulu kunazo zonke.",
       },
     ],
+    infographicAlt: "Amaphakethe embewu amabili ngaphezu kokuqhathanisa okulula: izitshalo ezinhlanu ezibukeka zifana ngakwesobunxele, nezitshalo ezinhlanu ezihlukahlukene ngakwesokudla. Actual offspring depend on variety and pollination.",
   },
   "seeds-sovereignty-l2": {
     title: "Indlela Yokulondoloza Imbewu: Izindlela Ezomile Nezimanzi",
@@ -171,6 +175,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Umoya uthwala impova yommbila ibanga elide. Lokhu kuhlukile endleleni impova katamatisi ehamba ngayo, njengoba utamatisi uvame ukuzithuthela impova. Yile ndlela ehlukile yokuthuthwa kwempova eyenza kudingeke izindlela ezahlukene zokuhlukanisa izitshalo.",
       },
     ],
+    infographicAlt: "Imbewu eyomile iqoqwa kuma-pod avuthiwe. Isibonelo sendlela emanzi yikatamatisi sibonisa ukuvutshelwa okufushane, ukugezwa nokomiswa.",
   },
   "seeds-sovereignty-l3": {
     title: "Ukomisa, Ukugcina Nokwabelana Ngembewu",
@@ -205,6 +210,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         rationale: "Ukuhlola ukuhluma kuveza imbewu esifile ngesikhathi igciniwe, ngaphambi kokuba uthembele kuyo ekutshaleni kwesizini yonke.",
       },
     ],
+    infographicAlt: "Amaphakethe embewu agcinwe esitsheni esivaliwe, endaweni epholile, emnyama neyomile. Eceleni kunezinhlamvu eziyishumi on a damp cloth — ezinye sezihlumile, ezinye azikahlumi — njengokuhlola ukuhluma.",
   },
   "intro-permaculture-l1": {
     "title": "Izimiso Ezintathu Zokuziphatha: Ukunakekela Umhlaba, Abantu Nokubuyisela Okusele",
@@ -238,7 +244,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 2,
         "rationale": "Qala uthole ukuthi yikuphi ukusetshenziswa kwamanzi okuvumelekile nokuthi umthombo ungakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngendlela yokwabelana ngokulinganayo. Ukuqapha izinga lamanzi kukusiza ubone ushintsho; akukuniki imvume yokusebenzisa amanzi engeziwe."
       }
-    ]
+    ],
+    infographicAlt: "Izimiso zokuziphatha ezintathu ziboniswe njengezindilinga ezintathu ezixhumene nezilingana ngosayizi: isandla esiphethe inhlabathi simele Ukunakekela Umhlaba (Earth Care), abantu ababili bamele Ukunakekela Abantu (People Care), kanti ubhasikidi odluliswa phakathi kwezandla umele Ukwabelana Ngokulinganayo (Fair Share).",
   },
   "intro-permaculture-l2": {
     "title": "Izimiso Eziyishumi Nambili: Ukuklama Ngokusebenzisana Nemvelo",
@@ -272,7 +279,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Ukuhlanganisa kubeka into ngayinye lapho isiza khona ezinye izinto eziseduze nayo. Lapha, izinkukhu zingadla ezinye izinambuzane futhi zengeze umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa. Umquba omusha ungaba namagciwane; ngakho hlola indlela ephephile yokuphatha umbhede ngaphambi kokuba kutshalwe futhi ukudla okuzodliwa."
       }
-    ]
+    ],
+    infographicAlt: "Izimiso zokuklama eziyi-12 zihlelwe njengezingxenye ezizungeze isithombo esimaphakathi. Ingxenye ngayinye iboniswa ngomfanekiso olula — iso lokubuka, iconsi lokubamba amanzi, ilanga lamandla, neluphu yokubuyisa udoti.",
   },
   "intro-permaculture-l3": {
     "title": "Ama-Zone Nama-Sector: Ukuhlela Ipulazi by Energy",
@@ -306,7 +314,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "I-windbreak isebenza ngokuma phakathi komoya nendawo ongayifuni ilimale. Ibekwa ohlangothini umoya obonwe ngempela ukuthi uvela kulo. Lesi sibonelo asisho ukuthi wonke amapulazi ase-Highveld anomoya osuka enyakatho-ntshonalanga."
       }
-    ]
+    ],
+    infographicAlt: "Umfanekiso wepulazi oyisibonelo: izimpawu ezinenombolo kusukela ku-0 kuya ku-5 zilandelana endleleni ejikajikayo yabahamba ngezinyawo, eqala endlini nasengadini eseduze, idlule ezinkukhwini nasensimini, iye ezihlahleni nasendaweni engasemfuleni esendle kakhulu. Lezi zimpawu ziyizibonelo, azisho imingcele emisiwe noma amabanga amisiwe.",
   },
   "reading-landscape-l1": {
     "title": "Ukuqonda Ukugeleza Kwamanzi: Lapho Imvula Iya Khona Emhlabeni Wakho",
@@ -340,7 +349,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Umthetho wokubeka awukwazi ukukhombisa ukuthi isakhiwo siyayifanelekela yini indawo. Imigqa ye-contour ebekwe kabi ingakhulisa ukuguguleka komhlabathi, futhi amanzi amaningi adinga indlela ephephile yokuphuma."
       }
-    ]
+    ],
+    infographicAlt: "Umdwebo osika uhlangothi lwegquma: imicibisholo ikhombisa lapho amanzi emvula egeleza khona ehle ngomthambeka, lapho eqoqana khona endaweni ephansi, nalapho engena khona emhlabathini njengoba umthambeka usuba yisicaba.",
   },
   "reading-landscape-l2": {
     "title": "Indlela Ilanga Elihamba Ngayo, Umthunzi Nokuma Komthambeka: Ukusebenzisa Ukukhanya Kwelanga",
@@ -374,7 +384,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 0,
         "rationale": "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu. I-shade cloth ingashintsha isikhathi ilanga elifika ngaso embhedeni. Ngaphambi kokuyiqinisa endaweni yayo, hlola umthunzi okhona ngempela ngo-8 ekuseni, emini, nango-4 ntambama."
       }
-    ]
+    ],
+    infographicAlt: "Umthambeka onelanga elisenyakatho. Izithunzi zesakhiwo nesihlahla ziwela eningizimu, zehle ngomthambeka.",
   },
   "reading-landscape-l3": {
     "title": "Umoya, Isithwathwa Nokuma Komhlaba: Ukuqonda Amandla Angabonakali",
@@ -408,7 +419,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan."
       }
-    ]
+    ],
+    infographicAlt: "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka.",
   },
   "reading-landscape-l4": {
     "title": "Ukwenza Imephu Elula Yendawo: Uhlelo Lwakho Luqala Ephepheni",
@@ -442,7 +454,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Njengoba uhlangothi okuvela kulo umoya lungashintsha ngokwenkathi, i-windbreak noma indawo yezitshalo esebenza kahle kwenye inkathi ingase ingafanele kwenye. Ngakho maka zombili izinkathi ngokwehlukana."
       }
-    ]
+    ],
+    infographicAlt: "Imephu yesiza edwetshwe ngesandla ephepheni ikhombisa inyakatho, izakhiwo, amanzi nomngcele; ingumdwebo olula, njengalowo umlimi angawudweba.",
   },
   "water-harvesting-l1": {
     "title": "Ama-swale Nama-berm: Ukubambezela Amanzi Agelezayo Emthambekeni",
@@ -476,7 +489,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Umthambeka wodwa awanele ukukhetha umsebenzi womhlaba. Umhlabathi, ukugeleza kwamanzi, ukuzinza komhlaba nokugeleza kwamanzi emvula enamandla nakho kufanele kuhlolwe."
       }
-    ]
+    ],
+    infographicAlt: "Umdwebo osika i-level contour swale, nesiduli somhlabathi esiphakanyisiwe ngaphansi kwayo. Imicibisholo ikhombisa amanzi ageleza phezu komhlaba (runoff) ehla ngejubane futhi asabalale; ukungena kwamanzi emhlabathini (infiltration) kuncike enhlabathini nasendaweni.",
   },
   "water-harvesting-l2": {
     "title": "Amadamu Namachibi Epulazini: Ukugcina Amanzi Esikhathi Esomile",
@@ -510,7 +524,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "I-spillway engenamfucumfucu namabhange anakekelwayo kusiza idamu lisebenze ngokomklamo walo. Izihlahla akufanele zitshalwe odongeni lwedamu lomhlabathi."
       }
-    ]
+    ],
+    infographicAlt: "Idamu lepulazi eliboniswe lisikwe phakathi: amanzi angena ngomunye umkhawulo, agcinwe ngaphakathi; i-spillway (umzila wokukhipha amanzi echichimayo) isenqenqemeni elingaphezulu ukuze kukhishwe amanzi achichimayo, kanti usebe olutshaliwe lubamba inhlabathi.",
   },
   "water-harvesting-l3": {
     "title": "Amathangi Amanzi Emvula Nokuwabamba Ophahleni: Ukuqoqa Nokuvikela Amanzi",
@@ -544,7 +559,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Ukuphambukisa amanzi okuqala kunganciphisa ukungcola, kodwa akuqinisekisi ukuthi amanzi alandelayo aphephile. Hlola ikhwalithi yamanzi ngokwalokho ozowasebenzisela kona."
       }
-    ]
+    ],
+    infographicAlt: "Imvula igeleza isuka ophahleni iye emseleni wamanzi, yehle ngepayipi ingene ethangini. I-first-flush diverter encane iyigatsha elisuka epayipini ngaphambi kwethangi ukuze iphambukise ilahle amanzi okuqala angcolile.",
   },
   "water-harvesting-l4": {
     "title": "Amanzi Asetshenzisiwe Asekhaya: Hlola Ngaphambi Kokuphinda Uwasebenzise",
@@ -612,7 +628,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 2,
         "rationale": "Ukubheka izinto eziningana kusiza ukuthola ukuthi inkinga ingaba yini. Umsebenzi wemisundu uyashintsha kuye ngezimo, ngakho imisundu embalwa yodwa ayichazi imbangela yenkinga."
       }
-    ]
+    ],
+    infographicAlt: "Umfanekiso osika inhlabathi ubonisa ungqimba olumnyama olungaphezulu (topsoil) ngaphezu kongqimba oluphaphathekile olungaphansi (subsoil), with two worms. Eceleni kwayo, imbiza yenhlabathi ihleli yaba izingqimba ezintathu — isihlabathi, i-silt nobumba.",
   },
   "soil-health-l2": {
     "title": "Ukwenza Nokusebenzisa I-compost",
@@ -646,7 +663,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Inqwaba evamile ingase ingayibeki yonke imbewu ezimweni eziyenza ingasakwazi ukuhluma. Ukukhipha ama-pod kunciphisa ingozi yokuthi imbewu isabalale ne-compost."
       }
-    ]
+    ],
+    infographicAlt: "Inqwaba yomquba eboniswe isikwe phakathi, inezingqimba ezishintshanayo zezinto ezomile ezinsundu nezinto ezintsha eziluhlaza. Ukushisa kukhuphuka phakathi nendawo, kanti umcibisholo ukhombisa inqwaba iphendulwa.",
   },
   "soil-health-l3": {
     "title": "I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Umhlabathi kanye Building Soil",
@@ -680,7 +698,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "I-leachate iwuketshezi oluphuma ngokwemvelo emgqonyeni wemisundu. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
       }
-    ]
+    ],
+    infographicAlt: "Izingxenye ezimbili zenhlabathi ngaphansi kwelanga elifanayo: umhlabathi ongamboziwe uqhekekile futhi womile; umhlabathi ombozwe nge-mulch usalokhu umnyama futhi unomswakama.",
   },
   "vegetables-staples-l1": {
     "title": "Ukulungisa Nokutshala Emibhedeni Yakho",
@@ -714,7 +733,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 2,
         "rationale": "Izimbotyi nezinye izitshalo ezikhula ngokushesha nezinezimpande ezizwelayo zingase zingamili kahle ngemva kokuphazanyiswa kokuzitshalisa kwenye indawo. Ukuzihlwanyela ngqo embhedeni kugwema ngokuphelele lokho kuphazamiseka."
       }
-    ]
+    ],
+    infographicAlt: "Umbhede ophakanyisiwe onobubanzi obucishe bube ngu-1.2 m, onezindlela nhlangothi zombili, ukuze umuntu afinyelele phakathi esuka kunoma yiluphi uhlangothi ngaphandle kokuma nhlobo enhlabathini okutshalwe kuyo.",
   },
   "vegetables-staples-l2": {
     "title": "Ukutshala Ngokulandelana Nokuxuba Izitshalo",
@@ -748,7 +768,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Izimbotyi zibopha i-nitrogen ngosizo lwamagciwane afanele asezimpandeni. I-nitrogen esezinsaleleni zazo itholakala lapho sezibola; ukutshala izimbotyi eduze kommbila akuqinisekisi ukuthi ummbila uzoyithola ngokushesha."
       }
-    ]
+    ],
+    infographicAlt: "Umbhede owodwa phakathi nezinkathi ezintathu: isivuno sesitshalo esikhula masinyane siyavunwa, bese kuhlwanyelwa imbewu entsha eceleni kwesitshalo esikhula kancane esisakhula, ukuze umbhede ungahlali ungenalutho.",
   },
   "vegetables-staples-l3": {
     "title": "Izitshalo Eziyinhloko Zokudla: Ummbila, Ubhontshisi Nezitshalo Zezimpande",
@@ -782,7 +803,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Amadumbe athanda umhlabathi omanzi kunalapho ummbila ungakhula kahle khona, ngakho agcwalisa indawo ekhethekile ezinye izitshalo eziyisisekelo ezingayifaneleki kahle."
       }
-    ]
+    ],
+    infographicAlt: "Izitshalo ezintathu zokudla okuyisisekelo zihlangene: uhlanga olude lokusanhlamvu, umvini okhuphuka esigxotsheni, nesitshalo sempande esiboniswe half below the ground.",
   },
   "vegetables-staples-l4": {
     "title": "Qaphela Futhi Ulawule Izinambuzane Nezifo",
@@ -816,7 +838,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 0,
         "rationale": "Amaqabunga angaphuzi ngenxa yezimbangela ezahlukene. Inkinga yezakhamzimba zomhlabathi noma yokunisela idinga isixazululo esihlukile kwesesinambuzane. Ukuhlola kuqala kusiza ukugwema ukwelapha okungadingekile."
       }
-    ]
+    ],
+    infographicAlt: "I-pest eseqabungeni, nezindlela ezintathu zokubhekana nayo ngaphandle kwamakhemikhali: isinambuzane esisizayo, isivimbeli esingokoqobo (physical barrier), nokuyisusa ngesandla.",
   },
   "food-forest-l1": {
     "title": "Izingqimba Eziyisikhombisa: Indlela Ihlathi Elizondla Ngayo",
@@ -850,7 +873,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Umthunzi ne-mulch efanele kunganciphisa ukuhwamuka kwamanzi engaphezulu lomhlabathi. Isidingo samanzi sezitshalo nokunakekelwa kwazo zisamila kusadinga ukunakwa."
       }
-    ]
+    ],
+    infographicAlt: "Umfanekiso osika ihlathi lokudla ubonisa isihlahla eside esimaphakathi, izihlahla ezincane, izihlahlana, izitshalo ezima ziqonde, izitshalo ezimboza umhlabathi nomvini; izimpande zazo zisabalala enhlabathini, kanti ukukhanya kwelanga kungena kusuka phezulu kwesobunxele.",
   },
   "food-forest-l2": {
     "title": "Ukukhetha Izinhlobo Zezitshalo Zama-food forest ENingizimu Afrika",
@@ -884,7 +908,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Khetha izitshalo ngokwemvelo yakini nangomsebenzi wazo. Lokhu akubeki iphesenti elilodwa elisebenza yonke indawo futhi akususi isidingo sokuhlola ukuthi izitshalo ziyifanele yini indawo."
       }
-    ]
+    ],
+    infographicAlt: "Umumo olula waseNingizimu Afrika ohlukaniswe waba izindawo ezintathu zokutshala ngombala womhlabathi nesimo sendawo kuphela: ithafa eliphakeme eliphaphathekile elinamagquma phakathi nezwe, a green humid coastal strip, nendawo ephansi eshisayo ebomvu ngokunsundu. Kume izihlahla ezinomumo ohlukene kulezi zindawo.",
   },
   "food-forest-l3": {
     "title": "Ukusungula I-food forest: Bheka Bese Ulungisa",
@@ -918,7 +943,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Izitshalo zesikhashana ezisiza ezinye nazo zingaqala ukuncintisana nazo. Bheka ukukhanya, amanzi nokukhula kwezitshalo, bese ukhetha indlela efanele yokuzinakekela kunokuthembela onyakeni omisiwe."
       }
-    ]
+    ],
+    infographicAlt: "Isiqephu esifanayo somhlaba siboniswe ngezigaba ezine ukusuka kwesobunxele kuya kwesokudla: i-mulch exegayo isatshalaliswa phezu kwekhadibhodi emhlabathini; kulandelwe izitshalo zokuqala eziphansi nezikhula masinyane; bese kuba young canopy trees nezinye izendlalelo ezingaphansi ezigcwalisayo; kugcine sekuyindawo yokutshala enezendlalelo ezizinzile.",
   },
   "small-livestock-l1": {
     "title": "Izinkukhu Ohlelweni Lwepulazi: Ukulawula Izinambuzane, Ukuvunda Komhlabathi Nokudla",
@@ -952,7 +978,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Amadada awaklwebhi njengezinkukhu. Asengazinyathela noma azidle izitshalo; ngakho qapha umhlabathi, uwahambise uma kudingeka."
       }
-    ]
+    ],
+    infographicAlt: "Umdwebo wesibaya sezinkukhu esinamasondo ubonisa izindawo ezimbili emgqeni womhlaba. Umcibisholo ukhomba kwesokudla; izinkukhu ezintathu zimi esibayeni esingakwesokudla, kanti indawo emnyama neklwebhekile iphakathi kwalezi zindawo ezimbili.",
   },
   "small-livestock-l2": {
     "title": "Izinyosi: Ukuthutha Impova, Uju Nokuphila Kwepulazi",
@@ -986,7 +1013,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 0,
         "rationale": "Ukuminyana kungakhuthaza ukuphuma kweqoqo, kodwa akusona ukuphela kwesizathu. Ukuhlola kuqondisa isinyathelo esilandelayo; ukwengeza indawo akuqinisekisi ukuthi inkinga izoxazululeka."
       }
-    ]
+    ],
+    infographicAlt: "Isidleke sezinyosi siboniswe sisikwe phakathi ukuze kubonakale amafreyimu abekwe ngokulandelana ngaphakathi, kanye nendilinga enkulu ebalazweni lepulazi ebonisa ibanga izinyosi ezilihambayo ziyofuna ukudla.",
   },
   "small-livestock-l3": {
     "title": "Ukuhlanganisa Imijikelezo Yemfuyo: Izakhamzimba Ezihamba Epulazini",
@@ -1020,7 +1048,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 0,
         "rationale": "Izinkukhu azikafakazelwa ukuthi zingathatha indawo yokulawula izikelemu ezimbuzini. Ukuphatha amadlelo nokuhlola impilo yezilwane kufanele kusebenze ndawonye."
       }
-    ]
+    ],
+    infographicAlt: "Ukudla kwezilwane okuthengiwe kungena epulazini. Izilwane zikhiqiza umquba; ezinye izakhamzimba zibuyela endaweni yokutshala ngomquba osuvundiswe ngokuphelele nge-compost. Ukudla neminye imikhiqizo kuphuma epulazini.",
   },
   "market-community-l1": {
     "title": "Ukugcina Amarekhodi: Ukwazi Lokho Okukhiqizwa Yipulazi Lakho Ngempela",
@@ -1054,7 +1083,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 1,
         "rationale": "Amarekhodi akhomba isikhathi sokushoda. Ukukhetha izitshalo nezinsuku zokuzihlwanyela kufanele kuhambisane nesimo sezulu sendawo, amanzi nesikhathi esilindelekile sokuvuna."
       }
-    ]
+    ],
+    infographicAlt: "Umuntu uphethe ipensela phezu kwegridi yokurekhoda enezikhala ezingenalutho encwadini evuliwe, eduze kukabhasikidi nemifino ebekwe eceleni.",
   },
   "market-community-l2": {
     "title": "Ukuthengisa Umkhiqizo Osele: Lapho Ungathengisa Khona Nendlela Yokubeka Intengo",
@@ -1088,7 +1118,8 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 2,
         "rationale": "Ama-oda aqinisekisiwe akunikeza ulwazi ngokufunwa komkhiqizo. Ayasiza kuphela uma umkhiqizo uhlinzekeka ngokwethembeka, kukhokhwa, futhi izindleko zokufeza ama-oda zicatshangelwa."
       }
-    ]
+    ],
+    infographicAlt: "Izindlela ezintathu zokuthengisa ezivela epulazini elilodwa: isitolo esiseceleni komgwaqo, ukuletha imikhiqizo ndawonye esitolo, nebhokisi eliya ngqo ekhaya lomndeni.",
   },
   "market-community-l3": {
     "title": "Ukwakha Amanethiwekhi Okudla Omphakathi: Amandla Ngokubambisana",
@@ -1122,6 +1153,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "correct": 2,
         "rationale": "Ibanga lithinta izindleko, kodwa akulona lodwa elibalulekile. Sebenzisa imali etholakele yangempela nokulahleka ukuze uqhathanise izindlela."
       }
-    ]
+    ],
+    infographicAlt: "Imibhede emincane emihlanu etshaliwe, nemicibisholo ekhomba ekhreyithini eliphakathi eligcwele imikhiqizo. Ngezansi kunethuluzi lesandla le-trowel (ifosholo elincane lasengadini) nembiza yembewu.",
   }
 };
