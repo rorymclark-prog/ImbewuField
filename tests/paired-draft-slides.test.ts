@@ -307,19 +307,69 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
     }
   }
 
-  const criticalEnglishHolds: Array<[number, number[]]> = [
-    [2, [0, 1, 2, 3]], // learning outcomes on swale design, spillway, tank safety and greywater separation
-    [3, [0, 1]],       // contour, grade, outlet, site conditions and adviser before digging
-    [4, [0, 1]],       // concept-only geometry and site-specific depth/overflow
-    [5, [0, 1]],       // downhill placement and conditional soil-moisture benefit
-    [7, [0, 1]],       // assessed overflow route and receiving capacity
-    [12, [0, 1]],      // catastrophic overtopping and professional assessment
-    [16, [0, 1]],      // first-flush sizing and safety check
-    [19, [0, 1]],      // used-water source and contamination guidance
-    [20, [0, 1]],      // required local sanitation advice and no-reuse condition
-    [21, [0, 1]],      // unapproved design and advice before any reuse
-    [22, [0]],         // contact, plumbing, spraying, pooling and runoff restrictions
-  ];
+  // Updated 5 October 2026 (course-vocabulary sweep): five Tshivenda anchors now follow the course's own words, which
+  // replaced Xitsonga or Sesotho carry-overs: thanngi (tank), muṋo (salt; munyu is Xitsonga), thoilethe (toilet) and
+  // muthu ane a lwala (a sick person), and the Tshivenda verb in a zwi vhulahi (do not kill; vhulayi echoed Sesotho
+  // bolaya). Each anchor still pins the same condition: kept out of the tank, salts, the excluded water sources, and
+  // soil and mulch do not disinfect.
+  // Rewritten 5 October 2026: these passages were exact-English holds. The ordinary-prose completion drafted each one
+  // beside its exact source, so the claim moves up from "stays English" to "every geometry, safety condition and
+  // prohibition survives in the draft, and the draft is bound to its recorded back-translation". Difficult terms
+  // (contour, spillway, first-flush diverter, greywater, berm, mulch, sanitation) stay in English inside the drafts.
+  const ordinaryEvidence = JSON.parse(readFileSync('docs/study-translation-reviews/SOIL-WATER-ORDINARY-SLIDES-2026-10-05.json', 'utf8')) as {
+    targetFieldChanges: Array<{
+      module: string; language: string; slide: number; field: string; bodyIndex: number | null; sourceEnglish: string;
+      previousTarget: { status: string; text?: string }; currentTarget: { status: string; text?: string; provenance?: string };
+      backTranslation: string;
+    }>;
+  };
+  const materialRepairs = JSON.parse(readFileSync(
+    'docs/study-translation-reviews/SOIL-WATER-MATERIAL-REPAIRS-2026-10-05.json', 'utf8')).repairs;
+  assert.equal(materialRepairs.length, 4, 'four independently identified technical clauses retain exact English');
+  const ordinaryProvenance = 'Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026)';
+  const formerHoldAnchors: Record<string, Record<'st' | 've' | 'ts', RegExp[]>> = {
+    // learning outcomes: level contour on a suitable site, assessed spillway, tank safety check, greywater separation
+    '2.0': { st: [/contour/, /bophahamong bo le bong/, /loketseng/], ve: [/contour/, /lingana/, /teaho/], ts: [/contour/, /ringaneke/, /faneleke/] },
+    '2.1': { st: [/spillway/, /tlhahlobo ya sebaka/], ve: [/spillway/, /u ṱolwa ha fhethu/], ts: [/spillway/, /nkambelo wa ndhawu/] },
+    '2.2': { st: [/first-flush diverter/, /ntse a hloka tlhahlobo ya polokeho/], ve: [/first-flush diverter/, /kha ḓi ṱoḓa u ṱolwa ha tsireledzo/], ts: [/first-flush diverter/, /ma ha lava nkambelo wa vuhlayiseki/] },
+    '2.3': { st: [/greywater/, /kgole le batho/, /metsi a nowang/], ve: [/greywater/, /kule na vhathu/, /maḓi a u nwa/], ts: [/greywater/, /ekule ni vanhu/, /mati yo nwa/] },
+    // level contour geometry; graded swales need a designed outlet and a trained adviser before digging
+    '3.0': { st: [/contour e bophahamong bo le bong/, /mobung o loketseng/], ve: [/contour yo lingana/, /mavu o fanelaho/], ts: [/ringaneke/, /a yi rhelelanga ehansi/, /misaveni leyi faneleke/] },
+    '3.1': { st: [/tsela e bolokehileng ya ho ntsha metsi/, /moeletsi ya rutilweng/, /pele o tjheka/], ve: [/nḓila ya u bva ya tsireledzo/, /mueletshedzi wa henefho o gudedzwaho/, /musi ni sa athu u bwa/], ts: [/hlayisekeke yo humesa mati/, /mutsundzuxi/, /u nga si cela/] },
+    // concept-only picture; it does not show moisture depth, so check before building
+    // (5 October 2026: Sesotho 4.1 uses the class 7 concord of 'setshwantsho', the picture: 'Ha se bontshe', not 'Ha e')
+    '4.0': { st: [/mohopolo/, /moo mobu o dumellang/], ve: [/muhumbulo/, /hune mavu a tshi zwi tendela/], ts: [/xifaniso xa miehleketo/, /laha misava yi pfumelelaka kona/] },
+    '4.1': { st: [/^Ha se bontshe/, /pele o haha/], ve: [/^A tshi sumbedzi/, /musi ni sa athu u fhaṱa/], ts: [/^A xi kombisi/, /u nga si aka/] },
+    // berm downhill; trees "may" be planted only when the site design suits; the moisture benefit varies
+    '5.0': { st: [/berm/, /lehlakoreng la tlase/, /ka jalwang/, /ha moralo/], ve: [/berm/, /fhasi ha u sendama/, /nga ṱavhiwa musi/], ts: [/berm/, /le hansi/, /nga byariwaka/, /loko/] },
+    '5.1': { st: [/ka nka/, /fapana/], ve: [/nga shumisa/, /fhambana/], ts: [/nga tirhisa/, /hambana/] },
+    // planned overflow route checked before digging; another swale or dam only after a site assessment, without damage
+    '7.0': { st: [/pele o tjheka/], ve: [/musi ni sa athu u bwa/], ts: [/u nga si cela/] },
+    '7.1': { st: [/feela ha tlhahlobo ya sebaka/, /ntle le tshenyo/], ve: [/fhedzi musi u ṱolwa ha fhethu/, /hu si na khombo/], ts: [/ntsena loko nkambelo wa ndhawu/, /handle ka ku onhaka/] },
+    // spillway before the wall; a suitably qualified person must assess before construction
+    '12.0': { st: [/spillway/, /pele ho lerako/], ve: [/spillway/, /musi luvhondo lu sa athu u fhaṱiwa/], ts: [/spillway/, /u nga si aka rirhangu/] },
+    '12.1': { st: [/ditshwaneleho tse loketseng o tlameha/, /pele ho kaho/], ve: [/o gudelaho nga nḓila i eneleaho u fanela/, /musi ni sa athu u fhaṱa/], ts: [/swidyondzo leswi faneleke u fanele/, /ku nga si sungula ku aka/] },
+    // first flush kept out of the tank; later runoff still needs a safety check
+    '16.0': { st: [/first-flush diverter/, /kantle ho tanka/], ve: [/first-flush diverter/i, /a si dzhene kha thanngi/], ts: [/first-flush diverter/i, /sivela/, /etankini/] },
+    '16.1': { st: [/hamorao a ntse a hloka tlhahlobo ya polokeho/], ve: [/nga murahu a kha ḓi ṱoḓa u ṱolwa/], ts: [/endzhaku ma ha lava ku kamberiwa vuhlayiseki/] },
+    // used water can carry germs and salts; never toilet, nappy, sick-person or animal washwater; no harmful chemicals
+    '19.0': { st: [/dikokwana-hloko/, /matswai/, /ha di hlalose/], ve: [/germs/, /muṋo/, /Tsivhudzo a i ṱalusi/], ts: [/leswi vangaka vuvabyi/, /munyu/, /a swi hlamuseli/] },
+    '19.1': {
+      // 5 October 2026: the Sesotho nappy anchor follows the glossary's "metsi a ho hlatswa dinapi" (water from washing
+      // nappies), which replaced "metsi a tswang dinapining" (water coming out of nappies); it still pins the nappy exclusion.
+      st: [/O se ke wa kenyelletsa/, /O se ke wa sebedisa hape/, /ntlwana ya boithomelo/, /a ho hlatswa dinapi/, /motho ya kulang/, /diphoofolo/],
+      ve: [/Tsivhudzo ya Afurika Tshipembe i fhambana/, /Ni songo katela/, /Ni songo shumisa hafhu/, /thoilethe/, /nappies/, /muthu ane a lwala/, /zwipuka/],
+      ts: [/U nga katsi/, /U nga tirhisi nakambe/, /thoyilete/, /tinapi/, /vabyaka/, /swiharhi/],
+    },
+    // advice before any reuse; no reuse when advice is missing; soil and mulch do not disinfect
+    '20.0': { st: [/masepala/, /ditshwaneleho/, /ka tsela efe kapa efe/], ve: [/mmasipala/, /mueletshedzi wa sanitation/, /Phanḓa ha u shumisa maḓi hafhu/], ts: [/masipala/, /sanitation/, /U nga si tirhisa nakambe/] },
+    '20.1': { st: [/o se ke wa sebedisa metsi ao hape/, /ha di bolaye/, /mulch/], ve: [/^Arali nyeletshedzo iyi/, /ni songo shumisa maḓi hafhu/, /a zwi vhulahi/, /mulch/], ts: [/u nga tirhisi mati nakambe/, /a swi dlayi/, /mulch/] },
+    '21.0': { st: [/o lekilweng kapa o dumeletsweng/, /Ha se pake/], ve: [/a si muvhumbekanyo/, /A tshi sumbedzi/], ts: [/a hi dizayini ya purasi/, /A xi kombisi/] },
+    '21.1': { st: [/pele o sebedisa metsi hape/, /ha di bolaye/], ve: [/^Vhudzisani vhaeletshedzi vha henefho/, /phanḓa ha u shumisa maḓi hafhu/, /a zwi vhulahi/], ts: [/u nga si tirhisa mati nakambe/, /a swi dlayi/] },
+    // prevent contact; no plumbing connection, spraying, pooling or runoff off the property
+    '22.0': { st: [/^Thibela/], ve: [/^Thivhelani/], ts: [/^Sivela/, /U nga hlanganiseli/, /u nga ma hangalasi/, /u nga pfumeleli leswaku ma hlengeletana, kumbe ma khulukela/] },
+  };
+  const separateProhibitions = { st: /o se ke wa/gi, ve: /ni songo/gi } as const;
 
   const reusedParagraphRows: string[] = [];
   const historicallyCheckedReuseRows: string[] = [];
@@ -369,6 +419,16 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
           }
           continue;
         }
+        if (part.status === 'mixed') {
+          const repair = materialRepairs.find((row: any) => row.language === language && row.slide === slide.n && row.bodyIndex === index);
+          assert.ok(repair, `${language} slide ${slide.n}: every mixed repair has an exact source record`);
+          assert.equal(repair.sourceEnglish, sourceParagraph);
+          assert.deepEqual(part, repair.currentTarget);
+          assert.equal(part.segments.map((segment: any) => segment.sourceEnglish).join(''), sourceParagraph);
+          assert.deepEqual(part.segments.filter((segment: any) => segment.status === 'english-hold').map((segment: any) => segment.sourceEnglish), [repair.heldEnglish]);
+          machineDraftRows.push(`${language}:${slide.n}:${index}`);
+          continue;
+        }
         assert.ok(part.text && part.text !== sourceParagraph,
           `${language} slide ${slide.n} body ${index}: a draft must contain target text, not an English copy`);
 
@@ -394,17 +454,38 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
       }
     }
 
-    for (const [slideNumber, indices] of criticalEnglishHolds) {
+    for (const [unit, anchors] of Object.entries(formerHoldAnchors)) {
+      const [slideNumber, index] = unit.split('.').map(Number);
       const slide = slides[slideNumber - 1];
-      for (const index of indices) {
-        assert.equal(slide.target.body[index].status, 'english-hold',
-          `${language} slide ${slideNumber} body ${index}: technical or sanitation guidance stays in exact English`);
-        assert.equal(slide.target.body[index].text, undefined);
-        assert.equal(slide.english.body[index], waterSource[slideNumber - 1].body[index]);
+      const livePart = slide.target.body[index];
+      const repair = materialRepairs.find((row: any) => row.language === language && row.slide === slideNumber && row.bodyIndex === index);
+      // Rewind only the four later technical holds before checking the original blind review and safety anchors.
+      // Live mixed segments are separately checked above; historical review evidence must remain unchanged.
+      const part = repair ? repair.previousTarget : livePart;
+      assert.equal(slide.english.body[index], waterSource[slideNumber - 1].body[index]);
+      assert.equal(part.status, 'draft', `${language} slide ${slideNumber} body ${index}: the former hold is now a labeled draft`);
+      assert.ok(part.provenance.startsWith(ordinaryProvenance) && /Unreviewed; not fluent or local farming approval/.test(part.provenance),
+        `${language} slide ${slideNumber} body ${index}: the draft is labeled as an unreviewed machine draft`);
+      const row = ordinaryEvidence.targetFieldChanges.filter((change) => change.module === 'water-harvesting'
+        && change.language === language && change.slide === slideNumber && change.field === 'body' && change.bodyIndex === index);
+      assert.equal(row.length, 1, `${language} slide ${slideNumber} body ${index}: exactly one evidence row records this draft`);
+      assert.equal(row[0].previousTarget.status, 'english-hold', `${language} slide ${slideNumber} body ${index}: drafted from the exact-English hold`);
+      assert.equal(row[0].sourceEnglish, slide.english.body[index]);
+      assert.deepEqual(row[0].currentTarget, part, `${language} slide ${slideNumber} body ${index}: the deck carries the recorded draft`);
+      assert.ok(row[0].backTranslation.trim().length > 20, `${language} slide ${slideNumber} body ${index}: a blind back-translation is recorded`);
+      for (const anchor of anchors[language]) {
+        assert.match(part.text, anchor, `${language} slide ${slideNumber} body ${index}: keep the ${anchor} condition`);
       }
     }
-    assert.equal(pairedTargetHasEnglishHolds(slides[2].target), true,
-      `${language}: technical holds remain visibly paired with their source`);
+    if (language !== 'ts') {
+      assert.ok((slides[21].target.body[0].text.match(separateProhibitions[language]) ?? []).length >= 4,
+        `${language}: plumbing, spraying, pooling and runoff each keep their own prohibition`);
+    }
+    assert.equal(pairedTargetHasEnglishHolds(slides[2].target), false,
+      `${language}: the swale outcome slide no longer needs an English hold`);
+    // Slide 22 paragraph 1 stays a learner-English hold in Tshivenda and Xitsonga (outside this deck-only scope).
+    assert.equal(pairedTargetHasEnglishHolds(slides[21].target), language !== 'st',
+      `${language}: the reuse-stop paragraph keeps its learner wording and visible hold label`);
 
     const damDesign = slides[10].target.body;
     assert.match(damDesign[0].text, /suitably qualified|ditshwaneleho tse loketseng|suitable qualifications/i,
@@ -418,44 +499,87 @@ test('Water Harvesting source-paired decks expose only exact-source resolver dra
     assert.match(damDesign[2].text, /breach wall|pshatla lerako|breach the wall/i);
     assert.match(damDesign[2].text, /safe route|tsela e bolokehileng|ndlela leyi hlayisekeke/i);
 
+    // Rewritten 5 October 2026: the assignment clauses that stayed inline English (weighted string, "it should read the
+    // same", the Tshivenda line direction) are now drafted around the retained term A-frame. The claims pin the three
+    // poles, the weighted string, the same reading after turning, three level points across the slope, a line that does
+    // not run downhill and the five-day minimum in every language.
     const assignment = slides[22];
     const build = assignment.target.body[0].text;
-    assert.match(build, /A-frame level/);
-    assert.match(build, language === 'ts' ? /ntambhu leyi nga ni ntiko/ : /weighted string/);
-    assert.match(build, language === 'ts' ? /tinharhu/ : language === 've' ? /tharu/ : /tse tharo/,
+    assert.match(build, /A-frame/);
+    assert.match(build, { st: /thapo e nang le boima/, ve: /luthambo lwo vhofhelwaho tshilemela/, ts: /ntambhu leyi nga na ndzito/ }[language],
+      `${language}: the level hangs from a weighted string`);
+    assert.match(build, { st: /dikota tse tharo/, ve: /miri miraru/, ts: /tipolo tinharhu/ }[language],
       `${language}: the assignment retains exactly three poles`);
     const turnAround = slides[23].target.body[1];
-    if (language === 'st' || language === 've') assert.match(turnAround.text, /it should read the same/);
-    else assert.match(turnAround.text, /yi fanele yi hlaya leswi fanaka/);
+    assert.match(turnAround.text, { st: /e lokela ho bontsha tekanyo e tshwanang/, ve: /i fanela u sumbedza zwi fanaho/, ts: /yi fanele yi hlaya leswi fanaka/ }[language],
+      `${language}: turned around, the level should read the same`);
     const points = slides[23].target.body[2].text;
-    assert.match(points, /at least three points|bonyane dintlha tse tharo|three points/i);
-    assert.match(points, /same height|bophahamong bo le bong|height yo fana/i);
-    assert.match(points, /across my slope|ho parola letsoapong|across slope/i);
-    const direction = slides[23].target.body[3];
-    if (language === 've') {
-      assert.equal(direction.status, 'english-hold');
-      assert.equal(direction.text, undefined);
-    } else {
-      assert.equal(direction.status, 'draft');
-      assert.match(direction.text, /not down|ha o ye tlase|a yi yi ehansi/i);
-      assert.match(direction.text, /across|parola|tsemakanya/i);
+    for (const anchor of { st: [/bonyane dintlha tse tharo/, /bophahamong bo le bong/, /parola/], ve: [/hu sa fhasi ha hu raru/, /vhuimo vhu fanaho/, /pfuka u sendama/], ts: [/tinharhu kumbe ku tlula/, /vuhenhla byin['’]we/, /tsemakanya/] }[language]) {
+      assert.match(points, anchor, `${language}: at least three points at one height across the slope (${anchor})`);
     }
+    const direction = slides[23].target.body[3];
+    assert.equal(direction.status, 'draft', `${language}: the line-direction check is a labeled draft`);
+    assert.match(direction.text, /ha o ye tlase|a u yi fhasi|a yi rhelelanga ehansi/, `${language}: the marked line does not run downhill`);
+    assert.match(direction.text, /parola|pfuka|tsemakanya/, `${language}: the marked line runs across the slope`);
     assert.match(slides[23].target.body[4].text, /5/);
-    assert.match(slides[23].target.body[4].text, /day|matsatsi|masiku/i);
+    assert.match(slides[23].target.body[4].text, /matsatsi|maḓuvha|masiku/);
   }
 
+  // Rewritten 5 October 2026 (ordinary-prose completion): 119 former exact-English holds are now bounded machine
+  // drafts. Only the six learner-English holds remain English; they stay outside this deck-only scope.
   assert.equal(reusedParagraphRows.length, 78,
     'all 78 target-language reuses are exact full paragraphs from a source-paired learner authority');
   assert.ok(historicallyCheckedReuseRows.length > 0,
     'when a whole-body learner draft is later completed, deck reuse is checked against its dated prior target');
   assert.equal(preservedHistoricalEnglishHoldRows.length, 6,
     'the six paragraphs that were exact English holds before learner completion remain exact English holds in the unchanged deck');
-  assert.equal(machineDraftRows.length, 49,
-    'new deck-only prose remains a bounded, separately labeled unreviewed draft');
+  assert.equal(machineDraftRows.length, 168,
+    'all 168 deck-only headings and paragraphs remain bounded unreviewed drafts, including four source-paired technical holds');
   assert.equal(existingHeadingRows.length, 6,
     'the two established generic headings per language remain unchanged');
-  assert.deepEqual(statusCounts, { 'english-hold': 125, draft: 133 },
-    'the three paired decks retain 125 exact-English holds and 133 clearly marked draft panels');
+  assert.deepEqual(statusCounts, { 'english-hold': 6, draft: 248, mixed: 4 },
+    'six historical learner holds remain exact English; four technical repairs retain explicit source-paired holds inside unreviewed drafts');
+});
+
+// Added 5 October 2026: the Sesotho Soil and Water passages drafted in the ordinary-prose completion use the South
+// African spelling of the Free State/QwaQwa edition, checked with the same rule as the Food Forest and Plant Guilds
+// decks. Eleven older passages that the batch did not change keep Lesotho spellings: four repeat the Sesotho Soil
+// lesson byte for byte, four are shared course headings that the tests pin, and three are earlier drafts. The review
+// README lists them so that they can be respelled together with the lesson.
+test('Sesotho Soil and Water slide passages drafted on 4-5 October 2026 use South African spelling', () => {
+  const batch = 'Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026)';
+  const lesothoSpelling: string[] = [];
+  let drafted = 0;
+  for (const moduleId of ['soil-health', 'water-harvesting'] as const) {
+    const packet = JSON.parse(readFileSync(`docs/narration/${moduleId}.st.paired-draft.json`, 'utf8'));
+    const slides = validatePairedDraft(packet, englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8')), 'st');
+    for (const slide of slides) {
+      const cells: Array<[string, string, any]> = [
+        [`${slide.n}:h`, slide.english.heading, slide.target.heading],
+        ...slide.english.body.map((english: string, index: number): [string, string, any] => [`${slide.n}:${index}`, english, slide.target.body[index]]),
+      ];
+      for (const [id, english, cell] of cells) {
+        if (cell.status !== 'draft') continue;
+        const pair: Array<[string, string]> = [[english, cell.text]];
+        if (cell.provenance?.startsWith(batch)) {
+          drafted += 1;
+          checkSouthAfricanSesotho(pair, `st ${moduleId} slide ${id}`);
+          continue;
+        }
+        try {
+          checkSouthAfricanSesotho(pair, `st ${moduleId} slide ${id}`);
+        } catch (error) {
+          if (!(error instanceof assert.AssertionError)) throw error;
+          lesothoSpelling.push(`${moduleId} ${id}`);
+        }
+      }
+    }
+  }
+  assert.equal(drafted, 76, 'every Sesotho Soil and Water passage drafted in this batch was checked');
+  assert.deepEqual(lesothoSpelling, [
+    'soil-health 2:h', 'soil-health 7:1', 'soil-health 7:2', 'soil-health 8:2', 'soil-health 15:0', 'soil-health 19:h',
+    'soil-health 20:h', 'water-harvesting 2:h', 'water-harvesting 23:h', 'water-harvesting 24:2', 'water-harvesting 24:3',
+  ], 'only the eleven older passages listed in the review README keep Lesotho spellings');
 });
 
 // Rewritten 2 October 2026: slides 12-16 and 18-20 were exact-English holds. Every heading and paragraph is
@@ -1743,9 +1867,11 @@ test('regional Study frames draft screened observations while risky advice stays
     { moduleId: 'vegetables-staples', lang: 'st', drafted: ['1:2', '1:3', '2:1', '2:2', '2:3', '2:4', '2:5', '8:1', '8:2', '8:3', '8:4', '8:5', '8:6', '9:1'], held: [], mixed: ['2:4'] },
     { moduleId: 'market-community', lang: 've', drafted: ['2:1', '2:2', '2:3', '3:4', '7:2', '18:1', '18:3'], held: ['15:4'] },
     // Full soil paragraphs are now reused only at byte-exact canonical matches; the dedicated Soil test checks resolver equality and keeps safety claims paired.
-    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '3:1', '4:1', '4:2', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['2:3', '5:4', '20:4'] },
-    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: ['3:3'] },
-    { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '14:1', '19:2'], held: ['5:4', '20:4'] },
+    // Updated 5 October 2026: the former Soil holds (ts 2:3, 5:4, 20:4; st 3:3; ve 5:4, 20:4) were drafted in the
+    // ordinary-prose completion; tests/soil-health-regional-silent-slides.test.ts binds each to its evidence row.
+    { moduleId: 'soil-health', lang: 'ts', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '3:1', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: [] },
+    { moduleId: 'soil-health', lang: 'st', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '3:3', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: [] },
+    { moduleId: 'soil-health', lang: 've', drafted: ['1:1', '1:2', '1:3', '2:1', '2:2', '2:3', '4:1', '4:2', '5:1', '5:2', '5:3', '5:4', '14:1', '19:2', '20:4'], held: [] },
   ] as const;
   for (const { moduleId, lang, drafted, held, ...rest } of cases) {
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
@@ -1783,7 +1909,8 @@ test('Soil Health deck reuses complete resolver paragraphs only at exact sources
   const soilModule = COURSE_MODULES.find((module) => module.id === 'soil-health');
   assert.ok(soilModule);
   const source = englishSlideRecords(readFileSync('docs/narration/soil-health.en.md', 'utf8'));
-  const exactResolverMatches = { st: 32, ve: 32, ts: 31 } as const;
+  // Updated 5 October 2026: slide 4 paragraph 3 now reuses its complete current learner paragraph in every language.
+  const exactResolverMatches = { st: 33, ve: 33, ts: 32 } as const;
   const safetySources = [
     'Sand settles first. Silt settles next, while clay can remain suspended much longer.',
     'This is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.',
@@ -1857,36 +1984,36 @@ test('Soil Health deck reuses complete resolver paragraphs only at exact sources
         `${lang} retains the current full resolver wording for the jar, compost, or leachate safety condition`);
     }
 
+    // Rewritten 5 October 2026: the checklist sentence was an exact-English hold inside a mixed field, and "soil-building"
+    // stayed inline English. The ordinary-prose completion drafts both; the claims move up to naming every recorded
+    // feature (including any worm channels) and keeping one action, building soil and the module scope.
     const inspection = slides[18];
     assert.equal(inspection.english.body[0], 'Inspect soil in a working area. Record colour, structure, roots, moisture and any worm channels.');
     const inspectionDraft = inspection.target.body[0];
-    assert.equal(inspectionDraft.status, 'mixed');
-    assert.deepEqual(inspectionDraft.segments.map((segment: any) => ({
-      sourceEnglish: segment.sourceEnglish,
-      status: segment.status,
-    })), [
-      { sourceEnglish: 'Inspect soil in a working area. ', status: 'draft' },
-      { sourceEnglish: 'Record colour, structure, roots, moisture and any worm channels.', status: 'english-hold' },
-    ], `${lang}: localize the ordinary inspection lead-in while keeping the complete technical checklist held`);
+    assert.equal(inspectionDraft.status, 'draft', `${lang}: the whole inspection paragraph is a labeled draft`);
     const inspectionAnchors = {
-      st: 'Hlahloba mobu',
-      ve: 'Sedzani mavu',
-      ts: 'Kambela misava',
+      st: { lead: 'Hlahloba mobu', colour: 'mmala', structure: 'sebopeho', roots: 'metso', moisture: 'mongobo', any: 'efe kapa efe', worms: 'diboko' },
+      ve: { lead: 'Sedzani mavu', colour: 'muvhala', structure: 'tshivhumbeo', roots: 'midzi', moisture: 'vhunyunyu', any: 'dzine dza vha hone', worms: 'zwivhungu' },
+      ts: { lead: 'Kambela misava', colour: 'muhlovo', structure: 'xivumbeko', roots: 'timitsu', moisture: 'ku tsakama', any: 'leti nga kona', worms: 'swivungu' },
     } as const;
-    assert.ok(inspectionDraft.segments[0].text.startsWith(inspectionAnchors[lang]));
+    assert.ok(inspectionDraft.text.startsWith(inspectionAnchors[lang].lead));
+    for (const [feature, anchor] of Object.entries(inspectionAnchors[lang])) {
+      assert.ok(inspectionDraft.text.includes(anchor), `${lang}: the inspection keeps ${feature} (${anchor})`);
+    }
 
     const firstAction = slides[19];
     assert.equal(firstAction.english.body[0], 'Start one soil-building action from this module.');
     const action = firstAction.target.body[0];
     assert.equal(action.status, 'draft');
-    assert.ok(action.text.includes('soil-building'), `${lang}: retain the technical soil-building phrase in English`);
+    // 5 October 2026: the Sesotho scope anchor follows the locative of the course's module noun "mojule"
+    // ("mojuleng", like kitjheneng); it still pins "from this module".
     const actionAnchors = {
-      st: { one: "'ngoe", action: 'ketso', scope: 'ho tsoa mojulung ona' },
-      ve: { one: 'nthihi', action: 'nyito', scope: 'u bva kha module iyi' },
-      ts: { one: "rin'we", action: 'goza', scope: 'ku suka eka modula lowu' },
+      st: { one: /ketso e le nngwe/, build: /ya ho aha mobu/, scope: /ho tswa mojuleng ona/ },
+      ve: { one: /nyito nthihi/, build: /ya u fhaṱa mavu/, scope: /u bva kha modulu iyi/ },
+      ts: { one: /xiendlo xin['’]we/, build: /xo aka misava/, scope: /ku suka eka modulu lowu/ },
     } as const;
     for (const anchor of Object.values(actionAnchors[lang])) {
-      assert.ok(action.text.includes(anchor), `${lang}: preserve the one-action instruction and its module scope`);
+      assert.match(action.text, anchor, `${lang}: preserve one soil-building action and its module scope`);
     }
 
     const drifted = structuredClone(packet);

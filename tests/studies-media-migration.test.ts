@@ -2697,3 +2697,71 @@ test('Reading first observations retire only the eight refreshed frames and all 
   assert.equal(puts, 1, 'later activation leaves replacement bytes alone');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'the worker retires stale URLs but leaves replacement downloads to the learner');
 });
+
+test('Soil and Water ordinary-prose refresh retires exactly the redrawn regional frames once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateSoilWaterOrdinaryPairedStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assertActivationOrder(source, 'migrateMarketL1OrdinaryStills', 'migrateSoilWaterOrdinaryPairedStills',
+    'the Soil and Water still refresh runs after the Market L1 still refresh during activation');
+
+  // The render proof lists every frame redrawn from a changed paired target; the migration must retire exactly those.
+  const frames = JSON.parse(readFileSync(new URL('../docs/media/soil-water-ordinary-2026-10-05/frames.json', import.meta.url), 'utf8')) as {
+    decks: Array<{ module: string; language: string; changed: Array<{ path: string }>; preserved: Array<{ path: string }> }>;
+  };
+  const changed = frames.decks.flatMap(deck => deck.changed.map(row => '/' + row.path.replace(/^public\//, '')));
+  const untouchedFrames = frames.decks.flatMap(deck => deck.preserved.map(row => '/' + row.path.replace(/^public\//, '')));
+  assert.equal(frames.decks.length, 6, 'both modules in all three regional languages are covered');
+  assert.equal(changed.length + untouchedFrames.length, 3 * (20 + 24), 'every regional Soil and Water frame is accounted for');
+  assert.ok(changed.length > 0);
+
+  const origin = 'https://field.test';
+  const staleUrls = changed.flatMap(path => [
+    new URL(path, origin).href,
+    new URL(path + '?saved=old', origin).href,
+  ]);
+  const preserved = [
+    ...untouchedFrames,
+    '/course-decks/soil-health/en/slide-04.jpg',
+    '/course-decks/soil-health/zu/slide-04.jpg',
+    '/course-decks/water-harvesting/en/slide-10.jpg',
+    '/course-decks/water-harvesting/zu/slide-10.jpg',
+    ...['en', 'zu'].flatMap(language => [
+      `/course-audio/soil-health/${language}/full.mp3`,
+      `/course-audio/water-harvesting/${language}/full.mp3`,
+    ]),
+    '/course-animations/soil-health/flow-build-compost-heap.mp4',
+    '/course-animations/water-harvesting/posters/flow-swale.jpg',
+    '/course-decks/vegetables-staples/ts/slide-08.webp',
+    '/course-decks/soil-health/.regional-draft-stills-20261003',
+    '/course-decks/water-harvesting/.regional-draft-stills-20261003',
+  ];
+  const preservedUrls = preserved.map(path => new URL(path + '?keep=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...staleUrls.map(url => [url, new Response('previous Soil or Water regional still')] as const),
+    ...preservedUrls.map(url => [url, new Response('unrelated saved course media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  for (const url of staleUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/.soil-water-ordinary-paired-stills-20261005';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preservedUrls.length, 1, 'only the once-only marker remains beside untouched media');
+  assert.equal(puts, 1, 'first activation records the migration marker');
+
+  const laterDownload = new URL(changed[0], origin).href;
+  rows.set(laterDownload, new Response('replacement selected and downloaded later by learner'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'replacement selected and downloaded later by learner');
+  for (const url of preservedUrls) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activation leaves learner-selected replacement bytes intact');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache activation never downloads replacement stills');
+});

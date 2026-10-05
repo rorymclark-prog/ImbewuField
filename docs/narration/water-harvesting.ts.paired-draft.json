@@ -20,7 +20,9 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swisele (swales), makhurhana ya misava (berms), madamu, tithanki ta mati ya mpfula, na greywater — nonokisa, hangalasa u tlhela u nghenisa thonsi rin’wana na rin’wana ra mati emisaveni.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -45,16 +47,24 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlamusela leswaku xisele (swale) lexi ringaneke, lexi celiweke hi ku tsemakanya ku rhelela hi khanthura (contour), xi nga nonokisa ni ku hangalasa njhani mati lama khulukaka (runoff) leswaku ma nghena emisaveni eka ndhawu leyi faneleke.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlamusela leswaku ha yini madamu ma lava spillway leyi dizayiniweke ni nkambelo wa ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlamusela leswaku first-flush diverter yi endla yini ni leswaku ha yini mati ya thanki ma ha lava nkambelo wa vuhlayiseki.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlayisa greywater ekule ni vanhu, swakudya ni tiphayiphi ta mati yo nwa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -71,14 +81,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dizayini Timbirhi ta Swisele",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xisele (swale) lexi ringaneke eka khanthura (contour) i dizayini yin’we yo nonokisa mati lama khulukaka. Mugodi wa xona wu landzela khanthura leyi ringaneke — layini leyi nga na ku tlakuka ko fana ndlela hinkwayo, yi tsemakanya ku rhelela, a yi rhelelanga ehansi — leswaku mati ma kota ku hangalala ni ku nghena emisaveni leyi faneleke.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swisele swin’wana swi nyikiwa hi xikongomelo ku rhelela ka katsongo, ku ri na ndhawu leyi dizayiniweke leyi hlayisekeke yo humesa mati. Misava, ku rhelela, ku nghena ni ku suka ka mati emisaveni ni ku khuluka ka mati ya xidzedze swi endla xiboho hi leswaku ndlela yihi yi faneleke. Kombela mutsundzuxi wa le ndhawini loyi a leteriweke leswaku a kambela ndhawu u nga si cela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -95,14 +111,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Xisele Xi Nga Pfumelela Mati Ma Nghena",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xifaniso lexi xi kombisa xisele (swale) lexi ringaneke eka khanthura (contour) tani hi xifaniso xa miehleketo. Mati ma nga hangalala hi ku landza mugodi ni ku nghena laha misava yi pfumelelaka kona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "A xi kombisi leswaku ku tsakama ku nghena ehansi ku fika kwihi emisaveni ya wena. Kambela misava, ku rhelela ni ndlela ya mati lama tlulaka u nga si aka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -119,14 +141,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khurhana ra Misava (Berm) ra le Hansi",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Misava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi. I ndhawu leyi mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mirhi yi nga tirhisa ku tsakama loku hlayisiweke emisaveni ya kusuhi endzhaku ka mpfula; mbuyelo wu hambana hi ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -144,7 +172,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mpfula ya matimba yi lava ndlela yo tlula yo hlayiseka",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -177,14 +207,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kambela ndlela yo tlula u nga si cela",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xisele xi lava ndlela leyi kunguhatiweke yo humesa mati lama tlulaka loko mpfula ya matimba yi na. Yi kambele u nga si cela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati ma nga ya eka xisele xin’wana kumbe damu ntsena loko nkambelo wa ndhawu wu kombisa leswaku ndlela, ndhawu yo humesa mati ni leswi ma amukelaka swi nga kota ku khoma mati lama khulukaka handle ka ku onhaka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -238,11 +274,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Timitsu ti pfuna ku khoma misava eka layini ya contour leyi byariweke.",
-            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+            "text": "Timitsu ta swimilana ti pfuna ku khoma misava eka layini ya khanthura (contour) leyi byariweke — layini leyi nga na ku tlakuka ko fana ndlela hinkwayo, leyi tsemakanyaka ndhawu yo rhelela, a yi rhelelanga ehansi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Hlawula ndlela yo sivela ku kukuleka ka misava hi ku tirhisa ntsundzuxo wa laha kaya; ndhawu yo rhelela ngopfu yi lava nkambelo wa ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -296,7 +334,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dizayina Spillway U nga si Aka Rirhangu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -329,14 +369,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Damu na Spillway: Xifaniso xa Miehleketo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Dizayina spillway u nga si aka rirhangu — rirhangu leri mati ma tlulaka ehenhla ka rona ri nga tshoveka hi ndlela ya khombo lerikulu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati lama khulukaka ku suka eka ndhawu yo hlengeleta mati (catchment runoff) i xin’we xa swilo leswi tirhisiwaka eka dizayini. Munhu loyi a nga na swidyondzo leswi faneleke u fanele ku kambela ndhawu, dizayini ya damu na ya spillway ku nga si sungula ku aka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -354,7 +400,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlayisa damu ni mintlhelo ya rona",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -426,7 +474,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hambukisa mati ya le sunguleni lama thyakeke",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -457,14 +507,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Mati ya le Sunguleni eka Thanki: Xifaniso xa Miehleketo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "First-flush diverter yi sivela mati ya le sunguleni lama khulukaka lwangwini ku nghena etankini.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Lulamisa sayizi ya yona hi ku landza lwangu ra wena naswona yi hlayise; mati lama taka endzhaku ma ha lava ku kamberiwa vuhlayiseki.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -482,7 +538,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Ringanisa sayizi ya thanki ni xilaveko xa mati",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -516,7 +574,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sirhelela mati lama hlayisiweke",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
@@ -553,10 +613,14 @@
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Mati lama tirhisiweke ekaya ma nga va na swilo leswitsongo leswi vangaka vuvabyi, munyu, swilo swo basisa ni swilo swin’wana. Swiletelo a swi hlamuseli swihlovo hinkwaswo hi ndlela yin’we.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Swiletelo swa Afrika-Dzonga swa hambana hi mati ya le khixini ni mati yo hlantswa swiambalo. U nga katsi mati ya thoyilete, mati ya tinapi, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa nakambe. U nga tirhisi nakambe mati lama nga na swilo swa khemikhali leswi nga ni khombo.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -573,14 +637,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kuma ntsundzuxo wa laha kaya u nga si tirhisa mati nakambe",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "U nga si tirhisa nakambe, kombela masipala ni mutsundzuxi wa laha kaya wa sanitation loyi a nga ni vuswikoti lebyi faneleke leswaku va kambela xihlovo lexi kongomeke, vukorhokeri bya mati ni sanitation bya muti, leswi u kunguhateleke ku tirhisa mati ha swona ni ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Loko ntsundzuxo lowu wu nga kumekiki kumbe wu nga twali kahle, u nga tirhisi mati nakambe. Misava ni mulch a swi dlayi swilo leswitsongo leswi vangaka vuvabyi ematini lama thyakeke lama tirhisiweke (wastewater).",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -597,14 +667,20 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Xifaniso a hi dizayini ya purasi",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Xifaniso lexi xa ku angarhela a hi dizayini ya purasi leyi ringiweke kumbe leyi pfumeleriweke. A xi kombisi leswaku xihlovo, ndlela leyi mati ma hundzaka ha yona kumbe laha mati ma yaka kona swi hlayisekile.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Vutisa vatsundzuxi va laha kaya lava nga ni vuswikoti lebyi faneleke u nga si tirhisa mati nakambe. Misava ni mulch a swi dlayi swilo leswitsongo leswi vangaka vuvabyi ematini lama thyakeke lama tirhisiweke (wastewater).",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           }
         ]
       }
@@ -621,11 +697,24 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sivela ku khumbana ni ku thyakisiwa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
         },
         "body": [
           {
-            "status": "english-hold"
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "text": "Sivela vanhu kumbe swiharhi ku khumbana ni mati lama tirhisiweke ku hlantswa. U nga hlanganiseli mati lawa eka tiphayiphi ta mati yo nwa, u nga ma hangalasi emoyeni, u nga pfumeleli leswaku ma hlengeletana, kumbe ma khulukela ehandle ka ndhawu ya wena eka ndlela, mugerwana kumbe ",
+                "sourceEnglish": "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "watercourse."
+              }
+            ]
           },
           {
             "status": "english-hold"
@@ -653,13 +742,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Vaka A-frame level hi tipolo tinharhu ni ntambhu leyi nga ni ntiko.",
-            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+            "text": "Vaka A-frame yo kamba leswi ringaneke hi tipolo tinharhu ni ntambhu leyi nga na ndzito leyi bohiweke eka yona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
-            "text": "Yi tirhisa ku kuma layini yin’we yo ringana across slope ya wena.",
-            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+            "text": "Yi tirhise ku kuma layini yin’we leyi ringaneke, leyi nga na ku tlakuka ko fana ndlela hinkwayo, leyi tsemakanyaka ndhawu ya wena yo rhelela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -701,13 +790,13 @@
           },
           {
             "status": "draft",
-            "text": "Ndzi funghile at least three points eka height yo fana across slope ya mina.",
-            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+            "text": "Ndzi veke swikombiso eka tindhawu tinharhu kumbe ku tlula, leti nga eka vuhenhla byin’we, hi ku tsemakanya ndhawu ya mina leyi rhelelaka ehansi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
-            "text": "Layini leyi ndzi yi funghileke yi tsemakanya slope; a yi yi ehansi ka slope.",
-            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+            "text": "Layini leyi ndzi yi vekeke swikombiso yi tsemakanya ndhawu yo rhelela; a yi rhelelanga ehansi hi ku landzela ndhawu yoleyo.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
           },
           {
             "status": "draft",
