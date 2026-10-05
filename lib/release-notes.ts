@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '5 October 2026', sha: 'e009d8ee', changes: [
+  { when: '5 October 2026', sha: 'b9f8248c', changes: [
     'Market records have fuller Sesotho, Tshivenda and Xitsonga draft lessons and silent cards.',
     'Teaching prices stay labelled examples; exact English remains beside unreviewed drafts.',
     'Offline packs refresh the changed cards without adding narration.',
