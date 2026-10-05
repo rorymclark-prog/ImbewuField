@@ -13,14 +13,16 @@ const evidence = (name: string) => JSON.parse(readFileSync(
 const baseline = evidence('BASELINE');
 const applied = evidence('APPLIED');
 const deckAccepted = evidence('DECK-ACCEPTED');
+const l2Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
+const l2DeckApplied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-DECK-APPLIED.json', import.meta.url), 'utf8'));
 const drafts = { st, ve, ts } as const;
 const targetKey = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 type Language = keyof typeof drafts;
 const canonicalModule = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!;
 const canonicalLesson = canonicalModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
 
-function pairAt(draft: any, fieldPath: string): any {
-  const lesson = draft.lessons.find((item: any) => item.id === 'vegetables-staples-l4');
+function pairAt(draft: any, fieldPath: string, lessonId = 'vegetables-staples-l4'): any {
+  const lesson = draft.lessons.find((item: any) => item.id === lessonId);
   const parts = fieldPath.split('.');
   if (parts[0] === 'body') return lesson.body;
   if (parts[0] === 'keyPoints') return lesson.keyPoints[Number(parts[1])];
@@ -60,7 +62,10 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
   assert.equal(applied.fields.length, 40);
   assert.equal(applied.summary.changedLearnerFields, 38);
   assert.equal(applied.summary.unchangedLearnerRows, 2);
-  assert.equal(applied.summary.rendered, false);
+  // The L4 packet records its own pre-render application phase. This test checks
+  // its source-bound content; render evidence is kept separately for each batch.
+  assert.ok(applied.fields.every((row: any) => row.sourceEnglish && row.appliedTarget && row.appliedReviewStatus),
+    'the dated L4 application record retains every source-bound target and draft status');
   const unchangedRows = applied.fields.filter((row: any) => !row.changedFromCurrent);
   assert.equal(unchangedRows.length, 2);
 
@@ -84,6 +89,31 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
         assert.equal(row.currentTarget, row.candidateTarget, `${language}/${row.fieldPath}: no-op fields are not rewritten`);
         assert.equal(row.currentReviewStatus, row.candidateReviewStatus);
       }
+    }
+    // 5 October 2026: L2 followed the L4 snapshot. Layer only its final exact-source
+    // learner rows into the reconstructed whole-module expectation.
+    for (const row of l2Applied.fields.filter((field: any) => field.language === language && field.language !== 'ts')) {
+      const pair = pairAt(expected, row.fieldPath, row.lessonId);
+      if (row.fieldPath.startsWith('body.')) {
+        const paragraphs = pair[targetKey[language]].split('\n\n');
+        const index = Number(row.fieldPath.split('.')[2]);
+        assert.equal(paragraphs[index], row.currentTarget, `${language}/${row.fieldPath}: frozen L2 before-state`);
+        assert.equal(pair.sourceEnglish.split('\n\n')[index], row.sourceEnglish);
+        paragraphs[index] = row.appliedTarget;
+        pair[targetKey[language]] = paragraphs.join('\n\n');
+      } else {
+        assert.equal(pair[targetKey[language]], row.currentTarget, `${language}/${row.fieldPath}: frozen L2 before-state`);
+        assert.equal(pair.sourceEnglish, row.sourceEnglish);
+        pair[targetKey[language]] = row.appliedTarget;
+      }
+      pair.reviewStatus = row.appliedReviewStatus;
+    }
+    for (const row of l2Applied.restoredToBaseline.filter((field: any) => field.language === language && field.language !== 'ts')) {
+      const pair = pairAt(expected, row.fieldPath, row.lessonId);
+      const paragraphs = pair[targetKey[language]].split('\n\n');
+      const index = Number(row.fieldPath.split('.')[2]);
+      assert.equal(paragraphs[index], row.restoredTarget,
+        `${language}/${row.fieldPath}: reconciliation preserves the frozen localized wording`);
     }
     assert.deepEqual(current, expected, `${language}: every unlisted learner field and status remains byte-for-byte equivalent as parsed data`);
     const lessonDraft = current.lessons.find(item => item.id === 'vegetables-staples-l4')!;
@@ -162,6 +192,15 @@ test('Vegetables L4 paired decks reuse only 12 exact-source rows and preserve ev
         `${language} slide ${row.slide}: exact-source reuse points at the matching accepted learner body field`);
       expected.slides[row.slide - 1].target.body[row.englishBodyIndexZeroBased] = row.proposedDeckTarget;
       assert.equal(validated[row.slide - 1].english.body[row.englishBodyIndexZeroBased], row.exactEnglishSource);
+    }
+    // The later L2 batch adds separate exact source rows to this historical packet.
+    for (const row of l2DeckApplied.entries.filter((entry: any) => entry.language === language)) {
+      const slide = expected.slides[row.slideArrayIndex];
+      assert.equal(slide.english.body[row.bodyIndex], row.sourceEnglish,
+        `${language}/slide${row.slideNumber}: later L2 row keeps its exact English source`);
+      assert.deepEqual(slide.target.body[row.bodyIndex], row.currentTarget,
+        `${language}/slide${row.slideNumber}: frozen L2 deck before-state remains exact`);
+      slide.target.body[row.bodyIndex] = row.proposedTarget;
     }
     assert.deepEqual(live, expected, `${language}: all unlisted source, target, status, heading and metadata fields remain unchanged`);
   }

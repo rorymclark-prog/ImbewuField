@@ -684,8 +684,10 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   }
   const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!.body.tshivendaDraft.split('\n\n');
   assert.match(l2[1], /^Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma\. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu\.$/, 'L2 p1 preserves frequent household use, a small amount, and repeated sowing in a checked unreviewed draft');
-  assert.match(l2[2], /every two to three weeks/);
-  assert.match(l2[3], /^U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi\. Zwiḽiwa zwiswa zwi a wanala for longer\./, 'the updated paragraph keeps less waste, the for-longer comparison anchor, and the existing season-long labour point');
+  assert.match(l2[2], /vhege dziṅwe na dziṅwe dza mbili u swika kha tharu/,
+    'the short row keeps its recurring two-to-three-week interval');
+  assert.match(l2[3], /^U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi\. Zwiḽiwa zwiswa zwi a wanala for longer\./,
+    'the checked wording names food waste, preserves the for-longer comparison anchor, and keeps the season-long labour point');
   assert.match(l2[4], /A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa/, 'repeated sowings are not framed as a harvest guarantee under continuing difficult conditions');
   assert.match(l2[8], /A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa/, 'suitable timing allows possible overlap without promising the first batch is ready by sowing four');
   assert.match(l2[9], /Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe/, 'heat still carries both possible faster timing and failure');
@@ -693,7 +695,8 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
   assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
   assert.match(l2[14], /and store as protein/);
-  assert.match(l2[15], /^Pumpkin spreads across the ground/);
+  assert.equal(l2[15], 'Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.',
+    'the ground-spreading action and soil shade remain localized while the crop and moisture terms stay English');
   assert.match(l2[16], /Tshifhinga tshi a vha tsha ndeme\. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya\./, 'maize is established first and is strong enough before beans start climbing');
   assert.match(l2[17], /do not assume they immediately feed the maize/);
   assert.match(l2[17], /nutrients in residues are released during decomposition/);
@@ -762,12 +765,13 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
   assert.match(l1.quiz[1].rationale.tshivendaDraft, /transplant shock/);
   const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
   // Unchecked comparisons and absolutes remain English; well is not better, nor not-yet never.
-  for (const [question, option] of [[0, 0], [0, 2], [1, 3]] as const) {
-    const pair = l2.quiz[question].options[option];
-    assert.equal(pair.tshivendaDraft, pair.sourceEnglish);
-    assert.equal(pair.reviewStatus, 'hold');
-  }
-  assert.match(l2.quiz[0].question.tshivendaDraft, /every 2-3 weeks/);
+  assert.equal(l2.quiz[0].options[0].tshivendaDraft, 'Zwi shumisa less seed nga u angaredza.');
+  assert.equal(l2.quiz[0].options[0].reviewStatus, 'machine-draft');
+  assert.equal(l2.quiz[0].options[2].tshivendaDraft, 'Lettuce i mela better nga zwipiḓa zwiṱuku.');
+  assert.equal(l2.quiz[0].options[2].reviewStatus, 'machine-draft');
+  assert.equal(l2.quiz[1].options[3].tshivendaDraft, 'I nga never be released.');
+  assert.equal(l2.quiz[1].options[3].reviewStatus, 'machine-draft');
+  assert.match(l2.quiz[0].question.tshivendaDraft, /vhege dziṅwe na dziṅwe dza mbili u swika kha tharu/);
   assert.match(l2.quiz[1].rationale.tshivendaDraft, /does not guarantee immediate feeding/);
   const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
   assert.equal(l4.keyPoints[3].tshivendaDraft, 'Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.');

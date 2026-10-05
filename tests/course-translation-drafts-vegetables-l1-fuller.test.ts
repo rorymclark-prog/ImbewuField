@@ -12,6 +12,7 @@ const evidence = (suffix: string) => JSON.parse(readFileSync(new URL(`../docs/st
 const baseline = evidence('BASELINE');
 const applied = evidence('APPLIED');
 const l4Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L4-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
+const l2Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
 const drafts = { st, ts, ve };
 type Language = keyof typeof drafts;
 const keys = { st: 'sesothoDraft', ts: 'xitsongaDraft', ve: 'tshivendaDraft' } as const;
@@ -39,7 +40,7 @@ test('Vegetables ordinary drafts retain every canonical instruction and all unre
   for (const language of Object.keys(drafts) as Language[]) {
     const expected = structuredClone(baseline.drafts[language]);
     for (const row of applied.fields.filter((row: any) => row.language === language)) {
-      const pair = pairAt(expected, row.fieldPath);
+      const pair = pairAt(expected, row.fieldPath, row.lessonId);
       if (row.fieldPath.startsWith('body.')) {
         const paragraphs = pair[keys[language]].split('\n\n');
         assert.equal(paragraphs[Number(row.fieldPath.split('.')[2])], row.currentTarget);
@@ -67,6 +68,27 @@ test('Vegetables ordinary drafts retain every canonical instruction and all unre
         pair[keys[language]] = paragraphs.join('\n\n');
       } else {
         assert.equal(pair[keys[language]], row.currentTarget, `${language}/${row.fieldPath}: historical L4 value is current before applying the accepted target`);
+        assert.equal(pair.sourceEnglish, row.sourceEnglish);
+        pair[keys[language]] = row.appliedTarget;
+      }
+      pair.reviewStatus = row.appliedReviewStatus;
+    }
+    // 5 October 2026: the final L2 prose batch followed the older L1 and L4 snapshots.
+    // Layer its exact approved source-bound targets so this historical comparison still
+    // checks every unlisted field against the actual current registry.
+    for (const row of l2Applied.fields.filter((row: any) => row.language === language && row.language !== 'ts')) {
+      const pair = pairAt(expected, row.fieldPath, row.lessonId);
+      if (row.fieldPath.startsWith('body.')) {
+        const paragraphs = pair[keys[language]].split('\n\n');
+        const index = Number(row.fieldPath.split('.')[2]);
+        assert.equal(paragraphs[index], row.currentTarget,
+          `${language}/${row.fieldPath}: frozen L2 before-state remains exact`);
+        assert.equal(pair.sourceEnglish.split('\n\n')[index], row.sourceEnglish);
+        paragraphs[index] = row.appliedTarget;
+        pair[keys[language]] = paragraphs.join('\n\n');
+      } else {
+        assert.equal(pair[keys[language]], row.currentTarget,
+          `${language}/${row.fieldPath}: frozen L2 before-state remains exact`);
         assert.equal(pair.sourceEnglish, row.sourceEnglish);
         pair[keys[language]] = row.appliedTarget;
       }

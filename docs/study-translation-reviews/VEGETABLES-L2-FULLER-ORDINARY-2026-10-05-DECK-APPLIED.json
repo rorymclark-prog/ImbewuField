@@ -1,0 +1,390 @@
+{
+  "baseHead": "179fa135e9fed9e0f15e0570e8ce85b2b3ea473f",
+  "status": "applied-for-diff-review-unreviewed-machine-draft",
+  "authority": "Only exact-deck-reuse candidateEntries from the checked packet were applied. Technical-hold and root-exclusion inventories are provenance only; no excluded slide rows were changed.",
+  "summary": {
+    "changedRows": 9,
+    "changedSlides": {
+      "st": [
+        10
+      ],
+      "ve": [
+        8,
+        10
+      ],
+      "ts": [
+        8,
+        9,
+        10
+      ]
+    },
+    "candidateEntriesByLanguage": {
+      "st": 1,
+      "ve": 5,
+      "ts": 3
+    },
+    "committed": false,
+    "pushed": false,
+    "phase": "final coherent deck application; assets not yet promoted"
+  },
+  "preservation": {
+    "englishSourceRowsUnchanged": true,
+    "allUnlistedDeckRowsPreserved": true,
+    "omittedTsSlide9Body3Preserved": true,
+    "omittedTsSlide11Body1Preserved": true,
+    "onlyTargetBodyEntriesChanged": true
+  },
+  "learnerCandidatePacket": "/tmp/imbewu-vegetables-l2-combined-root-checked-candidates-20261005.json",
+  "learnerCandidatePacketCheckedHead": "148f967bf30fdb7bba37c03b952adcddd3edf808",
+  "sourceFileSha256Before": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "docs/narration/vegetables-staples.st.paired-draft.json": "22f89fd204ed890b355527cfcc4302e1a29f7b406419003ce57193386eea7df3",
+    "docs/narration/vegetables-staples.ve.paired-draft.json": "57510bb175bb06a0d74bcce90ca874adfaeac5ba9e750921652a0afc0903685d",
+    "docs/narration/vegetables-staples.ts.paired-draft.json": "88bbf719458ab026b06b0a86ef924fc0da15b0502f04bcd4b97a7175bfc37083"
+  },
+  "entries": [
+    {
+      "slideId": "vegetables-staples-slide-10",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "lessonId": "vegetables-staples-l2",
+      "language": "st",
+      "fieldPath": "slides[n=10].target.body[1]",
+      "bodyIndex": 1,
+      "learnerFieldPath": "body.paragraphs.12",
+      "sourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "canonicalLessonSourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matswallo a Amerika (Indigenous farming traditions in the Americas)."
+      },
+      "candidateTarget": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matsoalloa a Amerika.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matsoalloa a Amerika."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "status": "draft",
+          "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matsoalloa a Amerika."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "“Matsoalloa a Amerika” conveys Indigenous/Native peoples in America; The Three Sisters name and origin remain. Back-translation: The Three Sisters is an example from the farming traditions of Native peoples of America. No factual scope added.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matsoalloa a Amerika."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-08",
+      "slideNumber": 8,
+      "slideArrayIndex": 7,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ve",
+      "fieldPath": "slides[n=8].target.body[2]",
+      "bodyIndex": 2,
+      "learnerFieldPath": "body.paragraphs.2",
+      "sourceEnglish": "Plant a short row every two to three weeks.",
+      "canonicalLessonSourceEnglish": "Plant a short row every two to three weeks.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Ṱavhani muduba mupfufhi every two to three weeks."
+      },
+      "candidateTarget": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Plant a short row every two to three weeks.",
+          "status": "draft",
+          "text": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "The explicit “vhege dziṅwe na dziṅwe” (“weeks each/every”) makes recurrence clearer than the current “every two to three weeks” English hold and avoids candidate nga murahu (“after”) sounding like a one-time wait. Numbers and short-row instruction remain exact. Local language review still needed.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-08",
+      "slideNumber": 8,
+      "slideArrayIndex": 7,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ve",
+      "fieldPath": "slides[n=8].target.body[3]",
+      "bodyIndex": 3,
+      "learnerFieldPath": "body.paragraphs.3",
+      "sourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+      "canonicalLessonSourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "U xelelwa nga zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phadalala kha khalaṅwaha, u sa ni kwama woṱhe nga tshifhinga tshithihi."
+      },
+      "candidateTarget": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+          "status": "draft",
+          "text": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "The Agy replacement for u xelelwa more directly names food waste and retains the source “less” via hu a fhungudzea; it also avoids a reading of food being lost/deprived. I cannot certify the Tshivenda wording. “lwa tshifhinga tshilapfu” may say for a long time rather than explicitly “for longer”, so retain the current exact English comparative tail pending verified local comparative. “Mushumo spreads across the season, not burdening you all at once” keeps source scope.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-10",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ve",
+      "fieldPath": "slides[n=10].target.body[0]",
+      "bodyIndex": 0,
+      "learnerFieldPath": "body.paragraphs.11",
+      "sourceEnglish": "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+      "canonicalLessonSourceEnglish": "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Intercropping is not just crowding different plants together. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+      },
+      "candidateTarget": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+          "status": "draft",
+          "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "Candidate renders intercropping as planting different plants together in one place and retains that each plant needs its own job and enough space. Back-translation matches the sentence. It may soften “crowding” to “gathering/putting together,” but the corrective “not just” and sufficient-space clause preserve the practical point.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-10",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ve",
+      "fieldPath": "slides[n=10].target.body[4]",
+      "bodyIndex": 4,
+      "learnerFieldPath": "body.paragraphs.15",
+      "sourceEnglish": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+      "canonicalLessonSourceEnglish": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Pumpkin spreads across the ground, i ita murunzi kha mavu na u vhulunga moisture."
+      },
+      "candidateTarget": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+          "status": "draft",
+          "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "Pumpkin spreads along the ground, shades soil and holds moisture. No added crop advice or quantity.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-08",
+      "slideNumber": 8,
+      "slideArrayIndex": 7,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ts",
+      "fieldPath": "slides[n=8].target.body[2]",
+      "bodyIndex": 2,
+      "learnerFieldPath": "body.paragraphs.2",
+      "sourceEnglish": "Plant a short row every two to three weeks.",
+      "canonicalLessonSourceEnglish": "Plant a short row every two to three weeks.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Byala ntila wo koma every two to three weeks."
+      },
+      "candidateTarget": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "Plant a short row every two to three weeks.",
+          "status": "draft",
+          "text": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "The repeated “man’wana ni man’wana” signals a recurring interval, addressing the ambiguity in candidate vhiki rin’wana na rin’wana ra mbirhi. The interval remains two to three weeks and the short-row instruction is preserved. Local language review still needed.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-10",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ts",
+      "fieldPath": "slides[n=10].target.body[1]",
+      "bodyIndex": 1,
+      "learnerFieldPath": "body.paragraphs.12",
+      "sourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "canonicalLessonSourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "english-hold"
+      },
+      "candidateTarget": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
+      },
+      "proposedSegments": [
+        {
+          "sourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "status": "draft",
+          "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
+        }
+      ],
+      "candidateReviewStatus": "machine-draft",
+      "rootDisposition": "accepted bounded semantic draft; not learner-wired",
+      "reason": "“i xifaniso lexi humaka eka Indigenous farming traditions in the Americas” conveys an example from the named traditions. The Three Sisters and culturally specific source phrase remain.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed.",
+      "priorTargetAtFinalBatchStart": {
+        "status": "draft",
+        "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
+      }
+    },
+    {
+      "slideId": "vegetables-staples-slide-10",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ve",
+      "fieldPath": "slides[n=10].target.body[1]",
+      "bodyIndex": 1,
+      "learnerFieldPath": "body.paragraphs.12",
+      "sourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "canonicalLessonSourceEnglish": "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "The Three Sisters ndi tsumbo from Indigenous farming traditions in the Americas."
+      },
+      "candidateTarget": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas."
+      },
+      "reason": "Exact current learner/card coherence; “ndi tsumbo ya Indigenous farming traditions in the Americas” preserves that Three Sisters is an example of/from those traditions. Proper name and culturally specific descriptor remain in English.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed."
+    },
+    {
+      "slideId": "vegetables-staples-slide-09",
+      "slideNumber": 9,
+      "slideArrayIndex": 8,
+      "lessonId": "vegetables-staples-l2",
+      "language": "ts",
+      "fieldPath": "slides[n=9].target.body[3]",
+      "bodyIndex": 3,
+      "learnerFieldPath": "body.paragraphs.9",
+      "sourceEnglish": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "canonicalLessonSourceEnglish": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+      "exactWholeRowMatch": true,
+      "currentTarget": {
+        "status": "draft",
+        "text": "Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka."
+      },
+      "candidateTarget": "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+      "proposedTarget": {
+        "status": "draft",
+        "text": "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka."
+      },
+      "reason": "Exact current learner/card coherence; The localized opening states the two-to-three-week interval and keeps the qualification “not a law” in Xitsonga. Holding only “starting rhythm” in English avoids the method-versus-rhythm ambiguity identified in the prior check. The exact current second sentence retains may/longer and the cool-season leaf-crop scope; the exact current third sentence retains heat may speed things up or cause a failure.",
+      "status": "unreviewed-candidate",
+      "provenance": "Final coherent candidate from the root-checked source-bound learner field; exact complete English row retained. Draft wording remains unreviewed."
+    }
+  ],
+  "omittedExactMatches": [
+    {
+      "language": "ve",
+      "learnerFieldPath": "body.paragraphs.12",
+      "slideNumber": 10,
+      "bodyIndex": 1,
+      "reason": "Candidate changes only the connector “from” to “ya” and keeps the same technical English phrase; existing row is already a paired draft. Omitted as not a substantive whole-row improvement."
+    },
+    {
+      "language": "ts",
+      "learnerFieldPath": "body.paragraphs.9",
+      "slideNumber": 9,
+      "bodyIndex": 3,
+      "reason": "Candidate reverts the already-localized opening sentence to exact English while retaining only the last translated sentence; would regress the existing mixed/draft row. Omitted."
+    },
+    {
+      "language": "ts",
+      "learnerFieldPath": "body.paragraphs.19",
+      "slideNumber": 11,
+      "bodyIndex": 1,
+      "reason": "Candidate replaces the existing localized “loko” (“when”) with English “when” and still holds the water-limits clause. No substantive whole-row gain; omitted."
+    }
+  ],
+  "phase": "final coherent paired-row application; final six-frame WebP render details and exact hashes are in the companion RENDER-PROOF file",
+  "finalCoherentDeckCandidatePacket": "/tmp/imbewu-vegetables-l2-final-coherent-deck-candidates-20261005.json",
+  "finalCoherentDeckCandidatePacketSha256": "3977d86d605b068c5809699c720c8f4bcf84dca508c6319362084fe5dfce6007",
+  "finalCoherentLearnerCandidatePacketSha256": "a0e272bb22e51213049614b6548ed1501579a4e3b5c4682d4e9b802390347d3d",
+  "renderProof": "VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-RENDER-PROOF.json"
+}

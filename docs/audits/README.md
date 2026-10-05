@@ -66,7 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
-| 2026-10-05 | [Vegetables L4 ordinary regional drafts — Codex](2026-10-05/study-vegetables-l4-ordinary-codex.md) |
+| 2026-10-05 | [Vegetables L2 fuller regional drafts — Codex](2026-10-05/study-vegetables-l2-fuller-codex.md) · [Vegetables L4 ordinary regional drafts — Codex](2026-10-05/study-vegetables-l4-ordinary-codex.md) |
 | 2026-10-05 | [Vegetables L1 fuller regional drafts — Codex](2026-10-05/study-vegetables-l1-fuller-codex.md) · [Core Study isiZulu deck source pairing — Codex](2026-10-05/study-isizulu-deck-source-pairing-codex.md) |
 | 2026-10-05 | [Core Study isiZulu learner source follow-up — Codex](2026-10-05/study-isizulu-learner-source-followup-codex.md) · [Core Study residual translation follow-up — Codex](2026-10-05/study-outcomes-residual-codex.md) · [Core Study isiZulu source-pairing audit — Codex](2026-10-05/study-isizulu-source-pairing-codex.md) |
 | 2026-10-04 | [Core Study Reading body and paired-deck follow-up — Codex](2026-10-04/study-reading-body-fuller-codex.md) |
@@ -112,3 +112,4 @@ with screenshots. That pack was exported at `a9b3f5a`; it does not include the
 
 The browser audit could not exercise the signed-in roles. Its coverage limit is
 not evidence that the current signed-in survey works or fails.
+- [Vegetables L2 fuller regional drafts — 2026-10-05](2026-10-05/study-vegetables-l2-fuller-codex.md)

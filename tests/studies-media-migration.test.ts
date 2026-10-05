@@ -4,7 +4,14 @@ import { readFileSync } from 'node:fs';
 
 function assertActivationOrder(source: string, previous: string, migration: string, reason: string) {
   const activation = source.slice(source.indexOf("self.addEventListener('activate'"));
-  assert.match(activation, new RegExp(`\\.then\\(${previous}\\)\\.then\\(${migration}\\)`), reason);
+  const migrations = [...activation.matchAll(/\.then\((migrate\w+)\)/g)].map(match => match[1]);
+  const previousIndex = migrations.indexOf(previous);
+  const migrationIndex = migrations.indexOf(migration);
+  assert.equal(migrations.filter(name => name === previous).length, 1, `${previous} runs once`);
+  assert.equal(migrations.filter(name => name === migration).length, 1, `${migration} runs once`);
+  // 5 October 2026: later course migrations may be inserted between these steps;
+  // their required relative order and single execution matter, not adjacency.
+  assert.ok(previousIndex >= 0 && migrationIndex > previousIndex, reason);
 }
 
 test('the nine updated Study stills refresh once without evicting other slides or narration', async () => {
