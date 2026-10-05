@@ -17,17 +17,17 @@ const sourceParagraphs = bodySourceEnglish.split('\n\n');
 const draftParagraphs = [
   "Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka.",
   "Hlawula swakudya leswi ndyangu wa wena wu talaka ku swi dya. Kutani byala xitsongo xa swona, u tlhela u endla tano hi ku phindha-phindha.",
-  "Byala ntila wo koma every two to three weeks.",
+  "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu.",
   "Ku lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan'weni yo ku wu humelela hinkwawo hi nkarhi wun'we.",
   "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni.",
   "Hi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo? Hlawula xin'we, u sungula hi vhege leyi.",
   "Hi leswi swi langutekaka hakona hi ku tirhisa.",
   "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune.",
   "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap. A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa.",
-  "Mavhiki mambirhi ku ya eka manharhu i maitele ya u sungula, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+  "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
   "Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila.",
   "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla.",
-  "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+  "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas.",
   "Maize yi nyika ku leha ni structure.",
   "Beans ti khandziya maize, and store as protein.",
   "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture.",
@@ -60,18 +60,28 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
           : index === 2
             ? pair('Use household food records to identify and plan for a hungry gap', 'Tirhisani household food records ku kuma ni ku pulanela hungry gap.')
             : index === 3
-              ? pair('Intercropped plants can still compete; manage space, timing and water', 'Intercropped plants can still compete; lawulani space, timing na mati.')
+              ? pair('Intercropped plants can still compete; manage space, timing and water', 'Swibyariwa leswi byariwe swin’we swi nga ha phikizana; lawulani ndhawu, nkarhi na mati.')
               : hold(sourceText)),
       quiz: sourceLesson.quiz.map((question, questionIndex) => ({
         question: questionIndex === 0
-          ? pair('Why sow lettuce in small batches every 2-3 weeks instead of all at once?', "Hikokwalaho ka yini u byala lettuce hi small batches every 2-3 weeks, ematshan'weni yo yi byala hinkwayona hi nkarhi wun'we?")
+          ? pair('Why sow lettuce in small batches every 2-3 weeks instead of all at once?', "Hikokwalaho ka yini u byala lettuce hi swiphemu leswitsongo mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu, ematshan’weni yo yi byala hinkwayona hi nkarhi wun’we?")
           : hold(question.q),
-        options: question.options.map((option, optionIndex) => optionIndex === 1 && questionIndex === 0
-          ? pair('It gives a steady harvest instead of a glut followed by a gap', 'Yi nyika steady harvest, ku nga ri glut leyi landzeleriwaka hi gap.')
-          : hold(option)),
+        options: question.options.map((option, optionIndex) => questionIndex === 0 && optionIndex === 0 && option === 'It uses less seed overall'
+          ? pair(option, 'Yi tirhisa less seed hi ku angarhela.')
+          : questionIndex === 0 && optionIndex === 1 && option === 'It gives a steady harvest instead of a glut followed by a gap'
+            ? pair(option, 'Yi nyika ntshovelo leyi tshamaka yi ri kona hi ku landzelelana, ku nga ri ntshovelo wo tala ngopfu kutani ku landzela nkarhi wa ku pfumaleka.')
+            : questionIndex === 0 && optionIndex === 2 && option === 'Lettuce germinates better in small batches'
+              ? pair(option, 'Lettuce yi mila better hi swiphemu leswitsongo.')
+              : questionIndex === 0 && optionIndex === 3 && option === 'It reduces pest pressure'
+                ? pair(option, 'Yi hunguta pest pressure.')
+                : questionIndex === 1 && optionIndex === 2 && option === 'Only when pumpkin leaves shade them'
+                  ? pair(option, 'Only loko matluka ya pumpkin ma endla ndzhuti eka them.')
+                  : questionIndex === 1 && optionIndex === 3 && option === 'It can never be released'
+                    ? pair(option, 'Yi nga never be released.')
+                    : hold(option)),
         sourceCorrectIndex: question.correct,
         rationale: questionIndex === 0
-          ? pair('A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.', 'A single large sowing matures all at once — ku byala hi ku landzelelana swi hangalasa harvest leswaku yi fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.')
+          ? pair('A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.', 'Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.')
           : hold(question.rationale),
       })),
     },

@@ -1087,9 +1087,9 @@ test('Vegetables opening frames retain exact source holds and reuse complete L1 
 test('Vegetables middle slides reuse whole source-matched lesson paragraphs and keep treatment safeguards intact', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
   const module = COURSE_MODULES.find(({ id }) => id === 'vegetables-staples')!;
-  const expectedHolds = new Set([
-    'ts:10:2',
-  ]);
+  // The final L2 coherence batch translates this complete row and the other
+  // accepted exact-source candidates; no complete source match remains held here.
+  const expectedHolds = new Set<string>();
   let sourceMatches = 0;
   let reusedDrafts = 0;
   const actualHolds = new Set<string>();
@@ -1137,7 +1137,7 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
 
   assert.equal(sourceMatches, 171, 'slides 7–16 contain 171 complete source-matched paragraphs across the three languages');
   assert.deepEqual(actualHolds, expectedHolds,
-    'the Indigenous farming example remains held; the accepted L4 draft now wraps ordinary treatment framing around exact held safety clauses, so only unrelated English holds remain');
+    'every complete source-matched learner paragraph in these middle slides now uses its current draft; technical English remains inside the exact learner composition where needed');
   assert.equal(reusedDrafts, sourceMatches - expectedHolds.size,
     'every other whole source-matched lesson paragraph uses its current learner draft in the deck');
 

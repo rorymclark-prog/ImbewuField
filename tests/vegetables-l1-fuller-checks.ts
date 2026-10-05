@@ -6,6 +6,8 @@ const read = (suffix: string) => JSON.parse(readFileSync(new URL(`../docs/study-
 const applied = read('APPLIED');
 const baseline = read('BASELINE');
 const l4Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L4-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
+const l2Applied = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-APPLIED.json', import.meta.url), 'utf8'));
+const l2Baseline = read('BASELINE');
 const keys = { st: 'sesothoDraft', ts: 'xitsongaDraft', ve: 'tshivendaDraft' };
 function pairAt(draft: any, field: string, lessonId = 'vegetables-staples-l1'): any {
   const parts = field.split('.');
@@ -27,6 +29,50 @@ export function vegetablesFullerTarget(language: Language, field: string): strin
 export function vegetablesBeforeFuller<T>(language: Language, actual: T): T {
   const reconstructed: any = structuredClone(actual);
   const key = keys[language];
+  // 5 October 2026: the final L2 batch was applied after the L1/L4 snapshots.
+  // Validate its exact targets, then invert only those source-bound fields before
+  // checking the older whole-module fixture.
+  for (const row of l2Applied.fields.filter((row: any) => row.language === language && row.language !== 'ts')) {
+    const pair = pairAt(reconstructed, row.fieldPath, row.lessonId);
+    const original = pairAt(l2Baseline.drafts[language], row.fieldPath, row.lessonId);
+    assert.equal(pair.reviewStatus, row.appliedReviewStatus,
+      `${language}/${row.fieldPath}: current final status is checked before reconstruction`);
+    assert.equal(original.reviewStatus, row.currentReviewStatus,
+      `${language}/${row.fieldPath}: frozen before-state status remains exact`);
+    if (row.fieldPath.startsWith('body.')) {
+      const index = Number(row.fieldPath.split('.')[2]);
+      const paragraphs = pair[key].split('\n\n');
+      const originalParagraphs = original[key].split('\n\n');
+      assert.equal(originalParagraphs[index], row.currentTarget,
+        `${language}/${row.fieldPath}: frozen before-state target remains exact`);
+      assert.equal(pair.sourceEnglish.split('\n\n')[index], row.sourceEnglish,
+        `${language}/${row.fieldPath}: current source remains exact before historical reconstruction`);
+      assert.equal(paragraphs[index], row.appliedTarget,
+        `${language}/${row.fieldPath}: final L2 target is checked before historical reconstruction`);
+      paragraphs[index] = row.currentTarget;
+      pair[key] = paragraphs.join('\n\n');
+    } else {
+      assert.equal(pair.sourceEnglish, row.sourceEnglish);
+      assert.equal(original[key], row.currentTarget,
+        `${language}/${row.fieldPath}: frozen before-state target remains exact`);
+      assert.equal(pair[key], row.appliedTarget,
+        `${language}/${row.fieldPath}: final L2 target is checked before historical reconstruction`);
+      pair[key] = row.currentTarget;
+    }
+    pair.reviewStatus = row.currentReviewStatus;
+  }
+  // The dedicated Xitsonga L2 registry is separate from the legacy module object
+  // used by these historical L1 snapshots; its exact state is checked in the L2 test.
+  for (const row of l2Applied.restoredToBaseline.filter((row: any) => row.language === language && row.language !== 'ts')) {
+    const pair = pairAt(reconstructed, row.fieldPath, row.lessonId);
+    const index = Number(row.fieldPath.split('.')[2]);
+    const paragraphs = pair[key].split('\n\n');
+    const frozen = pairAt(l2Baseline.drafts[language], row.fieldPath, row.lessonId);
+    assert.equal(paragraphs[index], row.restoredTarget,
+      `${language}/${row.fieldPath}: final reconciliation preserves the existing localized wording`);
+    assert.equal(frozen[key].split('\n\n')[index], row.restoredTarget,
+      `${language}/${row.fieldPath}: no false translation change is introduced`);
+  }
   for (const row of applied.fields.filter((row: any) => row.language === language)) {
     const pair = pairAt(reconstructed, row.fieldPath);
     const original = pairAt(baseline.drafts[language], row.fieldPath);
