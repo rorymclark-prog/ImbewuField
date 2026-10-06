@@ -66,6 +66,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-06 | [Soil ordinary prose follow-up — Codex](2026-10-06/study-soil-ordinary-completion-codex.md) |
 | 2026-10-06 | [Water ordinary prose and paired slides — Codex](2026-10-06/study-water-ordinary-completion-codex.md) |
 | 2026-10-06 | [Vegetables L3 ordinary assessment completion — Codex](2026-10-06/study-vegetables-l3-completion-codex.md) |
 | 2026-10-06 | [Water regional learner and slide precision — Codex](2026-10-06/study-water-reviewed-precision-codex.md) |

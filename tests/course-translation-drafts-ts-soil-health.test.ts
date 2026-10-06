@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
 import { historicalTS as XITSONGA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
-// Earlier clause checks retain their dated wording; the helper verifies live accepted text before rewinding it.
-import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
+// Rewind the root-approved 6 October units and the earlier fuller layer only after validating the live native overlay.
+import { resolveBeforeFullerSoilPresentation as resolveLearnerLessonPresentation } from './soil-ordinary-native-history-checks.ts';
 
 const sourceModule = COURSE_MODULES.find(module => module.id === 'soil-health')!;
 const sourceLesson = sourceModule.lessons.find(lesson => lesson.id === 'soil-health-l1')!;

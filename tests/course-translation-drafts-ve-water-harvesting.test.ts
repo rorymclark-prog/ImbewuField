@@ -5,10 +5,11 @@ import { createHash } from 'node:crypto';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
-// Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
+import { TSHIVENDA_SOIL_HEALTH_DRAFT as LIVE_TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
+// Preserve earlier Soil clause coverage only after the current approved overlay validates against its frozen source.
 import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_FOOD_FOREST_DRAFT } from '../lib/course-translation-drafts-ve-food-forest.ts';
-import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
+import { resolveBeforeFullerSoilPresentation as resolveLearnerLessonPresentation } from './soil-ordinary-native-history-checks.ts';
 import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
@@ -72,15 +73,15 @@ test('regional Study cards distinguish English module copy from available lesson
   assert.equal(regionalModuleDraftBadge(source('seeds-sovereignty'), 've'),
     'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 'ts'),
-    'English module · 3 lesson drafts available');
-  // 2026-10-05 phone QA found Market's checked card draft missing from the registry.
-  // Its registered card now carries the draft badge; Soil TS still exercises English fallback.
+    'AI draft · review pending');
+  // 2026-10-06 registered the source-paired Xitsonga Soil card as an unreviewed draft.
+  // 2026-10-05 phone QA also found Market's Tshivenda card draft missing from the registry.
   assert.equal(regionalModuleDraftBadge(source('market-community'), 've'),
     'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge(source('soil-health'), 've'),
     'Tshivenda AI draft · review pending');
   assert.equal(regionalModuleDraftBadge({ ...source('soil-health'), lessons: [] }, 'ts'),
-    'English module');
+    'AI draft · review pending', 'an exact-source module card remains visible even when its lesson list is empty');
 
   for (const language of ['st', 've', 'ts'] as const) {
     for (const module of COURSE_MODULES) {
@@ -675,13 +676,13 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }
   }
 
-  assert.equal(heldFields, 1, 'the module summary remains held; the three image descriptions now use exact-source machine drafts while compost diagnostics and the L3 purpose title keep their existing checks');
+  assert.equal(heldFields, 1, 'the historical snapshot has one summary hold; current card metadata is checked against the accepted live registry below');
 
   const modulePresentation = resolveCourseModulePresentation(source, 've');
   assert.equal(modulePresentation.status, 'draft', 'show the existing, visibly labelled Tshivenda module draft');
   assert.equal(modulePresentation.title, draft.title.tshivendaDraft);
-  assert.equal(modulePresentation.description, source.description,
-    'technical module summary stays exact English until its terms are checked');
+  assert.equal(modulePresentation.description, LIVE_TSHIVENDA_SOIL_HEALTH_DRAFT.description.tshivendaDraft,
+    'the live card shows the root-approved source-paired description while this dated lesson check retains its earlier summary hold');
   for (const [index, lesson] of source.lessons.entries()) {
     const presentation = resolveLearnerLessonPresentation(lesson, 've');
     const paired = draft.lessons[index];
@@ -703,8 +704,10 @@ test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft',
     }));
     assert.deepEqual(presentation.content.quiz, expectedQuiz,
       `${lesson.id}: show only the source-paired quiz drafts and keep the original answer mapping`);
-    assert.equal(presentation.content.infographicAlt, translated.get(`lessons[${index}].infographicAlt`) ?? lesson.infographicAlt,
-      `${lesson.id}: show only exact-source infographic drafts; unchanged descriptions remain English`);
+    assert.equal(presentation.content.infographicAlt,
+      LIVE_TSHIVENDA_SOIL_HEALTH_DRAFT.lessons[index].infographicAlt?.tshivendaDraft ??
+        translated.get(`lessons[${index}].infographicAlt`) ?? lesson.infographicAlt,
+      `${lesson.id}: show the live source-paired infographic draft while retaining historical lesson expectations`);
 
     assert.equal(resolveLearnerLessonPresentation({ ...lesson, title: `${lesson.title} changed` }, 've').status,
       'english-fallback', `${lesson.id}: changed source withdraws the whole paired draft`);

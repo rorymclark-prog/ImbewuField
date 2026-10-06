@@ -75,13 +75,19 @@ test('Soil and Market alt text keeps the pictured counts, order and direction', 
   }
   const soilL2St = alt('soil-health', 'soil-health-l2', 'st');
   const soilL2Ve = alt('soil-health', 'soil-health-l2', 've');
-  for (const text of [soilL2St, soilL2Ve]) {
+  assert.match(soilL2St, /cut open.*bokahare bo bonahale/i, 'st: show the heap cut open with its inside visible');
+  assert.match(soilL2St, /layers tse fapanyetsanang/i, 'st: describe alternating compost layers');
+  assert.match(soilL2St, /dintho tse ommeng tse sootho/i, 'st: preserve the dry brown material category');
+  assert.match(soilL2St, /dintho tse foreshe tse tala/i, 'st: preserve the fresh green material category');
+  assert.match(soilL2St, /Mocheso o nyoloha ho tswa bohareng/i, 'st: show heat rising from the middle');
+  assert.match(soilL2St, /motsu o bontsha hore qubu e a phetholwa/i, 'st: the arrow shows the heap being turned');
+  for (const text of [soilL2Ve]) {
     assert.match(text, /alternating layers/);
     assert.match(text, /dry brown material/);
     assert.match(text, /fresh green material/);
     assert.match(text, /heat/i);
     assert.match(text, /arrow/);
-    assert.match(text, /turned/);
+    assert.match(text, /arrow i sumbedza uri heap i a rembuluswa/i);
   }
   for (const lang of ['st', 've'] as const) {
     const soilL3 = alt('soil-health', 'soil-health-l3', lang);
@@ -90,8 +96,9 @@ test('Soil and Market alt text keeps the pictured counts, order and direction', 
       assert.match(soilL3, /petsohile mme o omme/);
       assert.match(soilL3, /le lefifi ebile o le mongobo/);
     } else {
-      assert.match(soilL3, /cracked and dry/);
-      assert.match(soilL3, /dark.*moisture/);
+      assert.match(soilL3, /mavu a songo fukedzwaho o pwashekanaho nahone o oma/i, 've: the bare patch remains cracked and dry');
+      assert.match(soilL3, /mavu o funedzwaho nga mulch a kha ḓi vha na muvhala wa swiswi nahone a tshe na vhunyunyu/i,
+        've: the mulched patch remains dark and moist');
     }
   }
   for (const lang of ['ve', 'ts'] as const) {

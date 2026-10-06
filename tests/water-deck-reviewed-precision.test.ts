@@ -9,6 +9,7 @@ import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
 import { waterDeckBeforeOrdinary, waterMediaBeforeOrdinary, waterAssetSizesBeforeOrdinary } from './water-reviewed-deck-history-checks.ts';
 import { waterNativeBeforeOrdinary } from './water-reviewed-precision-checks.ts';
+import { soilMediaBeforeOrdinary } from './soil-reviewed-ordinary-history-checks.ts';
 const proof = JSON.parse(readFileSync('docs/study-translation-reviews/WATER-DECK-REVIEWED-PRECISION-2026-10-05.json', 'utf8'));
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 const drafts = { st: SESOTHO_WATER_HARVESTING_DRAFT, ve: TSHIVENDA_WATER_HARVESTING_DRAFT, ts: XITSONGA_WATER_HARVESTING_DRAFT };
@@ -55,7 +56,14 @@ test('only selected Water frames change while other stills, narration and films 
     assert.equal(view.sha256, row.sha256); assert.notEqual(row.sha256, row.baselineSha256);
     assert.equal(view.byteLength, row.bytes); assert.equal(bytes.toString('ascii', 0, 4), 'RIFF'); assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
-  for (const row of media.preserved) assert.equal(waterMediaBeforeOrdinary(row.path).sha256, row.sha256, row.path);
+  for (const row of media.preserved) {
+    // Six later reviewed Soil redraws supersede this historical Water preservation snapshot.
+    // Validate all current Soil bytes first, then expose only their recorded earlier hashes.
+    const historical = row.path.startsWith('public/course-decks/soil-health/')
+      ? soilMediaBeforeOrdinary(row.path)
+      : waterMediaBeforeOrdinary(row.path);
+    assert.equal(historical.sha256, row.sha256, row.path);
+  }
   let sizes = waterAssetSizesBeforeOrdinary(media.assetSizeManifest.path);
   for (const row of media.assetSizeManifest.selectedEntries) {
     const current = `'${row.url}': ${row.currentSize}`;

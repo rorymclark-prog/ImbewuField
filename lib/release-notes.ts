@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '7d87fca1', changes: [
+    'Soil lessons and six silent slides add checked regional wording beside English.',
+    'The Xitsonga Soil card now shows its unreviewed title and summary draft.',
+  ], tour: [
+    { title: 'Compare Soil drafts',
+      where: 'Study → Soil Health',
+      detail: 'Read draft lessons, answer feedback and silent slides beside English.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '76769f1a', changes: [
     'Water lessons add regional prose and answer drafts beside exact English.',
     'Updated silent Water slides keep technical terms and safety conditions clear.',

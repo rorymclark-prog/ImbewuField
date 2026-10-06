@@ -1,0 +1,645 @@
+{
+  "title": "Read-only ST Soil ordinary completion candidate progress",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "baseSHA": "66b274842927ba93e47586c322325742716d2a39",
+  "sourceInventory": {
+    "path": "/tmp/imbewu-soil-ordinary-completion-source-inventory-20261006.json",
+    "sha256": "4af2a58358304dd93ba69c9def7260c45ea73e9be337b55bf88490d01526f49b"
+  },
+  "nativeBindings": [
+    {
+      "path": "lib/course-modules.ts",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "matchesBase66b27484": true
+    },
+    {
+      "path": "lib/course-module-translation-drafts.ts",
+      "sha256": "4905e70c5dbae62a617f25ad0a1ca9f4c98ba14c323e5cc6e481345eeb6ca481",
+      "matchesBase66b27484": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "matchesBase66b27484": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-soil-health.ts",
+      "sha256": "218e7e6f59b037479cede9451558cb607dc1413e2d3476c68f90f56fc26cccea",
+      "matchesBase66b27484": true
+    }
+  ],
+  "prior955AcceptedPacket": {
+    "path": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField/docs/study-translation-reviews/soil-learner-fuller-2026-10-05/soil-learner-final-accepted-candidates.json",
+    "sha256": "38d5cc52ba57f5e1b7da2461010af86ddfb9697a76963ec23d64e78580867016",
+    "all255CurrentTargetsStillExact": true
+  },
+  "prior955PrecisionProtections": [
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l1/body/paragraph[7]",
+      "currentSourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+      "priorReason": "Exact layers category restored; tse lutseng fatshe explicitly points to layers that have settled. Field/tactile action preserved.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l1/body/paragraph[11]",
+      "currentSourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "currentTarget": "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "priorReason": "Exact drainage term replaces flowing water. Three checks and BEFORE choosing remedy remain; no prescription or diagnosis added.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l1/quiz[1].rationale",
+      "currentSourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+      "currentTarget": "Ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa bothata.",
+      "priorReason": "Removes added tests and clarifies final cause reference to bothata/problem, rather than worms. Several/few-alone and does-not-establish conditions survive.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l2/keyPoints[2]",
+      "currentSourceEnglish": "Keep seed pods and contaminated materials out",
+      "currentTarget": "Boloka seed pods le contaminated materials kantle.",
+      "priorReason": "Exact seed pods and contaminated materials categories replace imprecise husks/dirty-material terms. Both categories and exclusion remain.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l3/keyPoints[1]",
+      "currentSourceEnglish": "Keep mulch away from trunks and stems",
+      "currentTarget": "Boloka mulch hole le trunks le stems.",
+      "priorReason": "Exact anatomical labels restore stems, replacing branches. Away-from relationship preserved.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/st/soil-health-l3/quiz[0].options[0]",
+      "currentSourceEnglish": "Overheating in winter sun and waterlogging from rain",
+      "currentTarget": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le waterlogging ho tswa puleng",
+      "priorReason": "Exact waterlogging replaces asking-for-water drift. Winter sun, rain cause and AND retained. This remains an incorrect distractor.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[7]",
+      "currentSourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Vhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.",
+      "priorReason": "Exact layers category replaces portions; dze dza dzula fhasi encodes the completed settled relation. No jar diagnostic claim added.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ve/soil-health-l1/quiz[1].options[1]",
+      "currentSourceEnglish": "Add a treatment without checking the site",
+      "currentTarget": "Engedzani treatment ni songo ṱola fhethu.",
+      "priorReason": "ni songo ṱola makes absence of checking explicit; removes before-checking ambiguity. Preserved as incorrect distractor. Site/place ordinary noun drafted; treatment anchor retained.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ve/soil-health-l2/quiz[0].options[1]",
+      "currentSourceEnglish": "Add more dry carbon material like straw and turn the heap",
+      "currentTarget": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+      "priorReason": "yo engedzeaho restores more/additional quantity, dry carbon material and straw exact. Turning refers to the heap in the question context; no number or new timing.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ve/soil-health-l3/quiz[1].options[1]",
+      "currentSourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+      "currentTarget": "I nga vha na harmful organisms kana zwithu zwi re na khombo; dilution a si safety guarantee",
+      "priorReason": "Harmful qualifier now explicit for second OR category, while can and dilution non-guarantee remain. zwithu zwi re na khombo means dangerous things; substance terminology receives no fluent approval.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[7]",
+      "currentSourceEnglish": "Compare the settled layers and feel the soil in the field.",
+      "currentTarget": "Fananisa settled layers, kutani u twa misava ensin'wini.",
+      "priorReason": "Use exact settled layers anchor for completed state. Candidate tshamaka describes settling generally; source already-settled category must remain explicit.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ts/soil-health-l1/quiz[1].question",
+      "currentSourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+      "currentTarget": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi rihi goza leri landzelaka leri nga pfunaka?",
+      "priorReason": "goza replaces Sesotho mohato in the Xitsonga question. The farmer/few worms/compacted and useful next-step framing remain; no action recommendation added.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ts/soil-health-l3/body/paragraph[8]",
+      "currentSourceEnglish": "Leachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.",
+      "currentTarget": "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.",
+      "priorReason": "Both independent prohibitions now explicitly negative. Harmful substances qualifier, leachate/edible/dilution technical concepts, can rather than guarantee retained.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "prior-14-independent-repair",
+      "id": "soil-health/ts/soil-health-l3/quiz[1].options[1]",
+      "currentSourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+      "currentTarget": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+      "priorReason": "Both categories explicitly harmful. May/can and dilution NOT safety guarantee remain. No safe dilution or nutrient claim added.",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "final-decomposition-or-SA-spelling-repair",
+      "id": "soil-health/st/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+      "exactEnglishHoldOrSpelling": "break down",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "final-decomposition-or-SA-spelling-repair",
+      "id": "soil-health/st/soil-health-l2/body/paragraph[0]",
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.",
+      "currentTarget": "Compost ke organic matter e broken down ka tsela e laolwang.",
+      "exactEnglishHoldOrSpelling": "broken down",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "final-decomposition-or-SA-spelling-repair",
+      "id": "soil-health/ve/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+      "exactEnglishHoldOrSpelling": "break down",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "final-decomposition-or-SA-spelling-repair",
+      "id": "soil-health/ts/soil-health-l1/body/paragraph[0]",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+      "currentTarget": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.",
+      "exactEnglishHoldOrSpelling": "break down",
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    },
+    {
+      "kind": "final-decomposition-or-SA-spelling-repair",
+      "id": "soil-health/st/soil-health-l3/body/paragraph[7]",
+      "sourceEnglish": "Liquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.",
+      "currentTarget": "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+      "exactEnglishHoldOrSpelling": null,
+      "exactAcceptedTargetStillPresent": true,
+      "doNotDuplicateRepair": true
+    }
+  ],
+  "inventoryChecks": {
+    "allRelevantFilesEqualBase66b27484": true,
+    "allNativeSourceAndResolverBindingsExact": true,
+    "all254ScreenedRunsCurrentBoundExact": true,
+    "all255PriorAcceptedTargetsExact": true,
+    "all14ReviewedRepairTuplesStillExact": true,
+    "all5FinalPrecisionSpellingRepairsStillExact": true,
+    "noDuplicate955RepairProposals": true,
+    "noTranslationsDrafted": true,
+    "noRenderMediaAudioSWChange": true
+  },
+  "scope": {
+    "language": "st",
+    "inventoryOrdinaryGapUnits": 9,
+    "changedUnits": 3,
+    "changedTargetsPendingIndependentAndRootReview": true,
+    "allThreeBodyCompositionsIncluded": true
+  },
+  "units": [
+    {
+      "unitId": "soil-health::soil-health-l1::st::infographicAlt",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "infographicAlt",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+      "currentTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+      "proposedTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, mobu o ka nkhong o lula ka mekhahlelo e meraro — sand, silt le clay.",
+      "changed": true,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "dark topsoil",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the visible jar action and settling into layers. Keep Soil cross-section, dark topsoil, pale subsoil, sand, silt and clay exact because their soil-category and color precision has not been independently verified in Sesotho."
+        },
+        {
+          "literalEnglish": "pale subsoil",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the visible jar action and settling into layers. Keep Soil cross-section, dark topsoil, pale subsoil, sand, silt and clay exact because their soil-category and color precision has not been independently verified in Sesotho."
+        },
+        {
+          "literalEnglish": "a jar",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the visible jar action and settling into layers. Keep Soil cross-section, dark topsoil, pale subsoil, sand, silt and clay exact because their soil-category and color precision has not been independently verified in Sesotho."
+        },
+        {
+          "literalEnglish": "settles into three layers — sand, silt",
+          "classification": "ordinary-English-prose-reviewable",
+          "sourceClauseContext": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "inventoryReason": "This is source-matched ordinary action, description, relationship, comparison or qualifier. Technical nouns/proper names can be retained inside a defensible full-clause draft; no candidate is approved here.",
+          "candidateReason": "Translate the visible jar action and settling into layers. Keep Soil cross-section, dark topsoil, pale subsoil, sand, silt and clay exact because their soil-category and color precision has not been independently verified in Sesotho."
+        }
+      ],
+      "literalEnglishReason": "Translate the visible jar action and settling into layers. Keep Soil cross-section, dark topsoil, pale subsoil, sand, silt and clay exact because their soil-category and color precision has not been independently verified in Sesotho.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::st::body::paragraph[6]",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 6,
+      "sourceEnglish": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+      "currentTarget": "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+      "proposedTarget": "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "cloudy water",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: does not yet tell you, may still, and the translated uncertainty are already present; cloudy water, sand, final proportions, fine particles and suspended remain measurement-process anchors."
+        },
+        {
+          "literalEnglish": "final proportions",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: does not yet tell you, may still, and the translated uncertainty are already present; cloudy water, sand, final proportions, fine particles and suspended remain measurement-process anchors."
+        },
+        {
+          "literalEnglish": "fine particles",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: does not yet tell you, may still, and the translated uncertainty are already present; cloudy water, sand, final proportions, fine particles and suspended remain measurement-process anchors."
+        }
+      ],
+      "literalEnglishReason": "No change: does not yet tell you, may still, and the translated uncertainty are already present; cloudy water, sand, final proportions, fine particles and suspended remain measurement-process anchors.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::st::quiz[0].question",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+      "currentTarget": "Nkho ya mobu e sa ntse e na le cloudy water ka hodima lera la sand. Molemi o lokela ho fihlela qeto efe?",
+      "proposedTarget": "Nkho ya mobu e sa ntse e na le cloudy water ka hodima lera la sand. Molemi o lokela ho fihlela qeto efe?",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "cloudy water",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: the farmer question is already localized; cloudy water is the observed soil-jar condition and remains English pending reviewed terminology."
+        }
+      ],
+      "literalEnglishReason": "No change: the farmer question is already localized; cloudy water is the observed soil-jar condition and remains English pending reviewed terminology.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::st::quiz[0].options[1]",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+      "currentTarget": "Fine particles di ka nna tsa sala di suspended; ho hlokahala ho sheba ho eketsehileng",
+      "proposedTarget": "Fine particles di ka nna tsa sala di suspended; ho hlokahala ho sheba ho eketsehileng",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "Fine particles",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "Fine particles may still be suspended; more observation is needed",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: may still be suspended and more observation is already localized; fine particles and suspended stay as technical anchors."
+        }
+      ],
+      "literalEnglishReason": "No change: may still be suspended and more observation is already localized; fine particles and suspended stay as technical anchors.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l1::st::quiz[0].rationale",
+      "lessonId": "soil-health-l1",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+      "currentTarget": "Cloudy water e ka ba le fine particles tse eso dule fatshe. Ho sheba hang feela qalong ho ke ke ha bontsha final proportions kapa treatment e loketseng.",
+      "proposedTarget": "Cloudy water e ka ba le fine particles tse eso dule fatshe. Ho sheba hang feela qalong ho ke ke ha bontsha final proportions kapa treatment e loketseng.",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "Cloudy water",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: can, one early observation cannot, final proportions and the right treatment are already expressed with their uncertainty; retain cloudy water, fine particles, final proportions and treatment as technical terms."
+        },
+        {
+          "literalEnglish": "fine particles",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: can, one early observation cannot, final proportions and the right treatment are already expressed with their uncertainty; retain cloudy water, fine particles, final proportions and treatment as technical terms."
+        },
+        {
+          "literalEnglish": "final proportions",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: can, one early observation cannot, final proportions and the right treatment are already expressed with their uncertainty; retain cloudy water, fine particles, final proportions and treatment as technical terms."
+        }
+      ],
+      "literalEnglishReason": "No change: can, one early observation cannot, final proportions and the right treatment are already expressed with their uncertainty; retain cloudy water, fine particles, final proportions and treatment as technical terms.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l2::st::infographicAlt",
+      "lessonId": "soil-health-l2",
+      "fieldPath": "infographicAlt",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+      "currentTarget": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+      "proposedTarget": "Heap ya compost e bontshwa e butswe hore bokahare bo bonahale. E bontsha mekhahlelo e fapanyetsanang ya dintho tse ommeng tse sootho le dintho tse foreshe tse tala. Mocheso o nyoloha ho tswa bohareng; motsu o bontsha hore qubu e a phetholwa.",
+      "changed": true,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "cut open",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        },
+        {
+          "literalEnglish": "alternating layers",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        },
+        {
+          "literalEnglish": "dry brown material",
+          "classification": "ordinary-English-prose-reviewable",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "This is source-matched ordinary action, description, relationship, comparison or qualifier. Technical nouns/proper names can be retained inside a defensible full-clause draft; no candidate is approved here.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        },
+        {
+          "literalEnglish": "fresh green material, heat",
+          "classification": "ordinary-English-prose-reviewable",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "This is source-matched ordinary action, description, relationship, comparison or qualifier. Technical nouns/proper names can be retained inside a defensible full-clause draft; no candidate is approved here.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        },
+        {
+          "literalEnglish": "an arrow",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        },
+        {
+          "literalEnglish": "it being turned",
+          "classification": "ordinary-English-prose-reviewable",
+          "sourceClauseContext": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "inventoryReason": "This is source-matched ordinary action, description, relationship, comparison or qualifier. Technical nouns/proper names can be retained inside a defensible full-clause draft; no candidate is approved here.",
+          "candidateReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen."
+        }
+      ],
+      "literalEnglishReason": "Translate the illustrated cut-open relation, alternating structure, dry/brown versus fresh/green description, rising heat and turning arrow. Preserve compost as the technical noun; fresh is not expanded into wet or green nitrogen.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::st::body::paragraph[2]",
+      "lessonId": "soil-health-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+      "currentTarget": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+      "proposedTarget": "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "trunks and stems",
+          "classification": "difficult-technical-anchor-allowed",
+          "sourceClauseContext": "Keep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.",
+          "inventoryReason": "A bounded technical noun/process term can remain English. This classification does not make a longer English sentence technical.",
+          "candidateReason": "No change: away-from-trunks/stems, checking moisture underneath, adjusting the layer and more mulch is not always better are already localized. Retain trunks and stems as exact plant anatomy terms."
+        }
+      ],
+      "literalEnglishReason": "No change: away-from-trunks/stems, checking moisture underneath, adjusting the layer and more mulch is not always better are already localized. Retain trunks and stems as exact plant anatomy terms.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::st::body::paragraph[12]",
+      "lessonId": "soil-health-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 12,
+      "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "proposedTarget": "Dijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "changed": true,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "Cover crops, mulch",
+          "classification": "ordinary-English-prose-reviewable",
+          "sourceClauseContext": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+          "inventoryReason": "This is source-matched ordinary action, description, relationship, comparison or qualifier. Technical nouns/proper names can be retained inside a defensible full-clause draft; no candidate is approved here.",
+          "candidateReason": "Reuse the current module-description translation for cover crops with its English label retained; preserve mulch and organic matter technical terms and the source’s can/help force."
+        }
+      ],
+      "literalEnglishReason": "Reuse the current module-description translation for cover crops with its English label retained; preserve mulch and organic matter technical terms and the source’s can/help force.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    },
+    {
+      "unitId": "soil-health::soil-health-l3::st::quiz[0].options[2]",
+      "lessonId": "soil-health-l3",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+      "currentTarget": "Wind erosion ya topsoil e ommeng le tahlehelo ya soil structure ka lebaka la tshusumetso ya spring storm.",
+      "proposedTarget": "Wind erosion ya topsoil e ommeng le tahlehelo ya soil structure ka lebaka la tshusumetso ya spring storm.",
+      "changed": false,
+      "ordinaryEnglishRuns": [
+        {
+          "literalEnglish": "spring storm",
+          "classification": "short-ordinary-or-precision-fragment-needs-context",
+          "sourceClauseContext": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "inventoryReason": "Two source tokens alone cannot establish a full ordinary clause. Keep context and source bounds; do not prioritize noun-only pseudo-translations.",
+          "candidateReason": "No change: wind erosion, dry topsoil and soil structure are technical anchors; spring storm is retained to avoid changing its seasonal/climate meaning."
+        }
+      ],
+      "literalEnglishReason": "No change: wind erosion, dry topsoil and soil structure are technical anchors; spring storm is retained to avoid changing its seasonal/climate meaning.",
+      "reviewStatus": "unreviewed-machine-draft",
+      "fluentApproval": false
+    }
+  ],
+  "completeBodyCompositions": [
+    {
+      "lessonId": "soil-health-l1",
+      "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+      "currentTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.\n\nFungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.\n\nSheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.\n\nKenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.\n\nSand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.\n\nEna ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.\n\nLera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.\n\nBapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.\n\nNgola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.\n\nHo thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.\n\nMmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.\n\nBatla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "proposedTarget": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.\n\nFungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.\n\nSheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.\n\nKenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.\n\nSand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.\n\nEna ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.\n\nLera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.\n\nBapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.\n\nNgola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.\n\nHo thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.\n\nMmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.\n\nBatla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+      "sourceParagraphCount": 12,
+      "currentParagraphs": [
+        "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+        "Fungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.",
+        "Sheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.",
+        "Kenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+        "Sand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.",
+        "Ena ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+        "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+        "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+        "Ngola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.",
+        "Ho thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.",
+        "Mmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.",
+        "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo."
+      ],
+      "proposedParagraphs": [
+        "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.",
+        "Fungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.",
+        "Sheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.",
+        "Kenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.",
+        "Sand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.",
+        "Ena ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.",
+        "Lera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.",
+        "Bapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.",
+        "Ngola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.",
+        "Ho thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.",
+        "Mmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.",
+        "Batla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo."
+      ],
+      "changedParagraphIndexes": [],
+      "changed": false,
+      "reviewStatus": "unreviewed-machine-draft"
+    },
+    {
+      "lessonId": "soil-health-l2",
+      "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+      "currentTarget": "Compost ke organic matter e broken down ka tsela e laolwang.\n\nCompost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.\n\nNako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.\n\nKopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.\n\nHa qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.\n\nHlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.\n\nKarolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.\n\nBoloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.\n\nU se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.\n\nBoloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.\n\nSebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.\n\nHlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+      "proposedTarget": "Compost ke organic matter e broken down ka tsela e laolwang.\n\nCompost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.\n\nNako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.\n\nKopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.\n\nHa qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.\n\nHlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.\n\nKarolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.\n\nBoloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.\n\nU se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.\n\nBoloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.\n\nSebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.\n\nHlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+      "sourceParagraphCount": 12,
+      "currentParagraphs": [
+        "Compost ke organic matter e broken down ka tsela e laolwang.",
+        "Compost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.",
+        "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.",
+        "Kopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.",
+        "Ha qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.",
+        "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.",
+        "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.",
+        "Boloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "U se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.",
+        "Boloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.",
+        "Sebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "Hlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged."
+      ],
+      "proposedParagraphs": [
+        "Compost ke organic matter e broken down ka tsela e laolwang.",
+        "Compost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.",
+        "Nako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.",
+        "Kopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.",
+        "Ha qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.",
+        "Hlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.",
+        "Karolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.",
+        "Boloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.",
+        "U se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.",
+        "Boloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.",
+        "Sebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.",
+        "Hlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged."
+      ],
+      "changedParagraphIndexes": [],
+      "changed": false,
+      "reviewStatus": "unreviewed-machine-draft"
+    },
+    {
+      "lessonId": "soil-health-l3",
+      "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+      "currentTarget": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.\n\nMulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.\n\nE boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.\n\nCover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.\n\nMehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.\n\nLegumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.\n\nWorm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.\n\nMokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.\n\nLeachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.\n\nTšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.\n\nMoea oa mariha o ka nka mobu o ommeng o ka holimo.\n\nSefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.\n\nCover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "proposedTarget": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.\n\nMulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.\n\nE boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.\n\nCover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.\n\nMehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.\n\nLegumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.\n\nWorm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.\n\nMokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.\n\nLeachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.\n\nTšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.\n\nMoea oa mariha o ka nka mobu o ommeng o ka holimo.\n\nSefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.\n\nDijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+      "sourceParagraphCount": 13,
+      "currentParagraphs": [
+        "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.",
+        "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.",
+        "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+        "Cover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.",
+        "Mehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.",
+        "Legumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.",
+        "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "Leachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+        "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+        "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+        "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela."
+      ],
+      "proposedParagraphs": [
+        "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.",
+        "Mulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.",
+        "E boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.",
+        "Cover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.",
+        "Mehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.",
+        "Legumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.",
+        "Worm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.",
+        "Mokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.",
+        "Leachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.",
+        "Tšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.",
+        "Moea oa mariha o ka nka mobu o ommeng o ka holimo.",
+        "Sefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.",
+        "Dijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela."
+      ],
+      "changedParagraphIndexes": [
+        12
+      ],
+      "changed": true,
+      "reviewStatus": "unreviewed-machine-draft"
+    }
+  ],
+  "protectedClaims": [
+    "Jar method remains a rough learning exercise; unsettled clay and clumps can mislead.",
+    "Soil laboratory remains the action when accurate texture is needed.",
+    "Cloudy water does not yet show final proportions; fine particles may remain suspended.",
+    "No new treatment, watering, compost guarantee, amount, timing, species or other claim is added.",
+    "All 255 prior accepted learner targets, 14 independent repairs and five final decomposition/spelling repairs remain exact."
+  ],
+  "limits": [
+    "Candidate wording is an unreviewed machine draft; no fluent Sesotho or local farming approval is claimed.",
+    "Technical soil-category, compost-process and texture terms remain English where a localized equivalent is uncertain.",
+    "This is draft progress pending independent meaning review and root review."
+  ]
+}

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { soilAssetSizesBeforeOrdinary, soilMediaSHAForEarlierProof } from './soil-reviewed-ordinary-history-checks.ts';
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/WATER-DECK-REVIEWED-PRECISION-2026-10-05.json', import.meta.url), 'utf8'));
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 // 2026-10-06: root accepted 35 ST/VE and then 19 TS exact-paragraph reuses after PR957.
@@ -76,8 +77,10 @@ function checkOrdinaryMedia() {
     assert.equal(row.sourceDraftBinding.slide, row.slide);
   }
   const sizes = readFileSync(ordinaryMedia.integrity.manifestPath, 'utf8');
-  assert.equal(sha(sizes), ordinaryMedia.integrity.manifestAfterSHA256);
-  assert.equal(sha(rewindOrdinaryManifest(sizes)), ordinaryMedia.integrity.manifestBeforeSHA256,
+  const beforeSoil = soilAssetSizesBeforeOrdinary(sizes);
+  assert.equal(sha(beforeSoil), ordinaryMedia.integrity.manifestAfterSHA256,
+    'after validating the later Soil batch, rewinding only its six entries restores the reviewed Water manifest');
+  assert.equal(sha(rewindOrdinaryManifest(beforeSoil)), ordinaryMedia.integrity.manifestBeforeSHA256,
     'rewinding only 27 actual manifest entries preserves every unlisted byte');
   checkedOrdinaryMedia = true;
 }
@@ -103,13 +106,21 @@ export function waterMediaBeforeOrdinary(path: string) {
 export function waterAssetSizesBeforeOrdinary(path: string) {
   checkOrdinaryMedia();
   assert.equal(path, ordinaryMedia.integrity.manifestPath);
-  return rewindOrdinaryManifest(readFileSync(path, 'utf8'));
+  const beforeSoil = soilAssetSizesBeforeOrdinary(readFileSync(path, 'utf8'));
+  return rewindOrdinaryManifest(beforeSoil);
 }
 const media = JSON.parse(readFileSync(new URL('../docs/media/water-reviewed-precision-2026-10-05/frames.json', import.meta.url), 'utf8'));
 export function mediaSHAForEarlierSoilProof(path: string) {
+  const beforeSoil = soilMediaSHAForEarlierProof(path);
+  const soilRow = assetsForSoil().find((row: any) => 'public' + row.url === path);
+  if (soilRow) return beforeSoil;
   const changed = media.changed.find((r: any) => r.path === path);
   const current = waterMediaBeforeOrdinary(path).sha256;
   if (!changed) return current;
   assert.equal(current, changed.sha256, 'new Water image must match its applied proof before reconstructing the earlier Soil media snapshot');
   return changed.baselineSha256;
+}
+
+function assetsForSoil() {
+  return JSON.parse(readFileSync('docs/study-translation-reviews/soil-ordinary-deck-2026-10-06/asset-proof.json', 'utf8'));
 }

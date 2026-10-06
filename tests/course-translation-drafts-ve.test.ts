@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, type QuizQuestion } from '../lib/course-modules.ts';
-import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
+import { resolveBeforeFullerSoilPresentation as resolveLearnerLessonPresentation } from './soil-ordinary-native-history-checks.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
 // Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
 import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
