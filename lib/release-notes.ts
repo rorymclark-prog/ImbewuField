@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: 'd5e3e92e', changes: [
+    'Tshivenda and Xitsonga Introduction lessons add draft prose beside English.',
+    '36 silent Introduction slides show fuller draft wording and exact English.',
+  ], tour: [
+    { title: 'Compare Introduction drafts',
+      where: 'Study → Introduction',
+      detail: 'Read unreviewed Tshivenda or Xitsonga drafts beside exact English.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: 'f5108aa1', changes: [
     'Vegetables Lesson 1 adds regional drafts beside exact English.',
     'Five silent Vegetables slides show fuller draft wording.',
