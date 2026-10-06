@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '76769f1a', changes: [
+    'Water lessons add regional prose and answer drafts beside exact English.',
+    'Updated silent Water slides keep technical terms and safety conditions clear.',
+  ], tour: [
+    { title: 'Compare Water drafts',
+      where: 'Study → Water Harvesting',
+      detail: 'Read draft lessons, answer feedback and silent slides beside English.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '9b345bb4', changes: [
     'Regional staple crop lessons add unreviewed key points and answer drafts.',
     'Exact English stays beside drafts; uncertain crop and seed terms remain precise.',
