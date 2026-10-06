@@ -1,0 +1,53 @@
+{
+  "status": "Unpublished. Original typecheck/fullsuite/diff pass. PR970 prerequisite actual phone/offline review resumed serially.",
+  "base": "c573f4e9d15f78223ab6d1789107fb544340e6e8",
+  "branch": "codex/regional-held-ordinary-completion-20261007",
+  "fields": 109,
+  "frames": 69,
+  "typecheck": "pass",
+  "focused": {
+    "pass": 10,
+    "fail": 0
+  },
+  "full": {
+    "total": 4809,
+    "pass": 4808,
+    "fail": 0,
+    "todo": 1,
+    "log": "/tmp/imbewu-held-ordinary-full-tests-20261007-r7.log",
+    "status": "terminal; exit0"
+  },
+  "log": "/tmp/imbewu-held-ordinary-full-tests-20261007-r2.log",
+  "ramPolicy": "One major job at a time; no helper agents or browser alongside tests/rendering.",
+  "claude971": {
+    "main": "95cf8a566a1a546c08eeef58d155e1047125100b",
+    "testRun": 37538662213,
+    "deployRun": 37538662256,
+    "test": "success",
+    "rules": "success",
+    "deploy": "success",
+    "productionBuildInfo": "95cf8a5"
+  },
+  "focusedSilentMedia": {
+    "pass": 19,
+    "fail": 0
+  },
+  "liveSuite": {
+    "status": "none; r7 completed"
+  },
+  "previousRun": {
+    "r3": "Stopped own npm suite tree after confirming avoidable repeated reads in history guard; incomplete, no pass claim.",
+    "repair": "Digest descriptors cached only while inode/size/mtime/ctime match; mutation tests retained. Unchanged paths no longer reread just to discover absence from the69-card layer."
+  },
+  "focusedLast": {
+    "pass": 12,
+    "fail": 0,
+    "log": "/tmp/imbewu-held-ordinary-last-focused-20261007.log"
+  },
+  "focusedFinalThree": {
+    "pass": 3,
+    "fail": 0,
+    "log": "/tmp/imbewu-held-ordinary-final-three-focused-20261007.log",
+    "durationMs": 285896.7
+  }
+}

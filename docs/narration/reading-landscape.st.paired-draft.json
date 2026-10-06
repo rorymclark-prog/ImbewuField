@@ -85,10 +85,11 @@
               },
               {
                 "sourceEnglish": "hollows.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mekoting e tlase."
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -174,7 +175,8 @@
               },
               {
                 "sourceEnglish": "ponds",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "matamo"
               },
               {
                 "sourceEnglish": ", and ",
@@ -183,7 +185,8 @@
               },
               {
                 "sourceEnglish": "where water leaves your property",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "moo metsi a tswang teng setsheng sa hao"
               },
               {
                 "sourceEnglish": ".",
@@ -191,7 +194,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -226,7 +229,8 @@
               },
               {
                 "sourceEnglish": " moving downhill.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " e theohelang tlase."
               },
               {
                 "sourceEnglish": " Follow where it ",
@@ -245,7 +249,8 @@
               },
               {
                 "sourceEnglish": "sinks",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "kenella mobung"
               },
               {
                 "sourceEnglish": ", gathers, and leaves the land.",
@@ -253,7 +258,7 @@
                 "text": ", bokellanang, le moo e tlohang land."
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -300,7 +305,8 @@
               },
               {
                 "sourceEnglish": "points at the same height.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "dintlha tse bophahamo bo lekanang."
               },
               {
                 "sourceEnglish": " Join ",
@@ -309,14 +315,16 @@
               },
               {
                 "sourceEnglish": "these points",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "dintlha tsena"
               },
               {
                 "sourceEnglish": " to trace a contour line.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " ho latela contour line."
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -333,7 +341,8 @@
               },
               {
                 "sourceEnglish": "mark points at the same height and trace a contour line",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line"
               },
               {
                 "sourceEnglish": ". ",
@@ -360,7 +369,8 @@
               },
               {
                 "sourceEnglish": "slope",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "moepa"
               },
               {
                 "sourceEnglish": ", ",
@@ -369,7 +379,8 @@
               },
               {
                 "sourceEnglish": "drainage",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ho ntsha metsi mobung"
               },
               {
                 "sourceEnglish": ", ",
@@ -378,7 +389,8 @@
               },
               {
                 "sourceEnglish": "storm flow",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "phallo ya metsi a sefefo (storm flow)"
               },
               {
                 "sourceEnglish": ", and a ",
@@ -387,7 +399,8 @@
               },
               {
                 "sourceEnglish": "safe overflow route",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "tsela e sireletsehileng ya ho ntsha metsi a mangata"
               },
               {
                 "sourceEnglish": " all matter. Ask a trained local adviser.",
@@ -395,7 +408,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -427,7 +440,8 @@
               },
               {
                 "sourceEnglish": "erosive force",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "matla a bakang khoholeho ya mobu"
               },
               {
                 "sourceEnglish": " as it runs downhill.",
@@ -435,7 +449,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -492,10 +506,11 @@
               },
               {
                 "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "the sun is to the north. Tsela ya lona e a fetoha ho ya ka sehla le sebaka sa heno."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -595,7 +610,8 @@
               },
               {
                 "sourceEnglish": "at 8am, midday, and 4pm on a winter's day. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ka 8am, motsheare, le 4pm ka letsatsi la mariha. "
               },
               {
                 "sourceEnglish": "Watch where the shade falls.",
@@ -603,7 +619,7 @@
                 "text": "Shebella moo moriti o welang teng."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -712,7 +728,8 @@
               },
               {
                 "sourceEnglish": "windbreak",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "windbreak (tshireletso ya moya)"
               },
               {
                 "sourceEnglish": ".",
@@ -720,7 +737,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -732,7 +749,8 @@
               },
               {
                 "sourceEnglish": "slope",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "moepa"
               },
               {
                 "sourceEnglish": " all matter when choosing places for crops and shelter.",
@@ -740,7 +758,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -813,7 +831,8 @@
               },
               {
                 "sourceEnglish": "cold air can flow downhill and collect in low places.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Moya o batang o ka theohela tlase mme wa bokellana dibakeng tse tlase."
               },
               {
                 "sourceEnglish": " These places can be colder than nearby slopes.",
@@ -821,7 +840,7 @@
                 "text": " Dibaka tsena di ka bata ho feta matswapo a haufi."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -861,7 +880,8 @@
               },
               {
                 "sourceEnglish": "nursery",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "sebaka sa ho hodisetsa dimela tse nyane"
               },
               {
                 "sourceEnglish": " sites through the local ",
@@ -879,7 +899,8 @@
               },
               {
                 "sourceEnglish": "local minimum-temperature records",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "direkoto tsa mocheso o tlase ka ho fetisisa sebakeng seo"
               },
               {
                 "sourceEnglish": " or ask a local agriculture adviser before choosing a permanent position.",
@@ -887,7 +908,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -913,7 +934,8 @@
             "segments": [
               {
                 "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Beha frost-sensitive seedling nursery ka ntle ho cold pockets tseo o di boneng. "
               },
               {
                 "sourceEnglish": "Compare candidate places through the local frost season. ",
@@ -922,7 +944,8 @@
               },
               {
                 "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Hlahloba local minimum-temperature records kapa o botse local agriculture adviser pele o kgetha permanent position. "
               },
               {
                 "sourceEnglish": "Check sun and damaging wind too. ",
@@ -934,18 +957,20 @@
                 "status": "english-hold"
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "For tomatoes troubled by late blight, moya o tsamayang hantle le letsatsi la hoseng di ka thusa makhasi ho oma. "
               },
               {
                 "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Boemo ba lehodimo bo phodileng le bo mongobo ka nako e telele bo ntse bo ka favour late blight. Ho tsamaisa bed feela ha ho laole late blight. "
               },
               {
                 "sourceEnglish": "Seek local crop-health advice too.",
@@ -953,7 +978,7 @@
                 "text": "Batla keletso ya lehae ka bophelo ba dijalo le yona."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -1095,7 +1120,8 @@
               },
               {
                 "sourceEnglish": "windbreak",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "windbreak (tshireletso ya moya)"
               },
               {
                 "sourceEnglish": " or crop position that works in one season may be wrong in the other.",
@@ -1103,7 +1129,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1133,7 +1159,8 @@
               },
               {
                 "sourceEnglish": "same base map",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "’mapa o le mong wa motheo"
               },
               {
                 "sourceEnglish": ".",
@@ -1141,7 +1168,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1187,7 +1214,8 @@
               },
               {
                 "sourceEnglish": "ponds",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "matamo"
               },
               {
                 "sourceEnglish": ", and ",
@@ -1196,7 +1224,8 @@
               },
               {
                 "sourceEnglish": "where water leaves your property",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "moo metsi a tswang teng setsheng sa hao"
               },
               {
                 "sourceEnglish": ". Note where excess water may need a safe route away.",
@@ -1204,7 +1233,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1216,7 +1245,8 @@
               },
               {
                 "sourceEnglish": "dawn on a cold June morning. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ha mafube a hlaha hoseng ho batang ha June. "
               },
               {
                 "sourceEnglish": "Mark ",
@@ -1228,7 +1258,7 @@
                 "status": "english-hold"
               }
             ],
-            "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1240,7 +1270,8 @@
               },
               {
                 "sourceEnglish": "fences",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "makgora"
               },
               {
                 "sourceEnglish": ", ",
@@ -1249,7 +1280,8 @@
               },
               {
                 "sourceEnglish": "slopes",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "matsoapo"
               },
               {
                 "sourceEnglish": ", and existing vegetation.",
@@ -1257,7 +1289,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -1295,7 +1327,8 @@
               },
               {
                 "sourceEnglish": "mark points at the same height and trace a contour line",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line"
               },
               {
                 "sourceEnglish": ". ",
@@ -1304,7 +1337,8 @@
               },
               {
                 "sourceEnglish": "This is an observation",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Sena ke seo o se boneng"
               },
               {
                 "sourceEnglish": ", not a design for ",
@@ -1321,7 +1355,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1351,7 +1385,8 @@
               },
               {
                 "sourceEnglish": "update it",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "o ntlafatse"
               },
               {
                 "sourceEnglish": ".",
@@ -1359,7 +1394,7 @@
                 "text": "."
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }

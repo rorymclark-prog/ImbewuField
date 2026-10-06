@@ -593,17 +593,19 @@
               },
               {
                 "sourceEnglish": "the sun is to the north. Its path changes with the season and your location.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "the sun is to the north. Nḓila yaḽo i shanduka hu tshi tevhedzwa khalaṅwaha na vhuimo haṋu."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "North-facing slopes",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "slopes dzine dza sedza devhula"
               },
               {
                 "sourceEnglish": " often get more sun and can be ",
@@ -621,7 +623,8 @@
               },
               {
                 "sourceEnglish": "South-facing slopes",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "slopes dzine dza sedza tshipembe"
               },
               {
                 "sourceEnglish": " are often ",
@@ -656,7 +659,7 @@
                 "status": "draft"
               }
             ],
-            "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1117,7 +1120,8 @@
             "segments": [
               {
                 "sourceEnglish": "Put a frost-sensitive seedling nursery outside the cold pockets you have observed. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Vheani frost-sensitive seedling nursery nnḓa ha cold pockets dze na dzi vhona. "
               },
               {
                 "sourceEnglish": "Compare candidate places through the local frost season. ",
@@ -1126,7 +1130,8 @@
               },
               {
                 "sourceEnglish": "Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Sedzani local minimum-temperature records kana ni vhudzise local agriculture adviser ni sa athu nanga permanent position. "
               },
               {
                 "sourceEnglish": "Check sun and damaging wind too. ",
@@ -1138,18 +1143,20 @@
                 "status": "english-hold"
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "For tomatoes troubled by late blight, good airflow and morning sun can help leaves dry. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "For tomatoes troubled by late blight, muya wo tshimbilaho zwavhuḓi na ḓuvha ḽa matsheloni zwi nga thusa uri maṱari a ome. "
               },
               {
                 "sourceEnglish": "Prolonged cool, damp weather can still favour the disease. Moving a bed alone does not control late blight. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Mutsho une wa rothola na u vha na vhunyefu lwa tshifhinga tshilapfu u kha ḓi nga tikedza late blight. U sudzulusela bed fhedzi a zwi langi late blight. "
               },
               {
                 "sourceEnglish": "Seek local crop-health advice too.",
@@ -1157,7 +1164,7 @@
                 "text": "Ṱoḓani nyeletshedzo ya henefho nga mutakalo wa zwimela na yone."
               }
             ],
-            "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }

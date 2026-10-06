@@ -254,7 +254,7 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -276,8 +276,9 @@
               },
               {
                 "sourceEnglish": "resources",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "swilo leswi tirhisiwaka"
               },
               {
                 "sourceEnglish": " ",
@@ -378,7 +379,7 @@
             "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -395,8 +396,9 @@
               },
               {
                 "sourceEnglish": "system",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "sisiteme"
               },
               {
                 "sourceEnglish": " —",
@@ -816,7 +818,7 @@
             ]
           },
           {
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -833,8 +835,9 @@
               },
               {
                 "sourceEnglish": "pattern",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "patironi"
               },
               {
                 "sourceEnglish": " — where water runs, where it pools, where it never reaches.",
@@ -953,13 +956,14 @@
         },
         "body": [
           {
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "Harvest",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "Hlengeleta"
               },
               {
                 "sourceEnglish": " rain, sun and ",
@@ -979,8 +983,9 @@
               },
               {
                 "sourceEnglish": "before they leave your property.",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "leswi swi nga si huma eka ndhawu ya wena."
               }
             ]
           },
@@ -1051,7 +1056,9 @@
             "segments": [
               {
                 "sourceEnglish": "The edge",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ndhawu ya ku hlangana",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " is where two things meet",
@@ -1065,7 +1072,7 @@
                 "reason": "Meaning-bounded alternatives clause. Fence/strip retained technical labels change noun order; entire source clause is paired with its full translated context."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 accepted ordinary remainder; facilitator fluency review pending"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1082,7 +1089,9 @@
               },
               {
                 "sourceEnglish": "edge",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ndzilekana",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " on your plot is doing nothing at the moment?",
@@ -1090,7 +1099,7 @@
                 "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -1173,8 +1182,9 @@
               },
               {
                 "sourceEnglish": "produce no waste",
-                "status": "english-hold",
-                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "ku nga tlangisi"
               },
               {
                 "sourceEnglish": ", so scraps become ",
@@ -1227,7 +1237,7 @@
                 "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
               }
             ],
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1259,7 +1269,7 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -1270,8 +1280,9 @@
               },
               {
                 "sourceEnglish": "chicken run",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "ndhawu leyi tihuku ti fambaka-famba eka yona"
               },
               {
                 "sourceEnglish": " arranged so the chickens ",
@@ -1281,8 +1292,9 @@
               },
               {
                 "sourceEnglish": "rotate through the beds",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "famba hi ku landzelelana etibedini"
               },
               {
                 "sourceEnglish": " after ",
@@ -1292,8 +1304,9 @@
               },
               {
                 "sourceEnglish": "harvest",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "ntshovelo"
               },
               {
                 "sourceEnglish": " is ",
@@ -1319,8 +1332,9 @@
               },
               {
                 "sourceEnglish": "crops",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "swibyariwa"
               },
               {
                 "sourceEnglish": " being harvested for food. ",
@@ -1541,7 +1555,7 @@
             ]
           },
           {
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -1574,8 +1588,9 @@
               },
               {
                 "sourceEnglish": "chicken run",
-                "status": "english-hold",
-                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "ndhawu leyi tihuku ti fambaka-famba eka yona"
               },
               {
                 "sourceEnglish": ", visited once or twice a day. ",
@@ -1982,7 +1997,7 @@
             ]
           },
           {
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -1993,8 +2008,9 @@
               },
               {
                 "sourceEnglish": "shrubs",
-                "status": "english-hold",
-                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "swihlahla"
               },
               {
                 "sourceEnglish": " stand between that wind and the ",
@@ -2131,15 +2147,16 @@
             },
             {
               "sourceEnglish": "Design",
-              "status": "english-hold",
-              "reason": "Formal design term retained exactly."
+              "status": "draft",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+              "text": "pulani"
             }
           ],
-          "provenance": "2026-10-06 source-bound accepted unreviewed draft; facilitator fluency review pending"
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
             "status": "mixed",
             "segments": [
               {
@@ -2162,8 +2179,9 @@
               },
               {
                 "sourceEnglish": "rings",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "swirhendzevutana"
               },
               {
                 "sourceEnglish": " outward by how often you visit.",

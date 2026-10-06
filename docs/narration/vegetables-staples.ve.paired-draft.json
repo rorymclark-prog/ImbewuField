@@ -129,7 +129,9 @@
             "text": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsha u thoma. Fhaṱani bed yo teaho — ni ite uri width na bed type zwi yelane na mavu aṋu na mvula ya fhethu haṋu.",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -192,9 +194,11 @@
               },
               {
                 "sourceEnglish": "when one crop fails.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "musi crop iṅwe i tshi kundelwa."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -233,9 +237,11 @@
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }

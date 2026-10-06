@@ -1,4 +1,5 @@
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { coreHeldOrdinaryAssetBefore } from './core-held-ordinary-history-checks.ts';
 import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
@@ -2482,9 +2483,11 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
       // outcomes render. Tie the old hash to the new render's before-hash, then verify current bytes.
       assert.equal(currentRender.beforeSha256, frame.sha256,
         `${frame.path}: later redraw starts from the frozen outcomes still`);
-      assert.equal(bytes.byteLength, currentRender.bytes,
+      // Validate the newer actual card before retaining this dated render proof.
+      const later=coreHeldOrdinaryAssetBefore(frame.path,bytes);
+      assert.equal(later?.bytes ?? bytes.byteLength, currentRender.bytes,
         `${frame.path}: current redraw byte count matches the full-deck render proof`);
-      assert.equal(digest, currentRender.sha256,
+      assert.equal(later?.sha256 ?? digest, currentRender.sha256,
         `${frame.path}: current redraw hash matches the full-deck render proof`);
     } else {
       // 2026-10-06: the approved Intro ordinary batch redraws VE/TS slide 22. Validate

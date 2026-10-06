@@ -1,13 +1,13 @@
 import type { CourseDeckRelease } from './course-deck-release-bindings';
 
-// Generated from approved pair9c0202a5 and actual rendered WebP bytes on2026-10-06.
+// Generated from the checked unreviewed silent pair and actual WebP bytes on 2026-10-07.
 // Build-time tests recompute pair/text/image digests; these declarations cannot self-verify.
 export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
   {
     "moduleId": "intro-permaculture",
     "language": "st",
     "pairPath": "docs/narration/intro-permaculture.st.silent-draft.json",
-    "pairSha256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+    "pairSha256": "7ae36d7d49004a25aadbe1ffa73d07e129afd4723e46572ee68bc23f4e1e2621",
     "reviewStatus": "unreviewed",
     "audioBinding": "none",
     "slides": [
@@ -238,7 +238,7 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
           "Where does water leave your land? Do you actually know, or are you guessing?"
         ],
-        "targetHeading": "Observe and Interact",
+        "targetHeading": "Sheba mme o sebelisane",
         "targetText": [
           "Shebella setsha sa hao sehleng sohle pele o itlama ka major earthworks.",
           "Sefefo se le seng se bontsha motsotso o le mong. Sehla sohle sa dipula se bontsha mokgwa — moo metsi a phallang, moo a bokellanang, le moo a sa fihleheng.",
@@ -246,10 +246,10 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Metsi a tloha kae setsheng sa hao? Na o tseba e le kannete, kapa o a hakanya?"
         ],
         "sourceHash": "51de9900be5c488a9f0d788bf21138c0a58c2a0a38b0818bd3af9a9440dd4b44",
-        "targetHash": "f4e3ef7d7e45553c03374f1c83f2cc67865f2bc667f8049e1fbbff645097ede5",
+        "targetHash": "fcf3749dfbdf5a0268b505db2afbd1a322399b2f8f2a9b9b06096bbbd5c52c16",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-10.webp",
-        "imageSha256": "d4168c3d6c1979922f2f7931fd1cef987a983b0e34606d242231de62a9b3ef4d",
-        "imageBytes": 693878,
+        "imageSha256": "45d16b62f98bae3e6de68628cbd7601f7a0d51f2458c17f734717d4112562c45",
+        "imageBytes": 689546,
         "width": 1440,
         "height": 5400
       },
@@ -262,7 +262,7 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Compare the cost and work with the benefit on your own farm.",
           "Name one thing that arrives on your land free and leaves again without being used."
         ],
-        "targetHeading": "Catch and Store Energy",
+        "targetHeading": "Bokella matla mme o a boloke",
         "targetText": [
           "Bokella pula, letsatsi le biomass pele di tloha setsheng sa hao.",
           "E nngwe le e nngwe ya tsona e fihla e sa lefellwe mme e tsamaya e sa lefellwe. Metsi a phalla a tloha, makgasi a fefolwa ke moya, letsatsi le kganyetsa mobu o se nang dimela.",
@@ -270,10 +270,10 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Bolela ntho e le nngwe e fihlang mobung wa hao e sa lefellwe, ebe e boela e tsamaya e sa sebediswa."
         ],
         "sourceHash": "5f648826249aafaef2dc5316444e7695a6708d16fe916590c67c91f77241196e",
-        "targetHash": "59f39117d8d97a993ac27f930141487131d86c8324dd899208e4aaab4b916435",
+        "targetHash": "605b61cf7a95aa13bc3724b0967f4432cb17b022cead5e842d1a2fa968ecedc5",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-11.webp",
-        "imageSha256": "589e2158f42e0fba0e50eec14b6aa791209541c01bdf06d300ccfb3f1fd5ff3b",
-        "imageBytes": 270858,
+        "imageSha256": "52af69c57d37d87226fefaf0b734946be41b18d96ea9a25e57a6a80c6a9dc70d",
+        "imageBytes": 266416,
         "width": 1440,
         "height": 5400
       },
@@ -285,17 +285,17 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
           "Which edge on your plot is doing nothing at the moment?"
         ],
-        "targetHeading": "Use Edges and Value the Marginal",
+        "targetHeading": "Sebedisa mathoko mme o ananele dibaka tse ka thoko",
         "targetText": [
           "Moeli ke moo lintho tse peli li kopanang teng — joalo ka mola oa terata kapa sebaka se pela tsela.",
           "Libaka tsena li ka ba molemo bakeng sa ho shebella. Sheba hore na ke eng e seng e mela hantle pela moeli oa hao. Seo ke tsela eo mobu o u bolellang ho hong ka eona.",
           "Ke karolo efe ea moeli setšeng sa hao e sa etse letho hona joale?"
         ],
         "sourceHash": "4943b3df069ae4f605de9664b42f23d11463ac4f9518a9f3086c0bde3c6d5802",
-        "targetHash": "7dcfc9048e094e45c6a5f40fefa57bf4625cf19b9e6c8441e648c2552b1c59c8",
+        "targetHash": "b2fcd3c72319370134767bdc60ceb0c8714f9485e6a42fc8cef9b56a85f9da83",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-12.webp",
-        "imageSha256": "c30cddddb1ad42bb5707d4e59bc965d59f3b1ed97e7bb9edf7deee51e7122588",
-        "imageBytes": 255448,
+        "imageSha256": "176cd94c6f61c6f4769889892b98e6bb41827fc0a48dc23e4c4894ec31a37343",
+        "imageBytes": 256212,
         "width": 1440,
         "height": 5400
       },
@@ -307,17 +307,17 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
           "What would one bad day cost you right now?"
         ],
-        "targetHeading": "Use and Value Diversity",
+        "targetHeading": "Sebedisa mefuta-futa mme o e ananele",
         "targetText": [
           "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le growth stage ya crop. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
           "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bed ntle le motlakase ho hang.",
           "Letsatsi le lebe le le leng le ka o jella bokae hona jwale?"
         ],
         "sourceHash": "7d683c4cd0423d45fe05f105feec2df31c2cbc657476bc18ddba02b214c0419f",
-        "targetHash": "b3f267f4cdc96f7e04bff774592768c40c8aa9fc29721a3dc9d79458472a8985",
+        "targetHash": "ae168cb6397b0bd4a17e66a49e8fdbd1dd7ac69af7a3007680cc629729bdf2ad",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-13.webp",
-        "imageSha256": "de08b18fe44aba08a062437ddc530901cbc8a739568992dee3ae27a195430acd",
-        "imageBytes": 418056,
+        "imageSha256": "bcd11431c6cbae3044f704760355c7f6c5c70bca5b44510f2448593a28d1e310",
+        "imageBytes": 417406,
         "width": 1440,
         "height": 5400
       },
@@ -330,7 +330,7 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "The same three things, fenced apart, do only their own job.",
           "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
         ],
-        "targetHeading": "Integrate Rather Than Segregate",
+        "targetHeading": "Kopanya ho e-na le ho arola",
         "targetText": [
           "Beha karolo ka nngwe moo e sebeletsang tse e potileng.",
           "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho rotate through the beds after harvest — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara germs. Kopa extension adviser hore a hlalose kamoo bed e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka clean up pests le ho eketsa fertility ho ena le ho dula di sa sebetse ka pen e sa fetoheng.",
@@ -338,10 +338,10 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Kgetha melao-motheo e mmedi kapa e meraro e buang ka bothata ba hao bo boholo, mme o e sebedise ka matla. Tse setseng di tla bonahala ha o ntse o tswela pele."
         ],
         "sourceHash": "972bd52f861e1dbc2951c13ddbfd548102efb9f247636229c37a21e5e9423351",
-        "targetHash": "5383a6b2e430b580915dc0335c00cbe83327fb2758d5221fe526d84827ff5992",
+        "targetHash": "28ee84fbe5036397d07d0cc516f44208d3d02984c8435836a962f3dab943dca2",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-14.webp",
-        "imageSha256": "13a8219e0000edcf96bbf7b23898c7b5ed592487b1bbede520dd6c48141a94f1",
-        "imageBytes": 425552,
+        "imageSha256": "270e702dc660c78880083a21352880b5f6b17493a8f493901a860e60e89cd36f",
+        "imageBytes": 417188,
         "width": 1440,
         "height": 5400
       },

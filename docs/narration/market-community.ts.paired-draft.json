@@ -689,8 +689,9 @@
               },
               {
                 "sourceEnglish": "fees",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "tihakelo"
               },
               {
                 "sourceEnglish": ", transport and ",
@@ -717,8 +718,9 @@
               },
               {
                 "sourceEnglish": "nearest buyer",
-                "status": "english-hold",
-                "reason": "Nearest superlative retained exactly."
+                "status": "draft",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed.",
+                "text": "muxavi loyi a nga ekusuhi swinene"
               },
               {
                 "sourceEnglish": " always gives the ",
@@ -741,7 +743,7 @@
                 "semanticContext": "nearest-return-predicate"
               }
             ],
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed; root-approved TS17 native warning supplement d3a4e5d3, first comparison unchanged"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -778,7 +780,9 @@
               },
               {
                 "sourceEnglish": "whether",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "loko",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " it may suit their ",
@@ -795,7 +799,7 @@
                 "text": " ya vona."
               }
             ],
-            "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",

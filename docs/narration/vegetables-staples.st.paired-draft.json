@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Meroho le dijalo tsa dijo tsa motheo",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -29,14 +31,16 @@
               },
               {
                 "sourceEnglish": "Vegetables and Staple Crops.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Meroho le dijalo tsa dijo tsa motheo."
               },
               {
                 "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
                 "status": "draft",
                 "text": " Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -90,8 +94,9 @@
               },
               {
                 "sourceEnglish": "Planting, tending and harvesting overlap.",
-                "status": "english-hold",
-                "reason": "Corrects inherited exact-simultaneity wording; ordinary overlap wording remains a disclosed precision gap."
+                "status": "draft",
+                "reason": "Translate ordinary action nouns; retain difficult temporal-overlap concept as explicit English loan. No same-time claim or added temporal qualifier.",
+                "text": "Ho jala, ho hlokomela le ho kotula di overlap."
               },
               {
                 "sourceEnglish": " Something is always coming ready.",
@@ -99,7 +104,7 @@
                 "text": " Kamehla ho na le se seng se atamelang ho loka."
               }
             ],
-            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -153,7 +158,8 @@
               },
               {
                 "sourceEnglish": "width",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "bophara"
               },
               {
                 "sourceEnglish": " and the ",
@@ -162,7 +168,8 @@
               },
               {
                 "sourceEnglish": "bed type",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mofuta wa bethe"
               },
               {
                 "sourceEnglish": " to your ",
@@ -171,7 +178,8 @@
               },
               {
                 "sourceEnglish": "soil",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mobu"
               },
               {
                 "sourceEnglish": " and your ",
@@ -180,7 +188,8 @@
               },
               {
                 "sourceEnglish": "rainfall",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "pula"
               },
               {
                 "sourceEnglish": ".",
@@ -188,7 +197,7 @@
                 "text": " ya hao."
               }
             ],
-            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -205,7 +214,8 @@
               },
               {
                 "sourceEnglish": "succession planting",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ho jala ka mekhahlelo (succession planting)"
               },
               {
                 "sourceEnglish": " and ",
@@ -214,9 +224,11 @@
               },
               {
                 "sourceEnglish": "intercropping.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ho jala dijalo tse fapaneng hammoho."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -233,7 +245,8 @@
               },
               {
                 "sourceEnglish": "staples",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "dijalo tsa dijo tsa motheo"
               },
               {
                 "sourceEnglish": " that protect you ",
@@ -242,9 +255,11 @@
               },
               {
                 "sourceEnglish": "when one crop fails.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ha sejalo se le seng se hloleha."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -275,13 +290,16 @@
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Bethe e bopehileng hantle e ntse e hloleha haeba tsohle di jalwa ka letsatsi le le leng. "
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ho lema mefuta e fapaneng ho ntse ho thatafalloa haeba o nka lekhasi le leng le le leng le mosehla e le bothata ba dikokonyana."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -300,7 +318,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Metso e hloka mobu o hlephileng; maoto a hao a tsamaye ditseleng",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -317,14 +337,16 @@
               },
               {
                 "sourceEnglish": "Permanent paths",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ditsela tsa ka mehla"
               },
               {
                 "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
                 "status": "draft",
                 "text": ", le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -340,14 +362,16 @@
               },
               {
                 "sourceEnglish": "working number",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "tekanyo eo re e sebedisang"
               },
               {
                 "sourceEnglish": ". At that width you can reach the centre from either path, and your feet never touch the growing area.",
                 "status": "draft",
                 "text": ". Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -373,7 +397,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Kgetha bethe ho ya ka mobu le pula",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -404,14 +430,16 @@
             "segments": [
               {
                 "sourceEnglish": "No-dig",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ho lema ntle le ho cheka (no-dig)"
               },
               {
                 "sourceEnglish": " suits most garden soils. Leave the structure alone and build fertility on top.",
                 "status": "draft",
                 "text": " e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -423,7 +451,8 @@
               },
               {
                 "sourceEnglish": "wet clay",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "letsopa le metsi"
               },
               {
                 "sourceEnglish": ". If ",
@@ -432,7 +461,8 @@
               },
               {
                 "sourceEnglish": "compaction",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ho petetsana ha mobu"
               },
               {
                 "sourceEnglish": " or ",
@@ -441,7 +471,8 @@
               },
               {
                 "sourceEnglish": "poor drainage",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "metsi a sa kgoneng ho phalla hantle"
               },
               {
                 "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
@@ -457,14 +488,16 @@
                 "status": "draft",
                 "text": "."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "Raised beds",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Dibethe tse phahamisitsweng"
               },
               {
                 "sourceEnglish": " suit ",
@@ -492,14 +525,15 @@
                 "text": "."
               }
             ],
-            "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
                 "sourceEnglish": "Sunken beds",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Dibethe tse tebisitsweng"
               },
               {
                 "sourceEnglish": " suit ",
@@ -508,14 +542,16 @@
               },
               {
                 "sourceEnglish": "dry ground",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mobu o ommeng"
               },
               {
                 "sourceEnglish": ", where you want to catch and hold what rain you get.",
                 "status": "draft",
                 "text": ", moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -537,7 +573,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Peo kapa sethopo?",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -550,7 +588,8 @@
               },
               {
                 "sourceEnglish": "They do better",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Di hola hantle ho feta"
               },
               {
                 "sourceEnglish": " sown straight where they'll grow. ",
@@ -575,7 +614,8 @@
                 "status": "draft",
                 "text": " ke tsa sehlopha seo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -597,7 +637,8 @@
               },
               {
                 "sourceEnglish": "nursery",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "sebaka sa ho hodisetsa dimela tse nyane"
               },
               {
                 "sourceEnglish": ", then ",
@@ -606,7 +647,8 @@
               },
               {
                 "sourceEnglish": "transplanting.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ho isa dimela sebakeng sa tsona sa ho qetela."
               },
               {
                 "sourceEnglish": " Tomatoes",
@@ -626,7 +668,8 @@
                 "status": "draft",
                 "text": " ke tsa sehlopha seo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -638,7 +681,8 @@
               },
               {
                 "sourceEnglish": "spacing guidance",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ditaelo tsa sebaka se lokelang ho ba pakeng tsa dimela"
               },
               {
                 "sourceEnglish": " for the ",
@@ -647,7 +691,8 @@
               },
               {
                 "sourceEnglish": "crop, variety",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "sejalo le mofuta"
               },
               {
                 "sourceEnglish": " and ",
@@ -656,7 +701,8 @@
               },
               {
                 "sourceEnglish": "local conditions",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "maemo a sebakeng seo"
               },
               {
                 "sourceEnglish": ". Check the packet and ",
@@ -665,14 +711,16 @@
               },
               {
                 "sourceEnglish": "local grower advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "keletso ya balemi ba sebakeng seo"
               },
               {
                 "sourceEnglish": ". Watch for crowding as plants develop.",
                 "status": "draft",
                 "text": ". Sheba crowding ha plants di ntse di hola."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -715,14 +763,16 @@
               },
               {
                 "sourceEnglish": "rectangle",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "sebopeho sa kgutlonne"
               },
               {
                 "sourceEnglish": ", and mark both access paths.",
                 "status": "draft",
                 "text": ", le ho tshwaya ditsela ka bobedi tsa ho kena."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -734,14 +784,16 @@
               },
               {
                 "sourceEnglish": "no-dig",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mokgwa wa ho lema ntle le ho cheka (no-dig)"
               },
               {
                 "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
                 "status": "draft",
                 "text": ", mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -774,14 +826,16 @@
           "segments": [
             {
               "sourceEnglish": "A Sowing Rhythm",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Morethetho wa ho jala"
             },
             {
               "sourceEnglish": " Keeps Food Moving",
               "status": "draft",
               "text": " e boloka lijo li ntse li fumaneha."
             }
-          ]
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -870,7 +924,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Sejalo ka seng se na le mosebetsi wa sona",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -928,9 +984,11 @@
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Nako eo dijo di haellang ka yona"
             }
-          ]
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -971,7 +1029,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Dijalo tsa motheo di thusa ho sireletsa dijo tsa lelapa",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -1132,7 +1192,8 @@
               },
               {
                 "sourceEnglish": "broad chemical use",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "tshebediso e pharalletseng ya dikhemikhale"
               },
               {
                 "sourceEnglish": " that has already removed the ",
@@ -1148,7 +1209,8 @@
                 "status": "draft",
                 "text": " tse neng di o thusa."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1225,7 +1287,8 @@
               },
               {
                 "sourceEnglish": ", barriers",
-                "status": "english-hold"
+                "status": "draft",
+                "text": ", mekoallo"
               },
               {
                 "sourceEnglish": " or changes in ",
@@ -1247,7 +1310,8 @@
                 "status": "draft",
                 "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1277,7 +1341,8 @@
               },
               {
                 "sourceEnglish": "label",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "leibole"
               },
               {
                 "sourceEnglish": ".",
@@ -1327,7 +1392,7 @@
                 "text": "."
               }
             ],
-            "provenance": "unreviewed independent draft; bounded exact stronger-doses hold; ordinary negative and mixtures clause translated; exact source partition verified"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1475,7 +1540,8 @@
               },
               {
                 "sourceEnglish": " What germinated.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Se ileng sa mela."
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1487,7 +1553,7 @@
                 "text": " Seo o se kotutseng."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
