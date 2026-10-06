@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { COURSE_TRANSCRIPTS } from '../lib/course-transcripts.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { soilWaterResidualPairedBefore, soilWaterResidualMediaBefore } from './soil-water-residual-history-checks.ts';
 
 test('ordinary Soil card refresh retires only its six approved saved stills once and keeps other offline media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
@@ -93,7 +94,8 @@ test('seven approved Soil deck fields remain paired to exact English and preserv
   const expectedSlots = ['st:18:3', 've:4:0', 've:8:0', 've:8:2', 'ts:8:2', 'ts:13:1', 'ts:18:3'];
   const seen: string[] = [];
   for (const lane of proof.languages) {
-    const current = JSON.parse(readFileSync(lane.path, 'utf8'));
+    const live = JSON.parse(readFileSync(lane.path, 'utf8'));
+    const current = soilWaterResidualPairedBefore(live, lane.path);
     const expected = structuredClone(lane.fullBefore);
     const narration = englishSlideRecords(readFileSync('docs/narration/soil-health.en.md', 'utf8'));
     validatePairedDraft(current, narration, lane.language);
@@ -145,8 +147,14 @@ test('the six refreshed Soil stills have actual proof-bound WebP bytes and exact
     const bytes = readFileSync('public' + row.url);
     assert.equal(bytes.subarray(0, 4).toString(), 'RIFF', row.url);
     assert.equal(bytes.subarray(8, 12).toString(), 'WEBP', row.url);
-    assert.equal(bytes.length, row.bytes, row.url);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), row.sha256, row.url);
+    const residualBefore = soilWaterResidualMediaBefore('public' + row.url);
+    if (residualBefore) {
+      assert.equal(residualBefore.bytes, row.bytes, `${row.url}: residual frame binds the prior proof descriptor`);
+      assert.equal(residualBefore.sha256, row.sha256, `${row.url}: residual frame binds the prior proof hash`);
+    } else {
+      assert.equal(bytes.length, row.bytes, row.url);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), row.sha256, row.url);
+    }
     assert.notEqual(row.sha256, row.beforeSHA256, row.url);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length, `${row.url}: download promises actual bytes`);
   }

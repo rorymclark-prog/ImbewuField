@@ -74,7 +74,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
             },
             {
               "sourceEnglish": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
-              "xitsongaDraft": "Dizayini leyi kunguhatiweke ni levels leti pimiweke swin’we ni mutsundzuxi wa laha kaya loyi a leteriweke; low point leyi nga kunguhatiwangiki yi nga va kona",
+              "xitsongaDraft": "Dizayini leyi kunguhatiweke ni levels leti pimiweke swin’we ni mutsundzuxi wa laha kaya loyi a leteriweke; ndhawu ya le hansi leyi nga kunguhatiwangiki yi nga va kona",
               "reviewStatus": "machine-draft"
             },
             {
@@ -91,7 +91,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
-            "xitsongaDraft": "Dizayini ya level contour yi fanele ku hangalasa mati eka vulehi bya yona. Ku tala loku nga ringaniki ku nga komba low point leyi nga kunguhatiwangiki, kambe swisele swin’wana swi endliwa grade hi xikongomelo leswaku mati ma ya eka outlet leyi hlayisekeke. Kambela dizayini ya xiviri, misava ni overflow route u nga si yi cinca.",
+            "xitsongaDraft": "Dizayini ya level contour yi fanele ku hangalasa mati eka vulehi bya yona. Ku tala loku nga ringaniki ku nga komba ndhawu ya le hansi leyi nga kunguhatiwangiki, kambe swisele swin’wana swi endliwa grade hi xikongomelo leswaku mati ma ya eka outlet leyi hlayisekeke. Kambela dizayini ya xiviri, misava ni overflow route u nga si yi cinca.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -365,7 +365,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
       },
       "body": {
         "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
-        "xitsongaDraft": "Mati lama tirhisiweke ekaya ma nga va na germs, salts, cleaning products ni swilo swin’wana. Swiletelo a swi hlamuseli swihlovo hinkwato hi ndlela yin’we. Swiletelo swa Afrika-Dzonga swi hambana hi mati ya le khixini ni mati yo hlantswa swiambalo.\n\nU nga katsi mati ya xihambukelo, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa mati nakambe. U nga tirhisi nakambe mati lama nga na chemicals leti nga ni khombo.\n\nBefore any reuse, kombela masipala na mutsundzuxi wa sanitation wa laha kaya loyi a nga qualified ku kambela xihlovo xa mati lexi kongomeke, vukorhokeri bya mati na sanitation bya ndyangu, ku tirhisiwa loku kunguhatiweke na ndhawu. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.\n\nXifaniso xo angarhela a hi pulani ya purasi. Misava ni mulch a swi disinfect wastewater. Hlayisa wastewater yi ri ekule ni plumbing ya mati yo nwa naswona u sivela leswaku yi khumba vanhu kumbe swiharhi. U nga ma fafazeli, u nga ma tshiki ma pool, naswona u nga ma pfumeleli ku khuluka ma huma eka property ma nghena exitarateni, eka drain kumbe eka watercourse.\n\nLoko system yo tirhisa mati nakambe yi se ri karhi yi tirha naswona mati ma nunha, ma pool kumbe ma onha swimilana, tshika ku ma tirhisa kutani u lava ndzayo ya mutsundzuxi wa laha kaya loyi a nga qualified.",
+        "xitsongaDraft": "Mati lama tirhisiweke ekaya ma nga va na germs, salts, swibveledzwa swo basisa ni swilo swin’wana. Swiletelo a swi hlamuseli swihlovo hinkwato hi ndlela yin’we. Swiletelo swa Afrika-Dzonga swi hambana hi mati ya le khixini ni mati yo hlantswa swiambalo.\n\nU nga katsi mati ya xihambukelo, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa mati nakambe. U nga tirhisi nakambe mati lama nga na chemicals leti nga ni khombo.\n\nBefore any reuse, kombela masipala na mutsundzuxi wa sanitation wa laha kaya loyi a nga qualified ku kambela xihlovo xa mati lexi kongomeke, vukorhokeri bya mati na sanitation bya ndyangu, ku tirhisiwa loku kunguhatiweke na ndhawu. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.\n\nXifaniso xo angarhela a hi pulani ya purasi. Misava ni mulch a swi disinfect wastewater. Hlayisa wastewater yi ri ekule ni plumbing ya mati yo nwa naswona u sivela leswaku yi khumba vanhu kumbe swiharhi. U nga ma fafazeli, u nga ma tshiki ma pool, naswona u nga ma pfumeleli ku khuluka ma huma eka property ma nghena exitarateni, eka drain kumbe eka watercourse.\n\nLoko system yo tirhisa mati nakambe yi se ri karhi yi tirha naswona mati ma nunha, ma hlengeletana ma yima endhawini yin’we kumbe ma onha swimilana, tshika ku ma tirhisa kutani u lava ndzayo ya mutsundzuxi wa laha kaya loyi a nga qualified.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -376,7 +376,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
-          "xitsongaDraft": "Before any reuse, kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu eka swiyimo swa laha kaya.",
+          "xitsongaDraft": "Before any reuse, kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu hi ku endla nkambelo wa laha kaya.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -386,7 +386,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         },
         {
           "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
-          "xitsongaDraft": "Sivela ku khumbana, ku fafazela, pooling, runoff ni drinking-water cross-connections",
+          "xitsongaDraft": "Sivela ku khumbana, ku fafazela, ku hlengeletana ka mati ku yima endhawini yin’we, runoff ni drinking-water cross-connections",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -394,7 +394,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "What should happen before any household washwater is reused?",
-            "xitsongaDraft": "Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?",
+            "xitsongaDraft": "Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe mati wahi na wahi lama tirhisiweke ku hlantswa ekaya?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -429,7 +429,7 @@ export const XITSONGA_WATER_HARVESTING_DRAFT = {
         {
           "question": {
             "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
-            "xitsongaDraft": "Hi mhaka muni u fanele ku kambela xihlovo xa mati lexi kongomeke na cleaning products u nga si anakanya hi ku ma tirhisa nakambe?",
+            "xitsongaDraft": "Hi mhaka muni u fanele ku kambela xihlovo xa mati lexi kongomeke na swibveledzwa swo basisa u nga si anakanya hi ku ma tirhisa nakambe?",
             "reviewStatus": "machine-draft"
           },
           "options": [

@@ -8,6 +8,7 @@ import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve
 import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
+import { soilWaterResidualNativeAfter, soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 
 const dir = 'docs/study-translation-reviews/soil-ordinary-ve-2026-10-06/';
 const fixtureBytes = readFileSync(dir + 'test-fixtures.json');
@@ -61,8 +62,9 @@ function expected(lang: Lang) {
 // 6 October supersedes listed ordinary wording, not historical precision coverage.
 // Validate the entire live object first: otherwise a rewind could hide an unlisted regression.
 function validateAndRewind(lang: Lang, current: Data) {
-  assert.deepEqual(current, expected(lang));
-  const rewind = structuredClone(current);
+  const beforeResidual = soilWaterResidualNativeBefore(lang, 'soil-health', current);
+  assert.deepEqual(beforeResidual, expected(lang));
+  const rewind = structuredClone(beforeResidual);
   for (const row of fixture.accepted[lang].rows as Row[]) {
     const live = slot(rewind, row);
     const before = slot(fixture.before[lang], row);
@@ -88,7 +90,7 @@ for (const lang of Object.keys(natives) as Lang[]) {
     validateAndRewind(lang, natives[lang]);
     for (const [index, lesson] of canonical.lessons.entries()) {
       const shown = resolveLearnerLessonPresentation(lesson, lang);
-      const wanted = expected(lang).lessons[index];
+      const wanted = soilWaterResidualNativeAfter(lang, 'soil-health').lessons[index];
       assert.equal(shown.status, 'draft');
       assert.equal(shown.content.body, wanted.body[keys[lang]]);
       assert.equal(shown.content.infographicAlt, wanted.infographicAlt[keys[lang]]);
@@ -143,7 +145,7 @@ for (const lang of Object.keys(natives) as Lang[]) {
 
 test('Soil translation completion keeps sedimentation uncertainty, the laboratory boundary and independent leachate prohibitions', () => {
   for (const lang of Object.keys(natives) as Lang[]) {
-    const before = fixture.before[lang];
+    const before = expected(lang);
     const current = natives[lang];
     const key = keys[lang];
     const beforeBody = before.lessons[0].body[key].split('\n\n');
@@ -151,16 +153,23 @@ test('Soil translation completion keeps sedimentation uncertainty, the laborator
     // These full clauses were intentionally not approved for change: not-yet, may-still,
     // rough exercise, laboratory WHEN needed and settled completed-state remain exact.
     for (const index of [4, 5, 6, 7, 8]) assert.equal(body[index], beforeBody[index]);
-    assert.match(body[0], /break down organic matter/);
+    const decomposition = lang === 'st'
+      ? /organic matter e bole.*dimatlafatsi ka potoloho/
+      : lang === 've'
+        ? /break down organic matter.*cycle nutrients/
+        : /organic matter yi bola.*nutrients ti famba hi xirhendzevutana/;
+    assert.match(body[0], decomposition);
     assert.match(current.lessons[1].body[key].split('\n\n')[0], /broken down/);
     assert.match(current.lessons[0].infographicAlt[key], /settles into three layers/);
     assert.match(current.lessons[1].infographicAlt[key], /cut open/);
     const leachate = current.lessons[2].body[key].split('\n\n');
     const original = before.lessons[2].body[key].split('\n\n');
+    const residualAfter = soilWaterResidualNativeAfter(lang, 'soil-health');
+    const residualLeachate = residualAfter.lessons[2].body[key].split('\n\n');
     assert.equal(leachate[7], original[7]);
-    assert.equal(leachate[8], original[8]);
-    assert.deepEqual(current.lessons[2].quiz[1].options[1], before.lessons[2].quiz[1].options[1]);
-    assert.deepEqual(current.lessons[2].quiz[1].rationale, before.lessons[2].quiz[1].rationale);
+    assert.equal(leachate[8], residualLeachate[8]);
+    assert.deepEqual(current.lessons[2].quiz[1].options[1], residualAfter.lessons[2].quiz[1].options[1]);
+    assert.deepEqual(current.lessons[2].quiz[1].rationale, residualAfter.lessons[2].quiz[1].rationale);
   }
   assert.match(SESOTHO_SOIL_HEALTH_DRAFT.lessons[2].body.sesothoDraft.split('\n\n')[12], /di ka thusa/);
   assert.match(XITSONGA_SOIL_HEALTH_DRAFT.lessons[2].body.xitsongaDraft.split('\n\n')[12], /swi nga pfuna/);

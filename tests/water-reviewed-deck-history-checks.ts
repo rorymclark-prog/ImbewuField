@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { soilAssetSizesBeforeOrdinary, soilMediaSHAForEarlierProof } from './soil-reviewed-ordinary-history-checks.ts';
 import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 import { vegetablesPestPrecisionMediaBeforeEarlierProof } from './vegetables-pest-precision-media-history-checks.ts';
+import { soilWaterResidualMediaBefore, soilWaterResidualPairedBefore } from './soil-water-residual-history-checks.ts';
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/WATER-DECK-REVIEWED-PRECISION-2026-10-05.json', import.meta.url), 'utf8'));
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 // 2026-10-06: root accepted 35 ST/VE and then 19 TS exact-paragraph reuses after PR957.
@@ -11,6 +12,7 @@ const sha = (value: Buffer | string) => createHash('sha256').update(value).diges
 // including every source, status, provenance and unlisted field, before rewinding.
 export function waterDeckBeforeOrdinary<T extends { slides: any[] }>(deck: T, language: string): T {
   assert.ok(language === 'st' || language === 've' || language === 'ts');
+  deck = soilWaterResidualPairedBefore(deck, `docs/narration/water-harvesting.${language}.paired-draft.json`);
   const dir = 'docs/study-translation-reviews/water-ordinary-deck-2026-10-06/';
   const prior = JSON.parse(readFileSync(dir + language + '-paired-before.json', 'utf8'));
   const expected = structuredClone(prior);
@@ -65,14 +67,21 @@ function checkOrdinaryMedia() {
   assert.deepEqual(counts, { st: 8, ve: 9, ts: 10 });
   for (const row of ordinaryMedia.frames) {
     const bytes = readFileSync(row.asset);
-    assert.equal(sha(bytes), row.new.sha256, row.asset + ': current image must match accepted final render');
-    assert.equal(bytes.length, row.new.bytes);
+    const residualBefore = soilWaterResidualMediaBefore(row.asset);
+    if (residualBefore) {
+      assert.equal(residualBefore.sha256, row.new.sha256, row.asset + ': the residual layer must reconstruct this accepted Water frame');
+      assert.equal(residualBefore.bytes, row.new.bytes, row.asset + ': the residual layer must reconstruct this accepted Water size');
+    } else {
+      assert.equal(sha(bytes), row.new.sha256, row.asset + ': current image must match accepted final render');
+      assert.equal(bytes.length, row.new.bytes);
+    }
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     assert.notEqual(row.new.sha256, row.old.sha256);
-    const deck = JSON.parse(readFileSync(`docs/narration/water-harvesting.${row.language}.paired-draft.json`, 'utf8'));
-    waterDeckBeforeOrdinary(deck, row.language);
-    const slide = deck.slides[row.slide - 1];
+    const currentDeck = JSON.parse(readFileSync(`docs/narration/water-harvesting.${row.language}.paired-draft.json`, 'utf8'));
+    const beforeResidual = soilWaterResidualPairedBefore(currentDeck, `docs/narration/water-harvesting.${row.language}.paired-draft.json`);
+    waterDeckBeforeOrdinary(currentDeck, row.language);
+    const slide = beforeResidual.slides[row.slide - 1];
     assert.deepEqual(row.sourceDraftBinding.sourceEnglish, slide.english);
     assert.deepEqual(row.sourceDraftBinding.currentDraftTarget, slide.target);
     assert.equal(row.sourceDraftBinding.language, row.language);
@@ -101,14 +110,22 @@ export function waterMediaBeforeOrdinary(path: string) {
   const bytes = readFileSync(path);
   const changed = ordinaryMedia.frames.find((row: any) => row.asset === path);
   if (!changed) {
+    const residualBefore = soilWaterResidualMediaBefore(path);
+    if (residualBefore) return { bytes, sha256: residualBefore.sha256, byteLength: residualBefore.bytes };
     const intro = introMediaBeforeEarlierProof(path);
     if (intro) return { bytes, sha256: intro.sha256, byteLength: intro.bytes };
     const vegetables = vegetablesPestPrecisionMediaBeforeEarlierProof(path);
     if (vegetables) return vegetables;
     return { bytes, sha256: sha(bytes), byteLength: bytes.length };
   }
-  assert.equal(sha(bytes), changed.new.sha256);
-  assert.equal(bytes.length, changed.new.bytes);
+  const residualBefore = soilWaterResidualMediaBefore(path);
+  if (residualBefore) {
+    assert.equal(residualBefore.sha256, changed.new.sha256, `${path}: current residual frame rewinds to the accepted Water frame`);
+    assert.equal(residualBefore.bytes, changed.new.bytes, `${path}: current residual frame rewinds to the accepted Water size`);
+  } else {
+    assert.equal(sha(bytes), changed.new.sha256);
+    assert.equal(bytes.length, changed.new.bytes);
+  }
   return { bytes, sha256: changed.old.sha256, byteLength: changed.old.bytes };
 }
 export function waterAssetSizesBeforeOrdinary(path: string) {

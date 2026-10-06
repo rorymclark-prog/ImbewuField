@@ -6,6 +6,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
+import { soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/WATER-LEARNER-REVIEWED-PRECISION-2026-10-05.json', import.meta.url), 'utf8'));
 const keys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 const drafts = { st: SESOTHO_WATER_HARVESTING_DRAFT, ve: TSHIVENDA_WATER_HARVESTING_DRAFT, ts: XITSONGA_WATER_HARVESTING_DRAFT };
@@ -62,8 +63,9 @@ export function waterNativeBeforeOrdinary(language: 'st' | 've' | 'ts'): WaterDr
     assert.equal(source.lessons.find(lesson => lesson.id === body.lessonId)!.body, body.sourceEnglish);
     pair[keys[language]] = ts ? body.proposed : body.proposedTarget;
   }
-  assert.deepEqual(drafts[language], expected,
-    `${language}: all current accepted and unlisted fields checked before ordinary-layer rewind`);
+  const beforeResidual = soilWaterResidualNativeBefore(language, 'water-harvesting', drafts[language]);
+  assert.deepEqual(beforeResidual, expected,
+    `${language}: all current accepted and unlisted fields checked before residual and ordinary-layer rewinds`);
   if (!ve && !ts) assert.deepEqual(expected, saved.nativeAppliedSnapshot);
   return structuredClone(before);
 }

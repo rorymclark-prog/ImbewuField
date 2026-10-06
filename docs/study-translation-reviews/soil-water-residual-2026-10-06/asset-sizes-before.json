@@ -1,0 +1,27 @@
+{
+  "title": "Verified pre-residual asset size entries",
+  "baselineHead": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "sourcePath": "lib/course-asset-sizes.ts",
+  "sourceSha256": "8c05b788252d209dcffc80e6655a6e1d436cf00222ab3abd078a87a7979fd311",
+  "priorSummaryLine": "// 1905 files, 744.5 MB total.",
+  "entries": {
+    "/course-decks/soil-health/st/slide-04.webp": 232098,
+    "/course-decks/soil-health/st/slide-09.webp": 263022,
+    "/course-decks/soil-health/st/slide-12.webp": 304072,
+    "/course-decks/soil-health/st/slide-13.webp": 273500,
+    "/course-decks/soil-health/st/slide-17.webp": 529456,
+    "/course-decks/soil-health/ts/slide-04.webp": 229738,
+    "/course-decks/soil-health/ts/slide-08.webp": 577128,
+    "/course-decks/soil-health/ts/slide-09.webp": 264444,
+    "/course-decks/soil-health/ts/slide-17.webp": 532172,
+    "/course-decks/soil-health/ve/slide-12.webp": 298134,
+    "/course-decks/soil-health/ve/slide-13.webp": 276574,
+    "/course-decks/soil-health/ve/slide-17.webp": 524534,
+    "/course-decks/water-harvesting/ts/slide-22.webp": 288368,
+    "/course-decks/water-harvesting/ve/slide-06.webp": 266208,
+    "/course-decks/water-harvesting/ve/slide-15.webp": 355172,
+    "/course-decks/water-harvesting/ve/slide-17.webp": 269054,
+    "/course-decks/water-harvesting/ve/slide-18.webp": 579274,
+    "/course-decks/water-harvesting/ve/slide-22.webp": 302624
+  }
+}

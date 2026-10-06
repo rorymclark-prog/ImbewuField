@@ -258,10 +258,10 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.ok(quiz0Question.sesothoDraft.includes('Ka mora pula e matla'));
   assert.ok(quiz0Question.sesothoDraft.includes('pele se fetola earthwork'));
   assert.equal(draft.lessons[0].quiz[0].rationale.reviewStatus, 'machine-draft',
-    'translated rationale framing remains visibly unreviewed while its unresolved predicate stays in English');
-  assert.ok(draft.lessons[0].quiz[0].rationale.sesothoDraft.includes('Uneven filling') &&
+    'translated rationale framing remains visibly unreviewed');
+  assert.ok(draft.lessons[0].quiz[0].rationale.sesothoDraft.includes('Ho tlala ho sa lekaleng') &&
     draft.lessons[0].quiz[0].rationale.sesothoDraft.includes('safe outlet'),
-    'preserve the exact uneven-filling predicate and safe-outlet qualification');
+    'preserve the uneven-filling diagnostic and safe-outlet qualification');
   const quiz1Question = draft.lessons[0].quiz[1].question;
   assert.equal(quiz1Question.reviewStatus, 'machine-draft');
   assert.ok(quiz1Question.sesothoDraft.startsWith('Sehwai se batlang '),

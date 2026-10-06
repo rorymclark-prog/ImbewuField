@@ -193,8 +193,8 @@
           },
           {
             "status": "draft",
-            "text": "Nḓila a i tei u erode slope kana u rumela maḓi a tshinyaho kha muhura. A downstream swale or dam must be able to receive it safely.",
-            "provenance": "Complete reviewed learner paragraph reused for byte-exact English source (Water ordinary completion, 6 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+            "text": "Nḓila a i tei u erode slope kana u rumela maḓi a tshinyaho kha muhura. Swale ya downstream kana damu ḽa downstream ḽi fanela u kona u ṱanganedza maḓi ayo safely.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
           },
           {
             "status": "draft",
@@ -502,8 +502,8 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Isani Maḓi a u Thoma a si Kunaho (Dirty First Flush) kule na Thanngi",
-          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          "text": "Isani Maḓi a u Thoma a si Kunaho (First Flush) kule na Thanngi",
+          "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
         },
         "body": [
           {
@@ -584,8 +584,8 @@
           },
           {
             "status": "draft",
-            "text": "Pulannani zwine na ḓo ita musi stored water runs low. Dzina ḽa vundu fhedzi a ḽi ni vhudzi vhuhulwane ha tank ine na i ṱoḓa.",
-            "provenance": "Complete reviewed learner paragraph reused for byte-exact English source (Water ordinary completion, 6 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+            "text": "Pulannani zwine na ḓo ita musi maḓi o vhulungwaho a tshi sala e maṱuku. Dzina ḽa vundu fhedzi a ḽi ni vhudzi vhuhulwane ha tank ine na i ṱoḓa.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
           }
         ]
       }
@@ -610,8 +610,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Itani uri tank i dzule covered; vheani screen kha openings uri zwikhokhonono zwi si dzhene, nahone ni ṱhogomele ṱhanga, gutters na diverter. Vhulungani maḓi a mvula o fhambanywa na pipes dza maḓi a u nwa.",
-            "provenance": "Complete reviewed learner paragraph reused for byte-exact English source (Water ordinary completion, 6 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+            "text": "Itani uri tank i dzule yo fukedzwaho; vheani screen kha zwikhala uri zwikhokhonono zwi si dzhene, nahone ni ṱhogomele ṱhanga, gutters na diverter. Vhulungani maḓi a mvula o fhambanywa na pipes dza maḓi a u nwa.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
           },
           {
             "status": "draft",
@@ -620,8 +620,8 @@
           },
           {
             "status": "draft",
-            "text": "Basic filter fhedzi a si drinking-water guarantee. Maḓi ane a shumiswa kha food crops na one a ṱoḓa safety assessment.",
-            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+            "text": "Basic filter fhedzi a i khwaṱhisedzi uri maḓi o lugela u nwa. Maḓi ane a shumiswa kha food crops na one a ṱoḓa safety assessment.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
           }
         ]
       }
@@ -754,8 +754,8 @@
           },
           {
             "status": "draft",
-            "text": "If a reuse system is already operating and the water smells bad, pools or harms plants, litshani u a shumisa ni humbele qualified local advice.",
-            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+            "text": "Arali system ya u shumisa maḓi hafhu yo no thoma u shuma, nahone tshiṅwe tsha izwi tsha itea: maḓi a tshi nukha zwavhi, a tshi kuvhangana fhethu huthihi, kana a tshi tshinya zwimela, litshani u a shumisa ni humbele qualified local advice.",
+            "provenance": "Source-bound ordinary-prose machine draft (6 October 2026): target text updated after exact source/current binding and independent semantic backcheck; difficult or uncertain technical terms retained. Unreviewed for fluency and local farming approval."
           }
         ]
       }
