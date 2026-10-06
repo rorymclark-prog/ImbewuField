@@ -395,7 +395,8 @@
               },
               {
                 "sourceEnglish": "sale price",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "theko eo dihlahiswa di rekiswang ka yona"
               },
               {
                 "sourceEnglish": ", but it also takes time, packing, transport and customer care.",
@@ -403,7 +404,7 @@
                 "text": ", empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki."
               }
             ],
-            "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -561,8 +562,9 @@
               },
               {
                 "sourceEnglish": "variety",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                "status": "draft",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed.",
+                "text": "mofuta"
               },
               {
                 "sourceEnglish": ", source and collection date. Plan ",
@@ -583,8 +585,9 @@
               },
               {
                 "sourceEnglish": "storage",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                "status": "draft",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed.",
+                "text": "poloko"
               },
               {
                 "sourceEnglish": " for each crop.",
@@ -593,7 +596,7 @@
                 "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
               }
             ],
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",

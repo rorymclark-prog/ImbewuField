@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-06",
+  "status": "root accepted source-bound unreviewed candidate; not wired/rendered/published",
+  "sourceBinding": {
+    "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+    "fileSHA256": "3dc7d86d7a9ec0d58db7a70baaf4357ed57c58a0df9d4bc7fcb1b0d92ba11db2",
+    "language": "ve",
+    "slideIndex": 2,
+    "slideNumber": 3,
+    "field": "slides[2].english.body[1]",
+    "sourceText": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+    "sourceTextSHA256": "521066347e679bb7b3aea99747589b3738983de83dabb32c02b5d149a710c87e"
+  },
+  "sourcePacketSHA256": "0b9a88f32113d2488658939cd8a71478131a84538a6a8e2f5ac1560f4eb139b4",
+  "independentCheck": "output/playwright/ve-vegetables-learning-bed-independent-check-20261006.json",
+  "independentCheckSHA256": "a6fd95b03803b8bf2ee3a787c6a39ef79cec986a7dd98c38a65fd25259cd550e",
+  "source": "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+  "targetText": "Tsha u thoma. Fhaṱani bed yo teaho — ni ite uri width na bed type zwi yelane na mavu aṋu na mvula ya fhethu haṋu.",
+  "targetSHA256": "6ed294525edfbc8501aec0877e7ce74bbccc4e90a8912f4437902c981ca043dc",
+  "technicalTerms": [
+    "bed",
+    "width",
+    "bed type"
+  ],
+  "rootReason": "Use project-attested Fhaṱani for Build rather than unsupported Akeni. Width and bed type remain jointly matched to both own soil and rainfall; no quantity, recommendation or new condition.",
+  "limitations": "Independent meaning check and root review only, no fluent approval. Exact-English source and visible unreviewed label required; actual render/phone/publication gates remain."
+}

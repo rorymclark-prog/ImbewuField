@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { coreHeldOrdinaryPairBefore, coreHeldOrdinaryPairBeforeHistory, coreHeldOrdinaryPairBytesBefore, coreHeldOrdinaryAssetBefore, ensureCoreHeldOrdinaryText } from './core-held-ordinary-history-checks.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
@@ -44,6 +45,9 @@ export function readFinalLanguageNextInputs() {
   return { native: structuredClone(finalLanguageNextNativeFiles), paired: Object.fromEntries(Object.keys(expectedPairs).map(file => [file, JSON.parse(readFileSync(file, 'utf8'))])) };
 }
 export function validateFinalLanguageNextText(input = readFinalLanguageNextInputs()) {
+  // 7 October adds 109 reviewed paired leaves. Validate that complete newer
+  // layer before preserving these older 39-field claims against their baseline.
+  input = { ...input, paired: Object.fromEntries(Object.entries(input.paired).map(([file, value]) => [file, coreHeldOrdinaryPairBefore(file, value)])) };
   assert.deepEqual(COURSE_MODULES, canonicalBefore, 'all canonical English and indices stay exact');
   assert.equal(sha(readFileSync('lib/course-modules.ts')), plan.canonicalFileSHA256);
   assert.equal(plan.nativePlans.length, 9); assert.equal(plan.pairPlans.length, 39);
@@ -74,12 +78,17 @@ export function validateFinalLanguageNextText(input = readFinalLanguageNextInput
   }
   // Whole native file bytes also protect other exports after module import.
   for (const [file, digest] of Object.entries({"lib/course-translation-drafts-ve-vegetables-staples.ts": "811401edf7fe0a2ec6048406999fa519c748954e6cc7621a742e392db98fbdad", "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "e85fbc6aca65654f4154399ce77616f186532bed5f73db7b38422daa813e05f4", "lib/course-translation-drafts-ts-vegetables-staples.ts": "d41a4f1273cfcc1faa68b618d427418edb838f4728787a4ea4e9f167084ab78d"})) assert.equal(sha(readFileSync(file)), digest, 'complete accepted native file bytes');
-  for (const item of plan.protectedInventory) assert.equal(sha(readFileSync(item.path)), item.sha256, 'ST archives and audio remain exact');
+  // Only active silent text changes; archive/audio remain actual byte checks.
+  for (const item of plan.protectedInventory) {
+    const bytes = readFileSync(item.path);
+    assert.equal(coreHeldOrdinaryAssetBefore(item.path,bytes)?.sha256 ?? sha(coreHeldOrdinaryPairBytesBefore(item.path,bytes)), item.sha256, 'ST archives and audio remain exact; checked active silent cards expose their predecessor');
+  }
 }
 // Historical accessors cache validation only while all relevant disk signatures
 // remain unchanged; explicit caller objects are always compared in full.
 let lastSignature = '';
 export function ensureFinalLanguageNextCurrent() {
+  ensureCoreHeldOrdinaryText();
   const files = [...Object.keys(expectedPairs), ...Object.keys(expectedNative), 'lib/course-modules.ts', ...plan.protectedInventory.map((item: any) => item.path)];
   const signature = files.map(file => { const s = statSync(file, { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
@@ -93,7 +102,8 @@ export function finalLanguageNextNativeBefore<T>(actual: T): T {
   return structuredClone(beforeNative[file]);
 }
 export function finalLanguageNextDeckBefore<T>(file: string, actual: T): T {
-  ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return actual;
+  ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return coreHeldOrdinaryPairBefore(file, actual);
+  actual = coreHeldOrdinaryPairBefore(file, actual);
   assert.deepEqual(actual, expectedPairs[file], 'caller supplies the complete accepted latest paired layer');
   return structuredClone(beforePairs[file]);
 }
@@ -103,8 +113,8 @@ export function finalLanguageNextDeckBeforeCurrent<T>(actual: T): T {
   return file ? finalLanguageNextDeckBefore(file, actual) : actual;
 }
 export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Array | string): string {
-  ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return Buffer.from(bytes).toString();
-  const actual = JSON.parse(Buffer.from(bytes).toString());
+  ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return Buffer.from(coreHeldOrdinaryPairBytesBefore(file,Buffer.from(bytes))).toString();
+  const actual = coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.deepEqual(actual, expectedPairs[file], 'whole listed paired bytes match accepted source/target/status before dated hash view');
   assert.equal(Buffer.from(bytes).toString(), readFileSync(file, 'utf8'), 'passed paired bytes are actual current bytes');
   return readFileSync(folder + 'before/' + file.replaceAll('/', '__') + '.txt', 'utf8');
@@ -134,6 +144,7 @@ export function finalLanguageNextPresentationBefore<T extends { status: string; 
  * The older caller still validates its complete predecessor, including unlisted data. */
 export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): T {
   ensureFinalLanguageNextCurrent();
+  actual = coreHeldOrdinaryPairBeforeHistory(file, actual);
   const restored: any = structuredClone(actual);
   for (const row of plan.pairPlans.filter((row: any) => row.file === file)) {
     const slide = restored.slides.find((slide: any) => slide.n === row.slide);

@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '41c5323b', changes: [
+    '69 silent Study cards add fuller regional drafts beside exact English.',
+    'Saved slide packs refresh those cards while keeping narration and other lessons.',
+  ], tour: [
+    { title: 'Read fuller silent Study cards',
+      where: 'Study → Introduction, Reading, Vegetables or Market',
+      detail: 'Compare unreviewed regional wording with English, or save the slides-only pack.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '5f410753', changes: [
     '36 silent regional slides add fuller drafts beside exact English.',
     'Vegetables lessons add clearer unreviewed regional drafts.',

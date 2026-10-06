@@ -37,7 +37,9 @@ test('36 final regional stills refresh once including queries without audio/film
 test('current 36-frame media guard rejects whole-manifest and same-size byte corruption before historical descriptors', () => {
   validateFinalLanguageNextMedia();
   const manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  const header = finalLanguageNextMediaProof.manifestNewComment;
+  // The aggregate changes with the later 69-card release; corrupt today's
+  // actual generated header so this mutation can still fail for the right reason.
+  const header = manifest.match(/^\/\/ \d+ files, [\d.]+ MB total\.$/m)![0];
   const corrupt = manifest.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corrupt, manifest);
   assert.throws(() => validateFinalLanguageNextMedia(corrupt), /complete current final-language manifest/);

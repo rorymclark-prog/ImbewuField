@@ -92,7 +92,7 @@ function validateCurrentFileHashes() {
   for (const row of Object.values(outputs.existingPaired) as any[]) {
     assert.equal(sha(finalLanguageNextPairedBytesBefore(row.path, readFileSync(row.path))), row.sha256, `${row.path}: exact accepted paired release bytes`);
   }
-  assert.equal(sha(readFileSync(outputs.newSilentST.path)), outputs.newSilentST.sha256,
+  assert.equal(sha(finalLanguageNextPairedBytesBefore(outputs.newSilentST.path,readFileSync(outputs.newSilentST.path))), outputs.newSilentST.sha256,
     'new silent Sesotho paired deck matches the accepted release bytes');
   assert.equal(sha(readFileSync(outputs.unchangedOldST.path)), outputs.unchangedOldST.sha256,
     'the archived Sesotho paired deck remains byte-identical');
@@ -148,7 +148,9 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
 
   // Only after full latest validation may the older 60-field release be reconstructed.
   const pairedInput = Object.fromEntries(Object.entries(input.paired ?? readCurrentIntroSilentTextInputs().paired).map(([language, deck]) => [language, finalLanguageNextDeckBefore(`docs/narration/intro-permaculture.${language}.paired-draft.json`, deck)]));
-  const currentSilentST = input.silentSesotho ?? readCurrentIntroSilentTextInputs().silentSesotho;
+  // Active silent headings were expanded on7 October; check the complete live
+  // source/target layer before retaining this older silent release's claims.
+  const currentSilentST = finalLanguageNextDeckBefore(proof.outputs.newSilentST.path,input.silentSesotho ?? readCurrentIntroSilentTextInputs().silentSesotho);
   // Bind caller-provided objects to the exact accepted files as well as the
   // row-by-row reconstruction below. This catches extra shadow properties on
   // mixed targets, which can leave their visible text unchanged.
@@ -159,7 +161,7 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
   }
   assert.deepEqual(pairedInput.st, readJson(proof.outputs.unchangedOldST.path),
     'supplied archived Sesotho paired object is the exact accepted archived registry');
-  assert.deepEqual(currentSilentST, readJson(proof.outputs.newSilentST.path),
+  assert.deepEqual(currentSilentST, finalLanguageNextDeckBefore(proof.outputs.newSilentST.path,readJson(proof.outputs.newSilentST.path)),
     'supplied silent Sesotho object is the exact accepted current registry');
   const pairedRows = proof.scope.changedRows.filter((row: any) => row.fieldLocator.startsWith('pairedSlides/'));
   assert.equal(pairedRows.length, 55);

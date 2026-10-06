@@ -9,6 +9,7 @@ import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-dra
 import { XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+import { coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
 
 const firstObservationsProof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-IMPLEMENTATION-2026-10-05.json', import.meta.url), 'utf8')) as {
   pairedFieldsApplied: Array<{
@@ -135,7 +136,10 @@ test('Reading observation drafts retain their exact source and geometry through 
   assert.deepEqual(new Set(firstObservationsProof.pairedFieldsApplied.map(row => `${row.language}:${row.slide}:${row.index}`)), selected,
     'the original observation release remains identifiable independently of later authorized fields');
   for (const language of ['st', 've', 'ts'] as const) {
-    const paired = JSON.parse(readFileSync(new URL(`../docs/narration/reading-landscape.${language}.paired-draft.json`, import.meta.url), 'utf8'));
+    // Later ordinary terms replace some literal holds. Validate the complete
+    // new layer before keeping the original observation/source/geometry claims.
+    const path = `docs/narration/reading-landscape.${language}.paired-draft.json`;
+    const paired = coreHeldOrdinaryPairBefore(path,JSON.parse(readFileSync(path,'utf8')));
     const checked = validatePairedDraft(paired, source, language);
     for (const row of firstObservationsProof.pairedFieldsApplied.filter(item => item.language === language)) {
       const slide = checked[row.slide - 1];

@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Miroho ni Swibyariwa swa Masungulo",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -29,14 +31,17 @@
               },
               {
                 "sourceEnglish": "Vegetables and Staple Crops.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Miroho ni Swibyariwa swa Masungulo.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
                 "status": "draft",
                 "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -229,14 +234,17 @@
               },
               {
                 "sourceEnglish": "staples",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "swakudya swa masungulo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " that protect you when one crop fails.",
                 "status": "draft",
                 "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -267,13 +275,17 @@
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. ",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -319,14 +331,17 @@
               },
               {
                 "sourceEnglish": "Permanent paths",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Tindlela leti tshamaka ti ri kona",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
                 "status": "draft",
                 "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -599,14 +614,17 @@
               },
               {
                 "sourceEnglish": "local conditions",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "swiyimo swa laha kaya",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
                 "status": "draft",
                 "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -862,9 +880,12 @@
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
             }
-          ]
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -905,7 +926,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -1158,7 +1181,9 @@
               },
               {
                 "sourceEnglish": ", barriers",
-                "status": "english-hold"
+                "status": "draft",
+                "text": ", swisirhelelo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " or changes in ",
@@ -1180,7 +1205,8 @@
                 "status": "draft",
                 "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1326,7 +1352,9 @@
               },
               {
                 "sourceEnglish": "ten-day photograph",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "foto ra le ndzhaku ka masiku ya khume",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " as an assignment checkpoint, ",
@@ -1338,7 +1366,8 @@
                 "status": "draft",
                 "text": "ku nga ri xivangelo xo hlwela ku khathalela."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1355,9 +1384,12 @@
               },
               {
                 "sourceEnglish": " with what you observed.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " u ri na leswi u swi xiyeke.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1423,7 +1455,9 @@
               },
               {
                 "sourceEnglish": " What germinated.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Leswi nga mila.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1435,7 +1469,7 @@
                 "text": " Leswi u tshoveleke."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",

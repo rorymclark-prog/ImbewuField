@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
+import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
+const laterPaths = new Set<string>(coreHeldOrdinaryAssets.map(row=>'public'+row.url));
+const laterFrames = new Map(coreHeldOrdinaryAssets.map(row=>['public'+row.url,row]));
 const folder = 'docs/media/final-language-next-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const bytes = readFileSync(folder + 'frames.json');
@@ -36,19 +39,29 @@ function descriptor(path: string) {
   const row = { signature, bytes: b.length, sha256: sha(b), width: b.length >= 30 ? b.readUInt16LE(26) & 0x3fff : 0, height: b.length >= 30 ? b.readUInt16LE(28) & 0x3fff : 0, riff: b.toString('ascii', 0, 4) === 'RIFF', webp: b.toString('ascii', 8, 12) === 'WEBP' };
   observations.set(path, row); return row;
 }
+function checkedHistoricalDescriptor(path: string) {
+  const actual = descriptor(path);
+  const later = laterFrames.get(path);
+  if (!later) return actual;
+  assert.equal(actual.bytes,later.afterBytes,path+': exact current measured bytes');
+  assert.equal(actual.sha256,later.afterSHA256,path+': exact current SHA');
+  return {...actual,bytes:later.beforeBytes,sha256:later.beforeSHA256,width:later.beforeDimensions[0],height:later.beforeDimensions[1]};
+}
 export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   const frame = changed.get(path); const before = beforeInventory.find(row => row.path === path);
   assert.ok(frame || before, 'asset belongs to the complete frozen media inventory');
   const expected = frame?.new ?? before;
-  assert.equal(bytes.length, expected.bytes, path + ': exact current measured bytes');
-  assert.equal(sha(bytes), expected.sha256, path + ': exact current SHA');
+  const latest = coreHeldOrdinaryAssetBefore(path, bytes);
+  assert.equal(latest?.bytes ?? bytes.length, expected.bytes, path + ': exact current measured bytes');
+  assert.equal(latest?.sha256 ?? sha(bytes), expected.sha256, path + ': exact current SHA');
 }
 export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  manifest = coreHeldOrdinaryManifestBefore(manifest);
   assert.equal(manifest, expectedManifest, 'complete current final-language manifest/header and all unlisted entries');
   ensureFinalLanguageNextCurrent();
   for (const before of beforeInventory) {
     const expected = changed.get(before.path)?.new ?? before;
-    const actual = descriptor(before.path);
+    const actual = checkedHistoricalDescriptor(before.path);
     assert.equal(actual.bytes, expected.bytes, before.path + ': all current inventory bytes');
     assert.equal(actual.sha256, expected.sha256, before.path + ': all current inventory hashes');
   }
@@ -57,10 +70,9 @@ export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/cour
     assert.equal(actual.riff, true); assert.equal(actual.webp, true);
     assert.deepEqual([actual.width, actual.height], [frame.new.width, frame.new.height]);
     assert.equal(actual.width, 1440); assert.ok(actual.height >= 5400);
-    const paired = JSON.parse(readFileSync(frame.pairFile, 'utf8'));
-    assert.equal(sha(readFileSync(frame.pairFile)), frame.pairSHA256);
+    const paired = coreHeldOrdinaryPairBefore(frame.pairFile, JSON.parse(readFileSync(frame.pairFile, 'utf8')));
     assert.deepEqual(paired.slides.find((slide: any) => slide.n === frame.slide), frame.pairedSlide);
-    finalLanguageNextDeckBefore(frame.pairFile, paired);
+    finalLanguageNextDeckBefore(frame.pairFile, JSON.parse(readFileSync(frame.pairFile, 'utf8')));
   }
 }
 let initialized = false;
@@ -74,10 +86,14 @@ export function finalLanguageNextMediaBefore(path: string): { bytes: number; sha
   const frame = changed.get(normalized);
   const expected = frame?.new ?? beforeInventory.find(row => row.path === normalized);
   if (expected) {
-    const actual = descriptor(normalized);
+    const actual = checkedHistoricalDescriptor(normalized);
     assert.equal(actual.bytes, expected.bytes, normalized + ': requested current measured bytes'); assert.equal(actual.sha256, expected.sha256, normalized + ': exact current SHA');
   }
-  return frame ? { ...frame.old } : null;
+  // Some of the later 69 cards were unlisted by this 36-card layer. Their
+  // checked predecessor still has to reach older complete inventory guards.
+  if(frame) return {...frame.old};
+  if(laterPaths.has(normalized)) {const actual=checkedHistoricalDescriptor(normalized);return {bytes:actual.bytes,sha256:actual.sha256,width:actual.width,height:actual.height};}
+  return null;
 }
 export function finalLanguageNextManifestBefore(current = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
   validateFinalLanguageNextMedia(current);
