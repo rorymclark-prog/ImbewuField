@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 October 2026', sha: '989b6f61', changes: [
+  { when: '6 October 2026', sha: '5f410753', changes: [
     '36 silent regional slides add fuller drafts beside exact English.',
     'Vegetables lessons add clearer unreviewed regional drafts.',
   ], tour: [
@@ -50,6 +50,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       where: 'Study → Introduction, Reading, Vegetables, Market or Water',
       detail: 'Compare unreviewed regional drafts with English, or save the silent slides.',
       href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '59fba04', changes: [
+    'Records add unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Save sale & invoice now says "& invoice" in isiZulu and Sesotho.',
+  ], tour: [
+    { title: 'Compare money-book drafts',
+      where: 'Records → Sold or Spent',
+      detail: 'Add a sale or cost and read the unreviewed wording beside exact English.',
+      href: '/records' },
   ] },
   { when: '6 October 2026', sha: 'b06536d2', changes: [
     'Reading, Vegetables and Market add fuller unreviewed regional lesson drafts.',

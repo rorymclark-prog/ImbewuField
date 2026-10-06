@@ -52,6 +52,24 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 6 Oct 2026 — Money book in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `/records` (Picked · Sold · Spent · Charts; `/finances` redirects there) now reads
+  source-keyed machine drafts in Sesotho, Tshivenda and provisional standard written Xitsonga, and
+  fills isiZulu where it still fell back to English. One lookup, `lib/records-regional-drafts.ts`,
+  keyed by the exact English on screen, so editing the English retires its draft. Existing wording
+  always wins; instructions about money and saved records show the English first. A visible
+  "Unreviewed … machine draft" notice sits above the tabs.
+- **Unchanged on purpose:** totals, formulas, units, currencies, dates, storage keys, validation
+  rules, paid AI (`/api/read-slip`) and recovery logic. Placeholders (`{kg}`, `{amount}`) must match
+  the English or the draft is refused.
+- **Review:** per-language drafting lane, then an independent blind back-translation review.
+  Reviewer repairs of whole sentences were not re-reviewed, so those, and every reviewer hold,
+  show English. Packet, briefs, verdicts and held rows: `docs/translation-reviews/records-finance-2026-10-06/`.
+- **Existing-wording fixes:** "Save sale & invoice" no longer drops "& invoice" in isiZulu and Sesotho.
+- **Still open:** Charts-tab components are isiZulu-only inline (`CashflowChart`, `FinanceGraphs`,
+  `ComingUpHarvests`, `HarvestReconciliation`, `AreaReturnCards`); held strings (units such as eggs
+  and jars, fuel, the lender disclaimer, Tshivenda Export); everything needs a fluent speaker.
+
 ### 1 Oct 2026 — Calendar sections; food chart month on top; phone gutter removed
 - **Four calendar sections** (`CalendarSectionHeader`, `CalendarSectionNote` in
   `app/facilitator/crops/page.tsx`): Vegetables (beds), Staple crops (plots), Fruit, nuts &
