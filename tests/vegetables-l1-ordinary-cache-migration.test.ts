@@ -2,25 +2,25 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
-import { expectedVegetablesL3Paths, validateCurrentVegetablesL3OrdinaryMedia, vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
+import { expectedVegetablesL1Paths, validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary } from './vegetables-l1-ordinary-media-history-checks.ts';
 
-test('Vegetables L3 refresh retires only eight approved saved still paths once and preserves other offline media', async () => {
+test('Vegetables L1 refresh retires only five approved saved still paths once and preserves other offline media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
-  const body = source.match(/async function migrateVegetablesL3OrdinaryResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  const body = source.match(/async function migrateVegetablesL1OrdinaryResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];
   assert.ok(body);
   const activation = source.slice(source.indexOf("self.addEventListener('activate'"));
   const migrations = [...activation.matchAll(/\.then\((migrate\w+)\)/g)].map(match => match[1]);
-  const precision = migrations.indexOf('migrateVegetablesPestPrecisionPairedStills');
-  const ordinary = migrations.indexOf('migrateVegetablesL3OrdinaryResidualStills');
+  const precision = migrations.indexOf('migrateVegetablesL3OrdinaryResidualStills');
+  const ordinary = migrations.indexOf('migrateVegetablesL1OrdinaryResidualStills');
   const market = migrations.indexOf('migrateMarketOrdinaryResidualStills');
-  assert.equal(migrations.filter(name => name === 'migrateVegetablesL3OrdinaryResidualStills').length, 1);
-  assert.ok(precision >= 0 && ordinary > precision && market >= 0 && ordinary > market && activation.indexOf('self.clients.claim()') > activation.indexOf('migrateVegetablesL3OrdinaryResidualStills'),
-    'the once-only Vegetables refresh follows prior pest and Market invalidations and completes before clients are claimed');
+  assert.equal(migrations.filter(name => name === 'migrateVegetablesL1OrdinaryResidualStills').length, 1);
+  assert.ok(precision >= 0 && ordinary > precision && market >= 0 && ordinary > market && activation.indexOf('self.clients.claim()') > activation.indexOf('migrateVegetablesL1OrdinaryResidualStills'),
+    'the once-only Vegetables refresh follows prior L3 and Market invalidations and completes before clients are claimed');
 
   const origin = 'https://field.test';
-  const changed = expectedVegetablesL3Paths;
-  assert.equal(changed.length, 8);
-  assert.equal(new Set(changed).size, 8);
+  const changed = expectedVegetablesL1Paths;
+  assert.equal(changed.length, 5);
+  assert.equal(new Set(changed).size, 5);
   const stale = changed.flatMap(path => [path, `${path}?saved=old`, `${path}?width=small`]);
   const changedSet = new Set(changed);
   const preservedVegetablesStills = ['st', 've', 'ts'].flatMap(language =>
@@ -29,7 +29,7 @@ test('Vegetables L3 refresh retires only eight approved saved still paths once a
       .filter(path => !changedSet.has(path))
       .map(path => `${path}?cached=1`)
   );
-  assert.equal(preservedVegetablesStills.length, 46, 'all other regional Vegetables frames stay cached');
+  assert.equal(preservedVegetablesStills.length, 49, 'all other regional Vegetables frames stay cached');
   const preserved = [
     ...preservedVegetablesStills,
     '/course-decks/vegetables-staples/en/slide-06.webp?cached=1',
@@ -62,7 +62,7 @@ test('Vegetables L3 refresh retires only eight approved saved still paths once a
   for (const path of stale) assert.equal(rows.has(new URL(path, origin).href), false, path);
   for (const path of preserved) assert.equal(rows.has(new URL(path, origin).href), true, path);
   assert.equal(deletes, stale.length, 'only the exact still paths and their query variants are retired');
-  const marker = '/course-decks/vegetables-staples/.l3-ordinary-residual-stills-20261006';
+  const marker = '/course-decks/vegetables-staples/.l1-ordinary-residual-stills-20261006';
   assert.equal(rows.has(new URL(marker, origin).href), true);
   assert.equal(writes, 1, 'the migration records one dated completion marker');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation never downloads learner-selected images');
@@ -78,23 +78,21 @@ test('Vegetables L3 refresh retires only eight approved saved still paths once a
   assert.equal(writes, 1, 'a later activation leaves the migration marker untouched');
 });
 
-test('eight actual compressed Vegetables cards match full accepted sources, measured download sizes and all protected assets', () => {
-  const proof = validateCurrentVegetablesL3OrdinaryMedia();
-  assert.equal(proof.frames.length, 8);
-  assert.equal(proof.manifestActualTotalBytes, 744357590);
-  assert.equal(proof.aggregateDeltaBytes, 545712);
-  const ve13 = proof.frames.find((row: { language: string; slide: number }) => row.language === 've' && row.slide === 13);
-  assert.equal(ve13.new.height, 5508, 'the complete natural-height source panel remains uncropped');
-  assert.equal(vegetablesL3AssetSizesBeforeOrdinary(), readFileSync('docs/media/vegetables-l3-ordinary-2026-10-06/asset-sizes-before.ts.txt', 'utf8'));
+
+test('five compressed L1 cards preserve all accepted sources, full download manifest and 87 unlisted Vegetable assets', () => {
+  const proof = validateCurrentVegetablesL1OrdinaryMedia();
+  assert.equal(proof.frames.length, 5);
+  assert.equal(proof.manifestActualTotalBytes, 744366586);
+  assert.equal(proof.aggregateDeltaBytes, 8996);
+  assert.equal(vegetablesL1AssetSizesBeforeOrdinary(), readFileSync('docs/media/vegetables-l1-ordinary-2026-10-06/asset-sizes-before.ts.txt', 'utf8'));
 });
 
-// 6 October 2026: the later five-card L1 layer validates live manifest mutations before this L3 view.
-test('the historical Vegetables media view rejects header and unlisted-size mutations before returning any old descriptor', () => {
+test('L1 historical descriptors reject aggregate and unlisted size drift before exposing the earlier assets', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(actual.replace('744.4 MB total.', '744.5 MB total.')), /only (?:eight|five) Vegetables sizes|exact guarded Vegetables L1 manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace('744.4 MB total.', '744.5 MB total.')), /only five Vegetables sizes/);
   const path = '/course-decks/vegetables-staples/st/slide-01.webp';
   const slot = `  '${path}': ${COURSE_ASSET_SIZES[path]},`;
   assert.ok(actual.includes(slot));
-  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:eight|five) Vegetables sizes|exact guarded Vegetables L1 manifest baseline/);
-  assert.throws(() => vegetablesL3AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded Vegetables (?:L3|L1) manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only five Vegetables sizes/);
+  assert.throws(() => vegetablesL1AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded Vegetables L1 manifest baseline/);
 });
