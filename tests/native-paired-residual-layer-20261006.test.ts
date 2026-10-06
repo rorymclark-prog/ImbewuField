@@ -14,6 +14,7 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryBeforeResidualLayer, nativeOrdinaryPresentationBeforeFinalBatch, validateNativeOrdinaryResidualLayer } from './native-ordinary-final-history-checks.ts';
+import { vegetablesDeckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 
 const layerDir = path.join(process.cwd(), 'docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06');
 const proof = JSON.parse(readFileSync(path.join(layerDir, 'applied-fields.json'), 'utf8'));
@@ -178,4 +179,33 @@ test('the newest layer rejects current source, target, status, index, and unlist
   indexDrift.paired[marketPath].slides.find((slide: any) => slide.n === 6).target.body.reverse();
   assert.throws(() => validateNativeOrdinaryResidualLayer(indexDrift.modules, indexDrift.paired), /complete current paired file/,
     'paired body index/order changes fail the complete-file check');
+});
+
+test('Vegetables historical decks rewind only after all six newest paired files and thirteen source cells pass', () => {
+  const pairedPath = 'docs/narration/vegetables-staples.st.paired-draft.json';
+  const current = structuredClone(actualPairedFiles[pairedPath]);
+  const prior = vegetablesDeckBeforeNativePairedResidual(current);
+  const expectedPrior = JSON.parse(readFileSync(path.join(layerDir, 'before/paired-files/vegetables-staples.st.paired-draft.json'), 'utf8'));
+  assert.deepEqual(prior, expectedPrior,
+    'the complete accepted after-file projects to its frozen pre-residual deck, including every unlisted field');
+
+  const targetDrift = structuredClone(current);
+  targetDrift.slides.find((slide: any) => slide.n === 5).target.body[4].segments[1].text += ' drift';
+  assert.throws(() => vegetablesDeckBeforeNativePairedResidual(targetDrift), /caller supplied the verified current deck/,
+    'a changed target cannot be hidden by the historical projection');
+
+  const sourceDrift = structuredClone(current);
+  sourceDrift.slides.find((slide: any) => slide.n === 5).english.body[4] += ' drift';
+  assert.throws(() => vegetablesDeckBeforeNativePairedResidual(sourceDrift), /caller supplied the verified current deck/,
+    'a changed canonical paired source cannot be hidden by the historical projection');
+
+  const indexDrift = structuredClone(current);
+  indexDrift.slides[4].target.body.reverse();
+  assert.throws(() => vegetablesDeckBeforeNativePairedResidual(indexDrift), /caller supplied the verified current deck/,
+    'a reordered target index cannot be hidden by the historical projection');
+
+  const unlistedDrift = structuredClone(current);
+  unlistedDrift.slides[0].target.body[0].segments[0].text += ' drift';
+  assert.throws(() => vegetablesDeckBeforeNativePairedResidual(unlistedDrift), /caller supplied the verified current deck/,
+    'an unlisted title change cannot be hidden by the historical projection');
 });

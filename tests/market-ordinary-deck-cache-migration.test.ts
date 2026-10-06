@@ -1,11 +1,11 @@
 import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
-import { marketAssetSizesBeforeOrdinary, validateCurrentMarketOrdinaryMedia } from './market-ordinary-media-history-checks.ts';
+import { marketAssetSizesBeforeOrdinary, validateCurrentMarketOrdinaryMedia, marketFrameBeforeNativeResidual } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
-import { marketDeckBeforeOrdinary, readCurrentMarketDecks } from './market-ordinary-deck-checks.ts';
+import { marketDeckBeforeOrdinary, marketDeckBeforeNativeResidual, readCurrentMarketDecks } from './market-ordinary-deck-checks.ts';
 
 test('ordinary Market refresh retires only its eleven approved saved stills once and keeps other offline media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
@@ -101,26 +101,34 @@ test('eleven Market WebPs and download promises match accepted paired sources wh
   const proof = JSON.parse(proofBytes.toString());
   assert.equal(proof.frames.length, 11);
   assert.deepEqual(proof.frames.map((frame: { path: string }) => frame.path).sort(), expectedPaths.slice().sort());
-  const decks = readCurrentMarketDecks();
-  marketDeckBeforeOrdinary(decks); // validates all current targets, sources, statuses and unlisted pairs first
+  const currentDecks = readCurrentMarketDecks();
+  marketDeckBeforeOrdinary(currentDecks);
+  const decks = marketDeckBeforeNativeResidual(currentDecks);
   const before = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(sha(before), proof.manifestBeforeSHA256);
   let expectedManifest = before;
   for (const frame of proof.frames) {
     assert.deepEqual(frame.pairedSource, decks[frame.language].slides[frame.slide - 1], frame.path);
-    const bytes = readFileSync('public' + frame.path);
-    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
-    assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
-    assert.equal(bytes.length, frame.new.bytes, frame.path);
-    assert.equal(sha(bytes), frame.new.sha256, frame.path);
+    // The final thirteen-frame layer supersedes one of these eleven images.
+    // Its complete real-byte guard precedes this exact predecessor/canvas claim.
+    const later = marketFrameBeforeNativeResidual(frame.path);
+    if (later) {
+      assert.deepEqual(later, {bytes:frame.new.bytes,sha256:frame.new.sha256,width:frame.new.width,height:frame.new.height});
+      assert.ok(vegetablesL3AssetSizesBeforeOrdinary().includes(`  '${frame.path}': ${frame.new.bytes},`));
+    } else {
+      const bytes = readFileSync('public' + frame.path);
+      assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
+      assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
+      assert.equal(bytes.length, frame.new.bytes, frame.path);
+      assert.equal(sha(bytes), frame.new.sha256, frame.path);
+      assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
+      assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
+      assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
+      assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
+    }
     assert.notEqual(frame.new.sha256, frame.old.sha256, frame.path);
     assert.equal(frame.new.width, 1440);
     assert.ok(frame.new.height >= 5400, 'natural-height panels must not be cropped');
-    // Pillow's lossy WebP carries a VP8 frame header with actual decoded dimensions.
-    assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
-    assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
-    assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
-    assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
     const oldEntry = `  '${frame.path}': ${frame.old.bytes},`;
     assert.equal(expectedManifest.split(oldEntry).length, 2, 'one exact old manifest slot');
     expectedManifest = expectedManifest.replace(oldEntry, `  '${frame.path}': ${frame.new.bytes},`);
@@ -142,9 +150,13 @@ test('eleven Market WebPs and download promises match accepted paired sources wh
       assert.deepEqual(proof.frames.find((frame: { path: string }) => frame.path === row.path).old, row);
       continue;
     }
-    const bytes = readFileSync('public' + row.path);
-    assert.equal(bytes.length, row.bytes, row.path);
-    assert.equal(sha(bytes), row.sha256, row.path);
+    const later = marketFrameBeforeNativeResidual(row.path);
+    if (later) assert.deepEqual({bytes:later.bytes,sha256:later.sha256}, {bytes:row.bytes,sha256:row.sha256}, row.path);
+    else {
+      const bytes = readFileSync('public' + row.path);
+      assert.equal(bytes.length, row.bytes, row.path);
+      assert.equal(sha(bytes), row.sha256, row.path);
+    }
   }
   assert.equal(sha(readFileSync(folder + 'protected-audio-films-before.json')), 'b51a853f7f1d05f13f48c2cfef20429641ecc667a5f93b3c9e9294ac02aa3bf5');
   const protectedMedia = JSON.parse(readFileSync(folder + 'protected-audio-films-before.json', 'utf8'));
@@ -164,12 +176,12 @@ test('Market historical media reconstruction rejects arbitrary headers and unlis
   const prior = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(marketAssetSizesBeforeOrdinary(actual), prior, 'exact full accepted layer restores the frozen historical text');
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(/MB total\./, 'MB total. corrupted')),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|the caller must supply the exact live complete manifest/);
   assert.throws(() => marketAssetSizesBeforeOrdinary(prior.replace('709.4 MB total.', '709.5 MB total.')),
     /exact guarded Market baseline/);
   const unlisted = '/course-decks/market-community/st/slide-01.webp';
   const slot = `  '${unlisted}': ${COURSE_ASSET_SIZES[unlisted]},`;
   assert.ok(actual.includes(slot));
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(slot, `  '${unlisted}': 1,`)),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|the caller must supply the exact live complete manifest/);
 });

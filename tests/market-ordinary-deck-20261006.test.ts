@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { marketDeckBeforeOrdinary, readCurrentMarketDecks, marketPartText } from './market-ordinary-deck-checks.ts';
+import { marketDeckBeforeOrdinary, marketDeckBeforeNativeResidual, readCurrentMarketDecks, marketPartText } from './market-ordinary-deck-checks.ts';
 
 test('Market ordinary slides preserve the full source/unlisted layer before historical reconstruction', () => {
   const current = readCurrentMarketDecks();
@@ -13,8 +13,11 @@ test('Market ordinary slides preserve the full source/unlisted layer before hist
 });
 
 test('Market cost, seed permission, only-when and nearest/measuring predicates retain exact source anchors', () => {
-  const decks = readCurrentMarketDecks();
-  marketDeckBeforeOrdinary(decks);
+  const current = readCurrentMarketDecks();
+  marketDeckBeforeOrdinary(current);
+  // Later full ordinary clauses supersede these exact dated segment layouts;
+  // validate all current files before inspecting the unchanged older safeguards.
+  const decks = marketDeckBeforeNativeResidual(current);
   const ve = decks.ve.slides;
   const terms = ve[14].target.body[3];
   assert.deepEqual(terms.segments!.filter(s => s.status === 'english-hold').map(s => s.sourceEnglish), ['variety', 'permission']);
@@ -39,7 +42,11 @@ test('Market deck guards reject source, current wording, unlisted, order and fal
     const decks = readCurrentMarketDecks(); change(decks); assert.throws(() => marketDeckBeforeOrdinary(decks));
   };
   mutate(d => { d.ve.slides[14].english.body[3] = d.ve.slides[14].english.body[3].replace('whether', 'because'); });
-  mutate(d => { d.ve.slides[10].target.body[2].segments!.at(-1)!.text = 'Always supplies'; });
+  mutate(d => {
+    const part = d.ve.slides[10].target.body[2];
+    if (part.status === 'draft') part.text = 'Always supplies';
+    else part.segments!.at(-1)!.text = 'Always supplies';
+  });
   mutate(d => { d.st.slides[0].target.body[0].text += ' changed'; });
   mutate(d => { d.ts.slides.reverse(); });
   mutate(d => { const p = d.ve.slides[14].target.body[3].segments![1]; p.status = 'draft'; p.text = p.sourceEnglish; });

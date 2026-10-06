@@ -4,11 +4,14 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
+import { vegetablesDeckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
+import { nativePairedResidualFrames, nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 const folder = 'docs/media/vegetables-l1-ordinary-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
 export const expectedVegetablesL1Paths = ['/course-decks/vegetables-staples/st/slide-06.webp', '/course-decks/vegetables-staples/ve/slide-04.webp', '/course-decks/vegetables-staples/ve/slide-05.webp', '/course-decks/vegetables-staples/ve/slide-06.webp', '/course-decks/vegetables-staples/ts/slide-06.webp'];
 const expectedPaths = expectedVegetablesL1Paths;
+const laterResidualPaths = new Set(nativePairedResidualFrames.map(frame => frame.url));
 
 
 // Many older preservation proofs ask about hundreds of files individually.
@@ -38,7 +41,9 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
   const decks: Record<string, any> = {};
   for (const language of ['st', 've', 'ts'] as const) {
     decks[language] = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${language}.paired-draft.json`, 'utf8'));
-    vegetablesDeckBeforeL1Ordinary(language, decks[language]);
+    const live = decks[language];
+    decks[language] = vegetablesDeckBeforeNativePairedResidual(live);
+    vegetablesDeckBeforeL1Ordinary(language, live);
     const acceptedBytes = readFileSync(folder + `paired-${language}-accepted.json`);
     assert.equal(sha(acceptedBytes), proof.pairedSnapshotHashes[language]);
     assert.deepEqual(decks[language], JSON.parse(acceptedBytes.toString()), 'full accepted paired deck and every unlisted field remain exact');
@@ -48,19 +53,30 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
   let expectedManifest = before;
   for (const frame of proof.frames) {
     assert.deepEqual(frame.pairedSource, decks[frame.language].slides[frame.slide - 1], frame.path);
-    const bytes = readFileSync('public' + frame.path);
-    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
-    assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
-    assert.equal(bytes.length, frame.new.bytes, frame.path);
-    assert.equal(sha(bytes), frame.new.sha256, frame.path);
+    const later = laterResidualPaths.has(frame.path) ? nativePairedResidualMediaBefore('public' + frame.path) : null;
+    let liveFrameBytes: number;
+    if (later) {
+      assert.deepEqual(later, { bytes: frame.new.bytes, sha256: frame.new.sha256 }, `${frame.path}: newest render rewinds to the exact L1 output`);
+      const currentFrame = nativePairedResidualFrames.find(item => item.path === 'public' + frame.path);
+      assert.ok(currentFrame, `${frame.path}: newer rendered frame remains in the approved complete set`);
+      assert.deepEqual([currentFrame.width, currentFrame.height], [frame.new.width, frame.new.height], `${frame.path}: full canvas remains exact`);
+      liveFrameBytes = currentFrame.bytes;
+    } else {
+      const bytes = readFileSync('public' + frame.path);
+      assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
+      assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
+      assert.equal(bytes.length, frame.new.bytes, frame.path);
+      assert.equal(sha(bytes), frame.new.sha256, frame.path);
+      // Pillow's lossy WebP carries a VP8 frame header with actual decoded dimensions.
+      assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
+      assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
+      assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
+      liveFrameBytes = bytes.length;
+    }
     assert.notEqual(frame.new.sha256, frame.old.sha256, frame.path);
     assert.equal(frame.new.width, 1440);
     assert.ok(frame.new.height >= 5400, 'natural-height panels must not be cropped');
-    // Pillow's lossy WebP carries a VP8 frame header with actual decoded dimensions.
-    assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
-    assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
-    assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
-    assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
+    assert.equal(COURSE_ASSET_SIZES[frame.path], liveFrameBytes, `${frame.path}: live manifest matches the current rendered file`);
     const oldEntry = `  '${frame.path}': ${frame.old.bytes},`;
     assert.equal(expectedManifest.split(oldEntry).length, 2, 'one exact old manifest slot');
     expectedManifest = expectedManifest.replace(oldEntry, `  '${frame.path}': ${frame.new.bytes},`);
@@ -86,6 +102,15 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
   for (const row of oldAssets) {
     if (changed.has(row.path)) {
       assert.deepEqual(proof.frames.find((frame: { path: string }) => frame.path === row.path).old, row);
+      continue;
+    }
+    // The later 13-frame batch redraws three Vegetables slide-05 cards that
+    // belong to this complete older inventory. Validate the live frame through
+    // the newer proof, then project its exact before descriptor for this layer.
+    if (laterResidualPaths.has(row.path)) {
+      const later = nativePairedResidualMediaBefore('public' + row.path);
+      assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
+      assert.deepEqual(later, { bytes: row.bytes, sha256: row.sha256 }, `${row.path}: newest frame rewinds to this frozen L1 inventory`);
       continue;
     }
     const actual = observedFile('public' + row.path);
@@ -126,8 +151,10 @@ export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
 export function vegetablesL1MediaBeforeEarlierProof(path: string) {
   const intro = introFullMediaBeforeEarlierProof(path);
   if (intro) return intro;
-  const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
+  // A miss exposes no old bytes; caller retains its actual unlisted-file check.
+  if (!expectedVegetablesL1Paths.includes(url)) return undefined;
+  const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;
 }

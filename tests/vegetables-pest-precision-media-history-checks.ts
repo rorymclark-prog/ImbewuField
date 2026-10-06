@@ -1,4 +1,5 @@
 import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
+import { nativePairedResidualManifestBefore968, nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -15,14 +16,22 @@ export const vegetablesPestPrecisionFrames = [
 
 /** Validate this complete later layer before exposing any older byte or manifest claim. */
 export function validateCurrentVegetablesPestPrecisionLayer(currentManifest?: string) {
-  // The later eight-frame ordinary layer is source/unlisted validated before this six-frame historical view.
+  // The newest 13-frame after-layer is checked before the merged 968 inventory and older still layers.
+  nativePairedResidualManifestBefore968();
+  // The later ordinary layer is source/unlisted validated before this six-frame historical view.
   const latestBefore = vegetablesL3AssetSizesBeforeOrdinary();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const manifest = currentManifest === undefined || currentManifest === actual ? latestBefore : currentManifest;
   for (const frame of vegetablesPestPrecisionFrames) {
-    const bytes = readFileSync('public' + frame.url);
-    assert.equal(bytes.length, frame.bytes, `${frame.url}: current frame byte count`);
-    assert.equal(sha(bytes), frame.sha256, `${frame.url}: current frame matches compressed review proof`);
+    const newer = nativePairedResidualMediaBefore('public' + frame.url);
+    if (newer) {
+      assert.deepEqual(newer, { bytes: frame.bytes, sha256: frame.sha256 },
+        `${frame.url}: newest rendered frame rewinds to the exact six-frame current state`);
+    } else {
+      const bytes = readFileSync('public' + frame.url);
+      assert.equal(bytes.length, frame.bytes, `${frame.url}: current frame byte count`);
+      assert.equal(sha(bytes), frame.sha256, `${frame.url}: current frame matches compressed review proof`);
+    }
     const entry = `'${frame.url}': ${frame.bytes}`;
     assert.equal(manifest.split(entry).length - 1, 1, `${frame.url}: current manifest entry matches actual bytes`);
     assert.notEqual(frame.sha256, frame.beforeSHA256, `${frame.url}: approved redraw changed the frame`);
@@ -31,10 +40,16 @@ export function validateCurrentVegetablesPestPrecisionLayer(currentManifest?: st
 }
 
 export function vegetablesPestPrecisionMediaBeforeEarlierProof(path: string) {
-  validateCurrentVegetablesPestPrecisionLayer();
   const normalized = path.startsWith('public/') ? path : path.replace(/^\//, 'public/');
   const frame = vegetablesPestPrecisionFrames.find(row => 'public' + row.url === normalized);
   if (!frame) return undefined;
+  // Validate the complete layer before any listed historical bytes are returned.
+  validateCurrentVegetablesPestPrecisionLayer();
+  const later = nativePairedResidualMediaBefore(normalized);
+  if (later) {
+    assert.deepEqual(later, { bytes: frame.bytes, sha256: frame.sha256 },
+      `${frame.url}: the newer approved image projects exactly to this six-frame layer`);
+  }
   return { bytes: readFileSync(path.startsWith('public/') ? path : normalized), byteLength: frame.beforeBytes, sha256: frame.beforeSHA256 };
 }
 

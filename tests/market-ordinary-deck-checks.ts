@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 
 type Segment = { sourceEnglish: string; status: 'draft' | 'english-hold'; text?: string; reason: string; semanticContext?: string };
 type Part = { status: string; text?: string; segments?: Segment[]; provenance?: string };
@@ -19,10 +20,18 @@ export const readCurrentMarketDecks = (): Record<string, MarketDeck> => Object.f
 export const marketPartText = (part: Part, source: string) => part.status === 'english-hold' ? source : part.status === 'draft' ? part.text! :
   part.segments!.map(segment => segment.status === 'english-hold' ? segment.sourceEnglish : segment.text).join('');
 
+export function marketDeckBeforeNativeResidual(decks = readCurrentMarketDecks()): Record<string, MarketDeck> {
+  return Object.fromEntries(languages.map(language => [language,
+    deckBeforeNativePairedResidual(decks[language], 'market-community')]));
+}
+
 // 2026-10-06: these fifteen compositions preserve independent deck prefixes.
 // Validate the entire accepted current layer before exposing an older view; a
 // historical rewind must not hide source, unlisted wording or status changes.
 export function marketDeckBeforeOrdinary(decks = readCurrentMarketDecks()) {
+  // The newer thirteen-cell layer reuses seven Market stills. Validate its
+  // complete current six-file source/target state before this dated deck claim.
+  decks = marketDeckBeforeNativeResidual(decks);
   assert.equal(digest(read('root-accepted-native-packet.json')), '149618dd0be79b1f91b630c81541ba16b884502b534fed6b59fea6dd912ebf5d');
   const independentBytes = read('independent-check.json');
   assert.equal(digest(independentBytes), 'cb1b0a64bfc6b72ad688aa2e9b5ab6e1148cf6882fcd9823249fe945e3ed4eed');

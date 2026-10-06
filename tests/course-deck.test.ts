@@ -1,3 +1,4 @@
+import { nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 import { readingBodyBeforeComparison } from './reading-comparison-history-checks.ts';
 import assert from 'node:assert/strict';
 import { existsSync, statSync, readFileSync } from 'node:fs';
@@ -1079,7 +1080,10 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
     assert.ok(sourceField, `${entry.lessonId}/${entry.field}: supported learner field is identified`);
     assert.equal(sourceField.source, entry.exactSource,
       `${entry.languageCode}/${entry.lessonId}/${entry.field}: learner field stays bound to its exact canonical source`);
-    const currentLesson = resolveLearnerLessonPresentation(sourceLesson, entry.languageCode);
+    const liveLesson = resolveLearnerLessonPresentation(sourceLesson, entry.languageCode);
+    // The later ordinary-prose batch changes exact listed fields. Its complete
+    // registry/source/index guard must pass before the dated 47-field proof is read.
+    const currentLesson = nativeOrdinaryPresentationBeforeFinalBatch(liveLesson, sourceLesson.id, entry.languageCode);
     assert.equal(currentLesson.status, 'draft');
     const currentField = learnerProofField(currentLesson.content, entry.field);
     assert.ok(currentField, `${entry.lessonId}/${entry.field}: resolved learner field exists`);
@@ -1088,7 +1092,7 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
     // snapshot first, then rewind that one clause for the older 47-field proof.
     const reviewedHistoricalTarget = entry.languageCode === 'st'
       && entry.lessonId === 'reading-landscape-l3' && entry.field === 'body'
-      ? readingBodyBeforeComparison(currentField.target) : currentField.target;
+      ? readingBodyBeforeComparison(learnerProofField(liveLesson.content, entry.field)!.target) : currentField.target;
     assert.equal(reviewedHistoricalTarget, entry.appliedTarget,
       `${entry.languageCode}/${entry.lessonId}/${entry.field}: verified current layer preserves the historical applied target after only the accepted comparison rewind`);
     assert.match(entry.reviewStatus, /unreviewed/i,
@@ -1116,7 +1120,8 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
     if (item.index === 1) assert.match(item.source, /roads, and fences\.$/,
       'the paired narration uses “and” before fences; canonical source omits only that conjunction');
 
-    const resolved = resolveLearnerLessonPresentation(lesson, item.lang);
+    const resolved: ReturnType<typeof resolveLearnerLessonPresentation> = nativeOrdinaryPresentationBeforeFinalBatch(
+      resolveLearnerLessonPresentation(lesson, item.lang), lesson.id, item.lang);
     assert.equal(resolved.status, 'draft');
     const learnerChange = readingFullLearnerProof.entries.find((entry: any) =>
       entry.lessonId === 'reading-landscape-l4' && entry.languageCode === item.lang && entry.field === 'body');
