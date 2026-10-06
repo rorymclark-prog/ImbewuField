@@ -84,7 +84,11 @@ def plan(module: str, lang: str) -> list[dict]:
                     if not isinstance(segment, dict) or segment.get("status") not in {"draft", "english-hold"}:
                         raise ValueError(f"Slide {n} has an invalid mixed segment status")
                     source_text = segment.get("sourceEnglish")
-                    if not isinstance(source_text, str) or not source_text.strip():
+                    # Source-only separators keep semantic clauses apart without
+                    # pretending punctuation or spacing is translated speech.
+                    if not isinstance(source_text, str) or not source_text or (
+                        not source_text.strip() and segment["status"] != "english-hold"
+                    ):
                         raise ValueError(f"Slide {n} has an empty mixed English source segment")
                     source_parts.append(source_text)
                     if segment["status"] == "draft":

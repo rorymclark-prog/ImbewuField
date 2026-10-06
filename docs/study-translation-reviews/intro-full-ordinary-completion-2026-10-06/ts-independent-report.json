@@ -1,0 +1,1393 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "reviewedCandidatePacket": {
+    "path": "/tmp/imbewu-intro-remaining-ordinary-prose-completion-candidates-20261006.json",
+    "sha256": "95dd88bb76ecdc6395c6d3e8ee95c8a2408c8d6ab741bbc1b2d4a09e1d0f6585",
+    "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6"
+  },
+  "reviewedSnapshotPacket": {
+    "path": "/tmp/imbewu-intro-full-ordinary-residual-inventory-20261006.json",
+    "sha256": "c40ed91e8e985dea43188fa24bab5e0d2dd81a869ee8ef631edd390cd84796aa"
+  },
+  "verifiedBaseFileHashes": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-translation-drafts-ve.ts": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+    "lib/course-translation-drafts-ts.ts": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+    "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+    "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "b933e501e5e77a6e15ab63ae270d16c56552d1cf1e08d927a02cb43a70dfb9d5",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603",
+    "docs/narration/intro-permaculture.st.paired-draft.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9"
+  },
+  "bindingAudit": {
+    "all42ExactSourceAndCurrentTargetsMatchedFrozenSnapshots": true,
+    "all42CandidateReplacementReplaysVerified": true,
+    "nativeRowsResolvedByExactLessonAndBodyKeypointQuizOptionIndex": true,
+    "pairedRowsResolvedBySlideAndBodyIndexWithMixedSegmentsComposedInOrder": true,
+    "tsFrames": 22,
+    "frameIndices": "1–22",
+    "canonicalQuizCorrectIndicesByLesson": {
+      "ve": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "ts": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "assessmentIndexChanges": false,
+    "tsSlideIndices": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "all22TsSlidesVerifiedInFrozenSnapshot": true
+  },
+  "results": [
+    {
+      "id": "deck:ts:s7.heading",
+      "locator": {
+        "slide": 7,
+        "field": "heading"
+      },
+      "exactSource": "Watch: One Decision, Three Ethics",
+      "exactCurrentTarget": "Watch: One Decision, Three Ethics",
+      "currentStatus": "english-hold",
+      "candidateTarget": "Languta: Xiboho Xin’we, Ethics Tinharhu",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Languta: Xiboho Xin’we, Ethics Tinharhu",
+      "independentBacktranslation": "Watch/observe: one decision, three ethics.",
+      "reason": "The candidate retains “Ethics” as the named concept and preserves one/three. Languta is a plausible watch/look rendering. Review remains semantic only.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Watch: One Decision, Three Ethics",
+          "exactCurrentSpan": "Watch: One Decision, Three Ethics",
+          "proposedTargetSpan": "Languta: Xiboho Xin’we, Ethics Tinharhu",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s16.heading",
+      "locator": {
+        "slide": 16,
+        "field": "heading"
+      },
+      "exactSource": "Keep Daily Crops Close",
+      "exactCurrentTarget": "Keep Daily Crops Close",
+      "currentStatus": "english-hold",
+      "candidateTarget": "Hlayisa Crops leti u ti Tirhisaka Siku na Siku Ekusuhi",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Hlayisa Crops leti u ti Tirhisaka Siku na Siku Ekusuhi",
+      "independentBacktranslation": "Keep close the crops that you use every day.",
+      "reason": "The relative phrase makes daily use explicit and preserves the keeping-close action; it avoids reading “daily crops” as crops planted each day.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Keep Daily Crops Close",
+          "exactCurrentSpan": "Keep Daily Crops Close",
+          "proposedTargetSpan": "Hlayisa Crops leti u ti Tirhisaka Siku na Siku Ekusuhi",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s18.heading",
+      "locator": {
+        "slide": 18,
+        "field": "heading"
+      },
+      "exactSource": "Sectors: The Energies Arriving From Outside",
+      "exactCurrentTarget": "Sectors: The Energies Arriving From Outside",
+      "currentStatus": "english-hold",
+      "candidateTarget": "Sectors: Energies leti Fikaka ku Suka Ehandle",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Sectors: Energies leti Fikaka ku Suka Ehandle",
+      "independentBacktranslation": "Sectors: energies that arrive from outside.",
+      "reason": "“ku suka ehandle” expresses origin from outside without adding a second finite “come out” action. Sectors/Energies stay as the technical labels.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Sectors: The Energies Arriving From Outside",
+          "exactCurrentSpan": "Sectors: The Energies Arriving From Outside",
+          "proposedTargetSpan": "Sectors: Energies leti Fikaka ku Suka Ehandle",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s21.heading",
+      "locator": {
+        "slide": 21,
+        "field": "heading"
+      },
+      "exactSource": "Field Assignment",
+      "exactCurrentTarget": "Field Assignment",
+      "currentStatus": "english-hold",
+      "candidateTarget": "Ntirho lowu Nyikiweke wa le Nsimwini",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Ntirho lowu Nyikiweke wa le Nsimwini",
+      "independentBacktranslation": "Field task/assignment given for the field.",
+      "reason": "“Nyikiweke” retains the assigned-task sense beyond generic field work, without naming an assigner.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Field Assignment",
+          "exactCurrentSpan": "Field Assignment",
+          "proposedTargetSpan": "Ntirho lowu Nyikiweke wa le Nsimwini",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s7.body[0]",
+      "locator": {
+        "slide": 7,
+        "bodyIndex": 0
+      },
+      "exactSource": "A borehole serves your household. Neighbours ask for water too.",
+      "exactCurrentTarget": "A borehole yi tirhela ndyangu wa wena. Vahakelani na vona va kombela mati.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Borehole yi tirhela ndyangu wa wena. Vahakelani na vona va kombela mati.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Borehole yi tirhela ndyangu wa wena. Vahakelani na vona va kombela mati.",
+      "independentBacktranslation": "A borehole serves your household. Neighbours also ask for water.",
+      "reason": "Borehole remains the source term; household and neighbor request are both retained.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "A borehole",
+          "exactCurrentSpan": "A borehole",
+          "proposedTargetSpan": "Borehole",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s7.body[1]",
+      "locator": {
+        "slide": 7,
+        "bodyIndex": 1
+      },
+      "exactSource": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "exactCurrentTarget": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta water level. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela the source. Ku languta water level ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+      "currentStatus": "draft",
+      "candidateTarget": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko borehole yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. People Care na Fair Share swi kongomisa ntwanano. Earth Care swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va safe kumbe swi pfumeleriwa.",
+      "independentBacktranslation": "First find out whether sharing is permitted. Check that the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree on fair sharing and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or permitted.",
+      "reason": "Preserves the allowed?/enough-water conditions, all users, without-taking-too-much constraint, agreement, continued monitoring, ethical labels, and final not-safe/not-permitted negation. “safe” remains exact English.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "water level",
+          "exactCurrentSpan": "water level",
+          "proposedTargetSpan": "xiyimo xa mati",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "the source",
+          "exactCurrentSpan": "the source",
+          "proposedTargetSpan": "xihlovo",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "Watching the level",
+          "exactCurrentSpan": "water level",
+          "proposedTargetSpan": "xiyimo xa mati",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s10.body[0]",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 0
+      },
+      "exactSource": "Watch your land through a full season before you commit to major earthworks.",
+      "exactCurrentTarget": "Languta land ya wena through a full season before you commit to major earthworks.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Languta land ya wena eka nguva leyi heleleke u nga si tinyiketela eka major earthworks.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Languta land ya wena eka nguva leyi heleleke u nga si tinyiketela eka major earthworks.",
+      "independentBacktranslation": "Watch your land for a complete season before committing yourself to major earthworks.",
+      "reason": "The full-season observation still precedes commitment. “Tinyiketela” preserves commitment; earthworks stays exact.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "through a full season before you commit to major earthworks",
+          "exactCurrentSpan": "through a full season before you commit to major earthworks",
+          "proposedTargetSpan": "eka nguva leyi heleleke u nga si tinyiketela eka major earthworks",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s10.body[1]",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 1
+      },
+      "exactSource": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "exactCurrentTarget": "Storm yin’we yi ku komba nkarhi wun’we. Full wet season yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+      "currentStatus": "draft",
+      "candidateTarget": "Xidzedze yin’we yi ku komba nkarhi wun’we. Nguva ya mpfula leyi heleleke yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Xidzedze xin’we xi ku komba nkarhi wun’we. Nguva ya mpfula leyi heleleke yi ku komba pattern: laha mati ya khulukaka, laha ya hlengeletanaka kona, ni laha ma nga fiki kona nikatsongo.",
+      "independentBacktranslation": "One storm shows you one moment. A full wet season shows you the pattern: where water runs, pools, and never reaches.",
+      "reason": "The source distinctions and never-reaches negation are preserved. Repair only the translated noun’s concord: xidzedze takes xin’we and xi, not yin’we/yi. “Pattern” remains precise.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "Xidzedze yin’we yi ku komba",
+            "after": "Xidzedze xin’we xi ku komba"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s10.body[2]",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 2
+      },
+      "exactSource": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "exactCurrentTarget": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela soil, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela trained local adviser a kambela ndhawu.",
+      "currentStatus": "draft",
+      "candidateTarget": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela misava, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela mutsundzuxi wa le ndhawini loyi a leteriweke a kambela ndhawu.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Leswi swi ku pfuna ku twisisa ndhawu. Kambe leswi ntsena a swi kombisi loko swale yi faneleka kumbe yi safe ku akiwa. U nga si cela, kambela misava, slope, drainage na safe overflow route leyi nga ta ka yi nga vangisi erosion kumbe ku rhumela mati lama onhaka eka vaakelani. Kombela mutsundzuxi wa le ndhawini loyi a leteriweke a kambela ndhawu.",
+      "independentBacktranslation": "This helps you understand the site. This alone does not show whether a swale is suitable or safe to build. Before digging, check soil, slope, drainage, and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "reason": "Preserves alone/not-by-itself, suitable-or-safe, before digging, all site checks, the route’s two prohibited outcomes, and trained local adviser assessment. Technical terms remain exact where no safe ordinary equivalent is supported.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "soil",
+          "exactCurrentSpan": "soil",
+          "proposedTargetSpan": "misava",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "trained local adviser",
+          "exactCurrentSpan": "trained local adviser",
+          "proposedTargetSpan": "mutsundzuxi wa le ndhawini loyi a leteriweke",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s14.body[1]",
+      "locator": {
+        "slide": 14,
+        "bodyIndex": 1
+      },
+      "exactSource": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "exactCurrentTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds after harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure can carry germs. Kombela extension adviser a ku hlamusela ndlela yo hlayisa bed yi ri safe loko edible crops ti nga si tlhela ti byariwa. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka fixed pen.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds endzhaku ka harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si tlhela ti byariwa. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Ntanga, mirhi ya mihandzu na chicken run swi nga veketeriwa leswaku tihuku ti rotate through the beds endzhaku ka harvest; leswi i integration. U nga pfumeleli tihuku ti tshinela eka crops leti ku tshoveriwaka swakudya. Fresh manure yi nga rhwala germs. Kombela mutsundzuxi wa extension a ku hlamusela ndlela yo hlayisa bed yi ri safe loko crops leti dyiwaka ti nga si vuya. Tihuku ti nga basisa pests ti tlhela ti engetela fertility, ematshan’weni yo tshama ti nga endli swo karhi eka pen leyi nga endhawini yin’we.",
+      "independentBacktranslation": "A garden, fruit trees, and chicken run arranged so chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. Chickens can clean pests and add fertility instead of sitting idle in a fixed pen.",
+      "reason": "All rotation, harvest timing, keep-away-from-food-crops, fresh-manure-can-carry-germs, adviser, and fixed-pen meanings are preserved. Replace the candidate’s “before edible crops are planted again” with “before edible crops return”; the source does not require a planting act.",
+      "exactCompositionChanges": {
+        "candidateSpanReplayVerified": true,
+        "additionalExactRepair": {
+          "before": "crops leti dyiwaka ti nga si tlhela ti byariwa",
+          "after": "crops leti dyiwaka ti nga si vuya"
+        },
+        "allOtherCandidateBytesPreserved": true,
+        "sourceAndCurrentBindingUnchanged": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L2.quiz[1].rationale",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "field": "rationale",
+        "correctIndex": 1
+      },
+      "exactSource": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+      "exactCurrentTarget": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka fixed pen ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko edible crops ti nga si vuya.",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka pen leyi nga endhawini yin’we ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko crops leti dyiwaka ti nga si vuya.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka pen leyi nga endhawini yin’we ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko crops leti dyiwaka ti nga si vuya.",
+      "independentBacktranslation": "Integration puts each element to work for its neighbours—here, chickens clean pests and add fertility rather than sit idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+      "reason": "Retains the fixed-pen contrast, manure possibility, safe-management check, and before-crops-return timing.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "edible crops",
+          "exactCurrentSpan": "edible crops",
+          "proposedTargetSpan": "crops leti dyiwaka",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "fixed pen",
+          "exactCurrentSpan": "fixed pen",
+          "proposedTargetSpan": "pen leyi nga endhawini yin’we",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L2.quiz[1].options[1]",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "optionIndex": 1,
+        "correctIndex": 1
+      },
+      "exactSource": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+      "exactCurrentTarget": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko edible crops ti nga si vuya",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko crops leti dyiwaka ti nga si vuya",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko crops leti dyiwaka ti nga si vuya",
+      "independentBacktranslation": "Garden, fruit trees, and chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return.",
+      "reason": "Preserves empty bed, after-harvest timing, then farmer check, and the before-return condition. No sequence or modality is added.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "edible crops",
+          "exactCurrentSpan": "edible crops",
+          "proposedTargetSpan": "crops leti dyiwaka",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s1.body[1]",
+      "locator": {
+        "slide": 1,
+        "bodyIndex": 1
+      },
+      "exactSource": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "exactCurrentTarget": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Three ethics, a set of design principles, na ndlela yin’we yo olova yo hlela land ya wena.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Ethics tinharhu, ntlawa wa design principles, na ndlela yin’we yo olova yo hlela land ya wena.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Modulu lowu i xisekelo xa swilo leswin’wana eka dyondzo leyi. Ethics tinharhu, ntlawa wa design principles, na ndlela yin’we yo olova yo hlela land ya wena.",
+      "independentBacktranslation": "This module is the foundation for the rest of the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "reason": "Keeps the module foundation relation, set/group framing, count three, and land organization.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Three ethics, a set of design principles",
+          "exactCurrentSpan": "Three ethics, a set of design principles",
+          "proposedTargetSpan": "Ethics tinharhu, ntlawa wa design principles",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s6.body[1]",
+      "locator": {
+        "slide": 6,
+        "bodyIndex": 1
+      },
+      "exactSource": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "exactCurrentTarget": "Teka ntsena leswi u swi lavaka, kutani return the surplus to the system — mbewu, swakudya, mati, vutivi.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Teka ntsena leswi u swi lavaka, kutani vuyisela surplus eka system — mbewu, swakudya, mati, vutivi.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Teka ntsena leswi u swi lavaka, kutani vuyisela leswi saleke eka system — mbewu, swakudya, mati, vutivi.",
+      "independentBacktranslation": "Take only what you need, then return what remains/the surplus to the system—seeds, food, water, knowledge.",
+      "reason": "Translate ordinary “surplus” as the existing learner phrase “leswi saleke.” Keep “system” as the broad permaculture term rather than narrowing it to a field/garden; preserve only-need and the complete list.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "vuyisela surplus eka system",
+            "after": "vuyisela leswi saleke eka system"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s4.body[1]",
+      "locator": {
+        "slide": 4,
+        "bodyIndex": 1
+      },
+      "exactSource": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "exactCurrentTarget": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “living systems to protect, not resources to use up.”",
+      "currentStatus": "mixed",
+      "candidateTarget": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “living systems to sirhelela, ku nga ri resources to heta hi ku tirhisa.”",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Swi vula ku teka misava, mati, swimilana na swiharhi tani hi “living systems to sirhelela, ku nga ri resources to heta hi ku tirhisa.”",
+      "independentBacktranslation": "It means treating soil, water, plants, and animals as living systems to protect, not resources to use up.",
+      "reason": "The target localizes the purpose phrase “to protect” without changing it into a must/should obligation, and localizes the negative resource-use contrast. Living systems/resources remain exact conceptual anchors. No obligation is added.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "living systems to protect, not resources to use up",
+          "exactCurrentSpan": "living systems to protect, not resources to use up",
+          "proposedTargetSpan": "living systems to sirhelela, ku nga ri resources to heta hi ku tirhisa",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s4.body[2]",
+      "locator": {
+        "slide": 4,
+        "bodyIndex": 2
+      },
+      "exactSource": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "exactCurrentTarget": "System leyi u yi tirhisaka yi hela, kutani “stops paying you.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “keeps paying you.”",
+      "currentStatus": "draft",
+      "candidateTarget": "System leyi u yi tirhisaka yi hela, kutani “a ya ha ku hakeli.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “yi ya mahlweni yi ku hakela.”",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "System leyi u yi tirhisaka yi hela, kutani “a ya ha ku hakeli.” System leyi u yi sirhelelaka ya ya mahlweni, kutani “yi ya mahlweni yi ku hakela.”",
+      "independentBacktranslation": "A system you use up is finished, and then it no longer pays you. A system you protect continues paying you.",
+      "reason": "Keeps both paired metaphors, contrast, and continuation; no numeric or cash/yield guarantee is added beyond the source metaphor.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "stops paying you",
+          "exactCurrentSpan": "stops paying you",
+          "proposedTargetSpan": "a ya ha ku hakeli",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "keeps paying you",
+          "exactCurrentSpan": "keeps paying you",
+          "proposedTargetSpan": "yi ya mahlweni yi ku hakela",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L1.quiz[0].question",
+      "locator": {
+        "lessonId": "intro-permaculture-l1",
+        "questionIndex": 0,
+        "field": "question",
+        "correctIndex": 2
+      },
+      "exactSource": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+      "exactCurrentTarget": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Murimi u xavisa maize ya yena ya surplus hinkwato kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi nawu wa mahanyelo leyi a tsandzekaka ku yi landzelela ngopfu?",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+      "independentBacktranslation": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he failing most?",
+      "reason": "Retain the exact quantifier phrase “all his surplus maize” because its noun scope/concord is uncertain; translate the surrounding ordinary clause, preserve nothing, composting OR seed saving, the ethic term, and MOST. This avoids implying that all maize grown is sold.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "maize ya yena ya surplus hinkwato",
+            "after": "all his surplus maize"
+          },
+          {
+            "before": "Hi yihi nawu wa mahanyelo leyi",
+            "after": "Hi yihi ethic leyi"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s13.body[0]",
+      "locator": {
+        "slide": 13,
+        "bodyIndex": 0
+      },
+      "exactSource": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "exactCurrentTarget": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka. Hail injury to maize depends on the storm and the crop’s growth stage. Principle leyi a yi tiyisisi leswaku crop yi ta pona eka xiendlakalo xin’wana ni xin’wana.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya crop. Principle leyi a yi tiyisisi leswaku crop yi ta pona eka xiendlakalo xin’wana ni xin’wana.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Tirhisa diversity u tlhela u yi teka yi ri ya nkoka. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya crop. Principle leyi a yi tiyisisi leswaku crop yi ta pona eka xiendlakalo xin’wana ni xin’wana.",
+      "independentBacktranslation": "Use and value diversity. Maize damage from hail depends on the storm and the crop’s growth stage. This principle does not promise a crop will survive every event.",
+      "reason": "Preserves conditional dependence on storm and growth stage and the explicit no-promise/every-event negative.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Hail injury to maize depends on the storm and the crop’s growth stage.",
+          "exactCurrentSpan": "Hail injury to maize depends on the storm and the crop’s growth stage.",
+          "proposedTargetSpan": "Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya crop.",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L2.body[1]",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "field": "body",
+        "paragraphIndex": 1
+      },
+      "exactSource": "Others worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.",
+      "exactCurrentTarget": "Tin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi storm na growth stage ya xibyariwa.",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Tin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya xibyariwa.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Tin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya xibyariwa.",
+      "independentBacktranslation": "Other principles worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a planting bed without electricity), and use and value diversity. Hail damage to maize depends on the storm and the crop’s growth stage.",
+      "reason": "The ordinary hail/storm clause is localized; named principles and the growth-stage technical term remain exact. “can” remains a possibility, not a guarantee.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "storm",
+          "exactCurrentSpan": "storm",
+          "proposedTargetSpan": "xidzedze",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L2.keyPoints[3]",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "keyPointIndex": 3
+      },
+      "exactSource": "Hail injury to maize depends on the storm and the crop’s growth stage",
+      "exactCurrentTarget": "Ku onhaka ka maize hi xihangu swi ya hi storm na growth stage ya ximilana",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya ximilana",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya ximilana",
+      "independentBacktranslation": "Hail damage to maize depends on the storm and the plant’s growth stage.",
+      "reason": "Keeps the dependency and stage condition; no certainty added.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "storm",
+          "exactCurrentSpan": "storm",
+          "proposedTargetSpan": "xidzedze",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s9.body[1]",
+      "locator": {
+        "slide": 9,
+        "bodyIndex": 1
+      },
+      "exactSource": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+      "exactCurrentTarget": "A swi lavi ku sungula hi hinkwato ta 12. Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: observe and interact, catch and store energy, and use edges and value the marginal.",
+      "currentStatus": "mixed",
+      "candidateTarget": "A swi lavi ku sungula hi hinkwato ta 12. Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: observe and interact, catch and store energy, na use edges and value the marginal.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "A swi lavi ku sungula hi hinkwato ta 12. Kha dyondzo leyi, ku na tindlela tinharhu leti pfunaka ku sungula: observe and interact, catch and store energy, na use edges and value the marginal.",
+      "independentBacktranslation": "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+      "reason": "Only the conjunction between the listed named principles is translated. The all-twelve limit and the exact list remain.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "energy, and use",
+          "exactCurrentSpan": "energy, and use",
+          "proposedTargetSpan": "energy, na use",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s11.body[2]",
+      "locator": {
+        "slide": 11,
+        "bodyIndex": 2
+      },
+      "exactSource": "Compare the cost and work with the benefit on your own farm.",
+      "exactCurrentTarget": "Pimanisa  the cost and work with the benefit epurasini ra wena.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Pimanisa  cost na ntirho ni mbuyelo epurasini ra wena.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Pimanisa  cost na ntirho ni mbuyelo epurasini ra wena.",
+      "independentBacktranslation": "Compare cost and work with the benefit on your own farm.",
+      "reason": "Preserves cost/work/benefit comparison and own-farm scope; benefit remains broad and is not presented as profit.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "the cost and work with the benefit",
+          "exactCurrentSpan": "the cost and work with the benefit",
+          "proposedTargetSpan": "cost na ntirho ni mbuyelo",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s15.body[1]",
+      "locator": {
+        "slide": 15,
+        "bodyIndex": 1
+      },
+      "exactSource": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+      "exactCurrentTarget": "Zone 0 i yindlu. Eka xifaniso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs and salad greens leti u ti tshovelaka nkarhi ni nkarhi.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Zone 0 i yindlu. Eka xifaniso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs na salad greens leti u ti tshovelaka nkarhi ni nkarhi.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Zone 0 i yindlu. Eka xikombiso lexi, Zone 1 yi le kusuhi ni yindlu naswona yi na herbs na salad greens leti u ti tshovelaka nkarhi ni nkarhi.",
+      "independentBacktranslation": "Zone 0 is the house. In this example, Zone 1 near the house holds herbs and salad greens picked often.",
+      "reason": "Replace “xifaniso lexi” (picture) with “xikombiso lexi” (example), correcting noun-class agreement and preserving the source’s example meaning; retain often-picked scope and the crop labels.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "Eka xifaniso lexi",
+            "after": "Eka xikombiso lexi"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s15.body[2]",
+      "locator": {
+        "slide": 15,
+        "bodyIndex": 2
+      },
+      "exactSource": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "exactCurrentTarget": "Zone 2 i main garden ni chicken run, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main field, u ya kona vhiki na vhiki.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Zone 2 i main ntanga ni chicken run, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main nsimu, u ya kona vhiki na vhiki.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Zone 2 i main ntanga ni chicken run, u ya eka swona kan’we kumbe kambirhi hi siku. Zone 3 i main nsimu, u ya kona vhiki na vhiki.",
+      "independentBacktranslation": "Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "reason": "Keeps primary role by retaining “main” rather than implying large, preserves OR, daily count, and weekly frequency.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "main garden",
+          "exactCurrentSpan": "main garden",
+          "proposedTargetSpan": "main ntanga",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "main field",
+          "exactCurrentSpan": "main field",
+          "proposedTargetSpan": "main nsimu",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s11.body[1]",
+      "locator": {
+        "slide": 11,
+        "bodyIndex": 1
+      },
+      "exactSource": "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+      "exactCurrentTarget": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Mati ma khuluka ma huma, matluka ma haha ma ya, dyambu ri wela eka bare ground.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Mati ma khuluka ma huma, matluka ma haha ma ya, dyambu ri wela eka misava leyi nga funengetiwangiki.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Hinkwato swi fika mahala swi tlhela swi famba mahala. Mati ma khuluka ma huma, matluka ma haha ma ya, dyambu ri wela eka misava leyi nga funengetiwangiki.",
+      "independentBacktranslation": "Every one of these arrives free and leaves free. Water runs off, leaves blow away, and sun falls on bare ground.",
+      "reason": "Preserves every, free in/out, and the listed water/leaf/sun events; bare ground becomes uncovered ground.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "bare ground",
+          "exactCurrentSpan": "bare ground",
+          "proposedTargetSpan": "misava leyi nga funengetiwangiki",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s19.body[1]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 1
+      },
+      "exactSource": "The trees and shrubs stand between that wind and the crops.",
+      "exactCurrentTarget": "Mirhi na shrubs swi yima exikarhi ka moya wolowo ni crops.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Mirhi na shrubs swi yima exikarhi ka moya wolowo ni swibyariwa.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Mirhi na shrubs swi yima exikarhi ka moya wolowo ni swibyariwa.",
+      "independentBacktranslation": "Trees and shrubs stand between that wind and the crops.",
+      "reason": "Preserves both shelter types and the between relation.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "crops",
+          "exactCurrentSpan": "crops",
+          "proposedTargetSpan": "swibyariwa",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s19.body[2]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 2
+      },
+      "exactSource": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "exactCurrentTarget": "Air yin’wana yi hundza hi le ka windbreak. Other air moves over it or around its ends.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Moya yin’wana yi hundza hi le ka windbreak. Moya wun’wana wu famba ehenhla ka yona kumbe wu rhendzela makumu ya yona.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Moya wun’wana wu hundza hi le ka windbreak. Moya wun’wana wu famba ehenhla ka yona kumbe wu rhendzela makumu ya yona.",
+      "independentBacktranslation": "Some air passes through the windbreak. Other air moves over it or around its ends.",
+      "reason": "Correct noun-class agreement in both clauses: moya takes wun’wana and wu. Preserve the distinct through, over, or around-the-ends paths and do not add below.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "Moya yin’wana yi",
+            "after": "Moya wun’wana wu"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s19.body[3]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 3
+      },
+      "exactSource": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "exactCurrentTarget": "Shelter yi nga hunguta rivilo ra moya endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Nsirhelelo yi nga hunguta rivilo ra moya endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Nsirhelelo yi nga hunguta rivilo ra moya endzhaku ka yona. Design ni ku hlayisiwa ka windbreak swi na nkoka.",
+      "independentBacktranslation": "The shelter can reduce wind speed behind it. The windbreak’s design and care matter.",
+      "reason": "Preserves can/reduce/speed/behind; does not promise stopping all wind. Design and care remain relevant.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "The shelter",
+          "exactCurrentSpan": "Shelter",
+          "proposedTargetSpan": "Nsirhelelo",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s19.heading",
+      "locator": {
+        "slide": 19,
+        "field": "heading"
+      },
+      "exactSource": "Watch: Shelter Between Wind and Crops",
+      "exactCurrentTarget": "Xiyisisa: Shelter Between Wind and Crops",
+      "currentStatus": "mixed",
+      "candidateTarget": "Xiyisisa: Nsirhelelo Exikarini ka Moya ni Swibyariwa",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Xiyisisa: Nsirhelelo Exikarini ka Moya ni Swibyariwa",
+      "independentBacktranslation": "Watch: Shelter Between Wind and Crops.",
+      "reason": "Preserves watch framing and between relation. “Xiyisisa” is consistent with the current heading prefix; noun shelter and endpoint crops are rendered.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "Shelter Between Wind and Crops",
+          "exactCurrentSpan": "Shelter Between Wind and Crops",
+          "proposedTargetSpan": "Nsirhelelo Exikarini ka Moya ni Swibyariwa",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s19.body[4]",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 4
+      },
+      "exactSource": "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "exactCurrentTarget": "Eka site ya wena, languta mimoya leyi onhaka u nga si hlawula laha u nga ta byala kona. Picture leyi a hi planting plan.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Eka site ya wena, languta mimoya leyi onhaka u nga si hlawula laha u nga ta byala kona. Xifaniso leyi a hi planting plan.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Eka site ya wena, languta mimoya leyi onhaka u nga si hlawula laha u nga ta byala kona. Xifaniso lexi a hi planting plan.",
+      "independentBacktranslation": "On your own site, observe damaging winds before choosing where to plant. This picture is not a planting plan.",
+      "reason": "Change only “Xifaniso leyi” to “Xifaniso lexi” for concord. Preserve own site, damaging winds, before choosing, the broad planting choice, and the explicit not-a-planting-plan statement.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "Xifaniso leyi",
+            "after": "Xifaniso lexi"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s22.body[0]",
+      "locator": {
+        "slide": 22,
+        "bodyIndex": 0
+      },
+      "exactSource": "Walk out and check your sketch against the ground.",
+      "exactCurrentTarget": "Famba ehandle u kambela sketch ya wena u yi pimanisa ni ground ya xiviri.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Famba ehandle u kambela sketch ya wena u yi pimanisa ni misava ya xiviri.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Famba ehandle u kambela sketch ya wena u yi pimanisa ni misava ya xiviri.",
+      "independentBacktranslation": "Walk out and check your sketch against the actual ground.",
+      "reason": "Preserves check/compare relation and does not alter the sketch or saved geometry.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "ground",
+          "exactCurrentSpan": "ground",
+          "proposedTargetSpan": "misava",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s22.body[3]",
+      "locator": {
+        "slide": 22,
+        "bodyIndex": 3
+      },
+      "exactSource": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "exactCurrentTarget": "Endzhaku kombela older neighbour un’we a ku hlamusela direction leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Endzhaku kombela older neighbour un’we a ku hlamusela tlhelo leyi worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Endzhaku kombela older neighbour un’we a ku hlamusela tlhelo leri worst wind yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+      "independentBacktranslation": "Then ask one older neighbour which direction the worst wind comes from and compare their answer with your arrow.",
+      "reason": "Correct relative concord from “tlhelo leyi” to “tlhelo leri.” Keep older and worst wind in exact English rather than silently changing older to experienced/longstanding or worst to strongest; preserve then, one, and compare-to-arrow.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "tlhelo leyi",
+            "after": "tlhelo leri"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L3.infographicAlt",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "field": "infographicAlt"
+      },
+      "exactSource": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "exactCurrentTarget": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni ndhawu ya le tlhelo ka nambu leyi nga wilder. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni ndhawu ya le tlhelo ka nambu leyi nga wilder. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+      "independentBacktranslation": "Illustrated example farm: markers 0–5 follow a winding footpath from the house and nearby garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "reason": "Retains every count, route order, comparative “wilder,” and the explicit examples-not-fixed-boundaries-or-distances qualification.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "a wilder riverside area",
+          "exactCurrentSpan": "a wilder riverside area",
+          "proposedTargetSpan": "ndhawu ya le tlhelo ka nambu leyi nga wilder",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L3.body[1]",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "field": "body",
+        "paragraphIndex": 1
+      },
+      "exactSource": "Sectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.",
+      "exactCurrentTarget": "Sectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, flood na fire. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Sectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, ndhambi na ndzilo. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Sectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, ndhambi na ndzilo. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.",
+      "independentBacktranslation": "Sectors are incoming energy from outside—sun, wind, rain, flood, and fire. Observe where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Observe where rainwater enters and flows across your land. Draw arrows for what you observe.",
+      "reason": "Preserves incoming origin and all five categories, strong-wind observation, nearby records can help check direction, rain entry/flow, and draw-only-what-is-observed. No forecast/approval is introduced.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "flood, fire",
+          "exactCurrentSpan": "flood na fire",
+          "proposedTargetSpan": "ndhambi na ndzilo",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L3.keyPoints[2]",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "keyPointIndex": 2
+      },
+      "exactSource": "Sectors map incoming sun, wind, rainwater, flood and fire",
+      "exactCurrentTarget": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, flood na ndzilo",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, ndhambi na ndzilo",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, ndhambi na ndzilo",
+      "independentBacktranslation": "Sectors show incoming energy: sun, wind, rainwater, flood, and fire.",
+      "reason": "Preserves all categories and incoming-energy map meaning.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "flood",
+          "exactCurrentSpan": "flood",
+          "proposedTargetSpan": "ndhambi",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L3.keyPoints[0]",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "keyPointIndex": 0
+      },
+      "exactSource": "In this example, Zone 1 near the house holds often-picked herbs",
+      "exactCurrentTarget": "Eka example leyi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Eka xikombiso leyi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Eka xikombiso lexi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+      "independentBacktranslation": "In this example, Zone 1 near the house holds herbs picked often.",
+      "reason": "Correct “xifaniso leyi”/“xikombiso leyi” to “xikombiso lexi” for the example noun; the often-picked qualifier and Zone 1 location stay intact.",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "Eka xikombiso leyi",
+            "after": "Eka xikombiso lexi"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "native:ts:L2.quiz[1].options[3]",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "optionIndex": 3,
+        "correctIndex": 1
+      },
+      "exactSource": "All animals kept off the cultivated zone",
+      "exactCurrentTarget": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka cultivated zone",
+      "currentStatus": "machine-draft",
+      "candidateTarget": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka zone leyi rimiweke",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka zone leyi rimiweke",
+      "independentBacktranslation": "All animals are kept off the cultivated zone.",
+      "reason": "Preserves all animals, kept out, and the cultivated zone; the false distractor remains false.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "cultivated zone",
+          "exactCurrentSpan": "cultivated zone",
+          "proposedTargetSpan": "zone leyi rimiweke",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s11.body[0]",
+      "locator": {
+        "slide": 11,
+        "bodyIndex": 0
+      },
+      "exactSource": "Harvest rain, sun and biomass before they leave your property.",
+      "exactCurrentTarget": "Harvest rain, sun na biomass u nga si swi lahla swi huma eka property ya wena.",
+      "currentStatus": "draft",
+      "candidateTarget": "Harvest mpfula, dyambu na biomass u nga si swi lahla swi huma eka property ya wena.",
+      "independentVerdict": "hold",
+      "finalComposedTarget": "Harvest mpfula, dyambu na biomass before they leave your property.",
+      "independentBacktranslation": "Harvest rain, sun, and biomass before they leave your property.",
+      "reason": "The proposed “swi lahla” introduces throwing/discarding and an agent, neither present in the source. Keep the exact “before they leave your property” clause until a checked equivalent is available; only translate the listed ordinary nouns.",
+      "exactCompositionChanges": {
+        "candidateNounReplacementsRetained": [
+          "rain → mpfula",
+          "sun → dyambu"
+        ],
+        "discardingPhraseRejected": "swi lahla swi huma",
+        "preciseSourceSuffixHeld": "before they leave your property",
+        "unlistedCurrentTargetBytesPreserved": false,
+        "reason": "This deliberately retains an exact English suffix because the candidate suffix added discard/agency."
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s14.body[3]",
+      "locator": {
+        "slide": 14,
+        "bodyIndex": 3
+      },
+      "exactSource": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "exactCurrentTarget": "Hlawula principles timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+      "currentStatus": "draft",
+      "candidateTarget": "Hlawula misinya ya milawu timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa swinene. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+      "independentVerdict": "repair",
+      "finalComposedTarget": "Hlawula misinya ya milawu timbirhi kumbe tinharhu leti khumbaka xiphiqo xa wena lexikulu u ti tirhisa hi ku tiyimisela. Letin’wana ti ta vonaka kahle loko u ya mahlweni.",
+      "independentBacktranslation": "Choose two or three principles that address your biggest problem and apply them earnestly. The rest will become clear as you go.",
+      "reason": "Use “hi ku tiyimisela” for “apply them hard” rather than “use them a lot”; preserve two OR three, biggest-problem scope, and “rest become clear as you go.”",
+      "exactCompositionChanges": {
+        "verifiedCandidateComposition": true,
+        "exactReplacements": [
+          {
+            "before": "u ti tirhisa swinene",
+            "after": "u ti tirhisa hi ku tiyimisela"
+          }
+        ],
+        "allOtherCandidateBytesPreserved": true,
+        "unlistedCurrentTargetBytesPreserved": true
+      },
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s18.body[1]",
+      "locator": {
+        "slide": 18,
+        "bodyIndex": 1
+      },
+      "exactSource": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "exactCurrentTarget": "Dyambu, moya, mpfula, flood na ndzilo swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Dyambu, moya, mpfula, ndhambi na ndzilo swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Dyambu, moya, mpfula, ndhambi na ndzilo swi tsemakanya ndzilakana wa wena hambi u swi pulanile kumbe a wu swi pulananga.",
+      "independentBacktranslation": "Sun, wind, rain, flood, and fire cross your boundary whether you planned for them or not.",
+      "reason": "Preserves all five incoming events and the whether planned or not contrast.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "flood",
+          "exactCurrentSpan": "flood",
+          "proposedTargetSpan": "ndhambi",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s15.body[3]",
+      "locator": {
+        "slide": 15,
+        "bodyIndex": 3
+      },
+      "exactSource": "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
+      "exactCurrentTarget": "Zone 4 i semi-wild: mirhi ya mihandzu na fodder leswi lavaka occasional attention. Zone 5 yi tshikiwa yi ri wild.",
+      "currentStatus": "mixed",
+      "candidateTarget": "Zone 4 i semi-wild: mirhi ya mihandzu na fodder leswi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwa yi ri wild.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "Zone 4 i semi-wild: mirhi ya mihandzu na fodder leswi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwa yi ri wild.",
+      "independentBacktranslation": "Zone 4 is semi-wild: fruit trees and fodder need attention sometimes. Zone 5 is left wild.",
+      "reason": "Preserves semi-wild, the two examples, occasional—not continuous—attention, and left wild.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "occasional attention",
+          "exactCurrentSpan": "occasional attention",
+          "proposedTargetSpan": "nyingiso minkarhi yin’wana",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    },
+    {
+      "id": "deck:ts:s9.body[0]",
+      "locator": {
+        "slide": 9,
+        "bodyIndex": 0
+      },
+      "exactSource": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+      "exactCurrentTarget": "David Holmgren u hlamusele twelve design principles eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula permaculture concept swin’we.",
+      "currentStatus": "draft",
+      "candidateTarget": "David Holmgren u hlamusele misinya ya milawu ya design ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula nongoti wa permaculture swin’we.",
+      "independentVerdict": "accept",
+      "finalComposedTarget": "David Holmgren u hlamusele misinya ya milawu ya design ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungula nongoti wa permaculture swin’we.",
+      "independentBacktranslation": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren began the permaculture concept together.",
+      "reason": "Names, title, twelve principles and co-originating-together relation remain; “sungula” is a close start/origin rendering, not an author/timing addition.",
+      "exactCompositionChanges": [
+        {
+          "exactSourceSpan": "twelve design principles",
+          "exactCurrentSpan": "twelve design principles",
+          "proposedTargetSpan": "misinya ya milawu ya design ya khume-mbirhi",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "permaculture concept",
+          "exactCurrentSpan": "permaculture concept",
+          "proposedTargetSpan": "nongoti wa permaculture",
+          "targetOccurrence": 1
+        }
+      ],
+      "sourceBinding": "literal exact frozen current canonical/authored source; no dynamic source replacement",
+      "compositionProof": {
+        "candidateSpanReplayVerified": true,
+        "frozenCurrentAndSourceIndependentlyMatched": true,
+        "finalOverridesBoundToExactCurrent": true
+      }
+    }
+  ],
+  "summary": {
+    "accept": 31,
+    "repair": 10,
+    "hold": 1,
+    "fluentLanguageApproval": false
+  },
+  "limits": [
+    "Independent semantic/source review only; no fluent or classroom approval.",
+    "English remains for precise technical labels or an exact clause where a proposed translation would change agency or risk misrepresenting agreement.",
+    "No repository file, learner content, slide, asset, test, or index was changed."
+  ]
+}

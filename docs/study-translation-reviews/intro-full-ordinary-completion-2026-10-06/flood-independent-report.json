@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "reviewedPacket": {
+    "path": "/tmp/imbewu-intro-ordinary-residual-fresh-candidates-20261006.json",
+    "sha256": "3bee598d370c2df51d773614bf43d23b0e40afa0f5925c7923e746138dc2fb10"
+  },
+  "reviewedCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "fileHashesVerified": {
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-localization.ts": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+    "lib/course-translation-drafts-ve.ts": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+    "lib/course-translation-drafts-ts.ts": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+    "docs/narration/intro-permaculture.ve.paired-draft.json": "b933e501e5e77a6e15ab63ae270d16c56552d1cf1e08d927a02cb43a70dfb9d5",
+    "docs/narration/intro-permaculture.ts.paired-draft.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603"
+  },
+  "bindingAudit": {
+    "pairedSlideEnglishSourceAndCurrentSegmentJoinExact": true,
+    "currentVisibleTargetsMatchPacket": true,
+    "canonicalRelatedParagraphs": "Slide 8 clause comes from Intro L1 canonical body[2], but the slide is a source-bound paraphrase, not a byte-identical copy. Slide 12 source comes from Intro L2 body[0]'s edge observation passage; it is a source-bound paraphrase, not a byte-identical copy.",
+    "learnerResolver": "VE and TS Intro L1/L2 resolve as draft. Slide 8's flood/swale clause already appears localized in each L1 learner body. Slide 12's adjacent observation idea already appears localized in each L2 key point[2]. No learner field change is proposed.",
+    "answerIndices": {
+      "l1": [2, 2],
+      "l2": [1, 1],
+      "unchanged": true
+    }
+  },
+  "rows": [
+    {
+      "id": "intro-ve-slide8-body1-ordinary-gap",
+      "locator": "docs/narration/intro-permaculture.ve.paired-draft.json; slide 8 body[1]",
+      "pairedSourceExact": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+      "relatedCanonicalSourceExact": "Ethics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+      "currentTarget": "Muhura u humbela u fulisa kholomo nga murahu ha gomelelo. A flood damages your swales. A hu na muthu o ṅwalaho phindulo.",
+      "currentStatus": "mixed",
+      "currentEnglishHoldExact": "A flood damages your swales.",
+      "proposedFullTarget": "Muhura u humbela u fulisa kholomo nga murahu ha gomelelo. Mandindi a tshinyadza dzi-swale dzaṋu. A hu na muthu o ṅwalaho phindulo.",
+      "proposedSegment": {
+        "sourceEnglish": "A flood damages your swales.",
+        "status": "draft",
+        "text": "Mandindi a tshinyadza dzi-swale dzaṋu."
+      },
+      "independentBacktranslation": "Floodwaters/flooding damage your swales.",
+      "verdict": "accept with lexical review note",
+      "reason": "The proposal retains the event and damage predicate, addresses the learner as the swale owner, and keeps the established swale design term. It adds no condition or advice. The neighboring localized prefix and suffix can remain unchanged.",
+      "uncertainty": "Mandindi's number/aspect should be checked by a fluent Tshivenda reviewer; the existing learner translation uses the same mandindi/tshinyadza/dzi-swale lexemes. No fluency claim."
+    },
+    {
+      "id": "intro-ts-slide8-body1-ordinary-gap",
+      "locator": "docs/narration/intro-permaculture.ts.paired-draft.json; slide 8 body[1]",
+      "pairedSourceExact": "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+      "relatedCanonicalSourceExact": "Ethics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+      "currentTarget": "Muakelani u kombela ku risa tihomu endzhaku ka dyandza. A flood damages your swales. A ku na munhu loyi a tsaleke nhlamulo.",
+      "currentStatus": "mixed",
+      "currentEnglishHoldExact": "A flood damages your swales.",
+      "proposedFullTarget": "Muakelani u kombela ku risa tihomu endzhaku ka dyandza. Ndhambi yi onha swisele (swales) swa wena. A ku na munhu loyi a tsaleke nhlamulo.",
+      "proposedSegment": {
+        "sourceEnglish": "A flood damages your swales.",
+        "status": "draft",
+        "text": "Ndhambi yi onha swisele (swales) swa wena."
+      },
+      "independentBacktranslation": "A flood damages your swales.",
+      "verdict": "accept",
+      "reason": "The subject remains a flood, yi onha preserves damages, and swa wena preserves your ownership. The established swales name stays visible in parentheses. No conditional, permission, or adviser wording is introduced. Other localized segments stay exact.",
+      "uncertainty": "Facilitator review remains open; no fluency claim."
+    },
+    {
+      "id": "intro-ve-slide12-body1-ordinary-gap",
+      "locator": "docs/narration/intro-permaculture.ve.paired-draft.json; slide 12 body[1]",
+      "pairedSourceExact": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+      "relatedCanonicalSourceExact": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.",
+      "currentTarget": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu. That is the land telling you something.",
+      "currentStatus": "mixed",
+      "currentEnglishHoldExact": " That is the land telling you something.",
+      "originalProposal": "Fhethu haṋu hu ni vhudza zwiṅwe.",
+      "recommendedTarget": "Land yaṋu i ni vhudza zwiṅwe.",
+      "recommendedSegment": {
+        "sourceEnglish": " That is the land telling you something.",
+        "status": "draft",
+        "text": " Land yaṋu i ni vhudza zwiṅwe."
+      },
+      "independentBacktranslation": "Your land tells you something.",
+      "verdict": "repair original proposal; use precise existing land anchor",
+      "reason": "Fhethu haṋu means your place/site and can shift the referent from land to place. The nearby source talks about what grows along your edge, making your land a compatible referent. Existing VE prose already uses “land yaṋu” for the land being observed. Prefix/suffix and metaphor are otherwise retained.",
+      "uncertainty": "Confirm the demonstrative/possessive idiom with a fluent Tshivenda reviewer. The source says “the land”; contextual possessive is supported by “along yours” but remains an interpretive choice."
+    },
+    {
+      "id": "intro-ts-slide12-body1-ordinary-gap",
+      "locator": "docs/narration/intro-permaculture.ts.paired-draft.json; slide 12 body[1]",
+      "pairedSourceExact": "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+      "relatedCanonicalSourceExact": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.",
+      "currentTarget": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i land leyi ku byelaka swin’wana.",
+      "currentStatus": "mixed",
+      "currentEnglishHoldExact": "land",
+      "proposedFullTarget": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i misava leyi ku byelaka swin’wana.",
+      "proposedSegment": {
+        "sourceEnglish": "land",
+        "status": "draft",
+        "text": "misava"
+      },
+      "independentBacktranslation": "That is the land/ground which tells you something.",
+      "verdict": "accept with lexical review note",
+      "reason": "Misava is supported as an existing local land/soil term and fits the land-as-observation metaphor here. It keeps the localized prefix and suffix byte-identical and adds no claim about what the land signals.",
+      "uncertainty": "Confirm that misava reads as the full land/site in this sentence, not only soil. No fluent approval."
+    }
+  ],
+  "preservation": {
+    "all_four_paired_sourceJoinsExact": true,
+    "all_four_currentVisibleTargetsExact": true,
+    "only_target_clause_spans_change": true,
+    "all_prefixes_and_suffixes_remain_byte_identical": true,
+    "lessonBodiesAndKeypointsUnchanged": true,
+    "correctAnswersRemain": {
+      "l1": [2, 2],
+      "l2": [1, 1]
+    },
+    "slide8NoAdvicePermissionOrConditionalAdded": true,
+    "slide12LandObservationMetaphorRetained": true,
+    "slide12EdgeAndStripDefinitionOutsideScope": true,
+    "quizIndexAndStatusChanges": false,
+    "fluentOrFarmingApprovalClaimed": false
+  },
+  "reviewLimits": [
+    "Slide English text is source-paired, but its source sentence is a paraphrase of the corresponding canonical paragraph; report records both rather than asserting byte identity.",
+    "These are independent semantic recommendations, not fluent-language approval. Root review remains necessary before implementation."
+  ]
+}

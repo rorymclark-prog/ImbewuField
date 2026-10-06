@@ -802,8 +802,8 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
   assert.equal(airflowRepair.scope.language, 'ts');
   assert.equal(airflowRepair.scope.slide, 19);
   assert.equal(airflowRepair.scope.bodyIndex, 2);
-  const tsAirflow = JSON.parse(readFileSync('docs/narration/intro-permaculture.ts.paired-draft.json', 'utf8'))
-    .slides[18].target.body[2];
+  // Later checked airflow framing supersedes this dated English hold; whole-current guards run before the earlier claim.
+  const tsAirflow = introDeckBeforeOrdinary('ts').slides[18].target.body[2];
   assert.deepEqual(tsAirflow, airflowRepair.finalTarget,
     'the doubtful “around its ends” airflow geometry is kept in exact English while through-flow stays drafted');
   assert.deepEqual(tsAirflow.segments.map((segment: any) => [segment.sourceEnglish, segment.status]), [
@@ -1844,7 +1844,8 @@ test('Intro integration noun updates preserve paired conditions and leave Sesoth
   } as const;
 
   for (const lang of ['ve', 'ts'] as const) {
-    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    // 6 October 2026: validate all later ordinary clauses before this dated noun-only source/status claim.
+    const deck = introDeckBeforeOrdinary(lang);
     const slides = validatePairedDraft(deck, introSource, lang);
     const field = slides[13].target.body[1];
     assert.equal(slides[13].english.body[1], sourceText);

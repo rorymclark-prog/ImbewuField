@@ -3,9 +3,16 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
-import { XITSONGA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT as currentTSHIVENDAIntro } from '../lib/course-translation-drafts-ve.ts';
+const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ve', currentTSHIVENDAIntro) as typeof currentTSHIVENDAIntro;
+import { XITSONGA_INTRO_PERMACULTURE_DRAFT as currentXITSONGAIntro } from '../lib/course-translation-drafts-ts.ts';
+const XITSONGA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ts', currentXITSONGAIntro) as typeof currentXITSONGAIntro;
+import { resolveLearnerLessonPresentation as resolveCurrentPresentation } from '../lib/course-localization.ts';
+import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
+// 6 October 2026: current accepted ordinary clauses supersede dated candidate
+// literals; validate every current source/unlisted/index before exposing that view.
+const resolveLearnerLessonPresentation: typeof resolveCurrentPresentation = (lesson, language) =>
+  introPresentationBeforeFullOrdinary(lesson, language, resolveCurrentPresentation(lesson, language));
 
 type Language = 've' | 'ts';
 type RegionalPair = {
@@ -168,6 +175,11 @@ test('changed L2 key points or safety sources fail closed to the exact English l
 });
 
 test('completed Xitsonga Intro L3 removes only its superseded hold records', () => {
+  // This dated L3-only claim is reconstructed after full current validation.
+  // The later accepted ordinary layer removes two L1 annotations in real live metadata.
+  assert.ok(!currentXITSONGAIntro.holds.some(hold => hold.lessonId === 'intro-permaculture-l1' &&
+    ((hold.field === 'keyPoints[1]' && hold.sourceText === 'People Care') ||
+     (hold.field === 'quiz[0].q' && hold.sourceText === 'seed saving'))), 'localized L1 anchors no longer falsely advertise English holds');
   const heldFields = XITSONGA_INTRO_PERMACULTURE_DRAFT.holds;
   assert.ok(heldFields.some(hold => hold.lessonId === 'intro-permaculture-l1' && hold.field === 'keyPoints[1]'),
     'the unrelated L1 key-point hold remains');

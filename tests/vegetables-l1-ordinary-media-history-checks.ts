@@ -1,3 +1,4 @@
+import { introFullAssetSizesBeforeOrdinary, introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -28,6 +29,8 @@ function observedFile(path: string) {
 // 6 October 2026: five accepted ordinary paragraph compositions change five
 // Vegetables frames. The complete later layer must pass before any dated rewind.
 export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  // 6 October 2026: the later 36 Intro frames are fully checked before this exact dated five-card view.
+  currentManifest = introFullAssetSizesBeforeOrdinary(currentManifest);
   assert.equal(sha(proofBytes), '5204a56d2d447544e069f428fa295294fa42bc11cec99ae064509874a4f84718');
   const proof = JSON.parse(proofBytes.toString());
   assert.equal(proof.frames.length, 5);
@@ -114,12 +117,15 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
 export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
   validateCurrentVegetablesL1OrdinaryMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const immediate = introFullAssetSizesBeforeOrdinary();
   const before = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
-  if (currentManifest === undefined || currentManifest === actual) return before;
+  if (currentManifest === undefined || currentManifest === actual || currentManifest === immediate) return before;
   assert.equal(currentManifest, before, 'only the exact guarded Vegetables L1 manifest baseline may be exposed');
   return before;
 }
 export function vegetablesL1MediaBeforeEarlierProof(path: string) {
+  const intro = introFullMediaBeforeEarlierProof(path);
+  if (intro) return intro;
   const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const frame = proof.frames.find((row: { path: string }) => row.path === url);

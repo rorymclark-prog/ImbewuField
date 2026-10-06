@@ -65,7 +65,33 @@ with tempfile.TemporaryDirectory() as tmp:
     assert slide["spokenText"] == "Sedzani mmbete. Tsireledzani gondo."
     assert slide["statuses"] == ["mixed"] and slide["mixedParagraphs"] == 1
 
+    # 6 October 2026: accepted semantic clauses keep exact source-only spacing
+    # between anchors. It is not translated speech and must not fail the plan.
+    separators = {"status":"mixed", "segments":[
+        {"status":"draft", "sourceEnglish":"Check the bed.", "text":"Sedzani mmbete."},
+        {"status":"english-hold", "sourceEnglish":" "},
+        {"status":"english-hold", "sourceEnglish":"Keep the marked path clear."},
+    ]}
+    path.write_text(json.dumps(packet(separators)))
+    slide = m.plan("fixture", "ve")[0]
+    assert slide["spokenText"] == "Sedzani mmbete. Keep the marked path clear."
+    assert slide["sourceEnglish"] == original
+    assert slide["statuses"] == ["mixed"] and slide["mixedParagraphs"] == 1
+
     invalid = [
+        ({"status":"mixed", "segments":[
+            {"status":"english-hold", "sourceEnglish":""},
+            {"status":"english-hold", "sourceEnglish":original},
+        ]}, "empty mixed English source segment"),
+        ({"status":"mixed", "segments":[
+            {"status":"draft", "sourceEnglish":" ", "text":"Invented"},
+            {"status":"english-hold", "sourceEnglish":original},
+        ]}, "empty mixed English source segment"),
+        ({"status":"mixed", "segments":[
+            {"status":"draft", "sourceEnglish":"Check the bed.", "text":"Sedzani mmbete."},
+            {"status":"english-hold", "sourceEnglish":" ", "text":"competing separator"},
+            {"status":"english-hold", "sourceEnglish":"Keep the marked path clear."},
+        ]}, "competing text for a mixed English hold"),
         ({"status":"mixed", "segments":[]}, "invalid mixed paragraph segments"),
         ({"status":"mixed", "segments":[
             {"status":"draft", "sourceEnglish":"Check the bed. ", "text":" "},

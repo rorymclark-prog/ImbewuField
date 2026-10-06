@@ -1,3 +1,5 @@
+import { introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
+import { validateAndRewindIntroFullPaired } from './intro-full-ordinary-paired-checks.ts';
 import { marketAssetSizesBeforeOrdinary, marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
 import { vegetablesAssetSizesBeforePestPrecision } from './vegetables-pest-precision-media-history-checks.ts';
 import assert from 'node:assert/strict';
@@ -42,12 +44,15 @@ assert.deepEqual(new Set(frames.map(row => row.asset)), expectedAssets,
   'the later overlay is exactly the 30 accepted VE/TS Intro URLs');
 
 const english = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
-const decks: Record<string, any> = {};
+let decks: Record<string, any> = {};
 for (const language of ['st', 've', 'ts']) {
   const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${language}.paired-draft.json`, 'utf8'));
   validatePairedDraft(deck, english, language);
   decks[language] = deck;
 }
+
+// The current72 pairs must pass before the previous54-target picture proof is reconstructed.
+decks = validateAndRewindIntroFullPaired(decks);
 
 let checked = false;
 function validateCurrentIntroLayer(currentManifest: string) {
@@ -60,9 +65,12 @@ function validateCurrentIntroLayer(currentManifest: string) {
   if (checked) return;
   for (const frame of frames) {
     assert.ok(frame.language === 've' || frame.language === 'ts');
-    const bytes = readFileSync(frame.asset);
-    assert.equal(bytes.length, frame.new.bytes, `${frame.asset}: current approved frame byte count`);
-    assert.equal(sha(bytes), frame.new.sha256, `${frame.asset}: current approved frame SHA`);
+    const liveBytes = readFileSync(frame.asset);
+    const later = introFullMediaBeforeEarlierProof(frame.asset);
+    // Old dimensions use actual base encoded headers frozen with full old SHA/size provenance.
+    const bytes = later ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
+    assert.equal(later?.bytes ?? bytes.length, frame.new.bytes, `${frame.asset}: current approved frame byte count`);
+    assert.equal(later?.sha256 ?? sha(bytes), frame.new.sha256, `${frame.asset}: current approved frame SHA`);
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', `${frame.asset}: WebP container`);
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP', `${frame.asset}: WebP payload`);
     assert.deepEqual([frame.new.width, frame.new.height], [1440, 5400]);
@@ -88,8 +96,9 @@ function validateCurrentIntroLayer(currentManifest: string) {
   const changed = expectedAssets;
   for (const asset of priorAssets.filter(row => !changed.has(row.path))) {
     const bytes = readFileSync(asset.path);
-    assert.equal(bytes.length, asset.bytes, `${asset.path}: unlisted media byte count remains exact`);
-    assert.equal(sha(bytes), asset.sha256, `${asset.path}: unlisted media bytes remain exact`);
+    const later = introFullMediaBeforeEarlierProof(asset.path);
+    assert.equal(later?.bytes ?? bytes.length, asset.bytes, `${asset.path}: unlisted media byte count remains exact`);
+    assert.equal(later?.sha256 ?? sha(bytes), asset.sha256, `${asset.path}: unlisted media bytes remain exact`);
   }
   checked = true;
 }
@@ -123,13 +132,18 @@ export function introAssetSizesBeforeOrdinary(currentManifest?: string) {
 }
 
 /** Return an earlier proof's frame descriptor only for an Intro URL superseded by this accepted overlay. */
+let guardedHistoricalManifestInitialized = false;
 export function introMediaBeforeEarlierProof(path: string) {
-  // 2026-10-06: the newer Market overlay must be fully verified before an older descriptor.
-  const market = marketMediaBeforeEarlierProof(path);
-  if (market) return market;
-  validateCurrentIntroLayer(readFileSync('lib/course-asset-sizes.ts', 'utf8'));
+  // 6 October 2026: validate the entire real later media/manifest chain once
+  // before exposing dated descriptors. Calling that same upstream normalization
+  // for every protected asset multiplied the older Soil/Water proof work.
+  // Explicit passed-manifest controls remain in introAssetSizesBeforeOrdinary.
+  if (!guardedHistoricalManifestInitialized) {
+    introAssetSizesBeforeOrdinary();
+    guardedHistoricalManifestInitialized = true;
+  }
   const normalized = path.startsWith('public/') ? path : path.replace(/^\//, 'public/');
   const frame = frames.find(row => row.asset === normalized);
-  if (!frame) return undefined;
+  if (!frame) return marketMediaBeforeEarlierProof(path);
   return { sha256: frame.old.sha256, bytes: frame.old.bytes };
 }

@@ -1,3 +1,5 @@
+import { introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
+import { validateAndRewindIntroFullPaired, readCurrentIntroFullDecks } from './intro-full-ordinary-paired-checks.ts';
 import { marketAssetSizesBeforeOrdinary } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -74,11 +76,14 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
   assert.deepEqual(changedSizes, [...changed].sort(), 'only those rendered frames affect learner download estimates');
   assert.deepEqual(proof.frames.map((f: { asset: string }) => '/' + f.asset.replace(/^public\//, '')).sort(), [...changed].sort());
   for (const frame of proof.frames) {
-    const bytes = readFileSync(new URL(`../${frame.asset}`, import.meta.url));
+    // 6 October 2026: verify the complete36-frame successor before using this dated actual base header/hash.
+    const liveBytes = readFileSync(new URL(`../${frame.asset}`, import.meta.url));
+    const later = introFullMediaBeforeEarlierProof(frame.asset);
+    const bytes = later ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
-    assert.equal(bytes.length, frame.new.bytes);
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), frame.new.sha256);
+    assert.equal(later?.bytes ?? bytes.length, frame.new.bytes);
+    assert.equal(later?.sha256 ?? createHash('sha256').update(bytes).digest('hex'), frame.new.sha256);
     assert.notEqual(frame.new.sha256, frame.old.sha256, 'rewritten targets must actually change the saved frame');
     assert.equal(frame.new.width, 1440); assert.equal(frame.new.height, 5400);
     const chunk = bytes.toString('ascii', 12, 16);
@@ -91,8 +96,8 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
       assert.equal(bytes.readUInt16LE(26) & 0x3fff, 1440);
       assert.equal(bytes.readUInt16LE(28) & 0x3fff, 5400);
     }
-    const deck = JSON.parse(read(`docs/narration/intro-permaculture.${frame.language}.paired-draft.json`));
+    const deck = validateAndRewindIntroFullPaired(readCurrentIntroFullDecks())[frame.language];
     assert.deepEqual(frame.sourceAndAcceptedTargets, deck.slides.find((slide: { n: number }) => slide.n === frame.slide));
-    assert.equal(COURSE_ASSET_SIZES['/' + frame.asset.replace(/^public\//, '')], bytes.length);
+    assert.equal(sizesBeforeLaterVegetablesLayer['/' + frame.asset.replace(/^public\//, '')], later?.bytes ?? bytes.length);
   }
 });
