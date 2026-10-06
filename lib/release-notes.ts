@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '906ec229', changes: [
+    'Soil and Water lessons add regional drafts beside exact English.',
+    '18 silent Soil and Water slides show fuller draft wording.',
+  ], tour: [
+    { title: 'Compare Soil and Water drafts',
+      where: 'Study → Soil Health or Water Harvesting',
+      detail: 'Read unreviewed regional drafts beside English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: 'd5e3e92e', changes: [
     'Tshivenda and Xitsonga Introduction lessons add draft prose beside English.',
     '36 silent Introduction slides show fuller draft wording and exact English.',
