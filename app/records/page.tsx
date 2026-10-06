@@ -692,7 +692,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     const amount = parseDecimalInput(form.price);
     const quantity = parseDecimalInput(form.quantity);
     if (!what || !Number.isFinite(amount) || amount < 0 || (isIn && (!Number.isFinite(quantity) || quantity <= 0))) {
-      setForm((f) => ({ ...f, error: isIn ? recordsFill(lang, 'Product, quantity and amount are required.') : recordsText(lang, 'Item and amount are required.', 'Kudingeka into nenani.') }));
+      setForm((f) => ({ ...f, error: isIn ? recordsPaired(lang, 'Product, quantity and amount are required.') : lang === 'zu' ? 'Kudingeka into nenani.' : recordsPaired(lang, 'Item and amount are required.') }));
       return;
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
@@ -914,7 +914,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
               {EXPENSE_CATEGORIES.map((c) => (
                 <button key={c} type="button"
                   onClick={() => setForm((f) => ({ ...f, category: f.category === c ? null : c }))}
-                  className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
+                  className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold transition-all"
                   style={form.category === c
                     ? { background: '#9A6018', color: '#fff', border: '1px solid #9A6018', cursor: 'pointer' }
                     : { background: 'var(--color-canvas)', color: 'var(--color-muted-strong)', border: '1px solid var(--color-border)', cursor: 'pointer' }}>
@@ -1033,7 +1033,7 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
-    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${paymentMethodLabel(i.paymentMethod)}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
   // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as

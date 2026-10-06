@@ -19,7 +19,7 @@ const SOURCES = ['app/records/page.tsx', 'components/MyRecords.tsx', 'components
   'components/records/RecordQuantityFields.tsx', 'components/records/RecordQuantitySummary.tsx',
   'lib/expense-receipts.ts', 'lib/duplicate-income.ts', 'lib/credit-pack-pdf.ts', 'lib/farm-records.ts',
   'lib/records-regional-drafts.ts', 'app/api/read-slip/route.ts', 'lib/api-auth.ts', 'lib/i18n.tsx',
-  'lib/i18n-pending.ts', 'lib/learner-ui-english.ts'].map(read).join('\n');
+  'lib/i18n-pending.ts', 'lib/learner-ui-english.ts', 'components/CropSelect.tsx', 'lib/invoices.ts', 'lib/crop-entry.ts'].map(read).join('\n');
 
 test('English is untouched: no draft is ever returned for English, and English labels are byte-identical', () => {
   for (const key of Object.keys(RECORDS_DRAFTS)) {
@@ -87,7 +87,7 @@ test('every shipped draft keeps the placeholders, digits and technical tokens of
 
 test('every draft is bound to exact English still shown by the screen, so an edit retires its draft', () => {
   for (const english of Object.keys(RECORDS_DRAFTS)) {
-    const literal = (q: string) => `${q}${english.replace(/'/g, "\\'")}${q}`;
+    const literal = (q: string) => `${q}${q === "'" ? english.replace(/'/g, "\\'") : english}${q}`;
     const templated = english.replace(/\{[a-zA-Z]+\}/g, '${');
     const shown = SOURCES.includes(literal("'")) || SOURCES.includes(literal('"')) || SOURCES.includes(literal('`'))
       || (english !== templated && templated.split('${').filter(Boolean).every((part) => SOURCES.includes(part)))
@@ -104,7 +104,7 @@ test('unit words: the number is untouched and only the unit word moves into the 
     for (const unit of RECORD_UNITS) {
       if (unit === 'kg') assert.equal(recordsUnitWord(unit, lang), 'kg', 'kg is a technical unit and stays kg');
     }
-    const label = recordsQuantityLabel({ quantity: 12, unit: 'eggs' }, lang);
+    const label = recordsQuantityLabel({ quantity: 12, unit: 'eggs', kg: null }, lang);
     assert.match(label, /^12 \S/, `${lang}: number first, then a unit word`);
     const unknown = recordsQuantityLabel({ quantity: 1, unit: 'furlongs' }, lang);
     assert.equal(unknown, recordsFill(lang, 'Quantity not recorded'), 'a malformed unit still reads as not recorded, never as a weight');
@@ -136,7 +136,7 @@ test('wrong-language contamination: a draft never carries another language\'s ma
         if (other === lang) continue;
         // Xitsonga, Sesotho and Tshivenda legitimately share a few short forms with each other
         // and with isiZulu loans; only the long distinctive markers count.
-        const hit = draft.match(markers[other]);
+        const hit: RegExpMatchArray | null = draft.match(markers[other]);
         if (hit && hit[0].length >= 6) assert.fail(`${lang} draft for "${english}" contains ${other} word "${hit[0]}": ${draft}`);
       }
     }
@@ -174,4 +174,76 @@ test('the do-not-enter-again warning and the nothing-is-lost reassurance keep th
       assert.ok(shown.startsWith(english), `${lang}: English source must come first`);
     }
   }
+});
+
+/* ── Coverage: the screen cannot grow an English string the drafts silently skip ──────────────── */
+
+import { existsSync } from 'node:fs';
+
+/** Quoted English literals inside recordsText/recordsInstruction/recordsUi/recordsFill/recordsTemplate/text calls. */
+function englishLiteralsIn(source: string, helpers: string[]): Set<string> {
+  const found = new Set<string>();
+  for (const helper of helpers) {
+    const call = new RegExp(`(?<![\\w.])${helper}\\(`, 'g');
+    for (let m = call.exec(source); m; m = call.exec(source)) {
+      let depth = 0; let quote = ''; let start = m.index + m[0].length; const args: string[] = [];
+      for (let i = m.index + m[0].length - 1; i < source.length; i++) {
+        const c = source[i];
+        if (quote) { if (c === '\\') i++; else if (c === quote) quote = ''; continue; }
+        if ("'\"`".includes(c)) quote = c;
+        else if ('([{'.includes(c)) depth++;
+        else if (')]}'.includes(c)) { depth--; if (depth === 0) { args.push(source.slice(start, i)); break; } }
+        else if (c === ',' && depth === 1) { args.push(source.slice(start, i)); start = i + 1; }
+      }
+      // text(en, zu) has English first; the others take lang first.
+      const english = helper === 'text' ? args[0] : args[1];
+      for (const lit of (english ?? '').matchAll(/'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)"/g)) found.add((lit[1] ?? lit[2]).replace(/\\'/g, "'"));
+    }
+  }
+  return found;
+}
+
+test('every English label the money book renders has a draft or an explicit hold in each regional language', () => {
+  const packet = (lang: string) => JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string }>;
+  const helpers = ['recordsText', 'recordsInstruction', 'recordsUi', 'recordsFill', 'recordsPaired', 'recordsTemplate'];
+  const literals = new Set<string>();
+  for (const file of ['app/records/page.tsx', 'components/MyRecords.tsx', 'components/CropSelect.tsx']) {
+    for (const lit of englishLiteralsIn(read(file), helpers)) literals.add(lit);
+  }
+  for (const lit of englishLiteralsIn(read('components/records/ReceiptPreview.tsx'), ['text'])) literals.add(lit);
+  // Selector tokens inside template expressions, not words a farmer reads.
+  for (const token of ['in', 'out', 'cost', 'sale', 'zu', 'en', 'bookTabPicked', 'bookTabSold', 'bookTabSpent', 'bookTabCharts', ' ', ', ']) literals.delete(token);
+  for (const lang of LANGS) {
+    const held = new Set(packet(lang).filter((row) => row.status === 'held').map((row) => row.english));
+    const missing = [...literals].filter((english) => !/[A-Za-z]{2}/.test(english) ? false : recordsDraft(lang, english) === null && !held.has(english));
+    assert.deepEqual(missing, [], `${lang}: English shown on the money book with neither a draft nor a recorded hold`);
+  }
+});
+
+test('the draft packet and the shipped table agree: only accepted drafts ship, held rows never do', () => {
+  for (const lang of ['zu', ...LANGS] as const) {
+    const rows = JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string; draft: string }>;
+    for (const row of rows) {
+      if (row.status === 'accepted') assert.equal(RECORDS_DRAFTS[row.english]?.[lang], row.draft, `${lang} accepted draft missing or different in the table: ${row.english}`);
+      else assert.equal(RECORDS_DRAFTS[row.english]?.[lang], undefined, `${lang} held row leaked into the table: ${row.english}`);
+    }
+  }
+  assert.ok(existsSync(new URL('../docs/translation-reviews/records-finance-2026-10-06/README.md', import.meta.url)));
+});
+
+test('useRecordsT wraps useLanguage and never itself — a self-call crashed the whole money book on first render', () => {
+  const source = read('components/MyRecords.tsx');
+  const start = source.indexOf('function useRecordsT');
+  const body = source.slice(start, source.indexOf('\n}\n', start));
+  assert.match(body, /useLanguage\(\)/);
+  assert.doesNotMatch(body.replace('function useRecordsT', ''), /useRecordsT\(/);
+});
+
+test('validation text and the draft notice reach the screen for the regional languages', () => {
+  const page = read('app/records/page.tsx');
+  assert.match(page, /isRecordsRegionalLang\(lang\) && <p role="note" lang="en" data-records-draft-notice=\{lang\}/, 'the unreviewed-draft notice must render above the tabs');
+  assert.match(page, /recordsPaired\(lang, 'Product, quantity and amount are required\.'\)/);
+  assert.match(page, /recordsPaired\(lang, 'Item and amount are required\.'\)/);
+  // The saved form must still validate exactly as before: the rule is untouched, only the words moved.
+  assert.match(page, /if \(!what \|\| !Number\.isFinite\(amount\) \|\| amount < 0 \|\| \(isIn && \(!Number\.isFinite\(quantity\) \|\| quantity <= 0\)\)\)/);
 });

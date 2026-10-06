@@ -111,5 +111,5 @@ const LANGUAGE_NAMES: Record<RecordsRegionalLang, string> = { st: 'Sesotho', ve:
 /** The visible draft notice for the regional languages. English on purpose: it is a status line. */
 export function recordsDraftNotice(lang: RecordsRegionalLang): string {
   const provisional = lang === 'ts' ? ' (provisional standard written Xitsonga)' : '';
-  return `Unreviewed ${LANGUAGE_NAMES[lang]} machine draft${provisional}. English is shown beside instructions; anything not yet drafted stays in English.`;
+  return `Unreviewed ${LANGUAGE_NAMES[lang]} machine draft${provisional}. English source is shown beside instructions; text not yet drafted stays in English.`;
 }

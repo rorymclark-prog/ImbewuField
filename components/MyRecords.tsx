@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { useLanguage, translate } from '@/lib/i18n';
-import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsDraft, isRecordsRegionalLang, recordsDraftNotice, samePlaceholders } from '@/lib/records-regional-drafts';
+import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsDraft, samePlaceholders } from '@/lib/records-regional-drafts';
 import {
   myProduction,
   mySales,
@@ -91,7 +91,7 @@ function RecordZuluDraft({ lang, english, isiZulu }: { lang: string; english: st
  * English (the guide-price lines substitute rands and kilograms into them) is refused.
  */
 function useRecordsT(): { t: (key: string) => string; lang: string } {
-  const { t, lang } = useRecordsT();
+  const { t, lang } = useLanguage();
   return {
     lang,
     t: (key: string) => {
@@ -1385,7 +1385,6 @@ export default function MyRecords({
       {showSold && (
         <Card accent="#315939">
           {lang === 'zu' && <p role="note" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>ISIZULU MACHINE DRAFT — This wording has not been reviewed by a fluent isiZulu speaker. The exact English source appears under each line.</p>}
-          {isRecordsRegionalLang(lang) && <p role="note" lang="en" className="mb-3 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)}</p>}
           <SectionLabel><RecordZuluDraft lang={lang} english="Record a sale" isiZulu="Qopha ukuthengisa" /></SectionLabel>
           <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english="Create an invoice to keep the buyer, produce, quantity and payment together." isiZulu="Dala i-invoyisi ukuze ugcine umthengi, isivuno, inani kanye nenkokhelo ndawonye." /></p>
           <div className="flex flex-wrap gap-2">

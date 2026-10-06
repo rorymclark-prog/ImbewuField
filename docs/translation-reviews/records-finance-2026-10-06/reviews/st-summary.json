@@ -1,0 +1,27 @@
+{
+ "language": "st",
+ "counts": {
+  "ok": 257,
+  "repair": 13,
+  "hold": 0,
+  "total": 270
+ },
+ "phaseC": {
+  "existing_errors": 1,
+  "detail": "myRecordsSaveSale drops '& invoice' (suggest 'Boloka thekiso le invoyese')"
+ },
+ "top10": [
+  "R057/R059: In/Out ledger columns drafted as imperatives 'Kena'/'Tswa' (Enter!/Come out!) - 'Kena' is also the sign-in verb; repaired to 'Tse kenang'/'Tse tswang' (meaning)",
+  "C myRecordsSaveSale: existing 'Boloka thekiso' drops '& invoice' (meaning)",
+  "R214: 'e seng bopaki ba kotulo' (not harvest evidence) uses wrong noun-class concord for 'sesupo' and 'sesupo' means pointer, not image; repaired with 'Setshwantsho ... se seng bopaki' (also R210, R213)",
+  "R234: 'ho kenya se seng' reads 'attach another', implying a photo already exists; repaired to 'ho kenya setshwantsho'",
+  "R187: demo-tour export-blocked message has a garbled final clause and drops 'own records'",
+  "R037: neutral fragment 'e kotutsweng' will not agree with most crop nouns when inserted after {crop}; use 'kotutswe'",
+  "R191/R202: 'direkoto tsa mobolekisi' = records OF the lender, not FOR a lender; repaired to 'bakeng sa mobolekisi'",
+  "R172: 'Khoporasi' = corporation, not Co-op; repaired to 'Khoperasi'",
+  "R075: typo 'dikenyellelong' in a crop-cost label; fixed",
+  "Residual unverified: R017 'Sebediswe' tab, R067/R258 'jarolla' (download) used for 'loading', R268 'dihlopha' (groups) for bunches, R021 fuel, R192 credit-score terms - left as ok but low confidence"
+ ],
+ "verified_clean": "All {placeholders} identical to English across 270 items (programmatically checked on drafts and repairs). Negations ('ha di a amiwa', 'ha di ke', 'Se ke wa', 'ha ho letho le hlakotsweng', 'e seng') preserved. Recover (Aha hape) is distinct from View (Sheba), Create (Etsa) and Retry (Leka hape). Sold/Picked/Spent distinguished; buyer 'moreki' vs supplier 'mofani' distinct. No isiZulu/Xitsonga/Tshivenda words found in the drafts.",
+ "confidence_limits": "I am a machine reviewer, not a fluent Sesotho speaker's approval. My Sesotho is good for grammar and common vocabulary but weaker on agricultural/finance register, noun-class concord in long sentences, and regional (Lesotho vs South African) orthography. Repairs are suggestions and should also be checked by a native speaker. 'ok' means no meaning error found, not that the wording is natural. The A-file usage strings leak code and English fragments, so Phase A was not perfectly blind."
+}

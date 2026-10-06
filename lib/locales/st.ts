@@ -777,7 +777,7 @@ const dict: Dict = {
   myRecordsBuyerLabel: 'Moreki (boikgethelo)',
   myRecordsBuyerPlaceholder: 'mohl. Mmaraka',
   myRecordsSaleValidationError: 'Sejalo, kg le tjhelete (R) di a hlokahala.',
-  myRecordsSaveSale: 'Boloka thekiso',
+  myRecordsSaveSale: 'Boloka thekiso le invoyese',
   myRecordsNoHarvests: 'Ha ho na dikotulo tse ngotsweng ho fihlela jwale.',
   myRecordsTotalHarvested: 'kaofela e kotutsweng',
   myRecordsTopsLabel: 'e hodimo',

@@ -1,0 +1,3786 @@
+[
+ {
+  "id": "R001",
+  "english": "Could not read the slip — try a clearer, flat, well-lit photo.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/api/read-slip/route.ts + lib/api-auth.ts"
+  ],
+  "context": "AI receipt reading failed"
+ },
+ {
+  "id": "R002",
+  "english": "This AI feature is switched off. You can change your AI settings or continue manually.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/api/read-slip/route.ts + lib/api-auth.ts"
+  ],
+  "context": "AI disabled"
+ },
+ {
+  "id": "R003",
+  "english": "Authentication required.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/api/read-slip/route.ts + lib/api-auth.ts"
+  ],
+  "context": "not signed in for AI reading"
+ },
+ {
+  "id": "R004",
+  "english": "No image provided",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/api/read-slip/route.ts + lib/api-auth.ts"
+  ],
+  "context": "AI request had no image"
+ },
+ {
+  "id": "R005",
+  "english": "No entries for this month. Use the New-entry button, the Invoice tool, or your phone — everything shows here.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "desktop ledger empty row (period variant)"
+ },
+ {
+  "id": "R006",
+  "english": "No crop activity or crop plan for this month.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Crop performance card empty (period variant)"
+ },
+ {
+  "id": "R007",
+  "english": "No sales or costs logged for this month.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Garden gross margin empty (period variant)"
+ },
+ {
+  "id": "R008",
+  "english": "No entries for this season. Use the New-entry button, the Invoice tool, or your phone — everything shows here.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "desktop ledger empty row (period variant)"
+ },
+ {
+  "id": "R009",
+  "english": "No crop activity or crop plan for this season.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Crop performance card empty (period variant)"
+ },
+ {
+  "id": "R010",
+  "english": "No sales or costs logged for this season.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Garden gross margin empty (period variant)"
+ },
+ {
+  "id": "R011",
+  "english": "No entries for this year. Use the New-entry button, the Invoice tool, or your phone — everything shows here.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "desktop ledger empty row (period variant)"
+ },
+ {
+  "id": "R012",
+  "english": "No crop activity or crop plan for this year.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Crop performance card empty (period variant)"
+ },
+ {
+  "id": "R013",
+  "english": "No sales or costs logged for this year.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Garden gross margin empty (period variant)"
+ },
+ {
+  "id": "R014",
+  "english": "Editing sale",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "small uppercase heading above the form while an existing entry is being edited"
+ },
+ {
+  "id": "R015",
+  "english": "Editing cost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "small uppercase heading above the form while an existing entry is being edited"
+ },
+ {
+  "id": "R016",
+  "english": "Sold",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "book tab label (Picked · Sold · Spent · Charts) and ledger heading; Sold = money in, Spent = money out"
+ },
+ {
+  "id": "R017",
+  "english": "Spent",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "book tab label (Picked · Sold · Spent · Charts) and ledger heading; Sold = money in, Spent = money out"
+ },
+ {
+  "id": "R018",
+  "english": "Charts",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "book tab label (Picked · Sold · Spent · Charts) and ledger heading; Sold = money in, Spent = money out"
+ },
+ {
+  "id": "R019",
+  "english": "Feed",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R020",
+  "english": "Seed",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R021",
+  "english": "Fuel",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R022",
+  "english": "Equipment",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R023",
+  "english": "Labour",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R024",
+  "english": "Transport",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R025",
+  "english": "Other",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "expense category chip / ledger category"
+ },
+ {
+  "id": "R026",
+  "english": "Check",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "CSV export column header for the duplicate warning"
+ },
+ {
+  "id": "R027",
+  "english": "Crop, kg and price are required.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R028",
+  "english": "Failed to save. Try again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R029",
+  "english": "Could not read that photo.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R030",
+  "english": "Could not read the slip.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R031",
+  "english": "Read it — check the numbers before saving.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R032",
+  "english": "Could not read the slip. The photo is still attached; enter the cost below.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R033",
+  "english": "The item, supplier and total are ready. Check them against the receipt before saving.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0"
+  ],
+  "context": "recordsMessage map key"
+ },
+ {
+  "id": "R034",
+  "english": "Preview with demonstration records",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1001"
+  ],
+  "context": "{recordsText(lang, 'Preview with demonstration records', 'Buka amarekhodi esibonelo')}"
+ },
+ {
+  "id": "R035",
+  "english": "Direct sale",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1027"
+  ],
+  "context": ".map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} ${recordsText(lang, 'sale', 'ukudayisa')}`, qty: recordsQuantityLabel(s, lang), inAmt: s.amount ?? 0, sourc"
+ },
+ {
+  "id": "R036",
+  "english": "Cost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1030"
+  ],
+  "context": ".map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category, lang) || '—', inAmt: null, source: x.supplier || recordsText(lang, 'Cost',"
+ },
+ {
+  "id": "R037",
+  "english": "harvested",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1033"
+  ],
+  "context": ".map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, so"
+ },
+ {
+  "id": "R038",
+  "english": "Yield log",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1033"
+  ],
+  "context": ".map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, so"
+ },
+ {
+  "id": "R039",
+  "english": "Income",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1086",
+   "components/MyRecords.tsx:1028",
+   "components/MyRecords.tsx:1038"
+  ],
+  "context": "{ label: recordsText(lang, 'Income', 'Imali engenayo'), value: fmtZAR(income), color: 'var(--record-positive)' },"
+ },
+ {
+  "id": "R040",
+  "english": "Expenses",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1087"
+  ],
+  "context": "{ label: recordsText(lang, 'Expenses', 'Izindleko'), value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: 'var(--record-negative)' },"
+ },
+ {
+  "id": "R041",
+  "english": "Recorded cash margin",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1088"
+  ],
+  "context": "{ label: recordsText(lang, 'Recorded cash margin', 'Imali esele erekhodiwe'), value: fmtZAR(net), color: 'var(--color-forest-800)' },"
+ },
+ {
+  "id": "R042",
+  "english": "Yield logged",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1089"
+  ],
+  "context": "{ label: recordsText(lang, 'Yield logged', 'Isivuno esirekhodiwe'), value: yieldLabel, color: 'var(--color-water)' },"
+ },
+ {
+  "id": "R043",
+  "english": "Financial sheet",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1100"
+  ],
+  "context": "<h2 className=\"font-display font-semibold\" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h2>"
+ },
+ {
+  "id": "R044",
+  "english": "Open a fully-worked demo farm. Your own books are not touched.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1105"
+  ],
+  "context": "title={recordsText(lang, 'Open a fully-worked demo farm. Your own books are not touched.', 'Vula ipulazi lesibonelo elinerekhodi eligcwele. Amarekhodi akho awathintwa.')}"
+ },
+ {
+  "id": "R045",
+  "english": "Try the money book",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1108"
+  ],
+  "context": "<Sparkles size={15} />{recordsText(lang, 'Try the money book', 'Zama incwadi yemali')}"
+ },
+ {
+  "id": "R046",
+  "english": "month",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1116"
+  ],
+  "context": "{recordsText(lang, p === 'month' ? 'month' : p === 'season' ? 'season' : 'year', p === 'month' ? 'inyanga' : p === 'season' ? 'isizini' : 'unyaka')}"
+ },
+ {
+  "id": "R047",
+  "english": "season",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1116"
+  ],
+  "context": "{recordsText(lang, p === 'month' ? 'month' : p === 'season' ? 'season' : 'year', p === 'month' ? 'inyanga' : p === 'season' ? 'isizini' : 'unyaka')}"
+ },
+ {
+  "id": "R048",
+  "english": "year",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1116"
+  ],
+  "context": "{recordsText(lang, p === 'month' ? 'month' : p === 'season' ? 'season' : 'year', p === 'month' ? 'inyanga' : p === 'season' ? 'isizini' : 'unyaka')}"
+ },
+ {
+  "id": "R049",
+  "english": "Export",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1123"
+  ],
+  "context": "<Download size={15} />{recordsText(lang, 'Export', 'Khipha')}"
+ },
+ {
+  "id": "R050",
+  "english": "New invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1126"
+  ],
+  "context": "<FileText size={15} />{recordsText(lang, 'New invoice', 'I-invoyisi entsha')}"
+ },
+ {
+  "id": "R051",
+  "english": "Log harvest",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1133"
+  ],
+  "context": "<Sprout size={15} />{recordsText(lang, 'Log harvest', 'Rekhoda isivuno')}"
+ },
+ {
+  "id": "R052",
+  "english": "New entry",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1138"
+  ],
+  "context": "<Plus size={15} />{recordsText(lang, 'New entry', 'Okufakiwe okusha')}"
+ },
+ {
+  "id": "R053",
+  "english": "Orchard is switched off, so {kg} kg is not in Yield logged: {names}. Income and recorded cash margin still count every sale.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1156"
+  ],
+  "context": "{recordsTemplate(lang, 'Orchard is switched off, so {kg} kg is not in Yield logged: {names}. Income and recorded cash margin still count every sale.', 'Ingadi yezihlahla icishiwe, ngakho u-{kg} kg akafakiwe esivunweni es"
+ },
+ {
+  "id": "R054",
+  "english": "Date",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R055",
+  "english": "Description",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R056",
+  "english": "Qty",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R057",
+  "english": "In",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R058",
+  "english": "Source",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R059",
+  "english": "Out",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1165"
+  ],
+  "context": "{[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out'"
+ },
+ {
+  "id": "R060",
+  "english": "entry",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1216"
+  ],
+  "context": "{recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ?"
+ },
+ {
+  "id": "R061",
+  "english": "entries",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1216"
+  ],
+  "context": "{recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ?"
+ },
+ {
+  "id": "R062",
+  "english": "Synced with your phone",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1216"
+  ],
+  "context": "{recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ?"
+ },
+ {
+  "id": "R063",
+  "english": "Add or edit sales and costs here, or with the New-entry button on your phone.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1216"
+  ],
+  "context": "{recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ?"
+ },
+ {
+  "id": "R064",
+  "english": "Unknown",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1225"
+  ],
+  "context": "return value === null || !Number.isFinite(value) ? recordsText(lang, 'Unknown', 'Akwaziwa') : `${value.toFixed(1)} ${unit}`;"
+ },
+ {
+  "id": "R065",
+  "english": "Crop performance",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1248"
+  ],
+  "context": "<h2 className=\"text-xl font-display font-semibold\" style={{ color: 'var(--text-primary)' }}>{recordsText(lang, 'Crop performance', 'Ukusebenza kwezitshalo')}</h2>"
+ },
+ {
+  "id": "R066",
+  "english": "Yield leads: it compares growing work even when prices change.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1249"
+  ],
+  "context": "<p className=\"text-xs font-sans mt-1\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield leads: it compares growing work even when prices change.', 'Isivuno sibekwa kuqala: siqhathanisa umsebenzi wokuli"
+ },
+ {
+  "id": "R067",
+  "english": "Loading crop areas…",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1252"
+  ],
+  "context": "<p className=\"px-4 py-6 text-xs font-sans\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Loading crop areas…', 'Kulayishwa izindawo zezitshalo…')}</p>"
+ },
+ {
+  "id": "R068",
+  "english": "Planted area not recorded",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1262"
+  ],
+  "context": "{crop.areaM2 === null ? recordsText(lang, 'Planted area not recorded', 'Indawo etshaliwe ayirekhodiwe') : `${crop.areaM2.toFixed(1)} m² ${recordsText(lang, 'planned', 'ihleliwe')}`}"
+ },
+ {
+  "id": "R069",
+  "english": "planned",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1262"
+  ],
+  "context": "{crop.areaM2 === null ? recordsText(lang, 'Planted area not recorded', 'Indawo etshaliwe ayirekhodiwe') : `${crop.areaM2.toFixed(1)} m² ${recordsText(lang, 'planned', 'ihleliwe')}`}"
+ },
+ {
+  "id": "R070",
+  "english": "Yield",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1266"
+  ],
+  "context": "<div><p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className=\"text-sm font-display font-semibold\" style={{ color: 'var(--color-forest-"
+ },
+ {
+  "id": "R071",
+  "english": "No harvest logged",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1266",
+   "app/records/page.tsx:1299"
+  ],
+  "context": "<div><p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className=\"text-sm font-display font-semibold\" style={{ color: 'var(--color-forest-"
+ },
+ {
+  "id": "R072",
+  "english": "Turnover",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1267"
+  ],
+  "context": "<div><p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className=\"text-sm font-display font-semibold\" style={{ color: 'var(--b"
+ },
+ {
+  "id": "R073",
+  "english": "No sales logged",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1267",
+   "app/records/page.tsx:1268",
+   "app/records/page.tsx:1305",
+   "app/records/page.tsx:1311"
+  ],
+  "context": "<div><p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className=\"text-sm font-display font-semibold\" style={{ color: 'var(--b"
+ },
+ {
+  "id": "R074",
+  "english": "Price",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1268",
+   "app/records/page.tsx:1309"
+  ],
+  "context": "<div><p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className=\"text-sm font-display font-semibold\" style={{ color: 'var(--gold)' }}>{crop"
+ },
+ {
+  "id": "R075",
+  "english": "Cost from tagged entries:",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1272"
+  ],
+  "context": "? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²', lang)}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other cos"
+ },
+ {
+  "id": "R076",
+  "english": "Other costs not attributed",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1272"
+  ],
+  "context": "? `${recordsText(lang, 'Cost from tagged entries:', 'Izindleko ezivela kokufakiwe okumakiwe:')} ${metricNumber(crop.taggedCostZarPerM2, 'R/m²', lang)}${metrics.hasUnattributedExpenses ? ` · ${recordsText(lang, 'Other cos"
+ },
+ {
+  "id": "R077",
+  "english": "Cost per m²: not attributed",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1273"
+  ],
+  "context": ": metrics.hasUnattributedExpenses ? recordsText(lang, 'Cost per m²: not attributed', 'Izindleko nge-m²: azabelwanga') : recordsText(lang, 'No crop cost logged', 'Azikho izindleko zesitshalo ezirekhodiwe')}"
+ },
+ {
+  "id": "R078",
+  "english": "No crop cost logged",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1273"
+  ],
+  "context": ": metrics.hasUnattributedExpenses ? recordsText(lang, 'Cost per m²: not attributed', 'Izindleko nge-m²: azabelwanga') : recordsText(lang, 'No crop cost logged', 'Azikho izindleko zesitshalo ezirekhodiwe')}"
+ },
+ {
+  "id": "R079",
+  "english": "Orchard & food forest",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1289"
+  ],
+  "context": "<p className=\"text-xs font-mono uppercase tracking-wider\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>"
+ },
+ {
+  "id": "R080",
+  "english": "picked & sold, not per m²",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1290"
+  ],
+  "context": "<p className=\"text-xs font-sans\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>"
+ },
+ {
+  "id": "R081",
+  "english": "Picked",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1297"
+  ],
+  "context": "book tab label (harvest page) and Orchard card column header meaning kilograms picked/harvested"
+ },
+ {
+  "id": "R082",
+  "english": "Sold for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1303"
+  ],
+  "context": "<p className=\"text-xs font-mono uppercase\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>"
+ },
+ {
+  "id": "R083",
+  "english": "{sold} of that was sold · {kept} eaten at home, given away or lost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1320"
+  ],
+  "context": "{recordsTemplate(lang, '{sold} of that was sold · {kept} eaten at home, given away or lost', 'Kuthengiswe {sold} · {kept} kudliwe ekhaya, kwanikezwa abanye noma kulahlekile', { sold: metricNumber(row.soldKg, 'kg', lang),"
+ },
+ {
+  "id": "R084",
+  "english": "These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the money below.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1326"
+  ],
+  "context": "{recordsInstruction(lang, 'These are not rows in the list above because every figure there is worked out per square metre of bed, and fruit off a tree does not come off a bed. The sales here are already counted in the mo"
+ },
+ {
+  "id": "R085",
+  "english": "Garden gross margin",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1331"
+  ],
+  "context": "<p className=\"text-xs font-mono uppercase tracking-wider\" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>"
+ },
+ {
+  "id": "R086",
+  "english": "Garden",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1336"
+  ],
+  "context": "<p className=\"text-sm font-display\" style={{ color: 'var(--text-primary)' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>"
+ },
+ {
+  "id": "R087",
+  "english": "This farm",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1336"
+  ],
+  "context": "<p className=\"text-sm font-display\" style={{ color: 'var(--text-primary)' }}>{margin.gardenId ? `${recordsText(lang, 'Garden', 'Ingadi')} ${margin.gardenId}` : recordsText(lang, 'This farm', 'Leli pulazi')}</p>"
+ },
+ {
+  "id": "R088",
+  "english": "Sales logged minus expenses logged. Shared costs are never guessed into crop profit.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1340"
+  ],
+  "context": "<p className=\"text-xs font-sans mt-1\" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Sales logged minus expenses logged. Shared costs are never guessed into crop profit.', 'Imali yokudayisa erekhod"
+ },
+ {
+  "id": "R089",
+  "english": "Learn",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1562"
+  ],
+  "context": "<LessonLink id=\"finances:overview\" label={recordsText(lang, 'Learn', 'Funda')} />"
+ },
+ {
+  "id": "R090",
+  "english": "No sales logged yet",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1674"
+  ],
+  "context": "emptyMessage={recordsText(lang, 'No sales logged yet', 'Akukho okudayisiwe okurekhodiwe okwamanje')}"
+ },
+ {
+  "id": "R091",
+  "english": "Add a sale by hand",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1689"
+  ],
+  "context": "addLabel={recordsText(lang, 'Add a sale by hand', 'Faka ukudayisa ngesandla')}"
+ },
+ {
+  "id": "R092",
+  "english": "No costs logged yet",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1703"
+  ],
+  "context": "emptyMessage={recordsText(lang, 'No costs logged yet', 'Azikho izindleko ezirekhodiwe okwamanje')}"
+ },
+ {
+  "id": "R093",
+  "english": "Log a cost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1716"
+  ],
+  "context": "addLabel={recordsText(lang, 'Log a cost', 'Rekhoda izindleko')}"
+ },
+ {
+  "id": "R094",
+  "english": "My farm",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1734"
+  ],
+  "context": "name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}"
+ },
+ {
+  "id": "R095",
+  "english": "Record an entry",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1758"
+  ],
+  "context": "role=\"dialog\" aria-modal=\"true\" aria-label={recordsText(lang, 'Record an entry', 'Rekhoda okufakiwe')}"
+ },
+ {
+  "id": "R096",
+  "english": "You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1795"
+  ],
+  "context": "{recordsInstruction(lang, 'You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.', 'Awuxhunyiwe — kuboniswa lokho okulondolozwe kule divayisi. Okushodayo kuzovel"
+ },
+ {
+  "id": "R097",
+  "english": "Try the Ubhejane money book",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1808"
+  ],
+  "context": "<span className=\"flex items-center gap-2\"><Sparkles size={18} />{recordsText(lang, 'Try the Ubhejane money book', 'Zama incwadi yemali yase-Ubhejane')}</span>"
+ },
+ {
+  "id": "R098",
+  "english": "A worked year from the Ubhejane Crèche demo farm: sales, costs, harvests and invoices. Your own books are not touched.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1810"
+  ],
+  "context": "{recordsText(lang, 'A worked year from the Ubhejane Crèche demo farm: sales, costs, harvests and invoices. Your own books are not touched.', 'Isibonelo sonyaka wasepulazini lokubonisa lase-Ubhejane Crèche: ukudayisa, izi"
+ },
+ {
+  "id": "R099",
+  "english": "Export this month (CSV)",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1821"
+  ],
+  "context": "<Download size={15} />{recordsText(lang, 'Export this month (CSV)', 'Khipha okwale nyanga (CSV)')}"
+ },
+ {
+  "id": "R100",
+  "english": "Recent activity",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1830"
+  ],
+  "context": "heading={recordsText(lang, 'Recent activity', 'Okwenzeke kamuva')}"
+ },
+ {
+  "id": "R101",
+  "english": "Nothing logged yet",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1831"
+  ],
+  "context": "emptyMessage={recordsText(lang, 'Nothing logged yet', 'Akukho okufakiwe okwamanje')}"
+ },
+ {
+  "id": "R102",
+  "english": "Sold this month",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:220"
+  ],
+  "context": "label: recordsText(lang, 'Sold this month', 'Okudayisiwe kule nyanga'),"
+ },
+ {
+  "id": "R103",
+  "english": "Spent this month",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:228"
+  ],
+  "context": "label: recordsText(lang, 'Spent this month', 'Okusetshenzisiwe kule nyanga'),"
+ },
+ {
+  "id": "R104",
+  "english": "Picked this month",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx:236"
+  ],
+  "context": "label: recordsFill(lang, 'Picked this month'),"
+ },
+ {
+  "id": "R105",
+  "english": "Orchard is switched off, so {kg} kg is not in the harvest figure: {names}. The rand figures still count every sale.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:283"
+  ],
+  "context": "{recordsTemplate(lang,"
+ },
+ {
+  "id": "R106",
+  "english": "You spent {amount} more than you made",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:303"
+  ],
+  "context": "? recordsTemplate(lang, 'You spent {amount} more than you made', 'Usebenzise i-{amount} ngaphezu kwalokho okutholile', { amount: fmtZAR(Math.abs(net)) })"
+ },
+ {
+  "id": "R107",
+  "english": "You kept {amount}",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:304"
+  ],
+  "context": ": recordsTemplate(lang, 'You kept {amount}', 'Ugcine i-{amount}', { amount: fmtZAR(net) });"
+ },
+ {
+  "id": "R108",
+  "english": "Money in {moneyIn} · Money out {moneyOut}",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:315"
+  ],
+  "context": "{recordsTemplate("
+ },
+ {
+  "id": "R109",
+  "english": "Only what you have written down.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:323"
+  ],
+  "context": "{recordsText(lang, 'Only what you have written down.', 'Yilokho kuphela osukubhalile.')}"
+ },
+ {
+  "id": "R110",
+  "english": "View invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:347"
+  ],
+  "context": "if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`${recordsText(lang, 'View invoice', 'Buka i-invoyisi')} ${invoice.no}`}><Eye size={16} /> {r"
+ },
+ {
+  "id": "R111",
+  "english": "Invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1036",
+   "app/records/page.tsx:1566",
+   "app/records/page.tsx:347",
+   "components/MyRecords.tsx:876"
+  ],
+  "context": "if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`${recordsText(lang, 'View invoice', 'Buka i-invoyisi')} ${invoice.no}`}><Eye size={16} /> {r"
+ },
+ {
+  "id": "R112",
+  "english": "View",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:347",
+   "components/MyRecords.tsx:876"
+  ],
+  "context": "if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`${recordsText(lang, 'View invoice', 'Buka i-invoyisi')} ${invoice.no}`}><Eye size={16} /> {r"
+ },
+ {
+  "id": "R113",
+  "english": "Recover invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:348",
+   "components/MyRecords.tsx:877"
+  ],
+  "context": "if (sale?.invoice_source_sale) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> {recordsText(lang, 'Recover invoice', 'Buyisa i-invoyisi')}</Link>;"
+ },
+ {
+  "id": "R114",
+  "english": "Create invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:349",
+   "components/MyRecords.tsx:877"
+  ],
+  "context": "if (sale && !sale.invoice_id && (recordQuantity(sale) ?? 0) > 0 && Number.isFinite(sale.amount) && sale.amount > 0) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><File"
+ },
+ {
+  "id": "R115",
+  "english": "via",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:357"
+  ],
+  "context": "title: s.crop, subtitle: s.buyer ? `${recordsText(lang, 'via', 'ku')} ${s.buyer} · ${recordsQuantityLabel(s, lang)}` : `${recordsQuantityLabel(s, lang)}`,"
+ },
+ {
+  "id": "R116",
+  "english": "Farm gate",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:370"
+  ],
+  "context": "subtitle: `${i.billTo || recordsText(lang, 'Farm gate', 'Epulazini')} · ${i.items.map((item) => `${item.qty} ${item.unit}`).join(', ')} · ${recordsText(lang, 'Paid', 'Ikhokhiwe')}`,"
+ },
+ {
+  "id": "R117",
+  "english": "Paid",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:370"
+  ],
+  "context": "subtitle: `${i.billTo || recordsText(lang, 'Farm gate', 'Epulazini')} · ${i.items.map((item) => `${item.qty} ${item.unit}`).join(', ')} · ${recordsText(lang, 'Paid', 'Ikhokhiwe')}`,"
+ },
+ {
+  "id": "R118",
+  "english": "Edit",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1195",
+   "app/records/page.tsx:480"
+  ],
+  "context": "aria-label={recordsText(lang, 'Edit', 'Hlela')}"
+ },
+ {
+  "id": "R119",
+  "english": "Confirm delete",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:492"
+  ],
+  "context": "aria-label={pendingDelete === item.id ? recordsText(lang, 'Confirm delete', 'Qinisekisa ukususa') : recordsText(lang, 'Delete', 'Susa')}"
+ },
+ {
+  "id": "R120",
+  "english": "Delete",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:492"
+  ],
+  "context": "aria-label={pendingDelete === item.id ? recordsText(lang, 'Confirm delete', 'Qinisekisa ukususa') : recordsText(lang, 'Delete', 'Susa')}"
+ },
+ {
+  "id": "R121",
+  "english": "Sure?",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:498"
+  ],
+  "context": "{pendingDelete === item.id ? recordsText(lang, 'Sure?', 'Uqinisekile?') : <Trash2 size={14} />}"
+ },
+ {
+  "id": "R122",
+  "english": "Photo attached. Enter the item, supplier and total below.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:638"
+  ],
+  "context": "if (isSampleMode()) { setScanNote(recordsText(lang, 'Photo attached. Enter the item, supplier and total below.', 'Isithombe sifakiwe. Faka into, umhlinzeki nenani eliphelele ngezansi.')); return; }"
+ },
+ {
+  "id": "R123",
+  "english": "Lima needs a connection. You can still enter the cost and save this photo offline.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:639"
+  ],
+  "context": "if (!online) { setScanNote(recordsText(lang, 'Lima needs a connection. You can still enter the cost and save this photo offline.', 'ULima udinga uxhumano. Usengafaka izindleko bese ugcina lesi sithombe ungaxhunyiwe.')); "
+ },
+ {
+  "id": "R124",
+  "english": "Lima reads photos up to 4 MB. You can still save this original photo and enter the cost yourself.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:640"
+  ],
+  "context": "if (file.size > 4 * 1024 * 1024) { setScanNote(recordsText(lang, 'Lima reads photos up to 4 MB. You can still save this original photo and enter the cost yourself.', 'ULima ufunda izithombe ezingafika ku-4 MB. Usengagcin"
+ },
+ {
+  "id": "R125",
+  "english": "Your account changed. Reopen this cost before asking Lima to read it.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:642"
+  ],
+  "context": "if (!requestUser || requestUser.uid !== receiptOwner.current) { setScanNote(recordsText(lang, 'Your account changed. Reopen this cost before asking Lima to read it.', 'I-akhawunti yakho ishintshile. Vula lezi zindleko fu"
+ },
+ {
+  "id": "R126",
+  "english": "Item and amount are required.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:695"
+  ],
+  "context": "setForm((f) => ({ ...f, error: isIn ? recordsFill(lang, 'Product, quantity and amount are required.') : recordsText(lang, 'Item and amount are required.', 'Kudingeka into nenani.') }));"
+ },
+ {
+  "id": "R127",
+  "english": "Product, quantity and amount are required.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx:695"
+  ],
+  "context": "setForm((f) => ({ ...f, error: isIn ? recordsFill(lang, 'Product, quantity and amount are required.') : recordsText(lang, 'Item and amount are required.', 'Kudingeka into nenani.') }));"
+ },
+ {
+  "id": "R128",
+  "english": "Cost saved. Its original receipt photo is saved on this device only.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:727"
+  ],
+  "context": "setSaveNote(recordsText(lang, !isIn && receiptPhoto ? 'Cost saved. Its original receipt photo is saved on this device only.' : 'Entry saved.', !isIn && receiptPhoto ? 'Izindleko zilondoloziwe. Isithombe sokuqala serisidi"
+ },
+ {
+  "id": "R129",
+  "english": "Entry saved.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:0",
+   "app/records/page.tsx:727"
+  ],
+  "context": "setSaveNote(recordsText(lang, !isIn && receiptPhoto ? 'Cost saved. Its original receipt photo is saved on this device only.' : 'Entry saved.', !isIn && receiptPhoto ? 'Izindleko zilondoloziwe. Isithombe sokuqala serisidi"
+ },
+ {
+  "id": "R130",
+  "english": "The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:746"
+  ],
+  "context": "? recordsInstruction(lang, 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.', 'Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele ukuqinisek"
+ },
+ {
+  "id": "R131",
+  "english": "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:747"
+  ],
+  "context": ": recordsInstruction(lang, \"You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.\", 'Awuxhunyiwe. Okufakiwe kulondolozwe ocingweni lwakho futhi kulindele"
+ },
+ {
+  "id": "R132",
+  "english": "sale",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:1027",
+   "app/records/page.tsx:789"
+  ],
+  "context": "{recordsText(lang, `Editing ${editing.type === 'sale' ? 'sale' : 'cost'}`, `Kuhlelwa ${editing.type === 'sale' ? 'ukudayisa' : 'izindleko'}`)}"
+ },
+ {
+  "id": "R133",
+  "english": "Money you were paid",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:795"
+  ],
+  "context": "{recordsText(lang, lockKind === 'in' ? 'Money you were paid' : 'Money you paid out', lockKind === 'in' ? 'Imali oyitholile' : 'Imali oyikhokhile')}"
+ },
+ {
+  "id": "R134",
+  "english": "Money you paid out",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:795"
+  ],
+  "context": "{recordsText(lang, lockKind === 'in' ? 'Money you were paid' : 'Money you paid out', lockKind === 'in' ? 'Imali oyitholile' : 'Imali oyikhokhile')}"
+ },
+ {
+  "id": "R135",
+  "english": "Money in",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:800"
+  ],
+  "context": "{([['in', recordsText(lang, 'Money in', 'Imali engenayo')], ['out', recordsText(lang, 'Money out', 'Imali ephumayo')]] as const).map(([k, label]) => ("
+ },
+ {
+  "id": "R136",
+  "english": "Money out",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:800"
+  ],
+  "context": "{([['in', recordsText(lang, 'Money in', 'Imali engenayo')], ['out', recordsText(lang, 'Money out', 'Imali ephumayo')]] as const).map(([k, label]) => ("
+ },
+ {
+  "id": "R137",
+  "english": "Growing area for this entry (optional)",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:814"
+  ],
+  "context": "<label className=\"block text-sm\">{recordsText(lang, 'Growing area for this entry (optional)', 'Indawo yokulima yalokhu okufakiwe (uma uthanda)')}"
+ },
+ {
+  "id": "R138",
+  "english": "Unassigned",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:816",
+   "components/MyRecords.tsx:580"
+  ],
+  "context": "<option value=\"\">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value=\"vegetables\">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value=\"staples\">{recordsText(lang, 'Staple"
+ },
+ {
+  "id": "R139",
+  "english": "Vegetable beds",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:816",
+   "components/MyRecords.tsx:580"
+  ],
+  "context": "<option value=\"\">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value=\"vegetables\">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value=\"staples\">{recordsText(lang, 'Staple"
+ },
+ {
+  "id": "R140",
+  "english": "Staple plots",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:816",
+   "components/MyRecords.tsx:580"
+  ],
+  "context": "<option value=\"\">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value=\"vegetables\">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value=\"staples\">{recordsText(lang, 'Staple"
+ },
+ {
+  "id": "R141",
+  "english": "Shared by beds and staple plots",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:816"
+  ],
+  "context": "<option value=\"\">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value=\"vegetables\">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value=\"staples\">{recordsText(lang, 'Staple"
+ },
+ {
+  "id": "R142",
+  "english": "Orchard / other",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:816",
+   "components/MyRecords.tsx:580"
+  ],
+  "context": "<option value=\"\">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value=\"vegetables\">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value=\"staples\">{recordsText(lang, 'Staple"
+ },
+ {
+  "id": "R143",
+  "english": "Choose only when this sale or cost belongs to that growing area.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:818"
+  ],
+  "context": "<span className=\"block text-xs mt-1\">{recordsInstruction(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</s"
+ },
+ {
+  "id": "R144",
+  "english": "Receipt photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:823"
+  ],
+  "context": "<p className=\"text-sm font-semibold\" style={{ color: 'var(--color-ink)' }}>{recordsText(lang, 'Receipt photo', 'Isithombe serisidi')} <span className=\"font-normal\">({recordsText(lang, 'optional', 'uma uthanda')})</span><"
+ },
+ {
+  "id": "R145",
+  "english": "optional",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:823",
+   "app/records/page.tsx:865",
+   "app/records/page.tsx:899",
+   "app/records/page.tsx:911"
+  ],
+  "context": "<p className=\"text-sm font-semibold\" style={{ color: 'var(--color-ink)' }}>{recordsText(lang, 'Receipt photo', 'Isithombe serisidi')} <span className=\"font-normal\">({recordsText(lang, 'optional', 'uma uthanda')})</span><"
+ },
+ {
+  "id": "R146",
+  "english": "Take photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:825"
+  ],
+  "context": "<button type=\"button\" onClick={() => slipInputRef.current?.click()} disabled={readingPhoto || scanning} className=\"inline-flex items-center gap-2 rounded-lg border px-3 text-sm\" style={{ minHeight: 44 }}><Camera size={17"
+ },
+ {
+  "id": "R147",
+  "english": "Choose photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:826"
+  ],
+  "context": "<button type=\"button\" onClick={() => slipUploadRef.current?.click()} disabled={readingPhoto || scanning} className=\"inline-flex items-center gap-2 rounded-lg border px-3 text-sm\" style={{ minHeight: 44 }}><Upload size={1"
+ },
+ {
+  "id": "R148",
+  "english": "Take a receipt photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:828"
+  ],
+  "context": "<input ref={slipInputRef} type=\"file\" accept={EXPENSE_RECEIPT_ACCEPT} capture=\"environment\" className=\"hidden\" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Take a receipt photo', 'Thatha isithombe serisidi"
+ },
+ {
+  "id": "R149",
+  "english": "Choose a receipt photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:829"
+  ],
+  "context": "<input ref={slipUploadRef} type=\"file\" accept={EXPENSE_RECEIPT_ACCEPT} className=\"hidden\" onChange={handlePickReceipt} aria-label={recordsText(lang, 'Choose a receipt photo', 'Khetha isithombe serisidi')} />"
+ },
+ {
+  "id": "R150",
+  "english": "Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:830"
+  ],
+  "context": "<p className=\"text-xs\" style={{ color: 'var(--color-muted-strong)' }}>{recordsInstruction(lang, 'Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.', 'Isebenza unga"
+ },
+ {
+  "id": "R151",
+  "english": "Checking photo…",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:831"
+  ],
+  "context": "{readingPhoto && <p role=\"status\" className=\"text-sm\">{recordsText(lang, 'Checking photo…', 'Kuhlolwa isithombe…')}</p>}"
+ },
+ {
+  "id": "R152",
+  "english": "Receipt photo attached to this cost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:834"
+  ],
+  "context": "<img src={receiptUrl} alt={recordsText(lang, 'Receipt photo attached to this cost', 'Isithombe serisidi esifakwe kulezi zindleko')} style={{ maxHeight: 220, width: '100%', objectFit: 'contain' }} />"
+ },
+ {
+  "id": "R153",
+  "english": "Ready to save",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:835"
+  ],
+  "context": "<div className=\"flex items-center justify-between gap-2 mt-2\"><p className=\"text-xs break-all\">{receiptPhoto.name} · {(receiptPhoto.size / (1024 * 1024)).toFixed(1)} MB · {recordsText(lang, 'Ready to save', 'Silungele uk"
+ },
+ {
+  "id": "R154",
+  "english": "Remove photo",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:835"
+  ],
+  "context": "<div className=\"flex items-center justify-between gap-2 mt-2\"><p className=\"text-xs break-all\">{receiptPhoto.name} · {(receiptPhoto.size / (1024 * 1024)).toFixed(1)} MB · {recordsText(lang, 'Ready to save', 'Silungele uk"
+ },
+ {
+  "id": "R155",
+  "english": "Lima is reading...",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:849"
+  ],
+  "context": "{scanning ? recordsText(lang, 'Lima is reading...', 'ULima uyafunda...') : isSampleMode() ? recordsText(lang, 'Read a receipt with Lima', 'Funda irisidi ngoLima') : recordsText(lang, 'Read this photo with Lima', 'Funda l"
+ },
+ {
+  "id": "R156",
+  "english": "Read a receipt with Lima",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:849"
+  ],
+  "context": "{scanning ? recordsText(lang, 'Lima is reading...', 'ULima uyafunda...') : isSampleMode() ? recordsText(lang, 'Read a receipt with Lima', 'Funda irisidi ngoLima') : recordsText(lang, 'Read this photo with Lima', 'Funda l"
+ },
+ {
+  "id": "R157",
+  "english": "Read this photo with Lima",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:849"
+  ],
+  "context": "{scanning ? recordsText(lang, 'Lima is reading...', 'ULima uyafunda...') : isSampleMode() ? recordsText(lang, 'Read a receipt with Lima', 'Funda irisidi ngoLima') : recordsText(lang, 'Read this photo with Lima', 'Funda l"
+ },
+ {
+  "id": "R158",
+  "english": "Optional AI reading uses your connection. You can also fill in the cost yourself.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:851"
+  ],
+  "context": "{!isSampleMode() && <p className=\"text-xs\" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, online ? 'Optional AI reading uses your connection. You can also fill in the cost yourself.' : 'Lima needs a co"
+ },
+ {
+  "id": "R159",
+  "english": "Lima needs a connection. Enter the cost yourself and keep the photo attached.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:851"
+  ],
+  "context": "{!isSampleMode() && <p className=\"text-xs\" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, online ? 'Optional AI reading uses your connection. You can also fill in the cost yourself.' : 'Lima needs a co"
+ },
+ {
+  "id": "R160",
+  "english": "Receipt",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:852"
+  ],
+  "context": "{shownSlip && <details open><summary>{recordsText(lang, 'Receipt', 'Irisidi')}</summary><ReceiptPaper expense={shownSlip} /></details>}"
+ },
+ {
+  "id": "R161",
+  "english": "Crop this cost was for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:865"
+  ],
+  "context": "{recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className=\"normal-case\" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>"
+ },
+ {
+  "id": "R162",
+  "english": "Leave blank if it served the whole garden",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:867"
+  ],
+  "context": "<input type=\"text\" placeholder={recordsText(lang, 'Leave blank if it served the whole garden', 'Shiya kungenalutho uma bekusetshenziselwa ingadi yonke')}"
+ },
+ {
+  "id": "R163",
+  "english": "Only tag a crop when this cost was just for that crop.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:871"
+  ],
+  "context": "<p className=\"text-xs font-sans mt-1\" style={{ color: 'var(--color-muted)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso"
+ },
+ {
+  "id": "R164",
+  "english": "What for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:877"
+  ],
+  "context": "{isIn ? recordsFill(lang, 'Produce / product') : recordsText(lang, 'What for', 'Bekungokwani')}"
+ },
+ {
+  "id": "R165",
+  "english": "Produce / product",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx:877",
+   "components/MyRecords.tsx:385",
+   "components/MyRecords.tsx:387",
+   "components/MyRecords.tsx:537"
+  ],
+  "context": "{isIn ? recordsFill(lang, 'Produce / product') : recordsText(lang, 'What for', 'Bekungokwani')}"
+ },
+ {
+  "id": "R166",
+  "english": "e.g. Spinach",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:879"
+  ],
+  "context": "<input type=\"text\" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}"
+ },
+ {
+  "id": "R167",
+  "english": "e.g. Seedlings",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:879"
+  ],
+  "context": "<input type=\"text\" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}"
+ },
+ {
+  "id": "R168",
+  "english": "Amount (R)",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:888"
+  ],
+  "context": "<label className=\"block text-xs font-sans uppercase tracking-wider mb-1\" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>"
+ },
+ {
+  "id": "R169",
+  "english": "Buyer",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:898"
+  ],
+  "context": "{recordsText(lang, isIn ? 'Buyer' : 'Supplier', isIn ? 'Umthengi' : 'Umhlinzeki')}"
+ },
+ {
+  "id": "R170",
+  "english": "Supplier",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:898"
+  ],
+  "context": "{recordsText(lang, isIn ? 'Buyer' : 'Supplier', isIn ? 'Umthengi' : 'Umhlinzeki')}"
+ },
+ {
+  "id": "R171",
+  "english": "e.g. Local market",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:901"
+  ],
+  "context": "<input type=\"text\" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}"
+ },
+ {
+  "id": "R172",
+  "english": "e.g. Agri Co-op",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:901"
+  ],
+  "context": "<input type=\"text\" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}"
+ },
+ {
+  "id": "R173",
+  "english": "Category",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:911"
+  ],
+  "context": "{recordsText(lang, 'Category', 'Isigaba')} <span className=\"normal-case\" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>"
+ },
+ {
+  "id": "R174",
+  "english": "Cancel",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:935"
+  ],
+  "context": "{recordsText(lang, 'Cancel', 'Khansela')}"
+ },
+ {
+  "id": "R175",
+  "english": "Saving...",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:943"
+  ],
+  "context": "{recordsText(lang, 'Saving...', 'Kuyalondolozwa...')}"
+ },
+ {
+  "id": "R176",
+  "english": "Save changes",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:945"
+  ],
+  "context": ") : editing ? recordsText(lang, 'Save changes', 'Londoloza izinguquko') : recordsText(lang, isIn ? 'Save sale & invoice' : 'Log cost', isIn ? 'Londoloza ukudayisa ne-invoyisi' : 'Rekhoda izindleko')}"
+ },
+ {
+  "id": "R177",
+  "english": "Save sale & invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:945"
+  ],
+  "context": ") : editing ? recordsText(lang, 'Save changes', 'Londoloza izinguquko') : recordsText(lang, isIn ? 'Save sale & invoice' : 'Log cost', isIn ? 'Londoloza ukudayisa ne-invoyisi' : 'Rekhoda izindleko')}"
+ },
+ {
+  "id": "R178",
+  "english": "Log cost",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:945"
+  ],
+  "context": ") : editing ? recordsText(lang, 'Save changes', 'Londoloza izinguquko') : recordsText(lang, isIn ? 'Save sale & invoice' : 'Log cost', isIn ? 'Londoloza ukudayisa ne-invoyisi' : 'Rekhoda izindleko')}"
+ },
+ {
+  "id": "R179",
+  "english": "Multiple products or payment later? Create an invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:948",
+   "components/MyRecords.tsx:610"
+  ],
+  "context": "{isIn && !editing && <Link href=\"/invoice\" className=\"block py-2 text-sm underline\">{recordsText(lang, 'Multiple products or payment later? Create an invoice', 'Imikhiqizo eminingi noma ukukhokha kamuva? Dala i-invoyisi'"
+ },
+ {
+  "id": "R180",
+  "english": "Sign in to track your income",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:978"
+  ],
+  "context": "{recordsText(lang, 'Sign in to track your income', 'Ngena ngemvume ukuze ulandele imali engenayo')}"
+ },
+ {
+  "id": "R181",
+  "english": "Log crop sales and see your earnings over time.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:981"
+  ],
+  "context": "{recordsText(lang, 'Log crop sales and see your earnings over time.', 'Rekhoda ukudayisa izitshalo ukuze ubone imali oyitholayo ngokuhamba kwesikhathi.')}"
+ },
+ {
+  "id": "R182",
+  "english": "Go to sign in",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx:993"
+  ],
+  "context": "{recordsText(lang, 'Go to sign in', 'Iya ekungeneneni')}"
+ },
+ {
+  "id": "R183",
+  "english": "Enter a product and a quantity greater than zero.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "harvest form validation error"
+ },
+ {
+  "id": "R184",
+  "english": "Enter a product, a quantity greater than zero and the sale amount.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "quick sale validation error"
+ },
+ {
+  "id": "R185",
+  "english": "You're offline. This is saved on your phone and will reach the cloud the moment you have signal again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "save queued offline (NOT lost; do not retype)"
+ },
+ {
+  "id": "R186",
+  "english": "Your connection dropped mid-save. Nothing is lost — this is saved on your phone and will finish sending on its own.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "save queued after timeout (NOT lost)"
+ },
+ {
+  "id": "R187",
+  "english": "This export is disabled while you are viewing the Ubhejane farm. Sign in and turn off the tour to export your own records.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "lender export blocked in demo/tour"
+ },
+ {
+  "id": "R188",
+  "english": "Spinach",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "example row produce name (fixture, not saved)"
+ },
+ {
+  "id": "R189",
+  "english": "Local market",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "example row buyer"
+ },
+ {
+  "id": "R190",
+  "english": "3 days ago",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "example row date label"
+ },
+ {
+  "id": "R191",
+  "english": "Records for a lender",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1013"
+  ],
+  "context": "{recordsUi(lang, 'Records for a lender', 'Amarekhodi okubolekwa imali')}"
+ },
+ {
+  "id": "R192",
+  "english": "A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1016"
+  ],
+  "context": "{recordsUi(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit scor"
+ },
+ {
+  "id": "R193",
+  "english": "Log at least one harvest, sale or cost first — there is nothing to summarise yet.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1023"
+  ],
+  "context": "{recordsUi(lang, 'Log at least one harvest, sale or cost first — there is nothing to summarise yet.', 'Rekhoda okungenani isivuno esisodwa, ukuthengisa noma izindleko kuqala — akukho okungafingqwa okwamanje.', true)}"
+ },
+ {
+  "id": "R194",
+  "english": "Costs",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1028",
+   "components/MyRecords.tsx:1038"
+  ],
+  "context": "{[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key=\"picked\" compac"
+ },
+ {
+  "id": "R195",
+  "english": "Harvested",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1028"
+  ],
+  "context": "{[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key=\"picked\" compac"
+ },
+ {
+  "id": "R196",
+  "english": "Close summary",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1034"
+  ],
+  "context": "<button type=\"button\" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className=\"w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold\" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{"
+ },
+ {
+  "id": "R197",
+  "english": "View summary",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1034"
+  ],
+  "context": "<button type=\"button\" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className=\"w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold\" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{"
+ },
+ {
+  "id": "R198",
+  "english": "Monthly income and costs",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1037"
+  ],
+  "context": "<caption className=\"text-left py-2 font-semibold\">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>"
+ },
+ {
+  "id": "R199",
+  "english": "Month",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1038"
+  ],
+  "context": "<thead><tr><th className=\"text-left p-2\">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className=\"text-right p-2\">{recordsUi(lang, 'Income', 'Imali engenayo', true)}</th><th className=\"text-right p-2\">{recordsUi(lang, 'C"
+ },
+ {
+  "id": "R200",
+  "english": "Balance",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1038"
+  ],
+  "context": "<thead><tr><th className=\"text-left p-2\">{recordsUi(lang, 'Month', 'Inyanga')}</th><th className=\"text-right p-2\">{recordsUi(lang, 'Income', 'Imali engenayo', true)}</th><th className=\"text-right p-2\">{recordsUi(lang, 'C"
+ },
+ {
+  "id": "R201",
+  "english": "Building document…",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1057"
+  ],
+  "context": "{recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}"
+ },
+ {
+  "id": "R202",
+  "english": "Export records for a lender",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1061"
+  ],
+  "context": "<Landmark size={14} /> {recordsUi(lang, 'Export records for a lender', 'Khipha amarekhodi kumbolekisi')}"
+ },
+ {
+  "id": "R203",
+  "english": "Top by weight: {crop}",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1347"
+  ],
+  "context": "{t('myRecordsTotalHarvested')}{topCrop ? ` · ${recordsTemplate(lang, 'Top by weight: {crop}', null, { crop: topCrop[0] })}` : ''}"
+ },
+ {
+  "id": "R204",
+  "english": "Record a sale",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1389"
+  ],
+  "context": "<SectionLabel><RecordZuluDraft lang={lang} english=\"Record a sale\" isiZulu=\"Qopha ukuthengisa\" /></SectionLabel>"
+ },
+ {
+  "id": "R205",
+  "english": "Create an invoice to keep the buyer, produce, quantity and payment together.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1390"
+  ],
+  "context": "<p className=\"text-sm mb-3\" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english=\"Create an invoice to keep the buyer, produce, quantity and payment together.\" isiZulu=\"Dala i-invoyisi ukuze ugcine "
+ },
+ {
+  "id": "R206",
+  "english": "New sale & invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1392"
+  ],
+  "context": "<Link href=\"/invoice?mode=sale\" className=\"inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold\" style={{ background: '#315939', color: '#fff' }}><FileText size={18} /><RecordZuluD"
+ },
+ {
+  "id": "R207",
+  "english": "Past sale / paper invoice",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1393"
+  ],
+  "context": "<Link href=\"/invoice?mode=paper\" className=\"inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold\" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}><Re"
+ },
+ {
+  "id": "R208",
+  "english": "Already logged this sale? Use Create invoice on its row below to keep one record.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1395"
+  ],
+  "context": "<p className=\"text-xs mt-3\" style={{ color: 'var(--color-muted-strong)' }}><RecordZuluDraft lang={lang} english=\"Already logged this sale? Use Create invoice on its row below to keep one record.\" isiZulu=\"Usuvele ukuqoph"
+ },
+ {
+  "id": "R209",
+  "english": "Quick sale entry",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:1397"
+  ],
+  "context": "<summary className=\"min-h-11 flex items-center cursor-pointer text-sm font-semibold\" style={{ color: 'var(--color-ink)' }}><RecordZuluDraft lang={lang} english=\"Quick sale entry\" isiZulu=\"Ukufaka ukuthengisa okusheshayo\""
+ },
+ {
+  "id": "R210",
+  "english": "AI-generated crop reference · add your own harvest photo below.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:383"
+  ],
+  "context": "{sampleProducePhoto(form.crop) && <figure className=\"flex items-center gap-3\"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: '"
+ },
+ {
+  "id": "R211",
+  "english": "Preview",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx:401"
+  ],
+  "context": "alt={recordsFill(lang, 'Preview')}"
+ },
+ {
+  "id": "R212",
+  "english": "Growing area for this sale (optional)",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:578"
+  ],
+  "context": "<label className=\"block text-sm\">{recordsUi(lang, 'Growing area for this sale (optional)', 'Indawo yokulima yalokhu kuthengisa (akuphoqelekile)')}"
+ },
+ {
+  "id": "R213",
+  "english": "AI-generated reference",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx:705"
+  ],
+  "context": "if (photo) return <img src={photo} alt={`${lookup} · ${recordsFill(lang, 'AI-generated reference')}`} title={recordsFill(lang, 'AI-generated crop reference, not harvest evidence')} width={40} height={40} style={{ width: "
+ },
+ {
+  "id": "R214",
+  "english": "AI-generated crop reference, not harvest evidence",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/MyRecords.tsx:705"
+  ],
+  "context": "if (photo) return <img src={photo} alt={`${lookup} · ${recordsFill(lang, 'AI-generated reference')}`} title={recordsFill(lang, 'AI-generated crop reference, not harvest evidence')} width={40} height={40} style={{ width: "
+ },
+ {
+  "id": "R215",
+  "english": "View invoice for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:876"
+  ],
+  "context": "{item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoy"
+ },
+ {
+  "id": "R216",
+  "english": "Recover invoice for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:877"
+  ],
+  "context": "{(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && (recordQuantity(item) ?? 0) > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURICompone"
+ },
+ {
+  "id": "R217",
+  "english": "Create invoice for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:877"
+  ],
+  "context": "{(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && (recordQuantity(item) ?? 0) > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURICompone"
+ },
+ {
+  "id": "R218",
+  "english": "Could not build the document. Please try again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx:995"
+  ],
+  "context": ": recordsUi(lang, 'Could not build the document. Please try again.', 'Ayikwazanga ukwakha idokhumenti. Sicela uzame futhi.'),"
+ },
+ {
+  "id": "R219",
+  "english": "Farm inputs",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:19"
+  ],
+  "context": "<h3 style={{ fontSize: 18, textAlign: 'center', fontWeight: 700 }}>{clean(expense.supplier || text('Farm inputs', 'Izinto zasepulazini'))}</h3>"
+ },
+ {
+  "id": "R220",
+  "english": "PURCHASE RECEIPT",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:20"
+  ],
+  "context": "<p style={{ textAlign: 'center', fontSize: 12, marginBottom: 20 }}>{text('PURCHASE RECEIPT', 'IRISIDI LOKUTHENGA')}</p>"
+ },
+ {
+  "id": "R221",
+  "english": "Ref",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:21"
+  ],
+  "context": "<p style={{ fontSize: 12 }}>{text('Ref', 'Inombolo')} {expense.id.replace(/^demo-expense-/, 'RC-').toUpperCase()}</p>"
+ },
+ {
+  "id": "R222",
+  "english": "TOTAL",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:24"
+  ],
+  "context": "<div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, fontSize: 19, fontWeight: 700 }}><span>{text('TOTAL', 'ISAMBA')}</span><span>R {expense.amount.toFixed(2)}</span></div>"
+ },
+ {
+  "id": "R223",
+  "english": "Thank you · Keep this receipt",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:25"
+  ],
+  "context": "<p style={{ marginTop: 24, fontSize: 12, textAlign: 'center' }}>{text('Thank you · Keep this receipt', 'Siyabonga · Gcina le risidi')}</p>"
+ },
+ {
+  "id": "R224",
+  "english": "Could not open this receipt. Try again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:78"
+  ],
+  "context": "if (version === request.current && receiptScopeIsCurrent(scope)) setError(cause instanceof Error ? cause.message : text('Could not open this receipt. Try again.', 'Asikwazanga ukuvula le risidi. Zama futhi.'));"
+ },
+ {
+  "id": "R225",
+  "english": "View receipt for",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:85"
+  ],
+  "context": "<button type=\"button\" onClick={() => void openReceipt()} aria-label={`${text('View receipt for', 'Buka irisidi lika')} ${expense.item}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44, paddi"
+ },
+ {
+  "id": "R226",
+  "english": "View slip",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:85"
+  ],
+  "context": "<button type=\"button\" onClick={() => void openReceipt()} aria-label={`${text('View receipt for', 'Buka irisidi lika')} ${expense.item}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44, paddi"
+ },
+ {
+  "id": "R227",
+  "english": "Purchase receipt",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:86",
+   "components/records/ReceiptPreview.tsx:87"
+  ],
+  "context": "<dialog ref={dialog} onClose={() => { announceOverlay(false); clearPhoto(); }} aria-label={text('Purchase receipt', 'Irisidi lokuthenga')} style={{ width: `min(${photoUrl ? 760 : 440}px, calc(100vw - 24px))`, maxHeight: "
+ },
+ {
+  "id": "R228",
+  "english": "Close receipt",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:87"
+  ],
+  "context": "<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><h2 style={{ fontSize: 20 }}>{text('Purchase receipt', 'Irisidi lokuthenga')}</h2><button type=\"button\" aria-label={text('Close rece"
+ },
+ {
+  "id": "R229",
+  "english": "Opening receipt…",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:88"
+  ],
+  "context": "{loading ? <p role=\"status\">{text('Opening receipt…', 'Kuvulwa irisidi…')}</p> : error ? <div><p role=\"alert\">{error}</p><button type=\"button\" onClick={() => void openReceipt()} style={{ minHeight: 44, textDecoration: 'u"
+ },
+ {
+  "id": "R230",
+  "english": "Try again",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:88"
+  ],
+  "context": "{loading ? <p role=\"status\">{text('Opening receipt…', 'Kuvulwa irisidi…')}</p> : error ? <div><p role=\"alert\">{error}</p><button type=\"button\" onClick={() => void openReceipt()} style={{ minHeight: 44, textDecoration: 'u"
+ },
+ {
+  "id": "R231",
+  "english": "Original photo · saved on this device only",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:91"
+  ],
+  "context": "<p style={{ margin: '8px 0', fontSize: 12 }}>{text('Original photo · saved on this device only', 'Isithombe sokuqala · sigcinwe kule divayisi kuphela')}</p>"
+ },
+ {
+  "id": "R232",
+  "english": "Open full size",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:93"
+  ],
+  "context": "<a href={photoUrl} target=\"_blank\" rel=\"noopener noreferrer\" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, gap: 6, textDecoration: 'underline' }}><Eye size={16} /> {text('Open full size', 'Vula ng"
+ },
+ {
+  "id": "R233",
+  "english": "Download original",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:94"
+  ],
+  "context": "<a href={photoUrl} download={receipt.name || 'receipt-photo'} style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, gap: 6, textDecoration: 'underline' }}><Download size={16} /> {text('Download original',"
+ },
+ {
+  "id": "R234",
+  "english": "No receipt photo is saved for this cost on this device. Edit the cost to attach one, or open it on the device where you saved the photo.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/records/ReceiptPreview.tsx:99"
+  ],
+  "context": ": <p style={{ margin: '16px 0', lineHeight: 1.6 }}>{text('No receipt photo is saved for this cost on this device. Edit the cost to attach one, or open it on the device where you saved the photo.', 'Asikho isithombe seris"
+ },
+ {
+  "id": "R235",
+  "english": "Quantity",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantityFields.tsx"
+  ],
+  "context": "quantity field label / missing quantity"
+ },
+ {
+  "id": "R236",
+  "english": "Quantity sold",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantityFields.tsx"
+  ],
+  "context": "quantity field label / missing quantity"
+ },
+ {
+  "id": "R237",
+  "english": "Quantity picked",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantityFields.tsx"
+  ],
+  "context": "quantity field label / missing quantity"
+ },
+ {
+  "id": "R238",
+  "english": "Quantity not recorded",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantityFields.tsx"
+  ],
+  "context": "quantity field label / missing quantity"
+ },
+ {
+  "id": "R239",
+  "english": "Unit",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantityFields.tsx:29"
+  ],
+  "context": "<label htmlFor={unitId} className=\"block text-xs font-sans font-semibold uppercase tracking-wide mb-1\" style={{ color: 'var(--color-muted-strong)' }}>{recordsFill(lang, 'Unit')}</label>"
+ },
+ {
+  "id": "R240",
+  "english": "No quantity recorded",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "components/records/RecordQuantitySummary.tsx:11"
+  ],
+  "context": "if (totals.length === 0) return <span className=\"text-sm font-sans font-normal\">{recordsFill(lang, 'No quantity recorded')}</span>;"
+ },
+ {
+  "id": "R241",
+  "english": "Paid invoice crop lines enter the sales book automatically and count once. Do not enter them again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/duplicate-income.ts DUPLICATE_LEDGER_FOOTER"
+  ],
+  "context": "ledger footer; negation matters"
+ },
+ {
+  "id": "R242",
+  "english": "Possibly the same sale — a paid invoice is already counted as income.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/duplicate-income.ts DUPLICATE_ROW_NOTE"
+  ],
+  "context": "warning on a ledger row that may duplicate a paid invoice"
+ },
+ {
+  "id": "R243",
+  "english": "Your account or workspace changed. Reopen this cost before saving its receipt.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "receipt save blocked after account switch"
+ },
+ {
+  "id": "R244",
+  "english": "Save the receipt with an expense.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "receipt needs an expense"
+ },
+ {
+  "id": "R245",
+  "english": "Choose a JPG, PNG or WebP photo up to 10 MB. Keep the original readable.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "receipt validation"
+ },
+ {
+  "id": "R246",
+  "english": "This file is not a readable JPG, PNG or WebP photo. Choose another image.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "receipt validation"
+ },
+ {
+  "id": "R247",
+  "english": "The receipt could not be saved on this device. Storage may be full or unavailable. Keep the original photo and try again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "receipt storage failure (the COST may still be saved)"
+ },
+ {
+  "id": "R248",
+  "english": "The cost was saved, but its receipt could not be confirmed on this device. Keep the photo and retry this cost.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/expense-receipts.ts"
+  ],
+  "context": "cost saved, receipt not confirmed: retry the receipt"
+ },
+ {
+  "id": "R249",
+  "english": "Example",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsExampleBadge"
+  ],
+  "context": "dictionary key myRecordsExampleBadge"
+ },
+ {
+  "id": "R250",
+  "english": "Example — what a logged entry looks like",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsExampleHeading"
+  ],
+  "context": "dictionary key myRecordsExampleHeading"
+ },
+ {
+  "id": "R251",
+  "english": "Estimated guide — confirm the local price.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuideEstimated"
+  ],
+  "context": "dictionary key myRecordsGuideEstimated"
+ },
+ {
+  "id": "R252",
+  "english": "No trustworthy guide price is stored for this crop. Enter the price you actually agreed.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuideMissing"
+  ],
+  "context": "dictionary key myRecordsGuideMissing"
+ },
+ {
+  "id": "R253",
+  "english": "For {kg} kg, that is roughly R{low}–R{high}.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuidePriceForKg"
+  ],
+  "context": "dictionary key myRecordsGuidePriceForKg"
+ },
+ {
+  "id": "R254",
+  "english": "Guide price, July 2026:",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuidePriceLabel"
+  ],
+  "context": "dictionary key myRecordsGuidePriceLabel"
+ },
+ {
+  "id": "R255",
+  "english": "shops about R{wholesale}/kg · direct/farm gate about R{retail}/kg.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuidePriceRange"
+  ],
+  "context": "dictionary key myRecordsGuidePriceRange"
+ },
+ {
+  "id": "R256",
+  "english": "Recommended guide — an average of prices found; confirm locally.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuideRecommended"
+  ],
+  "context": "dictionary key myRecordsGuideRecommended"
+ },
+ {
+  "id": "R257",
+  "english": "Sourced guide — enter the price you actually agreed.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsGuideSourced"
+  ],
+  "context": "dictionary key myRecordsGuideSourced"
+ },
+ {
+  "id": "R258",
+  "english": "Couldn't load your latest records. Check your connection and try again — what's shown below may be out of date or incomplete.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsLoadError"
+  ],
+  "context": "dictionary key myRecordsLoadError"
+ },
+ {
+  "id": "R259",
+  "english": "Retry",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key myRecordsRetry"
+  ],
+  "context": "dictionary key myRecordsRetry"
+ },
+ {
+  "id": "R260",
+  "english": "Orchard in",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key recordsOrchardIn"
+  ],
+  "context": "dictionary key recordsOrchardIn"
+ },
+ {
+  "id": "R261",
+  "english": "Orchard out",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key recordsOrchardOut"
+  ],
+  "context": "dictionary key recordsOrchardOut"
+ },
+ {
+  "id": "R262",
+  "english": "Orchard is switched off, so {kg} kg is not in this total: {names}. Nothing was deleted — switch it back on to count it again.",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "lib/i18n.tsx key recordsOrchardOutNote"
+  ],
+  "context": "dictionary key recordsOrchardOutNote"
+ },
+ {
+  "id": "R263",
+  "english": "Orchard is switched off, so {kg} kg is not in the weight above: {names}. The rand total still counts every sale, orchard included.",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/i18n.tsx key recordsOrchardOutNoteMoney"
+  ],
+  "context": "dictionary key recordsOrchardOutNoteMoney"
+ },
+ {
+  "id": "R264",
+  "english": "eggs",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R265",
+  "english": "jars",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R266",
+  "english": "bags",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R267",
+  "english": "crates",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R268",
+  "english": "bunches",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R269",
+  "english": "trays",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R270",
+  "english": "items",
+  "needs": [
+   "st",
+   "ts",
+   "ve",
+   "zu"
+  ],
+  "where": [
+   "lib/records-regional-drafts.ts"
+  ],
+  "context": "unit word printed after a number, e.g. \"12 eggs\", and in the unit dropdown"
+ },
+ {
+  "id": "R271",
+  "english": "Choose produce / product",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "first option of the crop/produce dropdown (a placeholder prompt; not a crop)"
+ },
+ {
+  "id": "R272",
+  "english": "Crop list",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading above the list of crops"
+ },
+ {
+  "id": "R273",
+  "english": "Fruit & nuts",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading (orchard produce)"
+ },
+ {
+  "id": "R274",
+  "english": "Indigenous fruit",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading (wild/indigenous fruit)"
+ },
+ {
+  "id": "R275",
+  "english": "Other food-forest plants",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading"
+ },
+ {
+  "id": "R276",
+  "english": "Animal products",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading (eggs, milk etc.)"
+ },
+ {
+  "id": "R277",
+  "english": "Products you added",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "dropdown group heading above names the farmer typed in earlier"
+ },
+ {
+  "id": "R278",
+  "english": "Add another product…",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "last dropdown option, shown after a plus sign: lets the farmer type a product that is not in the list"
+ },
+ {
+  "id": "R279",
+  "english": "New product name",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "accessible label of the text box for the new product name"
+ },
+ {
+  "id": "R280",
+  "english": "Type the product name",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "placeholder in that text box"
+ },
+ {
+  "id": "R281",
+  "english": "Save product",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/CropSelect.tsx"
+  ],
+  "context": "button that saves the typed product name to the list"
+ },
+ {
+  "id": "R282",
+  "english": "Cash",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "payment method word in the ledger source column, e.g. \"Invoice · Cash\""
+ },
+ {
+  "id": "R283",
+  "english": "Card",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "payment method word (bank card), e.g. \"Invoice · Card\""
+ },
+ {
+  "id": "R284",
+  "english": "Mobile",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "payment method word (mobile money/phone payment), e.g. \"Invoice · Mobile\""
+ }
+]

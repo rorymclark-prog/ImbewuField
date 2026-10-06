@@ -1,0 +1,22 @@
+{
+ "st": {
+  "accepted-ok": 267,
+  "accepted-repaired": 13,
+  "held": 4
+ },
+ "ve": {
+  "accepted-ok": 269,
+  "accepted-repaired": 4,
+  "held": 11
+ },
+ "ts": {
+  "accepted-ok": 253,
+  "accepted-repaired": 17,
+  "held": 14
+ },
+ "zu": {
+  "accepted-ok": 50,
+  "accepted-repaired": 4,
+  "held": 3
+ }
+}
