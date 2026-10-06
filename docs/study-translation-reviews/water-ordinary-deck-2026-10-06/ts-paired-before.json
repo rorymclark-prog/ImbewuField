@@ -1,0 +1,820 @@
+{
+  "language": "ts",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Water Harvesting",
+        "body": [
+          "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ku hlengeleta mati",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Swisele (swales), makhurhana ya misava (berms), madamu, tithanki ta mati ya mpfula, na greywater — nonokisa, hangalasa u tlhela u nghenisa thonsi rin’wana na rin’wana ra mati emisaveni.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Learning Outcomes",
+        "body": [
+          "Explain how a level contour swale can slow and spread runoff for infiltration on a suitable site.",
+          "Explain why dams need a designed spillway and a site assessment.",
+          "Explain what a first-flush diverter does and why tank water still needs a safety check.",
+          "Keep greywater away from people, food and drinking-water pipes."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Leswi u nga ta swi dyondza",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlamusela leswaku xisele (swale) lexi ringaneke, lexi celiweke hi ku tsemakanya ku rhelela hi khanthura (contour), xi nga nonokisa ni ku hangalasa njhani mati lama khulukaka (runoff) leswaku ma nghena emisaveni eka ndhawu leyi faneleke.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Hlamusela leswaku ha yini madamu ma lava spillway leyi dizayiniweke ni nkambelo wa ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Hlamusela leswaku first-flush diverter yi endla yini ni leswaku ha yini mati ya thanki ma ha lava nkambelo wa vuhlayiseki.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Hlayisa greywater ekule ni vanhu, swakudya ni tiphayiphi ta mati yo nwa.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Two Swale Designs",
+        "body": [
+          "A level contour swale is one design for slowing runoff. Its trench follows a level contour so water can spread and soak into suitable soil.",
+          "Some swales are deliberately given a slight grade, with a designed safe outlet. Soil, slope, drainage and storm flow decide which approach is suitable. Ask a trained local adviser to assess the site before digging."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dizayini Timbirhi ta Swisele",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xisele (swale) lexi ringaneke eka khanthura (contour) i dizayini yin’we yo nonokisa mati lama khulukaka. Mugodi wa xona wu landzela khanthura leyi ringaneke — layini leyi nga na ku tlakuka ko fana ndlela hinkwayo, yi tsemakanya ku rhelela, a yi rhelelanga ehansi — leswaku mati ma kota ku hangalala ni ku nghena emisaveni leyi faneleke.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Swisele swin’wana swi nyikiwa hi xikongomelo ku rhelela ka katsongo, ku ri na ndhawu leyi dizayiniweke leyi hlayisekeke yo humesa mati. Misava, ku rhelela, ku nghena ni ku suka ka mati emisaveni ni ku khuluka ka mati ya xidzedze swi endla xiboho hi leswaku ndlela yihi yi faneleke. Kombela mutsundzuxi wa le ndhawini loyi a leteriweke leswaku a kambela ndhawu u nga si cela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "A Swale May Let Water Soak In",
+        "body": [
+          "This picture shows a level contour swale as a concept. Water may spread along the trench and soak in where the soil allows it.",
+          "It does not show how deep moisture reaches on your land. Check the soil, slope and overflow route before building."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Xisele Xi Nga Pfumelela Mati Ma Nghena",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xifaniso lexi xi kombisa xisele (swale) lexi ringaneke eka khanthura (contour) tani hi xifaniso xa miehleketo. Mati ma nga hangalala hi ku landza mugodi ni ku nghena laha misava yi pfumelelaka kona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "A xi kombisi leswaku ku tsakama ku nghena ehansi ku fika kwihi emisaveni ya wena. Kambela misava, ku rhelela ni ndlela ya mati lama tlulaka u nga si aka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "The Downhill Berm",
+        "body": [
+          "The excavated soil forms a berm on the downhill side. It is where trees may be planted when the site design is suitable.",
+          "Trees may draw on moisture stored in nearby soil after rain; the result varies by site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khurhana ra Misava (Berm) ra le Hansi",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Misava leyi celiweke yi endla khurhana ra misava (berm) etlhelweni ra le hansi. I ndhawu leyi mirhi yi nga byariwaka kona loko dizayini ya ndhawu yi fanerile.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mirhi yi nga tirhisa ku tsakama loku hlayisiweke emisaveni ya kusuhi endzhaku ka mpfula; mbuyelo wu hambana hi ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Storms Need a Safe Overflow",
+        "body": [
+          "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+          "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+          "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mpfula ya matimba yi lava ndlela yo tlula yo hlayiseka",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mpfula ya matimba yi nga tata xisele hi ku hatlisa ku tlula hilaha mati ma nghenaka hakona emisaveni. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si cela.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele kumbe damu leri nga ehansi swi fanele ku kota ku ma amukela hi vuhlayiseki.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela misava, ku rhelela na ku khuluka ka mati ya xidzedze. Xifaniso a hi dizayini yo aka ha yona.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Assess the Overflow Before Digging",
+        "body": [
+          "A swale needs a planned overflow route for heavy rain. Check it before digging.",
+          "Water may go to another swale or a dam only when a site assessment shows that the route, outlet and receiver can take the flow without damage."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kambela ndlela yo tlula u nga si cela",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xisele xi lava ndlela leyi kunguhatiweke yo humesa mati lama tlulaka loko mpfula ya matimba yi na. Yi kambele u nga si cela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mati ma nga ya eka xisele xin’wana kumbe damu ntsena loko nkambelo wa ndhawu wu kombisa leswaku ndlela, ndhawu yo humesa mati ni leswi ma amukelaka swi nga kota ku khoma mati lama khulukaka handle ka ku onhaka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Check the Site Before Digging",
+        "body": [
+          "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+          "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kambela ndhawu u nga si cela",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ku rhelela ntsena a ku ku byeli loko xisele xi fanerile. Misava, ku humesa mati, misava leyi nga tiyangiki na mati lama taka hi le henhla ka ndhawu yo rhelela hinkwaswo swa nkoka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet kumbe unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Watch: Roots Help Hold Soil",
+        "body": [
+          "Roots help hold soil along a planted contour line.",
+          "Choose erosion controls with local advice; steep land needs a site assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Languta: timitsu ti pfuna ku khoma misava",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Timitsu ta swimilana ti pfuna ku khoma misava eka layini ya khanthura (contour) leyi byariweke — layini leyi nga na ku tlakuka ko fana ndlela hinkwayo, leyi tsemakanyaka ndhawu yo rhelela, a yi rhelelanga ehansi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Hlawula ndlela yo sivela ku kukuleka ka misava hi ku tirhisa ntsundzuxo wa laha kaya; ndhawu yo rhelela ngopfu yi lava nkambelo wa ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Store Rain for the Dry Season",
+        "body": [
+          "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+          "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+          "Before changing a watercourse or building storage works, check the required authorisation with the water authority."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlayisa mati ya mpfula ya nguva yo oma",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Damu kumbe xidziva xi nga hlayisa mati lama khulukaka ehenhla ka misava, kambe ntsengo lowu kumekaka wu titshege hi mpfula ya le kusuhi, ndhawu yo hlengeleta mati (catchment), ku lahleka ka mati na leswaku u tirhisa mati yo tala njhani.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwayo. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisiwangi.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Loko u nga si cinca watercourse kumbe ku aka storage works, kamba authorisation leyi lavekaka eka water authority.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Design the Spillway Before the Wall",
+        "body": [
+          "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+          "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+          "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dizayina Spillway U nga si Aka Rirhangu",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Damu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "U nga ehleketi leswaku ntsengo wa mpfula ya lembe wu ku byela vukulu bya ndhambi kumbe vuhlayiselo lebyi u nga ta va na byona.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "An uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke ngopfu u nga si sungula ku aka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Dam and Spillway: A Concept",
+        "body": [
+          "Design the spillway before the wall — an overtopped wall can breach catastrophically.",
+          "Catchment runoff is one input. A suitably qualified person must assess the site, dam and spillway design before construction."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Damu na Spillway: Xifaniso xa Miehleketo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Dizayina spillway u nga si aka rirhangu — rirhangu leri mati ma tlulaka ehenhla ka rona ri nga tshoveka hi ndlela ya khombo lerikulu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mati lama khulukaka ku suka eka ndhawu yo hlengeleta mati (catchment runoff) i xin’we xa swilo leswi tirhisiwaka eka dizayini. Munhu loyi a nga na swidyondzo leswi faneleke u fanele ku kambela ndhawu, dizayini ya damu na ya spillway ku nga si sungula ku aka.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Care for the Dam and Its Banks",
+        "body": [
+          "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+          "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+          "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlayisa damu ni mintlhelo ya rona",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mati ma nga lahleka hi evaporation and seepage. Kamba xiyimo xa mati naswona u lavisisa ku lutla kumbe ku gogodeka ka misava.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Hlayisa spillway yi nga pfaleki naswona hlayisa bank cover leyi boxiweke eka design. U nga byali mirhi ehenhla ka earth dam wall.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Animals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Your Roof Is a Harvesting Surface",
+        "body": [
+          "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+          "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+          "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+          "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lwangu ra wena i ndhawu yo hlengeleta mati",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Lwangu ra wena ri nga hlengeleta mati ya mpfula. Ntsengo wu titshege hi vukulu bya lwangu, mpfula na ku lahleka ka mati.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Kamba loko switirhisiwa swa lwangu swi faneleka ku hlengeleta mati ya mpfula u nga si hlanganisa thanki.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "An annual total does not tell you how much water will be available during a dry spell. Pimanisa supply na ku tirhisiwa ka mati loku u ku pulaneke.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Divert the Dirty First Flush",
+        "body": [
+          "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+          "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+          "A diverter does not make the remaining water safe to drink."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hambukisa mati ya le sunguleni lama thyakeke",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Roof runoff yi nga rhwala ntshuri, droppings na other contamination. First-flush diverter yi hambukisa mati man’wana ya runoff yo sungula leswaku ma nga ngheni etankini.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mati lama faneleke ku hambukisiwa ya titshege hi roof na system. Tirhisa the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Diverter a yi endli leswaku mati lawa ma saleke ma hlayiseka ku nwa.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "First Flush to Tank: A Concept",
+        "body": [
+          "A first-flush diverter keeps early roof runoff out of the tank.",
+          "Size and maintain it for your roof; later runoff still needs a safety check."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mati ya le Sunguleni eka Thanki: Xifaniso xa Miehleketo",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "First-flush diverter yi sivela mati ya le sunguleni lama khulukaka lwangwini ku nghena etankini.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Lulamisa sayizi ya yona hi ku landza lwangu ra wena naswona yi hlayise; mati lama taka endzhaku ma ha lava ku kamberiwa vuhlayiseki.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Match Tank Size to Water Demand",
+        "body": [
+          "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+          "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+          "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ringanisa sayizi ya thanki ni xilaveko xa mati",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          },
+          {
+            "status": "draft",
+            "text": "Tsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa demand ya wona na supply hi tinguva.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. Vito ra province ntsena a ri ku byeli tank size leyi u yi lavaka.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Keep Stored Water Protected",
+        "body": [
+          "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+          "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+          "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sirhelela mati lama hlayisiweke",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hlayisa thanki yi funengetiwile. Screen openings against insects, naswona hlayisa roof, gutters na diverter. Keep rainwater separate from drinking-water pipes.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Mati lama vonakaka ma basile ma nga ha va na germs kumbe chemicals. Vutisa local health authority hi testing na treatment leswi fambisanaka na intended use.",
+            "provenance": "Complete current learner paragraph reused for its byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          },
+          {
+            "status": "draft",
+            "text": "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+            "provenance": "Complete byte-exact English source learner paragraph reused; unreviewed machine draft."
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Used Water Varies by Source",
+        "body": [
+          "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way.",
+          "South African guidance differs on kitchen water and laundry water. Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mati lama tirhisiweke ya hambana hi xihlovo",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mati lama tirhisiweke ekaya ma nga va na swilo leswitsongo leswi vangaka vuvabyi, munyu, swilo swo basisa ni swilo swin’wana. Swiletelo a swi hlamuseli swihlovo hinkwaswo hi ndlela yin’we.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Swiletelo swa Afrika-Dzonga swa hambana hi mati ya le khixini ni mati yo hlantswa swiambalo. U nga katsi mati ya thoyilete, mati ya tinapi, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa nakambe. U nga tirhisi nakambe mati lama nga na swilo swa khemikhali leswi nga ni khombo.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Get Local Advice Before Any Reuse",
+        "body": [
+          "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site.",
+          "If this advice is unavailable or unclear, do not reuse the water. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kuma ntsundzuxo wa laha kaya u nga si tirhisa mati nakambe",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "U nga si tirhisa nakambe, kombela masipala ni mutsundzuxi wa laha kaya wa sanitation loyi a nga ni vuswikoti lebyi faneleke leswaku va kambela xihlovo lexi kongomeke, vukorhokeri bya mati ni sanitation bya muti, leswi u kunguhateleke ku tirhisa mati ha swona ni ndhawu.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Loko ntsundzuxo lowu wu nga kumekiki kumbe wu nga twali kahle, u nga tirhisi mati nakambe. Misava ni mulch a swi dlayi swilo leswitsongo leswi vangaka vuvabyi ematini lama thyakeke lama tirhisiweke (wastewater).",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "n": 21,
+        "heading": "A Picture Is Not a Farm Design",
+        "body": [
+          "This generic picture is not a tested or approved farm design. It does not prove that the source, route or destination is safe.",
+          "Check with qualified local advisers before any reuse. Soil and mulch do not disinfect wastewater."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Xifaniso a hi dizayini ya purasi",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Xifaniso lexi xa ku angarhela a hi dizayini ya purasi leyi ringiweke kumbe leyi pfumeleriweke. A xi kombisi leswaku xihlovo, ndlela leyi mati ma hundzaka ha yona kumbe laha mati ma yaka kona swi hlayisekile.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Vutisa vatsundzuxi va laha kaya lava nga ni vuswikoti lebyi faneleke u nga si tirhisa mati nakambe. Misava ni mulch a swi dlayi swilo leswitsongo leswi vangaka vuvabyi ematini lama thyakeke lama tirhisiweke (wastewater).",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "n": 22,
+        "heading": "Prevent Contact and Pollution",
+        "body": [
+          "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+          "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sivela ku khumbana ni ku thyakisiwa",
+          "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "text": "Sivela vanhu kumbe swiharhi ku khumbana ni mati lama tirhisiweke ku hlantswa. U nga hlanganiseli mati lawa eka tiphayiphi ta mati yo nwa, u nga ma hangalasi emoyeni, u nga pfumeleli leswaku ma hlengeletana, kumbe ma khulukela ehandle ka ndhawu ya wena eka ndlela, mugerwana kumbe ",
+                "sourceEnglish": "Prevent contact with people or animals. Do not connect washwater to drinking-water plumbing, spray it, let it pool, or allow it to run off the property into a street, drain or "
+              },
+              {
+                "status": "english-hold",
+                "sourceEnglish": "watercourse."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "If a reuse system is already operating and the water smells bad, pools or harms plants, tshika ku ma tirhisa kutani u lava ndzayo ya qualified local adviser.",
+            "provenance": "Bounded independently checked composition for the complete byte-exact English source (Water reviewed precision, 5 October 2026). Unreviewed machine draft; difficult technical English retained. No fluent, local farming or Shangani approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 23,
+      "english": {
+        "n": 23,
+        "heading": "Field Assignment",
+        "body": [
+          "Build an A-frame level from three poles and a weighted string.",
+          "Use it to find one level line across your slope.",
+          "Photograph the A-frame and the line you marked."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ntirho wa le nsinini",
+          "provenance": "existing unreviewed course heading reused verbatim; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vaka A-frame yo kamba leswi ringaneke hi tipolo tinharhu ni ntambhu leyi nga na ndzito leyi bohiweke eka yona.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Yi tirhise ku kuma layini yin’we leyi ringaneke, leyi nga na ku tlakuka ko fana ndlela hinkwayo, leyi tsemakanyaka ndhawu ya wena yo rhelela.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Teka xifaniso xa A-frame ni layini leyi u yi funghileke.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          }
+        ]
+      }
+    },
+    {
+      "n": 24,
+      "english": {
+        "n": 24,
+        "heading": "Check Your Work",
+        "body": [
+          "My A-frame is built and I have tested it.",
+          "Turn it around — it should read the same.",
+          "I have marked at least three points at the same height across my slope.",
+          "My marked line runs across the slope, not down it.",
+          "Realistic minimum time for the real work: 5 days."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kambela ntirho wa wena",
+          "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "A-frame ya mina yi akiwile naswona ndzi yi ringile.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Yi hundzuluxele; yi fanele yi hlaya leswi fanaka.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Ndzi veke swikombiso eka tindhawu tinharhu kumbe ku tlula, leti nga eka vuhenhla byin’we, hi ku tsemakanya ndhawu ya mina leyi rhelelaka ehansi.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Layini leyi ndzi yi vekeke swikombiso yi tsemakanya ndhawu yo rhelela; a yi rhelelanga ehansi hi ku landzela ndhawu yoleyo.",
+            "provenance": "Bounded deck-only machine draft (Soil/Water ordinary-prose completion, 4–5 October 2026): drafted, blind back-translated and semantically checked by separate AI agents; difficult technical English retained. Unreviewed; not fluent or local farming approval."
+          },
+          {
+            "status": "draft",
+            "text": "Nkarhi wa le hansi lowu twalaka wa ntirho wa xiviri: 5 wa masiku.",
+            "provenance": "Bounded deck-only machine draft independently checked for source meaning; difficult technical English retained. Not fluent or local farming approval."
+          }
+        ]
+      }
+    }
+  ]
+}

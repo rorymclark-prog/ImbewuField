@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-06",
+  "baseSHA": "66b274842927ba93e47586c322325742716d2a39",
+  "acceptedPacketSHA256": "ba100aa5be8dadd3f2ac6de4b63cbae44cb6bb144990cfaaa1ae0593deb5cb02",
+  "nativeBeforeSnapshotSHA256": "a171fae04ac14862c42961914a975e1f29b123904ee1151a44810d7dd380b50d",
+  "nativeBeforeFileSHA256": "5e4b578d242215a0d173bdac6c31dc4bb4f303f137432716c21856e1538090d9",
+  "nativeAppliedFileSHA256": "b53a4fcec07ec74510033ca98eadf6663c7446e5c9a1d6fe5453aa7f19ac462b",
+  "canonicalFileSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "units": 108,
+  "changedUnits": 78,
+  "unchangedUnits": 30,
+  "nativePairFieldsChanged": 56,
+  "allCanonicalCurrentBindingsChecked": true,
+  "wholeModuleEqualsBaselinePlusOnlyAcceptedOverlays": true,
+  "allUnlistedFieldsPreserved": true,
+  "allSourceEnglishPreserved": true,
+  "allOrderAndBIndicesPreserved": true,
+  "bodyCompositionsRecomputed": true,
+  "lexicalProvenanceReviewerVerifiedOnly": true,
+  "rootPrimaryFetchTimedOut": true,
+  "fluentApproval": false,
+  "verification": {
+    "typecheck": "npx tsc --noEmit exit0",
+    "focused": "new distinct VE test:3 pass0fail",
+    "historical": "existing five and new three VE tests:8pass0fail; complete historical baseline rewind after full current reviewed packet comparison, restored in finally",
+    "diffCheck": "git diff --check exit0"
+  },
+  "limits": [
+    "No UI or publication verification yet.",
+    "No media, shared tests or package registration changes performed."
+  ],
+  "historicalRepairReason": "2026-10-06 accepted78 ordinary translation units supersede old full-English holds; all historical assertions retained unchanged inside guarded complete snapshot rewind."
+}

@@ -1,0 +1,28 @@
+{
+  "title": "Narrow independent check: Xitsonga water reuse question quantifier",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "fieldId": "water-harvesting::water-harvesting-l4::ts::quiz[0].question",
+  "sourceEnglish": "What should happen before any household washwater is reused?",
+  "currentTarget": "Xana ku fanele ku endliwa yini before any household washwater is reused?",
+  "previousCandidate": "Xana ku fanele ku endliwa yini ku nga si va ni ku tirhisiwa nakambe kwihi na kwihi ka mati yo hlantswa ya le kaya?",
+  "exactMixedCandidateChecked": "Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?",
+  "verdict": "ACCEPT_MEANING_ONLY_NARROW_TERM_HOLD",
+  "semanticFinding": "At model semantic level, the revised wording retains the question frame, before relation, reuse action, and household washwater referent. Keeping “any” immediately before the water noun phrase preserves the source’s any-water scope and removes the possible spatial reading of “kwihi na kwihi.” No source proposition or scope appears dropped or added.",
+  "termDisposition": {
+    "retainedExact": "any",
+    "reason": "One exact quantifier is left in English to preserve the source scope."
+  },
+  "scopeCheck": {
+    "before": true,
+    "anyWaterScope": true,
+    "household": true,
+    "washwater": true,
+    "reuse": true,
+    "spatialAnywhereAdded": false
+  },
+  "grammarStatus": "Visible mixed grammar remains unreviewed; this verdict checks source meaning only.",
+  "wholeModuleCompletionClaimed": false,
+  "fluentApproval": false,
+  "packetSha256": "2b24d6a1c0e3c5f3b0d0a81e3dce7260c3aee9f923a8d48c0fc5d35e107a775c"
+}

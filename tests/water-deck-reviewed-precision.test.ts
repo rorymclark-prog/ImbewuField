@@ -7,6 +7,8 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
+import { waterDeckBeforeOrdinary, waterMediaBeforeOrdinary, waterAssetSizesBeforeOrdinary } from './water-reviewed-deck-history-checks.ts';
+import { waterNativeBeforeOrdinary } from './water-reviewed-precision-checks.ts';
 const proof = JSON.parse(readFileSync('docs/study-translation-reviews/WATER-DECK-REVIEWED-PRECISION-2026-10-05.json', 'utf8'));
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 const drafts = { st: SESOTHO_WATER_HARVESTING_DRAFT, ve: TSHIVENDA_WATER_HARVESTING_DRAFT, ts: XITSONGA_WATER_HARVESTING_DRAFT };
@@ -21,7 +23,9 @@ test('Water replacements bind complete source predicates and preserve every unli
     validatePairedDraft(deck, narration, language);
     const drift = structuredClone(narration); drift[5].body[0] += ' changed source';
     assert.throws(() => validatePairedDraft(deck, drift, language), /English body differs/);
-    const restored = structuredClone(deck.slides);
+    const priorDeck = waterDeckBeforeOrdinary(deck, language);
+    const restored = structuredClone(priorDeck.slides);
+    const priorNative = waterNativeBeforeOrdinary(language);
     for (const row of proof.targetFieldChanges.filter((r: any) => r.language === language)) {
       const slide = restored[row.slide - 1];
       assert.equal(slide.english.body[row.bodyIndex], row.sourceEnglish);
@@ -29,7 +33,7 @@ test('Water replacements bind complete source predicates and preserve every unli
       assert.equal(row.currentTarget.status, 'draft');
       assert.equal(row.currentTarget.text, row.acceptedCandidate);
       const match = row.currentNativeMatches[0];
-      const native = drafts[language].lessons.find(l => l.id === match.lessonId)!;
+      const native = priorNative.lessons.find((l: any) => l.id === match.lessonId)!;
       const source = canonical.lessons.find(l => l.id === match.lessonId)!;
       assert.equal(source.body.split('\n\n')[match.paragraphIndex], row.sourceEnglish);
       assert.equal(native.body.sourceEnglish, source.body);
@@ -46,12 +50,13 @@ test('only selected Water frames change while other stills, narration and films 
   const media = JSON.parse(readFileSync('docs/media/water-reviewed-precision-2026-10-05/frames.json', 'utf8'));
   assert.equal(media.changed.length, 20);
   for (const row of media.changed) {
-    const bytes = readFileSync(row.path);
-    assert.equal(sha(bytes), row.sha256); assert.notEqual(row.sha256, row.baselineSha256);
-    assert.equal(bytes.length, row.bytes); assert.equal(bytes.toString('ascii', 0, 4), 'RIFF'); assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+    const view = waterMediaBeforeOrdinary(row.path);
+    const bytes = view.bytes;
+    assert.equal(view.sha256, row.sha256); assert.notEqual(row.sha256, row.baselineSha256);
+    assert.equal(view.byteLength, row.bytes); assert.equal(bytes.toString('ascii', 0, 4), 'RIFF'); assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
-  for (const row of media.preserved) assert.equal(sha(readFileSync(row.path)), row.sha256, row.path);
-  let sizes = readFileSync(media.assetSizeManifest.path, 'utf8');
+  for (const row of media.preserved) assert.equal(waterMediaBeforeOrdinary(row.path).sha256, row.sha256, row.path);
+  let sizes = waterAssetSizesBeforeOrdinary(media.assetSizeManifest.path);
   for (const row of media.assetSizeManifest.selectedEntries) {
     const current = `'${row.url}': ${row.currentSize}`;
     assert.equal(sizes.split(current).length - 1, 1, 'only an exact selected manifest entry is replaced');
