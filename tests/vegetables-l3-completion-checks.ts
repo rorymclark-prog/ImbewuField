@@ -1,3 +1,4 @@
+import { vegetablesBeforeL3Ordinary, vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesAssessmentPresentationBeforeOrdinary } from './vegetables-assessment-ordinary-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -89,7 +90,8 @@ export function registerVegetablesL3CompletionTests() {
     for (const language of ['st', 've', 'ts'] as const) {
       assert.deepEqual(vegetablesL3BeforeCompletion(language, drafts[language]), baseline[language],
         `${language}: rewinding only 30 documented target/status leaves restores the entire prior module`);
-      assert.deepEqual(lessonAt(drafts[language]).body, lessonAt(baseline[language]).body,
+      // 6 October: validate the complete later twelve-span layer before this historical unchanged-body claim.
+      assert.deepEqual(lessonAt(vegetablesBeforeL3Ordinary(language, drafts[language])).body, lessonAt(baseline[language]).body,
         `${language}: all sixteen body paragraphs, technical holds and localized prefixes are unchanged`);
       assert.deepEqual(lessonAt(drafts[language]).quiz.map((q: any) => q.sourceCorrectIndex), [1, 1]);
       assert.equal(resolveLearnerLessonPresentation(source, language).status, 'draft');
@@ -166,7 +168,7 @@ export function registerVegetablesL3CompletionTests() {
     }
     for (const row of plan.checkedLearnerParagraphReuses) {
       assert.equal(source.body.split('\n\n')[row.canonicalLearnerParagraphIndex], row.sourceEnglish);
-      assert.equal(resolveLearnerLessonPresentation(source, row.language).content.body.split('\n\n')[row.canonicalLearnerParagraphIndex], row.currentDeckTarget);
+      assert.equal(vegetablesL3PresentationBeforeOrdinary(source, row.language).content.body.split('\n\n')[row.canonicalLearnerParagraphIndex], row.currentDeckTarget);
       assert.equal(row.learnerTarget, row.currentDeckTarget);
       assert.equal(row.action, 'preserve-identical-existing-cell');
     }

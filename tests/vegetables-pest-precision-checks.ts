@@ -1,3 +1,4 @@
+import { vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesBeforeAssessmentOrdinary } from './vegetables-assessment-ordinary-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -60,7 +61,8 @@ function deckFrom(language: Language, stage: 'before' | 'after') {
 // Reconstruct only the nine later deck slots after validating their exact current
 // source, visible target, segment coverage, and review status.
 export function vegetablesDeckBeforePestPrecision<T>(language: Language, actual: T): T {
-  const restored: any = structuredClone(actual);
+  // 6 October: accepted eleven L3 paragraph reuses are wholly checked before this older nine-slot proof.
+  const restored: any = vegetablesDeckBeforeL3Ordinary(language, actual);
   for (const row of deckProof.rows.filter((item: any) => item.language === language)) {
     const slide = restored.slides[row.slide - 1];
     const slot = slide.target.body[row.bodyIndex];
@@ -214,7 +216,9 @@ export function registerVegetablesPestPrecisionTests() {
     }
     for (const language of ['st', 've', 'ts'] as const) {
       const path = new URL(`../docs/narration/vegetables-staples.${language}.paired-draft.json`, import.meta.url);
-      const actual = JSON.parse(readFileSync(path, 'utf8'));
+      // 6 October: all twelve later L3 spans and every unlisted current deck field
+      // are checked before reconstructing this earlier pest-only after snapshot.
+      const actual = vegetablesDeckBeforeL3Ordinary(language, JSON.parse(readFileSync(path, 'utf8')));
       const prior = deckFrom(language, 'before');
       const accepted = deckFrom(language, 'after');
       assert.deepEqual(actual, accepted, `${language}: all unlisted deck fields and target slots remain exact`);

@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-06",
+  "sourceOriginalSHA256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+  "independentRefinementSHA256": "53cd459aeb29882817c98aecac3d87a306abe105ce9cf591443f07982096e2d2",
+  "rowId": "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground",
+  "oldSpan": "Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.",
+  "acceptedSpan": "Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.",
+  "reason": "Root explicitly accepted deletion of only a after independent same-module native evidence; no promised shelf life or duration."
+}

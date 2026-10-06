@@ -1,0 +1,163 @@
+{
+  "acceptedSpanIDs": [
+    "st:body[2]:weather-pests",
+    "st:body[15]:resources",
+    "st:body[15]:protection",
+    "ts:body[14]:two-or-more-staples",
+    "ts:body[9]:other-staples-struggle"
+  ],
+  "paragraphRows": [
+    {
+      "candidateId": "st:vegetables-staples-l3:body[2]:weather-pests",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 2,
+      "exactCanonicalSourceParagraph": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "exactCurrentResolvedTargetParagraph": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+      "proposedTarget": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla.",
+      "spanRepairs": [
+        {
+          "id": "st:body[2]:weather-pests",
+          "sourceEnglishSpan": "when weather or pests hit.",
+          "currentTargetSpan": "ha weather kapa pests di otla",
+          "recommendedTargetSpan": "ha maemo a leholimo kapa pests di otla",
+          "rootAccepted": true
+        }
+      ],
+      "nativeBodyReviewStatus": "machine-draft",
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 2,
+        "exactSourceEnglish": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla."
+        },
+        "proposedTargetText": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla."
+      },
+      "retainedTechnicalEnglish": [
+        "pests",
+        "Staple"
+      ],
+      "rootException": "ST weather final explicitly retains pests; prior inconsistent disenyi proposal is not authority.",
+      "fluencyApproved": false,
+      "fullProposedNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso."
+    },
+    {
+      "candidateId": "st:vegetables-staples-l3:body[15]:resources-and-protection",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 15,
+      "exactCanonicalSourceParagraph": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "exactCurrentResolvedTargetParagraph": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "proposedTarget": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "spanRepairs": [
+        {
+          "id": "st:body[15]:resources",
+          "sourceEnglishSpan": "water, soil and seasons",
+          "currentTargetSpan": "water, soil le seasons",
+          "recommendedTargetSpan": "metsi, mobu le dinako tsa selemo",
+          "rootAccepted": true
+        },
+        {
+          "id": "st:body[15]:protection",
+          "sourceEnglishSpan": "protection.",
+          "currentTargetSpan": "protection.",
+          "recommendedTargetSpan": "tshireletso.",
+          "rootAccepted": true
+        }
+      ],
+      "nativeBodyReviewStatus": "machine-draft",
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 14,
+        "bodyIndex": 4,
+        "exactSourceEnglish": "Different crops use water, soil and seasons differently. That difference is the protection.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection."
+        },
+        "proposedTargetText": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso."
+      },
+      "retainedTechnicalEnglish": [],
+      "rootException": null,
+      "fluencyApproved": false,
+      "fullProposedNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso."
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[14]:two-or-more-staples",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 14,
+      "exactCanonicalSourceParagraph": "Two or more staples give you more ways to keep eating.",
+      "exactCurrentResolvedTargetParagraph": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "proposedTarget": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "spanRepairs": [
+        {
+          "id": "ts:body[14]:two-or-more-staples",
+          "sourceEnglishSpan": "Two or more staples",
+          "currentTargetSpan": "Two or more staples",
+          "recommendedTargetSpan": "Staples swimbirhi kumbe ku fhira",
+          "rootAccepted": true
+        }
+      ],
+      "nativeBodyReviewStatus": "machine-draft",
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 14,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Two or more staples give you more ways to keep eating.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
+        },
+        "proposedTargetText": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
+      },
+      "retainedTechnicalEnglish": [
+        "Staples"
+      ],
+      "rootException": null,
+      "fluencyApproved": false,
+      "fullProposedNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nStaples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[9]:other-staples-struggle",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 9,
+      "exactCanonicalSourceParagraph": "Amadumbe handles wetter ground, where other staples struggle.",
+      "exactCurrentResolvedTargetParagraph": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.",
+      "proposedTarget": "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.",
+      "spanRepairs": [
+        {
+          "id": "ts:body[9]:other-staples-struggle",
+          "sourceEnglishSpan": "where other staples struggle.",
+          "currentTargetSpan": "where other staples struggle.",
+          "recommendedTargetSpan": "laha other staples swi tikeriwaka.",
+          "rootAccepted": true
+        }
+      ],
+      "retainedTechnicalEnglish": [
+        "wetter ground",
+        "other staples"
+      ],
+      "nativeBodyReviewStatus": "machine-draft",
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 4,
+        "exactSourceEnglish": "Amadumbe handles wetter ground, where other staples struggle.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle."
+        },
+        "proposedTargetText": "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka."
+      },
+      "reason": "Root accepted precise mixed framing; retain crop class other staples and wetter ground; translate where/struggle as finding it difficult, not failing or cannot handle.",
+      "fluencyApproved": false,
+      "fullProposedNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nStaples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
+    }
+  ],
+  "explicitRootReason": "Root accepted only5additional spans/4 paragraphs. Keep pests English, compose two ST15 spans cumulatively, Staples class/two-or-more exact, TS9 other staples/wetter ground exact with difficulty rather than fail/cannot. All other broader proposals and all quiz changes held."
+}

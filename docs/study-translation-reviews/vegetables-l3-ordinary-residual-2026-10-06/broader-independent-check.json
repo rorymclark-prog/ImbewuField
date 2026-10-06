@@ -1,0 +1,244 @@
+{
+  "reportType": "independent semantic/source/current-resolver backcheck; not fluency approval",
+  "date": "2026-10-06",
+  "input": {
+    "path": "/tmp/imbewu-vegetables-l3-remaining-ordinary-actual-candidates-20261006.json",
+    "sha256": "d1c7befd1c09fb0af1b663192a4f299db3977071df30ae5f8f1c9481d0784d88",
+    "expectedSha256": "d1c7befd1c09fb0af1b663192a4f299db3977071df30ae5f8f1c9481d0784d88",
+    "matchesExpected": true
+  },
+  "baseline": {
+    "head": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+    "packetHead": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+    "matches": true,
+    "currentResolverSnapshot": {
+      "path": "/tmp/vegetables-l3-current-68f955a1.json",
+      "sha256": "26aaaa92362985ec97358a2a48ee0c77b1b737fdcef746066365efa770ab86cd",
+      "matchesPacket": true
+    },
+    "sourceAndCurrentResolvedTargetsAll10Rechecked": true,
+    "bodyParagraphCount": 16
+  },
+  "priorSevenCandidateIdsExcluded": [
+    "st:vegetables-staples-l3:body[4]:companion_failure",
+    "ve:vegetables-staples-l3:body[4]:companion_failure",
+    "ts:vegetables-staples-l3:body[4]:companion_failure",
+    "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+    "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+    "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+    "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground"
+  ],
+  "uniqueFinalRowIds": [
+    "st:body[2]:weather-pests",
+    "st:body[15]:resources",
+    "st:body[15]:protection",
+    "ts:body[0]:staple-earns-place",
+    "ts:body[9]:other-staples-struggle",
+    "ts:body[14]:two-or-more-staples",
+    "ve:quiz[0].options[0]:open-pollinated-yield-more",
+    "ts:quiz[0].options[0]:open-pollinated-yield-more",
+    "ve:quiz[1].rationale:actually-prefers",
+    "ts:quiz[1].rationale:actually-prefers"
+  ],
+  "rows": [
+    {
+      "id": "st:body[2]",
+      "canonicalSource": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "currentResolvedTarget": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+      "proposedSpan": "ha maemo a leholimo kapa disenyi di otla",
+      "finalDecision": {
+        "decision": "repair candidate: translate weather; retain exact technical English “pests”",
+        "finalTarget": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa disenyi di otla.",
+        "reason": "The source conditional and hit predicate, quantity and choices remain exact. “maemo a leholimo” expresses weather. Sesotho agricultural usage independently uses “disenyi” for named crop pests (e.g. Fall armyworm) in Grain SA material, but for this batch retaining the broader source word “pests” avoids narrowing category."
+      }
+    },
+    {
+      "id": "st:body[15]",
+      "canonicalSource": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "currentResolvedTarget": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "proposedSpan": "metsi, mobu le dinako tsa selemo",
+      "finalDecision": {
+        "decision": "accept",
+        "finalSpan": "metsi, mobu le dinako tsa selemo",
+        "reason": "Water, soil and seasons are translated as ordinary resource/time nouns. “Different crops use … differently” and the following sentence remain intact."
+      }
+    },
+    {
+      "id": "st:body[15]",
+      "canonicalSource": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "currentResolvedTarget": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "proposedSpan": "tshireletso.",
+      "finalDecision": {
+        "decision": "accept",
+        "finalSpan": "tshireletso.",
+        "reason": "“tshireletso” is supported for protection/security in official South African usage; it does not assert guaranteed outcomes."
+      }
+    },
+    {
+      "id": "ts:body[0]",
+      "canonicalSource": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "currentResolvedTarget": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "proposedSpan": "Xakudya xa nkoka xi fanele ku va kona",
+      "finalDecision": {
+        "decision": "hold exact current span",
+        "finalSpan": "A staple earns its place",
+        "fullFinalTarget": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+        "reason": "The candidate “xi fanele ku va kona” says it should/ought to be present, which changes the source explanation that the crop earns its place through feeding the household. Keep the idiom until a wording preserves justification without adding prescription; current localized because/beyond-harvest clause stays."
+      }
+    },
+    {
+      "id": "ts:body[9]",
+      "canonicalSource": "Amadumbe handles wetter ground, where other staples struggle.",
+      "currentResolvedTarget": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.",
+      "proposedSpan": "laha swibyariwa swin’wana swa swakudya swa nkoka swi tikeriwaka.",
+      "finalDecision": {
+        "decision": "hold exact current tail",
+        "finalSpan": "where other staples struggle",
+        "fullFinalTarget": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.",
+        "reason": "The proposed phrase expands the crop-class label into “other important food crops”; that may broaden the source’s defined staple class. A safe local equivalent for this category/subject agreement is not established in this check, so preserve it pending terminology and fluent review."
+      }
+    },
+    {
+      "id": "ts:body[14]",
+      "canonicalSource": "Two or more staples give you more ways to keep eating.",
+      "currentResolvedTarget": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "proposedSpan": "Swibyariwa swa swakudya swa nkoka swimbirhi kumbe ku engetela",
+      "finalDecision": {
+        "decision": "repair proposal to retain exact crop-class label and use supported quantity wording",
+        "finalTarget": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+        "reason": "Keep “staples” explicit to preserve crop class; use the same module’s “swimbirhi kumbe ku fhira” (“two or more”) pattern instead of “ku engetela” (“to add”). The remainder about more ways to keep eating is unchanged."
+      }
+    },
+    {
+      "id": "ve:quiz[0].options[0]",
+      "canonicalSource": "Open-pollinated varieties yield more",
+      "currentResolvedTarget": "Varieties dza open-pollinated yield more.",
+      "proposedSpan": "Mixaka ya open-pollinated i bveledza zwinzhi.",
+      "finalDecision": {
+        "decision": "hold exact current option",
+        "finalTarget": "Varieties dza open-pollinated yield more.",
+        "reason": "The proposed “Mixaka” is Xitsonga-shaped and does not establish Tshivenda grammar. Keep this false distractor text at option index 0; the correct answer remains index 1."
+      }
+    },
+    {
+      "id": "ts:quiz[0].options[0]",
+      "canonicalSource": "Open-pollinated varieties yield more",
+      "currentResolvedTarget": "Mixaka ya open-pollinated yield more.",
+      "proposedSpan": "Mixaka ya open-pollinated yi humesa swo tala.",
+      "finalDecision": {
+        "decision": "accept",
+        "finalTarget": "Mixaka ya open-pollinated yi humesa swo tala.",
+        "reason": "The existing TS noun phrase remains exact; “yi humesa swo tala” expresses produces/yields more. This preserves the same false distractor at option index 0, with correct answer index 1 unchanged."
+      }
+    },
+    {
+      "id": "ve:quiz[1].rationale[None]",
+      "canonicalSource": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentResolvedTarget": "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "proposedSpan": "Amadumbe i funa vhukuma",
+      "finalDecision": {
+        "decision": "hold exact current lead",
+        "finalTarget": "Amadumbe actually prefers",
+        "reason": "“i funa vhukuma” risks changing truth-corrective “actually” into really/very much and prefers into likes/wants. The rest of the rationale, including damper ground, would struggle, and inability/capability tail, remains byte-exact."
+      }
+    },
+    {
+      "id": "ts:quiz[1].rationale[None]",
+      "canonicalSource": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentResolvedTarget": "Amadumbe actually prefers damper ground where maize would struggle — yi tata niche leyi other staples can't handle well.",
+      "proposedSpan": "Amadumbe yi tsakela swinene",
+      "finalDecision": {
+        "decision": "hold exact current lead",
+        "finalTarget": "Amadumbe actually prefers",
+        "reason": "“yi tsakela swinene” expresses strong liking (“likes very much”), shifting “actually prefers.” Preserve the current lead and exact comparison/modality tail until an equivalent is checked."
+      }
+    }
+  ],
+  "bodyFinalCompositions": {
+    "st": {
+      "paragraphCount": 16,
+      "fullTargetBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa disenyi di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "changedParagraphs": [
+        {
+          "index": 2,
+          "before": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+          "after": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa disenyi di otla."
+        },
+        {
+          "index": 15,
+          "before": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+          "after": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso."
+        }
+      ]
+    },
+    "ve": {
+      "paragraphCount": 16,
+      "fullTargetBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "changedParagraphs": []
+    },
+    "ts": {
+      "paragraphCount": 16,
+      "fullTargetBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nStaples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "changedParagraphs": [
+        {
+          "index": 14,
+          "before": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+          "after": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
+        }
+      ]
+    }
+  },
+  "quizInvariants": [
+    {
+      "language": "ve",
+      "questionIndex": 0,
+      "distractorIndex": 0,
+      "correctIndexBefore": 1,
+      "option0Current": "Varieties dza open-pollinated yield more.",
+      "option0Final": "Varieties dza open-pollinated yield more.",
+      "correctIndexAfter": 1,
+      "statusBefore": "draft",
+      "statusChanged": false
+    },
+    {
+      "language": "ts",
+      "questionIndex": 0,
+      "distractorIndex": 0,
+      "correctIndexBefore": 1,
+      "option0Current": "Mixaka ya open-pollinated yield more.",
+      "option0Final": "Mixaka ya open-pollinated yi humesa swo tala.",
+      "correctIndexAfter": 1,
+      "statusBefore": "draft",
+      "statusChanged": false
+    }
+  ],
+  "statusAndCoverage": {
+    "bodyStatusesPreserved": true,
+    "quizOptionIndicesPreserved": true,
+    "correctAnswerIndicesPreserved": true,
+    "infographicAltUnchanged": true,
+    "speciesOrNumbersChanged": false,
+    "conditionsModalityNegationChanged": false,
+    "unlistedParagraphsUnchanged": true,
+    "reviewStatusesChanged": false,
+    "repoWrites": false
+  },
+  "externalLexicalEvidence": [
+    {
+      "term": "disenyi",
+      "claim": "Sesotho agricultural publication uses “disenyi tsena” for Fall armyworm, supporting the word as an agricultural pest term. To avoid possible scope narrowing, this recommendation still retains the broader English “pests” in the composed target.",
+      "source": "Grain SA, Pula/Imvula July 2022 Sesotho issue",
+      "url": "https://www.grainsa.co.za/upload/article_pdfs/Pula-July-2022_Sesotho_WEB.pdf"
+    },
+    {
+      "term": "tshireletso",
+      "claim": "South African government usage calls the National Plant Protection Organisation “Mokgatlo wa Naha wa Tshireletso ya Dimela”; DSAC terminology also records Sesotho “tshireletso” under conservation. Supports translating protection without adding a guarantee.",
+      "source": "South African government phytosanitary permit page; DSAC Natural Sciences and Technology terminology",
+      "urls": [
+        "https://www.gov.za/st/services/export-permits-import/phytosanitary-permit",
+        "https://dsacevents.dsac.gov.za/NLTS/docs/natSciencesTech_gr46_Sotho2013.pdf"
+      ]
+    }
+  ],
+  "overall": "Five of ten proposals can be used with the listed refinements: translate ST weather, pests, resources and protection without changing conditions; retain the source crop-class label “staples” in TS body14 and use “swimbirhi kumbe ku fhira”; and translate TS false-option wording while leaving it false at index0. The agricultural term “disenyi” is supported by Sesotho agronomy usage for crop pests. Hold the TS “earns its place” idiom, TS other-staples comparison, VE false option, and both rationale leads at their exact current wording. All remain unreviewed drafts, not fluent-approved."
+}

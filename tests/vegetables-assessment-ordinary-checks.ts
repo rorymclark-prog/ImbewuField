@@ -1,3 +1,4 @@
+import { vegetablesBeforeL3Ordinary, vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -33,7 +34,9 @@ const registryName = (language: AssessmentLanguage, registry: any) => language =
 /** 6 October: validate the full actual approved layer before exposing any older pest or L3 snapshot. */
 export function vegetablesBeforeAssessmentOrdinary<T>(language: AssessmentLanguage, actual: T): T {
   assert.deepEqual(sourceModule(), assessmentBefore.canonical, 'all canonical Vegetable source/indices stay exact');
-  const key = registryName(language, actual);
+  // 6 October: later twelve body spans must pass full current/unlisted validation before the earlier quiz-only snapshot.
+  const current = vegetablesBeforeL3Ordinary(language, actual);
+  const key = registryName(language, current);
   const previous = assessmentBefore.drafts[key];
   const expected = structuredClone(previous);
   for (const row of rowsFor(language, previous)) {
@@ -47,8 +50,8 @@ export function vegetablesBeforeAssessmentOrdinary<T>(language: AssessmentLangua
     pair.reviewStatus = 'machine-draft';
   }
   assert.deepEqual(expected, assessmentAfter.drafts[key], `${key}: fixed before plus accepted18-only overlay equals fixed after`);
-  assert.deepEqual(actual, expected, `${key}: whole current source/targets/status/order/indices/unlisted match accepted after`);
-  const restored: any = structuredClone(actual);
+  assert.deepEqual(current, expected, `${key}: whole current source/targets/status/order/indices/unlisted match accepted after`);
+  const restored: any = structuredClone(current);
   for (const row of rowsFor(language, previous)) Object.assign(pairAt(restored, row), pairAt(previous, row));
   assert.deepEqual(restored, previous, `${key}: only accepted18 leaves rewind to the exact full prior registry`);
   return restored;
@@ -57,7 +60,7 @@ export function vegetablesBeforeAssessmentOrdinary<T>(language: AssessmentLangua
 export function vegetablesAssessmentPresentationBeforeOrdinary(lesson: Lesson, language: AssessmentLanguage) {
   const registry = language === 'ts' && lesson.id === 'vegetables-staples-l2' ? tsL2 : assessmentDrafts[language];
   vegetablesBeforeAssessmentOrdinary(language, registry);
-  const shown = structuredClone(resolveLearnerLessonPresentation(lesson, language));
+  const shown = vegetablesL3PresentationBeforeOrdinary(lesson, language);
   if (shown.status !== 'draft') return shown;
   for (const row of rowsFor(language, registry).filter(row => row.lessonId === lesson.id)) {
     const quiz = shown.content.quiz[row.questionIndex];

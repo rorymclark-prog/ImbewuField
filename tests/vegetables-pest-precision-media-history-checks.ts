@@ -1,3 +1,4 @@
+import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -14,7 +15,10 @@ export const vegetablesPestPrecisionFrames = [
 
 /** Validate this complete later layer before exposing any older byte or manifest claim. */
 export function validateCurrentVegetablesPestPrecisionLayer(currentManifest?: string) {
-  const manifest = currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  // The later eight-frame ordinary layer is source/unlisted validated before this six-frame historical view.
+  const latestBefore = vegetablesL3AssetSizesBeforeOrdinary();
+  const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const manifest = currentManifest === undefined || currentManifest === actual ? latestBefore : currentManifest;
   for (const frame of vegetablesPestPrecisionFrames) {
     const bytes = readFileSync('public' + frame.url);
     assert.equal(bytes.length, frame.bytes, `${frame.url}: current frame byte count`);

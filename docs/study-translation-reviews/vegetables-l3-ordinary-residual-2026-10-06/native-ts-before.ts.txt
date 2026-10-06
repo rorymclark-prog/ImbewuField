@@ -33,7 +33,7 @@ const vegetablesL3CheckedSourceEnglish = [
 const sourceParagraphs = vegetablesL3CheckedSourceEnglish.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
 draftParagraphs[0] = "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.";
-draftParagraphs[1] = "Yi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.";
+draftParagraphs[1] = "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.";
 draftParagraphs[2] = "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.";
 draftParagraphs[3] = "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.";
 draftParagraphs[5] = "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.";
@@ -43,12 +43,12 @@ draftParagraphs[12] = "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra
 draftParagraphs[13] = "Xibyariwa xin'we i \"point of failure\" yin'we.";
 draftParagraphs[15] = "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.";
 
-draftParagraphs[4] = "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.";
+draftParagraphs[4] = "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.";
 draftParagraphs[6] = "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.";
 draftParagraphs[7] = "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.";
-draftParagraphs[8] = "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.";
-draftParagraphs[9] = "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka.";
-draftParagraphs[14] = "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya.";
+draftParagraphs[8] = "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.";
+draftParagraphs[9] = "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.";
+draftParagraphs[14] = "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.";
 
 export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
   id: sourceModule.id,

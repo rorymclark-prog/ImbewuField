@@ -1,0 +1,193 @@
+{
+  "baseHEAD": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+  "acceptedRows": 11,
+  "nativeBodyFields": 3,
+  "deckFields": 11,
+  "frames": 8,
+  "hashes": {
+    "native-after.json": "9745884dfea0a6387bc9e563e1a2360a45568532b5f1725b8bfa68aa276655a1",
+    "original-seven-drafts.json": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+    "root-storage-repair.json": "6ffc1bf337b394ba7d79874a8b05f22c811e1741b0382ffc41cc9709a9024ecb",
+    "grammar-refinement.json": "53cd459aeb29882817c98aecac3d87a306abe105ce9cf591443f07982096e2d2",
+    "deck-after.json": "9ed4622a519a800f3d5b82f1286ba60d91993014d6c24d998ffe87855016db64",
+    "deck-before.json": "493aad5d8db76dbcfa272b7c7a760c59184c57f5709fbde720ece8ee799b9f43",
+    "native-before.json": "074d984815704f80cbb261cfe43ba627fcaa1a69d42a9533bd16b5a0cfbf00c9",
+    "accepted-seven-composed.json": "4d206533fe7353aab5baf1bdc77ab6a1cd9a7203d0973c4927af9f6d592a58a3",
+    "independent-backcheck.json": "9413261a739be35d9c25e1a8628dcb6174c221e9745a04a23689ff9b6babfbb6",
+    "source-binding-check.json": "3e0724a677acfa21d34b90ca3e5f9c96403e6b148633a5cddb5788b5da8a6fe3",
+    "native-ve-before.ts.txt": "baf370ec7e3eae65d37f506bb7af69c868a62763d5d4bef800326b1b5f4cc05d",
+    "native-ts-before.ts.txt": "179c9d7cd9dffbc1a139d82e67c734a39c9b4d0f4cc5b7d2013471a413b0609f",
+    "native-st-before.ts.txt": "32a2bd01d8f1c4a8b14c1717effbdc2a7c9cc7e170ca9c63971ac9cfd52b9d9f",
+    "deck-final-after.json": "ae2fa08b9dd82af33744de6c6cbefc52fe4183b50567e72bd7387f028c63ada7",
+    "broader-original-candidates.json": "d1c7befd1c09fb0af1b663192a4f299db3977071df30ae5f8f1c9481d0784d88",
+    "native-final-after.json": "83ef0299b7de8289f624ec80d1a674e73be69bc26c4d42af86ece68a2a1f8a34",
+    "README.md": "4026480712a3cfe85295fe97652ad1c40fcbf36a7277f623f652aaecf60124ba",
+    "accepted-final-composed.json": "77daf7d818b0f93aa6d1a09ed64431ddca22830beccd433ec80017be00030b95",
+    "root-extra-spans-overlay.json": "23f9c07a71530d20b115c26ea0958e6c5e2c419b09f71b8eea5c6493860aa51d",
+    "broader-independent-check.json": "36edf19dc30d1775b16bffb8757206b0c8bfaf78975c92ae5576d22eb36a3db4",
+    "seven-applied-proof.json": "962881a1f591fd63763744824da90128e56198fcd296461f349d841b8dfaf2f2",
+    "broader-refinement-overlay.json": "cd6921e44eb4a26523cb98e0e6bf5ccaed77ef4882a82101dd773ca6ab1f75e3"
+  },
+  "sourceStatusOrderCorrectIndicesPreserved": true,
+  "fullNativeSelectiveRewindEqualsBefore": true,
+  "fullDeckSelectiveRewindEqualsBefore": true,
+  "beforeAssets": [
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/st/slide-12.webp",
+      "beforeBytes": 371294,
+      "beforeSHA256": "11c16a76c9ef20930248c68374bbcdc1bd2b73044a330ba75733d476ee76fe85"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/st/slide-13.webp",
+      "beforeBytes": 363884,
+      "beforeSHA256": "f54f3b1302b8e8be08fd7ab1f231f6c1f997c8682e7058603aa2883e091cb6cf"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-14.webp",
+      "assetPath": "public/course-decks/vegetables-staples/st/slide-14.webp",
+      "beforeBytes": 215692,
+      "beforeSHA256": "fbd59b56e33135f7b2fb22048cb1fd8b3323698d7f83aefb10812c451c8cd7f8"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ts/slide-12.webp",
+      "beforeBytes": 375858,
+      "beforeSHA256": "838b9bac8a74dc8a8b8b98617ea67efa49b1ed749b4a30cddd88caa90b17730b"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ts/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ts/slide-13.webp",
+      "beforeBytes": 370390,
+      "beforeSHA256": "7d3295a7d5eda74cec5e53b11599fcac0f7567b2a937bb140db45765492ab572"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ts/slide-14.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ts/slide-14.webp",
+      "beforeBytes": 230166,
+      "beforeSHA256": "5e0a78fdf57a1852f19483dadb07ecc9e27d42e6d67d872e2fe9b72e4237bca3"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ve/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ve/slide-12.webp",
+      "beforeBytes": 401156,
+      "beforeSHA256": "0bdad7fa2f6c067ba146d02d6790eb786baad18af96eaf9ff001b51bc064b906"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ve/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ve/slide-13.webp",
+      "beforeBytes": 388806,
+      "beforeSHA256": "35357117e59663742a195d7345584ece009c84129297f02c685dc915a34821aa"
+    }
+  ],
+  "rendered": true,
+  "cacheChanged": true,
+  "fluentApproved": false,
+  "repositoryScope": [
+    "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "docs/narration/vegetables-staples.st.paired-draft.json",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts",
+    "docs/narration/vegetables-staples.ve.paired-draft.json",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts",
+    "docs/narration/vegetables-staples.ts.paired-draft.json"
+  ],
+  "actualAfterFiles": [
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sha256": "173b4a4cf2c435cb4fb7cac8673844846fb425c5fa5ece6bdf6e152ab6e72a4f"
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "sha256": "d9384b30cc00c16a54c62336fae1fe00afc2b1549bb8edf98f9e55ce3b215ed5"
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sha256": "e7e4aa9084f1bf42705471185e994d00ca8e1af5cd8eeefbed551aae43668ad9"
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sha256": "7a48dae1f0e0040bf6aba97ec2a5dd3f95f6180f104517e70b00f7ffe82fb375"
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sha256": "41eba3fa7ab8eff153ec591950ee0ddb5a64995deb456c91e5d330db76ec0f95"
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sha256": "500238291cc2ec08bab704a998ec425cbb5b68f97dd537065be57c1772874439"
+    }
+  ],
+  "canonicalPairedHeadingAndBodySourceFieldsExact": 351,
+  "actualNativeSnapshotsMatchAcceptedAfter": true,
+  "actualDeckSnapshotsMatchAcceptedAfter": true,
+  "verification": {
+    "typecheck": "Final original npx tsc --noEmit exit0 before full npm test",
+    "focusedNativeAndHistory": "36 passed/0 failed",
+    "focusedPaired": "6 passed/0 failed",
+    "diffCheck": "git diff --check exit0",
+    "originalFullSuite": "4747 total/4746 pass/0 fail/1 existing TODO; original npm test exit0;377.274s",
+    "newTestRegistration": "Residual learner and cache/media tests each registered once.",
+    "visual": "Eight actual compressed cards viewed by Codex and root in four contacts; phone/publication pending",
+    "firstFullSuite": "4747 total/4745 pass/1 superseded VE historical hold fail/1 existing TODO;377.911s; dated guard rewind then final ordered rerun",
+    "mediaCacheFocused": "6 passed/0 failed before final full-suite completion"
+  },
+  "currentStage": "Final11paragraphs/12spans",
+  "acceptedSpans": 12,
+  "noQuizChanges": true,
+  "wholeActualNativeEqualsFinalFrozenSnapshot": true,
+  "moduleCardPairsAndSourceStatusUnchanged": true,
+  "quizCurrentSourceCorrectIndices": {
+    "st": [
+      1,
+      1
+    ],
+    "ve": [
+      1,
+      1
+    ],
+    "ts": [
+      1,
+      1
+    ]
+  },
+  "textCheckpointProtectedFiles": [
+    {
+      "path": "lib/course-modules.ts",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "byteExactToBase": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "byteExactToBase": true
+    },
+    {
+      "path": "lib/course-audio.ts",
+      "sha256": "dd6f9cd571c5d3041daa9c3289a881fe1c2731f01e0d8f57744e36baa622c784",
+      "byteExactToBase": true
+    },
+    {
+      "path": "lib/course-asset-sizes.ts",
+      "sha256": "b7718264a6d182d95ffb14ce09b20d4e4739c1a3cc1623521a53bae02dde1815",
+      "byteExactToBase": true
+    },
+    {
+      "path": "app/sw.js/route.ts",
+      "sha256": "39006163d92e23fbbf66fd342dd2fd523aa3165bb34ef7b57c2bcedc97ab6259",
+      "byteExactToBase": true
+    }
+  ],
+  "mediaLayer": {
+    "proof": "docs/media/vegetables-l3-ordinary-2026-10-06/frames.json",
+    "sha256": "e7557fce28b7efa4520ce9ebf55c4aa2384ffd58f8d138270c338dc0edcc269d",
+    "changedFrames": 8,
+    "unlistedVegetablesFiles": 84,
+    "unlistedRegionalFrames": 46,
+    "protectedAudioFilms": 604,
+    "protectedSTIntroStills": 22,
+    "rootStaticContactReview": "Accepted all8; no observed clipping; not phone evidence",
+    "phonePublication": "pending"
+  },
+  "phonePublication": "pending"
+}

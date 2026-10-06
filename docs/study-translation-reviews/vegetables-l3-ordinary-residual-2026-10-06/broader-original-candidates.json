@@ -1,0 +1,340 @@
+{
+  "date": "2026-10-06",
+  "scope": "Read-only broader Vegetables L3 remaining ordinary-English span candidates, excluding the exact seven previous candidate rows. Source-bound to actual canonical content and st/ve/ts resolved native presentations at fresh branch HEAD. Draft for semantic/root review only; no fluency approval.",
+  "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+  "head": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+  "moduleId": "vegetables-staples",
+  "lessonId": "vegetables-staples-l3",
+  "authorities": {
+    "currentCanonicalAndResolverSnapshot": {
+      "path": "/tmp/vegetables-l3-current-68f955a1.json",
+      "sha256": "26aaaa92362985ec97358a2a48ee0c77b1b737fdcef746066365efa770ab86cd",
+      "method": "Node 26.5 imported COURSE_MODULES plus resolveLearnerLessonPresentation for st, ve and ts."
+    },
+    "priorSevenSpanPacket": {
+      "path": "/tmp/imbewu-vegetables-l3-ordinary-final-spans-actual-drafts-20261006.json",
+      "sha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+      "excludedIds": [
+        "st:vegetables-staples-l3:body[4]:companion_failure",
+        "ve:vegetables-staples-l3:body[4]:companion_failure",
+        "ts:vegetables-staples-l3:body[4]:companion_failure",
+        "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+        "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+        "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+        "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground"
+      ]
+    }
+  },
+  "counts": {
+    "additionalSourceBoundTargetSpanCandidates": 10,
+    "candidateLanguages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "fullBodyCompositions": 3,
+    "excludedPriorRows": 7,
+    "repoWrites": false,
+    "fluentApproval": false
+  },
+  "proposals": [
+    {
+      "id": "st:body[2]",
+      "language": "st",
+      "field": "body",
+      "fieldIndex": 2,
+      "exactCanonicalSourceField": "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+      "sourceClause": "when weather or pests hit.",
+      "exactCurrentResolvedTargetField": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.",
+      "exactCurrentSpan": "ha weather kapa pests di otla",
+      "proposedReplacementSpan": "ha maemo a leholimo kapa disenyi di otla",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa disenyi di otla.",
+      "prefixPreservedByteExact": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ",
+      "suffixPreservedByteExact": ".",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate ordinary weather and pest nouns; preserve the existing conditional and hit predicate, quantity, and choice framing.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "st:body[15]",
+      "language": "st",
+      "field": "body",
+      "fieldIndex": 15,
+      "exactCanonicalSourceField": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "sourceClause": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "exactCurrentResolvedTargetField": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "exactCurrentSpan": "water, soil le seasons",
+      "proposedReplacementSpan": "metsi, mobu le dinako tsa selemo",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Dijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "prefixPreservedByteExact": "Dijalo tse fapaneng di sebedisa ",
+      "suffixPreservedByteExact": " ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate ordinary resource and time nouns, preserving the different-use relation.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "st:body[15]",
+      "language": "st",
+      "field": "body",
+      "fieldIndex": 15,
+      "exactCanonicalSourceField": "Different crops use water, soil and seasons differently. That difference is the protection.",
+      "sourceClause": "That difference is the protection.",
+      "exactCurrentResolvedTargetField": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "exactCurrentSpan": "protection.",
+      "proposedReplacementSpan": "tshireletso.",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "prefixPreservedByteExact": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona ",
+      "suffixPreservedByteExact": "",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate the ordinary concluding noun; do not strengthen protection into a guarantee.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ts:body[0]",
+      "language": "ts",
+      "field": "body",
+      "fieldIndex": 0,
+      "exactCanonicalSourceField": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "sourceClause": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "exactCurrentResolvedTargetField": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "exactCurrentSpan": "A staple earns its place",
+      "proposedReplacementSpan": "Xakudya xa nkoka xi fanele ku va kona",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Xakudya xa nkoka xi fanele ku va kona hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": " hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate the ordinary introductory predicate while preserving the localized because-clause and beyond-harvest condition. Keep the staple-food class in the next native clause; needs fluent backcheck.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ts:body[9]",
+      "language": "ts",
+      "field": "body",
+      "fieldIndex": 9,
+      "exactCanonicalSourceField": "Amadumbe handles wetter ground, where other staples struggle.",
+      "sourceClause": "Amadumbe handles wetter ground, where other staples struggle.",
+      "exactCurrentResolvedTargetField": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.",
+      "exactCurrentSpan": "where other staples struggle.",
+      "proposedReplacementSpan": "laha swibyariwa swin’wana swa swakudya swa nkoka swi tikeriwaka.",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Amadumbe yi kota ku tiyisela eka wetter ground, laha swibyariwa swin’wana swa swakudya swa nkoka swi tikeriwaka.",
+      "prefixPreservedByteExact": "Amadumbe yi kota ku tiyisela eka wetter ground, ",
+      "suffixPreservedByteExact": "",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate only the ordinary comparative relation; retain existing species and wetter-ground clause.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ts:body[14]",
+      "language": "ts",
+      "field": "body",
+      "fieldIndex": 14,
+      "exactCanonicalSourceField": "Two or more staples give you more ways to keep eating.",
+      "sourceClause": "Two or more staples give you more ways to keep eating.",
+      "exactCurrentResolvedTargetField": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "exactCurrentSpan": "Two or more staples",
+      "proposedReplacementSpan": "Swibyariwa swa swakudya swa nkoka swimbirhi kumbe ku engetela",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Swibyariwa swa swakudya swa nkoka swimbirhi kumbe ku engetela swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": " swi ku nyika tindlela to tala ta ku ya mahlweni u dya.",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate quantity and crop-class framing; preserve the current clause about ways to keep eating.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ve:quiz[0].options[0]",
+      "language": "ve",
+      "field": "quiz",
+      "fieldIndex": [
+        0,
+        "options",
+        0
+      ],
+      "exactCanonicalSourceField": "Open-pollinated varieties yield more",
+      "sourceClause": "Open-pollinated varieties yield more",
+      "exactCurrentResolvedTargetField": "Varieties dza open-pollinated yield more.",
+      "exactCurrentSpan": "Varieties dza open-pollinated yield more.",
+      "proposedReplacementSpan": "Mixaka ya open-pollinated i bveledza zwinzhi.",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Mixaka ya open-pollinated i bveledza zwinzhi.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": "",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate the ordinary false-distractor wording around the retained crop term; preserve “yield more” and option index 0.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ts:quiz[0].options[0]",
+      "language": "ts",
+      "field": "quiz",
+      "fieldIndex": [
+        0,
+        "options",
+        0
+      ],
+      "exactCanonicalSourceField": "Open-pollinated varieties yield more",
+      "sourceClause": "Open-pollinated varieties yield more",
+      "exactCurrentResolvedTargetField": "Mixaka ya open-pollinated yield more.",
+      "exactCurrentSpan": "Mixaka ya open-pollinated yield more.",
+      "proposedReplacementSpan": "Mixaka ya open-pollinated yi humesa swo tala.",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Mixaka ya open-pollinated yi humesa swo tala.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": "",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate the ordinary false-distractor wording around the retained crop term; preserve “yield more” and option index 0.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ve:quiz[1].rationale[None]",
+      "language": "ve",
+      "field": "quiz",
+      "fieldIndex": [
+        1,
+        "rationale",
+        null
+      ],
+      "exactCanonicalSourceField": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "sourceClause": "Amadumbe actually prefers damper ground where maize would struggle",
+      "exactCurrentResolvedTargetField": "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "exactCurrentSpan": "Amadumbe actually prefers",
+      "proposedReplacementSpan": "Amadumbe i funa vhukuma",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Amadumbe i funa vhukuma damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": " damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate only the simple lead. Keep the tail byte-exact: its damper-ground, “would struggle” and niche/capability scope need independent Tshivenda review.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    },
+    {
+      "id": "ts:quiz[1].rationale[None]",
+      "language": "ts",
+      "field": "quiz",
+      "fieldIndex": [
+        1,
+        "rationale",
+        null
+      ],
+      "exactCanonicalSourceField": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "sourceClause": "Amadumbe actually prefers damper ground where maize would struggle",
+      "exactCurrentResolvedTargetField": "Amadumbe actually prefers damper ground where maize would struggle — yi tata niche leyi other staples can't handle well.",
+      "exactCurrentSpan": "Amadumbe actually prefers",
+      "proposedReplacementSpan": "Amadumbe yi tsakela swinene",
+      "proposedFullFieldWithOnlyThisSpanChanged": "Amadumbe yi tsakela swinene damper ground where maize would struggle — yi tata niche leyi other staples can't handle well.",
+      "prefixPreservedByteExact": "",
+      "suffixPreservedByteExact": " damper ground where maize would struggle — yi tata niche leyi other staples can't handle well.",
+      "statusBefore": "draft",
+      "statusChangeProposed": false,
+      "reason": "Translate only the simple lead. Keep the tail byte-exact: its damper-ground, “would struggle” and niche/capability scope need independent Xitsonga review.",
+      "confidenceAndLimit": "Machine-draft wording; independent fluent review still required."
+    }
+  ],
+  "fullBodyCompositions": {
+    "st": {
+      "fullCurrentBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "fullProposedBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha maemo a leholimo kapa disenyi di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa metsi, mobu le dinako tsa selemo ka ditsela tse fapaneng. Phapang eo ke yona tshireletso.",
+      "paragraphCountBefore": 16,
+      "paragraphCountAfter": 16,
+      "changedParagraphIndices": [
+        2,
+        15
+      ]
+    },
+    "ve": {
+      "fullCurrentBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "fullProposedBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "paragraphCountBefore": 16,
+      "paragraphCountAfter": 16,
+      "changedParagraphIndices": []
+    },
+    "ts": {
+      "fullCurrentBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "fullProposedBody": "Xakudya xa nkoka xi fanele ku va kona hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, laha swibyariwa swin’wana swa swakudya swa nkoka swi tikeriwaka.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nSwibyariwa swa swakudya swa nkoka swimbirhi kumbe ku engetela swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "paragraphCountBefore": 16,
+      "paragraphCountAfter": 16,
+      "changedParagraphIndices": [
+        0,
+        9,
+        14
+      ]
+    }
+  },
+  "remainingScopeReview": [
+    {
+      "field": "title",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "ST title is localized. VE title remains English; TS title translates only the conjunction. Held because the title is a crop-class label (staple crops/root vegetables) plus named crops; no terminology-backed title proposed."
+    },
+    {
+      "field": "body paragraphs 0–18",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "Paragraphs reviewed against canonical source and current resolver. Six additional body spans are proposed above. Prior seven rows remain excluded. Difficult crop, seed, drought, storage-root, resilience and failure-point terminology stays as currently written. Any other mixed-English fragments are retained where the technical scope or a candidate equivalent was not sufficiently secure."
+    },
+    {
+      "field": "keyPoints 0–3",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "No additional ordinary-clause proposal. Remaining English is embedded in compact crop-specific claims: open-pollinated/hybrid seed behavior, nitrogen-fixing, drought tolerance after storage roots, early water requirement, and taro/KZN wet-ground fit. Preserve these claims and existing localized surrounding text."
+    },
+    {
+      "field": "quiz questions and options",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "Questions are localized. Two Q1 option-0 proposals translate the ordinary wording of the false “open-pollinated varieties yield more” distractor while preserving its claim and index. Other mixed wording belongs to seed-genetics/drought assertions or already localized options and is held pending terminology confidence."
+    },
+    {
+      "field": "quiz rationales",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "ST rationale text is localized. Two Q2 rationale proposals translate only “Amadumbe actually prefers”; keep the comparative English tail exact because “would struggle” and “cannot handle well” encode capability/modality. Q1 seed-stability wording remains unchanged."
+    },
+    {
+      "field": "infographicAlt",
+      "languages": [
+        "st",
+        "ve",
+        "ts"
+      ],
+      "finding": "Alt text is substantially localized. English nouns identify pictured objects/categories (grain stalk, vine, root crop and staple); held because replacing them without checked equivalents may alter the crop class or pictured object."
+    }
+  ],
+  "preservationProof": {
+    "everyProposalMatchesCanonicalSource": true,
+    "everyProposalMatchesUniqueCurrentResolvedSpan": true,
+    "proposalCompositionsPreserveAllOtherTargetBytes": true,
+    "allBodyParagraphCountsMatchCanonical": true,
+    "speciesNumbersConditionsModalsNegationsQuizIndicesAndCorrectAnswersChanged": false,
+    "reviewStatusesChanged": false,
+    "repoWrites": false,
+    "rendered": false,
+    "commitOrPush": false
+  },
+  "limits": [
+    "All wording is machine-draft and requires independent fluent review.",
+    "The rationale comparison tails remain exact English for modality and scope.",
+    "No current source, canonical content, status, species, numeric value, quiz order, correct answer, or unlisted field is proposed to change."
+  ]
+}

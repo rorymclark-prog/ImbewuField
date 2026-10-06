@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1905 files, 744.4 MB total.
+// 1905 files, 743.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1672,9 +1672,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/st/slide-09.webp': 294378,
   '/course-decks/vegetables-staples/st/slide-10.webp': 785054,
   '/course-decks/vegetables-staples/st/slide-11.webp': 322910,
-  '/course-decks/vegetables-staples/st/slide-12.webp': 453456,
-  '/course-decks/vegetables-staples/st/slide-13.webp': 431282,
-  '/course-decks/vegetables-staples/st/slide-14.webp': 257240,
+  '/course-decks/vegetables-staples/st/slide-12.webp': 371294,
+  '/course-decks/vegetables-staples/st/slide-13.webp': 363884,
+  '/course-decks/vegetables-staples/st/slide-14.webp': 215692,
   '/course-decks/vegetables-staples/st/slide-15.webp': 573684,
   '/course-decks/vegetables-staples/st/slide-16.webp': 571682,
   '/course-decks/vegetables-staples/st/slide-17.webp': 366550,
@@ -1690,9 +1690,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/ts/slide-09.webp': 357254,
   '/course-decks/vegetables-staples/ts/slide-10.webp': 804770,
   '/course-decks/vegetables-staples/ts/slide-11.webp': 391148,
-  '/course-decks/vegetables-staples/ts/slide-12.webp': 459056,
-  '/course-decks/vegetables-staples/ts/slide-13.webp': 439406,
-  '/course-decks/vegetables-staples/ts/slide-14.webp': 272646,
+  '/course-decks/vegetables-staples/ts/slide-12.webp': 375858,
+  '/course-decks/vegetables-staples/ts/slide-13.webp': 370390,
+  '/course-decks/vegetables-staples/ts/slide-14.webp': 230166,
   '/course-decks/vegetables-staples/ts/slide-15.webp': 577910,
   '/course-decks/vegetables-staples/ts/slide-16.webp': 564290,
   '/course-decks/vegetables-staples/ts/slide-17.webp': 370800,
@@ -1708,8 +1708,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/ve/slide-09.webp': 347296,
   '/course-decks/vegetables-staples/ve/slide-10.webp': 780116,
   '/course-decks/vegetables-staples/ve/slide-11.webp': 400706,
-  '/course-decks/vegetables-staples/ve/slide-12.webp': 491110,
-  '/course-decks/vegetables-staples/ve/slide-13.webp': 458762,
+  '/course-decks/vegetables-staples/ve/slide-12.webp': 401156,
+  '/course-decks/vegetables-staples/ve/slide-13.webp': 388806,
   '/course-decks/vegetables-staples/ve/slide-14.webp': 231284,
   '/course-decks/vegetables-staples/ve/slide-15.webp': 575078,
   '/course-decks/vegetables-staples/ve/slide-16.webp': 568224,

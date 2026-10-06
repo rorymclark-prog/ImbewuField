@@ -1,3 +1,4 @@
+import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
 import { marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
 import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
@@ -1166,16 +1167,17 @@ test('Tshivenda Food Forest slides draft habitat, field-care and grassland guida
 
 test('Vegetables paired drafts keep the one-crop limit and source-bound seasonal framing', () => {
   const source = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
-  const sesothoPacket = JSON.parse(readFileSync('docs/narration/vegetables-staples.st.paired-draft.json', 'utf8'));
+  // 6 October: the complete accepted residual layer is checked before the older English seasonal/quantity anchors.
+  const sesothoPacket = vegetablesDeckBeforeL3Ordinary('st', JSON.parse(readFileSync('docs/narration/vegetables-staples.st.paired-draft.json', 'utf8')));
   const sesothoSlides = validatePairedDraft(sesothoPacket, source, 'st');
-  const sesothoLesson = SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons[2].body;
+  const sesothoLesson = vegetablesBeforeL3Ordinary('st', SESOTHO_VEGETABLES_STAPLES_DRAFT).lessons[2].body;
   const sesothoEnglish = sesothoLesson.sourceEnglish.split('\n\n');
   const sesothoDraft = sesothoLesson.sesothoDraft.split('\n\n');
   assert.equal(sesothoSlides[13].target.body[0].status, 'draft');
   assert.equal(sesothoSlides[13].english.body[0], sesothoEnglish[11]);
   assert.equal(sesothoSlides[13].target.body[0].text, sesothoDraft[11]);
 
-  const packet = JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8'));
+  const packet = vegetablesDeckBeforeL3Ordinary('ts', JSON.parse(readFileSync('docs/narration/vegetables-staples.ts.paired-draft.json', 'utf8')));
   const slides = validatePairedDraft(packet, source, 'ts');
   assert.equal(slides[0].target.body[2].status, 'mixed');
   assert.equal(slides[0].target.body[2].segments.at(-1).status, 'english-hold',
@@ -1186,7 +1188,7 @@ test('Vegetables paired drafts keep the one-crop limit and source-bound seasonal
   assert.equal(slides[1].english.body[3], source[1].body[3]);
   assert.equal(slides[1].target.body[3].status, 'draft',
     'the sowing, tending and harvesting overlap remains a draft tied to the correct seasonal sentence');
-  const lesson = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body;
+  const lesson = vegetablesBeforeL3Ordinary('ts', XITSONGA_VEGETABLES_STAPLES_DRAFT).lessons[0].body;
   const english = lesson.sourceEnglish.split('\n\n');
   const translated = lesson.xitsongaDraft.split('\n\n');
   for (const [slideIndex, slideParagraph, lessonParagraph] of [[12, 5, 10], [13, 0, 11], [13, 1, 12], [13, 2, 13], [13, 3, 14], [13, 4, 15]]) {

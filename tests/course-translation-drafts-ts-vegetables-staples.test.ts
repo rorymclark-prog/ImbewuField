@@ -1,3 +1,4 @@
+import { vegetablesBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesL3BeforeCompletion, vegetablesL3PresentationBeforeCompletion } from './vegetables-l3-completion-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import assert from 'node:assert/strict';
@@ -137,7 +138,9 @@ test('Vegetables & Staple Crops L3 source drift and undrafted lesson sources fal
 });
 
 test('Vegetables & Staple Crops L3 preserves the one-failure scope and the minimum two-crop safeguard', () => {
-  const paragraphs = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons[0].body.xitsongaDraft.split('\n\n');
+  // 6 October: validate all twelve current spans and unlisted fields before
+  // preserving this older English quantity anchor; the new rule checks the native quantity too.
+  const paragraphs = vegetablesBeforeL3Ordinary('ts', XITSONGA_VEGETABLES_STAPLES_DRAFT).lessons[0].body.xitsongaDraft.split('\n\n');
   assert.match(paragraphs[11], /Resilience a swi vuli leswaku a ku na lexi tsandzekaka/);
   assert.match(paragraphs[12], /ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena/);
   assert.match(paragraphs[13], /point of failure/);

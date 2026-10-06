@@ -1,3 +1,4 @@
+import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
 import { marketAssetSizesBeforeOrdinary, validateCurrentMarketOrdinaryMedia } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -128,7 +129,8 @@ test('eleven Market WebPs and download promises match accepted paired sources wh
   const total = entries.reduce((sum, entry) => sum + Number(entry[1]), 0);
   expectedManifest = expectedManifest.replace(/\/\/ \d+ files, [\d.]+ MB total\./,
     `// ${entries.length} files, ${(total / 1e6).toFixed(1)} MB total.`);
-  const actualManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  // Dated L3 supersession is fully guarded before the original Market manifest rule.
+  const actualManifest = vegetablesL3AssetSizesBeforeOrdinary();
   assert.equal(actualManifest, expectedManifest, 'only eleven sizes and the actual aggregate comment change');
   assert.equal(sha(actualManifest), proof.manifestAfterSHA256);
   const changed = new Set(expectedPaths);
@@ -159,13 +161,13 @@ test('Market historical media reconstruction rejects arbitrary headers and unlis
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const prior = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(marketAssetSizesBeforeOrdinary(actual), prior, 'exact full accepted layer restores the frozen historical text');
-  assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace('743.8 MB total.', '743.9 MB total.')),
-    /only eleven sizes and the actual aggregate comment change/);
+  assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(/MB total\./, 'MB total. corrupted')),
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline/);
   assert.throws(() => marketAssetSizesBeforeOrdinary(prior.replace('709.4 MB total.', '709.5 MB total.')),
     /exact guarded Market baseline/);
   const unlisted = '/course-decks/market-community/st/slide-01.webp';
   const slot = `  '${unlisted}': ${COURSE_ASSET_SIZES[unlisted]},`;
   assert.ok(actual.includes(slot));
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(slot, `  '${unlisted}': 1,`)),
-    /only eleven sizes and the actual aggregate comment change/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline/);
 });
