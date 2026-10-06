@@ -1,0 +1,19 @@
+{
+  "reviewStatus": "Root and independent semantic check accepted English commercial noun anchors; unreviewed draft, not fluent approval",
+  "reason": "Ditaelo can evoke instructions. The quiz has less customer context than the lesson body, which already retains Regular orders English. Only the commercial noun anchors change; original canonical strings and index remain unchanged. This records ambiguity, not a proven Sesotho error.",
+  "rows": [
+    {
+      "id": "st:market-community-l2:quiz.1.q",
+      "sourceEnglish": "How can agreed regular orders help a grower plan?",
+      "before": "Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?",
+      "target": "Regular orders tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?"
+    },
+    {
+      "id": "st:market-community-l2:quiz.1.rationale",
+      "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+      "before": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, tefo le ditjeo tsa ho di phethahatsa.",
+      "target": "Confirmed orders di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, tefo le ditjeo tsa ho di phethahatsa."
+    }
+  ],
+  "correctIndex": 2
+}

@@ -165,7 +165,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
           rationale: machineDraft("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.", "Ena ke yona feela tsela ya thekiso e sa mo hlokeng ho tshepisa fixed amount beke le beke — o rekisa seo a nang le sona ka nnete."),
         },
         {
-          question: machineDraft('How can agreed regular orders help a grower plan?', 'Ditaelo tsa kamehla tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?'),
+          question: machineDraft('How can agreed regular orders help a grower plan?', 'Regular orders tseo ho dumellanweng ka tsona di ka thusa molemi jwang ho rera?'),
           options: [
             machineDraft('Box customers always pay more per kilogram', 'Bareki ba box ba dula ba lefa tjhelete e ngata ka kilogram.'),
             machineDraft('Box schemes let you charge extra for packaging', 'Box schemes di dumella hore o lefise tjhelete e eketsehileng bakeng sa ho paka.'),
@@ -173,7 +173,7 @@ export const SESOTHO_MARKET_COMMUNITY_DRAFT: SesothoCourseModuleDraft = {
             machineDraft('Box schemes avoid tax obligations', 'Box schemes di qoba tax obligations'),
           ],
           sourceCorrectIndex: 2,
-          rationale: machineDraft('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, tefo le ditjeo tsa ho di phethahatsa."),
+          rationale: machineDraft('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', "Confirmed orders di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, tefo le ditjeo tsa ho di phethahatsa."),
         },
       ],
     },

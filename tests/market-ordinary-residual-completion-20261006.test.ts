@@ -6,7 +6,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { SESOTHO_MARKET_COMMUNITY_DRAFT as st } from '../lib/course-translation-drafts-st-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as ve } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as ts } from '../lib/course-translation-drafts-ts-market-community.ts';
-import { validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
+import { marketOrdinaryAppliedTarget, validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
 
 const packet = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/final-root-reviewed-candidates.json', import.meta.url), 'utf8'));
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/applied-proof.json', import.meta.url), 'utf8'));
@@ -71,10 +71,10 @@ test('Market resolver exposes all approved pairs and withdraws them when their E
     const identity = row.id;
     assert.equal(seen.has(identity), false, `${identity}: unique row`);
     seen.add(identity);
-    assert.equal(draftTarget(row.language, row.lessonId, row.fieldPath), row.proposedTarget, `${identity}: native target`);
+    assert.equal(draftTarget(row.language, row.lessonId, row.fieldPath), marketOrdinaryAppliedTarget(row), `${identity}: native target including documented phone-review noun repair`);
     const result = resolveLearnerLessonPresentation(sourceLesson(row.lessonId), row.language);
     assert.equal(result.status, 'draft', `${identity}: draft remains visibly unreviewed`);
-    assert.equal(resolvedField(result.content, row), row.proposedTarget, `${identity}: resolver shows approved target`);
+    assert.equal(resolvedField(result.content, row), marketOrdinaryAppliedTarget(row), `${identity}: resolver shows approved target`);
   }
   assert.equal(seen.size, 79);
   for (const language of ['st', 've', 'ts'] as const) {
@@ -87,6 +87,11 @@ test('Market resolver exposes all approved pairs and withdraws them when their E
 });
 
 test('Market order terms, cost comparisons, labour and seed-sharing conditions keep their source limits', () => {
+  const stOrders = resolveLearnerLessonPresentation(sourceLesson('market-community-l2'), 'st').content.quiz[1];
+  assert.match(stOrders.q, /^Regular orders tseo ho dumellanweng ka tsona/,
+    'the less contextual quiz keeps the commercial order noun distinct from instructions');
+  assert.match(stOrders.rationale, /^Confirmed orders di fana/);
+  assert.equal(stOrders.correct, 2);
   for (const language of ['st', 've', 'ts'] as const) {
     const l2 = drafts[language].lessons.find(item => item.id === 'market-community-l2')!;
     const l2Source = sourceLesson('market-community-l2');

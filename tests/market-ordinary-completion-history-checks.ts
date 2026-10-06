@@ -3,6 +3,18 @@ import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
 const packet = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/final-root-reviewed-candidates.json', import.meta.url), 'utf8'));
+const orderPrecision = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/sesotho-order-noun-precision.json', import.meta.url), 'utf8'));
+// Phone review exposed an inherited commercial-order ambiguity. The frozen
+// original packet stays intact; this exact two-field layer is checked first.
+export function marketOrdinaryAppliedTarget(row: any): string {
+  const repair = orderPrecision.rows.find((item: any) => item.id === row.id);
+  if (repair) {
+    assert.equal(repair.sourceEnglish, row.sourceEnglish);
+    assert.equal(repair.before, row.changed ? row.proposedTarget : row.currentTarget);
+    return repair.target;
+  }
+  return row.changed ? row.proposedTarget : row.currentTarget;
+}
 const languageKeys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 type MarketLanguage = keyof typeof languageKeys;
 const sourceModule = COURSE_MODULES.find(module => module.id === packet.moduleId)!;
@@ -51,6 +63,15 @@ function sourceFor(row: any) {
 }
 function expectedApplied(language: MarketLanguage) {
   const expected = structuredClone(packet.proposedOnlyNativeSnapshots[language]);
+  if (language === 'st') {
+    for (const repair of orderPrecision.rows) {
+      const row = packet.rows.find((item: any) => item.id === repair.id);
+      const pair = pairFor(expected, row);
+      assert.equal(pair.sourceEnglish, repair.sourceEnglish);
+      assert.equal(pair.sesothoDraft, repair.before);
+      pair.sesothoDraft = marketOrdinaryAppliedTarget(row);
+    }
+  }
   if (language === 'ts') {
     const option = expected.lessons.find((item: any) => item.id === 'market-community-l3')!.quiz[0].options[2];
     assert.equal(option.sourceEnglish, appliedStatusOverride.sourceEnglish);
@@ -82,7 +103,7 @@ export function validateAndRewindMarketOrdinary<T extends { lessons: readonly an
     }
     const pair = pairFor(native, row);
     assert.equal(pair.sourceEnglish, row.sourceEnglish, `${row.id}: native source pair`);
-    assert.equal(pair[languageKeys[language]], row.changed ? row.proposedTarget : row.currentTarget, `${row.id}: native target`);
+    assert.equal(pair[languageKeys[language]], marketOrdinaryAppliedTarget(row), `${row.id}: native target with exact documented order-noun layer`);
     const expectedStatus = row.id === appliedStatusOverride.id ? appliedStatusOverride.to
       : row.changed ? row.proposedReviewStatus : row.currentReviewStatus;
     assert.equal(pair.reviewStatus, expectedStatus, `${row.id}: visible review status`);
@@ -101,6 +122,14 @@ export function validateAndRewindMarketOrdinary<T extends { lessons: readonly an
 /** Validate live resolver output and reconstruct the visible state before this batch for historical tests. */
 export function rewindMarketOrdinaryPresentation<T extends { content: any; status: string }>(original: T, lessonId: string, language: MarketLanguage): T {
   const result = structuredClone(original);
+  if (language === 'st' && lessonId === 'market-community-l2') {
+    assert.equal(result.content.quiz[1].correct, orderPrecision.correctIndex);
+    for (const repair of orderPrecision.rows) {
+      const field = repair.id.endsWith('.q') ? 'q' : 'rationale';
+      assert.equal(result.content.quiz[1][field], repair.target, `${repair.id}: exact live order-noun repair before historical reconstruction`);
+      result.content.quiz[1][field] = repair.before;
+    }
+  }
   const rows = packet.rows.filter((item: any) => item.language === language && item.lessonId === lessonId && item.changed);
   for (const row of rows) {
     let target: any;

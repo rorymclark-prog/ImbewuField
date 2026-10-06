@@ -35,3 +35,13 @@ This changes learner prose and selected silent slide pictures. It does not chang
 ## Next continuation
 
 Finish historical preservation checks, rerun the original verification commands, publish once finished, inspect the exact preview at 390px and one offline pack, then verify both main jobs and production build-info. Full Studies and selected app translation goal remains incomplete.
+
+## Later exact-preview review and order-noun precision
+
+The first exact preview `e546b369` passed both PR/push test and rules jobs and native deployment. Root inspected all eleven normal and expanded regional cards at 390×844, plus a saved 6.4MB Tshivenda slides-only pack. Cached frames7/15 match committed bytes/hashes and existing-route offline navigation15→7→15 worked with exact English panels. This does not prove cold-start or whole-course offline support.
+
+Root rejected Xitsonga-labelled learner captures that actually showed Tshivenda. Fresh Xitsonga body, false-option and rationale images were subsequently inspected; one L1 source image still showed Tshivenda and remains excluded pending replacement. Remaining ST/VE rationale image checks and final updated-head checks are pending. No release claim follows from these partial phone checks.
+
+`STUDY-MARKET-006`: the inherited Sesotho quiz noun `Ditaelo` may evoke instructions rather than commercial orders. An independent source-specific check accepted retaining only `Regular orders` and `Confirmed orders` in English in L2 quiz1 question/rationale, matching the body noun policy. Ordinary surroundings, canonical strings, answer index2 and all other fields remain unchanged. The frozen original79-field packet is preserved; `sesotho-order-noun-precision.json` is an explicit two-field overlay (one previously unchanged field, one already changed rationale), with full native and resolver reconstruction checks. This records ambiguity rather than proven lexical error or fluency approval.
+
+The later Agy Food Forest files now exist and all148 source/target bindings were independently checked. Their blanket PASS verdict does not establish fluent approval: three predicate/scope changes were flagged for separate future review. No Food Forest repair is included in this Market batch.
