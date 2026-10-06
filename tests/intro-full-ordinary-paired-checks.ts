@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
-import { introFullFixture, introFullDigest, validateAndRewindIntroFullNative } from './intro-full-ordinary-native-checks.ts';
+import { introFullFixture, introFullDigest } from './intro-full-ordinary-native-checks.ts';
+import { validateAndRewindIntroNativeHistory, validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
 
 export const introFullPairedPacket = introFullFixture('accepted-paired-objects.json');
 export const readCurrentIntroFullDecks = (): Record<string, any> => Object.fromEntries(['ve', 'ts', 'st'].map(language => [language,
@@ -13,7 +14,11 @@ const resolve = (pair: any, source: string): string => pair.status === 'english-
 // the entire current native/deck layer first, then expose only its exact prior
 // view; an old source/target claim must never hide a newer unlisted mutation.
 export function validateAndRewindIntroFullPaired(decks = readCurrentIntroFullDecks()) {
-  for (const language of ['ve', 'ts'] as const) validateAndRewindIntroFullNative(language);
+  // The accepted 6 October silent release sits above this older paired fixture.
+  // Validate all 60 latest source/target changes and unlisted cells first, then
+  // rewind only the three VE/TS legacy-deck targets before applying this guard.
+  decks = validateAndRewindIntroSilentTextLayer({ paired: decks }).pairedBeforeSilent;
+  for (const language of ['ve', 'ts'] as const) validateAndRewindIntroNativeHistory(language);
   const hashes = introFullFixture('source-file-before-hashes.json');
   const sourceBytes = readFileSync(new URL('../docs/narration/intro-permaculture.en.md', import.meta.url));
   assert.equal(introFullDigest(sourceBytes), hashes['docs/narration/intro-permaculture.en.md']);
@@ -79,6 +84,14 @@ export function validateProtectedSTIntro() {
   assert.equal(rows.length, 45, 'all22 ST stills and23 audio files, including full narration, remain');
   for (const row of rows) verifyProtectedIntroAsset(row, readFileSync(new URL(`../${row.path}`, import.meta.url)));
   const hashes = introFullFixture('source-file-before-hashes.json');
-  for (const path of ['lib/course-audio.ts', 'lib/course-modules.ts']) assert.equal(
-    introFullDigest(readFileSync(new URL(`../${path}`, import.meta.url))), hashes[path], `${path}: canonical/audio authority unchanged`);
+  assert.equal(introFullDigest(readFileSync(new URL('../lib/course-modules.ts', import.meta.url))),
+    hashes['lib/course-modules.ts'], 'canonical lesson source and answer authority remain byte-identical');
+  const runtimeProofBytes = readFileSync(new URL(
+    '../docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/runtime-binding/applied-runtime-proof.json', import.meta.url));
+  assert.equal(introFullDigest(runtimeProofBytes), '15dde91f532cd4b1fffdd06e7beced8bc6cf96953d3e3359a4c03ece704e9157',
+    'current release-binding proof is the root-accepted runtime authority');
+  const runtimeProof = JSON.parse(runtimeProofBytes.toString());
+  const currentAudioAuthority = readFileSync(new URL('../lib/course-audio.ts', import.meta.url));
+  assert.equal(introFullDigest(currentAudioAuthority), runtimeProof.fileSHA256['lib/course-audio.ts'],
+    'current recording exposure is bound to the compatible release registry; archived Sesotho recordings remain verified above');
 }

@@ -511,89 +511,60 @@
             ]
           },
           {
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "First find out if sharing is allowed. ",
+                "sourceEnglish": "First find out if sharing is allowed. Check whether the ",
                 "status": "draft",
-                "text": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
-              },
-              {
-                "sourceEnglish": "Check whether the ",
-                "status": "draft",
-                "text": "Kambela loko ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+                "text": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
                 "sourceEnglish": "borehole",
                 "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
               },
               {
-                "sourceEnglish": " can serve all users without taking too much. ",
+                "sourceEnglish": " can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
                 "status": "draft",
-                "text": " yi nga tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
-              },
-              {
-                "sourceEnglish": "If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
-                "status": "draft",
-                "text": "Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+                "text": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
                 "sourceEnglish": "People Care",
                 "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
               },
               {
                 "sourceEnglish": " and ",
                 "status": "draft",
                 "text": " na ",
-                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
                 "sourceEnglish": "Fair Share",
                 "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
               },
               {
                 "sourceEnglish": " guide the agreement. ",
                 "status": "draft",
                 "text": " swi kongomisa ntwanano. ",
-                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
                 "sourceEnglish": "Earth Care",
                 "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
               },
               {
-                "sourceEnglish": " means protecting the source. ",
+                "sourceEnglish": " means protecting the source. Watching the level alone does not make extra use safe or allowed.",
                 "status": "draft",
-                "text": " swi vula ku sirhelela xihlovo. ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
-              },
-              {
-                "sourceEnglish": "Watching the level alone does not make extra use ",
-                "status": "draft",
-                "text": "Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va ",
-                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
-              },
-              {
-                "sourceEnglish": "safe",
-                "status": "english-hold",
-                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
-              },
-              {
-                "sourceEnglish": " or allowed.",
-                "status": "draft",
-                "text": " kumbe swi pfumeleriwa.",
-                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+                "text": " swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va hlayisekile kumbe swi pfumeleriwa.",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               }
-            ]
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary safety predicate translated; borehole and ethics labels retained as exact English; facilitator review pending"
           },
           {
             "status": "draft",
@@ -1097,27 +1068,9 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 accepted ordinary remainder; facilitator fluency review pending"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours. That is the ",
-                "status": "draft",
-                "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i ",
-                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
-              },
-              {
-                "sourceEnglish": "land",
-                "status": "english-hold",
-                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
-              },
-              {
-                "sourceEnglish": " telling you something.",
-                "status": "draft",
-                "text": " leyi ku byelaka swin’wana.",
-                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
-              }
-            ],
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+            "status": "draft",
+            "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i ndhawu leyi ku byelaka swin’wana.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary place wording; edge retained in target as a draft lexical borrowing; fluent review remains open"
           },
           {
             "status": "mixed",

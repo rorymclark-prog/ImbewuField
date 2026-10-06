@@ -7,13 +7,16 @@ import styles from './DeckPlayer.module.css';
 import {
   animationUrls,
   deckFor,
+  currentRegionalDeckSlide,
   formatBytes,
   resolveDeckLang,
   slideAudioUrl,
   slideImageFor,
   timedAnimationSync,
 } from '@/lib/course-deck';
-import { requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle } from '@/lib/course-audio';
+import { availableNarrationLanguages, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle } from '@/lib/course-audio';
+import { hasCurrentDeckRelease } from '@/lib/course-deck-release-bindings-registry';
+import type { CourseDeckReleaseSlide } from '@/lib/course-deck-release-bindings';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
 import { resolveIsiZuluDeckSourcePair } from '@/lib/course-deck-source-bindings';
@@ -113,6 +116,18 @@ function slidePoints(paragraphs: string[]): string[] {
     .slice(0, 4);
 }
 
+function CurrentDeckReleaseContent({ slide, source, sourceHeading, language }: {
+  slide: CourseDeckReleaseSlide | null; source: readonly string[]; sourceHeading: string; language: string;
+}) {
+  return <>
+    {slide ? <div lang={language}><h5>{slide.targetHeading}</h5>
+      {slide.targetText.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</div>
+      : <p>Current draft source comparison changed; showing English until checked.</p>}
+    <div lang="en"><h5>Exact English source</h5><h5>{sourceHeading}</h5>
+      {source.map((paragraph, i) => <p key={i}>{paragraph}</p>)}</div>
+  </>;
+}
+
 export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose }: DeckPlayerProps) {
   const { lang: uiLang, t } = useLanguage();
   const deck = deckFor(moduleId);
@@ -143,7 +158,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const spokenLang = narrationChoice && narrationChoice !== NO_NARRATION
     ? resolveNarrationLang(moduleId, narrationChoice)
     : null;
-  const languages = narration?.languages ?? [];
+  const languages = availableNarrationLanguages(moduleId);
 
   const slides = useMemo(
     () => (deck?.slides ?? []).filter((s) => !lessonId || s.lesson === lessonId),
@@ -476,6 +491,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   if (!deck || !slideLang || !current) return null;
 
+  const hasCurrentRelease = hasCurrentDeckRelease(moduleId, slideChoice);
+  const currentReleaseSlide = currentRegionalDeckSlide(moduleId, slideChoice, current.slide);
+  const currentReleaseSource = COURSE_TRANSCRIPTS[moduleId]?.en?.[current.slide] ?? [];
+  const currentReleaseLabel = 'Read slide · unreviewed draft / exact English source';
   const img = slideImageFor(moduleId, slideChoice, current.slide);
   const anim = animationUrls(moduleId, current.slide, slideChoice);
   const audio = audioForCurrent;
@@ -495,21 +514,23 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     : zuluHold || !zuluPair
       ? 'Read slide · English source / isiZulu revision pending'
       : 'Read slide · unreviewed isiZulu draft / exact English source';
-  const heading = zuluSilentDraft?.correctedTitle ?? (slideChoice === 'zu' && (zuluHold || !zuluPair)
+  const heading = currentReleaseSlide?.targetHeading ?? (hasCurrentRelease ? track ? trackTitle(track, 'en') : current.title : zuluSilentDraft?.correctedTitle ?? (slideChoice === 'zu' && (zuluHold || !zuluPair)
     ? track ? trackTitle(track, 'en') : current.title
-    : track ? trackTitle(track, slideChoice) : current.title);
+    : track ? trackTitle(track, slideChoice) : current.title));
   const isPlaying = playing.has(current.slide);
 
   const slideRatio = anim?.aspectRatio ?? img?.aspectRatio ?? deck.slideAspectRatioByLanguage?.[img?.lang ?? slideLang.lang] ?? 16 / 9;
   const artModule = (COURSE_DECK_ART as Record<string, Record<string, { layout: string }>>)[moduleId];
   const art = artModule?.[current.slide];
   // The reading follows the selected deck, independently of an optional English voice.
-  const visibleTranscript = slideChoice === 'zu'
+  const visibleTranscript = hasCurrentRelease
+    ? currentReleaseSlide ? [...currentReleaseSlide.targetText] : [...currentReleaseSource]
+    : slideChoice === 'zu'
     ? zuluSilentDraft ? [...zuluSilentDraft.correctedTarget]
       : zuluHold || !zuluPair ? zuluSource : [...zuluPair.recordedTarget]
     : transcript;
   const presentationPoints = visibleTranscript ? slidePoints([...visibleTranscript]) : [];
-  const showReflowedSlide = expanded && !zuluSilentDraft && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
+  const showReflowedSlide = expanded && !hasCurrentRelease && !zuluSilentDraft && !!artModule && !art && !anim && current.slide !== 1 && presentationPoints.length > 0;
   const fittedWidth = expanded && viewportSize.width && viewportSize.height
     ? Math.min(viewportSize.width, viewportSize.height * slideRatio) : 0;
   const fullSizeImageUrl = anim?.poster ?? img?.url;
@@ -861,6 +882,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </button>
       </div>
 
+      {hasCurrentRelease && <details className={`${styles.transcript} ${styles.sourcePair}`}>
+        <summary>{currentReleaseLabel}</summary>
+        <CurrentDeckReleaseContent slide={currentReleaseSlide} source={currentReleaseSource} sourceHeading={track ? trackTitle(track, 'en') : current.title} language={slideChoice} />
+      </details>}
       {showZuluSourcePair && (
         <details className={`${styles.transcript} ${styles.sourcePair}`} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
@@ -875,7 +900,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           />
         </details>
       )}
-      {transcript && slideChoice !== 'zu' && (
+      {transcript && !hasCurrentRelease && slideChoice !== 'zu' && (
         <details className={styles.transcript} style={{ borderTop: `1px solid ${LINE}`, paddingTop: 10 }}>
           <summary style={{ color: GREEN, fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '6px 0' }}>
             {t('courseDeckReadSlide').replace('{language}', langName(spokenLang!.lang, uiLang))}
@@ -889,7 +914,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       {fullSizeImageUrl && (
         <dialog
           ref={imageViewerRef}
-          className={`${styles.imageViewer} ${showZuluSourcePair ? styles.imageViewerWithSourcePair : ''}`}
+          className={`${styles.imageViewer} ${showZuluSourcePair || hasCurrentRelease ? styles.imageViewerWithSourcePair : ''}`}
           aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
           onKeyDown={(event) => event.stopPropagation()}
           onClose={() => { setChromeVisible(true); imageButtonRef.current?.focus(); }}
@@ -914,6 +939,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={fullSizeImageUrl} alt={heading} style={{ width: `${imageZoom * 100}%`, maxHeight: imageZoom === 1 && slideRatio >= 1 ? '100%' : undefined }} />
           </div>
+          {hasCurrentRelease && <section className={`${styles.sourcePair} ${styles.imageViewerSourcePair}`} aria-label={currentReleaseLabel}>
+            <h3>{currentReleaseLabel}</h3>
+            <CurrentDeckReleaseContent slide={currentReleaseSlide} source={currentReleaseSource} sourceHeading={track ? trackTitle(track, 'en') : current.title} language={slideChoice} />
+          </section>}
           {showZuluSourcePair && (
             <section className={`${styles.sourcePair} ${styles.imageViewerSourcePair}`} aria-label={zuluPairLabel}>
               <h3>{zuluPairLabel}</h3>

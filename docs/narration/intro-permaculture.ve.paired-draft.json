@@ -970,21 +970,24 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Compare ",
+                "sourceEnglish": "Compare the ",
                 "status": "draft",
-                "text": "Vhambedzani "
+                "text": "Vhambedzani ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
-                "sourceEnglish": "the cost and work with the benefit",
-                "status": "english-hold"
+                "sourceEnglish": "cost",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
               },
               {
-                "sourceEnglish": " on your own farm.",
+                "sourceEnglish": " and work with the benefit on your own farm.",
                 "status": "draft",
-                "text": " kha bulasi yaṋu."
+                "text": " na mushumo na mbuelo kha bulasi yaṋu.",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary comparison composition; cost retained as exact English; fluent review remains open"
           },
           {
             "status": "draft",

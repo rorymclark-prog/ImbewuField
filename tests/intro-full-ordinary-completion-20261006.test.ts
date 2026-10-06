@@ -4,12 +4,14 @@ import { readFileSync } from 'node:fs';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { introFullFixture, introFullNativeBefore, introFullNativeAfter, introFullCanonicalBefore,
-  readCurrentIntroNative, validateAndRewindIntroFullNative, type IntroLanguage } from './intro-full-ordinary-native-checks.ts';
+  readCurrentIntroNative, type IntroLanguage } from './intro-full-ordinary-native-checks.ts';
 import { introFullPairedPacket, readCurrentIntroFullDecks, validateAndRewindIntroFullPaired,
   validateProtectedSTIntro, verifyProtectedIntroAsset } from './intro-full-ordinary-paired-checks.ts';
+import { readCurrentIntroSilentTextInputs, validateAndRewindIntroNativeHistory,
+  validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
 
-test('Introduction exposes only the accepted94 source-bound rows, preserving every unlisted native/deck field and all12 answers', () => {
-  for (const language of ['ve', 'ts'] as const) assert.deepEqual(validateAndRewindIntroFullNative(language), introFullNativeBefore[language]);
+test('Introduction exposes only the accepted94 source-bound rows after validating the later 60-field silent release', () => {
+  for (const language of ['ve', 'ts'] as const) assert.deepEqual(validateAndRewindIntroNativeHistory(language), introFullNativeBefore[language]);
   const historical = validateAndRewindIntroFullPaired();
   for (const language of ['ve', 'ts', 'st']) assert.deepEqual(historical[language], introFullFixture(`${language}-paired-before.json`));
   assert.equal(introFullPairedPacket.objects.length, 72);
@@ -20,7 +22,7 @@ test('Introduction exposes only the accepted94 source-bound rows, preserving eve
 
 test('Introduction current hold metadata does not falsely label localized People Care or seed saving as unchanged English', () => {
   const current = readCurrentIntroNative().ts;
-  validateAndRewindIntroFullNative('ts', current);
+  validateAndRewindIntroSilentTextLayer({ native: { ...readCurrentIntroNative(), ts: current } });
   assert.deepEqual(current.holds, introFullNativeBefore.ts.holds.filter((hold: any) =>
     hold.sourceText !== 'People Care' && hold.sourceText !== 'seed saving'));
   assert.deepEqual(current.holds.map((hold: any) => hold.sourceText), ['all his surplus maize', 'composting', 'ethic']);
@@ -29,14 +31,20 @@ test('Introduction current hold metadata does not falsely label localized People
     assert.equal(hold.field, 'quiz[0].q');
     const question = current.lessons[0].quiz[0].question;
     assert.ok(question.sourceEnglish.includes(hold.sourceText));
-    assert.ok(question.xitsongaDraft.includes(hold.sourceText));
     assert.ok(hold.reason);
+    if (hold.sourceText === 'ethic') {
+      assert.ok(question.xitsongaDraft.includes(hold.sourceText), `${hold.sourceText}: unresolved technical hold remains visible`);
+    }
   }
-  assert.match(current.lessons[0].quiz[0].question.xitsongaDraft, /a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu/,
-    'nothing for composting OR seed saving stays negative, with precise crop/ownership/category anchors');
+  assert.equal(current.lessons[0].quiz[0].question.xitsongaDraft,
+    'Murimi u xavisa mavele ya yena lama saleke hinkwawo, kambe a nga hlayisi na xin’we xa ku endla compost kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ngopfu ku yi landzelela?',
+    'the later accepted full question translates ordinary surplus-maize and composting clauses while retaining ethic');
+  assert.match(current.lessons[0].quiz[0].question.xitsongaDraft, /a nga hlayisi na xin’we xa ku endla compost kumbe ku hlayisa mbewu/,
+    'the later accepted target keeps both compost-making and seed-saving clauses inside the negative predicate');
   assert.ok(current.lessons[0].keyPoints[1].xitsongaDraft.startsWith('Ku Hlayisa Vanhu:'));
   const stale = structuredClone(current); stale.holds.push(introFullNativeBefore.ts.holds[0]);
-  assert.throws(() => validateAndRewindIntroFullNative('ts', stale), 'obsolete live hold metadata is real drift, never a history exemption');
+  assert.throws(() => validateAndRewindIntroSilentTextLayer({ native: { ...readCurrentIntroNative(), ts: stale } }),
+    'obsolete live hold metadata is real drift, never a history exemption');
 });
 
 test('Introduction rejects current source, answer order, modal, metadata and unlisted mutations before any historical rewind', () => {
@@ -51,7 +59,26 @@ test('Introduction rejects current source, answer order, modal, metadata and unl
   ];
   for (const language of ['ve', 'ts'] as const) for (const mutate of mutations) {
     const current = structuredClone(readCurrentIntroNative()[language]); mutate(current);
-    assert.throws(() => validateAndRewindIntroFullNative(language, current), 'full current accepted layer must reject drift before reconstruction');
+    assert.throws(() => validateAndRewindIntroNativeHistory(language, current), 'full current accepted layers must reject drift before reconstruction');
+  }
+});
+
+test('the later 60-field Intro text layer rejects changed targets, sources, statuses and unlisted cells before rewind', () => {
+  const mutations: Array<(input: ReturnType<typeof readCurrentIntroSilentTextInputs>) => void> = [
+    input => { input.native.ve.lessons[0].keyPoints[1].tshivendaDraft += ' Always safe.'; },
+    input => { input.native.ts.lessons[0].keyPoints[1].sourceEnglish += ' changed source'; },
+    input => { input.native.ve.lessons[1].quiz[1].options[3].reviewStatus = 'hold'; },
+    input => { input.paired.ve.slides[10].target.body[2].text += ' extra'; },
+    input => { input.paired.ts.slides[6].english.body[1] += ' changed source'; },
+    input => { input.silentSesotho.slides[3].target.body[2].text += ' extra'; },
+    input => { input.silentSesotho.slides[21].n = 21; },
+    input => { input.paired.st.slides[21].target.heading.text += ' changed archived target'; },
+  ];
+  for (const mutate of mutations) {
+    const current = structuredClone(readCurrentIntroSilentTextInputs());
+    mutate(current);
+    assert.throws(() => validateAndRewindIntroSilentTextLayer(current),
+      'unexpected latest source/target/status/order/unlisted change must fail before historical rewinds');
   }
 });
 

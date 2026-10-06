@@ -157,17 +157,19 @@ test('eleven Market WebPs and download promises match accepted paired sources wh
 });
 
 
+// 6 October 2026: the silent25-asset release may reject corrupt current input before
+// older guards; retain every mutation and each earlier precise rejection route.
 test('Market historical media reconstruction rejects arbitrary headers and unlisted size mutations before exposing old descriptors', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const prior = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(marketAssetSizesBeforeOrdinary(actual), prior, 'exact full accepted layer restores the frozen historical text');
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(/MB total\./, 'MB total. corrupted')),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current/);
   assert.throws(() => marketAssetSizesBeforeOrdinary(prior.replace('709.4 MB total.', '709.5 MB total.')),
     /exact guarded Market baseline/);
   const unlisted = '/course-decks/market-community/st/slide-01.webp';
   const slot = `  '${unlisted}': ${COURSE_ASSET_SIZES[unlisted]},`;
   assert.ok(actual.includes(slot));
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(slot, `  '${unlisted}': 1,`)),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current/);
 });

@@ -10,7 +10,7 @@ import { APP_GUIDES, appGuideNarrationSections } from '../lib/course-app-guides.
 import { join } from 'node:path';
 
 import {
-  APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, allTracks, formatClock, fullNarrationUrl, hasNarration,
+  APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, availableNarrationLanguages, allTracks, formatClock, fullNarrationUrl, hasNarration,
   moduleLevelTracks, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -332,10 +332,11 @@ test('the question recording excludes feedback and each feedback clip belongs to
   }
 });
 
-test('every regional module without its own voice requires selection while English, isiZulu and recorded Sesotho keep their defaults', () => {
+test('every regional module without a compatible current voice requires selection while English and isiZulu keep defaults', () => {
   for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
     for (const appLang of ['en', 'zu', 'st', 've', 'ts']) {
-      const own = narration.languages.includes(appLang);
+      // 2026-10-06: archived recordings remain owned; only the current pair authorizes a voice.
+      const own = availableNarrationLanguages(moduleId).includes(appLang);
       const explicit = requiresExplicitNarrationChoice(moduleId, appLang);
       assert.equal(explicit, ['st', 've', 'ts'].includes(appLang) && !own, `${moduleId}/${appLang}`);
       const choice = explicit ? null : resolveNarrationLang(moduleId, appLang)?.lang;
@@ -343,8 +344,9 @@ test('every regional module without its own voice requires selection while Engli
       else assert.equal(choice, null, 'fallback availability cannot select English for a regional reader');
     }
   }
-  assert.equal(requiresExplicitNarrationChoice('intro-permaculture', 'st'), false);
-  assert.equal(trackUrl('intro-permaculture', 'st', 22), '/course-audio/intro-permaculture/st/slide-22.mp3');
+  assert.equal(requiresExplicitNarrationChoice('intro-permaculture', 'st'), true);
+  assert.ok(COURSE_NARRATION['intro-permaculture'].languages.includes('st'), 'archived voice remains owned');
+  assert.equal(trackUrl('intro-permaculture', 'st', 22), null);
 });
 
 test('regional playlist stays visible and silent until a voice is selected, and stale playback cannot survive an app-language change', async () => {
@@ -409,7 +411,7 @@ test('regional playlist stays visible and silent until a voice is selected, and 
   }
 });
 
-test('recorded English, isiZulu and Sesotho Intro playlists still select their own voice and retain review notices', async () => {
+test('English and isiZulu retain own defaults while the new Sesotho Intro pair selects silence', async () => {
   const CourseAudioPlayer = await loadAudioPlayer();
   for (const appLang of ['en', 'zu', 'st']) {
     const device = { src: '', paused: true, pause() {}, load() {}, removeAttribute() { this.src = ''; } };
@@ -418,13 +420,14 @@ test('recorded English, isiZulu and Sesotho Intro playlists still select their o
     try {
       const voices = view.root.findAllByType('button').filter(b => b.props['aria-pressed'] !== undefined);
       assert.equal(voices.filter(b => b.props['aria-pressed']).length, 1);
-      assert.equal(voices.find(b => b.props['aria-pressed'])!.children.join(''), appLang === 'st' ? 'Sesotho AI draft + English' : appLang === 'zu' ? 'isiZulu' : 'English');
+      assert.equal(voices.find(b => b.props['aria-pressed'])!.children.join(''), appLang === 'st' ? 'No narration' : appLang === 'zu' ? 'isiZulu' : 'English');
       assert.equal(device.src, '', 'selected own narration still does not preload');
       if (appLang === 'st') {
         assert.equal(view.root.findAllByType('li').length, 22);
         const copy = view.root.findAllByType('p').map(p => p.children.join('')).join('\n');
-        assert.match(copy, /Unreviewed machine Sesotho narration with exact English passages/);
-        assert.match(copy, /Fluent-speaker, local-farming and listening review are pending/);
+        assert.ok(view.root.findAllByType('li').every(row => row.findByType('button').props.disabled));
+        assert.ok(!voices.some(b => b.children.join('') === 'Sesotho AI draft + English'), 'archived voice cannot label the updated pair');
+        assert.equal(voices.find(b => b.children.join('') === 'English source narration')?.props['aria-pressed'], false);
       }
       if (appLang === 'zu') assert.match(view.root.findAllByType('p').map(p => p.children.join('')).join('\n'), /awaiting review|usalindele ukubuyekezwa/);
     } finally { act(() => view.unmount()); }
@@ -468,17 +471,22 @@ test('No narration clears active English playback and ignores old ended/error/me
   } finally { act(() => view.unmount()); }
 });
 
-test('Sesotho Intro retains normal per-slide advancement after an explicitly started own-language clip', async () => {
+test('Sesotho Intro advances optional English only after explicit selection and Play', async () => {
   const CourseAudioPlayer = await loadAudioPlayer();
   let plays = 0;
   const device = { src: '', paused: true, pause() { this.paused = true; }, play() { plays++; this.paused = false; return Promise.resolve(); }, load() {}, removeAttribute() { this.src = ''; } };
   let view!: ReactTestRenderer;
   act(() => { view = create(createElement(CourseAudioPlayer, { moduleId: 'intro-permaculture', appLang: 'st', tracks: COURSE_NARRATION['intro-permaculture'].tracks.slice(0, 2) }), { createNodeMock: e => e.type === 'audio' ? device : null }); });
   try {
+    // 2026-10-06: new silent pair cannot use the archived ST recording; playlist behavior remains covered.
+    assert.equal(device.src, '');
+    assert.ok(view.root.findAllByType('li').every(row => row.findByType('button').props.disabled));
+    act(() => view.root.findAllByType('button').find(b => b.children.join('') === 'English source narration')!.props.onClick());
+    assert.equal(plays, 0);
     await act(async () => { view.root.findAllByType('li')[0].findByType('button').props.onClick(); await Promise.resolve(); });
-    assert.equal(device.src, '/course-audio/intro-permaculture/st/slide-01.mp3');
+    assert.equal(device.src, '/course-audio/intro-permaculture/en/slide-01.mp3');
     await act(async () => { view.root.findByType('audio').props.onEnded(); await Promise.resolve(); });
-    assert.equal(device.src, '/course-audio/intro-permaculture/st/slide-02.mp3');
+    assert.equal(device.src, '/course-audio/intro-permaculture/en/slide-02.mp3');
     assert.equal(plays, 2);
     act(() => view.root.findByType('audio').props.onEnded());
     assert.equal(plays, 2, 'the playlist stops at its end');

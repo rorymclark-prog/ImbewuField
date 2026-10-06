@@ -1,0 +1,146 @@
+{
+  "title": "Supplemental exact-field disposition for native ordinary translation backcheck",
+  "createdAt": "2026-10-06",
+  "supplements": "/tmp/imbewu-study-final-native-ordinary-independent-check-20261006.json",
+  "reviewedCommit": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "renderingOrTests": false,
+  "authority": "Rory authorized regional ordinary translation with canonical English unchanged. This supplement carries no fluency certification and imposes no prepublication human-approval gate.",
+  "registryAuthority": "lib/course-localization.ts assembles the source-paired regional learner drafts against lib/course-modules.ts. Current source and target values are bound by candidateIndex in the supplied native ordinary inventory and triage; native registry file is given for each field.",
+  "summary": {
+    "exactFields": 7,
+    "releaseDispositionCounts": {
+      "repair": 5,
+      "exclude-noop": 2
+    },
+    "scope": "Only the seven fields named in this supplement are re-disposed. The prior report is not rewritten; the two no-op fields are explicitly excluded from release, and five fields receive precise repair targets."
+  },
+  "fieldDispositions": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 43
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "previousProposal": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa wa sebedisa stronger doses.",
+      "disposition": "repair",
+      "reason": "Keep one negative instruction governing both coordinated objects. The source says not to improvise mixtures or stronger doses; it does not separately ban using every stronger dose irrespective of whether it is improvised.",
+      "supplementalTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+      "backTranslation": "Do not make up mixtures or stronger doses.",
+      "targetEditScope": "Replace only the final sentence; preserve every preceding localized and English technical/safety clause exactly as in previousProposal."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt",
+        "candidateIndex": 45
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "previousProposal": "Pest e lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhale: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "disposition": "repair",
+      "reason": "Add the locative relation “on a leaf”; “Pest e lekhasi” can read as the pest being the leaf. “E holim’a lekhasi” back-translates as on top of a leaf and preserves the rest of the illustration description.",
+      "supplementalTarget": "Pest e holim'a lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhali: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "backTranslation": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 48
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "previousProposal": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana u shumisa stronger doses.",
+      "disposition": "repair",
+      "reason": "Keep one negative instruction governing both coordinated objects, preserving the source’s scope: do not improvise mixtures or stronger doses. Avoid the broader “or use stronger doses” reading.",
+      "supplementalTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+      "backTranslation": "Do not make up mixtures or stronger doses.",
+      "targetEditScope": "Replace only the final sentence; preserve every preceding localized and English technical/safety clause exactly as in previousProposal."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "keyPoints[3]",
+        "candidateIndex": 50
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "previousProposal": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "disposition": "exclude-noop",
+      "reason": "The proposed key point is byte-identical to currentTarget. There is no source-to-target change to release from this row."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndex": 56
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "previousProposal": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe ku tirhisa stronger doses.",
+      "disposition": "repair",
+      "reason": "Keep one negative instruction governing both coordinated objects, preserving the source’s scope: do not improvise mixtures or stronger doses. Avoid the broader “or use stronger doses” reading.",
+      "supplementalTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+      "backTranslation": "Do not make up mixtures or stronger doses.",
+      "targetEditScope": "Replace only the final sentence; preserve every preceding localized and English technical/safety clause exactly as in previousProposal."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "keyPoints[3]",
+        "candidateIndex": 58
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "previousProposal": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "disposition": "exclude-noop",
+      "reason": "The proposed key point is byte-identical to currentTarget. There is no source-to-target change to release from this row."
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]",
+        "candidateIndex": 64
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "previousProposal": "Loko hakunene ku ri xiphiqo xa swakudya swa misava kumbe xa ku cheleta",
+      "disposition": "repair",
+      "reason": "Retain “soil nutrient” as the technical phrase; translate the ordinary “issue” frame and “watering”. The alternative remains open as a whether-clause and is not recast as an asserted condition.",
+      "supplementalTarget": "Loko hakunene ku ri xiphiqo xa soil nutrient kumbe xa ku cheleta",
+      "backTranslation": "Whether it really is a soil nutrient problem or a watering problem."
+    }
+  ]
+}

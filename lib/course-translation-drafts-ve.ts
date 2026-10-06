@@ -84,7 +84,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "People Care: your family's needs come before market production",
-          "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwi no bviselwa makete",
+          "U Ṱhogomela Vhathu: ṱhoḓea dza muṱa waṋu dzi ranga zwine zwa bveledzwa u ya makete.",
         ),
         pair(
           "Fair Share: return surplus to the system — seeds, water, food, knowledge",
@@ -238,7 +238,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "All animals kept off the cultivated zone",
-              "All animals kept off zone yo limiwaho.",
+              "Zwipuka zwoṱhe zwi vhetshelwe kule na zone yo limiwaho.",
             ),
           ],
           sourceCorrectIndex: 1,
@@ -284,7 +284,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         {
           question: pair(
             "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
-            "Ni ṱavha herbs kha Zone 3, tsimu khulwane i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
+            "Ni ṱavha herbs kha Zone 3, main field i re kule na nnḓu. Hezwi zwi vhanga thaidzo-ḓe?",
           ),
           options: [
             pair(

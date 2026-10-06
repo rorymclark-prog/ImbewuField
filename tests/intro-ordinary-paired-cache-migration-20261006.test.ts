@@ -65,12 +65,13 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
   const baseline = JSON.parse(read('docs/study-translation-reviews/intro-ordinary-paired-2026-10-06/asset-manifest-before.json'));
   assert.equal(proof.acceptedPacketSHA256, '3297c1b24dba1a37de6976a0b66933a9796efffdb2be5bd8be7e9b027b8ee8e9');
   assert.equal(proof.frames.length, 30);
-  assert.deepEqual(Object.keys(COURSE_ASSET_SIZES).sort(), Object.keys(baseline).sort(), 'no payload keys are added or removed');
   validateCurrentVegetablesPestPrecisionLayer();
   // 2026-10-06: guard the entire newer Market layer then rewind only its eleven size entries/header.
   const sizesBeforeLaterVegetablesLayer: Record<string, number> = Object.fromEntries(
     [...marketAssetSizesBeforeOrdinary().matchAll(/^  '([^']+)': (\d+),$/gm)].map(row => [row[1], Number(row[2])])
   );
+  // 6 October 2026: validate new22 silent URLs first; the dated30-frame contract has no added keys.
+  assert.deepEqual(Object.keys(sizesBeforeLaterVegetablesLayer).sort(), Object.keys(baseline).sort(), 'no payload keys are added or removed');
   for (const frame of vegetablesPestPrecisionFrames) sizesBeforeLaterVegetablesLayer[frame.url] = frame.beforeBytes;
   const changedSizes = Object.keys(baseline).filter(path => baseline[path] !== sizesBeforeLaterVegetablesLayer[path]).sort();
   assert.deepEqual(changedSizes, [...changed].sort(), 'only those rendered frames affect learner download estimates');

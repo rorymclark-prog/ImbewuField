@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-06",
+  "dataOnly": true,
+  "learnerWired": false,
+  "packetPath": "docs/study-translation-reviews/final-native-ordinary-review-2026-10-06/final-native-filtered-current-independent-20261006.json",
+  "packetSHA256": "a3dbe2680768897f2d07475685007ee8b312acac015c83c203df05700bd17c9d",
+  "canonicalSourceSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "reviewedAllOriginalThirtySourceCurrentCandidateRows": true,
+  "independentFocusedChecksRead": 29,
+  "acceptedForFreshSourceBoundImplementation": [
+    11,
+    13,
+    15,
+    16,
+    25,
+    26,
+    27,
+    28,
+    29,
+    38,
+    43,
+    45,
+    46,
+    48,
+    51,
+    52,
+    56,
+    59,
+    60,
+    65,
+    66,
+    67,
+    68,
+    69,
+    71,
+    73,
+    74,
+    75
+  ],
+  "held": [
+    64
+  ],
+  "excludedNoop": [
+    72
+  ],
+  "diagramCorrespondence": "L1/L2/L4 images previously root-viewed; this review adds no new image or fluent-language approval.",
+  "limits": "Revalidate current field sources/targets after release integration before applying. Do not apply unsafe fertilizer immediate-to-quickly candidates omitted from this packet."
+}

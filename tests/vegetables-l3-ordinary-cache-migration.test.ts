@@ -89,6 +89,8 @@ test('eight actual compressed Vegetables cards match full accepted sources, meas
 });
 
 // 6 October 2026: the later five-card L1 layer validates live manifest mutations before this L3 view.
+// 6 October 2026: the silent25-asset release may reject corrupt current input before
+// older guards; retain every mutation and each earlier precise rejection route.
 test('the historical Vegetables media view rejects header and unlisted-size mutations before returning any old descriptor', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   // 6 October 2026: the later36 Intro stills change the measured header. This
@@ -98,10 +100,10 @@ test('the historical Vegetables media view rejects header and unlisted-size muta
   const corruptedHeader = actual.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corruptedHeader, actual, 'the negative control must really change the live aggregate');
 
-  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(corruptedHeader), /only (?:eight|five) Vegetables sizes|exact guarded (?:Vegetables L1|Intro full) manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(corruptedHeader), /only (?:eight|five) Vegetables sizes|exact guarded (?:Vegetables L1|Intro full) manifest baseline|only the complete accepted silent Intro manifest is current/);
   const path = '/course-decks/vegetables-staples/st/slide-01.webp';
   const slot = `  '${path}': ${COURSE_ASSET_SIZES[path]},`;
   assert.ok(actual.includes(slot));
-  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:eight|five) Vegetables sizes|exact guarded (?:Vegetables L1|Intro full) manifest baseline/);
-  assert.throws(() => vegetablesL3AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded Vegetables (?:L3|L1) manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL3OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:eight|five) Vegetables sizes|exact guarded (?:Vegetables L1|Intro full) manifest baseline|only the complete accepted silent Intro manifest is current/);
+  assert.throws(() => vegetablesL3AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded Vegetables (?:L3|L1) manifest baseline|only the complete accepted silent Intro manifest is current/);
 });

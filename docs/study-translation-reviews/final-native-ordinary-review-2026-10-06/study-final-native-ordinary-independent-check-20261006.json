@@ -1,0 +1,964 @@
+{
+  "title": "Independent semantic backcheck: native ordinary translation proposals",
+  "createdAt": "2026-10-06",
+  "reviewedCommit": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "renderingOrTests": false,
+  "authority": "Rory authorized regional ordinary translation with canonical English unchanged. This is a machine proposal backcheck, not a fluency certification or a requirement for prepublication human approval; facilitator review remains after labelled machine publication.",
+  "inputs": {
+    "triagePath": "/tmp/imbewu-study-final-native-ordinary-triage-20261006.json",
+    "inventoryPath": "/tmp/imbewu-study-final-scope-remaining-ordinary-inventory-20261006.json",
+    "triageCandidateRows": 76,
+    "triageFullTargetRows": 51,
+    "sourceInventoryRows": 76,
+    "dedupeKey": "moduleId + language + original-inventory lessonId at candidateIndex + fieldLocator",
+    "nativeRegistryAuthority": "lib/course-localization.ts, whose assembled module drafts are source-paired to lib/course-modules.ts; per-field currentTarget/sourceEnglish were checked against the inventory rows bound to candidateIndex and native draft registry files listed per locator.",
+    "soilWaterOverlay": "Excluded overlay rows before review. The separate accepted 47-unit Soil/Water overlay is not duplicated here; no included proposal row carries an overlay field id or accepted overlay marker."
+  },
+  "summary": {
+    "uniqueCandidateLocators": 46,
+    "verdictCounts": {
+      "accept": 40,
+      "repair": 4,
+      "hold": 2
+    },
+    "coherentSafeBatch": "vegetables-staples-l4 ordinary wording and assessment precision, across st/ve/ts, subject to 2 held rationale endings; the existing product-label, crop/pest registration, no-mixtures/no-stronger-dose and natural-origin safety conditions remain source-bound and intact.",
+    "limits": [
+      "Review is lexical and semantic backtranslation from source/target pairs; I am not claiming fluency in Sesotho, Xitsonga, or Tshivenda.",
+      "No audio, rendering, learner usability, or facilitator review was performed.",
+      "No percentage-completion claim is made."
+    ]
+  },
+  "candidateRows": [
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]",
+        "candidateIndexes": [
+          11
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani any water works for the site nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "proposedFullTarget": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]",
+        "candidateIndexes": [
+          13
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "proposedFullTarget": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]",
+        "candidateIndexes": [
+          15
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "proposedFullTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          16
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "proposedFullTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          17
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Muya wo rotholaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone through the local frost season. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "proposedFullTarget": "Muya wo rothalaho u nga kuvhangana fhethu ho tsaho kha vhusiku vhu sa na makole, hu si na muya. Vhambedzani fhethu hune nursery ya nga vhewa hone kha tshifhinga tsha frost tsha henefho. Ṱolani matsalwa a minimum temperatures a henefho kana ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu. Frost ine ya vhonala a si yone fhedzi tswayo ya frost damage; a hu na fhethu ha kha thavha hune ha fulufhedzisa uri a hu nga vhi na frost.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]",
+        "candidateIndexes": [
+          18
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "currentTarget": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "proposedFullTarget": "Eka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka eka nguva ya frost ya ndhawu yoleyo. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          19
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts.ts",
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "proposedFullTarget": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery eka nguva ya frost ya ndhawu yoleyo. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          25
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "currentTarget": "Raised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.",
+      "proposedFullTarget": "Raised beds di loketse mobu o metsi, moo metsi a hlokang sebaka sa ho phallela teng.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          26
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "proposedFullTarget": "Musi ho na mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "verdict": "repair",
+      "repairTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "reason": "The opener “Musi ho na mvula khulu” is Xitsonga/Sesotho-shaped rather than Tshivenda and does not clearly say to inspect after the rain. The proposed remaining clauses preserve where water sits/runs and the before-bed-choice condition; this repair localizes only the opener and leaves the technical anchors.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          27
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "proposedFullTarget": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa athu u vhuya a ima kha mavu ane a khou limiwa.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          28
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "currentTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "proposedFullTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "verdict": "repair",
+      "repairTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "reason": "“Heavy rain” is an ordinary weather phrase left in English. The remaining proposal preserves observation, drainage advice, and the before-choosing condition.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          29
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "proposedFullTarget": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          30
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentTarget": "Beans dzi gonya maize, and store as protein.",
+      "proposedFullTarget": "Beans dzi gonya maize, nahone dzi vhulunga protein.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          31
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentTarget": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "proposedFullTarget": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, fhedzi ni songo humbula uri dzi ṋea maize nutrients nga u ṱavhanya; nutrients in residues are released during decomposition.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          32
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "proposedFullTarget": "One bed eka tinguva tinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi ya xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          34,
+          35
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding.",
+      "proposedFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri maize i wana nutrients nga u ṱavhanya.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[14]",
+        "candidateIndexes": [
+          36
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentTarget": "Beans ti khandziya maize, and store as protein.",
+      "proposedFullTarget": "Beans ti khandziya maize, naswona ti hlayisa protein.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "body.paragraph[17]",
+        "candidateIndexes": [
+          37
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "currentTarget": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
+      "proposedFullTarget": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, kambe u nga ehleketi leswaku ti nyika maize nutrients hi ku hatlisa; nutrients in residues are released during decomposition.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          38
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "proposedFullTarget": "Bed nthihi eka misimu yinharhu: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          39,
+          40
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding.",
+      "proposedFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisekisi leswaku maize yi kuma nutrients hi ku hatlisa.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "fieldLocator": "title",
+        "candidateIndexes": [
+          41
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "currentTarget": "Staple Crops: Maize, Beans, and Root Vegetables",
+      "proposedFullTarget": "Zwibyariwa zwa swakudya swa nkoka: Maize, Beans, and Root Vegetables",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          43,
+          44
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedFullTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa wa sebedisa stronger doses.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          45
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "proposedFullTarget": "Pest e lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhale: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          46
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "proposedFullTarget": "Crop, pest, dose, protection le harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e bolokehe kapa e lokele.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          48,
+          49
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedFullTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana u shumisa stronger doses.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "keyPoints[3]",
+        "candidateIndexes": [
+          50
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "proposedFullTarget": "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          51
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "proposedFullTarget": "Pest kha ḽeaf, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa.",
+      "verdict": "repair",
+      "repairTarget": "Pest kha ṱari, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa.",
+      "reason": "“ḽeaf” is an untranslated/phonetic English form where a clear Tshivenda leaf word is available; repair only that ordinary noun, keeping the same pest and exactly three stated control methods.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          52
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "proposedFullTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe tsireledzea kana i fanelee.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          55
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "currentTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+      "proposedFullTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone thaidzo ya mavu kana ya u sheledza i ṱoḓa thandululo yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+      "verdict": "hold",
+      "reason": "“wasted treatment” remains ordinary English in the proposed Tshivenda rationale. The surrounding cause distinction and check-first instruction are retained, but I cannot supply a defensible Venda equivalent for that final phrase from this review.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          56,
+          57
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "proposedFullTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe ku tirhisa stronger doses.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "keyPoints[3]",
+        "candidateIndexes": [
+          58
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "If treatment is needed, use a registered product for the crop and pest and follow the label",
+      "currentTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "proposedFullTarget": "Loko treatment yi laveka, tirhisa registered product for the crop and pest kutani u landzelela label",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt",
+        "candidateIndexes": [
+          59
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "proposedFullTarget": "Pest eka rihanyu, ni tindlela tinharhu to yi lawula handle ka tikhemikhali: beneficial insect, physical barrier, ni ku yi susa hi voko.",
+      "verdict": "repair",
+      "repairTarget": "Pest eka tluka, ni tindlela tinharhu to yi lawula handle ka tikhemikhali: beneficial insect, physical barrier, ni ku yi susa hi voko.",
+      "reason": "“rihanyu” does not back-translate as leaf, so it risks changing the image description. “tluka” restores the leaf reference; the no-chemical frame and three methods remain.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          60
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "proposedFullTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi hlayiseka kumbe yi faneleka.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].rationale",
+        "candidateIndexes": [
+          63
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
+      "currentTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+      "proposedFullTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona xiphiqo xa misava kumbe xa ku cheleta xi lava ndlela yo xi lulamisa leyi hambaneke hi ku helela ni ya pest — ku kambela ku sungula ku papalata wasted treatment.",
+      "verdict": "hold",
+      "reason": "“wasted treatment” remains ordinary English in the proposed Xitsonga rationale. The soil/watering versus pest distinction and check-first order are preserved, but I cannot supply a defensible Xitsonga equivalent for the final phrase from this review.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]",
+        "candidateIndexes": [
+          64
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "proposedFullTarget": "Loko hakunene ku ri xiphiqo xa swakudya swa misava kumbe xa ku cheleta",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          65
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "proposedFullTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          66
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "proposedFullTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          67
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "currentTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "proposedFullTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndexes": [
+          68
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "proposedFullTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolo ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndexes": [
+          69
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "proposedFullTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]",
+        "candidateIndexes": [
+          70
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentTarget": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "proposedFullTarget": "Ku xavisa hi ku kongoma swi nga endla leswaku u sala na xiphemu lexikulu xa sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[8]",
+        "candidateIndexes": [
+          71
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "currentTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "proposedFullTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          72
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi permission to exchange a protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "proposedFullTarget": "Kwalithi ya mbeu i ḓitika nga crop-specific isolation, selection, labelling, storage na germination checks. Dzi check idzi a dzi sumbedzi uri ni na thendelo ya u kovhelana protected variety; ṱolani applicable rights ni sa athu u kovhelana.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "body.paragraph[10]",
+        "candidateIndexes": [
+          73
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "currentTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether it may suit their land.",
+      "proposedFullTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale",
+        "candidateIndexes": [
+          74
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "proposedFullTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    },
+    {
+      "locator": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[1].option[0]",
+        "candidateIndexes": [
+          75
+        ]
+      },
+      "nativeRegistryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "sourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "proposedFullTarget": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "verdict": "accept",
+      "reason": "Meaning and language identity match the bound English source at this field. Modal force, negation, order, quantities, named crops and safety qualifiers are preserved; remaining English is an exact technical/formal anchor or is unchanged source text.",
+      "triageClassification": "ordinary-or-mixed-frame-proposal",
+      "pendingSoilWaterOverlay": false
+    }
+  ]
+}

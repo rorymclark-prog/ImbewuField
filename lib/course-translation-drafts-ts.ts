@@ -79,7 +79,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "People Care: your family's needs come before market production",
-          "xitsongaDraft": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
+          "xitsongaDraft": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga swilo leswi endliwaka leswaku swi xavisiwa.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -97,7 +97,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+            "xitsongaDraft": "Murimi u xavisa mavele ya yena lama saleke hinkwawo, kambe a nga hlayisi na xin’we xa ku endla compost kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ngopfu ku yi landzelela?",
             "reviewStatus": "machine-draft"
           },
           "options": [

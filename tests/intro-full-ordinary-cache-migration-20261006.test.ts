@@ -1,3 +1,4 @@
+import { silentIntroIntegration } from './intro-silent-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -89,8 +90,9 @@ test('36 compressed Intro cards bind full source/target and measured manifest wh
 
 test('new Intro history rejects manifest drift and same-size corrupted or wrong-height compressed media', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  const currentSummary = soilWaterResidualMediaProof.courseAssetSizesAggregate.generatedSummaryLine;
-  assert.equal(actual.split(currentSummary).length - 1, 1, 'the residual proof identifies exactly one current generated summary');
+  // 6 October 2026: corrupt the actual later silent-release header, never a stale literal.
+  const currentSummary = silentIntroIntegration.finalManifest.summaryLine;
+  assert.equal(actual.split(currentSummary).length - 1, 1, 'the latest accepted proof identifies exactly one current generated summary');
   const wrongSummary = actual.replace(currentSummary, '// Incorrect aggregate');
   assert.notEqual(wrongSummary, actual, 'the mutation changes the current manifest');
   assert.throws(() => validateCurrentIntroFullMedia(wrongSummary));

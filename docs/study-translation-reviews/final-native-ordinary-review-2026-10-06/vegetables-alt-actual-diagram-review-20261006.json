@@ -1,0 +1,164 @@
+{
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryWrites": false,
+  "canonicalSourceFile": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-modules.ts",
+  "canonicalSourceSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "reviewAuthority": {
+    "path": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/final-native-ordinary-review-2026-10-06/root-vegetables-supplement-review-20261006.json",
+    "sha256": "7ad134073485a9d33bed2f0f39f53571414688381cf762ecbcd4ce7cc5e6737a"
+  },
+  "supplementAuthority": {
+    "path": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/final-native-ordinary-review-2026-10-06/study-final-native-ordinary-vegetables-language-supplement-20261006.json",
+    "sha256": "8f87f58c538a9d7df478b2211cac147e46214af9dee2454bd658c56d1efaa6be"
+  },
+  "rows": [
+    {
+      "language": "ve",
+      "id": "vegetables-staples-l1",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+      "currentPair": {
+        "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "tshivendaDraft": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "reviewStatus": "hold"
+      },
+      "candidate": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa.",
+      "sourceExact": true,
+      "currentTargetExact": true,
+      "image": {
+        "canonicalURL": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "absolutePath": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/public/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "sha256": "780bd7086c2807d08a245d15786d5910a36e2ce5ee5a90b019563eacadf658f0",
+        "bytes": 62890,
+        "dimensions": [
+          1200,
+          800
+        ],
+        "openedWith": "view_image actual image pixels in this review"
+      },
+      "imageCorrespondence": "compatible; no demonstrated source/image contradiction",
+      "imageEvidence": [
+        "One framed raised bed with growing soil and seedlings; clear pale paths run along both long sides.",
+        "Person stands with both boots on left access path, reaches into the middle; no feet on growing soil.",
+        "Horizontal double-headed arrow denotes bed width.",
+        "No numeric width label: about1.2metres is canonical source information, not a measurement read from the illustration.",
+        "Access from right is depicted by the right path; only left-side reaching is explicitly drawn."
+      ],
+      "noAddedSpeciesOrNumbers": true,
+      "fluentApproval": false,
+      "semanticCheck": {
+        "approximateWidth": "about1.2metres retained (VE English about1.2metres; TS kwalomu ka1.2metres)",
+        "twoSidesAndMiddle": "both paths/either-side reach and middle retained",
+        "neverStanding": "VE repaired a sa vhuye a ima removes prior not-yet/before-ever ambiguity; TS a nga tshuki a yima preserves categorical never-standing framing",
+        "technicalEnglish": [
+          "Raised bed",
+          "1.2 metres",
+          "paths"
+        ]
+      },
+      "verdict": "diagram correspondence accepted as data-only unreviewed candidate; no new image rewrite needed"
+    },
+    {
+      "language": "ts",
+      "id": "vegetables-staples-l1",
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+      "currentPair": {
+        "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "xitsongaDraft": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        "reviewStatus": "hold"
+      },
+      "candidate": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "sourceExact": true,
+      "currentTargetExact": true,
+      "image": {
+        "canonicalURL": "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "absolutePath": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/public/course-images/vegetables-staples/vegetables-staples-l1.jpg",
+        "sha256": "780bd7086c2807d08a245d15786d5910a36e2ce5ee5a90b019563eacadf658f0",
+        "bytes": 62890,
+        "dimensions": [
+          1200,
+          800
+        ],
+        "openedWith": "view_image actual image pixels in this review"
+      },
+      "imageCorrespondence": "compatible; no demonstrated source/image contradiction",
+      "imageEvidence": [
+        "One framed raised bed with growing soil and seedlings; clear pale paths run along both long sides.",
+        "Person stands with both boots on left access path, reaches into the middle; no feet on growing soil.",
+        "Horizontal double-headed arrow denotes bed width.",
+        "No numeric width label: about1.2metres is canonical source information, not a measurement read from the illustration.",
+        "Access from right is depicted by the right path; only left-side reaching is explicitly drawn."
+      ],
+      "noAddedSpeciesOrNumbers": true,
+      "fluentApproval": false,
+      "semanticCheck": {
+        "approximateWidth": "about1.2metres retained (VE English about1.2metres; TS kwalomu ka1.2metres)",
+        "twoSidesAndMiddle": "both paths/either-side reach and middle retained",
+        "neverStanding": "VE repaired a sa vhuye a ima removes prior not-yet/before-ever ambiguity; TS a nga tshuki a yima preserves categorical never-standing framing",
+        "technicalEnglish": [
+          "Raised bed",
+          "1.2 metres"
+        ]
+      },
+      "verdict": "diagram correspondence accepted as data-only unreviewed candidate; no new image rewrite needed"
+    },
+    {
+      "language": "ts",
+      "id": "vegetables-staples-l2",
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "infographicUrl": "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+      "currentPair": {
+        "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+        "xitsongaDraft": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+        "reviewStatus": "hold"
+      },
+      "candidate": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani ku byariwa swin'wana kusuhi na ximilana lexi kulaka hi ku nonoka lexi ha ka xi kula, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "sourceExact": true,
+      "currentTargetExact": true,
+      "image": {
+        "canonicalURL": "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "absolutePath": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/public/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "sha256": "892c33566d537dce0c3ded26e72b15d8ba553cd3e48bdac67ebe9298dc8d68f8",
+        "bytes": 121294,
+        "dimensions": [
+          1200,
+          800
+        ],
+        "openedWith": "view_image actual image pixels in this review"
+      },
+      "imageCorrespondence": "compatible; no demonstrated source/image contradiction",
+      "imageEvidence": [
+        "Three views arranged left-to-right portray the same bed layout through stages in the canonical interpretation.",
+        "First view shows a person harvesting small leafy crops into a basket.",
+        "Middle view shows small newly established plants beside larger plants along the other side.",
+        "Third view shows fuller growth beside the larger continuing plants; none of the three views is empty.",
+        "There are no time labels; exactly three seasons derives from source rather than independently measurable image timing.",
+        "The image does not show seed placement itself, so sowing versus generic planting is distinguished by source wording."
+      ],
+      "noAddedSpeciesOrNumbers": true,
+      "fluentApproval": false,
+      "semanticCheck": {
+        "oneBed": "yin’we replaces wrong-language nthihi",
+        "threeSeasons": "exact English over three seasons retained",
+        "sequenceBesideContinuedGrowth": "harvest, kutani/then, kusuhi/beside, slower crop still growing and never-empty framing retained",
+        "remainingSpecificityRisk": "ku byariwa swin'wana is backtranslated by the supplement as something is planted; source says a new sowing. Generic planting can include transplanting and does not explicitly bind the sowing event. The image cannot resolve that wording ambiguity.",
+        "boundedRecommendation": "Retain exact new sowing inside the ordinary then/beside framing, or obtain independent exact sowing wording; do not claim the picture proves the generic replacement equivalent."
+      },
+      "verdict": "diagram correspondence accepted; source-specific new-sowing semantic anchor still merits bounded repair/check before application"
+    }
+  ],
+  "conclusions": [
+    "All three exact source/current bindings pass, current values remain whole-English holds.",
+    "Both actual canonical diagrams opened before correspondence review; no demonstrated visual mismatch.",
+    "Approximate width and season duration are canonical contextual information, not independently labeled image measurements.",
+    "No canonical/image edits warranted from correspondence evidence.",
+    "TS L2 candidate new sowing precision remains a bounded semantic wording issue separate from compatible visual composition."
+  ],
+  "limits": [
+    "No fluent-speaker/local farming approval",
+    "No repository edits or implementation",
+    "The static diagram cannot prove all times, modal permissions or reach measurements without source context"
+  ]
+}

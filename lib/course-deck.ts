@@ -15,6 +15,10 @@ import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-au
 import { ISIZULU_DECK_SOURCE_BINDINGS } from '@/lib/course-deck-source-bindings';
 import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-registry';
 import type { IsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts';
+import { CURRENT_DECK_RELEASE_BINDINGS } from '@/lib/course-deck-release-bindings-registry';
+import type { CourseDeckReleaseBindings } from '@/lib/course-deck-release-bindings';
+import { COURSE_TRANSCRIPTS } from '@/lib/course-transcripts';
+import { trackTitle } from '@/lib/course-audio';
 
 export interface DeckAnimation {
   /** Silent clip — narration plays over it. Some clips contain labels in the deck language. */
@@ -405,6 +409,16 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${format}`;
 }
 
+/** The new silent pair supplies both pixels and reading text, independently of voice choice. */
+export function currentRegionalDeckSlide(moduleId: string, language: string, slide: number, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS) {
+  const release = bindings.resolve(moduleId, language, n => {
+    const track = COURSE_NARRATION[moduleId]?.tracks.find(row => row.slide === n);
+    const body = COURSE_TRANSCRIPTS[moduleId]?.en?.[n];
+    return track && body ? { heading: trackTitle(track, 'en'), body } : undefined;
+  });
+  return release?.slides.find(row => row.slide === slide) ?? null;
+}
+
 /** Image projection is independent of the narration hold; this is a silent visual draft only. */
 export function silentDraftSlideImageFor(
   moduleId: string,
@@ -433,7 +447,14 @@ export function slideImageFor(
   moduleId: string,
   lang: string,
   slide: number,
+  bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS,
 ): { url: string; lang: string; exact: boolean; aspectRatio?: number } | null {
+  if (bindings.has(moduleId, lang)) {
+    const current = currentRegionalDeckSlide(moduleId, lang, slide, bindings);
+    if (current) return { url: current.imageUrl, lang, exact: true, aspectRatio: current.width / current.height };
+    const fallback = slideImageUrl(moduleId, 'en', slide);
+    return fallback ? { url: fallback, lang: 'en', exact: false } : null;
+  }
   const silentImage = silentDraftSlideImageFor(moduleId, lang, slide);
   if (silentImage) return silentImage;
   const hasIsiZuluSnapshot = lang === 'zu'
