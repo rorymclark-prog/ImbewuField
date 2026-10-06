@@ -1,10 +1,13 @@
 import { checkWaterReviewedPrecision } from './water-reviewed-precision-checks.ts';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-st-water-harvesting.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+const ordinaryCompletion = JSON.parse(readFileSync(
+  new URL('../docs/study-translation-reviews/ST-WATER-ORDINARY-COMPLETION-ACCEPTED-2026-10-06.json', import.meta.url), 'utf8'));
 
 test('Water Harvesting Sesotho draft preserves exact sources, safety holds and quiz indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');
@@ -46,6 +49,16 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   checkPair(draft.title, source.title, 'module.title');
   checkPair(draft.description, source.description, 'module.description');
   assert.equal(draft.lessons.length, source.lessons.length, 'all four source lessons must be represented');
+  for (const composition of ordinaryCompletion.bodyCompositions) {
+    const sourceLesson: (typeof source.lessons)[number] = source.lessons.find(lesson => lesson.id === composition.lessonId)!;
+    const draftLesson: (typeof draft.lessons)[number] = draft.lessons.find(lesson => lesson.id === composition.lessonId)!;
+    assert.equal(draftLesson.body.sourceEnglish, composition.sourceEnglish,
+      `${composition.lessonId}: retain the complete canonical English body pairing`);
+    assert.equal(draftLesson.body.sesothoDraft, composition.proposedTarget,
+      `${composition.lessonId}: retain every accepted paragraph in its source order`);
+    assert.equal(draftLesson.body.sesothoDraft.split('\n\n').length, sourceLesson.body.split('\n\n').length,
+      `${composition.lessonId}: preserve complete body paragraph order and boundaries`);
+  }
 
   const holds: string[] = [];
   for (const [index, lesson] of draft.lessons.entries()) {
@@ -88,18 +101,8 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
       if (question.rationale.reviewStatus === 'hold') holds.push(`${questionPath}.rationale`);
     }
   }
-  assert.deepEqual(holds, [
-    'lessons[0] water-harvesting-l1.infographicAlt',
-    'lessons[0] water-harvesting-l1.keyPoints[0]',
-    'lessons[0] water-harvesting-l1.quiz[0].rationale',
-    'lessons[3] water-harvesting-l4.keyPoints[1]',
-    'lessons[3] water-harvesting-l4.keyPoints[2]',
-    'lessons[3] water-harvesting-l4.keyPoints[3]',
-    'lessons[3] water-harvesting-l4.quiz[0].options[1]',
-    'lessons[3] water-harvesting-l4.quiz[0].options[2]',
-    'lessons[3] water-harvesting-l4.quiz[0].rationale',
-    'lessons[3] water-harvesting-l4.quiz[1].rationale',
-  ], 'uncertain Sesotho safety wording stays visibly held while translated ordinary prose remains a draft');
+  assert.deepEqual(holds, [],
+    'translated fields remain machine drafts even when exact technical English is retained inside them');
 
   const greywaterSource = source.lessons[3];
   const greywaterDraft = draft.lessons[3];
@@ -111,43 +114,33 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   const draftParagraphs = greywaterDraft.body.sesothoDraft.split('\n\n');
   assert.equal(sourceParagraphs.length, 5, 'the source has five distinct advice stages');
   assert.equal(draftParagraphs.length, sourceParagraphs.length, 'keep each source stage in its own paragraph');
-  assert.ok(draftParagraphs[0].includes('Afrika Borwa') && draftParagraphs[0].endsWith('kitchen water le laundry water.'),
-    'retain the exact technical distinction between kitchen and laundry water');
-  // 2026-10-05: checked source-paired framing now translates the exclusions and decision gate.
-  // Keep the negative scope and no-advice/no-reuse condition observable after that change.
-  assert.ok(draftParagraphs[1].startsWith('O se ke wa kenya toilet water, water from nappies,') &&
-    draftParagraphs[1].includes('a ho hlatswa motho ya kulang') &&
-    draftParagraphs[1].includes('a ho hlatswa diphoofolo moralong wa reuse') &&
-    draftParagraphs[1].includes('O se ke wa sebedisa hape metsi a nang le harmful chemicals'),
-  'retain each excluded water source and the harmful-chemical prohibition');
-  assert.ok(draftParagraphs[2].startsWith('Pele ho reuse efe kapa efe, kopa municipality le qualified local sanitation adviser') &&
-    draftParagraphs[2].includes('source e tobileng') && draftParagraphs[2].includes('intended use le site') &&
+  assert.ok(draftParagraphs[0].includes('Afrika Borwa') &&
+    draftParagraphs[0].endsWith('metsi a khitjhineng le metsi a ho hlatswa diaparo.'),
+    'keep the South African scope and distinguish kitchen from laundry water');
+  assert.equal(draftParagraphs[1],
+    'O se ke wa kenya metsi a ntlwana, metsi a tswang ho nappies, a ho hlatswa motho ya kulang kapa a ho hlatswa diphoofolo moralong wa ho sebedisa metsi hape. O se ke wa sebedisa hape metsi a nang le dikhemikhale tse kotsi.',
+    'exclude toilet, nappy, sick-person wash and animal-wash water from reuse, and separately prohibit water with harmful chemicals');
+  assert.ok(draftParagraphs[2].startsWith('Pele ho tshebediso efe kapa efe ya metsi hape, kopa masepala le qualified local sanitation adviser') &&
+    draftParagraphs[2].includes('mohlodi o tobileng') && draftParagraphs[2].includes('tshebediso e rerilweng le setsha') &&
     draftParagraphs[2].endsWith('Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.'),
-  'keep the municipality/adviser checks and block reuse when advice is missing or unclear');
-  for (const safetyClause of [
-    'Soil le mulch ha di disinfect wastewater.',
-    'Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo.',
-    'O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.',
-  ]) {
-    assert.ok(draftParagraphs[3].includes(safetyClause), `retain the checked wastewater safety rule: ${safetyClause}`);
-  }
+    'keep the exact source, household service, intended use and site check; block reuse when advice is unavailable or unclear');
+  assert.ok(draftParagraphs[3].includes('Mobu le mulch ha di disinfect wastewater.') &&
+    draftParagraphs[3].includes('drinking-water plumbing') &&
+    draftParagraphs[3].includes('kantle ho property ho kena seterateng, drain kapa watercourse.'),
+    'keep wastewater disinfection, plumbing, contact and discharge safeguards');
   assert.match(sourceParagraphs[4], /already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice\.$/,
     'the stop rule applies to an operating system when any listed symptom occurs');
-  assert.ok(draftParagraphs[4].startsWith('Haeba reuse system e se e sebetsa '),
-    'translate the ordinary operating-system lead-in while preserving the conditional safety clause');
-  assert.ok(draftParagraphs[4].includes('e se e sebetsa mme the water') &&
-    draftParagraphs[4].includes('the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.') &&
-    draftParagraphs[4].indexOf('e se e sebetsa') < draftParagraphs[4].indexOf('mme the water') &&
-    draftParagraphs[4].indexOf('mme the water') < draftParagraphs[4].indexOf('smells bad'),
-    'preserve the AND operating condition, OR symptom trigger and qualified-advice action exactly');
+  assert.equal(draftParagraphs[4],
+    'Haeba tsamaiso ya ho sebedisa metsi hape e se e sebetsa mme metsi a nkga hampe, a bokellana a eme kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.',
+    'keep the stop rule conditional on an operating system AND bad smell OR pooling OR plant harm, then retain qualified local advice');
 
   const greywaterVisible = resolveLearnerLessonPresentation(greywaterSource, 'st');
   assert.equal(greywaterVisible.status, 'draft');
   assert.equal(greywaterVisible.content.body, greywaterDraft.body.sesothoDraft);
   assert.equal(greywaterDraft.quiz[0].sourceCorrectIndex, greywaterSource.quiz[0].correct);
   assert.equal(greywaterDraft.quiz[0].options[2].sourceEnglish, 'Use it if it looks clear');
-  assert.equal(greywaterDraft.quiz[0].options[2].sesothoDraft, 'Use it if it looks clear',
-    'do not translate a clear-looking distractor as though water were confirmed clean');
+  assert.equal(greywaterDraft.quiz[0].options[2].sesothoDraft, 'A sebedise haeba a shebahala a hlakile',
+    'translate the false clear-looking distractor without turning appearance into a safety guarantee');
   const changedGreywaterSource = {
     ...greywaterSource,
     body: greywaterSource.body.replace('Do not include toilet water', 'Include toilet water'),
@@ -177,17 +170,17 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   'retain the correct evaporation/seepage terms and preserve the checks');
   const waterL2ProtectionQuiz = waterL2Draft.quiz[1];
   assert.equal(waterL2ProtectionQuiz.sourceCorrectIndex, waterL2Source.quiz[1].correct);
-  assert.ok(waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft.includes('keep the spillway clear'),
-    'the correct protection option must say the spillway stays unobstructed, not merely clean');
+  assert.ok(waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft.includes('spillway e sa thibehang'),
+    'the correct protection option must say the spillway stays unobstructed');
   assert.ok(waterL2ProtectionQuiz.rationale.sesothoDraft.startsWith('Spillway e sa thibehang') &&
-    waterL2ProtectionQuiz.rationale.sesothoDraft.includes('earth dam'),
+    waterL2ProtectionQuiz.rationale.sesothoDraft.includes('lerako la letamo la mobu'),
     'the feedback must preserve the spillway-clear requirement');
   assert.equal(waterL2Visible.content.quiz[1].options[waterL2ProtectionQuiz.sourceCorrectIndex],
     waterL2ProtectionQuiz.options[waterL2ProtectionQuiz.sourceCorrectIndex].sesothoDraft);
   assert.equal(waterL2Visible.content.quiz[1].rationale, waterL2ProtectionQuiz.rationale.sesothoDraft);
   assert.ok(waterL2Paragraphs[7].startsWith('Boloka spillway e sa thibehang') &&
-    waterL2Paragraphs[7].includes('bank cover e boletsweng design') &&
-    waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la earth dam.'),
+    waterL2Paragraphs[7].includes('sekwahelo sa lebopo se boletsweng moralong') &&
+    waterL2Paragraphs[7].endsWith('O se ke wa jala difate hodima lerako la letamo la mobu.'),
     'preserve unobstructed spillway and design-specified cover, plus the existing tree prohibition');
   const changedWaterL2 = {
     ...waterL2Source,
@@ -203,12 +196,21 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.equal(visible.status, 'draft');
   assert.equal(visible.content.body, draft.lessons[0].body.sesothoDraft,
     'the exact-source-paired Sesotho body should be shown as an unreviewed learner draft');
-  assert.equal(visible.content.infographicAlt, swaleSource.infographicAlt);
-  assert.equal(visible.content.keyPoints[0], swaleSource.keyPoints[0]);
+  assert.equal(visible.content.infographicAlt, draft.lessons[0].infographicAlt?.sesothoDraft);
+  assert.equal(visible.content.keyPoints[0], draft.lessons[0].keyPoints[0].sesothoDraft);
   assert.equal(visible.content.quiz[0].q, draft.lessons[0].quiz[0].question.sesothoDraft);
-  assert.equal(visible.content.quiz[0].rationale, swaleSource.quiz[0].rationale);
+  assert.equal(visible.content.quiz[0].rationale, draft.lessons[0].quiz[0].rationale.sesothoDraft);
   assert.equal(visible.content.quiz[1].q, draft.lessons[0].quiz[1].question.sesothoDraft,
     'the second question should use its exact-source-paired Sesotho draft');
+
+  const waterL3 = source.lessons[2];
+  const waterL3Draft = draft.lessons[2];
+  const waterL3Paragraphs = waterL3Draft.body.sesothoDraft.split('\n\n');
+  assert.equal(waterL3Paragraphs.length, waterL3.body.split('\n\n').length);
+  assert.ok(waterL3Paragraphs[9].startsWith('Rala seo o tla se etsa ha metsi a bolokilweng a se a le manyenyane.'),
+    'plan while stored water is low, without waiting for the tank to be empty or adding a critical threshold');
+  assert.ok(waterL3Paragraphs[9].includes('Lebitso la provense feela ha le bolele boholo ba tanka'),
+    'preserve that province alone does not determine tank size');
 
   const body = draft.lessons[0].body;
   assert.equal(body.reviewStatus, 'machine-draft');
@@ -216,18 +218,21 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
   assert.equal(body.sesothoDraft.split('\n\n').length, 8);
   for (const requiredMeaning of [
     'level trench on contour',
-    'slight, controlled grade',
+    'grade e nyenyane, e laolwang',
     'safe outlet',
-    'Pele o tjheka, kopa trained local adviser hore a hlahlobe line, overflow le receiving point',
+    'moeletsi wa sebaka seo ya kwetlisitsweng',
+    'mola, overflow le receiving point',
     'berm ka lehlakoreng le theohelang',
-    'di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka site',
+    'ho ya ka setsha',
+    'di ka sebedisa metsi a bolokilweng mobung ka mora pula',
     'e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung',
     'Rala tsela e bolokehileng ya overflow pele o tjheka',
-    'Tsela ha e a lokela ho baka erosion moepeng',
+    'Tsela ha e a lokela ho baka kgoholeho moepeng',
     'metsi a senyang ho moahisani',
-    'A downstream swale or dam must be able to receive it safely',
-    'Slope feela ha e bolele hore swale e loketse',
-    'local assessment pele o tjheka sebakeng se steep, wet kapa unstable',
+    'Downstream swale kapa letamo di tlameha ho kgona ho amohela metsi ao ka polokeho',
+    'Letswapo feela ha le bolele hore swale e loketse',
+    'mobu o sa tsitsang',
+    'Fumana tlhahlobo ya sebaka seo pele o tjheka sebakeng se moepa, se metsi kapa se sa tsitsang',
   ]) {
     assert.ok(body.sesothoDraft.includes(requiredMeaning),
       `the body must retain this source condition or technical distinction: ${requiredMeaning}`);
@@ -246,16 +251,21 @@ test('Water Harvesting Sesotho draft preserves exact sources, safety holds and q
 
   const quiz0Question = draft.lessons[0].quiz[0].question;
   assert.equal(quiz0Question.reviewStatus, 'machine-draft');
-  assert.ok(quiz0Question.sesothoDraft.includes('one end'),
-    'the source says one end, so the candidate must not narrow it to a point');
+  assert.ok(quiz0Question.sesothoDraft.startsWith('Sehwai se rerile '),
+    'use the DBE-attested South African spelling in this farmer question only');
+  assert.ok(quiz0Question.sesothoDraft.includes('ntlha e nngwe e tshwere boholo ba metsi'),
+    'the source says one end holds most of the water; preserve both the end and most qualifiers');
   assert.ok(quiz0Question.sesothoDraft.includes('Ka mora pula e matla'));
   assert.ok(quiz0Question.sesothoDraft.includes('pele se fetola earthwork'));
-  assert.equal(draft.lessons[0].quiz[0].rationale.reviewStatus, 'hold',
-    'the geometry rationale remains exact English pending its separate review');
-  assert.equal(draft.lessons[0].quiz[0].rationale.sesothoDraft,
-    draft.lessons[0].quiz[0].rationale.sourceEnglish);
+  assert.equal(draft.lessons[0].quiz[0].rationale.reviewStatus, 'machine-draft',
+    'translated rationale framing remains visibly unreviewed while its unresolved predicate stays in English');
+  assert.ok(draft.lessons[0].quiz[0].rationale.sesothoDraft.includes('Uneven filling') &&
+    draft.lessons[0].quiz[0].rationale.sesothoDraft.includes('safe outlet'),
+    'preserve the exact uneven-filling predicate and safe-outlet qualification');
   const quiz1Question = draft.lessons[0].quiz[1].question;
   assert.equal(quiz1Question.reviewStatus, 'machine-draft');
+  assert.ok(quiz1Question.sesothoDraft.startsWith('Sehwai se batlang '),
+    'use the DBE-attested spelling in the second checked farmer question without changing its actor');
   assert.ok(quiz1Question.sesothoDraft.includes('mobung o moepa'));
   assert.ok(quiz1Question.sesothoDraft.includes('pele se tjheka'));
 });

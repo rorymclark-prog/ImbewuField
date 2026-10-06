@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-06",
+  "repairedPacket": "/tmp/imbewu-ve-water-ordinary-completion-repaired-candidates-20261006.json",
+  "repairedSHA256": "56585edea63e8b0d664e72ef8c6c550b119953f26b8ea548a4fd5a6722378612",
+  "originalPacket": "/tmp/imbewu-ve-water-ordinary-completion-candidates-20261006.json",
+  "originalSHA256": "fd169540ce2091d0c31508ffb2cf03080d843ba159ca5a2abec04fe4af295f96",
+  "independentReport": "/tmp/imbewu-ve-water-ordinary-completion-independent-check-20261006.json",
+  "independentSHA256": "2f5c0983c012148934516020f4ddcded91abe256e78f6b65b19f51ee44080f21",
+  "actualNativeCanonicalResolverProof": {
+    "head": "66b274842927ba93e47586c322325742716d2a39",
+    "packetSHA256": "fd169540ce2091d0c31508ffb2cf03080d843ba159ca5a2abec04fe4af295f96",
+    "nativeSHA256": "5e4b578d242215a0d173bdac6c31dc4bb4f303f137432716c21856e1538090d9",
+    "canonicalSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "rowCount": 108,
+    "changedCount": 77,
+    "bodyParagraphs": 35,
+    "errors": []
+  },
+  "sourceCurrentAll108Retained": true,
+  "uniqueIds": 108,
+  "sixOverlaysOnly": true,
+  "nonOverlayCandidateRowsUnchanged": true,
+  "allBodyCompositionsRecomputed": true,
+  "changedUnits": 77,
+  "unchangedUnits": 31,
+  "titleVerdict": {
+    "id": "water-harvesting::ve::water-harvesting-l2::title",
+    "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+    "currentTarget": "Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Gomelelo",
+    "recommendedTarget": "Madamu na Zwidziva zwa Bulasini: U Vhulunga Maḓi a Tshifhinga tsha Dry Season",
+    "verdict": "accept-bounded-exact-English-repair",
+    "reason": "Replace only drought-denoting Gomelelo with exact source Dry Season. All localized framing is byte-identical; no new seasonal vocabulary, dates, weather thresholds or regional assumption. This removes drought narrowing without a new translation claim.",
+    "oneReplacementOnly": true,
+    "canonicalSourceUnchanged": true,
+    "appliedToCandidatePacket": false,
+    "awaitsRootTitleAcceptance": true,
+    "fluentApproval": false
+  },
+  "lexicalEvidence": [
+    {
+      "term": "muhura",
+      "url": "https://ir.unisa.ac.za/bitstream/handle/10500/19465/Wentzel__PJ__9781868882953__Section4.pdf?isAllowed=y&sequence=4",
+      "publisher": "UNISA Press",
+      "authors": "P.J. Wentzel and T.W. Muloiwa",
+      "printedPage": 183,
+      "pdfPageIndex": 35,
+      "snippet": "neighbour mufhatisani (vha-), muhura (vha-)",
+      "independentlyOpened": true,
+      "rootVerified": false,
+      "limit": "Lexical neighbour only; not paragraph fluency or engineering approval."
+    },
+    {
+      "term": "Tsivhudzo",
+      "url": "https://www.education.gov.za/Portals/0/Documents/Manuals/MTG%20Literature/tshivenda-novel-isha-c2b7a-mi1odzi-.pdf",
+      "publisher": "Department of Basic Education",
+      "printedPage": 2,
+      "pdfPageIndex": 5,
+      "snippet": "TSIVHUDZO YA KUVHALELE NA KUṄWALELE KWA MULINGO",
+      "independentlyOpened": true,
+      "rootVerified": false,
+      "limit": "Official advice/guidance heading usage; does not certify technical greywater translation."
+    }
+  ],
+  "noRepositoryWrites": true,
+  "fluentApproval": false
+}

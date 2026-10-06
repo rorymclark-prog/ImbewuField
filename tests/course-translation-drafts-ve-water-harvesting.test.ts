@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
@@ -11,6 +13,55 @@ import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../li
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
 import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
+
+
+// 2026-10-06: the reviewed ordinary completion supersedes full-English holds and old
+// mixed targets. Keep their complete historical safety assertions against the dated
+// native snapshot, but reject live source/target/index drift before any rewind.
+function withHistoricalWater(assertHistoricalClaims: () => void) {
+  const dir = 'docs/study-translation-reviews/water-ordinary-ve-2026-10-06/';
+  const bytes = readFileSync(dir + 'root-reviewed-candidates.json');
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),
+    'ba100aa5be8dadd3f2ac6de4b63cbae44cb6bb144990cfaaa1ae0593deb5cb02');
+  const packet = JSON.parse(bytes.toString());
+  const baseline = JSON.parse(readFileSync(dir + 'native-before.json', 'utf8'));
+  const expected = structuredClone(baseline.draft);
+  assert.deepEqual(COURSE_MODULES.find(module => module.id === 'water-harvesting'), baseline.canonical);
+  for (const row of packet.rows) {
+    if (row.fieldPath === 'body') continue;
+    const owner = row.lessonId
+      ? expected.lessons.find((lesson: { id: string }) => lesson.id === row.lessonId) : expected;
+    const pair = row.fieldPath.replace(/\[(\d+)\]/g, '.$1').split('.')
+      .reduce((value: any, key: string) => value[key], owner);
+    assert.equal(pair.sourceEnglish, row.sourceEnglish);
+    assert.equal(pair.tshivendaDraft, row.currentTarget);
+    if (row.proposedTarget !== row.currentTarget) {
+      pair.tshivendaDraft = row.proposedTarget;
+      pair.reviewStatus = row.proposedReviewStatus;
+    }
+  }
+  for (const body of packet.bodyCompositions) {
+    const pair = expected.lessons.find((lesson: { id: string }) => lesson.id === body.lessonId).body;
+    assert.equal(pair.sourceEnglish, body.sourceEnglish);
+    assert.equal(pair.tshivendaDraft, body.currentTarget);
+    pair.tshivendaDraft = body.proposedTarget;
+  }
+  const live = TSHIVENDA_WATER_HARVESTING_DRAFT;
+  assert.deepEqual(live, expected, 'verify all current accepted and unlisted fields before historical rewind');
+  assert.match(live.lessons[0].body.tshivendaDraft,
+    /A downstream swale or dam must be able to receive it safely\./);
+  assert.match(live.lessons[2].body.tshivendaDraft, /stored water runs low/);
+  assert.match(live.lessons[3].body.tshivendaDraft,
+    /If a reuse system is already operating and the water smells bad, pools or harms plants,/);
+  const saved = structuredClone(live);
+  try {
+    Object.assign(live, structuredClone(baseline.draft));
+    assertHistoricalClaims();
+  } finally {
+    Object.assign(live, saved);
+    assert.deepEqual(live, expected, 'historical checks must restore the complete current registry');
+  }
+}
 
 test('regional Study cards distinguish English module copy from available lesson drafts', () => {
   const source = (id: string) => {
@@ -43,7 +94,7 @@ test('regional Study cards distinguish English module copy from available lesson
   }
 });
 
-test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer mapping intact', () => {
+test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer mapping intact', () => withHistoricalWater(() => {
   const source = COURSE_MODULES.find(module => module.id === 'water-harvesting');
   assert.ok(source, 'the draft must stay paired to the canonical Water Harvesting module');
   const draft = TSHIVENDA_WATER_HARVESTING_DRAFT;
@@ -381,9 +432,9 @@ test('Water Harvesting Tshivenda draft keeps safety clauses exact and answer map
   for (const criticalClaim of ['safe overflow', 'earth dam wall', 'first-flush diverter', 'not make the remaining water safe to drink', 'qualified local sanitation adviser', 'soil and mulch do not disinfect', 'Do not spray it, let it pool', 'water smells bad, pools or harms plants']) {
     assert.ok(held.toLowerCase().includes(criticalClaim.toLowerCase()), `critical technical anchor remains source-paired: ${criticalClaim}`);
   }
-});
+}));
 
-test('Tshivenda Water Harvesting shows source-paired lesson drafts and retains held technical claims', () => {
+test('Tshivenda Water Harvesting shows source-paired lesson drafts and retains held technical claims', () => withHistoricalWater(() => {
   const source = COURSE_MODULES.find(module => module.id === TSHIVENDA_WATER_HARVESTING_DRAFT.id);
   assert.ok(source, 'the canonical Water Harvesting module must exist');
   const modulePresentation = resolveCourseModulePresentation(source, 've');
@@ -465,7 +516,7 @@ test('Tshivenda Water Harvesting shows source-paired lesson drafts and retains h
     'the silent, source-paired Tshivenda review deck is available');
   assert.deepEqual(resolveNarrationLang(source.id, 've'), { lang: 'en', exact: false },
     'Tshivenda narration remains explicitly identified as English');
-});
+}));
 
 test('Soil Health Tshivenda L1 keeps the complete paired body visibly in draft', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');

@@ -1,0 +1,3072 @@
+{
+  "title": "Independent Xitsonga Water Harvesting ordinary-prose semantic backcheck",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "implementationApproval": false,
+  "packetPath": "/tmp/imbewu-ts-water-ordinary-completion-root-risk-repaired-candidates-20261006.json",
+  "packetSha256": "2b24d6a1c0e3c5f3b0d0a81e3dce7260c3aee9f923a8d48c0fc5d35e107a775c",
+  "branch": "codex/regional-water-ordinary-completion-20261006",
+  "baseHead": "66b274842927ba93e47586c322325742716d2a39",
+  "reviewScope": {
+    "allReviewUnits": 108,
+    "changedRowsIndependentlyScreened": 73,
+    "allFourBodiesRecomposedAndCompared": true,
+    "fourBodyParagraphs": 35,
+    "moduleMetadataChanges": 1
+  },
+  "reviewLimit": "Model-level semantic/source backcheck only. I am not claiming Xitsonga fluency, Shangani equivalence, local farming approval, or production readiness. Retained English technical terms and machine-draft grammar still require fluent review.",
+  "nativeSourceAndResolverBackcheck": {
+    "workingHead": "66b274842927ba93e47586c322325742716d2a39",
+    "packetSourceHashVerified": true,
+    "nativeBindingHashesMatchCurrentTree": true,
+    "tsWaterRegistryUnmodifiedAtBase": true,
+    "canonicalModuleAuthority": "lib/course-modules.ts / water-harvesting",
+    "resolverImportsTsRegistry": true,
+    "sourceFieldSnapshotCount": 75,
+    "registryReviewStatus": "machine-draft",
+    "sourceAndCurrentCorrectIndicesPerLesson": [
+      {
+        "moduleId": "water-harvesting",
+        "lessonId": "water-harvesting-l1",
+        "language": "ts",
+        "status": "draft",
+        "sourceParagraphCount": 8,
+        "targetParagraphCount": 8,
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "currentCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "moduleId": "water-harvesting",
+        "lessonId": "water-harvesting-l2",
+        "language": "ts",
+        "status": "draft",
+        "sourceParagraphCount": 9,
+        "targetParagraphCount": 9,
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "currentCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "moduleId": "water-harvesting",
+        "lessonId": "water-harvesting-l3",
+        "language": "ts",
+        "status": "draft",
+        "sourceParagraphCount": 13,
+        "targetParagraphCount": 13,
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "currentCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "moduleId": "water-harvesting",
+        "lessonId": "water-harvesting-l4",
+        "language": "ts",
+        "status": "draft",
+        "sourceParagraphCount": 5,
+        "targetParagraphCount": 5,
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "currentCorrectIndices": [
+          1,
+          1
+        ]
+      }
+    ],
+    "candidateChangesAnswerOrder": false,
+    "moduleDescriptionSourceComparedAgainst": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+    "actualTsRegistryParsedReadOnly": true,
+    "actualRegistryLessonOrder": [
+      "water-harvesting-l1",
+      "water-harvesting-l2",
+      "water-harvesting-l3",
+      "water-harvesting-l4"
+    ],
+    "canonicalLessonOrderMatchesRegistry": true,
+    "sourceSnapshotCurrentFieldsMatchActualRegistry": true,
+    "matchedCurrentFieldCount": 75,
+    "actualQuizSourceCorrectIndices": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "resolverExactSourcePairAndCorrectIndexGuardsInspected": true,
+    "lessonIdsAndFieldCoverageAgreeWithCanonicalAndRegistry": true
+  },
+  "fullBodyCompositionAudit": [
+    {
+      "lessonId": "water-harvesting-l1",
+      "sourceParagraphs": 8,
+      "currentParagraphs": 8,
+      "proposedParagraphs": 8,
+      "changedIndices": [
+        0,
+        4,
+        7
+      ],
+      "unchangedCurrentParagraphsPreservedExactly": [
+        1,
+        2,
+        3,
+        5,
+        6
+      ],
+      "compositionPass": true
+    },
+    {
+      "lessonId": "water-harvesting-l2",
+      "sourceParagraphs": 9,
+      "currentParagraphs": 9,
+      "proposedParagraphs": 9,
+      "changedIndices": [
+        1,
+        3,
+        5
+      ],
+      "unchangedCurrentParagraphsPreservedExactly": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        8
+      ],
+      "compositionPass": true
+    },
+    {
+      "lessonId": "water-harvesting-l3",
+      "sourceParagraphs": 13,
+      "currentParagraphs": 13,
+      "proposedParagraphs": 13,
+      "changedIndices": [
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "unchangedCurrentParagraphsPreservedExactly": [
+        0,
+        1,
+        6
+      ],
+      "compositionPass": true
+    },
+    {
+      "lessonId": "water-harvesting-l4",
+      "sourceParagraphs": 5,
+      "currentParagraphs": 5,
+      "proposedParagraphs": 5,
+      "changedIndices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unchangedCurrentParagraphsPreservedExactly": [
+        0
+      ],
+      "compositionPass": true
+    }
+  ],
+  "protectedMeaningReview": [
+    {
+      "aspect": "quantifiers/modality",
+      "result": "checked",
+      "notes": "some, may/can, likely, all/every, any, none/no, only, and not-guaranteed claims were checked row by row; row 64 requires repair because a spatial reading of any is possible."
+    },
+    {
+      "aspect": "conditions/order",
+      "result": "checked",
+      "notes": "before-digging/construction/reuse, if/when triggers, first-flush order, local advice, and intended-use limits were checked."
+    },
+    {
+      "aspect": "technical distinctions",
+      "result": "checked",
+      "notes": "level contour vs slight controlled grade, runoff vs stored/supply water, dry spell vs drought, source vs spring, property vs farm, watercourse vs river, downstream receiving ability, erosion vs breach, dam bank and sink-every-drop wording were explicitly reviewed."
+    },
+    {
+      "aspect": "quiz answer binding",
+      "result": "preserved",
+      "notes": "Four lessons each retain 8/9/13/5 item counts and source/current correct indices [1,1]; candidate fields do not reorder options. Quiz semantics screened against unchanged English source."
+    },
+    {
+      "aspect": "false distractors",
+      "result": "checked",
+      "notes": "False options retain their false proposition and polarity. Row 50 is held because the Xitsonga reading of ntsengo could be price or amount."
+    }
+  ],
+  "summary": {
+    "acceptMeaningOnly": 65,
+    "repair": 1,
+    "hold": 7,
+    "holdIds": [
+      "water-harvesting::water-harvesting-l2::ts::quiz[0].options[3]",
+      "water-harvesting::water-harvesting-l3::ts::quiz[0].options[1]",
+      "water-harvesting::water-harvesting-l3::ts::quiz[0].options[3]",
+      "water-harvesting::water-harvesting-l3::ts::quiz[1].rationale",
+      "water-harvesting::water-harvesting-l4::ts::body::paragraph[1]",
+      "water-harvesting::water-harvesting-l4::ts::quiz[1].options[0]",
+      "water-harvesting::ts::moduleDescription"
+    ],
+    "repairIds": [
+      "water-harvesting::water-harvesting-l4::ts::quiz[0].question"
+    ],
+    "completionClaimed": false
+  },
+  "rows": [
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::body::paragraph[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 0,
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentTarget": "Muxaka wun'we wa xisele (swale) i a level trench on contour. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku some water can soak into suitable soil. Swisele swin'wana swi dizayiniwa with a slight, controlled grade to carry excess water slowly to a safe outlet. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela line, overflow na receiving point u nga si cela.",
+      "proposed": "Muxaka wun'we wa xisele (swale) i a level trench on contour. Wu nonokisa mati lama khulukaka (runoff) wu tlhela wu ma hangalasa, leswaku mati man’wana ma kota ku nghena eka misava leyi faneleke. Swisele swin'wana swi dizayiniwa hi a slight, controlled grade, leswaku swi rhwala excess water hi ku nonoka ku ya eka outlet leyi hlayisekeke. Ndlela leyi faneleke ndhawu ya wena yi titshege hi misava, ku rhelela, ku humesa mati na ku khuluka ka mati ya xidzedze. Kombela mutsundzuxi wa laha kaya loyi a leteriweke leswaku a kambela line, overflow na ndhawu leyi mati ma amukeriwaka eka yona u nga si cela.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "swale",
+          "proposedBounds": [
+            25,
+            30
+          ],
+          "category": "hydrology",
+          "reason": "Established engineered feature name; current xisele gloss remains; no new design instruction.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "a level trench on contour",
+          "proposedBounds": [
+            34,
+            59
+          ],
+          "category": "geometry-precision",
+          "reason": "Root risk repair: preserve exact level trench on contour geometry without claiming unproven local surveying equivalence.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            94,
+            100
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "a slight, controlled grade",
+          "proposedBounds": [
+            231,
+            257
+          ],
+          "category": "geometry-precision",
+          "reason": "Root risk repair: preserve both slight and controlled designed grade; no unproven local geometry substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "excess water",
+          "proposedBounds": [
+            278,
+            290
+          ],
+          "category": "hydrology",
+          "reason": "Extra flow requiring safe handling; avoid substituting a fixed threshold or all stored water.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "outlet",
+          "proposedBounds": [
+            314,
+            320
+          ],
+          "category": "hydrology",
+          "reason": "Engineered receiving outlet, with safe qualifier retained.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "line",
+          "proposedBounds": [
+            529,
+            533
+          ],
+          "category": "surveying",
+          "reason": "Survey/design line rather than an arbitrary drawn line.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "overflow",
+          "proposedBounds": [
+            535,
+            543
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves one kind of swale, the exact level-on-contour geometry, some infiltration into suitable soil, other swales' slight controlled grade, excess water, safe outlet, trained local check, and before-digging condition. Exact geometry and design anchors remain in English.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::body::paragraph[4]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentTarget": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. A downstream swale or dam must be able to receive it safely.",
+      "proposed": "Ndlela ya kona a yi fanelanga ku kukula misava ya ndhawu yo rhelela kumbe ku rhumela mati lama onhaka eka muakelani. Xisele (swale) kumbe damu leswi nga downstream swi fanele ku kota ku ma amukela hi ndlela leyi hlayisekeke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "swale",
+          "proposedBounds": [
+            125,
+            130
+          ],
+          "category": "hydrology",
+          "reason": "Established engineered feature name; current xisele gloss remains; no new design instruction.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "downstream",
+          "proposedBounds": [
+            153,
+            163
+          ],
+          "category": "hydrology",
+          "reason": "Relative flow-direction location, not merely a neighbour or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the prohibition on erosion and damaging water to a neighbour, plus the requirement that a downstream swale or dam must be able to receive it safely.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::body::paragraph[7]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 7,
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentTarget": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka steep, wet kumbe unstable land. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+      "proposed": "Hlayisa misava yi funengetekile kahle. Kuma nkambelo wa laha kaya u nga si cela eka ndhawu leyi rhelelaka ngopfu, leyi nga tsakama kumbe leyi nga tiyangiki. Mindzilakano ya byanyi (grass barriers) na titerasi (terraces) na swona swi lava dizayini leyi faneleke ndhawu.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "grass barriers",
+          "proposedBounds": [
+            181,
+            195
+          ],
+          "category": "hydrology",
+          "reason": "Existing landscape feature gloss; current translated prefix preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "terraces",
+          "proposedBounds": [
+            210,
+            218
+          ],
+          "category": "hydrology",
+          "reason": "Existing engineered landform gloss; design/site qualification preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves all three site qualifiers as alternatives (steep OR wet OR unstable) and the local assessment before digging.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].question",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+      "currentTarget": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+      "proposed": "Murimi u pulanile level contour swale. Endzhaku ka mpfula ya ntamu, makumu man’we ma khoma vunyingi bya mati. Xana murimi u fanele ku kambela yini a nga si cinca earthwork?",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "swale",
+          "proposedBounds": [
+            32,
+            37
+          ],
+          "category": "hydrology",
+          "reason": "Established engineered feature name; current xisele gloss remains; no new design instruction.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "earthwork",
+          "proposedBounds": [
+            162,
+            171
+          ],
+          "category": "engineering",
+          "reason": "Engineered earthwork category; no instruction to excavate is added.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the planned level contour swale, heavy rain, one end holding most water, and the before-changing check question.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].rationale",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+      "currentTarget": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+      "proposed": "Dizayini ya level contour yi fanele ku hangalasa mati eka vulehi bya yona. Ku tala loku nga ringaniki ku nga komba low point leyi nga kunguhatiwangiki, kambe swisele swin’wana swi endliwa grade hi xikongomelo leswaku mati ma ya eka outlet leyi hlayisekeke. Kambela dizayini ya xiviri, misava ni overflow route u nga si yi cinca.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "low point",
+          "proposedBounds": [
+            115,
+            124
+          ],
+          "category": "surveying",
+          "reason": "Accidental low point in the design, with unintended/may preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "grade",
+          "proposedBounds": [
+            188,
+            193
+          ],
+          "category": "hydrology",
+          "reason": "Designed slope/grade precision; slight and controlled are localized separately.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        },
+        {
+          "retainedEnglish": "outlet",
+          "proposedBounds": [
+            232,
+            238
+          ],
+          "category": "hydrology",
+          "reason": "Engineered receiving outlet, with safe qualifier retained.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "overflow",
+          "proposedBounds": [
+            295,
+            303
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves should/ may, uneven fill as a possible sign, some swales intentionally graded, safe outlet, and checking design/soil/overflow before alteration.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].options[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Whether the trench can be made deeper without a site check",
+      "currentTarget": "Whether the trench can be made deeper without a site check",
+      "proposed": "Ku vona loko xisele xi nga entisiwa ku nga ri na nkambelo wa ndhawu",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option remains false: asks whether to deepen a trench without a site check.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].options[1]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+      "currentTarget": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+      "proposed": "Dizayini leyi kunguhatiweke ni levels leti pimiweke swin’we ni mutsundzuxi wa laha kaya loyi a leteriweke; low point leyi nga kunguhatiwangiki yi nga va kona",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "levels",
+          "proposedBounds": [
+            31,
+            37
+          ],
+          "category": "surveying",
+          "reason": "Measured elevations/levels; no arbitrary waterline interpretation.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "low point",
+          "proposedBounds": [
+            107,
+            116
+          ],
+          "category": "surveying",
+          "reason": "Accidental low point in the design, with unintended/may preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the intended design, measured levels, trained local adviser, and the possibility (not certainty) of an unintended low point.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].options[2]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Whether a new dam at the lowest point will catch every overflow",
+      "currentTarget": "Whether a new dam at the lowest point will catch every overflow",
+      "proposed": "Ku vona loko damu lerintshwa eka ndhawu leyi nga ehansi ku hundza hinkwato ri ta khoma overflow yin’wana ni yin’wana",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "overflow",
+          "proposedBounds": [
+            87,
+            95
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains new dam, lowest point, and every-overflow scope.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[0].options[3]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Whether the soil should be compacted to stop all infiltration",
+      "currentTarget": "Whether the soil should be compacted to stop all infiltration",
+      "proposed": "Ku vona loko misava yi fanele ku endliwa compaction leswaku yi yimisa infiltration hinkwato",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "compaction",
+          "proposedBounds": [
+            41,
+            51
+          ],
+          "category": "engineering",
+          "reason": "Compacting process; deliberate false option remains false.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        },
+        {
+          "retainedEnglish": "infiltration",
+          "proposedBounds": [
+            70,
+            82
+          ],
+          "category": "hydrology",
+          "reason": "Water entering soil process; all/no source qualifiers preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains compaction with the aim of stopping all infiltration.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].question",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A farmer wants to control erosion on steep land. What should she do before digging?",
+      "currentTarget": "A farmer wants to control erosion on steep land. What should she do before digging?",
+      "proposed": "Murimi u lava ku lawula ku kukuleka ka misava eka ndhawu leyi rhelelaka ngopfu. Xana u fanele ku endla yini a nga si cela?",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves steep land, erosion control, and the before-digging question.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].rationale",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
+      "currentTarget": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
+      "proposed": "Ku rhelela ntsena a ku enelanga ku hlawula earthwork. Misava, drainage, stability ni ku khuluka ka mati ya xidzedze na swona swi fanele ku kamberiwa.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "earthwork",
+          "proposedBounds": [
+            43,
+            52
+          ],
+          "category": "engineering",
+          "reason": "Engineered earthwork category; no instruction to excavate is added.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "drainage",
+          "proposedBounds": [
+            62,
+            70
+          ],
+          "category": "engineering",
+          "reason": "Drainage-site condition noun, not only running water.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "stability",
+          "proposedBounds": [
+            72,
+            81
+          ],
+          "category": "engineering",
+          "reason": "Ground/structural stability assessment term.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves that slope alone is insufficient and that soil, drainage, stability and storm flow also require assessment.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].options[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Standard swales dug as deep as possible",
+      "currentTarget": "Standard swales dug as deep as possible",
+      "proposed": "Standard swales leswi ceriweke swi enta hi laha swi kotekaka hakona",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Standard swales",
+          "proposedBounds": [
+            0,
+            15
+          ],
+          "category": "engineering",
+          "reason": "Source false standard-design alternative, with as-deep-as-possible preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains standard swales dug as deep as possible.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].options[1]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Keep ground covered and get a site assessment for suitable erosion controls",
+      "currentTarget": "Keep ground covered and get a site assessment for suitable erosion controls",
+      "proposed": "Hlayisa misava yi funengetekile naswona u kuma nkambelo wa ndhawu lowu kongomaneke ni tindlela leti faneleke to lawula ku kukuleka ka misava",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves both keeping ground covered and getting a site assessment for suitable erosion controls.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].options[2]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A large dam at the bottom to catch all runoff",
+      "currentTarget": "A large dam at the bottom to catch all runoff",
+      "proposed": "Damu lerikulu endhawini ya le hansi leswaku ri khoma runoff hinkwato",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            53,
+            59
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains a large dam at the bottom intended to catch all runoff.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l1::ts::quiz[1].options[3]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Compacting the soil surface with a roller",
+      "currentTarget": "Compacting the soil surface with a roller",
+      "proposed": "Ku endla compaction eka vuandlalo bya misava hi roller",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "compaction",
+          "proposedBounds": [
+            9,
+            19
+          ],
+          "category": "engineering",
+          "reason": "Compacting process; deliberate false option remains false.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        },
+        {
+          "retainedEnglish": "roller",
+          "proposedBounds": [
+            48,
+            54
+          ],
+          "category": "engineering",
+          "reason": "Source machinery name; no unverified local equipment term introduced.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains compaction of the soil surface with a roller.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::title",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "title",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+      "currentTarget": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati eka Dry Season",
+      "proposed": "Madamu ya Mapurasi na Swidziva: Ku Hlayisa Mati eka Nguva yo Oma",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Dry Season is rendered as a dry season; farm dams and ponds stay in the title.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::body::paragraph[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 1,
+      "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "currentTarget": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona plan for dry periods; damu leri teleke a ri tiyisisiwi.",
+      "proposed": "Tinguva ta mpfula ti hambana eAfrika Dzonga hinkwaro. Tirhisa tirhekhodo ta le kusuhi naswona u kunguhatela minkarhi yo oma; damu leri teleke a ri tiyisisiwi.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves different South African rainfall seasons, local records, planning for dry periods, and no guarantee that a dam will be full.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::body::paragraph[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 3,
+      "sourceEnglish": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "currentTarget": "Damu ri lava site investigation na design hi munhu loyi a nga na suitable qualifications. Catchment runoff, soil, foundations, downstream risk na safe spillway, hinkwato i swa nkoka.",
+      "proposed": "Damu ri lava site investigation na design hi munhu loyi a nga na qualifications leti faneleke. Catchment runoff, misava, foundations, downstream risk ni spillway leyi hlayisekeke, hinkwato i swa nkoka.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "site investigation",
+          "proposedBounds": [
+            13,
+            31
+          ],
+          "category": "engineering",
+          "reason": "Investigation depth should not become a casual visual check.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "design",
+          "proposedBounds": [
+            35,
+            41
+          ],
+          "category": "engineering",
+          "reason": "Engineered design category; qualified/safe/site requirements are separate.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "qualifications",
+          "proposedBounds": [
+            65,
+            79
+          ],
+          "category": "qualification-precision",
+          "reason": "Formal suitability of the designer’s qualifications, corresponding to source suitably qualified; not merely experienced or skilled.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        },
+        {
+          "retainedEnglish": "Catchment",
+          "proposedBounds": [
+            95,
+            104
+          ],
+          "category": "hydrology",
+          "reason": "Catchment scope retained; not a river or only the roof.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            105,
+            111
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "foundations",
+          "proposedBounds": [
+            121,
+            132
+          ],
+          "category": "engineering",
+          "reason": "Dam foundation assessment term; no unsupported structural substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "downstream",
+          "proposedBounds": [
+            134,
+            144
+          ],
+          "category": "hydrology",
+          "reason": "Relative flow-direction location, not merely a neighbour or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "spillway",
+          "proposedBounds": [
+            153,
+            161
+          ],
+          "category": "engineering",
+          "reason": "Specific overflow safety structure; no generic pipe substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves a site investigation and design by a suitably qualified person, and all listed catchment/foundation/downstream/spillway factors as important.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::body::paragraph[5]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 5,
+      "sourceEnglish": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "currentTarget": "An uncontrolled overflow can erode and breach the wall. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si sungula ku aka.",
+      "proposed": "Overflow leyi nga lawuriwiki yi nga erode and breach khumbi. Kunguhatela ndlela leyi hlayisekeke ya mati lama taleke u nga si sungula ku aka.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Overflow",
+          "proposedBounds": [
+            0,
+            8
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "erode and breach",
+          "proposedBounds": [
+            36,
+            52
+          ],
+          "category": "engineering-failure-precision",
+          "reason": "Root risk repair: exact destructive erosion and breach process retained, rather than opening (pfulela). Modal can and eventual timing stay in localized frame.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves uncontrolled overflow as a possible cause of erosion and wall breach, and planning a safe excess-water route before construction. The two risk verbs remain exact English technical anchors.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::infographicAlt",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "infographicAlt",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "currentTarget": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "proposed": "Damu ra purasi, ri tsemakanyiwile hi le xikarhini: mati ma nghena eka makumu man’we, mati lama hlayisiweke, spillway emakumu ya le henhla ya overflow, ni bank leyi byariweke leyi khomaka misava.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "spillway",
+          "proposedBounds": [
+            108,
+            116
+          ],
+          "category": "engineering",
+          "reason": "Specific overflow safety structure; no generic pipe substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "overflow",
+          "proposedBounds": [
+            141,
+            149
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "bank",
+          "proposedBounds": [
+            154,
+            158
+          ],
+          "category": "engineering",
+          "reason": "Dam bank structure, not a financial bank or merely a field edge.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves cutaway/cross-section, inflow at one end, stored water, spillway at the top edge for overflow, and planted bank holding soil.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::keyPoints[0]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "currentTarget": "Damu ri lava site assessment na qualified design.",
+      "proposed": "Damu ri lava nkambelo wa ndhawu na design hi munhu loyi a nga qualified.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "design",
+          "proposedBounds": [
+            35,
+            41
+          ],
+          "category": "engineering",
+          "reason": "Engineered design category; qualified/safe/site requirements are separate.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "qualified",
+          "proposedBounds": [
+            62,
+            71
+          ],
+          "category": "qualification-precision",
+          "reason": "Keep qualified explicit rather than replace with skilled/experienced; no new certifying body named.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves site assessment and qualified design as requirements.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::keyPoints[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Design a safe spillway before construction",
+      "currentTarget": "Design a safe spillway before construction",
+      "proposed": "Endla design ya spillway leyi hlayisekeke u nga si sungula ku aka",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "design",
+          "proposedBounds": [
+            6,
+            12
+          ],
+          "category": "engineering",
+          "reason": "Engineered design category; qualified/safe/site requirements are separate.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "spillway",
+          "proposedBounds": [
+            16,
+            24
+          ],
+          "category": "engineering",
+          "reason": "Specific overflow safety structure; no generic pipe substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves safe-spillway design and the before-construction timing.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[0].question",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+      "currentTarget": "Murimi u aka dam wall leyi nga riki na spillway. Endzhaku ka exceptional storm, damu ri khapakhapa. What is the likely result?",
+      "proposed": "Murimi u aka dam wall leyi nga riki na spillway. Endzhaku ka xidzedze lexi nga tolovelekangiki, damu ri khapakhapa. Xana ku nga languteriwa mvelelo wihi?",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "dam wall",
+          "proposedBounds": [
+            13,
+            21
+          ],
+          "category": "engineering",
+          "reason": "Dam structure term; ordinary event/likely question framing translated.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "spillway",
+          "proposedBounds": [
+            39,
+            47
+          ],
+          "category": "engineering",
+          "reason": "Specific overflow safety structure; no generic pipe substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves no spillway, exceptional storm, overflow condition, and asks for the likely result rather than asserting certainty.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[0].rationale",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "currentTarget": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "proposed": "Loko ku nga ri na overflow route leyi dizayiniweke, mati yo tala ma tikumela ndlela ya wona ehenhla ka khumbi — naswona ku khuluka koloko loku nga lawuriwiki hi kona ku erode and breach khumbi eku heteleleni.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "overflow",
+          "proposedBounds": [
+            18,
+            26
+          ],
+          "category": "hydrology",
+          "reason": "Excess flow/overflow noun, distinct from depletion or normal water movement.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "erode and breach",
+          "proposedBounds": [
+            169,
+            185
+          ],
+          "category": "engineering-failure-precision",
+          "reason": "Root risk repair: exact destructive erosion and breach process retained, rather than opening (pfulela). Modal can and eventual timing stay in localized frame.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves absence of a designed route, excess water finding its own path over the wall, uncontrolled flow, and eventual erosion/breach sequence.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[0].options[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+      "currentTarget": "It overtops and erodes the wall, risking a catastrophic breach",
+      "proposed": "Mati ma khuluka ehenhla ka khumbi naswona ma ri kukula, leswi vekaka khumbi ekhombyeni ra catastrophic breach",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "catastrophic breach",
+          "proposedBounds": [
+            90,
+            109
+          ],
+          "category": "safety-precision",
+          "reason": "Specific severe dam-wall failure; risk retained instead of certainty.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves overtopping and erosion with risk of catastrophic breach, not certainty of a breach.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[0].options[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Storage capacity increases permanently",
+      "currentTarget": "Storage capacity increases permanently",
+      "proposed": "Vuswikoti bya ku hlayisa mati byi engeteleka permanently",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "permanently",
+          "proposedBounds": [
+            45,
+            56
+          ],
+          "category": "ordinary-precision-fallback",
+          "reason": "Temporal force retained exactly because an unending increase is not the same as an increase that stays permanent; reviewer may supply a defensible equivalent.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "HOLD",
+      "semanticReview": "The false distractor's absolute time qualifier is essential and remains the ordinary English word 'permanently'; the semantic proposition is retained, but the requested ordinary prose completion is incomplete here. No Xitsonga replacement offered without fluent review.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[1].options[0]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+      "currentTarget": "A deep, exposed dam with no bank vegetation",
+      "proposed": "Damu leri enteke, leri nga erivaleni, leri nga riki na swimilana eka bank",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "bank",
+          "proposedBounds": [
+            69,
+            73
+          ],
+          "category": "engineering",
+          "reason": "Dam bank structure, not a financial bank or merely a field edge.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves deep/exposed dam and absence of bank vegetation.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[1].options[2]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A full concrete lining and plastic cover",
+      "currentTarget": "A full concrete lining and plastic cover",
+      "proposed": "Concrete lining leyi heleleke ni xifungeto xa pulasitiki",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Concrete lining",
+          "proposedBounds": [
+            0,
+            15
+          ],
+          "category": "engineering",
+          "reason": "Specific material/lining option; remains a false choice.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves a full concrete lining and plastic cover as one proposed option.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l2::ts::quiz[1].options[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "A larger surface area to spread evaporation evenly",
+      "currentTarget": "A larger surface area to spread evaporation evenly",
+      "proposed": "Vuandlalo byo kula ku hundza leswaku evaporation yi hangalaka hi ku ringana",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "evaporation",
+          "proposedBounds": [
+            37,
+            48
+          ],
+          "category": "hydrology",
+          "reason": "Water-loss process; do not replace with general disappearance.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves larger surface area and the intended even spreading of evaporation as the false option.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::title",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "title",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "currentTarget": "Rainwater Tanks and Roof Catchment: Ku hlengeleta ni ku sirhelela mati",
+      "proposed": "Mathanki ya mati ya mpfula ni Roof Catchment: Ku hlengeleta ni ku sirhelela mati",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Roof Catchment",
+          "proposedBounds": [
+            30,
+            44
+          ],
+          "category": "hydrology",
+          "reason": "Roof collection/catchment category rather than a new roof-area rule.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves roof catchment and collecting/protecting water; title's framing reads as a mixed-language title and remains a machine draft.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "currentTarget": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "proposed": "Tirhisa vukulu bya lwangu loko ri langutiwa hi le henhla na tirhekhodo ta mpfula ya le kusuhi. Kutani u tlhela u hlayela mati lama nga fikiki eka gutter, lama hambukisiwaka kumbe lama khulukaka ma huma eka thanki leyi teleke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "gutter",
+          "proposedBounds": [
+            146,
+            152
+          ],
+          "category": "hydrology",
+          "reason": "Roof channel noun; no invented shape or installation detail.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves use of roof area viewed from above and local rainfall records, then accounts for water missing the gutter, being diverted, or overflowing a full tank.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 3,
+      "sourceEnglish": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "currentTarget": "Ntsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta kumeka mati yo tala ku fikela kwihi hi nkarhi wa dry spell. Pimanisa supply na ku tirhisiwa ka mati loku u ku pulaneke.",
+      "proposed": "Ntsengo wa lembe hinkwaro a wu ku byeli leswaku ku ta kumeka mati yo tala ku fikela kwihi hi nkarhi wo oma. Pimanisa mati lama kumekaka na ku tirhisiwa ka mati loku u ku pulaneke.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves that annual total cannot tell available water during a dry spell, and compares usable supply with planned uses. 'Dry spell' is rendered as dry period rather than drought.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[4]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "currentTarget": "Roof runoff yi nga rhwala ntshuri, droppings na other contamination. First-flush diverter yi hambukisa mati man’wana ya runoff yo sungula leswaku ma nga ngheni etankini.",
+      "proposed": "Runoff ya lwangu yi nga rhwala ntshuri, droppings na contamination yin’wana. First-flush diverter yi hambukisa mati man’wana ya runoff yo sungula leswaku ma nga ngheni etankini.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Runoff",
+          "proposedBounds": [
+            0,
+            6
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "droppings",
+          "proposedBounds": [
+            40,
+            49
+          ],
+          "category": "health-precision",
+          "reason": "Root risk repair: exact broad roof contaminant category retained; avoid a term that might narrow to cattle dung.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "contamination",
+          "proposedBounds": [
+            53,
+            66
+          ],
+          "category": "health-precision",
+          "reason": "Contamination includes invisible agents; do not reduce to visible dirt.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "First-flush diverter",
+          "proposedBounds": [
+            77,
+            97
+          ],
+          "category": "hydrology",
+          "reason": "Source component label, with some runoff and no drinking-water guarantee preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            128,
+            134
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves roof runoff, dust, droppings and other contamination; a first-flush diverter diverts some early runoff away from the tank.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[5]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 5,
+      "sourceEnglish": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "currentTarget": "Mati lama faneleke ku hambukisiwa ya titshege hi roof na system. Tirhisa milawu ya supplier ya sizing na maintenance; a ku na volume yin’we ya roof yin’wana na yin’wana.",
+      "proposed": "Mati lama faneleke ku hambukisiwa ya titshege hi lwangu na system. Tirhisa swiletelo swa muphakeri swa sizing na maintenance; a ku na volume yin’we ya lwangu rin’wana na rin’wana.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "system",
+          "proposedBounds": [
+            59,
+            65
+          ],
+          "category": "engineering",
+          "reason": "Whole collection/reuse system; already operating condition is explicit.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "sizing",
+          "proposedBounds": [
+            103,
+            109
+          ],
+          "category": "engineering-precision",
+          "reason": "Root risk repair: sizing process retained rather than generic size alone.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "maintenance",
+          "proposedBounds": [
+            113,
+            124
+          ],
+          "category": "engineering-precision",
+          "reason": "Root risk repair: supplier maintenance instructions retained with sizing; no replacement maintenance regimen.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "volume",
+          "proposedBounds": [
+            134,
+            140
+          ],
+          "category": "engineering",
+          "reason": "Required diversion volume; no single volume or invented amount.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves that amount diverted depends on roof/system, supplier instructions cover sizing and maintenance, and no single volume fits every roof.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[7]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 7,
+      "sourceEnglish": "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+      "currentTarget": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya dry periods.",
+      "proposed": "Sayizi ya thanki yi titshege hi xilaveko xa mati, mpfula, vukulu bya lwangu na vulehi bya minkarhi yo oma.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves tank-size factors including demand, rainfall, roof area, and length of dry periods.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[8]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 8,
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "currentTarget": "Tsala intended uses kutani u anganyela demand ya wona hi ku tirhisa tirhekhodo ta wena. Pimanisa demand ya wona na supply hi tinguva.",
+      "proposed": "Tsala ku tirhisiwa ka mati loku kunguhatiweke kutani u anganyela ntsengo wa mati lama lavekaka eka ku tirhisiwa koloko hi ku tirhisa tirhekhodo ta wena. Pimanisa ntsengo wolowo na mati lama kumekaka hi tinguva.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves plural intended uses, estimates their demand from the user's records, and compares that demand with seasonal supply. The referent of 'ntsengo wolowo' is the estimated demand.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[9]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 9,
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "currentTarget": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. Vito ra province ntsena a ri ku byeli tank size leyi u yi lavaka.",
+      "proposed": "Kunguhatela leswi u nga ta swi endla loko mati lama hlayisiweke ma sungula ku va matsongo. Vito ra xifundzankulu ntsena a ri ku byeli vukulu bya thanki leyi u yi lavaka.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves planning for stored water running low and that province name alone cannot size the tank.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[10]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 10,
+      "sourceEnglish": "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+      "currentTarget": "Hlayisa thanki yi funengetiwile. Screen openings against insects, naswona hlayisa roof, gutters na diverter. Keep rainwater separate from drinking-water pipes.",
+      "proposed": "Hlayisa thanki yi funengetiwile. Funengeta timbobo hi screen leswaku switsotswana swi nga ngheni, naswona hlayisa lwangu, gutters na diverter. Hlayisa mati ya mpfula ma hambanile ni tiphayiphi ta mati yo nwa.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "screen",
+          "proposedBounds": [
+            54,
+            60
+          ],
+          "category": "engineering",
+          "reason": "Insect-screening technique; not sealing every opening solid.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "gutters",
+          "proposedBounds": [
+            122,
+            129
+          ],
+          "category": "hydrology",
+          "reason": "Existing roof collection-channel noun.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "diverter",
+          "proposedBounds": [
+            133,
+            141
+          ],
+          "category": "hydrology",
+          "reason": "Specific diversion component, not a filter or treatment guarantee.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves covered tank, screening openings against insects, maintenance of roof/gutters/diverter, and separation from drinking-water pipes.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[11]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 11,
+      "sourceEnglish": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "currentTarget": "Mati lama vonakaka ma basile ma nga ha va na germs kumbe chemicals. Vutisa local health authority hi testing na treatment leswi fambisanaka na intended use.",
+      "proposed": "Mati lama vonakaka ma basile ma nga ha va na germs kumbe chemicals. Vutisa health authority ya laha kaya hi testing na treatment leswi fambisanaka ni ku tirhisiwa ka mati loku kunguhatiweke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "germs",
+          "proposedBounds": [
+            45,
+            50
+          ],
+          "category": "health-precision",
+          "reason": "Avoid restricting germs to bacteria or claiming all microorganisms are harmful.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "chemicals",
+          "proposedBounds": [
+            57,
+            66
+          ],
+          "category": "health-precision",
+          "reason": "Actual chemical substances; not a guarantee of safety based on dilution.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "health authority",
+          "proposedBounds": [
+            75,
+            91
+          ],
+          "category": "qualification-precision",
+          "reason": "Appropriate local health authority role, not informal advice.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "testing",
+          "proposedBounds": [
+            108,
+            115
+          ],
+          "category": "health-precision",
+          "reason": "Water testing process, not just looking at clear water or tasting it.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "treatment",
+          "proposedBounds": [
+            119,
+            128
+          ],
+          "category": "health-precision",
+          "reason": "Use-suited water treatment, not a guarantee of potability.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves clear appearance without implying safety, possible germs/chemicals, local health authority, testing/treatment suited to intended use.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::body::paragraph[12]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 12,
+      "sourceEnglish": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+      "currentTarget": "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka food crops na wona ya lava safety assessment.",
+      "proposed": "Basic filter ntsena a yi tiyisisi leswaku mati ma hlayisekile ku nwa. Mati lawa ya tirhisiwaka eka swirimiwa swa swakudya na wona ya lava nkambelo wa vuhlayiseki.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Basic filter",
+          "proposedBounds": [
+            0,
+            12
+          ],
+          "category": "health-precision",
+          "reason": "Source simple filtration class, with no drinking-water guarantee.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves that a basic filter alone is no drinking-water guarantee and food-crop water also needs a safety assessment.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::infographicAlt",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "infographicAlt",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "currentTarget": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "proposed": "Mati ya mpfula ma khuluka ma suka elwangwini ma ya eka gutter, ma rhelela hi phayiphi ma nghena ethankini, ku ri ni first-flush diverter leyitsongo leyi humaka etlhelweni u nga si fika ethankini leswaku yi lahla mati yo sungula lama thyakeke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "gutter",
+          "proposedBounds": [
+            55,
+            61
+          ],
+          "category": "hydrology",
+          "reason": "Roof channel noun; no invented shape or installation detail.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "first-flush diverter",
+          "proposedBounds": [
+            116,
+            136
+          ],
+          "category": "hydrology",
+          "reason": "Source component label, with some runoff and no drinking-water guarantee preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves roof-to-gutter-to-pipe-to-tank order, diverter branch before the tank, and disposal of dirty first water.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::keyPoints[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
+      "currentTarget": "Vukulu bya lwangu, mpfula, xilaveko xa mati na losses swi lawula mati lama nga hlayisiwaka leswaku ma tirhisiwa.",
+      "proposed": "Vukulu bya lwangu, mpfula, xilaveko xa mati na ku lahleka ka mati swi lawula mati lama nga hlayisiwaka leswaku ma tirhisiwa.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves roof area, rain, demand and losses as determinants of usable storage.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::keyPoints[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Clear water can still contain germs or chemicals",
+      "currentTarget": "Mati lama vonakaka ma clear ma nga ha va na germs kumbe chemicals.",
+      "proposed": "Mati lama vonakaka ma ri clear ma nga ha va na germs kumbe chemicals.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "clear",
+          "proposedBounds": [
+            25,
+            30
+          ],
+          "category": "ordinary-precision-fallback",
+          "reason": "Visual clarity retained exactly; translating to chemically clean/safe/pure would change the false claim or disclaimer. Ordinary action/if framing is translated.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "germs",
+          "proposedBounds": [
+            47,
+            52
+          ],
+          "category": "health-precision",
+          "reason": "Avoid restricting germs to bacteria or claiming all microorganisms are harmful.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "chemicals",
+          "proposedBounds": [
+            59,
+            68
+          ],
+          "category": "health-precision",
+          "reason": "Actual chemical substances; not a guarantee of safety based on dilution.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the clear-appearance qualifier and that water may still contain germs or chemicals; appearance is not equated with cleanliness/safety.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::keyPoints[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Testing and treatment must match the intended use",
+      "currentTarget": "Testing na treatment swi fanele ku fambisana na intended use.",
+      "proposed": "Testing na treatment swi fanele ku fambisana ni ku tirhisiwa ka mati loku kunguhatiweke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Testing",
+          "proposedBounds": [
+            0,
+            7
+          ],
+          "category": "health-precision",
+          "reason": "Water testing process, not just looking at clear water or tasting it.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "treatment",
+          "proposedBounds": [
+            11,
+            20
+          ],
+          "category": "health-precision",
+          "reason": "Use-suited water treatment, not a guarantee of potability.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the requirement that testing and treatment match intended use.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].question",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "What information is needed to choose a rainwater tank?",
+      "currentTarget": "Hi wahi vuxokoxoko byi lavekaka ku hlawula rainwater tank?",
+      "proposed": "Hi wahi vuxokoxoko byi lavekaka ku hlawula thanki ya mati ya mpfula?",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the open question asking what information is needed to choose a rainwater tank.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].rationale",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
+      "currentTarget": "Ku pulana tank swi fanele ku pimanisa supply leyi nga tirhisiwaka na demand hi nkarhi wa wet na dry periods. Sayizi yin’we leyi vekiweke ya region a yi nge endli tano.",
+      "proposed": "Ku pulana thanki swi fanele ku pimanisa mati lama nga tirhisiwaka na ntsengo wa mati lama lavekaka hi minkarhi leyi nga tsakama ni leyi omeke. Sayizi yin’we leyi vekiweke ya region a yi nge endli tano.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "region",
+          "proposedBounds": [
+            174,
+            180
+          ],
+          "category": "geographic-precision",
+          "reason": "Regional scope should not be narrowed to one province.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves usable supply vs demand over wet and dry periods, and one fixed regional size as unable to answer that comparison. 'Region' remains broad in English rather than being narrowed to province.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Only the province where the farm is located",
+      "currentTarget": "Province ntsena laha farm yi nga kona.",
+      "proposed": "Xifundzankulu ntsena laha purasi ri nga kona.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option remains province alone as the basis for tank choice, and farm location is retained.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+      "currentTarget": "Vukulu bya roof, pattern ya mpfula, xilaveko xa mati na losses ta ku hlengeleta mati.",
+      "proposed": "Vukulu bya lwangu, ndlela leyi mpfula yi nakaka ha yona, xilaveko xa mati ni ku lahleka ka mati hi ku ma hlengeleta.",
+      "retainedEnglish": [],
+      "decision": "HOLD",
+      "semanticReview": "This is the keyed option and must preserve rainfall pattern as a time/distribution characteristic alongside roof area, demand and collection losses. 'Ndlela leyi mpfula yi nakaka ha yona' may describe how rain falls without clearly retaining the pattern dimension. Retain 'pattern ya mpfula' pending fluent review, or have a speaker confirm a precise ordinary equivalent.",
+      "exactRepair": "Vukulu bya lwangu, pattern ya mpfula, xilaveko xa mati ni ku lahleka ka mati hi ku ma hlengeleta.",
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Only the amount of rain in one storm",
+      "currentTarget": "Ntsengo wa mpfula ya storm yin'we ntsena.",
+      "proposed": "Ntsengo wa mpfula ya xidzedze xin’we ntsena.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option retains only the amount of rain in one storm.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[0].options[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Only the price of the biggest available tank",
+      "currentTarget": "Ntsengo ntsena wa tank leyikulu swinene leyi kumekaka.",
+      "proposed": "Ntsengo ntsena wa thanki leyikulu ku hundza hinkwato leti kumekaka.",
+      "retainedEnglish": [],
+      "decision": "HOLD",
+      "semanticReview": "The source says price/cost of the biggest available tank. 'Ntsengo' may express price or amount; this model check cannot confirm that the proposed wording preserves the price distractor rather than tank volume. Keep pending a fluent meaning check.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].question",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
+      "currentTarget": "Ha yini first-flush diverter yi ri ya nkoka hambi mati ya tank ma tirhisiwa eka irrigation ntsena?",
+      "proposed": "Ha yini first-flush diverter yi ri ya nkoka hambi mati ya thanki ma tirhisiwa eka irrigation ntsena?",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "first-flush diverter",
+          "proposedBounds": [
+            8,
+            28
+          ],
+          "category": "hydrology",
+          "reason": "Source component label, with some runoff and no drinking-water guarantee preserved.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "irrigation",
+          "proposedBounds": [
+            82,
+            92
+          ],
+          "category": "hydrology",
+          "reason": "Source use category, with only/negation retained.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves why first-flush diversion matters even where tank water is used for irrigation only.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].rationale",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+      "currentTarget": "Ku hambukisa early runoff swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela quality hi ku landza intended use.",
+      "proposed": "Ku hambukisa runoff yo sungula swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela xiyimo xa mati hi ku landza ku tirhisiwa loku kunguhatiweke.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            13,
+            19
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "contamination",
+          "proposedBounds": [
+            47,
+            60
+          ],
+          "category": "health-precision",
+          "reason": "Contamination includes invisible agents; do not reduce to visible dirt.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "HOLD",
+      "semanticReview": "The rationale must ask for water quality in relation to intended use. 'Xiyimo xa mati' can read as the water's state/condition and may be broader than the water-quality concept. Keep the exact technical anchor 'quality' until a fluent equivalent is confirmed.",
+      "exactRepair": "Ku hambukisa runoff yo sungula swi nga hunguta contamination, kambe a swi tiyisisi leswaku mati lama taka endzhaku ma hlayisekile. Kambela quality ya mati hi ku landza ku tirhisiwa loku kunguhatiweke.",
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].options[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
+      "currentTarget": "It doesn't matter for irrigation, only drinking water",
+      "proposed": "A yi na nkoka eka irrigation, yi na nkoka eka mati yo nwa ntsena",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "irrigation",
+          "proposedBounds": [
+            18,
+            28
+          ],
+          "category": "hydrology",
+          "reason": "Source use category, with only/negation retained.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option preserves that it supposedly does not matter for irrigation and supposedly matters only for drinking water.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].options[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
+      "currentTarget": "First flush yi rhwala concentrated droppings, dust na pathogens leti nga contaminate crops leti dyiwaka.",
+      "proposed": "First flush yi rhwala concentrated droppings, ntshuri ni pathogens leti nga contaminate swirimiwa leswi dyiwaka.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "First flush",
+          "proposedBounds": [
+            0,
+            11
+          ],
+          "category": "hydrology",
+          "reason": "Initial flow stage label; no new diversion amount.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "concentrated",
+          "proposedBounds": [
+            22,
+            34
+          ],
+          "category": "health-precision",
+          "reason": "Concentration modifier retained; no invented dilution ratio or mere visible dirt substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "droppings",
+          "proposedBounds": [
+            35,
+            44
+          ],
+          "category": "health-precision",
+          "reason": "Root risk repair: exact broad roof contaminant category retained; avoid a term that might narrow to cattle dung.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "pathogens",
+          "proposedBounds": [
+            57,
+            66
+          ],
+          "category": "health-precision",
+          "reason": "Disease-causing contaminant category, not any harmless organism.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "contaminate",
+          "proposedBounds": [
+            76,
+            87
+          ],
+          "category": "health-precision",
+          "reason": "Contamination action, not only visibly damaging a crop.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves concentrated droppings, dust, pathogens, the possibility of crop contamination, and that crops are eaten. English technical anchors remain.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].options[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "It's more acidic and changes soil pH over time",
+      "currentTarget": "It's more acidic naswona yi cinca soil pH hi ku famba ka nkarhi.",
+      "proposed": "Yi acidic ku hundza naswona yi cinca soil pH hi ku famba ka nkarhi.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "acidic",
+          "proposedBounds": [
+            3,
+            9
+          ],
+          "category": "chemistry",
+          "reason": "Acidity property; comparative ku hundza retained and the option remains false.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "soil pH",
+          "proposedBounds": [
+            37,
+            44
+          ],
+          "category": "chemistry",
+          "reason": "Exact pH process label; no numeric acidity value introduced.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the false claim of greater acidity and change in soil pH over time.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l3::ts::quiz[1].options[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "It stops the tank overfilling in storms",
+      "currentTarget": "Yi sivela tank ku tala ngopfu hi nkarhi wa storms.",
+      "proposed": "Yi sivela thanki ku tala ngopfu hi nkarhi wa swidzedze.",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "False option preserves the claim that the diverter prevents tank overfilling during storms.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 1,
+      "sourceEnglish": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+      "currentTarget": "U nga katsi mati ya toilet, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka reuse plan. U nga tirhisi nakambe mati lama nga na harmful chemicals.",
+      "proposed": "U nga katsi mati ya xihambukelo, mati yo huma eka nappies, mati yo hlantswa munhu loyi a vabyaka kumbe mati yo hlantswa swiharhi eka pulani yo tirhisa mati nakambe. U nga tirhisi nakambe mati lama nga na chemicals leti nga ni khombo.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "nappies",
+          "proposedBounds": [
+            50,
+            57
+          ],
+          "category": "health-precision",
+          "reason": "Specific exclusion category; no substitution meaning all laundry cloth.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "chemicals",
+          "proposedBounds": [
+            204,
+            213
+          ],
+          "category": "health-precision",
+          "reason": "Actual chemical substances; not a guarantee of safety based on dilution.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "HOLD",
+      "semanticReview": "The exclusion of water from nappies is retained, but 'nappies' is an ordinary household word left in English. It does not meet the scoped ordinary-prose completion; no replacement is offered without fluent review.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 2,
+      "sourceEnglish": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
+      "currentTarget": "Before any reuse, kombela municipality na qualified local sanitation adviser ku kambela source leyi kongomeke, vukorhokeri bya mati na sanitation bya household, intended use na site. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.",
+      "proposed": "Ku nga si va ni ku tirhisiwa ka mati nakambe kwihi na kwihi, kombela masipala na mutsundzuxi wa sanitation wa laha kaya loyi a nga qualified ku kambela xihlovo xa mati lexi kongomeke, vukorhokeri bya mati na sanitation bya ndyangu, ku tirhisiwa loku kunguhatiweke na ndhawu. Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni, u nga ma tirhisi nakambe.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "sanitation",
+          "proposedBounds": [
+            96,
+            106
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Household sanitation services/qualified adviser category.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "qualified",
+          "proposedBounds": [
+            131,
+            140
+          ],
+          "category": "qualification-precision",
+          "reason": "Keep qualified explicit rather than replace with skilled/experienced; no new certifying body named.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "sanitation",
+          "proposedBounds": [
+            208,
+            218
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Household sanitation services/qualified adviser category.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the before-any-reuse requirement, municipality and qualified local sanitation adviser, exact source, household water/sanitation services, intended use and site; if advice is unavailable or unclear, do not reuse.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 3,
+      "sourceEnglish": "A generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+      "currentTarget": "A generic picture a hi pulani ya purasi. Soil and mulch do not disinfect wastewater. Keep wastewater away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+      "proposed": "Xifaniso xo angarhela a hi pulani ya purasi. Misava ni mulch a swi disinfect wastewater. Hlayisa wastewater yi ri ekule ni plumbing ya mati yo nwa naswona u sivela leswaku yi khumba vanhu kumbe swiharhi. U nga ma fafazeli, u nga ma tshiki ma pool, naswona u nga ma pfumeleli ku khuluka ma huma eka property ma nghena exitarateni, eka drain kumbe eka watercourse.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "mulch",
+          "proposedBounds": [
+            55,
+            60
+          ],
+          "category": "agronomy",
+          "reason": "Existing source material/process label.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "disinfect",
+          "proposedBounds": [
+            67,
+            76
+          ],
+          "category": "health-precision",
+          "reason": "Disinfection process; do not imply soil or mulch kills all germs or guarantees safety.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "wastewater",
+          "proposedBounds": [
+            77,
+            87
+          ],
+          "category": "health-precision",
+          "reason": "Used-water category remains distinct from drinking water.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "wastewater",
+          "proposedBounds": [
+            97,
+            107
+          ],
+          "category": "health-precision",
+          "reason": "Used-water category remains distinct from drinking water.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "plumbing",
+          "proposedBounds": [
+            123,
+            131
+          ],
+          "category": "engineering",
+          "reason": "Whole drinking-water plumbing, not only one pipe.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "pool",
+          "proposedBounds": [
+            242,
+            246
+          ],
+          "category": "physical-condition-precision",
+          "reason": "Exact source physical pooling verb retained pending defensible independent lexical equivalent; not stopping (ma yima) or generic gathering.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "property",
+          "proposedBounds": [
+            298,
+            306
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Source property boundary retained; never substitute farm-only scope.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "drain",
+          "proposedBounds": [
+            334,
+            339
+          ],
+          "category": "hydrology",
+          "reason": "Drain category in runoff prohibition; not automatically a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "watercourse",
+          "proposedBounds": [
+            350,
+            361
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Keep broad source category; never narrow to river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves generic picture not being a farm design; no disinfection by soil/mulch; separation from drinking-water plumbing; prevent contact; no spraying, pooling, or runoff off the property to street/drain/watercourse. Broad property and watercourse concepts remain distinct.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::body::paragraph[4]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndexZeroBased": 4,
+      "sourceEnglish": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "currentTarget": "Loko reuse system yi ri karhi yi tirha naswona mati ma nunha, ma yima kumbe ma onha swimilana, tshika ku ma tirhisa kutani u lava ndzayo ya qualified local adviser.",
+      "proposed": "Loko system yo tirhisa mati nakambe yi se ri karhi yi tirha naswona mati ma nunha, ma pool kumbe ma onha swimilana, tshika ku ma tirhisa kutani u lava ndzayo ya mutsundzuxi wa laha kaya loyi a nga qualified.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "system",
+          "proposedBounds": [
+            5,
+            11
+          ],
+          "category": "engineering",
+          "reason": "Whole collection/reuse system; already operating condition is explicit.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "pool",
+          "proposedBounds": [
+            86,
+            90
+          ],
+          "category": "physical-condition-precision",
+          "reason": "Exact source physical pooling verb retained pending defensible independent lexical equivalent; not stopping (ma yima) or generic gathering.",
+          "literalInCanonicalSource": false,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "grammatical noun/adjective inflection or established current gloss; no added farming fact"
+        },
+        {
+          "retainedEnglish": "qualified",
+          "proposedBounds": [
+            197,
+            206
+          ],
+          "category": "qualification-precision",
+          "reason": "Keep qualified explicit rather than replace with skilled/experienced; no new certifying body named.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves already-operating condition, bad smell/pooling/plant harm as triggers, stop-use instruction, and qualified local advice.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::keyPoints[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+      "currentTarget": "Check the source, service status, intended use and site locally before any reuse",
+      "proposed": "Kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu eka swiyimo swa laha kaya, u nga si va ni ku tirhisiwa ka mati nakambe kwihi na kwihi",
+      "retainedEnglish": [],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves local check of source, service status, intended use and site before any reuse.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::keyPoints[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Soil and mulch do not disinfect wastewater",
+      "currentTarget": "Soil and mulch do not disinfect wastewater",
+      "proposed": "Misava ni mulch a swi disinfect wastewater",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "mulch",
+          "proposedBounds": [
+            10,
+            15
+          ],
+          "category": "agronomy",
+          "reason": "Existing source material/process label.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "disinfect",
+          "proposedBounds": [
+            22,
+            31
+          ],
+          "category": "health-precision",
+          "reason": "Disinfection process; do not imply soil or mulch kills all germs or guarantees safety.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "wastewater",
+          "proposedBounds": [
+            32,
+            42
+          ],
+          "category": "health-precision",
+          "reason": "Used-water category remains distinct from drinking water.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the strict negation: soil and mulch do not disinfect wastewater.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::keyPoints[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+      "currentTarget": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+      "proposed": "Sivela ku khumbana, ku fafazela, pooling, runoff ni drinking-water cross-connections",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "pooling",
+          "proposedBounds": [
+            33,
+            40
+          ],
+          "category": "physical-condition-precision",
+          "reason": "Exact source pooling phenomenon retained; no stopping or vague accumulation substitute.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "runoff",
+          "proposedBounds": [
+            42,
+            48
+          ],
+          "category": "hydrology",
+          "reason": "Surface flow term; do not replace with all water or a river.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "drinking-water cross-connections",
+          "proposedBounds": [
+            52,
+            84
+          ],
+          "category": "health-precision",
+          "reason": "Specific drinking-water cross-connection risk; full prevention remains.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves prevention of contact, spraying, pooling, runoff and drinking-water cross-connections.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[0].question",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "What should happen before any household washwater is reused?",
+      "currentTarget": "Xana ku fanele ku endliwa yini before any household washwater is reused?",
+      "proposed": "Xana ku fanele ku endliwa yini ku nga si va ni ku tirhisiwa nakambe kwihi na kwihi ka mati yo hlantswa ya le kaya?",
+      "retainedEnglish": [],
+      "decision": "REPAIR",
+      "semanticReview": "The source 'any household washwater' quantifies reuse occasions/sources. 'Kwihi na kwihi' reads as 'anywhere' (a place), which changes the scope. Remove that spatial phrase while retaining 'any' through the general construction.",
+      "exactRepair": "Xana ku fanele ku endliwa yini ku nga si va ni ku tirhisiwa nakambe ka mati yo hlantswa ya le kaya?",
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[0].rationale",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+      "currentTarget": "Swiletelo swi hambana hi swihlovo swin’wana swa mati ni hi swiyimo swa vukorhokeri leswi faneleke leswaku mati ma tirhisiwa nakambe. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+      "proposed": "Swiletelo swi hambana hi swihlovo swin’wana swa mati ni hi swiyimo swa vukorhokeri leswi faneleke leswaku mati ma tirhisiwa nakambe. Nkambelo wa laha kaya hi munhu loyi a nga qualified wa laveka u nga si endla xiboho xa leswaku xihlovo xihi na xihi ni ku tirhisiwa ka xona swi faneleka kumbe swa pfumeleriwa.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "qualified",
+          "proposedBounds": [
+            175,
+            184
+          ],
+          "category": "qualification-precision",
+          "reason": "Keep qualified explicit rather than replace with skilled/experienced; no new certifying body named.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves some source/service variation and the need for a local qualified check before deciding if any source/use is suitable or allowed.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[0].options[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+      "currentTarget": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+      "proposed": "Kombela masipala ni mutsundzuxi wa sanitation loyi a nga qualified ku kambela xihlovo, xiyimo xa vukorhokeri, ku tirhisiwa loku kunguhatiweke ni ndhawu",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "sanitation",
+          "proposedBounds": [
+            35,
+            45
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Household sanitation services/qualified adviser category.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "qualified",
+          "proposedBounds": [
+            57,
+            66
+          ],
+          "category": "qualification-precision",
+          "reason": "Keep qualified explicit rather than replace with skilled/experienced; no new certifying body named.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves both municipality and qualified sanitation adviser, plus the four checks: source, service status, intended use and site.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[0].options[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Use it if it looks clear",
+      "currentTarget": "Use it if it looks clear",
+      "proposed": "Ma tirhise loko ma vonaka ma ri clear",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "clear",
+          "proposedBounds": [
+            32,
+            37
+          ],
+          "category": "ordinary-precision-fallback",
+          "reason": "Visual clarity retained exactly; translating to chemically clean/safe/pure would change the false claim or disclaimer. Ordinary action/if framing is translated.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the false conditional advice to use water if it looks clear; visual appearance remains explicitly clear rather than safe/clean.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].question",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
+      "currentTarget": "Hi mhaka muni u fanele ku kambela exact water source na cleaning products u nga si anakanya hi reuse?",
+      "proposed": "Hi mhaka muni u fanele ku kambela xihlovo xa mati lexi kongomeke na cleaning products u nga si anakanya hi ku ma tirhisa nakambe?",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "cleaning products",
+          "proposedBounds": [
+            68,
+            85
+          ],
+          "category": "health-precision",
+          "reason": "Actual cleaning-product category, not merely tools/brushes or approved chemical mixtures.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves exact water source and cleaning products as factors to check before considering reuse.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].rationale",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+      "currentTarget": "Mati lama tirhisiweke ma nga va na germs, salts na chemicals to hambana. Ku vonaka ma clear, ku pfumaleka ka nun’hwelo kumbe mulch a swi tiyisisi leswaku ma hlayisekile kumbe ma faneleka.",
+      "proposed": "Mati lama tirhisiweke ma nga va na germs, salts na chemicals to hambana. Ku vonaka ma ri clear, ku pfumaleka ka nun’hwelo kumbe mulch a swi tiyisisi leswaku ma hlayisekile kumbe ma faneleka.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "germs",
+          "proposedBounds": [
+            35,
+            40
+          ],
+          "category": "health-precision",
+          "reason": "Avoid restricting germs to bacteria or claiming all microorganisms are harmful.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "salts",
+          "proposedBounds": [
+            42,
+            47
+          ],
+          "category": "health-precision",
+          "reason": "Plural dissolved salts, not just table salt.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "chemicals",
+          "proposedBounds": [
+            51,
+            60
+          ],
+          "category": "health-precision",
+          "reason": "Actual chemical substances; not a guarantee of safety based on dilution.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "clear",
+          "proposedBounds": [
+            89,
+            94
+          ],
+          "category": "ordinary-precision-fallback",
+          "reason": "Visual clarity retained exactly; translating to chemically clean/safe/pure would change the false claim or disclaimer. Ordinary action/if framing is translated.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "mulch",
+          "proposedBounds": [
+            128,
+            133
+          ],
+          "category": "agronomy",
+          "reason": "Existing source material/process label.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves different germs/salts/chemicals and the three non-proofs: clear appearance, no smell, or mulch; none establish safety or suitability.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].options[0]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "All cleaning products are safe if the water is diluted",
+      "currentTarget": "All cleaning products are safe loko mati ma dilute.",
+      "proposed": "Cleaning products hinkwato ti hlayisekile loko mati ma diluted.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Cleaning products",
+          "proposedBounds": [
+            0,
+            17
+          ],
+          "category": "health-precision",
+          "reason": "Actual cleaning-product category, not merely tools/brushes or approved chemical mixtures.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "diluted",
+          "proposedBounds": [
+            55,
+            62
+          ],
+          "category": "health-precision",
+          "reason": "Dilution condition retained; no invented ratio or claim dilution makes all products safe.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": false,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "HOLD",
+      "semanticReview": "The false option preserves all/are safe/if diluted, but the ordinary noun phrase 'Cleaning products' remains untranslated. Semantic force is intact at model level; the requested ordinary-prose completion is incomplete. No Xitsonga repair offered without fluent review.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].options[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
+      "currentTarget": "Water composition na effects ta products swa hambana; hikokwalaho source ya xiviri na products swi lava assessment.",
+      "proposed": "Water composition ni leswi products ti swi vangaka swa hambana; hikokwalaho xihlovo xa xiviri ni products swi lava nkambelo.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Water composition",
+          "proposedBounds": [
+            0,
+            17
+          ],
+          "category": "health-precision",
+          "reason": "Actual water composition is assessed; not just colour/appearance.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "products",
+          "proposedBounds": [
+            27,
+            35
+          ],
+          "category": "health-precision",
+          "reason": "Actual products in source water; no replacement with merely visible dirt.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "products",
+          "proposedBounds": [
+            97,
+            105
+          ],
+          "category": "health-precision",
+          "reason": "Actual products in source water; no replacement with merely visible dirt.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves varying water composition/product effects and need to assess the actual source and products.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::water-harvesting-l4::ts::quiz[1].options[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Mulch removes every harmful substance",
+      "currentTarget": "Mulch removes every harmful substance",
+      "proposed": "Mulch yi susa swilo hinkwato leswi nga ni khombo",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Mulch",
+          "proposedBounds": [
+            0,
+            5
+          ],
+          "category": "agronomy",
+          "reason": "Existing source material/process label.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "ACCEPT_MEANING_ONLY",
+      "semanticReview": "Preserves the false absolute that mulch removes every harmful substance.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    },
+    {
+      "id": "water-harvesting::ts::moduleDescription",
+      "lessonId": null,
+      "fieldPath": "moduleDescription",
+      "paragraphIndexZeroBased": null,
+      "sourceEnglish": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "currentTarget": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "proposed": "Swales, berms, madamu, mathanki ya mati ya mpfula ni greywater — nonokisa, hangalasa — sink every drop.",
+      "retainedEnglish": [
+        {
+          "retainedEnglish": "Swales",
+          "proposedBounds": [
+            0,
+            6
+          ],
+          "category": "hydrology",
+          "reason": "Named engineered feature category; no unapproved local noun changes.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "berms",
+          "proposedBounds": [
+            8,
+            13
+          ],
+          "category": "hydrology",
+          "reason": "Constructed landform noun; retain exact source category.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "greywater",
+          "proposedBounds": [
+            53,
+            62
+          ],
+          "category": "jurisdiction-precision",
+          "reason": "Source category depends on local guidance; no category expansion.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        },
+        {
+          "retainedEnglish": "sink every drop",
+          "proposedBounds": [
+            87,
+            102
+          ],
+          "category": "ordinary-precision-fallback",
+          "reason": "Exact design idiom retained; avoid translating it as a guarantee or command that every drop physically infiltrates.",
+          "literalInCanonicalSource": true,
+          "presentInCurrentTarget": true,
+          "sourceTermRelationship": "same term"
+        }
+      ],
+      "decision": "HOLD",
+      "semanticReview": "The description translates the item list partly and the commands 'slow, spread', but leaves the ordinary idiom 'sink every drop' in English. Its metaphor is source-sensitive and the wording is not complete in ordinary Xitsonga; hold for fluent review rather than invent a slogan.",
+      "exactRepair": null,
+      "fluentReviewStillRequired": true,
+      "fluentApproval": false
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 import { marketAcceptedTarget, checkMarketTeachingExample, checkMarketPriceQuestion, checkMarketGapQuestion } from './market-l1-completion-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
 import { XITSONGA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ts-water-harvesting.ts';
@@ -20,6 +22,49 @@ const XITSONGA_MARKET_COMMUNITY_DRAFT = reconstructMarketBeforeL2L3Completion(NA
 
 const source = COURSE_MODULES.find(module => module.id === 'water-harvesting')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
+
+// 2026-10-06: root-approved ordinary completion supersedes the former Water holds and
+// mixed targets. Check the complete live registry against the immutable accepted packet
+// before each historical test rewinds to its dated native snapshot; restore in finally.
+function withHistoricalWater(assertHistoricalClaims: () => void) {
+  const dir = 'docs/study-translation-reviews/water-ordinary-ts-2026-10-06/';
+  const packetBytes = readFileSync(dir + 'root-reviewed-candidates.json');
+  assert.equal(createHash('sha256').update(packetBytes).digest('hex'),
+    '3996b26f5a40dcbff2cd8b2a6ca1f0b876562e93cb62ac6dc1661397910fb19a');
+  const packet = JSON.parse(packetBytes.toString());
+  const baseline = JSON.parse(readFileSync(dir + 'native-before.json', 'utf8'));
+  const expected = structuredClone(baseline.registry);
+  assert.deepEqual(source.title, packet.sourceAndCurrentModuleSnapshot.sourceTitle);
+  assert.deepEqual(source.description, packet.sourceAndCurrentModuleSnapshot.sourceDescription);
+
+  for (const proposal of packet.fullFieldProposals) {
+    const owner = proposal.lessonId
+      ? expected.lessons.find((lesson: { id: string }) => lesson.id === proposal.lessonId)
+      : expected;
+    const fieldPath = proposal.fieldPath === 'moduleDescription' ? 'description' : proposal.fieldPath;
+    const pair = fieldPath.replace(/\[(\d+)\]/g, '.$1').split('.')
+      .reduce((value: any, key: string) => value[key], owner);
+    assert.equal(pair.sourceEnglish, proposal.sourceEnglish, `${proposal.id}: accepted source binding`);
+    assert.equal(pair.xitsongaDraft, proposal.currentTarget, `${proposal.id}: accepted current-target guard`);
+    pair.xitsongaDraft = proposal.proposed;
+    pair.reviewStatus = 'machine-draft';
+  }
+  const live = draft;
+  assert.deepEqual(live, expected,
+    'verify all 57 accepted fields, canonical pairings, answer indexes, metadata, holds and unlisted fields before rewind');
+  assert.equal(live.lessons[3].quiz[0].question.xitsongaDraft,
+    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?',
+    'the accepted L4 question keeps exact English “any” scoped to household washwater');
+
+  const saved = structuredClone(live);
+  try {
+    Object.assign(live, structuredClone(baseline.registry));
+    assertHistoricalClaims();
+  } finally {
+    Object.assign(live, saved);
+    assert.deepEqual(live, expected, 'historical checks restore every accepted current and unlisted field');
+  }
+}
 
 // Rewritten 2 October 2026 (Food Forest batch; the Water tests in this file are unchanged): Food Forest
 // L1 is now a complete Xitsonga draft, so the pins on three paragraphs held in English give way to a
@@ -230,13 +275,18 @@ test('Water L1-L4 show source-paired Xitsonga drafts while retained technical ho
   const module = resolveCourseModulePresentation(source, 'ts');
   assert.equal(module.status, 'draft');
   assert.equal(module.title, 'Ku hlengeleta Mati');
-  assert.equal(module.description, source.description);
+  assert.equal(module.description, draft.description.xitsongaDraft);
 
   const first = resolveLearnerLessonPresentation(source.lessons[0], 'ts');
   assert.equal(first.status, 'draft');
   assert.notEqual(first.content.title, source.lessons[0].title);
   assert.notEqual(first.content.body, source.lessons[0].body);
-  assert.deepEqual(first.content.quiz, source.lessons[0].quiz);
+  assert.deepEqual(first.content.quiz, draft.lessons[0].quiz.map((question, index) => ({
+    q: question.question.xitsongaDraft,
+    options: question.options.map(option => option.xitsongaDraft),
+    correct: source.lessons[0].quiz[index].correct,
+    rationale: question.rationale.xitsongaDraft,
+  })), 'the accepted ordinary question drafts show while preserving canonical answer order');
 
   for (const lesson of source.lessons.slice(1)) {
     const unreleased = resolveLearnerLessonPresentation(lesson, 'ts');
@@ -313,7 +363,7 @@ test('Water Harvesting Xitsonga data retains all canonical sources, lesson shape
   }
 });
 
-test('2026-10-05 Xitsonga holds remain exact and superseded whole-paragraph holds retain safety checks', () => {
+test('historical Xitsonga holds retain their dated source and safety checks', () => withHistoricalWater(() => {
   assert.ok(draft.holds.length > 0);
   for (const hold of draft.holds) {
     const pair = pairForHold(hold);
@@ -353,9 +403,9 @@ test('2026-10-05 Xitsonga holds remain exact and superseded whole-paragraph hold
     assert.equal(draft.holds.some(hold => hold.lessonId === lessonId && hold.field === field), false,
       `${lessonId} ${field}: replaced exact-paragraph hold must not mask the checked learner wording`);
   }
-});
+}));
 
-test('Water L2 Xitsonga exposes the checked heading and assessment draft while retaining marked technical holds', () => {
+test('historical Water L2 Xitsonga heading, assessment draft and technical holds retain their checks', () => withHistoricalWater(() => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   assert.equal(paired.title.reviewStatus, 'machine-draft');
@@ -383,12 +433,8 @@ test('Water L2 Xitsonga exposes the checked heading and assessment draft while r
 
   const shown = resolveLearnerLessonPresentation(canonical, 'ts');
   assert.equal(shown.status, 'draft');
-  assert.equal(shown.content.title, paired.title.xitsongaDraft);
-  assert.equal(shown.content.infographicAlt, canonical.infographicAlt);
-  assert.deepEqual(shown.content.keyPoints, paired.keyPoints.map(point => point.xitsongaDraft));
-  assert.deepEqual(shown.content.quiz.map(question => question.correct), [1, 1]);
-  assert.equal(shown.content.body, paired.body.xitsongaDraft,
-    'the exact-source body draft remains paired with its canonical English source');
+  assert.ok(shown.content.body.split('\n\n').length > 0,
+    'the resolver continues to produce a learner body while historical targets are inspected');
 
   const changedKeyPoint = { ...canonical, keyPoints: canonical.keyPoints.map((point, index) =>
     index === 0 ? `${point} changed` : point) };
@@ -396,9 +442,9 @@ test('Water L2 Xitsonga exposes the checked heading and assessment draft while r
   assert.equal(fallback.status, 'english-fallback');
   assert.deepEqual(fallback.content.keyPoints, changedKeyPoint.keyPoints,
     'a changed key-point source withdraws the whole source-paired lesson');
-});
+}));
 
-test('Water L3 Xitsonga keeps roof losses, first-flush limits and water-safety clauses source-bound', () => {
+test('historical Water L3 Xitsonga roof losses, first-flush limits and safety clauses remain source-bound', () => withHistoricalWater(() => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l3')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   const sourceParagraphs = canonical.body.split('\n\n');
@@ -440,9 +486,9 @@ test('Water L3 Xitsonga keeps roof losses, first-flush limits and water-safety c
   const fallback = resolveLearnerLessonPresentation(changed, 'ts');
   assert.equal(fallback.status, 'english-fallback');
   assert.equal(fallback.content.body, changed.body);
-});
+}));
 
-test('Water L1 Xitsonga keeps infiltration possible and requires assessment for all listed land conditions', () => {
+test('historical Water L1 Xitsonga keeps infiltration possible and all land-assessment conditions', () => withHistoricalWater(() => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l1')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   assert.equal(paired.body.sourceEnglish, canonical.body);
@@ -463,9 +509,9 @@ test('Water L1 Xitsonga keeps infiltration possible and requires assessment for 
   const shown = resolveLearnerLessonPresentation(changed, 'ts');
   assert.equal(shown.status, 'english-fallback', 'withdraw drafts after source changes infiltration certainty');
   assert.equal(shown.content.body, changed.body);
-});
+}));
 
-test('Water L2 Xitsonga preserves dry periods, overflow sequence and dam safeguards', () => {
+test('historical Water L2 Xitsonga preserves dry periods, overflow sequence and dam safeguards', () => withHistoricalWater(() => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   assert.equal(paired.body.sourceEnglish, canonical.body);
@@ -502,10 +548,10 @@ test('Water L2 Xitsonga preserves dry periods, overflow sequence and dam safegua
   const shown = resolveLearnerLessonPresentation(changed, 'ts');
   assert.equal(shown.status, 'english-fallback', 'withdraw the whole lesson when its source conditions change');
   assert.equal(shown.content.body, changed.body);
-});
+}));
 
 
-test('Water L4 Xitsonga preserves source scope, sanitation gates, prohibitions and conditional stop action', () => {
+test('historical Water L4 Xitsonga preserves source scope, sanitation gates, prohibitions and stop action', () => withHistoricalWater(() => {
   const canonical = source.lessons.find(lesson => lesson.id === 'water-harvesting-l4')!;
   const paired = draft.lessons.find(lesson => lesson.id === canonical.id)!;
   const sourceParagraphs = canonical.body.split('\n\n');
@@ -557,14 +603,73 @@ test('Water L4 Xitsonga preserves source scope, sanitation gates, prohibitions a
 
   const shown = resolveLearnerLessonPresentation(canonical, 'ts');
   assert.equal(shown.status, 'draft', 'expose the source-paired L4 draft in the Xitsonga resolver');
-  assert.equal(shown.content.title, paired.title.xitsongaDraft);
-  assert.equal(shown.content.body, paired.body.xitsongaDraft);
-  assert.deepEqual(shown.content.keyPoints, paired.keyPoints.map(point => point.xitsongaDraft));
-  assert.deepEqual(shown.content.quiz.map(item => item.correct), [1, 1]);
+  assert.equal(shown.content.body.split('\n\n').length, 5,
+    'the resolver retains the complete five-paragraph structure');
 
   const changedSource = { ...canonical, body: canonical.body.replace('toilet water', 'another source') };
   assert.notEqual(changedSource.body, canonical.body, 'fixture changes the canonical safety-source scope');
   const fallback = resolveLearnerLessonPresentation(changedSource, 'ts');
   assert.equal(fallback.status, 'english-fallback', 'source drift withdraws the complete paired lesson');
   assert.equal(fallback.content.body, changedSource.body);
+}));
+
+test('2026-10-06 Xitsonga Water completion stays paired and preserves household reuse gates', () => {
+  const tsDraft = draft;
+  const l4Source = source.lessons.find(lesson => lesson.id === 'water-harvesting-l4')!;
+  const l4Draft = tsDraft.lessons.find(lesson => lesson.id === l4Source.id)!;
+  const l4Paragraphs = l4Draft.body.xitsongaDraft.split('\n\n');
+
+  assert.equal(tsDraft.description.xitsongaDraft,
+    'Swales, berms, madamu, mathanki ya mati ya mpfula ni greywater — nonokisa, hangalasa — sink every drop.');
+  assert.equal(tsDraft.description.reviewStatus, 'machine-draft', 'the accepted description is visible as an unreviewed draft');
+  for (const lesson of source.lessons) {
+    const pair = tsDraft.lessons.find(item => item.id === lesson.id)!;
+    assert.equal(pair.body.sourceEnglish, lesson.body, `${lesson.id}: exact full source remains paired`);
+    assert.equal(pair.body.reviewStatus, 'machine-draft', `${lesson.id}: complete target remains marked unreviewed`);
+    assert.equal(pair.body.xitsongaDraft.split('\n\n').length, lesson.body.split('\n\n').length,
+      `${lesson.id}: every canonical paragraph stays in order`);
+    const shown = nativeResolveLearnerLessonPresentation(lesson, 'ts');
+    assert.equal(shown.status, 'draft', `${lesson.id}: current ordinary target remains selectable`);
+    assert.equal(shown.content.body, pair.body.xitsongaDraft, `${lesson.id}: resolver selects the accepted paired body`);
+    const changedSource: Lesson = { ...lesson, body: `${lesson.body}\nChanged source guard.` };
+    const fallback = nativeResolveLearnerLessonPresentation(changedSource, 'ts');
+    assert.equal(fallback.status, 'english-fallback', `${lesson.id}: changed source must withdraw its paired draft`);
+    assert.equal(fallback.content.body, changedSource.body);
+  }
+
+  assert.equal(l4Draft.body.sourceEnglish, l4Source.body);
+  assert.equal(l4Paragraphs.length, 5);
+  assert.ok(l4Paragraphs[1].includes('xihambukelo') && l4Paragraphs[1].includes('nappies') &&
+    l4Paragraphs[1].includes('munhu loyi a vabyaka') && l4Paragraphs[1].includes('kumbe') &&
+    l4Paragraphs[1].includes('swiharhi'),
+  'the exclusion list retains toilet water, nappies, washing a sick person or animals');
+  assert.ok(l4Paragraphs[1].includes('chemicals leti nga ni khombo'),
+    'water with harmful chemicals remains excluded from reuse');
+  assert.ok(l4Paragraphs[2].startsWith('Before any reuse,') && l4Paragraphs[2].includes('masipala') &&
+    l4Paragraphs[2].includes('mutsundzuxi wa sanitation') && l4Paragraphs[2].includes('xihlovo xa mati') &&
+    l4Paragraphs[2].includes('ku tirhisiwa loku kunguhatiweke') &&
+    l4Paragraphs[2].includes('Loko ndzayo leyi yi nga kumeki kumbe yi nga ri erivaleni'),
+  'the exact source, service, intended-use and site checks remain before reuse');
+  assert.ok(l4Paragraphs[3].includes('a swi disinfect wastewater') &&
+    l4Paragraphs[3].includes('plumbing ya mati yo nwa') && l4Paragraphs[3].includes('vanhu kumbe swiharhi') &&
+    l4Paragraphs[3].includes('U nga ma fafazeli') && l4Paragraphs[3].includes('ma pool') &&
+    l4Paragraphs[3].includes('property') && l4Paragraphs[3].includes('watercourse'),
+  'no-disinfection, contact, spray, pooling and off-property runoff safeguards remain explicit');
+  assert.ok(l4Paragraphs[4].includes('system yo tirhisa mati nakambe yi se ri karhi yi tirha') &&
+    l4Paragraphs[4].includes('naswona mati ma nunha') && l4Paragraphs[4].includes('ma pool kumbe ma onha swimilana') &&
+    l4Paragraphs[4].includes('tshika ku ma tirhisa') && l4Paragraphs[4].includes('loyi a nga qualified'),
+  'if an operating system has any listed failure sign, stop and seek qualified advice');
+  assert.equal(l4Draft.quiz[0].question.xitsongaDraft,
+    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?');
+  assert.equal(l4Draft.quiz[0].question.reviewStatus, 'machine-draft');
+  const damAnimals = tsDraft.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!
+    .body.xitsongaDraft.split('\n\n')[8];
+  assert.ok(damAnimals.startsWith('Swiharhi swi nga onha banks na ku engetela vulongo ematini.') &&
+    damAnimals.includes('Ku va kona ka swona a swi endli mati ma basa kumbe ma hlayiseka'),
+  'retain English “banks” for the physical dam bank while preserving animal and water-safety conditions');
+  for (const lesson of tsDraft.lessons) {
+    const canonical = source.lessons.find(item => item.id === lesson.id)!;
+    assert.deepEqual(lesson.quiz.map(question => question.sourceCorrectIndex),
+      canonical.quiz.map(question => question.correct), `${lesson.id}: answer indices stay canonical`);
+  }
 });

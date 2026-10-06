@@ -1,0 +1,49 @@
+{
+  "title": "Independent Xitsonga dam-bank bounded reuse check",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "learnerWrites": false,
+  "repoEdits": false,
+  "verdict": "ACCEPT_WITH_ENGLISH_BANKS_NOUN_HOLD",
+  "sourceEnglish": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+  "currentNativeTarget": "Swiharhi swi nga onha tibangi ta damu na ku engetela vulongo ematini. Ku va kona ka swona a swi endli mati ma basa kumbe ma hlayiseka.",
+  "currentDeckTarget": "Animals can damage banks and add manure to the water. Ku va kona ka swona a swi endli mati ma basa kumbe ku hlayiseka.",
+  "recommendedExactTargetForNativeAndMatchingDeck": "Swiharhi swi nga onha banks na ku engetela vulongo ematini. Ku va kona ka swona a swi endli mati ma basa kumbe ma hlayiseka.",
+  "meaningJudgment": "At model semantic level, retaining only the noun “banks” preserves the source’s physical bank referent in this dam/water paragraph and avoids relying on an unverified Xitsonga loan “tibangi.” The surrounding translated clause still expresses animals can damage the banks and add manure into the water; the second sentence still says their presence does not make the water clean or safe.",
+  "explicitMeaningTrace": {
+    "animals": "Swiharhi",
+    "can": "swi nga",
+    "damage": "onha",
+    "physicalDamBanks": "banks (exact source noun retained; dam-context referent)",
+    "andAddManureToWater": "na ku engetela vulongo ematini",
+    "theirPresenceDoesNotMakeWaterCleanOrSafe": "Ku va kona ka swona a swi endli mati ma basa kumbe ma hlayiseka"
+  },
+  "bankTermFinding": {
+    "sourceReferent": "physical bank of a dam, clear from this water/dam context",
+    "tibangiTaDamuIndependentlyVerifiedAsStructuralEarthDamBanks": false,
+    "reasonForNounOnlyHold": "I cannot independently verify that “tibangi” reliably names a dam embankment in Xitsonga. Preserving exact “banks” avoids a possible lexical ambiguity without leaving the whole sentence in English."
+  },
+  "qualifierChecks": {
+    "allAnimalsScope": true,
+    "canNotWill": true,
+    "damageBanks": true,
+    "addManureToWater": true,
+    "presenceDoesNotMakeClean": true,
+    "presenceDoesNotMakeSafe": true,
+    "cleanOrSafeDisjunction": true
+  },
+  "sourceCurrentProof": {
+    "nativeBaselineSnapshot": "docs/study-translation-reviews/water-ordinary-ts-2026-10-06/native-before.json",
+    "nativeBaselineSnapshotSha256": "75a7dee27ba976f93249296f27d8f5395952ab7115f326183323a826267b33bf",
+    "nativeRegistryPath": "lib/course-translation-drafts-ts-water-harvesting.ts",
+    "nativeParagraphZeroBasedIndex": 8,
+    "deckCurrentSource": "docs/narration/water-harvesting.ts.paired-draft.json",
+    "deckCurrentSha256": "d4db452cb6516aa54c19caff6cf6abe769c239263279b9b31c574472b8ad91db",
+    "deckSlide": 13,
+    "deckBodyIndexZeroBased": 2,
+    "deckCandidateSnapshot": "/tmp/water-deck-current-learner-fuller-reuse-candidates.json",
+    "deckCandidateSnapshotSha256": "36aa5e5b407f742c4ce33503c3d8fb4830d802d8a4d19e31ac1b21dcf6999626",
+    "sourceAndCurrentTargetsMatchedExactly": true
+  },
+  "limits": "Meaning/source check only. No fluent Xitsonga, local farming, Shangani, or production approval. The noun “banks” is an exact English hold; only the surrounding ordinary prose is recommended for reuse."
+}

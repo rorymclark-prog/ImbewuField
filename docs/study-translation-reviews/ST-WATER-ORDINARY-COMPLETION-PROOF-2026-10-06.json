@@ -1,0 +1,2349 @@
+{
+  "title": "ST Water ordinary completion exact native before/applied proof",
+  "date": "2026-10-06",
+  "acceptedReviewerPacket": "docs/study-translation-reviews/ST-WATER-ORDINARY-COMPLETION-ACCEPTED-2026-10-06.json",
+  "acceptedPacketSHA256": "2b6391d649e4feba3f74b315919fc93e756938db1b6d2ba9824cde6709f5346e",
+  "nativeRegistryPath": "lib/course-translation-drafts-st-water-harvesting.ts",
+  "nativeRegistryBeforeSHA256": "6c0bfaca11680029511e224e318abfc6f26472b48242ff1a8c019fb9d09b3ef5",
+  "nativeRegistryAppliedSHA256": "7ac70e6e7c58846c4c51b0d36f052189b54da04d9a038ea84ca24c63ce3f80e9",
+  "candidateCount": 107,
+  "changedUnits": 35,
+  "changedBodyParagraphs": 21,
+  "changedNonBodyFields": 14,
+  "reopenedExactEnglishHolds": 10,
+  "sourceCurrentAppliedBindingsExact": true,
+  "absentMetadataPreserved": true,
+  "allBodyCompositionsRecomputed": true,
+  "allChangedUnitsAppliedAsAccepted": true,
+  "rewindingOnlyChangedUnitsReproducesEntireOriginalNativeModule": true,
+  "rewindComparison": "Reverting every changed target and reopened review status reproduces the full module imported from the saved pre-change native TS snapshot.",
+  "noCanonicalOrOtherLanguageChanges": true,
+  "canonicalEnglishHash": "523f73cd81039f9ee4dfdce531dcbea538c5286803f1d713e9a8ddbe095b5400",
+  "rows": [
+    {
+      "id": "st.water-harvesting-l1.title",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "title",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Swales and Berms: Slowing Water on the Slope",
+      "currentTarget": "Mekero le Marako a Mobu (Swales le Berms): Ho Fokotsa Lebelo la Metsi Letswapong",
+      "appliedTarget": "Mekero le Marako a Mobu (Swales le Berms): Ho Fokotsa Lebelo la Metsi Letswapong",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.infographicAlt",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "infographicAlt",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+      "currentTarget": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+      "appliedTarget": "Setshwantsho sa concept cross-section sa level contour swale se nang le qubu e phahamisitsweng ka tlase ho yona. Metsu e bontsha ho fokotseha ha lebelo le ho hasana ha runoff; infiltration e itshetlehile ka mobu le setsha.",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.0",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "nativePairPresent": true,
+      "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.",
+      "currentTarget": "Mofuta o mong wa swale ke a level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, slope, drainage le storm flow. Pele o tjheka, kopa trained local adviser hore a hlahlobe line, overflow le receiving point.",
+      "appliedTarget": "Mofuta o mong wa swale ke level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Di-swale tse ding di radilwe ka grade e nyenyane, e laolwang ho tsamaisa metsi a feteletseng butle ho ya safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, letswapo, drainage le storm flow. Pele o tjheka, kopa moeletsi wa sebaka seo ya kwetlisitsweng hore a hlahlobe mola, overflow le receiving point.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.1",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "nativePairPresent": true,
+      "sourceEnglish": "The excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.",
+      "currentTarget": "Mobu o epolotsweng o etsa berm ka lehlakoreng le theohelang, moo difate di ka jalwang teng ha site design e loketse.",
+      "appliedTarget": "Mobu o epolotsweng o etsa berm ka lehlakoreng le theohelang, moo difate di ka jalwang teng ha moralo wa setsha o loketse.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.2",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "nativePairPresent": true,
+      "sourceEnglish": "Trees planted there may draw on moisture stored in the soil after rain, depending on the site.",
+      "currentTarget": "Difate tse jalwang moo di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka site.",
+      "appliedTarget": "Difate tse jalwang moo di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka setsha.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.3",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "nativePairPresent": true,
+      "sourceEnglish": "Heavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.",
+      "currentTarget": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rala tsela e bolokehileng ya overflow pele o tjheka.",
+      "appliedTarget": "Pula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rala tsela e bolokehileng ya overflow pele o tjheka.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.4",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 4,
+      "nativePairPresent": true,
+      "sourceEnglish": "The route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.",
+      "currentTarget": "Tsela ha e a lokela ho baka erosion moepeng kapa ho romela metsi a senyang ho moahisani. A downstream swale or dam must be able to receive it safely.",
+      "appliedTarget": "Tsela ha e a lokela ho baka kgoholeho moepeng kapa ho romela metsi a senyang ho moahisani. Downstream swale kapa letamo di tlameha ho kgona ho amohela metsi ao ka polokeho.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.5",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 5,
+      "nativePairPresent": true,
+      "sourceEnglish": "Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.",
+      "currentTarget": "Kopa trained local adviser hore a hlahlobe mobu, slope le storm flow. Setshwantsho hase construction design.",
+      "appliedTarget": "Kopa moeletsi wa sebaka seo ya kwetlisitsweng hore a hlahlobe mobu, letswapo le storm flow. Setshwantsho hase moralo wa kaho.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.6",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 6,
+      "nativePairPresent": true,
+      "sourceEnglish": "Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.",
+      "currentTarget": "Slope feela ha e bolele hore swale e loketse. Soil, drainage, unstable ground le metsi a tswang upslope kaofela di bohlokwa.",
+      "appliedTarget": "Letswapo feela ha le bolele hore swale e loketse. Mobu, drainage, mobu o sa tsitsang le metsi a tswang hodimo ho letswapo kaofela di bohlokwa.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.body.paragraph.7",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "body",
+      "paragraphIndex": 7,
+      "nativePairPresent": true,
+      "sourceEnglish": "Keep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+      "currentTarget": "Boloka ground cover e ntle. Fumana local assessment pele o tjheka sebakeng se steep, wet kapa unstable. Grass barriers le terraces le tsona di hloka design e loketseng site.",
+      "appliedTarget": "Boloka sekwahelo se setle sa mobu. Fumana tlhahlobo ya sebaka seo pele o tjheka sebakeng se moepa, se metsi kapa se sa tsitsang. Dithibelo tsa jwang le terraces le tsona di hloka moralo o loketseng setsha.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.keyPoints[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+      "currentTarget": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+      "appliedTarget": "Level contour swale e ka tshwara runoff bakeng sa infiltration setsheng se loketseng; di-swale tse ding di hloka grade e radilweng le safe outlet",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.keyPoints[1]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Keep good ground cover and plan a safe overflow",
+      "currentTarget": "Boloka sekwahelo se setle sa mobu mme o rale tsela e bolokehileng ya metsi a mangata a tswelang kantle",
+      "appliedTarget": "Boloka sekwahelo se setle sa mobu mme o rale tsela e bolokehileng ya metsi a mangata a tswelang kantle",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.keyPoints[2]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Assess soil, drainage, slope and storm flow before digging",
+      "currentTarget": "Lekola mobu, tsamaiso ya metsi (drainage), letswapo le phallo ya sefefo pele o tjheka",
+      "appliedTarget": "Lekola mobu, tsamaiso ya metsi (drainage), letswapo le phallo ya sefefo pele o tjheka",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.keyPoints[3]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A concept picture is not a construction design",
+      "currentTarget": "Setshwantsho sa mohopolo hase moralo wa kaho",
+      "appliedTarget": "Setshwantsho sa mohopolo hase moralo wa kaho",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].question",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+      "currentTarget": "Sehoai se rerile level contour swale. Ka mora pula e matla, one end holds most of the water. Sehoai se lokela ho hlahloba eng pele se fetola earthwork?",
+      "appliedTarget": "Sehwai se rerile level contour swale. Ka mora pula e matla, ntlha e nngwe e tshwere boholo ba metsi. Sehwai se lokela ho hlahloba eng pele se fetola earthwork?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].options[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Whether the trench can be made deeper without a site check",
+      "currentTarget": "Hore na mokero o ka etswa o tebileng haholwanyane ntle le tlhahlobo ya setsha",
+      "appliedTarget": "Hore na mokero o ka etswa o tebileng haholwanyane ntle le tlhahlobo ya setsha",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].options[1]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+      "currentTarget": "Moralo o neng o rerilwe le maemo a lekotsweng le moeletsi ya rutilweng wa sebaka seo; ho ka ba le sebaka se tlase se neng se sa rerwa",
+      "appliedTarget": "Moralo o neng o rerilwe le maemo a lekotsweng le moeletsi ya rutilweng wa sebaka seo; ho ka ba le sebaka se tlase se neng se sa rerwa",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].options[2]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Whether a new dam at the lowest point will catch every overflow",
+      "currentTarget": "Hore na letamo le letjha sebakeng se tlase ka ho fetisisa le tla tshwara phallo e nngwe le e nngwe ya metsi a tletseng",
+      "appliedTarget": "Hore na letamo le letjha sebakeng se tlase ka ho fetisisa le tla tshwara phallo e nngwe le e nngwe ya metsi a tletseng",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].options[3]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Whether the soil should be compacted to stop all infiltration",
+      "currentTarget": "Hore na mobu o lokela ho pitlwa ho emisa ho teba hohle ha metsi",
+      "appliedTarget": "Hore na mobu o lokela ho pitlwa ho emisa ho teba hohle ha metsi",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[0].rationale",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+      "currentTarget": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+      "appliedTarget": "Moralo wa level contour o lokela ho hasanya metsi boleleleng ba wona. Uneven filling ho ka bontsha sebaka se tlase se neng se sa rerwa, empa di-swale tse ding di etswa ka boomo ka grade e lebisang ho safe outlet. Hlahloba moralo wa sebele, mobu le tsela ya overflow pele o e fetola.",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].question",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A farmer wants to control erosion on steep land. What should she do before digging?",
+      "currentTarget": "Sehoai se batlang ho laola kgoholeho mobung o moepa se lokela ho etsa eng pele se tjheka?",
+      "appliedTarget": "Sehwai se batlang ho laola kgoholeho mobung o moepa se lokela ho etsa eng pele se tjheka?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].options[0]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Standard swales dug as deep as possible",
+      "currentTarget": "Mekero (swales) e tlwaelehileng e tjhekilweng ka botebo bo phahameng ka hohle kamoo ho ka kgonehang",
+      "appliedTarget": "Mekero (swales) e tlwaelehileng e tjhekilweng ka botebo bo phahameng ka hohle kamoo ho ka kgonehang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].options[1]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Keep ground covered and get a site assessment for suitable erosion controls",
+      "currentTarget": "Ho boloka mobu o kwahetswe le ho fumana tlhahlobo ya setsha bakeng sa taolo e loketseng ya kgoholeho",
+      "appliedTarget": "Ho boloka mobu o kwahetswe le ho fumana tlhahlobo ya setsha bakeng sa taolo e loketseng ya kgoholeho",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].options[2]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A large dam at the bottom to catch all runoff",
+      "currentTarget": "Letamo le leholo tlase ho tshwara metsi ohle a phallang",
+      "appliedTarget": "Letamo le leholo tlase ho tshwara metsi ohle a phallang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].options[3]",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Compacting the soil surface with a roller",
+      "currentTarget": "Ho pitla bokahodimo ba mobu ka rolara",
+      "appliedTarget": "Ho pitla bokahodimo ba mobu ka rolara",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l1.quiz[1].rationale",
+      "lessonId": "water-harvesting-l1",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
+      "currentTarget": "Letswapo feela ha le a lekana ho kgetha mosebetsi wa mobu. Mobu, tsamaiso ya metsi (drainage), botsitso le phallo ya sefefo le tsona di tlameha ho lekolwa.",
+      "appliedTarget": "Letswapo feela ha le a lekana ho kgetha mosebetsi wa mobu. Mobu, tsamaiso ya metsi (drainage), botsitso le phallo ya sefefo le tsona di tlameha ho lekolwa.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.title",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "title",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+      "currentTarget": "Matamo a Polasi le Matangwana: Ho Boloka Metsi Bakeng sa Sehla sa Komelelo",
+      "appliedTarget": "Matamo a Polasi le Matangwana: Ho Boloka Metsi Bakeng sa Sehla sa Komelelo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.infographicAlt",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "infographicAlt",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+      "currentTarget": "Letamo la polasi le sehilweng hara: metsi a kenang ntlheng e nngwe, bongata ba metsi a bolokilweng, tsela ya metsi a tletseng (spillway) ntlheng e kahodimo bakeng sa phallo e tletseng, le lebopo le jetsweng le tshwereng mobu.",
+      "appliedTarget": "Letamo la polasi le sehilweng hara: metsi a kenang ntlheng e nngwe, bongata ba metsi a bolokilweng, tsela ya metsi a tletseng (spillway) ntlheng e kahodimo bakeng sa phallo e tletseng, le lebopo le jetsweng le tshwereng mobu.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.0",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "nativePairPresent": true,
+      "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.",
+      "currentTarget": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+      "appliedTarget": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.1",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "nativePairPresent": true,
+      "sourceEnglish": "Rainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.",
+      "currentTarget": "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.",
+      "appliedTarget": "Dihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.2",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "nativePairPresent": true,
+      "sourceEnglish": "Before changing a watercourse or building storage works, check the required authorisation with the water authority.",
+      "currentTarget": "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+      "appliedTarget": "Pele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.3",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "nativePairPresent": true,
+      "sourceEnglish": "A dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.",
+      "currentTarget": "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+      "appliedTarget": "Letamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.4",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 4,
+      "nativePairPresent": true,
+      "sourceEnglish": "Do not assume that annual rainfall tells you the size of a flood or the storage you will have.",
+      "currentTarget": "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+      "appliedTarget": "O se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.5",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 5,
+      "nativePairPresent": true,
+      "sourceEnglish": "An uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.",
+      "currentTarget": "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+      "appliedTarget": "Phallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.6",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 6,
+      "nativePairPresent": true,
+      "sourceEnglish": "Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.",
+      "currentTarget": "Metsi a ka lahleha ka evaporation le seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+      "appliedTarget": "Metsi a ka lahleha ka evaporation le seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.7",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 7,
+      "nativePairPresent": true,
+      "sourceEnglish": "Keep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.",
+      "currentTarget": "Boloka spillway e sa thibehang mme o hlokomele bank cover e boletsweng design. O se ke wa jala difate hodima lerako la earth dam.",
+      "appliedTarget": "Boloka spillway e sa thibehang mme o hlokomele sekwahelo sa lebopo se boletsweng moralong. O se ke wa jala difate hodima lerako la letamo la mobu.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l2.body.paragraph.8",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "body",
+      "paragraphIndex": 8,
+      "nativePairPresent": true,
+      "sourceEnglish": "Animals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+      "currentTarget": "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+      "appliedTarget": "Diphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.keyPoints[0]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A dam needs a site assessment and qualified design",
+      "currentTarget": "Letamo le hloka tlhahlobo ya setsha le moralo o tswang ho motho ya nang le ditshwaneleho",
+      "appliedTarget": "Letamo le hloka tlhahlobo ya setsha le moralo o tswang ho motho ya nang le ditshwaneleho",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.keyPoints[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Design a safe spillway before construction",
+      "currentTarget": "Rala tsela e bolokehileng ya metsi a tletseng (spillway) pele ho kaho",
+      "appliedTarget": "Rala tsela e bolokehileng ya metsi a tletseng (spillway) pele ho kaho",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.keyPoints[2]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Check required water authorisations before building",
+      "currentTarget": "Hlahloba ditumello tse hlokahalang tsa metsi pele o haha",
+      "appliedTarget": "Hlahloba ditumello tse hlokahalang tsa metsi pele o haha",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.keyPoints[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+      "currentTarget": "Hlokomela sekwahelo sa lebopo mme o se ke wa lema difate hodima lerako la letamo la mobu",
+      "appliedTarget": "Hlokomela sekwahelo sa lebopo mme o se ke wa lema difate hodima lerako la letamo la mobu",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].question",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+      "currentTarget": "Sehwai se haha lerako la letamo le se nang tsela ya metsi a tletseng (spillway). Kamora sefefo se sa tlwaelehang le a kgaphatseha. Ke eng se ka bang sephetho?",
+      "appliedTarget": "Sehwai se haha lerako la letamo le se nang tsela ya metsi a tletseng (spillway). Kamora sefefo se sa tlwaelehang le a kgaphatseha. Ke eng se ka bang sephetho?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].options[0]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "The water irrigates lower fields beneficially",
+      "currentTarget": "Metsi a nosetsa masimo a ka tlase ka mokgwa o molemo",
+      "appliedTarget": "Metsi a nosetsa masimo a ka tlase ka mokgwa o molemo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].options[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+      "currentTarget": "A tlola hodimo mme a kgohola lerako, a beha kotsing ya ho pshatleha ho hoholo",
+      "appliedTarget": "A tlola hodimo mme a kgohola lerako, a beha kotsing ya ho pshatleha ho hoholo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].options[2]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+      "currentTarget": "Letamo le dula le tletse mme metsi a tletseng a tswa ntle le kotsi",
+      "appliedTarget": "Letamo le dula le tletse mme metsi a tletseng a tswa ntle le kotsi",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].options[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Storage capacity increases permanently",
+      "currentTarget": "Bokgoni ba polokelo bo eketseha ka ho sa feleng",
+      "appliedTarget": "Bokgoni ba polokelo bo eketseha ka ho sa feleng",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[0].rationale",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+      "currentTarget": "Ntle le tsela e radilweng ya metsi a feteletseng, metsi a feteletseng a iphumanela tsela hodima lerako — mme phallo eo e sa laolweng ke yona e kgoholang le ho qetella e pshatla lerako.",
+      "appliedTarget": "Ntle le tsela e radilweng ya metsi a feteletseng, metsi a feteletseng a iphumanela tsela hodima lerako — mme phallo eo e sa laolweng ke yona e kgoholang le ho qetella e pshatla lerako.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].question",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Which action helps protect an earth dam?",
+      "currentTarget": "Ke ketso efe e thusang ho sireletsa letamo la mobu?",
+      "appliedTarget": "Ke ketso efe e thusang ho sireletsa letamo la mobu?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].options[0]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+      "currentTarget": "Letamo le tebileng, le pepesitsweng le se nang dimela tsa lebopo",
+      "appliedTarget": "Letamo le tebileng, le pepesitsweng le se nang dimela tsa lebopo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].options[1]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+      "currentTarget": "Ho hlokomela sekwahelo sa lebopo se radilweng le ho boloka spillway e sa thibehang (keep the spillway clear)",
+      "appliedTarget": "Ho hlokomela sekwahelo sa lebopo se radilweng le ho boloka spillway e sa thibehang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].options[2]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A full concrete lining and plastic cover",
+      "currentTarget": "Ho le kwahela ka konkreite ka botlalo le sekwahelo sa polasetiki",
+      "appliedTarget": "Ho le kwahela ka konkreite ka botlalo le sekwahelo sa polasetiki",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].options[3]",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A larger surface area to spread evaporation evenly",
+      "currentTarget": "Sebaka se seholwanyane sa bokahodimo ho phatlalatsa mouwane ka ho lekana",
+      "appliedTarget": "Sebaka se seholwanyane sa bokahodimo ho phatlalatsa mouwane ka ho lekana",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l2.quiz[1].rationale",
+      "lessonId": "water-harvesting-l2",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+      "currentTarget": "Spillway e sa thibehang le mabopo a hlokometsweng di thusa letamo ho sebetsa jwalo ka design. Difate ha di a lokela ho jalwa hodima lerako la earth dam.",
+      "appliedTarget": "Spillway e sa thibehang le mabopo a hlokometsweng di thusa letamo ho sebetsa jwalo ka moralo. Difate ha di a lokela ho jalwa hodima lerako la letamo la mobu.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.title",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "title",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+      "currentTarget": "Ditanka tsa Metsi a Pula le Pokello ya Marulelo: Ho Bokella le ho Sireletsa Metsi",
+      "appliedTarget": "Ditanka tsa Metsi a Pula le Pokello ya Marulelo: Ho Bokella le ho Sireletsa Metsi",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.infographicAlt",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "infographicAlt",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+      "currentTarget": "Pula e phallang hodima marulelo e kena ka hara koto ebe e theoha ka phala ho kena ka hara tanka, e nang le sekgelo se senyenyane sa ho qala ha phallo (first-flush diverter) se kgelohang pele ho tanka ho lahla metsi a pele a ditshila.",
+      "appliedTarget": "Pula e phallang hodima marulelo e kena ka hara koto ebe e theoha ka phala ho kena ka hara tanka, e nang le sekgelo se senyenyane sa ho qala ha phallo (first-flush diverter) se kgelohang pele ho tanka ho lahla metsi a pele a ditshila.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.0",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "nativePairPresent": true,
+      "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.",
+      "currentTarget": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.",
+      "appliedTarget": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.1",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "nativePairPresent": true,
+      "sourceEnglish": "Check whether the roof material is suitable for rainwater collection before connecting a tank.",
+      "currentTarget": "Hlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.",
+      "appliedTarget": "Hlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.2",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "nativePairPresent": true,
+      "sourceEnglish": "Use the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "currentTarget": "Sebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Then allow for water that misses the gutter, is diverted or overflows a full tank.",
+      "appliedTarget": "Sebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Jwale o nahanele metsi a sa keneng ka gutter, a kgeloswang kapa a tsholohang tankeng e tletseng.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.3",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "nativePairPresent": true,
+      "sourceEnglish": "An annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.",
+      "currentTarget": "Palo ya pula ya selemo kaofela ha e o bolelle hore na metsi a makae a tla fumaneha nakong ya dry spell. Bapisa phepelo le ditshebediso tseo o di rerileng.",
+      "appliedTarget": "Palo ya pula ya selemo kaofela ha e o bolelle hore na metsi a makae a tla fumaneha nakong ya dry spell. Bapisa phepelo le ditshebediso tseo o di rerileng.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.4",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 4,
+      "nativePairPresent": true,
+      "sourceEnglish": "Roof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "currentTarget": "Metsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. A first-flush diverter keeps some of the first runoff out of the tank.",
+      "appliedTarget": "Metsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. First-flush diverter e thibela metsi a mang a phallo ya pele ho kena ka tankeng.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.5",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 5,
+      "nativePairPresent": true,
+      "sourceEnglish": "The required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.",
+      "currentTarget": "Bongata bo lokelang ho kgeloswa bo itshetlehile ka marulelo le system. Latela ditaelo tsa supplier tsa sizing le maintenance; ha ho volume e le nngwe bakeng sa marulelo ohle.",
+      "appliedTarget": "Bongata bo lokelang ho kgeloswa bo itshetlehile ka marulelo le tsamaiso. Latela ditaelo tsa mofani mabapi le ho lekanya boholo le ho hlokomela; ha ho volume e le nngwe bakeng sa marulelo ohle.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.6",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 6,
+      "nativePairPresent": true,
+      "sourceEnglish": "A diverter does not make the remaining water safe to drink.",
+      "currentTarget": "Sekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.",
+      "appliedTarget": "Sekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.7",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 7,
+      "nativePairPresent": true,
+      "sourceEnglish": "Tank size depends on water demand, rain, roof area and the length of dry periods.",
+      "currentTarget": "Boholo ba tank bo itshetlehile ka tlhoko ya metsi, pula, sebaka sa marulelo le bolelele ba dry periods.",
+      "appliedTarget": "Boholo ba tanka bo itshetlehile ka tlhoko ya metsi, pula, sebaka sa marulelo le bolelele ba dry periods.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.8",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 8,
+      "nativePairPresent": true,
+      "sourceEnglish": "List the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.",
+      "currentTarget": "Ngola intended uses mme o hakanye demand ya tsona o sebedisa records tsa hao. Bapisa demand ya tsona le phepelo ho pholletsa le dihla.",
+      "appliedTarget": "Ngola ditshebediso tse rerilweng mme o hakanye tlhoko ya tsona o sebedisa ditlaleho tsa hao. Bapisa tlhoko ya tsona le phepelo ho pholletsa le dihla.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.9",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 9,
+      "nativePairPresent": true,
+      "sourceEnglish": "Plan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.",
+      "currentTarget": "Rala seo o tla se etsa ha stored water runs low. Lebitso la provense feela ha le bolele boholo ba tank boo o bo hlokang.",
+      "appliedTarget": "Rala seo o tla se etsa ha metsi a bolokilweng a se a le manyenyane. Lebitso la provense feela ha le bolele boholo ba tanka boo o bo hlokang.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.10",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 10,
+      "nativePairPresent": true,
+      "sourceEnglish": "Keep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.",
+      "currentTarget": "Kwahela tank, kwahela masoba ka mesh e thibelang dikokonyana, mme o hlokomele marulelo, gutters le diverter. Arola metsi a pula le diphaephe tsa drinking water.",
+      "appliedTarget": "Kwahela tanka, kwahela masoba ka mesh e thibelang dikokonyana, mme o hlokomele marulelo, mekero ya marulelo (gutters) le sekgelo (diverter). Arola metsi a pula le diphaephe tsa metsi a nowang.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.11",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 11,
+      "nativePairPresent": true,
+      "sourceEnglish": "Water that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.",
+      "currentTarget": "Metsi a shebahalang a hlakile a ntse a ka ba le germs kapa chemicals. Botsa balaodi ba bophelo bo botle ba sebaka seo ka testing le treatment tse loketseng intended use.",
+      "appliedTarget": "Metsi a shebahalang a hlakile a ntse a ka ba le dikokwana-hloko kapa dikhemikhale. Botsa balaodi ba bophelo bo botle ba sebaka seo ka diteko le kalafo tse loketseng tshebediso e rerilweng.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l3.body.paragraph.12",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "body",
+      "paragraphIndex": 12,
+      "nativePairPresent": true,
+      "sourceEnglish": "A basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+      "currentTarget": "Sefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+      "appliedTarget": "Sefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.keyPoints[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
+      "currentTarget": "Boholo ba marulelo, pula, tlhoko le tahlehelo di lekanya polokelo e nang le molemo",
+      "appliedTarget": "Boholo ba marulelo, pula, tlhoko le tahlehelo di lekanya polokelo e nang le molemo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.keyPoints[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Size and maintain the first-flush diverter for the roof",
+      "currentTarget": "Bontsha boholo le ho hlokomela sekgelo sa ho qala ha phallo (first-flush diverter) bakeng sa marulelo",
+      "appliedTarget": "Bontsha boholo le ho hlokomela sekgelo sa ho qala ha phallo (first-flush diverter) bakeng sa marulelo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.keyPoints[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Clear water can still contain germs or chemicals",
+      "currentTarget": "Metsi a hlakileng a ka nna a ba le dikokwana-hloko kapa dikhemikhale",
+      "appliedTarget": "Metsi a hlakileng a ka nna a ba le dikokwana-hloko kapa dikhemikhale",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.keyPoints[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Testing and treatment must match the intended use",
+      "currentTarget": "Diteko le kalafo di tlameha ho tsamaisana le tshebediso e rerilweng",
+      "appliedTarget": "Diteko le kalafo di tlameha ho tsamaisana le tshebediso e rerilweng",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].question",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "What information is needed to choose a rainwater tank?",
+      "currentTarget": "Ke tlhahisoleseding efe e hlokahalang ho kgetha tanka ya metsi a pula?",
+      "appliedTarget": "Ke tlhahisoleseding efe e hlokahalang ho kgetha tanka ya metsi a pula?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].options[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Only the province where the farm is located",
+      "currentTarget": "Feela provense moo polasi e leng teng",
+      "appliedTarget": "Feela provense moo polasi e leng teng",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].options[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+      "currentTarget": "Boholo ba marulelo, mokgwa wa pula, tlhoko ya metsi le tahlehelo ya pokello",
+      "appliedTarget": "Boholo ba marulelo, mokgwa wa pula, tlhoko ya metsi le tahlehelo ya pokello",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].options[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Only the amount of rain in one storm",
+      "currentTarget": "Feela bongata ba pula sefefong se le seng",
+      "appliedTarget": "Feela bongata ba pula sefefong se le seng",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].options[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Only the price of the biggest available tank",
+      "currentTarget": "Feela theko ya tanka e kgolo ka ho fetisisa e fumanehang",
+      "appliedTarget": "Feela theko ya tanka e kgolo ka ho fetisisa e fumanehang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[0].rationale",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
+      "currentTarget": "Moralo wa tanka o tlameha ho bapisa phepelo e ka sebediswang le tlhoko ho pholletsa le dinako tsa pula le komello. Boholo bo le bong bo tsitsitseng ba sebaka bo ke ke ba etsa seo.",
+      "appliedTarget": "Moralo wa tanka o tlameha ho bapisa phepelo e ka sebediswang le tlhoko ho pholletsa le dinako tsa pula le komello. Boholo bo le bong bo tsitsitseng ba sebaka bo ke ke ba etsa seo.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].question",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
+      "currentTarget": "Hobaneng sekgelo sa ho qala ha phallo (first-flush diverter) se le bohlokwa le bakeng sa metsi a tanka a sebedisetswang nosetso feela?",
+      "appliedTarget": "Hobaneng sekgelo sa ho qala ha phallo (first-flush diverter) se le bohlokwa le bakeng sa metsi a tanka a sebedisetswang nosetso feela?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].options[0]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
+      "currentTarget": "Ha se na taba bakeng sa nosetso, feela metsing a nowang",
+      "appliedTarget": "Ha se na taba bakeng sa nosetso, feela metsing a nowang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].options[1]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
+      "currentTarget": "Phallo ya pele e jara mantle a teteaneng, lerole le dikokwana-hloko tse bakang mafu tse ka silafatsang dijalo tse jewang",
+      "appliedTarget": "Phallo ya pele e jara mantle a teteaneng, lerole le dikokwana-hloko tse bakang mafu tse ka silafatsang dijalo tse jewang",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].options[2]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "It's more acidic and changes soil pH over time",
+      "currentTarget": "E na le asiti e ngata mme e fetola pH ya mobu ha nako e ntse e ya",
+      "appliedTarget": "E na le asiti e ngata mme e fetola pH ya mobu ha nako e ntse e ya",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].options[3]",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "It stops the tank overfilling in storms",
+      "currentTarget": "E thibela tanka ho tlala ho tlola meeding nakong ya difefo",
+      "appliedTarget": "E thibela tanka ho tlala ho tlola meeding nakong ya difefo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l3.quiz[1].rationale",
+      "lessonId": "water-harvesting-l3",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+      "currentTarget": "Ho kgelosa metsi a pele a phallang ho ka fokotsa tshilafalo, empa ha ho tiise hore metsi a morao a bolokehile. Lekola boleng bakeng sa tshebediso e rerilweng.",
+      "appliedTarget": "Ho kgelosa metsi a pele a phallang ho ka fokotsa tshilafalo, empa ha ho tiise hore metsi a morao a bolokehile. Lekola boleng bakeng sa tshebediso e rerilweng.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.title",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "title",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Greywater: Check Before Reuse",
+      "currentTarget": "Metsi a Ditshila a Malapeng (Greywater): Hlahloba Pele o Sebedisa Hape",
+      "appliedTarget": "Metsi a Ditshila a Malapeng (Greywater): Hlahloba Pele o Sebedisa Hape",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.infographicAlt",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "infographicAlt",
+      "paragraphIndex": null,
+      "nativePairPresent": false,
+      "sourceEnglish": null,
+      "currentTarget": null,
+      "appliedTarget": null,
+      "currentReviewStatus": "canonical-fallback",
+      "appliedReviewStatus": null,
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.body.paragraph.0",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 0,
+      "nativePairPresent": true,
+      "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.",
+      "currentTarget": "Metsi a sebedisitsweng ka lapeng a ka ba le germs, salts, cleaning products le dintho tse ding. Ditaelo ha di hlalose mohlodi o mong le o mong ka tsela e tshwanang. Ditaelo tsa Afrika Borwa di fapana mabapi le kitchen water le laundry water.",
+      "appliedTarget": "Metsi a sebedisitsweng ka lapeng a ka ba le dikokwana-hloko, matswai, dihlahiswa tsa ho hlwekisa le dintho tse ding. Ditaelo ha di hlalose mohlodi o mong le o mong ka tsela e tshwanang. Ditaelo tsa Afrika Borwa di fapana mabapi le metsi a khitjhineng le metsi a ho hlatswa diaparo.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.body.paragraph.1",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 1,
+      "nativePairPresent": true,
+      "sourceEnglish": "Do not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.",
+      "currentTarget": "O se ke wa kenya toilet water, water from nappies, a ho hlatswa motho ya kulang kapa a ho hlatswa diphoofolo moralong wa reuse. O se ke wa sebedisa hape metsi a nang le harmful chemicals.",
+      "appliedTarget": "O se ke wa kenya metsi a ntlwana, metsi a tswang ho nappies, a ho hlatswa motho ya kulang kapa a ho hlatswa diphoofolo moralong wa ho sebedisa metsi hape. O se ke wa sebedisa hape metsi a nang le dikhemikhale tse kotsi.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.body.paragraph.2",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 2,
+      "nativePairPresent": true,
+      "sourceEnglish": "Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.",
+      "currentTarget": "Pele ho reuse efe kapa efe, kopa municipality le qualified local sanitation adviser hore ba hlahlobe source e tobileng, ditshebeletso tsa metsi le sanitation tsa household, intended use le site. Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.",
+      "appliedTarget": "Pele ho tshebediso efe kapa efe ya metsi hape, kopa masepala le qualified local sanitation adviser hore ba hlahlobe mohlodi o tobileng, ditshebeletso tsa metsi le sanitation tsa lelapa, tshebediso e rerilweng le setsha. Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.body.paragraph.3",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 3,
+      "nativePairPresent": true,
+      "sourceEnglish": "A generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.",
+      "currentTarget": "Setshwantsho se akaretsang hase farm design. Soil le mulch ha di disinfect wastewater. Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo. O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.",
+      "appliedTarget": "Setshwantsho se akaretsang hase moralo wa polasi. Mobu le mulch ha di disinfect wastewater. Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo. O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.body.paragraph.4",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "body",
+      "paragraphIndex": 4,
+      "nativePairPresent": true,
+      "sourceEnglish": "If a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+      "currentTarget": "Haeba reuse system e se e sebetsa mme the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+      "appliedTarget": "Haeba tsamaiso ya ho sebedisa metsi hape e se e sebetsa mme metsi a nkga hampe, a bokellana a eme kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.keyPoints[0]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Water sources and greywater guidance can differ",
+      "currentTarget": "Mehlodi ya metsi le ditaelo tsa metsi a ditshila (greywater) di ka fapana",
+      "appliedTarget": "Mehlodi ya metsi le ditaelo tsa metsi a ditshila (greywater) di ka fapana",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.keyPoints[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+      "currentTarget": "Check the source, service status, intended use and site locally before any reuse",
+      "appliedTarget": "Hlahloba mohlodi, service status, tshebediso e rerilweng le setsha sebakeng seo pele ho tshebediso efe kapa efe ya metsi hape",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.keyPoints[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Soil and mulch do not disinfect wastewater",
+      "currentTarget": "Soil and mulch do not disinfect wastewater",
+      "appliedTarget": "Mobu le mulch ha di disinfect wastewater",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.keyPoints[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "keyPoints[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+      "currentTarget": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+      "appliedTarget": "Thibela ho kopana le metsi, ho a fafatsa, ho a tlohela a bokellana a eme, runoff le drinking-water cross-connections",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].question",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "What should happen before any household washwater is reused?",
+      "currentTarget": "Ho lokela ho etsahala eng pele metsi afe kapa afe a ho hlatswa a lapeng a sebediswa hape?",
+      "appliedTarget": "Ho lokela ho etsahala eng pele metsi afe kapa afe a ho hlatswa a lapeng a sebediswa hape?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].options[0]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Direct it below mulch around a tree",
+      "currentTarget": "A ise ka tlase ho mulch ho potoloha sefate",
+      "appliedTarget": "A ise ka tlase ho mulch ho potoloha sefate",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].options[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+      "currentTarget": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+      "appliedTarget": "Kopa masepala le qualified sanitation adviser hore ba hlahlobe mohlodi, service status, tshebediso e rerilweng le setsha",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].options[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Use it if it looks clear",
+      "currentTarget": "Use it if it looks clear",
+      "appliedTarget": "A sebedise haeba a shebahala a hlakile",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].options[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Use it only on plants that are not eaten raw",
+      "currentTarget": "A sebedise feela dimeleng tse sa jeweng di le tala",
+      "appliedTarget": "A sebedise feela dimeleng tse sa jeweng di le tala",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[0].rationale",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[0].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+      "currentTarget": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+      "appliedTarget": "Ditaelo di fapana mabapi le mehlodi e meng ya metsi le maemo a ditshebeletso bakeng sa ho sebedisa metsi hape. Qualified local check e a hlokahala pele ho qeto ya hore na mohlodi ofe kapa ofe le tshebediso di loketse kapa di dumelletswe.",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].question",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].question",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
+      "currentTarget": "Hobaneng ho lokela ho hlahlojwa mohlodi o tobileng wa metsi le dihlahiswa tsa ho hlwekisa pele ho nahanwa ka ho a sebedisa hape?",
+      "appliedTarget": "Hobaneng ho lokela ho hlahlojwa mohlodi o tobileng wa metsi le dihlahiswa tsa ho hlwekisa pele ho nahanwa ka ho a sebedisa hape?",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].options[0]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[0]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "All cleaning products are safe if the water is diluted",
+      "currentTarget": "Dihlahiswa tsohle tsa ho hlwekisa di bolokehile haeba metsi a hlapolotswe",
+      "appliedTarget": "Dihlahiswa tsohle tsa ho hlwekisa di bolokehile haeba metsi a hlapolotswe",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].options[1]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[1]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
+      "currentTarget": "Sebopeho sa metsi le ditlamorao tsa dihlahiswa di a fapana, kahoo mohlodi wa sebele le dihlahiswa di hloka tlhahlobo",
+      "appliedTarget": "Sebopeho sa metsi le ditlamorao tsa dihlahiswa di a fapana, kahoo mohlodi wa sebele le dihlahiswa di hloka tlhahlobo",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].options[2]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[2]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "The water can be reused when it has no smell",
+      "currentTarget": "Metsi a ka sebediswa hape ha a se na monko",
+      "appliedTarget": "Metsi a ka sebediswa hape ha a se na monko",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].options[3]",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].options[3]",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Mulch removes every harmful substance",
+      "currentTarget": "Mulch e tlosa ntho e nngwe le e nngwe e kotsi",
+      "appliedTarget": "Mulch e tlosa ntho e nngwe le e nngwe e kotsi",
+      "currentReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "changed": false
+    },
+    {
+      "id": "st.water-harvesting-l4.quiz[1].rationale",
+      "lessonId": "water-harvesting-l4",
+      "fieldPath": "quiz[1].rationale",
+      "paragraphIndex": null,
+      "nativePairPresent": true,
+      "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+      "currentTarget": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+      "appliedTarget": "Metsi a sebedisitsweng a ka ba le dikokwana-hloko, matswai le dikhemikhale tse fapaneng. Ho shebahala a hlakile ha ho pake hore a bolokehile kapa a loketse; ho hloka monko ha ho pake seo, le mulch ha e pake seo.",
+      "currentReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "changed": true
+    }
+  ],
+  "nativeBeforeSnapshot": {
+    "id": "water-harvesting",
+    "language": "st",
+    "reviewStatus": "machine-draft",
+    "sourceMetadata": {
+      "durationMins": 35,
+      "category": "water"
+    },
+    "title": {
+      "sourceEnglish": "Water Harvesting",
+      "sesothoDraft": "Ho Kotula Metsi (Water Harvesting)",
+      "reviewStatus": "machine-draft"
+    },
+    "description": {
+      "sourceEnglish": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "sesothoDraft": "Meralo ya mekero le marako a mobu (swales le berms), matamo, ditanka tsa metsi a pula le metsi a ditshila a malapeng (greywater) — fokotsa lebelo, phatlalatsa mme o tebise lerothodi le leng le le leng.",
+      "reviewStatus": "machine-draft"
+    },
+    "lessons": [
+      {
+        "id": "water-harvesting-l1",
+        "infographicAlt": {
+          "sourceEnglish": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+          "sesothoDraft": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+          "reviewStatus": "hold"
+        },
+        "title": {
+          "sourceEnglish": "Swales and Berms: Slowing Water on the Slope",
+          "sesothoDraft": "Mekero le Marako a Mobu (Swales le Berms): Ho Fokotsa Lebelo la Metsi Letswapong",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+          "sesothoDraft": "Mofuta o mong wa swale ke a level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, slope, drainage le storm flow. Pele o tjheka, kopa trained local adviser hore a hlahlobe line, overflow le receiving point.\n\nMobu o epolotsweng o etsa berm ka lehlakoreng le theohelang, moo difate di ka jalwang teng ha site design e loketse.\n\nDifate tse jalwang moo di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka site.\n\nPula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rala tsela e bolokehileng ya overflow pele o tjheka.\n\nTsela ha e a lokela ho baka erosion moepeng kapa ho romela metsi a senyang ho moahisani. A downstream swale or dam must be able to receive it safely.\n\nKopa trained local adviser hore a hlahlobe mobu, slope le storm flow. Setshwantsho hase construction design.\n\nSlope feela ha e bolele hore swale e loketse. Soil, drainage, unstable ground le metsi a tswang upslope kaofela di bohlokwa.\n\nBoloka ground cover e ntle. Fumana local assessment pele o tjheka sebakeng se steep, wet kapa unstable. Grass barriers le terraces le tsona di hloka design e loketseng site.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+            "sesothoDraft": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Keep good ground cover and plan a safe overflow",
+            "sesothoDraft": "Boloka sekwahelo se setle sa mobu mme o rale tsela e bolokehileng ya metsi a mangata a tswelang kantle",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Assess soil, drainage, slope and storm flow before digging",
+            "sesothoDraft": "Lekola mobu, tsamaiso ya metsi (drainage), letswapo le phallo ya sefefo pele o tjheka",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "A concept picture is not a construction design",
+            "sesothoDraft": "Setshwantsho sa mohopolo hase moralo wa kaho",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+              "sesothoDraft": "Sehoai se rerile level contour swale. Ka mora pula e matla, one end holds most of the water. Sehoai se lokela ho hlahloba eng pele se fetola earthwork?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Whether the trench can be made deeper without a site check",
+                "sesothoDraft": "Hore na mokero o ka etswa o tebileng haholwanyane ntle le tlhahlobo ya setsha",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+                "sesothoDraft": "Moralo o neng o rerilwe le maemo a lekotsweng le moeletsi ya rutilweng wa sebaka seo; ho ka ba le sebaka se tlase se neng se sa rerwa",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Whether a new dam at the lowest point will catch every overflow",
+                "sesothoDraft": "Hore na letamo le letjha sebakeng se tlase ka ho fetisisa le tla tshwara phallo e nngwe le e nngwe ya metsi a tletseng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Whether the soil should be compacted to stop all infiltration",
+                "sesothoDraft": "Hore na mobu o lokela ho pitlwa ho emisa ho teba hohle ha metsi",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+              "sesothoDraft": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+              "reviewStatus": "hold"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "A farmer wants to control erosion on steep land. What should she do before digging?",
+              "sesothoDraft": "Sehoai se batlang ho laola kgoholeho mobung o moepa se lokela ho etsa eng pele se tjheka?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Standard swales dug as deep as possible",
+                "sesothoDraft": "Mekero (swales) e tlwaelehileng e tjhekilweng ka botebo bo phahameng ka hohle kamoo ho ka kgonehang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Keep ground covered and get a site assessment for suitable erosion controls",
+                "sesothoDraft": "Ho boloka mobu o kwahetswe le ho fumana tlhahlobo ya setsha bakeng sa taolo e loketseng ya kgoholeho",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A large dam at the bottom to catch all runoff",
+                "sesothoDraft": "Letamo le leholo tlase ho tshwara metsi ohle a phallang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Compacting the soil surface with a roller",
+                "sesothoDraft": "Ho pitla bokahodimo ba mobu ka rolara",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
+              "sesothoDraft": "Letswapo feela ha le a lekana ho kgetha mosebetsi wa mobu. Mobu, tsamaiso ya metsi (drainage), botsitso le phallo ya sefefo le tsona di tlameha ho lekolwa.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l2",
+        "infographicAlt": {
+          "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+          "sesothoDraft": "Letamo la polasi le sehilweng hara: metsi a kenang ntlheng e nngwe, bongata ba metsi a bolokilweng, tsela ya metsi a tletseng (spillway) ntlheng e kahodimo bakeng sa phallo e tletseng, le lebopo le jetsweng le tshwereng mobu.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+          "sesothoDraft": "Matamo a Polasi le Matangwana: Ho Boloka Metsi Bakeng sa Sehla sa Komelelo",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+          "sesothoDraft": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.\n\nDihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.\n\nPele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.\n\nLetamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.\n\nO se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.\n\nPhallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.\n\nMetsi a ka lahleha ka evaporation le seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.\n\nBoloka spillway e sa thibehang mme o hlokomele bank cover e boletsweng design. O se ke wa jala difate hodima lerako la earth dam.\n\nDiphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "A dam needs a site assessment and qualified design",
+            "sesothoDraft": "Letamo le hloka tlhahlobo ya setsha le moralo o tswang ho motho ya nang le ditshwaneleho",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Design a safe spillway before construction",
+            "sesothoDraft": "Rala tsela e bolokehileng ya metsi a tletseng (spillway) pele ho kaho",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check required water authorisations before building",
+            "sesothoDraft": "Hlahloba ditumello tse hlokahalang tsa metsi pele o haha",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+            "sesothoDraft": "Hlokomela sekwahelo sa lebopo mme o se ke wa lema difate hodima lerako la letamo la mobu",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+              "sesothoDraft": "Sehwai se haha lerako la letamo le se nang tsela ya metsi a tletseng (spillway). Kamora sefefo se sa tlwaelehang le a kgaphatseha. Ke eng se ka bang sephetho?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "The water irrigates lower fields beneficially",
+                "sesothoDraft": "Metsi a nosetsa masimo a ka tlase ka mokgwa o molemo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+                "sesothoDraft": "A tlola hodimo mme a kgohola lerako, a beha kotsing ya ho pshatleha ho hoholo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+                "sesothoDraft": "Letamo le dula le tletse mme metsi a tletseng a tswa ntle le kotsi",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Storage capacity increases permanently",
+                "sesothoDraft": "Bokgoni ba polokelo bo eketseha ka ho sa feleng",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+              "sesothoDraft": "Ntle le tsela e radilweng ya metsi a feteletseng, metsi a feteletseng a iphumanela tsela hodima lerako — mme phallo eo e sa laolweng ke yona e kgoholang le ho qetella e pshatla lerako.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Which action helps protect an earth dam?",
+              "sesothoDraft": "Ke ketso efe e thusang ho sireletsa letamo la mobu?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+                "sesothoDraft": "Letamo le tebileng, le pepesitsweng le se nang dimela tsa lebopo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+                "sesothoDraft": "Ho hlokomela sekwahelo sa lebopo se radilweng le ho boloka spillway e sa thibehang (keep the spillway clear)",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A full concrete lining and plastic cover",
+                "sesothoDraft": "Ho le kwahela ka konkreite ka botlalo le sekwahelo sa polasetiki",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A larger surface area to spread evaporation evenly",
+                "sesothoDraft": "Sebaka se seholwanyane sa bokahodimo ho phatlalatsa mouwane ka ho lekana",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+              "sesothoDraft": "Spillway e sa thibehang le mabopo a hlokometsweng di thusa letamo ho sebetsa jwalo ka design. Difate ha di a lokela ho jalwa hodima lerako la earth dam.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l3",
+        "infographicAlt": {
+          "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+          "sesothoDraft": "Pula e phallang hodima marulelo e kena ka hara koto ebe e theoha ka phala ho kena ka hara tanka, e nang le sekgelo se senyenyane sa ho qala ha phallo (first-flush diverter) se kgelohang pele ho tanka ho lahla metsi a pele a ditshila.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+          "sesothoDraft": "Ditanka tsa Metsi a Pula le Pokello ya Marulelo: Ho Bokella le ho Sireletsa Metsi",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+          "sesothoDraft": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.\n\nHlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.\n\nSebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nPalo ya pula ya selemo kaofela ha e o bolelle hore na metsi a makae a tla fumaneha nakong ya dry spell. Bapisa phepelo le ditshebediso tseo o di rerileng.\n\nMetsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. A first-flush diverter keeps some of the first runoff out of the tank.\n\nBongata bo lokelang ho kgeloswa bo itshetlehile ka marulelo le system. Latela ditaelo tsa supplier tsa sizing le maintenance; ha ho volume e le nngwe bakeng sa marulelo ohle.\n\nSekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.\n\nBoholo ba tank bo itshetlehile ka tlhoko ya metsi, pula, sebaka sa marulelo le bolelele ba dry periods.\n\nNgola intended uses mme o hakanye demand ya tsona o sebedisa records tsa hao. Bapisa demand ya tsona le phepelo ho pholletsa le dihla.\n\nRala seo o tla se etsa ha stored water runs low. Lebitso la provense feela ha le bolele boholo ba tank boo o bo hlokang.\n\nKwahela tank, kwahela masoba ka mesh e thibelang dikokonyana, mme o hlokomele marulelo, gutters le diverter. Arola metsi a pula le diphaephe tsa drinking water.\n\nMetsi a shebahalang a hlakile a ntse a ka ba le germs kapa chemicals. Botsa balaodi ba bophelo bo botle ba sebaka seo ka testing le treatment tse loketseng intended use.\n\nSefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
+            "sesothoDraft": "Boholo ba marulelo, pula, tlhoko le tahlehelo di lekanya polokelo e nang le molemo",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Size and maintain the first-flush diverter for the roof",
+            "sesothoDraft": "Bontsha boholo le ho hlokomela sekgelo sa ho qala ha phallo (first-flush diverter) bakeng sa marulelo",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Clear water can still contain germs or chemicals",
+            "sesothoDraft": "Metsi a hlakileng a ka nna a ba le dikokwana-hloko kapa dikhemikhale",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Testing and treatment must match the intended use",
+            "sesothoDraft": "Diteko le kalafo di tlameha ho tsamaisana le tshebediso e rerilweng",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "What information is needed to choose a rainwater tank?",
+              "sesothoDraft": "Ke tlhahisoleseding efe e hlokahalang ho kgetha tanka ya metsi a pula?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Only the province where the farm is located",
+                "sesothoDraft": "Feela provense moo polasi e leng teng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+                "sesothoDraft": "Boholo ba marulelo, mokgwa wa pula, tlhoko ya metsi le tahlehelo ya pokello",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Only the amount of rain in one storm",
+                "sesothoDraft": "Feela bongata ba pula sefefong se le seng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Only the price of the biggest available tank",
+                "sesothoDraft": "Feela theko ya tanka e kgolo ka ho fetisisa e fumanehang",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
+              "sesothoDraft": "Moralo wa tanka o tlameha ho bapisa phepelo e ka sebediswang le tlhoko ho pholletsa le dinako tsa pula le komello. Boholo bo le bong bo tsitsitseng ba sebaka bo ke ke ba etsa seo.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
+              "sesothoDraft": "Hobaneng sekgelo sa ho qala ha phallo (first-flush diverter) se le bohlokwa le bakeng sa metsi a tanka a sebedisetswang nosetso feela?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
+                "sesothoDraft": "Ha se na taba bakeng sa nosetso, feela metsing a nowang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
+                "sesothoDraft": "Phallo ya pele e jara mantle a teteaneng, lerole le dikokwana-hloko tse bakang mafu tse ka silafatsang dijalo tse jewang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It's more acidic and changes soil pH over time",
+                "sesothoDraft": "E na le asiti e ngata mme e fetola pH ya mobu ha nako e ntse e ya",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It stops the tank overfilling in storms",
+                "sesothoDraft": "E thibela tanka ho tlala ho tlola meeding nakong ya difefo",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+              "sesothoDraft": "Ho kgelosa metsi a pele a phallang ho ka fokotsa tshilafalo, empa ha ho tiise hore metsi a morao a bolokehile. Lekola boleng bakeng sa tshebediso e rerilweng.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l4",
+        "title": {
+          "sourceEnglish": "Greywater: Check Before Reuse",
+          "sesothoDraft": "Metsi a Ditshila a Malapeng (Greywater): Hlahloba Pele o Sebedisa Hape",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+          "sesothoDraft": "Metsi a sebedisitsweng ka lapeng a ka ba le germs, salts, cleaning products le dintho tse ding. Ditaelo ha di hlalose mohlodi o mong le o mong ka tsela e tshwanang. Ditaelo tsa Afrika Borwa di fapana mabapi le kitchen water le laundry water.\n\nO se ke wa kenya toilet water, water from nappies, a ho hlatswa motho ya kulang kapa a ho hlatswa diphoofolo moralong wa reuse. O se ke wa sebedisa hape metsi a nang le harmful chemicals.\n\nPele ho reuse efe kapa efe, kopa municipality le qualified local sanitation adviser hore ba hlahlobe source e tobileng, ditshebeletso tsa metsi le sanitation tsa household, intended use le site. Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.\n\nSetshwantsho se akaretsang hase farm design. Soil le mulch ha di disinfect wastewater. Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo. O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.\n\nHaeba reuse system e se e sebetsa mme the water smells bad, pools or harms plants, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Water sources and greywater guidance can differ",
+            "sesothoDraft": "Mehlodi ya metsi le ditaelo tsa metsi a ditshila (greywater) di ka fapana",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+            "sesothoDraft": "Check the source, service status, intended use and site locally before any reuse",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Soil and mulch do not disinfect wastewater",
+            "sesothoDraft": "Soil and mulch do not disinfect wastewater",
+            "reviewStatus": "hold"
+          },
+          {
+            "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+            "sesothoDraft": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+            "reviewStatus": "hold"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "What should happen before any household washwater is reused?",
+              "sesothoDraft": "Ho lokela ho etsahala eng pele metsi afe kapa afe a ho hlatswa a lapeng a sebediswa hape?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Direct it below mulch around a tree",
+                "sesothoDraft": "A ise ka tlase ho mulch ho potoloha sefate",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+                "sesothoDraft": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+                "reviewStatus": "hold"
+              },
+              {
+                "sourceEnglish": "Use it if it looks clear",
+                "sesothoDraft": "Use it if it looks clear",
+                "reviewStatus": "hold"
+              },
+              {
+                "sourceEnglish": "Use it only on plants that are not eaten raw",
+                "sesothoDraft": "A sebedise feela dimeleng tse sa jeweng di le tala",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+              "sesothoDraft": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+              "reviewStatus": "hold"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
+              "sesothoDraft": "Hobaneng ho lokela ho hlahlojwa mohlodi o tobileng wa metsi le dihlahiswa tsa ho hlwekisa pele ho nahanwa ka ho a sebedisa hape?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "All cleaning products are safe if the water is diluted",
+                "sesothoDraft": "Dihlahiswa tsohle tsa ho hlwekisa di bolokehile haeba metsi a hlapolotswe",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
+                "sesothoDraft": "Sebopeho sa metsi le ditlamorao tsa dihlahiswa di a fapana, kahoo mohlodi wa sebele le dihlahiswa di hloka tlhahlobo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The water can be reused when it has no smell",
+                "sesothoDraft": "Metsi a ka sebediswa hape ha a se na monko",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Mulch removes every harmful substance",
+                "sesothoDraft": "Mulch e tlosa ntho e nngwe le e nngwe e kotsi",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+              "sesothoDraft": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+              "reviewStatus": "hold"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "nativeAppliedSnapshot": {
+    "id": "water-harvesting",
+    "language": "st",
+    "reviewStatus": "machine-draft",
+    "sourceMetadata": {
+      "durationMins": 35,
+      "category": "water"
+    },
+    "title": {
+      "sourceEnglish": "Water Harvesting",
+      "sesothoDraft": "Ho Kotula Metsi (Water Harvesting)",
+      "reviewStatus": "machine-draft"
+    },
+    "description": {
+      "sourceEnglish": "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+      "sesothoDraft": "Meralo ya mekero le marako a mobu (swales le berms), matamo, ditanka tsa metsi a pula le metsi a ditshila a malapeng (greywater) — fokotsa lebelo, phatlalatsa mme o tebise lerothodi le leng le le leng.",
+      "reviewStatus": "machine-draft"
+    },
+    "lessons": [
+      {
+        "id": "water-harvesting-l1",
+        "infographicAlt": {
+          "sourceEnglish": "Concept cross-section of a level contour swale with a raised mound below it. Arrows show runoff slowing and spreading; infiltration depends on the soil and site.",
+          "sesothoDraft": "Setshwantsho sa concept cross-section sa level contour swale se nang le qubu e phahamisitsweng ka tlase ho yona. Metsu e bontsha ho fokotseha ha lebelo le ho hasana ha runoff; infiltration e itshetlehile ka mobu le setsha.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Swales and Berms: Slowing Water on the Slope",
+          "sesothoDraft": "Mekero le Marako a Mobu (Swales le Berms): Ho Fokotsa Lebelo la Metsi Letswapong",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "One kind of swale is a level trench on contour. It slows and spreads runoff so some water can soak into suitable soil. Other swales are designed with a slight, controlled grade to carry excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before digging.\n\nThe excavated soil forms a berm on the downhill side, where trees can be planted when the site design is suitable.\n\nTrees planted there may draw on moisture stored in the soil after rain, depending on the site.\n\nHeavy rain can fill a swale faster than water soaks into the soil. Plan a safe overflow before digging.\n\nThe route must not erode the slope or send damaging water to a neighbour. A downstream swale or dam must be able to receive it safely.\n\nAsk a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.\n\nSlope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from upslope all matter.\n\nKeep good ground cover. Get a local assessment before digging on steep, wet or unstable land. Grass barriers and terraces also need a design suited to the site.",
+          "sesothoDraft": "Mofuta o mong wa swale ke level trench on contour. E fokotsa lebelo mme e hasanya runoff, hore metsi a mang a kgone ho kenella mobung o loketseng. Di-swale tse ding di radilwe ka grade e nyenyane, e laolwang ho tsamaisa metsi a feteletseng butle ho ya safe outlet. Mokgwa o loketseng naha ya hao o itshetlehile ka mobu, letswapo, drainage le storm flow. Pele o tjheka, kopa moeletsi wa sebaka seo ya kwetlisitsweng hore a hlahlobe mola, overflow le receiving point.\n\nMobu o epolotsweng o etsa berm ka lehlakoreng le theohelang, moo difate di ka jalwang teng ha moralo wa setsha o loketse.\n\nDifate tse jalwang moo di ka sebedisa metsi a bolokilweng mobung ka mora pula, ho ya ka setsha.\n\nPula e matla e ka tlatsa swale ka potlako ho feta kamoo metsi a kenellang mobung. Rala tsela e bolokehileng ya overflow pele o tjheka.\n\nTsela ha e a lokela ho baka kgoholeho moepeng kapa ho romela metsi a senyang ho moahisani. Downstream swale kapa letamo di tlameha ho kgona ho amohela metsi ao ka polokeho.\n\nKopa moeletsi wa sebaka seo ya kwetlisitsweng hore a hlahlobe mobu, letswapo le storm flow. Setshwantsho hase moralo wa kaho.\n\nLetswapo feela ha le bolele hore swale e loketse. Mobu, drainage, mobu o sa tsitsang le metsi a tswang hodimo ho letswapo kaofela di bohlokwa.\n\nBoloka sekwahelo se setle sa mobu. Fumana tlhahlobo ya sebaka seo pele o tjheka sebakeng se moepa, se metsi kapa se sa tsitsang. Dithibelo tsa jwang le terraces le tsona di hloka moralo o loketseng setsha.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "A level contour swale can hold runoff for infiltration on a suitable site; other swales need a designed grade and safe outlet",
+            "sesothoDraft": "Level contour swale e ka tshwara runoff bakeng sa infiltration setsheng se loketseng; di-swale tse ding di hloka grade e radilweng le safe outlet",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Keep good ground cover and plan a safe overflow",
+            "sesothoDraft": "Boloka sekwahelo se setle sa mobu mme o rale tsela e bolokehileng ya metsi a mangata a tswelang kantle",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Assess soil, drainage, slope and storm flow before digging",
+            "sesothoDraft": "Lekola mobu, tsamaiso ya metsi (drainage), letswapo le phallo ya sefefo pele o tjheka",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "A concept picture is not a construction design",
+            "sesothoDraft": "Setshwantsho sa mohopolo hase moralo wa kaho",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer planned a level contour swale. After heavy rain, one end holds most of the water. What should the farmer check before changing the earthwork?",
+              "sesothoDraft": "Sehwai se rerile level contour swale. Ka mora pula e matla, ntlha e nngwe e tshwere boholo ba metsi. Sehwai se lokela ho hlahloba eng pele se fetola earthwork?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Whether the trench can be made deeper without a site check",
+                "sesothoDraft": "Hore na mokero o ka etswa o tebileng haholwanyane ntle le tlhahlobo ya setsha",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The intended design and measured levels with a trained local adviser; an unintended low point may be present",
+                "sesothoDraft": "Moralo o neng o rerilwe le maemo a lekotsweng le moeletsi ya rutilweng wa sebaka seo; ho ka ba le sebaka se tlase se neng se sa rerwa",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Whether a new dam at the lowest point will catch every overflow",
+                "sesothoDraft": "Hore na letamo le letjha sebakeng se tlase ka ho fetisisa le tla tshwara phallo e nngwe le e nngwe ya metsi a tletseng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Whether the soil should be compacted to stop all infiltration",
+                "sesothoDraft": "Hore na mobu o lokela ho pitlwa ho emisa ho teba hohle ha metsi",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A level contour design should spread water along its length. Uneven filling may indicate an unintended low point, but some swales are intentionally graded to a safe outlet. Check the actual design, soil and overflow route before altering it.",
+              "sesothoDraft": "Moralo wa level contour o lokela ho hasanya metsi boleleleng ba wona. Uneven filling ho ka bontsha sebaka se tlase se neng se sa rerwa, empa di-swale tse ding di etswa ka boomo ka grade e lebisang ho safe outlet. Hlahloba moralo wa sebele, mobu le tsela ya overflow pele o e fetola.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "A farmer wants to control erosion on steep land. What should she do before digging?",
+              "sesothoDraft": "Sehwai se batlang ho laola kgoholeho mobung o moepa se lokela ho etsa eng pele se tjheka?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Standard swales dug as deep as possible",
+                "sesothoDraft": "Mekero (swales) e tlwaelehileng e tjhekilweng ka botebo bo phahameng ka hohle kamoo ho ka kgonehang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Keep ground covered and get a site assessment for suitable erosion controls",
+                "sesothoDraft": "Ho boloka mobu o kwahetswe le ho fumana tlhahlobo ya setsha bakeng sa taolo e loketseng ya kgoholeho",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A large dam at the bottom to catch all runoff",
+                "sesothoDraft": "Letamo le leholo tlase ho tshwara metsi ohle a phallang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Compacting the soil surface with a roller",
+                "sesothoDraft": "Ho pitla bokahodimo ba mobu ka rolara",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.",
+              "sesothoDraft": "Letswapo feela ha le a lekana ho kgetha mosebetsi wa mobu. Mobu, tsamaiso ya metsi (drainage), botsitso le phallo ya sefefo le tsona di tlameha ho lekolwa.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l2",
+        "infographicAlt": {
+          "sourceEnglish": "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+          "sesothoDraft": "Letamo la polasi le sehilweng hara: metsi a kenang ntlheng e nngwe, bongata ba metsi a bolokilweng, tsela ya metsi a tletseng (spillway) ntlheng e kahodimo bakeng sa phallo e tletseng, le lebopo le jetsweng le tshwereng mobu.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Farm Dams and Ponds: Storing Water for the Dry Season",
+          "sesothoDraft": "Matamo a Polasi le Matangwana: Ho Boloka Metsi Bakeng sa Sehla sa Komelelo",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "A dam or pond can store runoff, but the amount available depends on local rain, the catchment, losses and how much water you use.\n\nRainfall seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.\n\nBefore changing a watercourse or building storage works, check the required authorisation with the water authority.\n\nA dam needs a site investigation and a design by a suitably qualified person. Catchment runoff, soil, foundations, downstream risk and a safe spillway all matter.\n\nDo not assume that annual rainfall tells you the size of a flood or the storage you will have.\n\nAn uncontrolled overflow can erode and breach the wall. Plan a safe route for excess water before construction.\n\nWater can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.\n\nKeep the spillway clear and maintain the bank cover specified in the design. Do not plant trees on an earth dam wall.\n\nAnimals can damage banks and add manure to the water. Their presence does not make the water clean or safe.",
+          "sesothoDraft": "Letamo kapa letangwana le ka boloka metsi a phallang, empa bongata bo fumanehang bo itshetlehile ka pula ya sebaka seo, sebaka se kgoboketsang metsi (catchment), tahlehelo le hore na o sebedisa metsi a makae.\n\nDihla tsa pula di fapana ho pholletsa le Afrika Borwa (South Africa). Sebedisa ditlaleho tsa sebaka seo mme o rale bakeng sa dry periods; letamo le tletseng ha le a tiisetswa.\n\nPele o fetola tsela ya noka kapa molatswana (watercourse) kapa o haha meaho ya polokelo, hlahloba tumello e hlokahalang le balaodi ba metsi.\n\nLetamo le hloka dipatlisiso tsa setsha le moralo o entsweng ke motho ya nang le ditshwaneleho tse loketseng. Metsi a phallang ho tswa sebakeng sa pokellelo (catchment runoff), mobu, metheo, kotsi e ka tlase (downstream risk) le tsela e bolokehileng ya metsi a tletseng (safe spillway) kaofela a bohlokwa.\n\nO se ke wa nka hore pula ya selemo le selemo e o jwetsa boholo ba morwallo kapa polokelo eo o tla ba le yona.\n\nPhallo e sa laolweng ya metsi a tletseng e ka kgohola le ho pshatla lerako. Rala tsela e bolokehileng bakeng sa metsi a feteletseng pele ho kaho.\n\nMetsi a ka lahleha ka evaporation le seepage. Hlahloba boemo ba metsi mme o batle dibaka tse dutlang kapa kgoholeho.\n\nBoloka spillway e sa thibehang mme o hlokomele sekwahelo sa lebopo se boletsweng moralong. O se ke wa jala difate hodima lerako la letamo la mobu.\n\nDiphoofolo di ka senya mabopo mme tsa eketsa mantle ka hara metsi. Ho ba teng ha tsona ha ho etse hore metsi a hlweke kapa a bolokehe.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "A dam needs a site assessment and qualified design",
+            "sesothoDraft": "Letamo le hloka tlhahlobo ya setsha le moralo o tswang ho motho ya nang le ditshwaneleho",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Design a safe spillway before construction",
+            "sesothoDraft": "Rala tsela e bolokehileng ya metsi a tletseng (spillway) pele ho kaho",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check required water authorisations before building",
+            "sesothoDraft": "Hlahloba ditumello tse hlokahalang tsa metsi pele o haha",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Maintain bank cover and keep trees off an earth dam wall",
+            "sesothoDraft": "Hlokomela sekwahelo sa lebopo mme o se ke wa lema difate hodima lerako la letamo la mobu",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "A farmer builds a dam wall with no spillway. After an exceptional storm it overflows. What's the likely result?",
+              "sesothoDraft": "Sehwai se haha lerako la letamo le se nang tsela ya metsi a tletseng (spillway). Kamora sefefo se sa tlwaelehang le a kgaphatseha. Ke eng se ka bang sephetho?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "The water irrigates lower fields beneficially",
+                "sesothoDraft": "Metsi a nosetsa masimo a ka tlase ka mokgwa o molemo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It overtops and erodes the wall, risking a catastrophic breach",
+                "sesothoDraft": "A tlola hodimo mme a kgohola lerako, a beha kotsing ya ho pshatleha ho hoholo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The dam stays full and overflow drains harmlessly",
+                "sesothoDraft": "Letamo le dula le tletse mme metsi a tletseng a tswa ntle le kotsi",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Storage capacity increases permanently",
+                "sesothoDraft": "Bokgoni ba polokelo bo eketseha ka ho sa feleng",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
+              "sesothoDraft": "Ntle le tsela e radilweng ya metsi a feteletseng, metsi a feteletseng a iphumanela tsela hodima lerako — mme phallo eo e sa laolweng ke yona e kgoholang le ho qetella e pshatla lerako.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Which action helps protect an earth dam?",
+              "sesothoDraft": "Ke ketso efe e thusang ho sireletsa letamo la mobu?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "A deep, exposed dam with no bank vegetation",
+                "sesothoDraft": "Letamo le tebileng, le pepesitsweng le se nang dimela tsa lebopo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Maintain the designed bank cover and keep the spillway clear",
+                "sesothoDraft": "Ho hlokomela sekwahelo sa lebopo se radilweng le ho boloka spillway e sa thibehang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A full concrete lining and plastic cover",
+                "sesothoDraft": "Ho le kwahela ka konkreite ka botlalo le sekwahelo sa polasetiki",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "A larger surface area to spread evaporation evenly",
+                "sesothoDraft": "Sebaka se seholwanyane sa bokahodimo ho phatlalatsa mouwane ka ho lekana",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "A clear spillway and maintained banks help the dam work as designed. Trees should not be planted on an earth dam wall.",
+              "sesothoDraft": "Spillway e sa thibehang le mabopo a hlokometsweng di thusa letamo ho sebetsa jwalo ka moralo. Difate ha di a lokela ho jalwa hodima lerako la letamo la mobu.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l3",
+        "infographicAlt": {
+          "sourceEnglish": "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
+          "sesothoDraft": "Pula e phallang hodima marulelo e kena ka hara koto ebe e theoha ka phala ho kena ka hara tanka, e nang le sekgelo se senyenyane sa ho qala ha phallo (first-flush diverter) se kgelohang pele ho tanka ho lahla metsi a pele a ditshila.",
+          "reviewStatus": "machine-draft"
+        },
+        "title": {
+          "sourceEnglish": "Rainwater Tanks and Roof Catchment: Collecting and Protecting Water",
+          "sesothoDraft": "Ditanka tsa Metsi a Pula le Pokello ya Marulelo: Ho Bokella le ho Sireletsa Metsi",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Your roof can collect rainwater. The amount depends on roof area, rainfall and losses.\n\nCheck whether the roof material is suitable for rainwater collection before connecting a tank.\n\nUse the roof area seen from above and local rainfall records. Then allow for water that misses the gutter, is diverted or overflows a full tank.\n\nAn annual total does not tell you how much water will be available during a dry spell. Compare supply with the uses you plan.\n\nRoof runoff can carry dust, droppings and other contamination. A first-flush diverter keeps some of the first runoff out of the tank.\n\nThe required diversion depends on the roof and system. Use the supplier's sizing and maintenance instructions; there is no single volume for every roof.\n\nA diverter does not make the remaining water safe to drink.\n\nTank size depends on water demand, rain, roof area and the length of dry periods.\n\nList the intended uses and estimate their demand from your own records. Compare that with supply through the seasons.\n\nPlan what you will do when stored water runs low. A province name alone cannot tell you the tank size you need.\n\nKeep the tank covered, screen openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.\n\nWater that looks clear may still contain germs or chemicals. Ask the local health authority about testing and treatment suited to the intended use.\n\nA basic filter alone is not a drinking-water guarantee. Water used on food crops also needs a safety assessment.",
+          "sesothoDraft": "Marulelo a hao a ka bokella metsi a pula. Bongata bo itshetlehile ka boholo ba marulelo, pula le tahlehelo.\n\nHlahloba hore na thepa ya marulelo e loketse ho bokella metsi a pula pele o hokela tanka.\n\nSebedisa boholo ba marulelo jwalo ka ha bo bonwa ho tloha hodimo le ditlaleho tsa pula ya sebaka seo. Jwale o nahanele metsi a sa keneng ka gutter, a kgeloswang kapa a tsholohang tankeng e tletseng.\n\nPalo ya pula ya selemo kaofela ha e o bolelle hore na metsi a makae a tla fumaneha nakong ya dry spell. Bapisa phepelo le ditshebediso tseo o di rerileng.\n\nMetsi a theohang marulelong a ka nka lerole, mantle le tshilafalo e nngwe. First-flush diverter e thibela metsi a mang a phallo ya pele ho kena ka tankeng.\n\nBongata bo lokelang ho kgeloswa bo itshetlehile ka marulelo le tsamaiso. Latela ditaelo tsa mofani mabapi le ho lekanya boholo le ho hlokomela; ha ho volume e le nngwe bakeng sa marulelo ohle.\n\nSekgelo (diverter) ha se etse hore metsi a setseng a bolokehele ho nowa.\n\nBoholo ba tanka bo itshetlehile ka tlhoko ya metsi, pula, sebaka sa marulelo le bolelele ba dry periods.\n\nNgola ditshebediso tse rerilweng mme o hakanye tlhoko ya tsona o sebedisa ditlaleho tsa hao. Bapisa tlhoko ya tsona le phepelo ho pholletsa le dihla.\n\nRala seo o tla se etsa ha metsi a bolokilweng a se a le manyenyane. Lebitso la provense feela ha le bolele boholo ba tanka boo o bo hlokang.\n\nKwahela tanka, kwahela masoba ka mesh e thibelang dikokonyana, mme o hlokomele marulelo, mekero ya marulelo (gutters) le sekgelo (diverter). Arola metsi a pula le diphaephe tsa metsi a nowang.\n\nMetsi a shebahalang a hlakile a ntse a ka ba le dikokwana-hloko kapa dikhemikhale. Botsa balaodi ba bophelo bo botle ba sebaka seo ka diteko le kalafo tse loketseng tshebediso e rerilweng.\n\nSefa sa mantlha feela hase tiiso ya metsi a nowang. Metsi a sebediswang dijalong tsa dijo le ona a hloka tlhahlobo ya polokeho.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Roof area, rain, demand and losses determine useful storage",
+            "sesothoDraft": "Boholo ba marulelo, pula, tlhoko le tahlehelo di lekanya polokelo e nang le molemo",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Size and maintain the first-flush diverter for the roof",
+            "sesothoDraft": "Bontsha boholo le ho hlokomela sekgelo sa ho qala ha phallo (first-flush diverter) bakeng sa marulelo",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Clear water can still contain germs or chemicals",
+            "sesothoDraft": "Metsi a hlakileng a ka nna a ba le dikokwana-hloko kapa dikhemikhale",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Testing and treatment must match the intended use",
+            "sesothoDraft": "Diteko le kalafo di tlameha ho tsamaisana le tshebediso e rerilweng",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "What information is needed to choose a rainwater tank?",
+              "sesothoDraft": "Ke tlhahisoleseding efe e hlokahalang ho kgetha tanka ya metsi a pula?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Only the province where the farm is located",
+                "sesothoDraft": "Feela provense moo polasi e leng teng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Roof area, rainfall pattern, water demand and collection losses",
+                "sesothoDraft": "Boholo ba marulelo, mokgwa wa pula, tlhoko ya metsi le tahlehelo ya pokello",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Only the amount of rain in one storm",
+                "sesothoDraft": "Feela bongata ba pula sefefong se le seng",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Only the price of the biggest available tank",
+                "sesothoDraft": "Feela theko ya tanka e kgolo ka ho fetisisa e fumanehang",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Tank planning must compare usable supply with demand through wet and dry periods. One fixed regional size cannot do that.",
+              "sesothoDraft": "Moralo wa tanka o tlameha ho bapisa phepelo e ka sebediswang le tlhoko ho pholletsa le dinako tsa pula le komello. Boholo bo le bong bo tsitsitseng ba sebaka bo ke ke ba etsa seo.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Why does a first-flush diverter matter even for irrigation-only tank water?",
+              "sesothoDraft": "Hobaneng sekgelo sa ho qala ha phallo (first-flush diverter) se le bohlokwa le bakeng sa metsi a tanka a sebedisetswang nosetso feela?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "It doesn't matter for irrigation, only drinking water",
+                "sesothoDraft": "Ha se na taba bakeng sa nosetso, feela metsing a nowang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The first flush carries concentrated droppings, dust and pathogens that can contaminate edible crops",
+                "sesothoDraft": "Phallo ya pele e jara mantle a teteaneng, lerole le dikokwana-hloko tse bakang mafu tse ka silafatsang dijalo tse jewang",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It's more acidic and changes soil pH over time",
+                "sesothoDraft": "E na le asiti e ngata mme e fetola pH ya mobu ha nako e ntse e ya",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "It stops the tank overfilling in storms",
+                "sesothoDraft": "E thibela tanka ho tlala ho tlola meeding nakong ya difefo",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Diverting early runoff can reduce contamination, but it does not guarantee that later water is safe. Assess quality for the intended use.",
+              "sesothoDraft": "Ho kgelosa metsi a pele a phallang ho ka fokotsa tshilafalo, empa ha ho tiise hore metsi a morao a bolokehile. Lekola boleng bakeng sa tshebediso e rerilweng.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      },
+      {
+        "id": "water-harvesting-l4",
+        "title": {
+          "sourceEnglish": "Greywater: Check Before Reuse",
+          "sesothoDraft": "Metsi a Ditshila a Malapeng (Greywater): Hlahloba Pele o Sebedisa Hape",
+          "reviewStatus": "machine-draft"
+        },
+        "body": {
+          "sourceEnglish": "Used household water can contain germs, salts, cleaning products and other substances. Guidance does not define every source in the same way. South African guidance differs on kitchen water and laundry water.\n\nDo not include toilet water, water from nappies, washing a sick person or washing animals in a reuse plan. Do not reuse water containing harmful chemicals.\n\nBefore any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the intended use and the site. If this advice is unavailable or unclear, do not reuse the water.\n\nA generic picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it pool, or allow it to run off the property into a street, drain or watercourse.\n\nIf a reuse system is already operating and the water smells bad, pools or harms plants, stop using it and seek qualified local advice.",
+          "sesothoDraft": "Metsi a sebedisitsweng ka lapeng a ka ba le dikokwana-hloko, matswai, dihlahiswa tsa ho hlwekisa le dintho tse ding. Ditaelo ha di hlalose mohlodi o mong le o mong ka tsela e tshwanang. Ditaelo tsa Afrika Borwa di fapana mabapi le metsi a khitjhineng le metsi a ho hlatswa diaparo.\n\nO se ke wa kenya metsi a ntlwana, metsi a tswang ho nappies, a ho hlatswa motho ya kulang kapa a ho hlatswa diphoofolo moralong wa ho sebedisa metsi hape. O se ke wa sebedisa hape metsi a nang le dikhemikhale tse kotsi.\n\nPele ho tshebediso efe kapa efe ya metsi hape, kopa masepala le qualified local sanitation adviser hore ba hlahlobe mohlodi o tobileng, ditshebeletso tsa metsi le sanitation tsa lelapa, tshebediso e rerilweng le setsha. Haeba keletso ena e sa fumanehe kapa e sa hlaka, o se ke wa sebedisa metsi hape.\n\nSetshwantsho se akaretsang hase moralo wa polasi. Mobu le mulch ha di disinfect wastewater. Boloka wastewater hole le drinking-water plumbing mme o thibele ho kopana ha yona le batho kapa diphoofolo. O se ke wa e fafatsa, wa e tlohela e eme, kapa wa dumella hore e phalle kantle ho property ho kena seterateng, drain kapa watercourse.\n\nHaeba tsamaiso ya ho sebedisa metsi hape e se e sebetsa mme metsi a nkga hampe, a bokellana a eme kapa a senya dimela, emisa ho a sebedisa mme o batle keletso ho qualified local adviser.",
+          "reviewStatus": "machine-draft"
+        },
+        "keyPoints": [
+          {
+            "sourceEnglish": "Water sources and greywater guidance can differ",
+            "sesothoDraft": "Mehlodi ya metsi le ditaelo tsa metsi a ditshila (greywater) di ka fapana",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Check the source, service status, intended use and site locally before any reuse",
+            "sesothoDraft": "Hlahloba mohlodi, service status, tshebediso e rerilweng le setsha sebakeng seo pele ho tshebediso efe kapa efe ya metsi hape",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Soil and mulch do not disinfect wastewater",
+            "sesothoDraft": "Mobu le mulch ha di disinfect wastewater",
+            "reviewStatus": "machine-draft"
+          },
+          {
+            "sourceEnglish": "Prevent contact, spray, pooling, runoff and drinking-water cross-connections",
+            "sesothoDraft": "Thibela ho kopana le metsi, ho a fafatsa, ho a tlohela a bokellana a eme, runoff le drinking-water cross-connections",
+            "reviewStatus": "machine-draft"
+          }
+        ],
+        "quiz": [
+          {
+            "question": {
+              "sourceEnglish": "What should happen before any household washwater is reused?",
+              "sesothoDraft": "Ho lokela ho etsahala eng pele metsi afe kapa afe a ho hlatswa a lapeng a sebediswa hape?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "Direct it below mulch around a tree",
+                "sesothoDraft": "A ise ka tlase ho mulch ho potoloha sefate",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Ask the municipality and a qualified sanitation adviser to check the source, service status, intended use and site",
+                "sesothoDraft": "Kopa masepala le qualified sanitation adviser hore ba hlahlobe mohlodi, service status, tshebediso e rerilweng le setsha",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Use it if it looks clear",
+                "sesothoDraft": "A sebedise haeba a shebahala a hlakile",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Use it only on plants that are not eaten raw",
+                "sesothoDraft": "A sebedise feela dimeleng tse sa jeweng di le tala",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Guidance differs on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use are suitable or allowed.",
+              "sesothoDraft": "Ditaelo di fapana mabapi le mehlodi e meng ya metsi le maemo a ditshebeletso bakeng sa ho sebedisa metsi hape. Qualified local check e a hlokahala pele ho qeto ya hore na mohlodi ofe kapa ofe le tshebediso di loketse kapa di dumelletswe.",
+              "reviewStatus": "machine-draft"
+            }
+          },
+          {
+            "question": {
+              "sourceEnglish": "Why check the exact water source and cleaning products before considering reuse?",
+              "sesothoDraft": "Hobaneng ho lokela ho hlahlojwa mohlodi o tobileng wa metsi le dihlahiswa tsa ho hlwekisa pele ho nahanwa ka ho a sebedisa hape?",
+              "reviewStatus": "machine-draft"
+            },
+            "options": [
+              {
+                "sourceEnglish": "All cleaning products are safe if the water is diluted",
+                "sesothoDraft": "Dihlahiswa tsohle tsa ho hlwekisa di bolokehile haeba metsi a hlapolotswe",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Water composition and product effects vary, so the actual source and products need assessment",
+                "sesothoDraft": "Sebopeho sa metsi le ditlamorao tsa dihlahiswa di a fapana, kahoo mohlodi wa sebele le dihlahiswa di hloka tlhahlobo",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "The water can be reused when it has no smell",
+                "sesothoDraft": "Metsi a ka sebediswa hape ha a se na monko",
+                "reviewStatus": "machine-draft"
+              },
+              {
+                "sourceEnglish": "Mulch removes every harmful substance",
+                "sesothoDraft": "Mulch e tlosa ntho e nngwe le e nngwe e kotsi",
+                "reviewStatus": "machine-draft"
+              }
+            ],
+            "sourceCorrectIndex": 1,
+            "rationale": {
+              "sourceEnglish": "Used water can contain different germs, salts and chemicals. Neither clear appearance, lack of smell nor mulch proves that it is safe or suitable.",
+              "sesothoDraft": "Metsi a sebedisitsweng a ka ba le dikokwana-hloko, matswai le dikhemikhale tse fapaneng. Ho shebahala a hlakile ha ho pake hore a bolokehile kapa a loketse; ho hloka monko ha ho pake seo, le mulch ha e pake seo.",
+              "reviewStatus": "machine-draft"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "repoChanges": [
+    "lib/course-translation-drafts-st-water-harvesting.ts",
+    "tests/course-translation-drafts-st-water-harvesting.test.ts",
+    "docs/study-translation-reviews/ST-WATER-ORDINARY-COMPLETION-ACCEPTED-2026-10-06.json",
+    "docs/study-translation-reviews/ST-WATER-ORDINARY-COMPLETION-PROOF-2026-10-06.json"
+  ]
+}
