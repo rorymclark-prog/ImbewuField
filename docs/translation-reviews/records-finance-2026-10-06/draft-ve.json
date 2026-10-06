@@ -9,9 +9,10 @@
   "reviewerProblem": "Meaning matches. 'mikwiḓi' (for 'flat') is a word I cannot verify; speaker should confirm it means creases/folds.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Ho kundelwa u vhala risidi — lingedzani tshifanyiso tshi vhonalaho zwavhuḓi, tshi si na mikwiḓi, tshi na tshedza tshi linganaho.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"mikwiḓi\" unverified by the reviewer",
+  "heldDraft": "Ho kundelwa u vhala risidi — lingedzani tshifanyiso tshi vhonalaho zwavhuḓi, tshi si na mikwiḓi, tshi na tshedza tshi linganaho."
  },
  {
   "id": "R002",
@@ -541,9 +542,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Mbuelo",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: Income \"Mbuelo\" can read as benefit/profit; income vs profit is a hard distinction",
+  "heldDraft": "Mbuelo"
  },
  {
   "id": "R040",
@@ -569,9 +571,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Masheleni o salaho o ṅwalwaho",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: margin / balance wordings are near-identical and lose \"gross\"; three different measures",
+  "heldDraft": "Masheleni o salaho o ṅwalwaho"
  },
  {
   "id": "R042",
@@ -863,9 +866,10 @@
   "reviewerProblem": "'matches your phone' is weaker than 'synced' but no meaning reversal.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Zwo lingana na founu yaṋu",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"lingana\" reads as equals/matches, sync sense unclear",
+  "heldDraft": "Zwo lingana na founu yaṋu"
  },
  {
   "id": "R063",
@@ -1185,9 +1189,10 @@
   "reviewerProblem": "'gross' not rendered, but R088 explains the calculation.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Masheleni o salaho a ngade",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: margin / balance wordings are near-identical and lose \"gross\"; three different measures",
+  "heldDraft": "Masheleni o salaho a ngade"
  },
  {
   "id": "R086",
@@ -1759,9 +1764,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Tshithu na mutengo zwi a ṱoḓea.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
+  "heldDraft": "Tshithu na mutengo zwi a ṱoḓea."
  },
  {
   "id": "R127",
@@ -1773,9 +1779,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Tshibveledzwa, tshivhalo na mutengo zwi a ṱoḓea.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
+  "heldDraft": "Tshibveledzwa, tshivhalo na mutengo zwi a ṱoḓea."
  },
  {
   "id": "R128",
@@ -1955,9 +1962,10 @@
   "reviewerProblem": "'Staple plots' as 'fields of large foods' is loose; low confidence.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Minda ya zwiḽiwa zwihulwane",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"zwihulwane\" reads as big foods, not staple",
+  "heldDraft": "Minda ya zwiḽiwa zwihulwane"
  },
  {
   "id": "R141",
@@ -1969,9 +1977,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Zwo kovhelanwaho nga mibhede na minda ya zwiḽiwa zwihulwane",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"zwihulwane\" reads as big foods, not staple",
+  "heldDraft": "Zwo kovhelanwaho nga mibhede na minda ya zwiḽiwa zwihulwane"
  },
  {
   "id": "R142",
@@ -2151,9 +2160,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Bvisani tshifanyiso",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: same verb as Delete; removing a photo keeps the cost, deleting erases a record",
+  "heldDraft": "Bvisani tshifanyiso"
  },
  {
   "id": "R155",
@@ -2347,9 +2357,10 @@
   "reviewerProblem": "'mutengo' (price) is used for 'Amount' here and for 'Price' in R074; existing convention but price/amount blur.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Mutengo (R)",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
+  "heldDraft": "Mutengo (R)"
  },
  {
   "id": "R169",
@@ -2417,9 +2428,10 @@
   "reviewerProblem": "'Lushaka' as 'category/kind' cannot be verified by me; could mean tribe/people.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Lushaka",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"Lushaka\" also means nation/tribe",
+  "heldDraft": "Lushaka"
  },
  {
   "id": "R174",
@@ -2571,9 +2583,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Ṅwalani tshibveledzwa, tshivhalo tshi fhiraho 0 na mutengo wa thengiso.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
+  "heldDraft": "Ṅwalani tshibveledzwa, tshivhalo tshi fhiraho 0 na mutengo wa thengiso."
  },
  {
   "id": "R185",
@@ -2669,9 +2682,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Rekhodo dza mubolekisi",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
+  "heldDraft": "Rekhodo dza mubolekisi"
  },
  {
   "id": "R192",
@@ -2795,9 +2809,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Masheleni o salaho",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: margin / balance wordings are near-identical and lose \"gross\"; three different measures",
+  "heldDraft": "Masheleni o salaho"
  },
  {
   "id": "R201",

@@ -1185,9 +1185,10 @@
   "reviewerProblem": "NOTE: 'phaello kakaretso' = general profit; approximates gross margin; R088 explains it",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Phaello kakaretso ya serapa",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"Phaello kakaretso\" reads as overall/net profit; gross margin is a different measure",
+  "heldDraft": "Phaello kakaretso ya serapa"
  },
  {
   "id": "R086",

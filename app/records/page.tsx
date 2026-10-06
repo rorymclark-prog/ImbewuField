@@ -1051,11 +1051,16 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
 }
 
+/** The export keeps isiZulu's existing wording; the unreviewed regional drafts never go into a file. */
+const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : 'en');
+
 function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
   const head = lang === 'zu'
     ? ['Usuku', 'Incazelo', 'Inani', 'Ingenayo', 'Umthombo', 'Ephumayo', 'Hlola']
-    : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'].map((label) => recordsFill(lang, label));
-  const duplicateNote = lang === 'zu' ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.' : recordsFill(lang, DUPLICATE_ROW_NOTE);
+    : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
+  // The CSV can leave the app for a lender or accountant, so unreviewed Sesotho, Tshivenda and
+  // Xitsonga drafts stay out of it: those languages export English headings, as before.
+  const duplicateNote = lang === 'zu' ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.' : DUPLICATE_ROW_NOTE;
   const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
@@ -1080,7 +1085,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const periodKg = scopeKg(production.filter((p) => isInFinancePeriod(p.logged_at, period, now)), includePerennials);
   const yieldLabel = <RecordQuantitySummary compact totals={periodKg.quantities} />;
 
-  function exportCsv() { exportLedgerCsv(rows, period, lang); }
+  function exportCsv() { exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, period, now, csvLang(lang)), period, csvLang(lang)); }
 
   const stats = [
     { label: recordsText(lang, 'Income', 'Imali engenayo'), value: fmtZAR(income), color: 'var(--record-positive)' },
@@ -1813,7 +1818,7 @@ export default function RecordsPage() {
                   )}
                   <button
                     type="button"
-                    onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), lang), 'month', lang)}
+                    onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), csvLang(lang)), 'month', csvLang(lang))}
                     disabled={!hasAnyData}
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                     style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--color-muted)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}

@@ -247,3 +247,24 @@ test('validation text and the draft notice reach the screen for the regional lan
   // The saved form must still validate exactly as before: the rule is untouched, only the words moved.
   assert.match(page, /if \(!what \|\| !Number\.isFinite\(amount\) \|\| amount < 0 \|\| \(isIn && \(!Number\.isFinite\(quantity\) \|\| quantity <= 0\)\)\)/);
 });
+
+test('the CSV export never carries an unreviewed regional draft: Sesotho, Tshivenda and Xitsonga export English', () => {
+  const page = read('app/records/page.tsx');
+  assert.match(page, /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : 'en'\);/);
+  const calls = [...page.matchAll(/(?<!function )exportLedgerCsv\(([^\n]*)/g)].map((m) => m[1]);
+  assert.ok(calls.length >= 2, 'both CSV entry points (desktop sheet and phone button) must still exist');
+  for (const call of calls) {
+    assert.match(call, /csvLang\(lang\)/, `CSV call must go through csvLang(): ${call}`);
+    assert.doesNotMatch(call.replace(/csvLang\(lang\)/g, ''), /\blang\b/, `CSV call passes the raw language: ${call}`);
+    assert.doesNotMatch(call, /,\s*lang\s*[,)]/, 'raw lang argument');
+  }
+});
+
+test('held rows stay English: after the second-session backcheck no held draft reaches the screen', () => {
+  // The Tshivenda amount/price collapse is the one that could change what a farmer types into a money field.
+  for (const english of ['Amount (R)', 'Product, quantity and amount are required.', 'Item and amount are required.']) {
+    assert.equal(recordsDraft('ve', english), null, `ve must show English for: ${english}`);
+  }
+  assert.equal(recordsDraft('st', 'Garden gross margin'), null);
+  assert.equal(recordsDraft('ts', 'Original photo · saved on this device only'), null, 'the device-only photo warning stays English until a speaker confirms it');
+});

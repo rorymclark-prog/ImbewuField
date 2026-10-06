@@ -1,22 +1,18 @@
 {
  "st": {
-  "accepted-ok": 267,
-  "accepted-repaired": 13,
-  "held": 4
+  "accepted": 279,
+  "held": 5
  },
  "ve": {
-  "accepted-ok": 269,
-  "accepted-repaired": 4,
-  "held": 11
+  "accepted": 258,
+  "held": 26
  },
  "ts": {
-  "accepted-ok": 253,
-  "accepted-repaired": 17,
-  "held": 14
+  "accepted": 255,
+  "held": 29
  },
  "zu": {
-  "accepted-ok": 50,
-  "accepted-repaired": 4,
+  "accepted": 54,
   "held": 3
  }
 }

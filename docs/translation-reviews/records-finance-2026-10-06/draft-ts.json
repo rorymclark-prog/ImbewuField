@@ -317,9 +317,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Vatirhi",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"Vatirhi\" means workers (people), not labour",
+  "heldDraft": "Vatirhi"
  },
  {
   "id": "R024",
@@ -1787,9 +1788,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xi hlayisiwe eka xitirhisiwa lexi ntsena.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xi hlayisiwe eka xitirhisiwa lexi ntsena."
  },
  {
   "id": "R129",
@@ -1815,9 +1817,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena."
  },
  {
   "id": "R131",
@@ -1829,9 +1832,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena."
  },
  {
   "id": "R132",
@@ -2095,9 +2099,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa ni xihakelo lexi eka xitirhisiwa lexi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa ni xihakelo lexi eka xitirhisiwa lexi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB."
  },
  {
   "id": "R151",
@@ -2151,9 +2156,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Susa xifaniso",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: same verb as Delete; removing a photo keeps the cost, deleting erases a record",
+  "heldDraft": "Susa xifaniso"
  },
  {
   "id": "R155",
@@ -2417,9 +2423,10 @@
   "reviewerProblem": "'Rixaka' means tribe/nation/race, not 'category'; wrong and sensitive in a form field.",
   "reviewerSeverity": "meaning",
   "reviewerRepair": "Muxaka",
-  "status": "accepted",
-  "draft": "Muxaka",
-  "decision": "accepted as reviewer-repaired (not re-reviewed by a second reviewer)"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"Muxaka\" can also mean clan/kind of people; category word unverified",
+  "heldDraft": "Muxaka"
  },
  {
   "id": "R174",
@@ -2669,9 +2676,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Tirhekhodo ta mubolekisi",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
+  "heldDraft": "Tirhekhodo ta mubolekisi"
  },
  {
   "id": "R192",
@@ -2697,9 +2705,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Sungula hi ku tsala ntshovelo, ku xavisa kumbe xihakelo xin'we — a ku na nchumu wo katsakanya ku fikela sweswi.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xin'we\" scopes only to the cost; \"at least one\" weakened",
+  "heldDraft": "Sungula hi ku tsala ntshovelo, ku xavisa kumbe xihakelo xin'we — a ku na nchumu wo katsakanya ku fikela sweswi."
  },
  {
   "id": "R194",
@@ -2823,9 +2832,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Humesa tirhekhodo ta mubolekisi",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
+  "heldDraft": "Humesa tirhekhodo ta mubolekisi"
  },
  {
   "id": "R203",
@@ -2949,9 +2959,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Languta",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"Languta\" means just look",
+  "heldDraft": "Languta"
  },
  {
   "id": "R212",
@@ -3229,9 +3240,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Xifaniso xa ku sungula · xi hlayisiwile eka xitirhisiwa lexi ntsena",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Xifaniso xa ku sungula · xi hlayisiwile eka xitirhisiwa lexi ntsena"
  },
  {
   "id": "R232",
@@ -3271,9 +3283,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka xitirhisiwa lexi. Cinca xihakelo lexi ku engetela xin'we, kumbe u xi pfula eka xitirhisiwa lexi u xi hlayiseke eka xona.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka xitirhisiwa lexi. Cinca xihakelo lexi ku engetela xin'we, kumbe u xi pfula eka xitirhisiwa lexi u xi hlayiseke eka xona."
  },
  {
   "id": "R235",
@@ -3453,9 +3466,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Risiti a yi hlayisiwanga eka xitirhisiwa lexi. Ndhawu yo hlayisa yi nga ha tala kumbe yi nga tirhi. Hlayisa xifaniso xa ku sungula u ringeta nakambe.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Risiti a yi hlayisiwanga eka xitirhisiwa lexi. Ndhawu yo hlayisa yi nga ha tala kumbe yi nga tirhi. Hlayisa xifaniso xa ku sungula u ringeta nakambe."
  },
  {
   "id": "R248",
@@ -3467,9 +3481,10 @@
   "reviewerProblem": "",
   "reviewerSeverity": "",
   "reviewerRepair": "",
-  "status": "accepted",
-  "draft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi tiyisisiwanga eka xitirhisiwa lexi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi.",
-  "decision": "accepted: independent reviewer found no meaning error"
+  "status": "held",
+  "draft": "",
+  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
+  "heldDraft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi tiyisisiwanga eka xitirhisiwa lexi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi."
  },
  {
   "id": "R249",

@@ -39,6 +39,20 @@ Honest limits: drafters and reviewers are models. "ok" means a reviewer found no
 that the wording is natural. The phase-A usage notes were English descriptions, so the blind pass
 was not perfectly blind. Reviewer repairs were not independently re-reviewed.
 
+## Second-session backcheck (read-only, 6 October)
+
+A separate read-only session re-checked the shipped rows. Mechanical checks were clean (placeholders,
+negations, no cross-language copies). It raised meaning-level risks, and 31 accepted rows were moved to
+`held` (English shown) with the reason in each row's `decision`: Tshivenda "amount" rendered with the
+word for price; income/balance/margin wordings that blur income with profit or lose "gross"; Sesotho
+"gross margin" reading as total profit; Xitsonga "xitirhisiwa" (device/tool) on the device-only photo
+warnings; "of the lender" instead of "for a lender"; the Delete and Remove-photo verb collision;
+"Category" words that also mean tribe/clan; and a few unverified words. The CSV export also keeps
+English headings and columns for Sesotho, Tshivenda and Xitsonga, because that file can leave the app.
+Not acted on (flagged for a speaker): Xitsonga "muholo" for income (existing dictionary term),
+"lisiti"/"risiti" one letter apart, Xitsonga "ndhawu yo kurisa" for growing area, past-tense Sold/Spent
+headings becoming nouns in Tshivenda and Xitsonga.
+
 ## Changes to existing wording (specific demonstrated errors only)
 
 - `zu` `myRecordsSaveSale` "Londoloza ukudayisa" dropped "& invoice" while the button creates and opens
