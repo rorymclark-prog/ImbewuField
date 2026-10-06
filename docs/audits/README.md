@@ -68,6 +68,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-06 | [Introduction full ordinary prose — Codex](2026-10-06/study-intro-full-ordinary-completion-codex.md) |
 | 2026-10-06 | [Vegetables L1 ordinary residual — Codex](2026-10-06/study-vegetables-l1-ordinary-residual-codex.md) |
 | 2026-10-06 | [Vegetables L3 ordinary residual — Codex](2026-10-06/study-vegetables-l3-ordinary-residual-codex.md) |
 | 2026-10-06 | [Vegetables pest and assessment precision — Codex](2026-10-06/study-vegetables-pest-precision-codex.md) |

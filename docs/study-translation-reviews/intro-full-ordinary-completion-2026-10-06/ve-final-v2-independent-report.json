@@ -1,0 +1,1183 @@
+{
+  "task": "Independent semantic and grammar review of 33 Tshivenda Introduction ordinary-prose candidates; exact source/current bindings and full compositions checked.",
+  "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "packet": {
+    "path": "/tmp/imbewu-intro-remaining-ordinary-prose-completion-candidates-20261006.json",
+    "sha256": "95dd88bb76ecdc6395c6d3e8ee95c8a2408c8d6ab741bbc1b2d4a09e1d0f6585",
+    "inventoryPath": "/tmp/imbewu-intro-full-ordinary-residual-inventory-20261006.json",
+    "inventorySha256": "c40ed91e8e985dea43188fa24bab5e0d2dd81a869ee8ef631edd390cd84796aa"
+  },
+  "scope": {
+    "language": "ve",
+    "candidateRowsReviewed": 33,
+    "otherLanguageRowsExcluded": 42,
+    "verdictCounts": {
+      "accept": 22,
+      "repair": 7,
+      "hold": 4
+    },
+    "coverageByScope": {
+      "paired-heading": 2,
+      "paired-body": 24,
+      "learner-assessment-option": 3,
+      "learner-assessment": 1,
+      "learner-body-paragraph": 1,
+      "learner-keypoint": 1,
+      "learner-lesson-metadata": 1
+    }
+  },
+  "authorityChecks": {
+    "listedFileHashesMatchCurrent": {
+      "lib/course-modules.ts": true,
+      "lib/course-translation-drafts-ve.ts": true,
+      "lib/course-translation-drafts-ts.ts": true,
+      "lib/course-localization.ts": true,
+      "docs/narration/intro-permaculture.en.md": true,
+      "docs/narration/intro-permaculture.ve.paired-draft.json": true,
+      "docs/narration/intro-permaculture.ts.paired-draft.json": true,
+      "docs/narration/intro-permaculture.st.paired-draft.json": true
+    },
+    "all33CanonicalSourceAndCurrentTargetBindingsExact": true,
+    "all33ReplacementReplaysEqualCandidateTargets": true,
+    "currentNativeRegistryMatchesFrozenSnapshot": true,
+    "allThreeLiveResolverLessonsMatchFrozenSnapshot": true,
+    "currentHead": "f923c0c330551586587ec6248cb3e0491d176cf6",
+    "snapshotBaseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+    "nativeBodyCompositions": [
+      {
+        "lessonId": "intro-permaculture-l1",
+        "sourceExact": true,
+        "currentFullBodyExact": true,
+        "candidateBodyExact": true,
+        "unlistedParagraphsPreserved": true,
+        "recommendedFullBody": "Permaculture yo thewa kha milayo miraru ya vhuḓifari. U Ṱhogomela Mavu na Mupo (Earth Care) zwi amba u dzhia mavu, maḓi, zwimela na zwipuka sa maitele a no tshila a fanelaho u tsireledzwa, hu si zwiko zwine zwa fanela u fhedzwa. U Ṱhogomela Vhathu (People Care) zwi amba uri ṱhoḓea dza muṱa waṋu dzi dzia u ranga, ha kona u tevhela dza tshitshavha tsha haṋu. U Kovhelana ho Fanelaho (Fair Share) zwi amba u dzhia fhedzi zwine na zwi ṱoḓa nahone na vhuedzedza zwo salaho (surplus) — mbeu, zwiḽiwa, maḓi, nḓivho — murahu kha maitele.\n\nHezwi a si mihumbulo fhedzi i sa vhonali. Mulimi ane a rengisa makumba oṱhe na miroho yoṱhe fhedzi a si siele ṱafula ḽa muṱa tshithu u khou pfuka u Ṱhogomela Vhathu. Tshitshavha tshine tsha thivhela tshisima tshi kovhelanwaho nga lufhenḓe tshi khou pwanya u Kovhelana ho Fanelaho.\n\nMilayo ya vhuḓifari ndi ya ndeme ngauri i ni thusa u dzhia tsheo musi hu si na bugu ya milayo — muhura ane a khou humbela u fulisa kholomo nga murahu ha gomelelo, mandindi ane a khou tshinyadza dzi-swale dzaṋu. Fhaṱani hezwi zwiraru kha nḓila ine na humbula ngayo musi ni sa athu fhaṱa tshithu fhasi."
+      },
+      {
+        "lessonId": "intro-permaculture-l2",
+        "sourceExact": true,
+        "currentFullBodyExact": true,
+        "candidateBodyExact": true,
+        "unlistedParagraphsPreserved": true,
+        "recommendedFullBody": "David Holmgren o vhea maitele a design a fumi na mavhili kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Maitele mararu a vhuedzaho u thoma ngao kha hei ngudo ndi haya: observe and interact — sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks; catch and store energy — ṱhogomelani mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu; na use edges and value the marginal — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip) tshi nga vha fhethu hu vhuedzaho ha u sedza.\n\nMaṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.\n\nKhethani maitele mavhili kana mararu ane a tshimbidzana na thaidzo yaṋu khulwanesa, nahone ni a shumise nga mafulufulu. Maṅwe a ḓo tou vha khagala musi ni tshi khou bvela phanḓa."
+      },
+      {
+        "lessonId": "intro-permaculture-l3",
+        "sourceExact": true,
+        "currentFullBodyExact": true,
+        "candidateBodyExact": true,
+        "unlistedParagraphsPreserved": true,
+        "recommendedFullBody": "Zones na sectors zwi thusa u fhungudza mushumo u sa ṱoḓei. Zones dzi bva kha 0 u ya kha 5, zwi tshi tevhedza uri ni dalela fhethu honoho lunzhi-lini. Zone 0 ndi nnḓu. Kha tsumbo iyi, Zone 1 i tsini na nnḓu nahone i na zwine na zwi ka lunzhi — herbs na muroho wa saladi. Zone 2 ndi serapa tshihulwane na chicken run, zwine zwa dalelwa luthihi kana luvhili nga ḓuvha. Zone 3 ndi tsimu khulwane, ine ya dalelwa vhege iṅwe na iṅwe. Zone 4 ndi semi-wild — miri ya mitshelo na fodder zwine zwa ṱoḓa ṱhogomelo nga zwiṅwe zwifhinga. Zone 5 yo siwa i wild.\n\nSectors ndi energy dzi no swika dzi tshi bva nnḓa — ḓuvha, muya, mvula, mandindi na mulilo. Sedzani hune muya u re na maanḓa wa bva hone bulasini yaṋu. Rekhodo dza weather station ya tsini dzi nga thusa u sedza thungo ya muya. Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha land yaṋu. Olani misevhe u sumbedza zwe na zwi vhona.\n\nOlani zones na sectors kha bammbiri, nahone ni vha ni na motheo wa pulane yaṋu."
+      }
+    ]
+  },
+  "semanticFindings": {
+    "accepted": "The accepted content-level proposals retain the checked source predicates, numbers, conditions, sequence, OR/AND, negation, modal, timing, category and spatial relations. Two previously accepted candidate sentences are now marked repair solely for Tshivenda noun concord: ḽi with ḓumbu and mavhili/mararu with plural maitele.",
+    "repairs": "Seven repair rows remain. The principles sentence now carries class-6 agreement through numerals, relative pronoun, object pronoun and next sentence. The false quiz option preserves the source fragment “All animals kept off” verbatim and localizes only cultivated zone to avoid adding a subjunctive-style mood. Other precise repairs are detailed row by row.",
+    "holds": "Four precise spans should remain English: cost/work WITH benefit comparison, crops versus all plants, physical ground versus soil, and flood. Existing mandindi usage elsewhere is not independent lexical confirmation.",
+    "inheritedCurrentTextRisks": "The report preserves three source-meaning repairs: deck VE s11 body0 before they leave your property; deck VE s14 body1 edible crops return (now using the independently accepted return wording); and learner option VE L2 Q1 O3 all animals rather than possibly livestock/domestic animals. The full targets are in the rows.",
+    "assessmentIdentity": "The all-animals false distractor is actually Intro lesson L2 quiz index 1 option index 3; source correct index is 1. This identity is verified from the live canonical row; no index change proposed.",
+    "limits": "No fluent-speaker/local farming approval. Retaining an exact source span in English is a bounded precision hold; all other candidate translations are evaluated independently."
+  },
+  "rows": [
+    {
+      "id": "deck:ve:s7.heading",
+      "language": "ve",
+      "scope": "paired-heading",
+      "locator": {
+        "slide": 7,
+        "field": "heading"
+      },
+      "exactSource": "Watch: One Decision, Three Ethics",
+      "exactCurrentVisibleTarget": "Watch: One Decision, Three Ethics",
+      "currentStatus": "english-hold",
+      "candidateFullTarget": "Sedzani: Tsheo Nthihi, Ethics Tharu",
+      "independentRecommendedTarget": "Sedzani: Tsheo Nthihi, Ethics Tharu",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Watch: One Decision, Three Ethics",
+          "exactCurrentSpan": "Watch: One Decision, Three Ethics",
+          "proposedTargetSpan": "Sedzani: Tsheo Nthihi, Ethics Tharu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Watch/look: one decision, three Ethics.",
+      "independentReason": "Sedzani is the current ordinary watch/look imperative; formal Ethics retained to avoid behavior-only substitution. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "edbbdedaeab211d85e2e7bfd8cec26b7849e924d149486858b03ed31f2c66385"
+    },
+    {
+      "id": "deck:ve:s16.heading",
+      "language": "ve",
+      "scope": "paired-heading",
+      "locator": {
+        "slide": 16,
+        "field": "heading"
+      },
+      "exactSource": "Keep Daily Crops Close",
+      "exactCurrentVisibleTarget": "Keep Daily Crops Close",
+      "currentStatus": "english-hold",
+      "candidateFullTarget": "Vheani Crops dzine na dzi Shumisa Ḓuvha ḽiṅwe na ḽiṅwe Tsini",
+      "independentRecommendedTarget": "Vheani Crops dzine na dzi Shumisa Ḓuvha ḽiṅwe na ḽiṅwe Tsini",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Keep Daily Crops Close",
+          "exactCurrentSpan": "Keep Daily Crops Close",
+          "proposedTargetSpan": "Vheani Crops dzine na dzi Shumisa Ḓuvha ḽiṅwe na ḽiṅwe Tsini",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Keep/place close the crops you use every day.",
+      "independentReason": "Daily-use interpretation bound to slide paths/picking/visit context; no daily planting. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "e9c7c284adf64fe9764eda23a907b65591d82399eeaef768480828249be2c395"
+    },
+    {
+      "id": "deck:ve:s7.body[0]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 7,
+        "bodyIndex": 0
+      },
+      "exactSource": "A borehole serves your household. Neighbours ask for water too.",
+      "exactCurrentVisibleTarget": "A borehole i shumela muṱa waṋu. Vhahura vha khou humbela maḓi na vhone.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Borehole i shumela muṱa waṋu. Vhahura vha khou humbela maḓi na vhone.",
+      "independentRecommendedTarget": "Borehole i shumela muṱa waṋu. Vhahura vha khou humbela maḓi na vhone.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "A borehole",
+          "exactCurrentSpan": "A borehole",
+          "proposedTargetSpan": "Borehole",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "A borehole (indefinite article absorbed).",
+      "independentReason": "Preserve whole household/neighbor request wording. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "f148411b56117f8aafa5e5f854e3321805957dfb90d20df0c8ef5a1a5cf133b4"
+    },
+    {
+      "id": "deck:ve:s7.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 7,
+        "bodyIndex": 1
+      },
+      "exactSource": "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "exactCurrentVisibleTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Check whether the borehole can serve all users without taking too much. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza water level. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza the source. U sedza water level fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "independentRecommendedTarget": "Thomani nga u wana arali u kovhelana ho tendelwa. Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. People Care na Fair Share zwi livhisa u tendelana. Earth Care zwi amba u tsireledza tshiko. U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi safe kana zwo tendelwa.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Check whether the borehole can serve all users without taking too much.",
+          "exactCurrentSpan": "Check whether the borehole can serve all users without taking too much.",
+          "proposedTargetSpan": "Ṱolani arali borehole i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho.",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "water level",
+          "exactCurrentSpan": "water level",
+          "proposedTargetSpan": "vhuimo ha maḓi",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "the source",
+          "exactCurrentSpan": "the source",
+          "proposedTargetSpan": "tshiko",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "Watching the level",
+          "exactCurrentSpan": "water level",
+          "proposedTargetSpan": "vhuimo ha maḓi",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Check whether borehole can serve all users without taking too much water; water level; source.",
+      "independentReason": "Can/all/without excessive taking, sharing permission and enough-water IF, fair agreement, monitoring-alone negation and safe OR allowed all preserved. Water level is current native exact source equivalent. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "360d92069a7eff5159ff1fc4394929b7719913865448b0e6e21c0ac380de44f2"
+    },
+    {
+      "id": "deck:ve:s7.body[2]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 7,
+        "bodyIndex": 2
+      },
+      "exactSource": "Who could help you check the rules and the water supply?",
+      "exactCurrentVisibleTarget": "Ndi nnyi ane a nga ni thusa u sedza milayo na water supply?",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Ndi nnyi ane a nga ni thusa u sedza milayo na mphakelo wa maḓi?",
+      "independentRecommendedTarget": "Ndi nnyi ane a nga ni thusa u sedza milayo na mphakelo wa maḓi?",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "water supply",
+          "exactCurrentSpan": "water supply",
+          "proposedTargetSpan": "mphakelo wa maḓi",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Water supply.",
+      "independentReason": "Keep could/help/check rules unchanged; supply is not guaranteed availability. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "30e9aec5c28ca792ea5d213c8c413db97ae4122690e5bcd60482f558d3968c41"
+    },
+    {
+      "id": "deck:ve:s10.body[0]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 0
+      },
+      "exactSource": "Watch your land through a full season before you commit to major earthworks.",
+      "exactCurrentVisibleTarget": "Sedzani land yaṋu through a full season before you commit to major earthworks.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu u ḓiṋekedza kha major earthworks.",
+      "independentRecommendedTarget": "Sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu u ḓiṋekedza kha major earthworks.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "through a full season before you commit to major earthworks",
+          "exactCurrentSpan": "through a full season before you commit to major earthworks",
+          "proposedTargetSpan": "kha khalaṅwaha yoṱhe ni sa athu u ḓiṋekedza kha major earthworks",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Across a whole season before committing yourself to major earthworks.",
+      "independentReason": "Retain whole-season observation BEFORE commitment, not merely first rainfall/start digging. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "1267667805a297b4bdf68160cd759a87d2813fcaaa60f18f05e4a69db6763211"
+    },
+    {
+      "id": "deck:ve:s10.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 1
+      },
+      "exactSource": "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+      "exactCurrentVisibleTarget": "One storm i sumbedza tshifhinga tshithihi. Full wet season i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Ḓumbu ḽithihi i sumbedza tshifhinga tshithihi. Khalaṅwaha ya mvula yoṱhe i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+      "independentRecommendedTarget": "Ḓumbu ḽithihi ḽi sumbedza tshifhinga tshithihi. Khalaṅwaha ya mvula yoṱhe i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "One storm",
+          "exactCurrentSpan": "One storm",
+          "proposedTargetSpan": "Ḓumbu ḽithihi ḽi",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "A full wet season",
+          "exactCurrentSpan": "Full wet season",
+          "proposedTargetSpan": "Khalaṅwaha ya mvula yoṱhe",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "One storm; whole wet/rain season.",
+      "independentReason": "The class-5 subject concord with ḓumbu is ḽi; the candidate used i. Correct concord while retaining one storm, one moment, a full wet season, pattern, and all three water-location clauses.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "c9e61d36840d340a3930518b4e9047acbda7d8a3d36f08bdc1a5f25c749f5b6b",
+      "grammarReview": {
+        "previousRecommendation": "Ḓumbu ḽithihi i sumbedza tshifhinga tshithihi. Khalaṅwaha ya mvula yoṱhe i sumbedza pattern: hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+        "check": "follow-up concord/composition review requested by root",
+        "reason": "The class-5 subject concord with ḓumbu is ḽi; the candidate used i. Correct concord while retaining one storm, one moment, a full wet season, pattern, and all three water-location clauses."
+      }
+    },
+    {
+      "id": "deck:ve:s10.body[2]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 10,
+        "bodyIndex": 2
+      },
+      "exactSource": "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+      "exactCurrentVisibleTarget": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani soil, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani trained local adviser uri a sedze site.",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani mavu, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani mueletshedzi wa henefho o gudedzwaho uri a sedze site.",
+      "independentRecommendedTarget": "Izwi zwi thusa uri ni pfesese site. Fhedzi izwi fhedzi a zwi sumbedzi uri swale yo tea kana yo safe u fhaṱiwa. Ni sa athu cela, sedzani mavu, slope, drainage na safe overflow route ine ya sa ise kha erosion kana u rumela maḓi a tshinyadzaho kha vhahura. Humbelani mueletshedzi wa henefho o gudedzwaho uri a sedze site.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "soil",
+          "exactCurrentSpan": "soil",
+          "proposedTargetSpan": "mavu",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "trained local adviser",
+          "exactCurrentSpan": "trained local adviser",
+          "proposedTargetSpan": "mueletshedzi wa henefho o gudedzwaho",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Soil; trained adviser from the locality.",
+      "independentReason": "Qualified/local/trained exact native source equivalent; not trustworthiness alone. No changes to suitable/safe, before digging, erosion OR damaging neighbor water. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "b8bd120a7ad2006d967718bbe62016a31564555712b34fee89a857f67685cad2"
+    },
+    {
+      "id": "native:ve:L2.quiz[0].options[1]",
+      "language": "ve",
+      "scope": "learner-assessment-option",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 0,
+        "optionIndex": 1,
+        "correctIndex": 1
+      },
+      "exactSource": "Watch where water flows and pools across at least one wet season",
+      "exactCurrentVisibleTarget": "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha at least one wet season",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha khalaṅwaha ya mvula nthihi kana u fhira nthihi",
+      "independentRecommendedTarget": "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha khalaṅwaha ya mvula nthihi kana u fhira nthihi",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "at least one wet season",
+          "exactCurrentSpan": "at least one wet season",
+          "proposedTargetSpan": "khalaṅwaha ya mvula nthihi kana u fhira nthihi",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "One wet/rain season or more than one.",
+      "independentReason": "Explicit inclusive lower bound at least one, no drought/full extra condition. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "d107bdb5e6061da788edf24d69d5d20489f337d7a94a9a714afce14082759535"
+    },
+    {
+      "id": "deck:ve:s14.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 14,
+        "bodyIndex": 1
+      },
+      "exactSource": "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+      "exactCurrentVisibleTarget": "A garden, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds after harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure can carry germs. Vhudzisani extension adviser uri bed i langulwe hani safely, edible crops dzi sa athu dovha u hula. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha fixed pen.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu dovha u hula. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "independentRecommendedTarget": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "A garden",
+          "exactCurrentSpan": "A garden",
+          "proposedTargetSpan": "Serapa",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "after harvest",
+          "exactCurrentSpan": "after harvest",
+          "proposedTargetSpan": "nga murahu ha harvest",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "Fresh manure can carry germs.",
+          "exactCurrentSpan": "Fresh manure can carry germs.",
+          "proposedTargetSpan": "Fresh manure i nga hwalela germs.",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "extension adviser",
+          "exactCurrentSpan": "extension adviser",
+          "proposedTargetSpan": "mueletshedzi wa extension",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "edible crops",
+          "exactCurrentSpan": "edible crops",
+          "proposedTargetSpan": "crops dzine dza ḽiwa dzi sa athu vhuya",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "fixed pen",
+          "exactCurrentSpan": "fixed pen",
+          "proposedTargetSpan": "pen yo dzulaho fhethu huthihi",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Garden (VE); after harvest; fresh manure CAN carry germs; extension adviser; edible crops; stationary/fixed pen.",
+      "independentReason": "Use the already independently accepted return wording crops dzine dza ḽiwa dzi sa athu vhuya; it preserves “before edible crops return” without implying the crops must regrow. Retain the existing safely anchor and other source clauses.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "b49858845c9cbdbcf356776c51a468f03214d830d97b84f2edc7436b566d24f8",
+      "grammarReview": {
+        "previousRecommendation": "Serapa, miri ya mitshelo na chicken run zwi nga dzudzanywa uri khuhu dzi rotate through the beds nga murahu ha harvest; izwi ndi integration. Ni songo tendela khuhu dzi tshi swika kha crops dzine dza khou harvestiwa uri dzi ḽiwe. Fresh manure i nga hwalela germs. Vhudzisani mueletshedzi wa extension uri bed i langulwe hani safely before edible crops return. Khuhu dzi nga thusa u bvisa pests na u engedza fertility, nṱhani ha uri dzi dzule dzi sa shumi kha pen yo dzulaho fhethu huthihi.",
+        "check": "follow-up concord/composition review requested by root",
+        "reason": "Use the already independently accepted return wording crops dzine dza ḽiwa dzi sa athu vhuya; it preserves “before edible crops return” without implying the crops must regrow. Retain the existing safely anchor and other source clauses."
+      }
+    },
+    {
+      "id": "native:ve:L2.quiz[1].rationale",
+      "language": "ve",
+      "scope": "learner-assessment",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "field": "rationale",
+        "correctIndex": 1
+      },
+      "exactSource": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
+      "exactCurrentVisibleTarget": "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi clean up pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha fixed pen. Fresh manure i nga hwalela germs, ngauralo tola safe management musi edible crops dzi sa athu vhuya.",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi bvisa pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha pen yo dzulaho fhethu huthihi. Fresh manure i nga hwalela germs, ngauralo tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya.",
+      "independentRecommendedTarget": "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi bvisa pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha pen yo dzulaho fhethu huthihi. Fresh manure i nga hwalela germs, ngauralo tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "edible crops",
+          "exactCurrentSpan": "edible crops",
+          "proposedTargetSpan": "crops dzine dza ḽiwa",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "fixed pen",
+          "exactCurrentSpan": "fixed pen",
+          "proposedTargetSpan": "pen yo dzulaho fhethu huthihi",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "clean up pests",
+          "exactCurrentSpan": "clean up pests",
+          "proposedTargetSpan": "bvisa pests",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Edible crops; fixed/static pen (rationale); remove pests (VE rationale).",
+      "independentReason": "Existing safe-management BEFORE crop return, manure CAN carry germs and full correct answer sequence retained. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "88afcab952f3ba2dc8693a4eaace16c09d23b32a5701be44fd7236cfb98cd188"
+    },
+    {
+      "id": "native:ve:L2.quiz[1].options[1]",
+      "language": "ve",
+      "scope": "learner-assessment-option",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "optionIndex": 1,
+        "correctIndex": 1
+      },
+      "exactSource": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+      "exactCurrentVisibleTarget": "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi edible crops dzi sa athu vhuya",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya",
+      "independentRecommendedTarget": "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "edible crops",
+          "exactCurrentSpan": "edible crops",
+          "proposedTargetSpan": "crops dzine dza ḽiwa",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Edible crops; fixed/static pen (rationale); remove pests (VE rationale).",
+      "independentReason": "Existing safe-management BEFORE crop return, manure CAN carry germs and full correct answer sequence retained. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "08767f327a62ee0f01c2b07b197d58060c4afbae11d612b15c1e61c0a902beed"
+    },
+    {
+      "id": "deck:ve:s1.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 1,
+        "bodyIndex": 1
+      },
+      "exactSource": "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+      "exactCurrentVisibleTarget": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Three ethics, a set of design principles, na nḓila nthihi yo leluwaho ya u dzudzanya land yaṋu.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Ethics tharu, tshigwada tsha design principles, na nḓila nthihi yo leluwaho ya u dzudzanya land yaṋu.",
+      "independentRecommendedTarget": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. Ethics tharu, tshigwada tsha design principles, na nḓila nthihi yo leluwaho ya u dzudzanya land yaṋu.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Three ethics, a set of design principles",
+          "exactCurrentSpan": "Three ethics, a set of design principles",
+          "proposedTargetSpan": "Ethics tharu, tshigwada tsha design principles",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Three Ethics, a set/group of design principles.",
+      "independentReason": "Explicit set/group retained; formal labels not replaced with behavior/rules blanket. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "aa22b01e6bfd2b99f8de5ac87f63d219878a58a7c5ef1662a8ba8b4b56c2a578"
+    },
+    {
+      "id": "deck:ve:s3.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 3,
+        "bodyIndex": 1
+      },
+      "exactSource": "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+      "exactCurrentVisibleTarget": "Bulani the three ethics, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Bulani Ethics tharu, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+      "independentRecommendedTarget": "Bulani Ethics tharu, ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "the three ethics",
+          "exactCurrentSpan": "the three ethics",
+          "proposedTargetSpan": "Ethics tharu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "The three Ethics.",
+      "independentReason": "Formal label retained while count localized. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "95a5b260de97f1bc52ebeaa15a597e73729de697258fc33b018861b1f0ddd097"
+    },
+    {
+      "id": "deck:ve:s6.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 6,
+        "bodyIndex": 1
+      },
+      "exactSource": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "exactCurrentVisibleTarget": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone return the surplus to the system — mbeu, zwiḽiwa, maḓi, nḓivho.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone vhuedzedzani surplus kha system — mbeu, zwiḽiwa, maḓi, nḓivho.",
+      "independentRecommendedTarget": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone vhuedzedzani surplus kha system — mbeu, zwiḽiwa, maḓi, nḓivho.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "return the surplus to the system",
+          "exactCurrentSpan": "return the surplus to the system",
+          "proposedTargetSpan": "vhuedzedzani surplus kha system",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Return surplus to the system.",
+      "independentReason": "Keep only-need and all resource-list items unchanged. System remains broad, not garden/field. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "ade3fdafee8610516fda7863d0da7d83b897b92ae984426b12979910970db2e4"
+    },
+    {
+      "id": "deck:ve:s4.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 4,
+        "bodyIndex": 1
+      },
+      "exactSource": "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+      "exactCurrentVisibleTarget": "Zwi amba u dzhia mavu, maḓi, zwimela na zwipuka sa “living systems to protect, not resources to use up.”",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Zwi amba u dzhia mavu, maḓi, zwimela na zwipuka sa “living systems dza u tsireledza, hu si resources dza u fhedza nga u shumisa.”",
+      "independentRecommendedTarget": "Zwi amba u dzhia mavu, maḓi, zwimela na zwipuka sa “living systems dza u tsireledza, hu si resources dza u fhedza nga u shumisa.”",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "living systems to protect, not resources to use up",
+          "exactCurrentSpan": "living systems to protect, not resources to use up",
+          "proposedTargetSpan": "living systems dza u tsireledza, hu si resources dza u fhedza nga u shumisa",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Living systems to protect, not resources to exhaust through use.",
+      "independentReason": "Purpose-infinitive framing avoids adding must/should obligation; no land/system narrowing. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "20d35a55cd65780999788a1e6accb4acea67b7fea6dbd947bd52de6b38f64023"
+    },
+    {
+      "id": "deck:ve:s4.body[2]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 4,
+        "bodyIndex": 2
+      },
+      "exactSource": "A system you use up stops paying you. A system you protect keeps paying you.",
+      "exactCurrentVisibleTarget": "System ine na shumisa na fhedza i a ima: “stops paying you.” System ine na tsireledza i bvela phanda: “keeps paying you.”",
+      "currentStatus": "draft",
+      "candidateFullTarget": "System ine na shumisa na fhedza i a ima: “a i tsha ni badela.” System ine na tsireledza i bvela phanda: “i bvela phanḓa u ni badela.”",
+      "independentRecommendedTarget": "System ine na shumisa na fhedza i a ima: “a i tsha ni badela.” System ine na tsireledza i bvela phanda: “i bvela phanḓa u ni badela.”",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "stops paying you",
+          "exactCurrentSpan": "stops paying you",
+          "proposedTargetSpan": "a i tsha ni badela",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "keeps paying you",
+          "exactCurrentSpan": "keeps paying you",
+          "proposedTargetSpan": "i bvela phanḓa u ni badela",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Stops paying you; continues paying you.",
+      "independentReason": "Keep metaphor as paying, not new yield/cash guarantee; existing localized relationship unchanged. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "dd029975d93bce21a0ec6ccc8e5c3da369e8eeddd65202d3388f5ad7a2f88e91"
+    },
+    {
+      "id": "deck:ve:s13.body[0]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 13,
+        "bodyIndex": 0
+      },
+      "exactSource": "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+      "exactCurrentVisibleTarget": "Shumisani diversity ni i dzhiele nṱha. Hail injury to maize depends on the storm and the crop’s growth stage. Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha tshiwo tshiṅwe na tshiṅwe.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Shumisani diversity ni i dzhiele nṱha. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop. Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha tshiwo tshiṅwe na tshiṅwe.",
+      "independentRecommendedTarget": "Shumisani diversity ni i dzhiele nṱha. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop. Principle iyi a i fulufhedzisi uri crop i ḓo ponyoka kha tshiwo tshiṅwe na tshiṅwe.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Hail injury to maize depends on the storm and the crop’s growth stage.",
+          "exactCurrentSpan": "Hail injury to maize depends on the storm and the crop’s growth stage.",
+          "proposedTargetSpan": "Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Hail injury to maize depends on storm and crop growth stage.",
+      "independentReason": "Native same-source dependence pattern retained; not certain mortality or survival. No guarantee/every-event negative unchanged. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "65bb92c9ec59cc2cd34f9c0cf89d807bbddb300d465fe8dda2fec975335a1a4f"
+    },
+    {
+      "id": "native:ve:L2.body[1]",
+      "language": "ve",
+      "scope": "learner-body-paragraph",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "field": "body",
+        "paragraphIndex": 1
+      },
+      "exactSource": "Others worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.",
+      "exactCurrentVisibleTarget": "Maṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga storm na growth stage ya crop.",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Maṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.",
+      "independentRecommendedTarget": "Maṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "storm",
+          "exactCurrentSpan": "storm",
+          "proposedTargetSpan": "ḓumbu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Storm.",
+      "independentReason": "Keep exact hail/maize/growth-stage dependence; translate weather noun only. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "20b5758d3c3650c3d3a3cc260a42c402b10968c72e87d8fd456eae15ab097ac1"
+    },
+    {
+      "id": "native:ve:L2.keyPoints[3]",
+      "language": "ve",
+      "scope": "learner-keypoint",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "keyPointIndex": 3
+      },
+      "exactSource": "Hail injury to maize depends on the storm and the crop’s growth stage",
+      "exactCurrentVisibleTarget": "Hail injury kha maize i ya nga storm na growth stage ya crop",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Hail injury kha maize i ya nga ḓumbu na growth stage ya crop",
+      "independentRecommendedTarget": "Hail injury kha maize i ya nga ḓumbu na growth stage ya crop",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "storm",
+          "exactCurrentSpan": "storm",
+          "proposedTargetSpan": "ḓumbu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Storm.",
+      "independentReason": "Keep exact hail/maize/growth-stage dependence; translate weather noun only. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "23ec1696b024aaed43529dd69a7bcfcba74e91a28db301adf77c9390245a5f7a"
+    },
+    {
+      "id": "deck:ve:s13.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 13,
+        "bodyIndex": 1
+      },
+      "exactSource": "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+      "exactCurrentVisibleTarget": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — bakete ḽi nga sheledza bed hu si na muḓagasi na luthihi.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: produce no waste, ngauralo masalela a vha compost na compost ya vha mavu. Nahone use small and slow solutions — bakete ḽi nga sheledza bed hu si na muḓagasi na luthihi.",
+      "independentRecommendedTarget": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: produce no waste, ngauralo masalela a vha compost na compost ya vha mavu. Nahone use small and slow solutions — bakete ḽi nga sheledza bed hu si na muḓagasi na luthihi.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions",
+          "exactCurrentSpan": "produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions",
+          "proposedTargetSpan": "produce no waste, ngauralo masalela a vha compost na compost ya vha mavu. Nahone use small and slow solutions",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Produce no waste, thus scraps become compost and compost becomes soil. And use small and slow solutions.",
+      "independentReason": "Named principles remain exact labels, ordinary material transformation/conjunction translated; bucket CAN and no electricity at all untouched. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "265261fd59677ba9fd2fb4d45207223c7b842b821dc82b9b0281424ec001a0ef"
+    },
+    {
+      "id": "deck:ve:s11.body[2]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 11,
+        "bodyIndex": 2
+      },
+      "exactSource": "Compare the cost and work with the benefit on your own farm.",
+      "exactCurrentVisibleTarget": "Vhambedzani the cost and work with the benefit kha bulasi yaṋu.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Vhambedzani cost na mushumo na mbuyelo kha bulasi yaṋu.",
+      "independentRecommendedTarget": "Vhambedzani the cost and work with the benefit kha bulasi yaṋu.",
+      "verdict": "hold",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "the cost and work with the benefit",
+          "exactCurrentSpan": "the cost and work with the benefit",
+          "proposedTargetSpan": "cost na mushumo na mbuyelo",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Compare cost and work with the benefit.",
+      "independentReason": "Candidate turns “compare cost and work with the benefit” into a list, losing the comparison.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "cc1d2fbbeaff9a4db7b3e3aa57e837073ced531e37db8c274db7b876e6b0febe"
+    },
+    {
+      "id": "deck:ve:s15.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 15,
+        "bodyIndex": 1
+      },
+      "exactSource": "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+      "exactCurrentVisibleTarget": "Zone 0 ndi nḓu. Kha hei tsumbo, Zone 1 i tsini na nḓu nahone i na herbs and salad greens zwine na zwi kaṋa lunzhi.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Zone 0 ndi nḓu. Kha hei tsumbo, Zone 1 i tsini na nḓu nahone i na herbs na salad greens zwine na zwi kaṋa lunzhi.",
+      "independentRecommendedTarget": "Zone 0 ndi nḓu. Kha hei tsumbo, Zone 1 i tsini na nḓu nahone i na herbs na salad greens zwine na zwi kaṋa lunzhi.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "herbs and salad greens",
+          "exactCurrentSpan": "herbs and salad greens",
+          "proposedTargetSpan": "herbs na salad greens",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Herbs and salad greens.",
+      "independentReason": "Only ordinary and translated; plant/food-part technical categories intact. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "3fecb11351f2ba0b3b3997c699317cbfe2adbcb9e61301e84c50d489677a905b"
+    },
+    {
+      "id": "deck:ve:s15.body[2]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 15,
+        "bodyIndex": 2
+      },
+      "exactSource": "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+      "exactCurrentVisibleTarget": "Zone 2 ndi main garden na chicken run, ni zwi dalela luthihi kana luvhili nga ḓuvha. Zone 3 ndi main field, ni i dalela vhege iṅwe na iṅwe.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Zone 2 ndi main serapa na chicken run, ni zwi dalela luthihi kana luvhili nga ḓuvha. Zone 3 ndi main tsimu, ni i dalela vhege iṅwe na iṅwe.",
+      "independentRecommendedTarget": "Zone 2 ndi main garden na chicken run, ni zwi dalela luthihi kana luvhili nga ḓuvha. Zone 3 ndi main field, ni i dalela vhege iṅwe na iṅwe.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "main garden",
+          "exactCurrentSpan": "main garden",
+          "proposedTargetSpan": "main serapa",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "main field",
+          "exactCurrentSpan": "main field",
+          "proposedTargetSpan": "main tsimu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Main garden; main field.",
+      "independentReason": "Keep exact zone-role labels main garden/main field; candidate main serapa/main tsimu is an awkward hybrid. Frequencies remain once OR twice daily versus weekly.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "dba5e74d29753f56aa3cbea093d267469edc680c062214a43e596195fe054791"
+    },
+    {
+      "id": "deck:ve:s19.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 1
+      },
+      "exactSource": "The trees and shrubs stand between that wind and the crops.",
+      "exactCurrentVisibleTarget": "Miri na shrubs dzi ima vhukati ha muya uyo na crops.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Miri na shrubs dzi ima vhukati ha muya uyo na zwimela.",
+      "independentRecommendedTarget": "Miri na shrubs dzi ima vhukati ha muya uyo na crops.",
+      "verdict": "hold",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "crops",
+          "exactCurrentSpan": "crops",
+          "proposedTargetSpan": "zwimela",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Crops/plants.",
+      "independentReason": "Candidate zwimela broadens crops to plants; retain the crop endpoint.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "5c8ecaff2fb9000b4a3efdb68f942c591793effef17ecf3464fa5eb78fe30119"
+    },
+    {
+      "id": "deck:ve:s19.body[3]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 19,
+        "bodyIndex": 3
+      },
+      "exactSource": "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+      "exactCurrentVisibleTarget": "Shelter i nga fhungudza luvhilo lwa muya nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Tsireledzo i nga fhungudza luvhilo lwa muya nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+      "independentRecommendedTarget": "Tsireledzo i nga fhungudza luvhilo lwa muya nga murahu hayo. Design na u ṱhogomela windbreak ndi zwa ndeme.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "The shelter",
+          "exactCurrentSpan": "Shelter",
+          "proposedTargetSpan": "Tsireledzo",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Shelter/protection.",
+      "independentReason": "Can REDUCE wind SPEED BEHIND it, no eliminate/allwind guarantee. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "4eb613e5091cc3990ed5cae2f2fb88cb3e6e918286999a09dbdde1f316402776"
+    },
+    {
+      "id": "deck:ve:s22.body[0]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 22,
+        "bodyIndex": 0
+      },
+      "exactSource": "Walk out and check your sketch against the ground.",
+      "exactCurrentVisibleTarget": "Tshimbilani ni sedzani nyolo yaṋu ni tshi i vhambedza na ground ya vhukuma.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Tshimbilani ni sedzani nyolo yaṋu ni tshi i vhambedza na mavu ya vhukuma.",
+      "independentRecommendedTarget": "Tshimbilani ni sedzani nyolo yaṋu ni tshi i vhambedza na ground ya vhukuma.",
+      "verdict": "hold",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "ground",
+          "exactCurrentSpan": "ground",
+          "proposedTargetSpan": "mavu",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Ground.",
+      "independentReason": "Candidate mavu may narrow physical ground/terrain to soil.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "d7b7c53d44eda23c97fd634ea2e8c254968cdae01e95cf09af8a99e6215abe00"
+    },
+    {
+      "id": "deck:ve:s22.body[3]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 22,
+        "bodyIndex": 3
+      },
+      "exactSource": "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
+      "exactCurrentVisibleTarget": "Nga murahu ni humbele older neighbour muthihi uri a ni vhudze direction ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Nga murahu ni humbele older neighbour muthihi uri a ni vhudze sia ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+      "independentRecommendedTarget": "Nga murahu ni humbele older neighbour muthihi uri a ni vhudze sia ine worst wind ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+      "verdict": "accept",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "direction",
+          "exactCurrentSpan": "direction",
+          "proposedTargetSpan": "sia",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Direction.",
+      "independentReason": "Retain older-neighbor age and worst-wind superlative precision anchors individually; preserve then/one/compare arrow. Independent check found the listed source-bound composition defensible while preserving the adjacent current target text; facilitator language review remains open.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "f716b649dd2e3e4ddc3b876f39faa282ba234feba6f60b6a3592ed433782877b"
+    },
+    {
+      "id": "native:ve:L3.infographicAlt",
+      "language": "ve",
+      "scope": "learner-lesson-metadata",
+      "locator": {
+        "lessonId": "intro-permaculture-l3",
+        "field": "infographicAlt"
+      },
+      "exactSource": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "exactCurrentVisibleTarget": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "currentStatus": "hold",
+      "candidateFullTarget": "Bulasi ḽa tsumbo ḽo sumbedzwaho nga zwifanyiso: markers dzi re na nomboro 0 u ya kha 5 dzi tevhela nḓila ya u tshimbila nga milenzhe i monamonaho u bva kha nnḓu na serapa ḽa tsini, dzi tshi fhira khuhu na tsimu, dzi tshi ya kha miri na a wilder riverside area. Markers idzi ndi tsumbo, hu si mikano kana zwikhala zwo vhewaho zwa sa shanduka.",
+      "independentRecommendedTarget": "Bulasi ḽa tsumbo ḽo sumbedzwaho nga zwifanyiso: markers dzi re na nomboro 0 u ya kha 5 dzi tevhela nḓila ya u tshimbila nga milenzhe i monamonaho u bva kha nnḓu na serapa ḽa tsini, dzi tshi fhira khuhu na tsimu, dzi tshi ya kha miri na a wilder riverside area. Markers idzi ndi tsumbo, not fixed boundaries or distances.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+          "exactCurrentSpan": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+          "proposedTargetSpan": "Bulasi ḽa tsumbo ḽo sumbedzwaho nga zwifanyiso: markers dzi re na nomboro 0 u ya kha 5 dzi tevhela nḓila ya u tshimbila nga milenzhe i monamonaho u bva kha nnḓu na serapa ḽa tsini, dzi tshi fhira khuhu na tsimu, dzi tshi ya kha miri na a wilder riverside area. Markers idzi ndi tsumbo, hu si mikano kana zwikhala zwo vhewaho zwa sa shanduka.",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Illustrated example farm: numbered markers0–5 follow winding footpath from house/near garden, past chickens/field, toward trees and exact wilder-riverside anchor. Markers are examples NOT fixed boundaries OR distances.",
+      "independentReason": "Translate ordinary description, retain comparative “a wilder riverside area”, and keep “not fixed boundaries or distances” in exact English because zwikhala may mean spaces/intervals.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "6861635b5716b2dc4249a63ae14ba487dfb0c4a8df88554a23c226233e95a24f"
+    },
+    {
+      "id": "native:ve:L2.quiz[1].options[3]",
+      "language": "ve",
+      "scope": "learner-assessment-option",
+      "locator": {
+        "lessonId": "intro-permaculture-l2",
+        "questionIndex": 1,
+        "optionIndex": 3,
+        "correctIndex": 1
+      },
+      "exactSource": "All animals kept off the cultivated zone",
+      "exactCurrentVisibleTarget": "Zwifuwo zwoṱhe zwi dzule nnḓa ha cultivated zone",
+      "currentStatus": "machine-draft",
+      "candidateFullTarget": "Zwifuwo zwoṱhe zwi dzule nnḓa ha zone yo limiwaho",
+      "independentRecommendedTarget": "All animals kept off zone yo limiwaho.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "All animals",
+          "exactCurrentSpan": "Zwifuwo zwoṱhe",
+          "proposedTargetSpan": "All animals kept off",
+          "targetOccurrence": 1,
+          "followupReview": true
+        },
+        {
+          "exactSourceSpan": "cultivated zone",
+          "exactCurrentSpan": "cultivated zone",
+          "proposedTargetSpan": "zone yo limiwaho",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Cultivated zone.",
+      "independentReason": "The source is a false-option fragment, “All animals kept off the cultivated zone.” The prior subjunctive-style zwi dzule may add a mood (“should/stay”). Preserve the exact action/category in English and translate only cultivated zone; no option index or answer key changes.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "de0adf6debb8cf2f116ef69cc263c7a63b384bc7c7880993a1a5aab78a5a1e31",
+      "grammarReview": {
+        "previousRecommendation": "All animals zwi dzule nnḓa ha zone yo limiwaho.",
+        "check": "follow-up complete noun-class agreement and source-modality review",
+        "reason": "The source is a false-option fragment, “All animals kept off the cultivated zone.” The prior subjunctive-style zwi dzule may add a mood (“should/stay”). Preserve the exact action/category in English and translate only cultivated zone; no option index or answer key changes."
+      }
+    },
+    {
+      "id": "deck:ve:s11.body[0]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 11,
+        "bodyIndex": 0
+      },
+      "exactSource": "Harvest rain, sun and biomass before they leave your property.",
+      "exactCurrentVisibleTarget": "Harvest rain, sun na biomass ni sa athu u zwi xedza kha property yaṋu.",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Harvest mvula, ḓuvha na biomass ni sa athu u zwi xedza kha property yaṋu.",
+      "independentRecommendedTarget": "Harvest mvula, ḓuvha na biomass before they leave your property.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "Harvest rain, sun",
+          "exactCurrentSpan": "Harvest rain, sun",
+          "proposedTargetSpan": "Harvest mvula, ḓuvha",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Harvest rain, sun.",
+      "independentReason": "Inherited xedza can mean lose/discard; source says before rain, sun and biomass leave the property.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "65b870c21fc3be0c454c2d237840dd1adc53e7b6997bc7b91639f7560c26ed32"
+    },
+    {
+      "id": "deck:ve:s14.body[3]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 14,
+        "bodyIndex": 3
+      },
+      "exactSource": "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "exactCurrentVisibleTarget": "Khethani principles mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+      "currentStatus": "draft",
+      "candidateFullTarget": "Khethani maitele mbili kana tharu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+      "independentRecommendedTarget": "Khethani maitele mavhili kana mararu ane a amba na thaidzo yaṋu khulwane ni a shumise nga maanḓa. Maṅwe a ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+      "verdict": "repair",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "principles",
+          "exactCurrentSpan": "principles",
+          "proposedTargetSpan": "maitele",
+          "targetOccurrence": 1
+        },
+        {
+          "exactSourceSpan": "two or three",
+          "exactCurrentSpan": "mbili kana tharu",
+          "proposedTargetSpan": "mavhili kana mararu",
+          "targetOccurrence": 1,
+          "followupReview": true
+        },
+        {
+          "exactSourceSpan": "that speak to your biggest problem and apply them hard. The rest",
+          "exactCurrentSpan": "dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe",
+          "proposedTargetSpan": "ane a amba na thaidzo yaṋu khulwane ni a shumise nga maanḓa. Maṅwe",
+          "targetOccurrence": 1,
+          "followupReview": true
+        }
+      ],
+      "backTranslation": "Principles.",
+      "independentReason": "Class 6 agreement is carried through the complete sentence: maitele mavhili kana mararu, relative ane a, object a, and Maṅwe a. This avoids repairing only the numeral while leaving class-6 relations expressed with the earlier borrowed-principles agreement.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "550514bb1943234b9b4c670a880fa33e7af534aa07ec708dd455f47919a59de7",
+      "grammarReview": {
+        "previousRecommendation": "Khethani maitele mavhili kana mararu dzine dza amba na thaidzo yaṋu khulwane ni dzi shumise nga maanḓa. Dziṅwe dzi ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+        "check": "follow-up complete noun-class agreement and source-modality review",
+        "reason": "Class 6 agreement is carried through the complete sentence: maitele mavhili kana mararu, relative ane a, object a, and Maṅwe a. This avoids repairing only the numeral while leaving class-6 relations expressed with the earlier borrowed-principles agreement."
+      }
+    },
+    {
+      "id": "deck:ve:s18.body[1]",
+      "language": "ve",
+      "scope": "paired-body",
+      "locator": {
+        "slide": 18,
+        "bodyIndex": 1
+      },
+      "exactSource": "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+      "exactCurrentVisibleTarget": "Ḓuvha, muya, mvula, flood na mulilo zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+      "currentStatus": "mixed",
+      "candidateFullTarget": "Ḓuvha, muya, mvula, mandindi na mulilo zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+      "independentRecommendedTarget": "Ḓuvha, muya, mvula, flood na mulilo zwi pfuka boundary yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+      "verdict": "hold",
+      "exactReplacements": [
+        {
+          "exactSourceSpan": "flood",
+          "exactCurrentSpan": "flood",
+          "proposedTargetSpan": "mandindi",
+          "targetOccurrence": 1
+        }
+      ],
+      "backTranslation": "Flood.",
+      "independentReason": "Mandindi is inherited elsewhere in the machine draft but lacks independent lexical confirmation here; retain exact flood.",
+      "sourceBound": true,
+      "currentTargetBound": true,
+      "candidateCompositionReplayed": true,
+      "recommendedTargetSha256": "b35171476149e55f810bec8944533826f4f62f76817684909266cb750f21ee50"
+    }
+  ],
+  "revision": {
+    "supersedes": "/tmp/imbewu-intro-remaining-ordinary-prose-ve-independent-check-final-20261006.json",
+    "reason": "Final bounded whole-sentence agreement and source-modality review. Prior revisions remain recorded in the superseded file.",
+    "reviewedRows": [
+      "deck:ve:s14.body[3]",
+      "native:ve:L2.quiz[1].options[3]"
+    ],
+    "note": "All source/current/snapshot bindings remain unchanged. Only the independent recommended target, rationale and exact replacement map for these two rows changed."
+  }
+}

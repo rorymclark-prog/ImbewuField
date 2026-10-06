@@ -168,7 +168,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
       ),
       body: pair(
         "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "David Holmgren o vhea maitele a design a fumi na mavhili kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Maitele mararu a vhuedzaho u thoma ngao kha hei ngudo ndi haya: observe and interact — sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks; catch and store energy — ṱhogomelani mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu; na use edges and value the marginal — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip) tshi nga vha fhethu hu vhuedzaho ha u sedza.\n\nMaṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga storm na growth stage ya crop.\n\nKhethani maitele mavhili kana mararu ane a tshimbidzana na thaidzo yaṋu khulwanesa, nahone ni a shumise nga mafulufulu. Maṅwe a ḓo tou vha khagala musi ni tshi khou bvela phanḓa.",
+        "David Holmgren o vhea maitele a design a fumi na mavhili kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhoṱhe. Maitele mararu a vhuedzaho u thoma ngao kha hei ngudo ndi haya: observe and interact — sedzani land yaṋu kha khalaṅwaha yoṱhe ni sa athu ita major earthworks; catch and store energy — ṱhogomelani mvula, ḓuvha na biomass zwi sa athu bva kha ndaka yaṋu; na use edges and value the marginal — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip) tshi nga vha fhethu hu vhuedzaho ha u sedza.\n\nMaṅwe maitele ane zwa vhuedza u a ḓivha ndi haya: produce no waste (masalela a vha compost, compost ya vha mavu); use small and slow solutions (bakete ḽi nga sheledza planting bed hu si na muḓagasi); na use and value diversity. Hail injury kha maize i ya nga ḓumbu na growth stage ya crop.\n\nKhethani maitele mavhili kana mararu ane a tshimbidzana na thaidzo yaṋu khulwanesa, nahone ni a shumise nga mafulufulu. Maṅwe a ḓo tou vha khagala musi ni tshi khou bvela phanḓa.",
       ),
       keyPoints: [
         pair(
@@ -185,7 +185,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
         ),
         pair(
           "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "Hail injury kha maize i ya nga storm na growth stage ya crop",
+          "Hail injury kha maize i ya nga ḓumbu na growth stage ya crop",
         ),
       ],
       quiz: [
@@ -201,7 +201,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "Watch where water flows and pools across at least one wet season",
-              "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha at least one wet season",
+              "Sedzani hune maḓi a elela hone na hune a kuvhangana hone kha khalaṅwaha ya mvula nthihi kana u fhira nthihi",
             ),
             pair(
               "Copy a neighbour's swale layout",
@@ -230,7 +230,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi edible crops dzi sa athu vhuya",
+              "Tsimu, miri ya mitshelo na chicken run zwo vhekanywa nga nḓila ine khuhu dza shumisa planting bed i si na zwimela nga murahu ha harvest; nga murahu mulimi u tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya",
             ),
             pair(
               "Separate paddocks for each crop",
@@ -238,13 +238,13 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
             ),
             pair(
               "All animals kept off the cultivated zone",
-              "Zwifuwo zwoṱhe zwi dzule nnḓa ha cultivated zone",
+              "All animals kept off zone yo limiwaho.",
             ),
           ],
           sourceCorrectIndex: 1,
           rationale: pair(
             "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi clean up pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha fixed pen. Fresh manure i nga hwalela germs, ngauralo tola safe management musi edible crops dzi sa athu vhuya.",
+            "Integration i ita uri element iṅwe na iṅwe i shumele zwine zwa vha tsini nayo — hafha, khuhu dzi bvisa pests na u engedza fertility, nṱhani ha u dzula dzi sa shumi kha pen yo dzulaho fhethu huthihi. Fresh manure i nga hwalela germs, ngauralo tola safe management musi crops dzine dza ḽiwa dzi sa athu vhuya.",
           ),
         },
       ],
@@ -252,7 +252,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
     {
       id: "intro-permaculture-l3",
       // The earlier draft described rings that the replacement picture does not show.
-      infographicAlt: hold("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances."),
+      infographicAlt: pair("Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.", "Bulasi ḽa tsumbo ḽo sumbedzwaho nga zwifanyiso: markers dzi re na nomboro 0 u ya kha 5 dzi tevhela nḓila ya u tshimbila nga milenzhe i monamonaho u bva kha nnḓu na serapa ḽa tsini, dzi tshi fhira khuhu na tsimu, dzi tshi ya kha miri na a wilder riverside area. Markers idzi ndi tsumbo, not fixed boundaries or distances."),
       title: pair(
         "Zones and Sectors: Organising Your Farm by Energy",
         "Zoune na Sekithara: U Dzudzanya Bulasi Yaṋu nga Maanḓa",
@@ -314,7 +314,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
           // Keep the observed north-west condition paired with its boundary answer and rationale.
           question: pair(
             "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
-            "Musi ni tshi vhona “damaging wind coming from the north-west on a Highveld farm”, windbreak i fanela u vhewa ngafhi?",
+            "Musi ni tshi vhona muya u tshinyadzaho u tshi bva north-west kha bulasi ḽa Highveld, windbreak i fanela u vhewa ngafhi?",
           ),
           options: [
             pair(

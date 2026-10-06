@@ -1,0 +1,120 @@
+{
+  "id": "intro-permaculture",
+  "title": "Introduction to Permaculture",
+  "description": "Ethics, principles and patterns — the foundation for everything else you will build.",
+  "durationMins": 20,
+  "category": "foundation",
+  "lessons": [
+    {
+      "id": "intro-permaculture-l1",
+      "infographicUrl": "/course-images/intro-permaculture/intro-permaculture-l1.jpg",
+      "infographicAlt": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "title": "The Three Ethics: Earth Care, People Care, Fair Share",
+      "body": "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+      "keyPoints": [
+        "Earth Care: protect soil, water, and biodiversity",
+        "People Care: your family's needs come before market production",
+        "Fair Share: return surplus to the system — seeds, water, food, knowledge",
+        "Ethics guide decisions when there's no rulebook"
+      ],
+      "quiz": [
+        {
+          "q": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
+          "options": [
+            "Earth Care only",
+            "People Care only",
+            "Fair Share — he returns nothing to the system",
+            "All three equally"
+          ],
+          "correct": 2,
+          "rationale": "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle."
+        },
+        {
+          "q": "Your borehole serves your household. Neighbours ask for water too. Which action best reflects all three ethics?",
+          "options": [
+            "Sell access to the highest bidder",
+            "Keep all the borehole water for a larger irrigation area",
+            "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
+            "Cap the borehole to preserve groundwater only"
+          ],
+          "correct": 2,
+          "rationale": "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water."
+        }
+      ]
+    },
+    {
+      "id": "intro-permaculture-l2",
+      "infographicUrl": "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
+      "infographicAlt": "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
+      "title": "Twelve Principles: Designing with Nature",
+      "body": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+      "keyPoints": [
+        "Observe your land for a full season before major earthworks",
+        "Catch and store rain, sun, and biomass before they leave your property",
+        "Edges and margins can be useful places to observe what grows well",
+        "Hail injury to maize depends on the storm and the crop’s growth stage"
+      ],
+      "quiz": [
+        {
+          "q": "A farmer wants to dig swales to harvest rainwater. What should she do first, following 'observe and interact'?",
+          "options": [
+            "Dig immediately after the first good rain",
+            "Watch where water flows and pools across at least one wet season",
+            "Copy a neighbour's swale layout",
+            "Assume the same swale design fits every site"
+          ],
+          "correct": 1,
+          "rationale": "A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow route with a trained local adviser before digging."
+        },
+        {
+          "q": "Which layout best applies 'integrate rather than segregate'?",
+          "options": [
+            "Chickens penned far from the garden",
+            "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
+            "Separate paddocks for each crop",
+            "All animals kept off the cultivated zone"
+          ],
+          "correct": 1,
+          "rationale": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return."
+        }
+      ]
+    },
+    {
+      "id": "intro-permaculture-l3",
+      "infographicUrl": "/course-images/intro-permaculture/intro-permaculture-l3-footpath.jpg",
+      "infographicAlt": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
+      "title": "Zones and Sectors: Organising Your Farm by Energy",
+      "body": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+      "keyPoints": [
+        "In this example, Zone 1 near the house holds often-picked herbs",
+        "Zones organise labour by how often you need to visit",
+        "Sectors map incoming sun, wind, rainwater, flood and fire",
+        "A simple sketch of zones and sectors is enough to start designing"
+      ],
+      "quiz": [
+        {
+          "q": "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
+          "options": [
+            "Herbs grow too large",
+            "The extra walk may mean you pick or check them less often",
+            "Herbs cross-pollinate with main crops",
+            "Zone 3 gets too much sun for herbs"
+          ],
+          "correct": 1,
+          "rationale": "Put a crop you pick often near a daily path. A distant bed adds walking and may be checked less often."
+        },
+        {
+          "q": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
+          "options": [
+            "South-east boundary",
+            "North-west boundary, between the wind and the crops",
+            "Centre of the property",
+            "Windbreaks aren't needed since winds are seasonal"
+          ],
+          "correct": 1,
+          "rationale": "A windbreak works by standing between the wind source and what it would damage — so it belongs on the side the wind actually comes from."
+        }
+      ]
+    }
+  ]
+}

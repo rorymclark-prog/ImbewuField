@@ -2,12 +2,18 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import {
-  XITSONGA_INTRO_PERMACULTURE_DRAFT as draft,
+  XITSONGA_INTRO_PERMACULTURE_DRAFT as currentIntroDraft,
   XITSONGA_READING_LANDSCAPE_DRAFT as readingDraft,
 } from '../lib/course-translation-drafts-ts.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as resolveCurrentPresentation } from '../lib/course-localization.ts';
+import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
+// 6 October 2026: full current accepted prose/metadata is checked before dated
+// literal alt/zone/assessment strings; real source/index controls remain intact.
+const draft = validateAndRewindIntroFullNative('ts', currentIntroDraft) as typeof currentIntroDraft;
+const resolveLearnerLessonPresentation: typeof resolveCurrentPresentation = (lesson, language) =>
+  introPresentationBeforeFullOrdinary(lesson, language, resolveCurrentPresentation(lesson, language));
 
 const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
@@ -42,10 +48,14 @@ test('the Xitsonga draft preserves all Introduction source pairs and quiz answer
 });
 
 test('held Xitsonga anchors remain exact while mixed fields stay machine drafts', () => {
-  assert.ok(draft.holds.length > 0);
-  const lessons = new Map(draft.lessons.map(lesson => [lesson.id, lesson]));
+  // This is the live hold contract, not a historical snapshot. Two accepted
+  // localized terms no longer claim to remain English; the three genuine holds do.
+  validateAndRewindIntroFullNative('ts', currentIntroDraft);
+  assert.deepEqual(currentIntroDraft.holds.map(hold => hold.sourceText), ['all his surplus maize', 'composting', 'ethic']);
+  assert.ok(currentIntroDraft.holds.length > 0);
+  const lessons = new Map(currentIntroDraft.lessons.map(lesson => [lesson.id, lesson]));
 
-  for (const hold of draft.holds) {
+  for (const hold of currentIntroDraft.holds) {
     const lesson = lessons.get(hold.lessonId);
     assert.ok(lesson, `hold points to unknown lesson ${hold.lessonId}`);
     const match = hold.field.match(/^(body)|^keyPoints\[(\d+)\]$|^quiz\[(\d+)\](?:\.(q|rationale)|\.options\[(\d+)\])$/);
@@ -209,7 +219,7 @@ test('Introduction L3 candidate preserves visit frequencies, observed wind, and 
   assert.match(lesson.quiz[1].rationale.xitsongaDraft, /eka tlhelo leri moya wu humaka eka rona hakunene/,
     'the rationale stays tied to where the observed wind actually comes from');
 
-  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  // Use the validated dated Intro presentation above; changed-source fallback stays live.
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, lesson.body.xitsongaDraft);
@@ -329,7 +339,7 @@ test('Reading Landscape Xitsonga body candidates preserve paragraph order and bo
 test('Reading Landscape Xitsonga source drift falls back to the complete current English lesson', async () => {
   const readingSource = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
   const sourceLesson = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l1')!;
-  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  // Use the validated dated Intro presentation above; changed-source fallback stays live.
   const draftView = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   const paired = readingDraft.lessons.find(lesson => lesson.id === sourceLesson.id)!;
   assert.equal(draftView.status, 'draft');
@@ -396,7 +406,7 @@ test('the Xitsonga principles body translates every paragraph while remaining bo
   }
   assert.ok(!paragraphs[0].includes('Tinhlokomhaka'), 'starting points must not become topics or headings');
   assert.match(paragraphs[1], /swi ya hi storm na growth stage/, 'preserve the dependence of hail damage on storm and crop stage');
-  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  // Dated literal targets use the full-current-validated Intro wrapper above.
   const view = resolveLearnerLessonPresentation(lesson, 'ts');
   assert.equal(view.status, 'draft');
   assert.equal(view.content.body, paired.body.xitsongaDraft);

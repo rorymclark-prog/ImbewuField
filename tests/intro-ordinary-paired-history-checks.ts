@@ -1,3 +1,4 @@
+import { validateAndRewindIntroFullPaired } from './intro-full-ordinary-paired-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -19,6 +20,9 @@ const resolve = (part: Part, source: string) => part.status === 'draft' ? part.t
 // 2026-10-06: root accepted 54 complete targets, not every earlier candidate.
 // Check the live approved layer first; restoring old fields must not conceal drift.
 export function validateAndRewindIntroOrdinary(decks = readCurrentIntroDecks()) {
+  // 6 October 2026: validate all72 newer accepted objects and every unlisted
+  // source/status first, then preserve the original54-field historical assertions.
+  decks = validateAndRewindIntroFullPaired(decks);
   assert.equal(introOrdinaryDigest(introOrdinaryRead('root-accepted-final-packet.json')), '3297c1b24dba1a37de6976a0b66933a9796efffdb2be5bd8be7e9b027b8ee8e9');
   assert.equal(introOrdinaryDigest(introOrdinaryRead('ve-paired-before.json')), '01461eca47f40a5db61a5f8d2c2d507621a1ca949b277b9a06ae2f22bcd1d6e4');
   assert.equal(introOrdinaryDigest(introOrdinaryRead('ts-paired-before.json')), '427cd88461ecf81071dda4e85d71c414718026a634d271a9df04e67629eaf226');

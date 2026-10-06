@@ -1,0 +1,12 @@
+{
+  "lib/course-translation-drafts-ve.ts": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+  "lib/course-translation-drafts-ts.ts": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+  "docs/narration/intro-permaculture.ve.paired-draft.json": "b933e501e5e77a6e15ab63ae270d16c56552d1cf1e08d927a02cb43a70dfb9d5",
+  "docs/narration/intro-permaculture.ts.paired-draft.json": "10d0f9ede93fc7c323d60dab330b670d4c21b30720e073426598d27f8e444603",
+  "docs/narration/intro-permaculture.st.paired-draft.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+  "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+  "lib/course-audio.ts": "dd6f9cd571c5d3041daa9c3289a881fe1c2731f01e0d8f57744e36baa622c784",
+  "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+  "lib/course-asset-sizes.ts": "3418ba37152873e31306751bfd35b1849e3487ea194d2c4a0356fc316d95a928",
+  "app/sw.js/route.ts": "8ea7b28328c1ed9ec085b18e410c8db267a6df2bc60a4e8be97e3791e47ace5c"
+}

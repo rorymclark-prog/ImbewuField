@@ -1,0 +1,79 @@
+{
+  "baseCommit": "8914c4ed10d7fdddd9b7b58b43a839fe7bdda7b7",
+  "status": "Core native/paired application verified; root diff review before render; no publication/phone/fluency claim",
+  "authorities": {
+    "acceptedTargetsSHA256": "982d6151e95ba3ac522ed26754d4ce35c85797eb880c98163de56b01f2d8f785",
+    "acceptedPairedObjectsSHA256": "1fea568b5c3926bbb42c7d08cd27504598a271212e3c299432aa4108e97a56a9",
+    "acceptedMetadataAmendmentSHA256": "f3a26283d97c506ebc3bb636e8a78e8b58da961c6e15e9ec9b2dafdb2f7bb6af"
+  },
+  "counts": {
+    "acceptedTargetRows": 94,
+    "nativeCandidateRows": 22,
+    "changedFullNativeLeaves": 21,
+    "pairedObjects": 72,
+    "uniqueFramesPendingRender": 36,
+    "unlistedPairedObjectsExact": 148,
+    "sourcePairedFieldsIncludingST": 330,
+    "correctAnswerIndices": 12,
+    "stProtectedFiles": 45,
+    "removedStaleHoldEntries": 2,
+    "remainingHoldEntriesExact": 3
+  },
+  "nativeFileProof": [
+    {
+      "path": "lib/course-translation-drafts-ve.ts",
+      "beforeSHA256": "748b93af41a1c8ac9b7b85131c31f0aa74e49a8723862b1aaf34c7761332b729",
+      "afterSHA256": "0358e790c699fa047101cbae939bbf0410deb7cd2eea2c3bdc0f2ae5d482d818",
+      "fullFileBytesEqualOnlyAuthorizedLiteralSubstitutions": true,
+      "allOtherExportsIncludingReadingExact": true,
+      "changedFullSourcePairs": 8,
+      "changedSourceEnglishFields": 0,
+      "completeNativeRewindEqualsBefore": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "beforeSHA256": "77fd4d85f17244f5b72adf3714c5accf3a9ec476b6737f4c88935f3b6ff674ab",
+      "afterSHA256": "28e45acf80a96956885e227f55716ac84549bd129019deb23874ffea51396c4e",
+      "fullFileBytesEqualOnlyAuthorizedLiteralSubstitutions": true,
+      "allOtherExportsIncludingReadingExact": true,
+      "changedFullSourcePairs": 13,
+      "changedSourceEnglishFields": 0,
+      "completeNativeRewindEqualsBefore": true
+    }
+  ],
+  "pairedProof": {
+    "actualFullAfterMatchesFrozenObjects": true,
+    "originalEnglishAll330FieldsExact": true,
+    "full72ObjectRewindEqualsRealBefore": true,
+    "allUnlistedFullPairsMetadataAndSTExact": true,
+    "englishHoldHasNoText": true,
+    "sourceIdentityDraftSpans": 0,
+    "retainedBorrowingsNotClaimedTranslated": true
+  },
+  "unchangedWholeFileHashProof": {
+    "docs/narration/intro-permaculture.st.paired-draft.json": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+    "lib/course-modules.ts": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "lib/course-audio.ts": "dd6f9cd571c5d3041daa9c3289a881fe1c2731f01e0d8f57744e36baa622c784",
+    "docs/narration/intro-permaculture.en.md": "312fce3eb18c46b04d9353eac636c3b66013b7e17d1cf2ce18a1446d2900914d",
+    "lib/course-asset-sizes.ts": "3418ba37152873e31306751bfd35b1849e3487ea194d2c4a0356fc316d95a928",
+    "app/sw.js/route.ts": "8ea7b28328c1ed9ec085b18e410c8db267a6df2bc60a4e8be97e3791e47ace5c"
+  },
+  "gates": {
+    "typecheck": {
+      "command": "npx tsc --noEmit",
+      "result": "pass",
+      "log": "/tmp/imbewu-intro-full-core-typecheck-20261006.log"
+    },
+    "focused": {
+      "command": "node --import ./tests/register-alias.mjs --test tests/intro-full-ordinary-completion-20261006.test.ts",
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "duration_ms": 352.951125,
+      "log": "/tmp/imbewu-intro-full-core-focused-20261006.log"
+    },
+    "diffCheck": "pass",
+    "fullSuite": "not run; historical claim integration/render later authorized review stage"
+  },
+  "knownHistoricalClaimsPending": "Older native literal snapshots and earlier54-target/30-frame proofs require full approved current validation then dated exact rewind; no historical assertions changed in core stage. Current remaining3 TS holds tested on actual native."
+}

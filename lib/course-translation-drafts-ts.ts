@@ -79,7 +79,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "People Care: your family's needs come before market production",
-          "xitsongaDraft": "People Care: swilaveko swa ndyangu wa wena swi rhanga market production",
+          "xitsongaDraft": "Ku Hlayisa Vanhu: swilaveko swa ndyangu wa wena swi rhanga market production",
           "reviewStatus": "machine-draft"
         },
         {
@@ -97,7 +97,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A farmer sells all his surplus maize but keeps nothing for composting or seed saving. Which ethic is he most failing?",
-            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe seed saving. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
+            "xitsongaDraft": "Murimi u xavisa all his surplus maize kambe a nga hlayisi xilo xa composting kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ku yi landzelela ngopfu?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -180,7 +180,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land through a full season before major earthworks; catch and store energy — notice rain, sun and biomass before they leave your property; and use edges and value the marginal — a fence line or strip beside a path can be a useful place to observe.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-        "xitsongaDraft": "David Holmgren u hlamuserile misinya ya milawu ya dizayini ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungule nongoti wa permaculture swin'we. Tindlela tinharhu to sungula leti pfunaka eka dyondzo leyi hi leti: observe and interact — languta ndhawu ya wena eka nguva leyi heleleke u nga si endla earthworks letikulu; catch and store energy — xiya mpfula, dyambu na biomass loko swi nga si suka eka ndhawu ya wena; na use edges and value the marginal — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip) xi nga va ndhawu leyi pfunaka ku xiyisisa.\n\nTin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi storm na growth stage ya xibyariwa.\n\nHlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya.",
+        "xitsongaDraft": "David Holmgren u hlamuserile misinya ya milawu ya dizayini ya khume-mbirhi eka Essence of Permaculture. Bill Mollison na David Holmgren va sungule nongoti wa permaculture swin'we. Tindlela tinharhu to sungula leti pfunaka eka dyondzo leyi hi leti: observe and interact — languta ndhawu ya wena eka nguva leyi heleleke u nga si endla earthworks letikulu; catch and store energy — xiya mpfula, dyambu na biomass loko swi nga si suka eka ndhawu ya wena; na use edges and value the marginal — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip) xi nga va ndhawu leyi pfunaka ku xiyisisa.\n\nTin'wana leti faneleke ku tiviwa: produce no waste (masalela ma hundzuka compost, compost yi hundzuka misava), use small and slow solutions (bakiti ri nga cheleta planting bed handle ka gezi), na use and value diversity. Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya xibyariwa.\n\nHlawula misinya ya milawu yimbirhi kumbe yinharhu leyi fambelanaka ni xiphiqo xa wena lexikulu, u yi tirhisa hi ku tiyimisela. Leyin'wana yi ta sungula ku vonaka loko u ri karhi u ya.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -201,7 +201,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Hail injury to maize depends on the storm and the crop’s growth stage",
-          "xitsongaDraft": "Ku onhaka ka maize hi xihangu swi ya hi storm na growth stage ya ximilana",
+          "xitsongaDraft": "Ku onhaka ka maize hi xihangu swi ya hi xidzedze na growth stage ya ximilana",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -255,7 +255,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Garden, fruit trees and a chicken run arranged so chickens use an empty bed after harvest, then the farmer checks safe management before edible crops return",
-              "xitsongaDraft": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko edible crops ti nga si vuya",
+              "xitsongaDraft": "Ntanga, mirhi ya mihandzu na chicken run swi hleriwe leswaku tihuku ti tirhisa planting bed leyi nga riki na swin'wana endzhaku ka harvest, kutani murimi u kambela safe management loko crops leti dyiwaka ti nga si vuya",
               "reviewStatus": "machine-draft"
             },
             {
@@ -265,14 +265,14 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "All animals kept off the cultivated zone",
-              "xitsongaDraft": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka cultivated zone",
+              "xitsongaDraft": "Swiharhi hinkwaswo swi hlayisiwa swi nga ngheni eka zone leyi rimiweke",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops return.",
-            "xitsongaDraft": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka fixed pen ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko edible crops ti nga si vuya.",
+            "xitsongaDraft": "Ku hlanganisa swi endla leswaku element yin’wana ni yin’wana yi tirhela leswi nga ekusuhi na yona — laha, tihuku ti basisa pests ni ku engetela fertility, ematshan'weni yo tshamela eka pen leyi nga endhawini yin’we ti nga endli nto. Fresh manure yi nga rhwala germs, hikokwalaho kambela safe management loko crops leti dyiwaka ti nga si vuya.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -287,18 +287,18 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "infographicAlt": {
         "sourceEnglish": "Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and near garden, past chickens and a field, toward trees and a wilder riverside area. The markers are examples, not fixed boundaries or distances.",
-        "xitsongaDraft": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni a wilder riverside area. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
+        "xitsongaDraft": "Xikombiso xa purasi lexi kombisiweke hi swifaniso: tinomboro ta 0 ku ya eka 5 ti landzelela ndlela yo famba hi milenge leyi jikajikaka ku suka endlwini ni le xirhapeni xa le kusuhi, ti hundza tihuku ni nsimu, ti ya eka mirhi ni ndhawu ya le tlhelo ka nambu leyi nga wilder. Tinomboro leti i swikombiso ntsena; a hi mindzilakano leyi tiyisiweke kumbe mipfhuka leyi tiyisiweke.",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Zones and sectors help you cut wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. In this example, Zone 1 is near the house and holds what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land. Draw arrows for what you observe.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
-        "xitsongaDraft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka example leyi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, flood na fire. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena.",
+        "xitsongaDraft": "Zones na sectors swi ku pfuna ku hunguta ntirho lowu tlangisiwaka. Zones ti sukela eka 0 ku ya eka 5 hi ku ya hi ku tala ka minkarhi leyi u endzelaka ha yona. Zone 0 i yindlu. Eka xikombiso lexi, Zone 1 yi le kusuhi na yindlu naswona yi na leswi u swi tshovelaka nkarhi na nkarhi — herbs na salad greens. Zone 2 i ntanga lowukulu na xivala xa tihuku, leswi u swi endzelaka kan’we kumbe kambirhi hi siku. Zone 3 i nsimu leyikulu, leyi u yi endzelaka vhiki na vhiki. Zone 4 yi le ka semi-wild — mirhi ya mihandzu na fodder leyi lavaka nyingiso minkarhi yin’wana. Zone 5 yi tshikiwile yi ri nhova.\n\nSectors i energy leyi nghenaka yi huma ehandle — dyambu, moya, mpfula, ndhambi na ndzilo. Xiya laha moya lowu tiyeke wu humaka kona epurasini ra wena. Matsalwa ya weather station ya le kusuhi ma nga ku pfuna ku kambela tlhelo leri moya wu humaka eka rona. Xiya laha mati ya mpfula ma nghenaka kona ni laha ma khulukaka kona eka ndhawu ya wena. Dirowa miseve ya leswi u swi vonaka.\n\nDirowa zones na sectors ephepheni kutani u va na motheo wa design ya wena.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "In this example, Zone 1 near the house holds often-picked herbs",
-          "xitsongaDraft": "Eka example leyi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
+          "xitsongaDraft": "Eka xikombiso lexi, Zone 1 leyi nga kusuhi na yindlu yi na herbs leti u ti tshovelaka nkarhi na nkarhi",
           "reviewStatus": "machine-draft"
         },
         {
@@ -308,7 +308,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Sectors map incoming sun, wind, rainwater, flood and fire",
-          "xitsongaDraft": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, flood na ndzilo",
+          "xitsongaDraft": "Sectors ti komba energy leyi nghenaka: dyambu, moya, mati ya mpfula, ndhambi na ndzilo",
           "reviewStatus": "machine-draft"
         },
         {
@@ -342,7 +342,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Zone 3 gets too much sun for herbs",
-              "xitsongaDraft": "Zone 3 yi kuma sun yo tala ngopfu eka herbs",
+              "xitsongaDraft": "Zone 3 yi kuma dyambu ro tala ngopfu eka herbs",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -356,7 +356,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "You observe damaging wind coming from the north-west on a Highveld farm. Where should a windbreak go?",
-            "xitsongaDraft": "U xiyisisa damaging wind coming from the North-west on a Highveld farm. Windbreak yi fanele ku ya kwihi?",
+            "xitsongaDraft": "U xiyisisa moya lowu onhaka lowu humaka hi North-west eka purasi ra Highveld. Windbreak yi fanele ku ya kwihi?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -394,12 +394,6 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
   "holds": [
     {
       "lessonId": "intro-permaculture-l1",
-      "field": "keyPoints[1]",
-      "sourceText": "People Care",
-      "reason": "Retain the named permaculture ethic exactly while translating the family-needs-before-market-production priority around it."
-    },
-    {
-      "lessonId": "intro-permaculture-l1",
       "field": "quiz[0].q",
       "sourceText": "all his surplus maize",
       "reason": "Retain the exact crop, ownership, and all-of-surplus wording because Xitsonga concord for the English crop anchor is uncertain."
@@ -409,12 +403,6 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       "field": "quiz[0].q",
       "sourceText": "composting",
       "reason": "Retain the named soil-input practice exact within the unreviewed negative clause."
-    },
-    {
-      "lessonId": "intro-permaculture-l1",
-      "field": "quiz[0].q",
-      "sourceText": "seed saving",
-      "reason": "Retain the named seed practice exact within the unreviewed negative clause."
     },
     {
       "lessonId": "intro-permaculture-l1",

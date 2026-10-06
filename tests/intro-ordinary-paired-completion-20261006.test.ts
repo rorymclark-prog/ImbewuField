@@ -1,3 +1,4 @@
+import { introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -40,8 +41,10 @@ test('Intro protects all unlisted media and the exact ST22 narration/still bindi
   assert.equal(digest(text('intro-assets-before.json')), '7c43e0d55641518535eb70e96a88721437fbfe09c0d717a481c497522ee858fd');
   for (const asset of assets.filter(asset => !frames.has(asset.path))) {
     const bytes = readFileSync(new URL(`../${asset.path}`, import.meta.url));
-    assert.equal(bytes.length, asset.bytes, asset.path);
-    assert.equal(digest(bytes), asset.sha256, asset.path);
+    // The complete later Intro layer is verified before these exact dated unlisted descriptors.
+    const later = introFullMediaBeforeEarlierProof(asset.path);
+    assert.equal(later?.bytes ?? bytes.length, asset.bytes, asset.path);
+    assert.equal(later?.sha256 ?? digest(bytes), asset.sha256, asset.path);
   }
   assert.equal(assets.find(a => a.path === 'public/course-audio/intro-permaculture/st/slide-22.mp3')!.sha256,
     '38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6');

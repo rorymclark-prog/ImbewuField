@@ -5,8 +5,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, type QuizQuestion } from '../lib/course-modules.ts';
-import { resolveBeforeFullerSoilPresentation as resolveLearnerLessonPresentation } from './soil-ordinary-native-history-checks.ts';
-import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
+import { resolveBeforeFullerSoilPresentation as resolveBeforeSoilPresentation } from './soil-ordinary-native-history-checks.ts';
+import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT as currentIntroDraft } from '../lib/course-translation-drafts-ve.ts';
+import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
+// 6 October 2026: preserve older literal Intro claims after full current-layer validation.
+const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ve', currentIntroDraft) as typeof currentIntroDraft;
+const resolveLearnerLessonPresentation: typeof resolveBeforeSoilPresentation = (lesson, language) =>
+  introPresentationBeforeFullOrdinary(lesson, language, resolveBeforeSoilPresentation(lesson, language));
 // Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
 import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as learnerVegetablesDraft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
@@ -476,7 +481,7 @@ test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind
   assert.match(draftWindQuestion.rationale.tshivendaDraft, /muya wa bva khaḽo zwa vhukuma/,
     'the rationale points to the side the observed wind actually comes from');
 
-  const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
+  // Use the validated dated Intro presentation above; changed-source fallback stays live.
   const presentation = resolveLearnerLessonPresentation(sourceLesson, 've');
   assert.equal(presentation.status, 'draft');
   assert.equal(presentation.content.body, draftLesson.body.tshivendaDraft);
