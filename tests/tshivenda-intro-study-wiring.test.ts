@@ -3,14 +3,13 @@ import assert from 'node:assert/strict';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation as resolveCurrentPresentation } from '../lib/course-localization.ts';
-import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
-// 6 October 2026: current accepted ordinary clauses supersede dated candidate
-// literals; validate every current source/unlisted/index before exposing that view.
+import { validateAndRewindIntroNativeHistory, introPresentationBeforeSilentRelease } from './intro-silent-release-text-checks.ts';
+// Dated Introduction wording is shown only after both accepted text layers validate.
 const resolveLearnerLessonPresentation: typeof resolveCurrentPresentation = (lesson, language) =>
-  introPresentationBeforeFullOrdinary(lesson, language, resolveCurrentPresentation(lesson, language));
+  introPresentationBeforeSilentRelease(lesson, language, resolveCurrentPresentation(lesson, language));
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT as currentTSHIVENDAIntro } from '../lib/course-translation-drafts-ve.ts';
-const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ve', currentTSHIVENDAIntro) as typeof currentTSHIVENDAIntro;
+const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroNativeHistory('ve', currentTSHIVENDAIntro) as typeof currentTSHIVENDAIntro;
 
 test('Tshivenda Introduction Study keeps source pairs, held L2 risks and conditional L3 compass wording visible', () => {
   const draft = TSHIVENDA_INTRO_PERMACULTURE_DRAFT;

@@ -386,7 +386,7 @@ test('regional paired frames stay visible while English and isiZulu keep their r
   }
 });
 
-test('regional poster holds preserve the established Market film split and Introduction narration', () => {
+test('regional poster holds preserve the Market film split and archived Introduction clips without offering mismatched speech', () => {
   for (const lang of ['st', 've', 'ts']) {
     assert.equal(animationUrls('market-community', 15, lang), null,
       'the existing Market paired-card protection remains in force');
@@ -399,8 +399,10 @@ test('regional poster holds preserve the established Market film split and Intro
   const introTracks = COURSE_NARRATION['intro-permaculture']!.tracks;
   assert.equal(introTracks.length, 22);
   for (const track of introTracks) {
-    assert.ok(slideAudioUrl('intro-permaculture', 'st', track.slide),
-      `Sesotho Introduction narration remains available on slide ${track.slide}`);
+    // The 2026-10-06 silent release has new text; archived speech must remain on disk,
+    // but must not be offered against that different paired edition.
+    assert.ok(onDisk(`/course-audio/intro-permaculture/st/slide-${String(track.slide).padStart(2, '0')}.mp3`));
+    assert.equal(slideAudioUrl('intro-permaculture', 'st', track.slide), null);
   }
 });
 
@@ -837,10 +839,9 @@ test('regional Introduction chooses every registered still and falls back only f
   }
 });
 
-test('Sesotho draft narration starts with paired slides and English source choice keeps them', async () => {
-  // A single language state used to switch both image and voice to English. With a real but
-  // unreviewed Sesotho recording, the learner may listen to it or choose the English source;
-  // neither choice may swap away the source-paired picture.
+test('Sesotho silent draft starts without speech and optional English keeps its current paired slides', async () => {
+  // The fuller 2026-10-06 pair no longer matches archived speech. Start silent;
+  // an explicit English choice must keep the new regional picture and its source.
   const deck = COURSE_DECKS['intro-permaculture'];
   assert.ok(deck.slideLanguages.includes('st'));
   assert.equal(deck.slideAspectRatioByLanguage?.st, 1440 / 5400);
@@ -864,16 +865,16 @@ test('Sesotho draft narration starts with paired slides and English source choic
   try {
     const picture = () => view.root.findAllByType('img')[0];
     const imageCanvas = () => picture().parent!;
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/);
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-01\.webp$/);
     assert.equal(imageCanvas().props.style.aspectRatio, 1440 / 5400, 'portrait text must not be shrunk into a widescreen frame');
     const stage = view.root.findByProps({ className: 'slideStage' });
     assert.equal(stage.props.style.overflow, 'auto', 'a tall paired slide needs its own scroll area so controls stay visible');
     assert.equal(stage.props.style.maxHeight, 'min(65vh, 600px)');
     assert.equal(view.root.findAllByType('img')[1].props.style.maxHeight, undefined,
       'the full-image viewer must allow a portrait slide to scroll at readable width');
-    assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/st\/slide-01\.mp3$/);
-    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
-    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /Unreviewed Sesotho machine narration/);
+    assert.equal(view.root.findAllByType('audio').length, 0, 'a silent edition must not mount mismatched archived speech');
+    assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
+    assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /No narration will play/);
     const english = view.root.findAllByType('button').find(button => button.children.join('').includes('English source narration'))!;
     assert.equal(english.props['aria-pressed'], false);
 
@@ -881,11 +882,11 @@ test('Sesotho draft narration starts with paired slides and English source choic
     assert.equal(english.props['aria-pressed'], true);
     assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, false);
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-01\.mp3$/);
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-01\.webp$/, 'choosing a voice must not replace the picture');
     assert.match(view.root.findByProps({ role: 'status' }).children.join(''), /English source narration selected/);
 
     act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
-    assert.match(picture().props.src, /intro-permaculture\/st\/slide-02\.webp$/, 'page turns keep the selected slide language');
+    assert.match(picture().props.src, /intro-permaculture\/st-silent\/slide-02\.webp$/, 'page turns keep the selected slide language');
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/en\/slide-02\.mp3$/);
   } finally { act(() => view.unmount()); }
 

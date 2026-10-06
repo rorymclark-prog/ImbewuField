@@ -168,7 +168,7 @@ export function offlinePack(
 export function downloadableModules(lang: string, quality: PackQuality = 'standard'): Array<{ moduleId: string; bytes: number; count: number }> {
   return COURSE_MODULES
     .map((m) => {
-      const pack = offlinePack(m.id, lang, quality);
+      const pack = offlinePack(m.id, lang, quality, defaultOfflinePackVariant([m.id], lang));
       return { moduleId: m.id, bytes: pack.bytes, count: pack.entries.length };
     })
     .filter((p) => p.count > 0);

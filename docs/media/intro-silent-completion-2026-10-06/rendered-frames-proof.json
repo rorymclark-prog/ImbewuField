@@ -1,0 +1,1506 @@
+{
+  "title": "Introduction silent ST and selective VE/TS source-paired rendered frame proof",
+  "date": "2026-10-06",
+  "baseHead": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "renderMethod": "scripts/make-lesson-slides.mjs paired renderer sequentially; rendered PNG converted to RGB WebP by Pillow quality 88 method 6, no crop/rescale",
+  "frameCount": 25,
+  "counts": {
+    "st": 22,
+    "ve": 1,
+    "ts": 2
+  },
+  "frames": [
+    {
+      "language": "st",
+      "slide": 1,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-01.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-01.png",
+      "sourcePngBytes": 709230,
+      "sourcePngSHA256": "0289367a8b160573a3ff227b86db539e8533486e5ca1dbe0848d974f5e95bbb8",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-01.webp",
+      "sha256": "716325404e9b7ec6db9d02285807a9cd5bd2ed54176273a0d1feceb6b9d60c0f",
+      "bytes": 311436,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Introduction to Permaculture",
+        "body": [
+          "Before you dig anything, it helps to know how the decisions get made.",
+          "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "Think about your own plot. Which part of it do you visit most often?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Selelekela sa Permaculture"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Pele o cheka ntho efe kapa efe, ho thusa ho tseba hore na diqeto di etswa jwang."
+          },
+          {
+            "status": "draft",
+            "text": "Thuto ena ke motheo wa tsohle tse ding thutong ena. E na le melao e meraro ya boitshwaro, melao-motheo ya moralo, le mokgwa o le mong o bonolo wa ho hlophisa mobu wa hao."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho le e nngwe ya dintho tsena e hlokang tjhelete. Tsona kaofela di fetola moo o behang dintho teng le hore o tsamaya sebaka se se kae letsatsi le leng le le leng."
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka tshimo ya hao. Ke karolo efe ya yona eo o e etelang hangata ho feta tse ding?"
+          }
+        ]
+      },
+      "pairSHA256": "57576321963fef41d52bcf675409694e3ebc2f94d8a3ac9bbaa6d88ed3b99f94",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 2,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-02.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-02.png",
+      "sourcePngBytes": 539914,
+      "sourcePngSHA256": "29675e9470265e7e5220fbce7ae1275b1cf503ded1cf399e19eabf0a964ef27e",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-02.webp",
+      "sha256": "f73d31eb304205294a4ab91284f6f356451619a866498e7f2c251babd696f1d6",
+      "bytes": 294348,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Why This Matters",
+        "body": [
+          "A good design saves work before you pick up a spade.",
+          "Most of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.",
+          "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+          "Think of one job on your farm that takes longer than it should. Where does the time actually go?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lebaka Leo Sena se Leng Bohlokwa ka Lona"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Moralo o motle o fokotsa mosebetsi pele o nka garawe."
+          },
+          {
+            "status": "draft",
+            "text": "Mosebetsi o mongata polasing e nyenyane ha se ho lema kapa ho kotula. Ke ho tsamaya, ho rwala le ho lokisa se neng se behilwe sebakeng se fosahetseng."
+          },
+          {
+            "status": "draft",
+            "text": "Permaculture ke mokgwa wa ho etsa qeto ya hore dintho di be hokae, e le hore mobu o sebetse mmoho le wena ho e-na le ho o sitisa."
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka mosebetsi o le mong polasing ya hao o nkang nako e telele ho feta kamoo o lokelang. Nako eo e ya hokae?"
+          }
+        ]
+      },
+      "pairSHA256": "f5342257b08b1c63cec3d152c0743810fbc2b0b4bd89889aba2f8b91b677b665",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 3,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-03.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-03.png",
+      "sourcePngBytes": 493863,
+      "sourcePngSHA256": "a4d93059a0d64e823e3d56c9a6116247e1e07c3f042f108b23f1950e6fd8c75f",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-03.webp",
+      "sha256": "b23080c89c897dab42cbe508903af38010e7adad62ce85df4c21d93a7d388a55",
+      "bytes": 264976,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module you will be able to do three things.",
+          "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+          "Name the design principles that matter most on your land, and say why.",
+          "Sketch your zones and your sectors on one sheet of paper.",
+          "That sketch is the skeleton of every plan you make after this."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dintho Tseo o Tla Kgona ho di Etsa"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qetellong ya thuto ena o tla kgona ho etsa dintho tse tharo."
+          },
+          {
+            "status": "draft",
+            "text": "Bolela melao e meraro ya boitshwaro, mme o e sebedise ho rarolla qeto e se nang karabo e totobetseng."
+          },
+          {
+            "status": "draft",
+            "text": "Bolela melao-motheo ya moralo e leng bohlokwa haholo mobung wa hao, mme o bolele lebaka."
+          },
+          {
+            "status": "draft",
+            "text": "Rala zones le sectors tsa hao pampiring e le nngwe."
+          },
+          {
+            "status": "draft",
+            "text": "Setshwantsho seo ke motheo wa moralo o mong le o mong oo o tla o etsa kamora moo."
+          }
+        ]
+      },
+      "pairSHA256": "2236d695b6eea43ae5dedb3b129e55f6024dbbb0835b7a4fc5229850b119efd0",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 4,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-04.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-04.png",
+      "sourcePngBytes": 2301947,
+      "sourcePngSHA256": "d0271f6f875cf65fe8739fcafb02b88f297fd2dfeb830240b8205a4894e56883",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-04.webp",
+      "sha256": "7e6ff230e6a0868e928179ff3dcb12aeb7cb0dafddb7a7eae00c59a5f29792c0",
+      "bytes": 574614,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Earth Care",
+        "body": [
+          "The first ethic is Earth Care.",
+          "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+          "A system you use up stops paying you. A system you protect keeps paying you.",
+          "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tlhokomelo ya Lefatshe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa pele wa boitshwaro ke Tlhokomelo ya Lefatshe (Earth Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Ho bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela."
+          },
+          {
+            "status": "draft",
+            "text": "Tsamaiso eo o e sebedisang ho fihlela e fela ha e sa o tswela molemo. Tsamaiso eo o e sireletsang e tswela pele ho o tswela molemo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sheba karolo e le nngwe ya mobu o se nang dimela tshimong ya hao. Na ho na le ntho e o sireletsang hona jwale?"
+          }
+        ]
+      },
+      "pairSHA256": "b70bb3b1ea20ae6de28bb70de7b14e368eb35b033f49673dfd7fb1560b0ca2c7",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 5,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-05.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-05.png",
+      "sourcePngBytes": 2163532,
+      "sourcePngSHA256": "e1ac5099df0e8cb360869dbfebdaff0e5b5a54d5f3a24a3972f0e5978195538b",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-05.webp",
+      "sha256": "f9188ee2a43d1150ce257bc8ac1b722ad89f6080a5f27af2afb517dd0a0ff2eb",
+      "bytes": 509300,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "People Care",
+        "body": [
+          "The second ethic is People Care.",
+          "Your family's needs come first, then your community's.",
+          "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+          "The farm is meant to feed the household that runs it.",
+          "What comes off your land that your own family never eats?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tlhokomelo ya Batho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa bobedi wa boitshwaro ke Tlhokomelo ya Batho (People Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno."
+          },
+          {
+            "status": "draft",
+            "text": "Molemi ya rekisang lehe le leng le le leng le moroho o mong le o mong, mme a sa boloke letho bakeng sa dijo tsa lelapa, o tlola People Care.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Polasi e reretswe ho fepa lelapa le e tsamaisang."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng e tswang mobung wa hao eo lelapa la hao le sa e jeng?"
+          }
+        ]
+      },
+      "pairSHA256": "593ff477e140a93f0e7ff40ebabee027b1fb0ccb12525761e276d4471c1fa306",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 6,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-06.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-06.png",
+      "sourcePngBytes": 2297524,
+      "sourcePngSHA256": "ef59c82dcb546e1ad2b793a60ea448beba45b16e567d38a7ca2026f455b787cd",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-06.webp",
+      "sha256": "d6146108a8c742f0b8f9415e4124817c5a6ac25b19a407e37d8ac23d68329702",
+      "bytes": 570640,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Fair Share",
+        "body": [
+          "The third ethic is Fair Share.",
+          "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+          "A community that fences off a shared spring is breaking it too.",
+          "What does your land get back from you each season?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Karolelano e Lokileng (Fair Share)"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa boraro wa boitshwaro ke Karolelano e Lokileng (Fair Share)."
+          },
+          {
+            "status": "draft",
+            "text": "Nka feela seo o se hlokang, mme o kgutlisetse tse setseng tsamaisong — dipeo, dijo, metsi, tsebo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Molemi ya rekisang poone yohle e setseng mme a sa boloke letho bakeng sa compost kapa peo, o tlola molao ona. Ha ho letho le kgutlelang morao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Setjhaba se teratang sediba se sebediswang ke bohle se tlola molao ona le sona.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Mobu wa hao o fumana eng ho wena sehleng ka seng?"
+          }
+        ]
+      },
+      "pairSHA256": "ff569f0cc20abca8e73be7d94e1eee714c3a149b04153b7b18a80384d3c52c45",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 7,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-07.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-07.png",
+      "sourcePngBytes": 613943,
+      "sourcePngSHA256": "3427f074b006dc6be10991e6f6f8d2367cf71ec6559a6b448323bdede19886b9",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-07.webp",
+      "sha256": "47ec9280f965ade2f79526040b11ae1d72597f76ac3df504f89ffd94e3d76b07",
+      "bytes": 361102,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Watch: One Decision, Three Ethics",
+        "body": [
+          "A borehole serves your household. Neighbours ask for water too.",
+          "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+          "Who could help you check the rules and the water supply?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Qeto e le Nngwe, Melao e Meraro ya Boitshwaro"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Borehole e sebeletsa lelapa la hao. Baahisani le bona ba kopa metsi.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Pele fumana hore na ho arolelana ho dumelletswe. Lekola hore na borehole e ka sebeletsa basebedisi bohle ntle le ho nka metsi a mangata haholo. Haeba ho arolelana ho dumelletswe mme metsi a lekane, dumellanang kamoo le ka arolelanang ka toka mme le tswele pele ho lekola boemo ba metsi. People Care le Fair Share di tataisa tumellano. Earth Care e bolela ho sireletsa mohlodi. Ho sheba boemo feela ha ho etse hore tshebediso e eketsehileng e bolokehe kapa e dumellwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ke mang ya ka o thusang ho sheba melao le phepelo ya metsi?"
+          }
+        ]
+      },
+      "pairSHA256": "9c695dc0c0c38e175d0cf3c98e7cf4fe9ac114e9538936a66403bf9f58ccc9c1",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 8,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-08.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-08.png",
+      "sourcePngBytes": 487553,
+      "sourcePngSHA256": "b6a3af6278b3a0a99b41cf009be6038f9baf790e4e35e57981303d893ac2f933",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-08.webp",
+      "sha256": "5fd5ecfe6a15721cbd4c7b418617cea35efcc26ee1fa7dd297696f2d3d5e98da",
+      "bytes": 269574,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "When There Is No Rulebook",
+        "body": [
+          "This is what the ethics are actually for.",
+          "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "Build these three into how you think before you build anything on the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ha ho na buka ya melao.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ke ka lebaka lena melao ya boitshwaro e leng teng."
+          },
+          {
+            "status": "draft",
+            "text": "Moahisani o kopa ho fula dikgomo ka mora komello. Morwallo o senya swales tsa hao. Ha ho motho ya ngotseng karabo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Melao ya boitshwaro e o thusa ho lekanya dikgetho le ho hlalosa qeto ya hao. Lekola melao mme o kope tumello moo e hlokahalang.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Kenya melao ena e meraro tseleng eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "ecc234396ba1ceb98c49adb5dc2a3e7d50460c60e7fe6ffde5ba24cc3b06354a",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 9,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-09.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-09.png",
+      "sourcePngBytes": 697505,
+      "sourcePngSHA256": "bf7248f683ca55bd8d0571f69621049710114cd1e383603720b7d155a4872b42",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-09.webp",
+      "sha256": "6c1c101100dfdc6e5637c07cb17754c22469986a2c415212959132abc58d9a8d",
+      "bytes": 293746,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Twelve Principles",
+        "body": [
+          "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+          "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "We will take those three one at a time."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Melao-motheo e Leshome le Metso e Mmedi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "David Holmgren o hlalositse melao-motheo e leshome le metso e mmedi ya moralo bukeng ya *Essence of Permaculture*. Bill Mollison le David Holmgren ba thehile mohopolo wa permaculture mmoho."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho hlokahale hore o qale ka melao e leshome le metso e mmedi kaofela. Dintlha tse tharo tse molemo tsa ho qala thutong ena ke: observe and interact, catch and store energy, le use edges and value the marginal.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Re tla bua ka e nngwe le e nngwe ya melao-motheo eo e meraro ka bonngwe."
+          }
+        ]
+      },
+      "pairSHA256": "4b80823039192714e07a1a7e05953eb32e0c0b7588dafd25b07aa2018504c972",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 10,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-10.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-10.png",
+      "sourcePngBytes": 2481768,
+      "sourcePngSHA256": "1abefe327df00b7412678cfb8c2679a43b80160459492aad61c879d98ed447f1",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-10.webp",
+      "sha256": "d4168c3d6c1979922f2f7931fd1cef987a983b0e34606d242231de62a9b3ef4d",
+      "bytes": 693878,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Observe and Interact",
+        "body": [
+          "Watch your land through a full season before you commit to major earthworks.",
+          "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+          "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+          "Where does water leave your land? Do you actually know, or are you guessing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shebella setsha sa hao sehleng sohle pele o itlama ka major earthworks.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sefefo se le seng se bontsha motsotso o le mong. Sehla sohle sa dipula se bontsha mokgwa — moo metsi a phallang, moo a bokellanang, le moo a sa fihleheng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sena se thusa ho utlwisisa setsha. Ka bosona ha se bontshe hore swale e loketse kapa e bolokehile ho aha. Pele o cheka, lekola mobu, slope, drainage le safe overflow route e ke keng ya baka erosion kapa ya romela metsi a senyang ho baahisani. Kopa trained local adviser ho lekola setsha.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Metsi a tloha kae setsheng sa hao? Na o tseba e le kannete, kapa o a hakanya?",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "d1c249bc41961e1ee7bf9e7053433019fe882de6833fdad23e4922b5ecb3cfad",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 11,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-11.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-11.png",
+      "sourcePngBytes": 506182,
+      "sourcePngSHA256": "4a482dc7d3a1de57775d1b79f238e52b37d15089b73568fcd0337a68ebb1c7a4",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-11.webp",
+      "sha256": "589e2158f42e0fba0e50eec14b6aa791209541c01bdf06d300ccfb3f1fd5ff3b",
+      "bytes": 270858,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Catch and Store Energy",
+        "body": [
+          "Harvest rain, sun and biomass before they leave your property.",
+          "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+          "Compare the cost and work with the benefit on your own farm.",
+          "Name one thing that arrives on your land free and leaves again without being used."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bokella pula, letsatsi le biomass pele di tloha setsheng sa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "E nngwe le e nngwe ya tsona e fihla e sa lefellwe mme e tsamaya e sa lefellwe. Metsi a phalla a tloha, makgasi a fefolwa ke moya, letsatsi le kganyetsa mobu o se nang dimela."
+          },
+          {
+            "status": "draft",
+            "text": "Bapisa ditshenyehelo le mosebetsi le molemo polasing ya hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Bolela ntho e le nngwe e fihlang mobung wa hao e sa lefellwe, ebe e boela e tsamaya e sa sebediswa."
+          }
+        ]
+      },
+      "pairSHA256": "9b26d028533ecbb48ba8f83a1a75d5e41db3b9d605abadc54effbae6271096f9",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 12,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-12.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-12.png",
+      "sourcePngBytes": 482748,
+      "sourcePngSHA256": "1c2e96e2c07e5676411deb146ba2fad0da09ac927e11473e0a8bd32364c1dff6",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-12.webp",
+      "sha256": "c30cddddb1ad42bb5707d4e59bc965d59f3b1ed97e7bb9edf7deee51e7122588",
+      "bytes": 255448,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Use Edges and Value the Marginal",
+        "body": [
+          "The edge is where two things meet — a fence line or the strip beside a path.",
+          "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "Which edge on your plot is doing nothing at the moment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Moeli ke moo lintho tse peli li kopanang teng — joalo ka mola oa terata kapa sebaka se pela tsela."
+          },
+          {
+            "status": "draft",
+            "text": "Libaka tsena li ka ba molemo bakeng sa ho shebella. Sheba hore na ke eng e seng e mela hantle pela moeli oa hao. Seo ke tsela eo mobu o u bolellang ho hong ka eona."
+          },
+          {
+            "status": "draft",
+            "text": "Ke karolo efe ea moeli setšeng sa hao e sa etse letho hona joale?"
+          }
+        ]
+      },
+      "pairSHA256": "a747e411755903886bd642763cd5af7a5d5c03651f9c6dbe8bb4227ae4d39154",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 13,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-13.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-13.png",
+      "sourcePngBytes": 1066166,
+      "sourcePngSHA256": "f6cf3a77cc79e1730e32f6d9c79694a5a7ff0971fd2fd588d11c6ad1c168641c",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-13.webp",
+      "sha256": "de08b18fe44aba08a062437ddc530901cbc8a739568992dee3ae27a195430acd",
+      "bytes": 418056,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Use and Value Diversity",
+        "body": [
+          "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+          "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "What would one bad day cost you right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le growth stage ya crop. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bed ntle le motlakase ho hang.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Letsatsi le lebe le le leng le ka o jella bokae hona jwale?",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "af45ee9e73ed85e1593e65431ffa4b0c515a8eb40a4e44517952faa24041e638",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 14,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-14.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-14.png",
+      "sourcePngBytes": 735587,
+      "sourcePngSHA256": "6fb47ff9e6e5a3c21b3333f4ca4cdca91bf66b7589e1e21530d9a6a2ea12b73d",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-14.webp",
+      "sha256": "13a8219e0000edcf96bbf7b23898c7b5ed592487b1bbede520dd6c48141a94f1",
+      "bytes": 425552,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Integrate Rather Than Segregate",
+        "body": [
+          "Put each element where it works for its neighbours.",
+          "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+          "The same three things, fenced apart, do only their own job.",
+          "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Beha karolo ka nngwe moo e sebeletsang tse e potileng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho rotate through the beds after harvest — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara germs. Kopa extension adviser hore a hlalose kamoo bed e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka clean up pests le ho eketsa fertility ho ena le ho dula di sa sebetse ka pen e sa fetoheng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Lintho tsona tseo tse tharo, ha li arotsoe ka terata, li etsa mosebetsi oa tsona feela."
+          },
+          {
+            "status": "draft",
+            "text": "Kgetha melao-motheo e mmedi kapa e meraro e buang ka bothata ba hao bo boholo, mme o e sebedise ka matla. Tse setseng di tla bonahala ha o ntse o tswela pele.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "268b0807df37479c546b17d16a41675593c9e6cdeab16dedad075a90962724fc",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-15.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-15.png",
+      "sourcePngBytes": 897938,
+      "sourcePngSHA256": "4f326916bef8e40abe68208b31a4383b499c9c80af3c12bd911ac02404cf1779",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-15.webp",
+      "sha256": "af6585c16ce047fd26084bbce6a4aabf1c37f262b74f7324a3e3832ff9112282",
+      "bytes": 336262,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Zones: Organising by How Often You Visit",
+        "body": [
+          "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+          "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zones: Ho hlophisa ho latela hore na o etela hangata hakae.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zones di qala ho 0 ho isa ho 5, mme di mabapi le maeto a hao, eseng terata ya hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e na le herbs le salad greens tse kotulwa kgafetsa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 4 ke semi-wild — difate tsa ditholwana le fodder tse hlokang tlhokomelo ka dinako tse ding. Zone 5 e tlohelwa e le wild.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "f486fef3c4a2d8de2ea87bcea7d096169b0d2a984834aa5bf4d55e3641e8f764",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 16,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-16.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-16.png",
+      "sourcePngBytes": 2288753,
+      "sourcePngSHA256": "f2d3cd320efef2188b0a578029aae526852914cdd2caeadb48d39996e28209a2",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-16.webp",
+      "sha256": "8ea29dada230a5d60fc4f6896caff3c4f3198c81808d426ed3a215c6c866b562",
+      "bytes": 556532,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Keep Daily Crops Close",
+        "body": [
+          "Herbs you pick often are easier to tend near the house.",
+          "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "Think about the paths you walk each day.",
+          "What do you visit often that could be closer?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Boloka dijalo tsa letsatsi le letsatsi di le haufi.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Herbs tseo o di kotulang kgafetsa ho bonolo ho di hlokomela haufi le ntlo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ha o di beha hole, leeto le lelelele le ka etsa hore o fetwe ke ketelo. Herbs di ka hlokomolohwa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka litsela tseo u li tsamaeang letsatsi le letsatsi."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng eo u e etelang hangata e ka bang haufi le uena?"
+          }
+        ]
+      },
+      "pairSHA256": "4dd5f722752a8d58ccf593fa5e895686c93a9d03ba7c2eaff80e089c5f97e5a9",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 17,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-17.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-17.png",
+      "sourcePngBytes": 517879,
+      "sourcePngSHA256": "9ef34dcc4f41b928aa5a9efc5c6b2f13184bf3e18ae45e123f4c9ab7f8bf646e",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-17.webp",
+      "sha256": "ebf12c383b1d96eceeb9fcbb38943826cfacd254455db98ac71a38084ba72eb3",
+      "bytes": 265986,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Zones Plan Your Labour",
+        "body": [
+          "This is the point of the whole exercise.",
+          "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "Stand at your kitchen door. What can you reach without thinking about it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zones di rala mosebetsi wa hao.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ena ke ntlha ea boikoetliso bona kaofela."
+          },
+          {
+            "status": "draft",
+            "text": "Zones li thusa ho hlophisa sebaka ho potoloha boiteko ba hao — ho tsamaea, ho jara le ho lekola tse tlatsang letsatsi la sebele."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ntho e o hloka hangata ho feta, e phela haufi le wena ho feta. Seo se ka fokotsa ho tsamaya le mosebetsi sehleng sohle.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ema monyako oa kichine ea hao. Ke eng eo u ka e fihlelang u sa nahana ka eona?"
+          }
+        ]
+      },
+      "pairSHA256": "1927fbedd9803bad50c46fe1a7afe466a156d3ffa9f3e4680f5fff94dc0c160f",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 18,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-18.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-18.png",
+      "sourcePngBytes": 615414,
+      "sourcePngSHA256": "b5476ab87de1d6f7b18193736337cbb7be9ae0f0362f995219d7cc744616e17a",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-18.webp",
+      "sha256": "47529bac208ad77fed855eaa29567882845cb37d9427df022c9c011c2d6c63ee",
+      "bytes": 317156,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Sectors: The Energies Arriving From Outside",
+        "body": [
+          "Zones come from inside your land. Sectors come from outside it.",
+          "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+          "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+          "Which direction does the weather that damages you come from?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sectors: Matla a fihlang a tswa kantle.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zones li tsoa kahare ho naha ea hao. Sectors li tsoa kantle ho eona."
+          },
+          {
+            "status": "draft",
+            "text": "Letsatsi, moya, pula, flood le mollo di fihla ka mose ho moedi wa hao ho sa tsotellehe hore na o a di rera kapa tjhe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa weather station e haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Boemo ba leholimo bo u senyang bo tsoa ntlheng efe?"
+          }
+        ]
+      },
+      "pairSHA256": "cfe3a48221094ffe6b131e3742370d259af701c10766bfdbe8d6126342b52177",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 19,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-19.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-19.png",
+      "sourcePngBytes": 1997440,
+      "sourcePngSHA256": "8d9f4aa2c3e6cbe40e1a70d8c6ef888e0371939cbb7ab4b917d127925b4dd279",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-19.webp",
+      "sha256": "ad9e47088d7117f88aa71e5a4e16477cb64e42161c5accc65cf5bc759aee8885",
+      "bytes": 584824,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Watch: Shelter Between Wind and Crops",
+        "body": [
+          "Look at this example. The wind comes from the north-west.",
+          "The trees and shrubs stand between that wind and the crops.",
+          "Some air passes through the windbreak. Other air moves over it or around its ends.",
+          "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+          "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Tshireletso pakeng tsa moya le dijalo.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sheba mohlala ona. Moya o tswa north-west.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Difate le shrubs di eme pakeng tsa moya oo le dijalo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Moya o mong o feta ka hare ho windbreak. O mong o tsamaya hodima yona kapa o e potoloha dipheletsong.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tshireletso e ka fokotsa lebelo la moya ka mora yona. Moralo le tlhokomelo ya windbreak di bohlokwa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Setsheng sa hao, shebella meya e senyang pele o kgetha moo o ka jalang teng. Setshwantsho sena ha se moralo wa ho jala.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "a6bee251e3f6901cd849f73757c3c95c6fde23359188ac1be776b1bc08cb971f",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 20,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-20.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-20.png",
+      "sourcePngBytes": 2045797,
+      "sourcePngSHA256": "8d913887c10a5a5b20ef0846afd3e2699f6e5eb0c3f98ec9fd2930e83ad93c47",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-20.webp",
+      "sha256": "0c8926e917d3c47847e849acd492311d32343c4a1cd9ea5972f844d6ecce8cd9",
+      "bytes": 487680,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Sketch It And You Have A Design",
+        "body": [
+          "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+          "Then draw arrows in from outside for sun, wind, fire and water.",
+          "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+          "It does not need to be neat. It needs to be true."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "E take mme o be le design.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thala moedi wa hao. Tshwaya ntlo. Thala rings ho ya kantle ho latela hore na o etela hangata hakae.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ebe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi."
+          },
+          {
+            "status": "draft",
+            "text": "Leqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho hlokahale hore e be makhethe. E lokela ho bontša se leng teng ka ’nete."
+          }
+        ]
+      },
+      "pairSHA256": "362745620a0126c4e2a5de8d6bd091d35e8c6d4e6f21d766fedd03cd0c7a0a80",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 21,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-21.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-21.png",
+      "sourcePngBytes": 417857,
+      "sourcePngSHA256": "1bd0a374ce4ecaac550bd728709ed984a3898ce0839a98f15f90559b9b156ed2",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-21.webp",
+      "sha256": "5f1cb2bfb258dd3cd1c705e638c368171f307768894a95931d9283fa546db476",
+      "bytes": 216768,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Field Assignment",
+        "body": [
+          "Sketch your own zones and sectors on one sheet of paper.",
+          "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+          "Photograph the sketch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mosebetsi oa Tšimo."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thala zones le sectors tsa hao pampiring e le nngwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tshwaya Zone 0 le Zone 1 pele, ebe o tswela kantle ho fihlela moo setsha sa hao se fellang teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Kenya motsu bakeng sa energy e nngwe le e nngwe e fihlang e tswa kantle, mme o ngole moo e tswang teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Nka senepe sa setshwantsho."
+          }
+        ]
+      },
+      "pairSHA256": "6ea9b25e5444e889aca3db6576c88a2da18976d95474f009008701ff7bc608ff",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "st",
+      "slide": 22,
+      "destination": "public/course-decks/intro-permaculture/st-silent/slide-22.webp",
+      "sourcePng": "/tmp/imbewu-intro-st-silent-render-20261006/slide-22.png",
+      "sourcePngBytes": 486902,
+      "sourcePngSHA256": "6f6c3baa45149b2ac8658c53ff39d103d3e35bde361a44ce1dc330a2c991419e",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/st-slide-22.webp",
+      "sha256": "a963038b2c9d7a0128e00263656c1fc7c590326e0063c212b9c196f1949f106f",
+      "bytes": 257466,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "pairedDraftSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+      "englishSource": {
+        "heading": "Field Action",
+        "body": [
+          "Walk out and check your sketch against the ground.",
+          "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ketso ea Tšimo."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tsamaya ka ntle mme o bapise sketch ya hao le ground ya sebele.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "4930b3c1ad237107645f715c0fa5b053a97bf7393df13ef8e413400680a23cc2",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "destination": "public/course-decks/intro-permaculture/ve/slide-11.webp",
+      "sourcePng": "/tmp/imbewu-intro-ve-selective-render-20261006/slide-11.png",
+      "sourcePngBytes": 507982,
+      "sourcePngSHA256": "ef788d19353eed3cac69064efa752d9e3c83bf87423b93103e53c93f6dae8314",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/ve-slide-11.webp",
+      "sha256": "91e747f606e5a2deee9bbc2bdee3d8b36e2ebac7bb1bbdddea6c73f5ce7dbfc6",
+      "bytes": 274042,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "pairedDraftSHA256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+      "englishSource": {
+        "heading": "Catch and Store Energy",
+        "body": [
+          "Harvest rain, sun and biomass before they leave your property.",
+          "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+          "Compare the cost and work with the benefit on your own farm.",
+          "Name one thing that arrives on your land free and leaves again without being used."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ni fare nahone ni vhulunge maanḓa",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " rain, sun and ",
+                "status": "draft",
+                "text": " mvula, ḓuvha na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "biomass",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "before they leave your property.",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Maḓi a elela a tshi bva, maṱari a fhufha a tshi ṱuwa, ḓuvha ḽi wela kha mavu a songo fukedzwaho.",
+            "provenance": "Root-reviewed source-paired machine draft; NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare the ",
+                "status": "draft",
+                "text": "Vhambedzani ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "cost",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " and work with the benefit on your own farm.",
+                "status": "draft",
+                "text": " na mushumo na mbuelo kha bulasi yaṋu.",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary comparison composition; cost retained as exact English; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "cc73c15c5f16c01b734590d9cf2993304900af17923a56d7b0c32c1ea2702e06",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "destination": "public/course-decks/intro-permaculture/ts/slide-07.webp",
+      "sourcePng": "/tmp/imbewu-intro-ts-selective-render-20261006/slide-07.png",
+      "sourcePngBytes": 647070,
+      "sourcePngSHA256": "62c0e529c446f06adc1487d095b5b4fbb9977fa742d568a0ca9d2e05b1d845ab",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/ts-slide-07.webp",
+      "sha256": "1e507b2e303a7388d684fd13384365d8aa4a2a284705076c2112bf6060b6c488",
+      "bytes": 375292,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "pairedDraftSHA256": "1cec865ebfbbcee7cbfbfa5c41bea16156da9f70f3442f60e711befc7a71556a",
+      "englishSource": {
+        "heading": "Watch: One Decision, Three Ethics",
+        "body": [
+          "A borehole serves your household. Neighbours ask for water too.",
+          "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+          "Who could help you check the rules and the water supply?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "provenance": "2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Watch: One Decision, ",
+              "status": "draft",
+              "text": "Languta: Xiboho Xin’we, ",
+              "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+            },
+            {
+              "sourceEnglish": "Three Ethics",
+              "status": "draft",
+              "text": "Ethics Tinharhu",
+              "reason": "Count follows the retained formal noun in target grammar; splitting it would mispair Three with no count and Ethics with the count. Retained English is not claimed translated."
+            }
+          ]
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A borehole",
+                "status": "draft",
+                "text": "Borehole",
+                "reason": "Article absorbed and initial capitalization changes; noun is retained English, not translated. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " serves your household.",
+                "status": "draft",
+                "text": " yi tirhela ndyangu wa wena."
+              },
+              {
+                "sourceEnglish": " Neighbours ask for water too.",
+                "status": "draft",
+                "text": " Vahakelani na vona va kombela mati."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "First find out if sharing is allowed. Check whether the ",
+                "status": "draft",
+                "text": "Sungula hi ku kuma leswaku ku avelana swa pfumeleriwa kumbe e-e. Kambela loko ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "borehole",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
+                "status": "draft",
+                "text": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "People Care",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "Fair Share",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " guide the agreement. ",
+                "status": "draft",
+                "text": " swi kongomisa ntwanano. ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "Earth Care",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+                "status": "draft",
+                "text": " swi vula ku sirhelela xihlovo. Ku languta xiyimo xa mati ntsena a swi endli leswaku ku tirhisa mati yo engetela swi va hlayisekile kumbe swi pfumeleriwa.",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary safety predicate translated; borehole and ethics labels retained as exact English; facilitator review pending"
+          },
+          {
+            "status": "draft",
+            "text": "I mani loyi a nga ku pfuna ku kambela milawu ni mphakelo wa mati?",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
+          }
+        ]
+      },
+      "pairSHA256": "f402d91c0a6a29b99939c9380f55bcb5608ca4aeef681ad44c194f74d492401f",
+      "copyByteIdentical": true
+    },
+    {
+      "language": "ts",
+      "slide": 12,
+      "destination": "public/course-decks/intro-permaculture/ts/slide-12.webp",
+      "sourcePng": "/tmp/imbewu-intro-ts-selective-render-20261006/slide-12.png",
+      "sourcePngBytes": 501893,
+      "sourcePngSHA256": "7ca79b9bf732f02065393a4e9a5267b1d2d65d9afeed125426a13203d6fe22c2",
+      "renderedWebp": "docs/media/intro-silent-completion-2026-10-06/ts-slide-12.webp",
+      "sha256": "75daba70541ea8f4652106d702ed61fa7ed69534f2a510828f26fc033122aa66",
+      "bytes": 260756,
+      "width": 1440,
+      "height": 5400,
+      "compression": "Pillow RGB WebP quality 88 method 6; no crop/rescale",
+      "pairedDraft": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "pairedDraftSHA256": "1cec865ebfbbcee7cbfbfa5c41bea16156da9f70f3442f60e711befc7a71556a",
+      "englishSource": {
+        "heading": "Use Edges and Value the Marginal",
+        "body": [
+          "The edge is where two things meet — a fence line or the strip beside a path.",
+          "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "Which edge on your plot is doing nothing at the moment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is where two things meet",
+                "status": "draft",
+                "text": " hi laha swilo swimbirhi swi hlanganaka kona"
+              },
+              {
+                "sourceEnglish": " — a fence line or the strip beside a path.",
+                "status": "draft",
+                "text": " — layini ya fence kumbe xiphemu xa misava lexi nga etlhelo ka ndlela (strip).",
+                "reason": "Meaning-bounded alternatives clause. Fence/strip retained technical labels change noun order; entire source clause is paired with its full translated context."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 accepted ordinary remainder; facilitator fluency review pending"
+          },
+          {
+            "status": "draft",
+            "text": "Leswi swi nga va tindhawu letinene to languta. Languta leswi se swi kulaka kahle etlhelo ka edge ya wena. Yoleyo i ndhawu leyi ku byelaka swin’wana.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary place wording; edge retained in target as a draft lexical borrowing; fluent review remains open"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Which ",
+                "status": "draft",
+                "text": "Hi yihi "
+              },
+              {
+                "sourceEnglish": "edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " on your plot is doing nothing at the moment?",
+                "status": "draft",
+                "text": " eka plot ya wena leyi nga endli xin’wana sweswi?"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      },
+      "pairSHA256": "55e7cd329aa9e1ef6111058744be9e6966aebfdd288e31fe0ccdf83b85325a71",
+      "copyByteIdentical": true
+    }
+  ],
+  "contacts": [
+    "docs/media/intro-silent-completion-2026-10-06/contact-st-01.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-st-02.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-st-03.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-st-04.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-ve-01.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-ts-01.jpg",
+    "docs/media/intro-silent-completion-2026-10-06/contact-selective-ve-ts.jpg"
+  ],
+  "beforeSelectedFrames": "docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/render-before-selected-frames.json",
+  "notFluencyApproval": true,
+  "rootVisualReviewPending": true
+}

@@ -8,12 +8,11 @@ import {
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { resolveLearnerLessonPresentation as resolveCurrentPresentation } from '../lib/course-localization.ts';
-import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
-// 6 October 2026: full current accepted prose/metadata is checked before dated
-// literal alt/zone/assessment strings; real source/index controls remain intact.
-const draft = validateAndRewindIntroFullNative('ts', currentIntroDraft) as typeof currentIntroDraft;
+import { validateAndRewindIntroNativeHistory, introPresentationBeforeSilentRelease } from './intro-silent-release-text-checks.ts';
+// Historical clauses are exposed only after both accepted source-bound Intro text layers validate.
+const draft = validateAndRewindIntroNativeHistory('ts', currentIntroDraft) as typeof currentIntroDraft;
 const resolveLearnerLessonPresentation: typeof resolveCurrentPresentation = (lesson, language) =>
-  introPresentationBeforeFullOrdinary(lesson, language, resolveCurrentPresentation(lesson, language));
+  introPresentationBeforeSilentRelease(lesson, language, resolveCurrentPresentation(lesson, language));
 
 const source = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!;
 const digits = (value: string) => value.match(/\d+/g) ?? [];
@@ -48,9 +47,9 @@ test('the Xitsonga draft preserves all Introduction source pairs and quiz answer
 });
 
 test('held Xitsonga anchors remain exact while mixed fields stay machine drafts', () => {
-  // This is the live hold contract, not a historical snapshot. Two accepted
-  // localized terms no longer claim to remain English; the three genuine holds do.
-  validateAndRewindIntroFullNative('ts', currentIntroDraft);
+  // Hold records remain exact metadata; the later question row translates two
+  // recorded phrases, while its unresolved ethic term stays visible in English.
+  validateAndRewindIntroNativeHistory('ts', currentIntroDraft);
   assert.deepEqual(currentIntroDraft.holds.map(hold => hold.sourceText), ['all his surplus maize', 'composting', 'ethic']);
   assert.ok(currentIntroDraft.holds.length > 0);
   const lessons = new Map(currentIntroDraft.lessons.map(lesson => [lesson.id, lesson]));
@@ -72,7 +71,11 @@ test('held Xitsonga anchors remain exact while mixed fields stay machine drafts'
     }
     assert.ok(pair, `${hold.lessonId} ${hold.field} must resolve to a source pair`);
     assert.ok(pair.sourceEnglish.includes(hold.sourceText), `${hold.field} hold must belong to the exact source`);
-    assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain the exact held source phrase`);
+    const translatedByLatestSourceBoundRow = hold.lessonId === 'intro-permaculture-l1' && hold.field === 'quiz[0].q' &&
+      ['all his surplus maize', 'composting'].includes(hold.sourceText);
+    if (!translatedByLatestSourceBoundRow) {
+      assert.ok(pair.xitsongaDraft.includes(hold.sourceText), `${hold.field} must retain the exact held source phrase`);
+    }
     if (pair.sourceEnglish === hold.sourceText) {
       assert.equal(pair.xitsongaDraft, hold.sourceText, `${hold.field} whole-field hold must remain exact English`);
       assert.equal(pair.reviewStatus, 'hold');
@@ -81,6 +84,12 @@ test('held Xitsonga anchors remain exact while mixed fields stay machine drafts'
     }
     assert.ok(hold.reason.length > 0);
   }
+  const latestIntro = lessons.get('intro-permaculture-l1');
+  assert.ok(latestIntro, 'the source-bound Introduction lesson must remain registered');
+  const latestIntroQuestion = latestIntro.quiz[0].question.xitsongaDraft;
+  assert.equal(latestIntroQuestion,
+    'Murimi u xavisa mavele ya yena lama saleke hinkwawo, kambe a nga hlayisi na xin’we xa ku endla compost kumbe ku hlayisa mbewu. Hi yihi ethic leyi a tsandzekaka ngopfu ku yi landzelela?',
+    'the later accepted full question translates the surplus-maize and composting clauses while retaining the exact ethic term');
 });
 
 test('Introduction Xitsonga alt text and L1 framing resolve as source-bound machine drafts', () => {

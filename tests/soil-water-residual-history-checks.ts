@@ -1,3 +1,4 @@
+import { silentIntroAssetSizesBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -108,7 +109,8 @@ export function soilWaterResidualPairedBefore<T extends { slides: Data[] }>(deck
 /** Validate current frame bytes and rewind only the 18 measured manifest entries for earlier media guards. */
 export function soilWaterResidualAssetSizesBefore(currentManifest?: string): string {
   assertBoundProof();
-  const manifest = currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  // 6 October 2026: validate new25-slot silent Intro layer before reconstructing this dated residual manifest.
+  const manifest = silentIntroAssetSizesBefore(currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8'));
   assert.equal(hash(Buffer.from(manifest)), media.courseAssetSizesAggregate.sha256After);
   let prior = manifest;
   for (const frame of media.renderedFrames as Data[]) {

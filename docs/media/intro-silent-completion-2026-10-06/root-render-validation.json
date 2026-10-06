@@ -1,0 +1,251 @@
+{
+  "date": "2026-10-06",
+  "renderProofSHA256": "c619ca9c3e1fab4c79e57a9a683d4c5c3380be4f0a3a3d59d5343a178429bb64",
+  "checkedFrames": [
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-01.webp",
+      "sha256": "716325404e9b7ec6db9d02285807a9cd5bd2ed54176273a0d1feceb6b9d60c0f",
+      "bytes": 311436,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-02.webp",
+      "sha256": "f73d31eb304205294a4ab91284f6f356451619a866498e7f2c251babd696f1d6",
+      "bytes": 294348,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-03.webp",
+      "sha256": "b23080c89c897dab42cbe508903af38010e7adad62ce85df4c21d93a7d388a55",
+      "bytes": 264976,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-04.webp",
+      "sha256": "7e6ff230e6a0868e928179ff3dcb12aeb7cb0dafddb7a7eae00c59a5f29792c0",
+      "bytes": 574614,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-05.webp",
+      "sha256": "f9188ee2a43d1150ce257bc8ac1b722ad89f6080a5f27af2afb517dd0a0ff2eb",
+      "bytes": 509300,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-06.webp",
+      "sha256": "d6146108a8c742f0b8f9415e4124817c5a6ac25b19a407e37d8ac23d68329702",
+      "bytes": 570640,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-07.webp",
+      "sha256": "47ec9280f965ade2f79526040b11ae1d72597f76ac3df504f89ffd94e3d76b07",
+      "bytes": 361102,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-08.webp",
+      "sha256": "5fd5ecfe6a15721cbd4c7b418617cea35efcc26ee1fa7dd297696f2d3d5e98da",
+      "bytes": 269574,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-09.webp",
+      "sha256": "6c1c101100dfdc6e5637c07cb17754c22469986a2c415212959132abc58d9a8d",
+      "bytes": 293746,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-10.webp",
+      "sha256": "d4168c3d6c1979922f2f7931fd1cef987a983b0e34606d242231de62a9b3ef4d",
+      "bytes": 693878,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-11.webp",
+      "sha256": "589e2158f42e0fba0e50eec14b6aa791209541c01bdf06d300ccfb3f1fd5ff3b",
+      "bytes": 270858,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-12.webp",
+      "sha256": "c30cddddb1ad42bb5707d4e59bc965d59f3b1ed97e7bb9edf7deee51e7122588",
+      "bytes": 255448,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-13.webp",
+      "sha256": "de08b18fe44aba08a062437ddc530901cbc8a739568992dee3ae27a195430acd",
+      "bytes": 418056,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-14.webp",
+      "sha256": "13a8219e0000edcf96bbf7b23898c7b5ed592487b1bbede520dd6c48141a94f1",
+      "bytes": 425552,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-15.webp",
+      "sha256": "af6585c16ce047fd26084bbce6a4aabf1c37f262b74f7324a3e3832ff9112282",
+      "bytes": 336262,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-16.webp",
+      "sha256": "8ea29dada230a5d60fc4f6896caff3c4f3198c81808d426ed3a215c6c866b562",
+      "bytes": 556532,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-17.webp",
+      "sha256": "ebf12c383b1d96eceeb9fcbb38943826cfacd254455db98ac71a38084ba72eb3",
+      "bytes": 265986,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-18.webp",
+      "sha256": "47529bac208ad77fed855eaa29567882845cb37d9427df022c9c011c2d6c63ee",
+      "bytes": 317156,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-19.webp",
+      "sha256": "ad9e47088d7117f88aa71e5a4e16477cb64e42161c5accc65cf5bc759aee8885",
+      "bytes": 584824,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-20.webp",
+      "sha256": "0c8926e917d3c47847e849acd492311d32343c4a1cd9ea5972f844d6ecce8cd9",
+      "bytes": 487680,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-21.webp",
+      "sha256": "5f1cb2bfb258dd3cd1c705e638c368171f307768894a95931d9283fa546db476",
+      "bytes": 216768,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-22.webp",
+      "sha256": "a963038b2c9d7a0128e00263656c1fc7c590326e0063c212b9c196f1949f106f",
+      "bytes": 257466,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ve/slide-11.webp",
+      "sha256": "91e747f606e5a2deee9bbc2bdee3d8b36e2ebac7bb1bbdddea6c73f5ce7dbfc6",
+      "bytes": 274042,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-07.webp",
+      "sha256": "1e507b2e303a7388d684fd13384365d8aa4a2a284705076c2112bf6060b6c488",
+      "bytes": 375292,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-12.webp",
+      "sha256": "75daba70541ea8f4652106d702ed61fa7ed69534f2a510828f26fc033122aa66",
+      "bytes": 260756,
+      "dimensions": [
+        1440,
+        5400
+      ]
+    }
+  ],
+  "rootVisualEvidence": {
+    "scope": "All 25 frames inspected in five original readable contact images; no clipping observed, draft status and English source present. Individual phone layout remains unverified. Root additionally inspected the actual compressed ST22 image: no clipping, ordinary meaning holds still visible and not counted as completed translation.",
+    "contacts": [
+      "contact-st-01.jpg",
+      "contact-st-02.jpg",
+      "contact-st-03.jpg",
+      "contact-st-04.jpg",
+      "contact-selective-ve-ts.jpg"
+    ],
+    "fluentApproval": false,
+    "phoneQAComplete": false,
+    "individualCompressedFrames": [
+      "public/course-decks/intro-permaculture/st-silent/slide-22.webp"
+    ],
+    "ordinaryMeaningHoldsRemain": [
+      "Slide22 comparative distance versus visit frequency",
+      "Slide22 older-neighbour age scope"
+    ]
+  },
+  "publicationStatus": "unpublished; runtime and ordered test gates pending"
+}

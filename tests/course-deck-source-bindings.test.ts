@@ -322,11 +322,12 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
     assert.equal(assetSha256(`${stAudioDir}${filename}`), expectedHash, `ST Introduction ${filename} remains byte-identical`);
   }
   assert.equal(trackUrl('intro-permaculture', 'en', 22), '/course-audio/intro-permaculture/en/slide-22.mp3');
-  assert.equal(trackUrl('intro-permaculture', 'st', 22), '/course-audio/intro-permaculture/st/slide-22.mp3');
-  assert.equal(fullNarrationUrl('intro-permaculture', 'st'), '/course-audio/intro-permaculture/st/full.mp3');
+  // 2026-10-06: hashes above still protect the archived pair/audio; updated published text is silent.
+  assert.equal(trackUrl('intro-permaculture', 'st', 22), null);
+  assert.equal(fullNarrationUrl('intro-permaculture', 'st'), null);
   assert.deepEqual(slideImageFor('intro-permaculture', 'st', 22), {
-    url: slideImageUrl('intro-permaculture', 'st', 22), lang: 'st', exact: true,
-  }, 'ST Introduction remains on its own existing slide pair');
+    url: '/course-decks/intro-permaculture/st-silent/slide-22.webp', lang: 'st', exact: true, aspectRatio: 1440 / 5400,
+  }, 'ST Introduction uses its new exact-source silent pair; archived bytes remain protected above');
 });
 
 test('the 23 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {

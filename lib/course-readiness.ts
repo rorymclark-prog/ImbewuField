@@ -16,7 +16,7 @@
 // disappears by itself.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { hasNarration, narrationFor } from '@/lib/course-audio';
+import { availableNarrationLanguages } from '@/lib/course-audio';
 import { narrationReviewPending } from '@/lib/narration-blockers';
 import { hasDeck } from '@/lib/course-deck';
 
@@ -43,7 +43,7 @@ export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
   const mod = COURSE_MODULES.find((m) => m.id === moduleId);
   const totalLessons = mod?.lessons.length ?? 0;
   const illustratedLessons = mod?.lessons.filter((l) => l.infographicUrl && l.infographicAlt).length ?? 0;
-  const narrationLanguages = hasNarration(moduleId) ? (narrationFor(moduleId)?.languages ?? []) : [];
+  const narrationLanguages = availableNarrationLanguages(moduleId);
   const deck = hasDeck(moduleId);
 
   const complete =

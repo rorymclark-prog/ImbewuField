@@ -7,11 +7,11 @@ import assert from 'node:assert/strict';
 import { COURSE_MODULES, type QuizQuestion } from '../lib/course-modules.ts';
 import { resolveBeforeFullerSoilPresentation as resolveBeforeSoilPresentation } from './soil-ordinary-native-history-checks.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT as currentIntroDraft } from '../lib/course-translation-drafts-ve.ts';
-import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
-// 6 October 2026: preserve older literal Intro claims after full current-layer validation.
-const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ve', currentIntroDraft) as typeof currentIntroDraft;
+import { validateAndRewindIntroNativeHistory, introPresentationBeforeSilentRelease } from './intro-silent-release-text-checks.ts';
+// Historical clauses are exposed only after both accepted source-bound Intro text layers validate.
+const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroNativeHistory('ve', currentIntroDraft) as typeof currentIntroDraft;
 const resolveLearnerLessonPresentation: typeof resolveBeforeSoilPresentation = (lesson, language) =>
-  introPresentationBeforeFullOrdinary(lesson, language, resolveBeforeSoilPresentation(lesson, language));
+  introPresentationBeforeSilentRelease(lesson, language, resolveBeforeSoilPresentation(lesson, language));
 // Preserve earlier Soil clause coverage against dated text; live accepted targets are checked before rewind.
 import { historicalVE as TSHIVENDA_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT as vegetablesL3Draft, TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as learnerVegetablesDraft } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';

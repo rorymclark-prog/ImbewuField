@@ -1,3 +1,4 @@
+import { silentIntroAssetSizesBefore } from './intro-silent-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -289,7 +290,9 @@ test('the 18 approved frames and every protected media inventory match the durab
   assert.equal(media.unlistedCourseAudio.length, 523);
   assert.equal(media.unlistedCourseAnimations.length, 81);
   assert.equal(media.introSesothoStills.length, 22);
-  assert.equal(Object.keys(COURSE_ASSET_SIZES).length, 1905);
+  // 6 October 2026: the later22 new silent URLs are validated before the dated1905-entry claim.
+  const predecessor = silentIntroAssetSizesBefore();
+  assert.equal([...predecessor.matchAll(/^  '[^']+': (\d+),$/gm)].length, 1905);
 });
 
 test('the residual cache migration removes only exact frame paths and query variants once', async () => {

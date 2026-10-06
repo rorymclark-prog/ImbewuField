@@ -1,3 +1,5 @@
+import { validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
+import { silentIntroMediaBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -52,8 +54,11 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
   }
   soilWaterResidualValidateCurrentFrames();
   const beforeResidual = soilWaterResidualAssetSizesBefore(currentManifest);
-  const decks = readCurrentIntroFullDecks();
-  validateAndRewindIntroFullPaired(decks);
+  const currentDecks = readCurrentIntroFullDecks();
+  validateAndRewindIntroFullPaired(currentDecks);
+  // The media proof belongs to the36-frame release, before the three later text cells.
+  // Both whole-current guards run on live input; do not feed already-restored data into them.
+  const decks = validateAndRewindIntroSilentTextLayer({ paired: currentDecks }).pairedBeforeSilent;
   const proof = introFullMediaProof;
   assert.equal(proof.frames.length, 36);
   assert.equal(new Set(proof.frames.map((row: any) => row.path)).size, 36);
@@ -76,7 +81,10 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
     assert.equal(header.readUInt16LE(26) & 0x3fff, frame.old.width);
     assert.equal(header.readUInt16LE(28) & 0x3fff, frame.old.height);
     assert.deepEqual(frame.pairedSource, decks[frame.language].slides[frame.slide - 1], 'full English/accepted target/status binding');
-    verifyIntroFullFrameBytes(frame, readFileSync(frame.asset));
+    // 6 October 2026: three later Intro pictures have complete current-byte guards before their prior descriptors.
+    const later = silentIntroMediaBefore(frame.asset);
+    if (later) assert.deepEqual({bytes:later.bytes,sha256:later.sha256}, {bytes:frame.new.bytes,sha256:frame.new.sha256});
+    else verifyIntroFullFrameBytes(frame, readFileSync(frame.asset));
     assert.notEqual(frame.old.sha256, frame.new.sha256);
     const oldEntry = `  '${frame.path}': ${frame.old.bytes},`;
     assert.equal(expected.split(oldEntry).length, 2);
