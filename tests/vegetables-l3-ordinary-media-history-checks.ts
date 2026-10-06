@@ -5,11 +5,13 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
+import { nativePairedResidualFrames, nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 const folder = 'docs/media/vegetables-l3-ordinary-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
 export const expectedVegetablesL3Paths = ['st', 've', 'ts'].flatMap(language => (language === 've' ? [12, 13] : [12, 13, 14]).map(n => `/course-decks/vegetables-staples/${language}/slide-${String(n).padStart(2, '0')}.webp`));
 const expectedPaths = expectedVegetablesL3Paths;
+const laterResidualPaths = new Set(nativePairedResidualFrames.map(frame => frame.url));
 
 
 // Many older preservation proofs ask about hundreds of files individually.
@@ -89,11 +91,22 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
       assert.deepEqual(proof.frames.find((frame: { path: string }) => frame.path === row.path).old, row);
       continue;
     }
-    // The complete L1 layer was checked above, including all current bytes and
-    // mutation-sensitive inputs. Rechecking that entire layer for each of 84
-    // historical files multiplied two older suites into 848,725 validations.
-    // Use only this invocation's validated replacement records; every unlisted
-    // file still receives its identity-sensitive observation and hash assertion.
+    // Later 13-frame redraws overlap this older inventory. Validate those exact
+    // live cards through their source-bound proof, then compare the newer
+    // before descriptor with this L3 snapshot. L1 is later than this L3 media
+    // snapshot, so its five changed cards project through their frozen before
+    // descriptors; every other file is read.
+    if (laterResidualPaths.has(row.path)) {
+      const later = nativePairedResidualMediaBefore('public' + row.path);
+      assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
+      const l1Replacement = acceptedL1.frames.find((frame: { path: string }) => frame.path === row.path);
+      if (l1Replacement) {
+        assert.deepEqual(later, { bytes: l1Replacement.new.bytes, sha256: l1Replacement.new.sha256 }, `${row.path}: newest frame rewinds to exact L1 output`);
+      }
+      const projected = l1Replacement ? l1Replacement.old : later;
+      assert.deepEqual({ bytes: projected.bytes, sha256: projected.sha256 }, { bytes: row.bytes, sha256: row.sha256 }, `${row.path}: chronological later-layer rewinds restore this frozen L3 inventory`);
+      continue;
+    }
     const replacement = acceptedL1.frames.find((frame: { path: string }) => frame.path === row.path);
     const actual = replacement ? replacement.old : observedFile('public' + row.path);
     assert.equal(actual.bytes, row.bytes, row.path);
@@ -132,8 +145,10 @@ export function vegetablesL3AssetSizesBeforeOrdinary(currentManifest?: string) {
 export function vegetablesL3MediaBeforeEarlierProof(path: string) {
   const latest = vegetablesL1MediaBeforeEarlierProof(path);
   if (latest) return latest;
-  const proof = validateCurrentVegetablesL3OrdinaryMedia();
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
+  // A miss exposes no old bytes; caller retains its actual unlisted-file check.
+  if (!expectedVegetablesL3Paths.includes(url)) return undefined;
+  const proof = validateCurrentVegetablesL3OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;
 }

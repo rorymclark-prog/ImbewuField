@@ -1,3 +1,4 @@
+import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -80,7 +81,12 @@ function assertPairedTarget(pair: any, row: any, targetText: string, status: str
 function validateCurrentFileHashes() {
   const outputs = proof.outputs;
   for (const row of Object.values(outputs.native) as any[]) {
-    assert.equal(sha(readFileSync(row.path)), row.sha256, `${row.path}: exact accepted native release bytes`);
+    // The later Reading change shares TS's file; validate its full layer and
+    // rewind its one literal before preserving the entire Intro968 file digest.
+    const actual = readFileSync(row.path, 'utf8');
+    const historical = row.path === 'lib/course-translation-drafts-ts.ts'
+      ? tsSharedSourceBeforeNativeOrdinary(actual) : actual;
+    assert.equal(sha(historical), row.sha256, `${row.path}: exact accepted native release bytes`);
   }
   for (const row of Object.values(outputs.existingPaired) as any[]) {
     assert.equal(sha(readFileSync(row.path)), row.sha256, `${row.path}: exact accepted paired release bytes`);

@@ -7,6 +7,7 @@ import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translatio
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { vegetablesBeforeL1Ordinary, vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
+import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 
 export type VegetablesLanguage = 'st' | 've' | 'ts';
 const folder = '../docs/study-translation-reviews/vegetables-l3-ordinary-residual-2026-10-06/';
@@ -41,7 +42,7 @@ export function vegetablesBeforeL3Ordinary<T>(language: VegetablesLanguage, actu
     // The separate L2 registry is validated by the older assessment helper; its caller
     // must also observe the complete current L3 layer before exposing older history.
     vegetablesBeforeL3Ordinary('ts', ordinaryDrafts.ts);
-    return structuredClone(actual);
+    return nativeOrdinaryBeforeFinalBatch(actual);
   }
   // 6 October: validate the complete newly accepted L1 layer before rewinding its
   // five exact target slots for the historical L3 whole-module preservation proof.

@@ -47,7 +47,7 @@ export function reconstructMarketBeforeL2L3Completion<T extends { lessons: reado
 export const reconstructMarketPresentationBeforeCompletion: typeof resolveLearnerLessonPresentation = (...args) => {
   let result = resolveLearnerLessonPresentation(...args);
   const [lesson, language] = args;
-  if (result.status !== 'draft' || !['st', 've', 'ts'].includes(language)) return result;
+  if (result.status !== 'draft' || !lesson.id.startsWith('market-community-') || !['st', 've', 'ts'].includes(language)) return result;
   result = rewindMarketOrdinaryPresentation(result, lesson.id, language as keyof typeof targetKeys) as typeof result;
   for (const field of proof.fields.filter((row: any) => row.language === language && row.lessonId === lesson.id)) {
     let container: any = result.content;

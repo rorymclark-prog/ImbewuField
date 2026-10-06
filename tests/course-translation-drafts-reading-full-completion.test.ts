@@ -130,9 +130,14 @@ test('Reading full learner drafts keep all fields source-bound, ordered, withdra
     const l3Lesson = byCode[code].module.lessons.find(item => item.id === 'reading-landscape-l3')!;
     const l3Body = valueAt(l3Lesson.body as unknown as PairLike, byCode[code].targetKey).split('\n\n')[1];
     const frostRationale = valueAt(l3Lesson.quiz[0].rationale as unknown as PairLike, byCode[code].targetKey);
-    assert.ok(l3Body.includes('through the local frost season'), `${code}: compare sites throughout the frost season`);
-    assert.ok(frostRationale.includes('through the local frost season'),
-      `${code}: nursery comparison covers the full frost season in the assessment too`);
+    // The 2026-10-06 native overlay localizes the Sesotho duration. Keep an explicit
+    // through-the-whole-season predicate; a generic during-the-season phrase is weaker.
+    const frostDuration = code === 'st'
+      ? 'ho pholletsa le sehla sa frost sa sebakeng seo'
+      : 'through the local frost season';
+    assert.ok(l3Body.includes(frostDuration), `${code}: compare sites throughout the full local frost season`);
+    assert.ok(frostRationale.includes(frostDuration),
+      `${code}: nursery comparison covers the full local frost season in the assessment too`);
     const l3Rationale = text(code, 'reading-landscape-l3', 'quiz1rationale');
     assert.ok(/prolonged|tshifhinga tshilapfu|nkarhi wo leha|nako e telele/i.test(l3Rationale),
       `${code}: late-blight weather condition remains prolonged`);

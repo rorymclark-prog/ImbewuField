@@ -347,9 +347,9 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
   assert.ok(l1DraftParagraphs[2].includes('Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion') &&
     l1DraftParagraphs[2].includes('mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa'),
     'preserve the can-increase erosion risk and slow-infiltration overflow condition');
-  assert.ok(l1DraftParagraphs[2].includes('Nangani any water works for the site') &&
+  assert.ok(l1DraftParagraphs[2].includes('Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono') &&
     l1DraftParagraphs[2].includes('nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa'),
-    'retain the site-specific waterworks scope and safe excess-water route');
+    'the accepted localized choice remains site-specific and retains the safe excess-water route');
   const changedL1Source = { ...landscapeL1Source, body: landscapeL1Source.body.replace('walk your land', 'walk a different field') };
   assert.notEqual(changedL1Source.body, landscapeL1Source.body);
   assert.equal(resolveLearnerLessonPresentation(changedL1Source, 've').status, 'english-fallback',

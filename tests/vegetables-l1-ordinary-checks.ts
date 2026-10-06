@@ -5,6 +5,8 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
+import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+import { vegetablesDeckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 
 export type VegetablesL1Language = 'st' | 've' | 'ts';
 const folder = '../docs/study-translation-reviews/vegetables-l1-ordinary-residual-2026-10-06/';
@@ -35,6 +37,9 @@ const visible = (pair: any): string => pair.status === 'mixed'
 
 /** Validate the entire current layer before restoring only its five reviewed native paragraphs. */
 export function vegetablesBeforeL1Ordinary<T>(language: VegetablesL1Language, actual: T): T {
+  // 6 October: validate and rewind the complete newest native overlay before this
+  // historical five-paragraph snapshot is evaluated.
+  actual = nativeOrdinaryBeforeFinalBatch(actual);
   const before = vegetablesL1Before;
   const after = vegetablesL1After;
   assert.deepEqual(sourceModule(), before.canonical, 'canonical Vegetables instructions, species and answer indices are unchanged');
@@ -63,6 +68,9 @@ export function vegetablesBeforeL1Ordinary<T>(language: VegetablesL1Language, ac
 
 /** Validate a whole current paired deck, then rewind only the accepted L1 card cells. */
 export function vegetablesDeckBeforeL1Ordinary<T>(language: VegetablesL1Language, actual: T): T {
+  // The final 13-cell pair layer is newer than this snapshot; validate its full six-file source,
+  // targets and unlisted deck data before restoring only the exact prior paired deck.
+  actual = vegetablesDeckBeforeNativePairedResidual(actual as any) as T;
   vegetablesBeforeL1Ordinary(language, vegetablesL1Drafts[language]);
   const before = vegetablesL1Before;
   const after = vegetablesL1After;

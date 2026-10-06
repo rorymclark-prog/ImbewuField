@@ -1,5 +1,5 @@
 import { validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
-import { silentIntroMediaBefore } from './intro-silent-media-history-checks.ts';
+import { isSilentIntroLaterReplacedAsset, silentIntroMediaBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -102,6 +102,12 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
   assert.equal(inventory.filter((row: any) => !changed.has(row.path)).length, 1851);
   for (const row of inventory) {
     if (changed.has(row.path)) continue;
+    const later = isSilentIntroLaterReplacedAsset(row.path) ? silentIntroMediaBefore(row.path) : undefined;
+    if (later) {
+      assert.equal(later.bytes, row.bytes, row.path + ': the complete newer 968/13-frame layers rewind to this frozen descriptor');
+      assert.equal(later.sha256, row.sha256, row.path + ': the complete newer 968/13-frame layers rewind to this frozen descriptor');
+      continue;
+    }
     const actual = fileDescriptor('public' + row.path);
     assert.equal(actual.bytes, row.bytes, row.path + ': all unlisted assets exact');
     assert.equal(actual.sha256, row.sha256, row.path + ': all unlisted assets exact');
@@ -117,8 +123,12 @@ export function introFullAssetSizesBeforeOrdinary(currentManifest?: string) {
   return before;
 }
 export function introFullMediaBeforeEarlierProof(path: string) {
-  validateCurrentIntroFullMedia();
   const url = path.startsWith('public/') ? path.slice(6) : path;
+  // Unlisted files receive no historical descriptor. Their caller checks actual
+  // bytes; validating the whole inventory per unrelated path made Soil/Water
+  // preservation quadratic. Every listed rewind still validates the full layer.
+  if (!expectedIntroFullPaths.includes(url)) return undefined;
+  validateCurrentIntroFullMedia();
   const frame = introFullMediaProof.frames.find((row: any) => row.path === url);
   return frame ? frame.old as { sha256: string; bytes: number; encodedHeaderHex: string } : undefined;
 }

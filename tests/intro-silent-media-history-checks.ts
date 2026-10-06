@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
+import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const review = 'docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/';
 function frozen(path: string, digest: string) {
@@ -24,6 +26,28 @@ for (const f of silentIntroIntegration.actualAssets) {
   inventory.set(f.url, {bytes:f.bytes,sha256:f.sha256});
 }
 assert.equal(inventory.size, 1927);
+// The later Vegetables/Market redraws leave Intro968 intact. Keep its complete
+// prior inventory for historical descriptors, and validate all real current bytes.
+const latest = frozen('docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06/render-proof.json',
+  'f9ff13f9ee8366b0cf8881242e55f415842e972a8d2387b1252eac1faa4b59e1');
+const currentInventory = new Map(inventory);
+assert.equal(latest.frames.length, 13);
+for (const frame of latest.frames) {
+  const url = '/' + frame.repositoryPath.replace(/^public\//, '');
+  assert.ok(inventory.has(url), url + ': later redraw replaces an existing claimed frame');
+  currentInventory.set(url, {bytes: frame.bytes, sha256: frame.sha256});
+}
+assert.equal(currentInventory.size, inventory.size, 'later redraws add no unlisted assets');
+const laterReplacedURLs = new Set<string>([
+  ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
+  ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
+]);
+// Only these frozen, listed URLs need a historical descriptor. Bulk inventory
+// callers still check every other real file directly, without recursively
+// validating two thousand assets for each unchanged row.
+export function isSilentIntroLaterReplacedAsset(path: string): boolean {
+  return laterReplacedURLs.has(path.startsWith('public/') ? path.slice(6) : path);
+}
 const observed = new Map<string,{signature:string;bytes:number;sha256:string}>();
 function fileDescriptor(path: string) {
   const stat=statSync(path,{bigint:true});
@@ -35,13 +59,16 @@ function fileDescriptor(path: string) {
 function verifyCurrentDiskInventory() {
   // Every later call still notices same-size writes. Cache hashes, not700MB of
   // media buffers, and reuse them only while all filesystem identities match.
-  for(const [url, expected] of inventory) {
+  for(const [url, expected] of currentInventory) {
     const actual=fileDescriptor('public'+url);
     assert.equal(actual.bytes,expected.bytes,url+': entire current inventory measured bytes');
     assert.equal(actual.sha256,expected.sha256,url+': entire current inventory SHA');
   }
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
-    assert.equal(fileDescriptor(output.path).sha256,output.sha256,'approved current native/paired files still exact');
+    const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
+      ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
+      : fileDescriptor(output.path).sha256;
+    assert.equal(sourceHash,output.sha256,'approved Intro native/paired files remain exact after the validated later Reading projection');
   }
   for(const old of applied.verification.oldSTProtectedByteInventory) {
     const actual=fileDescriptor(old.path);assert.equal(actual.bytes,old.bytes);assert.equal(actual.sha256,old.sha256,'archived ST files still exact');
@@ -49,7 +76,7 @@ function verifyCurrentDiskInventory() {
   assert.equal(fileDescriptor('lib/course-modules.ts').sha256,applied.beforeSnapshots['canonical-before.ts.txt'].sha256);
 }
 export function verifySilentIntroAsset(url: string, bytes: Buffer) {
-  const expected=inventory.get(url); assert.ok(expected, url + ': claimed current asset');
+  const expected=currentInventory.get(url); assert.ok(expected, url + ': claimed current asset');
   assert.equal(bytes.length,expected.bytes,url + ': exact measured bytes');
   assert.equal(sha(bytes),expected.sha256,url + ': exact current asset SHA');
 }
@@ -66,19 +93,23 @@ let initialized=false;
 // published post-967 media layer. Full real current validation precedes any dated
 // descriptor; immutable manifests stay checked on every call without rereading1902 files.
 export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
-  assert.equal(sha(manifest),silentIntroIntegration.finalManifest.sha256,'only the complete accepted silent Intro manifest is current');
+  const priorManifest = nativePairedResidualManifestBefore968(manifest);
+  assert.equal(sha(priorManifest),silentIntroIntegration.finalManifest.sha256,'after validating all later redraws, the complete accepted silent Intro manifest remains exact');
   verifyCurrentDiskInventory();
   if(initialized) return;
-  const entries=Object.fromEntries([...manifest.matchAll(/^  '([^']+)': (\d+),$/gm)].map(m=>[m[1],Number(m[2])]));
+  const entries=Object.fromEntries([...priorManifest.matchAll(/^  '([^']+)': (\d+),$/gm)].map(m=>[m[1],Number(m[2])]));
   assert.deepEqual(entries,silentIntroIntegration.finalManifest.expectedEntries,'full manifest including unlisted entries');
   assert.equal(Object.keys(entries).length,1927);
   assert.equal(Object.values(entries).reduce((a,b)=>a+b,0),silentIntroIntegration.finalManifest.totalBytes);
-  assert.equal(manifest.split(silentIntroIntegration.finalManifest.summaryLine).length,2);
+  assert.equal(priorManifest.split(silentIntroIntegration.finalManifest.summaryLine).length,2);
   assert.equal(sha(readFileSync('lib/course-modules.ts')),applied.beforeSnapshots['canonical-before.ts.txt'].sha256,'canonical source remains exact');
   assert.equal(render.frames.length,25);assert.equal(silentIntroIntegration.actualAssets.length,25);
   assert.equal(new Set(render.frames.map((f:any)=>f.destination)).size,25);
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
-    assert.equal(sha(readFileSync(output.path)),output.sha256,'approved complete current native/paired source/status/provenance');
+    const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
+      ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
+      : sha(readFileSync(output.path));
+    assert.equal(sourceHash,output.sha256,'approved complete Intro source/status/provenance after the validated later Reading projection');
   }
   for (const f of render.frames) {
     const bound=silentIntroIntegration.actualAssets.find((a:any)=>a.path===f.destination);assert.ok(bound);
@@ -98,7 +129,7 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   initialized=true;
 }
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
-  validateSilentIntroMedia(manifest);let before=manifest;
+  validateSilentIntroMedia(manifest);let before=nativePairedResidualManifestBefore968(manifest);
   for(const f of silentIntroIntegration.actualAssets) {
     const row=`  '${f.url}': ${f.bytes},\n`;assert.equal(before.split(row).length,2);
     before=before.replace(row,f.beforeBytes===null?'':`  '${f.url}': ${f.beforeBytes},\n`);
@@ -109,7 +140,11 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
 }
 export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
-  const actual=fileDescriptor('public'+url);const expected=inventory.get(url);assert.ok(expected);assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url)) {
+    const previous=inventory.get(url);assert.ok(previous);
+    return {bytes:previous.bytes,sha256:previous.sha256};
+  }
   const row=silentIntroIntegration.actualAssets.find((f:any)=>f.url===url && f.beforeBytes!==null);
   return row?{bytes:row.beforeBytes,sha256:row.beforeSHA256}:undefined;
 }

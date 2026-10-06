@@ -112,10 +112,13 @@ export function waterMediaBeforeOrdinary(path: string) {
   if (!changed) {
     const residualBefore = soilWaterResidualMediaBefore(path);
     if (residualBefore) return { bytes, sha256: residualBefore.sha256, byteLength: residualBefore.bytes };
-    const intro = introMediaBeforeEarlierProof(path);
-    if (intro) return { bytes, sha256: intro.sha256, byteLength: intro.bytes };
+    // Six Vegetables pest frames were redrawn before this dated Water proof.
+    // Their full precision guard must run before the generic Intro/Market chain
+    // can expose the newer thirteen-frame predecessor and stop one layer early.
     const vegetables = vegetablesPestPrecisionMediaBeforeEarlierProof(path);
     if (vegetables) return vegetables;
+    const intro = introMediaBeforeEarlierProof(path);
+    if (intro) return { bytes, sha256: intro.sha256, byteLength: intro.bytes };
     return { bytes, sha256: sha(bytes), byteLength: bytes.length };
   }
   const residualBefore = soilWaterResidualMediaBefore(path);
@@ -136,9 +139,10 @@ export function waterAssetSizesBeforeOrdinary(path: string) {
 }
 const media = JSON.parse(readFileSync(new URL('../docs/media/water-reviewed-precision-2026-10-05/frames.json', import.meta.url), 'utf8'));
 export function mediaSHAForEarlierSoilProof(path: string) {
-  const beforeSoil = soilMediaSHAForEarlierProof(path);
   const soilRow = assetsForSoil().find((row: any) => 'public' + row.url === path);
-  if (soilRow) return beforeSoil;
+  // Only Soil members need that historical chain; every other asset retains
+  // the validated Water/Intro/Vegetables projection plus its exact prior hash.
+  if (soilRow) return soilMediaSHAForEarlierProof(path);
   const changed = media.changed.find((r: any) => r.path === path);
   const current = waterMediaBeforeOrdinary(path).sha256;
   if (!changed) return current;

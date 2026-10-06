@@ -1,0 +1,792 @@
+{
+  "language": "st",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "n": 1,
+        "heading": "Market Gardening & Community",
+        "body": [
+          "Your garden gives food, income, and useful knowledge.",
+          "This module shows how to keep records, sell surplus, and build local food networks.",
+          "The aim is a farm that feeds the household and works as a small, clear economy."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Temo ya Marakeng le Setjhaba",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Serapa sa hao se fana ka dijo, lekeno le tsebo e molemo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Thuto ena e bontsha kamoo o ka bolokang direkoto, wa rekisa masalla, le ho haha marangrang a dijo a lehae.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Sepheo ke hore polasi e fepe lelapa, hape e sebetse e le a small, clear economy.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "n": 2,
+        "heading": "Why This Matters",
+        "body": [
+          "A harvest can feed the household, be sold, be shared, or be lost.",
+          "Recording these different uses helps you see what the farm produces and what reaches customers.",
+          "Use that information to protect household food and make better business decisions."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lebaka leo sena se leng bohlokwa ka lona",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ho rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Sebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "n": 3,
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end, you can record harvests and where they go.",
+          "You can work out the true cost of production before setting a price.",
+          "You can match surplus to a suitable customer or selling channel.",
+          "You can build a local network for seeds, tools, skills, and food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dintho tseo o tla kgona ho di etsa",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qetellong o tla kgona ho rekota dikotulo le moo di yang teng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "O tla kgona ho fumana ditjeo tsa nnete tsa tlhahiso pele o beha theko.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "O tla kgona ho bapisa masalla le moreki kapa mokgwa o loketseng wa ho rekisa.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "O tla kgona ho haha marangrang a lehae bakeng sa dipeo, disebediswa, bokgoni le dijo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "n": 4,
+        "heading": "Watch: What the Farm Record Shows",
+        "body": [
+          "The record follows each harvest to family food, sales, gifts, or compost.",
+          "Read across the season to see the farm as an economy before making a business decision."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Seo rekoto ya polasi e se bontshang",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Rekoto e latela kotulo ka nngwe ho ya dijong tsa lelapa, thekisong, dimphong kapa compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Bala rekoto ho pholletsa le sehla ho bona polasi e le moruo pele o etsa qeto ya kgwebo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "n": 5,
+        "heading": "Record Every Harvest",
+        "body": [
+          "Write down every harvest as it happens.",
+          "Record kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.",
+          "Use the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.",
+          "Do not rely on memory at the end of the season."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rekota kotulo e nngwe le e nngwe",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ngola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ngola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Sebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "O se ke wa itshetleha ka mohopolo qetellong ya sehla.",
+            "provenance": "reused verbatim from SESOTHO_MARKET_COMMUNITY_DRAFT lesson market-community-l1; unreviewed machine candidate; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "n": 6,
+        "heading": "Let One Season Answer Questions",
+        "body": [
+          "One season of records answers practical questions.",
+          "Which crops give the best yield per bed? Which return the most for each hour of work?",
+          "Which crops use more seeds, water, and compost than they return?",
+          "The record also shows which months leave the household buying food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Etsa hore sehla se le seng se arabe dipotso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sehla se le seng sa direkoto se araba dipotso tse sebetsang."
+          },
+          {
+            "status": "draft",
+            "text": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ke dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Rekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "n": 7,
+        "heading": "Find the True Cost",
+        "body": [
+          "Before setting a price, record production, packing and selling costs, including labour and transport.",
+          "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+          "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Fumana ditjeo tsa nnete",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Pele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Mohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.",
+            "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Hlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "n": 8,
+        "heading": "Plan for the Food Gap",
+        "body": [
+          "Use your record to find when household food runs short.",
+          "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+          "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rera bakeng sa nako ya kgaello ya dijo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Khetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Letsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "n": 9,
+        "heading": "Watch: Where Surplus Can Go",
+        "body": [
+          "Surplus can leave the farm through a roadside stall, a group delivery to a shop, or a box delivered to a household.",
+          "The arrows show each route."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Moo masalla a ka yang teng",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Masalla a ka tloha polasing ka setala se pela tsela, ka ho isa thepa lebenkeleng e le sehlopha, kapa ka lebokose le iswang lelapeng.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Metsu e bontsha tsela ka nngwe.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "n": 10,
+        "heading": "Know Your Customer",
+        "body": [
+          "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+          "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+          "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tseba moreki wa hao",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Botsa hore na moreki o hloka eng: sehlahiswa, bongata, boleng, ho iswa le letsatsi la tefo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Bapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Hlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "n": 11,
+        "heading": "Count the Work of Direct Selling",
+        "body": [
+          "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+          "A box scheme supplies a regular selection to agreed customers.",
+          "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bala mosebetsi wa ho rekisa ka kotloloho",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho nka nako, ho paka, dipalangoang le ho hlokomela bareki.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Mokgwa wa mabokose o fa bareki ba dumellaneng regular selection ya dihlahiswa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Dumellanang ka tse ka lebokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Diodara tsa kamehla di thusa ho rera feela ha bareki le balemi ba kgona ho boloka tumellano.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "n": 12,
+        "heading": "Plan Around Real Orders",
+        "body": [
+          "Start from what you can reliably supply and what customers want.",
+          "Check the costs and household food needs before promising regular boxes.",
+          "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Rera ho ya ka diotara tsa sebele",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Hlahloba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Boholo ba serapa kapa palo ya bareki feela ha e bolele esale pele lekeno. Leka mokgwa oo o ka o laolang mme o rekote diphetho.",
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "n": 13,
+        "heading": "Match the Channel to Your Supply",
+        "body": [
+          "If production changes from week to week, avoid promising a fixed delivery you cannot supply.",
+          "Offer the surplus you have and agree clear terms with customers.",
+          "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bapisa mokgwa wa thekiso le phepelo ya hao",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ha tlhahiso e fetoha beke le beke, qoba ho tshepisa thomello e sa fetoheng eo o ke keng wa kgona ho fana ka yona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Fana ka masalla ao o nang le ona, mme le dumellane ka dipehelo tse hlakileng le bareki.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Hlalosa ka botshepehi mekgwa ya hao ya ho lema. Pele o sebedisa letshwao, hlahloba setifikeiti kapa tseko efe kapa efe eo moreki a e hlokang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "n": 14,
+        "heading": "Watch: How Neighbours Strengthen a Harvest",
+        "body": [
+          "One farm can produce food.",
+          "A group can share seed, tools, skills, and transport.",
+          "Separate growers become a stronger local food network, with each household contributing what it can."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Kamoo baahisani ba matlafatsang kotulo",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Polasi e le nngwe e ka hlahisa dijo.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Sehlopha se ka arolelana peo, disebediswa, bokgoni le dipalangoang.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Balemi ba arohaneng ba ka theha marangrang a matla a dijo a lehae, lelapa ka leng le kenya letsoho ka seo le ka se kgonang.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "n": 15,
+        "heading": "Save Seed Together",
+        "body": [
+          "Neighbours can share different varieties and the work of saving seed.",
+          "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+          "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+          "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bolokang peo mmoho",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Record the crop, ",
+                "status": "draft",
+                "text": "Ngola sejalo, ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "variety",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": ", source and collection date. Plan ",
+                "status": "draft",
+                "text": ", mohlodi le letsatsi la ho bokella. Rera ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "suitable isolation, selection, drying",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " le ",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              },
+              {
+                "sourceEnglish": "storage",
+                "status": "english-hold",
+                "reason": "Exact English technical or business precision retained; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": " for each crop.",
+                "status": "draft",
+                "text": " bakeng sa sejalo se seng le se seng.",
+                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+              }
+            ],
+            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+          },
+          {
+            "status": "draft",
+            "text": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Before exchanging seed, ",
+                "status": "draft",
+                "text": "Pele o fapanyetsana peo, "
+              },
+              {
+                "sourceEnglish": "check whether the variety is protected and whether permission is needed.",
+                "status": "english-hold"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "n": 16,
+        "heading": "Share Expensive Tools",
+        "body": [
+          "Tool sharing puts expensive equipment within reach of the group.",
+          "A water pump or grain mill may be beyond one household’s budget.",
+          "Shared use spreads the value across the group and helps each farm do work it could not do alone."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Arolelanang disebediswa tse turang",
+          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ho arolelana disebediswa ho etsa hore sehlopha se fihlele disebediswa tse turang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Pompo ya metsi kapa tshilo ya dijo-thollo e ka ba kahodimo ho tekanyetso ya lelapa le le leng.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Tšebeliso e arolelanoang e aba boleng ba sesebediswa hara sehlopha mme e thusa polasi ka nngwe ho etsa mosebetsi oo e neng e ke ke ya o etsa e le nngwe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "n": 17,
+        "heading": "Reduce Loss Between Harvest and Sale",
+        "body": [
+          "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+          "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+          "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Fokotsa tahlehelo pakeng tsa kotulo le thekiso",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tshwara dihlahiswa ka hloko, mme o di boloke moriting o loketseng, diphuthelong le polokelong e loketseng nakong yohle ya ho di isa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Moreki ya haufi a ka fokotsa leeto, empa tahlehelo le ditjeo tsa thekiso di ntse di lokela ho lekanngwa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Bapisa tjhelete e amohetsweng kamora ditefello, dipalangoang le ho senyeha bakeng sa kgetho ka nngwe. O se ke wa nahana hore moreki ya haufi ka mehla o fana ka poelo e ntle ka ho fetisisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "n": 18,
+        "heading": "Share Skills and Check Results",
+        "body": [
+          "Neighbours can demonstrate useful skills and compare what happened on their own farms.",
+          "Record the method, conditions and result so others can judge whether it may suit their land.",
+          "Seek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Arolelana bokgoni mme o hlahlobe diphetho",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Baahisani ba ka bontsha bokgoni bo molemo mme ba bapisa se etsahetseng mapolasing a bona.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ngola mokgwa, maemo le sephetho hore ba bang ba kgone ho bona hore na o ka tshwanelana le naha ya bona.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "n": 19,
+        "heading": "Field Assignment: Make a Farm Record",
+        "body": [
+          "Use headings for harvest, where it went, costs, and labour.",
+          "Record every kilogram, dozen, or bundle as it leaves the farm.",
+          "Include food kept by the household, produce sold, produce gifted, and produce composted.",
+          "At the end of one season, identify a crop that returns well and a month when the household buys food."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mosebetsi wa tshimo: Etsa rekoto ya polasi",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebelisa dihlooho tsa kotulo, moo e yang teng, ditjeo le mosebetsi.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Rekota kilogram, dazene kapa ngata e nngwe le e nngwe ha e tloha polasing.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Kenyelletsa dijo tse bolokwang ke lelapa, tse rekiswang, tse fanwang e le dimpho le tse kenngwang compost.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Qetellong ya sehla se le seng, supa sejalo se fanang ka poelo e ntle le kgwedi eo lelapa le rekang dijo ka yona.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "n": 20,
+        "heading": "Field Action: Use the Record",
+        "body": [
+          "Choose one real decision from your farm record.",
+          "Compare the cost and return of a crop or selling route, or plan for a household food gap using local growing conditions.",
+          "Then agree one practical seed swap, tool share, shared delivery or skills session with neighbours. Before a seed swap, check whether the variety is protected and whether permission is needed. Record responsibilities and review what happens."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ketso ya tshimo: Sebedisa rekoto",
+          "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kgetha qeto e le nngwe ya sebele ho tswa rekotong ya polasi ya hao.",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Bapisa ditjeo le poelo ya sejalo kapa mokgwa wa thekiso, kapa o rere bakeng sa kgaello ya dijo tsa lelapa o sebedisa maemo a ho lema a lehae.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          {
+            "status": "draft",
+            "text": "Ebe le dumellane le baahisani ka one practical action: peo swap, ho arolelana sesebediswa, thomello e kopanetsweng kapa kopano ya ho arolelana bokgoni. Before a seed swap, check whether the variety is protected and whether permission is needed. Rekota boikarabelo, mme le hlahlobe se etsahalang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -58,7 +58,11 @@ test('same-size unlisted disk mutation after initialization withdraws the entire
       const path='public/course-images/vegetables-staples/vegetables-staples-l1.jpg';
       const original=readFileSync(path);const corrupt=Buffer.from(original);corrupt[corrupt.length-1]^=1;
       writeFileSync(path,corrupt);
-      assert.throws(()=>validateSilentIntroMedia(),/entire current inventory SHA/);
+      // The later full-inventory guard can reject first. Both routes must name
+      // this actual same-size corrupted asset, not an unrelated setup failure.
+      assert.throws(()=>validateSilentIntroMedia(),error=>
+        error instanceof Error && error.message.includes(path) &&
+        /entire current inventory SHA|exact current inventory hash/.test(error.message));
       writeFileSync(path,original);validateSilentIntroMedia();
     `],{cwd:fixture,stdio:'pipe'});
   } finally {rmSync(fixture,{recursive:true,force:true});}

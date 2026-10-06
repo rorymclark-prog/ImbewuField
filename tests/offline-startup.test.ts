@@ -179,11 +179,14 @@ test('worker activation retires replaced Reading and Market cards while preservi
     '/course-decks/reading-landscape/zu/slide-01.jpg',
     '/course-audio/reading-landscape/en/slide-01.mp3',
     '/course-audio/reading-landscape/st/slide-01.mp3',
-    // Market L1 now replaces ST1; preserve unchanged ST6 and VE1 instead of pinning that old card.
-    '/course-decks/market-community/st/slide-06.webp',
+    // The final paired batch also replaces Market ST6; preserve an unrelated
+    // Seeds still while explicitly checking ST6 retirement and its later replacement.
+    '/course-decks/seeds-sovereignty/st/slide-06.webp',
     '/course-decks/market-community/ve/slide-01.webp',
   ];
   const marketReplaced = [
+    '/course-decks/market-community/st/slide-06.webp',
+    '/course-decks/market-community/st/slide-06.webp?revision=old',
     '/course-decks/market-community/st/slide-01.webp',
     '/course-decks/market-community/ts/slide-07.webp?revision=old',
   ];
@@ -199,7 +202,10 @@ test('worker activation retires replaced Reading and Market cards while preservi
     'activation records the migration so a later install does not sweep newly chosen slides');
 
   await course.put(old[1], new Response('replacement chosen after activation'));
+  await course.put('/course-decks/market-community/st/slide-06.webp', new Response('current Market replacement'));
   await h.lifecycle('activate');
   assert.equal(await (await course.match(old[1]))!.text(), 'replacement chosen after activation',
     'the shipped worker’s later activation must respect the one-time marker');
+  assert.equal(await (await course.match('/course-decks/market-community/st/slide-06.webp'))!.text(),
+    'current Market replacement', 'the new migration must not evict a later selected Market card');
 });

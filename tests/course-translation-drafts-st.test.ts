@@ -454,10 +454,10 @@ test('Sesotho pest step framing preserves diagnosis before action and treatment 
   assert.ok(paragraphs[9].includes('Netefatsa hore ketso e loketse bothata') &&
     paragraphs[9].includes('behe leihlo sephethong'),
   'the action-fit and result-monitoring clauses are localized without changing the preceding treatment safeguards');
-  // 5 October 2026: ordinary linking prose is now drafted in this paragraph; keep every
-  // crop/pest, label, protection and harvest restriction plus the exact no-improvised-dose ban.
+  // 6 October 2026: the newest reviewed ending keeps one shared negative over mixtures
+  // and stronger doses. Earlier English wording is no longer the live target.
   for (const safeguard of ['product registered for that crop and pest', 'label ya yona', 'neem products',
-    'protection and harvest waiting instructions', 'Do not improvise mixtures or stronger doses']) {
+    'protection and harvest waiting instructions', 'O se ke wa itirela metswako kapa stronger doses']) {
     assert.ok(paragraphs[10].includes(safeguard), `treatment safeguard remains visible: ${safeguard}`);
   }
   assert.equal(draft.body.sourceEnglish.split('\n\n')[10], source.body.split('\n\n')[10],

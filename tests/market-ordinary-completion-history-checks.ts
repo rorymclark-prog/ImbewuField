@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 
 const packet = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/final-root-reviewed-candidates.json', import.meta.url), 'utf8'));
 const orderPrecision = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/market-ordinary-completion-2026-10-06/sesotho-order-noun-precision.json', import.meta.url), 'utf8'));
@@ -83,6 +84,9 @@ function expectedApplied(language: MarketLanguage) {
 
 /** Validate the exact final overlay, then reconstruct the state before this dated batch. */
 export function validateAndRewindMarketOrdinary<T extends { lessons: readonly any[]; language: MarketLanguage }>(native: T, language: MarketLanguage): T {
+  // 6 October: require the complete source-bound 28-field overlay to match before
+  // reconstructing this earlier Market snapshot.
+  native = nativeOrdinaryBeforeFinalBatch(native);
   assert.equal(packet.baselineCommit, 'b2c81e32458f83cff951250e3b9065d2b1314206');
   assert.equal(packet.reviewStatus, 'root-repaired data-only packet; pending root review; no fluency approval');
   assert.deepEqual(native, expectedApplied(language), `${language}: current full registry equals only the approved overlay plus the explicit status override`);
@@ -121,7 +125,9 @@ export function validateAndRewindMarketOrdinary<T extends { lessons: readonly an
 
 /** Validate live resolver output and reconstruct the visible state before this batch for historical tests. */
 export function rewindMarketOrdinaryPresentation<T extends { content: any; status: string }>(original: T, lessonId: string, language: MarketLanguage): T {
-  const result = structuredClone(original);
+  // 2026-10-06: validate and rewind the final native/residual layer before
+  // testing the older 79-row source-bound presentation claim.
+  const result = nativeOrdinaryPresentationBeforeFinalBatch(original, lessonId, language);
   if (language === 'st' && lessonId === 'market-community-l2') {
     assert.equal(result.content.quiz[1].correct, orderPrecision.correctIndex);
     for (const repair of orderPrecision.rows) {

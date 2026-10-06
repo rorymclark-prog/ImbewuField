@@ -150,7 +150,13 @@ export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
 export function soilMediaBeforeOrdinary(path: string) {
   const residual = soilWaterResidualMediaBefore(path);
   const row = assets.find(item => 'public' + item.url === path);
-  // This call validates all six current images and their six live size entries before any old proof is exposed.
+  // A nonmember returns only its actual descriptor, not a historical claim.
+  // Do not reconstruct every media layer for each unrelated preserved asset.
+  if (!residual && !row) {
+    const bytes = readFileSync(path);
+    return { sha256: sha(bytes), bytes: bytes.length };
+  }
+  // Every actual rewind still validates all six images and the full manifest.
   soilAssetSizesBeforeOrdinary();
   if (residual && !row) return residual;
   if (residual && row) {

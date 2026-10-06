@@ -4,7 +4,8 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { vegetablesPestPrecisionFrames } from './vegetables-pest-precision-media-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
-import { marketDeckBeforeOrdinary, readCurrentMarketDecks } from './market-ordinary-deck-checks.ts';
+import { marketDeckBeforeOrdinary, marketDeckBeforeNativeResidual, readCurrentMarketDecks } from './market-ordinary-deck-checks.ts';
+import { nativePairedResidualFrames, nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 const folder = 'docs/media/market-ordinary-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
@@ -13,6 +14,15 @@ const expectedPaths = [
   ...[7, 8, 10, 11, 15, 17].map(n => `/course-decks/market-community/ve/slide-${String(n).padStart(2, '0')}.webp`),
   ...[7, 10, 17].map(n => `/course-decks/market-community/ts/slide-${String(n).padStart(2, '0')}.webp`),
 ];
+
+export function marketFrameBeforeNativeResidual(path: string) {
+  const url = path.startsWith('public/') ? path.slice(6) : path;
+  const current = nativePairedResidualFrames.find((frame:any)=>frame.url===url);
+  if (!current) return undefined;
+  const previous = nativePairedResidualMediaBefore(url);
+  assert.ok(previous, url + ': listed redraw has an exact validated predecessor');
+  return {...previous, width:current.width, height:current.height};
+}
 
 
 // Many older preservation proofs ask about hundreds of files individually.
@@ -39,26 +49,33 @@ export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSyn
   const proof = JSON.parse(proofBytes.toString());
   assert.equal(proof.frames.length, 11);
   assert.deepEqual(proof.frames.map((frame: { path: string }) => frame.path).sort(), expectedPaths.slice().sort());
-  const decks = readCurrentMarketDecks();
-  marketDeckBeforeOrdinary(decks); // validates all current targets, sources, statuses and unlisted pairs first
+  const currentDecks = readCurrentMarketDecks();
+  marketDeckBeforeOrdinary(currentDecks);
+  const decks = marketDeckBeforeNativeResidual(currentDecks);
   const before = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(sha(before), proof.manifestBeforeSHA256);
   let expectedManifest = before;
   for (const frame of proof.frames) {
     assert.deepEqual(frame.pairedSource, decks[frame.language].slides[frame.slide - 1], frame.path);
-    const bytes = readFileSync('public' + frame.path);
-    assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
-    assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
-    assert.equal(bytes.length, frame.new.bytes, frame.path);
-    assert.equal(sha(bytes), frame.new.sha256, frame.path);
+    const later = marketFrameBeforeNativeResidual(frame.path);
+    if (later) {
+      assert.deepEqual(later, {bytes:frame.new.bytes,sha256:frame.new.sha256,width:frame.new.width,height:frame.new.height},
+        frame.path + ': the later redraw preserves this exact input and canvas');
+      assert.ok(currentManifest.includes(`  '${frame.path}': ${frame.new.bytes},`));
+    } else {
+      const bytes = readFileSync('public' + frame.path);
+      assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
+      assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
+      assert.equal(bytes.length, frame.new.bytes, frame.path);
+      assert.equal(sha(bytes), frame.new.sha256, frame.path);
+      assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
+      assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
+      assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
+      assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
+    }
     assert.notEqual(frame.new.sha256, frame.old.sha256, frame.path);
     assert.equal(frame.new.width, 1440);
     assert.ok(frame.new.height >= 5400, 'natural-height panels must not be cropped');
-    // Pillow's lossy WebP carries a VP8 frame header with actual decoded dimensions.
-    assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
-    assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
-    assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
-    assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
     const oldEntry = `  '${frame.path}': ${frame.old.bytes},`;
     assert.equal(expectedManifest.split(oldEntry).length, 2, 'one exact old manifest slot');
     expectedManifest = expectedManifest.replace(oldEntry, `  '${frame.path}': ${frame.new.bytes},`);
@@ -83,7 +100,7 @@ export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSyn
       assert.deepEqual(proof.frames.find((frame: { path: string }) => frame.path === row.path).old, row);
       continue;
     }
-    const actual = observedFile('public' + row.path);
+    const actual = marketFrameBeforeNativeResidual(row.path) ?? observedFile('public' + row.path);
     assert.equal(actual.bytes, row.bytes, row.path);
     assert.equal(actual.sha256, row.sha256, row.path);
   }
@@ -119,10 +136,19 @@ export function marketAssetSizesBeforeOrdinary(currentManifest?: string) {
 }
 
 export function marketMediaBeforeEarlierProof(path: string) {
-  const latest = vegetablesL3MediaBeforeEarlierProof(path);
-  if (latest) return latest;
-  const proof = validateCurrentMarketOrdinaryMedia();
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
+  // A later redraw of a Market URL must still pass through this older Market
+  // layer; returning its immediate predecessor would skip the eleven-frame history.
+  if (!url.startsWith('/course-decks/market-community/')) {
+    const latest = vegetablesL3MediaBeforeEarlierProof(path);
+    if (latest) return latest;
+  }
+  // Only the immutable eleven-frame layer or a listed later redraw can expose
+  // a predecessor. All other files fall through to actual byte/hash checks.
+  if (!expectedPaths.includes(url) && !nativePairedResidualFrames.some(frame => frame.url === url)) return undefined;
+  const proof = validateCurrentMarketOrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
-  return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;
+  if (frame) return {sha256:frame.old.sha256,bytes:frame.old.bytes};
+  const later = marketFrameBeforeNativeResidual(url);
+  return later ? {sha256:later.sha256,bytes:later.bytes} : undefined;
 }

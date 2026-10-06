@@ -1,3 +1,4 @@
+import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
 import { marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
@@ -1360,11 +1361,21 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
       `${lang}: all treatment clauses remain in source order with complete coverage`);
     const safetyAnchors = [
       'product registered for that crop and pest', 'label', 'neem products.',
-      'protection and harvest waiting instructions.', 'Do not improvise mixtures or stronger doses.',
+      'protection and harvest waiting instructions.', 'stronger doses',
     ];
     const heldSource = treatment.segments.filter((segment: any) => segment.status === 'english-hold')
       .map((segment: any) => segment.sourceEnglish).join('');
     for (const anchor of safetyAnchors) assert.ok(heldSource.includes(anchor), `${lang}: exact English safety anchor remains held: ${anchor}`);
+    // The final native/deck batch translates the ordinary prohibition while
+    // retaining the exact stronger-doses anchor. Check the actual negative and
+    // OR composition, rather than requiring that whole sentence to stay English.
+    const negative = { st: ' O se ke wa itirela ', ve: ' Ni songo ḓiitela ', ts: ' U nga tiendleli ' }[lang];
+    const negativeSegment = treatment.segments.find((segment: any) => segment.sourceEnglish === ' Do not improvise ');
+    assert.deepEqual(negativeSegment, { sourceEnglish: ' Do not improvise ', status: 'draft', text: negative });
+    const tail = treatment.segments.slice(treatment.segments.indexOf(negativeSegment));
+    assert.equal(tail.map((segment: any) => segment.sourceEnglish).join(''), ' Do not improvise mixtures or stronger doses.');
+    assert.equal(tail.find((segment: any) => segment.sourceEnglish === ' or ')?.text,
+      { st: ' kapa ', ve: ' kana ', ts: ' kumbe ' }[lang], 'negative applies to mixtures OR stronger doses');
     const learnerLesson = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
     const learnerTreatment = resolveLearnerLessonPresentation(learnerLesson, lang).content.body.split('\n\n')[10];
     assert.equal(targetVisibleText(treatment), learnerTreatment,
@@ -2768,12 +2779,16 @@ test('regional closing records passages remain visibly unreviewed and source-pai
   const source = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
   for (const lang of ['st', 've', 'ts'] as const) {
     const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
+    // Validate all six paired files and the accepted 13-field composition before
+    // allowing the newer mixed records field alongside existing full drafts.
+    deckBeforeNativePairedResidual(packet, 'market-community');
     const slides = validatePairedDraft(packet, source, lang);
     for (const [slideNumber, paragraphIndex] of [[1, 1], [6, 0], [18, 1]] as const) {
       const part = slides[slideNumber - 1].target.body[paragraphIndex];
-      assert.equal(part.status, 'draft', `${lang} slide ${slideNumber} shows the records draft`);
+      assert.ok(part.status === 'draft' || part.status === 'mixed', `${lang} slide ${slideNumber} shows a labelled localized records draft`);
+      if (part.status === 'mixed') assert.equal(part.segments.map((segment: any) => segment.sourceEnglish).join(''), source[slideNumber - 1].body[paragraphIndex]);
       assert.equal(slides[slideNumber - 1].english.body[paragraphIndex], source[slideNumber - 1].body[paragraphIndex]);
-      assert.ok(part.text && part.text !== source[slideNumber - 1].body[paragraphIndex]);
+      assert.ok(targetVisibleText(part) && targetVisibleText(part) !== source[slideNumber - 1].body[paragraphIndex]);
       if (part.provenance) assert.ok(part.provenance.includes('unreviewed'));
     }
     if (lang === 'ts') assert.ok(slides[0].target.body[1].text.includes('local food networks'),

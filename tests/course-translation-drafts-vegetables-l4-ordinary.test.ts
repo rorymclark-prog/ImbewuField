@@ -141,7 +141,7 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
   const sesotho = st.lessons.find(item => item.id === 'vegetables-staples-l4')!;
   const venda = ve.lessons.find(item => item.id === 'vegetables-staples-l4')!;
   const xitsonga = ts.lessons.find(item => item.id === 'vegetables-staples-l4')!;
-  for (const text of [sesotho.body.sesothoDraft, venda.body.tshivendaDraft, xitsonga.body.xitsongaDraft]) {
+  for (const [language, text] of [['st', sesotho.body.sesothoDraft], ['ve', venda.body.tshivendaDraft], ['ts', xitsonga.body.xitsongaDraft]] as const) {
     const paragraphs = text.split('\n\n');
     assert.match(paragraphs[6], /underside|bokatlase|tlhelo ḽa fhasi|tlhelo ra le hansi/i,
       'the observation step retains the lower leaf surface');
@@ -151,9 +151,14 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
       'action stays after observation and diagnosis');
     assert.match(paragraphs[9], /lightest thing that works/,
       'the least intensive effective action remains explicit');
-    for (const safeguard of ['registered for that crop and pest', 'label', 'neem products', 'protection and harvest waiting instructions', 'Do not improvise mixtures or stronger doses']) {
+    for (const safeguard of ['registered for that crop and pest', 'label', 'neem products', 'protection and harvest waiting instructions']) {
       assert.ok(paragraphs[10].includes(safeguard), `the full treatment restriction remains explicit: ${safeguard}`);
     }
+    const sharedNegative = language === 'st' ? 'O se ke wa itirela metswako kapa stronger doses.'
+      : language === 've' ? 'Ni songo ḓiitela misanganedzo kana stronger doses.'
+        : 'U nga tiendleli swihlanganisi kumbe stronger doses.';
+    assert.ok(paragraphs[10].endsWith(sharedNegative),
+      'one negative instruction covers both improvised mixtures and stronger doses without banning ordinary use');
   }
   assert.deepEqual(unchangedRows.map((row: any) => row.sourceEnglish), [
     'An improvised stronger mixture',
