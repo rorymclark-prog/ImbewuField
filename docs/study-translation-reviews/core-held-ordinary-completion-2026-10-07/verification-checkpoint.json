@@ -1,5 +1,5 @@
 {
-  "status": "Unpublished. Original typecheck/fullsuite/diff pass. PR970 prerequisite actual phone/offline review resumed serially.",
+  "status": "Content d4ab8f1b integrated at41c5323b; original typecheck/full4825pass0fail1TODO/diff pass. Release-note commit pending. Batch not pushed/previewed/published; PR970 final exact-head publication prerequisites running.",
   "base": "c573f4e9d15f78223ab6d1789107fb544340e6e8",
   "branch": "codex/regional-held-ordinary-completion-20261007",
   "fields": 109,
@@ -33,7 +33,7 @@
     "fail": 0
   },
   "liveSuite": {
-    "status": "none; r7 completed"
+    "status": "none; both original and integrated full suites terminal pass"
   },
   "previousRun": {
     "r3": "Stopped own npm suite tree after confirming avoidable repeated reads in history guard; incomplete, no pass claim.",
@@ -49,5 +49,15 @@
     "fail": 0,
     "log": "/tmp/imbewu-held-ordinary-final-three-focused-20261007.log",
     "durationMs": 285896.7
+  },
+  "contentCommit": "d4ab8f1b",
+  "integratedContentCommit": "41c5323b5275b57dd5177a71785e621d6b7c8a7e",
+  "integratedFull": {
+    "status": "terminal exit0",
+    "total": 4826,
+    "pass": 4825,
+    "fail": 0,
+    "todo": 1,
+    "log": "/tmp/imbewu-core-held-integrated-full-tests-20261007.log"
   }
 }

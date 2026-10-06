@@ -6,4 +6,4 @@ The complete ten frozen input documents are under `before/`. The applied plan an
 
 Original typecheck, full suite and whitespace checks pass: 4808 passing tests, zero failures and one unchanged shape-sync-loss TODO (4809 total). Historical media claims retain their source, asset and corruption checks through explicit chronology reconstruction. The final three focused checks also pass.
 
-Root inspected all 69 compressed frames in nine contact sheets and five full compressed cards. Exact-preview 390px and offline review remain outstanding. No commit, push, preview or publication for this batch yet. PR970 is the prerequisite branch. Work is serial to preserve local RAM.
+Root inspected all 69 compressed frames in nine contact sheets and five full compressed cards. Exact-preview 390px and offline review remain outstanding. Content is saved at d4ab8f1b, then history-integrated at 41c5323b with current money-book and PR970 releases. Integrated typecheck/full suite/whitespace pass: 4825 tests pass, zero fail and one unchanged TODO. The batch is not yet pushed, previewed or published. PR970 remains the prerequisite release. Work is serial to preserve local RAM.
