@@ -1,0 +1,20 @@
+{
+ "counts": {
+  "repair": 5,
+  "ok": 41,
+  "hold": 1
+ },
+ "top_issues": [
+  "R188 'Uswidi' = sweets/candy, not Spinach (meaning; repaired to Isipinashi; also an existing placeholder error 'bv. Uswidi' should be checked)",
+  "R263 'Isivande sezithelo' = pumpkin dish, not orchard; repaired to 'Ingadi yezithelo' (also check zu.ts recordsOrchardOutNote which uses the same wrong word)",
+  "R265 'izimbiza' = cooking pots, not jars; held (no confident replacement)",
+  "R184 'imali yokudayisa' ambiguous vs 'sale amount'; repaired",
+  "R244 'kanye nokufakiwe kwezindleko' awkward/unclear; repaired",
+  "R248 'uzama lezi zindleko futhi' mirrors English but may suggest re-entering the cost (duplicate risk) - minor, left ok",
+  "R185 draft is faithful; 'Awuxhunyiwe' is natural; no 'do not retype' wording needed since English lacks it",
+  "R001 wording tidy-up of 'flat' (lilele ngokuyisicaba)",
+  "R104/R237 'Picked' correctly rendered with vuna (harvest) not vuma; flagged by drafter that existing locale 'Okuvunyiwe' is wrong - existing text should be audited",
+  "Loanwords (iyunithi, amakhreyithi, amathreyi, divayisi) are plausible but unverified by a native speaker"
+ ],
+ "confidence": "Machine review by a non-native model; reasonable on Zulu morphology and common vocabulary but not a fluent-speaker approval. Item-level lexical claims (uswidi, isivande, izimbiza) are fairly confident; fine nuances of register, loanword preferences (kg, crate, tray) and naturalness are less certain and need native review."
+}

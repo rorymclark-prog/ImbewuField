@@ -1459,7 +1459,7 @@ const dict: Dict = {
   myRecordsBuyerLabel: 'Umthengi (okukhethekile)',
   myRecordsBuyerPlaceholder: 'bv. Imakethe',
   myRecordsSaleValidationError: 'Isitshalo, kg kanye nenani (R) ziyadingeka.',
-  myRecordsSaveSale: 'Londoloza ukudayisa',
+  myRecordsSaveSale: 'Londoloza ukudayisa ne-invoyisi',
   myRecordsNoHarvests: 'Ayikho imivuno erekhode okwamanje.',
   myRecordsTotalHarvested: 'iqoqiwe yonke',
   myRecordsTopsLabel: 'ephezulu',

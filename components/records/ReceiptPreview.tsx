@@ -7,11 +7,12 @@ import { announceOverlay } from '@/lib/overlay-signal';
 import { expenseReceiptScope, loadExpenseReceipt, receiptScopeIsCurrent, type ExpenseReceipt } from '@/lib/expense-receipts';
 import { getSandboxExpenses, isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
+import { recordsFill } from '@/lib/records-regional-drafts';
 
 /** The tour's receipt is drawn from its own expense, so the slip and ledger always agree. */
 export function ReceiptPaper({ expense }: { expense: Pick<ExpenseLog, 'id' | 'item' | 'supplier' | 'amount' | 'spent_at'> }) {
   const { lang } = useLanguage();
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const clean = (value: string) => value.replace(/^Sample\s*[—–-]\s*/i, '');
   return <article style={{ margin: '16px auto', maxWidth: 360, padding: '28px 24px', background: '#FFFCF2', color: '#302C24', boxShadow: '0 6px 24px #00000018', borderTop: '5px solid #AC926A', fontFamily: 'var(--font-mono), monospace', lineHeight: 1.65 }}>
     <Receipt size={27} style={{ margin: '0 auto 10px', color: '#6F7656' }} />
@@ -27,7 +28,7 @@ export function ReceiptPaper({ expense }: { expense: Pick<ExpenseLog, 'id' | 'it
 
 export default function ReceiptPreview({ expense }: { expense: ExpenseLog }) {
   const { lang } = useLanguage();
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const dialog = useRef<HTMLDialogElement>(null);
   const [receipt, setReceipt] = useState<ExpenseReceipt | null>(null);
   const [photoUrl, setPhotoUrl] = useState('');
@@ -84,7 +85,7 @@ export default function ReceiptPreview({ expense }: { expense: ExpenseLog }) {
     <button type="button" onClick={() => void openReceipt()} aria-label={`${text('View receipt for', 'Buka irisidi lika')} ${expense.item}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44, padding: '6px 10px', color: 'var(--color-muted-strong)', border: '1px solid var(--color-border)', borderRadius: 9, fontSize: 12 }}><Eye size={16} /> {text('View slip', 'Buka irisidi')}</button>
     <dialog ref={dialog} onClose={() => { announceOverlay(false); clearPhoto(); }} aria-label={text('Purchase receipt', 'Irisidi lokuthenga')} style={{ width: `min(${photoUrl ? 760 : 440}px, calc(100vw - 24px))`, maxHeight: 'calc(100dvh - 24px)', overflow: 'auto', padding: 16, border: '1px solid #D5CAB6', borderRadius: 18, background: '#EDE6D7', color: '#302C24' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}><h2 style={{ fontSize: 20 }}>{text('Purchase receipt', 'Irisidi lokuthenga')}</h2><button type="button" aria-label={text('Close receipt', 'Vala irisidi')} onClick={() => dialog.current?.close()} style={{ minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}><X size={22} /></button></div>
-      {loading ? <p role="status">{text('Opening receipt…', 'Kuvulwa irisidi…')}</p> : error ? <div><p role="alert">{error}</p><button type="button" onClick={() => void openReceipt()} style={{ minHeight: 44, textDecoration: 'underline' }}>{text('Try again', 'Zama futhi')}</button></div>
+      {loading ? <p role="status">{text('Opening receipt…', 'Kuvulwa irisidi…')}</p> : error ? <div><p role="alert">{recordsFill(lang, error)}</p><button type="button" onClick={() => void openReceipt()} style={{ minHeight: 44, textDecoration: 'underline' }}>{text('Try again', 'Zama futhi')}</button></div>
         : photoUrl && receipt ? <>
           <p style={{ margin: '8px 0', fontSize: 14 }}>{expense.item} · R {expense.amount.toFixed(2)}</p>
           <p style={{ margin: '8px 0', fontSize: 12 }}>{text('Original photo · saved on this device only', 'Isithombe sokuqala · sigcinwe kule divayisi kuphela')}</p>
