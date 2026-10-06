@@ -42,9 +42,10 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 October 2026', sha: 'f276b6ad', changes: [
+  { when: '6 October 2026', sha: 'e8eb9841', changes: [
     'Market lessons and questions add regional drafts beside exact English.',
     'Eleven silent Market slides show fuller drafts and precise cost wording.',
+    'Sesotho Market questions keep precise English order terms beside draft prose.',
   ], tour: [
     { title: 'Compare Market drafts',
       where: 'Study → Market Gardening & Community',
