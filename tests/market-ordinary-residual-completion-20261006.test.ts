@@ -2,7 +2,16 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as resolveCurrent } from '../lib/course-localization.ts';
+import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+
+// This dated 79-row claim is checked after validating the later full native layer.
+const resolveLearnerLessonPresentation: typeof resolveCurrent = (...args) => {
+  const result = resolveCurrent(...args);
+  return result.status === 'draft'
+    ? nativeOrdinaryPresentationBeforeFinalBatch(result, args[0].id, args[1]) as typeof result
+    : result;
+};
 import { SESOTHO_MARKET_COMMUNITY_DRAFT as st } from '../lib/course-translation-drafts-st-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as ve } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as ts } from '../lib/course-translation-drafts-ts-market-community.ts';
@@ -27,7 +36,7 @@ function resolvedField(content: any, row: any): string {
   return match[2] === 'q' ? question.q : match[2] === 'rationale' ? question.rationale : question.options[Number(match[3])];
 }
 function draftTarget(language: keyof typeof targetKey, lessonId: string, fieldPath: string): string {
-  const lesson: any = drafts[language].lessons.find(item => item.id === lessonId)!;
+  const lesson: any = nativeOrdinaryBeforeFinalBatch(drafts[language]).lessons.find(item => item.id === lessonId)!;
   if (fieldPath === 'title') return lesson.title[targetKey[language]];
   if (fieldPath === 'infographicAlt') return lesson.infographicAlt[targetKey[language]];
   if (fieldPath.startsWith('body.')) return lesson.body[targetKey[language]].split('\n\n')[Number(fieldPath.slice(5))];

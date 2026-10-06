@@ -1,3 +1,4 @@
+import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 import { vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
@@ -792,7 +793,9 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
   assert.equal(l2.quiz[1].options[3].reviewStatus, 'machine-draft');
   assert.match(l2.quiz[0].question.tshivendaDraft, /vhege dziṅwe na dziṅwe dza mbili u swika kha tharu/);
   assert.match(l2.quiz[1].rationale.tshivendaDraft, /does not guarantee immediate feeding/);
-  const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+  // The final ordinary layer localizes safe/suitable without changing the negative.
+  // Validate its entire accepted registry before retaining this dated wording.
+  const l4 = nativeOrdinaryBeforeFinalBatch(learnerVegetablesDraft).lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
   assert.equal(l4.keyPoints[3].tshivendaDraft, 'Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label.');
   assert.match(l4.quiz[0].rationale.tshivendaDraft, /dose, protection and harvest waiting instructions/);
   assert.match(l4.quiz[0].rationale.tshivendaDraft, /a i iti uri improvised treatment i vhe safe or suitable/);

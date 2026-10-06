@@ -3,7 +3,6 @@ import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { rewindMarketOrdinaryPresentation, validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
-import { nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-APPLIED-2026-10-05.json', import.meta.url), 'utf8'));
 const source = COURSE_MODULES.find(module => module.id === 'market-community')!;
@@ -49,7 +48,6 @@ export const reconstructMarketPresentationBeforeCompletion: typeof resolveLearne
   let result = resolveLearnerLessonPresentation(...args);
   const [lesson, language] = args;
   if (result.status !== 'draft' || !lesson.id.startsWith('market-community-') || !['st', 've', 'ts'].includes(language)) return result;
-  result = nativeOrdinaryPresentationBeforeFinalBatch(result, lesson.id, language) as typeof result;
   result = rewindMarketOrdinaryPresentation(result, lesson.id, language as keyof typeof targetKeys) as typeof result;
   for (const field of proof.fields.filter((row: any) => row.language === language && row.lessonId === lesson.id)) {
     let container: any = result.content;

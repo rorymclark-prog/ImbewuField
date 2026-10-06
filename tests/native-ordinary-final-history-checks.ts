@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT as readVe } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
@@ -232,4 +233,24 @@ export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: 
     setPresentationTarget(reconstructed.content, row.field.fieldLocator, old);
   }
   return reconstructed;
+}
+
+/** 2026-10-06: Reading shares a source file with the immutable Intro968 export.
+ * Validate its complete accepted native object before projecting the sole new
+ * Reading body literal; the caller still checks every other byte by the old SHA.
+ */
+export function tsSharedSourceBeforeNativeOrdinary(bytes: string, currentReading: any = readTs): string {
+  nativeOrdinaryBeforeFinalBatch(currentReading);
+  const rows = fieldProof.fields.filter((row: any) => row.registryExport === 'XITSONGA_READING_LANDSCAPE_DRAFT');
+  assert.equal(rows.length, 1, 'only the accepted TS Reading body field may be projected in the shared source');
+  const row = rows[0];
+  const after = JSON.stringify(row.appliedWholeTarget);
+  const before = JSON.stringify(row.beforeWholeTarget);
+  assert.equal(bytes.split(after).length - 1, 1, 'the exact accepted TS Reading body literal occurs once');
+  assert.notEqual(after, before, 'the accepted source projection must change exactly its listed literal');
+  const restored = bytes.replace(after, before);
+  assert.equal(createHash('sha256').update(restored).digest('hex'),
+    'f34dd03aeba8b72b5bc684b9491e27ee4cb65da2153dbbc09b8fbe0967670816',
+    'TS shared source preserves every Intro968 and unlisted byte after only the accepted Reading projection');
+  return restored;
 }

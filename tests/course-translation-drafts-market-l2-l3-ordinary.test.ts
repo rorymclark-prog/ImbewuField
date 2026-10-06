@@ -195,13 +195,14 @@ test('Market L2/L3 source drift withdraws the regional draft', () => {
   assert.equal(result.content.body, drifted.body);
 });
 
+// The newest full-layer guard now rejects corrupt input before the dated guard.
 test('Historical Market reconstruction rejects an altered final target or English source pair', () => {
   const changedTarget = structuredClone(SESOTHO_MARKET_COMMUNITY_DRAFT);
   changedTarget.lessons.find(lesson => lesson.id === 'market-community-l2')!.body.sesothoDraft += ' Added advice.';
-  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedTarget, 'st'), /current full registry equals only the approved overlay/);
+  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedTarget, 'st'), /current full registry equals only the approved overlay|complete current registry equals the frozen newest layer|imported current registry equals the complete reviewed applied object/);
   const changedPair = structuredClone(SESOTHO_MARKET_COMMUNITY_DRAFT);
   changedPair.lessons.find(lesson => lesson.id === 'market-community-l2')!.body.sourceEnglish += ' Altered English.';
-  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedPair, 'st'), /current full registry equals only the approved overlay/);
+  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedPair, 'st'), /current full registry equals only the approved overlay|complete current registry equals the frozen newest layer|imported current registry equals the complete reviewed applied object/);
 });
 
 

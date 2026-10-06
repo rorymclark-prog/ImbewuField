@@ -15,7 +15,7 @@ import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-draft
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
-import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryBeforeResidualLayer, nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryBeforeResidualLayer, nativeOrdinaryPresentationBeforeFinalBatch, tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
 
 type Language = 'st' | 've' | 'ts';
 type Pair = { sourceEnglish: string; reviewStatus: string; sesothoDraft?: string; tshivendaDraft?: string; xitsongaDraft?: string };
@@ -275,4 +275,22 @@ test('Presentation history rewind requires a correct current learner field and n
   assert.throws(() => nativeOrdinaryPresentationBeforeFinalBatch(corrupted, source.id, 'st'),
     'a stale or changed supplied learner target cannot be hidden by rewinding');
   assert.deepEqual(corrupted, corruptedBefore, 'failed validation also leaves the caller presentation untouched');
+});
+
+
+test('later TS Reading projection preserves the complete Intro968 shared file and rejects caller or unlisted corruption', () => {
+  const bytes = readFileSync('lib/course-translation-drafts-ts.ts', 'utf8');
+  const restored = tsSharedSourceBeforeNativeOrdinary(bytes);
+  assert.notEqual(restored, bytes, 'the single accepted Reading body is actually rewound');
+  assert.match(restored, /Hlawula any water works for the site/);
+  const unlistedBytes = bytes + '\n// Unapproved shared-source change.\n';
+  assert.notEqual(unlistedBytes, bytes);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(unlistedBytes), /preserves every Intro968 and unlisted byte/);
+  const mutated = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
+  mutated.lessons[0].body.sourceEnglish += ' Changed source.';
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, mutated), /imported current registry equals the complete reviewed applied object/);
+  const alteredIndex = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
+  alteredIndex.lessons[0].quiz[0].sourceCorrectIndex = 99;
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, alteredIndex), /imported current registry equals the complete reviewed applied object/);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /exact accepted TS Reading body literal occurs once/);
 });

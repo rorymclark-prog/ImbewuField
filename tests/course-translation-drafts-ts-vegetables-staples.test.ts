@@ -1,3 +1,4 @@
+import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 import { vegetablesBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesL3BeforeCompletion, vegetablesL3PresentationBeforeCompletion } from './vegetables-l3-completion-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
@@ -233,7 +234,10 @@ test('Xitsonga bed paragraphs preserve dimensions, access and soil restrictions 
 
 test('Pest framing keeps the diagnostic order and treatment safeguards in the source-bound draft', () => {
   const source = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
-  const matches = XITSONGA_VEGETABLES_STAPLES_DRAFT.lessons.filter(lesson => lesson.id === source.id);
+  // 2026-10-06: the accepted categorical negative is localized later; validate
+  // that whole current layer before retaining this older pest framing claim.
+  const historical = nativeOrdinaryBeforeFinalBatch(XITSONGA_VEGETABLES_STAPLES_DRAFT);
+  const matches = historical.lessons.filter(lesson => lesson.id === source.id);
   assert.equal(matches.length, 1);
   const draft = matches[0];
   assert.equal(draft.body.sourceEnglish, source.body);
@@ -279,7 +283,7 @@ test('Pest framing keeps the diagnostic order and treatment safeguards in the so
   assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.'), 'the draft retains the problem-fit and outcome-monitoring checks');
   assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));
-  const shown = resolveLearnerLessonPresentation(source, 'ts');
+  const shown = nativeOrdinaryPresentationBeforeFinalBatch(resolveLearnerLessonPresentation(source, 'ts'), source.id, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.deepEqual(shown.content.quiz.map(q => q.correct), source.quiz.map(q => q.correct));
