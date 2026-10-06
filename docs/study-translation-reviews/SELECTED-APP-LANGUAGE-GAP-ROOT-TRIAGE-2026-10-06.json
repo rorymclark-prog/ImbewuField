@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-06",
+  "dataOnly": true,
+  "auditPath": "docs/study-translation-reviews/SELECTED-APP-LANGUAGE-GAP-AUDIT-2026-10-06.json",
+  "auditSHA256": "d8f8197987b0b63e7615d0159face379c5db9a2eee40c6c672fabe8b96ac7eec",
+  "scopeAndLimitsRootRead": true,
+  "implementationApproved": false,
+  "runtimeAndSourceBindingsPending": true,
+  "prioritiesAfterCore": [
+    "participant Finance record entry/recovery",
+    "financial chart scope explanations",
+    "Study source/draft/media controls"
+  ],
+  "courseExcluded": "Farm Finance course remains excluded; participant Finance /records is a separate app screen",
+  "reviewedCountsNotCompletionPercentage": true,
+  "plainInstructions": "Preserve existing source math/units/record ownership/recovery and consent; ordinary surrounding prose may be drafted after source/resolver checks. Receipt AI remains an explicit optional paid action, not a free translation dependency."
+}

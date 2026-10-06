@@ -18,6 +18,9 @@
 import { COURSE_TRANSCRIPTS } from './course-transcripts';
 import { resolveIsiZuluDeckSourcePair, ISIZULU_DECK_SOURCE_BINDINGS } from './course-deck-source-bindings';
 import { isiZuluDeckReviewHold } from './course-deck-review-holds';
+import { regionalNarrationDraft } from './narration-blockers';
+import { CURRENT_DECK_RELEASE_BINDINGS } from './course-deck-release-bindings-registry';
+import { recordingMatchesDeckRelease, type CourseDeckReleaseBindings } from './course-deck-release-bindings';
 
 export interface NarrationTrack {
   /** Slide number in the facilitator deck. Also the filename: slide-07.mp3. */
@@ -768,6 +771,21 @@ export function hasNarration(moduleId: string): boolean {
   return Boolean(n && n.languages.length > 0 && n.tracks.length > 0);
 }
 
+/** Raw manifest languages keep archived files owned; callers offer only compatible voices. */
+export function availableNarrationLanguages(moduleId: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string[] {
+  return (COURSE_NARRATION[moduleId]?.languages ?? []).filter(lang => narrationReleaseCompatible(moduleId, lang, bindings));
+}
+
+export function narrationReleaseCompatible(moduleId: string, lang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): boolean {
+  if (!bindings.has(moduleId, lang)) return true;
+  const release = bindings.resolve(moduleId, lang, slide => {
+    const track = COURSE_NARRATION[moduleId]?.tracks.find(row => row.slide === slide);
+    const body = COURSE_TRANSCRIPTS[moduleId]?.en?.[slide];
+    return track && body ? { heading: trackTitle(track, 'en'), body } : undefined;
+  });
+  return recordingMatchesDeckRelease(release, regionalNarrationDraft(moduleId, lang)?.sourcePairSha256);
+}
+
 export interface ResolvedLang {
   lang: string;
   /** false = we are playing a different language from the one the app is set to. The UI must
@@ -777,19 +795,20 @@ export interface ResolvedLang {
 
 /** Pick the language to actually play: the app language if it was recorded, else English,
  *  else whatever exists. Null when the module has no recording at all. */
-export function resolveNarrationLang(moduleId: string, appLang: string): ResolvedLang | null {
+export function resolveNarrationLang(moduleId: string, appLang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): ResolvedLang | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || n.languages.length === 0) return null;
-  if (n.languages.includes(appLang)) return { lang: appLang, exact: true };
-  if (n.languages.includes('en')) return { lang: 'en', exact: false };
-  return { lang: n.languages[0], exact: false };
+  const languages = availableNarrationLanguages(moduleId, bindings);
+  if (!n || languages.length === 0) return null;
+  if (languages.includes(appLang)) return { lang: appLang, exact: true };
+  if (languages.includes('en')) return { lang: 'en', exact: false };
+  return { lang: languages[0], exact: false };
 }
 
 /** Regional readers must choose a voice when their own recording is absent.
  * The resolver still describes available fallback audio for explicit choices. */
-export function requiresExplicitNarrationChoice(moduleId: string, appLang: string): boolean {
+export function requiresExplicitNarrationChoice(moduleId: string, appLang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): boolean {
   return ['st', 've', 'ts'].includes(appLang) &&
-    !COURSE_NARRATION[moduleId]?.languages.includes(appLang);
+    !availableNarrationLanguages(moduleId, bindings).includes(appLang);
 }
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -800,9 +819,9 @@ function base(n: ModuleNarration, moduleId: string, lang: string): string {
 }
 
 /** URL for one slide clip, or null if the module or slide isn't in the manifest. */
-export function trackUrl(moduleId: string, lang: string, slide: number): string | null {
+export function trackUrl(moduleId: string, lang: string, slide: number, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !n.languages.includes(lang) || !narrationReleaseCompatible(moduleId, lang, bindings)) return null;
   const track = n.tracks.find((t) => t.slide === slide);
   if (!track) return null;
   if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
@@ -816,9 +835,9 @@ export function trackUrl(moduleId: string, lang: string, slide: number): string 
 }
 
 /** URL for the single continuous narration of the whole module. */
-export function fullNarrationUrl(moduleId: string, lang: string): string | null {
+export function fullNarrationUrl(moduleId: string, lang: string, bindings: CourseDeckReleaseBindings = CURRENT_DECK_RELEASE_BINDINGS): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !n.languages.includes(lang) || !narrationReleaseCompatible(moduleId, lang, bindings)) return null;
   if (lang === 'zu' && ISIZULU_DECK_SOURCE_BINDINGS.some((binding) => binding.moduleId === moduleId)) {
     for (const track of n.tracks) {
       if (isiZuluDeckReviewHold(moduleId, track.slide)) return null;

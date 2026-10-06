@@ -4,15 +4,14 @@ import test from 'node:test';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT as currentTSHIVENDAIntro } from '../lib/course-translation-drafts-ve.ts';
-const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ve', currentTSHIVENDAIntro) as typeof currentTSHIVENDAIntro;
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT as currentXITSONGAIntro } from '../lib/course-translation-drafts-ts.ts';
-const XITSONGA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroFullNative('ts', currentXITSONGAIntro) as typeof currentXITSONGAIntro;
 import { resolveLearnerLessonPresentation as resolveCurrentPresentation } from '../lib/course-localization.ts';
-import { validateAndRewindIntroFullNative, introPresentationBeforeFullOrdinary } from './intro-full-ordinary-native-checks.ts';
-// 6 October 2026: current accepted ordinary clauses supersede dated candidate
-// literals; validate every current source/unlisted/index before exposing that view.
+import { validateAndRewindIntroNativeHistory, introPresentationBeforeSilentRelease } from './intro-silent-release-text-checks.ts';
+const TSHIVENDA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroNativeHistory('ve', currentTSHIVENDAIntro) as typeof currentTSHIVENDAIntro;
+const XITSONGA_INTRO_PERMACULTURE_DRAFT = validateAndRewindIntroNativeHistory('ts', currentXITSONGAIntro) as typeof currentXITSONGAIntro;
+// Dated assessment claims are exposed only after both accepted Intro text layers validate.
 const resolveLearnerLessonPresentation: typeof resolveCurrentPresentation = (lesson, language) =>
-  introPresentationBeforeFullOrdinary(lesson, language, resolveCurrentPresentation(lesson, language));
+  introPresentationBeforeSilentRelease(lesson, language, resolveCurrentPresentation(lesson, language));
 
 type Language = 've' | 'ts';
 type RegionalPair = {

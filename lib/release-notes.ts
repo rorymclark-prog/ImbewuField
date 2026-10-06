@@ -42,6 +42,19 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: 'f6dff3fb', changes: [
+    'Silent draft decks show English narration as an optional choice.',
+    'Paired slide images stay visible beside their source text when enlarged.',
+  ] },
+  { when: '6 October 2026', sha: '08a62a3f', changes: [
+    'Sesotho Introduction has 22 silent draft slides beside exact English.',
+    'Choose English narration separately, or save the slides-only pack.',
+  ], tour: [
+    { title: 'Read the Sesotho Introduction',
+      where: 'Study → Introduction → Sesotho',
+      detail: 'Compare unreviewed drafts with English and choose silent slides or English audio.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '906ec229', changes: [
     'Soil and Water lessons add regional drafts beside exact English.',
     '18 silent Soil and Water slides show fuller draft wording.',

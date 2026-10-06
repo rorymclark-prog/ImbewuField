@@ -1,0 +1,26 @@
+{
+  "baseHead": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "frames": [
+    {
+      "path": "public/course-decks/intro-permaculture/ve/slide-11.webp",
+      "bytes": 276706,
+      "sha256": "3da34c3ce680ef0fc1cbf3378717964260e913a2454bc2022f0964be9ac09d84",
+      "width": 1440,
+      "height": 5400
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-07.webp",
+      "bytes": 374036,
+      "sha256": "0d5dbded1994e50361b6d533d336bbe09428082cdce70d73b5a677a715b31fc7",
+      "width": 1440,
+      "height": 5400
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-12.webp",
+      "bytes": 258410,
+      "sha256": "b24ba40347eb0b1e33d0559826864fd5fbf71d83e0f7165a341826c1245070f0",
+      "width": 1440,
+      "height": 5400
+    }
+  ]
+}

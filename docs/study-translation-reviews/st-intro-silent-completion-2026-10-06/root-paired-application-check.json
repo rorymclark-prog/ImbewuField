@@ -1,0 +1,27 @@
+{
+  "base": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "independentRootPairedChecks": [
+    {
+      "language": "st",
+      "changedApprovedTargets": 52,
+      "slides": 22,
+      "sourceAndUnlistedPreserved": true
+    },
+    {
+      "language": "ve",
+      "changedApprovedTargets": 1,
+      "slides": 22,
+      "sourceAndUnlistedPreserved": true
+    },
+    {
+      "language": "ts",
+      "changedApprovedTargets": 2,
+      "slides": 22,
+      "sourceAndUnlistedPreserved": true
+    }
+  ],
+  "originalSTPairSha256": "50ac554323e41921cdfc83dd4b6d6abf18f240d8c416b38dc95e01630d4b3df9",
+  "rootReadAll60Candidates": true,
+  "renderApproval": "text/source data approved for rendering; runtime/actual media/full gates still pending",
+  "notPublished": true
+}

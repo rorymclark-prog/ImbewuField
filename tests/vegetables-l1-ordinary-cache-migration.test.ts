@@ -87,6 +87,8 @@ test('five compressed L1 cards preserve all accepted sources, full download mani
   assert.equal(vegetablesL1AssetSizesBeforeOrdinary(), readFileSync('docs/media/vegetables-l1-ordinary-2026-10-06/asset-sizes-before.ts.txt', 'utf8'));
 });
 
+// 6 October 2026: the silent25-asset release may reject corrupt current input before
+// older guards; retain every mutation and each earlier precise rejection route.
 test('L1 historical descriptors reject aggregate and unlisted size drift before exposing the earlier assets', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   // 6 October 2026: the later36 Intro stills change the measured header. This
@@ -96,10 +98,10 @@ test('L1 historical descriptors reject aggregate and unlisted size drift before 
   const corruptedHeader = actual.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corruptedHeader, actual, 'the negative control must really change the live aggregate');
 
-  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(corruptedHeader), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(corruptedHeader), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current/);
   const path = '/course-decks/vegetables-staples/st/slide-01.webp';
   const slot = `  '${path}': ${COURSE_ASSET_SIZES[path]},`;
   assert.ok(actual.includes(slot));
-  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline/);
-  assert.throws(() => vegetablesL1AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded (?:Vegetables L1|Intro full) manifest baseline/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current/);
+  assert.throws(() => vegetablesL1AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded (?:Vegetables L1|Intro full) manifest baseline|only the complete accepted silent Intro manifest is current/);
 });

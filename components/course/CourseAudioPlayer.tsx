@@ -18,7 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, AlertCircle } from 'lucide-react';
 import {
-  formatClock, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, trackUrl,
+  availableNarrationLanguages, formatClock, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
 import { useLanguage } from '@/lib/i18n-context';
@@ -55,6 +55,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   const { t } = useLanguage();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const narration = narrationFor(moduleId);
+  const availableLanguages = availableNarrationLanguages(moduleId);
   const resolved = resolveNarrationLang(moduleId, appLang);
 
   // Chosen language is state so the learner can override the resolved default. Re-resolves if
@@ -221,9 +222,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {label ?? t('courseAudioListen')}
         </span>
         <div className="flex-1 min-w-0" />
-        {(narration.languages.length > 1 || needsExplicitChoice) && (
+        {(availableLanguages.length > 1 || needsExplicitChoice) && (
           <div className="ml-auto flex w-full flex-wrap items-center justify-end gap-1 sm:w-auto" role="group" aria-label={t('courseNarrationLanguage')}>
-            {narration.languages.map((code) => {
+            {availableLanguages.map((code) => {
               const on = code === lang;
               return (
                 <button

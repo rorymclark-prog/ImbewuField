@@ -15,9 +15,9 @@ import { resolveIsiZuluSilentDeckDraft } from '@/lib/course-deck-silent-drafts-r
 
 const PUBLIC = join(process.cwd(), 'public');
 
-test('silent regional downloads default to slides while Sesotho Introduction keeps its own recording', () => {
-  assert.equal(defaultOfflinePackVariant(['intro-permaculture'], 'st'), 'full');
-  assert.equal(regionalPackNeedsNarrationChoice(['intro-permaculture'], 'st'), false);
+test('silent regional downloads including updated Sesotho Introduction default to slides', () => {
+  assert.equal(defaultOfflinePackVariant(['intro-permaculture'], 'st'), 'slides');
+  assert.equal(regionalPackNeedsNarrationChoice(['intro-permaculture'], 'st'), true);
   for (const lang of ['st', 've', 'ts']) {
     assert.equal(defaultOfflinePackVariant(['vegetables-staples'], lang), 'slides');
     const silent = offlinePack('vegetables-staples', lang, 'standard', defaultOfflinePackVariant(['vegetables-staples'], lang));
@@ -29,8 +29,9 @@ test('silent regional downloads default to slides while Sesotho Introduction kee
   const optional = offlinePack('vegetables-staples', 'st', 'standard', 'full');
   assert.ok(optional.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
   const intro = offlinePack('intro-permaculture', 'st', 'standard', 'full');
-  assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/st/')).length, 22);
-  assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/en/')));
+  assert.equal(intro.entries.filter(entry => entry.kind === 'audio' && entry.url.includes('/en/')).length, 22);
+  assert.ok(!intro.entries.some(entry => entry.kind === 'audio' && entry.url.includes('/st/')),
+    '2026-10-06: updated silent pair permits explicit English only; archived ST remains owned');
 });
 
 test('the nine updated regional slides resolve to the exact still in a silent offline pack', () => {
@@ -63,8 +64,8 @@ test('the nine updated regional slides resolve to the exact still in a silent of
     assert.ok(animationUrls('market-community', 15, language),
       `${language} Market lesson retains its existing source-language film`);
   }
-  assert.equal(slideAudioUrl('intro-permaculture', 'st', 22)?.includes('/st/'), true,
-    'the existing Sesotho Introduction recording remains available');
+  assert.equal(slideAudioUrl('intro-permaculture', 'st', 22), null,
+    '2026-10-06: archived ST recording cannot voice the updated silent source pair');
 });
 
 test('public teaching-preview packs name every static reading route and the finance materials it links', () => {
@@ -193,12 +194,13 @@ test('offline packs include every available narration track and omit only source
   // The complement of the test above: `missing` only catches a file the manifest forgot.
   // It cannot catch a pack that never ASKED for the audio, which is the other half of how
   // the 2026-08-04 regression stayed invisible — a stale manifest and an unasked-for asset
-  // both look like "0 missing". COURSE_NARRATION is the promise; the pack must honour it.
+  // both look like "0 missing". The resolved current voice is the promise; archived inventory alone cannot authorize playback.
   for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
     for (const lang of narration.languages) {
       const audio = offlinePack(moduleId, lang).entries.filter((e) => e.kind === 'audio');
+      const resolved = resolveNarrationLang(moduleId, lang);
       const expected = narration.tracks
-        .map(track => trackUrl(moduleId, lang, track.slide))
+        .map(track => resolved ? trackUrl(moduleId, resolved.lang, track.slide) : null)
         .filter((url): url is string => url !== null);
       assert.deepEqual(audio.map(entry => entry.url), expected,
         `${moduleId}/${lang}: every playable track is packed and held rows are not reported as missing files`);
@@ -289,21 +291,23 @@ test('a pack carries whatever the player will actually show, including any fallb
   }
 });
 
-test('Sesotho intro lessons download paired images and their source-bound draft narration', () => {
-  const pack = offlinePack('intro-permaculture', 'st');
+test('Sesotho intro lessons download the new silent pair with explicitly selected English source narration', () => {
+  const pack = offlinePack('intro-permaculture', 'st', 'standard', 'full');
   assert.deepEqual(pack.missing, [], 'a missing image would only surface after the learner went offline');
   const slides = pack.entries.filter((entry) => entry.kind === 'slide').map((entry) => entry.url);
   assert.equal(slides.filter((url) => url.endsWith('.webp')).length, 22);
-  assert.ok(slides.includes('/course-decks/intro-permaculture/st/slide-22.webp'));
+  assert.ok(slides.includes('/course-decks/intro-permaculture/st-silent/slide-22.webp'));
   assert.ok(!slides.some((url) => url.includes('/course-decks/intro-permaculture/en/')));
   assert.ok(pack.entries.some((entry) => entry.kind === 'audio' &&
-    entry.url === '/course-audio/intro-permaculture/st/slide-04.mp3'));
+    entry.url === '/course-audio/intro-permaculture/en/slide-04.mp3'));
   assert.equal(pack.entries.filter((entry) => entry.kind === 'audio' &&
-    entry.url.startsWith('/course-audio/intro-permaculture/st/slide-')).length, 22,
+    entry.url.startsWith('/course-audio/intro-permaculture/en/slide-')).length, 22,
   'the offline pack carries each distinct slide clip once without redownloading full.mp3');
   assert.ok(!pack.entries.some((entry) => entry.url.endsWith('/full.mp3')));
-  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/en/')),
-    'the offline pack should not silently add the English recording when Sesotho was chosen');
+  assert.ok(pack.entries.every((entry) => !entry.url.includes('/course-audio/intro-permaculture/st/')),
+    '2026-10-06: explicit full variant adds compatible English, never stale archived ST');
+  const silent = offlinePack('intro-permaculture', 'st', 'standard', 'slides');
+  assert.ok(silent.entries.every(entry => entry.kind !== 'audio'), 'default slides variant remains silent');
 });
 
 test('Sesotho Soil Health entry keeps paired stills and English source narration offline', () => {

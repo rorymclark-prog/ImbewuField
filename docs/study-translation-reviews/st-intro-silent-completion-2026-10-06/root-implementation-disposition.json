@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-06",
+  "base": "2731fe76f2e8e7d1bc9a0be0dce66be497904401",
+  "decision": "Coherent text/media/runtime implementation authorized; root diff, actual image, full gates and phone/offline review required before commit/push/publication",
+  "textOwner": "water_ordinary_semantic_check",
+  "runtimeOwner": "soil_water_integration_finish",
+  "textAuthority": "repaired-candidates.json",
+  "preserve": [
+    "original ST paired JSON50ac",
+    "all23STMP3",
+    "oldSTstills",
+    "canonical English",
+    "all quiz indices",
+    "geometry",
+    "PLAN_VERSION"
+  ],
+  "renderNotYetAuthorized": true,
+  "notPublished": true
+}

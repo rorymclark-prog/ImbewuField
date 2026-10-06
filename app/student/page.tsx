@@ -1033,6 +1033,8 @@ export default function StudentPage() {
               ? regionalModuleDraftBadge(mod, lang) : null;
             const zuluSlidesReady = resolveDeckLang(mod.id, 'zu')?.exact ?? false;
             const zuluAudioReady = resolveNarrationLang(mod.id, 'zu')?.exact ?? false;
+            // Archived recordings remain owned, but must not advertise a voice over revised text.
+            const ownNarrationReady = resolveNarrationLang(mod.id, lang)?.exact ?? false;
             const deck = deckFor(mod.id);
             const regionalDraftSlides = Boolean(deck?.slideLanguages.includes(lang) &&
               deck.slides.some(slide => !deck.missingSlides?.[lang]?.includes(slide.slide)));
@@ -1190,8 +1192,8 @@ export default function StudentPage() {
                           <Headphones size={11} style={{ color: '#1F4D2B' }} />
                           <span className="font-sans text-xs" style={{ color: '#1F4D2B' }}>
                             {lang === 'zu' && !zuluAudioReady ? 'Umsindo: isiNgisi'
-                              : regionalNarrationDraft(mod.id, lang) ? `Audio: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang as 'st' | 'ts' | 've']} AI draft + English holds`
-                                : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: English' : t('studentAudio')}
+                              : ownNarrationReady && regionalNarrationDraft(mod.id, lang) ? `Audio: ${{ st: 'Sesotho', ts: 'Xitsonga', ve: 'Tshivenda' }[lang as 'st' | 'ts' | 've']} AI draft + English holds`
+                                : (lang === 'st' || lang === 'ts' || lang === 've') ? 'Audio: optional English' : t('studentAudio')}
                           </span>
                         </div>
                       )}
@@ -1265,7 +1267,7 @@ export default function StudentPage() {
                         })()}
                       </p>
                     )}
-                    {narrationReviewPending(mod.id, lang) && (
+                    {ownNarrationReady && narrationReviewPending(mod.id, lang) && (
                       <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
                         style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: '#5C5040' }}>
                         {regionalNarrationDraft(mod.id, lang)
