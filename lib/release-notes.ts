@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: 'f5108aa1', changes: [
+    'Vegetables Lesson 1 adds regional drafts beside exact English.',
+    'Five silent Vegetables slides show fuller draft wording.',
+  ], tour: [
+    { title: 'Compare Vegetables Lesson 1',
+      where: 'Study → Vegetables & Staple Crops → Lesson 1',
+      detail: 'Read the unreviewed drafts beside English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '06d069cf', changes: [
     'Vegetables Lesson 3 adds regional drafts beside exact English.',
     'Eight silent Vegetables slides show fuller draft wording.',
