@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { expectedIntroFullPaths, validateCurrentIntroFullMedia, introFullAssetSizesBeforeOrdinary, introFullMediaProof, verifyIntroFullFrameBytes } from './intro-full-ordinary-media-history-checks.ts';
+const soilWaterResidualMediaProof = JSON.parse(readFileSync('docs/media/soil-water-residual-2026-10-06/frames.json', 'utf8'));
 
 test('Intro full ordinary refresh retires only 36 approved saved still paths once and preserves other offline media', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
@@ -88,7 +89,11 @@ test('36 compressed Intro cards bind full source/target and measured manifest wh
 
 test('new Intro history rejects manifest drift and same-size corrupted or wrong-height compressed media', () => {
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  assert.throws(() => validateCurrentIntroFullMedia(actual.replace(introFullMediaProof.manifestNewComment, '// Incorrect aggregate')));
+  const currentSummary = soilWaterResidualMediaProof.courseAssetSizesAggregate.generatedSummaryLine;
+  assert.equal(actual.split(currentSummary).length - 1, 1, 'the residual proof identifies exactly one current generated summary');
+  const wrongSummary = actual.replace(currentSummary, '// Incorrect aggregate');
+  assert.notEqual(wrongSummary, actual, 'the mutation changes the current manifest');
+  assert.throws(() => validateCurrentIntroFullMedia(wrongSummary));
   const path = '/course-decks/intro-permaculture/st/slide-22.webp';
   const slot = `  '${path}': ${COURSE_ASSET_SIZES[path]},`;
   assert.ok(actual.includes(slot));

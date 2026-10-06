@@ -22,14 +22,14 @@ l3DraftParagraphs[4] = "Swikombiso swa dyondzo swi katsa oats, lupins, sunn hemp
 l3DraftParagraphs[5] = "Legumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.";
 l3DraftParagraphs[6] = "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani xibye ematshan'weni yo langutela siku ra ntshovelo leri vekiweke.";
 l3DraftParagraphs[7] = "Liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin yi vuriwa leachate. A yi fani na worm-casting tea leyi lunghisiweke.";
-l3DraftParagraphs[8] = "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.";
+l3DraftParagraphs[8] = "Leachate yi nga va na harmful organisms kumbe swilo leswi nga ni khombo. U nga yi tirhisi eka swimilani leswi dyiwaka. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.";
 l3DraftParagraphs[12] = 'Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.';
 
 const l2SourceBody = 'Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.';
 const l2DraftBody = [
   "Compost i organic matter leyi broken down ehansi ka swiyimo leswi lawuriwaka.",
   "Compost leyi lunghekeke yi nga antswisa xivumbeko xa misava ni ku engetela nutrients.",
-  "Nkarhi wo lungheka wa hambana hi swilo leswi tirhisiweke, ku tsakama, moya na temperature. Vito ra xifundzankulu kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.",
+  "Nkarhi wo lungheka wa hambana hi swilo leswi tirhisiweke, ku tsakama, moya na temperature. Vito ra xifundzankulu kumbe nhlayo leyi vekiweke ya mavhiki a hi ndlela yo kambela leswaku compost yi lunghekile.",
   "Hlanganisa dry browns na fresh greens. Papalata thick layers leti tsakamaka leti sivelaka moya ku nghena.",
   "Loko nhulu yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi hundzuluxa.",
   "Kambela ku tsakama na moya loko nhulu yi ri karhi yi cinca; ndlela yin'we yo hlanganisa a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa swilo leswi tirhisiweke.",
@@ -44,7 +44,7 @@ const l2DraftBody = [
 const sourceBody = 'Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.';
 const sourceParagraphs = sourceBody.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
-draftParagraphs[0] = "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.";
+draftParagraphs[0] = "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku endla leswaku organic matter yi bola ni ku endla leswaku nutrients ti famba hi xirhendzevutana.";
 draftParagraphs[1] = "Fungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.";
 draftParagraphs[2] = 'Languta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.';
 draftParagraphs[3] = "Chela misava na mati eka jar leyi u vonaka leswi nga endzeni ka yona, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.";
@@ -53,7 +53,7 @@ draftParagraphs[5] = "Lowu i ntoloveto wo dyondza wo ringanyeta. Clumps na clay 
 draftParagraphs[6] = 'Thick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.';
 draftParagraphs[7] = "Fananisa settled layers, kutani u twa misava ensin'wini.";
 draftParagraphs[8] = 'Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.';
-draftParagraphs[9] = "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.";
+draftParagraphs[9] = "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni ku hanya ka misava.";
 draftParagraphs[10] = "Muhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.";
 draftParagraphs[11] = "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.";
 
@@ -163,13 +163,13 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
         {
           question: pair('What should you remember about liquid draining from a worm bin?', "U fanele ku tsundzuka yini hi liquid leyi khulukaka yi huma eka worm bin?"),
           options: [
-            pair('It is always safe on salad leaves', 'Yi hlayisekile minkarhi hinkwayu eka salad leaves'),
-            pair('It can contain harmful organisms or substances; dilution is not a safety guarantee', "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee"),
+            pair('It is always safe on salad leaves', "Yi hlayisekile minkarhi hinkwayu eka matluka ya saladi"),
+            pair('It can contain harmful organisms or substances; dilution is not a safety guarantee', "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a yi tiyisekisi vuhlayiseki."),
             pair('It is identical to finished worm castings', 'Yi fana hi ku helela na finished worm castings'),
             pair('A fixed dilution makes every liquid safe', 'Dilution yo karhi leyi vekiweke yi endla leswaku liquid yin\'wana ni yin\'wana yi hlayiseka'),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair('Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.', "Leachate i liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin. Composition ya yona ya hambana, hikokwalaho a yi fanelanga ku kombisiwa yi ri feed leyi tiyisekisiweke leswaku yi hlayisekile eka edible crops."),
+          rationale: pair('Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.', "Leachate i liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin. Swilo leswi yi nga na swona swa hambana, hikokwalaho a yi fanelanga ku kombisiwa yi ri feed leyi tiyisekisiweke leswaku yi hlayisekile eka swibyariwa leswi dyekaka."),
         },
       ],
     },

@@ -487,19 +487,20 @@ test('Soil repaired diagnostic and sanitation clauses retain their independent c
   assert.match(ts[2].quiz[1].options[1].xitsongaDraft, /harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee/);
 });
 
-test('Soil decomposition clauses retain exact English process and completed-state anchors after the four-flag audit', () => {
+test('Soil decomposition clauses retain their accepted ordinary predicates and completed-state anchors', () => {
   const st0 = liveST.lessons[0].body.sesothoDraft.split('\n\n')[0];
   const stCompost = liveST.lessons[1].body.sesothoDraft.split('\n\n')[0];
   const ve0 = liveVE.lessons[0].body.tshivendaDraft.split('\n\n')[0];
   const ts0 = liveTS.lessons[0].body.xitsongaDraft.split('\n\n')[0];
-  assert.match(st0, /di thusa ho break down organic matter/);
+  assert.match(st0, /Baktheria le fungi di thusa hore organic matter e bole le ho tsamaisa dimatlafatsi ka potoloho/);
   assert.doesNotMatch(st0, /qhaqha/);
   assert.match(stCompost, /organic matter e broken down ka tsela e laolwang/);
   assert.doesNotMatch(stCompost, /qhaqhollwang/);
   assert.match(ve0, /dzi thusa u break down organic matter/);
   assert.doesNotMatch(ve0, /kwashekanya/);
-  assert.match(ts0, /swi pfuna ku break down organic matter/);
-  assert.doesNotMatch(ts0, /fayelela/);
+  // The 6 October Xitsonga residual layer localizes this ordinary predicate;
+  // the frozen earlier wording remains covered by the dated history fixture.
+  assert.match(ts0, /swi pfuna ku endla leswaku organic matter yi bola ni ku endla leswaku nutrients ti famba hi xirhendzevutana/);
 });
 
 import { checkSouthAfricanSesotho } from './regional-full-draft-checks.ts';

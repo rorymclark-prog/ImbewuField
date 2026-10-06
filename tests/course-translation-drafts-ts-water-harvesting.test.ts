@@ -12,6 +12,7 @@ import type { XitsongaCourseModuleDraft, XitsongaSourcePair } from '../lib/cours
 import { resolveLearnerLessonPresentation as nativeResolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
+import { soilWaterResidualNativeAfter, soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 
 import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
 
@@ -50,11 +51,14 @@ function withHistoricalWater(assertHistoricalClaims: () => void) {
     pair.reviewStatus = 'machine-draft';
   }
   const live = draft;
-  assert.deepEqual(live, expected,
-    'verify all 57 accepted fields, canonical pairings, answer indexes, metadata, holds and unlisted fields before rewind');
+  const residualAfter = soilWaterResidualNativeAfter('ts', 'water-harvesting');
+  assert.deepEqual(soilWaterResidualNativeBefore('ts', 'water-harvesting', residualAfter), expected,
+    'the residual layer preserves the complete immutable 57-field after-state and all its unlisted values');
+  assert.deepEqual(live, residualAfter,
+    'verify all current accepted fields, canonical pairings, answer indexes, metadata, holds and unlisted fields before rewind');
   assert.equal(live.lessons[3].quiz[0].question.xitsongaDraft,
-    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?',
-    'the accepted L4 question keeps exact English “any” scoped to household washwater');
+    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe mati wahi na wahi lama tirhisiweke ku hlantswa ekaya?',
+    'the accepted L4 question keeps “any water used to wash at home” in scope');
 
   const saved = structuredClone(live);
   try {
@@ -62,7 +66,7 @@ function withHistoricalWater(assertHistoricalClaims: () => void) {
     assertHistoricalClaims();
   } finally {
     Object.assign(live, saved);
-    assert.deepEqual(live, expected, 'historical checks restore every accepted current and unlisted field');
+    assert.deepEqual(live, residualAfter, 'historical checks restore every accepted current and unlisted field');
   }
 }
 
@@ -655,12 +659,10 @@ test('2026-10-06 Xitsonga Water completion stays paired and preserves household 
     l4Paragraphs[3].includes('U nga ma fafazeli') && l4Paragraphs[3].includes('ma pool') &&
     l4Paragraphs[3].includes('property') && l4Paragraphs[3].includes('watercourse'),
   'no-disinfection, contact, spray, pooling and off-property runoff safeguards remain explicit');
-  assert.ok(l4Paragraphs[4].includes('system yo tirhisa mati nakambe yi se ri karhi yi tirha') &&
-    l4Paragraphs[4].includes('naswona mati ma nunha') && l4Paragraphs[4].includes('ma pool kumbe ma onha swimilana') &&
-    l4Paragraphs[4].includes('tshika ku ma tirhisa') && l4Paragraphs[4].includes('loyi a nga qualified'),
+  assert.match(l4Paragraphs[4], /system.*se ri karhi yi tirha naswona.*ma nunha.*ma hlengeletana.*kumbe.*ma onha swimilana.*tshika ku ma tirhisa kutani.*ndzayo.*loyi a nga qualified/,
   'if an operating system has any listed failure sign, stop and seek qualified advice');
   assert.equal(l4Draft.quiz[0].question.xitsongaDraft,
-    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe any mati yo hlantswa ya le kaya?');
+    'Xana ku fanele ku endliwa yini ku nga si tirhisiwa nakambe mati wahi na wahi lama tirhisiweke ku hlantswa ekaya?');
   assert.equal(l4Draft.quiz[0].question.reviewStatus, 'machine-draft');
   const damAnimals = tsDraft.lessons.find(lesson => lesson.id === 'water-harvesting-l2')!
     .body.xitsongaDraft.split('\n\n')[8];

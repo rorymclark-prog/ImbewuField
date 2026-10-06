@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_WATER_HARVESTING_DRAFT as draft } from '../lib/course-translation-drafts-ve-water-harvesting.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { soilWaterResidualNativeAfter, soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 
 const dir = 'docs/study-translation-reviews/water-ordinary-ve-2026-10-06/';
 const packetBytes = readFileSync(dir + 'root-reviewed-candidates.json');
@@ -42,12 +43,15 @@ test('Venda Water follows the reviewed 78-unit packet and preserves every unlist
   assert.equal(new Set(packet.rows.map((row: any) => row.id)).size, 108);
   assert.equal(packet.rows.filter((row: any) => row.currentTarget !== row.proposedTarget).length, 78);
   assert.deepEqual(canonical, baseline.canonical);
-  assert.deepEqual(draft, expectedNative());
+  const residualAfter = soilWaterResidualNativeAfter('ve', 'water-harvesting');
+  assert.deepEqual(soilWaterResidualNativeBefore('ve', 'water-harvesting', residualAfter), expectedNative(),
+    'the later residual layer preserves the immutable reviewed 78-unit after-state');
+  assert.deepEqual(draft, residualAfter);
   for (const lesson of canonical.lessons) {
     const shown = resolveLearnerLessonPresentation(lesson, 've');
-    const expected = packet.bodyCompositions.find((body: any) => body.lessonId === lesson.id);
+    const expected = residualAfter.lessons.find((body: any) => body.id === lesson.id);
     assert.equal(shown.status, 'draft');
-    assert.equal(shown.content.body, expected.proposedTarget);
+    assert.equal(shown.content.body, expected.body.tshivendaDraft);
     assert.equal(shown.content.body.split('\n\n').length, lesson.body.split('\n\n').length);
     assert.deepEqual(shown.content.quiz.map(question => question.correct), [1, 1]);
   }
@@ -79,19 +83,21 @@ test('Venda Water retains hydraulic alternatives, qualifications and the exact P
   assert.match(swale.body.tshivendaDraft, /slight, controlled grade/);
   assert.match(swale.body.tshivendaDraft, /maḓi o engedzeaho nga u ongologa/);
   assert.match(swale.body.tshivendaDraft, /luvhilo lu fhiraho/);
-  assert.match(swale.body.tshivendaDraft, /A downstream swale or dam must be able to receive it safely\./);
+  assert.match(swale.body.tshivendaDraft, /Swale ya downstream kana damu.*ṱanganedza maḓi ayo safely/);
   assert.match(dam.body.tshivendaDraft, /suitably qualified person/);
-  assert.match(dam.title.tshivendaDraft, /Dry Season$/);
+  assert.match(dam.title.tshivendaDraft, /Tshifhinga tsha u Oma$/);
   assert.doesNotMatch(dam.title.tshivendaDraft, /Gomelelo/);
-  assert.match(tank.body.tshivendaDraft, /stored water runs low/);
-  assert.match(tank.body.tshivendaDraft, /covered; vheani screen kha openings uri zwikhokhonono zwi si dzhene/);
-  assert.match(tank.quiz[0].rationale.tshivendaDraft, /wet and dry periods/);
+  assert.match(tank.body.tshivendaDraft, /maḓi o vhulungwaho a tshi sala e maṱuku/);
+  assert.match(tank.body.tshivendaDraft, /tank.*yo fukedzwaho.*screen.*zwikhala.*zwikhokhonono.*si dzhene/);
+  assert.match(tank.quiz[0].rationale.tshivendaDraft, /vhambedza supply.*demand.*zwifhinga zwa mvula na zwa u oma/);
   assert.match(reuse.body.tshivendaDraft, /qualified local sanitation adviser/);
-  assert.match(reuse.body.tshivendaDraft, /If a reuse system is already operating and the water smells bad, pools or harms plants,/);
+  assert.match(reuse.body.tshivendaDraft,
+    /system.*yo no thoma u shuma.*tshiṅwe tsha izwi tsha itea: maḓi a tshi nukha.*a tshi kuvhangana.*kana a tshi tshinya zwimela.*litshani.*qualified local advice/);
   assert.match(reuse.body.tshivendaDraft, /property/);
   assert.match(reuse.body.tshivendaDraft, /watercourse/);
-  assert.match(reuse.keyPoints[1].tshivendaDraft, /locally/);
-  assert.doesNotMatch(reuse.keyPoints[1].tshivendaDraft, /na vha henefho/);
+  assert.match(reuse.keyPoints[1].tshivendaDraft,
+    /Kha vhupo haṋu, ṱolani tshiko, service status, mushumo wo pulaniwaho na fhethu ni sa athu u shumisa maḓi hafhu na luthihi/,
+    'the local check covers source, service status, intended use and site before any reuse');
   assert.match(draft.description.tshivendaDraft, /sink every drop/);
   assert.match(reuse.quiz[1].rationale.tshivendaDraft, /o tsireledzea kana o tea/);
 });

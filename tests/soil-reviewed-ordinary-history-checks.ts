@@ -9,6 +9,8 @@ import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve
 import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
 import { introAssetSizesBeforeOrdinary, introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 import { vegetablesAssetSizesBeforePestPrecision } from './vegetables-pest-precision-media-history-checks.ts';
+import { soilWaterResidualPairedBefore } from './soil-water-residual-history-checks.ts';
+import { soilWaterResidualAssetSizesBefore, soilWaterResidualMediaBefore } from './soil-water-residual-history-checks.ts';
 
 const root = 'docs/study-translation-reviews/soil-ordinary-deck-2026-10-06/';
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
@@ -49,6 +51,7 @@ function languageProof(language: string) {
 }
 
 function verifyCurrentDeck(deck: { slides: any[] }, language: string) {
+  deck = soilWaterResidualPairedBefore(deck, `docs/narration/soil-health.${language}.paired-draft.json`);
   const row = languageProof(language);
   validatePairedDraft(deck, source, language);
   assert.deepEqual(deck, row.fullAfter,
@@ -109,8 +112,14 @@ export function soilDeckBeforeOrdinary<T extends { slides: any[] }>(deck: T, lan
 function checkCurrentAssetsAndManifest(currentManifest?: string) {
   for (const row of assets) {
     const bytes = readFileSync('public' + row.url);
-    assert.equal(sha(bytes), row.sha256, `${row.url}: current image matches approved proof`);
-    assert.equal(bytes.length, row.bytes, `${row.url}: current image has approved byte count`);
+    const residualBefore = soilWaterResidualMediaBefore('public' + row.url);
+    if (residualBefore) {
+      assert.equal(residualBefore.sha256, row.sha256, `${row.url}: the residual proof reconstructs this approved historical frame`);
+      assert.equal(residualBefore.bytes, row.bytes, `${row.url}: the residual proof reconstructs this approved historical size`);
+    } else {
+      assert.equal(sha(bytes), row.sha256, `${row.url}: current image matches approved proof`);
+      assert.equal(bytes.length, row.bytes, `${row.url}: current image has approved byte count`);
+    }
     assert.deepEqual(row.dimensions, [1440, 5400]);
     assert.notEqual(row.sha256, row.beforeSHA256, `${row.url}: approved redraw changed the image`);
   }
@@ -125,7 +134,8 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
 
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
   // 2026-10-06: validate the complete newer Market layer before the older media history.
-  let prior = vegetablesAssetSizesBeforePestPrecision(marketAssetSizesBeforeOrdinary(currentManifest));
+  soilWaterResidualAssetSizesBefore(currentManifest);
+  let prior = vegetablesAssetSizesBeforePestPrecision(marketAssetSizesBeforeOrdinary());
   prior = introAssetSizesBeforeOrdinary(prior);
   prior = checkCurrentAssetsAndManifest(prior);
   for (const row of assets) {
@@ -138,9 +148,16 @@ export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
 }
 
 export function soilMediaBeforeOrdinary(path: string) {
+  const residual = soilWaterResidualMediaBefore(path);
   const row = assets.find(item => 'public' + item.url === path);
   // This call validates all six current images and their six live size entries before any old proof is exposed.
   soilAssetSizesBeforeOrdinary();
+  if (residual && !row) return residual;
+  if (residual && row) {
+    assert.equal(residual.sha256, row.sha256, `${path}: the residual frame rewinds to the approved six-frame layer`);
+    assert.equal(residual.bytes, row.bytes, `${path}: the residual frame rewinds to the approved six-frame size`);
+    return { sha256: row.beforeSHA256, bytes: priorAssetBytes[row.url] };
+  }
   const bytes = readFileSync(path);
   if (!row) return { sha256: sha(bytes), bytes: bytes.length };
   assert.equal(sha(bytes), row.sha256, `${path}: verify current accepted image before historical rewind`);

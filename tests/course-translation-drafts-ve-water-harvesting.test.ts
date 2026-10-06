@@ -14,6 +14,7 @@ import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '../li
 import { resolveDeckLang } from '../lib/course-deck.ts';
 import { resolveNarrationLang } from '../lib/course-audio.ts';
 import { checkCompleteLessonDraft } from './regional-full-draft-checks.ts';
+import { soilWaterResidualNativeAfter, soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 
 
 // 2026-10-06: the reviewed ordinary completion supersedes full-English holds and old
@@ -48,19 +49,24 @@ function withHistoricalWater(assertHistoricalClaims: () => void) {
     pair.tshivendaDraft = body.proposedTarget;
   }
   const live = TSHIVENDA_WATER_HARVESTING_DRAFT;
-  assert.deepEqual(live, expected, 'verify all current accepted and unlisted fields before historical rewind');
-  assert.match(live.lessons[0].body.tshivendaDraft,
-    /A downstream swale or dam must be able to receive it safely\./);
-  assert.match(live.lessons[2].body.tshivendaDraft, /stored water runs low/);
+  const residualAfter = soilWaterResidualNativeAfter('ve', 'water-harvesting');
+  assert.deepEqual(soilWaterResidualNativeBefore('ve', 'water-harvesting', residualAfter), expected,
+    'the residual layer preserves the complete immutable 78-row after-state');
+  assert.deepEqual(live, residualAfter, 'verify all current accepted and unlisted fields before historical rewind');
+  const receiving = live.lessons[0].body.tshivendaDraft.split('\n\n')[4];
+  assert.match(receiving, /Swale ya downstream kana damu.*ṱanganedza maḓi ayo safely/,
+    'keep the receiving swale OR dam clause and safely qualifier');
+  assert.match(live.lessons[2].body.tshivendaDraft, /maḓi o vhulungwaho a tshi sala e maṱuku/);
   assert.match(live.lessons[3].body.tshivendaDraft,
-    /If a reuse system is already operating and the water smells bad, pools or harms plants,/);
+    /system.*yo no thoma u shuma.*tshiṅwe tsha izwi tsha itea: maḓi a tshi nukha.*a tshi kuvhangana.*kana a tshi tshinya zwimela.*litshani.*qualified local advice/,
+    'keep the active-system AND any-one-sign trigger, stop action and advice');
   const saved = structuredClone(live);
   try {
     Object.assign(live, structuredClone(baseline.draft));
     assertHistoricalClaims();
   } finally {
     Object.assign(live, saved);
-    assert.deepEqual(live, expected, 'historical checks must restore the complete current registry');
+    assert.deepEqual(live, residualAfter, 'historical checks must restore the complete current registry');
   }
 }
 

@@ -7,6 +7,7 @@ import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve
 import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { soilPacket, fieldAt } from './soil-learner-reviewed-history.ts';
+import { soilWaterResidualNativeBefore } from './soil-water-residual-history-checks.ts';
 
 // 6 October: only the root-approved 3 ST, 13 VE and 12 TS ordinary units
 // supersede the 5 October layer. Check the full live object before any rewind,
@@ -73,8 +74,9 @@ export function validateAndRewindSoilOrdinary(lang: Lang, current: Data = native
     const authority = JSON.parse(bytes.toString());
     assert.deepEqual(packet.rows, (authority.rows ?? authority.changes).map((row: Data) => ({ ...row, acceptedTarget: row.acceptedTarget ?? row.recommendedTarget ?? row.proposedTarget })));
   }
-  assert.deepEqual(current, expected(lang));
-  const rewind = structuredClone(current);
+  const residualBefore = soilWaterResidualNativeBefore(lang, 'soil-health', current);
+  assert.deepEqual(residualBefore, expected(lang));
+  const rewind = structuredClone(residualBefore);
   for (const row of fixture.accepted[lang].rows as Row[]) {
     const live = slot(rewind, row);
     const before = slot(fixture.before[lang], row);

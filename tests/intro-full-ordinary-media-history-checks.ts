@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { validateAndRewindIntroFullPaired, readCurrentIntroFullDecks } from './intro-full-ordinary-paired-checks.ts';
+import { soilWaterResidualAssetSizesBefore, soilWaterResidualValidateCurrentFrames } from './soil-water-residual-history-checks.ts';
 const folder = 'docs/media/intro-full-ordinary-completion-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
@@ -45,9 +46,12 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
   // As in the older Intro proof, one immutable full media pass per process is
   // sufficient for dated descriptors; every caller's manifest is still exact.
   if (verifiedExpectedManifest !== undefined) {
-    assert.equal(currentManifest, verifiedExpectedManifest, 'only 36 approved sizes and the measured exact aggregate comment change');
+    const beforeResidual = soilWaterResidualAssetSizesBefore(currentManifest);
+    assert.equal(beforeResidual, verifiedExpectedManifest, 'only 36 approved sizes and the measured exact aggregate comment change before the later Soil/Water layer');
     return introFullMediaProof;
   }
+  soilWaterResidualValidateCurrentFrames();
+  const beforeResidual = soilWaterResidualAssetSizesBefore(currentManifest);
   const decks = readCurrentIntroFullDecks();
   validateAndRewindIntroFullPaired(decks);
   const proof = introFullMediaProof;
@@ -56,7 +60,11 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
   assert.deepEqual(proof.frames.map((row: any) => row.path).sort(), expectedIntroFullPaths.slice().sort());
   assert.equal(inventory.length, 1905);
   let expected = before;
-  const changed = new Set(expectedIntroFullPaths);
+  const changed = new Set([
+    ...expectedIntroFullPaths,
+    ...JSON.parse(readFileSync('docs/media/soil-water-residual-2026-10-06/frames.json', 'utf8')).renderedFrames
+      .map((row: any) => '/' + row.path.replace(/^public\//, '')),
+  ]);
   for (const frame of proof.frames) {
     const old = inventory.find((row: any) => row.path === frame.path);
     assert.ok(old);
@@ -81,9 +89,9 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
   assert.equal(proof.manifestNewComment, `// 1905 files, ${(total / 1e6).toFixed(1)} MB total.`);
   assert.equal(expected.split(proof.manifestOldComment).length, 2);
   expected = expected.replace(proof.manifestOldComment, proof.manifestNewComment);
-  assert.equal(currentManifest, expected, 'only 36 approved sizes and the measured exact aggregate comment change');
-  assert.equal(sha(currentManifest), proof.manifestAfterSHA256);
-  assert.equal(inventory.filter((row: any) => !changed.has(row.path)).length, 1869);
+  assert.equal(beforeResidual, expected, 'only 36 approved sizes and the measured exact aggregate comment change before the later Soil/Water layer');
+  assert.equal(sha(beforeResidual), proof.manifestAfterSHA256);
+  assert.equal(inventory.filter((row: any) => !changed.has(row.path)).length, 1851);
   for (const row of inventory) {
     if (changed.has(row.path)) continue;
     const actual = fileDescriptor('public' + row.path);

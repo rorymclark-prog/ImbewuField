@@ -101,7 +101,7 @@ test('regional ordinary metadata drafts stay source-bound and appear on the inte
 
   const titleRows = [
     // 6 October: the checked conjunction is now Venda; source drift still withdraws the card.
-    { language: 've' as const, lessonId: 'water-harvesting-l3', lessonDraft: TSHIVENDA_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === 'water-harvesting-l3')!, target: 'Rainwater Tanks na Roof Catchment: U kuvhanganya na u tsireledza maḓi' },
+    { language: 've' as const, lessonId: 'water-harvesting-l3', lessonDraft: TSHIVENDA_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === 'water-harvesting-l3')!, target: 'Thanngi dza maḓi a mvula na Roof Catchment: U kuvhanganya na u tsireledza maḓi' },
     // 6 October: source-paired ordinary title is translated; canonical title and drift guard remain.
     { language: 'ts' as const, lessonId: 'water-harvesting-l3', lessonDraft: XITSONGA_WATER_HARVESTING_DRAFT.lessons.find(item => item.id === 'water-harvesting-l3')!, target: 'Mathanki ya mati ya mpfula ni Roof Catchment: Ku hlengeleta ni ku sirhelela mati' },
     { language: 'ts' as const, lessonId: 'soil-health-l1', lessonDraft: XITSONGA_SOIL_HEALTH_DRAFT.lessons.find(item => item.id === 'soil-health-l1')!, target: 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo' },
