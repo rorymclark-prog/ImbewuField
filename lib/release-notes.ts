@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '989b6f61', changes: [
+    '36 silent regional slides add fuller drafts beside exact English.',
+    'Vegetables lessons add clearer unreviewed regional drafts.',
+  ], tour: [
+    { title: 'Read fuller regional drafts',
+      where: 'Study → Introduction, Reading, Vegetables, Market or Water',
+      detail: 'Compare unreviewed regional drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: 'b06536d2', changes: [
     'Reading, Vegetables and Market add fuller unreviewed regional lesson drafts.',
     '13 silent Vegetables and Market slides match the fuller lesson drafts.',
