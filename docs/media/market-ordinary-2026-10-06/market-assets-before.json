@@ -1,0 +1,507 @@
+[
+  {
+    "path": "/course-decks/market-community/en/slide-01.jpg",
+    "bytes": 409619,
+    "sha256": "8cac9be9eb251098a0ea2f4ad304d0432cab7dfea8aefda51ddff2668e5ea04b"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-02.jpg",
+    "bytes": 151849,
+    "sha256": "df1f86fd0f30596a8bb9bcccfd0b3b9875a55b1c2e762d958d928aa0168a5cda"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-03.jpg",
+    "bytes": 127111,
+    "sha256": "52862d29adaaf657a585c7c45ed66e2dde643f66573ca893da75529aecc2f87d"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-04.jpg",
+    "bytes": 224944,
+    "sha256": "d4218b9f523ad7effe33ba7290b3b7bcdf2c4c21b83c3df80f4243c5bbe25d8c"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-05.jpg",
+    "bytes": 505128,
+    "sha256": "b565f5e17f0ed553d38fa4fd7e9c16c3e303862873aa3bf897d3276b748dbce4"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-06.jpg",
+    "bytes": 133791,
+    "sha256": "04d7ec6ead62e7cede15cd98bbedd41fc8fea55f12c048004ea257c65f65ea84"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-07.jpg",
+    "bytes": 802371,
+    "sha256": "aa1479c2d3b615390d1a798bc63dba63ab9672c3f7abe66eb0de2956f34ae4cf"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-08.jpg",
+    "bytes": 110217,
+    "sha256": "44e6593579c40e7f91689dda20fae9bb2f5d087017ee43ac6c3e059d0c431811"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-09.jpg",
+    "bytes": 191111,
+    "sha256": "07ed3c60f85fc1c23445e1404161ee99b0ed36169416ce2e2d18a11e64f90cb3"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-10.jpg",
+    "bytes": 823629,
+    "sha256": "f0b4bc6a8ebdf4ddf22c645c1b327c21121d60136d61653b0a90a101980c78f1"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-11.jpg",
+    "bytes": 136160,
+    "sha256": "40bc3c9837cb3cf23b629b6181d5ed93ee4ba5467e7006f53588e32c1bb02849"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-12.jpg",
+    "bytes": 117841,
+    "sha256": "fa2dc0927b99794d24e767e2480424ed6f018f0164af0025c449963bda30d67e"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-13.jpg",
+    "bytes": 167361,
+    "sha256": "d2c5ed41dcd6e18c77caa08ced1f82a7ecaf40f89d765d3ad50b1a1091be3f19"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-14.jpg",
+    "bytes": 208457,
+    "sha256": "d535ba4f2cbfa2012ed470ee1d82307c81029eb5a65477ffe7a646cd68f9eec2"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-15.jpg",
+    "bytes": 738631,
+    "sha256": "0d019fcd0f6982fc54aa579af81d463d7ec23782a266ba783dabb3aa9737518b"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-16.jpg",
+    "bytes": 861957,
+    "sha256": "22e44b6ce9b5eac598abfb55dd8149574039a3604d93808e76adcc62d5213d2b"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-17.jpg",
+    "bytes": 142492,
+    "sha256": "6c839a057bc518bd92e0f52f95a88857121751cfb9bbb4eaac1bd20813643433"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-18.jpg",
+    "bytes": 860955,
+    "sha256": "ba14df873c730694fc4c75c10b6747b613d309709537cfaa68fd093f179ef693"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-19.jpg",
+    "bytes": 154910,
+    "sha256": "1b6098c6bab76f87f99a44895a776b89025b052aa26f856670b3d23a7304a797"
+  },
+  {
+    "path": "/course-decks/market-community/en/slide-20.jpg",
+    "bytes": 257692,
+    "sha256": "ceb68f4d1478c28bdce9b0065fb5e21d35b557acf235d7824f0166e43e874351"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-01.webp",
+    "bytes": 301922,
+    "sha256": "c7306ff6f0dd9ccd5521fc7d1c00cff5a040d7ed8827eb72cb83055fffa8c297"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-02.webp",
+    "bytes": 229892,
+    "sha256": "58f7c79e8c47cf2a32193624587900864bfa6fdce0149b7c0818bf8bf8db0875"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-03.webp",
+    "bytes": 224384,
+    "sha256": "71a014fecb58335bc5c4a7d60d03ee7a514a2f0b313c44c40383ddf2aebd368c"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-04.webp",
+    "bytes": 205630,
+    "sha256": "46e2ef39c0d3fcdc081fa0d6ace0bf5953f82ad4e25fd6cce77bf3a52dd39eea"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-05.webp",
+    "bytes": 383718,
+    "sha256": "60efc522ba76d97a5f74e5538b9439ad108b2088f98d3248b67ee84f88da6827"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-06.webp",
+    "bytes": 256118,
+    "sha256": "92de501477b34ea1331469364017d702d1fe5b0b39e29c712f3493c082dc06bf"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-07.webp",
+    "bytes": 524266,
+    "sha256": "6d097282df6cfd92f7ef55becc5c4d3319422c2c87d564f56b2207968a0ee174"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-08.webp",
+    "bytes": 248978,
+    "sha256": "7c50f690c6351125638c1cd953d22985be9e028a4afb9bd4a033e5140a9d205a"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-09.webp",
+    "bytes": 183484,
+    "sha256": "53d836c45aa59ea01f0d53347b81825544db0ced1008221672b9840b6bd2dbf4"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-10.webp",
+    "bytes": 502830,
+    "sha256": "fffa77616eba8990d7b3bc93aaa825e1e7399608a38b11e94657e9bd55bf158c"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-11.webp",
+    "bytes": 275258,
+    "sha256": "2b1915c8c5794d54a9820fb29c733e88368b2873daa1c3a78e395a5c5fb1b844"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-12.webp",
+    "bytes": 225434,
+    "sha256": "b1fafb970015240b525585a45f324e1e858ac11a846f626db7edaba04c563aa6"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-13.webp",
+    "bytes": 258964,
+    "sha256": "fd3f8875acde184a7bbe5e85d124d16dee0ff711aa00afefa247662b09f271eb"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-14.webp",
+    "bytes": 221786,
+    "sha256": "312d23c2c119543582a12cb9832c94a5b9c8dec20f3407767ef988935f668be5"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-15.webp",
+    "bytes": 533706,
+    "sha256": "2bd19395873fd7640c706a4155e4cf2374482d52ea476bfb0e5e63e8d2e39723"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-16.webp",
+    "bytes": 509110,
+    "sha256": "b0d5622185c73342631e0343c6bd36de52fb984be3fff7a8837f0db54a4bb3fd"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-17.webp",
+    "bytes": 289632,
+    "sha256": "2d665925e402812b82b4307af87aa67c3d24aa4d1db596d5b1d827fd8b535c33"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-18.webp",
+    "bytes": 577078,
+    "sha256": "fc2946c35a7990b0b7b45284a3fa632e0541203b5ace8d787c2d923c23cfe35d"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-19.webp",
+    "bytes": 277076,
+    "sha256": "be977ec0d8b99188eb04eff024835faf4b0c182cbf19ad769b241e938289f220"
+  },
+  {
+    "path": "/course-decks/market-community/st/slide-20.webp",
+    "bytes": 356740,
+    "sha256": "4f384c904525eefde711055699bc9c117fa861fdd991cac930880e7cb1d83662"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-01.webp",
+    "bytes": 314122,
+    "sha256": "961f58a4cbd20f6d0d706b8622003e72b533dab261b684e19f96fa9b4f830b49"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-02.webp",
+    "bytes": 232738,
+    "sha256": "eec172f0f99c8024c565aa99c2dbd5b91dc4349adfb6d39e1f4c1bc7aaa7a2e8"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-03.webp",
+    "bytes": 215244,
+    "sha256": "9b7d95fe636974183650963a701bb623e8ae5192cab6610c278c2e541e73b22e"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-04.webp",
+    "bytes": 218116,
+    "sha256": "3345624076949a8e03682505fc113a40260571453011bee50df76ccad21cceda"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-05.webp",
+    "bytes": 388230,
+    "sha256": "744cc28f658009aaaf9d4c2529a869795a23a897c4c054e21f06b7119bab80e5"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-06.webp",
+    "bytes": 259068,
+    "sha256": "4be0060669bfbb2f943d0ce7fde7c97709dc6e0ac78d0fd3943db52061775926"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-07.webp",
+    "bytes": 533820,
+    "sha256": "c81cccac9ba8f70c8ca8deef922ecaabe5a697c2ac81bdd68112696fcdb70d7a"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-08.webp",
+    "bytes": 267530,
+    "sha256": "c8276c3cede3a8d3a8a0ba9cdc135a5cebdb4a0b8cb87994a3b5958538e3296b"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-09.webp",
+    "bytes": 188806,
+    "sha256": "d0159a2945733386e9c11157ab56bb8baa4c3d465b515e2ec0c197703a8f9b4f"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-10.webp",
+    "bytes": 497110,
+    "sha256": "2e1b949f4da94393dfc850986b06624ed2b8bd814a63e9f4c5bef50e4da0f213"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-11.webp",
+    "bytes": 291048,
+    "sha256": "1a4cdc98540fe5f1f24588d81a2568f5e0c7d4613d86cffe25664890a82f3be1"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-12.webp",
+    "bytes": 244516,
+    "sha256": "17fc0afa6f06d98ddcc6895e42eb9859167ef267d6ed656dfcc792249e1a5a34"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-13.webp",
+    "bytes": 273682,
+    "sha256": "bdd6126b19050aed149e10f5f13256992f9d5a94dc78adaa776ea593a1b76f37"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-14.webp",
+    "bytes": 229082,
+    "sha256": "89f7e9287ed88b53c1d8d936ba95806eee7df26253a6be7a9a5dd21031ddbefc"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-15.webp",
+    "bytes": 538650,
+    "sha256": "c5a14de0a5d546fd284b9cfb448941198563d3bf8f3ef162d41298355cfbae14"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-16.webp",
+    "bytes": 510410,
+    "sha256": "7073472cc8cb2608a604ee7bffba1854dc1081c338f8ed74d860e9ade4908d0e"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-17.webp",
+    "bytes": 290268,
+    "sha256": "e731be420aa421712ac5d3bff0aabed55a19c5386d48b498936a43bb1877c404"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-18.webp",
+    "bytes": 581786,
+    "sha256": "9b8e69c8d58cf441bd637b1dd20c227c39c65ab7d0dce7a8b0b0c7f37152e556"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-19.webp",
+    "bytes": 281174,
+    "sha256": "04e9c64640d37f4096dd9cf2720e48dc8891f7b6b658dbbae396fd39567cbe18"
+  },
+  {
+    "path": "/course-decks/market-community/ts/slide-20.webp",
+    "bytes": 354248,
+    "sha256": "9d3df9508a2ab78be41692b1049c0955f870528ab5bdf8891341f4cc3f89d4fc"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-01.webp",
+    "bytes": 314976,
+    "sha256": "d2f020aa094c8120a8f0dab93c355f305d18f68d65cfd3f26469a061d2afcb5d"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-02.webp",
+    "bytes": 229028,
+    "sha256": "13b2135cb5455ec086f2585c0d0a3582eb63514962a66fb1bbafccadb2d90144"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-03.webp",
+    "bytes": 217102,
+    "sha256": "eb9c3d08405801d58cf32bef9faa2feb23f0ffcfbe3872e9ed4dd644decb64e3"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-04.webp",
+    "bytes": 221186,
+    "sha256": "d3f67dd11a1245fcfcdfe7487b3dfbdff4a9ff0aaf39fb3f286a5c2619e92f64"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-05.webp",
+    "bytes": 386256,
+    "sha256": "923f46114ffe290eaf6dcd6ee8f84f3069ee6351aa9ba7db991017d1bd6e28f5"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-06.webp",
+    "bytes": 259402,
+    "sha256": "ded86afd92d7c829560d96edcdf7d9b258981cde04d3417de76663cab32e436a"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-07.webp",
+    "bytes": 531396,
+    "sha256": "b88abf473649e6fb7e37ab6a7aeac786e127b2df476c1457d7139bbf84e2c3b1"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-08.webp",
+    "bytes": 262260,
+    "sha256": "d1af4fe065780f9766aed70ad13c1d85e5f506ed3879cf9ca0e4ce24df49f703"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-09.webp",
+    "bytes": 191924,
+    "sha256": "37a8394a2fbe0021bfd2c4642d33614f5e582d2048f4f9f7b29e077ed482e773"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-10.webp",
+    "bytes": 507188,
+    "sha256": "15ce5d306176a82cd98d71578bdf32cfdd64af59f88aadd16fb6c8e0a36e60d1"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-11.webp",
+    "bytes": 269142,
+    "sha256": "e2bc57eafff4583f92206d2c0a3f5c5f5b741a49e8b781afa2c6c24fea732fa6"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-12.webp",
+    "bytes": 237628,
+    "sha256": "0d842805234d83c17e0ab9e5389c20f69dcf68e76a535ccdf9b1575696889a91"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-13.webp",
+    "bytes": 251968,
+    "sha256": "b7fcdf57d88fe7acf9e8cc8beb78c12f056ace62e68430fd314af5cd09acc211"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-14.webp",
+    "bytes": 224036,
+    "sha256": "ac4a9cdd1a1ae5afbd778e14ce3669682b7f36fa54b9007dcd0d399e7793f074"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-15.webp",
+    "bytes": 584918,
+    "sha256": "0d1d0deaf7e6f7f86128e09b51b88b34fd7a62f8fa0235a89c604f869e589ca1"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-16.webp",
+    "bytes": 505140,
+    "sha256": "77c40e3f0ea53fa42b53ccc1b46981c0bfa128db7bd06f9b9af0fba9324e0a6b"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-17.webp",
+    "bytes": 284012,
+    "sha256": "435fbcc05281925723ed0551708a6eecaf3d35f9199134d1187a87480d398650"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-18.webp",
+    "bytes": 572706,
+    "sha256": "ce3e81192503aa59315b477734d451aa01b3128e9066ff314b4cbbbc6358852e"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-19.webp",
+    "bytes": 287854,
+    "sha256": "0337a50ec544e66eb8adedc31781011b2e36b4ef5cdfa00bd78d66e24678c062"
+  },
+  {
+    "path": "/course-decks/market-community/ve/slide-20.webp",
+    "bytes": 359694,
+    "sha256": "092387bfae0cb4af5110f6ff764a1bec2b28f6deaf60545861d688faf660e1cf"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-01.jpg",
+    "bytes": 231014,
+    "sha256": "127f302a34f3ab8ed1101ffb60889fd48134ea512d77507f67cf73b3c00d997b"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-02.jpg",
+    "bytes": 99870,
+    "sha256": "40f54d5e56ac5d891b9e68cde07ab28a4878c20206e71e16b9bc6ed32d53ba82"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-03.jpg",
+    "bytes": 110807,
+    "sha256": "c0b1c1cd3d77b386b642353694af09785916d56e6ffe252abd2ce527a8509e0d"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-04.jpg",
+    "bytes": 113605,
+    "sha256": "3b25e3a0cc9ad2e13ff60ffb775bfca6ae688300aca1f36f8f23fd334b74e0b2"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-05.jpg",
+    "bytes": 329274,
+    "sha256": "b9ee6b369524f936dce7c6ae06b1201e3a91ebf660958a214092be605fba66d6"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-06.jpg",
+    "bytes": 106387,
+    "sha256": "c89c172122f292f06f179e26bc7089989764d74260ea69d23c613a41fc42671d"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-07.jpg",
+    "bytes": 506997,
+    "sha256": "6f3ec3132e49a313f3bfa47175dd9f23b0cd2c88686eea0c1a8646ba4fbad21b"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-08.jpg",
+    "bytes": 98568,
+    "sha256": "8e020e1b431aa54550c48d2825d0806cea9162c38ee44c96d4df1f58bb7c89c1"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-09.jpg",
+    "bytes": 129027,
+    "sha256": "eb07a5e3a95687527b6525dc7bea8561ed6aa90268bf9556a6aa6e098a0abc7b"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-10.jpg",
+    "bytes": 529918,
+    "sha256": "35cf2659ab6811a2c7ff787ea87bf109fe4f7637ba3f7c015a047d5bd68f8cb6"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-11.jpg",
+    "bytes": 124215,
+    "sha256": "88d3e61844af989d8be3de23f6828f42db88c1dc19ef3b38da8bd463f52ec420"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-12.jpg",
+    "bytes": 97910,
+    "sha256": "9380a6151f7acd7a246c13434346b11c9b27b9b62ffa286b5177640a8a1fe92c"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-13.jpg",
+    "bytes": 109717,
+    "sha256": "baf55ac87ad7d10ee5663dcbd32183dbe412f188edc112a9e10cb13a8529f2fa"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-14.jpg",
+    "bytes": 109943,
+    "sha256": "6a935180a5d86dad2bbe9725107cf1ec795aa2d734934c459f903beb11a918f9"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-15.jpg",
+    "bytes": 471220,
+    "sha256": "cbe38c2674856845f4df2b95d51729ce0a19cf8ed6ad6fd2d659257fc8048cbd"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-16.jpg",
+    "bytes": 553093,
+    "sha256": "9c6e1f306da0a5572dbc16a01fac67f6c37e404a488e99189543ddc406f066d1"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-17.jpg",
+    "bytes": 136297,
+    "sha256": "bab12a4b781411828fcd63e1a32d89c18fad0434ff536499784191ea32b839a4"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-18.jpg",
+    "bytes": 544791,
+    "sha256": "fbc461537a8039a546078953e3e51bdd3fa3eed3a0be85022e84b04e8271ca30"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-19.jpg",
+    "bytes": 135405,
+    "sha256": "f0aa079b2b354f0b47e86dd6be4e4689aa7de2cdacfd3287adf2591be746d431"
+  },
+  {
+    "path": "/course-decks/market-community/zu/slide-20.jpg",
+    "bytes": 138860,
+    "sha256": "5a5c44847b589b81ec4d2a77f33c22c0238a5f6e73bc08d1703c8666d639b4f6"
+  },
+  {
+    "path": "/course-decks/market-community/zu-silent/slide-14.webp",
+    "bytes": 213512,
+    "sha256": "287241055294f6fe510b21436297d5ea4d069a2853646f63dd357943604ff16c"
+  }
+]

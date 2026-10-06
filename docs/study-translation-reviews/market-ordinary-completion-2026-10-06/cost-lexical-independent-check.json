@@ -1,0 +1,706 @@
+{
+  "reportId": "imbewu-market-cost-lexical-independent-check-20261006",
+  "generatedAt": "2026-10-06",
+  "mode": "read-only independent lexical/composition spotcheck; no repository edits and no translation approval",
+  "candidateAuthority": {
+    "path": "/tmp/imbewu-market-ordinary-residual-candidates-20261006.json",
+    "sha256": "c948918d5e0c2ad000f0e4888f9dbceda291ba73532258bc7ba54ee510f1938c",
+    "baselineCommit": "b2c81e32458f83cff951250e3b9065d2b1314206",
+    "currentMainCommit": "b2c81e32458f83cff951250e3b9065d2b1314206",
+    "sourceFilesVerifiedAgainstCurrentMain": [
+      {
+        "path": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exactOriginMain": true
+      },
+      {
+        "path": "lib/course-localization.ts",
+        "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+        "exactOriginMain": true
+      },
+      {
+        "path": "lib/course-translation-drafts-st-market-community.ts",
+        "sha256": "a3c2170501056b0996e83ec66f0b831f44569f66c20dcdd18242cf9c72cb0fbd",
+        "exactOriginMain": true
+      },
+      {
+        "path": "lib/course-translation-drafts-ve-market-community.ts",
+        "sha256": "6e801aa8b9dfde31be37f713fd52b1937c7971bdc1c782ad0c152df406b545fd",
+        "exactOriginMain": true
+      },
+      {
+        "path": "lib/course-translation-drafts-ts-market-community.ts",
+        "sha256": "e32e3b5e0530a5779b6317637f4433fba396d44f5ab00e86676a8885c1e36d38",
+        "exactOriginMain": true
+      }
+    ],
+    "changedRows": 86,
+    "changedRowsSourceCurrentSubstringBindingFailures": 0
+  },
+  "primaryLexicalAuthority": {
+    "title": "Multilingual Human, Social, Economic and Management Sciences Terminology List (March 2017)",
+    "publisher": "Department of Arts and Culture / DSAC, Republic of South Africa",
+    "officialPdfUrl": "https://www.dsac.gov.za/sites/default/files/2024-10/Multilingual%20Human%20Social%20Economic%20and%20Management%20Sciences%20Terminology.pdf",
+    "locallyInspectedCopy": "/tmp/imbewu-dsac-economic-terminology-20261006.pdf",
+    "sha256": "13ea22f88275a160bfd0444a66bbb8de1acc2adf39f639a8d687670da9af5d8f",
+    "inspection": "Extracted searchable text and visually inspected the relevant printed table pages; page numbering recorded as printed page and PDF page.",
+    "terms": [
+      {
+        "headword": "cost of production",
+        "printedPage": 32,
+        "pdfPage": 33,
+        "sesotho": "ditjeo tsa tlhahiso",
+        "tshivenda": "ndifho ya vhubveledzi; synonym mutengo wa vhubveledzi",
+        "xitsonga": "ntsengo wa andziso"
+      },
+      {
+        "headword": "cost price",
+        "printedPage": 32,
+        "pdfPage": 33,
+        "tshivenda": "mutengo wa vhubveledzi",
+        "xitsonga": "ntsengo wa nxavo"
+      },
+      {
+        "headword": "final product",
+        "printedPage": 48,
+        "pdfPage": 49,
+        "tshivenda": "tshibveledzwa",
+        "xitsonga": "xikumiwa xo hetelela"
+      },
+      {
+        "headword": "market price",
+        "printedPage": 69,
+        "pdfPage": 70,
+        "tshivenda": "mutengo wa maragani; synonym mutengo wa maketeni",
+        "xitsonga": "nxavo wa le makete"
+      }
+    ]
+  },
+  "bindingCheck": {
+    "changedRowsChecked": 86,
+    "sourceAndCurrentBoundToPacketSnapshots": true,
+    "liveMainSourceOwnerHashesMatch": true,
+    "limitation": "This verifies the packet against exact source/current values and source-owner files, not native-language quality."
+  },
+  "findings": {
+    "sesothoDitjeo": {
+      "candidateRows": 5,
+      "verdict": "Lexically supported for production-cost contexts. DSAC lists `ditjeo tsa tlhahiso` for `cost of production`, so the candidate stem `ditjeo` is a defensible match. It does not establish every sentence-level use as fluent."
+    },
+    "tshivendaTsengo": {
+      "candidateRows": 10,
+      "verdict": "Do not accept `tsengo` yet. The inspected DSAC table gives `ndifho ya vhubveledzi` / `mutengo wa vhubveledzi` for production cost and `mutengo wa maragani` for market price; it does not establish the proposed generic `tsengo` as this lesson’s cost noun. Absence from this table is not proof the word is wrong. Keep only the source noun `cost`/`costs` in those slots until a language check confirms scope, preserving every other localized span."
+    },
+    "xitsongaMaliUsed": {
+      "candidateRows": 9,
+      "verdict": "The proposed `mali leyi tirhisiwaka` (“money being used”) risks narrowing economic costs to cash spent; the course separately includes labour, transport, sale costs and comparison with revenue. DSAC lists the more specific term `ntsengo wa andziso` for `cost of production`, but that alone does not validate the generic phrase in every context. Keep only the exact `cost`/`costs` noun in uncertain slots; retain translated framing and activity words. For the L1 body.11 composite candidate, use `ku humesa, ku paka ni ku xavisa costs` so the three cost categories remain explicit."
+    },
+    "regularOrdersSesotho": {
+      "verdict": "No current mismatch confirmed. `Ditaelo tsa kamehla` can also be read as instructions, but this full source context is commercial: it connects customer orders, customers and growers, and keeping an agreement. That context supports the order sense. The proposal preserves “regular” and the source’s only-when/ability qualifier; do not hold the whole sentence based on isolated-word ambiguity."
+    },
+    "productProduce": {
+      "tshivendaProduct": "`tshibveledzwa` is supported by DSAC as `final product`; using it for a customer’s market product is plausible. The plural `zwibveledzwa` is plausible for farm produce as goods, but the glossary does not directly verify every produce context.",
+      "xitsongaProduct": "DSAC uses `xikumiwa xo hetelela` for “final product”; it does not directly verify `xihumisiwa` as the buyer-facing noun `product`. Treat `xihumisiwa` as plausible but unverified. If needed, retain only `product` at those atomic noun slots while translating quantity/quality/delivery/payment around it.",
+      "xitsongaProduce": "`swihumisiwa` may mean things produced/outputs and is plausible in the market produce context; the inspected glossary does not settle this exact use. No defect is confirmed; local lexical review needed only for the noun, not the full sentence."
+    },
+    "packingAndRelatedTerms": {
+      "packingVerb": "`ho paka` / `ku paka` in sentences about time and work plausibly translates the activity “packing”; no change needed from this spotcheck.",
+      "packagingNoun": "In `keep suitable shade, packaging and storage through delivery`, `ho paka` / `ku paka` renders the act of packing, while source `packaging` may refer to the package/material/provision. This is a narrow unresolved composition risk in ST/TS body.6. If reviewers cannot confirm, keep only the noun `packaging` in English while retaining localized `shade`, `storage`, and `delivery`."
+    },
+    "feesPaymentLosses": {
+      "verdict": "No confirmed meaning defect from these lexical candidates. Sesotho `tefo` for payment is supported contextually; Tshivenda `mbadelo` appears in the DSAC payment vocabulary; Xitsonga `ku hakela` is a verbal form that fits “day to pay” and the agreement list but should be locally checked for noun-style payment contexts. Sesotho `ditahlehelo` and Xitsonga `ku lahlekeriwa` are plausible losses; Tshivenda `ndozwo` has a related DSAC loss entry in a capital-loss context. Market fees remain English in some candidate rows where precision is uncertain. Preserve the distinct source categories fees, costs, selling price, money received, spoilage, unsold produce and losses."
+    }
+  },
+  "costSlotOnlyRecommendations": [
+    {
+      "rowId": "ve:market-community-l1:body.12",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l1:body.13",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Sedzani mutengo, cost na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l1:keyPoints.2",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Label worked examples; shumisani cost dzaṋu dza vhukuma u dzhia tsheo.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l1:quiz.0.rationale",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Mutengo wa tsumbo u fhasi ha cost yo ambiwaho. Sedzani phambano na zwine vharengi vha zwi ṱoḓa ni sa athu dzhia tsheo ya u bveledza hu tevhelaho.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l1:quiz.0.options.2",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Mutengo wa u rengisa, cost, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l2:body.2",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Sedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana cost.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l2:body.7",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Ṱolani cost na ṱhoḓea dza zwiḽiwa zwa muṱa musi ni sa athu fulufhedzisa regular boxes.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l2:quiz.1.rationale",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, mbadelo na cost dza u dzi swikisa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l3:body.7",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Mutengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na cost ya u rengisa zwi kha ḓi tea u pimiwa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ve:market-community-l3:quiz.1.options.3",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Humbulani uri u dzhena kha tshigwada zwi fhelisa cost dzoṱhe.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l1:body.11",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "U nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa costs, ku katsa labour ni vutleketli.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l1:body.13",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Languta nxavo, cost ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l1:keyPoints.2",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Marka worked examples; tirhisa cost ta wena ta xiviri eka swiboho.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l1:quiz.0.rationale",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa ku humesa loku landzelaka.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l2:body.2",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe cost.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l2:body.7",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Kambisisa cost ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika mabokisi ya nkarhi na nkarhi.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l2:keyPoints.1",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Pimanisa cost ni ku lahlekeriwa xikan’we ni nxavo wo xavisa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l2:quiz.1.rationale",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, ku hakela ni cost ta ku ti hetisisa.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    },
+    {
+      "rowId": "ts:market-community-l3:quiz.1.options.3",
+      "minimalEnglishAnchor": "cost(s) noun only",
+      "candidateWithAnchorTarget": "Ehleketa leswaku ku nghena eka ntlawa ku susa cost hinkwato.",
+      "note": "Use this only in the exact cost slot; retain all other candidate ordinary-span translations and surrounding localized text."
+    }
+  ],
+  "candidateRows": {
+    "sesothoDitjeo": [
+      {
+        "id": "st:market-community-l2:body.7",
+        "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+        "currentTarget": "Sheba costs le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+        "proposedTarget": "Sheba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+        "currentSpan": "costs",
+        "candidateSpan": "ditjeo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "st:market-community-l2:quiz.1.rationale",
+        "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+        "currentTarget": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, payment le costs tsa ho di phethahatsa.",
+        "proposedTarget": "Ditaelo tse netefaditsweng di fana ka tlhahisoleseding ka demand. Boleng ba tsona bo ntse bo itshetlehile ka reliable supply, tefo le ditjeo tsa ho di phethahatsa.",
+        "currentSpan": "costs",
+        "candidateSpan": "ditjeo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "st:market-community-l3:body.7",
+        "sourceEnglish": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+        "currentTarget": "Moreki wa haufi a ka fokotsa leeto, empa losses le selling costs di sa ntse di lokela ho lekanngwa.",
+        "proposedTarget": "Moreki wa haufi a ka fokotsa leeto, empa ditahlehelo le ditjeo tsa thekiso di sa ntse di lokela ho lekanngwa.",
+        "currentSpan": "losses le selling costs",
+        "candidateSpan": "ditahlehelo le ditjeo tsa thekiso",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "st:market-community-l3:quiz.1.rationale",
+        "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
+        "currentTarget": "Distance e ama costs, empa ha se yona feela factor. Sebedisa actual returns le losses ho bapisa options.",
+        "proposedTarget": "Bohole e ama ditjeo, empa ha se yona feela factor. Sebedisa actual returns le ditahlehelo ho bapisa options.",
+        "currentSpan": "costs",
+        "candidateSpan": "ditjeo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "st:market-community-l3:quiz.1.options.3",
+        "sourceEnglish": "Assume joining a group removes all costs",
+        "currentTarget": "Nka hore ho kena group ho tlosa costs tsohle.",
+        "proposedTarget": "Nka hore ho kena sehlopha ho tlosa ditjeo tsohle.",
+        "currentSpan": "costs",
+        "candidateSpan": "ditjeo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "tshivendaTsengo": [
+      {
+        "id": "ve:market-community-l1:body.12",
+        "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "currentTarget": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.",
+        "proposedTarget": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli tsengo yo bulwaho.",
+        "currentSpan": "cost",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l1:body.13",
+        "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+        "currentTarget": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+        "proposedTarget": "Sedzani mutengo, tsengo na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l1:keyPoints.2",
+        "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+        "currentTarget": "Label worked examples; shumisani costs dzaṋu dza vhukuma u dzhia tsheo.",
+        "proposedTarget": "Label worked examples; shumisani tsengo dzaṋu dza vhukuma u dzhia tsheo.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l1:quiz.0.rationale",
+        "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+        "currentTarget": "Mutengo wa tsumbo u fhasi ha cost yo ambiwaho. Sedzani phambano na zwine vharengi vha zwi ṱoḓa ni sa athu dzhia tsheo ya u bveledza hu tevhelaho.",
+        "proposedTarget": "Mutengo wa tsumbo u fhasi ha tsengo yo ambiwaho. Sedzani phambano na zwine vharengi vha zwi ṱoḓa ni sa athu dzhia tsheo ya u bveledza hu tevhelaho.",
+        "currentSpan": "cost",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l1:quiz.0.options.2",
+        "sourceEnglish": "The selling price, costs and whether another crop would give a better return",
+        "currentTarget": "Mutengo wa u rengisa, costs, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+        "proposedTarget": "Mutengo wa u rengisa, tsengo, na uri tshimela tshiṅwe tshi nga netshedza return i khwine.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:body.2",
+        "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+        "currentTarget": "Sedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+        "proposedTarget": "Sedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana tsengo.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:body.7",
+        "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+        "currentTarget": "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+        "proposedTarget": "Ṱolani tsengo na ṱhoḓea dza zwiḽiwa zwa muṱa musi ni sa athu fulufhedzisa regular boxes.",
+        "currentSpan": "costs na household food needs",
+        "candidateSpan": "tsengo na ṱhoḓea dza zwiḽiwa zwa muṱa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:quiz.1.rationale",
+        "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+        "currentTarget": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.",
+        "proposedTarget": "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, mbadelo na tsengo dza u dzi swikisa.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l3:body.7",
+        "sourceEnglish": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+        "currentTarget": "Mutengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi tea u pimiwa.",
+        "proposedTarget": "Mutengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na tsengo ya u rengisa zwi kha ḓi tea u pimiwa.",
+        "currentSpan": "losses na selling costs",
+        "candidateSpan": "ndozwo na tsengo ya u rengisa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l3:quiz.1.options.3",
+        "sourceEnglish": "Assume joining a group removes all costs",
+        "currentTarget": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+        "proposedTarget": "Humbulani uri u dzhena kha tshigwada zwi fhelisa tsengo dzoṱhe.",
+        "currentSpan": "costs",
+        "candidateSpan": "tsengo",
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "xitsongaMoneyUsed": [
+      {
+        "id": "ts:market-community-l1:body.11",
+        "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "currentTarget": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+        "proposedTarget": "U nga si veka nxavo, tsala mali ya ku humesa, ku paka ni ku xavisa, ku katsa labour ni vutleketli.",
+        "currentSpan": "production, packing and selling costs",
+        "candidateSpan": "mali ya ku humesa, ku paka ni ku xavisa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l1:body.13",
+        "sourceEnglish": "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.",
+        "currentTarget": "Languta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+        "proposedTarget": "Languta nxavo, mali leyi tirhisiwaka ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l1:keyPoints.2",
+        "sourceEnglish": "Label worked examples; use your actual costs for decisions",
+        "currentTarget": "Marka worked examples; tirhisa costs ta wena ta xiviri eka swiboho.",
+        "proposedTarget": "Marka worked examples; tirhisa mali leyi tirhisiwaka ta wena ta xiviri eka swiboho.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l1:quiz.0.rationale",
+        "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
+        "currentTarget": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa production leyi landzelaka.",
+        "proposedTarget": "Nxavo wa xikombiso wu le hansi ka mali leyi tirhisiweke leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa ku humesa loku landzelaka.",
+        "currentSpan": "cost",
+        "candidateSpan": "mali leyi tirhisiweke",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:body.2",
+        "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.",
+        "currentTarget": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.",
+        "proposedTarget": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe mali leyi tirhisiwaka.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:body.7",
+        "sourceEnglish": "Check the costs and household food needs before promising regular boxes.",
+        "currentTarget": "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.",
+        "proposedTarget": "Kambisisa mali leyi tirhisiwaka ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika mabokisi ya nkarhi na nkarhi.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:keyPoints.1",
+        "sourceEnglish": "Compare costs and losses as well as selling price",
+        "currentTarget": "Pimanisa costs ni losses xikan’we ni selling price.",
+        "proposedTarget": "Pimanisa mali leyi tirhisiwaka ni ku lahlekeriwa xikan’we ni nxavo wo xavisa.",
+        "currentSpan": "costs ni losses xikan’we ni selling price",
+        "candidateSpan": "mali leyi tirhisiwaka ni ku lahlekeriwa xikan’we ni nxavo wo xavisa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:quiz.1.rationale",
+        "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
+        "currentTarget": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+        "proposedTarget": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, ku hakela ni mali leyi tirhisiwaka ta ku ti hetisisa.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l3:quiz.1.options.3",
+        "sourceEnglish": "Assume joining a group removes all costs",
+        "currentTarget": "Ehleketa leswaku ku nghena eka group ku susa costs hinkwato.",
+        "proposedTarget": "Ehleketa leswaku ku nghena eka ntlawa ku susa mali leyi tirhisiwaka hinkwato.",
+        "currentSpan": "costs",
+        "candidateSpan": "mali leyi tirhisiwaka",
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "tshivendaProductProduce": [
+      {
+        "id": "ve:market-community-l2:infographicAlt",
+        "sourceEnglish": "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
+        "currentTarget": "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+        "proposedTarget": "Nḓila tharu dza u rengisa zwi tshi bva kha bulasi ḽithihi: roadside stall, u isa zwibveledzwa shop nga tshigwada, na box i yaho nga ho livhaho muṱani.",
+        "currentSpan": "produce",
+        "candidateSpan": "zwibveledzwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:body.0",
+        "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "currentTarget": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+        "proposedTarget": "Vhudzisani uri mutengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.",
+        "currentSpan": "product",
+        "candidateSpan": "tshibveledzwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:quiz.0.options.1",
+        "sourceEnglish": "A box scheme needing the same produce weekly",
+        "currentTarget": "Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.",
+        "proposedTarget": "Box scheme ine ya ṱoḓa zwibveledzwa i fanaho vhege iṅwe na iṅwe.",
+        "currentSpan": "produce",
+        "candidateSpan": "zwibveledzwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l3:body.6",
+        "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "currentTarget": "Farani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.",
+        "proposedTarget": "Farani zwibveledzwa nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.",
+        "currentSpan": "produce",
+        "candidateSpan": "zwibveledzwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "xitsongaProductProduce": [
+      {
+        "id": "ts:market-community-l2:body.0",
+        "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "currentTarget": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+        "proposedTarget": "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.",
+        "currentSpan": "product",
+        "candidateSpan": "xihumisiwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:keyPoints.0",
+        "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
+        "currentTarget": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+        "proposedTarget": "Pfumelelanani hi xihumisiwa, nhlayo, khwalithi, ku yisa ni ku hakela.",
+        "currentSpan": "product",
+        "candidateSpan": "xihumisiwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l3:body.6",
+        "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "currentTarget": "Khoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.",
+        "proposedTarget": "Khoma swihumisiwa hi vukheta, u hlayisa ndzhuti lowu faneleke, ku paka ni ku hlayisa ku fikela loko swi fikisiwa.",
+        "currentSpan": "produce",
+        "candidateSpan": "swihumisiwa",
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "highValueExamples": [
+      {
+        "id": "ve:market-community-l1:body.12",
+        "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+        "currentTarget": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.",
+        "proposedTarget": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli tsengo yo bulwaho.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram",
+            "candidateSpan": "matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram"
+          },
+          {
+            "currentSpan": "cost",
+            "candidateSpan": "tsengo"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l1:body.11",
+        "sourceEnglish": "Before setting a price, record production, packing and selling costs, including labour and transport.",
+        "currentTarget": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+        "proposedTarget": "U nga si veka nxavo, tsala mali ya ku humesa, ku paka ni ku xavisa, ku katsa labour ni vutleketli.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "production, packing and selling costs",
+            "candidateSpan": "mali ya ku humesa, ku paka ni ku xavisa"
+          },
+          {
+            "currentSpan": "transport",
+            "candidateSpan": "vutleketli"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "st:market-community-l2:body.5",
+        "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+        "currentTarget": "Dumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.",
+        "proposedTarget": "Dumellanang ka tse ka mabokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Ditaelo tsa kamehla di thusa ho rera feela ha bareki le balemi ba ka phethahatsa tumellano.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "box contents, price, payment",
+            "candidateSpan": "tse ka mabokoseng, theko, tefo"
+          },
+          {
+            "currentSpan": "crops",
+            "candidateSpan": "dijalo"
+          },
+          {
+            "currentSpan": "Regular orders",
+            "candidateSpan": "Ditaelo tsa kamehla"
+          },
+          {
+            "currentSpan": "customers le growers",
+            "candidateSpan": "bareki le balemi"
+          },
+          {
+            "currentSpan": "agreement",
+            "candidateSpan": "tumellano"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l2:body.0",
+        "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "currentTarget": "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+        "proposedTarget": "Vhudzisani uri mutengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "product",
+            "candidateSpan": "tshibveledzwa"
+          },
+          {
+            "currentSpan": "quality",
+            "candidateSpan": "kwalithi"
+          },
+          {
+            "currentSpan": "delivery",
+            "candidateSpan": "u isa"
+          },
+          {
+            "currentSpan": "payment",
+            "candidateSpan": "mbadelo"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:body.0",
+        "sourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+        "currentTarget": "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
+        "proposedTarget": "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "product",
+            "candidateSpan": "xihumisiwa"
+          },
+          {
+            "currentSpan": "quality",
+            "candidateSpan": "khwalithi"
+          },
+          {
+            "currentSpan": "delivery",
+            "candidateSpan": "ku yisa"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l3:body.6",
+        "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "currentTarget": "Khoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.",
+        "proposedTarget": "Khoma swihumisiwa hi vukheta, u hlayisa ndzhuti lowu faneleke, ku paka ni ku hlayisa ku fikela loko swi fikisiwa.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "produce",
+            "candidateSpan": "swihumisiwa"
+          },
+          {
+            "currentSpan": "packaging ni storage",
+            "candidateSpan": "ku paka ni ku hlayisa"
+          },
+          {
+            "currentSpan": "yi fikisiwa",
+            "candidateSpan": "swi fikisiwa"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ve:market-community-l3:body.6",
+        "sourceEnglish": "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+        "currentTarget": "Farani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.",
+        "proposedTarget": "Farani zwibveledzwa nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "produce",
+            "candidateSpan": "zwibveledzwa"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      },
+      {
+        "id": "ts:market-community-l2:keyPoints.1",
+        "sourceEnglish": "Compare costs and losses as well as selling price",
+        "currentTarget": "Pimanisa costs ni losses xikan’we ni selling price.",
+        "proposedTarget": "Pimanisa mali leyi tirhisiwaka ni ku lahlekeriwa xikan’we ni nxavo wo xavisa.",
+        "ordinarySpanProposals": [
+          {
+            "currentSpan": "costs ni losses xikan’we ni selling price",
+            "candidateSpan": "mali leyi tirhisiwaka ni ku lahlekeriwa xikan’we ni nxavo wo xavisa"
+          }
+        ],
+        "candidateStatus": "independent-check-and-root-review-required"
+      }
+    ],
+    "sesothoRegularOrders": {
+      "id": "st:market-community-l2:body.5",
+      "sourceEnglish": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "currentTarget": "Dumellanang ka box contents, price, payment le se tla etsahala ha crops di haella. Regular orders di thusa ho rera feela ha customers le growers ba ka phethahatsa agreement.",
+      "proposedTarget": "Dumellanang ka tse ka mabokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Ditaelo tsa kamehla di thusa ho rera feela ha bareki le balemi ba ka phethahatsa tumellano."
+    }
+  },
+  "compositionRisks": [
+    {
+      "identity": "st:market-community-l3:body.6",
+      "risk": "Candidate uses “ho paka” for source “packaging”; verify package/material sense versus packing activity."
+    },
+    {
+      "identity": "ts:market-community-l3:body.6",
+      "risk": "Candidate uses “ku paka” for “packaging”; same bounded noun/action ambiguity."
+    }
+  ],
+  "conclusion": {
+    "confirmedCandidateMeaningDefects": 0,
+    "recommendedEnglishHolds": "Only the cost/costs noun at the listed Tshivenda/Xitsonga candidate slots if no direct language confirmation is available, plus potentially packaging as a noun in the two listed delivery sentences. Do not hold entire fields.",
+    "safeCandidateAreas": "Sesotho `ditjeo` has primary terminology support for production cost; Tshivenda `tshibveledzwa` has primary support for final product; customer/agreement context supports Sesotho `Ditaelo tsa kamehla` as order rather than command.",
+    "notAFluentApproval": "These primary term mappings support bounded lexical choices; they do not establish fluent, local farming, or market practice approval."
+  },
+  "limitations": [
+    "No repo files or course data edited.",
+    "Only the official DSAC terminology PDF was used for lexical recommendations; no independent local-language speaker check was performed.",
+    "ExactEnglish anchors are recommendations for review fallback, not applied translations."
+  ]
+}

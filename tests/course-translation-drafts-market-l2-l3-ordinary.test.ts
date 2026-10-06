@@ -8,15 +8,25 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { reconstructMarketBeforeL2L3Completion } from './market-l2-l3-completion-checks.ts';
+import { rewindMarketOrdinaryPresentation, validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
 
 const reviewDir = path.join(process.cwd(), 'docs/study-translation-reviews');
 const baseline = JSON.parse(readFileSync(path.join(reviewDir, 'MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-BASELINE-2026-10-05.json'), 'utf8'));
 const applied = JSON.parse(readFileSync(path.join(reviewDir, 'MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-APPLIED-2026-10-05.json'), 'utf8'));
 const moduleSource = COURSE_MODULES.find(module => module.id === 'market-community')!;
+// This dated test preserves the 2026-10-05 batch claim. Validate the exact newer
+// 2026-10-06 overlay first, then reconstruct the state this historical packet describes.
 const regional = {
-  st: SESOTHO_MARKET_COMMUNITY_DRAFT,
-  ve: TSHIVENDA_MARKET_COMMUNITY_DRAFT,
-  ts: XITSONGA_MARKET_COMMUNITY_DRAFT,
+  st: validateAndRewindMarketOrdinary(SESOTHO_MARKET_COMMUNITY_DRAFT, 'st'),
+  ve: validateAndRewindMarketOrdinary(TSHIVENDA_MARKET_COMMUNITY_DRAFT, 've'),
+  ts: validateAndRewindMarketOrdinary(XITSONGA_MARKET_COMMUNITY_DRAFT, 'ts'),
+};
+const resolveBeforeOrdinaryResidual = (...args: Parameters<typeof resolveLearnerLessonPresentation>) => {
+  const result = resolveLearnerLessonPresentation(...args);
+  const [lesson, language] = args;
+  return result.status === 'draft' && ['st', 've', 'ts'].includes(language)
+    ? rewindMarketOrdinaryPresentation(result, lesson.id, language as keyof typeof targetKey)
+    : result;
 };
 const targetKey = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 const lessonIds = ['market-community-l2', 'market-community-l3'];
@@ -107,7 +117,7 @@ test('Market L2/L3 draft targets stay bound to all 36 accepted English sources',
     const priorResolved = priorLesson ? getRegionalField(priorLesson, field.language as keyof typeof targetKey, field.fieldPath) : undefined;
     assert.equal(priorResolved, field.currentTarget, `${identity} immutable prior target`);
     assert.notEqual(field.appliedTarget, field.currentTarget, `${identity} is a real target change`);
-    const result = resolveLearnerLessonPresentation(sourceLesson, field.language);
+    const result = resolveBeforeOrdinaryResidual(sourceLesson, field.language);
     assert.equal(result.status, 'draft', `${identity} remains visibly a draft`);
     assert.equal(getTargetField(result.content, field.fieldPath), field.appliedTarget, `${identity} resolved target`);
   }
@@ -158,17 +168,17 @@ test('Market L2/L3 retains supply conditions, income, seed permissions and compa
   assert.match(bodyParagraph('st', 'market-community-l2', 8), /income/);
   assert.match(bodyParagraph('ts', 'market-community-l2', 8), /does not predict income/);
   assert.match(bodyParagraph('ts', 'market-community-l3', 0), /different varieties/);
-  const tsSeed = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[0];
+  const tsSeed = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[0];
   assert.equal(tsSeed.options[0], 'Hlanganisa all varieties without labels.');
   assert.equal(tsSeed.correct, 1);
   assert.doesNotMatch(tsSeed.options[0], /writing|ku tsala/, 'absence of labels stays broader than not writing them');
 
-  const stHighest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'st').content.quiz[1].options[0];
-  const veHighest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 've').content.quiz[1].options[0];
-  const tsHighest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[1].options[0];
-  const stShortest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'st').content.quiz[1].options[1];
-  const veShortest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 've').content.quiz[1].options[1];
-  const tsShortest = resolveLearnerLessonPresentation(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[1].options[1];
+  const stHighest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'st').content.quiz[1].options[0];
+  const veHighest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 've').content.quiz[1].options[0];
+  const tsHighest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[1].options[0];
+  const stShortest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'st').content.quiz[1].options[1];
+  const veShortest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 've').content.quiz[1].options[1];
+  const tsShortest = resolveBeforeOrdinaryResidual(moduleSource.lessons.find(lesson => lesson.id === 'market-community-l3')!, 'ts').content.quiz[1].options[1];
   assert.match(stHighest, /e phahameng ka ho fetisisa/);
   assert.match(veHighest, /ya nṱhesa/);
   assert.match(tsHighest, /the highest headline price/);
@@ -180,7 +190,7 @@ test('Market L2/L3 retains supply conditions, income, seed permissions and compa
 test('Market L2/L3 source drift withdraws the regional draft', () => {
   const source = moduleSource.lessons.find(lesson => lesson.id === 'market-community-l2')!;
   const drifted = { ...source, body: `${source.body} Source wording changed.` };
-  const result = resolveLearnerLessonPresentation(drifted, 'st');
+  const result = resolveBeforeOrdinaryResidual(drifted, 'st');
   assert.equal(result.status, 'english-fallback');
   assert.equal(result.content.body, drifted.body);
 });
@@ -188,10 +198,10 @@ test('Market L2/L3 source drift withdraws the regional draft', () => {
 test('Historical Market reconstruction rejects an altered final target or English source pair', () => {
   const changedTarget = structuredClone(SESOTHO_MARKET_COMMUNITY_DRAFT);
   changedTarget.lessons.find(lesson => lesson.id === 'market-community-l2')!.body.sesothoDraft += ' Added advice.';
-  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedTarget, 'st'), /native target matches/);
+  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedTarget, 'st'), /current full registry equals only the approved overlay/);
   const changedPair = structuredClone(SESOTHO_MARKET_COMMUNITY_DRAFT);
   changedPair.lessons.find(lesson => lesson.id === 'market-community-l2')!.body.sourceEnglish += ' Altered English.';
-  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedPair, 'st'), /native source pair remains exact/);
+  assert.throws(() => reconstructMarketBeforeL2L3Completion(changedPair, 'st'), /current full registry equals only the approved overlay/);
 });
 
 
@@ -203,14 +213,14 @@ test('Market L2/L3 keeps the five accepted unchanged fields and all bounded repa
     assert.equal(getSourceField(source, field.fieldPath), field.sourceEnglish);
     const prior = baseline.regionalDrafts[field.language].find((item: any) => item.id === field.lessonId);
     assert.equal(getRegionalField(prior, field.language, field.fieldPath), field.currentTarget);
-    assert.equal(getTargetField(resolveLearnerLessonPresentation(source, field.language).content, field.fieldPath), field.currentTarget);
+    assert.equal(getTargetField(resolveBeforeOrdinaryResidual(source, field.language).content, field.fieldPath), field.currentTarget);
   }
   assert.equal(applied.boundedRepairs.length, 25);
   for (const repair of applied.boundedRepairs) {
     const paragraph = repair.fieldPath.match(/^body\.paragraphs\.(\d+)$/);
     const fieldPath = paragraph ? 'body' : repair.fieldPath;
     const source = moduleSource.lessons.find(lesson => lesson.id === repair.lessonId)!;
-    const actual = getTargetField(resolveLearnerLessonPresentation(source, repair.language).content, fieldPath);
+    const actual = getTargetField(resolveBeforeOrdinaryResidual(source, repair.language).content, fieldPath);
     assert.equal(paragraph ? actual.split('\n\n')[Number(paragraph[1])] : actual, repair.reviewedTarget);
     assert.ok(repair.reason.length > 0, 'bounded repair carries its source meaning reason');
   }

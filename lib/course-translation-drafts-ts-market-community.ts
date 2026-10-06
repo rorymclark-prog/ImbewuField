@@ -30,7 +30,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+        "xitsongaDraft": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa costs, ku katsa labour ni vutleketli.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -87,7 +87,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "The example price is below the stated cost. Review the gap and customer demand before making the next production decision.",
-            "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa production leyi landzelaka.",
+            "xitsongaDraft": "Nxavo wa xikombiso wu le hansi ka cost leyi boxiweke. Kambisisa ku hambana ni leswi vaxavi va swi lavaka u nga se endla xiboho xa ku humesa loku landzelaka.",
             "reviewStatus": 'machine-draft'
           }
         },
@@ -148,16 +148,16 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label."
         ].join("\n\n"),
         "xitsongaDraft": [
-          "Vutisa leswaku muxavi u lava yini: product, nhlayo, quality, delivery na siku ra ku hakela.",
-          "Pimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+          "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.",
+          "Pimanisa market fees, vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
           "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.",
-          "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, packing, transport ni ku khathalela vaxavi.",
+          "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
           "Box scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.",
-          "Pfumelelanani hi box contents, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa agreement.",
+          "Pfumelelanani hi leswi nga eka box, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa ntwanano.",
           "Sungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.",
-          "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika regular boxes.",
+          "Kambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika mabokisi ya nkarhi na nkarhi.",
           "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
-          "Loko production yi cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.",
+          "Loko ku humesa ku cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.",
           "Nyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.",
           "Hlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
         ].join("\n\n"),
@@ -166,12 +166,12 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       "keyPoints": [
         {
             "sourceEnglish": "Agree product, quantity, quality, delivery and payment",
-            "xitsongaDraft": "Pfumelelanani hi product, nhlayo, khwalithi, ku yisa ni ku hakela.",
+            "xitsongaDraft": "Pfumelelanani hi xihumisiwa, nhlayo, khwalithi, ku yisa ni ku hakela.",
             "reviewStatus": "machine-draft"
           },
         {
             "sourceEnglish": "Compare costs and losses as well as selling price",
-            "xitsongaDraft": "Pimanisa costs ni losses xikan’we ni selling price.",
+            "xitsongaDraft": "Pimanisa costs ni ku lahlekeriwa xikan’we ni nxavo wo xavisa.",
             "reviewStatus": "machine-draft"
           },
         {
@@ -181,7 +181,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check market rules and describe growing practices honestly",
-          "xitsongaDraft": "Kambisisa market rules kutani u hlamusela growing practices ta wena hi ku vula ntiyiso.",
+          "xitsongaDraft": "Kambisisa milawu ya makete kutani u hlamusela maendlelo ya wena yo kurisa swibyariwa hi ku vula ntiyiso.",
           "reviewStatus": 'machine-draft'
         }
       ],
@@ -235,12 +235,12 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Box schemes let you charge extra for packaging",
-              "xitsongaDraft": "Box schemes ti ku pfumelela ku charge extra for packaging.",
+              "xitsongaDraft": "Box schemes ti ku pfumelela ku hakerisa mali leyi engetelekeke ya ku paka.",
               "reviewStatus": 'machine-draft'
             },
             {
               "sourceEnglish": "Committed subscription income lets you plan production around real demand instead of growing speculatively",
-              "xitsongaDraft": "Committed subscription income yi ku pfuna ku pulana production hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
+              "xitsongaDraft": "Committed subscription income yi ku pfuna ku pulana ku humesa hi ku landzelela real demand ematshan’wini yo byala hi ku bvumbha.",
               "reviewStatus": 'machine-draft'
             },
             {
@@ -252,7 +252,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.",
-            "xitsongaDraft": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, payment ni costs ta ku ti hetisisa.",
+            "xitsongaDraft": "Tioda leti tiyisisiweke ti nyika vuxokoxoko hi demand. Nkoka wa tona wa ha titshege hi reliable supply, ku hakela ni costs ta ku ti hetisisa.",
             "reviewStatus": 'machine-draft'
           }
         }
@@ -264,7 +264,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
       "title": { sourceEnglish: "Building Community Food Networks: Strength in Numbers", xitsongaDraft: "Ku aka network ya swakudya swa muganga: Strength in Numbers", reviewStatus: 'machine-draft' },
       "body": {
         "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
-        "xitsongaDraft": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma produce hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni storage ku fikela loko yi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe losses ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala method, conditions ni result leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+        "xitsongaDraft": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma swihumisiwa hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni ku hlayisa ku fikela loko swi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe ku lahlekeriwa ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, vutleketli na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -280,12 +280,12 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Measure losses and net returns for each selling route",
-          "xitsongaDraft": "Pima losses ni net returns eka selling route yin’wana ni yin’wana.",
+          "xitsongaDraft": "Pima ku lahlekeriwa ni net returns eka ndlela yo xavisa yin’wana ni yin’wana.",
           "reviewStatus": "machine-draft"
         },
         {
           "sourceEnglish": "Combine shared experience with qualified help when needed",
-          "xitsongaDraft": "Hlanganisa shared experience ni qualified help loko swi laveka.",
+          "xitsongaDraft": "Hlanganisa ntokoto lowu avelaniwaka ni qualified help loko swi laveka.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -299,7 +299,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "Mix all varieties without labels",
-              "xitsongaDraft": "Hlanganisa all varieties without labels.",
+              "xitsongaDraft": "Hlanganisa all varieties ku nga ri na labels.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -309,19 +309,19 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Assume sharing automatically improves every seed lot",
-              "xitsongaDraft": "Assume sharing automatically improves every seed lot",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Ehleketa leswaku ku avelana automatically ku antswisa seed lot yin’wana ni yin’wana",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Rely only on the size of the group",
-              "xitsongaDraft": "Tshemba ntsena eka vukulu bya group.",
+              "xitsongaDraft": "Tshemba ntsena eka vukulu bya ntlawa.",
               "reviewStatus": "machine-draft"
             }
           ],
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
-            "xitsongaDraft": "Quality ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+            "xitsongaDraft": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -344,12 +344,12 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
-              "xitsongaDraft": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport, unsold produce ni losses.",
+              "xitsongaDraft": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, vutleketli, swihumisiwa leswi nga xavisiwangiki ni ku lahlekeriwa.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume joining a group removes all costs",
-              "xitsongaDraft": "Ehleketa leswaku ku nghena eka group ku susa costs hinkwato.",
+              "xitsongaDraft": "Ehleketa leswaku ku nghena eka ntlawa ku susa costs hinkwato.",
               "reviewStatus": "machine-draft"
             }
           ],

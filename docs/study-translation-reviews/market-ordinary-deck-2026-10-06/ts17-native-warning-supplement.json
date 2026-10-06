@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "mode": "read-only semantic source/native spotcheck",
+  "candidatePacket": "/tmp/imbewu-market-ordinary-residual-root-repaired-20261006.json",
+  "candidatePacketSha256": "149618dd0be79b1f91b630c81541ba16b884502b534fed6b59fea6dd912ebf5d",
+  "fieldId": "ts:market-community-l3:body.8",
+  "sourceEnglishFull": "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.",
+  "sourceWarningSentence": "Do not assume the nearest buyer always gives the best return.",
+  "deckCurrentTarget": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, transport na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+  "checkedCurrentNativeSentence": "U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+  "nativeSourceBindingExact": true,
+  "recommendedFullDeckTarget": "Pimanisa mali leyi u yi amukelaka endzhaku ka fees, vutleketli na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+  "verdict": "accept-bounded-mixed-language-repair",
+  "reason": "The checked unchanged native sentence translates “Do not assume” as “U nga ehleketi leswaku”, preserves nearest buyer and best return in exact English, and renders “always” as “minkarhi hinkwato”. It therefore preserves the source warning and superlative while translating ordinary framing. The preceding comparison keeps received money, fees, transport, spoilage, and each-option scope distinct; only the authorized transport span changes there.",
+  "operations": [
+    {
+      "sourceSentence": "Do not assume the nearest buyer always gives the best return.",
+      "targetSentence": "U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+      "retainedEnglish": [
+        "nearest buyer",
+        "best return"
+      ],
+      "localizedMeaning": [
+        "Do not assume",
+        "gives",
+        "always"
+      ],
+      "scope": "replace only second sentence in TS slide 17 body 2; retain localized first sentence from final deck plan"
+    }
+  ],
+  "limitations": [
+    "Bounded semantic check, not fluency approval.",
+    "No repository or deck file edited."
+  ],
+  "actualCanonicalWarningSentence": "Do not assume the nearest buyer always gives the best return.",
+  "actualCurrentResolverSentence": "U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.",
+  "canonicalSourceMatchesDeckEnglish": true,
+  "resolverSentenceMatchesCheckedTarget": true
+}

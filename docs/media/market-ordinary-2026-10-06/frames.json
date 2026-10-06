@@ -1,0 +1,922 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "baselineCommit": "b2c81e32458f83cff951250e3b9065d2b1314206",
+  "frames": [
+    {
+      "language": "st",
+      "slide": 12,
+      "path": "/course-decks/market-community/st/slide-12.webp",
+      "old": {
+        "path": "/course-decks/market-community/st/slide-12.webp",
+        "bytes": 225434,
+        "sha256": "b1fafb970015240b525585a45f324e1e858ac11a846f626db7edaba04c563aa6"
+      },
+      "new": {
+        "sha256": "ea4129f0efdce4524355efce66d01b0a721e62abbf7070eeb0411e1b5025e038",
+        "bytes": 225412,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 12,
+        "english": {
+          "n": 12,
+          "heading": "Plan Around Real Orders",
+          "body": [
+            "Start from what you can reliably supply and what customers want.",
+            "Check the costs and household food needs before promising regular boxes.",
+            "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Rera ho ya ka diotara tsa sebele",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "draft",
+              "text": "Hlahloba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "draft",
+              "text": "Boholo ba serapa kapa palo ya bareki feela ha e bolele esale pele lekeno. Leka mokgwa oo o ka o laolang mme o rekote diphetho.",
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/st/slide-12.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/st-12-390.jpg"
+    },
+    {
+      "language": "st",
+      "slide": 15,
+      "path": "/course-decks/market-community/st/slide-15.webp",
+      "old": {
+        "path": "/course-decks/market-community/st/slide-15.webp",
+        "bytes": 533706,
+        "sha256": "2bd19395873fd7640c706a4155e4cf2374482d52ea476bfb0e5e63e8d2e39723"
+      },
+      "new": {
+        "sha256": "1bb153330d1cd76988c40714be46b3e844071224caafccfa98d7a78d2f950f05",
+        "bytes": 540748,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 15,
+        "english": {
+          "n": 15,
+          "heading": "Save Seed Together",
+          "body": [
+            "Neighbours can share different varieties and the work of saving seed.",
+            "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+            "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+            "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Bolokang peo mmoho",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Baahisani ba ka arolelana mefuta e fapaneng ya dijalo le mosebetsi wa ho boloka peo.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Record the crop, ",
+                  "status": "draft",
+                  "text": "Ngola sejalo, ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "variety",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": ", source and collection date. Plan ",
+                  "status": "draft",
+                  "text": ", mohlodi le letsatsi la ho bokella. Rera ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "suitable isolation, selection, drying",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "storage",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " for each crop.",
+                  "status": "draft",
+                  "text": " bakeng sa sejalo se seng le se seng.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Ho arolelana ha ho bolele hore diversity e tla eketseha kapa quality e ntlafale ka bo yona. Hlahloba identity le germination pele o itshetleha ka shared seed.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Before exchanging seed, ",
+                  "status": "draft",
+                  "text": "Pele o fapanyetsana peo, "
+                },
+                {
+                  "sourceEnglish": "check whether the variety is protected and whether permission is needed.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/st/slide-15.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/st-15-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 7,
+      "path": "/course-decks/market-community/ve/slide-07.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-07.webp",
+        "bytes": 531396,
+        "sha256": "b88abf473649e6fb7e37ab6a7aeac786e127b2df476c1457d7139bbf84e2c3b1"
+      },
+      "new": {
+        "sha256": "169c88d0b815e60e4cc2887653997c7f395deb33a7a1571db3caf724527e62bb",
+        "bytes": 535268,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 7,
+        "english": {
+          "n": 7,
+          "heading": "Find the True Cost",
+          "body": [
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Wanani True Cost.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Musi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. ",
+                  "status": "draft",
+                  "text": "Tsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. ",
+                  "reason": "Teaching example and exact R18/R15 cost/sale comparison; kilogram is the existing borrowed measurement noun."
+                },
+                {
+                  "sourceEnglish": "That price does not cover the stated cost.",
+                  "status": "draft",
+                  "text": "Mutengo wonoyo a u swikeli cost yo bulwaho.",
+                  "reason": "Contextual English cost retained inside the complete stated-cost clause: target places yo bulwaho after cost, unlike source stated cost. Keep the semantic clause whole rather than misbind stated to punctuation."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Sedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-07.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-07-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 8,
+      "path": "/course-decks/market-community/ve/slide-08.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-08.webp",
+        "bytes": 262260,
+        "sha256": "d1af4fe065780f9766aed70ad13c1d85e5f506ed3879cf9ca0e4ce24df49f703"
+      },
+      "new": {
+        "sha256": "7fecc2866ff25c05d48880deb11da9c54c1e17d36ec8ee473c6d199c56ee705c",
+        "bytes": 262124,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 8,
+        "english": {
+          "n": 8,
+          "heading": "Plan for the Food Gap",
+          "body": [
+            "Use your record to find when household food runs short.",
+            "Choose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.",
+            "A date that works on another farm may not work here. Include a backup plan when rain, water or crops fail."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Dzudzanyelani Tshifhinga Tshine Zwiḽiwa zwa Ṱhaela",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Shumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.",
+              "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+            },
+            {
+              "status": "draft",
+              "text": "Nangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha khaṋo ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.",
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Ḓuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-08.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-08-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 10,
+      "path": "/course-decks/market-community/ve/slide-10.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-10.webp",
+        "bytes": 507188,
+        "sha256": "15ce5d306176a82cd98d71578bdf32cfdd64af59f88aadd16fb6c8e0a36e60d1"
+      },
+      "new": {
+        "sha256": "9dfd8f9a6517a9df3a610ef9c8a42c881929c36074cd66baf17ad21bbae53c49",
+        "bytes": 511556,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 10,
+        "english": {
+          "n": 10,
+          "heading": "Know Your Customer",
+          "body": [
+            "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Dzulani Ni Tshi Ḓivha Murengi Waṋu",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Vhudzisani uri murengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.",
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or ",
+                  "status": "draft",
+                  "text": "Sedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana ",
+                  "reason": "Preserve exact negation and OR; existing capitalized Informal stall remains a contextual borrowed business-classification noun within its complete negative clause."
+                },
+                {
+                  "sourceEnglish": "costs.",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-10.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-10-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 11,
+      "path": "/course-decks/market-community/ve/slide-11.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-11.webp",
+        "bytes": 269142,
+        "sha256": "e2bc57eafff4583f92206d2c0a3f5c5f5b741a49e8b781afa2c6c24fea732fa6"
+      },
+      "new": {
+        "sha256": "4f649e393d2ee6d6f40efd828338aaa81fba9d032cd3949c762a28055077dc68",
+        "bytes": 288656,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 11,
+        "english": {
+          "n": 11,
+          "heading": "Count the Work of Direct Selling",
+          "body": [
+            "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+            "A box scheme supplies a regular selection to agreed customers.",
+            "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Vhalani Mushumo Wa Direct Selling",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Direct selling can retain more of the sale price",
+                  "status": "english-hold",
+                  "reason": "Source-exact can/more sale-price retention; no profit guarantee."
+                },
+                {
+                  "sourceEnglish": ", but it also takes time, packing, ",
+                  "status": "draft",
+                  "text": ", fhedzi zwi dzhia tshifhinga, u paka, ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "transport",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " and customer care.",
+                  "status": "draft",
+                  "text": " na u ṱhogomela vharengi.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Box scheme i ṋea vharengi vho tendelanaho regular selection ya zwibveledzwa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Agree the contents, price, payment and ",
+                  "status": "draft",
+                  "text": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na ",
+                  "reason": "Preserve existing Tendelanani prefix; box is retained contextual borrowed packaging noun."
+                },
+                {
+                  "sourceEnglish": "what happens when crops are short. Regular orders",
+                  "status": "english-hold",
+                  "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
+                },
+                {
+                  "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
+                  "status": "draft",
+                  "text": " dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-11.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-11-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 15,
+      "path": "/course-decks/market-community/ve/slide-15.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-15.webp",
+        "bytes": 584918,
+        "sha256": "0d1d0deaf7e6f7f86128e09b51b88b34fd7a62f8fa0235a89c604f869e589ca1"
+      },
+      "new": {
+        "sha256": "210ca0c46d4ea83c4bafffaa89b9060c9ba774c6ea8eb3797c12f0a91d3626ce",
+        "bytes": 536640,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 15,
+        "english": {
+          "n": 15,
+          "heading": "Save Seed Together",
+          "body": [
+            "Neighbours can share different varieties and the work of saving seed.",
+            "Record the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.",
+            "Sharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed.",
+            "Before exchanging seed, check whether the variety is protected and whether permission is needed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Save Seed Roṱhe.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Vhahura vha nga kovhekana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Record the crop, ",
+                  "status": "draft",
+                  "text": "Ṅwalani tshimela, ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "variety",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": ", source and collection date. Plan ",
+                  "status": "draft",
+                  "text": ", vhubvo na datumu ya u kuvhanganya. Pulani ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "suitable isolation, selection, drying and storage",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " for each crop.",
+                  "status": "draft",
+                  "text": " kha tshimela tshiṅwe na tshiṅwe.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "U kovhekana a zwi ambi uri diversity i ḓo engedzea automatically kana quality i khwinifhale automatically. Ṱolani identity na germination ni sa athu ḓitika nga shared seed.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Before exchanging seed, check whether the ",
+                  "status": "draft",
+                  "text": "Ni sa athu u tshintshana mbeu, ṱolani arali ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "variety",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " is protected and whether ",
+                  "status": "draft",
+                  "text": " yo tsireledzwa na arali ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "permission",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " is needed.",
+                  "status": "draft",
+                  "text": " i tshi ṱoḓea.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-15.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-15-390.jpg"
+    },
+    {
+      "language": "ve",
+      "slide": 17,
+      "path": "/course-decks/market-community/ve/slide-17.webp",
+      "old": {
+        "path": "/course-decks/market-community/ve/slide-17.webp",
+        "bytes": 284012,
+        "sha256": "435fbcc05281925723ed0551708a6eecaf3d35f9199134d1187a87480d398650"
+      },
+      "new": {
+        "sha256": "6ff873a18cdc5f0f39f7cf4e34a0358c4692673675ccd85b7e01fe052981f908",
+        "bytes": 290566,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 17,
+        "english": {
+          "n": 17,
+          "heading": "Reduce Loss Between Harvest and Sale",
+          "body": [
+            "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+            "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+            "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Reduce Loss vhukati ha khaṋo na u rengisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Farani zwibveledzwa nga vhulenda, ni zwi vhee murunzini wo teaho, kha packaging na fhethu ha u vhulunga zwo teaho u swika zwi tshi swika.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "A nearby buyer may reduce the journey, but losses and ",
+                  "status": "draft",
+                  "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "selling costs still need measuring.",
+                  "status": "english-hold",
+                  "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Vhambedzani tshelede yo tanganwaho nga murahu ha fees, transport na spoilage kha khetho iṅwe na iṅwe. Ni songo humbula uri murengi wa tsini u dzula a tshi ṋea the best return.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ve/slide-17.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ve-17-390.jpg"
+    },
+    {
+      "language": "ts",
+      "slide": 7,
+      "path": "/course-decks/market-community/ts/slide-07.webp",
+      "old": {
+        "path": "/course-decks/market-community/ts/slide-07.webp",
+        "bytes": 533820,
+        "sha256": "c81cccac9ba8f70c8ca8deef922ecaabe5a697c2ac81bdd68112696fcdb70d7a"
+      },
+      "new": {
+        "sha256": "baaba766e2e7f051ed46a61f68cab1653de841a999d6bba6b4cfbc52b5ce4c31",
+        "bytes": 537772,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 7,
+        "english": {
+          "n": 7,
+          "heading": "Find the True Cost",
+          "body": [
+            "Before setting a price, record production, packing and selling costs, including labour and transport.",
+            "Here is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.",
+            "Review the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Kuma Ntsengo Wa Xiviri",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Before setting a price, record production, packing and selling ",
+                  "status": "draft",
+                  "text": "U nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "costs",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": ", including ",
+                  "status": "draft",
+                  "text": ", ku katsa ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "labour",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " and transport.",
+                  "status": "draft",
+                  "text": " ni vutleketli.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Lexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.",
+              "provenance": "root-accepted unreviewed machine draft; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "draft",
+              "text": "Languta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ts/slide-07.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ts-07-390.jpg"
+    },
+    {
+      "language": "ts",
+      "slide": 10,
+      "path": "/course-decks/market-community/ts/slide-10.webp",
+      "old": {
+        "path": "/course-decks/market-community/ts/slide-10.webp",
+        "bytes": 497110,
+        "sha256": "2e1b949f4da94393dfc850986b06624ed2b8bd814a63e9f4c5bef50e4da0f213"
+      },
+      "new": {
+        "sha256": "9fe238e530e025c1a35e4c005e57c76736c0194fe1e80f0ae5bdd94fb6e8e60e",
+        "bytes": 504472,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 10,
+        "english": {
+          "n": 10,
+          "heading": "Know Your Customer",
+          "body": [
+            "Ask what the customer needs: product, quantity, quality, delivery and payment date.",
+            "Compare market fees, transport, packing and unsold produce as well as the selling price.",
+            "Check the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Tiva Muxavi Wa Wena",
+            "provenance": "unreviewed-machine-candidate; independent-semantic-backcheck; exact English source paired"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Vutisa leswi muxavi a swi lavaka: xihumisiwa, nhlayo, khwalithi, ku yisa ni siku ro hakela.",
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Compare ",
+                  "status": "draft",
+                  "text": "Pimanisa ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "market fees",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": ", transport, packing and unsold produce as well as the selling price.",
+                  "status": "draft",
+                  "text": ", vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            },
+            {
+              "status": "draft",
+              "text": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ts/slide-10.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ts-10-390.jpg"
+    },
+    {
+      "language": "ts",
+      "slide": 17,
+      "path": "/course-decks/market-community/ts/slide-17.webp",
+      "old": {
+        "path": "/course-decks/market-community/ts/slide-17.webp",
+        "bytes": 290268,
+        "sha256": "e731be420aa421712ac5d3bff0aabed55a19c5386d48b498936a43bb1877c404"
+      },
+      "new": {
+        "sha256": "cbcbeb0edf1fcef76fe649aade17783e9d6db42059796381a54c6f6d72bf4e69",
+        "bytes": 297082,
+        "width": 1440,
+        "height": 5400
+      },
+      "pairedSource": {
+        "n": 17,
+        "english": {
+          "n": 17,
+          "heading": "Reduce Loss Between Harvest and Sale",
+          "body": [
+            "Handle produce gently and keep suitable shade, packaging and storage through delivery.",
+            "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+            "Compare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Hunguta Ku Lahleka Ku Suka Eka Ntshovelo Ku Ya Eku Xaviseni",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Khoma leswi humesiweke hi vukheta, u swi hlayisa emurhinyini, eka ku pakiwa ni vuhlayiselo byo faneleka loko swi yisiwa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "draft",
+              "text": "Muxavi wa le kusuhi a nga hunguta riendzo, kambe ku lahleka ni ntsengo wa ku xavisa swi fanele ku pimiwa.",
+              "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Compare the money received after ",
+                  "status": "draft",
+                  "text": "Pimanisa mali leyi amukeriweke endzhaku ka ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "fees",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": ", transport and ",
+                  "status": "draft",
+                  "text": ", vutleketli ni ",
+                  "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+                },
+                {
+                  "sourceEnglish": "spoilage",
+                  "status": "english-hold",
+                  "reason": "Exact English technical or business precision retained; not fluent reviewed."
+                },
+                {
+                  "sourceEnglish": " for each option. ",
+                  "status": "draft",
+                  "text": " eka option yin’wana ni yin’wana. ",
+                  "reason": "Existing option is retained contextual borrowed noun; each-option qualifier follows that noun in Xitsonga, so this complete qualifier clause stays together."
+                },
+                {
+                  "sourceEnglish": "Do not assume the ",
+                  "status": "draft",
+                  "text": "U nga ehleketi leswaku ",
+                  "reason": "Checked source-bound native negative instruction."
+                },
+                {
+                  "sourceEnglish": "nearest buyer",
+                  "status": "english-hold",
+                  "reason": "Nearest superlative retained exactly."
+                },
+                {
+                  "sourceEnglish": " always gives the ",
+                  "status": "draft",
+                  "text": " u nyika ",
+                  "reason": "Shared predicate context: source always gives the best return. maps to target u nyika best return minkarhi hinkwato.; the always qualifier is realized after the held return noun in the following context segment.",
+                  "semanticContext": "nearest-return-predicate"
+                },
+                {
+                  "sourceEnglish": "best return",
+                  "status": "english-hold",
+                  "reason": "Precise best-return comparison retained exactly.",
+                  "semanticContext": "nearest-return-predicate"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " minkarhi hinkwato.",
+                  "reason": "Completes the same nearest-return predicate context; minkarhi hinkwato translates the source always qualifier from its preceding source span, in checked native target order. This segment is not a standalone punctuation translation.",
+                  "semanticContext": "nearest-return-predicate"
+                }
+              ],
+              "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed; root-approved TS17 native warning supplement d3a4e5d3, first comparison unchanged"
+            }
+          ]
+        }
+      },
+      "sourceJPEG": "/tmp/imbewu-market-ordinary-render-20261006/ts/slide-17.png",
+      "closeView390": "/tmp/imbewu-market-ordinary-render-20261006/ts-17-390.jpg"
+    }
+  ],
+  "fieldCount": 15,
+  "frameCount": 11,
+  "contacts": [
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-st-1.jpg",
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-ve-1.jpg",
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-ve-2.jpg",
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-ve-3.jpg",
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-ts-1.jpg",
+    "/tmp/imbewu-market-ordinary-render-20261006/contact-ts-2.jpg"
+  ],
+  "renderer": "Existing make-lesson-slides.mjs selected frames sequentially; 1440-wide natural height preserved, WebP quality88 method6",
+  "manifestBeforeSHA256": "f176d2fe351afa83ddaf0fff48fef551df38a5d33f38507c5f0f4d2fb86f7e96",
+  "manifestAfterSHA256": "b7718264a6d182d95ffb14ce09b20d4e4739c1a3cc1623521a53bae02dde1815",
+  "unchangedMarketAssets": 90,
+  "protectedAudioFilmFiles": 604,
+  "unlistedHashesVerified": true,
+  "visualReview": "Actual compressed-image root review pending; no phone/preview/offline claim."
+}

@@ -1,3 +1,4 @@
+import { marketAssetSizesBeforeOrdinary } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -64,7 +65,10 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
   assert.equal(proof.frames.length, 30);
   assert.deepEqual(Object.keys(COURSE_ASSET_SIZES).sort(), Object.keys(baseline).sort(), 'no payload keys are added or removed');
   validateCurrentVegetablesPestPrecisionLayer();
-  const sizesBeforeLaterVegetablesLayer = { ...COURSE_ASSET_SIZES };
+  // 2026-10-06: guard the entire newer Market layer then rewind only its eleven size entries/header.
+  const sizesBeforeLaterVegetablesLayer: Record<string, number> = Object.fromEntries(
+    [...marketAssetSizesBeforeOrdinary().matchAll(/^  '([^']+)': (\d+),$/gm)].map(row => [row[1], Number(row[2])])
+  );
   for (const frame of vegetablesPestPrecisionFrames) sizesBeforeLaterVegetablesLayer[frame.url] = frame.beforeBytes;
   const changedSizes = Object.keys(baseline).filter(path => baseline[path] !== sizesBeforeLaterVegetablesLayer[path]).sort();
   assert.deepEqual(changedSizes, [...changed].sort(), 'only those rendered frames affect learner download estimates');
