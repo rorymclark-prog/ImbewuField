@@ -1,0 +1,3022 @@
+[
+  {
+    "path": "/course-animations/food-forest/flow-sheet-mulching-closeup.mp4",
+    "bytes": 6248424,
+    "sha256": "01ba5108d6630d6770256da4ee6687d9b03343e5ec24ae04b2b376a6b2cae128"
+  },
+  {
+    "path": "/course-animations/food-forest/flow-sheet-mulching.mp4",
+    "bytes": 7483690,
+    "sha256": "5bc8868d14b7e1c46978a297fa748cf5b340bf701b701130a767a5fcbbacbbfb"
+  },
+  {
+    "path": "/course-animations/food-forest/posters/flow-sheet-mulching-closeup.jpg",
+    "bytes": 241289,
+    "sha256": "fe0c8474ae25ebc138f097899e5615f850f9e76476d8a492d32641b1d0420857"
+  },
+  {
+    "path": "/course-animations/food-forest/posters/flow-sheet-mulching.jpg",
+    "bytes": 474783,
+    "sha256": "568320ab4537fee7503d7597f87ebf87a93e15f2fa4f237b2225e867c1a9c2a2"
+  },
+  {
+    "path": "/course-animations/intro-permaculture/flow-earth-care.mp4",
+    "bytes": 5177501,
+    "sha256": "d0f2441f869e8a63ab8743ba3f33e94f0fe001d4c1e868636d86c58a61f1040c"
+  },
+  {
+    "path": "/course-animations/intro-permaculture/posters/flow-earth-care.jpg",
+    "bytes": 414921,
+    "sha256": "8505eb58ac46d88a8422bfb86ac94313464a2f86b4c999075288008c09b3fb2e"
+  },
+  {
+    "path": "/course-animations/market-community/flow-seed-sharing.mp4",
+    "bytes": 3024675,
+    "sha256": "39556f4a976856fbfbf1b9e2f8e7f0becd577697d101973793746af4615cc0bc"
+  },
+  {
+    "path": "/course-animations/market-community/posters/flow-seed-sharing.jpg",
+    "bytes": 318404,
+    "sha256": "a272243db37c9a0c7376763cb6d640fbb835c577ad21f892f8671959ff97bbfc"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4",
+    "bytes": 3173759,
+    "sha256": "e66cf9dd0a7621594a7c91f0251b80e41c162565ac8ccbbef873f6315d273003"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4",
+    "bytes": 3373640,
+    "sha256": "adbef5fb7fcc5419e105ba5ceb6009798ca1be3953b376073e63b146cfc144c2"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4",
+    "bytes": 7277042,
+    "sha256": "346ed02f44b20dea94833c4bfcc7d65e4aa3ca0bfd26b1f5f7b9289fcb0c6827"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4",
+    "bytes": 3933234,
+    "sha256": "4cb9ceafb95c64956e59c859c09f5d5f18a8ee1772b8d3b01d433b4d26b1a576"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4",
+    "bytes": 9200096,
+    "sha256": "478c605da1a25f72a208874627298d4ab7821f0149b70e1a5f068fa19f95ed2d"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4",
+    "bytes": 3900208,
+    "sha256": "8ee9e0ac457b70136644a15f5a1d9db3ab4599a8a6faaeecbf50ec736eb783ae"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4",
+    "bytes": 8354154,
+    "sha256": "a618b18467d2600ef30b83d8d55c7c89f4ce4ed5c6d08e913af326e6c299c931"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled-zu.mp4",
+    "bytes": 3639293,
+    "sha256": "dea135f85477566f8bccc7e16b2b2d7b6ec829cf2d1f3cc833625b627c878e64"
+  },
+  {
+    "path": "/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled.mp4",
+    "bytes": 4174276,
+    "sha256": "d0d73614a71f1d53488372e0753a4855fdfa9359fd9313a3061a43a57b41bc8d"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring-zu.jpg",
+    "bytes": 297589,
+    "sha256": "06ad93c06d3bb785a261af080224b7ec7150967e5caf139daf7a7b001036fc8c"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-01-Mulch-ring.jpg",
+    "bytes": 297589,
+    "sha256": "06ad93c06d3bb785a261af080224b7ec7150967e5caf139daf7a7b001036fc8c"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed-zu.jpg",
+    "bytes": 324251,
+    "sha256": "ac39c1760bbf1daab55a3510ac54ba45fcc8a4c8dedde6754433a5e11f6079a7"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-02-Pruning-trimmed.jpg",
+    "bytes": 324251,
+    "sha256": "ac39c1760bbf1daab55a3510ac54ba45fcc8a4c8dedde6754433a5e11f6079a7"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food-zu.jpg",
+    "bytes": 302287,
+    "sha256": "da8aadc1a73c20ba0527f2c5470b27ad08c6f4f9195ae47c01a53e75bd445a3f"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-03-Pigeon-pea-food.jpg",
+    "bytes": 302287,
+    "sha256": "da8aadc1a73c20ba0527f2c5470b27ad08c6f4f9195ae47c01a53e75bd445a3f"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects-zu.jpg",
+    "bytes": 212588,
+    "sha256": "43ab49469a3eac11dc69fc6d46f75b4ea8bfe97f287c3a9c5f630dfcb43da0bd"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-04-Helpful-insects.jpg",
+    "bytes": 212588,
+    "sha256": "43ab49469a3eac11dc69fc6d46f75b4ea8bfe97f287c3a9c5f630dfcb43da0bd"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview-zu.jpg",
+    "bytes": 322179,
+    "sha256": "67567ffbea6a743eb323508bc53785c4766bd6ce781ede43f0d1bc860c343f97"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-05-Guild-overview.jpg",
+    "bytes": 322179,
+    "sha256": "67567ffbea6a743eb323508bc53785c4766bd6ce781ede43f0d1bc860c343f97"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish-zu.jpg",
+    "bytes": 322973,
+    "sha256": "7360fea7a9c1043e69578ae179a87be2e4cd97e197adb2c719640be7ca2bfff5"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-06-Succession-establish.jpg",
+    "bytes": 322973,
+    "sha256": "7360fea7a9c1043e69578ae179a87be2e4cd97e197adb2c719640be7ca2bfff5"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch-zu.jpg",
+    "bytes": 326728,
+    "sha256": "5c438cca9d6b3745e6ab7f3420e0fc795bef995d2a319c063db2822cc98168d7"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-08-Succession-carry-mulch.jpg",
+    "bytes": 326728,
+    "sha256": "5c438cca9d6b3745e6ab7f3420e0fc795bef995d2a319c063db2822cc98168d7"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled-zu.jpg",
+    "bytes": 238549,
+    "sha256": "53fcfa85a5f9d6c515fe08c1172cf02aa070b92f39450bf3ce93cd9732fe7c2d"
+  },
+  {
+    "path": "/course-animations/plant-guilds/posters/Imbewu-Guilds-09-Labelled.jpg",
+    "bytes": 240698,
+    "sha256": "5333018bebff0b82c8ee8fd60eb87bdab79f4a08bf1fe31ae4b6cebb036f6c5e"
+  },
+  {
+    "path": "/course-animations/reading-landscape/flow-a-frame.mp4",
+    "bytes": 1808880,
+    "sha256": "32721be26c47a79b23edac694be0ae90f2ea1deadab7ae01cbaa1a34e0f56584"
+  },
+  {
+    "path": "/course-animations/reading-landscape/posters/flow-a-frame.jpg",
+    "bytes": 391242,
+    "sha256": "eb42e726ea3503c14470209f2bffc5a1e5db8bf7b66f953a81fce09a8278c1f8"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_01.mp4",
+    "bytes": 640574,
+    "sha256": "fcb54afb93a5ad1360a73558710b88ab308001afc7082e49978f022a0dcc7519"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_02.mp4",
+    "bytes": 1145431,
+    "sha256": "f41fc55da1b7624b542210189aae8d7eef4d51e6a146265b8b9e24776b00a805"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_03.mp4",
+    "bytes": 634341,
+    "sha256": "f30db5c167b2042785981620049000d085793fe28c033b492f47f39f8c1544a6"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_05.mp4",
+    "bytes": 2245228,
+    "sha256": "531485e15e1a99e55178ee611e2c3abd0a7ff01a3c877ceb04b4b1901dddb391"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_06.mp4",
+    "bytes": 659072,
+    "sha256": "a16df3b998c7bcb6587ae1aa9f8f24b27c1cac2c1deb54adb63da41be8c053a5"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/new_seed-storage-jar-vs-bag.mp4",
+    "bytes": 2694411,
+    "sha256": "3868dcca4d19b275ee8029aecf3ca0ece1361898a8af9c41ea0ee94cfefdc162"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/seed-dry-processing.mp4",
+    "bytes": 1226704,
+    "sha256": "4ae1446d5c0f29319f4151113e3aa2151a75b2876a1115dd84a576c6f45dc0c7"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/hi/seed-selecting-parents.mp4",
+    "bytes": 1122111,
+    "sha256": "3b1bd9b737c19a872f1263bcca81e4ccc62ee5544b1617c324b08422ddbdb8c0"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/imbewu_isiZulu_video_01.mp4",
+    "bytes": 420204,
+    "sha256": "9924b305a38bebc2c1570b4ede0e386573bf6c73d12823e0ea9e2efc04c54cbc"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/imbewu_isiZulu_video_02.mp4",
+    "bytes": 738328,
+    "sha256": "38fa0356593e3295d5301ac8cf715af118f516d77ea4e653b5efa1fd697a85ea"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/imbewu_isiZulu_video_03.mp4",
+    "bytes": 399404,
+    "sha256": "65f88c92436b70d59cc7678dcb6e784bfbf233eb705522b62dbb25e62c8fb9dd"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/imbewu_isiZulu_video_05.mp4",
+    "bytes": 1377407,
+    "sha256": "ee7b3acda9614bfddb013c4126962e68dee4d26bf73469841284e38f0d30f590"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/imbewu_isiZulu_video_06.mp4",
+    "bytes": 439958,
+    "sha256": "46a9b4bc0df988a5aa81aa088125ec12e452757323c8ec5ab015a5fcca8d0408"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/new_seed-storage-jar-vs-bag.mp4",
+    "bytes": 474949,
+    "sha256": "f4d766b754fecdff8dbb614d1a30c87b8b0dec656ff3e6e1662f3e5e6d7c77f3"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_01.jpg",
+    "bytes": 44740,
+    "sha256": "beed130b3b62ecf704e606e184878beb241467e99b4d1be0de4c5e84a1446c9a"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_02.jpg",
+    "bytes": 77066,
+    "sha256": "43cafc8dfca16cd00b2a669063a468d9d4ce75d28bd357892b9a367ff7699559"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_03.jpg",
+    "bytes": 39804,
+    "sha256": "fcf48af6defb6816c4d4680b6fab29d398252874d17300c401e53bb1cb09e2f9"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_05.jpg",
+    "bytes": 55313,
+    "sha256": "c18c01244942d43019260faa221ea8dfdf6f21135c3ef86e7d211aed3e968dd4"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/imbewu_isiZulu_video_06.jpg",
+    "bytes": 48227,
+    "sha256": "4184a6bd070bfa3c165f4f8836e3947914f308000bb4405bb90b259589e1ffcc"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/new_seed-storage-jar-vs-bag.jpg",
+    "bytes": 47889,
+    "sha256": "bd8ee10b55af633f47250cf8517ff348c38f7ff45f1a4c3b47c349bd39783d9f"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/seed-dry-processing.jpg",
+    "bytes": 51003,
+    "sha256": "34bb1a1116978fc66d60a4e05f305b8c890795e822d342dfa3e7d50c4b83a478"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/posters/seed-selecting-parents.jpg",
+    "bytes": 52099,
+    "sha256": "92ebe111c2112432805b16ccd1fddd1c82e395c6953a5266291477ca020d5216"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/seed-dry-processing.mp4",
+    "bytes": 311237,
+    "sha256": "ac2b716e251d1bb228fa2f05ac407537778ad4e9d313581a6d3e3793a52e3bc6"
+  },
+  {
+    "path": "/course-animations/seeds-sovereignty/seed-selecting-parents.mp4",
+    "bytes": 248394,
+    "sha256": "97a794c0f0e9cfda9246970c1dc954689e7a5730faec0b7c64472a4c89d9724c"
+  },
+  {
+    "path": "/course-animations/small-livestock/flow-bee-between-blossoms.mp4",
+    "bytes": 2126645,
+    "sha256": "8fba954a33c7d13c46db7a3ef1ff6e7eb5403a0d61c6ef62659b0e9f11dc0533"
+  },
+  {
+    "path": "/course-animations/small-livestock/flow-ducks-understorey.mp4",
+    "bytes": 7613902,
+    "sha256": "6b577ae543814d69b1566b3ee22549556f12c95068ee25730f43f93a380217f4"
+  },
+  {
+    "path": "/course-animations/small-livestock/flow-hens-foraging.mp4",
+    "bytes": 5064928,
+    "sha256": "66bfa1ab31974d4bc7e02e2505969afa9bf9faf97e2ea17510327be887ef04e7"
+  },
+  {
+    "path": "/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4",
+    "bytes": 5058477,
+    "sha256": "6c01f32a2334bbea0fd6ecbb94de818f518d4959e85d4910bb45e560eeb4527d"
+  },
+  {
+    "path": "/course-animations/small-livestock/posters/flow-bee-between-blossoms.jpg",
+    "bytes": 80245,
+    "sha256": "30534c32c09c8ad9d45004a50440439816b4b1274d58810199d1e6ff29ad5516"
+  },
+  {
+    "path": "/course-animations/small-livestock/posters/flow-ducks-understorey.jpg",
+    "bytes": 460807,
+    "sha256": "ce7f00d9f8acd7dd58a58183d87f9dd6df4bb38f8ff90c0161a9db0ce7abb038"
+  },
+  {
+    "path": "/course-animations/small-livestock/posters/flow-hens-foraging.jpg",
+    "bytes": 391735,
+    "sha256": "6db8ba32a9606b90cab2d190abe8c78f18156080bf010e0df07607d7dfad80d6"
+  },
+  {
+    "path": "/course-animations/small-livestock/posters/hens-pecking-pexels-5563939.jpg",
+    "bytes": 227468,
+    "sha256": "bcce063fb5259352f75b4d2579e3bba8c436092ce0551933e47acd564a66e504"
+  },
+  {
+    "path": "/course-animations/soil-health/flow-build-compost-heap.mp4",
+    "bytes": 7619537,
+    "sha256": "39ce8d61c36c10d9be85928bdded1041e74625ebec531159333c57e62197ce03"
+  },
+  {
+    "path": "/course-animations/soil-health/flow-compost-materials.mp4",
+    "bytes": 4290981,
+    "sha256": "330895a064fac69b2c2798c17096ee8ea8960b9559870b1d3a5347cb151ec743"
+  },
+  {
+    "path": "/course-animations/soil-health/posters/flow-build-compost-heap.jpg",
+    "bytes": 223344,
+    "sha256": "eafaf1e2e16fb7cb51d053cef1faa6488379edd1a55ffe2eb7ba0fd635eb29a7"
+  },
+  {
+    "path": "/course-animations/soil-health/posters/flow-compost-materials.jpg",
+    "bytes": 433066,
+    "sha256": "c454c6e8aee766cdc39f6866d05f1e85aae84ef0d5ad3bbd1c9f115f6e01ace3"
+  },
+  {
+    "path": "/course-animations/vegetables-staples/flow-seed-or-seedling.mp4",
+    "bytes": 5423616,
+    "sha256": "c0a552b017ef13527a1ea68501c9789abb730800e842147937fcc54be5f5e80a"
+  },
+  {
+    "path": "/course-animations/vegetables-staples/flow-transplant-root-plug.mp4",
+    "bytes": 6707780,
+    "sha256": "e2e0a6e1efd1fb45c0a462030b17a7bbad759228e1008d8fbd3b4c4acde3a1c4"
+  },
+  {
+    "path": "/course-animations/vegetables-staples/posters/flow-seed-or-seedling.jpg",
+    "bytes": 393560,
+    "sha256": "59b13010d3abd72165e94bfd66e9c861c4852a4b61f10cc859e1404ab0aabb5a"
+  },
+  {
+    "path": "/course-animations/vegetables-staples/posters/flow-transplant-root-plug.jpg",
+    "bytes": 390414,
+    "sha256": "ec14d5515ad4c6b944f22765dc5f9bb6df3d77e287e0c189920ebff09ef6bb49"
+  },
+  {
+    "path": "/course-animations/water-harvesting/flow-roof-rain.mp4",
+    "bytes": 3828056,
+    "sha256": "c3f36f720feec46a2f9587f4022c54c5eb83ea0fc20c01c0796f63028db87993"
+  },
+  {
+    "path": "/course-animations/water-harvesting/posters/flow-roof-rain.jpg",
+    "bytes": 342615,
+    "sha256": "695b2ace50e6de9240001112676322dc1f8744e52b503c6c9de5979cda519fbf"
+  },
+  {
+    "path": "/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg",
+    "bytes": 92145,
+    "sha256": "b1ebc8e122967c9278d95bd983b2eff6c3bc06f6ebc22509a40dc01e1092c5c6"
+  },
+  {
+    "path": "/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg",
+    "bytes": 170083,
+    "sha256": "57b42457643526e9d80557ad701ca2ff6a81d6fcc548f383968f89b0bb0e6cd2"
+  },
+  {
+    "path": "/course-animations/water-harvesting/watch-04-swale-infiltration.mp4",
+    "bytes": 881320,
+    "sha256": "a029794b0a815468bce4f53bb367d9266545552ee8752d37a23b85d9477eabd3"
+  },
+  {
+    "path": "/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4",
+    "bytes": 2712641,
+    "sha256": "45a587d018f2e254c29e3f8c6ae1377450d63e0cf8d0b569eeee9da7a1bcaa7d"
+  },
+  {
+    "path": "/course-audio/food-forest/en/full.mp3",
+    "bytes": 2636012,
+    "sha256": "3765dccef3805435fd370dd7776e6de6b65aa57a9c3a1fb28eaaa8c15529c24c"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-01.mp3",
+    "bytes": 95184,
+    "sha256": "e3987ea439293ac39095358c8cc54b4b42b91d7c8365617894580f8d25649e48"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-02.mp3",
+    "bytes": 99360,
+    "sha256": "9e69f11d62f7ef5ae679c0e214b13ed0d1e160df9f180cd8d38ea4be280ae695"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-03.mp3",
+    "bytes": 92304,
+    "sha256": "5152fb07df5dd418400e9e2e049a57f9c5c1229563d79eb346b82be95e513c6e"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-04.mp3",
+    "bytes": 110592,
+    "sha256": "3d207df280f0462ae046e82f4ae89d798e737c14ba39ec05edf91d71459c5e58"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-05.mp3",
+    "bytes": 174528,
+    "sha256": "daee91abddb7876aa32e443b113c96a7255707a7f240558d9a81675a40d94e18"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-06.mp3",
+    "bytes": 114336,
+    "sha256": "c4ed99c3492b730712071f0bd2d87937ececd7b8d02bb0a596bee2160d872205"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-07.mp3",
+    "bytes": 147600,
+    "sha256": "dcaf8b2088cc1f35458c8a07dd4a52e5b02dd03bef7a1faf1d1e5920c8a6ffda"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-08.mp3",
+    "bytes": 129024,
+    "sha256": "e1daa91deccddd731dd19cccaeed1ffa498015bf4d3329a5ee8c250011a89fc4"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-09.mp3",
+    "bytes": 129312,
+    "sha256": "049c9c5efa8634e24a6799f42f3560b235a7ace760473bf1b6600183d32b578f"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-10.mp3",
+    "bytes": 81648,
+    "sha256": "36efc66221434e9698ea630c5722d06c11b5d132c6def34238145fa699b92c7b"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-11.mp3",
+    "bytes": 171216,
+    "sha256": "e00ec923e900ed86706d14b77fa1c54b1c44193088ac7f62d5dc7c99a06e60e2"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-12.mp3",
+    "bytes": 170352,
+    "sha256": "2b68e25ec07ec121a98b42e2036b75746d144cce5239d6a06359eb7421b42273"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-13.mp3",
+    "bytes": 129744,
+    "sha256": "c82d53751ef7f12f28e1c58c838c1435316d9eb529fea610b594551bdf6629f9"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-14.mp3",
+    "bytes": 137232,
+    "sha256": "fe13a4d07ae003cae7aac22aaead4da1fde1e5e1d729fb8032e042f997c116f3"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-15.mp3",
+    "bytes": 192240,
+    "sha256": "e9f947a495d135b850aab0491ac648d01c78eae8824353cbcbb7b4cbba9f39fa"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-16.mp3",
+    "bytes": 141408,
+    "sha256": "2d75c89883c89cffe8f757c386958167ccf0dd74f7abc3f72c9724a42a087dd1"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-17.mp3",
+    "bytes": 150768,
+    "sha256": "6a61b0bd3d8e46d05b78bbd1b755cb4a4822b7bb69b774dc4271714212cd53bb"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-18.mp3",
+    "bytes": 142128,
+    "sha256": "11218323ee1cc01ac73a71b4ede61a836e7f4222d7879f2ffa5935a3dd395ce9"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-19.mp3",
+    "bytes": 114192,
+    "sha256": "13d11dca1580bc664efcf68298547a1a29db3700129e15f07391f364b358ac61"
+  },
+  {
+    "path": "/course-audio/food-forest/en/slide-20.mp3",
+    "bytes": 112608,
+    "sha256": "f3f8945239aee08a88185593e62ddaa277a784cfec4b9d4c93b7912dc5114973"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/full.mp3",
+    "bytes": 3991484,
+    "sha256": "eca724d61fd9b3f7072988ade3a237fc4fbe069a5ca0d4b84be959f0bf5013b6"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-01.mp3",
+    "bytes": 136512,
+    "sha256": "76c8d2369deaec5dae44c8536ee003a218350e8c05bfb56c1df3bbb9cb809656"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-02.mp3",
+    "bytes": 159120,
+    "sha256": "ab979048b4abc8bcb259f4a0bca33c47af5e031b64540e01794ef6ce72616291"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-03.mp3",
+    "bytes": 171792,
+    "sha256": "c413613e50472d48742773ad28b73015c99a85b5bb7a2f62a1679c42900b7eb4"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-04.mp3",
+    "bytes": 179568,
+    "sha256": "62b25bfa9420a28acf86f53dc48dea75ac08af6f4bf97aa2e4d6bbb0abbf7d05"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-05.mp3",
+    "bytes": 189648,
+    "sha256": "5b4c8607ba9cd34d389c7fcda8e729036e4d075808d49640b50689267d20b1c2"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-06.mp3",
+    "bytes": 202752,
+    "sha256": "0165e0abd48446590aa3e678edbb1d868726dfe12a258024d65d019efd495c7e"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-07.mp3",
+    "bytes": 236880,
+    "sha256": "30e78e212ea69a722c38372e594168a26bf57aa6ac799a7bc0a38d3250030ab0"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-08.mp3",
+    "bytes": 197712,
+    "sha256": "5775757957421c0e572d1dbc74d0ff79045248fc58d12fe419802d62bdc90cd5"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-09.mp3",
+    "bytes": 191520,
+    "sha256": "821b28e69074cdc4496b8028a4170db32c0a6ae433e83e6dc80f053b93f3a2a4"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-10.mp3",
+    "bytes": 144288,
+    "sha256": "45c347e97cc0fd287a73acacd80ba03726a4e9eb1a33830ebf9f1120f9840158"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-11.mp3",
+    "bytes": 243648,
+    "sha256": "fb8c6e7ba3fde974aed83c7750dc3b149e3c73c5c8be7d9019f0dbfb947ab428"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-12.mp3",
+    "bytes": 246384,
+    "sha256": "a00b3b61fe878e035af8a862b9f016f3229b805f968d258eaaf158d49419f572"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-13.mp3",
+    "bytes": 200880,
+    "sha256": "6c42670007909bdea6486e6d9a224d050730b0bed0658fcb27f8b9226dce2d5e"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-14.mp3",
+    "bytes": 211536,
+    "sha256": "11bbe937c4f67f2c176bb2a78c7abdd71309d0b5140ec1634fafa10bb98c7385"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-15.mp3",
+    "bytes": 232272,
+    "sha256": "e7f73437414e8dd8ea40534d263240ff01a420e784a9c2e61323f3bbdf31241d"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-16.mp3",
+    "bytes": 231552,
+    "sha256": "76f0acce81fdc9e5e6cbb7b88285261ac0bbd5f94a0b96254c76d06cbe8ad9d5"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-17.mp3",
+    "bytes": 222768,
+    "sha256": "bde79ef3d78e0277d833ab30b04b8535bb8321f1e38c1412d2e4e09f8cdd0772"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-18.mp3",
+    "bytes": 236304,
+    "sha256": "069657b23b18f86d02b623702501671abccb28ac2ef625fc8f8f2e8525355b66"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-19.mp3",
+    "bytes": 170208,
+    "sha256": "80255bfdeda60c043a43551954133294428bf8393edf05bea9c1e027eaec015a"
+  },
+  {
+    "path": "/course-audio/food-forest/zu/slide-20.mp3",
+    "bytes": 185904,
+    "sha256": "347254bd37d7f385622a341a6d2644ed9f6e7bc3870147e7f7f2a094ab87d367"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/full.mp3",
+    "bytes": 3214172,
+    "sha256": "92d21aa6c5eb441084965720036e8a3309bfecf6c581ddc417d275c913cb70d1"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-01.mp3",
+    "bytes": 142848,
+    "sha256": "a0e826184bc0a525b3ce1b15787b18dec81bc96d3bd34dc05d167fbae4dea568"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-02.mp3",
+    "bytes": 133776,
+    "sha256": "967efc3bf9bc67ec8f51226f84fee88af6261dac0ab2098d6ac2b2505a41cbb3"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-03.mp3",
+    "bytes": 117792,
+    "sha256": "32691195bec83b4d805d44c5d049404fdb027d6aebc2c77b075add433004999f"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-04.mp3",
+    "bytes": 117792,
+    "sha256": "99a88c21eab80e8f07e60f2e0c2f67a78f02e25766c030e2daeab12d6013f654"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-05.mp3",
+    "bytes": 112608,
+    "sha256": "df29f7e9082fdcbb9821ec89257021ab683ebcab95a8e6da880f498f45e83e67"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-06.mp3",
+    "bytes": 134640,
+    "sha256": "92bbe194042946b95891e4b733f7b594ad28332b9b2bd831b5072e77cfdb1bb9"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-07.mp3",
+    "bytes": 199584,
+    "sha256": "c29326f42f16f572e511a82adbb7b477a03413cc561d6010bcdf96338375f766"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-08.mp3",
+    "bytes": 140976,
+    "sha256": "37ac3ffd512af05705ee60756ac4a2af9d63935d343819aa57f326eb66f0fe88"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-09.mp3",
+    "bytes": 145152,
+    "sha256": "3f6f91f97319fe54dbf2d781c6f393ea334c000bcf10520161bd7b63b2d878f6"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-10.mp3",
+    "bytes": 232416,
+    "sha256": "f6441d294295b34869121bcfc27350f52a9f4c39e3a527a864cde2b480cc0164"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-11.mp3",
+    "bytes": 129456,
+    "sha256": "4180cd6be6711fbb6298ee66ef26c8c7d145578160d57d930e7c6a6a1b1f7733"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-12.mp3",
+    "bytes": 104400,
+    "sha256": "71df88fc183a41a7ab589773a1ea630f23ac24244e5123824a0bbce3076bc239"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-13.mp3",
+    "bytes": 163440,
+    "sha256": "75daebf9901c9703e2236a56e343c3cd3c4064f928bf12ff4755ce7bae7ebaae"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-14.mp3",
+    "bytes": 242064,
+    "sha256": "dba0d44a74e689f14df63783358d46a4d896cb8ba776e3df3b14a17f1752c817"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-15.mp3",
+    "bytes": 187920,
+    "sha256": "2b43b083a024de72f2675bcd8a0074fe323c964d5c353d111f7eb1ae6825b2d7"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-16.mp3",
+    "bytes": 102528,
+    "sha256": "c1f6678391ab800a01b74394abd735fa6aa3d845ff3d7184eab5c83bd8eb40fd"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-17.mp3",
+    "bytes": 136368,
+    "sha256": "7dfd03c6c9087ca406c8551ca74c76a946e7045ab4483aab72e420380ee927ed"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-18.mp3",
+    "bytes": 166752,
+    "sha256": "7e804422bb638549c84e5fd1f9bf33bc972a1de296a7cb712b6847a75baea796"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-19.mp3",
+    "bytes": 176256,
+    "sha256": "455bdf3b8fbfb0a6437b7309894117680f13557144a77654e754f297b28ef24e"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-20.mp3",
+    "bytes": 126720,
+    "sha256": "fc68a2ad4764da258934ba0c95051aba5f229ebc1abedc4bf64d1a2488b60830"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-21.mp3",
+    "bytes": 93744,
+    "sha256": "570b9f81b982616666b392356804982fd736b1d166a18aa590a01a42dfcee76d"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/en/slide-22.mp3",
+    "bytes": 106704,
+    "sha256": "1d799fa44a215d72fe996a73ac70054dcc43941022e33709d40545d7a3e53e43"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/full.mp3",
+    "bytes": 5168108,
+    "sha256": "c2411fd63e864a7bf158547a921ab9613ccd8d40d6d2cd09ec0974492ffe9510"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-01.mp3",
+    "bytes": 283628,
+    "sha256": "e6126d03971fc957eb8465625e6c1cbad9653b8cfa9c06a8fc364b640eb426cb"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-02.mp3",
+    "bytes": 255980,
+    "sha256": "852d9d98894ba4466145433f620a8898450c2cdd5c813f5cb7956b722b9a783b"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-03.mp3",
+    "bytes": 245804,
+    "sha256": "4b870e2ea0eb2501ebc2e6f2c6ac9874edb3ed47c5b701287e36146f80ebe0f4"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-04.mp3",
+    "bytes": 239660,
+    "sha256": "767a4f3a50ba255c7a468ae05986f9544e69dfab7bc35f5e571ddaa3017c3a2e"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-05.mp3",
+    "bytes": 226028,
+    "sha256": "24f8a79fd1aa23799957968385c2e22d4202364fc9b8d9bb2b34100182a340b5"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-06.mp3",
+    "bytes": 231788,
+    "sha256": "f0fe5f1c8b8700321a56aa5f081e1afe0ae28094926c6fcd56e7ac88e15a07cd"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-07.mp3",
+    "bytes": 257708,
+    "sha256": "4908700e6b6b8b7ac1841716be0c9abd9da4b9d47e235f9bb96cd6459eaa2d35"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-08.mp3",
+    "bytes": 199148,
+    "sha256": "781e1107d13a46f1a75a0282b5f70275b1f4ef54fb5ce3f40b22ca1c390585f6"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-09.mp3",
+    "bytes": 255020,
+    "sha256": "f7430be929f4244e796127abf7e01dc1741933395c957361fd6bf9f5ba9f8243"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-10.mp3",
+    "bytes": 346028,
+    "sha256": "d2f7359238379c1dbe8ee0f168f45c2802d76f3bb64f408dd719f7f70abee5e9"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-11.mp3",
+    "bytes": 244268,
+    "sha256": "182c16cc99390ac6a6f4094540ad069cf871a2c469edda8d6cc74107afd7c279"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-12.mp3",
+    "bytes": 172844,
+    "sha256": "bef2ab756beea6e941455389219dbe131d0a9da64ced8ff07ab72b2b424fe271"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-13.mp3",
+    "bytes": 227180,
+    "sha256": "741918799e5ddd653ad0a4638d4edfe664aeaf40f8329e8f7bced856a94ce80e"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-14.mp3",
+    "bytes": 331820,
+    "sha256": "ee77bce0d1d64cb219771930cc6952794fe54566cd403c5c7e8cdc2ed3b83742"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-15.mp3",
+    "bytes": 255788,
+    "sha256": "e98f413d6e6875fdea5eb272bf89347ff95683efcd31aef2fde21c90bc319bd0"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-16.mp3",
+    "bytes": 161708,
+    "sha256": "2d96297c2a3c073bfd12d95e1086bbf0c82b76396d0a00f4fd56dc54a86a4a10"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-17.mp3",
+    "bytes": 215468,
+    "sha256": "cfc2f59c05ed362256699ad8645f0546a1d5b3574fa65d023a57d10d2442a474"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-18.mp3",
+    "bytes": 234860,
+    "sha256": "85ea7f16de208a83af15c423bbc0f3ca452c605194f621c557243dfd5b333f84"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-19.mp3",
+    "bytes": 226604,
+    "sha256": "95988c9559a92e7fabe49d213f3d3dffdf1f416e3a938997d5430fa9b36781d3"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-20.mp3",
+    "bytes": 242540,
+    "sha256": "f281ce330f09951d197196df8d3c5d09219f32e2e77bba5f69c7f58adc8b37fb"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-21.mp3",
+    "bytes": 145964,
+    "sha256": "91dd1d172982254fa040a0d2b9820226b98b1e016d292c7ef7f5c935ee985bcd"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/st/slide-22.mp3",
+    "bytes": 182828,
+    "sha256": "38a4980a865fbde9541176d1d4d42eac0c4699448a7026c21c4fd8294d508cd6"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/full.mp3",
+    "bytes": 5266604,
+    "sha256": "5a18b60cd8df37269374699486eccef939a5c1e9b7902340167f6ec6ac4c3ba9"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-01.mp3",
+    "bytes": 216576,
+    "sha256": "bf5122c67ee1cdebdff8705e9e64932e0df63a04ede983b334f0e5f4654c2c47"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-02.mp3",
+    "bytes": 232416,
+    "sha256": "049c37059fc1df745a992b325dd7ed0da254537e8be2b51bdf689291fe74fbbf"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-03.mp3",
+    "bytes": 187200,
+    "sha256": "9878d825a92f1f49f6f9ac68ee982e3c870a9dbe4369eb91eec412320e1b10db"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-04.mp3",
+    "bytes": 213264,
+    "sha256": "e94c1ab45c08747139c095dfabdb54dc230442f1105dd6f1a575a02bc1d0c08c"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-05.mp3",
+    "bytes": 173232,
+    "sha256": "28e58d3f12829514e70bd03fcd40683a559bf7f16e4f2cf53f1f37d408de1151"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-06.mp3",
+    "bytes": 232848,
+    "sha256": "30562db482235d6b465a0fa9ce5b6a7763d36428042d75fc23890f5a9a5315c7"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-07.mp3",
+    "bytes": 348336,
+    "sha256": "e25aa23792efd4d2543148078533557373178d26689fab9d6fd8a51c58e7234b"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-08.mp3",
+    "bytes": 211104,
+    "sha256": "bd7aaac8b222c770068b22157d97eea0dce8572d0c9b0025bedf42b020b68e03"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-09.mp3",
+    "bytes": 242640,
+    "sha256": "3f77854754c52debde9727bfe232a5d5b3c488bb42878ce947d5c066f78f958d"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-10.mp3",
+    "bytes": 384624,
+    "sha256": "adc264918c47df9823f6d74a4a40a80bb1ed57fa28045e176457f663a4fe2e72"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-11.mp3",
+    "bytes": 233136,
+    "sha256": "e964f54bf933039b7aa0e55a6d402beea1d54f024f8a2ff6162ff675c8024ffb"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-12.mp3",
+    "bytes": 170784,
+    "sha256": "7ac44511453763100d6804a7ac4b66e0ba335884acb1fd02888c84575aeb0a68"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-13.mp3",
+    "bytes": 269424,
+    "sha256": "3836132d3226ebaa9ee8c3c4b5079ffc41974c968b644f828d8fbe309528828d"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-14.mp3",
+    "bytes": 388224,
+    "sha256": "3d6abe7faa9fded9a1cfc5c7f747fcaf049abdfcd654c8c177219db1d3006d36"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-15.mp3",
+    "bytes": 293040,
+    "sha256": "2dea661cd8ead0252295e1ec6280a51c234c0ac352a0686742e1f5665728eb6c"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-16.mp3",
+    "bytes": 145152,
+    "sha256": "4c776e7a0f20cb1ea1a2f00a68ecccda0a8d2d6887271ec80a70212971cf1030"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-17.mp3",
+    "bytes": 179136,
+    "sha256": "b3d75461dbf9de6172e123c4d2b7399c61a0b74953a159099372f5bd133b6f06"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-18.mp3",
+    "bytes": 275040,
+    "sha256": "e55390b99852d9daa67c01353ed19033b9ff281adef74f40752212770c085ae6"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-19.mp3",
+    "bytes": 279936,
+    "sha256": "c1da3a5024c945953f22d08182829fa993b4830606d57827026f7bdc270d8d85"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-20.mp3",
+    "bytes": 227520,
+    "sha256": "8e9f15e760677a6e812e365283df94d32db2b08f3b4a3d0253ed1c3ddc2aff33"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-21.mp3",
+    "bytes": 152928,
+    "sha256": "6a0f9a393afa3a53d1fb83be0db511879099abc7bdc7b6257e30dd8b76295847"
+  },
+  {
+    "path": "/course-audio/intro-permaculture/zu/slide-22.mp3",
+    "bytes": 209808,
+    "sha256": "4b0af9688744a95a084b5699a8c6fa9101c74562a086c9b9eb985d3db342e7af"
+  },
+  {
+    "path": "/course-audio/market-community/en/full.mp3",
+    "bytes": 2322956,
+    "sha256": "7dbe32a755f2ae7f372258c97169a06f84aa1cf494a7f8c176d1eba1fabb133c"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-01.mp3",
+    "bytes": 94176,
+    "sha256": "6b381e97cfaa9f1b60c16a8dd419b93056f065a22e845756681bccebfddcb2f9"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-02.mp3",
+    "bytes": 98064,
+    "sha256": "083d8f074a3b44fc113aa9f633b7bc6cbc158f07af817e601b21527a943e5be6"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-03.mp3",
+    "bytes": 107568,
+    "sha256": "82112c31c705e31eb771408ec0a55ca5090c121a1f38d4919dc32339e4082aca"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-04.mp3",
+    "bytes": 66240,
+    "sha256": "e5e6c47587a4d02279283b8996796c1d9861bcb71f43e512f3176b990be4bc7e"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-05.mp3",
+    "bytes": 128160,
+    "sha256": "8bc31cd79cbaa599e17ac9f51ba17268719bd6be29987b1a2eb393e9bd46ced5"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-06.mp3",
+    "bytes": 116784,
+    "sha256": "f1fd2f05c8f8d65cd2b41e0e873807a2055138c5919cc5543354063ddc6d8f03"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-07.mp3",
+    "bytes": 165600,
+    "sha256": "382fac9c2630a42884dda7003569c849218f28b41e884aacba126ab3e5b58d3d"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-08.mp3",
+    "bytes": 120240,
+    "sha256": "34b0ce7eb5d812c1ca48e63cb6b12ebb3a1cb0e32d400c40e53354d9ed7b2c1c"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-09.mp3",
+    "bytes": 58896,
+    "sha256": "25fca3c8d45cb45245d7b1eb16dfe02bedaa36953466c9da34cb54802b27b93a"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-10.mp3",
+    "bytes": 131760,
+    "sha256": "4bae6744d32d4803cedb167029945dd5e2cf4d3d755b9ba9afe99cec7ce5dcb4"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-11.mp3",
+    "bytes": 135648,
+    "sha256": "2c5a652b81611ac1e41f0d6a740373f88db90e74bbfcd8e76bcd74a64f797fd0"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-12.mp3",
+    "bytes": 102960,
+    "sha256": "a06a59c4bea89ca240f8412485fa4c5f771a925ce4eb6f3ced10e1b702af2b91"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-13.mp3",
+    "bytes": 107136,
+    "sha256": "346b70f0e72e4f76035ac707f8214f5953dd32894c7368d9c41601d51168b548"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-14.mp3",
+    "bytes": 81648,
+    "sha256": "34cb2dfe153abd2c38a67d660fc7ee57d9bc56f57abcbb2fa36eac5d1508d6f8"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-15.mp3",
+    "bytes": 176400,
+    "sha256": "bf65157ae8e76da3d1e3e9982774213e28f7ac5afd41cbbf67f55878c495692d"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-16.mp3",
+    "bytes": 86400,
+    "sha256": "8b23c6b1a0b237b39934e02ebcace25f48975527732b14b64034f3d9f621eced"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-17.mp3",
+    "bytes": 127584,
+    "sha256": "a4d97a6e7225ece49b9641f4d024cb19973551e816dd891997cb1cb32fb94e37"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-18.mp3",
+    "bytes": 119232,
+    "sha256": "d04f33d503182b878863948e0c9b8aee37555f879f870309a61ba5670a9f08bc"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-19.mp3",
+    "bytes": 137664,
+    "sha256": "8e3c7fc0d221dd843a06aec8f956e24889fb3ba54604ac7c1663bde3f2195b0b"
+  },
+  {
+    "path": "/course-audio/market-community/en/slide-20.mp3",
+    "bytes": 160560,
+    "sha256": "37e2838d023df57dd17e0c2b3e83e903ebbea3f234f8022a7a7ee0aa9e94b91f"
+  },
+  {
+    "path": "/course-audio/market-community/zu/full.mp3",
+    "bytes": 3643148,
+    "sha256": "8e2d803f40082e7787963109e736fe1bfed5c4076675d1e47133f785924df5a9"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-01.mp3",
+    "bytes": 136512,
+    "sha256": "a59a7e675f4f9ed17a696860063ba9323f2603ce1dc7a3191ad5f5b7eea76867"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-02.mp3",
+    "bytes": 151632,
+    "sha256": "9f62e5f556e2a5ab2d3185d925a14f91f081030a644fcc327188e12de0966291"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-03.mp3",
+    "bytes": 167760,
+    "sha256": "6ecafb8808d351c3d7794059b7f3350204a859a3ca9ecd9dbab34c29ca4c2ba6"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-04.mp3",
+    "bytes": 99216,
+    "sha256": "5278c244a4cc6b7d91b42c1bcea4248f976103c413412e07f93c6e76ba60b9d3"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-05.mp3",
+    "bytes": 174960,
+    "sha256": "1023b008393aec19010295e90ef8a05688931dabcd3fb7089de6fa8156fa184b"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-06.mp3",
+    "bytes": 183168,
+    "sha256": "f04066492a597143e28a021c71f9b5c6135ab3a677ae1dc81edcef361d1bc07d"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-07.mp3",
+    "bytes": 282960,
+    "sha256": "5395bb2d0fd274c390da840d02dafceedc77fbf712be045448c694631cb5404f"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-08.mp3",
+    "bytes": 196128,
+    "sha256": "d522a848a9380690c5e6b271df3d4f23135177eed6cab6d7561b056a48d67f1b"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-09.mp3",
+    "bytes": 83520,
+    "sha256": "eef62c03f93bfe89468a8e57c770ad47258db6880e6ab08c7b153efdf61cd184"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-10.mp3",
+    "bytes": 198288,
+    "sha256": "a23c9f83c5e026812e3298b479114a013a8b332927c3b4be1246c19a9dc8c64f"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-11.mp3",
+    "bytes": 225648,
+    "sha256": "dd498059d47487ae6ac94214fdb62a82270d75c08ba47df0e4efc1c90b09d88a"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-12.mp3",
+    "bytes": 157968,
+    "sha256": "fa4b7935708012727606cb4e0d44dd98785f91d98a05ec722549e10341820b2a"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-13.mp3",
+    "bytes": 175248,
+    "sha256": "63bc7a05d19a3722b3df9d0693f2d8dc22a075a3eb3fe11c4ab52fa0c15d9cfc"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-14.mp3",
+    "bytes": 95616,
+    "sha256": "a168c14c2f6b2366482d03f6b2d5a145d2445afba79ee4105dae0e69513ca2c6"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-15.mp3",
+    "bytes": 291744,
+    "sha256": "93750f9ded249290f4f287d1a0a3da537986d2a988085be889c50aa25b3e0273"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-16.mp3",
+    "bytes": 142416,
+    "sha256": "0b22b80994a88b5a71aae1c8c91e80c587d9833408034ad3a6eda0a8be50144f"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-17.mp3",
+    "bytes": 208800,
+    "sha256": "6b91112d63d15ca871b7eb31e863db2926b2cb7c721374dd66b00ccc42bd22b5"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-18.mp3",
+    "bytes": 192528,
+    "sha256": "cef1de04c78aab2160862d16e48a251ef952fb4d361b083c750eb62a1ce50334"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-19.mp3",
+    "bytes": 194400,
+    "sha256": "6ce95e329ee7963375978d785b6baa07eff3d0583f0d37a404d3ebc59bb6e7d1"
+  },
+  {
+    "path": "/course-audio/market-community/zu/slide-20.mp3",
+    "bytes": 284400,
+    "sha256": "05cfc34594f3500e129ae8828caeefa3742c9a595cda3529f67e16c33c5dce11"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/full.mp3",
+    "bytes": 6533997,
+    "sha256": "137cadcebf941a5bbe35e6bc1e5d0c8b8e73b5ccd722b42584db7abcc94b2a1c"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-01.mp3",
+    "bytes": 59373,
+    "sha256": "d7295a8e4909883e4573ed34147192565c06633029e9b5b235c54ad0b770a066"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-02.mp3",
+    "bytes": 196077,
+    "sha256": "98407ecda9ce43c27a446d6d6fcae3957e13400e98899e7b8afc055b04fd9bd9"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-03.mp3",
+    "bytes": 52461,
+    "sha256": "0ad33c8533fbf81bacafe9c90ca1909ff0c2d784543b67435781217c04bd37e0"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-04.mp3",
+    "bytes": 187437,
+    "sha256": "9a79501197dcd4f506a8afb84eb91d0ccaf10039dc79cc1051ae7399ef3b15d3"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-05.mp3",
+    "bytes": 47661,
+    "sha256": "0fdd83c6e1145faef4d55057e7788298f4d524f3804212ff710baf2088013d2d"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-06.mp3",
+    "bytes": 200301,
+    "sha256": "8c338ad925f51f5d38b519c3eacb9131f5d66a809073bdb19f5230b1a0ef48cc"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-07.mp3",
+    "bytes": 49005,
+    "sha256": "5082370e80e95cfd6be93c51b8f6b6c5fd210b8d0d46e88c33ecf3d9d7aae4d1"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-08.mp3",
+    "bytes": 170733,
+    "sha256": "18424944af157ddd7dddd76f389d59d350d768a2949030dac3f4fa35075b0fc2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-09.mp3",
+    "bytes": 60333,
+    "sha256": "e6b118b5499febc20cd0ed25fe60a1bbde353698fd896629477fbef3a3b879c2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-10.mp3",
+    "bytes": 189357,
+    "sha256": "07a56cee93f551826e2eba1f7382fa75c81e30fb9bd654991e85e2ecc415a05f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-11.mp3",
+    "bytes": 53997,
+    "sha256": "f87b705f9b9da50843e421782ea7f8eb289c4e0e10e8256fe8cd446e41beb092"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-12.mp3",
+    "bytes": 192621,
+    "sha256": "668c800876ae6e499457df253fec3e9b32aa03dcf1fb8862c3ff271c87ca3e50"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-13.mp3",
+    "bytes": 56301,
+    "sha256": "52f90119acebe0d17168a38c510219ca4e8dec2d78fc3dedc40371066beb41d0"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-14.mp3",
+    "bytes": 227373,
+    "sha256": "869a17b2791fd1d7bae7c719a0a20749af2278fc9be06e635384b6e7903af818"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-15.mp3",
+    "bytes": 77997,
+    "sha256": "da1748ab265ae507054cd8ef16e449d07500431c6bdb035bb6e7c06ce87e564c"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-16.mp3",
+    "bytes": 209325,
+    "sha256": "69bf752264e4300f3e27431124392ddb9c953ba75dfec4e3914cee57ca541f15"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-17.mp3",
+    "bytes": 60717,
+    "sha256": "73234b9a9ce88ed1eeb91090c8e1ef2b189a45a9be6c7f1bc8279dbd267ed75e"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-18.mp3",
+    "bytes": 197997,
+    "sha256": "bcf246c6f53c7987b82f30fc33d8b0dc02ac8299ab7f020ebf243ec6562fbd67"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-19.mp3",
+    "bytes": 55725,
+    "sha256": "377ddbfb1757b7be47ab4349c8421682f67cc1e2bc5c29a393f0ae25e2457f0d"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-20.mp3",
+    "bytes": 195309,
+    "sha256": "b4b4bf2f3662d03fd5626dff3ef821b9ef6ce4964194a0206731b294365fb7cb"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-21.mp3",
+    "bytes": 52077,
+    "sha256": "391285b3db5bf95d07531596c90c6d4ca6e1241c10ae6dbbc13644515f998a8a"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-22.mp3",
+    "bytes": 193965,
+    "sha256": "b21eced8d3b776f095641a07e2991088f39065f8f8408528070439af0c9b7415"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-23.mp3",
+    "bytes": 68013,
+    "sha256": "0c85bc613bc17291cabce5c6a22bafeae2ec47e729bd72546830687c61ee8e44"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-24.mp3",
+    "bytes": 207405,
+    "sha256": "f08de68ced41a5b280a5e25dbe9a30b868ecb5b6c335d38e895e140845f0267f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-25.mp3",
+    "bytes": 52653,
+    "sha256": "8fd66cc70c9aa06f77aba4ce4a746915dd70ebdffe415d1fe7046a3555ec47a7"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-26.mp3",
+    "bytes": 189741,
+    "sha256": "aece53fa91516765aec53416893d03ab622db2e37406c2ab6199b0f7bb2056bf"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-27.mp3",
+    "bytes": 44013,
+    "sha256": "326d27d519c16d9c2e10d669070f2e39bc2912410958ff48e3a983a603f0d7cf"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-28.mp3",
+    "bytes": 236013,
+    "sha256": "da05a40ec466f18af5ab2edb3ae12b34e764785a09701af5e3274dc17e3a367c"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-29.mp3",
+    "bytes": 68013,
+    "sha256": "4d11b892a8c09dba8b703c5ba8dcdfea96febfaea8570f955294c3175a59e73a"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-30.mp3",
+    "bytes": 171693,
+    "sha256": "8c256c57a3a2c7476c2278249b0a85fcfe784f139d8c5f5309765297c2d9992a"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-31.mp3",
+    "bytes": 51117,
+    "sha256": "b6848237dd6405ce18e307579f24fde564770e6b8cc459543b435259d25e1a3a"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-32.mp3",
+    "bytes": 188781,
+    "sha256": "c6f8de8fbe5f1a2faab2cdf67dc653ce355e896fc14717806d235a3e61e7ea50"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-33.mp3",
+    "bytes": 49389,
+    "sha256": "402211120b472895660af5f052f52bd0c5248f3a05ecf2c51a2a1864c8e99eb9"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-34.mp3",
+    "bytes": 197037,
+    "sha256": "19ea8086d59d0f97d48879e54bda489d945bcb37655c4f1469c8f62929b0588d"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-35.mp3",
+    "bytes": 51117,
+    "sha256": "2fd81c5127fd019df3e0d5a20d360e1597d7f463b1314461e3d4d818cf96e145"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-36.mp3",
+    "bytes": 185133,
+    "sha256": "e6ace3146d7673965527e170f39aab8ffa38c41cb737fc6397d3931e0b5243fd"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-37.mp3",
+    "bytes": 68013,
+    "sha256": "bb20c9cf7fbe0a82256239bba60a5a3d4d2dd535adfba6b9399a53e4676be862"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-38.mp3",
+    "bytes": 204717,
+    "sha256": "275440e7b339f4376f091bc984608f0bda6000dc2e95b4dab0f7d554fb34ace5"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-39.mp3",
+    "bytes": 61677,
+    "sha256": "0fdcbfb6201c3c1d63c735d487994df533b635f265162b6dea862ba53963b835"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-40.mp3",
+    "bytes": 163629,
+    "sha256": "ca0ce4ba5cbd362d6fcf54b0db67d1a288e05dbfc218cff22070dd3141c3218b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-41.mp3",
+    "bytes": 68013,
+    "sha256": "4f1f3c99c0bef127c2c7f1b99b562c7158dc31ffa6da1b99376c7e23b43e94b3"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-42.mp3",
+    "bytes": 183021,
+    "sha256": "6503d36ec306afafae2ef7d5eec4d77fc673393cd9afdc908f9f0473342d6da7"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-43.mp3",
+    "bytes": 257709,
+    "sha256": "ebcea3a875f5f94e403d52ad3ca520ce7a684d558ae85bc4f2fbce11598d1e35"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-44.mp3",
+    "bytes": 70317,
+    "sha256": "cb6e39b18e40fc189e0b90018c6d2ff1788ce43f5db95e7d891e598cd2dbb05b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-45.mp3",
+    "bytes": 195693,
+    "sha256": "d698bbed218f67e1a06f9dba8ad544c21519990ecfbc88d07a3de68b2171657b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-46.mp3",
+    "bytes": 45357,
+    "sha256": "cd5eca25d0d12782f07d0762a26ab4ca6eb5c0868116775feaa0b3439da49c08"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-47.mp3",
+    "bytes": 199725,
+    "sha256": "ade0ab3090a88dc499cbf49e760b54e308c4402e6ab67390771c23bd910c3456"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-48.mp3",
+    "bytes": 49773,
+    "sha256": "322f2330e1087caaa9ac3fec2ce254eb4b61c76c4c8642ad3fd3695778692293"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-49.mp3",
+    "bytes": 195693,
+    "sha256": "945dd2e749ca832108996f4078ce7f88ab26e7a72cc0fba0a05e0302bf323f5d"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-50.mp3",
+    "bytes": 55341,
+    "sha256": "efe98d71cd26d5d478a0ba883882c58a5c2d60b7d3aaea0a6ba4236215752e2f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/en/slide-51.mp3",
+    "bytes": 204141,
+    "sha256": "2ef9a9dab71d8a7a1f251f0cb5628e88244b71bf7b22957c21821ad9b9861731"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/full.mp3",
+    "bytes": 8324397,
+    "sha256": "b63c70b8919f59ecee604dc852f37d9921d54bbf8f093bb5aa50d26a59b22c53"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-01.mp3",
+    "bytes": 65709,
+    "sha256": "0b588feff56ba05c58b8295ebd326913f03ea73e382d66bffea9cd720361e3e2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-02.mp3",
+    "bytes": 269997,
+    "sha256": "abbc57b19800620db1babb70598f89282c2298a453a7d64294cc676f9dd50fe8"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-03.mp3",
+    "bytes": 56301,
+    "sha256": "a02d3fa89dfcc322bbc1badf94b8ce185e5cd4df9478ecdb46d368991198b7ed"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-04.mp3",
+    "bytes": 234669,
+    "sha256": "8f6a519f5aea2a7840d63b34f31342201fe6bb5eb9d9320c22abfc8c2b6c296b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-05.mp3",
+    "bytes": 49965,
+    "sha256": "d0fc8ad440122c558a48b0bff7a4646781be941c8362ec54e0f50d981f35d9bd"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-06.mp3",
+    "bytes": 268653,
+    "sha256": "9652c0cac4e6091a4048efbe69bfc484be3aeabf29e4e32f4d0395c3061235d5"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-07.mp3",
+    "bytes": 63789,
+    "sha256": "d6d66ca009b65840d8e8bdb1bdebaa90497b359c67fa290a669faea277945f1e"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-08.mp3",
+    "bytes": 212397,
+    "sha256": "65b6b1e718c0923c656a12504c10f26f86aa6bb8c190eccf96d05cf4e0cb37fa"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-09.mp3",
+    "bytes": 68397,
+    "sha256": "7ca149279f9cc9f6f5a54538dea3d39a60732ec9fce0b0c98daef5b27b95062f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-10.mp3",
+    "bytes": 254637,
+    "sha256": "c899ef6cb7e3f716cc30bd79a721097f3ea7810e90d30531a31a918c159860b0"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-11.mp3",
+    "bytes": 61101,
+    "sha256": "c3951acfc9885caac3320afb64aca6a5b8555663a07f1e82ce4b7553c536036f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-12.mp3",
+    "bytes": 246381,
+    "sha256": "8f92f1423d505da75ed2ec673153088549f043309a90a3ed47f6ba26e7a5279c"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-13.mp3",
+    "bytes": 57453,
+    "sha256": "de1fa84cc803792a8dc52eaa4f152366ee11b036c0faf7bd0be77b91a8f8556d"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-14.mp3",
+    "bytes": 264429,
+    "sha256": "835eb07b7a45af4a92b595f39d28f6fdaacd59fdab2b9addc72d8b38703bb095"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-15.mp3",
+    "bytes": 73965,
+    "sha256": "0ffdb974965bd97473e2af729975526e71ac4d0da35825fb94197dcdccc8912b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-16.mp3",
+    "bytes": 276717,
+    "sha256": "6c285eed7e903a31f13aa744b0aa0485fd5103b3fc3369435b8b4d730a594327"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-17.mp3",
+    "bytes": 70317,
+    "sha256": "a1f92e12f2ef3246c6e859c374130814b45cae16c83715bc61bb8bb131eee18b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-18.mp3",
+    "bytes": 265005,
+    "sha256": "16862c83249f142629918bcf7e4e76b8448d2eb1e3923749787548f8e4bdc9a2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-19.mp3",
+    "bytes": 84333,
+    "sha256": "75bd132acbc9d90cbc4acf5f3236413b763524cd8dc9d18f3eb1170fc97fa5c5"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-20.mp3",
+    "bytes": 272301,
+    "sha256": "86def2e0213f807d68d2e8e9bf28f32e189f7a895cfeb6b0131a2d8fc94d51b2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-21.mp3",
+    "bytes": 69357,
+    "sha256": "072f8d16dba74c97c28793db9773619432c55fe4bdad76ca41edf3bc759842a7"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-22.mp3",
+    "bytes": 270957,
+    "sha256": "4ab2b5c8dbcb3a529cb12868c52c93b4be9b472fe1d0e5b09455a975f4d6dd98"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-23.mp3",
+    "bytes": 68013,
+    "sha256": "2fa4e03a778628630d5c69ab2b3bd1131b7409dd1993da40f5343052bd73dccc"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-24.mp3",
+    "bytes": 245997,
+    "sha256": "112bc9a8aef89d615bc965c6493c23c925342d32761d8a94c484c0e553d05903"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-25.mp3",
+    "bytes": 60333,
+    "sha256": "af7aef5dc620f0b6eaf115f31ed3c00cc4801ec1609bf8228e10f29f04a2270f"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-26.mp3",
+    "bytes": 217773,
+    "sha256": "7d1bc33d2846fee27c08c1d0503c30623409fb01a5be6a38b2f55bf388f413b8"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-27.mp3",
+    "bytes": 49389,
+    "sha256": "5cb4e603c1dfb4e936f7d7475ffaaab05e47bce499e8664594b8dfdf1254045c"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-28.mp3",
+    "bytes": 258477,
+    "sha256": "48a6d067d0f6cd14cb222c9edd56d2f410b04f66aa17d4e058c30dea6cdb388a"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-29.mp3",
+    "bytes": 101037,
+    "sha256": "57d49b7bc09ae6798f91739c4cf6ef6c7b88ec346e66daef6befae7983dc32b4"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-30.mp3",
+    "bytes": 224301,
+    "sha256": "641b6eb9536f47689acf83f756d5bee49e112819e5e03478a846bfda8f85da82"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-31.mp3",
+    "bytes": 69357,
+    "sha256": "15611f975bad0c3ea87ce48aedf732463062e4cc53fa7394370228e853651389"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-32.mp3",
+    "bytes": 256365,
+    "sha256": "6cd434bfe90f24f3bfc6697a68d788c4246b72b1db29622540da7cd59eae76b5"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-33.mp3",
+    "bytes": 60333,
+    "sha256": "814846adbf7ace6aa88bc1f1fff84f6cf2af58c313009c0d7ca1def3d5bbe8dd"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-34.mp3",
+    "bytes": 289389,
+    "sha256": "a98cfbacd3908c53f621f942814ee7c92c9469f9dc3cb2b22989aa1a635da5ac"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-35.mp3",
+    "bytes": 66477,
+    "sha256": "de593948b35b92a0fddb52ccae15ea08fe6d48fe4a80301e15695a8611e90af4"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-36.mp3",
+    "bytes": 262701,
+    "sha256": "33936c600887141a86407b07b0383e2389cc87d5d3b63aaa1680fdd6e2377efb"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-37.mp3",
+    "bytes": 68013,
+    "sha256": "24eb1249cf1115a0e8345ea65ee2e78066242a977dbc07af5162de82e036e000"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-38.mp3",
+    "bytes": 234093,
+    "sha256": "a5d488a3112240567cd270df75f5eaf8eb254806427e1819b637667b51b056e2"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-39.mp3",
+    "bytes": 65709,
+    "sha256": "ec2146f7a014990017cf84dd1746a8e896ff252da907cf69bf7e667189fff370"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-40.mp3",
+    "bytes": 251373,
+    "sha256": "7d92638ce21cb0a9a8c6dc78278dce754ea0b149b0a0a4d144bda7c8435aa696"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-41.mp3",
+    "bytes": 82029,
+    "sha256": "48b9b13f99171ae2b4b82a5e3880ecbd88bbaddfc4b77c1c8585cd8395ed2cbc"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-42.mp3",
+    "bytes": 249069,
+    "sha256": "058f1155d7451428dac60aa1fef25c7917d19dca7741d9eb5195216daa87884b"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-43.mp3",
+    "bytes": 272109,
+    "sha256": "a39201269f882c0b31d9e9075343c1a2f97dead440fbd24b4514a4b69f671731"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-44.mp3",
+    "bytes": 105069,
+    "sha256": "ed35d9d1f17f53c926e50849e53389c3b777a8825bdad8c2c5ebfd2496bc7002"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-45.mp3",
+    "bytes": 247341,
+    "sha256": "cd4abc96c57102da57cef0cb6f67c720c50421c1c4e314a9c2517cf6d1e0e4aa"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-46.mp3",
+    "bytes": 53997,
+    "sha256": "5193d9712945a0c2aa4f321d0ccb63ff8306b0d83521c90e4a248f579eef32c6"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-47.mp3",
+    "bytes": 269997,
+    "sha256": "fd157970b5c2eec864bdf451566e4d9770421ee01ea138dd025e22b4bf7e21d8"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-48.mp3",
+    "bytes": 68973,
+    "sha256": "9b006b1ebdbe2867d7e807d44010870f0e0a374efbad68b0aaaf5f1f0ad1e10e"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-49.mp3",
+    "bytes": 277293,
+    "sha256": "03c864b867c0eac1076a4633e97052ca08b1d72a7e9290a3fce659082bea9baa"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-50.mp3",
+    "bytes": 63981,
+    "sha256": "660ddd9db9a80c2b44d4baf198d6e84e26533b8a96d757c090cfb9caea91c2be"
+  },
+  {
+    "path": "/course-audio/plant-guilds/zu/slide-51.mp3",
+    "bytes": 263469,
+    "sha256": "093b3f74597617d12f2255a921efb51c062d14f7802ff03c2f77f90e0226c010"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/full.mp3",
+    "bytes": 2788364,
+    "sha256": "2b15d9041016109ca5d0d070d7bbf7f4542610955d8afa53a4a52310d8f3028d"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-01.mp3",
+    "bytes": 118512,
+    "sha256": "e13214784aebafe5a33cc65c549f912b7c6eddb75b042d39bbf3b125b465b54b"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-02.mp3",
+    "bytes": 126144,
+    "sha256": "181bb91a42efcc45ec9d309ac541c9871e7387da0b5857de4e50e1f0954ff43c"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-03.mp3",
+    "bytes": 124848,
+    "sha256": "2b65a10af345cf1ef8b88c9ae884e71f37061c56995a68c079bf49893b1ec2a4"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-04.mp3",
+    "bytes": 127728,
+    "sha256": "eaa71f95ffe52561e94f44c3b8a0f501601dc4932c355fc838419c83e414be8c"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-05.mp3",
+    "bytes": 47376,
+    "sha256": "526ab298c413d4075c4dd2394c67d4f2c92d98243d87582d74bab52fbd37f149"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-06.mp3",
+    "bytes": 196272,
+    "sha256": "e52dbd5bf51de9dbe50c7304ea1dec2a74d308747b15ab13c6b07fb3fe2c401b"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-07.mp3",
+    "bytes": 132048,
+    "sha256": "08b91e215c05890f3260210fa1aec6638385b63ae19b04334d178a1fc799162f"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-08.mp3",
+    "bytes": 158256,
+    "sha256": "ccfd27e374049cf2cdaae05eb1b39a8e0527574cd761eeb1086c855b5ea8d09e"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-09.mp3",
+    "bytes": 45504,
+    "sha256": "69a8af59c23f7d7c20c05c72237bc59a49f7f0c2ef43d2e90f5c36b8bac532e6"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-10.mp3",
+    "bytes": 128016,
+    "sha256": "c78e0bcbdd0c601250f52ed9637861595e86a7a302d9a16b11f2512cf0adf22a"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-11.mp3",
+    "bytes": 61632,
+    "sha256": "f8e43648fbe1f0c5870e3f0b70f81f2495a28779ccbf9da297b17ea6fe434c5d"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-12.mp3",
+    "bytes": 151632,
+    "sha256": "d0f0034e13666ebb4b4557f10c730fbc00f66f6e9343c8f89cca901f5cb911c2"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-13.mp3",
+    "bytes": 43632,
+    "sha256": "a43a1d8d8a3854c5a00ec0b30d1b36b4ecba5ea1ce077b78ccc8efb1c2165ce5"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-14.mp3",
+    "bytes": 266256,
+    "sha256": "abf650d2e82be55fc71393fab4649845ea35c24a9f7baefe0151cc03a3e33b93"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-15.mp3",
+    "bytes": 234576,
+    "sha256": "1959a9ea57c99b47d567d52da559d6ec4f725579b8f76791c7208d99e04ac740"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-16.mp3",
+    "bytes": 159120,
+    "sha256": "eae883e18debb299186e80bf7d7d1ce664f6ac5d1ad506c80c1063eb785d4dac"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-17.mp3",
+    "bytes": 58032,
+    "sha256": "762049394cb66c910c37106ae89c55b1d87bcc41b3e7cdbcdb403ab15f93c6c0"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-18.mp3",
+    "bytes": 135648,
+    "sha256": "5e5a06c9fa0e9aaff5f491b14b3bc58a387e3dfc1bf25a5bc2a862a2e9c3adab"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-19.mp3",
+    "bytes": 113184,
+    "sha256": "4fdbdd207ab372f2e8e2f1559fe1bbcb912fcb7497213d06a0f35dac5eb8685d"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-20.mp3",
+    "bytes": 182448,
+    "sha256": "1cbf91bbaa8ebf3dba742b9623dad80ab2f313194935fcdefa4992e4fc434a47"
+  },
+  {
+    "path": "/course-audio/reading-landscape/en/slide-21.mp3",
+    "bytes": 177264,
+    "sha256": "8c1c110008e93cb0cb95903161ea2023f9c17f8ef5a4caf115979603dec6c754"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/full.mp3",
+    "bytes": 4695932,
+    "sha256": "dbea7ff7be41899b87d40e8f737f45e12119aebeff7af7025975148af140b1a4"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-01.mp3",
+    "bytes": 199872,
+    "sha256": "af4e167b6af15f71742d326d2230c8f9efc9ff0024d9a930a86256bc19866c79"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-02.mp3",
+    "bytes": 207936,
+    "sha256": "c5dedb087b4d7cc511435a8530907cf018ea16717cbcbbc389a6e329ce742770"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-03.mp3",
+    "bytes": 222912,
+    "sha256": "0cdcec0ddf41296e4597bb7cf118189489179b64de6841a11db254ba1afaa31d"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-04.mp3",
+    "bytes": 204624,
+    "sha256": "10e2418ffc8dae69fd7d8c0217b59127e187eca261475fb0256d7cf76fb95083"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-05.mp3",
+    "bytes": 99360,
+    "sha256": "a203d7e38f6ba77549f0773740a3ad572385f8fed1e08885ff916c450c899f74"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-06.mp3",
+    "bytes": 345456,
+    "sha256": "1ddc2ea085344cd99411354c7f36d545c5c728f0febfc2ed4aa84f51593b3f94"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-07.mp3",
+    "bytes": 242064,
+    "sha256": "9026d9b17f64a9711a3af8da366647135a7d26d498e3484bf5e462dbc8acb644"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-08.mp3",
+    "bytes": 283104,
+    "sha256": "524e9052191eb1b3c447735775c2341f7658e74c7203a1660609948142b76232"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-09.mp3",
+    "bytes": 81792,
+    "sha256": "b18e3904d9938fa3c7b19fa0fd71dcd5dd2796abe9ded3f892c79e82aa9e44f0"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-10.mp3",
+    "bytes": 208800,
+    "sha256": "c05c4ed3c4e3b6ff66d46f284960cd5867d6c58dff67d70d8a37be17f2f369e7"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-11.mp3",
+    "bytes": 120096,
+    "sha256": "bf7b42cf7eeafcb24877230cb88054b2c75dcd74bff4250d3391157870028933"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-12.mp3",
+    "bytes": 249264,
+    "sha256": "67cbfb1d86e497f2cd566aba66be3ef22f4c3813e7474be65bd5fc0dd62b3cd9"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-13.mp3",
+    "bytes": 77616,
+    "sha256": "a9b9cbccf30a59e5fd426dcaf90ab239cef97fc10d3ffe81b93f682644f85ed8"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-14.mp3",
+    "bytes": 443376,
+    "sha256": "c7fd2eca151716a9ed19efb3e340f1f3789c00636d8b0071fc5ec081a5c33915"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-15.mp3",
+    "bytes": 375264,
+    "sha256": "e5364c56cdf2774d681bf10321de5b44a3f0e28e1c3c0c3b90608e1de2e03704"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-16.mp3",
+    "bytes": 216000,
+    "sha256": "9ebd784b29beaf2c171fabbd745ac8a74e392e0d721e01ff252566fd6c7aa328"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-17.mp3",
+    "bytes": 96480,
+    "sha256": "8ea251d2093e3bce4ae25def8551b837ebb92f00e77e77350bc872df574ac27b"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-18.mp3",
+    "bytes": 222912,
+    "sha256": "2e015c166458890f54b6361e6ef306953dc93e8c1401390d40a8774ddbfdb232"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-19.mp3",
+    "bytes": 201888,
+    "sha256": "a2e28050f2714e1c3f94ee2d50d3794f11806252be5581a81e8fbdbf613e8f0a"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-20.mp3",
+    "bytes": 303120,
+    "sha256": "820646de67ee4717698c9f636b849b184d81d9353c8e7b101356cf84e12a513b"
+  },
+  {
+    "path": "/course-audio/reading-landscape/zu/slide-21.mp3",
+    "bytes": 293760,
+    "sha256": "ada28c7e101efeda5ad48b678f52cd4b2ca1fdc82a977b70401638314eb10558"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/full.mp3",
+    "bytes": 6304844,
+    "sha256": "3e4dac1d367802f06af7499f6cb7116cecfa5ac2063a446dc773d9424b57c5bc"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-01.mp3",
+    "bytes": 249788,
+    "sha256": "849920c1882bcc7388ea4a59bde4d47bb0876b43856067dc49b654be2b4c94e6"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-02.mp3",
+    "bytes": 242012,
+    "sha256": "2385c85fc72bc1ce4d1b98d4e478aa643d0a8cc798131a44f9bd0bc6937cfa29"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-03.mp3",
+    "bytes": 196364,
+    "sha256": "98d53a448b089aabfb912dc8e0bf1252ed97f674cb7ff8b40ad692b01200be29"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-04.mp3",
+    "bytes": 317900,
+    "sha256": "5d829a1ce3117f239b8afba7910556b9a1d480f01f420a8d1f1007a5eab3046b"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-05.mp3",
+    "bytes": 271388,
+    "sha256": "c73d4824e0032d79c55df78e3bedb61f71b16b6a5933640f6a11d5010ad1c5fb"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-06.mp3",
+    "bytes": 253244,
+    "sha256": "d27c371d1490b5cc89f412d5f8072e07ef123774f65e20223a3ee83360763c7b"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-07.mp3",
+    "bytes": 231212,
+    "sha256": "5136cb4d330469d400999bec43350aacee0499c4dba72ec5a1509bf86051a9b8"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-08.mp3",
+    "bytes": 287228,
+    "sha256": "45ad6caac12a632f6fc34b77ee02dd3a951ee37b3e1732f2dd21f10a9b33c015"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-09.mp3",
+    "bytes": 277148,
+    "sha256": "c3ce1a701f46b04eb590e2ed6bdd7603fa219e1b901618a4de7115207f8e92e2"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-10.mp3",
+    "bytes": 204860,
+    "sha256": "4f455f9828ff2084ed38f347c7aae8c3faa6291b126c6d0002162214ccc95853"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-11.mp3",
+    "bytes": 275852,
+    "sha256": "8523fa11ba6dce0f962b4d19fa4561f9f9b5db34d62605c90b0e4d4818c12a07"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-12.mp3",
+    "bytes": 269084,
+    "sha256": "c908f205f376ffde97c04682581413ba887ea06b02fd1e6822ee370e904c3279"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-13.mp3",
+    "bytes": 190028,
+    "sha256": "54c13c2aed436d78d821e4bc7018038629c377270ef1184f1099b9025f123157"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-14.mp3",
+    "bytes": 317036,
+    "sha256": "7e9be1befe792d5ae83523ae3e705f09670a0c897ffb2827e7360763b31fc720"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-15.mp3",
+    "bytes": 255548,
+    "sha256": "3c97e236609ae8f59e81f3b74e2749681a8890f41d58fa2598ce53127dfb6e83"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-16.mp3",
+    "bytes": 266060,
+    "sha256": "33a5d16513683b29629ca6f3e820398986124a19d23fdab285487cc8edcae528"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-17.mp3",
+    "bytes": 231644,
+    "sha256": "523a5df43ed9e684cee6e6df45bc5a3226483c93577c0ae9805e107845b433d1"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-18.mp3",
+    "bytes": 258284,
+    "sha256": "68ed37384126ec2f4376477f09f83d641bba43bae4499efb0ffb6e8f187cd318"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-19.mp3",
+    "bytes": 236540,
+    "sha256": "b6f2ddde18feb6e69f642f198d1d97ae6ab2db4950abea03e7f4048775982a4a"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-20.mp3",
+    "bytes": 277436,
+    "sha256": "3321672f9ae6bba82ff6eddacdb4d42cc4e73518ff72e2622ff425e1ff28c570"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-21.mp3",
+    "bytes": 234668,
+    "sha256": "2206364874d6a5c7f63d856670d283af9ae4b3433cfd7de210b84ebe2dc8722e"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-22.mp3",
+    "bytes": 232220,
+    "sha256": "1fb48a41930107577eb516867d71d96ee00fc584aeec575e69284ab77b0572d5"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-23.mp3",
+    "bytes": 332876,
+    "sha256": "61d69b2bb15a6285261481c113e8ebd1d99984f72d7679cf23ea0d0aeba073d9"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/en/slide-24.mp3",
+    "bytes": 186572,
+    "sha256": "15b718766d6e213be11d908e2b709c7d41528c3167e3faa541fdd98101376836"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/full.mp3",
+    "bytes": 7433372,
+    "sha256": "de724eb2cf36612f769be57d38bf8b1f18b29a9819544bb716a8d086847ecef5"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-01.mp3",
+    "bytes": 310844,
+    "sha256": "eff0820362d40f11c4aa2719e86b465714649990e4f46aaf7ae201c6e4ae37a4"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-02.mp3",
+    "bytes": 294284,
+    "sha256": "6c2c1c2f6bdd118312b1dddab095e9434346f57a074d872b3d8a9f4a2527c737"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-03.mp3",
+    "bytes": 223004,
+    "sha256": "1a52f34ee074d8c3478c519b8cebecf4597e364bd9bab37e6b983388c1438b18"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-04.mp3",
+    "bytes": 372332,
+    "sha256": "da7a2899de05af3861a533c00aabf6ec92adeb4383153c49d478799eeba1d65f"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-05.mp3",
+    "bytes": 321068,
+    "sha256": "33306c8c24a1404cc5629aea26cf4033b8b79bda57f6d059a5d3309e52c955d0"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-06.mp3",
+    "bytes": 298316,
+    "sha256": "b35684ea5614549084ab7d459086027a8a12eec80ab717452445702ce34c0934"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-07.mp3",
+    "bytes": 279740,
+    "sha256": "e3cec5e7191599f43bdd8bcdba77104d1eeeff4f458909a5cd2f1387b5ad1167"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-08.mp3",
+    "bytes": 344396,
+    "sha256": "29af674e22722a3cf78aacb47b2ceda81164d2e378a2da3d06d57f4b463d1088"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-09.mp3",
+    "bytes": 314732,
+    "sha256": "bd193a4152ca856717cb0c5cf528c68c38de4676723248962952452b6f2ee37f"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-10.mp3",
+    "bytes": 248492,
+    "sha256": "e0091cba1012f6e0d054e7d29fa3c50e7a4036e5a4edd047e30738d232962451"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-11.mp3",
+    "bytes": 339212,
+    "sha256": "af60cd544ffb58a67b4c0bd17025a3008a6f344f1412c621233942679596c526"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-12.mp3",
+    "bytes": 320636,
+    "sha256": "96ae68ccd0f098b5bb63119aa9e3304bcc7262f8a5485eb7dd4c07398e4127f7"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-13.mp3",
+    "bytes": 223004,
+    "sha256": "2b8e375246cff7cc5235e563d12afe4981d17455c2e19db1d59165dfad1532ab"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-14.mp3",
+    "bytes": 367436,
+    "sha256": "5e9a715e3576c31df4afd7547b854512083a910e2963e48db1c4c0079c932a2e"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-15.mp3",
+    "bytes": 297020,
+    "sha256": "716a94ffb9b96a6bc38d3ab85cccb086287a162028384cf042e341457696ef06"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-16.mp3",
+    "bytes": 308828,
+    "sha256": "94cea58275eeb32afa5594f380220f768c0947c5c8c407116c1dced4581a8426"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-17.mp3",
+    "bytes": 278444,
+    "sha256": "22591fdea7edb9c2291de13014e15da1c8d288057ca6794bea72897bee093b74"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-18.mp3",
+    "bytes": 320348,
+    "sha256": "4fee383f8ced5f41bdc16f4dacc15bcca52ccf1088571952761107dea154577a"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-19.mp3",
+    "bytes": 288956,
+    "sha256": "11713e6e6c322ff20440b03e75f8631978bf2edb5b1d40f57445bc6c14065e52"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-20.mp3",
+    "bytes": 346556,
+    "sha256": "084c4f6482167aee135a1db94c9629133ae8abbfd2291b518e6ab8ec77414775"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-21.mp3",
+    "bytes": 257564,
+    "sha256": "5c132b22efa4727a2bdd5894a7057b744027393d5a7ea891f2ea30c1b2a12c0c"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-22.mp3",
+    "bytes": 261452,
+    "sha256": "82c179e39086dd0e7bfedc3f971b61a665caed2d96e1a0aa8b296d5850e4bc22"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-23.mp3",
+    "bytes": 382412,
+    "sha256": "84462f50021f82851adbb16486fd54eb54cc577c68fde1fc19f76b2a27a24b03"
+  },
+  {
+    "path": "/course-audio/seeds-sovereignty/zu/slide-24.mp3",
+    "bytes": 224444,
+    "sha256": "f7bf310de78e6851de516c09f572e734f76b362affd13ade8298a492596e45e2"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/full.mp3",
+    "bytes": 2508428,
+    "sha256": "7b87f0a20af02c3cb9bb43352bb56be4a3f9ff2375f4e678614e835a5f6481cc"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-01.mp3",
+    "bytes": 126144,
+    "sha256": "0c6c1b45799e48391bac60b483e3ed596eb223a3c51648edc1a88bda71f7a8f5"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-02.mp3",
+    "bytes": 144864,
+    "sha256": "ee6be420bc0f0200cdc8aabaed2126a3babc755ec2eadac8ba86bbeffd474a70"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-03.mp3",
+    "bytes": 114624,
+    "sha256": "cf41d916b678e0dc2bad7510dcd521d44303cfaf3b150f64d5936b91a31f4722"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-04.mp3",
+    "bytes": 95760,
+    "sha256": "4ab4360862340e04d2b37cd024725a62dfa579e0abb1d702c60e0a483fe57fb0"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-05.mp3",
+    "bytes": 110016,
+    "sha256": "c69173b35d7b15aa998c8c93a7f06028c6b583b5df5ad398ef9c3e1aae78309c"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-06.mp3",
+    "bytes": 112320,
+    "sha256": "382f3edcba453a67bac27992161827edbfbae3b8d49d4c069516b466a9055822"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-07.mp3",
+    "bytes": 121104,
+    "sha256": "e4f641d2447eb8c25eb3e3075a9dc47962674c6537eda7ea2798c98d5d540838"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-08.mp3",
+    "bytes": 125856,
+    "sha256": "23611f01a2f7e1e5f9d49b01ef4fadc4286a0aa3b6fa5b587fc50afdff810c80"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-09.mp3",
+    "bytes": 41040,
+    "sha256": "ee5a17966afe61448267c0e1aa921aed1cf9a1e49d2fab5a80ca1c11d09be500"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-10.mp3",
+    "bytes": 128160,
+    "sha256": "083e7f088d83f8f4c4756ab04198b148cf967d6f058262182401892e5bbd255d"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-11.mp3",
+    "bytes": 151344,
+    "sha256": "127ebc0512767bf1de61361e7c3fc59a27044916e577bed2935cd15a4f0377cd"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-12.mp3",
+    "bytes": 104688,
+    "sha256": "0dbe4510ae8ab6947a150b226454cc17aebada6732853d05e81ba8bed0666e34"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-13.mp3",
+    "bytes": 229248,
+    "sha256": "57048a389b6973b8c83c7a59f7d4150dc8a8287c99785dae89bb1bebff877ceb"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-14.mp3",
+    "bytes": 92448,
+    "sha256": "361b196fec07879e66f9a9c1a63f790304d4fd22ed5d92bcabf18302cf6d5fb1"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-15.mp3",
+    "bytes": 184464,
+    "sha256": "6056d92fa25a6fd90983a848dfb29b74b0ca710398d2bd2ec8eb334a7654cadf"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-16.mp3",
+    "bytes": 106848,
+    "sha256": "f5bd54e3edce0460a663e42f540514f9e71dd1d447c750a8b39f2a3f6c912559"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-17.mp3",
+    "bytes": 130464,
+    "sha256": "c0a7e1852c29dad1934dbe3869aef4a77ab8ffe342d498d13230e8c2aa1a7ee5"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-18.mp3",
+    "bytes": 113184,
+    "sha256": "816c18b8343ef2f1caef827224e093eb36cbc6716c40eb840a29596753096716"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-19.mp3",
+    "bytes": 150912,
+    "sha256": "46d8c67a91accac2473a833db8a8f00803c51d96c1bcfb50e5f5869420ceddb6"
+  },
+  {
+    "path": "/course-audio/small-livestock/en/slide-20.mp3",
+    "bytes": 124704,
+    "sha256": "b57ef36a9516ca2aa72f986898c26f32bc6ec83f11a2d7c44689d5649eaaf624"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/full.mp3",
+    "bytes": 3964700,
+    "sha256": "da9475e2cdc2890f0a96effcc88d3b077a0bd440777bb81b7d7976a29b456d24"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-01.mp3",
+    "bytes": 185184,
+    "sha256": "7c493a7b2951aabdb95ace2e635f97e805197db7eadf796a222eaa4f22bc6e9d"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-02.mp3",
+    "bytes": 218736,
+    "sha256": "95ea54938adc595deb46ac403e42209ab14ebe690358d6c341fc25fefd36a50c"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-03.mp3",
+    "bytes": 173520,
+    "sha256": "898c8aae2c281fb5e7aa5b50fda09099e318ca28601852a5c7f2c5194e3a3591"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-04.mp3",
+    "bytes": 141984,
+    "sha256": "309c060d15d234e0637b1e01677b221510f8775587b4a73eea817a57cba654e0"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-05.mp3",
+    "bytes": 191808,
+    "sha256": "014637ea3fa0a7c6133630c014ae4a0649af3b8b7449791d8a332c1cc9256dbe"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-06.mp3",
+    "bytes": 168480,
+    "sha256": "998e6877143a6006caf05d8050563ce0f5d23cc897acac04e8ac604880424b1e"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-07.mp3",
+    "bytes": 195696,
+    "sha256": "bc9d7b6f7fd5e1ca290b3c91657f9cbc63192f2a3f9c0b1b53b64344a6ff37cc"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-08.mp3",
+    "bytes": 191664,
+    "sha256": "756564929b5603c5bbefe94e32b798f2dc91f73dcb3885254a9bbadb7ea3c7c3"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-09.mp3",
+    "bytes": 60480,
+    "sha256": "b5a230f7d1f5f99a73be3d2941c443dc3218f820fd51f45abb366a5a097ca7a3"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-10.mp3",
+    "bytes": 205488,
+    "sha256": "4eef96ce1f43a74f252f48c0e5c6c650a4558b28f65e03a51ebe58395f5a95bf"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-11.mp3",
+    "bytes": 283248,
+    "sha256": "9495358f0078c81079275798f70c174f40d40d70367ead7db751248e9d0095fc"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-12.mp3",
+    "bytes": 157104,
+    "sha256": "1a71d8c7361e357c5806721fc422b835221ba47848f30ebb0b791b6e75587bfd"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-13.mp3",
+    "bytes": 391536,
+    "sha256": "93da8a1ff7133c268651dfbbf4688a2ea6d3b6c03a8c493b0a2b5bf7480889a8"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-14.mp3",
+    "bytes": 140976,
+    "sha256": "aff28f59082f74ead41937eb2807db50c5ecab3ce2c66f1198bb0ae7cec1c457"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-15.mp3",
+    "bytes": 307440,
+    "sha256": "7b3d2cf50b462277bd1b8bb70b8e266df49f5e82b65b9d401785f18419eaf558"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-16.mp3",
+    "bytes": 177264,
+    "sha256": "bd82c7fa7e1170caa30aae67a2625ba5aa432817a5ee6fefd166d5081e260d60"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-17.mp3",
+    "bytes": 177696,
+    "sha256": "e60ada7d9d5742c483358d273b8ba1fbc4744c7ecb6460a9934614c9d45988df"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-18.mp3",
+    "bytes": 192096,
+    "sha256": "589c09b995475dbeeaa8b5d238619c128c2cb0472284a0f054d942c359c22c78"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-19.mp3",
+    "bytes": 216000,
+    "sha256": "f927e2936993d4de2fc732ae8ecd21830fda0e7eb6c41173a5950ad7fc41eed9"
+  },
+  {
+    "path": "/course-audio/small-livestock/zu/slide-20.mp3",
+    "bytes": 188064,
+    "sha256": "9ba19ad4d52af2c3d4cd41d5479ff861bf810c43194b7bb8faecdc10ddd39ec6"
+  },
+  {
+    "path": "/course-audio/soil-health/en/full.mp3",
+    "bytes": 2483084,
+    "sha256": "1b8ed0ff516d0296272575914303db94f720ceb3f3382684011d28a92fa926c9"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-01.mp3",
+    "bytes": 101376,
+    "sha256": "edfc7ab6ae61b4559070cf49e46e22a10d2ad4c0f036d7e5c3c2827fc3046f17"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-02.mp3",
+    "bytes": 103824,
+    "sha256": "f4767eff13ad7a752f1d0e59a5396c0275a5b2e7594d4654f7e1753979255054"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-03.mp3",
+    "bytes": 87120,
+    "sha256": "42b44715fb8329a7747adc3352364095365bd27c1c696b472e4bb35698531b6e"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-04.mp3",
+    "bytes": 127440,
+    "sha256": "570b95d787f5a8fd810732cf08a22665da079e43c7576d8854ed2bd5bbbb49ed"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-05.mp3",
+    "bytes": 171360,
+    "sha256": "be95f7b98600d255a37201bb8da9ab4f069260daa127cc2ba4dcad4beb08171f"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-06.mp3",
+    "bytes": 151920,
+    "sha256": "8040869eade835873f6a67b8cd99d9a8b5851059da3603f6663a41303ec5ec4c"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-07.mp3",
+    "bytes": 123408,
+    "sha256": "78d3d7a87d6225e71051f87522b4d8a6b1afb2d73607321b922e4b5827b5775c"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-08.mp3",
+    "bytes": 132192,
+    "sha256": "a0f051ae561b0798d81bf4a4d54f48f5cdc86e44d1202195688cb1f9fbf55570"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-09.mp3",
+    "bytes": 113616,
+    "sha256": "e0ffe197fcf3648ff4e5e2a21b51940038dccf790fa198bece80f7ae33d13d15"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-10.mp3",
+    "bytes": 51408,
+    "sha256": "517ed42fe64040c48fb9a80836537146180543eb5720cf1b268311ea3598cbf9"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-11.mp3",
+    "bytes": 111312,
+    "sha256": "82f85ecbe6fee3e4a80d00a9a07852708fb99704fd0ef6906ce295607fea9029"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-12.mp3",
+    "bytes": 151920,
+    "sha256": "796b1f6a86dba6bccfe5f65a6a7b068e2f341c31a7ae2cf64f452e0b15852b62"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-13.mp3",
+    "bytes": 141840,
+    "sha256": "3c27cfed9613f50f25c0e32e2be4d657c84f3858e2f93ebf7a866a4924334afc"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-14.mp3",
+    "bytes": 95328,
+    "sha256": "c3dd4ac92812406fff51100253d5c79f6dcb44d3e09cdde0f4a509faeeb677f6"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-15.mp3",
+    "bytes": 116064,
+    "sha256": "504e9df61166faafd23dbe5e2cd3b364d08be0ef2aba891f10f15450b1b721be"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-16.mp3",
+    "bytes": 157968,
+    "sha256": "0dbe6d08c43db350084a7c2041adc46ce45835349961dfab7af4a2be23b55f70"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-17.mp3",
+    "bytes": 152064,
+    "sha256": "d15c179c4f4175f8512e64d63469b6063f2165ba835722e087efa25285150351"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-18.mp3",
+    "bytes": 144000,
+    "sha256": "a5be0990f48c5be81dca8c6f17557b5a0375b49c0dc03630dc7a44760b517f20"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-19.mp3",
+    "bytes": 129888,
+    "sha256": "b122b081aee363e5d4954c3fee18fa6d2fc0414df66276817fcb989504da1c8e"
+  },
+  {
+    "path": "/course-audio/soil-health/en/slide-20.mp3",
+    "bytes": 118800,
+    "sha256": "3a536eb6419199138d503bc5bc4d74b674936045715a17bf8b44e485f7ee49e1"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/full.mp3",
+    "bytes": 4015964,
+    "sha256": "5e45b4be12c6a47749bff5bcd8238f4547dc5f85a8de24ef8fb51563b467f711"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-01.mp3",
+    "bytes": 167040,
+    "sha256": "17e9f22f4cece15b51ee25c62d4752b9008aa9f9aee1a9e972beec45ea1bfb17"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-02.mp3",
+    "bytes": 147456,
+    "sha256": "1b54dcd7881e439d3c614e8b63f7f2aff07e368794c0ab8c3912d2fa92dc6fce"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-03.mp3",
+    "bytes": 147456,
+    "sha256": "ec5beb6e31cfc42ff1d2734940aaab234752376e5613e309f6975ce08da48919"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-04.mp3",
+    "bytes": 201888,
+    "sha256": "3b9c60b827686256c06e1e4095b0a0599cfd2e90d1c1ee06016bb4f9ea5e1cc1"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-05.mp3",
+    "bytes": 244512,
+    "sha256": "8d4d31ea5ddeee429ceae0ded3ec021a55e7feb00a54fc9abe78b68e02f57d74"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-06.mp3",
+    "bytes": 253728,
+    "sha256": "145ea45a3d0857bf3613a02c73a984a832116833482e4240e42248d953ae605e"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-07.mp3",
+    "bytes": 192816,
+    "sha256": "2627ba055865d08c4ea6c810ff06b4b782f9a7b4e86a34039ad740dde1679197"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-08.mp3",
+    "bytes": 232704,
+    "sha256": "39b5cb955bbb3ba48d626011ce7395cc646285be35de3d016a4a3d578d6cc03f"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-09.mp3",
+    "bytes": 182016,
+    "sha256": "c179ca28f3e7218f74208afa3b5b088ee26785e2613692ac0c25329f359d4ef2"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-10.mp3",
+    "bytes": 83232,
+    "sha256": "3f26005a949a897965aa22bd125555a552fab76f5e80c9af9e696a92be362ce6"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-11.mp3",
+    "bytes": 166464,
+    "sha256": "f37b7522b66ac635cad2b7d78d0aa64bb94e6bedbeeb2a117fdb71a039401b45"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-12.mp3",
+    "bytes": 262368,
+    "sha256": "01d975bca33f691be3ead850222ce7c8d480d9d0a6e10164cc8b95c94cf9be11"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-13.mp3",
+    "bytes": 210672,
+    "sha256": "728de617050929e3dd5c8a5ba440c5c37b9df0a2203988dc0f1ef7fae2c19772"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-14.mp3",
+    "bytes": 170352,
+    "sha256": "7dc3370762be919864d9923a721a287e7359ab0206b6f5757e38609d8d409c4f"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-15.mp3",
+    "bytes": 181296,
+    "sha256": "4a8e80153d93ec63e2438ff0f9b9e6ddbb4dd05cd707822094c91d79f976a37f"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-16.mp3",
+    "bytes": 253872,
+    "sha256": "31e270eb4d50a43655a05f9efd5f9c553c4fb399adbb9c9b2f9e9d7d65726b23"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-17.mp3",
+    "bytes": 242640,
+    "sha256": "0280525a60ca231f341ddd07619bdc75b86c7abff67e003b107a76c4fc09f45b"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-18.mp3",
+    "bytes": 261936,
+    "sha256": "a812e2fb0639c99a885137ebf3befd331f6a88b6671b07efd61e4bec23e102f8"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-19.mp3",
+    "bytes": 219312,
+    "sha256": "5c39f958891f3ff2bdcdf0ee2a80ba917a715569d53d39ae3ecc0d8e3cce5e16"
+  },
+  {
+    "path": "/course-audio/soil-health/zu/slide-20.mp3",
+    "bytes": 193968,
+    "sha256": "3846b87cf5aba10150747ea3daa9a10b9a3717d07ed0a7aeeb64319a6e24d9a9"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/full.mp3",
+    "bytes": 4162268,
+    "sha256": "0e92cde50d559a1ca766b62fecb4f39de03822603b6ebe9c0e172ac1079197b7"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-01.mp3",
+    "bytes": 184176,
+    "sha256": "7210b41a9a604b77b3ef19b89035768a9c8f84ca836372f926c24657da1a2613"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-02.mp3",
+    "bytes": 208080,
+    "sha256": "4e19c5160298a3ea2228cd8cb5b2ed10edeace1e597dc65e626cfd2a225b088d"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-03.mp3",
+    "bytes": 235296,
+    "sha256": "2c5d0d7901bb4ecf205273c5d838f2f5e045e35f628b6a0edd1ca87aab896b9b"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-04.mp3",
+    "bytes": 236016,
+    "sha256": "06fb4e3bcc7fab4a04e149f51a793a201522b12f6e2900c111144ecf3ddf0525"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-05.mp3",
+    "bytes": 260928,
+    "sha256": "8776ecab29c7e16ae59d6271b6652a3c9885dbfe86af6bd37b167136497b5b52"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-06.mp3",
+    "bytes": 177552,
+    "sha256": "42991149f1e62c63c3f5f4fa37ec37de4b53c4918aa5863eafc489b2b08e9652"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-07.mp3",
+    "bytes": 227232,
+    "sha256": "a9e7ddbf7af131b48ed06a35c3b6961d8b9777e19fe0ffb2740a795e43706c5f"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-08.mp3",
+    "bytes": 242352,
+    "sha256": "a7f0a6e4f77b397626b432d84dac91cd970547af41cc6d680a63d301204d3dd4"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-09.mp3",
+    "bytes": 222048,
+    "sha256": "fdb9e0dcf97b5f402623c8e70bfb7167b48cf651c307e9da8e101b7837fb6c1e"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-10.mp3",
+    "bytes": 281088,
+    "sha256": "d8cf133c5b03669087c2a04d970783eab3c14a8acb07dbe6f651de66680b6f11"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-11.mp3",
+    "bytes": 210096,
+    "sha256": "8fbbb4494cabf3d318be31a89213d4aa622f701fe00074af602c643d7eec42f5"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-12.mp3",
+    "bytes": 207936,
+    "sha256": "4be846ba9b9a1b7efb6b7f4f5f916e61299cfa1d16c38dfc7856ce69ee8f526b"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-13.mp3",
+    "bytes": 240480,
+    "sha256": "7a6d2f2bb5a4320687745225a65aabbdc77666ccb42c2b64252f8fb98e551a31"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-14.mp3",
+    "bytes": 124560,
+    "sha256": "0d79dcab8e2e5fba92dc2fdfd2cdbd76c033e2980923bb35b7aa973846ae4a59"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-15.mp3",
+    "bytes": 216720,
+    "sha256": "a1076f8638923327293197e50aa81ed15c2dc1bb54e3edfd46c6a463b01192c2"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-16.mp3",
+    "bytes": 374112,
+    "sha256": "d4cef6fcf83a046080e5509fe9fac6d06c47fa8670aa47a2bf560b418f3e7088"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-17.mp3",
+    "bytes": 250128,
+    "sha256": "034035dc55449acc5c5a36c76574cbf11f795ef1f07102b503dc25b675ab47da"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/en/slide-18.mp3",
+    "bytes": 263232,
+    "sha256": "d8beb174510597d6007e7dc36bc3e567d3e842843fd387f22f11d80da91d03ed"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/full.mp3",
+    "bytes": 6571532,
+    "sha256": "ddb63c8ac38c56f9e8cc4e2a66acc9287dad40906d8c2068fef66044cf0e3cd9"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-01.mp3",
+    "bytes": 249984,
+    "sha256": "aa4cea0e5bff86d38aa330389090e4b894342ba631c0396f395e7784bee1374c"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-02.mp3",
+    "bytes": 287712,
+    "sha256": "ebc6a373e87c56841d4dc2b67cd5a188d755b61a6d2ab391c9761f2ea4c680d5"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-03.mp3",
+    "bytes": 379584,
+    "sha256": "b822fb97a227e9548dbe4144562d35cc28d1c472aad364c225a5d093929f1503"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-04.mp3",
+    "bytes": 339840,
+    "sha256": "2d7122bdff1868f2c17c5c693c64c733fc096dbeb9ad96265195349615468d1c"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-05.mp3",
+    "bytes": 423504,
+    "sha256": "4064bd3de6f0353abec264f8eac6cc074b932264ddffcad50f26eeaa44dab512"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-06.mp3",
+    "bytes": 297792,
+    "sha256": "64443f20c9f6fd42a37b87e49150905d0f1e09f66a235e4f4677eb2add3157d9"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-07.mp3",
+    "bytes": 318528,
+    "sha256": "b4c36398741b2e0d83f65e0c62ae6ba9abbcabd845fa5a0cdbae7131ab9f53ce"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-08.mp3",
+    "bytes": 407376,
+    "sha256": "28209a573288df9091e45dc3b273eecdb3abaedd37eaee2aa9c7e036802b0af6"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-09.mp3",
+    "bytes": 363600,
+    "sha256": "947b85c8ac6f9d4c87f6473bae4e27ab47042a0d15ac56cb6329d2dc9ef3b146"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-10.mp3",
+    "bytes": 431568,
+    "sha256": "8d9e5681065fc94261fef383d2cde19d602015f72cda94f56697f8fe166bc15e"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-11.mp3",
+    "bytes": 354960,
+    "sha256": "ad7f60599575dcd1fc29e5e4ebfbf7193fcdffc6307dbfb2a6e914db83e09740"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-12.mp3",
+    "bytes": 350208,
+    "sha256": "09bd968b93b266608a4e06a5fb4e6fbf38b13e0e4b277456d12c3edf98ab11c9"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-13.mp3",
+    "bytes": 431568,
+    "sha256": "495d4791ca2445b41a6e22bb17b6083c40b4f14310ca7827c5071a451e2d9313"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-14.mp3",
+    "bytes": 239328,
+    "sha256": "5a04a59e354f4a9011e2fe8009e361a37bbd0c3f3a1898a476a3dabc62ee8396"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-15.mp3",
+    "bytes": 350496,
+    "sha256": "1d0b62ff4ee5d51189a28f1cb98012731536081825102fa93b2c1a5fe1070f84"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-16.mp3",
+    "bytes": 614304,
+    "sha256": "0c98dc0292d82e71dded1e46547c0e56ea598bfe6300b80384209aaafa4dede5"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-17.mp3",
+    "bytes": 411120,
+    "sha256": "2d08b917878c10e7a9ce1fde9146900bcf58cd07080a640bd84cf096c904ce18"
+  },
+  {
+    "path": "/course-audio/vegetables-staples/zu/slide-18.mp3",
+    "bytes": 319824,
+    "sha256": "1fc801d605e69a3409393105ede021aa6551085e92368f825798b9412bd00ec3"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/full.mp3",
+    "bytes": 2790956,
+    "sha256": "75687000956b7f68aaa4c2809724181acf2e53deb3c78fa521b7a58bc9deedab"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-01.mp3",
+    "bytes": 43344,
+    "sha256": "fc7fb1cdc1b63b1ca116164f8b9d0f0d0f542ca984a50a6fd2eab31f79fbe61b"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-02.mp3",
+    "bytes": 127152,
+    "sha256": "b0d1523435a15e21d29c1de20e19a8a52a12fa511c34596a0a21d1abfb81c0a6"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-03.mp3",
+    "bytes": 146880,
+    "sha256": "05fbc0adc431d5c1890c3ccc22235a8c0585f95b6fc445f4e2851ef4f27b4bb4"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-04.mp3",
+    "bytes": 97488,
+    "sha256": "951a5d75b57b0ac943bd5a47f0077e5f5d0f137290f8d06e2a5dfbcbb1c36836"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-05.mp3",
+    "bytes": 84384,
+    "sha256": "32cf5403d2c3f88c430f9e4bcf22c73fc9ddc7fad4dcaa3e088ec1bfffa689a8"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-06.mp3",
+    "bytes": 145872,
+    "sha256": "1172c702186bb38e6c85630a33c6aa0d0c5832ff10d775ffe28749a7f62caa81"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-07.mp3",
+    "bytes": 86832,
+    "sha256": "6997884148391096bb71da40f765b667bf590d9b57c7f19988cee3901a578462"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-08.mp3",
+    "bytes": 129456,
+    "sha256": "16829e41e21daa4d2b68d3ed3ba1f4be0f9cdd946e515a71151e5312ca767779"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-09.mp3",
+    "bytes": 55440,
+    "sha256": "d68731e74e7791a296c8cdae389f20f3eb4dcc11888eb93b3fa6249fd90ffb83"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-10.mp3",
+    "bytes": 144720,
+    "sha256": "035e7115049d70d4cdd9b31fa30e8d77abb5f28b9a040320c5d1805011613cbf"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-11.mp3",
+    "bytes": 152496,
+    "sha256": "8579545434df77c3f85c40cd33961129f4cb85f606983b1b6b5d8300e1c3ba48"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-12.mp3",
+    "bytes": 86688,
+    "sha256": "8364b9c3b63bbfb1cc4afa5b3b65345b6bcc2343b394fb464a1bd557bdeb0d30"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-13.mp3",
+    "bytes": 133200,
+    "sha256": "27c0665ac04fda1100159cb83deb548aac06bf7db516d46b1093031f5b47df53"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-14.mp3",
+    "bytes": 185040,
+    "sha256": "a7589c2d95e6636176e83592e2aac43fe9886803580e2bb97973663db9d8f4aa"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-15.mp3",
+    "bytes": 138384,
+    "sha256": "81f1a068ed13bc52cae56e5013efcf7aaee1571dacbb6b489c67721773eb8a9a"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-16.mp3",
+    "bytes": 56592,
+    "sha256": "dfb6168caf3f6b778b17d646902d290bb5f3f80083c842ca5ce648cf5b51217b"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-17.mp3",
+    "bytes": 130320,
+    "sha256": "b3a8d605d14598314d7d875b03d4d0598dae9b03b01436588eef8893b05a71cb"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-18.mp3",
+    "bytes": 168912,
+    "sha256": "c3d4486087824027105637f5da97d2ced0115f7d1e5cbbc4afdbafb234aca012"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-19.mp3",
+    "bytes": 148896,
+    "sha256": "148614cc96e25473a7027a4796d9ac210c87cbf3eb3cd71e30ca0c83fc85ae0a"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-20.mp3",
+    "bytes": 122112,
+    "sha256": "d5340395c47a09c3fc068a7e56f9a50793eaf49d04f8fba903e3af38ad62dc51"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-21.mp3",
+    "bytes": 98496,
+    "sha256": "79bf4f06100d1b78aed3c22fddd78d409672580aa9ffe66cd1efd8e994ae66e7"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-22.mp3",
+    "bytes": 128880,
+    "sha256": "ede0efb9054542302275db0b3ca8d82adc3a2e5fbd49e9e8d35ec5e9f3fe3c5b"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-23.mp3",
+    "bytes": 65952,
+    "sha256": "84f7dd69d12fe8975492e7e33588b507bfadd8af55e954ee25810467f104d22c"
+  },
+  {
+    "path": "/course-audio/water-harvesting/en/slide-24.mp3",
+    "bytes": 113184,
+    "sha256": "bf7bbf46761120b019af20038eaec13c88fdcfc292aad6cc221b2f827f5ce3ab"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/full.mp3",
+    "bytes": 4509164,
+    "sha256": "8ed984911e94468f3102c954db77b75d7614bad4c94933887da4ac2e708b65d3"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-01.mp3",
+    "bytes": 101520,
+    "sha256": "63f71b13043eefd453921686f2b71209a01ec2b3a4851f51c229e0997874ac01"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-02.mp3",
+    "bytes": 210672,
+    "sha256": "5b8da7fa22b8663ff29cb7ee09463f00ea99171ca12644548182187574fa77dd"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-03.mp3",
+    "bytes": 247392,
+    "sha256": "09225932390eaf3095df12a782a7454e9265a9fac8d114d4d2f4e9d6be11d91f"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-04.mp3",
+    "bytes": 158400,
+    "sha256": "11ddc1c6c025b6210bdd08289f283020dfdab19e5839c20d90076c0564b4a9d8"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-05.mp3",
+    "bytes": 128592,
+    "sha256": "24a27a2663dac1ef129e8268d6e519377c5557bc52bd66043b47ae7c3e45df86"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-06.mp3",
+    "bytes": 229968,
+    "sha256": "4e45be6e25f281a7751bacf92d3ae80909cefac627c2640e714491b44144e0a4"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-07.mp3",
+    "bytes": 141984,
+    "sha256": "cfb3e973d2595a4d8aafe3f4dcf3bb58fba20ebbe4afe2346ac274f1444b476f"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-08.mp3",
+    "bytes": 193392,
+    "sha256": "40eb559492410080e2726957d47d29c3397fbaa077ad913a9734bed772a8885c"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-09.mp3",
+    "bytes": 93312,
+    "sha256": "49ae251e3f705d15a6feb3bbcedecd29648e0507b70f0848ef0899f9a8b53c75"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-10.mp3",
+    "bytes": 253152,
+    "sha256": "954826bc076f2091e0357e9ae68b5e63c9a2ef37075334dd0be7cb76be6d579f"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-11.mp3",
+    "bytes": 243216,
+    "sha256": "ac804e4ee2520e0da20ef2fd69ba841b8ba719704bf26a80e5732e63e4fe9017"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-12.mp3",
+    "bytes": 141696,
+    "sha256": "3c740cf3eecc2e543aece6ebfec4d0517faec256d00413cf562b78581cf3b95a"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-13.mp3",
+    "bytes": 210240,
+    "sha256": "d2a271b099cd28f778a82b97f2d92f48571dd6c347667e5fe362cf2b947765ed"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-14.mp3",
+    "bytes": 279504,
+    "sha256": "bb558c0057e49b08dc329b3470c32b90c2d9e0a790315d0c69dd696d8854494c"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-15.mp3",
+    "bytes": 218304,
+    "sha256": "443a82cc602262f8cb79a2230ae6e878281fbd4351e32176eb30952968da3523"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-16.mp3",
+    "bytes": 107568,
+    "sha256": "041d50e56c585f9cd1a9f83723f52d40251c551064e6aea862e4f1a7af7b5b6e"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-17.mp3",
+    "bytes": 204480,
+    "sha256": "3f8e1afd99bbd7abe4182085201e0dde8b68499427e08d24b86236ae7273531a"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-18.mp3",
+    "bytes": 259920,
+    "sha256": "49bdf07691acef3561af0e66bb4f768040d59253b68746c4df7570eea154fd8e"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-19.mp3",
+    "bytes": 231120,
+    "sha256": "14ecb056a9cc6db89c265788419f24f76a3dab05e3d506a224c7acfe31634e00"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-20.mp3",
+    "bytes": 192384,
+    "sha256": "6d930d34c67377aa72333e9177620eeaecd9deabac2ce2485286050c74047a4d"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-21.mp3",
+    "bytes": 165168,
+    "sha256": "d4770737eda0510ecf338b26b8115a9726160ea75dcb3b9f4f9106a46958bd71"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-22.mp3",
+    "bytes": 218880,
+    "sha256": "ccffbd64b6dbc98008b824838959d175f787999e208c62bef6575497901de794"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-23.mp3",
+    "bytes": 103392,
+    "sha256": "8c985d95773cf4ac266fbd8648a76443b69635dd402981a8877fd1f349cd90ea"
+  },
+  {
+    "path": "/course-audio/water-harvesting/zu/slide-24.mp3",
+    "bytes": 174672,
+    "sha256": "cbac724f1ad1090f2f020534a0ad25e0daf064d438f3792f3544dfc6f0ea3244"
+  }
+]

@@ -6,6 +6,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
+import { vegetablesBeforeL1Ordinary, vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 
 export type VegetablesLanguage = 'st' | 've' | 'ts';
 const folder = '../docs/study-translation-reviews/vegetables-l3-ordinary-residual-2026-10-06/';
@@ -36,13 +37,16 @@ const sourceModule = () => COURSE_MODULES.find(module => module.id === 'vegetabl
 
 /** 6 October: validate the complete accepted 11-paragraph/12-span layer before older English-hold claims. */
 export function vegetablesBeforeL3Ordinary<T>(language: VegetablesLanguage, actual: T): T {
-  assert.deepEqual(sourceModule(), ordinaryBefore.canonical, 'all canonical Vegetables content and answer indices remain exact');
   if (language === 'ts' && (actual as any).lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2')) {
     // The separate L2 registry is validated by the older assessment helper; its caller
     // must also observe the complete current L3 layer before exposing older history.
     vegetablesBeforeL3Ordinary('ts', ordinaryDrafts.ts);
     return structuredClone(actual);
   }
+  // 6 October: validate the complete newly accepted L1 layer before rewinding its
+  // five exact target slots for the historical L3 whole-module preservation proof.
+  actual = vegetablesBeforeL1Ordinary(language, actual);
+  assert.deepEqual(sourceModule(), ordinaryBefore.canonical, 'all canonical Vegetables content and answer indices remain exact');
   const previous = ordinaryBefore.drafts[language];
   const expected = structuredClone(previous);
   const lesson = lessonAt(expected);
@@ -80,6 +84,9 @@ export function vegetablesBeforeL3Ordinary<T>(language: VegetablesLanguage, actu
 
 export function vegetablesDeckBeforeL3Ordinary<T>(language: VegetablesLanguage, actual: T): T {
   vegetablesBeforeL3Ordinary(language, ordinaryDrafts[language]);
+  // The L1 helper validates and restores its own latest paired rows before the
+  // historical L3 snapshot is compared below.
+  actual = vegetablesDeckBeforeL1Ordinary(language, actual);
   const expected = structuredClone(ordinaryDeckBefore[language]);
   for (const row of ordinaryRows.filter(row => row.language === language)) {
     const { slide, bodyIndex } = row.deckComposition;

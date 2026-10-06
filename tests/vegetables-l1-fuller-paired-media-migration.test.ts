@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 
 test('Vegetables L1 fuller paired stills retire only their stale cached variants once', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
@@ -56,11 +57,15 @@ test('Vegetables L1 fuller paired stills retire only their stale cached variants
   assert.equal(writes, 1);
 });
 
-test('Vegetables L1 paired update proof binds each target to its complete English row', () => {
+test('Vegetables L1 paired update proof retains exact source and target history after validating later ordinary drafts', () => {
   const proof = JSON.parse(readFileSync(new URL('../docs/media/vegetables-staples/l1-fuller-paired-update-2026-10-05.json', import.meta.url), 'utf8'));
   assert.equal(proof.rows.length, 39);
-  for (const language of ['st', 've', 'ts']) {
-    const deck = JSON.parse(readFileSync(new URL(`../docs/narration/vegetables-staples.${language}.paired-draft.json`, import.meta.url), 'utf8'));
+  for (const language of ['st', 've', 'ts'] as const) {
+    const current = JSON.parse(readFileSync(new URL(`../docs/narration/vegetables-staples.${language}.paired-draft.json`, import.meta.url), 'utf8'));
+    // The 6 October layer translates the older "do better" English holds.
+    // Validate the complete live layer before rewinding only its five approved
+    // cells; all 39 dated source/target claims below still have to match.
+    const deck = vegetablesDeckBeforeL1Ordinary(language, current);
     const rows = proof.rows.filter((row: { language: string }) => row.language === language);
     assert.equal(rows.length, language === 've' ? 14 : language === 'st' ? 13 : 12);
     for (const row of rows) {

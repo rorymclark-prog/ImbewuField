@@ -9,6 +9,7 @@ import { resolveCourseModulePresentation } from '../lib/course-module-translatio
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { vegetablesBeforeL1Ordinary, vegetablesDeckBeforeL1Ordinary, vegetablesL1Before, vegetablesL1Rows } from './vegetables-l1-ordinary-checks.ts';
 
 const evidence = (suffix: string) => JSON.parse(readFileSync(new URL(`../docs/study-translation-reviews/VEGETABLES-L1-FULLER-ORDINARY-2026-10-05-${suffix}.json`, import.meta.url), 'utf8'));
 const baseline = evidence('BASELINE');
@@ -144,7 +145,7 @@ test('Wet clay prohibition and local advice precede deeper cultivation; deeper w
   assert.match(fieldText('st', 'body.paragraphs.8'), /wet ground.*metsi a hlokang somewhere to drain away to\.$/);
 });
 
-test('Technical fallbacks keep the better nursery start and deliberately false all-conditions drainage distractor', () => {
+test('Historical pre-residual snapshot keeps its source holds after the newer L1 layer is checked and rewound', () => {
   const veParagraph = fieldText('ve', 'body.paragraphs.12');
   assert.equal(veParagraph.split('. ')[0] + '.', 'Others do better with a protected start in a nursery, then transplanting.');
   assert.ok(veParagraph.endsWith('Tomatoes na brassicas zwi wela henefho.'));
@@ -152,6 +153,73 @@ test('Technical fallbacks keep the better nursery start and deliberately false a
   assert.match(fieldText('ts', 'quiz.0.options.2'), /^Narrow beds drain better eka swiyimo hinkwato$/);
   assert.match(fieldText('ve', 'quiz.0.options.2'), /^Narrow beds drain better kha nyimele dzoṱhe$/);
   assert.match(fieldText('ve', 'quiz.1.q'), /best suited to direct-seeding rather than transplanting/);
+});
+
+test('Vegetables L1 residual wording preserves increasing difficulty, majority scope, broad performance comparison and crop sequence', () => {
+  assert.equal(vegetablesL1Rows.length, 5, 'only three Tshivenda, one Sesotho and one Xitsonga paragraph enter this dated layer');
+  for (const language of Object.keys(drafts) as Language[]) {
+    const restored = vegetablesBeforeL1Ordinary(language, drafts[language]);
+    assert.deepEqual(restored, vegetablesL1Before.drafts[language], `${language}: only the five reviewed L1 rows rewind to the exact prior registry`);
+    const deck = JSON.parse(readFileSync(`docs/narration/vegetables-staples.${language}.paired-draft.json`, 'utf8'));
+    vegetablesDeckBeforeL1Ordinary(language, deck);
+    const live = resolveLearnerLessonPresentation(lesson, language);
+    assert.equal(live.status, 'draft');
+    assert.deepEqual(live.content.quiz.map(question => question.correct), [1, 2], `${language}: original answer choices stay B/C`);
+    for (const row of vegetablesL1Rows.filter((item: any) => item.language === language)) {
+      assert.equal(live.content.body.split('\n\n')[row.bodyIndex], row.afterTarget, `${row.id}: live learner exposes the exact checked target`);
+    }
+  }
+  const veBody = resolveLearnerLessonPresentation(lesson, 've').content.body.split('\n\n');
+  assert.match(veBody[0], /^Mavu o petetsanaho a xedza zwikhala zwa muya\./,
+    'physical soil compression and lost air spaces are retained without introducing a new soil category');
+  assert.match(veBody[0], /Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe\.$/,
+    'the increasing comparative is held exactly while the surrounding season phrase remains localized');
+  assert.match(veBody[6], /^No-dig i tea kha vhunzhi ha mavu a ngade\./,
+    'the no-dig method name stays precise and the translated scope remains most garden soils');
+  const expectedNursery = {
+    st: /di sebetsa hantle ho feta.*nursery.*transplanting.*Tomatoes le brassicas ke tsa sehlopha seo\.$/,
+    ts: /swi tirha ku antswa.*nursery.*transplanting.*Tomatoes na brassicas swi wela eka ntlawa wolowo\.$/,
+    ve: /zwi ita khwine.*nursery.*nga murahu transplanting.*Tomatoes na brassicas zwi wela henefho\.$/,
+  };
+  for (const language of Object.keys(drafts) as Language[]) {
+    const paragraph = resolveLearnerLessonPresentation(lesson, language).content.body.split('\n\n')[12];
+    assert.match(paragraph, expectedNursery[language], `${language}: broad “do better” comparison, protected start and crop grouping remain`);
+    assert.ok(paragraph.includes('nursery') && paragraph.includes('transplanting'), `${language}: technical start and transplanting terms remain exact`);
+  }
+});
+
+test('Vegetables L1 source, comparison, sequence, crop names and unrelated rows fail closed before history rewind', () => {
+  const replaceParagraphOnce = (draft: any, language: Language, index: number, from: string, to: string) => {
+    const target = draft.lessons.find((item: any) => item.id === 'vegetables-staples-l1');
+    assert.ok(target, `${language}: mutation fixture must locate the actual L1 lesson`);
+    const body = target.body[keys[language]].split('\n\n');
+    assert.ok(body[index].includes(from), `${language}/body[${index}]: mutation premise exists`);
+    body[index] = body[index].replace(from, to);
+    assert.notEqual(body[index], target.body[keys[language]].split('\n\n')[index], `${language}/body[${index}]: mutation must change the guarded field`);
+    target.body[keys[language]] = body.join('\n\n');
+  };
+  const veMutations: Array<[string, (draft: any) => void]> = [
+    ['progressive comparison', draft => replaceParagraphOnce(draft, 've', 0, 'gets harder to work', 'is hard to work')],
+    ['majority scope', draft => replaceParagraphOnce(draft, 've', 6, 'vhunzhi ha', 'manzhi a')],
+    ['protected-start sequence', draft => replaceParagraphOnce(draft, 've', 12, 'nga murahu', ' ')],
+    ['unlisted paragraph', draft => replaceParagraphOnce(draft, 've', 1, 'Permanent paths', 'Temporary paths')],
+  ];
+  for (const [label, mutate] of veMutations) {
+    const changed: any = structuredClone(ve); mutate(changed);
+    assert.throws(() => vegetablesBeforeL1Ordinary('ve', changed), `VE ${label}: validate actual accepted layer before rewind`);
+  }
+  const changedSt: any = structuredClone(st);
+  replaceParagraphOnce(changedSt, 'st', 12, 'Tomatoes le brassicas', 'Tomatoes le other crops');
+  assert.throws(() => vegetablesBeforeL1Ordinary('st', changedSt), 'the source crop group cannot drift during historical reconstruction');
+  const changedTs: any = structuredClone(ts);
+  replaceParagraphOnce(changedTs, 'ts', 12, 'ku antswa', 'swinene');
+  assert.throws(() => vegetablesBeforeL1Ordinary('ts', changedTs), 'the broad comparative cannot become a non-comparative intensifier');
+
+  const deck = JSON.parse(readFileSync('docs/narration/vegetables-staples.ve.paired-draft.json', 'utf8'));
+  const cropSpan = deck.slides[5].target.body[1].segments.find((segment: any) => segment.sourceEnglish === ' Tomatoes');
+  assert.ok(cropSpan, 'the exact spaced source segment is present in the composition');
+  cropSpan.sourceEnglish = ' Tomato';
+  assert.throws(() => vegetablesDeckBeforeL1Ordinary('ve', deck), 'source segment coverage and crop names are checked before any historical deck rewind');
 });
 
 test('Learner and module cards expose unreviewed targets alongside exact English, without implying fluent approval', () => {

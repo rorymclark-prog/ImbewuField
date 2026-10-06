@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "candidatePacket": {
+    "path": "/tmp/imbewu-vegetables-l1-ordinary-residual-candidates-20261006.json",
+    "sha256": "0e00eefc34f7190155b5f191ff405ad1847885391a4fd6e5009193cf80e02177"
+  },
+  "fullSourceCurrentSnapshot": {
+    "path": "/tmp/imbewu-vegetables-l1-current-binding-export-20261006.json",
+    "sha256": "f6de628c5a10be575a080ba0974b4ae8e44db2a0bc4d98c5978f4dbfd130a441"
+  },
+  "fileHashes": [
+    {
+      "path": "lib/course-modules.ts",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sha256": "173b4a4cf2c435cb4fb7cac8673844846fb425c5fa5ece6bdf6e152ab6e72a4f",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sha256": "e7e4aa9084f1bf42705471185e994d00ca8e1af5cd8eeefbed551aae43668ad9",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sha256": "41eba3fa7ab8eff153ec591950ee0ddb5a64995deb456c91e5d330db76ec0f95",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "sha256": "d9384b30cc00c16a54c62336fae1fe00afc2b1549bb8edf98f9e55ce3b215ed5",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sha256": "7a48dae1f0e0040bf6aba97ec2a5dd3f95f6180f104517e70b00f7ffe82fb375",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sha256": "500238291cc2ec08bab704a998ec425cbb5b68f97dd537065be57c1772874439",
+      "matches": true
+    }
+  ],
+  "bindingSummary": {
+    "uniqueCandidates": 5,
+    "exactCanonicalNativeResolverPairedBindings": 5,
+    "missing": 0,
+    "duplicates": 0,
+    "exactProposedSourceAndTargetConcatenations": 5,
+    "warning": "Exact concatenation alone is not semantic acceptance."
+  },
+  "rows": [
+    {
+      "id": "ve-L1-p0",
+      "source": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "current": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "originalProposal": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo kha khalaṅwaha iṅwe na iṅwe.",
+      "bindings": {
+        "canonicalNativeResolverPairedExact": true,
+        "pairedBodyIndex": 0,
+        "slide": 4,
+        "pairedAfterConcatenationsExact": true
+      },
+      "recommendedTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "verdict": "repair",
+      "backtranslation": "Compressed soil loses air spaces. Roots grow slowly. Water enters differently. Bed is hard to work in each season.",
+      "reason": "Is hard loses the source progressive comparative gets harder every season. Compacted/compressed first clause has no demonstrated scope defect; concord remains unreviewed.",
+      "heldSpans": {
+        "Bed gets harder to work": "Exact comparative process until defensible local comparative supplied."
+      }
+    },
+    {
+      "id": "ve-L1-p6",
+      "source": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "current": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "originalProposal": "No-dig i tea kha most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "bindings": {
+        "canonicalNativeResolverPairedExact": true,
+        "pairedBodyIndex": 2,
+        "slide": 5,
+        "pairedAfterConcatenationsExact": true
+      },
+      "recommendedTarget": "No-dig i tea kha most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "verdict": "accept-target-repair-segmentation",
+      "backtranslation": "No-dig is suitable for most garden soils. Leave soil structure unchanged and build fertility on top.",
+      "reason": "Most garden soils exact English preserves majority/class. Neighboring current Raised/Sunken beds use tea for suitability, supporting relationship context, not fluent proof. Identity punctuation cannot be claimed as translated draft.",
+      "recommendedPairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suits ",
+            "status": "draft",
+            "text": " i tea kha "
+          },
+          {
+            "sourceEnglish": "most garden soils.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+          }
+        ]
+      },
+      "heldSpans": {
+        "No-dig": "Method",
+        "most garden soils.": "Majority and soil class; punctuation held with phrase."
+      }
+    },
+    {
+      "id": "st-L1-p12",
+      "source": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "originalProposal": "Tse ding di hola hantle ho feta ha di qala di sireletsehile ka nursery, ebe di a fetisetswa. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "bindings": {
+        "canonicalNativeResolverPairedExact": true,
+        "pairedBodyIndex": 1,
+        "slide": 6,
+        "pairedAfterConcatenationsExact": true
+      },
+      "recommendedTarget": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "verdict": "hold-original-proposal-preserve-current",
+      "backtranslation": "Others grow better when they begin protected in a nursery, then are transferred. Tomatoes and brassicas are of that group.",
+      "reason": "Grow better narrows broad do better to growth. Fetisetswa means transferred, not reliably transplanting. Preserve existing localized prefix/condition/then/classification and exact do better/transplanting anchors; no demonstrated need to replace them.",
+      "heldSpans": {
+        "do better": "Broad comparative performance",
+        "nursery": "Propagation setting",
+        "transplanting": "Precise plant process"
+      }
+    },
+    {
+      "id": "ts-L1-p12",
+      "source": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "originalProposal": "Swin'wana swibyariwa swi kula ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani swi hundziseriwa. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "bindings": {
+        "canonicalNativeResolverPairedExact": true,
+        "pairedBodyIndex": 1,
+        "slide": 6,
+        "pairedAfterConcatenationsExact": true
+      },
+      "recommendedTarget": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "verdict": "hold-original-proposal-preserve-current",
+      "backtranslation": "Other crops grow better when they begin protected in a nursery, then are transferred. Tomatoes and brassicas belong to that group.",
+      "reason": "Growth narrows performance, hundziseriwa generic transfer loses technical transplanting. Added swibyariwa unnecessary; keep exact current prefix and localized condition/then/classification.",
+      "heldSpans": {
+        "do better": "Broad comparative performance",
+        "nursery": "Propagation setting",
+        "transplanting": "Precise process"
+      }
+    },
+    {
+      "id": "ve-L1-p12",
+      "source": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "current": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "originalProposal": "Zwiṅwe zwimela zwi aluwa zwi khwine musi zwi tshi thoma zwo tsireledzea kha nursery, zwa pfuluselwa. Tomatoes na brassicas zwi wela henefho.",
+      "bindings": {
+        "canonicalNativeResolverPairedExact": true,
+        "pairedBodyIndex": 1,
+        "slide": 6,
+        "pairedAfterConcatenationsExact": true
+      },
+      "recommendedTarget": "Zwiṅwe do better musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "verdict": "repair",
+      "backtranslation": "Other plants grow better when they start protected in a nursery, [and] are moved. Tomatoes and brassicas belong there.",
+      "reason": "Aluwa narrows performance to growth; pfuluselwa movement does not guarantee transplanting; zwa lacks explicit then. Translate Others/protected framing with exact do better and transplanting anchors and explicit afterwards, retaining classification.",
+      "heldSpans": {
+        "do better": "Broad comparative performance",
+        "nursery": "Propagation setting",
+        "transplanting": "Precise process"
+      },
+      "framingLimit": "Zwiṅwe/nga murahu ordinary Others/afterwards proposal; no fluent concord approval."
+    }
+  ],
+  "orderAndIndices": {
+    "lessonId": "vegetables-staples-l1",
+    "canonicalCorrectIndices": [
+      1,
+      2
+    ],
+    "allNativeLessonOrders": {
+      "st": [
+        "vegetables-staples-l1",
+        "vegetables-staples-l2",
+        "vegetables-staples-l3",
+        "vegetables-staples-l4"
+      ],
+      "ve": [
+        "vegetables-staples-l3",
+        "vegetables-staples-l1",
+        "vegetables-staples-l2",
+        "vegetables-staples-l4"
+      ],
+      "ts": [
+        "vegetables-staples-l3",
+        "vegetables-staples-l1",
+        "vegetables-staples-l4"
+      ]
+    },
+    "note": "Native registry lesson order differs by language; bindings matched exact lesson ID, not array position. No species/numbers/questions/indices/repository changes applied."
+  },
+  "holdsAndLimits": [
+    {
+      "language": "st",
+      "bodyIndex": 0,
+      "decision": "no-change",
+      "reason": "Already fully localized in the current learner body and paired slide."
+    },
+    {
+      "language": "ts",
+      "bodyIndex": 0,
+      "decision": "no-change",
+      "reason": "Existing target translates all sentences; “Compacted soil” is retained as a precise source term and the remainder has localized target text."
+    },
+    {
+      "language": "st",
+      "bodyIndex": 6,
+      "decision": "no-change",
+      "reason": "“No-dig” is held as the named method, while “suits most garden soils” is already localized and preserves majority scope."
+    },
+    {
+      "language": "ts",
+      "bodyIndex": 6,
+      "decision": "no-change for this scoped batch",
+      "reason": "No-dig’s first clause locally translates suits but retains “most garden soils”; outside the specifically requested VE No-dig candidate."
+    }
+  ],
+  "conclusion": "No demonstrated wrong-language contamination. Three growth/transfer proposals rejected. VE harder comparative requires repair. VE No-dig target semantically acceptable with identity-punctuation segmentation repair. Current localized clauses retained; no fluency approval or implementation authority."
+}

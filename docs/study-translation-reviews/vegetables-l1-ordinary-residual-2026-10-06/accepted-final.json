@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-06",
+  "readOnly": true,
+  "baseCommit": "f923c0c330551586587ec6248cb3e0491d176cf6",
+  "packet": {
+    "path": "/tmp/imbewu-vegetables-l1-fuller-repaired-candidates-20261006.json",
+    "sha256": "a45d5e911b39aafeb285b10b7f7bf61664f19305ab14f3e0ae9696b611927a63"
+  },
+  "frozenSourceCurrentExport": {
+    "path": "/tmp/imbewu-vegetables-l1-current-binding-export-20261006.json",
+    "sha256": "f6de628c5a10be575a080ba0974b4ae8e44db2a0bc4d98c5978f4dbfd130a441"
+  },
+  "fileHashes": [
+    {
+      "path": "lib/course-modules.ts",
+      "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sha256": "173b4a4cf2c435cb4fb7cac8673844846fb425c5fa5ece6bdf6e152ab6e72a4f",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sha256": "e7e4aa9084f1bf42705471185e994d00ca8e1af5cd8eeefbed551aae43668ad9",
+      "matches": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sha256": "41eba3fa7ab8eff153ec591950ee0ddb5a64995deb456c91e5d330db76ec0f95",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "sha256": "d9384b30cc00c16a54c62336fae1fe00afc2b1549bb8edf98f9e55ce3b215ed5",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sha256": "7a48dae1f0e0040bf6aba97ec2a5dd3f95f6180f104517e70b00f7ffe82fb375",
+      "matches": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sha256": "500238291cc2ec08bab704a998ec425cbb5b68f97dd537065be57c1772874439",
+      "matches": true
+    }
+  ],
+  "bindingSummary": {
+    "uniqueRows": 5,
+    "canonicalNativeResolverPairedCurrentExact": 5,
+    "sourceAndFinalTargetConcatenationsExact": 5,
+    "missingDuplicatesOrMismatches": 0
+  },
+  "rows": [
+    {
+      "id": "ve-L1-body-0",
+      "language": "ve",
+      "bodyIndex": 0,
+      "slide": 4,
+      "pairedBodyIndex": 0,
+      "exactSource": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "exactCurrent": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "candidateTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya u konḓa u shuma khayo nga khalaṅwaha iṅwe na iṅwe.",
+      "sourceCurrentResolverPairBindings": true,
+      "candidateConcatenationsExact": true,
+      "recommendedTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.",
+      "recommendedPairedAfter": {
+        "status": "draft",
+        "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+      },
+      "fluencyStatus": "Unreviewed machine draft; no fluent approval.",
+      "verdict": "repair",
+      "independentBacktranslation": "Compacted soil loses air spaces. Roots grow slowly. Water enters differently. Bed will/is going to be difficult to work in each season.",
+      "reason": "i ya u konḓa can read as going to be difficult; no explicit more/increasing degree is established. Packet backtranslation progressively harder is unsupported. Keep exact gets harder to work anchor, preserving old season phrase kha khalaṅwaha iṅwe na iṅwe instead of introducing nga.",
+      "rejectedLine": "Bed i ya u konḓa u shuma khayo nga khalaṅwaha iṅwe na iṅwe.",
+      "technicalHoldReason": "Exact source comparative retained within established whole-paragraph draft schema; no whole English identity field falsely marked draft."
+    },
+    {
+      "id": "ve-L1-body-6",
+      "language": "ve",
+      "bodyIndex": 6,
+      "slide": 5,
+      "pairedBodyIndex": 2,
+      "exactSource": "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+      "exactCurrent": "No-dig suits most garden soils. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "candidateTarget": "No-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "sourceCurrentResolverPairBindings": true,
+      "candidateConcatenationsExact": true,
+      "recommendedTarget": "No-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.",
+      "recommendedPairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "No-dig",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " suits most garden soils.",
+            "status": "draft",
+            "text": " i tea kha vhunzhi ha mavu a ngade."
+          },
+          {
+            "sourceEnglish": " Leave the structure alone and build fertility on top.",
+            "status": "draft",
+            "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+          }
+        ]
+      },
+      "fluencyStatus": "Unreviewed machine draft; no fluent approval.",
+      "verdict": "accept-semantic-draft",
+      "independentBacktranslation": "No-dig is suitable for the greater part/majority of garden soils. Leave soil structure unchanged and build fertility on top.",
+      "reason": "vhunzhi ha is the greater part/majority construction, not bare many (mavu manzhi). Garden soil class retained; no all/only change. i tea suitability context supported by existing neighboring Raised/Sunken bed clauses. Structure/fertility and following clause byte-identical. Idiom remains facilitator review.",
+      "lexicalEvidence": "Current VE Water source most of the water→vhunzhi ha maḓi; primary Wits bilingual scale search excerpt pairs Vhunzhi ha/Most of the, full PDF fetch429 so only corroboration, not claimed full-source verification."
+    },
+    {
+      "id": "st-L1-body-12",
+      "language": "st",
+      "bodyIndex": 12,
+      "slide": 6,
+      "pairedBodyIndex": 1,
+      "exactSource": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "exactCurrent": "Tse ding do better ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "candidateTarget": "Tse ding di sebetsa ka katleho e kgolo ha di qala di sireletsehile ka nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "sourceCurrentResolverPairBindings": true,
+      "candidateConcatenationsExact": true,
+      "recommendedTarget": "Tse ding di sebetsa hantle ho feta ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.",
+      "recommendedPairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Tse ding "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "di sebetsa hantle ho feta"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " ka qalo e sireletsehileng ho "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", ebe "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " le "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " ke tsa sehlopha seo."
+          }
+        ]
+      },
+      "fluencyStatus": "Unreviewed machine draft; no fluent approval.",
+      "verdict": "repair",
+      "independentBacktranslation": "Others work with large/great success when they start protected in a nursery, then transplanting. Tomatoes and brassicas are of that group.",
+      "reason": "Katleho e kgolo is large/great success; it does not explicitly express better than the alternative and can intensify the degree. Use broad perform/work better comparative di sebetsa hantle ho feta, preserving original protected-start phrase rather than rewriting it.",
+      "rejectedLine": "di sebetsa ka katleho e kgolo ha di qala di sireletsehile ka",
+      "scopeReason": "Broad performance, not growth/yield only. Existing Tse ding, ka qalo e sireletsehileng ho, ebe and crop grouping preserved."
+    },
+    {
+      "id": "ts-L1-body-12",
+      "language": "ts",
+      "bodyIndex": 12,
+      "slide": 6,
+      "pairedBodyIndex": 1,
+      "exactSource": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "exactCurrent": "Swin'wana do better loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "candidateTarget": "Swin'wana swi tirha ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "sourceCurrentResolverPairBindings": true,
+      "candidateConcatenationsExact": true,
+      "recommendedTarget": "Swin'wana swi tirha ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.",
+      "recommendedPairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Swin'wana "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "swi tirha ku antswa"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " loko swi sungula swi sirhelelekile eka "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", kutani "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " swi wela eka ntlawa wolowo."
+          }
+        ]
+      },
+      "fluencyStatus": "Unreviewed machine draft; no fluent approval.",
+      "verdict": "accept-semantic-draft",
+      "independentBacktranslation": "Others work/perform better when they begin protected in a nursery, then transplanting. Tomatoes and brassicas belong to that group.",
+      "reason": "tirha denotes work/function/performance, with ku antswa explicit better. It does not force growth-only or harvest-only interpretation; existing prefix, protected condition, then and grouping unchanged. Nursery/transplanting retained exact; crop-context naturalness still unreviewed."
+    },
+    {
+      "id": "ve-L1-body-12",
+      "language": "ve",
+      "bodyIndex": 12,
+      "slide": 6,
+      "pairedBodyIndex": 1,
+      "exactSource": "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+      "exactCurrent": "Others do better with a protected start in a nursery, then transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "candidateTarget": "Zwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "sourceCurrentResolverPairBindings": true,
+      "candidateConcatenationsExact": true,
+      "recommendedTarget": "Zwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.",
+      "recommendedPairedAfter": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Others ",
+            "status": "draft",
+            "text": "Zwiṅwe "
+          },
+          {
+            "sourceEnglish": "do better",
+            "status": "draft",
+            "text": "zwi ita khwine"
+          },
+          {
+            "sourceEnglish": " with a protected start in a ",
+            "status": "draft",
+            "text": " musi zwi tshi thoma zwo tsireledzea kha "
+          },
+          {
+            "sourceEnglish": "nursery",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", then ",
+            "status": "draft",
+            "text": ", nga murahu "
+          },
+          {
+            "sourceEnglish": "transplanting.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " Tomatoes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " and ",
+            "status": "draft",
+            "text": " na "
+          },
+          {
+            "sourceEnglish": "brassicas",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " belong there.",
+            "status": "draft",
+            "text": " zwi wela henefho."
+          }
+        ]
+      },
+      "fluencyStatus": "Unreviewed machine draft; no fluent approval.",
+      "verdict": "accept-semantic-draft",
+      "independentBacktranslation": "Others do better when they begin protected in a nursery, afterwards transplanting. Tomatoes and brassicas belong there.",
+      "reason": "ita khwine retains broad do better, without aluwa growth narrowing. nga murahu explicitly after/then; exact technical nursery/transplanting retained. No new species/noun or timing amount. Existing localized classification retained; agreement/idiom remains unreviewed."
+    }
+  ],
+  "unchangedScope": {
+    "questionsCorrectIndices": [
+      1,
+      2
+    ],
+    "species": [
+      "Tomatoes",
+      "brassicas"
+    ],
+    "unlisted": "Read-only check applies nothing. Full modules/native registries frozen in export; all recommendation scopes limited to five listed paragraphs/paired cells. Existing roots/water/classification clauses preserved."
+  },
+  "provenanceLimits": {
+    "research": "Bounded primary source search, not a lexical approval loop. No primary exact i ya u konḓa=gets harder evidence found.",
+    "primaryURLs": [
+      {
+        "url": "https://wiredspace.wits.ac.za/bitstreams/f476515f-5307-4a37-8fde-1ed016cf8a0d/download",
+        "observed": "Search excerpt Vhunzhi ha / Most of the; full PDF open failed429; page not verified."
+      },
+      {
+        "url": "https://www.gov.za/ve/blog?page=15",
+        "observed": "Primary government usage Vhunzhi ha vhadzulapo; contextual evidence only, not exact garden-soil phrase."
+      }
+    ],
+    "nativePrecedent": "Draft usage corroborates construction, does not prove fluency."
+  },
+  "conclusion": "3 bounded semantic accepts,2 repairs. VE increasing comparative and ST greater-success wording rejected. No wrong-language contamination or source/species/index drift demonstrated; no fluent approval, repository edits, rendering or publication."
+}
