@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 October 2026', sha: '989b6f61', changes: [
+  { when: '6 October 2026', sha: '5f410753', changes: [
     '36 silent regional slides add fuller drafts beside exact English.',
     'Vegetables lessons add clearer unreviewed regional drafts.',
   ], tour: [
