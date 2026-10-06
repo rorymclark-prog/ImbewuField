@@ -1,0 +1,1878 @@
+[
+ {
+  "id": "R001",
+  "verdict": "ok",
+  "problem": "Meaning matches. 'mikwiḓi' (for 'flat') is a word I cannot verify; speaker should confirm it means creases/folds.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R002",
+  "verdict": "ok",
+  "problem": "Meaning matches. 'magagulo' for 'settings' is unverified by me.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R003",
+  "verdict": "repair",
+  "problem": "English is jargon 'Authentication required'; draft 'confirm it is you is required' never says to sign in, which is the action the farmer must take (usage: not signed in).",
+  "repaired": "Ni fanela u dzhena.",
+  "severity": "wording"
+ },
+ {
+  "id": "R004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R006",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R008",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R010",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R012",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R013",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R014",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R015",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R016",
+  "verdict": "ok",
+  "problem": "Fine as tab (8 chars).",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R017",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R018",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R019",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R020",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R021",
+  "verdict": "ok",
+  "problem": "'mafuta' means fat/oil as well as fuel; plausible but confirm it reads as fuel (diesel/petrol) in a cost category.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R022",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R023",
+  "verdict": "ok",
+  "problem": "'Mushumo' = work; as cost category could read as 'work' rather than labour cost. Acceptable next to other cost chips.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R024",
+  "verdict": "ok",
+  "problem": "'Vhuendi' = travelling/journey; acceptable but not a firm term for 'transport'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R025",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R026",
+  "verdict": "ok",
+  "problem": "Literal 'check'; does not itself say duplicate, same as English. OK.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R027",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R028",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R029",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R030",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R031",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R032",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R033",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R034",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R035",
+  "verdict": "ok",
+  "problem": "English 'Direct sale' is rendered 'sale of oneself/own'; low confidence, readable as own/direct sale.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R036",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R037",
+  "verdict": "ok",
+  "problem": "Fragment after crop name. 'kaṋwa' as harvest/pick verb cannot be verified by me; 'Khaṋo' is also used for Yield (R070) and the Picked tab (R081), so Picked and Yield are not distinguished.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R038",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R039",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R040",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R041",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R042",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R044",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R045",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R046",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R047",
+  "verdict": "ok",
+  "problem": "'khalaṅwaha' as 'season' cannot be verified by me.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R048",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R049",
+  "verdict": "repair",
+  "problem": "'Bvisani' = remove/take out and is the same word as the shipped Delete (R120). A farmer could read Export as Delete. Use a distinct word.",
+  "repaired": "Dauniloudani",
+  "severity": "meaning"
+ },
+ {
+  "id": "R050",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R051",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R052",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R053",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R054",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R055",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R056",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R057",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R058",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R059",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R060",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R061",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R062",
+  "verdict": "ok",
+  "problem": "'matches your phone' is weaker than 'synced' but no meaning reversal.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R063",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R064",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R065",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R066",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R067",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R068",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R069",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R070",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R071",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R072",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R073",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R074",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R075",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R076",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R077",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R078",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R079",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R080",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R081",
+  "verdict": "ok",
+  "problem": "Same word as Yield 'Khaṋo' (R070); tab fine at 5 chars.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R082",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R083",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R084",
+  "verdict": "ok",
+  "problem": "Meaning matches (rows/list, per m², tree fruit, sales already counted). 'Hezi' looks non-Venda (Venda demonstrative is izwi/hezwi); confirm.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R085",
+  "verdict": "ok",
+  "problem": "'gross' not rendered, but R088 explains the calculation.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R086",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R087",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R088",
+  "verdict": "hold",
+  "problem": "'dzo bviswa mbadelo' reads as 'sales were removed (by) expenses', not clearly 'minus'; 'a dzi nga ngo elekanywa' = 'cannot be estimated' not 'never guessed'. Profit logic: cannot be repaired confidently by a machine reviewer; needs a speaker.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R089",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R090",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R091",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R092",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R093",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R094",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R095",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R096",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R097",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R098",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R099",
+  "verdict": "repair",
+  "problem": "'Bvisani' = remove; 'Remove this month (CSV)' reads like deleting. Same collision as R049.",
+  "repaired": "Dauniloudani ya ṅwedzi uyu (CSV)",
+  "severity": "meaning"
+ },
+ {
+  "id": "R100",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R101",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R102",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R103",
+  "verdict": "ok",
+  "problem": "'Zwo badelwaho' = those paid; acceptable for 'Spent'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R104",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R105",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R106",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R107",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R108",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R109",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R110",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R111",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R112",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R113",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R114",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R115",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R116",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R117",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R118",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R119",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R120",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R121",
+  "verdict": "ok",
+  "problem": "Existing shipped wording (parcelDeleteConfirm). 'vhungoho' I cannot verify as 'sure'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R122",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R123",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R124",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R125",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R126",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R128",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R129",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R130",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R132",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R133",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R134",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R135",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R136",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R137",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R138",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R139",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R140",
+  "verdict": "ok",
+  "problem": "'Staple plots' as 'fields of large foods' is loose; low confidence.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R141",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R142",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R143",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R144",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R145",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R146",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R147",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R148",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R149",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R151",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R152",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R156",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R158",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R159",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R160",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R161",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R162",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R163",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R164",
+  "verdict": "ok",
+  "problem": "'Ya mini' = 'of what'; adequate for 'What for'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R165",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R166",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R167",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R168",
+  "verdict": "ok",
+  "problem": "'mutengo' (price) is used for 'Amount' here and for 'Price' in R074; existing convention but price/amount blur.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R169",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R170",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R171",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R172",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R173",
+  "verdict": "ok",
+  "problem": "'Lushaka' as 'category/kind' cannot be verified by me; could mean tribe/people.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R174",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R175",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R176",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R177",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R178",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R179",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R180",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R181",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R182",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R183",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R184",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R185",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R186",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R187",
+  "verdict": "repair",
+  "problem": "'U bvisa' (remove) is used for export, so 'to remove your own records' reads as deleting the farmer's records. Use a distinct export word.",
+  "repaired": "U dauniloudu ha rekhodo hu a dzimwa musi ni tshi khou vhona bulasi ya Ubhejane. Dzhenani ni dzime thura u itela u dauniloudu rekhodo dzaṋu ṋoṋe.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R188",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R189",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R190",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R191",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R192",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R193",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R194",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R195",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R196",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R197",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R198",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R199",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R200",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R201",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R202",
+  "verdict": "repair",
+  "problem": "'Bvisani rekhodo dza mubolekisi' reads 'Remove lender records'; Export confusable with Delete.",
+  "repaired": "Dauniloudani rekhodo dza mubolekisi",
+  "severity": "meaning"
+ },
+ {
+  "id": "R203",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R204",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R205",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R206",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R207",
+  "verdict": "ok",
+  "problem": "'yo fhelaho' = finished/completed, English is 'past'; close enough.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R208",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R209",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R210",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R211",
+  "verdict": "ok",
+  "problem": "'U vhona phanḓa' = to see ahead; acceptable for Preview alt text.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R212",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R213",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R214",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R215",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R216",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R217",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R218",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R219",
+  "verdict": "ok",
+  "problem": "English 'Farm inputs' vs shipped 'Zwishumiswa zwa bulasi' (farm tools); 'things used' is broad enough but not identical.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R220",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R221",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R222",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R223",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R224",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R225",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R226",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R227",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R228",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R229",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R230",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R231",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R232",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R233",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R234",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R235",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R236",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R237",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R238",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R239",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R240",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R241",
+  "verdict": "repair",
+  "problem": "'automatically' is lost and replaced by 'ya ṋoṋe' (own), which reads 'your own sales book'. Negation and 'count once' are fine.",
+  "repaired": "Mitsetse ya zwiliṅwa kha dzi-invoisi dzo badelwaho i dzhena kha bugu ya thengiso i tshi ṋoṋe nahone i vhalwa luthihi. Ni songo zwi ṅwala hafhu.",
+  "severity": "wording"
+ },
+ {
+  "id": "R242",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R243",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R244",
+  "verdict": "ok",
+  "problem": "'Save the receipt and the expense' - acceptable but could imply two separate actions.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R245",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R246",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R247",
+  "verdict": "repair",
+  "problem": "Concord error: 'a ro ngo kona' has a 1st-person-plural subject marker with 'Risidi' as subject, so the sentence is ungrammatical/unclear.",
+  "repaired": "A ro ngo kona u vhulunga risidi kha founu iyi. Fhethu ha u vhulunga hu nga vha ho ḓala kana hu si hone. Dzulisani tshifanyiso tsha u thoma ni lingedze hafhu.",
+  "severity": "wording"
+ },
+ {
+  "id": "R248",
+  "verdict": "ok",
+  "problem": "Draft matches English ('retry this cost'). Note for product: retrying the cost when only the receipt failed risks a duplicate cost entry; the English itself may need rewording to 'retry the receipt'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R249",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R250",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R251",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R252",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R253",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R254",
+  "verdict": "repair",
+  "problem": "Wrong month: 'Luhuhi' is February in Tshivenda; English says July. July is Fulwana.",
+  "repaired": "Mutengo wa nyeletshedzo, Fulwana 2026:",
+  "severity": "meaning"
+ },
+ {
+  "id": "R255",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R256",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R257",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R258",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R259",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R260",
+  "verdict": "ok",
+  "problem": "'Ngade ya mitshelo' vs 'Ngade ya miri ya mitshelo' elsewhere - minor inconsistency.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R261",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R262",
+  "verdict": "repair",
+  "problem": "Orchard is 'yo dzimwa' (switched off) but is told to 'use it again' (shumiseni) rather than switch back on; the on/off pair is not parallel.",
+  "repaired": "Ngade ya miri ya mitshelo yo dzimwa, ngauralo {kg} kg a zwi katelwi kha mbalo iyi: {names}. A hu na tshithu tsho bviswaho — i vhaseni hafhu uri i vhalwe.",
+  "severity": "wording"
+ },
+ {
+  "id": "R263",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R265",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R266",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R267",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R269",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R270",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ }
+]

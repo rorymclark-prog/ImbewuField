@@ -51,6 +51,15 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Compare unreviewed regional drafts with English, or save the silent slides.',
       href: '/student' },
   ] },
+  { when: '6 October 2026', sha: '59fba04', changes: [
+    'Records add unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Save sale & invoice now says "& invoice" in isiZulu and Sesotho.',
+  ], tour: [
+    { title: 'Compare money-book drafts',
+      where: 'Records → Sold or Spent',
+      detail: 'Add a sale or cost and read the unreviewed wording beside exact English.',
+      href: '/records' },
+  ] },
   { when: '6 October 2026', sha: 'b06536d2', changes: [
     'Reading, Vegetables and Market add fuller unreviewed regional lesson drafts.',
     '13 silent Vegetables and Market slides match the fuller lesson drafts.',
