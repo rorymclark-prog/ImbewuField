@@ -1,3 +1,4 @@
+import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -60,11 +61,13 @@ test('Vegetables L2 fuller drafts retain the 27 final source-bound fields and ex
   assert.equal(applied.summary.changedLearnerFields, 27);
 
   for (const language of Object.keys(drafts) as Language[]) {
+    // 6 October: accepted quiz+pest layers pass complete current/source/unlisted guards before this older27-field snapshot.
+    const historical = vegetablesBeforePestPrecision(language, drafts[language]);
     const expected = structuredClone(baseline.drafts[language]);
     for (const row of applied.fields.filter((item: any) => item.language === language)) {
       const prior = pairAt(baseline.drafts[language], row.fieldPath);
       const source = canonicalSource(row.fieldPath);
-      const live = pairAt(drafts[language], row.fieldPath);
+      const live = pairAt(historical, row.fieldPath);
       assert.equal(row.sourceEnglish, source, `${language}/${row.fieldPath}: checked source must still match canonical English`);
       assert.equal(prior.sourceEnglish, row.fieldPath.startsWith('body.') ? canonicalLesson.body : row.sourceEnglish,
         `${language}/${row.fieldPath}: original full source pair is retained`);
@@ -81,7 +84,7 @@ test('Vegetables L2 fuller drafts retain the 27 final source-bound fields and ex
       setTarget(pairAt(expected, row.fieldPath), language, row);
     }
     // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
-    assert.deepEqual(drafts[language], vegetablesWithL3Completion(language, expected),
+    assert.deepEqual(historical, vegetablesWithL3Completion(language, expected),
       `${language}: every unlisted lesson, paragraph, key point, assessment, and status remains unchanged`);
 
     const presentation = resolveLearnerLessonPresentation(canonicalLesson, language);

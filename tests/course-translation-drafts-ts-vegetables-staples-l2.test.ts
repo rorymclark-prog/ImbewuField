@@ -1,3 +1,4 @@
+import { vegetablesBeforeAssessmentOrdinary, vegetablesAssessmentPresentationBeforeOrdinary } from './vegetables-assessment-ordinary-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
@@ -16,7 +17,8 @@ const draftParagraphsSelected = [
 ];
 
 test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded assessment drafts', () => {
-  const moduleDraft = XITSONGA_VEGETABLES_STAPLES_L2_DRAFT;
+  // 6 October: validate the full later accepted quiz layer before retaining this older bounded-hold scenario.
+  const moduleDraft = vegetablesBeforeAssessmentOrdinary('ts', XITSONGA_VEGETABLES_STAPLES_L2_DRAFT);
   const draft = moduleDraft.lessons[0];
   assert.equal(moduleDraft.id, sourceModule.id);
   assert.equal(moduleDraft.language, 'ts');
@@ -97,7 +99,7 @@ test('Vegetables & Staple Crops L2 exposes its source-paired body and bounded as
   assert.equal(draft.quiz[0].question.sourceEnglish, 'Why sow lettuce in small batches every 2-3 weeks instead of all at once?',
     'the candidate must stay bound to the checked literal instead of following future canonical edits');
 
-  const shown = resolveLearnerLessonPresentation(sourceLesson, 'ts');
+  const shown = vegetablesAssessmentPresentationBeforeOrdinary(sourceLesson, 'ts');
   assert.equal(shown.status, 'draft');
   assert.equal(shown.content.body, draft.body.xitsongaDraft);
   assert.equal(shown.content.keyPoints[1], draft.keyPoints[1].xitsongaDraft);

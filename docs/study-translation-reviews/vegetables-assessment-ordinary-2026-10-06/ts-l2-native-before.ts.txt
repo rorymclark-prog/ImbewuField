@@ -65,7 +65,7 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
       quiz: sourceLesson.quiz.map((question, questionIndex) => ({
         question: questionIndex === 0
           ? pair('Why sow lettuce in small batches every 2-3 weeks instead of all at once?', "Hikokwalaho ka yini u byala lettuce hi swiphemu leswitsongo mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu, ematshan’weni yo yi byala hinkwayona hi nkarhi wun’we?")
-          : pair("When can nitrogen in bean crop residues become available to other plants?", "Xana nitrogen leyi nga eka bean crop residues yi nga become available rini eka swimila swin’wana?"),
+          : hold(question.q),
         options: question.options.map((option, optionIndex) => questionIndex === 0 && optionIndex === 0 && option === 'It uses less seed overall'
           ? pair(option, 'Yi tirhisa less seed hi ku angarhela.')
           : questionIndex === 0 && optionIndex === 1 && option === 'It gives a steady harvest instead of a glut followed by a gap'
@@ -75,18 +75,14 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
               : questionIndex === 0 && optionIndex === 3 && option === 'It reduces pest pressure'
                 ? pair(option, 'Yi hunguta pest pressure.')
                 : questionIndex === 1 && optionIndex === 2 && option === 'Only when pumpkin leaves shade them'
-                  ? pair("Only when pumpkin leaves shade them", "Loko ntsena matluka ya pumpkin ma endla ndzhuti eka them.")
+                  ? pair(option, 'Only loko matluka ya pumpkin ma endla ndzhuti eka them.')
                   : questionIndex === 1 && optionIndex === 3 && option === 'It can never be released'
                     ? pair(option, 'Yi nga never be released.')
-                    : questionIndex === 1 && optionIndex === 0
-                      ? pair("Immediately whenever a bean touches maize", "Immediately nkarhi wun’wana ni wun’wana loko bean yi khumba maize.")
-                      : questionIndex === 1 && optionIndex === 1
-                      ? pair("As soil organisms decompose the residues", "Loko soil organisms ti ri karhi ti decompose residues.")
-                      : hold(option)),
+                    : hold(option)),
         sourceCorrectIndex: question.correct,
         rationale: questionIndex === 0
           ? pair('A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.', 'Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.')
-          : pair("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.", "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding."),
+          : hold(question.rationale),
       })),
     },
   ],

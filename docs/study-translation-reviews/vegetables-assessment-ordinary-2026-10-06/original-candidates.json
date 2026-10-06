@@ -1,0 +1,1336 @@
+{
+  "title": "VE/TS Vegetables L1-L3 ordinary assessment translation candidates",
+  "date": "2026-10-06",
+  "mode": "read-only machine-draft proposals; no repository edits or fluent/local farming approval",
+  "authority": {
+    "worktree": "/Users/roryclark/.codex/worktrees/regional-study-next-3443/ImbewuField",
+    "commit": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+    "currentMainCommit": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+    "resolverStatus": {
+      "ve": {
+        "vegetables-staples-l1": "draft",
+        "vegetables-staples-l2": "draft",
+        "vegetables-staples-l3": "draft"
+      },
+      "ts": {
+        "vegetables-staples-l1": "draft",
+        "vegetables-staples-l2": "draft",
+        "vegetables-staples-l3": "draft"
+      }
+    },
+    "sourceAuthority": "Canonical quiz objects from COURSE_MODULES; current target text obtained by calling resolveLearnerLessonPresentation on the registered VE and TS lesson drafts.",
+    "files": {
+      "canonical": {
+        "path": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "gitBlob": "62bbbce287d9a0e07e19709f6ac98e49797e6f0d"
+      },
+      "resolver": {
+        "path": "lib/course-localization.ts",
+        "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+        "gitBlob": "f4f9801ab6c2dd449251f9421e252c71495c26ec"
+      },
+      "veRegistry": {
+        "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "6e21f046ca4a48780d2a796c1b2f06f8dc9be9e902321ead5e69126f89e35044",
+        "gitBlob": "031a4b574849db7fd7e7e8d1a84a50489dae6775"
+      },
+      "tsRegistry": {
+        "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "2b0e710f2f2890fb0ef1a3ecb125b01704f2e02e4a8706409d4371447f514e6d",
+        "gitBlob": "f741d83acad4f6c43e1965bacffb555687f998b9"
+      }
+    },
+    "liveSnapshot": {
+      "path": "/tmp/vegetables-l1-l3-assessments-current-e1002c3f.json",
+      "sha256": "bde2a463f792bf4554c2957230262058cbeb4a02659eab27ada7f6c85d4fd236"
+    }
+  },
+  "scope": {
+    "languages": [
+      "ve",
+      "ts"
+    ],
+    "moduleId": "vegetables-staples",
+    "lessonIds": [
+      "vegetables-staples-l1",
+      "vegetables-staples-l2",
+      "vegetables-staples-l3"
+    ],
+    "items": 72,
+    "itemsByLanguage": {
+      "ve": 36,
+      "ts": 36
+    },
+    "questions": 12,
+    "options": 48,
+    "rationales": 12,
+    "correctIndexChecks": [
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 2,
+        "resolvedCorrectIndex": 2,
+        "preserved": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 2,
+        "resolvedCorrectIndex": 2,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 1,
+        "sourceCorrectIndex": 1,
+        "resolvedCorrectIndex": 1,
+        "preserved": true
+      }
+    ],
+    "sourceAndCurrentFieldsBoundToExactResolvedLessonQuestionOptionIndex": true
+  },
+  "precisionRules": [
+    "Retain canonical crops/species, maize/bean/pumpkin/lettuce/pepper/tomato/brassica/Amadumbe, KZN and all numerical values.",
+    "Retain genetics terms: open-pollinated, hybrid, breed true, F1, pollination, and managed pollination where a verified equivalent is unavailable.",
+    "Retain nitrogen-fixation, root-bacteria, bean-residue and decomposition claims exactly; translate ordinary question/option framing around those technical clauses.",
+    "Retain wet-ground/damper-ground suitability and maize comparison; translate ordinary narrative around it without changing crop adaptation.",
+    "Retain compaction, transplant shock, root disturbance, drainage and pest pressure where local precision is uncertain.",
+    "Preserve negation, “only”, “always”, “never”, “immediately”, timing, quantities, answer indices, and distractor claims.",
+    "Do not infer a pesticide instruction; pesticide terms are outside these L1-L3 assessment rows."
+  ],
+  "rows": [
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?",
+      "proposedTarget": "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita yo aṱamaho?",
+      "changed": true,
+      "reason": "Translate ordinary “vegetable bed/wide/wider”; preserve the exact 1–1.2 m range and comparison.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Wider beds get too much sun",
+      "currentTarget": "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa",
+      "proposedTarget": "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande growing area, na thivhela compaction",
+      "proposedTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction.",
+      "changed": true,
+      "reason": "Translate ordinary growing-area phrase; preserve either-side access and retain technical “compaction”.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better kha nyimele dzoṱhe",
+      "proposedTarget": "Mabedhe a re na vhuphara vhuṱuku a drain zwavhuḓi kha nyimele dzoṱhe.",
+      "changed": true,
+      "reason": "Translate narrow-bed/all-conditions framing; retain technical drainage predicate and absolute scope.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "It's a fixed rule with no practical reason",
+      "currentTarget": "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa.",
+      "proposedTarget": "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentTarget": "U kanda growing soil zwi ita compaction na u tshinyadza midzi — bed ine na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda growing soil.",
+      "proposedTarget": "U kanda fhethu hune zwimela zwa mela zwi ita compaction na u tshinyadza midzi — bed ya miroho ine na nga swikelela vhukati hwayo ni tshi bva masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda fhethu hune zwimela zwa mela.",
+      "changed": true,
+      "reason": "Translate ordinary soil/bed wording; preserve compaction, root damage, bilateral centre access, and “never have to”.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "currentTarget": "Ndi tshimela tshifhio tshine tsha vha best suited to direct-seeding rather than transplanting?",
+      "proposedTarget": "Ndi tshimela tshifhio tshine tsha fanelea vhukuma u itela direct-seeding u fhira transplanting?",
+      "changed": true,
+      "reason": "Translate “best suited to” framing and preserve the precise direct-seeding/transplanting terms.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "currentTarget": "Tomatoes, dzine dza ṱoḓa early start",
+      "proposedTarget": "Tomatoes, dzine dza ṱoḓa u thomiwa nga u ṱavhanya.",
+      "changed": true,
+      "reason": "Translate ordinary “need an early start” without adding nursery/protection claims.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "currentTarget": "Brassicas, dzine dza ṱoḓa tsireledzo musi dzi tshee ṱhukhu",
+      "proposedTarget": "Brassicas, dzine dza ṱoḓa tsireledzo musi dzi tshee ṱhukhu",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Beans, which resent root disturbance",
+      "currentTarget": "Beans, dzine dza si takalele root disturbance",
+      "proposedTarget": "Beans, dzine dza si takalele root disturbance",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "Peppers, which are slow to germinate",
+      "currentTarget": "Peppers, dzine dza ongolowa u mela",
+      "proposedTarget": "Peppers, dzine dza ongolowa u mela",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe.",
+      "proposedTarget": "Beans na zwiṅwe zwimela zwine zwa aluwa nga u ṱavhanya, zwine zwa si takalele root disturbance, establish poorly nga murahu ha transplant shock — u zwi sowa thwii kha bed zwi thivhela setback yeneyo yoṱhe.",
+      "changed": true,
+      "reason": "Translate quick-crop and action framing; retain root disturbance, establishment, transplant shock, and full-setback scope as exact technical English where uncertain.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentTarget": "Ndi ngani ni tshi sow lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sow all at once?",
+      "proposedTarget": "Ndi ngani ni tshi sowa lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sowa yoṱhe nga tshifhinga tshithihi?",
+      "changed": true,
+      "reason": "Translate sowing/all-at-once framing; preserve lettuce, every two-to-three weeks, and contrast.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "It uses less seed overall",
+      "currentTarget": "Zwi shumisa less seed nga u angaredza.",
+      "proposedTarget": "Zwi shumisa mbeu i si nnzhi nga u angaredza.",
+      "changed": true,
+      "reason": "Translate “less seed overall” without implying smaller seed size.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+      "currentTarget": "Zwi ita uri ni kaṋe zwiḽiwa nga u tevhekana, nṱhani ha khaṋo nnzhi nga tshifhinga tshithihi yo tevhelwa nga tshikhala tshi si na khaṋo.",
+      "proposedTarget": "Zwi ita uri ni kaṋe zwiḽiwa nga u tevhekana, nṱhani ha khaṋo nnzhi nga tshifhinga tshithihi yo tevhelwa nga tshikhala tshi si na khaṋo.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Lettuce germinates better in small batches",
+      "currentTarget": "Lettuce i mela better nga zwipiḓa zwiṱuku.",
+      "proposedTarget": "Mbeu ya lettuce i mela zwavhuḓi nga zwipiḓa zwiṱuku.",
+      "changed": true,
+      "reason": "Translate the germination option while keeping the seed and small-batch meaning.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "It reduces pest pressure",
+      "currentTarget": "Zwi fhungudza pest pressure.",
+      "proposedTarget": "Zwi fhungudza pest pressure.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "currentTarget": "U sowa hoṱhe luthihi nga vhunzhi zwi vhibva zwoṱhe nga tshifhinga tshithihi — u sowa nga u tevhekana zwi phaḓaladza khaṋo uri i lingane na zwine muṱa wa kona u shumisa zwa vhukuma.",
+      "proposedTarget": "U sowa hoṱhe luthihi nga vhunzhi zwi vhibva zwoṱhe nga tshifhinga tshithihi — u sowa nga u tevhekana zwi phaḓaladza khaṋo uri i lingane na zwine muṱa wa kona u shumisa zwa vhukuma.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentTarget": "Ndi lini nitrogen in bean crop residues i nga vha available kha other plants?",
+      "proposedTarget": "Ndi lini nitrogen ya bean crop residues ine ya nga vha available kha zwimela zwiṅwe?",
+      "changed": true,
+      "reason": "Translate question framing and “other plants”; retain nitrogen, bean crop residues, and availability wording.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Immediately whenever a bean touches maize",
+      "currentTarget": "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize.",
+      "proposedTarget": "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "As soil organisms decompose the residues",
+      "currentTarget": "As soil organisms decompose the residues",
+      "proposedTarget": "Musi soil organisms dzi tshi decompose residues.",
+      "changed": true,
+      "reason": "Translate “as”; retain soil organisms, decompose, and residues as precise soil-biology terms.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Only when pumpkin leaves shade them",
+      "currentTarget": "Only musi maṱari a pumpkin a tshi ita murunzi kha them.",
+      "proposedTarget": "Feela musi maṱari a pumpkin a tshi ita murunzi kha residues.",
+      "changed": true,
+      "reason": "Translate only/shade framing; retain pumpkin and residues; resolve “them” as residues.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It can never be released",
+      "currentTarget": "I nga never be released.",
+      "proposedTarget": "I nga never be released.",
+      "changed": false,
+      "reason": "Hold current wording because the “can never be released” technical impossibility is not safely localized here.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "proposedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisi immediate feeding.",
+      "changed": true,
+      "reason": "Keep the specific nitrogen-fixation, root-bacteria, and decomposition claims exact; translate only the ordinary no-guarantee/growing-beside-maize framing.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+      "currentTarget": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+      "proposedTarget": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi u fhira",
+      "proposedTarget": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi.",
+      "changed": true,
+      "reason": "Remove the dangling “than” while preserving the false distractor’s yield-more claim and open-pollinated category.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "currentTarget": "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+      "proposedTarget": "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Open-pollinated maize is always more drought-tolerant",
+      "currentTarget": "Open-pollinated maize i dzulela u vha more drought-tolerant",
+      "proposedTarget": "Open-pollinated maize i dzulela u vha more drought-tolerant",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "Hybrids can't be planted in South Africa",
+      "currentTarget": "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe",
+      "proposedTarget": "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "currentTarget": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu.",
+      "proposedTarget": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].question",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+      "currentTarget": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?",
+      "proposedTarget": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[0]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "It thrives on very dry, sandy soil",
+      "currentTarget": "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+      "proposedTarget": "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[1]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "currentTarget": "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi.",
+      "proposedTarget": "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[2]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "It requires no cultivation at all",
+      "currentTarget": "A i ṱoḓi cultivation na luthihi",
+      "proposedTarget": "A i ṱoḓi cultivation na luthihi",
+      "changed": false,
+      "reason": "Keep cultivation because its farming/tillage scope is not safely established here; current Sesotho already expresses the no-requirement and at-all negation.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[3]",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "proposedTarget": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho multiple years.",
+      "changed": true,
+      "reason": "Keep “multiple years” exact because current “more than one year” weakens the duration; preserve the only-staple scope.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].rationale",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "proposedTarget": "Amadumbe i funa vhukuma damper ground, hune maize ya konḓelwa — i dzhia niche ine zwiṅwe staples zwa sa kona u i fara zwavhuḓi.",
+      "changed": true,
+      "reason": "Translate preference/maize-struggle/fill-handle framing; retain the wet-ground condition and niche/staple terminology precisely.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m hi ku anama ku ri na ku yi endla yi anama ku tlurisa?",
+      "proposedTarget": "Hikokwalaho ka yini u hlayisa bed ya miroho yi ri na ku anama ka 1-1.2m, ematshan’weni yo yi endla yi anama ku tlurisa?",
+      "changed": true,
+      "reason": "Translate ordinary vegetable-bed phrase; preserve keep-width meaning, range, and wider-than comparison.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Wider beds get too much sun",
+      "currentTarget": "Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.",
+      "proposedTarget": "Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "U nga fika exikarhini ku suka eka tlhelo rin'wana ni rin'wana ra lamambirhi handle ko kandziya growing area, u papalata compaction",
+      "proposedTarget": "U nga fika exikarhini ku suka eka tlhelo rin’wana ni rin’wana ra lamambirhi handle ko kandziya ndhawu leyi swibyariwa swi milaka eka yona, u papalata compaction.",
+      "changed": true,
+      "reason": "Translate ordinary growing-area wording; preserve either-side access and retain technical compaction.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better eka swiyimo hinkwato",
+      "proposedTarget": "Mabedhe lama nga anamangiki ngopfu ma drain better eka swiyimo hinkwato.",
+      "changed": true,
+      "reason": "Translate narrow-bed/all-conditions framing; retain the technical drainage claim and absolute scope.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "It's a fixed rule with no practical reason",
+      "currentTarget": "I nawu lowu nga cinciki, lowu nga riki na practical reason.",
+      "proposedTarget": "I nawu lowu nga cinciki, lowu nga riki na practical reason.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[0].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentTarget": "Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.",
+      "proposedTarget": "Ku kandziya misava leyi swimila swi milaka eka yona swi endla compaction ni ku onha timitsu — bed ya miroho leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki nikatsongo ku kandziya misava leyi swimila swi milaka eka yona.",
+      "changed": true,
+      "reason": "Translate ordinary growing-soil/bed wording; preserve compaction, root damage, both-side reach, and the no-need qualifier.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "currentTarget": "Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?",
+      "proposedTarget": "Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "currentTarget": "Tomatoes, leti lavaka early start",
+      "proposedTarget": "Tomatoes, leti lavaka early start",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "Brassicas, which need protection while small",
+      "currentTarget": "Brassicas, leti lavaka nsirhelelo loko ta ha ri titsongo",
+      "proposedTarget": "Brassicas, leti lavaka nsirhelelo loko ta ha ri titsongo",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Beans, which resent root disturbance",
+      "currentTarget": "Beans, leti nga tsakeliki root disturbance",
+      "proposedTarget": "Beans, leti nga tsakeliki root disturbance",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "Peppers, which are slow to germinate",
+      "currentTarget": "Peppers, leti hlwelaka ku mila",
+      "proposedTarget": "Peppers, leti hlwelaka ku mila",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l1.quiz[1].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+      "proposedTarget": "Beans na swin’wana swimila leswi kulaka hi ku hatlisa, leswi timitsu ta swona ti nga tsakeliki root disturbance, establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma ebedini swi papalata ku kavanyeteka koloko hi ku helela.",
+      "changed": true,
+      "reason": "Translate ordinary crop-speed/planting/setback framing; retain root disturbance, establishment, and transplant shock technical terms.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentTarget": "Hikokwalaho ka yini u byala lettuce hi swiphemu leswitsongo mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu, ematshan’weni yo yi byala hinkwayona hi nkarhi wun’we?",
+      "proposedTarget": "Hikokwalaho ka yini u byala lettuce hi swiphemu leswitsongo mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu, ematshan’weni yo yi byala hinkwayona hi nkarhi wun’we?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "It uses less seed overall",
+      "currentTarget": "Yi tirhisa less seed hi ku angarhela.",
+      "proposedTarget": "Yi tirhisa less seed hi ku angarhela.",
+      "changed": false,
+      "reason": "Keep the current quantity term because “mbewu yitsongo” could be read as small-sized seed; a precise native quantity phrase needs independent review.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "It gives a steady harvest instead of a glut followed by a gap",
+      "currentTarget": "Yi nyika ntshovelo leyi tshamaka yi ri kona hi ku landzelelana, ku nga ri ntshovelo wo tala ngopfu kutani ku landzela nkarhi wa ku pfumaleka.",
+      "proposedTarget": "Yi nyika ntshovelo leyi tshamaka yi ri kona hi ku landzelelana, ku nga ri ntshovelo wo tala ngopfu kutani ku landzela nkarhi wa ku pfumaleka.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Lettuce germinates better in small batches",
+      "currentTarget": "Lettuce yi mila better hi swiphemu leswitsongo.",
+      "proposedTarget": "Mbewu ya lettuce yi mila kahle hi swiphemu leswitsongo.",
+      "changed": true,
+      "reason": "Translate the germination option while retaining the seed/small-batch relation.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "It reduces pest pressure",
+      "currentTarget": "Yi hunguta pest pressure.",
+      "proposedTarget": "Yi hunguta pest pressure.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[0].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.",
+      "currentTarget": "Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.",
+      "proposedTarget": "Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentTarget": "When can nitrogen in bean crop residues become available to other plants?",
+      "proposedTarget": "Xana nitrogen leyi nga eka bean crop residues yi nga kumeka rini eka swimila swin’wana?",
+      "changed": true,
+      "reason": "Translate question framing and “become available to other plants”; retain nitrogen and bean crop residues.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Immediately whenever a bean touches maize",
+      "currentTarget": "Immediately whenever a bean touches maize",
+      "proposedTarget": "Hi ku hatlisa nkarhi wun’wana ni wun’wana bean yi khumba maize.",
+      "changed": true,
+      "reason": "Translate “immediately whenever”; retain bean and maize referents.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "As soil organisms decompose the residues",
+      "currentTarget": "As soil organisms decompose the residues",
+      "proposedTarget": "Loko soil organisms ti ri karhi ti decompose residues.",
+      "changed": true,
+      "reason": "Translate “as”; retain soil organisms, decompose, and residues as precise terms.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Only when pumpkin leaves shade them",
+      "currentTarget": "Only loko matluka ya pumpkin ma endla ndzhuti eka them.",
+      "proposedTarget": "Loko ntsena matluka ya pumpkin ma endla ndzhuti eka residues.",
+      "changed": true,
+      "reason": "Translate only/shade framing; retain pumpkin/residues and resolve “them” as residues.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It can never be released",
+      "currentTarget": "Yi nga never be released.",
+      "proposedTarget": "Nitrogen a yi nge humesiwi nikatsongo.",
+      "changed": true,
+      "reason": "Translate “can never be released” while retaining nitrogen and the absolute never/not-at-all force.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l2.quiz[1].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "proposedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi immediate feeding.",
+      "changed": true,
+      "reason": "Keep the exact nitrogen-fixation, bacteria, and decomposition claims; translate only the no-guarantee/growing-beside-maize frame.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?",
+      "currentTarget": "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?",
+      "proposedTarget": "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza",
+      "proposedTarget": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala.",
+      "changed": true,
+      "reason": "Remove dangling “than” while preserving the false yield-more distractor and open-pollinated category.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "Hybrid seed won't breed true — the next generation won't match the parent plant",
+      "currentTarget": "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+      "proposedTarget": "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Open-pollinated maize is always more drought-tolerant",
+      "currentTarget": "Open-pollinated maize is always more drought-tolerant",
+      "proposedTarget": "Open-pollinated maize is always more drought-tolerant",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "3",
+      "sourceEnglish": "Hybrids can't be planted in South Africa",
+      "currentTarget": "Hybrids a ti koti ku byariwa eAfrika-Dzonga",
+      "proposedTarget": "Hybrids a ti koti ku byariwa eAfrika-Dzonga",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[0].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.",
+      "currentTarget": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu.",
+      "proposedTarget": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].question",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Why is amadumbe (taro) a good staple choice for parts of KZN?",
+      "currentTarget": "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?",
+      "proposedTarget": "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[0]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "It thrives on very dry, sandy soil",
+      "currentTarget": "Yi kula kahle eka misava leyi omeke swinene ya sava",
+      "proposedTarget": "Yi kula kahle eka misava leyi omeke swinene ya sava",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[1]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions",
+      "currentTarget": "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala.",
+      "proposedTarget": "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala.",
+      "changed": false,
+      "reason": "Keep current wording: it already preserves the source or contains a precise technical phrase with no defensible local replacement in this bounded packet.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[2]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "It requires no cultivation at all",
+      "currentTarget": "A yi lavi cultivation nikatsongo",
+      "proposedTarget": "A yi lavi cultivation nikatsongo",
+      "changed": false,
+      "reason": "Keep cultivation because its farming/tillage scope is not safely established here; current Xitsonga already expresses no-requirement and at-all negation.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].options[3]",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "proposedTarget": "Hi yona ntsena staple leyi hlayisekaka multiple years.",
+      "changed": true,
+      "reason": "Keep “multiple years” exact rather than weakening to “more than one year”; preserve only-staple scope.",
+      "reviewStatus": "machine-draft-candidate"
+    },
+    {
+      "fieldId": "vegetables-staples-l3.quiz[1].rationale",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "proposedTarget": "Amadumbe yi tsakela hakunene damper ground, laha maize yi nga tikeriwaka — yi tata niche leyi swin’wana staples swi nga kotiki ku yi khoma kahle.",
+      "changed": true,
+      "reason": "Translate preference/maize-struggle/fill-handle framing; retain wet-ground condition, crop names, and niche/staple terms.",
+      "reviewStatus": "machine-draft-candidate"
+    }
+  ],
+  "proposedFullQuizzes": {
+    "ve": {
+      "vegetables-staples-l1": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          2
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          2
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita yo aṱamaho?",
+            "options": [
+              "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa",
+              "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction.",
+              "Mabedhe a re na vhuphara vhuṱuku a drain zwavhuḓi kha nyimele dzoṱhe.",
+              "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa."
+            ],
+            "correct": 1,
+            "rationale": "U kanda fhethu hune zwimela zwa mela zwi ita compaction na u tshinyadza midzi — bed ya miroho ine na nga swikelela vhukati hwayo ni tshi bva masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda fhethu hune zwimela zwa mela."
+          },
+          {
+            "q": "Ndi tshimela tshifhio tshine tsha fanelea vhukuma u itela direct-seeding u fhira transplanting?",
+            "options": [
+              "Tomatoes, dzine dza ṱoḓa u thomiwa nga u ṱavhanya.",
+              "Brassicas, dzine dza ṱoḓa tsireledzo musi dzi tshee ṱhukhu",
+              "Beans, dzine dza si takalele root disturbance",
+              "Peppers, dzine dza ongolowa u mela"
+            ],
+            "correct": 2,
+            "rationale": "Beans na zwiṅwe zwimela zwine zwa aluwa nga u ṱavhanya, zwine zwa si takalele root disturbance, establish poorly nga murahu ha transplant shock — u zwi sowa thwii kha bed zwi thivhela setback yeneyo yoṱhe."
+          }
+        ]
+      },
+      "vegetables-staples-l2": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          1
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Ndi ngani ni tshi sowa lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sowa yoṱhe nga tshifhinga tshithihi?",
+            "options": [
+              "Zwi shumisa mbeu i si nnzhi nga u angaredza.",
+              "Zwi ita uri ni kaṋe zwiḽiwa nga u tevhekana, nṱhani ha khaṋo nnzhi nga tshifhinga tshithihi yo tevhelwa nga tshikhala tshi si na khaṋo.",
+              "Mbeu ya lettuce i mela zwavhuḓi nga zwipiḓa zwiṱuku.",
+              "Zwi fhungudza pest pressure."
+            ],
+            "correct": 1,
+            "rationale": "U sowa hoṱhe luthihi nga vhunzhi zwi vhibva zwoṱhe nga tshifhinga tshithihi — u sowa nga u tevhekana zwi phaḓaladza khaṋo uri i lingane na zwine muṱa wa kona u shumisa zwa vhukuma."
+          },
+          {
+            "q": "Ndi lini nitrogen ya bean crop residues ine ya nga vha available kha zwimela zwiṅwe?",
+            "options": [
+              "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize.",
+              "Musi soil organisms dzi tshi decompose residues.",
+              "Feela musi maṱari a pumpkin a tshi ita murunzi kha residues.",
+              "I nga never be released."
+            ],
+            "correct": 1,
+            "rationale": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisi immediate feeding."
+          }
+        ]
+      },
+      "vegetables-staples-l3": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          1
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?",
+            "options": [
+              "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi.",
+              "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi",
+              "Open-pollinated maize i dzulela u vha more drought-tolerant",
+              "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe"
+            ],
+            "correct": 1,
+            "rationale": "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu."
+          },
+          {
+            "q": "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?",
+            "options": [
+              "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha",
+              "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi.",
+              "A i ṱoḓi cultivation na luthihi",
+              "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho multiple years."
+            ],
+            "correct": 1,
+            "rationale": "Amadumbe i funa vhukuma damper ground, hune maize ya konḓelwa — i dzhia niche ine zwiṅwe staples zwa sa kona u i fara zwavhuḓi."
+          }
+        ]
+      }
+    },
+    "ts": {
+      "vegetables-staples-l1": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          2
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          2
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Hikokwalaho ka yini u hlayisa bed ya miroho yi ri na ku anama ka 1-1.2m, ematshan’weni yo yi endla yi anama ku tlurisa?",
+            "options": [
+              "Mabedhe lama anameke ma kuma dyambu ro tala ngopfu.",
+              "U nga fika exikarhini ku suka eka tlhelo rin’wana ni rin’wana ra lamambirhi handle ko kandziya ndhawu leyi swibyariwa swi milaka eka yona, u papalata compaction.",
+              "Mabedhe lama nga anamangiki ngopfu ma drain better eka swiyimo hinkwato.",
+              "I nawu lowu nga cinciki, lowu nga riki na practical reason."
+            ],
+            "correct": 1,
+            "rationale": "Ku kandziya misava leyi swimila swi milaka eka yona swi endla compaction ni ku onha timitsu — bed ya miroho leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki nikatsongo ku kandziya misava leyi swimila swi milaka eka yona."
+          },
+          {
+            "q": "Hi xihi xibyariwa lexi faneleke ngopfu ku byariwa hi direct-seeding ku ri na transplanting?",
+            "options": [
+              "Tomatoes, leti lavaka early start",
+              "Brassicas, leti lavaka nsirhelelo loko ta ha ri titsongo",
+              "Beans, leti nga tsakeliki root disturbance",
+              "Peppers, leti hlwelaka ku mila"
+            ],
+            "correct": 2,
+            "rationale": "Beans na swin’wana swimila leswi kulaka hi ku hatlisa, leswi timitsu ta swona ti nga tsakeliki root disturbance, establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma ebedini swi papalata ku kavanyeteka koloko hi ku helela."
+          }
+        ]
+      },
+      "vegetables-staples-l2": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          1
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Hikokwalaho ka yini u byala lettuce hi swiphemu leswitsongo mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu, ematshan’weni yo yi byala hinkwayona hi nkarhi wun’we?",
+            "options": [
+              "Yi tirhisa less seed hi ku angarhela.",
+              "Yi nyika ntshovelo leyi tshamaka yi ri kona hi ku landzelelana, ku nga ri ntshovelo wo tala ngopfu kutani ku landzela nkarhi wa ku pfumaleka.",
+              "Mbewu ya lettuce yi mila kahle hi swiphemu leswitsongo.",
+              "Yi hunguta pest pressure."
+            ],
+            "correct": 1,
+            "rationale": "Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene."
+          },
+          {
+            "q": "Xana nitrogen leyi nga eka bean crop residues yi nga kumeka rini eka swimila swin’wana?",
+            "options": [
+              "Hi ku hatlisa nkarhi wun’wana ni wun’wana bean yi khumba maize.",
+              "Loko soil organisms ti ri karhi ti decompose residues.",
+              "Loko ntsena matluka ya pumpkin ma endla ndzhuti eka residues.",
+              "Nitrogen a yi nge humesiwi nikatsongo."
+            ],
+            "correct": 1,
+            "rationale": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi immediate feeding."
+          }
+        ]
+      },
+      "vegetables-staples-l3": {
+        "status": "draft",
+        "sourceCorrectIndices": [
+          1,
+          1
+        ],
+        "resolvedCorrectIndices": [
+          1,
+          1
+        ],
+        "proposedQuiz": [
+          {
+            "q": "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?",
+            "options": [
+              "Mixaka ya open-pollinated yi humesa ntshovelo wo tala.",
+              "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari",
+              "Open-pollinated maize is always more drought-tolerant",
+              "Hybrids a ti koti ku byariwa eAfrika-Dzonga"
+            ],
+            "correct": 1,
+            "rationale": "Mbewu leyi hlayisiweke eka F1 hybrid yi nga mela, kambe swimilana swa xitukulwana lexi landzelaka swi nga hambana. Mbuyelo ya muxaka wa open-pollinated lowu nga stable lowu pollination ya wona yi lawuriwaka yi olova ku bvumba ku hundza, loko u hlayisa mbewu."
+          },
+          {
+            "q": "Hikokwalaho ka yini amadumbe (taro) yi ri nhlawulo lowunene wa staple eka swiphemu swa KZN?",
+            "options": [
+              "Yi kula kahle eka misava leyi omeke swinene ya sava",
+              "Yi tiyisela misava leyi tsakamaka ku hundza leyi maize yi yi tiyiselaka, yi fambisana ni misava ya le kusuhi ni lwandle ni swiyimo swa mpfula yo tala.",
+              "A yi lavi cultivation nikatsongo",
+              "Hi yona ntsena staple leyi hlayisekaka multiple years."
+            ],
+            "correct": 1,
+            "rationale": "Amadumbe yi tsakela hakunene damper ground, laha maize yi nga tikeriwaka — yi tata niche leyi swin’wana staples swi nga kotiki ku yi khoma kahle."
+          }
+        ]
+      }
+    }
+  },
+  "limits": [
+    "These targets are bounded machine-draft candidates only; no fluent or local farming approval is claimed.",
+    "English phrases explicitly retained identify precision-sensitive claims whose local equivalents need qualified language review.",
+    "Correct option indices remain unchanged and are included as explicit source/resolved equality checks."
+  ]
+}

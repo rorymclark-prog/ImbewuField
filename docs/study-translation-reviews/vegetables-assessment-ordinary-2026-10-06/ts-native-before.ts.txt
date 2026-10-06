@@ -75,7 +75,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         {
           question: pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Hikokwalaho ka yini u hlawula open-pollinated maize ematshan'weni ya hybrid variety loko u kunguhata ku hlayisa mbewu ya wena?"),
           options: [
-            pair("Open-pollinated varieties yield more", "Mixaka ya open-pollinated yield more."),
+            pair("Open-pollinated varieties yield more", "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza"),
             pair("Hybrid seed won't breed true — the next generation won't match the parent plant", "Mbewu ya hybrid a yi nge breed true — swimilana swa xitukulwana lexi landzelaka a swi nge fani ni ximilana xa mutswari"),
             hold("Open-pollinated maize is always more drought-tolerant"),
             pair("Hybrids can't be planted in South Africa", "Hybrids a ti koti ku byariwa eAfrika-Dzonga"),
@@ -92,7 +92,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
             pair("It's the only staple that stores for multiple years", "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we"),
           ],
           sourceCorrectIndex: 1,
-          rationale: pair("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.", "Amadumbe actually prefers damper ground where maize would struggle — yi tata niche leyi other staples can't handle well."),
+          rationale: hold("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."),
         },
       ],
     },
@@ -139,7 +139,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
-            "xitsongaDraft": "Hikokwalaho ka yini u hlayisa bed ya miroho yi ri na ku anama ka 1-1.2m, ematshan’weni yo yi endla wider?",
+            "xitsongaDraft": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m hi ku anama ku ri na ku yi endla yi anama ku tlurisa?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -150,7 +150,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
-              "xitsongaDraft": "U nga fika exikarhini ku suka eka tlhelo rin’wana ni rin’wana ra lamambirhi handle ko kandziya ndhawu leyi swibyariwa swi milaka eka yona, u papalata compaction.",
+              "xitsongaDraft": "U nga fika exikarhini ku suka eka tlhelo rin'wana ni rin'wana ra lamambirhi handle ko kandziya growing area, u papalata compaction",
               "reviewStatus": "machine-draft"
             },
             {
@@ -167,7 +167,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 1,
           "rationale": {
             "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
-            "xitsongaDraft": "Ku kandziya misava leyi swimila swi milaka eka yona swi endla compaction ni ku onha timitsu — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki nikatsongo ku kandziya misava leyi swimila swi milaka eka yona.",
+            "xitsongaDraft": "Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.",
             "reviewStatus": "machine-draft"
           }
         },

@@ -1,0 +1,78 @@
+{
+  "snapshot": "canonical-source-fields",
+  "moduleId": "vegetables-staples",
+  "fields": [
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:st:body.paragraphs.1",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:st:body.paragraphs.9",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.2",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 2,
+      "sourceEnglish": "So before you treat anything, look at the whole system."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.3",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 3,
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?"
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.4",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 4,
+      "sourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.9",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.1",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 1,
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you."
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.3",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 3,
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?"
+    },
+    {
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.9",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result."
+    },
+    {
+      "fieldId": "veg-st-vegetables-staples-l3-kp0",
+      "lessonId": "vegetables-staples-l3",
+      "keyPointIndex": 0,
+      "sourceEnglish": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season"
+    },
+    {
+      "fieldId": "veg-st-vegetables-staples-l1-kp2",
+      "lessonId": "vegetables-staples-l1",
+      "keyPointIndex": 2,
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance"
+    },
+    {
+      "fieldId": "veg-st-vegetables-staples-l2-kp3",
+      "lessonId": "vegetables-staples-l2",
+      "keyPointIndex": 3,
+      "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water"
+    }
+  ]
+}

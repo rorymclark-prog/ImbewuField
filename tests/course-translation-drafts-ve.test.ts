@@ -1,3 +1,4 @@
+import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -709,7 +710,8 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[17], /do not assume they immediately feed the maize/);
   assert.match(l2[17], /nutrients in residues are released during decomposition/);
   const sourceL4 = module.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.split('\n\n');
-  const l4 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.tshivendaDraft.split('\n\n');
+  // 6 October: validate the complete accepted quiz+pest layers, then retain this older treatment-order wording.
+  const l4 = vegetablesBeforePestPrecision('ve', learnerVegetablesDraft).lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!.body.tshivendaDraft.split('\n\n');
   assert.ok(l4[1].startsWith('Zwimela zwi re na stress. '));
   assert.ok(l4[1].endsWith('One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.'),
     'the translated clause preserves broad chemical use as an already-happened removal of helpful predators');

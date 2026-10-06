@@ -138,7 +138,7 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
     quiz: [
       {
         question: pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?"),
-        options: [pair("Open-pollinated varieties yield more", "Varieties dza open-pollinated yield more."), pair("Hybrid seed won't breed true — the next generation won't match the parent plant", "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi"), pair("Open-pollinated maize is always more drought-tolerant", "Open-pollinated maize i dzulela u vha more drought-tolerant"), pair("Hybrids can't be planted in South Africa", "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe")],
+        options: [pair("Open-pollinated varieties yield more", "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi u fhira"), pair("Hybrid seed won't breed true — the next generation won't match the parent plant", "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi"), pair("Open-pollinated maize is always more drought-tolerant", "Open-pollinated maize i dzulela u vha more drought-tolerant"), pair("Hybrids can't be planted in South Africa", "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe")],
         sourceCorrectIndex: 1,
         rationale: pair("Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.", "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu."),
       },
@@ -146,7 +146,7 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
         question: pair("Why is amadumbe (taro) a good staple choice for parts of KZN?", "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?"),
         options: [pair("It thrives on very dry, sandy soil", "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha"), pair("It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions", "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi."), pair("It requires no cultivation at all", "A i ṱoḓi cultivation na luthihi"), pair("It's the only staple that stores for multiple years", "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi")],
         sourceCorrectIndex: 1,
-        rationale: pair("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.", "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well."),
+        rationale: hold("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well."),
       },
     ],
   },
@@ -163,10 +163,10 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
     ],
     quiz: [
       {
-        question: pair("Why keep a vegetable bed to 1-1.2m wide rather than wider?", "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita wider?"),
+        question: pair("Why keep a vegetable bed to 1-1.2m wide rather than wider?", "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?"),
         options: [
           pair("Wider beds get too much sun", "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa"),
-          pair("You can reach the centre from either side without stepping on the growing area, avoiding compaction", "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction."),
+          pair("You can reach the centre from either side without stepping on the growing area, avoiding compaction", "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande growing area, na thivhela compaction"),
           pair("Narrow beds drain better in all conditions", "Narrow beds drain better kha nyimele dzoṱhe"),
           pair("It's a fixed rule with no practical reason", "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa."),
         ],
@@ -210,15 +210,15 @@ export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft =
         rationale: pair("A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.", "U sowa hoṱhe luthihi nga vhunzhi zwi vhibva zwoṱhe nga tshifhinga tshithihi — u sowa nga u tevhekana zwi phaḓaladza khaṋo uri i lingane na zwine muṱa wa kona u shumisa zwa vhukuma."),
       },
       {
-        question: pair("When can nitrogen in bean crop residues become available to other plants?", "Ndi lini nitrogen in bean crop residues i nga become available kha zwimela zwiṅwe?"),
+        question: pair("When can nitrogen in bean crop residues become available to other plants?", "Ndi lini nitrogen in bean crop residues i nga vha available kha other plants?"),
         options: [
           pair("Immediately whenever a bean touches maize", "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize."),
-          pair("As soil organisms decompose the residues", "Musi soil organisms dzi tshi decompose residues."),
-          pair("Only when pumpkin leaves shade them", "Fhedzi musi maṱari a pumpkin a tshi ita murunzi kha them."),
+          hold("As soil organisms decompose the residues"),
+          pair("Only when pumpkin leaves shade them", "Only musi maṱari a pumpkin a tshi ita murunzi kha them."),
           pair("It can never be released", "I nga never be released."),
         ],
         sourceCorrectIndex: 1,
-        rationale: pair("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.", "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding."),
+        rationale: hold("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding."),
       },
     ],
   },

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
+import { vegetablesPestPrecisionFrames, validateCurrentVegetablesPestPrecisionLayer } from './vegetables-pest-precision-media-history-checks.ts';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const packet = JSON.parse(read('docs/study-translation-reviews/intro-ordinary-paired-2026-10-06/root-accepted-final-packet.json'));
@@ -62,7 +63,10 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
   assert.equal(proof.acceptedPacketSHA256, '3297c1b24dba1a37de6976a0b66933a9796efffdb2be5bd8be7e9b027b8ee8e9');
   assert.equal(proof.frames.length, 30);
   assert.deepEqual(Object.keys(COURSE_ASSET_SIZES).sort(), Object.keys(baseline).sort(), 'no payload keys are added or removed');
-  const changedSizes = Object.keys(baseline).filter(path => baseline[path] !== COURSE_ASSET_SIZES[path]).sort();
+  validateCurrentVegetablesPestPrecisionLayer();
+  const sizesBeforeLaterVegetablesLayer = { ...COURSE_ASSET_SIZES };
+  for (const frame of vegetablesPestPrecisionFrames) sizesBeforeLaterVegetablesLayer[frame.url] = frame.beforeBytes;
+  const changedSizes = Object.keys(baseline).filter(path => baseline[path] !== sizesBeforeLaterVegetablesLayer[path]).sort();
   assert.deepEqual(changedSizes, [...changed].sort(), 'only those rendered frames affect learner download estimates');
   assert.deepEqual(proof.frames.map((f: { asset: string }) => '/' + f.asset.replace(/^public\//, '')).sort(), [...changed].sort());
   for (const frame of proof.frames) {

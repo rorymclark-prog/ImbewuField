@@ -1068,8 +1068,7 @@
               },
               {
                 "sourceEnglish": " One crop dominating the ground.",
-                "status": "draft",
-                "text": " Xibyariwa xin’we lexi lawulaka ndhawu."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " Or ",
@@ -1102,7 +1101,7 @@
           },
           {
             "status": "draft",
-            "text": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+            "text": "Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
           },
           {
             "status": "draft",
@@ -1175,12 +1174,11 @@
               {
                 "sourceEnglish": " or changes in ",
                 "status": "draft",
-                "text": " kumbe ku cinca ndlela yo hlayisa "
+                "text": " kumbe ku cinca "
               },
               {
                 "sourceEnglish": "crop care",
-                "status": "draft",
-                "text": "swibyariwa"
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " may help.",

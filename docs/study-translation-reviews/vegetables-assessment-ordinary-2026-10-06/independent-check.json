@@ -1,0 +1,1330 @@
+{
+  "title": "Independent Vegetables L1-L3 assessment ordinary proposal source and semantic check",
+  "date": "2026-10-06",
+  "mode": "read-only; no repository edits/UI/render/publication",
+  "packetPath": "/tmp/imbewu-vegetables-assessment-ordinary-next-candidates-20261006.json",
+  "packetSHA256": "f3999789bab1a0c4beb52ab88bf1c410615d86ddb1e98107b14b7bab01ee4500",
+  "actualNativeCommit": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+  "bindings": {
+    "uniqueRows": 72,
+    "sourceCurrentLiteralChecks": [
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l1.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l2.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ve:vegetables-staples-l3.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l1.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l2.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[0].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].question",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].options[0]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].options[1]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].options[2]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].options[3]",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      },
+      {
+        "key": "ts:vegetables-staples-l3.quiz[1].rationale",
+        "sourceExact": true,
+        "currentExact": true,
+        "changedFlagExact": true
+      }
+    ],
+    "mismatches": [],
+    "missingRows": [],
+    "duplicateRows": [],
+    "fileChecks": [
+      {
+        "label": "canonical",
+        "path": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "gitBlob": "62bbbce287d9a0e07e19709f6ac98e49797e6f0d",
+        "actualSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "actualGitBlob": "62bbbce287d9a0e07e19709f6ac98e49797e6f0d",
+        "exact": true
+      },
+      {
+        "label": "resolver",
+        "path": "lib/course-localization.ts",
+        "sha256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+        "gitBlob": "f4f9801ab6c2dd449251f9421e252c71495c26ec",
+        "actualSHA256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+        "actualGitBlob": "f4f9801ab6c2dd449251f9421e252c71495c26ec",
+        "exact": true
+      },
+      {
+        "label": "veRegistry",
+        "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "6e21f046ca4a48780d2a796c1b2f06f8dc9be9e902321ead5e69126f89e35044",
+        "gitBlob": "031a4b574849db7fd7e7e8d1a84a50489dae6775",
+        "actualSHA256": "6e21f046ca4a48780d2a796c1b2f06f8dc9be9e902321ead5e69126f89e35044",
+        "actualGitBlob": "031a4b574849db7fd7e7e8d1a84a50489dae6775",
+        "exact": true
+      },
+      {
+        "label": "tsRegistry",
+        "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "2b0e710f2f2890fb0ef1a3ecb125b01704f2e02e4a8706409d4371447f514e6d",
+        "gitBlob": "f741d83acad4f6c43e1965bacffb555687f998b9",
+        "actualSHA256": "2b0e710f2f2890fb0ef1a3ecb125b01704f2e02e4a8706409d4371447f514e6d",
+        "actualGitBlob": "f741d83acad4f6c43e1965bacffb555687f998b9",
+        "exact": true
+      }
+    ],
+    "indexChecks": [
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 1,
+        "canonical": 2,
+        "resolved": 2,
+        "match": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 1,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 1,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "questionIndex": 1,
+        "canonical": 2,
+        "resolved": 2,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "questionIndex": 1,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 0,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l3",
+        "questionIndex": 1,
+        "canonical": 1,
+        "resolved": 1,
+        "match": true
+      }
+    ],
+    "compositionChecks": [
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          2
+        ]
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l2",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "language": "ve",
+        "lessonId": "vegetables-staples-l3",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          2
+        ]
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          1
+        ]
+      },
+      {
+        "language": "ts",
+        "lessonId": "vegetables-staples-l3",
+        "proposedQuizMatchesExact72RowOverlay": true,
+        "questionAndOptionOrderPreserved": true,
+        "sourceAndResolvedAndProposedCorrectIndices": [
+          1,
+          1
+        ]
+      }
+    ],
+    "unchangedRows": 40,
+    "unchangedRowsAreByteExact": true,
+    "independentlyDerivedExpectedKeys": [
+      "ts:vegetables-staples-l1.quiz[0].options[0]",
+      "ts:vegetables-staples-l1.quiz[0].options[1]",
+      "ts:vegetables-staples-l1.quiz[0].options[2]",
+      "ts:vegetables-staples-l1.quiz[0].options[3]",
+      "ts:vegetables-staples-l1.quiz[0].question",
+      "ts:vegetables-staples-l1.quiz[0].rationale",
+      "ts:vegetables-staples-l1.quiz[1].options[0]",
+      "ts:vegetables-staples-l1.quiz[1].options[1]",
+      "ts:vegetables-staples-l1.quiz[1].options[2]",
+      "ts:vegetables-staples-l1.quiz[1].options[3]",
+      "ts:vegetables-staples-l1.quiz[1].question",
+      "ts:vegetables-staples-l1.quiz[1].rationale",
+      "ts:vegetables-staples-l2.quiz[0].options[0]",
+      "ts:vegetables-staples-l2.quiz[0].options[1]",
+      "ts:vegetables-staples-l2.quiz[0].options[2]",
+      "ts:vegetables-staples-l2.quiz[0].options[3]",
+      "ts:vegetables-staples-l2.quiz[0].question",
+      "ts:vegetables-staples-l2.quiz[0].rationale",
+      "ts:vegetables-staples-l2.quiz[1].options[0]",
+      "ts:vegetables-staples-l2.quiz[1].options[1]",
+      "ts:vegetables-staples-l2.quiz[1].options[2]",
+      "ts:vegetables-staples-l2.quiz[1].options[3]",
+      "ts:vegetables-staples-l2.quiz[1].question",
+      "ts:vegetables-staples-l2.quiz[1].rationale",
+      "ts:vegetables-staples-l3.quiz[0].options[0]",
+      "ts:vegetables-staples-l3.quiz[0].options[1]",
+      "ts:vegetables-staples-l3.quiz[0].options[2]",
+      "ts:vegetables-staples-l3.quiz[0].options[3]",
+      "ts:vegetables-staples-l3.quiz[0].question",
+      "ts:vegetables-staples-l3.quiz[0].rationale",
+      "ts:vegetables-staples-l3.quiz[1].options[0]",
+      "ts:vegetables-staples-l3.quiz[1].options[1]",
+      "ts:vegetables-staples-l3.quiz[1].options[2]",
+      "ts:vegetables-staples-l3.quiz[1].options[3]",
+      "ts:vegetables-staples-l3.quiz[1].question",
+      "ts:vegetables-staples-l3.quiz[1].rationale",
+      "ve:vegetables-staples-l1.quiz[0].options[0]",
+      "ve:vegetables-staples-l1.quiz[0].options[1]",
+      "ve:vegetables-staples-l1.quiz[0].options[2]",
+      "ve:vegetables-staples-l1.quiz[0].options[3]",
+      "ve:vegetables-staples-l1.quiz[0].question",
+      "ve:vegetables-staples-l1.quiz[0].rationale",
+      "ve:vegetables-staples-l1.quiz[1].options[0]",
+      "ve:vegetables-staples-l1.quiz[1].options[1]",
+      "ve:vegetables-staples-l1.quiz[1].options[2]",
+      "ve:vegetables-staples-l1.quiz[1].options[3]",
+      "ve:vegetables-staples-l1.quiz[1].question",
+      "ve:vegetables-staples-l1.quiz[1].rationale",
+      "ve:vegetables-staples-l2.quiz[0].options[0]",
+      "ve:vegetables-staples-l2.quiz[0].options[1]",
+      "ve:vegetables-staples-l2.quiz[0].options[2]",
+      "ve:vegetables-staples-l2.quiz[0].options[3]",
+      "ve:vegetables-staples-l2.quiz[0].question",
+      "ve:vegetables-staples-l2.quiz[0].rationale",
+      "ve:vegetables-staples-l2.quiz[1].options[0]",
+      "ve:vegetables-staples-l2.quiz[1].options[1]",
+      "ve:vegetables-staples-l2.quiz[1].options[2]",
+      "ve:vegetables-staples-l2.quiz[1].options[3]",
+      "ve:vegetables-staples-l2.quiz[1].question",
+      "ve:vegetables-staples-l2.quiz[1].rationale",
+      "ve:vegetables-staples-l3.quiz[0].options[0]",
+      "ve:vegetables-staples-l3.quiz[0].options[1]",
+      "ve:vegetables-staples-l3.quiz[0].options[2]",
+      "ve:vegetables-staples-l3.quiz[0].options[3]",
+      "ve:vegetables-staples-l3.quiz[0].question",
+      "ve:vegetables-staples-l3.quiz[0].rationale",
+      "ve:vegetables-staples-l3.quiz[1].options[0]",
+      "ve:vegetables-staples-l3.quiz[1].options[1]",
+      "ve:vegetables-staples-l3.quiz[1].options[2]",
+      "ve:vegetables-staples-l3.quiz[1].options[3]",
+      "ve:vegetables-staples-l3.quiz[1].question",
+      "ve:vegetables-staples-l3.quiz[1].rationale"
+    ],
+    "fullExpectedKeySetEqualsPacket": true,
+    "allFieldIdsMatchExplicitIndices": true,
+    "submittedSnapshotSHA256Exact": true
+  },
+  "changedRowReviews": [
+    {
+      "rowIndex": 0,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[0].question",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Ndi ngani ni tshi vhulunga vegetable bed i tshi vha 1-1.2m wide, nṱhani ha u i ita wider?",
+      "proposedTarget": "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita yo aṱamaho?",
+      "independentBacktranslation": "Why keep a vegetable bed at width1-1.2m rather than make it wide?",
+      "verdict": "repair",
+      "reason": "yo aṱamaho states wide; the wider comparison is no longer explicit. Preserve wider rather than invent a comparative.",
+      "recommendedTarget": "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita wider?",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 2,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[0].options[1]",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande growing area, na thivhela compaction",
+      "proposedTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction.",
+      "independentBacktranslation": "You can reach the middle from either of the two sides without stepping where crops grow, preventing compaction.",
+      "verdict": "accept",
+      "reason": "Either side, can, without stepping and compaction remain. Ordinary growing-area framing is defensible.",
+      "recommendedTarget": "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 3,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[0].options[2]",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better kha nyimele dzoṱhe",
+      "proposedTarget": "Mabedhe a re na vhuphara vhuṱuku a drain zwavhuḓi kha nyimele dzoṱhe.",
+      "independentBacktranslation": "Beds of small width drain well in all conditions.",
+      "verdict": "repair",
+      "reason": "Well loses source better; retain exact drain better and translate narrow/all-conditions framing.",
+      "recommendedTarget": "Mabedhe a re na vhuphara vhuṱuku a drain better kha nyimele dzoṱhe.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 5,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[0].rationale",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentTarget": "U kanda growing soil zwi ita compaction na u tshinyadza midzi — bed ine na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda growing soil.",
+      "proposedTarget": "U kanda fhethu hune zwimela zwa mela zwi ita compaction na u tshinyadza midzi — bed ya miroho ine na nga swikelela vhukati hwayo ni tshi bva masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda fhethu hune zwimela zwa mela.",
+      "independentBacktranslation": "Stepping on the place where plants grow causes compaction and damages roots; a vegetable bed reachable at its middle from both sides means you never need step there.",
+      "verdict": "repair",
+      "reason": "Growing soil was replaced by place and vegetable added to the source bed. Preserve existing literal growing soil and complete existing never/both-sides wording. This row needs no publication delta absent a precise soil equivalent.",
+      "recommendedTarget": "U kanda growing soil zwi ita compaction na u tshinyadza midzi — bed ine na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda growing soil.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 6,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[1].question",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Which crop is best suited to direct-seeding rather than transplanting?",
+      "currentTarget": "Ndi tshimela tshifhio tshine tsha vha best suited to direct-seeding rather than transplanting?",
+      "proposedTarget": "Ndi tshimela tshifhio tshine tsha fanelea vhukuma u itela direct-seeding u fhira transplanting?",
+      "independentBacktranslation": "Which crop is very suitable for direct-seeding more than transplanting?",
+      "verdict": "hold",
+      "reason": "Very suitable does not reliably preserve best suited. Existing exact best suited to direct-seeding rather than transplanting is safer; no changed target recommended.",
+      "recommendedTarget": "Ndi tshimela tshifhio tshine tsha vha best suited to direct-seeding rather than transplanting?",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 7,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[1].options[0]",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Tomatoes, which need an early start",
+      "currentTarget": "Tomatoes, dzine dza ṱoḓa early start",
+      "proposedTarget": "Tomatoes, dzine dza ṱoḓa u thomiwa nga u ṱavhanya.",
+      "independentBacktranslation": "Tomatoes that need to be started quickly/early.",
+      "verdict": "hold",
+      "reason": "Nga u ṱavhanya risks quickly rather than early timing. Keep exact early start until the timing distinction is independently supported.",
+      "recommendedTarget": "Tomatoes, dzine dza ṱoḓa early start",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 11,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l1.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe.",
+      "proposedTarget": "Beans na zwiṅwe zwimela zwine zwa aluwa nga u ṱavhanya, zwine zwa si takalele root disturbance, establish poorly nga murahu ha transplant shock — u zwi sowa thwii kha bed zwi thivhela setback yeneyo yoṱhe.",
+      "independentBacktranslation": "Beans and other fast-growing crops which dislike root disturbance establish poorly after transplant shock; sowing straight in bed prevents all that setback.",
+      "verdict": "repair",
+      "reason": "Sensitive-rooted is replaced with dislike disturbance; quick becomes explicitly fast growth. Retain original exact technical first clause and established direct sowing/entirely framing.",
+      "recommendedTarget": "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 12,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[0].question",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why sow lettuce in small batches every 2-3 weeks instead of all at once?",
+      "currentTarget": "Ndi ngani ni tshi sow lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sow all at once?",
+      "proposedTarget": "Ndi ngani ni tshi sowa lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sowa yoṱhe nga tshifhinga tshithihi?",
+      "independentBacktranslation": "Why sow lettuce in small batches every two to three weeks rather than sow all at one time?",
+      "verdict": "accept",
+      "reason": "Small/all-at-once contrast and exact two-to-three-week interval preserved; sowa is visibly borrowed sow wording, not a claim of reviewed terminology.",
+      "recommendedTarget": "Ndi ngani ni tshi sowa lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sowa yoṱhe nga tshifhinga tshithihi?",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 13,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[0].options[0]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "It uses less seed overall",
+      "currentTarget": "Zwi shumisa less seed nga u angaredza.",
+      "proposedTarget": "Zwi shumisa mbeu i si nnzhi nga u angaredza.",
+      "independentBacktranslation": "It uses not-many seeds overall.",
+      "verdict": "hold",
+      "reason": "Not many is absolute and loses comparative less. Current less seed plus localized overall preserves the false distractor precisely.",
+      "recommendedTarget": "Zwi shumisa less seed nga u angaredza.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 15,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[0].options[2]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Lettuce germinates better in small batches",
+      "currentTarget": "Lettuce i mela better nga zwipiḓa zwiṱuku.",
+      "proposedTarget": "Mbeu ya lettuce i mela zwavhuḓi nga zwipiḓa zwiṱuku.",
+      "independentBacktranslation": "Lettuce seed germinates well in small batches.",
+      "verdict": "hold",
+      "reason": "Well loses better. Preserve already localized current wording with exact better; seed clarification is unnecessary.",
+      "recommendedTarget": "Lettuce i mela better nga zwipiḓa zwiṱuku.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 18,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[1].question",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentTarget": "Ndi lini nitrogen in bean crop residues i nga vha available kha other plants?",
+      "proposedTarget": "Ndi lini nitrogen ya bean crop residues ine ya nga vha available kha zwimela zwiṅwe?",
+      "independentBacktranslation": "When nitrogen of bean residues which can be available to other plants?",
+      "verdict": "repair",
+      "reason": "Relative ine weakens the direct can-become question and available remains technical. Restore question construction and retain become available as exact technical English.",
+      "recommendedTarget": "Ndi lini nitrogen in bean crop residues i nga become available kha zwimela zwiṅwe?",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 20,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[1]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "As soil organisms decompose the residues",
+      "currentTarget": "As soil organisms decompose the residues",
+      "proposedTarget": "Musi soil organisms dzi tshi decompose residues.",
+      "independentBacktranslation": "As soil organisms decompose residues.",
+      "verdict": "accept",
+      "reason": "Musi ... dzi tshi preserves the contemporaneous as process; decompose remains technical. No early/immediate release added.",
+      "recommendedTarget": "Musi soil organisms dzi tshi decompose residues.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 21,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[2]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Only when pumpkin leaves shade them",
+      "currentTarget": "Only musi maṱari a pumpkin a tshi ita murunzi kha them.",
+      "proposedTarget": "Feela musi maṱari a pumpkin a tshi ita murunzi kha residues.",
+      "independentBacktranslation": "Only when pumpkin leaves shade residues.",
+      "verdict": "repair",
+      "reason": "Feela is a Sesotho-form intrusion into Tshivenda; explicitly replacing ambiguous them with residues adds an interpretation. Use existing Tshivenda fhedzi and retain source pronoun.",
+      "recommendedTarget": "Fhedzi musi maṱari a pumpkin a tshi ita murunzi kha them.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 23,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l2.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "proposedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisi immediate feeding.",
+      "independentBacktranslation": "Exact nitrogen-fixation and decomposition clauses; growing beans near maize does not strengthen/confirm immediate feeding.",
+      "verdict": "repair",
+      "reason": "Khwaṱhisi is not an independently established guarantee equivalent. Translate growing-beside framing but retain exact negated guarantee predicate.",
+      "recommendedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 25,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l3.quiz[0].options[0]",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi u fhira",
+      "proposedTarget": "Varieties dza open-pollinated dzi bveledza khaṋo nnzhi.",
+      "independentBacktranslation": "Open-pollinated varieties produce a large/many harvest.",
+      "verdict": "repair",
+      "reason": "Removing dangling u fhira leaves an absolute many, losing source comparative more. Keep exact yield more.",
+      "recommendedTarget": "Varieties dza open-pollinated yield more.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 34,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l3.quiz[1].options[3]",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "proposedTarget": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho multiple years.",
+      "independentBacktranslation": "It is the only staple stored for multiple years (English).",
+      "verdict": "preserve-current",
+      "reason": "Current already says years exceeding one; no concrete defect supports reversing localized ordinary wording to English. Preserve existing target byte-exact.",
+      "recommendedTarget": "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 35,
+      "language": "ve",
+      "fieldId": "vegetables-staples-l3.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "proposedTarget": "Amadumbe i funa vhukuma damper ground, hune maize ya konḓelwa — i dzhia niche ine zwiṅwe staples zwa sa kona u i fara zwavhuḓi.",
+      "independentBacktranslation": "Amadumbe really likes damper ground where maize struggles; it takes a niche other staples cannot hold well.",
+      "verdict": "repair",
+      "reason": "Really likes does not reliably preserve actually prefers; would becomes present; handle becomes physical hold/take. Preserve source first clause and exact limitation, translate only bounded fill framing.",
+      "recommendedTarget": "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 36,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l1.quiz[0].question",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Why keep a vegetable bed to 1-1.2m wide rather than wider?",
+      "currentTarget": "Hikokwalaho ka yini u hlayisa vegetable bed e le 1-1.2m hi ku anama ku ri na ku yi endla yi anama ku tlurisa?",
+      "proposedTarget": "Hikokwalaho ka yini u hlayisa bed ya miroho yi ri na ku anama ka 1-1.2m, ematshan’weni yo yi endla yi anama ku tlurisa?",
+      "independentBacktranslation": "Why keep vegetable bed1-1.2m wide instead of making it excessively wide?",
+      "verdict": "repair",
+      "reason": "Ku tlurisa may mean too/excessively rather than simply wider. Keep exact wider while ordinary bed/width/question framing stays localized.",
+      "recommendedTarget": "Hikokwalaho ka yini u hlayisa bed ya miroho yi ri na ku anama ka 1-1.2m, ematshan’weni yo yi endla wider?",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 38,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l1.quiz[0].options[1]",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "1",
+      "sourceEnglish": "You can reach the centre from either side without stepping on the growing area, avoiding compaction",
+      "currentTarget": "U nga fika exikarhini ku suka eka tlhelo rin'wana ni rin'wana ra lamambirhi handle ko kandziya growing area, u papalata compaction",
+      "proposedTarget": "U nga fika exikarhini ku suka eka tlhelo rin’wana ni rin’wana ra lamambirhi handle ko kandziya ndhawu leyi swibyariwa swi milaka eka yona, u papalata compaction.",
+      "independentBacktranslation": "You can reach middle from either of the two sides without treading the place crops grow, avoiding compaction.",
+      "verdict": "accept",
+      "reason": "Can/either/without and technical compaction preserved; no new species or quantities.",
+      "recommendedTarget": "U nga fika exikarhini ku suka eka tlhelo rin’wana ni rin’wana ra lamambirhi handle ko kandziya ndhawu leyi swibyariwa swi milaka eka yona, u papalata compaction.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 39,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l1.quiz[0].options[2]",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Narrow beds drain better in all conditions",
+      "currentTarget": "Narrow beds drain better eka swiyimo hinkwato",
+      "proposedTarget": "Mabedhe lama nga anamangiki ngopfu ma drain better eka swiyimo hinkwato.",
+      "independentBacktranslation": "Beds that are not very wide drain better in all conditions.",
+      "verdict": "hold",
+      "reason": "Not very wide is weaker than narrow, though comparative/absolute all retained. Original exact Narrow beds drain better with localized all conditions is safer.",
+      "recommendedTarget": "Narrow beds drain better eka swiyimo hinkwato",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 41,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l1.quiz[0].rationale",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 0,
+      "optionIndex": null,
+      "sourceEnglish": "Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.",
+      "currentTarget": "Ku kandziya growing soil ku endla compaction ni ku onha roots — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki ku kandziya growing soil.",
+      "proposedTarget": "Ku kandziya misava leyi swimila swi milaka eka yona swi endla compaction ni ku onha timitsu — bed ya miroho leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki nikatsongo ku kandziya misava leyi swimila swi milaka eka yona.",
+      "independentBacktranslation": "Stepping on growing soil causes compaction and damages roots; a vegetable bed reachable from both sides means you are never obliged to step on the growing soil.",
+      "verdict": "repair",
+      "reason": "Soil, roots, both sides and never preserved. Remove unnecessary added vegetable qualifier; source just bed. Keep current reach framing and translate remaining soil/roots.",
+      "recommendedTarget": "Ku kandziya misava leyi swimila swi milaka eka yona swi endla compaction ni ku onha timitsu — bed leyi u nga yi fikelelaka ku suka ematlhelweni haswimbirhi yi vula leswaku a wu boheki nikatsongo ku kandziya misava leyi swimila swi milaka eka yona.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 47,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l1.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l1",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.",
+      "currentTarget": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+      "proposedTarget": "Beans na swin’wana swimila leswi kulaka hi ku hatlisa, leswi timitsu ta swona ti nga tsakeliki root disturbance, establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma ebedini swi papalata ku kavanyeteka koloko hi ku helela.",
+      "independentBacktranslation": "Beans and other fast-growing plants whose roots dislike disturbance establish poorly after transplant shock; planting straight in bed avoids that disruption completely.",
+      "verdict": "repair",
+      "reason": "Sensitive-rooted becomes root dislike; quick becomes fast growth; setback becomes disruption. Keep exact original technical first clause/setback and original direct sowing/entirely framing.",
+      "recommendedTarget": "Beans and other quick, sensitive-rooted crops establish poorly endzhaku ka transplant shock — ku swi byala hi ku kongoma eka bed ku papalata setback yoleyo hi ku helela.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 51,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[0].options[2]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 0,
+      "optionIndex": "2",
+      "sourceEnglish": "Lettuce germinates better in small batches",
+      "currentTarget": "Lettuce yi mila better hi swiphemu leswitsongo.",
+      "proposedTarget": "Mbewu ya lettuce yi mila kahle hi swiphemu leswitsongo.",
+      "independentBacktranslation": "Lettuce seed germinates well in small batches.",
+      "verdict": "hold",
+      "reason": "Kahle means well; better comparison lost. Current localized germination retains exact better and should remain.",
+      "recommendedTarget": "Lettuce yi mila better hi swiphemu leswitsongo.",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 54,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].question",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "When can nitrogen in bean crop residues become available to other plants?",
+      "currentTarget": "When can nitrogen in bean crop residues become available to other plants?",
+      "proposedTarget": "Xana nitrogen leyi nga eka bean crop residues yi nga kumeka rini eka swimila swin’wana?",
+      "independentBacktranslation": "When can nitrogen in bean residues be found by/available to other plants?",
+      "verdict": "repair",
+      "reason": "Kumeka may mean be found, insufficient for nutrient availability transition. Keep exact become available and existing can question framing.",
+      "recommendedTarget": "Xana nitrogen leyi nga eka bean crop residues yi nga become available rini eka swimila swin’wana?",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 55,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[0]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "0",
+      "sourceEnglish": "Immediately whenever a bean touches maize",
+      "currentTarget": "Immediately whenever a bean touches maize",
+      "proposedTarget": "Hi ku hatlisa nkarhi wun’wana ni wun’wana bean yi khumba maize.",
+      "independentBacktranslation": "Quickly each time a bean touches maize.",
+      "verdict": "repair",
+      "reason": "Hi ku hatlisa may mean quickly, not necessarily immediately. Retain immediately and make whenever construction explicit; preserve false distractor.",
+      "recommendedTarget": "Immediately nkarhi wun’wana ni wun’wana loko bean yi khumba maize.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 56,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[1]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "1",
+      "sourceEnglish": "As soil organisms decompose the residues",
+      "currentTarget": "As soil organisms decompose the residues",
+      "proposedTarget": "Loko soil organisms ti ri karhi ti decompose residues.",
+      "independentBacktranslation": "While/as soil organisms are decomposing residues.",
+      "verdict": "accept",
+      "reason": "Concurrent process remains; no new immediate timing or release guarantee.",
+      "recommendedTarget": "Loko soil organisms ti ri karhi ti decompose residues.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 57,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[2]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "2",
+      "sourceEnglish": "Only when pumpkin leaves shade them",
+      "currentTarget": "Only loko matluka ya pumpkin ma endla ndzhuti eka them.",
+      "proposedTarget": "Loko ntsena matluka ya pumpkin ma endla ndzhuti eka residues.",
+      "independentBacktranslation": "Only when pumpkin leaves shade residues.",
+      "verdict": "repair",
+      "reason": "Only-when scope defensible, but source them should not be silently resolved to residues. Preserve source pronoun.",
+      "recommendedTarget": "Loko ntsena matluka ya pumpkin ma endla ndzhuti eka them.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 58,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].options[3]",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It can never be released",
+      "currentTarget": "Yi nga never be released.",
+      "proposedTarget": "Nitrogen a yi nge humesiwi nikatsongo.",
+      "independentBacktranslation": "Nitrogen can never be released at all.",
+      "verdict": "accept",
+      "reason": "A yi nge ... nikatsongo preserves modal impossibility/never; nitrogen is the same question subject, no mechanism added.",
+      "recommendedTarget": "Nitrogen a yi nge humesiwi nikatsongo.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 59,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l2.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l2",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "currentTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.",
+      "proposedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi immediate feeding.",
+      "independentBacktranslation": "Exact fixation/decomposition clauses; growing/planting beans near maize does not ensure immediate feeding.",
+      "verdict": "repair",
+      "reason": "Negation preserved but guarantee has stronger exact scope than an unreviewed ensure equivalent. Keep exact does not guarantee immediate feeding after localized growing-near framing.",
+      "recommendedTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 61,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l3.quiz[0].options[0]",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 0,
+      "optionIndex": "0",
+      "sourceEnglish": "Open-pollinated varieties yield more",
+      "currentTarget": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala ku hundza",
+      "proposedTarget": "Mixaka ya open-pollinated yi humesa ntshovelo wo tala.",
+      "independentBacktranslation": "Open-pollinated kinds produce a large/many harvest.",
+      "verdict": "repair",
+      "reason": "Removing ku hundza leaves absolute quantity, losing source more. Retain exact yield more.",
+      "recommendedTarget": "Mixaka ya open-pollinated yield more.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 70,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l3.quiz[1].options[3]",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": "3",
+      "sourceEnglish": "It's the only staple that stores for multiple years",
+      "currentTarget": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "proposedTarget": "Hi yona ntsena staple leyi hlayisekaka multiple years.",
+      "independentBacktranslation": "It is the only staple that stores multiple years (English).",
+      "verdict": "preserve-current",
+      "reason": "Existing target already preserves only and duration exceeding one year. No concrete semantic defect justifies regression to English.",
+      "recommendedTarget": "Hi yona ntsena staple leyi hlayisekaka ku ringana nkarhi wa ku hundza lembe rin’we",
+      "recommendedDelta": false,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    },
+    {
+      "rowIndex": 71,
+      "language": "ts",
+      "fieldId": "vegetables-staples-l3.quiz[1].rationale",
+      "lessonId": "vegetables-staples-l3",
+      "questionIndex": 1,
+      "optionIndex": null,
+      "sourceEnglish": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "currentTarget": "Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.",
+      "proposedTarget": "Amadumbe yi tsakela hakunene damper ground, laha maize yi nga tikeriwaka — yi tata niche leyi swin’wana staples swi nga kotiki ku yi khoma kahle.",
+      "independentBacktranslation": "Amadumbe truly prefers damper ground where maize may be troubled; fills a niche other staples cannot hold well.",
+      "verdict": "repair",
+      "reason": "Would struggle becomes may; handle risks physical hold. Retain exact source environmental/modal first clause and exact remaining inability, translate only bounded fill framing.",
+      "recommendedTarget": "Amadumbe actually prefers damper ground where maize would struggle — yi tata niche leyi other staples can't handle well.",
+      "recommendedDelta": true,
+      "reviewStatus": "unreviewed; source-paired machine draft only",
+      "limits": "Semantic review with conservative English holds; not fluent-language approval."
+    }
+  ],
+  "summary": {
+    "accept": 6,
+    "repair": 18,
+    "hold": 6,
+    "preserve-current": 2
+  },
+  "recommendations": {
+    "changedTargetsAfterRecommendedRepairs": 21,
+    "protectedPredicates": [
+      "better/less/yield-more comparisons",
+      "can/never/only/whenever",
+      "early versus quickly",
+      "quick/sensitive-rooted first clause held verbatim",
+      "nitrogen/root-bacteria/residue/decomposition source clauses",
+      "would-struggle and damper-ground technical first clause",
+      "staple/genetics terms and crop identities",
+      "only/multiple-year existing native wording"
+    ],
+    "rootApprovalStillRequired": true
+  },
+  "limits": [
+    "No fluent-language or local agronomy approval.",
+    "Retained English phrases are precise holds; neither candidate status nor fluency can be inferred from the original draft.",
+    "Some recommended rows intentionally equal current because candidate introduced a regression or translated already-accurate wording back to English.",
+    "No easy/small/young/now/already substitution introduced.",
+    "No source/canonical, correct index, repository or media edits."
+  ]
+}
