@@ -58,6 +58,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Market residual ordinary prose and precise cost terms — 6 October 2026](2026-10-06/study-market-ordinary-residual-codex.md).
+
 This seeds the archive with the 30 documents Claude collected on 20 September,
 plus the later survey review records and today's continuation. Dates come from
 the document title/body or dated filename. `*` means the document has no explicit

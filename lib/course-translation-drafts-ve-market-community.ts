@@ -26,12 +26,12 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       "infographicAlt": { sourceEnglish: "A person holds a pencil over a blank record grid in an open notebook, beside a basket and loose vegetables.", tshivendaDraft: "Muthu u fara pencil nga nṱha ha record grid i si na tshithu kha notebook yo vuleaho, tsini na basket na loose vegetables.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Record-Keeping: Knowing What Your Farm Is Actually Producing",
-        "tshivendaDraft": "Record-Keeping: U Ḓivha Zwine Bulasi Yaṋu Ya Bveledza Zwa Vhukuma",
+        "tshivendaDraft": "U Vhulunga Rekhodo: U Ḓivha Zwine Bulasi Yaṋu Ya Bveledza Zwa Vhukuma",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
-        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: tomatoes cost R18 per kilogram to produce but sell for R15 per kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha harvest ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+        "tshivendaDraft": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha khaṋo ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -60,13 +60,13 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "In this teaching example, tomatoes sell at R15/kg and cost R18/kg to produce. What should the farmer review?",
-            "tshivendaDraft": "Kha tsumbo iyi ya u funza, tomatoes sell at R15/kg and cost R18/kg to produce. Mulimi u fanela u sedza mini?",
+            "tshivendaDraft": "Kha tsumbo iyi ya u funza, matamatisi a rengiswa nga R15/kg nahone a ḓura R18/kg u a bveledza. Mulimi u fanela u sedza mini?",
             "reviewStatus": 'machine-draft'
           },
           "options": [
             {
               "sourceEnglish": "Keep selling at R15 — short-term loss builds relationships",
-              "tshivendaDraft": "Bvelani phanḓa ni tshi rengisa nga R15 — short-term loss i fhaṱa vhushaka.",
+              "tshivendaDraft": "Bvelani phanḓa ni tshi rengisa nga R15 — ndozwo ya tshifhinga tshipfufhi i fhaṱa vhushaka.",
               "reviewStatus": 'machine-draft'
             },
             {
@@ -115,13 +115,13 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
       "title": { sourceEnglish: "Building Community Food Networks: Strength in Numbers", tshivendaDraft: "U fhaṱa network ya zwiḽiwa zwa tshitshavhani: Strength in Numbers", reviewStatus: 'machine-draft' },
       "body": {
         "sourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
-        "tshivendaDraft": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani crop, variety, source na datumu ya u kuvhanganya. Pulani isolation, selection, drying na storage zwo teaho kha crop iṅwe na iṅwe.\n\nU kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Before exchanging seed, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani produce nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.\n\nMutengi wa tsini a nga fhungudza lwendo, fhedzi losses na selling costs zwi kha ḓi tea u pimiwa.\n\nVhambedzani money received nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani method, conditions na result uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease kana technical problems. Shared experience na specialist help zwi nga shuma khathihi.",
+        "tshivendaDraft": "Vhahura vha nga kovhelana mifuda yo fhambanaho na mushumo wa u vhulunga mbeu.\n\nṄwalani tshimela, variety, vhubvo na datumu ya u kuvhanganya. Pulani isolation, selection, drying na storage zwo teaho kha tshimela tshiṅwe na tshiṅwe.\n\nU kovhekana a zwi ambi nga u tou kovhekana fhedzi uri diversity i ḓo engedzea kana quality i khwinifhale. Ṱolani identity na germination ni sa athu ḓitika nga shared seed. Ni sa athu u tshintshana mbeu, ṱolani arali variety yo tsireledzwa na arali permission i tshi ṱoḓea.\n\nU kovhelana zwishumiswa zwi ita uri zwishumiswa zwi ḓuraho zwi swikelele tshigwada.\n\nPhampu ya maḓi kana tshigayo tsha thoro zwi nga vha zwi sa swikeleliho nga masheleni a muṱa muthihi.\n\nU zwi shumisa roṱhe zwi phaḓaladza ndeme yazwo kha tshigwada, zwa thusa bulasi ḽiṅwe na ḽiṅwe u ita mushumo une ḽi si kone u u ita ḽoṱhe.\n\nFarani zwibveledzwa nga vhulenda, ni vhulunge nga shade yo teaho, packaging na storage u swika delivery i tshi fhela.\n\nMutengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na costs dza u rengisa zwi kha ḓi tea u pimiwa.\n\nVhambedzani tshelede yo ṱanganedzwaho nga murahu ha fees, transport na spoilage kha option iṅwe na iṅwe. Ni songo humbula uri nearest buyer u dzula a tshi netshedza best return.\n\nVhahura vha nga sumbedza vhukoni vhu thusaho nahone vha vhambedza zwe zwa itea bulasini ḽavho.\n\nṄwalani nḓila, nyimele na mvelelo uri vhaṅwe vha kone u vhona arali zwi tshi nga fanela their land.\n\nṰoḓani qualified advice nga ha unfamiliar disease kana technical problems. Shared experience na specialist help zwi nga shuma khathihi.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
         {
           "sourceEnglish": "Record seed identity, source and quality, and check if permission is needed before sharing",
-          "tshivendaDraft": "Ṅwalani seed identity, source na quality, nahone ni sedze arali permission i tshi ṱoḓea ni sa athu u kovhelana.",
+          "tshivendaDraft": "Ṅwalani seed identity, vhubvo na kwalithi, nahone ni sedze arali permission i tshi ṱoḓea ni sa athu u kovhelana.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -131,7 +131,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Measure losses and net returns for each selling route",
-          "tshivendaDraft": "Pimani losses na net returns kha selling route iṅwe na iṅwe.",
+          "tshivendaDraft": "Pimani ndozwo na net returns kha nḓila ya u rengisa iṅwe na iṅwe.",
           "reviewStatus": "machine-draft"
         },
         {
@@ -144,7 +144,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "Neighbours want to share saved seed. What helps make the shared seed useful?",
-            "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana saved seed. Ndi mini tshi nga thusa uri seed yo kovhelanaho i shume zwavhuḓi?",
+            "tshivendaDraft": "Vhahura vha ṱoḓa u kovhelana mbeu yo vhulungwaho. Ndi mini tshi nga thusa uri mbeu yo kovhelanaho i shume zwavhuḓi?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -179,7 +179,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
         {
           "question": {
             "sourceEnglish": "A grower is comparing a distant market with nearby customers. What should guide the decision?",
-            "tshivendaDraft": "Mulimi u khou vhambedza market i re kule na vharengi vha re tsini. Ndi mini ine ya tea u livhisa phetho?",
+            "tshivendaDraft": "Mulimi u khou vhambedza makete i re kule na vharengi vha re tsini. Ndi mini ine ya tea u livhisa phetho?",
             "reviewStatus": "machine-draft"
           },
           "options": [
@@ -195,12 +195,12 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Compare money received after fees, transport, unsold produce and losses",
-              "tshivendaDraft": "Vhambedzani money received nga murahu ha fees, transport, unsold produce na losses.",
+              "tshivendaDraft": "Vhambedzani tshelede yo ṱanganedzwaho nga murahu ha fees, transport, unsold produce na losses.",
               "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "Assume joining a group removes all costs",
-              "tshivendaDraft": "Humbulani uri u dzhena kha group zwi fhelisa costs dzoṱhe.",
+              "tshivendaDraft": "Humbulani uri u dzhena kha tshigwada zwi fhelisa costs dzoṱhe.",
               "reviewStatus": "machine-draft"
             }
           ],
@@ -215,7 +215,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       id: 'market-community-l2',
-      infographicAlt: { sourceEnglish: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.", tshivendaDraft: "Nḓila tharu dza u rengisa zwi tshi bva kha farm nthihi: roadside stall, u isa produce shop nga tshigwada, na box i yaho nga ho livhaho muṱani.", reviewStatus: 'machine-draft' },
+      infographicAlt: { sourceEnglish: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.", tshivendaDraft: "Nḓila tharu dza u rengisa zwi tshi bva kha bulasi ḽithihi: roadside stall, u isa zwibveledzwa shop nga tshigwada, na box i yaho nga ho livhaho muṱani.", reviewStatus: 'machine-draft' },
       title: { sourceEnglish: "Selling Surplus: Where to Sell and How to Price", tshivendaDraft: "U rengisa surplus: Hune wa nga rengisa hone na uri wa vhea mutengo hani", reviewStatus: 'machine-draft' },
       body: pair(
         [
@@ -233,35 +233,35 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
           "Describe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
         ].join('\n\n'),
         [
-          "Vhudzisani uri mutengi u ṱoḓa mini: product, tshivhalo, quality, delivery na ḓuvha ḽa payment.",
+          "Vhudzisani uri mutengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.",
           "Vhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.",
-          "Sedzani milayo ya market na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
-          "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, packing, transport na customer care.",
+          "Sedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.",
+          "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
           "Box scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.",
-          "Tendelani nga box contents, mutengo, payment na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi customers na growers vha tshi kona u tevhedza agreement.",
+          "Tendelani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
           "Thomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
-          "Ṱolani costs na household food needs musi ni sa athu fulufhedzisa regular boxes.",
+          "Ṱolani costs na ṱhoḓea dza zwiḽiwa zwa muṱa musi ni sa athu fulufhedzisa regular boxes.",
           "Tshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.",
           "Arali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.",
           "Ṋetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.",
-          "Ṱalusani growing practices dzaṋu nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+          "Ṱalusani maitele aṋu a u alusa zwimela nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
         ].join('\n\n'),
       ),
       keyPoints: [
-        pair("Agree product, quantity, quality, delivery and payment", "Tendelani nga ha tshibveledzwa, tshivhalo, quality, delivery na payment."),
+        pair("Agree product, quantity, quality, delivery and payment", "Tendelani nga ha tshibveledzwa, tshivhalo, kwalithi, u isa na mbadelo."),
         pair(
           'Compare costs and losses as well as selling price',
           'Vhambedzani tsengo na ndozwo khathihi na mutengo wa u rengisa.',
         ),
         pair('Promise regular boxes only when supply and customer terms support them', 'Fulufhedzisani regular boxes fhedzi musi supply na customer terms zwi tshi zwi tendela.'),
-        pair('Check market rules and describe growing practices honestly', 'Sedzani market rules, nahone ni ṱaluse growing practices dzaṋu nga u fulufhedzea.'),
+        pair('Check market rules and describe growing practices honestly', "Sedzani milayo ya makete, nahone ni ṱaluse maitele aṋu a u alusa zwimela nga u fulufhedzea."),
       ],
       quiz: [
         {
           question: pair('A smallholder has inconsistent weekly production — surplus some weeks, little in others. Which channel suits her best?', 'Mulimi wa bulasi ḽiṱuku u na production ine ya fhambana vhege nga vhege — surplus vhege dziṅwe, ya vha ṱhukhu kha dziṅwe. Ndi channel ifhio ine ya mu tea nga maanḓa?'),
           options: [
             pair('A formal market stall needing consistent weekly supply', "Formal market stall ine ya ṱoḓa supply yo fulufhedzeaho ya vhege iṅwe na iṅwe."),
-            pair('A box scheme needing the same produce weekly', 'Box scheme ine ya ṱoḓa produce i fanaho vhege iṅwe na iṅwe.'),
+            pair('A box scheme needing the same produce weekly', "Box scheme ine ya ṱoḓa zwibveledzwa zwi fanaho vhege iṅwe na iṅwe."),
             pair('An informal market or neighbour sales with no fixed commitment', 'Informal market kana u rengisa kha vhahura hu si na fixed commitment.'),
             pair('A daily-delivery school contract', 'Thendelano ya tshikolo ine ya ṱoḓa u isa zwithu ḓuvha ḽiṅwe na ḽiṅwe.'),
           ],
@@ -269,7 +269,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
           rationale: pair("This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.", "Iyi ndi yone channel nthihi ine ya si ṱoḓe uri a fulufhedzise fixed amount vhege iṅwe na iṅwe — u rengisa zwe a vha nazwo zwa vhukuma."),
         },
         {
-          question: pair('How can agreed regular orders help a grower plan?', 'Agreed regular orders zwi nga thusa hani mulimi u pulana?'),
+          question: pair('How can agreed regular orders help a grower plan?', "Regular orders dze ha tendelanwa dzi nga thusa hani mulimi u pulana?"),
           options: [
             pair('Box customers always pay more per kilogram', 'Vharengi vha box vha badela tshifhinga tshoṱhe tshelede nnzhi nga kilogram.'),
             pair('Box schemes let you charge extra for packaging', 'Box schemes dzi ni tendela u badelisa tshelede yo engedzeaho ya packaging.'),
@@ -277,7 +277,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
             pair('Box schemes avoid tax obligations', 'Box schemes dzi iledza tax obligations'),
           ],
           sourceCorrectIndex: 2,
-          rationale: pair('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', 'Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, payment na costs dza u dzi swikisa.'),
+          rationale: pair('Confirmed orders give information about demand. Their value still depends on reliable supply, payment and the costs of fulfilling them.', "Dzioda dzo khwaṱhiswaho dzi ni fha mafhungo nga ha demand. Ndeme yadzo i kha ḓi dzhia uri hu vhe na reliable supply, mbadelo na costs dza u dzi swikisa."),
         },
       ],
     },

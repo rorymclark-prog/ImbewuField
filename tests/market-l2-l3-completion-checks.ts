@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { rewindMarketOrdinaryPresentation, validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
 
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-APPLIED-2026-10-05.json', import.meta.url), 'utf8'));
 const source = COURSE_MODULES.find(module => module.id === 'market-community')!;
@@ -10,8 +11,8 @@ const targetKeys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraf
 // Historical tests describe earlier partial drafts. Validate their accepted
 // source/prior/final edges before reconstructing that history, so changing a
 // final target or its English pair still fails those tests.
-export function reconstructMarketBeforeL2L3Completion<T extends { lessons: readonly any[] }>(native: T, language: keyof typeof targetKeys): T {
-  const prior = structuredClone(native);
+export function reconstructMarketBeforeL2L3Completion<T extends { lessons: readonly any[]; language: keyof typeof targetKeys }>(native: T, language: keyof typeof targetKeys): T {
+  const prior = validateAndRewindMarketOrdinary(native, language);
   const key = targetKeys[language];
   for (const field of proof.fields.filter((row: any) => row.language === language)) {
     const lesson = prior.lessons.find(item => item.id === field.lessonId)!;
@@ -44,9 +45,10 @@ export function reconstructMarketBeforeL2L3Completion<T extends { lessons: reado
 }
 
 export const reconstructMarketPresentationBeforeCompletion: typeof resolveLearnerLessonPresentation = (...args) => {
-  const result = resolveLearnerLessonPresentation(...args);
+  let result = resolveLearnerLessonPresentation(...args);
   const [lesson, language] = args;
   if (result.status !== 'draft' || !['st', 've', 'ts'].includes(language)) return result;
+  result = rewindMarketOrdinaryPresentation(result, lesson.id, language as keyof typeof targetKeys) as typeof result;
   for (const field of proof.fields.filter((row: any) => row.language === language && row.lessonId === lesson.id)) {
     let container: any = result.content;
     let key = field.fieldPath;

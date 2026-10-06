@@ -105,7 +105,7 @@ test('Soil and Market alt text keeps the pictured counts, order and direction', 
     const routes = alt('market-community', 'market-community-l2', lang);
     assert.match(routes, /three|tharu|tinharhu/i);
     assert.ok(routes.indexOf('roadside stall') < routes.indexOf('shop') && routes.indexOf('shop') < Math.max(routes.indexOf('household'), routes.indexOf('muṱani'), routes.indexOf('ndyangu')), `${lang}: preserve the three route order`);
-    assert.match(routes, /one farm|farm nthihi|farm rin’we/);
+    assert.match(routes, /one farm|farm nthihi|farm rin’we|bulasi ḽithihi/i, `${lang}: all three routes still come from one farm`);
     const beds = alt('market-community', 'market-community-l3', lang);
     assert.match(beds, /five|miṱanu|miṱanu|Five/i);
     assert.match(beds, /arrows|miseve|misevhe/);

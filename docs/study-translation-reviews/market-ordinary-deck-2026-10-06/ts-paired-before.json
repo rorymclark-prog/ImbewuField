@@ -250,38 +250,9 @@
         },
         "body": [
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Before setting a price, record production, packing and selling ",
-                "status": "draft",
-                "text": "U nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa ",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              },
-              {
-                "sourceEnglish": "costs",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
-              },
-              {
-                "sourceEnglish": ", including ",
-                "status": "draft",
-                "text": ", ku katsa ",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              },
-              {
-                "sourceEnglish": "labour",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
-              },
-              {
-                "sourceEnglish": " and transport.",
-                "status": "draft",
-                "text": " ni vutleketli.",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              }
-            ],
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            "status": "draft",
+            "text": "U nga si veka nxavo, tsala production, packing and selling costs, ku katsa labour ni transport.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -382,31 +353,13 @@
         "body": [
           {
             "status": "draft",
-            "text": "Vutisa leswi muxavi a swi lavaka: xihumisiwa, nhlayo, khwalithi, ku yisa ni siku ro hakela.",
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            "text": "Vutisa leswi muxavi a swi lavaka: product, nhlayo, quality, delivery ni siku ro hakela.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Compare ",
-                "status": "draft",
-                "text": "Pimanisa ",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              },
-              {
-                "sourceEnglish": "market fees",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
-              },
-              {
-                "sourceEnglish": ", transport, packing and unsold produce as well as the selling price.",
-                "status": "draft",
-                "text": ", vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              }
-            ],
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+            "status": "draft",
+            "text": "Pimanisa market fees, transport, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
             "status": "draft",
@@ -676,69 +629,9 @@
             "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Compare the money received after ",
-                "status": "draft",
-                "text": "Pimanisa mali leyi amukeriweke endzhaku ka ",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              },
-              {
-                "sourceEnglish": "fees",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
-              },
-              {
-                "sourceEnglish": ", transport and ",
-                "status": "draft",
-                "text": ", vutleketli ni ",
-                "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
-              },
-              {
-                "sourceEnglish": "spoilage",
-                "status": "english-hold",
-                "reason": "Exact English technical or business precision retained; not fluent reviewed."
-              },
-              {
-                "sourceEnglish": " for each option. ",
-                "status": "draft",
-                "text": " eka option yin’wana ni yin’wana. ",
-                "reason": "Existing option is retained contextual borrowed noun; each-option qualifier follows that noun in Xitsonga, so this complete qualifier clause stays together."
-              },
-              {
-                "sourceEnglish": "Do not assume the ",
-                "status": "draft",
-                "text": "U nga ehleketi leswaku ",
-                "reason": "Checked source-bound native negative instruction."
-              },
-              {
-                "sourceEnglish": "nearest buyer",
-                "status": "english-hold",
-                "reason": "Nearest superlative retained exactly."
-              },
-              {
-                "sourceEnglish": " always gives the ",
-                "status": "draft",
-                "text": " u nyika ",
-                "reason": "Shared predicate context: source always gives the best return. maps to target u nyika best return minkarhi hinkwato.; the always qualifier is realized after the held return noun in the following context segment.",
-                "semanticContext": "nearest-return-predicate"
-              },
-              {
-                "sourceEnglish": "best return",
-                "status": "english-hold",
-                "reason": "Precise best-return comparison retained exactly.",
-                "semanticContext": "nearest-return-predicate"
-              },
-              {
-                "sourceEnglish": ".",
-                "status": "draft",
-                "text": " minkarhi hinkwato.",
-                "reason": "Completes the same nearest-return predicate context; minkarhi hinkwato translates the source always qualifier from its preceding source span, in checked native target order. This segment is not a standalone punctuation translation.",
-                "semanticContext": "nearest-return-predicate"
-              }
-            ],
-            "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed; root-approved TS17 native warning supplement d3a4e5d3, first comparison unchanged"
+            "status": "draft",
+            "text": "Pimanisa mali leyi amukeriweke endzhaku ka fees, transport ni spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku muxavi wa le kusuhi u tshamela ku nyika the best return.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
           }
         ]
       }

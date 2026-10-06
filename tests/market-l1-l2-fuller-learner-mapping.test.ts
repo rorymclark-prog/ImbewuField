@@ -7,6 +7,7 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { validateAndRewindMarketOrdinary } from './market-ordinary-completion-history-checks.ts';
 
 type Language = 'st' | 've' | 'ts';
 type AppliedRow = {
@@ -30,10 +31,12 @@ const mapping = JSON.parse(readFileSync(
 
 const marketL2L3 = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/MARKET-COMMUNITY-L2-L3-ORDINARY-COMPLETION-APPLIED-2026-10-05.json', import.meta.url), 'utf8'));
 
+// The 2026-10-03 mapping is historical. Its full-before check now validates and
+// rewinds the later 2026-10-06 Market residual batch before checking these same rows.
 const drafts = {
-  st: SESOTHO_MARKET_COMMUNITY_DRAFT,
-  ve: TSHIVENDA_MARKET_COMMUNITY_DRAFT,
-  ts: XITSONGA_MARKET_COMMUNITY_DRAFT,
+  st: validateAndRewindMarketOrdinary(SESOTHO_MARKET_COMMUNITY_DRAFT, 'st'),
+  ve: validateAndRewindMarketOrdinary(TSHIVENDA_MARKET_COMMUNITY_DRAFT, 've'),
+  ts: validateAndRewindMarketOrdinary(XITSONGA_MARKET_COMMUNITY_DRAFT, 'ts'),
 };
 const learnerField = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 

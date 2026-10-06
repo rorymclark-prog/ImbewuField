@@ -1,3 +1,5 @@
+import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
+import { marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
 import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 import { introDeckBeforeOrdinary } from './intro-ordinary-paired-history-checks.ts';
 import { waterDeckBeforeReviewedPrecision } from './water-reviewed-deck-history-checks.ts';
@@ -183,7 +185,8 @@ test('Market L1 paired-deck repairs bind complete approved clauses and preserve 
 
   for (const language of ['st', 've', 'ts'] as const) {
     const languageProof = proof.languages[language];
-    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${language}.paired-draft.json`, 'utf8'));
+    // 2026-10-06: validate all fifteen current fields and every unlisted pair before the old L1 proof.
+    const packet = marketDeckBeforeOrdinary()[language];
     const slides = validatePairedDraft(packet, marketSource, language);
     assert.equal(packet.reviewStatus, 'unreviewed');
     assert.equal(languageProof.bodyFields.length, 17);
@@ -233,16 +236,17 @@ test('Market L1 paired-deck repairs bind complete approved clauses and preserve 
 
     const languageAssetProof = assetProof.languages[language];
     const manifest = JSON.parse(readFileSync(languageAssetProof.manifestPath, 'utf8'));
-    assert.equal(manifest.pairedSourceSha256, sha256File(`docs/narration/market-community.${language}.paired-draft.json`),
+    assert.equal(manifest.pairedSourceSha256, sha256File(`docs/study-translation-reviews/market-ordinary-deck-2026-10-06/${language}-paired-before.json`),
       `${language}: rendered-asset manifest is bound to the applied paired source`);
     assert.deepEqual(languageAssetProof.expectedChangedFrames, expectedChangedFrames[language]);
     assert.equal(languageAssetProof.assets.length, expectedChangedFrames[language].length);
     for (const rendered of languageAssetProof.assets) {
       const asset = readFileSync(rendered.path);
+      const historical = marketMediaBeforeEarlierProof(rendered.path);
       const manifestEntry = manifest.slides.find((entry: any) => entry.slide === rendered.slide);
-      assert.equal(manifestEntry.sha256, sha256File(rendered.path),
+      assert.equal(manifestEntry.sha256, historical?.sha256 ?? sha256File(rendered.path),
         `${language} slide ${rendered.slide}: manifest checksum matches the installed WebP`);
-      assert.equal(manifestEntry.bytes, asset.byteLength);
+      assert.equal(manifestEntry.bytes, historical?.bytes ?? asset.byteLength);
       assert.equal(manifestEntry.pixels, '1440x5400');
     }
     assert.match(manifest.note, /L1 teaching-price example is now a source-bound machine draft/);
@@ -1886,7 +1890,9 @@ test('regional Study frames draft screened observations while risky advice stays
   ] as const;
   for (const { moduleId, lang, drafted, held, ...rest } of cases) {
     const source = englishSlideRecords(readFileSync(`docs/narration/${moduleId}.en.md`, 'utf8'));
-    const packet = JSON.parse(readFileSync(`docs/narration/${moduleId}.${lang}.paired-draft.json`, 'utf8'));
+    // 2026-10-06: permission framing is now mixed; validate and rewind only the accepted Market layer.
+    const packet = moduleId === 'market-community' ? marketDeckBeforeOrdinary()[lang]
+      : JSON.parse(readFileSync(`docs/narration/${moduleId}.${lang}.paired-draft.json`, 'utf8'));
     const slides = validatePairedDraft(packet, source, lang);
     for (const item of drafted) {
       const [n, p] = item.split(':').map(Number);
@@ -2399,7 +2405,8 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
     const path = `docs/narration/${field.moduleId}.${field.language}.paired-draft.json`;
     const packet = field.moduleId === 'intro-permaculture'
       ? introDeckBeforeOrdinary(field.language)
-      : JSON.parse(readFileSync(path, 'utf8')); // Reading outcomes still use the live deck
+      : field.moduleId === 'market-community' ? marketDeckBeforeOrdinary()[field.language]
+        : JSON.parse(readFileSync(path, 'utf8')); // Reading outcomes still use the live deck
     const sourceSlides = englishSlideRecords(readFileSync(`docs/narration/${field.moduleId}.en.md`, 'utf8'));
     const validated = validatePairedDraft(packet, sourceSlides, field.language);
     assert.equal(packet.reviewStatus, 'unreviewed');
@@ -2459,7 +2466,7 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
       // all current frames/source/unlisted media before comparing this older outcomes descriptor.
       const earlierIntro = frame.module === 'intro-permaculture' && frame.slide === 22
         && (frame.language === 've' || frame.language === 'ts')
-        ? introMediaBeforeEarlierProof(frame.path) : undefined;
+        ? introMediaBeforeEarlierProof(frame.path) : marketMediaBeforeEarlierProof(frame.path);
       assert.equal(earlierIntro?.bytes ?? bytes.byteLength, frame.bytes, `${frame.path}: manifest byte count matches the still`);
       assert.equal(earlierIntro?.sha256 ?? digest, frame.sha256, `${frame.path}: manifest hash matches the still`);
     }
@@ -2587,7 +2594,8 @@ test('regional Market slides preserve the teaching-price source, seed holds and 
     ts: 'Lexi i xikombiso xo dyondzisa, a hi nxavo wa makete',
   } as const;
   for (const lang of ['st', 've', 'ts'] as const) {
-    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${lang}.paired-draft.json`, 'utf8'));
+    // 2026-10-06: full current Market acceptance/unlisted guards precede these historical exact claims.
+    const packet = marketDeckBeforeOrdinary()[lang];
     const slides = validatePairedDraft(packet, source, lang);
     assert.equal(packet.reviewStatus, 'unreviewed');
     for (const [slideNumber, paragraphIndex] of [[7, 1], [15, 3]] as const) {
@@ -2732,7 +2740,8 @@ test('Market seed record and advice slides reuse only exact whole learner paragr
   ] as const;
 
   for (const item of reuse) {
-    const packet = JSON.parse(readFileSync(`docs/narration/market-community.${item.lang}.paired-draft.json`, 'utf8'));
+    // 2026-10-06: full current Market acceptance/unlisted guards precede these historical exact claims.
+    const packet = marketDeckBeforeOrdinary()[item.lang];
     const slides = validatePairedDraft(packet, marketSource, item.lang);
     const slide = slides[item.slide - 1];
     const lesson = module.lessons.find(({ id }) => id === item.lessonId)!;

@@ -1,3 +1,5 @@
+import { marketAssetSizesBeforeOrdinary, marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
+import { vegetablesAssetSizesBeforePestPrecision } from './vegetables-pest-precision-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -98,7 +100,10 @@ const priorTotalComment = '// 1905 files, 708.5 MB total.';
 
 /** Validate all 30 current Intro frames, deck bindings and unlisted media before rewinding its exact later overlay. */
 export function introAssetSizesBeforeOrdinary(currentManifest?: string) {
-  const current = currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  // 2026-10-06: always validate the full accepted Market after-layer first, even
+  // when the caller already supplied its exact baseline through the history chain.
+  const marketPrior = marketAssetSizesBeforeOrdinary(currentManifest);
+  const current = currentManifest === undefined ? vegetablesAssetSizesBeforePestPrecision(marketPrior) : marketPrior;
   validateCurrentIntroLayer(current);
   assert.equal(current.split(currentTotalComment).length - 1, 1,
     'the later Intro overlay updates only the known aggregate-size comment');
@@ -119,6 +124,9 @@ export function introAssetSizesBeforeOrdinary(currentManifest?: string) {
 
 /** Return an earlier proof's frame descriptor only for an Intro URL superseded by this accepted overlay. */
 export function introMediaBeforeEarlierProof(path: string) {
+  // 2026-10-06: the newer Market overlay must be fully verified before an older descriptor.
+  const market = marketMediaBeforeEarlierProof(path);
+  if (market) return market;
   validateCurrentIntroLayer(readFileSync('lib/course-asset-sizes.ts', 'utf8'));
   const normalized = path.startsWith('public/') ? path : path.replace(/^\//, 'public/');
   const frame = frames.find(row => row.asset === normalized);

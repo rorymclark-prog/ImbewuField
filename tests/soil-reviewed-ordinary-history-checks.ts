@@ -1,3 +1,4 @@
+import { marketAssetSizesBeforeOrdinary } from './market-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -123,7 +124,8 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
 }
 
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
-  let prior = vegetablesAssetSizesBeforePestPrecision(currentManifest);
+  // 2026-10-06: validate the complete newer Market layer before the older media history.
+  let prior = vegetablesAssetSizesBeforePestPrecision(marketAssetSizesBeforeOrdinary(currentManifest));
   prior = introAssetSizesBeforeOrdinary(prior);
   prior = checkCurrentAssetsAndManifest(prior);
   for (const row of assets) {
