@@ -914,7 +914,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       {fullSizeImageUrl && (
         <dialog
           ref={imageViewerRef}
-          className={`${styles.imageViewer} ${showZuluSourcePair ? styles.imageViewerWithSourcePair : ''}`}
+          className={`${styles.imageViewer} ${showZuluSourcePair || hasCurrentRelease ? styles.imageViewerWithSourcePair : ''}`}
           aria-label={t('courseDeckOpenImageAria').replace('{title}', heading)}
           onKeyDown={(event) => event.stopPropagation()}
           onClose={() => { setChromeVisible(true); imageButtonRef.current?.focus(); }}
