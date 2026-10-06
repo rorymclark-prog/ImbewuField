@@ -16,13 +16,13 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
   },
   "description": {
     "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
-    "tshivendaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
-    "reviewStatus": "hold"
+    "tshivendaDraft": "Akhani mavu a re na vhutshilo nga compost, mulch, cover crops na worm farms.",
+    "reviewStatus": "machine-draft"
   },
   "lessons": [
     {
       "id": "soil-health-l1",
-      "infographicAlt": { sourceEnglish: "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.", tshivendaDraft: "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.", reviewStatus: 'machine-draft' },
+      "infographicAlt": { sourceEnglish: "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.", tshivendaDraft: "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, mavu a re kha jar a settles into three layers — sand, silt na clay.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
         "tshivendaDraft": "U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe",
@@ -30,7 +30,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
-        "tshivendaDraft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.\n\nHezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.\n\nPale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.\n\nSedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+        "tshivendaDraft": "Mavu a na mifuda minzhi ya zwithu zwine zwa tshila. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.\n\nHezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na u xela ha organic matter zwi nga limit midzi na vhutshilo ha mavu.\n\nPale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.\n\nSedzani patterns tsimuni yoṱhe. Sedzani ḓivhazwakale ya nḓila ya u langa tsimu, drainage na u aluwa ha zwimela ni sa athu khetha nḓila ya u tandulula thaidzo.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -51,7 +51,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
-          "tshivendaDraft": "Ṱolani drainage, midzi na management history ni sa athu khetha remedy.",
+          "tshivendaDraft": "Ṱolani drainage, midzi na ḓivhazwakale ya nḓila ya u langa tsimu ni sa athu khetha nḓila ya u tandulula thaidzo.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -110,7 +110,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Check drainage, roots, moisture and management history",
-              "tshivendaDraft": "Ṱolani drainage, midzi, vhunyunyu na management history",
+              "tshivendaDraft": "Ṱolani drainage, midzi, vhunyunyu na ḓivhazwakale ya nḓila ya u langa tsimu.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -130,7 +130,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       "id": "soil-health-l2",
-      "infographicAlt": { sourceEnglish: "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.", tshivendaDraft: "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.", reviewStatus: 'machine-draft' },
+      "infographicAlt": { sourceEnglish: "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.", tshivendaDraft: "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; arrow i sumbedza uri heap i a rembuluswa.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Making and Using Compost",
         "tshivendaDraft": "U Ita na U Shumisa Khomposo (Compost)",
@@ -159,7 +159,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
-          "tshivendaDraft": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa regional timetable yo vhewaho.",
+          "tshivendaDraft": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa timetable ya dzingu yo vhewaho.",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -178,7 +178,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
-              "tshivendaDraft": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+              "tshivendaDraft": "Engedzani zwinzhi zwa material ya carbon yo omaho, sa straw, nahone ni rembuluse thulwi ya compost.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -238,7 +238,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
     },
     {
       "id": "soil-health-l3",
-      "infographicAlt": { sourceEnglish: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.", tshivendaDraft: "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.", reviewStatus: 'machine-draft' },
+      "infographicAlt": { sourceEnglish: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.", tshivendaDraft: "Zwipiḓa zwivhili zwa mavu nga fhasi ha ḓuvha ḽithihi: mavu a songo fukedzwaho o pwashekanaho nahone o oma; mavu o funedzwaho nga mulch a kha ḓi vha na muvhala wa swiswi nahone a tshe na vhunyunyu.", reviewStatus: 'machine-draft' },
       "title": {
         "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
         "tshivendaDraft": "Mulching and Cover Crops: U tsireledza mavu na Building Soil",
@@ -291,7 +291,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
-              "tshivendaDraft": "Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm",
+              "tshivendaDraft": "Wind erosion ya topsoil yo omaho na u tshinyala ha soil structure nga u rwa ha spring storm",
               "reviewStatus": "machine-draft"
             },
             {
@@ -316,7 +316,7 @@ export const TSHIVENDA_SOIL_HEALTH_DRAFT: TshivendaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "It is always safe on salad leaves",
-              "tshivendaDraft": "I dzula yo tsireledzea tshifhinga tshoṱhe kha salad leaves",
+              "tshivendaDraft": "I dzula yo tsireledzea tshifhinga tshoṱhe kha maṱari a saladi.",
               "reviewStatus": "machine-draft"
             },
             {

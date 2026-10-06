@@ -1,0 +1,1716 @@
+{
+  "date": "2026-10-06",
+  "reason": "Frozen pre-ordinary Soil snapshots independently source-checked against c5f1771e and prior955. Accepted root packets are separate authorities; all current fields must match their full overlay before rewind.",
+  "baseSHA": "c5f1771eaa7bb014aefe9a19ba349d149b4b4a57",
+  "canonical": {
+    "id": "soil-health",
+    "title": "Soil Health & Composting",
+    "description": "Build living soil with compost, mulch, cover crops and worm farms.",
+    "durationMins": 20,
+    "category": "soil",
+    "lessons": [
+      {
+        "id": "soil-health-l1",
+        "infographicUrl": "/course-images/soil-health/soil-health-l1.jpg",
+        "infographicAlt": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+        "title": "Understanding Your Soil: The Foundation of Everything",
+        "body": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+        "keyPoints": [
+          "Use several clues to assess soil condition",
+          "Soil colour and worm counts alone do not diagnose the cause of a problem",
+          "A jar exercise gives a rough indication of texture, not a complete soil test",
+          "Check drainage, roots and management history before choosing a remedy"
+        ],
+        "quiz": [
+          {
+            "q": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+            "options": [
+              "The soil definitely needs less water",
+              "Fine particles may still be suspended; more observation is needed",
+              "All the clay has already settled",
+              "The crop definitely needs gypsum"
+            ],
+            "correct": 1,
+            "rationale": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment."
+          },
+          {
+            "q": "A farmer finds compacted soil and few worms. What is the useful next step?",
+            "options": [
+              "Assume every soil organism has died",
+              "Add a treatment without checking the site",
+              "Check drainage, roots, moisture and management history",
+              "Give up because the soil cannot improve"
+            ],
+            "correct": 2,
+            "rationale": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause."
+          }
+        ]
+      },
+      {
+        "id": "soil-health-l2",
+        "infographicUrl": "/course-images/soil-health/soil-health-l2.jpg",
+        "infographicAlt": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+        "title": "Making and Using Compost",
+        "body": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+        "keyPoints": [
+          "Balance browns, greens, moisture and air",
+          "A hot centre does not prove the whole heap is sanitised",
+          "Keep seed pods and contaminated materials out",
+          "Judge readiness from the compost condition, not a fixed regional timetable"
+        ],
+        "quiz": [
+          {
+            "q": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+            "options": [
+              "Add more nitrogen-rich green material",
+              "Add more dry carbon material like straw and turn the heap",
+              "Stop turning it and let it cool",
+              "Add more water — the smell means it's too dry"
+            ],
+            "correct": 1,
+            "rationale": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy."
+          },
+          {
+            "q": "Why keep wattle seed pods out of an ordinary compost heap?",
+            "options": [
+              "Bark makes every heap too hot",
+              "Some seeds may survive and spread when the compost is used",
+              "Pods always attract termites",
+              "Pods release a gas that kills every soil organism"
+            ],
+            "correct": 1,
+            "rationale": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost."
+          }
+        ]
+      },
+      {
+        "id": "soil-health-l3",
+        "infographicUrl": "/course-images/soil-health/soil-health-l3.jpg",
+        "infographicAlt": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+        "title": "Mulching and Cover Crops: Protecting and Building Soil",
+        "body": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+        "keyPoints": [
+          "Protect exposed soil with suitable cover",
+          "Keep mulch away from trunks and stems",
+          "Choose cover crops for local water, weather and the following crop",
+          "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants"
+        ],
+        "quiz": [
+          {
+            "q": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+            "options": [
+              "Overheating in winter sun and waterlogging from rain",
+              "Frost kills soil life and weeds take over early",
+              "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+              "Soil pH drops and nitrogen builds up"
+            ],
+            "correct": 2,
+            "rationale": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away."
+          },
+          {
+            "q": "What should you remember about liquid draining from a worm bin?",
+            "options": [
+              "It is always safe on salad leaves",
+              "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+              "It is identical to finished worm castings",
+              "A fixed dilution makes every liquid safe"
+            ],
+            "correct": 1,
+            "rationale": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops."
+          }
+        ]
+      }
+    ]
+  },
+  "before": {
+    "st": {
+      "id": "soil-health",
+      "language": "st",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "soil"
+      },
+      "title": {
+        "sourceEnglish": "Soil Health & Composting",
+        "sesothoDraft": "Bophelo bo Botle ba Mobu le ho Etsa Kompose (Compost)",
+        "reviewStatus": "machine-draft"
+      },
+      "description": {
+        "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "sesothoDraft": "Aha mobu o phelang ka kompose (compost), mulch, dijalo tse sireletsang mobu (cover crops) le mapolasi a diboko.",
+        "reviewStatus": "machine-draft"
+      },
+      "lessons": [
+        {
+          "id": "soil-health-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+            "sesothoDraft": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
+            "sesothoDraft": "Ho Utlwisisa Mobu wa Hao: Motheo wa Ntho e Nngwe le e Nngwe",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+            "sesothoDraft": "Mobung ho na le mefuta e mengata ya dintho tse phelang. Baktheria le fungi di thusa ho break down organic matter le ho tsamaisa dimatlafatsi ka potoloho.\n\nFungi tse ding di thusa metso ho monya dimatlafatsi. Meselana e entsweng ke diboko e ka thusa metsi le moya ho kena mobung.\n\nSheba metso, sebopeho sa mobu le motsamao wa metsi, hammoho le dintho tse phelang mobung tse bonahalang.\n\nKenya mobu le metsi ka jar e bonaletsang, o kenye hanyenyane ya suitable dispersing detergent. E kwale mme o e sisinye, ebe o e siya e sa sisinyehe.\n\nSand e dula fatshe pele. Silt e latela, athe clay e ka nna ya dula e suspended nako e telele haholo.\n\nEna ke boikwetliso ba ho ithuta ba kakanyo feela. Dikgobokano tsa mobu (clumps) le clay e so duleng fatshe di ka o kgelosa; sebedisa soil laboratory ha o hloka soil texture e nepahetseng.\n\nLera le letenya la sand ka tlasa cloudy water ha le eso o bolelle final proportions. Fine particles tse ding di ka nna tsa dula di suspended.\n\nBapisa layers tse lutseng fatshe, ’me u utloe mobu tšimong.\n\nNgola seo u se bonang le seo u sa kholisehang ka sona. U se ke ua etsa qeto ea ho nosetsa kapa ho alafa mobu ka lebaka la nkho e le ’ngoe feela.\n\nHo thatafala ha mobu (compaction), drainage e mpe le tahlehelo ya organic matter di ka sitisa metso le bophelo ba mobu.\n\nMmala o lerootho kapa palo e nyane ya diboko ha e pake hore dikhemikhale di bolaile mobu. Mosebetsi wa diboko le wona o a fetoha ho latela mongobo le sehla.\n\nBatla mekhoa e iphetang tšimong. Hlahloba nalane ea tsamaiso, drainage le kholo ea limela pele u khetha tharollo.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Use several clues to assess soil condition",
+              "sesothoDraft": "Sebedisa dintlha le matshwao a mmalwa ho lekola boemo ba mobu",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+              "sesothoDraft": "Mmala wa mobu le palo ya diboko feela ha di fumane sesosa sa bothata",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+              "sesothoDraft": "Boikwetliso ba jar bo fana ka kakanyo ya soil texture, eseng soil test e felletseng.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+              "sesothoDraft": "Hlahloba drainage, metso le nalane ya tshebediso pele o kgetha pheko",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+                "sesothoDraft": "Nkho ya mobu e sa ntse e na le cloudy water ka hodima lera la sand. Molemi o lokela ho fihlela qeto efe?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "The soil definitely needs less water",
+                  "sesothoDraft": "Mobu o hloka metsi a fokolang ka nnete",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+                  "sesothoDraft": "Fine particles di ka nna tsa sala di suspended; ho hlokahala ho sheba ho eketsehileng",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "All the clay has already settled",
+                  "sesothoDraft": "Letsopa lohle le se le dutse fatshe",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The crop definitely needs gypsum",
+                  "sesothoDraft": "Sejalo se hloka gypsum ka nnete",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+                "sesothoDraft": "Cloudy water e ka ba le fine particles tse eso dule fatshe. Ho sheba hang feela qalong ho ke ke ha bontsha final proportions kapa treatment e loketseng.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+                "sesothoDraft": "Molemi o fumana mobu o kitlaneng le diboko tse mmalwa feela. Mohato o latelang o nang le thuso ke ofe?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Assume every soil organism has died",
+                  "sesothoDraft": "Nahana hore setshedi se seng le se seng sa mobu se shwele",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add a treatment without checking the site",
+                  "sesothoDraft": "Kenya pheko kapa kalafo ntle le ho hlahloba setsha",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Check drainage, roots, moisture and management history",
+                  "sesothoDraft": "Hlahloba drainage, metso, mongobo le nalane ya tshebediso le botsamaisi",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Give up because the soil cannot improve",
+                  "sesothoDraft": "Nyahama hobane mobu o ke ke wa hlola o ntlafala",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+                "sesothoDraft": "Ditekolo tse mmalwa di thusa ho fumana bothata. Mosebetsi wa diboko o fapana le maemo, kahoo diboko tse mmalwa feela ha di tiise sesosa sa bothata.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l2",
+          "infographicAlt": {
+            "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+            "sesothoDraft": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Making and Using Compost",
+            "sesothoDraft": "Ho Etsa le ho Sebedisa Kompose (Compost)",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+            "sesothoDraft": "Compost ke organic matter e broken down ka tsela e laolwang.\n\nCompost e phethilweng e ka ntlafatsa sebopeho sa mobu mme ya fana ka dimatlafatsi.\n\nNako ya hore compost e lokele ho sebediswa e fapana ho ya ka dintho tse sebediswang, mongobo, moya le thempereitjha. Lebitso la profinse kapa palo e behilweng ya dibeke ha se readiness test.\n\nKopanya dry browns le fresh greens. Qoba layers tse teteaneng, tse metsi tse thibelang moya ho kena.\n\nHa qubu ya compost e ka ba slimy kapa e nkha ammonia haholo, eketsa dry browns mme o e phethole.\n\nHlahloba mongobo le moya ha qubu ya compost e ntse e fetoha; mokgwa o le mong wa ho kopanya ha o tshwanele motswako o mong le o mong wa dintho tse sebediswang.\n\nKarolo e bohareng e tjhesang ya qubu ha e pake hore karolo e nngwe le e nngwe ya yona e se e treated. Nako, temperature le tsamaiso ya yona kaofela di bohlokwa.\n\nBoloka nama, dairy, dimela tse kulang, pet waste le contaminated materials di le ka ntle ho tsamaiso ena e bonolo ya lapeng.\n\nU se ke ua nahana hore home composting e fedisa peo e nngwe le e nngwe ya mofoka kapa disease organism e nngwe le e nngwe. Sebedisa recognised process moo sanitation e hlokahalang.\n\nBoloka wattle seed pods di le ka ntle ho qubu ya compost. Qubu e tlwaelehileng e ka nna ya se etse hore peo e nngwe le e nngwe e be non-viable.\n\nSebedisa dintho tse hlwekileng feela, tse sa alafwang. Bark e bola butle; lebitso la yona feela ha le pake hore ha e na contamination.\n\nHlahloba qubu ya compost mme o e phethole ha e hloka moya o mongata kapa ho kopanngwa. E boloke e le mongobo, e se ke ya ba waterlogged.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Balance browns, greens, moisture and air",
+              "sesothoDraft": "Lekanyetsa tse sootho, tse tala, mongobo le moya",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+              "sesothoDraft": "Karolo e bohareng e chesang ha e pake hore qubu yohle e sanitised.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep seed pods and contaminated materials out",
+              "sesothoDraft": "Boloka seed pods le contaminated materials kantle.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+              "sesothoDraft": "Ahlola ho loka ho tswa boemong ba kompose, eseng lenaneong le behilweng la nako la lebatowa",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+                "sesothoDraft": "Qubu ya compost ya molemi e nkha ammonia haholo mme e metsi ebile e slimy. Tharollo ke efe?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Add more nitrogen-rich green material",
+                  "sesothoDraft": "Eketsa disebediswa tse tala tse nang le naetrojene e ngata",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+                  "sesothoDraft": "Eketsa disebediswa tse omileng tsa khabone (carbon) jwalo ka jwang bo omileng (straw) mme o phethole qubu",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop turning it and let it cool",
+                  "sesothoDraft": "Kgaotsa ho e phethola mme o e tlohele e fole",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more water — the smell means it's too dry",
+                  "sesothoDraft": "Eketsa metsi a mangata — monko o bolela hore e omeletse haholo",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+                "sesothoDraft": "Qubu e metsi, e slimy e ka hloka moya o mongata le material e ommeng ho feta. Eketsa dry browns mme o phethole qubu hore e bulehe mme moya o kene. Monko wa ammonia le wona o ka bontsha hore ho na le material e ngata haholo e nang le nitrogen. Hlahloba hore qubu e dule e le damp, e se be soggy.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+                "sesothoDraft": "Ke hobaneng ha o lokela ho boloka makgapha a dipeo tsa wattle kantle ho qubu e tlwaelehileng ya kompose?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Bark makes every heap too hot",
+                  "sesothoDraft": "Makgapetla a difate a etsa hore qubu e nngwe le e nngwe e tjhese haholo",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+                  "sesothoDraft": "Dipeo tse ding di ka nna tsa pholoha mme tsa nama ha kompose e sebediswa",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods always attract termites",
+                  "sesothoDraft": "Makgapha a dula a hulela mohlwa kamehla",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods release a gas that kills every soil organism",
+                  "sesothoDraft": "Makgapha a lokolla kgase e bolayang setshedi se seng le se seng sa mobu",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+                "sesothoDraft": "Qubu e tlwaelehileng e ka nna ya se pepesetse peo e nngwe le e nngwe maemong a ka e etsang hore e se hlole e kgona ho mela (non-viable). Ho ntsha makgapha a dipeo ho thibela hore a se ke a nama mmoho le kompose.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+            "sesothoDraft": "Dikarolo tse pedi tsa soil ka tlasa letsatsi le le leng: mobu o sa kwahelwang o petsohile mme o omme; mobu o kwahetsweng ka mulch o ntse o le lefifi ebile o le mongobo.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+            "sesothoDraft": "Ho Sebedisa Mulch le Dijalo tse Sireletsang Mobu (Cover Crops): Ho Sireletsa le ho Aha Mobu",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+            "sesothoDraft": "Koahela mobu o pepesitsweng ka mulch e hlwekileng e loketseng, jwalo ka straw, jwang bo ommeng kapa wood chips.\n\nMulch e ka fokotsa evaporation, ya fokotsa matla ao pula e otlang mobu ka ona, mme ya fokotsa kgolo ya mefoka.\n\nE boloke e le hole le trunks and stems. Hlahloba mongobo ka tlasa mulch mme o fetole layer; mulch e ngata ha e dule e le betere.\n\nCover crops di ka sireletsa mobu pakeng tsa dijalo tse ka sehloohong. Di kgethe ho latela boemo ba lehodimo ba sebakeng sa heno, metsi a fumanehang le ho lema ho latelang.\n\nMehlala ya thuto ena e kenyelletsa oats, lupins, sunn hemp le cowpea. Hlahloba hore di loketse sebaka sa heno pele o jala.\n\nLegumes di hloka bacteria tse loketseng le maemo a kgolo a loketseng hore di kgone ho fix nitrogen. Dimatlafatsi tse masalleng a tsona di a fumaneha ha thepa eo e ntse e bola.\n\nWorm farms di ka fetola food scraps le bedding tse loketseng hore e be worm castings. Hlahloba setshelo ho e-na le ho lebella letsatsi le behilweng la kotulo.\n\nMokedikedi o itshollang ka tlhaho ho tswa ho worm bin o bitswa leachate. Ha o tshwane le worm-casting tea e lokisitsweng.\n\nLeachate e ka ba le harmful organisms kapa dintho tse kotsi. O se ke wa e sebedisa hodima edible plants kapa wa nahana hore ho e hlapolla ho etsa hore e bolokehe.\n\nTšimo ea Highveld e siiloeng e sa koaheloa ka mor’a kotulo ea maize e tobana le likotsi tse peli tse kholo.\n\nMoea oa mariha o ka nka mobu o ommeng o ka holimo.\n\nSefefo sa pele se matla sa selemo se ka otla mobu o sa koaheloang ’me sa senya bokaholimo le sebopeho sa mobu. Ha metsi a phalla holim’a tšimo, a ka nka mobu o khoehileng.\n\nCover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Protect exposed soil with suitable cover",
+              "sesothoDraft": "Sireletsa mobu o pepesitsweng ka sekwahelo se loketseng",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep mulch away from trunks and stems",
+              "sesothoDraft": "Boloka mulch hole le trunks le stems.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
+              "sesothoDraft": "Kgetha dijalo tse sireletsang mobu ho latela metsi a lehae, maemo a lehodimo le sejalo se latelang",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+              "sesothoDraft": "Leachate ya worm bin ha ya lokela ho nkwa e le fertiliser e bolokehileng ka bohona; o se ke wa e sebedisa hodima edible plants.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+                "sesothoDraft": "Molemi wa Highveld o kotula poone (maize) ka Mmesa mme o siya tshimo e hlobotse mariha kaofela. Dikotsi tse pedi tse ka sehloohong ke dife?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+                  "sesothoDraft": "Ho tjhesa ho tlola tekanyo letsatsing la mariha le waterlogging ho tswa puleng",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Frost kills soil life and weeds take over early",
+                  "sesothoDraft": "Serame se bolaya bophelo ba mobu mme mefoka e nka sebaka pele ho nako",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+                  "sesothoDraft": "Wind erosion ya topsoil e ommeng le tahlehelo ya soil structure ka lebaka la tshusumetso ya spring storm.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Soil pH drops and nitrogen builds up",
+                  "sesothoDraft": "PH ya mobu e a theoha mme naetrojene e a bokellana",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+                "sesothoDraft": "Mobu o sa kwahelwang o pepesetswa moya wa mariha, o ka nkang topsoil e ommeng wa tsamaya nayo. Tshusumetso ya marothodi a pula e ka senya bokahodimo; moo metsi a phallang hodima tshimo, a ka nka mobu o hlephileng a o tlosa.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
+                "sesothoDraft": "O lokela ho hopola eng ka mokedikedi o rothang ho tswa moqomong wa diboko?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "It is always safe on salad leaves",
+                  "sesothoDraft": "O dula o bolokehile kamehla hodima mahlaku a salate",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+                  "sesothoDraft": "O ka ba le ditshedi kapa dintho tse kotsi; ho o hlapolla hase tiisetso ya polokeho",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It is identical to finished worm castings",
+                  "sesothoDraft": "O tshwana hantle le manyolo a phethilweng a diboko (worm castings)",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A fixed dilution makes every liquid safe",
+                  "sesothoDraft": "Ho hlapolla ho itseng ho behilweng ho etsa hore mokedikedi o mong le o mong o bolokehe",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+                "sesothoDraft": "Leachate ke mokelikeli o itshollang ka tlhaho ho tswa ho worm bin. Composition ya yona e a fapana, kahoo ha ya lokela ho hlahiswa jwalo ka feed e bolokehileng ka tiisetso bakeng sa edible crops.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ve": {
+      "id": "soil-health",
+      "language": "ve",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "soil"
+      },
+      "title": {
+        "sourceEnglish": "Soil Health & Composting",
+        "tshivendaDraft": "Mutakalo wa Mavu na U Ita Khomposo (Composting)",
+        "reviewStatus": "machine-draft"
+      },
+      "description": {
+        "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "tshivendaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "reviewStatus": "hold"
+      },
+      "lessons": [
+        {
+          "id": "soil-health-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+            "tshivendaDraft": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
+            "tshivendaDraft": "U Pfesesa Mavu Aṋu: Mutheo wa Zwoṱhe",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+            "tshivendaDraft": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.\n\nDziṅwe fungi dzi thusa midzi u dzhia nutrients. Worm channels dzi nga thusa uri maḓi na muya zwi dzhene mavuni.\n\nSedzani midzi, tshivhumbeo tsha mavu na u tshimbila ha maḓi, ni dovhe ni sedze zwithu zwi tshilaho zwine zwa vhonala mavuni.\n\nVheani mavu na maḓi kha jar ine na kona u vhona zwa nga ngomu hayo, ni engedze suitable dispersing detergent ṱhukhu. Ni vale jar, ni i dzinginye, ni i sie i sa tshintshwi.\n\nSand i dzula fhasi u thoma. Silt i dzula fhasi nga murahu, ngeno clay i tshi nga sala i suspended lwa tshifhinga tshilapfu vhukuma.\n\nHezwi ndi nyito ya u guda ya u anganyela. Clumps na clay i sa athu u dzula fhasi zwi nga ni xedza; shumisani soil laboratory musi accurate texture i tshi ṱoḓea.\n\nThick sand layer nga fhasi ha cloudy water a i athu u ni vhudza final proportions. Fine particles dzi nga kha ḓi vha suspended.\n\nVhambedzani layers dze dza dzula fhasi, ni dovhe ni fare mavu tsimuni.\n\nṄwalani zwe na zwi vhona na zwine zwa kha ḓi sa vha khagala. Ni songo dzhia phetho ya u sheledza kana u lafha mavu nga u sedza jar nthihi fhedzi.\n\nCompaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.\n\nPale colour kana worms dzi si gathi a zwi khwaṱhisedzi uri chemicals dzo vhulaha mavu. U shuma ha worms na hone hu a shanduka u ya nga vhunyunyu na khalaṅwaha.\n\nSedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Use several clues to assess soil condition",
+              "tshivendaDraft": "Shumisani zwiṱalusi zwo vhalaho u ṱola vhuimo ha mavu.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+              "tshivendaDraft": "Muvhala wa mavu na tshivhalo tsha zwivhungu fhedzi a zwi sumbedzi uri thaidzo yo vhangwa nga mini.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+              "tshivendaDraft": "U lingedza nga jar zwi sumbedza texture nga u anganyela fhedzi, a si soil test yo fhelelaho.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+              "tshivendaDraft": "Ṱolani drainage, midzi na management history ni sa athu khetha remedy.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+                "tshivendaDraft": "Jar ya mavu i kha ḓi vha na cloudy water nga nṱha ha lera la sand. Mulimi u fanela u phetha mini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "The soil definitely needs less water",
+                  "tshivendaDraft": "Mavu a ṱoḓa maḓi o fhungudzeaho nga ngoho",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+                  "tshivendaDraft": "Fine particles dzi nga kha ḓi vha suspended; u sedza hafhu zwi a ṱoḓea",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "All the clay has already settled",
+                  "tshivendaDraft": "Clay yoṱhe yo no dzula fhasi",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The crop definitely needs gypsum",
+                  "tshivendaDraft": "Tshimela tshi ṱoḓa gypsum nga ngoho",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+                "tshivendaDraft": "Cloudy water i nga vha na fine particles dzi sa athu u dzula fhasi. U sedza ha u thoma luthihi a hu nga khwaṱhisedzi final proportions kana treatment yo teaho.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+                "tshivendaDraft": "Mulimi u wana mavu o compacted na worms dzi si gathi. Ndi vhukando vhufhio vhu tevhelaho vhune ha nga thusa?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Assume every soil organism has died",
+                  "tshivendaDraft": "Humbulani uri soil organism iṅwe na iṅwe yo fa",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add a treatment without checking the site",
+                  "tshivendaDraft": "Engedzani treatment ni songo ṱola fhethu.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Check drainage, roots, moisture and management history",
+                  "tshivendaDraft": "Ṱolani drainage, midzi, vhunyunyu na management history",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Give up because the soil cannot improve",
+                  "tshivendaDraft": "Litshani u lingedza ngauri mavu a nga si khwinifhadzee",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+                "tshivendaDraft": "U sedza zwithu zwo vhalaho zwi thusa u wana thaidzo. Worm activity i a shanduka u ya nga zwiimo, ngauralo worms dzi si gathi fhedzi a dzi khwaṱhisedzi uri thaidzo yo vhangwa nga mini.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l2",
+          "infographicAlt": {
+            "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+            "tshivendaDraft": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Making and Using Compost",
+            "tshivendaDraft": "U Ita na U Shumisa Khomposo (Compost)",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+            "tshivendaDraft": "Compost ndi organic matter yo broken down nga fhasi ha zwiimo zwi langulwaho.\n\nCompost yo fhelelaho i nga khwinifhadza tshivhumbeo tsha mavu, na u engedza nutrients.\n\nTshifhinga tsha u luga ha manyoro tshi a fhambana u ya nga zwishumiswa (materials), vhunyunyu, muya na thempheretsha (temperature). Dzina ḽa vundu kana mbalo yo vhewaho ya vhege a si tsedzuluso ya u luga ha manyoro.\n\nTanganyani dry browns na fresh greens. Iledzani thick, wet layers dzi thivhelaho muya u dzhena.\n\nArali thulwi ya manyoro ya vha slimy kana ya nukha ammonia nga maanḓa, shelani dry browns nahone ni i rembuluse.\n\nSedzulusani vhunyunyu na muya musi thulwi i tshi khou shanduka; nḓila nthihi ya u ṱanganya a i lulameli muṱanganyo muṅwe na muṅwe wa zwishumiswa.\n\nVhukati ho fhisaho a vhu khwaṱhisedzi uri tshipida tshiṅwe na tshiṅwe tsha thulwi tsho treated. Tshifhinga, temperature na ndangulo zwoṱhe zwi na ndeme.\n\nIledzani u dzhenisa nyama, dairy, zwimela zwi re na malwadze, pet waste na contaminated materials kha iyi nḓila i leluwaho ya muṱani.\n\nNi songo humbula uri home composting i fhedza weed seed iṅwe na iṅwe kana disease organism iṅwe na iṅwe. Shumisani recognised process hune sanitation ya ṱoḓea.\n\nIledzani u dzhenisa wattle seed pods kha thulwi ya manyoro. Thulwi yo ḓoweleaho i nga kha ḓi sa ita uri mbeu iṅwe na iṅwe i vhe non-viable.\n\nShumisani zwishumiswa zwo kunaho, zwi songo treated fhedzi. Bark i a sina nga u ongowa; dzina layo fhedzi a si vhuṱanzi ha uri a i na contamination.\n\nSedzulusani thulwi ni i rembuluse musi i tshi toda muya wo engedzeaho kana u tanganiswa. I vhulungeni i na vhunyunyu, hu si waterlogged.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Balance browns, greens, moisture and air",
+              "tshivendaDraft": "Linganyisani browns, greens, vhunyunyu na muya.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+              "tshivendaDraft": "Vhukati ho fhisaho a vhu sumbedzi uri thulwi yoṱhe yo sanitised.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep seed pods and contaminated materials out",
+              "tshivendaDraft": "Siyani seed pods na contaminated materials nnḓa ha thulwi.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+              "tshivendaDraft": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa regional timetable yo vhewaho.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+                "tshivendaDraft": "Thulwi ya compost ya mulimi i nukha ammonia nga maanḓa nahone i na maḓi na slimy. Ndi mini zwine zwa nga lugisa?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Add more nitrogen-rich green material",
+                  "tshivendaDraft": "Engedzani green material ine ya vha na nitrogen nnzhi",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+                  "tshivendaDraft": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop turning it and let it cool",
+                  "tshivendaDraft": "Litshani u rembulusa thulwi, ni i tende i rothole.",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more water — the smell means it's too dry",
+                  "tshivendaDraft": "Engedzani maḓi manzhi — honoyo munukho u amba uri yo oma nga maanḓa",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+                "tshivendaDraft": "Thulwi i re na maḓi na slimy i nga ṱoḓa muya wo engedzeaho na zwishumiswa zwo omaho u fhira zwa zwino. Engedzani dry browns ni rembuluse thulwi uri i vulee. Munukho wa ammonia u nga dovha wa sumbedza uri hu na nitrogen-rich material nnzhi nga maanḓa. Sedzani uri thulwi i dzule i na vhunyunyu, hu si soggy.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+                "tshivendaDraft": "Ndi ngani ni tshi tea u vhea wattle seed pods nnḓa ha thulwi ya compost yo ḓoweleaho?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Bark makes every heap too hot",
+                  "tshivendaDraft": "Bark i ita uri thulwi iṅwe na iṅwe i fhise nga maanḓa",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+                  "tshivendaDraft": "Dziṅwe seeds dzi nga tshila nahone dza phaḓalala musi compost i tshi shumiswa",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods always attract termites",
+                  "tshivendaDraft": "Pods dzi kunga termites tshifhinga tshoṱhe",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods release a gas that kills every soil organism",
+                  "tshivendaDraft": "Pods dzi bvisa gas ine ya vhulaha zwivhumbiwa zwoṱhe zwa mavu",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+                "tshivendaDraft": "Thulwi yo ḓoweleaho i nga kha ḓi sa swikisa mbeu iṅwe na iṅwe kha zwiimo zwine zwa ita uri i vhe non-viable. U bvisa pods zwi thivhela uri dzi phaḓalale dzi tshi ṱuwa na compost.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+            "tshivendaDraft": "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+            "tshivendaDraft": "Mulching and Cover Crops: U tsireledza mavu na Building Soil",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+            "tshivendaDraft": "Fukedzani mavu a songo fukwaho nga mulch yo kunaho, yo teaho, u fana na straw, hatsi ho omaho kana wood chips.\n\nMulch i nga fhungudza evaporation; i nga fhungudza u rwa ha mvula; i nga thivhela weeds.\n\nI vhetseni kule na trunks and stems. Sedzani vhunyunyu nga fhasi hayo ni lulamise layer; mulch nnzhi a i dzuli i tshi vha yavhuḓi.\n\nCover crops dzi nga tsireledza mavu vhukati ha main crops. Khethani u ya nga mutsho wa henefho, maḓi ane a vha hone na u zwala hu tevhelaho.\n\nTsumbo dza ngudo dzi katela oats, lupins, sunn hemp na cowpea. Sedzani arali dzi tshi fanela fhethu haṋu ni sa athu dzi zwala.\n\nLegumes dzi ṱoḓa bacteria dzo teaho na zwiimo zwo teaho zwa u mela u fix nitrogen. Nutrients dzi re kha masalela adzo dzi a wanala musi material i tshi decompose.\n\nWorm farms dzi nga shandula food scraps na bedding zwo teaho zwa vha castings. Sedzani tshifaredzi, ni songo lavhelela ḓuvha ḽo vhewaho ḽa u kaṋa.\n\nLiquid i elelaho nga mvelo i tshi bva kha worm bin i vhidzwa leachate. A si tshithu tshithihi na worm-casting tea yo lugiswaho.\n\nLeachate i nga vha na harmful organisms kana zwithu zwi re na khombo. Ni songo i shumisa kha edible plants kana u humbula uri dilution i ita uri i vhe yo tsireledzeaho.\n\nTsimu ya Highveld yo salaho i songo fukedzwa nga murahu ha u kaṋa maize i sedzana na khombo mbili khulwane.\n\nMhepo ya vhuria i nga hwala topsoil yo omaho ya i bvisa.\n\nStorm ya u thoma khulwane ya spring i nga rwa mavu a songo fukedzwaho, ya tshinyadza surface na structure ya hone. Arali maḓi a tshi elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.\n\nCover crops, mulch na organic matter zwi nga thusa u fara mavu fhethu hayo na u thusa uri a dzule a tshi khou tshila.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Protect exposed soil with suitable cover",
+              "tshivendaDraft": "Tsireledzani mavu a songo fukedzwaho nga zwithu zwo teaho zwa u fukedza.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep mulch away from trunks and stems",
+              "tshivendaDraft": "Vhetseni mulch kule na trunks na stems.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
+              "tshivendaDraft": "Khethani cover crops u ya nga maḓi a henefho, mutsho na crop i tevhelaho.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+              "tshivendaDraft": "Worm-bin leachate a i sokou vha fertiliser yo tsireledzeaho; i vhetseni kule na edible plants.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+                "tshivendaDraft": "Mulimi wa Highveld u kaṋa maize nga April a sia tsimu i songo fukedzwaho vhuria hoṱhe. Ndi khombo dzifhio mbili khulwane?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+                  "tshivendaDraft": "U fhisa nga maanḓa fhasi ha ḓuvha ḽa vhuria na waterlogging i bvaho kha mvula",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Frost kills soil life and weeds take over early",
+                  "tshivendaDraft": "Frost i vhulaha zwivhumbiwa zwi tshilaho mavuni, weeds dzi dzhia fhethu nga u ṱavhanya",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+                  "tshivendaDraft": "Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Soil pH drops and nitrogen builds up",
+                  "tshivendaDraft": "Soil pH i tsela fhasi na nitrogen i a kuvhangana",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+                "tshivendaDraft": "Mavu a songo fukedzwaho a vha khagala kha mhepo ya vhuria, ine ya nga hwala topsoil yo omaho ya i bvisa. U rwa ha marothi a mvula hu nga tshinyadza surface; hune maḓi a elela nṱha ha tsimu, a nga hwala loosened soil a a bvisa.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
+                "tshivendaDraft": "Ni fanela u humbula mini nga liquid i elelaho i tshi bva kha worm bin?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "It is always safe on salad leaves",
+                  "tshivendaDraft": "I dzula yo tsireledzea tshifhinga tshoṱhe kha salad leaves",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+                  "tshivendaDraft": "I nga vha na harmful organisms kana zwithu zwi re na khombo; dilution a si safety guarantee",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It is identical to finished worm castings",
+                  "tshivendaDraft": "I fana tshoṱhe na finished worm castings",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A fixed dilution makes every liquid safe",
+                  "tshivendaDraft": "Dilution yo vhewaho i ita uri liquid iṅwe na iṅwe i vhe yo tsireledzeaho",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+                "tshivendaDraft": "Leachate ndi liquid i elelaho nga mvelo i tshi bva kha worm bin. Composition yayo i a fhambana, ngauralo a i tei u sumbedzwa sa feed yo khwaṱhisedzwaho uri yo tsireledzea kha edible crops.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "ts": {
+      "id": "soil-health",
+      "language": "ts",
+      "reviewStatus": "machine-draft",
+      "sourceMetadata": {
+        "durationMins": 20,
+        "category": "soil"
+      },
+      "title": {
+        "sourceEnglish": "Soil Health & Composting",
+        "xitsongaDraft": "Soil Health & Composting",
+        "reviewStatus": "hold"
+      },
+      "description": {
+        "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "xitsongaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
+        "reviewStatus": "hold"
+      },
+      "lessons": [
+        {
+          "id": "soil-health-l1",
+          "infographicAlt": {
+            "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+            "xitsongaDraft": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Understanding Your Soil: The Foundation of Everything",
+            "xitsongaDraft": "Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.\n\nSome fungi help roots take up nutrients. Worm channels can help water and air enter soil.\n\nLook at roots, soil structure and water movement as well as visible soil life.\n\nPut soil and water in a clear jar, with a little suitable dispersing detergent. Close and shake it, then leave it undisturbed.\n\nSand settles first. Silt settles next, while clay can remain suspended much longer.\n\nThis is a rough learning exercise. Clumps and unsettled clay can mislead you; use a soil laboratory when accurate texture is needed.\n\nA thick sand layer beneath cloudy water does not yet tell you the final proportions. Some fine particles may still be suspended.\n\nCompare the settled layers and feel the soil in the field.\n\nRecord what you see and what remains uncertain. Do not prescribe watering or soil treatments from one jar alone.\n\nCompaction, poor drainage and loss of organic matter can limit roots and soil life.\n\nPale colour or few worms do not prove that chemicals killed the soil. Worm activity also changes with moisture and season.\n\nLook for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+            "xitsongaDraft": "Misava yi na tinxaka to tala ta swilo leswi hanyaka. Bacteria na fungi swi pfuna ku break down organic matter ni ku cycle nutrients.\n\nFungi tin'wana ti pfuna timitsu ku tswonga nutrients. Worm channels ti nga pfuna mati na moya ku nghena emhlabeni.\n\nLanguta timitsu, xivumbeko xa misava ni ndlela leyi mati ma fambaka ha yona, swin’we ni leswi hanyaka emisaveni leswi u swi vonaka.\n\nChela misava na mati eka jar leyi u vonaka leswi nga endzeni ka yona, u chela nyana suitable dispersing detergent. Pfala jar u yi ninginika, kutani u yi tshika yi nga ninginiki.\n\nSand yi sungula ku tshamisa ehansi. Silt yi tshamisa endzhaku ka yona, kasi clay yi nga ha sala yi suspended nkarhi wo leha swinene.\n\nLowu i ntoloveto wo dyondza wo ringanyeta. Clumps na clay leyi nga si tshamaka ehansi swi nga ku hambukisa; tirhisa soil laboratory loko ku laveka soil texture leyi pimiweke kahle.\n\nThick sand layer ehansi ka cloudy water a yi si komba final proportions. Fine particles tin’wana ti nga ha va suspended.\n\nFananisa settled layers, kutani u twa misava ensin'wini.\n\nTsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.\n\nCompaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.\n\nMuhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.\n\nLanguta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Use several clues to assess soil condition",
+              "xitsongaDraft": "Tirhisa swikombiso swo hlayanyana ku kambela xiyimo xa misava.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Soil colour and worm counts alone do not diagnose the cause of a problem",
+              "xitsongaDraft": "Muhlovo wa misava ni ku hlayela worms ntsena a swi diagnose xivangelo xa xiphiqo.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A jar exercise gives a rough indication of texture, not a complete soil test",
+              "xitsongaDraft": "Ntoloveto wa jar wu nyika nkombiso wo ringanyeta wa texture, a hi soil test leyi heleleke.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+              "xitsongaDraft": "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A soil jar still has cloudy water above the sand layer. What should the farmer conclude?",
+                "xitsongaDraft": "Jar ya misava ya ha ri na cloudy water ehenhla ka sand layer. Murimi u fanele ku gimeta hi yini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "The soil definitely needs less water",
+                  "xitsongaDraft": "Misava yi lava mati lama hunguteke hakunene",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Fine particles may still be suspended; more observation is needed",
+                  "xitsongaDraft": "Fine particles ti nga ha va suspended; ku laveka ku languta nakambe",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "All the clay has already settled",
+                  "xitsongaDraft": "Clay hinkwaro se yi tshamile ehansi",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "The crop definitely needs gypsum",
+                  "xitsongaDraft": "Xibyariwa xi lava gypsum hakunene",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Cloudy water can contain unsettled fine particles. One early observation cannot establish the final proportions or the right treatment.",
+                "xitsongaDraft": "Cloudy water yi nga va na fine particles leti nga se tshamaka ehansi. Ku languta kan'we le masungulweni a ku koti ku tiyisisa final proportions kumbe treatment leyi faneleke.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "A farmer finds compacted soil and few worms. What is the useful next step?",
+                "xitsongaDraft": "Murimi u kuma misava leyi compacted ni worms ti nga ri tingani. Hi rihi goza leri landzelaka leri nga pfunaka?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Assume every soil organism has died",
+                  "xitsongaDraft": "Ehleketa leswaku soil organism yin'wana ni yin'wana yi file",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add a treatment without checking the site",
+                  "xitsongaDraft": "Engetela treatment handle ko kambela ndhawu",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Check drainage, roots, moisture and management history",
+                  "xitsongaDraft": "Kambela drainage, timitsu, ku tsakama ni management history",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Give up because the soil cannot improve",
+                  "xitsongaDraft": "Tshika hikuva misava a yi nge antswi",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Several observations help identify a problem. Worm activity varies with conditions, so few worms alone do not establish its cause.",
+                "xitsongaDraft": "Ku languta swilo swo hlayanyana swi pfuna ku kuma xiphiqo. Worm activity yi cinca hi swiyimo, hikokwalaho worms ti nga ri tingani ntsena a ti kombisi xivangelo xa xona.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l2",
+          "infographicAlt": {
+            "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+            "xitsongaDraft": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Making and Using Compost",
+            "xitsongaDraft": "Ku Endla ni Ku Tirhisa Compost",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.",
+            "xitsongaDraft": "Compost i organic matter leyi broken down ehansi ka swiyimo leswi lawuriwaka.\n\nCompost leyi lunghekeke yi nga antswisa xivumbeko xa misava ni ku engetela nutrients.\n\nNkarhi wo lungheka wa hambana hi swilo leswi tirhisiweke, ku tsakama, moya na temperature. Vito ra xifundzankulu kumbe nhlayo leyi vekiweke ya mavhiki a hi readiness test.\n\nHlanganisa dry browns na fresh greens. Papalata thick layers leti tsakamaka leti sivelaka moya ku nghena.\n\nLoko nhulu yi va slimy kumbe yi nun'hwa ammonia swinene, engetela dry browns kutani u yi hundzuluxa.\n\nKambela ku tsakama na moya loko nhulu yi ri karhi yi cinca; ndlela yin'we yo hlanganisa a yi ringani eka nkatsakanyo wun'wana ni wun'wana wa swilo leswi tirhisiweke.\n\nXiphemu xa le xikarhini xa nhulu lexi hisaka a xi tiyisisi leswaku xiphemu xin’wana ni xin’wana xa nhulu xi treated. Nkarhi, temperature ni ndlela yo yi lawula hinkwato swi na nkoka.\n\nHlayisani nyama, dairy, swimilani leswi vabyaka, pet waste na contaminated materials swi ri ehandle ka ndlela leyi olovaka ya ndyangu.\n\nU nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.\n\nHlayisani wattle seed pods ehandle ka nhulu ya compost. Nhulu leyi tolovelekeke yi nga ha ka yi nga endli mbewu yin’wana ni yin’wana yi va non-viable.\n\nTirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.\n\nKambela nhulu kutani u yi hundzuluxa loko yi lava moya wo tala kumbe ku hlanganisiwa. Yi hlayise yi tsakamile, ku nga ri waterlogged.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Balance browns, greens, moisture and air",
+              "xitsongaDraft": "Ringanisa browns, greens, ku tsakama ni moya.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "A hot centre does not prove the whole heap is sanitised",
+              "xitsongaDraft": "Xiphemu xa le xikarhini lexi hisaka a xi tiyisisi leswaku nhulu hinkwayo yi sanitised.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep seed pods and contaminated materials out",
+              "xitsongaDraft": "Hlayisa seed pods na contaminated materials swi ri handle ka nhulu.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+              "xitsongaDraft": "Kambela ku lungheka ka compost hi xiyimo xa yona, ku nga ri hi regional timetable leyi vekiweke.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?",
+                "xitsongaDraft": "Nhulu ya compost ya murimi yi nun'hwa ammonia swinene naswona yi tsakama yi tlhela yi va slimy. Ku lulamisa i yini?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Add more nitrogen-rich green material",
+                  "xitsongaDraft": "Engetela green material yo tala leyi fuweke hi nitrogen",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+                  "xitsongaDraft": "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Stop turning it and let it cool",
+                  "xitsongaDraft": "Tshika ku hundzuluxa nhulu kutani u yi tshika yi hola",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Add more water — the smell means it's too dry",
+                  "xitsongaDraft": "Engetela mati yo tala — nun'hwelo wu vula leswaku yi omile ngopfu",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "A wet, slimy heap may need more air and drier material. Add dry browns and turn the heap to open it up. An ammonia smell can also suggest too much nitrogen-rich material. Check that the heap stays damp, not soggy.",
+                "xitsongaDraft": "Nhulu leyi tsakamaka, yi slimy yi nga lava moya wo tala na swilo swo oma ku tlurisa leswi nga kona. Engetela dry browns kutani u hundzuluxa nhulu leswaku yi pfuleka. Nun'hwelo wa ammonia na wona wu nga komba nitrogen-rich material yo tala ngopfu. Kambela leswaku nhulu yi sala yi tsakamile, ku nga ri soggy.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "Why keep wattle seed pods out of an ordinary compost heap?",
+                "xitsongaDraft": "Ha yini u fanele ku hlayisa wattle seed pods handle ka nhulu ya compost leyi tolovelekeke?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Bark makes every heap too hot",
+                  "xitsongaDraft": "Bark yi endla leswaku nhulu yin'wana ni yin'wana yi hisa ngopfu",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Some seeds may survive and spread when the compost is used",
+                  "xitsongaDraft": "Mbewu tin'wana ti nga ha pona kutani ti hangalaka loko compost yi tirhisiwa",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods always attract termites",
+                  "xitsongaDraft": "Pods ti koka termites minkarhi hinkwayu",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Pods release a gas that kills every soil organism",
+                  "xitsongaDraft": "Pods ti humesa gas leyi dlayaka soil organism yin'wana ni yin'wana",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "An ordinary heap may not expose every seed to conditions that make it non-viable. Excluding pods avoids spreading them with the compost.",
+                "xitsongaDraft": "Nhulu leyi tolovelekeke yi nga ha ka yi nga fikisi mbewu yin’wana ni yin’wana eka swiyimo leswi yi endlaka yi va non-viable. Ku susa pods swi papalata ku ti hangalasa na compost.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "soil-health-l3",
+          "infographicAlt": {
+            "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+            "xitsongaDraft": "Swiphemu swimbirhi swa misava ehansi ka dyambu rin'we: misava leyi nga funengetiwangi yi pandzekile naswona yi omile; misava leyi nga na mulch ya ha ri ya ntima naswona yi tsakamile.",
+            "reviewStatus": "machine-draft"
+          },
+          "title": {
+            "sourceEnglish": "Mulching and Cover Crops: Protecting and Building Soil",
+            "xitsongaDraft": "Ku Tirhisa Mulch na Cover Crops: Ku Sirhelela Misava na Building Soil",
+            "reviewStatus": "machine-draft"
+          },
+          "body": {
+            "sourceEnglish": "Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.\n\nMulch can reduce evaporation, soften the impact of rain and suppress weeds.\n\nKeep it clear of trunks and stems. Check moisture underneath and adjust the layer; more mulch is not always better.\n\nCover crops can protect ground between main crops. Choose for local weather, available water and the next planting.\n\nThe course examples include oats, lupins, sunn hemp and cowpea. Check local suitability before sowing.\n\nLegumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their residues become available as the material decomposes.\n\nWorm farms can turn suitable food scraps and bedding into castings. Check the bin rather than expecting a fixed harvest date.\n\nLiquid that drains naturally from a worm bin is called leachate. It is not the same as a prepared worm-casting tea.\n\nLeachate can contain harmful organisms or substances. Do not use it on edible plants or assume that dilution makes it safe.\n\nA Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage its surface and structure. If water runs over the field, it can carry loosened soil away.\n\nCover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+            "xitsongaDraft": "Funengetani misava leyi nga funengetiwangiki hi mulch leyi basekile, leyi faneleke, yo fana na straw, byanyi byo oma kumbe wood chips.\n\nMulch yi nga hunguta evaporation; yi nga olovisa ku ba ka mpfula naswona yi nga sivela nhova.\n\nYi hlayiseni ekule na trunks and stems. Kambelani ku tsakama ehansi ka yona, mi lulamisa layer; mulch yo tala a yi vuli leswaku swi ta antswa nkarhi wun'wana ni wun'wana.\n\nCover crops ti nga sirhelela misava leyi nga kona exikari ka main crops. Ti hlawuleni hi ku ya hi maxelo ya laha, mati lama kumekaka ni ku byala loku landzelaka.\n\nSwikombiso swa dyondzo swi katsa oats, lupins, sunn hemp na cowpea. Kambelani loko swi fanele ndhawu ya kwalaho mi nga si swi byala.\n\nLegumes ti lava bacteria leti faneleke ni swiyimo leswi faneleke swa ku kula leswaku ti fix nitrogen. Nutrients leti nga eka masalela ya tona ta kumeka loko material yi ri karhi yi bola.\n\nWorm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani xibye ematshan'weni yo langutela siku ra ntshovelo leri vekiweke.\n\nLiquid leyi khulukaka hi ntumbuluko yi huma eka worm bin yi vuriwa leachate. A yi fani na worm-casting tea leyi lunghisiweke.\n\nLeachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.\n\nNsimu ya Highveld leyi tshikiweke yi nga funengetiwangi endzhaku ka ntshovelo wa maize yi langutana ni makhombo mambirhi lamakulu.\n\nMheho wa xixika wu nga susa misava ya le henhla leyi omeke.\n\nXidzedze xo sungula xo tika xa ximun’wana xi nga hlasela misava leyi nga funengetiwangi, xi onha vuandlalo ni xivumbeko xa yona. Loko mati ma khuluka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma famba na yona.\n\nCover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+            "reviewStatus": "machine-draft"
+          },
+          "keyPoints": [
+            {
+              "sourceEnglish": "Protect exposed soil with suitable cover",
+              "xitsongaDraft": "Sirhelela misava leyi paluxiweke hi swilo leswi faneleke swo yi funengeta.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Keep mulch away from trunks and stems",
+              "xitsongaDraft": "Hlayisa mulch ekule na trunks na stems.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Choose cover crops for local water, weather and the following crop",
+              "xitsongaDraft": "Hlawula cover crops hi ku ya hi mati ya laha, maxelo ni crop leyi landzelaka.",
+              "reviewStatus": "machine-draft"
+            },
+            {
+              "sourceEnglish": "Worm-bin leachate is not automatically safe fertiliser; keep it off edible plants",
+              "xitsongaDraft": "Worm-bin leachate a yi fanelanga ku tekiwa yi ri fertiliser leyi hlayisekeke hi yoxe; yi hlayise ekule na edible plants.",
+              "reviewStatus": "machine-draft"
+            }
+          ],
+          "quiz": [
+            {
+              "question": {
+                "sourceEnglish": "A Highveld farmer harvests maize in April and leaves the field bare all winter. What are the two main risks?",
+                "xitsongaDraft": "Murimi wa Highveld u tshovela maize hi April kutani a siya nsimu yi nga funengetiwangi xixika hinkwaxo. Hi wahi makhombo mambirhi lamakulu?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "Overheating in winter sun and waterlogging from rain",
+                  "xitsongaDraft": "Ku hisa ngopfu ehansi ka dyambu ra xixika ni waterlogging leyi vangiwaka hi mpfula",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Frost kills soil life and weeds take over early",
+                  "xitsongaDraft": "Frost yi dlaya soil life naswona nhova yi talela ndhawu ka ha ri eku sunguleni",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+                  "xitsongaDraft": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "Soil pH drops and nitrogen builds up",
+                  "xitsongaDraft": "Soil pH ya hunguteka naswona nitrogen ya hlengeletana",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 2,
+              "rationale": {
+                "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+                "xitsongaDraft": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+                "reviewStatus": "machine-draft"
+              }
+            },
+            {
+              "question": {
+                "sourceEnglish": "What should you remember about liquid draining from a worm bin?",
+                "xitsongaDraft": "U fanele ku tsundzuka yini hi liquid leyi khulukaka yi huma eka worm bin?",
+                "reviewStatus": "machine-draft"
+              },
+              "options": [
+                {
+                  "sourceEnglish": "It is always safe on salad leaves",
+                  "xitsongaDraft": "Yi hlayisekile minkarhi hinkwayu eka salad leaves",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It can contain harmful organisms or substances; dilution is not a safety guarantee",
+                  "xitsongaDraft": "Yi nga va na harmful organisms kumbe substances leswi nga ni khombo; dilution a hi safety guarantee",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "It is identical to finished worm castings",
+                  "xitsongaDraft": "Yi fana hi ku helela na finished worm castings",
+                  "reviewStatus": "machine-draft"
+                },
+                {
+                  "sourceEnglish": "A fixed dilution makes every liquid safe",
+                  "xitsongaDraft": "Dilution yo karhi leyi vekiweke yi endla leswaku liquid yin'wana ni yin'wana yi hlayiseka",
+                  "reviewStatus": "machine-draft"
+                }
+              ],
+              "sourceCorrectIndex": 1,
+              "rationale": {
+                "sourceEnglish": "Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.",
+                "xitsongaDraft": "Leachate i liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin. Composition ya yona ya hambana, hikokwalaho a yi fanelanga ku kombisiwa yi ri feed leyi tiyisekisiweke leswaku yi hlayisekile eka edible crops.",
+                "reviewStatus": "machine-draft"
+              }
+            }
+          ]
+        }
+      ],
+      "holds": []
+    }
+  },
+  "accepted": {
+    "st": {
+      "filename": "st-root-accepted-test-packet.json",
+      "sha256": "4f6bc6191a223c1deeb1c13cea3efe22181b26530cdb040f66d8509db97619cd",
+      "rows": [
+        {
+          "unitId": "soil-health::soil-health-l1::st::infographicAlt",
+          "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "currentTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, soil in a jar settles into three layers — sand, silt le clay.",
+          "proposedTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, mobu o ka nkhong o settles into three layers — sand, silt le clay.",
+          "reason": "Bare lula does not explicitly carry particle sedimentation; mekhahlelo has not been independently established as physical sediment layers. Prior 955 repair deliberately retained layers. The exact settles into three layers clause preserves both physical process and category while localizing the jar framing.",
+          "acceptedTarget": "Soil cross-section e bontsha dark topsoil ka hodima pale subsoil, e na le diboko tse pedi. Ka thoko, mobu o ka nkhong o settles into three layers — sand, silt le clay."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::st::infographicAlt",
+          "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "currentTarget": "Heap ya compost cut open e bontsha alternating layers tsa dry brown material le fresh green material. Heat e nyoloha ho tswa bohareng; an arrow shows it being turned.",
+          "proposedTarget": "Heap ya compost e bontshwa e le cut open hore bokahare bo bonahale. E bontsha layers tse fapanyetsanang tsa dintho tse ommeng tse sootho le dintho tse foreshe tse tala. Mocheso o nyoloha ho tswa bohareng; motsu o bontsha hore qubu e a phetholwa.",
+          "reason": "Opening so the inside is visible does not explicitly preserve the source cut-open cross-section. Use exact cut open and layers; the dry/brown, fresh/green, alternating, heat-middle and turning-arrow descriptions are otherwise bounded and do not assert a guaranteed hot centre in practice.",
+          "acceptedTarget": "Heap ya compost e bontshwa e le cut open hore bokahare bo bonahale. E bontsha layers tse fapanyetsanang tsa dintho tse ommeng tse sootho le dintho tse foreshe tse tala. Mocheso o nyoloha ho tswa bohareng; motsu o bontsha hore qubu e a phetholwa."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::st::body::paragraph[12]",
+          "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+          "currentTarget": "Cover crops, mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+          "proposedTarget": "Dijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela.",
+          "reason": "The cover-crop category remains explicitly labelled in English. The added Sesotho gloss matches the existing module-description framing. di ka thusa preserves can help for the coordinated categories, with no new species, amount, promise, timing or mechanism. Every word after the replaced cover-crop label is unchanged.",
+          "acceptedTarget": "Dijalo tse sireletsang mobu (cover crops), mulch le organic matter di ka thusa ho tshwara mobu sebakeng sa wona le ho o thusa hore o dule o phela."
+        }
+      ]
+    },
+    "ve": {
+      "filename": "ve-root-accepted-test-packet.json",
+      "sha256": "1bc396ebb540584406bd049a27bb7b10c42bc07ba9f0a8719da4914c73308085",
+      "rows": [
+        {
+          "unitId": "soil-health::ve::moduleDescription",
+          "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+          "currentTarget": "Build living soil with compost, mulch, cover crops and worm farms.",
+          "candidateTarget": "Akhani mavu a re na vhutshilo nga compost, mulch, cover crops na worm farms.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Build living soil using compost, mulch, cover crops and worm farms.",
+          "verdict": "accept",
+          "reason": "Imperative build and living soil are bounded; all four methods unchanged. Text accepted only as unreviewed draft, and hold must become machine-draft if approved.",
+          "recommendedTarget": "Akhani mavu a re na vhutshilo nga compost, mulch, cover crops na worm farms.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "hold",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Akhani mavu a re na vhutshilo nga compost, mulch, cover crops na worm farms."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::infographicAlt",
+          "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "currentTarget": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, the soil in the jar settles into three layers — sand, silt na clay.",
+          "candidateTarget": "Soil cross-section i sumbedza topsoil ya muvhala wa swiswi nga nṱha ha subsoil yo dombileaho, i na worms mbili. Kha thungo, jar ya mavu i sumbedza mavu a tshi dzula a vha layers tharu — sand, silt na clay.",
+          "changed": true,
+          "backTranslationBeforeComparison": "The section shows dark-coloured topsoil above subsoil described by an unverified pale term, with two worms. Beside it a jar shows soil sitting/becoming three layers.",
+          "verdict": "repair",
+          "reason": "Exact pale equivalence is unestablished and jar shows soil sitting is less explicit than physical settles. Preserve current first sentence and exact settles into three layers. No colour/settling inference from the still image.",
+          "recommendedTarget": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, mavu a re kha jar a settles into three layers — sand, silt na clay.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Soil cross-section i sumbedza dark topsoil nga nṱha ha pale subsoil, i na worms mbili. Kha thungo, mavu a re kha jar a settles into three layers — sand, silt na clay."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::body::paragraph[0]",
+          "sourceEnglish": "Soil contains many kinds of living organisms. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "currentTarget": "Mavu a na mifuda minzhi ya living organisms. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+          "candidateTarget": "Mavu a na mifuda minzhi ya zwithu zwine zwa tshila. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Soil contains many kinds of things that live. Bacteria and fungi help break down organic matter and cycle nutrients.",
+          "verdict": "accept",
+          "reason": "Living things preserves living organisms in plain framing, no species added. Exact prior955 break down and cycle nutrients remain.",
+          "recommendedTarget": "Mavu a na mifuda minzhi ya zwithu zwine zwa tshila. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Mavu a na mifuda minzhi ya zwithu zwine zwa tshila. Bacteria na fungi dzi thusa u break down organic matter na u cycle nutrients."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::body::paragraph[9]",
+          "sourceEnglish": "Compaction, poor drainage and loss of organic matter can limit roots and soil life.",
+          "currentTarget": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na soil life.",
+          "candidateTarget": "Compaction, poor drainage na u xela ha organic matter zwi nga fhungudza u aluwa ha midzi na vhutshilo ha mavu.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Compaction, poor drainage and loss of organic matter can reduce the growth of roots and soil life.",
+          "verdict": "repair",
+          "reason": "Root growth narrows the source broader limit roots. Remove added growth and retain limit as precise English predicate while accepting soil-life framing.",
+          "recommendedTarget": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na vhutshilo ha mavu.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Compaction, poor drainage na u xela ha organic matter zwi nga limit midzi na vhutshilo ha mavu."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::body::paragraph[11]",
+          "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+          "currentTarget": "Sedzani patterns tsimuni yoṱhe. Sedzani management history, drainage na u aluwa ha zwimela ni sa athu khetha remedy.",
+          "candidateTarget": "Sedzani zwithu zwine zwa dovholola tsimuni yoṱhe. Sedzani ḓivhazwakale ya nḓila ya u langa tsimu, drainage na u aluwa ha zwimela ni sa athu khetha nḓila ya u tandulula thaidzo.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Look at things that repeat over the field. Check the history of how the field was managed, drainage and plant growth before choosing a way to solve the problem.",
+          "verdict": "repair",
+          "reason": "Things repeating narrows patterns, which can include spatial gradients. Retain patterns English while accepting management-history and remedy framing. BEFORE and three checks intact.",
+          "recommendedTarget": "Sedzani patterns tsimuni yoṱhe. Sedzani ḓivhazwakale ya nḓila ya u langa tsimu, drainage na u aluwa ha zwimela ni sa athu khetha nḓila ya u tandulula thaidzo.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Sedzani patterns tsimuni yoṱhe. Sedzani ḓivhazwakale ya nḓila ya u langa tsimu, drainage na u aluwa ha zwimela ni sa athu khetha nḓila ya u tandulula thaidzo."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::keyPoints[3]",
+          "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+          "currentTarget": "Ṱolani drainage, midzi na management history ni sa athu khetha remedy.",
+          "candidateTarget": "Ṱolani drainage, midzi na ḓivhazwakale ya nḓila ya u langa tsimu ni sa athu khetha nḓila ya u tandulula thaidzo.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Check drainage, roots and the history of how the field was managed before choosing a way to solve the problem.",
+          "verdict": "accept",
+          "reason": "Three checks and BEFORE choosing remedy survive; management history plain framing does not add an action or timing.",
+          "recommendedTarget": "Ṱolani drainage, midzi na ḓivhazwakale ya nḓila ya u langa tsimu ni sa athu khetha nḓila ya u tandulula thaidzo.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Ṱolani drainage, midzi na ḓivhazwakale ya nḓila ya u langa tsimu ni sa athu khetha nḓila ya u tandulula thaidzo."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ve::quiz[1].options[2]",
+          "sourceEnglish": "Check drainage, roots, moisture and management history",
+          "currentTarget": "Ṱolani drainage, midzi, vhunyunyu na management history",
+          "candidateTarget": "Ṱolani drainage, midzi, vhunyunyu na ḓivhazwakale ya nḓila ya u langa tsimu.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Check drainage, roots, moisture and the history of how the field was managed.",
+          "verdict": "accept",
+          "reason": "All four checks preserved, correct option index2 remains source-bound.",
+          "recommendedTarget": "Ṱolani drainage, midzi, vhunyunyu na ḓivhazwakale ya nḓila ya u langa tsimu.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Ṱolani drainage, midzi, vhunyunyu na ḓivhazwakale ya nḓila ya u langa tsimu."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ve::infographicAlt",
+          "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "currentTarget": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; an arrow shows the heap being turned.",
+          "candidateTarget": "Heap ya compost yo vuleaho nga vhukati i sumbedza layers dzi tevhekanaho dza material yo omaho ya muvhala wa buraweni na material ntswa ya muvhala mudala. Heat i gonya i tshi bva vhukati; mutswi u sumbedza uri heap i a rembuluswa.",
+          "changed": true,
+          "backTranslationBeforeComparison": "A compost heap opened in the middle shows successive layers of dry brown material and new green material. Heat rises from the middle; an unverified arrow term shows turning.",
+          "verdict": "repair",
+          "reason": "Opened is not explicitly cut open; successive layers do not express alternation; new is not necessarily fresh. mutswi is not established as arrow in primary evidence. Retain cut open, alternating layers and fresh material categories, use English arrow in localized framing.",
+          "recommendedTarget": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; arrow i sumbedza uri heap i a rembuluswa.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Heap ya compost cut open i sumbedza alternating layers dza dry brown material na fresh green material. Heat i gonya i tshi bva vhukati; arrow i sumbedza uri heap i a rembuluswa."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ve::keyPoints[3]",
+          "sourceEnglish": "Judge readiness from the compost condition, not a fixed regional timetable",
+          "currentTarget": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa regional timetable yo vhewaho.",
+          "candidateTarget": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa timetable ya dzingu yo vhewaho.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Judge whether compost is ready from its condition; do not use a fixed timetable for the region.",
+          "verdict": "accept",
+          "reason": "Region (dzingu) remains broad rather than province. Fixed and NOT preserved; no duration added.",
+          "recommendedTarget": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa timetable ya dzingu yo vhewaho.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Ṱolani uri compost yo lugela nga tshiimo tshayo; ni songo shumisa timetable ya dzingu yo vhewaho."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ve::quiz[0].options[1]",
+          "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+          "currentTarget": "Engedzani dry carbon material yo engedzeaho i ngaho straw nahone ni i rembuluse.",
+          "candidateTarget": "Engedzani zwinzhi zwa material ya carbon yo omaho, sa straw, nahone ni rembuluse thulwi ya compost.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Add more dry carbon material, such as straw, and turn the compost heap.",
+          "verdict": "accept",
+          "reason": "zwinzhi expresses more quantity, dry/carbon/straw and AND turning survive. Understood as the heap in question; no material substitution or number.",
+          "recommendedTarget": "Engedzani zwinzhi zwa material ya carbon yo omaho, sa straw, nahone ni rembuluse thulwi ya compost.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Engedzani zwinzhi zwa material ya carbon yo omaho, sa straw, nahone ni rembuluse thulwi ya compost."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ve::infographicAlt",
+          "sourceEnglish": "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
+          "currentTarget": "Zwipiḓa zwivhili zwa soil nga fhasi ha ḓuvha ḽithihi: bare ground, cracked and dry; mulched ground i kha ḓi vha dark nahone i na moisture.",
+          "candidateTarget": "Zwipiḓa zwivhili zwa mavu nga fhasi ha ḓuvha ḽithihi: mavu a songo fukedzwaho o pwashekanaho nahone o oma; mavu o funedzwaho nga mulch a kha ḓi vha na muvhala wa swiswi nahone a tshe na vhunyunyu.",
+          "changed": true,
+          "backTranslationBeforeComparison": "Two soil patches beneath the same sun: uncovered cracked dry soil; mulch-covered soil still dark-coloured and still moist.",
+          "verdict": "accept",
+          "reason": "Two/same sun, bare versus mulched, cracked/dry and still dark/moist intact. Primary DSAC list supports dark=swiswi; no guarantee beyond pictured description.",
+          "recommendedTarget": "Zwipiḓa zwivhili zwa mavu nga fhasi ha ḓuvha ḽithihi: mavu a songo fukedzwaho o pwashekanaho nahone o oma; mavu o funedzwaho nga mulch a kha ḓi vha na muvhala wa swiswi nahone a tshe na vhunyunyu.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Zwipiḓa zwivhili zwa mavu nga fhasi ha ḓuvha ḽithihi: mavu a songo fukedzwaho o pwashekanaho nahone o oma; mavu o funedzwaho nga mulch a kha ḓi vha na muvhala wa swiswi nahone a tshe na vhunyunyu."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ve::quiz[0].options[2]",
+          "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "currentTarget": "Wind erosion ya dry topsoil na u tshinyala ha soil structure nga u rwa ha spring storm",
+          "candidateTarget": "Wind erosion ya topsoil yo omaho na u tshinyala ha soil structure nga u rwa ha spring storm",
+          "changed": true,
+          "backTranslationBeforeComparison": "Wind erosion of dry topsoil and damage to soil structure due to spring storm impact.",
+          "verdict": "accept",
+          "reason": "Only dry translated; correct index2 and existing erosion/loss/seasonal framing preserved. No newly corrected false distractor.",
+          "recommendedTarget": "Wind erosion ya topsoil yo omaho na u tshinyala ha soil structure nga u rwa ha spring storm",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "Wind erosion ya topsoil yo omaho na u tshinyala ha soil structure nga u rwa ha spring storm"
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ve::quiz[1].options[0]",
+          "sourceEnglish": "It is always safe on salad leaves",
+          "currentTarget": "I dzula yo tsireledzea tshifhinga tshoṱhe kha salad leaves",
+          "candidateTarget": "I dzula yo tsireledzea tshifhinga tshoṱhe kha maṱari a saladi.",
+          "changed": true,
+          "backTranslationBeforeComparison": "It is always safe on salad leaves.",
+          "verdict": "accept",
+          "reason": "maṱari a saladi preserves the edible leaf category, always false assertion retained. Incorrect option0 remains incorrect; not published as advice outside question.",
+          "recommendedTarget": "I dzula yo tsireledzea tshifhinga tshoṱhe kha maṱari a saladi.",
+          "sourceBindingExact": true,
+          "currentBindingExact": true,
+          "currentNativeStatus": "machine-draft",
+          "requiredAcceptedNativeStatus": "machine-draft",
+          "fluentApproval": false,
+          "acceptedTarget": "I dzula yo tsireledzea tshifhinga tshoṱhe kha maṱari a saladi."
+        }
+      ]
+    },
+    "ts": {
+      "filename": "ts-root-accepted-test-packet.json",
+      "sha256": "fffc70b38c919dccb9e1e02bda2fcc868dd2b588393a22b91ac9e9b67ca42009",
+      "rows": [
+        {
+          "unitId": "soil-health::ts::moduleTitle",
+          "fieldPath": "moduleTitle",
+          "sourceEnglish": "Soil Health & Composting",
+          "currentTarget": "Soil Health & Composting",
+          "candidateTarget": "Rihanyo ra Misava na Ku Endla Compost",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Rihanyo ra Misava na Ku Endla Compost",
+          "reason": "The module label is concise and keeps Compost as the domain term. It preserves the source topic.",
+          "sourceBindingExact": "module title/description exact source checked against lib/course-modules.ts",
+          "index": null,
+          "nativeReviewStatus": "hold",
+          "resolverStatus": "english-fallback",
+          "quizPair": {
+            "sourceEnglish": "Soil Health & Composting",
+            "xitsongaDraft": "Soil Health & Composting",
+            "reviewStatus": "hold"
+          },
+          "acceptedTarget": "Rihanyo ra Misava na Ku Endla Compost",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::ts::moduleDescription",
+          "fieldPath": "moduleDescription",
+          "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+          "currentTarget": "Build living soil with compost, mulch, cover crops and worm farms.",
+          "candidateTarget": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+          "reason": "The ordinary instruction to build living soil is localized; compost, mulch, cover crops and worm farms remain as recognizable practice/category labels.",
+          "sourceBindingExact": "module title/description exact source checked against lib/course-modules.ts",
+          "index": null,
+          "nativeReviewStatus": "hold",
+          "resolverStatus": "english-fallback",
+          "quizPair": {
+            "sourceEnglish": "Build living soil with compost, mulch, cover crops and worm farms.",
+            "xitsongaDraft": "Build living soil with compost, mulch, cover crops and worm farms.",
+            "reviewStatus": "hold"
+          },
+          "acceptedTarget": "Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ts::infographicAlt",
+          "fieldPath": "infographicAlt",
+          "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+          "currentTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+          "candidateTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi settles into three layers — sand, silt na clay.",
+          "candidateChanged": true,
+          "verdict": "repair",
+          "recommendedTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi tshamisa yi endla swiphemu swinharhu — sand, silt na clay.",
+          "reason": "The candidate has the English verb “settles” embedded in a local clause. This repair translates the ordinary process and preserves the three distinct material categories.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.",
+            "xitsongaDraft": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi settles into three layers — sand, silt na clay.",
+          "rootReason": "Root rejects sitting/becoming sections as physical sedimentation; retains exact settles into three layers and physical layer categories."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ts::body::paragraph[11]",
+          "fieldPath": "body",
+          "sourceEnglish": "Look for patterns across the field. Check management history, drainage and plant growth before choosing a remedy.",
+          "currentTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+          "candidateTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+          "reason": "“Matimu ya malawulelo” is a defensible rendering of management history in this field-check context. The check-before-remedy order and all three evidence sources remain.",
+          "sourceBindingExact": true,
+          "index": 11,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": null,
+          "acceptedTarget": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ts::keyPoints[3]",
+          "fieldPath": "keyPoints[3]",
+          "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+          "currentTarget": "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa.",
+          "candidateTarget": "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa.",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa.",
+          "reason": "Same management-history wording as the paragraph; drainage, roots, and “before choosing” are retained.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "Check drainage, roots and management history before choosing a remedy",
+            "xitsongaDraft": "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa.",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l1::ts::quiz[1].options[2]",
+          "fieldPath": "quiz[1].options[2]",
+          "sourceEnglish": "Check drainage, roots, moisture and management history",
+          "currentTarget": "Kambela drainage, timitsu, ku tsakama ni management history",
+          "candidateTarget": "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo",
+          "reason": "The repeated key-point uses the accepted management-history translation and keeps drainage, roots, moisture, and the before-remedy qualifier.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "Check drainage, roots, moisture and management history",
+            "xitsongaDraft": "Kambela drainage, timitsu, ku tsakama ni management history",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ts::infographicAlt",
+          "fieldPath": "infographicAlt",
+          "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+          "currentTarget": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+          "candidateTarget": "Nhulu ya compost cut open, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.",
+          "candidateChanged": true,
+          "verdict": "repair",
+          "recommendedTarget": "Nhulu ya compost leyi pfuriweke leswaku ku vonaka endzeni ka yona, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.",
+          "reason": "“Cut open” is left as an English action phrase. The repair makes clear this is a heap opened to show its inside while retaining alternating dry-brown/fresh-green material, heat from the centre, and the turning arrow.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.",
+            "xitsongaDraft": "Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Nhulu ya compost cut open, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.",
+          "rootReason": "Root retains exact cut open; opened to show the inside alone does not state the source cut section."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ts::body::paragraph[10]",
+          "fieldPath": "body",
+          "sourceEnglish": "Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.",
+          "currentTarget": "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "candidateTarget": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "reason": "“Clean” is translated; untreated and contamination remain technical/safety terms. Bark’s slow breakdown and the warning that its name alone proves nothing are preserved.",
+          "sourceBindingExact": true,
+          "index": 10,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": null,
+          "acceptedTarget": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l2::ts::quiz[0].options[1]",
+          "fieldPath": "quiz[0].options[1]",
+          "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+          "currentTarget": "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu",
+          "candidateTarget": "Engetela carbon material leyi omeke yo tala yo fana na straw kutani u hundzuluxa nhulu",
+          "candidateChanged": true,
+          "verdict": "repair",
+          "recommendedTarget": "Engetela carbon material yo oma yo tala, yo fana na straw, kutani u hundzuluxa nhulu.",
+          "reason": "The candidate correctly localizes dry but has awkward word order. This repair preserves more/additional, dry carbon material, straw as an example, and the instruction to turn the heap.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "Add more dry carbon material like straw and turn the heap",
+            "xitsongaDraft": "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Engetela carbon material yo oma yo tala, yo fana na straw, kutani u hundzuluxa nhulu.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ts::body::paragraph[12]",
+          "fieldPath": "body",
+          "sourceEnglish": "Cover crops, mulch, and organic matter can help hold soil in place and help it stay alive.",
+          "currentTarget": "Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+          "candidateTarget": "Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+          "candidateChanged": true,
+          "verdict": "accept",
+          "recommendedTarget": "Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+          "reason": "The proposal localizes cover crops with an English anchor and preserves can-help, holding soil in place, and the soil-stays-alive claim; mulch and organic matter remain domain terms.",
+          "sourceBindingExact": true,
+          "index": 12,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": null,
+          "acceptedTarget": "Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ts::quiz[0].options[2]",
+          "fieldPath": "quiz[0].options[2]",
+          "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+          "currentTarget": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+          "candidateTarget": "Wind erosion ya misava ya le henhla leyi omeke ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+          "candidateChanged": true,
+          "verdict": "repair",
+          "recommendedTarget": "Wind erosion ya topsoil leyi omeke (misava ya le henhla) ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+          "reason": "“Misava ya le henhla leyi omeke” alone may describe upper soil without anchoring the technical topsoil category. Add the English anchor while retaining the localized dry qualifier and all erosion/structure/storm relations.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "Wind erosion of dry topsoil and loss of soil structure from spring storm impact",
+            "xitsongaDraft": "Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Wind erosion ya topsoil leyi omeke (misava ya le henhla) ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm",
+          "rootReason": "Root accepts independent recommended target."
+        },
+        {
+          "unitId": "soil-health::soil-health-l3::ts::quiz[0].rationale",
+          "fieldPath": "quiz[0].rationale",
+          "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+          "currentTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+          "candidateTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka misava ya le henhla leyi omeke. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+          "candidateChanged": true,
+          "verdict": "repair",
+          "recommendedTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka topsoil leyi omeke (misava ya le henhla). Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+          "reason": "The proposed translation removes the explicit topsoil category. Retain it alongside the local gloss; the modal can carry away, raindrop damage, and conditional field runoff remain intact.",
+          "sourceBindingExact": true,
+          "index": null,
+          "nativeReviewStatus": "machine-draft",
+          "resolverStatus": "draft",
+          "quizPair": {
+            "sourceEnglish": "Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.",
+            "xitsongaDraft": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+            "reviewStatus": "machine-draft"
+          },
+          "acceptedTarget": "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka topsoil leyi omeke (misava ya le henhla). Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa.",
+          "rootReason": "Root accepts independent recommended target."
+        }
+      ]
+    }
+  }
+}

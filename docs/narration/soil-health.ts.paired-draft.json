@@ -298,8 +298,8 @@
           },
           {
             "status": "draft",
-            "text": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
-            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+            "text": "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; bounded independently checked ordinary wording, precision English preserved (6 October 2026). Unreviewed machine draft; no fluent or local farming approval."
           }
         ]
       }
@@ -462,8 +462,8 @@
           },
           {
             "status": "draft",
-            "text": "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
-            "provenance": "Complete final learner paragraph reused only for its byte-exact English source (Soil fuller learner review, 5 October 2026); independently semantically checked machine draft, difficult technical English retained. Unreviewed; no fluent or local farming approval."
+            "text": "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+            "provenance": "Complete current learner paragraph reused only for its byte-exact English source; bounded independently checked ordinary wording, precision English preserved (6 October 2026). Unreviewed machine draft; no fluent or local farming approval."
           },
           {
             "status": "draft",
@@ -640,7 +640,8 @@
           },
           {
             "status": "draft",
-            "text": "Cover crops, mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya."
+            "text": "Swibyariwa swo sirhelela misava (cover crops), mulch na organic matter swi nga pfuna ku khoma misava yi nga susiwi ni ku yi pfuna yi hambeta yi hanya.",
+            "provenance": "Cover-crop category prefix only, independently checked against the exact English source and full current deck clause (6 October 2026). Existing modality and remaining wording unchanged. Unreviewed machine draft; no fluent or local farming approval."
           }
         ]
       }

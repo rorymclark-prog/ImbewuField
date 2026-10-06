@@ -5,7 +5,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { Lesson } from '../lib/course-modules.ts';
 import { historicalST as SESOTHO_SOIL_HEALTH_DRAFT } from './soil-learner-reviewed-history.ts';
 // Earlier clause checks retain their dated wording; the helper verifies live accepted text before rewinding it.
-import { resolveHistoricalPresentation as resolveLearnerLessonPresentation } from './soil-learner-reviewed-history.ts';
+import { resolveBeforeFullerSoilPresentation as resolveLearnerLessonPresentation } from './soil-ordinary-native-history-checks.ts';
 
 test('Soil Health Sesotho draft preserves exact sources, safety holds, plant names and quiz indexes', () => {
   const source = COURSE_MODULES.find(module => module.id === 'soil-health');
@@ -412,7 +412,14 @@ import { XITSONGA_SOIL_HEALTH_DRAFT as liveTS } from '../lib/course-translation-
 import { resolveLearnerLessonPresentation as liveResolve } from '../lib/course-localization.ts';
 import { soilPacket, soilBefore, fieldAt } from './soil-learner-reviewed-history.ts';
 
-const liveSoil = { st: liveST, ve: liveVE, ts: liveTS };
+import { validateAndRewindSoilOrdinary, resolveBeforeSoilOrdinary } from './soil-ordinary-native-history-checks.ts';
+// 6 October ordinary targets are validated as a full live layer before preserving
+// these dated 5 October snapshot and diagnostic assertions.
+const liveSoil = {
+  st: validateAndRewindSoilOrdinary('st') as typeof liveST,
+  ve: validateAndRewindSoilOrdinary('ve') as typeof liveVE,
+  ts: validateAndRewindSoilOrdinary('ts') as typeof liveTS,
+};
 const targetKeys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' };
 
 test('Soil ordinary completion binds all 153 fields to canonical source and preserves every unlisted native property', () => {
@@ -440,7 +447,7 @@ test('Soil ordinary completion binds all 153 fields to canonical source and pres
       for (const species of ['oats', 'lupins', 'sunn hemp', 'cowpea', 'wattle']) {
         if (field.sourceEnglish.includes(species)) assert.ok(native[targetKeys[language]].includes(species), `retain canonical species: ${species}`);
       }
-      const shown = liveResolve(source.lessons[index], language);
+      const shown = resolveBeforeSoilOrdinary(source.lessons[index], language);
       assert.equal(shown.status, 'draft');
       assert.equal(fieldAt(shown.content, canonicalPath), field.proposedTarget);
       const changedSource = structuredClone(source.lessons[index]);
@@ -458,7 +465,7 @@ test('Soil ordinary completion binds all 153 fields to canonical source and pres
 });
 
 test('Soil repaired diagnostic and sanitation clauses retain their independent checked scope', () => {
-  const st = liveST.lessons, ts = liveTS.lessons, ve = liveVE.lessons;
+  const st = liveSoil.st.lessons, ts = liveSoil.ts.lessons, ve = liveSoil.ve.lessons;
   assert.match(st[0].body.sesothoDraft.split('\n\n')[7], /layers tse lutseng fatshe/);
   assert.match(ve[0].body.tshivendaDraft.split('\n\n')[7], /layers dze dza dzula fhasi/);
   assert.match(ts[0].body.xitsongaDraft.split('\n\n')[7], /settled layers/);
@@ -504,4 +511,20 @@ test('Soil natural worm-bin liquid keeps its meaning while using South African S
   assert.match(shown, /worm bin.*leachate.*Ha o tshwane le worm-casting tea/);
   checkSouthAfricanSesotho([[english, shown]], 'Soil ST L3 paragraph 7');
   assert.throws(() => checkSouthAfricanSesotho([[english, shown.replace('Mokedikedi', 'Mokelikeli')]], 'bad spelling'), /Lesotho/);
+});
+
+// The dated snapshot reconstruction must never hide regressions in the live layer.
+test('Soil historical reconstruction refuses unlisted or source changes before restoring earlier wording', () => {
+  const changedSource = structuredClone(liveST);
+  changedSource.lessons[0].body.sourceEnglish += ' Changed source.';
+  assert.throws(() => validateAndRewindSoilOrdinary('st', changedSource));
+  const unlisted = structuredClone(liveST);
+  unlisted.lessons[0].keyPoints[0].sesothoDraft += ' Unlisted change.';
+  assert.throws(() => validateAndRewindSoilOrdinary('st', unlisted));
+  const changedIndex = structuredClone(liveST);
+  changedIndex.lessons[0].quiz[0].sourceCorrectIndex = 0;
+  assert.throws(() => validateAndRewindSoilOrdinary('st', changedIndex));
+  const lostModal = structuredClone(liveST);
+  lostModal.lessons[2].body.sesothoDraft = lostModal.lessons[2].body.sesothoDraft.replace('di ka thusa', 'di thusa');
+  assert.throws(() => validateAndRewindSoilOrdinary('st', lostModal));
 });

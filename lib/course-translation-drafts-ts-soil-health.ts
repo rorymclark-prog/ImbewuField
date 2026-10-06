@@ -23,7 +23,7 @@ l3DraftParagraphs[5] = "Legumes ti lava bacteria leti faneleke ni swiyimo leswi 
 l3DraftParagraphs[6] = "Worm farms ti nga hundzuluxa food scraps ni bedding leswi faneleke swi va castings. Kambelani xibye ematshan'weni yo langutela siku ra ntshovelo leri vekiweke.";
 l3DraftParagraphs[7] = "Liquid leyi khulukaka hi ntumbuluko yi huma eka worm bin yi vuriwa leachate. A yi fani na worm-casting tea leyi lunghisiweke.";
 l3DraftParagraphs[8] = "Leachate yi nga va na harmful organisms kumbe substances leswi nga ni khombo. U nga yi tirhisi eka edible plants. U nga ehleketi leswaku dilution yi endla leswaku yi hlayiseka.";
-l3DraftParagraphs[12] = 'Cover crops, mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.';
+l3DraftParagraphs[12] = 'Swibyariwa swo sirhelela misava (cover crops), mulch ni organic matter swi nga pfuna ku khoma misava endhawini ya yona ni ku yi pfuna leswaku yi ya mahlweni yi hanya.';
 
 const l2SourceBody = 'Compost is organic matter broken down under managed conditions.\n\nFinished compost can improve soil structure and contribute nutrients.\n\nTime to readiness varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a readiness test.\n\nMix dry browns with fresh greens. Avoid thick, wet layers that keep air out.\n\nIf the heap becomes slimy or smells strongly of ammonia, add dry browns and turn it.\n\nCheck moisture and air as the heap changes; one recipe does not suit every mix of materials.\n\nA hot centre does not prove that every part of a heap has been treated. Time, temperature and management all matter.\n\nKeep meat, dairy, diseased plants, pet waste and contaminated materials out of this simple household system.\n\nDo not assume home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.\n\nKeep wattle seed pods out of the compost heap. An ordinary heap may not make every seed non-viable.\n\nUse only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.\n\nCheck the heap and turn when it needs more air or mixing. Keep it moist rather than waterlogged.';
 const l2DraftBody = [
@@ -37,7 +37,7 @@ const l2DraftBody = [
   "Hlayisani nyama, dairy, swimilani leswi vabyaka, pet waste na contaminated materials swi ri ehandle ka ndlela leyi olovaka ya ndyangu.",
   "U nga teki leswaku home composting yi lovisa weed seed yin'wana ni yin'wana kumbe disease organism yin'wana ni yin'wana. Tirhisa recognised process laha sanitation yi lavekaka.",
   "Hlayisani wattle seed pods ehandle ka nhulu ya compost. Nhulu leyi tolovelekeke yi nga ha ka yi nga endli mbewu yin’wana ni yin’wana yi va non-viable.",
-  "Tirhisa clean, untreated materials ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
+  "Tirhisa swilo leswi baseke, leswi untreated ntsena. Bark yi bola hi ku nonoka; vito ra yona ntsena a hi vumbhoni bya leswaku a yi na contamination.",
   "Kambela nhulu kutani u yi hundzuluxa loko yi lava moya wo tala kumbe ku hlanganisiwa. Yi hlayise yi tsakamile, ku nga ri waterlogged.",
 ].join('\n\n');
 
@@ -55,26 +55,26 @@ draftParagraphs[7] = "Fananisa settled layers, kutani u twa misava ensin'wini.";
 draftParagraphs[8] = 'Tsala leswi u swi vonaka ni leswi nga si tiyiseka. U nga teki xiboho xa ku cheleta kumbe ku tirhisa ndlela yo lulamisa misava hi ku ya hi jar yin’we ntsena.';
 draftParagraphs[9] = "Compaction, poor drainage na ku lahleka ka organic matter swi nga limit timitsu ni soil life.";
 draftParagraphs[10] = "Muhlovo lowu nga vonakaka wa pale kumbe worms ti nga ri tingani a swi tiyisisi leswaku chemicals ti dlayile misava. Worm activity na yona ya cinca hi ku ya hi ku tsakama na nguva.";
-draftParagraphs[11] = "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela management history, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.";
+draftParagraphs[11] = "Languta patterns leti humelelaka ensin'wini hinkwaro. Kambela matimu ya malawulelo, drainage ni ku kula ka swimilani u nga si hlawula ndlela yo lulamisa.";
 
 export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
   id: 'soil-health',
   language: 'ts',
   reviewStatus: 'machine-draft',
   sourceMetadata: { durationMins: 20, category: 'soil' },
-  title: hold('Soil Health & Composting'),
-  description: hold('Build living soil with compost, mulch, cover crops and worm farms.'),
+  title: pair('Soil Health & Composting', 'Rihanyo ra Misava na Ku Endla Compost'),
+  description: pair('Build living soil with compost, mulch, cover crops and worm farms.', 'Aka misava leyi hanyaka hi compost, mulch, cover crops na worm farms.'),
   lessons: [
     {
       id: 'soil-health-l1',
-      infographicAlt: { sourceEnglish: "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.", xitsongaDraft: "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: the soil in the jar settles into three layers — sand, silt na clay.", reviewStatus: 'machine-draft' },
+      infographicAlt: { sourceEnglish: "A soil cross-section shows dark topsoil above pale subsoil, with two worms. Beside it, a jar of soil settles into three layers — sand, silt and clay.", xitsongaDraft: "Xiyenge xa misava lexi tsemiweke xi komba dark topsoil ehenhla ka pale subsoil, xi ri na worms timbirhi. Etlhelo ka xona: misava leyi nga eka jar yi settles into three layers — sand, silt na clay.", reviewStatus: 'machine-draft' },
       title: pair('Understanding Your Soil: The Foundation of Everything', 'Ku twisisa misava ya wena: Masungulo ya swilo hinkwawo'),
       body: pair(sourceBody, draftParagraphs.join('\n\n')),
       keyPoints: [
         pair('Use several clues to assess soil condition', 'Tirhisa swikombiso swo hlayanyana ku kambela xiyimo xa misava.'),
         pair('Soil colour and worm counts alone do not diagnose the cause of a problem', "Muhlovo wa misava ni ku hlayela worms ntsena a swi diagnose xivangelo xa xiphiqo."),
         pair('A jar exercise gives a rough indication of texture, not a complete soil test', "Ntoloveto wa jar wu nyika nkombiso wo ringanyeta wa texture, a hi soil test leyi heleleke."),
-        pair('Check drainage, roots and management history before choosing a remedy', "Kambela drainage, timitsu na management history u nga si hlawula ndlela yo lulamisa."),
+        pair('Check drainage, roots and management history before choosing a remedy', "Kambela drainage, timitsu na matimu ya malawulelo u nga si hlawula ndlela yo lulamisa."),
       ],
       quiz: [
         {
@@ -93,7 +93,7 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
           options: [
             pair('Assume every soil organism has died', 'Ehleketa leswaku soil organism yin\'wana ni yin\'wana yi file'),
             pair('Add a treatment without checking the site', "Engetela treatment handle ko kambela ndhawu"),
-            pair('Check drainage, roots, moisture and management history', "Kambela drainage, timitsu, ku tsakama ni management history"),
+            pair('Check drainage, roots, moisture and management history', "Kambela drainage, timitsu, ku tsakama ni matimu ya malawulelo"),
             pair('Give up because the soil cannot improve', 'Tshika hikuva misava a yi nge antswi'),
           ],
           sourceCorrectIndex: 2,
@@ -103,7 +103,7 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
     },
     {
       id: 'soil-health-l2',
-      infographicAlt: pair('A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.', 'Heap ya compost cut open, yi komba alternating layers ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona arrow yi komba leswaku heap ya hundzuluxiwa.'),
+      infographicAlt: pair('A compost heap cut open, showing alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing it being turned.', 'Nhulu ya compost cut open, yi komba layers leti cincanaka ta dry brown material na fresh green material; ku hisa ku tlakuka ku suka exikarhini, naswona nseve wu komba leswaku nhulu ya hundzuluxiwa.'),
       title: pair('Making and Using Compost', 'Ku Endla ni Ku Tirhisa Compost'),
       body: pair(l2SourceBody, l2DraftBody),
       keyPoints: [
@@ -117,7 +117,7 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
           question: pair("A farmer's compost heap smells strongly of ammonia and is wet and slimy. What's the fix?", "Nhulu ya compost ya murimi yi nun'hwa ammonia swinene naswona yi tsakama yi tlhela yi va slimy. Ku lulamisa i yini?"),
           options: [
             pair('Add more nitrogen-rich green material', 'Engetela green material yo tala leyi fuweke hi nitrogen'),
-            pair('Add more dry carbon material like straw and turn the heap', "Engetela dry carbon material yo tala yo fana na straw kutani u hundzuluxa nhulu"),
+            pair('Add more dry carbon material like straw and turn the heap', "Engetela carbon material yo oma yo tala, yo fana na straw, kutani u hundzuluxa nhulu."),
             pair('Stop turning it and let it cool', "Tshika ku hundzuluxa nhulu kutani u yi tshika yi hola"),
             pair("Add more water — the smell means it's too dry", 'Engetela mati yo tala — nun\'hwelo wu vula leswaku yi omile ngopfu'),
           ],
@@ -154,11 +154,11 @@ export const XITSONGA_SOIL_HEALTH_DRAFT: XitsongaCourseModuleDraft = {
           options: [
             pair('Overheating in winter sun and waterlogging from rain', "Ku hisa ngopfu ehansi ka dyambu ra xixika ni waterlogging leyi vangiwaka hi mpfula"),
             pair('Frost kills soil life and weeds take over early', "Frost yi dlaya soil life naswona nhova yi talela ndhawu ka ha ri eku sunguleni"),
-            pair('Wind erosion of dry topsoil and loss of soil structure from spring storm impact', 'Wind erosion ya dry topsoil ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm'),
+            pair('Wind erosion of dry topsoil and loss of soil structure from spring storm impact', 'Wind erosion ya topsoil leyi omeke (misava ya le henhla) ni ku lahlekeriwa hi soil structure hi ku ba ka spring storm'),
             pair('Soil pH drops and nitrogen builds up', 'Soil pH ya hunguteka naswona nitrogen ya hlengeletana'),
           ],
           sourceCorrectIndex: 2,
-          rationale: pair('Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.', "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka dry topsoil. Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa."),
+          rationale: pair('Bare soil is exposed to winter wind, which can carry away dry topsoil. Raindrop impact can damage the surface; where water runs over the field, it can carry loosened soil away.', "Misava leyi nga funengetiwangi yi va erivaleni eka mheho wa xixika, lowu nga susaka topsoil leyi omeke (misava ya le henhla). Ku ba ka marhonsi ya mpfula ku nga onha vuandlalo; laha mati ma khulukaka ehenhla ka nsimu, ma nga teka misava leyi ntshunxekeke ma yi susa."),
         },
         {
           question: pair('What should you remember about liquid draining from a worm bin?', "U fanele ku tsundzuka yini hi liquid leyi khulukaka yi huma eka worm bin?"),

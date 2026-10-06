@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { soilDeckBeforeOrdinary, soilMediaBeforeOrdinary } from './soil-reviewed-ordinary-history-checks.ts';
 
 type Evidence = {
   baselineHead: string;
@@ -70,7 +71,7 @@ test('Soil slide drafts remain paired to the exact narration and preserve every 
     // Rewind newest first: the 4–5 October ordinary-prose layer (headings and bodies), then the 3 October source-paired
     // batch, then the original fifteen drafts. Each layer's recorded value is checked against the state the newer layers
     // leave behind, so every authorized edit is bound to its exact source and no other target cell can move.
-    const restored = structuredClone(packet.slides);
+    const restored = soilDeckBeforeOrdinary(packet, lang).slides;
     // The later fuller-learner batch superseded 69 dated targets. Verify current values first, then reconstruct
     // the prior reviewed state so historical untouched-cell coverage remains able to catch regressions.
     const fullerRows = fullerEvidence.targetFieldChanges.filter((row) => row.language === lang);
@@ -149,15 +150,14 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
   const untouched = new Map(soilDecks.flatMap((deck) => deck.preserved).map((row) => [row.path, row]));
   assert.equal(redrawn.size + untouched.size, 60, 'the ordinary-prose render accounts for every regional Soil frame once');
   for (const deck of soilDecks) {
-    const packet = JSON.parse(readFileSync(deck.pairedSource, 'utf8'));
-    assert.equal(sha(readFileSync(deck.pairedSource)), fullerFrames.pairedSourceHashes[deck.language],
-      `${deck.language}: latest rendered frames bind the actual paired draft`);
+    const currentPacket = JSON.parse(readFileSync(deck.pairedSource, 'utf8'));
+    const packet = soilDeckBeforeOrdinary(currentPacket, deck.language);
     for (const row of fullerEvidence.targetFieldChanges.filter((row) => row.language === deck.language)) {
       assert.deepEqual(packet.slides[row.slide - 1].target.body[row.bodyIndex], row.currentTarget);
       packet.slides[row.slide - 1].target.body[row.bodyIndex] = structuredClone(row.previousTarget);
     }
     assert.equal(deck.pairedSourceSha256, sha(JSON.stringify(packet, null, 2) + '\n'),
-      `${deck.language}: the newer layer reconstructs the prior paired input exactly`);
+      `${deck.language}: rewinding the later approved layer reconstructs the paired input used for this render`);
   }
 
   for (const row of latestEvidence.changed) {
@@ -171,6 +171,7 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
   assert.equal(fullerRedrawn.size, 34);
   for (const row of [...latestEvidence.changed, ...latestEvidence.preservedAssetProof]) {
     const bytes = readFileSync(row.path);
+    const historical = soilMediaBeforeOrdinary(row.path);
     const later = redrawn.get(row.path);
     const final = fullerRedrawn.get(row.path);
     const priorSha = later?.sha256 ?? row.sha256;
@@ -178,12 +179,13 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
     if (final) {
       assert.equal(final.baselineSha256, priorSha, `${row.path}: fuller redraw starts from prior reviewed bytes`);
       assert.notEqual(final.sha256, final.baselineSha256);
-      assert.equal(sha(bytes), final.sha256);
-      assert.equal(bytes.length, final.bytes);
+      assert.equal(historical.sha256, final.sha256,
+        `${row.path}: current approved ordinary redraw rewinds to this historical proof`);
+      assert.equal(historical.bytes, final.bytes);
     } else {
       assert.equal(fullerPreserved.get(row.path)?.sha256, priorSha);
-      assert.equal(sha(bytes), priorSha);
-      assert.equal(bytes.length, priorBytes);
+      assert.equal(historical.sha256, priorSha);
+      assert.equal(historical.bytes, priorBytes);
     }
     if (later) {
       assert.equal(later.baselineSha256, row.sha256, `${row.path}: the redraw starts from the 3 October proof`);
