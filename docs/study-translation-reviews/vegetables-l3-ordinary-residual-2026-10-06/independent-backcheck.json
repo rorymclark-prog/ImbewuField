@@ -1,0 +1,346 @@
+{
+  "reportType": "independent semantic, source, native-composition and paired-deck backcheck; not fluency approval",
+  "date": "2026-10-06",
+  "input": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-final-spans-actual-drafts-20261006.json",
+    "sha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+    "expectedSha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a",
+    "matchesExpected": true
+  },
+  "repository": {
+    "head": "672567ecd8669d8cb269bcf16d1b2794405da832",
+    "packetHead": "672567ecd8669d8cb269bcf16d1b2794405da832",
+    "branch": "codex/regional-market-ordinary-next-20261006",
+    "trackedFilesReadOnlyHashes": [
+      {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "bytes": 55495,
+        "sha256": "f3311a2940f819793f60f657a805245bf48d601db701a9c6992036233382d4b4"
+      },
+      {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "bytes": 55916,
+        "sha256": "697aa04e6b4665b51f077b261f6e395640087c3b561d615ff4b6cc509e923e70"
+      },
+      {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "bytes": 57716,
+        "sha256": "f1b7f3f56dccf94ac3fb4b6a086e89b248085b654d759d365cd249a0ae45b792"
+      },
+      {
+        "path": "lib/course-modules.ts",
+        "bytes": 113494,
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397"
+      }
+    ]
+  },
+  "snapshotProofs": {
+    "beforeSnapshot": {
+      "path": "/tmp/imbewu-vegetables-final-spans-native-snapshot-20261006.json",
+      "expectedSha256": "2c4697e9cd88b28c0f064508dea7db75f389fe55870c3511d9b0f1ec1ff40c63",
+      "actualSha256": "2c4697e9cd88b28c0f064508dea7db75f389fe55870c3511d9b0f1ec1ff40c63",
+      "matches": true,
+      "bytes": 116311
+    },
+    "candidateAfterSnapshot": {
+      "path": "/tmp/imbewu-vegetables-final-seven-spans-candidate-native-after-20261006.json",
+      "expectedSha256": "ee1402d7ba695b7ef1fae2c570b318d469fc3752a400df3d6bd1d2d7cf0ff4ee",
+      "actualSha256": "ee1402d7ba695b7ef1fae2c570b318d469fc3752a400df3d6bd1d2d7cf0ff4ee",
+      "matches": true,
+      "bytes": 116448
+    }
+  },
+  "scopeProof": {
+    "rows": 7,
+    "fullNativeRewindEqualsBefore": true,
+    "allSourceStatusQuizIndicesUnlistedNativeFieldsPreserved": true,
+    "counts": {
+      "actualTargetDrafts": 7,
+      "nativeFullBodyFields": 3,
+      "matchingDeckFields": 7,
+      "uniqueDeckFrames": 6,
+      "optionalSafetyChanges": 0
+    },
+    "optionalSafetyRowsChanged": true,
+    "allSevenPhysicalSourceTargetPairsVerified": true
+  },
+  "rows": [
+    {
+      "candidateId": "st:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 4,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentNativeParagraph": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateFullNativeParagraph": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+      "changedSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateSpan": "Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+      "candidateBackTranslation": "It is the one whose failure would hurt most of all — therefore it is the one that needs a companion.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair, with native phrasing still needing a fluent review. The unchanged first sentence keeps the current staple question and household reliance. The added sentence preserves failure as the cause of harm, conditional would, greatest-harm comparison, the causal so/therefore, and the recommendation that this staple needs a companion. “failure” and “companion” remain English; no yield or guarantee is added.",
+      "semanticChecks": {
+        "failureCausePreserved": true,
+        "wouldConditionalPreserved": true,
+        "mostComparisonPreserved": true,
+        "causalSoPreserved": true,
+        "needsRecommendationPreserved": true,
+        "yieldOrGuaranteeAdded": false
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 4,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentNativeParagraph": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateFullNativeParagraph": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+      "changedSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateSpan": "Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+      "candidateBackTranslation": "It is the one whose failure would hurt very much more than the others — therefore it is the one that needs a companion.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair, with native phrasing still needing a fluent review. The unchanged first sentence keeps the current staple question and household reliance. The added sentence preserves failure as the cause of harm, conditional would, greatest-harm comparison, the causal so/therefore, and the recommendation that this staple needs a companion. “failure” and “companion” remain English; no yield or guarantee is added.",
+      "semanticChecks": {
+        "failureCausePreserved": true,
+        "wouldConditionalPreserved": true,
+        "mostComparisonPreserved": true,
+        "causalSoPreserved": true,
+        "needsRecommendationPreserved": true,
+        "yieldOrGuaranteeAdded": false
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 4,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentNativeParagraph": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateFullNativeParagraph": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+      "changedSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "candidateSpan": "Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+      "candidateBackTranslation": "It is the one whose failure would hurt most compared with the others — therefore it is the one that needs a companion.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair, with native phrasing still needing a fluent review. The unchanged first sentence keeps the current staple question and household reliance. The added sentence preserves failure as the cause of harm, conditional would, greatest-harm comparison, the causal so/therefore, and the recommendation that this staple needs a companion. “failure” and “companion” remain English; no yield or guarantee is added.",
+      "semanticChecks": {
+        "failureCausePreserved": true,
+        "wouldConditionalPreserved": true,
+        "mostComparisonPreserved": true,
+        "causalSoPreserved": true,
+        "needsRecommendationPreserved": true,
+        "yieldOrGuaranteeAdded": false
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 8,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentNativeParagraph": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "candidateFullNativeParagraph": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.",
+      "changedSourceSpan": "Its young leaves are edible too.",
+      "candidateSpan": "young leaves tsa yona le tsona di a jeha.",
+      "candidateBackTranslation": "Its young leaves are edible too.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair. Only the final sentence changes; its explicit “young leaves” retains the exact age descriptor, the possessive ties the leaves to sweet potato in this paragraph, edible is stated, and too remains additive. The drought-tolerance-after-root-formation claim, first-weeks and while-forming water needs, and conditional water-stress harvest reduction remain byte-exact.",
+      "semanticChecks": {
+        "youngAgePreserved": true,
+        "onlySpecifiedCropReferent": true,
+        "ediblePredicatePreserved": true,
+        "additiveTooPreserved": true,
+        "droughtRootTimingAndWaterStressClausesUnchanged": true
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 8,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentNativeParagraph": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "candidateFullNativeParagraph": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.",
+      "changedSourceSpan": "Its young leaves are edible too.",
+      "candidateSpan": "young leaves ayo na one a a ḽiwa.",
+      "candidateBackTranslation": "Its young leaves too are edible.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair. Only the final sentence changes; its explicit “young leaves” retains the exact age descriptor, the possessive ties the leaves to sweet potato in this paragraph, edible is stated, and too remains additive. The drought-tolerance-after-root-formation claim, first-weeks and while-forming water needs, and conditional water-stress harvest reduction remain byte-exact.",
+      "semanticChecks": {
+        "youngAgePreserved": true,
+        "onlySpecifiedCropReferent": true,
+        "ediblePredicatePreserved": true,
+        "additiveTooPreserved": true,
+        "droughtRootTimingAndWaterStressClausesUnchanged": true
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 8,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentNativeParagraph": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "candidateFullNativeParagraph": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.",
+      "changedSourceSpan": "Its young leaves are edible too.",
+      "candidateSpan": "young leaves ya yona na yona ya dyiwa.",
+      "candidateBackTranslation": "Its young leaves too are edible.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair. Only the final sentence changes; its explicit “young leaves” retains the exact age descriptor, the possessive ties the leaves to sweet potato in this paragraph, edible is stated, and too remains additive. The drought-tolerance-after-root-formation claim, first-weeks and while-forming water needs, and conditional water-stress harvest reduction remain byte-exact.",
+      "semanticChecks": {
+        "youngAgePreserved": true,
+        "onlySpecifiedCropReferent": true,
+        "ediblePredicatePreserved": true,
+        "additiveTooPreserved": true,
+        "droughtRootTimingAndWaterStressClausesUnchanged": true
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndexZeroBased": 1,
+      "nativeField": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 1",
+      "sourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentNativeParagraph": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "candidateFullNativeParagraph": "Yi nyika energy kumbe protein. Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "changedSourceSpan": "It stores, or it stays in the ground until you need it.",
+      "candidateSpan": "Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.",
+      "candidateBackTranslation": "It stores/keeps, or remains in the ground until you need it.",
+      "physicalDeck": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 1,
+        "sourceMatchesCanonicalAndPacket": true,
+        "currentTargetMatchesPacket": true,
+        "candidateDeckTextMatchesCandidate": true,
+        "currentStatus": "draft",
+        "proposedStatusRemainsUnreviewedDraft": true
+      },
+      "preservation": {
+        "currentLocalizedPrefixByteExact": true,
+        "currentLocalizedSuffixByteExact": true,
+        "unlistedParagraphsByteExact": true,
+        "candidateBodyAgainstSource": true
+      },
+      "verdict": "semantically supported candidate; not fluent-approved",
+      "finding": "Supported meaning repair, with the storage verb still needing a fluent review. The target states the alternatives with “kumbe” (or), then keeps the in-ground alternative through “until you need it.” It does not add a storage duration or shelf-life guarantee. “Yi a hlayiseka” can convey that the crop keeps/stores, as reflected by the candidate back-translation; verify its naturalness and precise crop-storage sense with a fluent reviewer.",
+      "semanticChecks": {
+        "storesOrAlternativePreserved": true,
+        "staysInGroundAlternativePreserved": true,
+        "untilNeededPreserved": true,
+        "shelfLifeDurationAdded": false,
+        "fluentLexicalReviewNeeded": true
+      },
+      "fluencyApproved": false
+    }
+  ],
+  "overall": "All seven actual drafts are correctly bound to the stated native source paragraph and physical paired-deck source/target entry. Each draft preserves its existing prefix and suffix and leaves unlisted paragraphs unchanged. The three companion-failure spans preserve would/hurt-most/so/needs; the three young-leaf clauses retain young, sweet-potato-only reference, edible and too while leaving water/root/harvest conditions unchanged; the TS storage sentence retains OR and until-needed without adding duration. These are candidate semantic checks only. St retained failure/companion and all three retained young leaves in English; that is acceptable for this unreviewed precision pass, with ordinary fluent review still needed. The TS storage verb also needs fluent review. Optional L4 safety rows remain separate and unchanged."
+}

@@ -1,0 +1,530 @@
+{
+  "scope": "Seven root-refined spans only; interim composition awaiting broader L3 packet/independent/root repair before combined final authority. Data-only, no repository writes/render/publication.",
+  "baseHEAD": "68f955a1227b1a9bfc659e8a7908fee099f8ab9b",
+  "historicalOriginal": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-final-spans-actual-drafts-20261006.json",
+    "sha256": "b923828a75a583df8fabe51a8264b121ed066b17ec356cc36a0e7861fc768f9a"
+  },
+  "grammarRefinement": {
+    "path": "/tmp/imbewu-vegetables-seven-span-grammar-refinement-20261006.json",
+    "sha256": "53cd459aeb29882817c98aecac3d87a306abe105ce9cf591443f07982096e2d2"
+  },
+  "rows": [
+    {
+      "candidateId": "st:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "paragraphIndex": 4,
+      "exactCanonicalSourceParagraph": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactCurrentResolvedTargetParagraph": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetPrefixPreserveByteForByte": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? ",
+      "currentEnglishSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “whose failure would hurt most” as a consequence statement and “needs” as recommendation; do not add yield or guarantee claims.",
+      "candidateTargetSpan": "Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+      "candidateSpanBackTranslation": "It is the one whose failure would hurt most of all — therefore it is the one that needs a companion.",
+      "proposedTarget": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "fullProposedNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "failure",
+        "companion"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+          "candidateTarget": "Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+          "retainedEnglish": [
+            "failure",
+            "companion"
+          ],
+          "semanticCheckNeeded": "Conditional would, failure CONSEQUENCE, maximal hurt comparison, causal so and needs—not can, easier crop, high yield or a guarantee."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        },
+        "proposedTargetText": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "paragraphIndex": 4,
+      "exactCanonicalSourceParagraph": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactCurrentResolvedTargetParagraph": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetPrefixPreserveByteForByte": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? ",
+      "currentEnglishSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “whose failure would hurt most” as a consequence statement and “needs” as recommendation; do not add yield or guarantee claims.",
+      "candidateTargetSpan": "Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+      "candidateSpanBackTranslation": "It is the one whose failure would hurt very much more than the others — therefore it is the one that needs a companion.",
+      "proposedTarget": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "fullProposedNativeBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "failure",
+        "companion"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+          "candidateTarget": "Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+          "retainedEnglish": [
+            "failure",
+            "companion"
+          ],
+          "semanticCheckNeeded": "Conditional would, failure CONSEQUENCE, maximal hurt comparison, causal so and needs—not can, easier crop, high yield or a guarantee."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        },
+        "proposedTargetText": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[4]:companion_failure",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 4",
+      "paragraphIndex": 4,
+      "exactCanonicalSourceParagraph": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactCurrentResolvedTargetParagraph": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "exactSourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetPrefixPreserveByteForByte": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? ",
+      "currentEnglishSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “whose failure would hurt most” as a consequence statement and “needs” as recommendation; do not add yield or guarantee claims.",
+      "candidateTargetSpan": "Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+      "candidateSpanBackTranslation": "It is the one whose failure would hurt most compared with the others — therefore it is the one that needs a companion.",
+      "proposedTarget": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "fullProposedNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "failure",
+        "companion"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+          "candidateTarget": "Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+          "retainedEnglish": [
+            "failure",
+            "companion"
+          ],
+          "semanticCheckNeeded": "Conditional would, failure CONSEQUENCE, maximal hurt comparison, causal so and needs—not can, easier crop, high yield or a guarantee."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "exactSourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        },
+        "proposedTargetText": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "paragraphIndex": 8,
+      "exactCanonicalSourceParagraph": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "exactCurrentResolvedTargetParagraph": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "exactSourceSpan": "Its young leaves are edible too.",
+      "currentTargetPrefixPreserveByteForByte": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. ",
+      "currentEnglishSpan": "Its young leaves are edible too.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “young” and additive “too”; keep the preceding sweet-potato water and storage-root conditions unchanged.",
+      "candidateTargetSpan": "young leaves tsa yona le tsona di a jeha.",
+      "candidateSpanBackTranslation": "Its young leaves are edible too.",
+      "proposedTarget": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "fullProposedNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? Ke yona eo failure ya yona e neng e tla utlwisa bohloko haholo ho feta tsohle — ka hoo ke yona e hlokang companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "young leaves"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "Its young leaves are edible too.",
+          "candidateTarget": "young leaves tsa yona le tsona di a jeha.",
+          "retainedEnglish": [
+            "young leaves"
+          ],
+          "reason": "Use exact English young leaves to preserve age, not small/new plant. Possessive and additive edible predicate are localized. Current approved key point already has young leaves plus native possessive/edibility wording.",
+          "semanticCheckNeeded": "Possessive agreement, additive too and age retained; sweet potato referent only. VE diacritic ḽiwa is candidate, not fluent-certified."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. young leaves tsa yona le tsona di a jeha.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "paragraphIndex": 8,
+      "exactCanonicalSourceParagraph": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "exactCurrentResolvedTargetParagraph": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "exactSourceSpan": "Its young leaves are edible too.",
+      "currentTargetPrefixPreserveByteForByte": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. ",
+      "currentEnglishSpan": "Its young leaves are edible too.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “young” and additive “too”; keep the preceding sweet-potato water and storage-root conditions unchanged.",
+      "candidateTargetSpan": "young leaves ayo na one a a ḽiwa.",
+      "candidateSpanBackTranslation": "Its young leaves too are edible.",
+      "proposedTarget": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "fullProposedNativeBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "young leaves"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "Its young leaves are edible too.",
+          "candidateTarget": "young leaves ayo na one a a ḽiwa.",
+          "retainedEnglish": [
+            "young leaves"
+          ],
+          "reason": "Use exact English young leaves to preserve age, not small/new plant. Possessive and additive edible predicate are localized. Current approved key point already has young leaves plus native possessive/edibility wording.",
+          "semanticCheckNeeded": "Possessive agreement, additive too and age retained; sweet potato referent only. VE diacritic ḽiwa is candidate, not fluent-certified."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 8",
+      "paragraphIndex": 8,
+      "exactCanonicalSourceParagraph": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "exactCurrentResolvedTargetParagraph": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "exactSourceSpan": "Its young leaves are edible too.",
+      "currentTargetPrefixPreserveByteForByte": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. ",
+      "currentEnglishSpan": "Its young leaves are edible too.",
+      "currentTargetSuffixPreserveByteForByte": "",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve “young” and additive “too”; keep the preceding sweet-potato water and storage-root conditions unchanged.",
+      "candidateTargetSpan": "young leaves ya yona na yona ya dyiwa.",
+      "candidateSpanBackTranslation": "Its young leaves too are edible.",
+      "proposedTarget": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "fullProposedNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [
+        "young leaves"
+      ],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "Its young leaves are edible too.",
+          "candidateTarget": "young leaves ya yona na yona ya dyiwa.",
+          "retainedEnglish": [
+            "young leaves"
+          ],
+          "reason": "Use exact English young leaves to preserve age, not small/new plant. Possessive and additive edible predicate are localized. Current approved key point already has young leaves plus native possessive/edibility wording.",
+          "semanticCheckNeeded": "Possessive agreement, additive too and age retained; sweet potato referent only. VE diacritic ḽiwa is candidate, not fluent-certified."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "exactSourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too."
+        },
+        "proposedTargetText": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "fieldPath": "lib/course-modules.ts::vegetables-staples-l3.body paragraph 1",
+      "paragraphIndex": 1,
+      "exactCanonicalSourceParagraph": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "exactCurrentResolvedTargetParagraph": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "exactSourceSpan": "It stores, or it stays in the ground until you need it.",
+      "currentTargetPrefixPreserveByteForByte": "Yi nyika energy kumbe protein. ",
+      "currentEnglishSpan": "It stores, or it stays in the ground until you need it.",
+      "currentTargetSuffixPreserveByteForByte": " Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "candidateMethod": "Replace only the exact inventoried English span with the supplied actual draft, pending independent backcheck and root review; current native prefix/suffix remain exact.",
+      "sourceParagraphContainsSpan": true,
+      "spanOccursExactlyOnceInSourceAndCurrentTarget": true,
+      "reviewStatus": "machine-draft; visibly unreviewed",
+      "semanticGuard": "Preserve the alternatives (“stores” OR “stays in the ground”) and “until you need it”; do not claim shelf life or storage duration.",
+      "candidateTargetSpan": "Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.",
+      "candidateSpanBackTranslation": "It stores/keeps, or remains in the ground until you need it.",
+      "proposedTarget": "Yi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "fullCanonicalBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "fullCurrentNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "fullProposedNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "nativeBodyReviewStatus": "machine-draft",
+      "retainedTechnicalEnglish": [],
+      "semanticSpanMapping": [
+        {
+          "sourceEnglish": "It stores, or it stays in the ground until you need it.",
+          "candidateTarget": "Yi a hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava.",
+          "semanticCheckNeeded": "hlayiseka expresses storing/keeping as a property, not promised shelf life; OR remains kumbe; in-ground endpoint only until needed, no duration."
+        }
+      ],
+      "prefixPreservedByteExact": true,
+      "suffixPreservedByteExact": true,
+      "unlistedParagraphsByteExact": true,
+      "deckComposition": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 1,
+        "exactSourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+        "currentTargetPair": {
+          "status": "draft",
+          "text": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory."
+        },
+        "proposedTargetText": "Yi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.",
+        "sourceWholeParagraphEqualsLearner": true,
+        "statusIfLaterApplied": "unreviewed draft/mixed per exact English holds; not reviewed",
+        "publicationSegmentStatus": "Not wired. Segment boundaries must follow semantic source clauses and retained terms; no character-diff status inference."
+      },
+      "verdict": "actual draft; independent semantic/backtranslation check and root approval pending",
+      "fluencyApproved": false,
+      "rootRepair": "Remove only extra a; independent native same-module hlayiseka precedent, root explicitly accepted.",
+      "independentPending": "Fluent concord review pending; independent semantic check and root accepted these exact seven spans plus TS storage repair."
+    }
+  ],
+  "fullSnapshot": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-seven-root-refined-snapshots-20261006.json",
+    "sha256": "76678f1eb7f7a0866cd36a8d6a37cb762b6aac18907e78dc27935049bac0f1da"
+  },
+  "fullNativeSelectiveRewindEqualsBefore": true,
+  "fullDeckSelectiveRewindEqualsBefore": true,
+  "sourceUnlistedStatusIndicesPreserved": true,
+  "sourceFiles": [
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "sha256": "32a2bd01d8f1c4a8b14c1717effbdc2a7c9cc7e170ca9c63971ac9cfd52b9d9f",
+      "bytes": 39561,
+      "currentEqualsHEAD": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "sha256": "f3311a2940f819793f60f657a805245bf48d601db701a9c6992036233382d4b4",
+      "bytes": 55495,
+      "currentEqualsHEAD": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "sha256": "baf370ec7e3eae65d37f506bb7af69c868a62763d5d4bef800326b1b5f4cc05d",
+      "bytes": 35774,
+      "currentEqualsHEAD": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sha256": "f1b7f3f56dccf94ac3fb4b6a086e89b248085b654d759d365cd249a0ae45b792",
+      "bytes": 57716,
+      "currentEqualsHEAD": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "sha256": "179c9d7cd9dffbc1a139d82e67c734a39c9b4d0f4cc5b7d2013471a413b0609f",
+      "bytes": 29418,
+      "currentEqualsHEAD": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sha256": "697aa04e6b4665b51f077b261f6e395640087c3b561d615ff4b6cc509e923e70",
+      "bytes": 55916,
+      "currentEqualsHEAD": true
+    }
+  ],
+  "affectedFrames": [
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/st/slide-12.webp",
+      "beforeSHA256": "11c16a76c9ef20930248c68374bbcdc1bd2b73044a330ba75733d476ee76fe85",
+      "beforeBytes": 371294,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    },
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/st/slide-13.webp",
+      "beforeSHA256": "f54f3b1302b8e8be08fd7ab1f231f6c1f997c8682e7058603aa2883e091cb6cf",
+      "beforeBytes": 363884,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ts/slide-12.webp",
+      "beforeSHA256": "838b9bac8a74dc8a8b8b98617ea67efa49b1ed749b4a30cddd88caa90b17730b",
+      "beforeBytes": 375858,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ts/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ts/slide-13.webp",
+      "beforeSHA256": "7d3295a7d5eda74cec5e53b11599fcac0f7567b2a937bb140db45765492ab572",
+      "beforeBytes": 370390,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ve/slide-12.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ve/slide-12.webp",
+      "beforeSHA256": "0bdad7fa2f6c067ba146d02d6790eb786baad18af96eaf9ff001b51bc064b906",
+      "beforeBytes": 401156,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    },
+    {
+      "url": "/course-decks/vegetables-staples/ve/slide-13.webp",
+      "assetPath": "public/course-decks/vegetables-staples/ve/slide-13.webp",
+      "beforeSHA256": "35357117e59663742a195d7345584ece009c84129297f02c685dc915a34821aa",
+      "beforeBytes": 388806,
+      "manifestPath": "lib/course-asset-sizes.ts",
+      "cacheMatchRule": "Exact pathname including query variants only; once-only marker, no fetch; later downloads preserved."
+    }
+  ],
+  "existingHistoryExtensionPlan": {
+    "newGuard": "Verify immutable before plus every accepted paragraph/span equals complete actual native/deck after including source/status/order/index/unlisted before exposing earlier snapshots; mutation controls for source, would/most, young age/leaf identity, OR/until and unrelated field drift.",
+    "learnerLayer": "tests/vegetables-assessment-ordinary-checks.ts currently owns full-current registry validation. Add new guarded rewind before that older18-quiz layer; preserve TS-only L2 registry path. tests/vegetables-pest-precision-checks.ts and tests/vegetables-l3-completion-checks.ts then keep original full/module/body assertions with dated explanation.",
+    "deckLayer": "tests/vegetables-pest-precision-checks.ts vegetablesDeckBeforePestPrecision needs latest full-deck guard/selective rewind first; tests/vegetables-l3-completion-checks.ts 48-reuse claims need historical learner presentation after current accepted validation.",
+    "mediaLayer": "Actual compressed proof after future rendering must guard all accepted current bytes/manifest plus unlisted files before old descriptors; existing tests/vegetables-pest-precision-media-history-checks.ts and earlier chained helpers must retain all original assertions.",
+    "cacheModel": "app/sw.js/route.ts and tests/market-ordinary-deck-cache-migration.test.ts exact path/query once-only/no-fetch/later-download pattern. Scope final URLs only after broader accepted packet determines full frame set.",
+    "audit": "Carry STUDY-RES-002; link latest L3 completion and pest-precision audits; distinguish older pending text superseded by verified PR962; fluent concord pending."
+  },
+  "fluencyApproved": false,
+  "status": "Applied exact seven accepted spans only; current draft/text statuses retained per explicit root approval. No render/media/cache/commit/publication."
+}

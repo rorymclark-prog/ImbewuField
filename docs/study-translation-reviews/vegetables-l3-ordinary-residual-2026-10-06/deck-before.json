@@ -1,0 +1,4544 @@
+{
+  "st": {
+    "language": "st",
+    "sourceLanguage": "en",
+    "reviewStatus": "unreviewed",
+    "slides": [
+      {
+        "n": 1,
+        "english": {
+          "n": 1,
+          "heading": "Vegetables and Staple Crops",
+          "body": [
+            "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+            "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+            "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Welcome. This is ",
+                  "status": "draft",
+                  "text": "Rea le amohela. Ena ke "
+                },
+                {
+                  "sourceEnglish": "Vegetables and Staple Crops.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                  "status": "draft",
+                  "text": " Ke e nngwe ya dimmojule tse leshome tsa thupelo ya ImbewuField."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Jarete e hlahisang hantle ha se e shebahalang e tletse ka ho fetisisa ka letsatsi le le leng. Ke e tswelang pele ho isa dijo ka tlung beke le beke."
+            },
+            {
+              "status": "draft",
+              "text": "Metsotsong e mmalwa e tlang, re tla bua ka dintho tse nne. Ho lokisa bethe. Ho etsa hore kotulo e nne e tswele pele. Hore na ke dijalo dife tsa staple tse lokelang ho jalwa. Le seo o ka se etsang ha disenyi di fihla."
+            }
+          ]
+        }
+      },
+      {
+        "n": 2,
+        "english": {
+          "n": 2,
+          "heading": "Why This Matters",
+          "body": [
+            "Let's start with the problem.",
+            "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+            "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+            "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+            "That rhythm is what feeds a household. Not the size of the garden."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Hobaneng sena se le bohlokoa"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A re qaleng ka bothata."
+            },
+            {
+              "status": "draft",
+              "text": "Ho jala haholo ka nako e le ’ngoe ho hlahisa kotulo e ngata ka nako e le ’ngoe. Tsohle li loketse ka nako e le ’ngoe. Le ja seo le ka se jang, le fane ka se seng, ’me se setseng sea senyeha."
+            },
+            {
+              "status": "draft",
+              "text": "Joale ho latela nako ea khaello. Ha ho letho le loketseng ho kotuloa. Serapa se tletse limela, empa ha ho lijo tse ho sona."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Small sowings create a rhythm instead. ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "Planting, tending and harvesting overlap. ",
+                  "status": "draft",
+                  "text": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. "
+                },
+                {
+                  "sourceEnglish": "Something is always coming ready.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ke morethetho oo o fepang lelapa. Eseng boholo ba serapa."
+            }
+          ]
+        }
+      },
+      {
+        "n": 3,
+        "english": {
+          "n": 3,
+          "heading": "Learning Outcomes",
+          "body": [
+            "By the end of this module, you'll be able to make four decisions in your own field.",
+            "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+            "Two. Keep harvests moving, using succession planting and intercropping.",
+            "Three. Choose staples that protect you when one crop fails.",
+            "Four. Read a pest problem before you treat it.",
+            "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Liphetho tsa ho ithuta"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Qetellong ya mojule ona, o tla kgona ho etsa diqeto tse nne tshimong ya hao."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One. ",
+                  "status": "draft",
+                  "text": "Nngwe. "
+                },
+                {
+                  "sourceEnglish": "Build the right bed",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " — matching the ",
+                  "status": "draft",
+                  "text": " — "
+                },
+                {
+                  "sourceEnglish": "width",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and the ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "bed type",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " to your ",
+                  "status": "draft",
+                  "text": " di tsamaisana le "
+                },
+                {
+                  "sourceEnglish": "soil",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and your ",
+                  "status": "draft",
+                  "text": " ya hao le "
+                },
+                {
+                  "sourceEnglish": "rainfall",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " ya hao."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Two. ",
+                  "status": "draft",
+                  "text": "Pedi. "
+                },
+                {
+                  "sourceEnglish": "Keep harvests moving, using ",
+                  "status": "draft",
+                  "text": "Etsa hore dikotulo di tswele pele ka "
+                },
+                {
+                  "sourceEnglish": "succession planting",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "intercropping.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Three. ",
+                  "status": "draft",
+                  "text": "Tharo. "
+                },
+                {
+                  "sourceEnglish": "Choose ",
+                  "status": "draft",
+                  "text": "Khetha "
+                },
+                {
+                  "sourceEnglish": "staples",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that protect you ",
+                  "status": "draft",
+                  "text": " tse o sireletsang "
+                },
+                {
+                  "sourceEnglish": "when one crop fails.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four. ",
+                  "status": "draft",
+                  "text": "Nne. "
+                },
+                {
+                  "sourceEnglish": "Read a pest problem",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before you treat it.",
+                  "status": "draft",
+                  "text": " pele o e phekola."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "These four belong together. ",
+                  "status": "draft",
+                  "text": "Dintho tsena tse nne di tsamaya mmoho. "
+                },
+                {
+                  "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 4,
+        "english": {
+          "n": 4,
+          "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+          "body": [
+            "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+            "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+            "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "The protection is simple. ",
+                  "status": "draft",
+                  "text": "Tshireletso e bonolo. "
+                },
+                {
+                  "sourceEnglish": "Permanent paths",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                  "status": "draft",
+                  "text": ", le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One metre to one point two metres wide.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " That's the ",
+                  "status": "draft",
+                  "text": " Ke yona "
+                },
+                {
+                  "sourceEnglish": "working number",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". At that width you can reach the centre from either path, and your feet never touch the growing area.",
+                  "status": "draft",
+                  "text": ". Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Jwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape."
+            }
+          ]
+        }
+      },
+      {
+        "n": 5,
+        "english": {
+          "n": 5,
+          "heading": "Choose the Bed for the Soil and Rainfall",
+          "body": [
+            "There's no single bed shape that's right everywhere.",
+            "Start with the least disturbance that solves your problem.",
+            "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+            "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+            "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+            "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+            "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ha ho sebopeho se le seng sa bethe se loketseng dibaka tsohle."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Start with the ",
+                  "status": "draft",
+                  "text": "Qala ka "
+                },
+                {
+                  "sourceEnglish": "least disturbance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that solves your problem.",
+                  "status": "draft",
+                  "text": " e rarollang bothata ba hao."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "No-dig",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suits most garden soils. Leave the structure alone and build fertility on top.",
+                  "status": "draft",
+                  "text": " e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Do not dig ",
+                  "status": "draft",
+                  "text": "U se ke ua cheka "
+                },
+                {
+                  "sourceEnglish": "wet clay",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". If ",
+                  "status": "draft",
+                  "text": ". Ha "
+                },
+                {
+                  "sourceEnglish": "compaction",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or ",
+                  "status": "draft",
+                  "text": " kapa "
+                },
+                {
+                  "sourceEnglish": "poor drainage",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                  "status": "draft",
+                  "text": " e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha "
+                },
+                {
+                  "sourceEnglish": "deeper cultivation",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Raised beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " di loketse "
+                },
+                {
+                  "sourceEnglish": "wet ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where water needs ",
+                  "status": "draft",
+                  "text": ", moo metsi a hlokang "
+                },
+                {
+                  "sourceEnglish": "somewhere to drain away to",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Sunken beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " di loketse "
+                },
+                {
+                  "sourceEnglish": "dry ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where you want to catch and hold what rain you get.",
+                  "status": "draft",
+                  "text": ", moo o batlang ho tshwara le ho boloka pula eo o e fumanang."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ka mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe."
+            }
+          ]
+        }
+      },
+      {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Dijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " ha di jalwa ka kotloloho moo di tla hola teng. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " ke tsa sehlopha seo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others ",
+                  "status": "draft",
+                  "text": "Tse ding "
+                },
+                {
+                  "sourceEnglish": "do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " with a protected start in a ",
+                  "status": "draft",
+                  "text": " ka qalo e sireletsehileng ho "
+                },
+                {
+                  "sourceEnglish": "nursery",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", then ",
+                  "status": "draft",
+                  "text": ", ebe "
+                },
+                {
+                  "sourceEnglish": "transplanting. Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " ke tsa sehlopha seo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Sebedisa "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " bakeng sa "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " le "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and ",
+                  "status": "draft",
+                  "text": ". Hlahloba packet le "
+                },
+                {
+                  "sourceEnglish": "local grower advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Sheba crowding ha plants di ntse di hola."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 7,
+        "english": {
+          "n": 7,
+          "heading": "Mark the Working Shape",
+          "body": [
+            "Before you plant, mark the bed out.",
+            "One point two metres wide. Three metres long. One practice bed.",
+            "Use pegs and string. Mark the rectangle, and mark both access paths.",
+            "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+            "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+            "That bed gets easier to improve every season, because you stopped walking on it."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Tšoaea sebopeho seo u tla se sebelisa."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Pele o lema, tshwaya bethe."
+            },
+            {
+              "status": "draft",
+              "text": "Bophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use pegs and string. Mark the ",
+                  "status": "draft",
+                  "text": "Sebedisa pegs le string. Tshwaya "
+                },
+                {
+                  "sourceEnglish": "rectangle",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and mark both access paths.",
+                  "status": "draft",
+                  "text": ", le ho tshwaya ditsela ka bobedi tsa ho kena."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Then prepare for your own soil — ",
+                  "status": "draft",
+                  "text": "Jwale lokisetsa ho ya ka mobu wa hao — qala ka "
+                },
+                {
+                  "sourceEnglish": "no-dig",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                  "status": "draft",
+                  "text": ", mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Mohala wa thapo o fetola mohopolo qeto. Ha ditsela di se di le teng, di boloke. Ha sebaka sa temo se se se le teng, se sireletse."
+            },
+            {
+              "status": "draft",
+              "text": "Bethe eo e ba bonolo ho e ntlafatsa sehla se seng le se seng, hobane o kgaolitse ho e hata."
+            }
+          ]
+        }
+      },
+      {
+        "n": 8,
+        "english": {
+          "n": 8,
+          "heading": "A Sowing Rhythm Keeps Food Moving",
+          "body": [
+            "Succession planting is a calendar habit, not a special crop.",
+            "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+            "Plant a short row every two to three weeks.",
+            "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+            "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+            "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A Sowing Rhythm",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Keeps Food Moving",
+                "status": "draft",
+                "text": " e boloka lijo li ntse li fumaneha."
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Temo e latellanang ke mokgwa wa almanaka, eseng sejalo se kgethehileng."
+            },
+            {
+              "status": "draft",
+              "text": "Kgetha ntho eo ba lelapa la hao ba hlileng ba e jang kgafetsa. Ebe o jala e nyane ya yona, kgafetsa le hape."
+            },
+            {
+              "status": "draft",
+              "text": "Jala mola o mokgutshwane dibeke dingwe le dingwe tse pedi ho isa ho tse tharo."
+            },
+            {
+              "status": "draft",
+              "text": "Tshenyo e fokolang nakong ya ha di le ngata haholo. Dijo tse foreshe ka nako e telele. Mme mosebetsi o a arohana hohle sehleng ho e na le ho wela hodima hao kaofela ka nako e le nngwe."
+            },
+            {
+              "status": "draft",
+              "text": "Dijalo tse arohaneng di ka fokotsa kotsi ya ho lahlehelwa ke tsohle hang-hang. Ha di netefatse kotulo haeba maemo a thata a tswela pele."
+            },
+            {
+              "status": "draft",
+              "text": "Ke sejalo sefe se potlakang seo o ka se jalang ka dihlopha tse nyane? Etsa qeto ka se le seng, mme o se qale bekeng ena."
+            }
+          ]
+        }
+      },
+      {
+        "n": 9,
+        "english": {
+          "n": 9,
+          "heading": "Sow Little and Often",
+          "body": [
+            "Here's what it looks like in practice.",
+            "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+            "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+            "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+            "Watch what your own garden does, and adjust the interval. That observation is the skill."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Jala hanyenyane khafetsa."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ke sena seo e shebahalang ka teng tshebetsong."
+            },
+            {
+              "status": "draft",
+              "text": "Jala ya pele. Ebe dibeke tse pedi ho isa ho tse tharo hamorao, o jala ya bobedi. Ebe o jala ya boraro. Ebe o jala ya bone."
+            },
+            {
+              "status": "draft",
+              "text": "Ka nako e nepahetseng ya sejalo, dikotulo di ka qala ho kopana. Sehlopha sa pele ha se na ho dula se lokile kamehla ka nako ya jalo ya bone."
+            },
+            {
+              "status": "draft",
+              "text": "Dibeke tse pedi ho isa ho tse tharo ke morethetho wa ho qala, eseng molao. Sejalo sa mahlaku sa sehla se batang se ka nka nako e telele. Mofuthu o ka potlakisa dintho, kapa wa baka ho hloleha."
+            },
+            {
+              "status": "draft",
+              "text": "Sheba se etsahalang jareteng ya hao, mme o fetole nako ya kgefutso. Pono eo ke bokgoni."
+            }
+          ]
+        }
+      },
+      {
+        "n": 10,
+        "english": {
+          "n": 10,
+          "heading": "Each Crop Earns Its Place",
+          "body": [
+            "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+            "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+            "Maize gives height and structure.",
+            "Beans climb the maize, and store as protein.",
+            "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+            "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+            "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Temo e kopantsweng ha se feela ho pitlaganya dimela tse fapaneng mmoho. Semela ka seng se hloka mosebetsi, le sebaka se lekaneng sa ho o etsa."
+            },
+            {
+              "status": "draft",
+              "text": "Kgaitsedi tse Tharo (The Three Sisters) ke mohlala o tswang meetlong ya temo ya Matsoalloa a Amerika."
+            },
+            {
+              "status": "draft",
+              "text": "Poone e fana ka bophahamo le sebopeho."
+            },
+            {
+              "status": "draft",
+              "text": "Dinawa di hlwella pooneng, mme di bolokeha jwalo ka protheine."
+            },
+            {
+              "status": "draft",
+              "text": "Mokopu o nama fatshe, o etsa moriti mobung le ho boloka mongobo."
+            },
+            {
+              "status": "draft",
+              "text": "Nako e bohlokwa. Hlahisa poone pele, e le hore e be matla a lekaneng ho jara dinawa ha di qala ho hlwella."
+            },
+            {
+              "status": "draft",
+              "text": "Dimela di ntse di ka qothisana lehlokwa. Di fe sebaka se loketseng, metsi le lesedi. Dinawa di tlama naetrojene ka baktheriya ya metso, empa o se ke wa nahana hore di fepa poone hang-hang; phepo e matlakaleng a setseng e lokollwa nakong ya ha a bola."
+            }
+          ]
+        }
+      },
+      {
+        "n": 11,
+        "english": {
+          "n": 11,
+          "heading": "Plan Backwards From Your Hungry Gap",
+          "body": [
+            "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+            "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+            "Don't copy somebody else's calendar. Name your own months first.",
+            "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+            "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Plan Backwards From ",
+                "status": "draft",
+                "text": "Rera u khutlela morao ho tloha ho "
+              },
+              {
+                "sourceEnglish": "Your Hungry Gap",
+                "status": "english-hold"
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Lelapa le ka ba le nako ya sekgeo sa tlala (hungry gap): dibeke tseo ka tsona dijo tse bolokilweng di fellang pele kotulo e latelang e loka."
+            },
+            {
+              "status": "draft",
+              "text": "Ya hao e ka tla ka mora hore poone e bolokilweng e fele. E ka tla pele meroho ya mariha e loka. E ka tla nakong ya komello ha metsi a lekanyetsa jarete."
+            },
+            {
+              "status": "draft",
+              "text": "O se ke wa kopitsa almanaka ya motho e mong. Reha dikgwedi tsa hao pele."
+            },
+            {
+              "status": "draft",
+              "text": "Di ngole fatshe. Ebe o kgetha sejalo le letsatsi la ho jala le kenyang dijo sekgeong seo."
+            },
+            {
+              "status": "draft",
+              "text": "Eo ke thero e qalellang morao, mme ke phapang dipakeng tsa jarete e shebahalang e hlahisa le lelapa le jang."
+            }
+          ]
+        }
+      },
+      {
+        "n": 12,
+        "english": {
+          "n": 12,
+          "heading": "Staples Are Food Insurance",
+          "body": [
+            "A staple earns its place because it feeds the household beyond the day of harvest.",
+            "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+            "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+            "Grow at least two. Not one.",
+            "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo."
+            },
+            {
+              "status": "draft",
+              "text": "E fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory."
+            },
+            {
+              "status": "draft",
+              "text": "Staple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla."
+            },
+            {
+              "status": "draft",
+              "text": "Lema bonyane tse pedi. E seng se le seng."
+            },
+            {
+              "status": "draft",
+              "text": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion."
+            }
+          ]
+        }
+      },
+      {
+        "n": 13,
+        "english": {
+          "n": 13,
+          "heading": "Different Staples Protect Against Different Risks",
+          "body": [
+            "Each staple protects you against something different.",
+            "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+            "Beans and cowpeas give a storable protein harvest.",
+            "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+            "Amadumbe handles wetter ground, where other staples struggle.",
+            "Notice that they fail in different conditions. That's the whole point."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Staples tse fapaneng li sireletsa kgahlanong le dikotsi tse fapaneng."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Staple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng."
+            },
+            {
+              "status": "draft",
+              "text": "Maize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection."
+            },
+            {
+              "status": "draft",
+              "text": "Beans le cowpeas li fana ka protein harvest e ka bolokoang."
+            },
+            {
+              "status": "draft",
+              "text": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too."
+            },
+            {
+              "status": "draft",
+              "text": "Amadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng."
+            },
+            {
+              "status": "draft",
+              "text": "Hlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle."
+            }
+          ]
+        }
+      },
+      {
+        "n": 14,
+        "english": {
+          "n": 14,
+          "heading": "Diversity Keeps Food Moving",
+          "body": [
+            "Resilience doesn't mean nothing fails.",
+            "It means one failure doesn't finish your household's food plan.",
+            "One crop is one point of failure.",
+            "Two or more staples give you more ways to keep eating.",
+            "Different crops use water, soil and seasons differently. That difference is the protection."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Mefuta-futa e boloka lijo li ntse li fumaneha."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ho mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang."
+            },
+            {
+              "status": "draft",
+              "text": "Ho bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao."
+            },
+            {
+              "status": "draft",
+              "text": "Sejalo se le seng ke point of failure e le nngwe."
+            },
+            {
+              "status": "draft",
+              "text": "Dijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja."
+            },
+            {
+              "status": "draft",
+              "text": "Dijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection."
+            }
+          ]
+        }
+      },
+      {
+        "n": 15,
+        "english": {
+          "n": 15,
+          "heading": "Pests Are Messengers Before They Are Enemies",
+          "body": [
+            "Pest pressure usually rises for a reason.",
+            "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+            "So before you treat anything, look at the whole system.",
+            "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+            "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Pest pressure hangata e a eketseha ka lebaka le itseng."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Plants under ",
+                  "status": "draft",
+                  "text": "Dimela tse nang le "
+                },
+                {
+                  "sourceEnglish": "stress.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " One crop dominating the ground.",
+                  "status": "draft",
+                  "text": " Sejalo se le seng se laolang sebaka."
+                },
+                {
+                  "sourceEnglish": " Or ",
+                  "status": "draft",
+                  "text": " Kapa "
+                },
+                {
+                  "sourceEnglish": "broad chemical use",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that has already removed the ",
+                  "status": "draft",
+                  "text": " e seng e tlositse "
+                },
+                {
+                  "sourceEnglish": "predators",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that were helping you.",
+                  "status": "draft",
+                  "text": " tse neng di o thusa."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ka hona, pele o phekola eng kapa eng, sheba system yohle."
+            },
+            {
+              "status": "draft",
+              "text": "Na semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?"
+            },
+            {
+              "status": "draft",
+              "text": "Lekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato."
+            }
+          ]
+        }
+      },
+      {
+        "n": 16,
+        "english": {
+          "n": 16,
+          "heading": "Treat the Cause Before the Insect",
+          "body": [
+            "Work through four steps, in order.",
+            "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+            "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+            "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+            "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+            "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+            "Be honest with yourself about which step you usually skip."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Phekola sesosa pele ho kokoanyana."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Sebetsa ka mehato e mene, ka tatellano."
+            },
+            {
+              "status": "draft",
+              "text": "Ntlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane."
+            },
+            {
+              "status": "draft",
+              "text": "Ntlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi."
+            },
+            {
+              "status": "draft",
+              "text": "Ntlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four.",
+                  "status": "draft",
+                  "text": "Ntlha ya bone."
+                },
+                {
+                  "sourceEnglish": " Only then, act — and start with ",
+                  "status": "draft",
+                  "text": " Ke ka morao feela moo o nkang kgato — qala ka "
+                },
+                {
+                  "sourceEnglish": "the lightest thing that works.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Physical removal",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", barriers",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or changes in ",
+                  "status": "draft",
+                  "text": " kapa diphetoho "
+                },
+                {
+                  "sourceEnglish": "crop care",
+                  "status": "draft",
+                  "text": "tlhokomelong ya dijalo"
+                },
+                {
+                  "sourceEnglish": " may help.",
+                  "status": "draft",
+                  "text": " di ka thusa."
+                },
+                {
+                  "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+                  "status": "draft",
+                  "text": " Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "If a ",
+                  "status": "draft",
+                  "text": "Ha "
+                },
+                {
+                  "sourceEnglish": "treatment",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is needed, use a ",
+                  "status": "draft",
+                  "text": " e hlokahala, sebedisa "
+                },
+                {
+                  "sourceEnglish": "product registered for that crop and pest",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and follow its ",
+                  "status": "draft",
+                  "text": ", mme o latele "
+                },
+                {
+                  "sourceEnglish": "label",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " ya yona."
+                },
+                {
+                  "sourceEnglish": " This includes ",
+                  "status": "draft",
+                  "text": " Sena se kenyeletsa "
+                },
+                {
+                  "sourceEnglish": "neem products.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Check ",
+                  "status": "draft",
+                  "text": " Hlahloba "
+                },
+                {
+                  "sourceEnglish": "protection and harvest waiting instructions.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ipolelle nnete, hore na ke mohato ofe oo hangata o o tlolang."
+            }
+          ]
+        }
+      },
+      {
+        "n": 17,
+        "english": {
+          "n": 17,
+          "heading": "Field Assignment",
+          "body": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres.",
+            "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+            "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+            "Photograph it when it's planted. Then come back after ten days with what you observed.",
+            "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Mosebetsi oa tšimong"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Joale thuto e fella mobung."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Haha bed e le nngwe e ka tswelang pele ho o fepa. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Fihla bohareng ho tloha mahlakoreng ka bobedi. Etsa bonnete ba hore leoto le leng le le leng le sala ditseleng. Beha dimela ka sebaka se tshwanetseng boemo ba lehodimo ba hao. Tshhela mulch bedeng."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Check the bed regularly from planting.",
+                  "status": "draft",
+                  "text": "Hlahloba bed kgafetsa ho tloha ha e lengwa."
+                },
+                {
+                  "sourceEnglish": " Use the ",
+                  "status": "draft",
+                  "text": " Sebedisa "
+                },
+                {
+                  "sourceEnglish": "ten-day photograph",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " as an assignment checkpoint, ",
+                  "status": "draft",
+                  "text": " e le assignment checkpoint, "
+                },
+                {
+                  "sourceEnglish": "not a reason to delay care.",
+                  "status": "draft",
+                  "text": "eseng lebaka la ho diehisa tlhokomelo."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Nka senepe ha bed e se e jetsoe. Ebe o kgutle ka mora matsatsi a leshome o tlisa seo o se boneng."
+            },
+            {
+              "status": "draft",
+              "text": "Sepheo ha se setshwantsho se phethahetseng. Sepheo ke bed eo o kgethileng shape, spacing le rhythm ya yona ka boomo."
+            }
+          ]
+        }
+      },
+      {
+        "n": 18,
+        "english": {
+          "n": 18,
+          "heading": "Field Action",
+          "body": [
+            "This week, put one bed into production.",
+            "One. Mark the bed and the paths.",
+            "Two. Plant, with your spacing and your sowing rhythm.",
+            "Three. Return after ten days, with a photo.",
+            "Then observe. Adjust. And write it down.",
+            "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+            "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "Use your record with reliable local advice when making the next decision."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ketso ea tšimong"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Bekeng ena, kenya bed e le nngwe tlhahisong."
+            },
+            {
+              "status": "draft",
+              "text": "Nngwe. Tshwaya bed le paths."
+            },
+            {
+              "status": "draft",
+              "text": "Pedi. Jala ka spacing ya hao le sowing rhythm ya hao."
+            },
+            {
+              "status": "draft",
+              "text": "Tharo. Kgutla ka mora matsatsi a leshome, o tshotse foto."
+            },
+            {
+              "status": "draft",
+              "text": "Ebe o sheba. O fetole. Mme o ngole fatshe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Record the sowing date.",
+                  "status": "draft",
+                  "text": "Ngola letsatsi la sowing."
+                },
+                {
+                  "sourceEnglish": " The rain.",
+                  "status": "draft",
+                  "text": " Pula."
+                },
+                {
+                  "sourceEnglish": " What germinated.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Pest pressure.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " What you harvested.",
+                  "status": "draft",
+                  "text": " Seo o se kotutseng."
+                }
+              ],
+              "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Season by season, ",
+                  "status": "draft",
+                  "text": "Sehla ka seng, "
+                },
+                {
+                  "sourceEnglish": "your garden ",
+                  "status": "draft",
+                  "text": "serapa sa hao "
+                },
+                {
+                  "sourceEnglish": "becomes less dependent on guesswork",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " — and more on ",
+                  "status": "draft",
+                  "text": " — mme haholo ka "
+                },
+                {
+                  "sourceEnglish": "what you've actually seen happen",
+                  "status": "draft",
+                  "text": "seo o hlileng o se boneng se etsahala"
+                },
+                {
+                  "sourceEnglish": " on your own ground.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use your record ",
+                  "status": "draft",
+                  "text": "Sebedisa rekoto ya hao "
+                },
+                {
+                  "sourceEnglish": "with reliable local advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " when making the next decision.",
+                  "status": "draft",
+                  "text": " ha o etsa qeto e latelang."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "ve": {
+    "language": "ve",
+    "sourceLanguage": "en",
+    "reviewStatus": "unreviewed",
+    "slides": [
+      {
+        "n": 1,
+        "english": {
+          "n": 1,
+          "heading": "Vegetables and Staple Crops",
+          "body": [
+            "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+            "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+            "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Welcome. This is ",
+                  "status": "draft",
+                  "text": "Ri a ni ṱanganedza. Leyi ndi "
+                },
+                {
+                  "sourceEnglish": "Vegetables and Staple Crops.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                  "status": "draft",
+                  "text": " Ndi muṅwe wa modules dza fumi kha ngudo ya ImbewuField."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Nsimu ine ya bveledza zwavhuḓi a si ine ya vhonala yo ḓala nga ḓuvha ḽithihi fhedzi. Ndi ine ya bvela phanḓa na u isa zwiḽiwa muṱani, vhege nga vhege."
+            },
+            {
+              "status": "draft",
+              "text": "Kha minetse i si gathi i tevhelaho, ri ḓo haseledza zwithu zwiṋa. U lugisa bed. U ita uri harvest i bvele phanḓa. Uri ndi zwifhio zwimela zwa staple zwine zwa fanela u ṱavhiwa. Na zwine na nga ita musi pests dzi tshi swika."
+            }
+          ]
+        }
+      },
+      {
+        "n": 2,
+        "english": {
+          "n": 2,
+          "heading": "Why This Matters",
+          "body": [
+            "Let's start with the problem.",
+            "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+            "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+            "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+            "That rhythm is what feeds a household. Not the size of the garden."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ndi ngani zwi zwa ndeme"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Kha ri thome nga thaidzo."
+            },
+            {
+              "status": "draft",
+              "text": "U tavha zwinzhi nga tshifhinga tshithihi zwi ita uri hu vhe na zwibveledzwa zwinzhi nga tshifhinga tshithihi. Zwoṱhe zwi lugela nga tshifhinga tshithihi. Niḽa zwine na kona, ni ṋea vhaṅwe zwiṅwe, nahone zwo salaho zwi a sina."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Then comes the gap. Nothing is ready. ",
+                  "status": "draft",
+                  "text": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. "
+                },
+                {
+                  "sourceEnglish": "The garden is full of plants, but there's no food in it.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "U ṱavha zwipiḓa zwiṱuku nga zwifhinga zwo fhambanaho zwi ita uri hu vhe na mutevhetsindo. U ṱavha, u ṱhogomela na u kaṋa zwi bvela phanḓa zwi tshi itea nga zwifhinga zwi fanaho. Hu dzula hu na tshiṅwe tshine tsha khou lugela u kaṋiwa."
+            },
+            {
+              "status": "draft",
+              "text": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha garden."
+            }
+          ]
+        }
+      },
+      {
+        "n": 3,
+        "english": {
+          "n": 3,
+          "heading": "Learning Outcomes",
+          "body": [
+            "By the end of this module, you'll be able to make four decisions in your own field.",
+            "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+            "Two. Keep harvests moving, using succession planting and intercropping.",
+            "Three. Choose staples that protect you when one crop fails.",
+            "Four. Read a pest problem before you treat it.",
+            "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Zwine na ḓo guda"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu."
+            },
+            {
+              "status": "english-hold"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Two. ",
+                  "status": "draft",
+                  "text": "Tsha vhuvhili. "
+                },
+                {
+                  "sourceEnglish": "Keep ",
+                  "status": "draft",
+                  "text": "Itani uri "
+                },
+                {
+                  "sourceEnglish": "harvests",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " moving, using ",
+                  "status": "draft",
+                  "text": " dzi bvele phanḓa, ni tshi shumisa "
+                },
+                {
+                  "sourceEnglish": "succession planting",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "intercropping.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Three. ",
+                  "status": "draft",
+                  "text": "Tsha vhuraru. "
+                },
+                {
+                  "sourceEnglish": "Choose ",
+                  "status": "draft",
+                  "text": "Nangani "
+                },
+                {
+                  "sourceEnglish": "staples",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that protect you ",
+                  "status": "draft",
+                  "text": " dzi ni tsireledzaho "
+                },
+                {
+                  "sourceEnglish": "when one crop fails.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four. ",
+                  "status": "draft",
+                  "text": "Tsha vhuṋa. "
+                },
+                {
+                  "sourceEnglish": "Read a pest problem",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before you ",
+                  "status": "draft",
+                  "text": " ni sa athu u "
+                },
+                {
+                  "sourceEnglish": "treat it.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "These four belong together. ",
+                  "status": "draft",
+                  "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+                },
+                {
+                  "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 4,
+        "english": {
+          "n": 4,
+          "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+          "body": [
+            "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+            "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+            "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Compacted soil loses its air spaces. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "The protection is simple. ",
+                  "status": "draft",
+                  "text": "Tsireledzo ndi yo leluwaho. "
+                },
+                {
+                  "sourceEnglish": "Permanent paths",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                  "status": "draft",
+                  "text": ", na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One metre to one point two metres wide.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                  "status": "draft",
+                  "text": " Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami "
+                },
+                {
+                  "sourceEnglish": "growing area",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " na luthihi."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+            }
+          ]
+        }
+      },
+      {
+        "n": 5,
+        "english": {
+          "n": 5,
+          "heading": "Choose the Bed for the Soil and Rainfall",
+          "body": [
+            "There's no single bed shape that's right everywhere.",
+            "Start with the least disturbance that solves your problem.",
+            "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+            "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+            "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+            "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+            "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Start with the ",
+                  "status": "draft",
+                  "text": "Thomani nga "
+                },
+                {
+                  "sourceEnglish": "least disturbance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that solves your problem.",
+                  "status": "draft",
+                  "text": " ine ya tandulula thaidzo yaṋu."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "No-dig suits most garden soils.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Leave the structure alone and build fertility on top.",
+                  "status": "draft",
+                  "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Do not dig ",
+                  "status": "draft",
+                  "text": "Ni songo bwa "
+                },
+                {
+                  "sourceEnglish": "wet clay",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". If ",
+                  "status": "draft",
+                  "text": ". Arali "
+                },
+                {
+                  "sourceEnglish": "compaction",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or ",
+                  "status": "draft",
+                  "text": " kana "
+                },
+                {
+                  "sourceEnglish": "poor drainage",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                  "status": "draft",
+                  "text": " zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha "
+                },
+                {
+                  "sourceEnglish": "deeper cultivation",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Raised beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " dzi tea "
+                },
+                {
+                  "sourceEnglish": "wet ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where water needs somewhere to drain away to.",
+                  "status": "draft",
+                  "text": ", hune maḓi a ṱoḓa fhethu ha u bva hone."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Sunken beds",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " suit ",
+                  "status": "draft",
+                  "text": " dzi tea "
+                },
+                {
+                  "sourceEnglish": "dry ground",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", where you want to catch and hold what rain you get.",
+                  "status": "draft",
+                  "text": ", hune na ṱoḓa u fara na u vhulunga mvula ine na i wana."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Look after ",
+                  "status": "draft",
+                  "text": "Musi "
+                },
+                {
+                  "sourceEnglish": "heavy rain",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+                  "status": "draft",
+                  "text": " yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na "
+                },
+                {
+                  "sourceEnglish": "soil and drainage advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before choosing the bed.",
+                  "status": "draft",
+                  "text": " ni sa athu khetha bed."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " zwi wela kha tshigwada itsho."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others do better with a protected start in a nursery, then transplanting. ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " zwi wela henefho."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Shumisani "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " ya "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and ",
+                  "status": "draft",
+                  "text": ". Sedzani packet na "
+                },
+                {
+                  "sourceEnglish": "local grower advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Sedzani crowding musi zwimela zwi tshi aluwa."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 7,
+        "english": {
+          "n": 7,
+          "heading": "Mark the Working Shape",
+          "body": [
+            "Before you plant, mark the bed out.",
+            "One point two metres wide. Three metres long. One practice bed.",
+            "Use pegs and string. Mark the rectangle, and mark both access paths.",
+            "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+            "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+            "That bed gets easier to improve every season, because you stopped walking on it."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Maka tshivhumbeo tshine tsha shumiswa."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ni sa athu ṱavha, swayani bed."
+            },
+            {
+              "status": "draft",
+              "text": "One point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed)."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use pegs and string. Mark the ",
+                  "status": "draft",
+                  "text": "Shumisani zwipiki na thambo. Swayani "
+                },
+                {
+                  "sourceEnglish": "rectangle",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and mark both access paths.",
+                  "status": "draft",
+                  "text": ", nahone ni swaye paths dzoṱhe mbili dza u swikelela bed."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Then prepare for your own soil — ",
+                  "status": "draft",
+                  "text": "Nga murahu ni lugiselele u ya nga mavu aṋu — thomani nga "
+                },
+                {
+                  "sourceEnglish": "no-dig",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                  "status": "draft",
+                  "text": ", nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "String line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze."
+            },
+            {
+              "status": "draft",
+              "text": "Bed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo."
+            }
+          ]
+        }
+      },
+      {
+        "n": 8,
+        "english": {
+          "n": 8,
+          "heading": "A Sowing Rhythm Keeps Food Moving",
+          "body": [
+            "Succession planting is a calendar habit, not a special crop.",
+            "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+            "Plant a short row every two to three weeks.",
+            "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+            "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+            "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A Sowing Rhythm",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Keeps Food Moving",
+                "status": "draft",
+                "text": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho."
+            },
+            {
+              "status": "draft",
+              "text": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu."
+            },
+            {
+              "status": "draft",
+              "text": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu."
+            },
+            {
+              "status": "draft",
+              "text": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+            },
+            {
+              "status": "draft",
+              "text": "U ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa."
+            },
+            {
+              "status": "draft",
+              "text": "Ndi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku? Nangani tshithihi, ni tshi thome ino vhege."
+            }
+          ]
+        }
+      },
+      {
+        "n": 9,
+        "english": {
+          "n": 9,
+          "heading": "Sow Little and Often",
+          "body": [
+            "Here's what it looks like in practice.",
+            "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+            "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+            "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+            "Watch what your own garden does, and adjust the interval. That observation is the skill."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ṱavhani zwiṱuku nahone lunzhi."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Hezwi ndi zwine zwa itea ngazwo."
+            },
+            {
+              "status": "draft",
+              "text": "Sow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa."
+            },
+            {
+              "status": "draft",
+              "text": "Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap. A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa."
+            },
+            {
+              "status": "draft",
+              "text": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe."
+            },
+            {
+              "status": "draft",
+              "text": "Sedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill."
+            }
+          ]
+        }
+      },
+      {
+        "n": 10,
+        "english": {
+          "n": 10,
+          "heading": "Each Crop Earns Its Place",
+          "body": [
+            "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+            "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+            "Maize gives height and structure.",
+            "Beans climb the maize, and store as protein.",
+            "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+            "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+            "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+            },
+            {
+              "status": "draft",
+              "text": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas."
+            },
+            {
+              "status": "draft",
+              "text": "Maize i ṋea vhulapfu na tshivhumbeo."
+            },
+            {
+              "status": "draft",
+              "text": "Beans dzi gonya maize, and store as protein."
+            },
+            {
+              "status": "draft",
+              "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+            },
+            {
+              "status": "draft",
+              "text": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya."
+            },
+            {
+              "status": "draft",
+              "text": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+            }
+          ]
+        }
+      },
+      {
+        "n": 11,
+        "english": {
+          "n": 11,
+          "heading": "Plan Backwards From Your Hungry Gap",
+          "body": [
+            "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+            "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+            "Don't copy somebody else's calendar. Name your own months first.",
+            "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+            "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Plan Backwards From ",
+                "status": "draft",
+                "text": "Planani ni tshi humela murahu u bva kha "
+              },
+              {
+                "sourceEnglish": "Your Hungry Gap",
+                "status": "english-hold"
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Muṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga."
+            },
+            {
+              "status": "draft",
+              "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
+            },
+            {
+              "status": "draft",
+              "text": "Ni songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu."
+            },
+            {
+              "status": "draft",
+              "text": "Iṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo."
+            },
+            {
+              "status": "draft",
+              "text": "Hezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa."
+            }
+          ]
+        }
+      },
+      {
+        "n": 12,
+        "english": {
+          "n": 12,
+          "heading": "Staples Are Food Insurance",
+          "body": [
+            "A staple earns its place because it feeds the household beyond the day of harvest.",
+            "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+            "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+            "Grow at least two. Not one.",
+            "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo."
+            },
+            {
+              "status": "draft",
+              "text": "Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory."
+            },
+            {
+              "status": "draft",
+              "text": "Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela."
+            },
+            {
+              "status": "draft",
+              "text": "Alusani zwivhili kana zwo engaho. Hu si tshithihi."
+            },
+            {
+              "status": "draft",
+              "text": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion."
+            }
+          ]
+        }
+      },
+      {
+        "n": 13,
+        "english": {
+          "n": 13,
+          "heading": "Different Staples Protect Against Different Risks",
+          "body": [
+            "Each staple protects you against something different.",
+            "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+            "Beans and cowpeas give a storable protein harvest.",
+            "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+            "Amadumbe handles wetter ground, where other staples struggle.",
+            "Notice that they fail in different conditions. That's the whole point."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Staples dzo fhambanaho dzi tsireledza kha khombo dzo fhambanaho."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho."
+            },
+            {
+              "status": "draft",
+              "text": "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection."
+            },
+            {
+              "status": "draft",
+              "text": "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa."
+            },
+            {
+              "status": "draft",
+              "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too."
+            },
+            {
+              "status": "draft",
+              "text": "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa."
+            },
+            {
+              "status": "draft",
+              "text": "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa."
+            }
+          ]
+        }
+      },
+      {
+        "n": 14,
+        "english": {
+          "n": 14,
+          "heading": "Diversity Keeps Food Moving",
+          "body": [
+            "Resilience doesn't mean nothing fails.",
+            "It means one failure doesn't finish your household's food plan.",
+            "One crop is one point of failure.",
+            "Two or more staples give you more ways to keep eating.",
+            "Different crops use water, soil and seasons differently. That difference is the protection."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "U fhambana ha zwimela zwi ita uri zwiliwa zwi dzule zwi tshi wanala."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Resilience a zwi ambi uri a hu na zwine zwa kundwa."
+            },
+            {
+              "status": "draft",
+              "text": "Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu."
+            },
+            {
+              "status": "draft",
+              "text": "Tshibyariwa tshithihi ndi point nthihi ya failure."
+            },
+            {
+              "status": "draft",
+              "text": "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa."
+            },
+            {
+              "status": "draft",
+              "text": "Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo."
+            }
+          ]
+        }
+      },
+      {
+        "n": 15,
+        "english": {
+          "n": 15,
+          "heading": "Pests Are Messengers Before They Are Enemies",
+          "body": [
+            "Pest pressure usually rises for a reason.",
+            "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+            "So before you treat anything, look at the whole system.",
+            "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+            "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Pest pressure i anzela u engedzea nga tshiitisi."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Plants under ",
+                  "status": "draft",
+                  "text": "Zwimela zwi re na "
+                },
+                {
+                  "sourceEnglish": "stress.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " One crop dominating the ground.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Or ",
+                  "status": "draft",
+                  "text": " Kana "
+                },
+                {
+                  "sourceEnglish": "broad chemical use",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that has already removed the ",
+                  "status": "draft",
+                  "text": " yo no bvisa "
+                },
+                {
+                  "sourceEnglish": "predators",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that were helping you.",
+                  "status": "draft",
+                  "text": " dze dza vha dzi tshi ni thusa."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "So ",
+                  "status": "draft",
+                  "text": "Ngazwenezwo, "
+                },
+                {
+                  "sourceEnglish": "before you treat anything, ",
+                  "status": "draft",
+                  "text": "ni sa athu u thoma u lafha tshithu, "
+                },
+                {
+                  "sourceEnglish": "look at the whole system.",
+                  "status": "draft",
+                  "text": "sedzani system yoṱhe."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Is the plant short of water?",
+                  "status": "draft",
+                  "text": "Naa tshimela tshi khou shaya maḓi?"
+                },
+                {
+                  "sourceEnglish": " Is the soil ",
+                  "status": "draft",
+                  "text": " Mavu o "
+                },
+                {
+                  "sourceEnglish": "compacted",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", or ",
+                  "status": "draft",
+                  "text": " kana "
+                },
+                {
+                  "sourceEnglish": "hungry",
+                  "status": "draft",
+                  "text": "a si na pfushi"
+                },
+                {
+                  "sourceEnglish": "?",
+                  "status": "draft",
+                  "text": "?"
+                },
+                {
+                  "sourceEnglish": " Are predators already working on the problem for you?",
+                  "status": "draft",
+                  "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
+            }
+          ]
+        }
+      },
+      {
+        "n": 16,
+        "english": {
+          "n": 16,
+          "heading": "Treat the Cause Before the Insect",
+          "body": [
+            "Work through four steps, in order.",
+            "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+            "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+            "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+            "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+            "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+            "Be honest with yourself about which step you usually skip."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Langa tshiitisi phanḓa ha tshikhokhonono."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Tevhelani vhukando vhuṋa nga u tevhekana."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One. Observe. Look at the ",
+                  "status": "draft",
+                  "text": "Tsha u thoma. Sedzani. Sedzani "
+                },
+                {
+                  "sourceEnglish": "damage pattern",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", the underside of the leaf, the stem, and the plants nearby.",
+                  "status": "draft",
+                  "text": ", tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Tsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage."
+            },
+            {
+              "status": "draft",
+              "text": "Tsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four.",
+                  "status": "draft",
+                  "text": "Tsha vhuṋa."
+                },
+                {
+                  "sourceEnglish": " Only then, act — and start with ",
+                  "status": "draft",
+                  "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+                },
+                {
+                  "sourceEnglish": "the lightest thing that works.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Physical removal",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", barriers",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or changes in ",
+                  "status": "draft",
+                  "text": " kana tshanduko kha nḓila ya u ṱhogomela "
+                },
+                {
+                  "sourceEnglish": "crop care",
+                  "status": "draft",
+                  "text": "zwimela"
+                },
+                {
+                  "sourceEnglish": " may help.",
+                  "status": "draft",
+                  "text": " zwi nga thusa."
+                },
+                {
+                  "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+                  "status": "draft",
+                  "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "If a ",
+                  "status": "draft",
+                  "text": "Arali "
+                },
+                {
+                  "sourceEnglish": "treatment",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is needed, use a ",
+                  "status": "draft",
+                  "text": " i tshi ṱoḓea, shumisani "
+                },
+                {
+                  "sourceEnglish": "product registered for that crop and pest",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and follow its ",
+                  "status": "draft",
+                  "text": ", nahone ni tevhele "
+                },
+                {
+                  "sourceEnglish": "label",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " yayo."
+                },
+                {
+                  "sourceEnglish": " This includes ",
+                  "status": "draft",
+                  "text": " Hezwi zwi katela "
+                },
+                {
+                  "sourceEnglish": "neem products.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Check ",
+                  "status": "draft",
+                  "text": " Ṱolani "
+                },
+                {
+                  "sourceEnglish": "protection and harvest waiting instructions.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ni ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka."
+            }
+          ]
+        }
+      },
+      {
+        "n": 17,
+        "english": {
+          "n": 17,
+          "heading": "Field Assignment",
+          "body": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres.",
+            "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+            "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+            "Photograph it when it's planted. Then come back after ten days with what you observed.",
+            "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Mushumo wa tsimuni"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Zwino ngudo i fhela mavuni."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Fhaṱani bed nthihi ine ya nga bvela phanḓa u ni ṋea zwiliwa. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Swikani vhukati ha bed ni tshi bva thungo dzoṱhe mbili. Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. Ṋeani zwimela spacing yo teaho kha climate yaṋu. Vheani mulch kha bed."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Check the bed regularly from planting.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Use the ",
+                  "status": "draft",
+                  "text": " Shumisani "
+                },
+                {
+                  "sourceEnglish": "ten-day photograph",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " as an assignment checkpoint, ",
+                  "status": "draft",
+                  "text": " sa assignment checkpoint, "
+                },
+                {
+                  "sourceEnglish": "not a reason to delay care.",
+                  "status": "draft",
+                  "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Photograph it",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " when it's planted.",
+                  "status": "draft",
+                  "text": " musi bed yo no ṱavhiwa."
+                },
+                {
+                  "sourceEnglish": " Then come back after ten days with what you observed.",
+                  "status": "draft",
+                  "text": " Nga murahu ha maḓuvha a fumi ni vhuye ni na zwe na zwi vhona."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Tshipikwa a si tshifanyiso tsho fhelelaho. Tshipikwa ndi bed ine na khetha shape, spacing na rhythm yayo nga ndivho."
+            }
+          ]
+        }
+      },
+      {
+        "n": 18,
+        "english": {
+          "n": 18,
+          "heading": "Field Action",
+          "body": [
+            "This week, put one bed into production.",
+            "One. Mark the bed and the paths.",
+            "Two. Plant, with your spacing and your sowing rhythm.",
+            "Three. Return after ten days, with a photo.",
+            "Then observe. Adjust. And write it down.",
+            "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+            "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "Use your record with reliable local advice when making the next decision."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Nyito ya tsimuni"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Vhege ino, shumisani bed nthihi kha production."
+            },
+            {
+              "status": "draft",
+              "text": "Tshithihi. Swayani bed na paths."
+            },
+            {
+              "status": "draft",
+              "text": "Mbili. Ṱavhani, ni tshi tevhedza spacing yaṋu na sowing rhythm yaṋu."
+            },
+            {
+              "status": "draft",
+              "text": "Raru. Vhuyani nga murahu ha maḓuvha a fumi, ni na foto."
+            },
+            {
+              "status": "draft",
+              "text": "Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Record the sowing date.",
+                  "status": "draft",
+                  "text": "Ṅwalani datumu ya sowing."
+                },
+                {
+                  "sourceEnglish": " The rain.",
+                  "status": "draft",
+                  "text": " Mvula."
+                },
+                {
+                  "sourceEnglish": " What germinated.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Pest pressure.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " What you harvested.",
+                  "status": "english-hold"
+                }
+              ],
+              "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Season by season,",
+                  "status": "draft",
+                  "text": "Khalaṅwaha iṅwe na iṅwe,"
+                },
+                {
+                  "sourceEnglish": " your garden ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "becomes less dependent on guesswork",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " — and more on ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "what you've actually seen happen",
+                  "status": "draft",
+                  "text": "zwe na zwi vhona zwa vhukuma zwi tshi itea"
+                },
+                {
+                  "sourceEnglish": " on your own ground.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use your record ",
+                  "status": "draft",
+                  "text": "Shumisani rekhodo yaṋu "
+                },
+                {
+                  "sourceEnglish": "with reliable local advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " when making the next decision.",
+                  "status": "draft",
+                  "text": " musi ni tshi dzhia tsheo i tevhelaho."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "ts": {
+    "language": "ts",
+    "sourceLanguage": "en",
+    "reviewStatus": "unreviewed",
+    "slides": [
+      {
+        "n": 1,
+        "english": {
+          "n": 1,
+          "heading": "Vegetables and Staple Crops",
+          "body": [
+            "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+            "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+            "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Welcome. This is ",
+                  "status": "draft",
+                  "text": "Hi mi amukela. Leyi i "
+                },
+                {
+                  "sourceEnglish": "Vegetables and Staple Crops.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
+                  "status": "draft",
+                  "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Nsimu leyi humesaka kahle a hi leyi vonakaka yi tele ngopfu hi siku rin'we ntsena. I leyi yi yisaka swakudya endlwini vhiki rin'wana ni rin'wana."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. ",
+                  "status": "draft",
+                  "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. "
+                },
+                {
+                  "sourceEnglish": "And what to do when pests arrive.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 2,
+        "english": {
+          "n": 2,
+          "heading": "Why This Matters",
+          "body": [
+            "Let's start with the problem.",
+            "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+            "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+            "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+            "That rhythm is what feeds a household. Not the size of the garden."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ha Yini Leswi Swi Ri Swa Nkoka"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A hi sunguleni hi xiphiqo."
+            },
+            {
+              "status": "draft",
+              "text": "Ku byala swo tala hi nkarhi wun'we swi endla leswaku ku va ni swakudya swo tala hi nkarhi wun'we. Hinkwato swi lulamela hi nkarhi wun'we. U dya leswi u swi kotaka, u nyika van'wana swin'wana, kutani leswi salaka swa lahleka."
+            },
+            {
+              "status": "draft",
+              "text": "Kutani ku landzela nkarhi wa ku pfumala ntshovelo. Ku hava lexi lunghekeleke ku tshoveriwa. Nsimu yi tele hi swibyariwa, kambe a ku na swakudya eka yona."
+            },
+            {
+              "status": "draft",
+              "text": "Ku byala switsongo swi endla rhithimi ematshan'weni ya ku byala swo tala hi nkarhi wun'we. Ku byala, ku khathalela ni ku tshovela swa hlangana. Ku ni lexi tshamelaka ku lungheka ku tshoveriwa."
+            },
+            {
+              "status": "draft",
+              "text": "Hi rhithimi wolowo ndyangu wu kuma swakudya. A hi vukulu bya nsimu."
+            }
+          ]
+        }
+      },
+      {
+        "n": 3,
+        "english": {
+          "n": 3,
+          "heading": "Learning Outcomes",
+          "body": [
+            "By the end of this module, you'll be able to make four decisions in your own field.",
+            "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+            "Two. Keep harvests moving, using succession planting and intercropping.",
+            "Three. Choose staples that protect you when one crop fails.",
+            "Four. Read a pest problem before you treat it.",
+            "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Leswi u nga ta swi dyondza"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Loko modula lowu wu hela, u ta kota ku endla swiboho swa mune ensin'wini ya wena."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One. ",
+                  "status": "draft",
+                  "text": "Xo sungula. "
+                },
+                {
+                  "sourceEnglish": "Build the right bed",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " — matching the ",
+                  "status": "draft",
+                  "text": " — "
+                },
+                {
+                  "sourceEnglish": "width",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and the ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "bed type",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " to your ",
+                  "status": "draft",
+                  "text": " swi fambisana ni "
+                },
+                {
+                  "sourceEnglish": "soil",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and your ",
+                  "status": "draft",
+                  "text": " ya wena na "
+                },
+                {
+                  "sourceEnglish": "rainfall",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " ya wena."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Two. ",
+                  "status": "draft",
+                  "text": "Xa vumbirhi. "
+                },
+                {
+                  "sourceEnglish": "Keep harvests moving, using ",
+                  "status": "draft",
+                  "text": "Endla leswaku ku tshovela ku ya mahlweni hi ku tirhisa "
+                },
+                {
+                  "sourceEnglish": "succession planting",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "intercropping.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Three. ",
+                  "status": "draft",
+                  "text": "Xa vunharhu. "
+                },
+                {
+                  "sourceEnglish": "Choose ",
+                  "status": "draft",
+                  "text": "Hlawula "
+                },
+                {
+                  "sourceEnglish": "staples",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that protect you when one crop fails.",
+                  "status": "draft",
+                  "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four. ",
+                  "status": "draft",
+                  "text": "Xa vumune. "
+                },
+                {
+                  "sourceEnglish": "Read a pest problem",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before you treat it.",
+                  "status": "draft",
+                  "text": " u nga si xi tshungula."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "These four belong together. ",
+                  "status": "draft",
+                  "text": "Swilo leswi swa mune swi fambisana. "
+                },
+                {
+                  "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+                  "status": "english-hold"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 4,
+        "english": {
+          "n": 4,
+          "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+          "body": [
+            "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+            "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+            "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+            "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Compacted soil",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+                  "status": "draft",
+                  "text": " yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "The protection is simple. ",
+                  "status": "draft",
+                  "text": "Nsirhelelo wu olova. "
+                },
+                {
+                  "sourceEnglish": "Permanent paths",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                  "status": "draft",
+                  "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "One metre to one point two metres",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                  "status": "draft",
+                  "text": " hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi "
+                },
+                {
+                  "sourceEnglish": "growing area",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " nikatsongo."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana."
+            }
+          ]
+        }
+      },
+      {
+        "n": 5,
+        "english": {
+          "n": 5,
+          "heading": "Choose the Bed for the Soil and Rainfall",
+          "body": [
+            "There's no single bed shape that's right everywhere.",
+            "Start with the least disturbance that solves your problem.",
+            "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+            "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+            "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+            "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+            "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Start with the ",
+                  "status": "draft",
+                  "text": "Sungula hi "
+                },
+                {
+                  "sourceEnglish": "least disturbance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that solves your problem.",
+                  "status": "draft",
+                  "text": " leyi lulamisaka xiphiqo xa wena."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Do not dig ",
+                  "status": "draft",
+                  "text": "U nga keli "
+                },
+                {
+                  "sourceEnglish": "wet clay",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". If ",
+                  "status": "draft",
+                  "text": ". Loko "
+                },
+                {
+                  "sourceEnglish": "compaction",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or ",
+                  "status": "draft",
+                  "text": " kumbe "
+                },
+                {
+                  "sourceEnglish": "poor drainage",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
+                  "status": "draft",
+                  "text": " swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula "
+                },
+                {
+                  "sourceEnglish": "deeper cultivation",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": "."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona."
+            },
+            {
+              "status": "draft",
+              "text": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Look after ",
+                  "status": "draft",
+                  "text": "Endzhaku ka "
+                },
+                {
+                  "sourceEnglish": "heavy rain",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Where does water sit or run off? Combine that observation with ",
+                  "status": "draft",
+                  "text": ", kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni "
+                },
+                {
+                  "sourceEnglish": "soil and drainage advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " before choosing the bed.",
+                  "status": "draft",
+                  "text": " u nga si hlawula bed."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 6,
+        "english": {
+          "n": 6,
+          "heading": "Seed or Seedling?",
+          "body": [
+            "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+            "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+            "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Some crops resent having their roots disturbed. ",
+                  "status": "draft",
+                  "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
+                },
+                {
+                  "sourceEnglish": "They do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " sown straight where they'll grow. ",
+                  "status": "draft",
+                  "text": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
+                },
+                {
+                  "sourceEnglish": "Beans, carrots",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "maize",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong in that group.",
+                  "status": "draft",
+                  "text": " swi wela eka ntlawa wolowo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Others ",
+                  "status": "draft",
+                  "text": "Swin'wana "
+                },
+                {
+                  "sourceEnglish": "do better",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " with a protected start in a ",
+                  "status": "draft",
+                  "text": " loko swi sungula swi sirhelelekile eka "
+                },
+                {
+                  "sourceEnglish": "nursery",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", then ",
+                  "status": "draft",
+                  "text": ", kutani "
+                },
+                {
+                  "sourceEnglish": "transplanting. Tomatoes",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "brassicas",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " belong there.",
+                  "status": "draft",
+                  "text": " swi wela eka ntlawa wolowo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use ",
+                  "status": "draft",
+                  "text": "Landzelela "
+                },
+                {
+                  "sourceEnglish": "spacing guidance",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " for the ",
+                  "status": "draft",
+                  "text": " ya "
+                },
+                {
+                  "sourceEnglish": "crop, variety",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " and ",
+                  "status": "draft",
+                  "text": " na "
+                },
+                {
+                  "sourceEnglish": "local conditions",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
+                  "status": "draft",
+                  "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "n": 7,
+        "english": {
+          "n": 7,
+          "heading": "Mark the Working Shape",
+          "body": [
+            "Before you plant, mark the bed out.",
+            "One point two metres wide. Three metres long. One practice bed.",
+            "Use pegs and string. Mark the rectangle, and mark both access paths.",
+            "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+            "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+            "That bed gets easier to improve every season, because you stopped walking on it."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Tshwaya xivumbeko lexi tirhaka."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Loko u nga si byala, fungha bed."
+            },
+            {
+              "status": "draft",
+              "text": "One point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use pegs and string. Mark the ",
+                  "status": "draft",
+                  "text": "Tirhisa pegs na string. Fungha "
+                },
+                {
+                  "sourceEnglish": "rectangle",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and mark both access paths.",
+                  "status": "draft",
+                  "text": ", kutani u fungha tindlela hatimbirhi to nghena."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Then prepare for your own soil — ",
+                  "status": "draft",
+                  "text": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi "
+                },
+                {
+                  "sourceEnglish": "no-dig",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
+                  "status": "draft",
+                  "text": ", kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Ntila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele."
+            },
+            {
+              "status": "draft",
+              "text": "Bed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona."
+            }
+          ]
+        }
+      },
+      {
+        "n": 8,
+        "english": {
+          "n": 8,
+          "heading": "A Sowing Rhythm Keeps Food Moving",
+          "body": [
+            "Succession planting is a calendar habit, not a special crop.",
+            "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+            "Plant a short row every two to three weeks.",
+            "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+            "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+            "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A Sowing Rhythm",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " Keeps Food Moving",
+                "status": "draft",
+                "text": " yi endla leswaku swakudya swi hambeta swi kumeka."
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka."
+            },
+            {
+              "status": "draft",
+              "text": "Hlawula swakudya leswi ndyangu wa wena wu talaka ku swi dya. Kutani byala xitsongo xa swona, u tlhela u endla tano hi ku phindha-phindha."
+            },
+            {
+              "status": "draft",
+              "text": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu."
+            },
+            {
+              "status": "draft",
+              "text": "Ku lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan'weni yo ku wu humelela hinkwawo hi nkarhi wun'we."
+            },
+            {
+              "status": "draft",
+              "text": "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni."
+            },
+            {
+              "status": "draft",
+              "text": "Hi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo? Hlawula xin'we, u sungula hi vhege leyi."
+            }
+          ]
+        }
+      },
+      {
+        "n": 9,
+        "english": {
+          "n": 9,
+          "heading": "Sow Little and Often",
+          "body": [
+            "Here's what it looks like in practice.",
+            "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+            "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+            "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+            "Watch what your own garden does, and adjust the interval. That observation is the skill."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Byala switsongo naswona nkarhi na nkarhi."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Hi leswi swi langutekaka hakona hi ku tirhisa."
+            },
+            {
+              "status": "draft",
+              "text": "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune."
+            },
+            {
+              "status": "draft",
+              "text": "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap. A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa."
+            },
+            {
+              "status": "draft",
+              "text": "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka."
+            },
+            {
+              "status": "draft",
+              "text": "Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila."
+            }
+          ]
+        }
+      },
+      {
+        "n": 10,
+        "english": {
+          "n": 10,
+          "heading": "Each Crop Earns Its Place",
+          "body": [
+            "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+            "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+            "Maize gives height and structure.",
+            "Beans climb the maize, and store as protein.",
+            "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+            "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+            "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
+            },
+            {
+              "status": "draft",
+              "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
+            },
+            {
+              "status": "draft",
+              "text": "Maize yi nyika ku leha ni structure."
+            },
+            {
+              "status": "draft",
+              "text": "Beans ti khandziya maize, and store as protein."
+            },
+            {
+              "status": "draft",
+              "text": "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture."
+            },
+            {
+              "status": "draft",
+              "text": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya."
+            },
+            {
+              "status": "draft",
+              "text": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+            }
+          ]
+        }
+      },
+      {
+        "n": 11,
+        "english": {
+          "n": 11,
+          "heading": "Plan Backwards From Your Hungry Gap",
+          "body": [
+            "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+            "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+            "Don't copy somebody else's calendar. Name your own months first.",
+            "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+            "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Plan Backwards From ",
+                "status": "draft",
+                "text": "Hlela u tlhelela endzhaku ku suka eka "
+              },
+              {
+                "sourceEnglish": "Your Hungry Gap",
+                "status": "english-hold"
+              }
+            ]
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka."
+            },
+            {
+              "status": "draft",
+              "text": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden."
+            },
+            {
+              "status": "draft",
+              "text": "U nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena."
+            },
+            {
+              "status": "draft",
+              "text": "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo."
+            },
+            {
+              "status": "draft",
+              "text": "Leswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka."
+            }
+          ]
+        }
+      },
+      {
+        "n": 12,
+        "english": {
+          "n": 12,
+          "heading": "Staples Are Food Insurance",
+          "body": [
+            "A staple earns its place because it feeds the household beyond the day of harvest.",
+            "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+            "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+            "Grow at least two. Not one.",
+            "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo."
+            },
+            {
+              "status": "draft",
+              "text": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory."
+            },
+            {
+              "status": "draft",
+              "text": "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela."
+            },
+            {
+              "status": "draft",
+              "text": "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we."
+            },
+            {
+              "status": "draft",
+              "text": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion."
+            }
+          ]
+        }
+      },
+      {
+        "n": 13,
+        "english": {
+          "n": 13,
+          "heading": "Different Staples Protect Against Different Risks",
+          "body": [
+            "Each staple protects you against something different.",
+            "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+            "Beans and cowpeas give a storable protein harvest.",
+            "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+            "Amadumbe handles wetter ground, where other staples struggle.",
+            "Notice that they fail in different conditions. That's the whole point."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Staples to hambana ti sirhelela eka makhombo yo hambana."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana."
+            },
+            {
+              "status": "draft",
+              "text": "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection."
+            },
+            {
+              "status": "draft",
+              "text": "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa."
+            },
+            {
+              "status": "draft",
+              "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too."
+            },
+            {
+              "status": "draft",
+              "text": "Amadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle."
+            },
+            {
+              "status": "draft",
+              "text": "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona."
+            }
+          ]
+        }
+      },
+      {
+        "n": 14,
+        "english": {
+          "n": 14,
+          "heading": "Diversity Keeps Food Moving",
+          "body": [
+            "Resilience doesn't mean nothing fails.",
+            "It means one failure doesn't finish your household's food plan.",
+            "One crop is one point of failure.",
+            "Two or more staples give you more ways to keep eating.",
+            "Different crops use water, soil and seasons differently. That difference is the protection."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ku hambana ka swibyariwa ku endla leswaku swakudya swi hambeta swi kumeka."
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Resilience a swi vuli leswaku a ku na lexi tsandzekaka."
+            },
+            {
+              "status": "draft",
+              "text": "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena."
+            },
+            {
+              "status": "draft",
+              "text": "Xibyariwa xin'we i \"point of failure\" yin'we."
+            },
+            {
+              "status": "draft",
+              "text": "Two or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
+            },
+            {
+              "status": "draft",
+              "text": "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
+            }
+          ]
+        }
+      },
+      {
+        "n": 15,
+        "english": {
+          "n": 15,
+          "heading": "Pests Are Messengers Before They Are Enemies",
+          "body": [
+            "Pest pressure usually rises for a reason.",
+            "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+            "So before you treat anything, look at the whole system.",
+            "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+            "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Pest pressure hi ntolovelo yi engetseka hi xivangelo."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Plants under ",
+                  "status": "draft",
+                  "text": "Swibyariwa leswi nga na "
+                },
+                {
+                  "sourceEnglish": "stress.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " One crop dominating the ground.",
+                  "status": "draft",
+                  "text": " Xibyariwa xin’we lexi lawulaka ndhawu."
+                },
+                {
+                  "sourceEnglish": " Or ",
+                  "status": "draft",
+                  "text": " Kumbe "
+                },
+                {
+                  "sourceEnglish": "broad chemical use",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that has already removed the ",
+                  "status": "draft",
+                  "text": " leyi se yi suseke "
+                },
+                {
+                  "sourceEnglish": "predators",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " that were helping you.",
+                  "status": "draft",
+                  "text": " leti a ti ku pfuna."
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Kutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu."
+            },
+            {
+              "status": "draft",
+              "text": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+            },
+            {
+              "status": "draft",
+              "text": "A yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
+            }
+          ]
+        }
+      },
+      {
+        "n": 16,
+        "english": {
+          "n": 16,
+          "heading": "Treat the Cause Before the Insect",
+          "body": [
+            "Work through four steps, in order.",
+            "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+            "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+            "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+            "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+            "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+            "Be honest with yourself about which step you usually skip."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "english-hold"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Tirha hi magoza ya mune, hi ku landzelelana."
+            },
+            {
+              "status": "draft",
+              "text": "Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi."
+            },
+            {
+              "status": "draft",
+              "text": "Vumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage."
+            },
+            {
+              "status": "draft",
+              "text": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Four.",
+                  "status": "draft",
+                  "text": "Vumune."
+                },
+                {
+                  "sourceEnglish": " Only then, act — and start with ",
+                  "status": "draft",
+                  "text": " Hi kona ntsena u tekaka goza — sungula hi "
+                },
+                {
+                  "sourceEnglish": "the lightest thing that works.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Physical removal",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", barriers",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " or changes in ",
+                  "status": "draft",
+                  "text": " kumbe ku cinca ndlela yo hlayisa "
+                },
+                {
+                  "sourceEnglish": "crop care",
+                  "status": "draft",
+                  "text": "swibyariwa"
+                },
+                {
+                  "sourceEnglish": " may help.",
+                  "status": "draft",
+                  "text": " swi nga pfuna."
+                },
+                {
+                  "sourceEnglish": " Check that the action suits the problem and monitor the result.",
+                  "status": "draft",
+                  "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "If a ",
+                  "status": "draft",
+                  "text": "Loko "
+                },
+                {
+                  "sourceEnglish": "treatment",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " is needed, use a ",
+                  "status": "draft",
+                  "text": " yi laveka, tirhisa "
+                },
+                {
+                  "sourceEnglish": "product registered for that crop and pest",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ", and follow its ",
+                  "status": "draft",
+                  "text": ", kutani u landzelela "
+                },
+                {
+                  "sourceEnglish": "label",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": ".",
+                  "status": "draft",
+                  "text": " ya yona."
+                },
+                {
+                  "sourceEnglish": " This includes ",
+                  "status": "draft",
+                  "text": " Leswi swi katsa "
+                },
+                {
+                  "sourceEnglish": "neem products.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Check ",
+                  "status": "draft",
+                  "text": " Kambela "
+                },
+                {
+                  "sourceEnglish": "protection and harvest waiting instructions.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula."
+            }
+          ]
+        }
+      },
+      {
+        "n": 17,
+        "english": {
+          "n": 17,
+          "heading": "Field Assignment",
+          "body": [
+            "Now the lesson finishes in the soil.",
+            "Build one bed that can keep feeding you. One point two metres by three metres.",
+            "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+            "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+            "Photograph it when it's planted. Then come back after ten days with what you observed.",
+            "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Ntirho wa le nsinini"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Sweswi, dyondzo yi hela emhlabeni."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Build one bed that can keep feeding you. ",
+                  "status": "draft",
+                  "text": "Aka bed yin'we leyi nga tshamaka yi ku nyika swakudya. "
+                },
+                {
+                  "sourceEnglish": "One point two metres by three metres.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Fika exivindzini hi matlhelo hamambirhi. Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. Siyela swimilani mpfhuka lowu faneleke eka maxelo ya wena. Tirhisa mulch eka bed."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Check the bed regularly from planting.",
+                  "status": "draft",
+                  "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
+                },
+                {
+                  "sourceEnglish": " Use the ",
+                  "status": "draft",
+                  "text": " Tirhisa "
+                },
+                {
+                  "sourceEnglish": "ten-day photograph",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " as an assignment checkpoint, ",
+                  "status": "draft",
+                  "text": " tanihi assignment checkpoint, "
+                },
+                {
+                  "sourceEnglish": "not a reason to delay care.",
+                  "status": "draft",
+                  "text": "ku nga ri xivangelo xo hlwela ku khathalela."
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Photograph it when it's planted.",
+                  "status": "draft",
+                  "text": "Teka foto loko bed yi byariwile."
+                },
+                {
+                  "sourceEnglish": " Then come back after ten days",
+                  "status": "draft",
+                  "text": " Kutani vuya endzhaku ka masiku ya khume"
+                },
+                {
+                  "sourceEnglish": " with what you observed.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "draft",
+              "text": "Xikongomelo a hi xifaniso lexi hetisekeke. Xikongomelo i bed leyi xivumbeko, spacing ni rhythm ya yona u swi hlawuleke hi vomu."
+            }
+          ]
+        }
+      },
+      {
+        "n": 18,
+        "english": {
+          "n": 18,
+          "heading": "Field Action",
+          "body": [
+            "This week, put one bed into production.",
+            "One. Mark the bed and the paths.",
+            "Two. Plant, with your spacing and your sowing rhythm.",
+            "Three. Return after ten days, with a photo.",
+            "Then observe. Adjust. And write it down.",
+            "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+            "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+            "Use your record with reliable local advice when making the next decision."
+          ]
+        },
+        "target": {
+          "heading": {
+            "status": "draft",
+            "text": "Xiendlo xa le nsinini"
+          },
+          "body": [
+            {
+              "status": "draft",
+              "text": "Vhiki leri, nghenisa bed yin’we eka production."
+            },
+            {
+              "status": "draft",
+              "text": "Xin’we. Maka bed na paths."
+            },
+            {
+              "status": "draft",
+              "text": "Mbirhi. Byala hi spacing ya wena ni sowing rhythm ya wena."
+            },
+            {
+              "status": "draft",
+              "text": "Nharhu. Vuya endzhaku ka masiku ya khume, u ri na foto."
+            },
+            {
+              "status": "draft",
+              "text": "Kutani languta. Lulamisa. Tsala leswi ehansi."
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Record the sowing date.",
+                  "status": "draft",
+                  "text": "Tsala siku ra sowing."
+                },
+                {
+                  "sourceEnglish": " The rain.",
+                  "status": "draft",
+                  "text": " Mpfula."
+                },
+                {
+                  "sourceEnglish": " What germinated.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " Pest pressure.",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " What you harvested.",
+                  "status": "draft",
+                  "text": " Leswi u tshoveleke."
+                }
+              ],
+              "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Season by season, ",
+                  "status": "draft",
+                  "text": "Nguva yin’wana ni yin’wana, "
+                },
+                {
+                  "sourceEnglish": "your garden ",
+                  "status": "draft",
+                  "text": "ntanga wa wena "
+                },
+                {
+                  "sourceEnglish": "becomes less dependent on guesswork",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " — and more on ",
+                  "status": "draft",
+                  "text": " — naswona wu titshega ngopfu hi "
+                },
+                {
+                  "sourceEnglish": "what you've actually seen happen",
+                  "status": "draft",
+                  "text": "leswi u swi voneke swi humelela hakunene"
+                },
+                {
+                  "sourceEnglish": " on your own ground.",
+                  "status": "english-hold"
+                }
+              ]
+            },
+            {
+              "status": "mixed",
+              "segments": [
+                {
+                  "sourceEnglish": "Use your record ",
+                  "status": "draft",
+                  "text": "Tirhisa rhekhodo ya wena "
+                },
+                {
+                  "sourceEnglish": "with reliable local advice",
+                  "status": "english-hold"
+                },
+                {
+                  "sourceEnglish": " when making the next decision.",
+                  "status": "draft",
+                  "text": " loko u endla xiboho lexi landzelaka."
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,886 @@
+{
+  "date": "2026-10-06",
+  "scope": "Read-only independent exact-binding and semantic scope check; no translation is supplied by the input packet. No repository edits/render/adoption/commit/publication.",
+  "currentHEAD": "672567ecd8669d8cb269bcf16d1b2794405da832",
+  "packetCommit": "e8eb9841ddbe95794fddc83bb2b0a6cc227ecdd7",
+  "input": {
+    "path": "/tmp/imbewu-vegetables-l3-ordinary-final-spans-candidates-20261006.json",
+    "sha256": "26e3f6e2a6697b62572287dc494036716f27c7aeba6cb85ea094ab35fd072414"
+  },
+  "authorityProof": [
+    {
+      "path": "lib/course-modules.ts",
+      "packetSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "actualSHA256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "lib/course-localization.ts",
+      "packetSHA256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "actualSHA256": "4d209e8a7c4c16136354e3057cbd12c0bdb76ef9cf0db94ab13f0fc22cb7e1ae",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "packetSHA256": "32a2bd01d8f1c4a8b14c1717effbdc2a7c9cc7e170ca9c63971ac9cfd52b9d9f",
+      "actualSHA256": "32a2bd01d8f1c4a8b14c1717effbdc2a7c9cc7e170ca9c63971ac9cfd52b9d9f",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "packetSHA256": "baf370ec7e3eae65d37f506bb7af69c868a62763d5d4bef800326b1b5f4cc05d",
+      "actualSHA256": "baf370ec7e3eae65d37f506bb7af69c868a62763d5d4bef800326b1b5f4cc05d",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "packetSHA256": "179c9d7cd9dffbc1a139d82e67c734a39c9b4d0f4cc5b7d2013471a413b0609f",
+      "actualSHA256": "179c9d7cd9dffbc1a139d82e67c734a39c9b4d0f4cc5b7d2013471a413b0609f",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "packetSHA256": "f3311a2940f819793f60f657a805245bf48d601db701a9c6992036233382d4b4",
+      "actualSHA256": "f3311a2940f819793f60f657a805245bf48d601db701a9c6992036233382d4b4",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "packetSHA256": "f1b7f3f56dccf94ac3fb4b6a086e89b248085b654d759d365cd249a0ae45b792",
+      "actualSHA256": "f1b7f3f56dccf94ac3fb4b6a086e89b248085b654d759d365cd249a0ae45b792",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    },
+    {
+      "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "packetSHA256": "697aa04e6b4665b51f077b261f6e395640087c3b561d615ff4b6cc509e923e70",
+      "actualSHA256": "697aa04e6b4665b51f077b261f6e395640087c3b561d615ff4b6cc509e923e70",
+      "packetHashMatch": true,
+      "currentEqualsHEAD": true,
+      "unchangedSincePacketCommit": true
+    }
+  ],
+  "counts": {
+    "L3SpanRows": 7,
+    "optionalL4Rows": 3,
+    "uniqueSpanIDs": 10,
+    "sourceCurrentDeckBindingFailures": 0,
+    "translatedCandidatesSupplied": 0,
+    "acceptedTranslatedTargets": 0
+  },
+  "conclusion": "All seven ordinary-span boundaries and three optional safety-span boundaries exactly bind current canonical/native/resolved/deck text at HEAD672567ec. No actual language replacement exists to evaluate: translation semantic verdict remains pending. Existing surrounding clauses and indices bind exactly.",
+  "rows": [
+    {
+      "candidateId": "st:vegetables-staples-l3:body[4]:companion_failure",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 4,
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTarget": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "sourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "preservedPrefix": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Failure WOULD hurt MOST is a counterfactual consequence and superlative, not merely failure can hurt/a vulnerable crop. Retain causal so and needs a companion. Preserve already translated household reliance/right-now question. Do not introduce yield guarantee or substitute easier crop/species.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Ke staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[4]:companion_failure",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 4,
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTarget": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "sourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "preservedPrefix": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Failure WOULD hurt MOST is a counterfactual consequence and superlative, not merely failure can hurt/a vulnerable crop. Retain causal so and needs a companion. Preserve already translated household reliance/right-now question. Do not introduce yield guarantee or substitute easier crop/species.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[4]:companion_failure",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 4,
+      "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "currentTarget": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "sourceSpan": "That's the one whose failure would hurt most — so that's the one that needs a companion.",
+      "preservedPrefix": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Failure WOULD hurt MOST is a counterfactual consequence and superlative, not merely failure can hurt/a vulnerable crop. Retain causal so and needs a companion. Preserve already translated household reliance/right-now question. Do not introduce yield guarantee or substitute easier crop/species.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 4,
+        "sourceEnglish": "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 8,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentTarget": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.",
+      "sourceSpan": "Its young leaves are edible too.",
+      "preservedPrefix": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Its refers only to the Sweet potato named in the unchanged paragraph. Young means leaf age, not small leaves or a new plant; additive too remains. Do not extend edibility to mature leaves or other plants or invent preparation safety claims. All storage-root formation/first-weeks/while-forming/then/can-reduce clauses remain byte-exact.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Sweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 8,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentTarget": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.",
+      "sourceSpan": "Its young leaves are edible too.",
+      "preservedPrefix": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Its refers only to the Sweet potato named in the unchanged paragraph. Young means leaf age, not small leaves or a new plant; additive too remains. Do not extend edibility to mature leaves or other plants or invent preparation safety claims. All storage-root formation/first-weeks/while-forming/then/can-reduce clauses remain byte-exact.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[8]:young_leaves_edible",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 8,
+      "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+      "currentTarget": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.",
+      "sourceSpan": "Its young leaves are edible too.",
+      "preservedPrefix": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Its refers only to the Sweet potato named in the unchanged paragraph. Young means leaf age, not small leaves or a new plant; additive too remains. Do not extend edibility to mature leaves or other plants or invent preparation safety claims. All storage-root formation/first-weeks/while-forming/then/can-reduce clauses remain byte-exact.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 13,
+        "bodyIndex": 3,
+        "sourceEnglish": "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l3:body[1]:stores_or_stays_in_ground",
+      "lane": "seven-L3-ordinary-spans",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "paragraphIndex": 1,
+      "sourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+      "currentTarget": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "sourceSpan": "It stores, or it stays in the ground until you need it.",
+      "preservedPrefix": "Yi nyika energy kumbe protein. ",
+      "preservedSuffix": " Hakanyingi yi tlhela yi rhwala cultural memory.",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Preserve storage OR remaining in the ground, and until needed. Do not say both, already stored, fixed duration, or shelf-life guarantee. Keep energy OR protein and often/cultural-memory suffix exact.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 12,
+        "bodyIndex": 1,
+        "sourceEnglish": "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+        "currentPair": {
+          "status": "draft",
+          "text": "Yi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory."
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "st:vegetables-staples-l4:body[10]:categorical-safety-warning",
+      "lane": "optional-separate-L4-safety",
+      "language": "st",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 10,
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "sourceSpan": "Do not improvise mixtures or stronger doses.",
+      "preservedPrefix": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Unconditional Do not applies to improvise mixtures OR stronger doses. The earlier IF-needed does not make the prohibition optional. Preserve both prohibited acts without added amounts, recipe, product choice or agronomic prescription.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "currentPair": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Ha "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " e hlokahala, sebedisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", mme o latele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Sena se kenyeletsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Hlahloba "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ve:vegetables-staples-l4:body[10]:categorical-safety-warning",
+      "lane": "optional-separate-L4-safety",
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 10,
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "sourceSpan": "Do not improvise mixtures or stronger doses.",
+      "preservedPrefix": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Unconditional Do not applies to improvise mixtures OR stronger doses. The earlier IF-needed does not make the prohibition optional. Preserve both prohibited acts without added amounts, recipe, product choice or agronomic prescription.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "currentPair": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Arali "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " i tshi ṱoḓea, shumisani "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", nahone ni tevhele "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " yayo."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Hezwi zwi katela "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Ṱolani "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        }
+      },
+      "fluencyApproved": false
+    },
+    {
+      "candidateId": "ts:vegetables-staples-l4:body[10]:categorical-safety-warning",
+      "lane": "optional-separate-L4-safety",
+      "language": "ts",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 10,
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "sourceSpan": "Do not improvise mixtures or stronger doses.",
+      "preservedPrefix": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. ",
+      "preservedSuffix": "",
+      "checks": {
+        "canonicalParagraphExact": true,
+        "currentResolvedParagraphExact": true,
+        "nativeBodyEqualsResolved": true,
+        "nativeFullBodySourceExact": true,
+        "nativeReviewStatusExact": true,
+        "sourceSpanExactlyOnce": true,
+        "currentSpanExactlyOnce": true,
+        "prefixSpanSuffixExact": true,
+        "paragraphCountEqual": true,
+        "correctIndicesUnchanged": true,
+        "deckSourceExact": true,
+        "deckCurrentPairExact": true,
+        "deckTargetExactLearnerCurrent": true,
+        "deckSpanExactlyOnce": true,
+        "mixedSourceConcatenatesExact": true
+      },
+      "proposedTarget": null,
+      "candidateBackTranslation": null,
+      "independentVerdict": "exact-bound-span-scope; translated-target-not-supplied",
+      "semanticRequirements": "Unconditional Do not applies to improvise mixtures OR stronger doses. The earlier IF-needed does not make the prohibition optional. Preserve both prohibited acts without added amounts, recipe, product choice or agronomic prescription.",
+      "reason": "This packet expressly supplies no replacement text. Source/current/prefix/deck identity can be checked, but a nonexistent translation cannot receive a semantic accept verdict, backtranslation or fluency approval.",
+      "deckBinding": {
+        "path": "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "slide": 16,
+        "bodyIndex": 5,
+        "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+        "currentPair": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "If a ",
+              "status": "draft",
+              "text": "Loko "
+            },
+            {
+              "sourceEnglish": "treatment",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " is needed, use a ",
+              "status": "draft",
+              "text": " yi laveka, tirhisa "
+            },
+            {
+              "sourceEnglish": "product registered for that crop and pest",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ", and follow its ",
+              "status": "draft",
+              "text": ", kutani u landzelela "
+            },
+            {
+              "sourceEnglish": "label",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": ".",
+              "status": "draft",
+              "text": " ya yona."
+            },
+            {
+              "sourceEnglish": " This includes ",
+              "status": "draft",
+              "text": " Leswi swi katsa "
+            },
+            {
+              "sourceEnglish": "neem products.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Check ",
+              "status": "draft",
+              "text": " Kambela "
+            },
+            {
+              "sourceEnglish": "protection and harvest waiting instructions.",
+              "status": "english-hold"
+            },
+            {
+              "sourceEnglish": " Do not improvise mixtures or stronger doses.",
+              "status": "english-hold"
+            }
+          ]
+        }
+      },
+      "fluencyApproved": false
+    }
+  ],
+  "fullBodyProof": {
+    "st:vegetables-staples-l3": {
+      "sourceEnglishBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "currentNativeBody": "Staple e tshwanelwa ke sebaka sa yona hobane e fepa lelapa le kamora letsatsi la kotulo.\n\nE fana ka energy kapa protein. E a bolokwa, kapa e sala e le mobung ho fihlela o e hloka. Hangata e boetse e na le cultural memory.\n\nStaple e le nngwe e o siya o sa sireletseha. Tse pedi kapa ho feta di o fa dikgetho ha weather kapa pests di otla.\n\nLema bonyane tse pedi. E seng se le seng.\n\nKe staple efe eo lelapa la hao le itšetlehileng ka eona haholo hona joale? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple e nngwe le e nngwe e o sireletsa kgahlanong le ntho e fapaneng.\n\nMaize e fana ka calories, ’me e ka bolokoa e omme. Open-pollinated maize e boetse e u lumella ho boloka peo ea hao, haeba u laola isolation le selection.\n\nBeans le cowpeas li fana ka protein harvest e ka bolokoang.\n\nSweet potato e ba le drought tolerance e itseng ka mor’a hore storage roots tsa eona li bopehe. E hloka metsi libekeng tsa pele le ha storage roots li ntse li bopeha; water stress ka nako eo e ka fokotsa harvest. Its young leaves are edible too.\n\nAmadumbe e khona ho mamella wetter ground, moo lijalo tse ling tsa staple li thatafalloang teng.\n\nHlokomela hore di hloleha maemong a fapaneng. Ke yona ntlha yohle.\n\nHo mamella maemo a thata ha ho bolele hore ha ho letho le hlolehang.\n\nHo bolela hore ho hloleha ho le hong ha ho fedise morero wa dijo wa lelapa la hao.\n\nSejalo se le seng ke point of failure e le nngwe.\n\nDijalo tse pedi kapa ho feta tsa staple di o fa ditsela tse ngata tsa ho tswela pele o ja.\n\nDijalo tse fapaneng di sebedisa water, soil le seasons ka ditsela tse fapaneng. Phapang eo ke yona protection.",
+      "paragraphCount": 16,
+      "quizSourceCorrectIndices": [
+        1,
+        1
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        1
+      ]
+    },
+    "ve:vegetables-staples-l3": {
+      "sourceEnglishBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "currentNativeBody": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. Its young leaves are edible too.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo.",
+      "paragraphCount": 16,
+      "quizSourceCorrectIndices": [
+        1,
+        1
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        1
+      ]
+    },
+    "ts:vegetables-staples-l3": {
+      "sourceEnglishBody": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
+      "currentNativeBody": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.\n\nYi nyika energy kumbe protein. It stores, or it stays in the ground until you need it. Hakanyingi yi tlhela yi rhwala cultural memory.\n\nStaple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.\n\nByala swimbirhi kumbe ku fhira. Ku nga ri xin'we.\n\nHi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nStaple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana.\n\nMaize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection.\n\nBeans na cowpeas swi nyika protein harvest leyi nga hlayisiwa.\n\nSweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. Its young leaves are edible too.\n\nAmadumbe yi kota ku tiyisela eka wetter ground, where other staples struggle.\n\nXiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona.\n\nResilience a swi vuli leswaku a ku na lexi tsandzekaka.\n\nSwi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena.\n\nXibyariwa xin'we i \"point of failure\" yin'we.\n\nTwo or more staples swi ku nyika tindlela to tala ta ku ya mahlweni u dya.\n\nSwibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo.",
+      "paragraphCount": 16,
+      "quizSourceCorrectIndices": [
+        1,
+        1
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        1
+      ]
+    },
+    "st:vegetables-staples-l4": {
+      "sourceEnglishBody": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentNativeBody": "Pest pressure hangata e a eketseha ka lebaka le itseng.\n\nDimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.\n\nKa hona, pele o phekola eng kapa eng, sheba system yohle.\n\nNa semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?\n\nLekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.\n\nSebetsa ka mehato e mene, ka tatellano.\n\nNtlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.\n\nNtlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.\n\nNtlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena.\n\nNtlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.\n\nHa treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nIpolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
+      "paragraphCount": 12,
+      "quizSourceCorrectIndices": [
+        1,
+        0
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        0
+      ]
+    },
+    "ve:vegetables-staples-l4": {
+      "sourceEnglishBody": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentNativeBody": "Pest pressure i anzela u engedzea nga tshiitisi.\n\nZwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.\n\nNgazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.\n\nNaa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?\n\nYellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.\n\nTevhelani vhukando vhuṋa nga u tevhekana.\n\nTsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.\n\nTsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage.\n\nTsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita.\n\nTsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.\n\nArali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nNi ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka.",
+      "paragraphCount": 12,
+      "quizSourceCorrectIndices": [
+        1,
+        0
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        0
+      ]
+    },
+    "ts:vegetables-staples-l4": {
+      "sourceEnglishBody": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentNativeBody": "Pest pressure hi ntolovelo yi engetseka hi xivangelo.\n\nSwibyariwa leswi nga na stress. Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.\n\nKutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu.\n\nXana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?\n\nA yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza.\n\nTirha hi magoza ya mune, hi ku landzelelana.\n\nXo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi.\n\nVumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage.\n\nVunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe.\n\nVumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.\n\nLoko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nTshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula.",
+      "paragraphCount": 12,
+      "quizSourceCorrectIndices": [
+        1,
+        0
+      ],
+      "quizCurrentCorrectIndices": [
+        1,
+        0
+      ]
+    }
+  },
+  "unaffectedChecks": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l4",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l3",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l3",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l4",
+      "checks": {
+        "resolverStatus": true,
+        "sourceAlt": true,
+        "targetAlt": true,
+        "sourceKP": true,
+        "targetKP": true,
+        "quizCount": true,
+        "optionCounts": true,
+        "sourceIndices": true,
+        "resolvedIndices": true
+      }
+    }
+  ],
+  "unlistedPreservationLimit": "Input proposes no concrete target or after snapshot, so no claimed after/unlisted rewrite can be verified. Full current body/native snapshots recorded; future overlay must prove exact prefix/suffix plus all other native fields unchanged.",
+  "snapshotFiles": [
+    {
+      "path": "/tmp/imbewu-vegetables-final-spans-native-snapshot-20261006.json",
+      "sha256": "2c4697e9cd88b28c0f064508dea7db75f389fe55870c3511d9b0f1ec1ff40c63"
+    },
+    {
+      "path": "/tmp/imbewu-vegetables-final-spans-current-resolved-20261006.json",
+      "sha256": "169d7a7bc8e1341ce0c3311675d2ee7fb3fdf152382a4c7fde85a57e30b19ed2"
+    }
+  ],
+  "excluded": "No field is changed; no inherited meanings or species introduced. Optional safety rows remain separately scoped. No fluent approval."
+}

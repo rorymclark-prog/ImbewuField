@@ -1,3 +1,4 @@
+import { vegetablesL3AssetSizesBeforeOrdinary, vegetablesL3MediaBeforeEarlierProof } from './vegetables-l3-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { vegetablesPestPrecisionFrames } from './vegetables-pest-precision-media-history-checks.ts';
@@ -32,6 +33,8 @@ function observedFile(path: string) {
 // 6 October 2026: Market supersedes eleven real frame descriptors and fixes the
 // stale total comment. Validate the complete accepted layer before old proofs run.
 export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  // Later L3 images are independently validated before this older eleven-frame claim.
+  currentManifest = vegetablesL3AssetSizesBeforeOrdinary(currentManifest);
   assert.equal(sha(proofBytes), '0efa24cb294beaa3203576fec99b497b0f6aa872d89320454369edc8421cac41');
   const proof = JSON.parse(proofBytes.toString());
   assert.equal(proof.frames.length, 11);
@@ -98,6 +101,7 @@ export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSyn
 export function marketAssetSizesBeforeOrdinary(currentManifest?: string) {
   validateCurrentMarketOrdinaryMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const beforeL3 = vegetablesL3AssetSizesBeforeOrdinary();
   const prior = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   // The existing Soil history enters after the separately guarded six-frame
   // Vegetables rewind. Accept only these exact complete manifest states, never
@@ -108,13 +112,15 @@ export function marketAssetSizesBeforeOrdinary(currentManifest?: string) {
     assert.equal(priorBeforeVegetables.split(current).length - 1, 1);
     priorBeforeVegetables = priorBeforeVegetables.replace(current, `'${frame.url}': ${frame.beforeBytes}`);
   }
-  if (currentManifest === undefined || currentManifest === actual) return prior;
+  if (currentManifest === undefined || currentManifest === actual || currentManifest === beforeL3) return prior;
   assert.ok(currentManifest === prior || currentManifest === priorBeforeVegetables,
     'historical composition accepts only the exact guarded Market baseline or its six known Vegetables rewinds');
   return currentManifest;
 }
 
 export function marketMediaBeforeEarlierProof(path: string) {
+  const latest = vegetablesL3MediaBeforeEarlierProof(path);
+  if (latest) return latest;
   const proof = validateCurrentMarketOrdinaryMedia();
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const frame = proof.frames.find((row: { path: string }) => row.path === url);

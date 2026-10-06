@@ -1,3 +1,4 @@
+import { vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesBeforeFuller } from './vegetables-l1-fuller-checks.ts';
 import test from 'node:test';
@@ -557,7 +558,10 @@ test('Vegetables L3 preserves crop conditions and exact technical clauses while 
   // Checked ordinary prose can grow; protect each selected source sentence rather than pinning a draft count.
   assert.equal(draftLesson.body.sourceEnglish, lesson.body, 'source drift must invalidate the entire learner draft');
   assert.equal(draftLesson.body.reviewStatus, 'machine-draft');
-  const shown = resolveLearnerLessonPresentation(lesson, 've');
+  // 6 October: the accepted eleven-paragraph layer localizes consequence and young-leaf
+  // framing. Validate its whole source/status/unlisted snapshot before this older exact
+  // clause view; retain every original crop, timing, index and drift assertion below.
+  const shown = vegetablesL3PresentationBeforeOrdinary(lesson, 've');
   assert.equal(shown.status, 'draft');
   const translated = shown.content.body.split('\n\n');
   assert.equal(translated.length, paragraphs.length);
