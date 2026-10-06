@@ -48,13 +48,16 @@
               {
                 "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. ",
                 "status": "draft",
-                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. "
+                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ndlela yo aka bed. Ku endla leswaku harvest yi ya yi ri kona. Staples tihi to ti byala. ",
+                "reason": "Preserve original complete topic-list semantic boundary; build and which-staples repairs are root accepted."
               },
               {
                 "sourceEnglish": "And what to do when pests arrive.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Na ku endla yini loko pests ti fika."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -135,7 +138,9 @@
               },
               {
                 "sourceEnglish": "Build the right bed",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Aka bed leyi faneleke",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
               },
               {
                 "sourceEnglish": " — matching the ",
@@ -178,7 +183,8 @@
                 "status": "draft",
                 "text": " ya wena."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1445,24 +1451,13 @@
                 "text": "ntanga wa wena "
               },
               {
-                "sourceEnglish": "becomes less dependent on guesswork",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " — and more on ",
+                "sourceEnglish": "becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
                 "status": "draft",
-                "text": " — naswona wu titshega ngopfu hi "
-              },
-              {
-                "sourceEnglish": "what you've actually seen happen",
-                "status": "draft",
-                "text": "leswi u swi voneke swi humelela hakunene"
-              },
-              {
-                "sourceEnglish": " on your own ground.",
-                "status": "english-hold"
+                "text": "wu ya wu hunguta ku titshega hi ku bvumba — naswona wu ya wu engetela ku titshega hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1474,14 +1469,17 @@
               },
               {
                 "sourceEnglish": "with reliable local advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ni xitsundzuxo xo tshembeka xa laha kaya",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
                 "text": " loko u endla xiboho lexi landzelaka."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

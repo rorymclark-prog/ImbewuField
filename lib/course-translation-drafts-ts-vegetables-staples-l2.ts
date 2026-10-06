@@ -86,7 +86,7 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
         sourceCorrectIndex: question.correct,
         rationale: questionIndex === 0
           ? pair('A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.', 'Ku byala lokukulu kan’we ku endla leswaku swimilani swi vupfa hi nkarhi wun’we — ku byala hi ku hambanisa minkarhi swi hangalasa ntshovelo leswaku wu fambisana ni leswi ndyangu wu nga swi tirhisaka hakunene.')
-          : pair("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.", "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding."),
+          : pair("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.", "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi leswaku immediate feeding yi ta humelela."),
       })),
     },
   ],

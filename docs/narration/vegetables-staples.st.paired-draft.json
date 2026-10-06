@@ -85,18 +85,21 @@
             "segments": [
               {
                 "sourceEnglish": "Small sowings create a rhythm instead. ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "Planting, tending and harvesting overlap. ",
                 "status": "draft",
-                "text": "Ho jala, ho hlokomela le ho kotula di etsahala ka nako e le nngwe. "
+                "text": "Ho jala hanyenyane ho e-na le hoo ho theha morethetho. "
               },
               {
-                "sourceEnglish": "Something is always coming ready.",
-                "status": "english-hold"
+                "sourceEnglish": "Planting, tending and harvesting overlap.",
+                "status": "english-hold",
+                "reason": "Corrects inherited exact-simultaneity wording; ordinary overlap wording remains a disclosed precision gap."
+              },
+              {
+                "sourceEnglish": " Something is always coming ready.",
+                "status": "draft",
+                "text": " Kamehla ho na le se seng se atamelang ho loka."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -139,7 +142,9 @@
               },
               {
                 "sourceEnglish": "Build the right bed",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Haha bed e loketseng",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
               },
               {
                 "sourceEnglish": " — matching the ",
@@ -182,7 +187,8 @@
                 "status": "draft",
                 "text": " ya hao."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1497,24 +1503,13 @@
                 "text": "serapa sa hao "
               },
               {
-                "sourceEnglish": "becomes less dependent on guesswork",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " — and more on ",
+                "sourceEnglish": "becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
                 "status": "draft",
-                "text": " — mme haholo ka "
-              },
-              {
-                "sourceEnglish": "what you've actually seen happen",
-                "status": "draft",
-                "text": "seo o hlileng o se boneng se etsahala"
-              },
-              {
-                "sourceEnglish": " on your own ground.",
-                "status": "english-hold"
+                "text": "se ntse se fokotsa ho itshetleha ka ho hakanya — mme se ntse se eketsa ho itshetleha ka seo o hlileng o se boneng se etsahala fatshe la hao.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1526,14 +1521,17 @@
               },
               {
                 "sourceEnglish": "with reliable local advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mmoho le keletso e tshepahalang ya sebakeng sa heno",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
                 "text": " ha o etsa qeto e latelang."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

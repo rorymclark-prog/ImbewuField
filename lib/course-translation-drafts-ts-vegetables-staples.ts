@@ -257,8 +257,8 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "An improvised stronger mixture",
-              "xitsongaDraft": "An improvised stronger mixture",
-              "reviewStatus": "hold"
+              "xitsongaDraft": "Mpfangano lowu endliweke hi ku improvise, lowu nga stronger.",
+              "reviewStatus": "machine-draft"
             },
             {
               "sourceEnglish": "A product registered for the crop and pest, used according to its label",
@@ -292,7 +292,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
           "options": [
             {
               "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
-              "xitsongaDraft": "Loko hakunene ku ri soil nutrient or watering issue",
+              "xitsongaDraft": "Xana hakunene i xiphiqo xa soil nutrient kumbe xa ku cheleta?",
               "reviewStatus": "machine-draft"
             },
             {
@@ -314,7 +314,7 @@ export const XITSONGA_VEGETABLES_STAPLES_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 0,
           "rationale": {
             "sourceEnglish": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.",
-            "xitsongaDraft": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+            "xitsongaDraft": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona xiphiqo xa soil kumbe xa ku cheleta xi lava ku lulamisiwa hi ndlela leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula swi papalata ku tirhisa treatment swa hava.",
             "reviewStatus": "machine-draft"
           }
         }

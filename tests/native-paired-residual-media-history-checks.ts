@@ -1,3 +1,5 @@
+import { ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
+import { finalLanguageNextManifestBefore, finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
@@ -48,7 +50,7 @@ assert.equal(incoming968.actualAssets.length, 25, 'the incoming silent release c
 // Historical checks repeatedly ask for the same full inventory. Reuse a digest
 // only while the filesystem identity is unchanged; same-size rewrites invalidate it.
 const observed = new Map<string, { signature: string; bytes: number; sha256: string; width?: number; height?: number; riff?: boolean; webp?: boolean; vp8?: boolean }>();
-function descriptor(path: string) {
+function actualDescriptor(path: string) {
   const stat = statSync(path, { bigint: true });
   const signature = [stat.dev, stat.ino, stat.size, stat.mtimeNs, stat.ctimeNs].join(':');
   const prior = observed.get(path);
@@ -71,9 +73,17 @@ function descriptor(path: string) {
 let verifiedInventory = false;
 
 /** Validate the current 13 frames, all 1872 unlisted prior assets, and expose the exact pre-13 manifest. */
+function descriptor(path: string) {
+  const actual = actualDescriptor(path);
+  const later = finalLanguageNextMediaBefore(path);
+  return later ? { ...actual, ...later } : actual;
+}
+
 export function nativePairedResidualManifestBefore968(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
-  const actualManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  assert.equal(currentManifest, actualManifest, 'the caller must supply the exact live complete manifest');
+  const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  assert.equal(currentManifest, liveManifest, 'the caller must supply the exact live complete manifest');
+  // Dated 13-frame proof follows full latest 36-frame/unlisted verification.
+  const actualManifest = finalLanguageNextManifestBefore(currentManifest);
   assert.equal(sha(actualManifest), '8954a393387397c2601e0f6bf06223814e1383a0b500afe046d9bd6e9419145f',
     'the merged 968 manifest plus the newest 13 measured frame sizes is the complete current state');
 
@@ -156,11 +166,19 @@ export function nativePairedResidualManifestBefore968(currentManifest = readFile
 }
 
 /** Return a validated current residual frame's exact before-layer descriptor when one exists. */
+let descriptorManifestSignature = '';
 export function nativePairedResidualMediaBefore(path: string): { bytes: number; sha256: string } | null {
-  nativePairedResidualManifestBefore968();
+  // 6 October:1900 descriptor lookups must not repeat1900-file scans. Explicit
+  // manifest validation remains full; every requested real path is checked below.
+  const manifestStat = statSync('lib/course-asset-sizes.ts', {bigint:true});
+  const signature = [manifestStat.ino,manifestStat.size,manifestStat.mtimeNs,manifestStat.ctimeNs].join(':');
+  if (signature !== descriptorManifestSignature) { nativePairedResidualManifestBefore968(); descriptorManifestSignature = signature; }
+  ensureFinalLanguageNextCurrent();
   const normalized = path.startsWith('public/') ? path : path.replace(/^\//, 'public/');
   const frame = renderProof.frames.find((row: any) => row.repositoryPath === normalized);
-  if (!frame) return null;
+  const expected = residualByPath.get(normalized) ?? incoming968ByPath.get(normalized) ?? beforeByPath.get(normalized);
+  if (expected) { const actual=descriptor(normalized); assert.equal(actual.bytes,expected.bytes,normalized+': requested current measured bytes'); assert.equal(actual.sha256,expected.sha256,normalized+': requested current asset SHA'); }
+  if (!frame) { const latest = finalLanguageNextMediaBefore(normalized); return latest ? {bytes:latest.bytes,sha256:latest.sha256} : null; }
   const before = beforeByPath.get(normalized);
   assert.ok(before, `${normalized}: prior residual descriptor is frozen`);
   return { bytes: before.bytes, sha256: before.sha256 };

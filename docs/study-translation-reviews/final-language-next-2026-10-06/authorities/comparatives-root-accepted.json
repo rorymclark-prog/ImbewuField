@@ -1,0 +1,128 @@
+{
+  "title": "Root accepted two ordinary comparative replacements",
+  "date": "2026-10-06",
+  "candidateSHA256": "36080a06f48c9346badfaaca7035cb48824e58936cf30bc993d04d1686c5583b",
+  "independentSHA256": "45f6a1c7f407fa24185d55209859e2bd34c1aaa90fe0544df32cf1aa3c0d3558",
+  "rows": [
+    {
+      "locator": {
+        "moduleId": "intro-permaculture",
+        "languageTag": "ve",
+        "languageName": "Tshivenda",
+        "relativeFile": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "slideNumber": 22,
+        "bodyIndexZeroBased": 2,
+        "fieldLocator": "slides[n=22].target.body[2]"
+      },
+      "binding": {
+        "currentFileSHA256": "fb462a6cf792d31503e38a8d0bf0897cec71a53706c02018f8c5897a6ad71c16",
+        "latestAppliedPlan": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/final-language-next-2026-10-06/applied-plan.json",
+        "latestAppliedPlanSHA256": "f8b14d04d27196152c02e513e79452d235f48ace746f4accdda81eaafa8aef02",
+        "planPreapplyFileSHA256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+        "planCurrentTargetExact": "Wanani tshithu tshithihi tsho ṱavhiwaho further away than uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "planMatchesCurrentObject": true
+      },
+      "source": {
+        "canonicalEnglishField": "Find one thing planted further away than how often you use it, and write down where it should move to.",
+        "sourceSHA256": "01fdbd71ab2ce1159dea57023a109fee27332ef69eec205dead7cd8e4b873047",
+        "targetObjectSHA256": "1e19c2542d0bd9d682e879e865af35e37be9e560f41a4e964311350859ea28c9"
+      },
+      "beforeObject": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Find one thing planted ",
+            "status": "draft",
+            "text": "Wanani tshithu tshithihi tsho ṱavhiwaho "
+          },
+          {
+            "sourceEnglish": "further away than",
+            "status": "english-hold",
+            "reason": "Opaque distance versus use-frequency comparative retained exactly; no threshold or dimension invented."
+          },
+          {
+            "sourceEnglish": " how often you use it",
+            "status": "draft",
+            "text": " uri ni tshi shumisa kangani"
+          },
+          {
+            "sourceEnglish": ", and write down where it should move to.",
+            "status": "draft",
+            "text": ", ni ṅwale hune tsha tea u pfuluselwa hone."
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+      },
+      "afterObject": {
+        "status": "draft",
+        "text": "Wanani tshithu tshithihi tsho ṱavhiwaho kule u fhira uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+        "provenance": "2026-10-06 root-accepted ordinary comparative draft; independent semantic backcheck; exact English source unchanged; visible unreviewed machine draft; no fluent approval"
+      },
+      "literalBacktranslation": "Find one thing planted farther away than how often you use it, and write down where it should be moved to.",
+      "independentDisposition": "accept_candidate_semantics"
+    },
+    {
+      "locator": {
+        "moduleId": "market-community",
+        "languageTag": "ts",
+        "languageName": "itsonga",
+        "relativeFile": "docs/narration/market-community.ts.paired-draft.json",
+        "slideNumber": 11,
+        "bodyIndexZeroBased": 0,
+        "fieldLocator": "slides[n=11].target.body[0]"
+      },
+      "binding": {
+        "currentFileSHA256": "3de071725408c506d1073e70c998d35ecb0ec1a1d013fe666c644e911965a7a8",
+        "latestAppliedPlan": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/study-translation-reviews/final-language-next-2026-10-06/applied-plan.json",
+        "latestAppliedPlanSHA256": "f8b14d04d27196152c02e513e79452d235f48ace746f4accdda81eaafa8aef02",
+        "planPreapplyFileSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+        "planCurrentTargetExact": "Ku xavisa hi ku kongoma ku nga hlayisa more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "planMatchesCurrentObject": true
+      },
+      "source": {
+        "canonicalEnglishField": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+        "sourceSHA256": "e037dd6cfa3b6d2ac107842aa77099a2f30bb0cfb7bce763ab1f06643caf7e30",
+        "targetObjectSHA256": "82d4f854080911169b6562f24875635ed72b299641a567c03e048161c2d48beb"
+      },
+      "beforeObject": {
+        "status": "draft",
+        "text": "Ku xavisa hi ku kongoma ku nga hlayisa more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+      },
+      "afterObject": {
+        "status": "draft",
+        "text": "Ku xavisa hi ku kongoma ku nga hlayisa swo tala swa nxavo wo xavisa, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+        "provenance": "2026-10-06 root-accepted ordinary comparative draft; independent semantic backcheck; exact English source unchanged; visible unreviewed machine draft; no fluent approval"
+      },
+      "literalBacktranslation": "Direct selling can retain more of the selling price, but it also takes time, packing, transport and customer care.",
+      "independentDisposition": "accept_candidate_semantics"
+    }
+  ],
+  "held": [
+    {
+      "locator": {
+        "moduleId": "intro-permaculture",
+        "languageTag": "ts",
+        "languageName": "itsonga",
+        "relativeFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+        "slideNumber": 22,
+        "bodyIndexZeroBased": 2,
+        "fieldLocator": "slides[n=22].target.body[2]"
+      },
+      "reason": "The anchor combines a distance term with a root glossed as “pass/surpass,” but the proposed backtranslation explicitly keeps two readings (“far away, beyond” and “farther than”). That does not establish the exact comparative relation needed here. Keep the exact source span in English while retaining the already-localized frequency clause and all surrounding wording. This is a bounded term hold, not a hold on the full sentence."
+    },
+    {
+      "locator": {
+        "moduleId": "vegetables-staples",
+        "languageTag": "st",
+        "languageName": "Sesotho",
+        "relativeFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+        "slideNumber": 2,
+        "bodyIndexZeroBased": 3,
+        "fieldLocator": "slides[n=2].target.body[3]"
+      },
+      "reason": "The wording may express the activities’ periods meeting or coinciding, but the evidence supplied does not establish that it means partial overlap rather than their happening at the same time. That distinction is the reason the exact English sentence replaced the inherited “at the same time” wording. Preserve the exact English anchor and the localized ordinary clauses until a source-backed Sesotho wording distinguishes overlap from identical timing."
+    }
+  ],
+  "scope": "Two already-listed current48 fields; no new locations; use exact current object and source checks; requires render, tests and phone QA; not fluent approval"
+}

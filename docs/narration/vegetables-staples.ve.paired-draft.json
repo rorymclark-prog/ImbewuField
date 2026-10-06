@@ -86,9 +86,12 @@
               },
               {
                 "sourceEnglish": "The garden is full of plants, but there's no food in it.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Garden yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: Garden"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -1393,7 +1396,9 @@
             "segments": [
               {
                 "sourceEnglish": "Check the bed regularly from planting.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ṱolani bed regularly u bva musi wa u ṱavha.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, regularly, ten-day photograph, assignment checkpoint"
               },
               {
                 "sourceEnglish": " Use the ",
@@ -1414,7 +1419,8 @@
                 "status": "draft",
                 "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1521,27 +1527,13 @@
                 "text": "Khalaṅwaha iṅwe na iṅwe,"
               },
               {
-                "sourceEnglish": " your garden ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "becomes less dependent on guesswork",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " — and more on ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "what you've actually seen happen",
+                "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
                 "status": "draft",
-                "text": "zwe na zwi vhona zwa vhukuma zwi tshi itea"
-              },
-              {
-                "sourceEnglish": " on your own ground.",
-                "status": "english-hold"
+                "text": " garden yaṋu i ya i tshi fhungudza u ḓitika nga u humbulela — nahone i tshi engedza u ḓitika nga zwe na zwi vhona zwa vhukuma zwi tshi itea fhethu haṋu.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: garden"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1553,14 +1545,17 @@
               },
               {
                 "sourceEnglish": "with reliable local advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "na nyeletshedzo i fulufhedzeaho ya henefho",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
                 "text": " musi ni tshi dzhia tsheo i tevhelaho."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

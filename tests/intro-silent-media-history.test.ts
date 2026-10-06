@@ -17,7 +17,10 @@ test('the silent Introduction release validates25 measured assets and1902 unlist
 });
 test('extra or unlisted manifest entries and wrong measured aggregate cannot expose any dated silent-release media',()=>{
   const actual=readFileSync('lib/course-asset-sizes.ts','utf8');
-  for(const mutated of [actual.replace('});',"  '/unlisted-extra.webp': 1,\n});"),actual.replace(silentIntroIntegration.finalManifest.summaryLine,'// Incorrect aggregate'),actual.replace("'/course-decks/intro-permaculture/st/slide-22.webp':", "'/renamed-old-st.webp':")]){
+  // 6 October: the later36 measured frames change the live aggregate; corrupt its current header.
+  const currentHeader=actual.match(/^\/\/ \d+ files, [\d.]+ MB total\.$/m)?.[0];
+  assert.ok(currentHeader);
+  for(const mutated of [actual.replace('});',"  '/unlisted-extra.webp': 1,\n});"),actual.replace(currentHeader,'// Incorrect aggregate'),actual.replace("'/course-decks/intro-permaculture/st/slide-22.webp':", "'/renamed-old-st.webp':")]){
     assert.notEqual(mutated,actual);assert.throws(()=>silentIntroAssetSizesBefore(mutated));
   }
 });
@@ -62,7 +65,7 @@ test('same-size unlisted disk mutation after initialization withdraws the entire
       // this actual same-size corrupted asset, not an unrelated setup failure.
       assert.throws(()=>validateSilentIntroMedia(),error=>
         error instanceof Error && error.message.includes(path) &&
-        /entire current inventory SHA|exact current inventory hash/.test(error.message));
+        /entire current inventory SHA|exact current inventory hash|all current inventory hashes/.test(error.message));
       writeFileSync(path,original);validateSilentIntroMedia();
     `],{cwd:fixture,stdio:'pipe'});
   } finally {rmSync(fixture,{recursive:true,force:true});}

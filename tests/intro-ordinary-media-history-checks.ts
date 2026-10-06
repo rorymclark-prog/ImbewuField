@@ -68,7 +68,7 @@ function validateCurrentIntroLayer(currentManifest: string) {
     const liveBytes = readFileSync(frame.asset);
     const later = introFullMediaBeforeEarlierProof(frame.asset);
     // Old dimensions use actual base encoded headers frozen with full old SHA/size provenance.
-    const bytes = later ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
+    const bytes = later?.encodedHeaderHex ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
     assert.equal(later?.bytes ?? bytes.length, frame.new.bytes, `${frame.asset}: current approved frame byte count`);
     assert.equal(later?.sha256 ?? sha(bytes), frame.new.sha256, `${frame.asset}: current approved frame SHA`);
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', `${frame.asset}: WebP container`);

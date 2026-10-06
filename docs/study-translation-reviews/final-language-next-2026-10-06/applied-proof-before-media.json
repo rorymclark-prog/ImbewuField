@@ -1,0 +1,618 @@
+{
+  "date": "2026-10-06",
+  "base": "3341019a39a081a33348b2f73f9275285918f618",
+  "appliedPlanSHA256": "ca7ffb96405db9b050454d52db714cbc04aa05e7f3777cfc38af61e5b1153019",
+  "appliedFields": {
+    "native": 9,
+    "paired": 39,
+    "total": 48
+  },
+  "sourceEnglishFieldCountVerified": 1134,
+  "fullCurrentNativeAcceptedOverlayMatch": true,
+  "fullNativeAfterSelectedRewindEqualsImmutableBefore": true,
+  "fullPairedAfterSelectedRewindEqualsImmutableBefore": true,
+  "allQuizSourceCorrectIndicesCanonical": true,
+  "canonicalWholeModuleAndFileUnchanged": true,
+  "protectedArchiveAndAudioFilesVerified": 570,
+  "manifestUnchanged": true,
+  "actualFiles": {
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": {
+      "beforeSHA256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+      "afterSHA256": "811401edf7fe0a2ec6048406999fa519c748954e6cc7621a742e392db98fbdad",
+      "beforeMatchesBase": true
+    },
+    "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": {
+      "beforeSHA256": "2c73d441d205340548c082fe64d52318bf590a4eb0f679540ee4708e8fe5904d",
+      "afterSHA256": "e85fbc6aca65654f4154399ce77616f186532bed5f73db7b38422daa813e05f4",
+      "beforeMatchesBase": true
+    },
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": {
+      "beforeSHA256": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+      "afterSHA256": "d41a4f1273cfcc1faa68b618d427418edb838f4728787a4ea4e9f167084ab78d",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/reading-landscape.st.paired-draft.json": {
+      "beforeSHA256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+      "afterSHA256": "2b1de786ff90c360f505cec6f0ce0ab6726cf74dc6bfcb970e466cb958bde136",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/reading-landscape.ve.paired-draft.json": {
+      "beforeSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+      "afterSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/reading-landscape.ts.paired-draft.json": {
+      "beforeSHA256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+      "afterSHA256": "9925739e5185bf723700a040227d5947b87df13a39c53427362f2ccb2bf39cf6",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/intro-permaculture.ve.paired-draft.json": {
+      "beforeSHA256": "89400f76434e9eb6af8a2ef7f5056258b6004910bacd7f9887e557d0e63f4fa1",
+      "afterSHA256": "fb462a6cf792d31503e38a8d0bf0897cec71a53706c02018f8c5897a6ad71c16",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/intro-permaculture.ts.paired-draft.json": {
+      "beforeSHA256": "1cec865ebfbbcee7cbfbfa5c41bea16156da9f70f3442f60e711befc7a71556a",
+      "afterSHA256": "956f558efef759c858c57f84aa826c7121f4bc657846069be943b0708043a655",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/water-harvesting.ve.paired-draft.json": {
+      "beforeSHA256": "04543fdf4385d23bf63098c124ff080589fee4227dff6c2604a2bc7166f0fde2",
+      "afterSHA256": "340c342901393719b63cfb3401d379ae9d35b4bd59d7d04cdb76e42b5a735ba4",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/vegetables-staples.st.paired-draft.json": {
+      "beforeSHA256": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88",
+      "afterSHA256": "733d715c39b7e6a40798ccf93d59e699d911cdb18b25a1044aa6ee5de66495e3",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/vegetables-staples.ve.paired-draft.json": {
+      "beforeSHA256": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c",
+      "afterSHA256": "3dc7d86d7a9ec0d58db7a70baaf4357ed57c58a0df9d4bc7fcb1b0d92ba11db2",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/vegetables-staples.ts.paired-draft.json": {
+      "beforeSHA256": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e",
+      "afterSHA256": "2bf5bc093a6196c2beed2993bf8b64183e933a22a9112d679d254be50bdca5a2",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/market-community.st.paired-draft.json": {
+      "beforeSHA256": "8046170b4cfd3a96fde790e9c53ce7ab73cf6846ddf8d75f1109c9dbcbefc160",
+      "afterSHA256": "084bd6732647bdcefcbcf93fb8326f7225a2875704835cf9b3636dde0ef318fc",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/market-community.ve.paired-draft.json": {
+      "beforeSHA256": "f08ae7470ff8913d315017275054a3e9582e5c6b5df523b36c9c95971f389620",
+      "afterSHA256": "4b2819df030c6c71fb092e10132c66e082d271f3a22a198d30480902e7e9fdbf",
+      "beforeMatchesBase": true
+    },
+    "docs/narration/market-community.ts.paired-draft.json": {
+      "beforeSHA256": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286",
+      "afterSHA256": "3de071725408c506d1073e70c998d35ecb0ec1a1d013fe666c644e911965a7a8",
+      "beforeMatchesBase": true
+    }
+  },
+  "results": [
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l2",
+      "field": "infographicAlt",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l2",
+      "field": "quiz[1].rationale",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l3",
+      "field": "title",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l4",
+      "field": "quiz[0].option[0]",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l4",
+      "field": "quiz[1].rationale",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "lessonId": "vegetables-staples-l2",
+      "field": "quiz[1].rationale",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l4",
+      "field": "quiz[0].option[0]",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l4",
+      "field": "quiz[1].rationale",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "native",
+      "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "lessonId": "vegetables-staples-l4",
+      "field": "quiz[1].option[0]",
+      "sourceExact": true,
+      "targetExact": true,
+      "status": "machine-draft"
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 9,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 10,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 13,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 17,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 9,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 10,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 13,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 17,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 9,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 10,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 13,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 17,
+      "field": "heading",
+      "index": null,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 12,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+      "slide": 22,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "slide": 22,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/water-harvesting.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 2,
+      "field": "body",
+      "index": 3,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 3,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 6,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 7,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 2,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 17,
+      "field": "body",
+      "index": 3,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 6,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 7,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 1,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 3,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 6,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 7,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "slide": 12,
+      "field": "body",
+      "index": 0,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "slide": 15,
+      "field": "body",
+      "index": 3,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.st.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 12,
+      "field": "body",
+      "index": 0,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 10,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 11,
+      "field": "body",
+      "index": 0,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 12,
+      "field": "body",
+      "index": 0,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 15,
+      "field": "body",
+      "index": 3,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 18,
+      "field": "body",
+      "index": 2,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    },
+    {
+      "type": "paired",
+      "file": "docs/narration/market-community.ts.paired-draft.json",
+      "slide": 20,
+      "field": "body",
+      "index": 1,
+      "sourceExact": true,
+      "targetJoinExact": true,
+      "sourceJoinExact": true
+    }
+  ],
+  "frames": [
+    "intro-permaculture.ts:22",
+    "intro-permaculture.ve:12",
+    "intro-permaculture.ve:22",
+    "market-community.st:12",
+    "market-community.st:15",
+    "market-community.st:18",
+    "market-community.ts:10",
+    "market-community.ts:11",
+    "market-community.ts:12",
+    "market-community.ts:15",
+    "market-community.ts:18",
+    "market-community.ts:20",
+    "market-community.ve:12",
+    "market-community.ve:18",
+    "reading-landscape.st:10",
+    "reading-landscape.st:13",
+    "reading-landscape.st:17",
+    "reading-landscape.st:9",
+    "reading-landscape.ts:10",
+    "reading-landscape.ts:13",
+    "reading-landscape.ts:17",
+    "reading-landscape.ts:9",
+    "reading-landscape.ve:10",
+    "reading-landscape.ve:13",
+    "reading-landscape.ve:17",
+    "reading-landscape.ve:9",
+    "vegetables-staples.st:18",
+    "vegetables-staples.st:2",
+    "vegetables-staples.st:3",
+    "vegetables-staples.ts:1",
+    "vegetables-staples.ts:18",
+    "vegetables-staples.ts:3",
+    "vegetables-staples.ve:17",
+    "vegetables-staples.ve:18",
+    "vegetables-staples.ve:2",
+    "water-harvesting.ve:4"
+  ],
+  "ordinaryPrecisionGaps": [
+    "VE/TS Intro22 exact further away than comparator retained English while frequency localized; no new threshold",
+    "ST Vegetables2 exact overlap sentence held ordinary English rather than conflated with exact simultaneity",
+    "TS Market11 exact more of the sale price retained English rather than large share/profit paraphrase",
+    "VE Vegetables17 regularly retained English rather than all the time",
+    "Unfamiliar in source-qualified disease phrases remains a disclosed ordinary adjective within precision anchor"
+  ],
+  "limits": [
+    "No render or image change yet; these accepted text changes will change the picture when rendered.",
+    "No fluent-speaker, farming, financial or legal approval; visible unreviewed status maintained.",
+    "No tests were rewritten or removed, no full suite/commit/push performed."
+  ]
+}

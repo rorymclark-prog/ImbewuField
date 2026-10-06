@@ -1,3 +1,5 @@
+import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { finalLanguageNextMediaProof } from './final-language-next-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -38,9 +40,12 @@ for (const frame of latest.frames) {
   currentInventory.set(url, {bytes: frame.bytes, sha256: frame.sha256});
 }
 assert.equal(currentInventory.size, inventory.size, 'later redraws add no unlisted assets');
+// 6 October: complete later 36-frame layer is validated before older descriptors.
+for (const frame of finalLanguageNextMediaProof.frames) currentInventory.set(frame.url, frame.new);
 const laterReplacedURLs = new Set<string>([
   ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
   ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
+  ...finalLanguageNextMediaProof.frames.map((frame:any)=>frame.url),
 ]);
 // Only these frozen, listed URLs need a historical descriptor. Bulk inventory
 // callers still check every other real file directly, without recursively
@@ -67,7 +72,7 @@ function verifyCurrentDiskInventory() {
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
     const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
       ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
-      : fileDescriptor(output.path).sha256;
+      : sha(finalLanguageNextPairedBytesBefore(output.path, readFileSync(output.path)));
     assert.equal(sourceHash,output.sha256,'approved Intro native/paired files remain exact after the validated later Reading projection');
   }
   for(const old of applied.verification.oldSTProtectedByteInventory) {
@@ -108,14 +113,14 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
     const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
       ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
-      : sha(readFileSync(output.path));
+      : sha(finalLanguageNextPairedBytesBefore(output.path, readFileSync(output.path)));
     assert.equal(sourceHash,output.sha256,'approved complete Intro source/status/provenance after the validated later Reading projection');
   }
   for (const f of render.frames) {
     const bound=silentIntroIntegration.actualAssets.find((a:any)=>a.path===f.destination);assert.ok(bound);
     assert.equal(bound.sha256,f.sha256);assert.equal(bound.bytes,f.bytes);
-    assert.equal(sha(readFileSync(f.pairedDraft)),f.pairedDraftSHA256);
-    const pair=JSON.parse(readFileSync(f.pairedDraft,'utf8'));const slide=pair.slides[f.slide-1];
+    assert.equal(sha(finalLanguageNextPairedBytesBefore(f.pairedDraft, readFileSync(f.pairedDraft))),f.pairedDraftSHA256);
+    const pair=JSON.parse(finalLanguageNextPairedBytesBefore(f.pairedDraft, readFileSync(f.pairedDraft)));const slide=pair.slides[f.slide-1];
     assert.equal(slide.n,f.slide);assert.deepEqual(slide.english,f.englishSource);assert.deepEqual(slide.target,f.target);
     verifySilentIntroFrame(bound,readFileSync(f.destination));
   }
@@ -141,7 +146,7 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
 export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
   const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
-  if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url)) {
+  if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url) || finalLanguageNextMediaProof.frames.some((frame:any)=>frame.url===url)) {
     const previous=inventory.get(url);assert.ok(previous);
     return {bytes:previous.bytes,sha256:previous.sha256};
   }

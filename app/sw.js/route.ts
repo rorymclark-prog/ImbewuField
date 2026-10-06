@@ -2002,6 +2002,56 @@ async function migrateIntroSilentReleaseStills() {
   await cache.put(marker, new Response('Updated regional Introduction cards'));
 }
 
+// These checked regional wording changes replace only the 36 named saved stills.
+// Audio, shared films and later replacement downloads remain in the course cache.
+async function migrateFinalLanguageNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.final-language-next-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/intro-permaculture/ve/slide-12.webp',
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/market-community/st/slide-12.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/st/slide-18.webp',
+    '/course-decks/market-community/ts/slide-10.webp',
+    '/course-decks/market-community/ts/slide-11.webp',
+    '/course-decks/market-community/ts/slide-12.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/market-community/ts/slide-20.webp',
+    '/course-decks/market-community/ve/slide-12.webp',
+    '/course-decks/market-community/ve/slide-18.webp',
+    '/course-decks/reading-landscape/st/slide-09.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-13.webp',
+    '/course-decks/reading-landscape/st/slide-17.webp',
+    '/course-decks/reading-landscape/ts/slide-09.webp',
+    '/course-decks/reading-landscape/ts/slide-10.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-09.webp',
+    '/course-decks/reading-landscape/ve/slide-10.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/st/slide-02.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-01.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-02.webp',
+    '/course-decks/vegetables-staples/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+    '/course-decks/water-harvesting/ve/slide-04.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated source-paired regional wording'));
+}
+
 self.addEventListener('activate', function (event) {
   event.waitUntil(
     caches.keys().then(function (keys) {
@@ -2017,7 +2067,7 @@ self.addEventListener('activate', function (event) {
           })
           .map(function (key) { return caches.delete(key); })
       );
-    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateNativePairedResidualStills).then(function () {
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateNativePairedResidualStills).then(migrateFinalLanguageNextStills).then(function () {
       // Take control of already-open tabs so this version's fetch handler
       // (and therefore network-first HTML) runs without needing a reload first.
       return self.clients.claim();

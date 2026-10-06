@@ -125,15 +125,18 @@
             "status": "mixed",
             "segments": [
               {
-                "status": "english-hold",
-                "sourceEnglish": "It does not show how deep moisture reaches on your land."
+                "sourceEnglish": "It does not show how deep moisture reaches on your land.",
+                "status": "draft",
+                "text": "A zwi sumbedzi uri moisture i swika fhasi vhungafhani kha land yaṋu.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: moisture, land"
               },
               {
                 "status": "draft",
                 "text": " Ṱolani mavu, u sendama na nḓila ya u fhalala ha maḓi musi ni sa athu u fhaṱa.",
                 "sourceEnglish": " Check the soil, slope and overflow route before building."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

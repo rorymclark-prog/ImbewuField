@@ -410,8 +410,8 @@
           },
           {
             "status": "draft",
-            "text": "Kambisisa milawu ya makete ni local trading and food requirements. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe ntsengo.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -436,8 +436,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Ku xavisa hi ku kongoma ku nga retain more of the sale price, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Ku xavisa hi ku kongoma ku nga hlayisa swo tala swa nxavo wo xavisa, kambe swi teka nkarhi, ku paka, swo famba ni ku khathalela vaxavi.",
+            "provenance": "2026-10-06 root-accepted ordinary comparative draft; independent semantic backcheck; exact English source unchanged; visible unreviewed machine draft; no fluent approval"
           },
           {
             "status": "draft",
@@ -472,8 +472,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Sungula hi what you can reliably supply ni leswi vaxavi va swi lavaka.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Sungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -604,9 +604,12 @@
               },
               {
                 "sourceEnglish": "check whether the variety is protected and whether permission is needed.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: variety, permission"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -796,8 +799,8 @@
           },
           {
             "status": "draft",
-            "text": "Lavani qualified advice eka unfamiliar disease or technical problems. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Lavani qualified advice eka unfamiliar disease kumbe swiphiqo swa technical. Ntokoto lowu avelaniweke ni specialist help swi nga tirha swin’we.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -869,8 +872,8 @@
           },
           {
             "status": "draft",
-            "text": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u plan for a household food gap using local growing conditions.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Pimanisa cost ni return ya crop kumbe ndlela yo xavisa, kumbe u pulanela ku kayivela ka swakudya swa ndyangu hi ku ya hi swiyimo swa ku byala swa laha kaya.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
