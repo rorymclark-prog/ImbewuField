@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { soilAssetSizesBeforeOrdinary, soilMediaSHAForEarlierProof } from './soil-reviewed-ordinary-history-checks.ts';
+import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 const proof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/WATER-DECK-REVIEWED-PRECISION-2026-10-05.json', import.meta.url), 'utf8'));
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 // 2026-10-06: root accepted 35 ST/VE and then 19 TS exact-paragraph reuses after PR957.
@@ -98,7 +99,11 @@ export function waterMediaBeforeOrdinary(path: string) {
   checkOrdinaryMedia();
   const bytes = readFileSync(path);
   const changed = ordinaryMedia.frames.find((row: any) => row.asset === path);
-  if (!changed) return { bytes, sha256: sha(bytes), byteLength: bytes.length };
+  if (!changed) {
+    const intro = introMediaBeforeEarlierProof(path);
+    if (intro) return { bytes, sha256: intro.sha256, byteLength: intro.bytes };
+    return { bytes, sha256: sha(bytes), byteLength: bytes.length };
+  }
   assert.equal(sha(bytes), changed.new.sha256);
   assert.equal(bytes.length, changed.new.bytes);
   return { bytes, sha256: changed.old.sha256, byteLength: changed.old.bytes };

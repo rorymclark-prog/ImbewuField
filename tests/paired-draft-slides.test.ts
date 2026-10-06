@@ -1,3 +1,5 @@
+import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
+import { introDeckBeforeOrdinary } from './intro-ordinary-paired-history-checks.ts';
 import { waterDeckBeforeReviewedPrecision } from './water-reviewed-deck-history-checks.ts';
 import { checkWaterReviewedPrecision, waterBodyBeforeReviewedPrecision } from './water-reviewed-precision-checks.ts';
 import { reconstructMarketBeforeL2L3Completion, reconstructMarketPresentationBeforeCompletion } from './market-l2-l3-completion-checks.ts';
@@ -637,11 +639,13 @@ test('Sesotho Introduction review slides keep uncertain field steps paired in En
 });
 
 test('regional Introduction proposals preserve source-paired meaning beside technical English', () => {
+  // 2026-10-06: first validate the whole accepted current layer, then recover
+  // this earlier technical-hold scenario; the new live wording has separate guards.
   const ts = validatePairedDraft(
-    JSON.parse(readFileSync('docs/narration/intro-permaculture.ts.paired-draft.json', 'utf8')),
+    introDeckBeforeOrdinary('ts'),
     source, 'ts');
   const ve = validatePairedDraft(
-    JSON.parse(readFileSync('docs/narration/intro-permaculture.ve.paired-draft.json', 'utf8')),
+    introDeckBeforeOrdinary('ve'),
     source, 've');
 
   assert.equal(ts[2].target.body[1].status, 'draft', 'the three ethics remain a marked learning goal');
@@ -690,7 +694,7 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
   assert.equal(candidatePacket.candidateFields.length, 60);
 
   for (const lang of ['ve', 'ts'] as const) {
-    const currentDeck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const currentDeck = introDeckBeforeOrdinary(lang); // validated 2026-10-06 layer before the existing 60/65-field rewind
     // Rebuild the earlier 60-field snapshot because the later approved exercise batch revises three of its
     // target cells; the historical checks still verify their original wording and all other prior coverage.
     const deck = structuredClone(currentDeck);
@@ -811,7 +815,7 @@ test('regional Introduction proposals bind all 60 fields, keep every unlisted ta
   assert.equal(validatedDirection('ts'), true,
     'itsonga marks Zone 0 and 1 first, then moves outward');
   for (const lang of ['ve', 'ts'] as const) {
-    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${lang}.paired-draft.json`, 'utf8'));
+    const deck = introDeckBeforeOrdinary(lang); // the old conditional-hold assertions also belong to this earlier layer
     const text = (slide: number, bodyIndex: number) => targetVisibleText(deck.slides[slide - 1].target.body[bodyIndex]);
     assert.ok(targetVisibleText(deck.slides[14].target.body[0]).includes('0') &&
       targetVisibleText(deck.slides[14].target.body[0]).includes('5'), `${lang}: zone range retains 0 and 5`);
@@ -860,7 +864,7 @@ test('Intro exercise drafts preserve ordered energy arrows, one-sheet source and
   assert.equal(review.changedTargetCount, 4);
   const byKey = new Map(review.changedFields.map((row: any) => [`${row.language}:${row.slide}:${row.bodyIndex}`, row]));
   for (const row of review.changedFields) {
-    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${row.language}.paired-draft.json`, 'utf8'));
+    const deck = introDeckBeforeOrdinary(row.language); // retain the older exact exercise assertions after approved-layer validation
     const validated = validatePairedDraft(deck, source, row.language);
     assert.equal(row.sourceEnglish, source[row.slide - 1].body[row.bodyIndex]);
     assert.deepEqual(validated[row.slide - 1].target.body[row.bodyIndex], row.after,
@@ -900,7 +904,7 @@ test('Intro exercise drafts preserve ordered energy arrows, one-sheet source and
   assert.equal(tsCompare.after.segments[2].text, undefined, 'the retained site-comparison clause has no competing target');
 
   for (const held of review.preservedHeldRows) {
-    const deck = JSON.parse(readFileSync(`docs/narration/intro-permaculture.${held.language}.paired-draft.json`, 'utf8'));
+    const deck = introDeckBeforeOrdinary(held.language); // preserve the recorded pre-ordinary held rows after whole-current validation
     const actual = deck.slides[held.slide - 1].target.body[held.bodyIndex];
     const laterField = approvedStudyOutcome('intro-permaculture', held.language, held.slide, held.bodyIndex);
     if (laterField) {
@@ -2393,7 +2397,9 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
   const frameKeys = new Set<string>();
   for (const field of fields) {
     const path = `docs/narration/${field.moduleId}.${field.language}.paired-draft.json`;
-    const packet = JSON.parse(readFileSync(path, 'utf8'));
+    const packet = field.moduleId === 'intro-permaculture'
+      ? introDeckBeforeOrdinary(field.language)
+      : JSON.parse(readFileSync(path, 'utf8')); // Reading outcomes still use the live deck
     const sourceSlides = englishSlideRecords(readFileSync(`docs/narration/${field.moduleId}.en.md`, 'utf8'));
     const validated = validatePairedDraft(packet, sourceSlides, field.language);
     assert.equal(packet.reviewStatus, 'unreviewed');
@@ -2449,8 +2455,13 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
       assert.equal(digest, currentRender.sha256,
         `${frame.path}: current redraw hash matches the full-deck render proof`);
     } else {
-      assert.equal(bytes.byteLength, frame.bytes, `${frame.path}: manifest byte count matches the still`);
-      assert.equal(digest, frame.sha256, `${frame.path}: manifest hash matches the still`);
+      // 2026-10-06: the approved Intro ordinary batch redraws VE/TS slide 22. Validate
+      // all current frames/source/unlisted media before comparing this older outcomes descriptor.
+      const earlierIntro = frame.module === 'intro-permaculture' && frame.slide === 22
+        && (frame.language === 've' || frame.language === 'ts')
+        ? introMediaBeforeEarlierProof(frame.path) : undefined;
+      assert.equal(earlierIntro?.bytes ?? bytes.byteLength, frame.bytes, `${frame.path}: manifest byte count matches the still`);
+      assert.equal(earlierIntro?.sha256 ?? digest, frame.sha256, `${frame.path}: manifest hash matches the still`);
     }
   }
 });

@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-06",
+  "baselineHEAD": "816771b83b44f1bb4493d44be49992fbffecd80f",
+  "acceptedPacketSHA256": "3c6b91b0f6e5c18538806965693a4c30eef2289469160e2e27067604c348dae9",
+  "nativePath": "lib/course-translation-drafts-st-reading-landscape.ts",
+  "nativeBeforeSHA256": "9eb9574d1807cf0db4e13b30fcbeedb011bbd97a7a73a3dc37dd82c7f18c34a4",
+  "nativeAfterSHA256": "70893f7673dddbd9dfe1209a3c8120cdcbc7b03928cc75b633bed740b1b6a7a4",
+  "lessonId": "reading-landscape-l3",
+  "paragraphIndex": 1,
+  "canonicalSource": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+  "beforeTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata haholo ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+  "afterTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+  "removedOnly": "haholo ",
+  "reason": "Canonical comparison is can be colder, not much/very colder; exact source-identical ST slide14 already uses the conservative clause. Root accepted removal of only the intensifier; all source and other prose remain literal.",
+  "sourceUnchanged": true,
+  "wholeRegistryRewindExact": true,
+  "allOtherFieldsAssessmentIndicesStatusesUnchanged": true,
+  "sameSourceDeck14Clause": "Dibaka tsena di ka bata ho feta matswapo a haufi.",
+  "reviewStatus": "machine-draft; no fluency approval",
+  "limits": "No media/audio/PLAN_VERSION changes. Preview and learner pixels not verified in this lane.",
+  "fixtureSHA256": {
+    "native-before.json": "b78779cd8f5d48214947cf6588b80ede94b0256a4b8dea5fd49740ea82be87f8",
+    "native-after.json": "a42f569b71d791816c5d5062caa4b9f6b283b238f18ed8b0d2a94e64831ff34a",
+    "canonical-before.json": "5062622d592cef5675704cbcf1e15f3c6c1b923e025daa2aa4e5a048a4272454",
+    "root-accepted-repair-packet.json": "3c6b91b0f6e5c18538806965693a4c30eef2289469160e2e27067604c348dae9"
+  },
+  "verification": {
+    "actualNativeMatchesSavedAfter": true,
+    "actualFullRegistryRewindExact": true,
+    "typecheck": "passed original npx tsc --noEmit",
+    "focusedTests": {
+      "pass": 10,
+      "fail": 0,
+      "newTests": 3
+    },
+    "diffCheck": "passed",
+    "historicalTestEdits": "none",
+    "fullSuite": "pending root combined Intro lane"
+  }
+}
