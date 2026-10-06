@@ -1,3 +1,4 @@
+import { readingBodyBeforeComparison } from './reading-comparison-history-checks.ts';
 import assert from 'node:assert/strict';
 import { existsSync, statSync, readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -1081,8 +1082,14 @@ test('Reading slide 16 reuses only its mapped learner sentences and keeps the fo
     assert.equal(currentLesson.status, 'draft');
     const currentField = learnerProofField(currentLesson.content, entry.field);
     assert.ok(currentField, `${entry.lessonId}/${entry.field}: resolved learner field exists`);
-    assert.equal(currentField.target, entry.appliedTarget,
-      `${entry.languageCode}/${entry.lessonId}/${entry.field}: current learner target matches its applied proof before historical checks`);
+    // 2026-10-06: the source-identical ST comparison removed only an invented
+    // intensity word. Validate the complete accepted current registry/canonical
+    // snapshot first, then rewind that one clause for the older 47-field proof.
+    const reviewedHistoricalTarget = entry.languageCode === 'st'
+      && entry.lessonId === 'reading-landscape-l3' && entry.field === 'body'
+      ? readingBodyBeforeComparison(currentField.target) : currentField.target;
+    assert.equal(reviewedHistoricalTarget, entry.appliedTarget,
+      `${entry.languageCode}/${entry.lessonId}/${entry.field}: verified current layer preserves the historical applied target after only the accepted comparison rewind`);
     assert.match(entry.reviewStatus, /unreviewed/i,
       `${entry.languageCode}/${entry.lessonId}/${entry.field}: the review draft remains visibly unreviewed`);
   }

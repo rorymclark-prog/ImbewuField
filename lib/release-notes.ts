@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: 'dd251f0e', changes: [
+    'Tshivenda and Xitsonga Introduction slides add draft wording beside English.',
+    'Sesotho Reading keeps the colder comparison without an added intensity word.',
+  ], tour: [
+    { title: 'Compare Introduction drafts',
+      where: 'Study → Introduction → Slides',
+      detail: 'Read the unreviewed draft and exact English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: '7d87fca1', changes: [
     'Soil lessons and six silent slides add checked regional wording beside English.',
     'The Xitsonga Soil card now shows its unreviewed title and summary draft.',

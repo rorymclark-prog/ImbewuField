@@ -6,6 +6,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
+import { introAssetSizesBeforeOrdinary, introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 
 const root = 'docs/study-translation-reviews/soil-ordinary-deck-2026-10-06/';
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
@@ -121,7 +122,8 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
 }
 
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
-  let prior = checkCurrentAssetsAndManifest(currentManifest);
+  let prior = introAssetSizesBeforeOrdinary(currentManifest);
+  prior = checkCurrentAssetsAndManifest(prior);
   for (const row of assets) {
     const current = `'${row.url}': ${row.bytes}`;
     const old = `'${row.url}': ${priorAssetBytes[row.url]}`;
@@ -143,5 +145,7 @@ export function soilMediaBeforeOrdinary(path: string) {
 }
 
 export function soilMediaSHAForEarlierProof(path: string) {
-  return soilMediaBeforeOrdinary(path).sha256;
+  const soil = soilMediaBeforeOrdinary(path);
+  const intro = introMediaBeforeEarlierProof(path);
+  return intro?.sha256 ?? soil.sha256;
 }
