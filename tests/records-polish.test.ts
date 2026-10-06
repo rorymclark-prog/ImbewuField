@@ -121,7 +121,9 @@ test('eggs and honey are direct record choices from the animal catalogue without
   assert.equal(cropEntryOption('Eggs'), null, 'a product must never acquire a bed yield or sowing rule');
   assert.ok(!CROP_ENTRY_OPTIONS.some(option => option.key.startsWith('animal-product:')));
   const picker = readFileSync(new URL('../components/CropSelect.tsx', import.meta.url), 'utf8');
-  assert.match(picker, /<optgroup label="Animal products">/);
+  // The heading goes through recordsFill so Sesotho, Tshivenda and Xitsonga drafts can name it; the
+  // English heading and the animal-product option list it labels are unchanged.
+  assert.match(picker, /<optgroup label=\{recordsFill\(lang, 'Animal products'\)\}>/);
   assert.match(picker, /ANIMAL_PRODUCT_ENTRY_OPTIONS\.find/, 'selecting an animal product must resolve the same catalogue option that was displayed');
 });
 
