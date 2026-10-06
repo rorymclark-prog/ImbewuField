@@ -1,3 +1,4 @@
+import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -29,7 +30,8 @@ function pairAt(draft: any, field: string, lessonId = 'vegetables-staples-l1'): 
   return parts[2] === 'options' ? question.options[Number(parts[3])] : question[parts[2] === 'q' ? 'question' : parts[2]];
 }
 function fieldText(language: Language, field: string): string {
-  const text = pairAt(drafts[language], field)[keys[language]];
+  // 6 October: historical leaf expectations follow full current18-quiz and12-pest validation/rewind.
+  const text = pairAt(vegetablesBeforePestPrecision(language, drafts[language]), field)[keys[language]];
   return field.startsWith('body.') ? text.split('\n\n')[Number(field.split('.')[2])] : text;
 }
 const digits = (text: string) => text.match(/\d+(?:[.-]\d+)?/g) ?? [];
@@ -96,13 +98,13 @@ test('Vegetables ordinary drafts retain every canonical instruction and all unre
       pair.reviewStatus = row.appliedReviewStatus;
     }
     // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
-    assert.deepEqual(drafts[language], vegetablesWithL3Completion(language, expected), `${language}: only reviewed source-bound fields may change, including the separately checked 6 October L3 layer`);
+    assert.deepEqual(vegetablesBeforePestPrecision(language, drafts[language]), vegetablesWithL3Completion(language, expected), `${language}: only reviewed source-bound fields may change, including the separately checked 6 October L3 layer`);
   }
 });
 
 test('Vegetables source and draft retain all twenty ordered paragraphs, numbered dimensions and quiz assignments', () => {
   for (const language of Object.keys(drafts) as Language[]) {
-    const draft = drafts[language].lessons.find(lesson => lesson.id === 'vegetables-staples-l1')! as any;
+    const draft = vegetablesBeforePestPrecision(language, drafts[language]).lessons.find(lesson => lesson.id === 'vegetables-staples-l1')! as any;
     assert.equal(draft.body.sourceEnglish, lesson.body);
     const paragraphs = draft.body[keys[language]].split('\n\n');
     assert.equal(paragraphs.length, lesson.body.split('\n\n').length);

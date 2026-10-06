@@ -5,6 +5,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
+import { vegetablesDeckBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 
 const evidence = (name: string) => JSON.parse(readFileSync(
   new URL(`../docs/study-translation-reviews/VEGETABLES-L2-FULLER-ORDINARY-2026-10-05-DECK-${name}.json`, import.meta.url), 'utf8'));
@@ -15,9 +16,13 @@ const currentFiles = {
   ve: 'vegetables-staples.ve.paired-draft.json',
   ts: 'vegetables-staples.ts.paired-draft.json',
 } as const;
-const current = Object.fromEntries(Object.entries(currentFiles).map(([language, filename]) => [
+const currentLive = Object.fromEntries(Object.entries(currentFiles).map(([language, filename]) => [
   language,
   JSON.parse(readFileSync(new URL(`../docs/narration/${filename}`, import.meta.url), 'utf8')),
+])) as Record<keyof typeof currentFiles, any>;
+const current = Object.fromEntries(Object.entries(currentLive).map(([language, deck]) => [
+  language,
+  vegetablesDeckBeforePestPrecision(language as Language, deck),
 ])) as Record<keyof typeof currentFiles, any>;
 const learnerDrafts = { st, ve, ts } as const;
 const targetKey = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;

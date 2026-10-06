@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 October 2026', sha: '52a7a00f', changes: [
+    'Vegetables pest lessons and six silent slides add regional draft wording.',
+    'Vegetables questions keep precise comparisons and show exact English beside drafts.',
+  ], tour: [
+    { title: 'Compare Vegetables drafts',
+      where: 'Study → Vegetables & Staple Crops',
+      detail: 'Read the unreviewed drafts, compare English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '6 October 2026', sha: 'dd251f0e', changes: [
     'Tshivenda and Xitsonga Introduction slides add draft wording beside English.',
     'Sesotho Reading keeps the colder comparison without an added intensity word.',

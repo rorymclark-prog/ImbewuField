@@ -1,3 +1,4 @@
+import { vegetablesAssessmentPresentationBeforeOrdinary } from './vegetables-assessment-ordinary-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
@@ -7,6 +8,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
+import { vegetablesBeforePestPrecision, vegetablesDeckBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 
 type Language = 'st' | 've' | 'ts';
 const folder = '../docs/study-translation-reviews/vegetables-l3-completion-2026-10-06/';
@@ -23,10 +25,12 @@ const contentPath = (path: string) => path.replace('.question', '.q');
 const lessonAt = (draft: any) => draft.lessons.find((lesson: any) => lesson.id === source.id);
 
 export function vegetablesL3BeforeCompletion<T>(language: Language, actual: T): T {
-  const restored: any = structuredClone(actual);
-  const shown = resolveLearnerLessonPresentation(source, language);
+  // The later 6 October pest/assessment precision layer is validated and rewound
+  // first so this older L3 history assertion still checks its original claim.
+  const restored: any = vegetablesBeforePestPrecision(language, actual);
+  const shown = vegetablesAssessmentPresentationBeforeOrdinary(source, language);
   for (const row of packet.candidates.filter((row: any) => row.language === language)) {
-    const live = get(lessonAt(actual), row.fieldPath);
+    const live = get(lessonAt(restored), row.fieldPath);
     const old = get(lessonAt(baseline[language]), row.fieldPath);
     assert.equal(live.sourceEnglish, row.sourceEnglish, `${row.id}: current source guard`);
     assert.equal(get(source, contentPath(row.fieldPath)), row.sourceEnglish, `${row.id}: canonical source`);
@@ -44,7 +48,7 @@ export function vegetablesL3BeforeCompletion<T>(language: Language, actual: T): 
 export function vegetablesL3PresentationBeforeCompletion(lesson: Lesson, language: Language) {
   assert.equal(lesson.id, source.id);
   vegetablesL3BeforeCompletion(language, drafts[language]);
-  const shown = structuredClone(resolveLearnerLessonPresentation(lesson, language));
+  const shown = vegetablesAssessmentPresentationBeforeOrdinary(lesson, language);
   for (const row of packet.candidates.filter((row: any) => row.language === language)) {
     const path = parts(contentPath(row.fieldPath));
     const parent = path.slice(0, -1).reduce((value: any, key: string) => value[key], shown.content);
@@ -137,7 +141,8 @@ export function registerVegetablesL3CompletionTests() {
 
   test('seed possibility, future negatives, always, no cultivation and wetter-than-maize comparisons remain bounded', () => {
     for (const language of ['ve', 'ts'] as const) {
-      const shown = resolveLearnerLessonPresentation(source, language).content;
+      // 6 October: this earlier English niche assertion follows full accepted18 current validation.
+      const shown = vegetablesAssessmentPresentationBeforeOrdinary(source, language).content;
       assert.match(shown.quiz[0].rationale, language === 've' ? /i nga mela.*zwi nga fhambana.*stable.*pollination.*u fhira/ : /yi nga mela.*swi nga hambana.*stable.*pollination.*ku hundza/);
       assert.match(shown.quiz[0].options[1], language === 've' ? /a i nga ḓo breed true.*a zwi nga ḓo fana/ : /a yi nge breed true.*a swi nge fani/);
       assert.match(shown.quiz[0].options[2], language === 've' ? /i dzulela u vha more drought-tolerant/ : /^Open-pollinated maize is always more drought-tolerant$/);
@@ -151,8 +156,12 @@ export function registerVegetablesL3CompletionTests() {
   test('all 48 existing whole-paragraph slide reuses and their independently localized prefixes remain byte exact', () => {
     assert.equal(plan.checkedLearnerParagraphReuses.length, 48);
     for (const file of plan.pairedFiles) {
-      const bytes = readFileSync(new URL('../' + file.path, import.meta.url));
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), file.sha256,
+      const language = file.path.match(/vegetables-staples\.(st|ve|ts)\.paired-draft\.json$/)?.[1] as Language | undefined;
+      assert.ok(language, `${file.path}: historical paired deck language is explicit`);
+      const live = JSON.parse(readFileSync(new URL('../' + file.path, import.meta.url), 'utf8'));
+      const prior = vegetablesDeckBeforePestPrecision(language, live);
+      const priorBytes = `${JSON.stringify(prior, null, 2)}\n`;
+      assert.equal(createHash('sha256').update(priorBytes).digest('hex'), file.sha256,
         `${file.path}: unchanged headings, target schemas, source cards and unlisted slots need no rerender`);
     }
     for (const row of plan.checkedLearnerParagraphReuses) {

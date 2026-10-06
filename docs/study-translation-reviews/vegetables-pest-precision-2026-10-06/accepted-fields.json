@@ -1,0 +1,152 @@
+{
+  "title": "Vegetables L4 + Sesotho assessment bounded precision application",
+  "date": "2026-10-06",
+  "baseCommit": "e1002c3f1c4e42bf6bfe61b9faf6acad4e39ee5b",
+  "scope": {
+    "changedL4BodyParagraphs": 9,
+    "byLanguage": {
+      "st": 2,
+      "ve": 4,
+      "ts": 3
+    },
+    "changedSesothoKeyPoints": 3,
+    "allReviewStatusesRemain": "machine-draft",
+    "pairedDecks": "not changed in this stage"
+  },
+  "bodyRows": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 1,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:st:body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": "Dimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "acceptedTarget": "Dimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.",
+      "reviewStatus": "machine-draft",
+      "reason": "The localized phrase says one crop controls the space; one-crop quantity and broad-chemical-use/predator clause remain exact."
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:st:body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "acceptedTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+      "reviewStatus": "machine-draft",
+      "reason": "Keep “Only then” and “may help”; candidate easy/simple wording can mean easiest rather than least intensive. Retain exact source phrase pending review."
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 2,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.2",
+      "sourceEnglish": "So before you treat anything, look at the whole system.",
+      "currentTarget": "Ngazwenezwo, before you treat anything, sedzani system yoṱhe.",
+      "acceptedTarget": "Ngazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.",
+      "reviewStatus": "machine-draft",
+      "reason": "Before-treating sequence and whole-system check are retained."
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 3,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.3",
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTarget": "Is the plant short of water? Soil yo compacted kana yo “hungry”? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "acceptedTarget": "Naa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?",
+      "reviewStatus": "machine-draft",
+      "reason": "Translate ordinary water/soil questions; preserve the current predator sentence because “already” is more precise than candidate “zwino” (now)."
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 4,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.4",
+      "sourceEnglish": "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.",
+      "currentTarget": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha water, nutrition, kana root damage. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.",
+      "acceptedTarget": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.",
+      "reviewStatus": "machine-draft",
+      "reason": "Preserve current first sentence: candidate does not improve the automatic/insect negation safely. Other causes and check-before-action clause stay bounded."
+    },
+    {
+      "language": "ve",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ve:body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha crop care zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "acceptedTarget": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.",
+      "reviewStatus": "machine-draft",
+      "reason": "Preserve current Tshivenda step label; retain “lightest thing that works” in English because “easy” does not establish least intervention. “May help”, suitability check, and monitoring remain."
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 1,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.1",
+      "sourceEnglish": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentTarget": "Swibyariwa leswi nga na stress. One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "acceptedTarget": "Swibyariwa leswi nga na stress. Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.",
+      "reviewStatus": "machine-draft",
+      "reason": "“One crop” quantity and area relation are retained; surrounding stress and chemical/predator wording remains."
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 3,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.3",
+      "sourceEnglish": "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+      "currentTarget": "Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?",
+      "acceptedTarget": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?",
+      "reviewStatus": "machine-draft",
+      "reason": "Keep the localized water/soil clauses, including “compacted”; preserve the existing exact “se ... ti ku pfuna hi ku tirha” already/working-for-you predicate."
+    },
+    {
+      "language": "ts",
+      "lessonId": "vegetables-staples-l4",
+      "paragraphIndex": 9,
+      "fieldId": "vegetables-staples:vegetables-staples-l4:ts:body.paragraphs.9",
+      "sourceEnglish": "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+      "currentTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "acceptedTarget": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.",
+      "reviewStatus": "machine-draft",
+      "reason": "Keep “Only then” and “may help”; candidate easy wording can mean simplest rather than least intensive. Retain exact phrase pending review."
+    }
+  ],
+  "keypointRows": [
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l3",
+      "keyPointIndex": 0,
+      "fieldId": "veg-st-vegetables-staples-l3-kp0",
+      "sourceEnglish": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
+      "currentTarget": "Poone e iphedisang ka moya (open-pollinated maize) e o dumella ho boloka peo; peo ya hybrid ha e na ho tswala se tshwanang hantle sehla se tlang",
+      "acceptedTarget": "Open-pollinated maize e o dumella ho boloka peo; hybrid seed won't breed true next season",
+      "reviewStatus": "machine-draft",
+      "reason": "Remove only the unsupported wind-pollination wording, retain the accepted Sesotho seed-saving prefix, and preserve the exact canonical English hybrid-seed genetics clause because the existing Sesotho wording may overstate that hybrid seed cannot produce the same. The retained English clause is an explicit technical hold for independent language review, not a fluent approval."
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l1",
+      "keyPointIndex": 2,
+      "fieldId": "veg-st-vegetables-staples-l1-kp2",
+      "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
+      "currentTarget": "Hloma dijalo tse hlokang qalo e sireletsehileng; jala ka kotloloho dijalo tse sa rateng ho tshwenngwa ha metso",
+      "acceptedTarget": "Hloma dijalo tse hlokang head start; jala ka kotloloho dijalo tse sa rateng ho tshwenngwa ha metso",
+      "reviewStatus": "machine-draft",
+      "reason": "Current “qalo e sireletsehileng” and its BT “safe start” introduce safety where the source says “head start” (an early or advantageous start)."
+    },
+    {
+      "language": "st",
+      "lessonId": "vegetables-staples-l2",
+      "keyPointIndex": 3,
+      "fieldId": "veg-st-vegetables-staples-l2-kp3",
+      "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
+      "currentTarget": "Dimela tse kopantsweng di ntse di ka lwela phepo; laola sebaka, nako le metsi",
+      "acceptedTarget": "Dimela tse kopantsweng di ntse di ka compete; laola sebaka, nako le metsi",
+      "reviewStatus": "machine-draft",
+      "reason": "Current “lwela phepo” and the BT “fight for nutrients” restrict general competition to nutrients. The same source clause names space, timing, and water as management dimensions."
+    }
+  ]
+}

@@ -239,9 +239,10 @@ test('Pest framing keeps the diagnostic order and treatment safeguards in the so
   const paragraphs = draft.body.xitsongaDraft.split('\n\n');
   assert.equal(paragraphs.length, 12);
   assert.ok(paragraphs[1].startsWith('Swibyariwa leswi nga na stress. '));
-  assert.ok(paragraphs[1].endsWith('One crop dominating the ground. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.'),
-    'the draft preserves crop dominance and the already-removed-predators cause while localizing the remaining framing');
-  assert.ok(paragraphs[3].startsWith('Xana xibyariwa xi pfumala mati? Soil yi compacted kumbe yi “hungry”?'));
+  assert.ok(paragraphs[1].endsWith('Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.'),
+    'the draft preserves one crop dominating the ground and the already-removed-predators cause while localizing the remaining framing');
+  assert.ok(paragraphs[3].startsWith('Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya?'),
+    'the diagnostic preserves compaction and soil nutrient shortage while localizing the ordinary question');
   assert.ok(paragraphs[3].includes('predators se ti ku pfuna hi ku tirha eka xiphiqo lexi'),
     'the diagnostic question still asks whether predators are already helping');
   assert.match(paragraphs[4], /^A yellow leaf a swi vuli automatically leswaku ku ni insect\./,
@@ -253,7 +254,7 @@ test('Pest framing keeps the diagnostic order and treatment safeguards in the so
   assert.ok(paragraphs[7].startsWith('Vumbirhi. Kambela stress.') && /timitsu/.test(paragraphs[7]) && /nutrition/.test(paragraphs[7]) && /drainage/.test(paragraphs[7]));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
   assert.ok(paragraphs[9].includes('sungula hi the lightest thing that works.'));
-  assert.ok(paragraphs[9].includes('Physical removal, barriers kumbe ku cinca crop care swi nga pfuna.'));
+  assert.ok(paragraphs[9].includes('Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna.'));
   assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.'),
     'the step still comes only after diagnosis, begins with the lightest effective option, and checks fit and result');
   assert.notEqual(paragraphs[10], english[10]);
@@ -271,7 +272,7 @@ test('Pest framing keeps the diagnostic order and treatment safeguards in the so
   assert.equal(paragraphs[5], 'Tirha hi magoza ya mune, hi ku landzelelana.');
   assert.ok(paragraphs[8].includes('Beneficial insects') && paragraphs[8].includes('ntirho'));
   assert.ok(paragraphs[9].startsWith('Vumune. Hi kona ntsena u tekaka goza —'));
-  assert.ok(paragraphs[9].includes('sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca crop care swi nga pfuna.'), 'the action still comes only after the earlier checks and keeps its qualified method choices');
+  assert.ok(paragraphs[9].includes('sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna.'), 'the action still comes only after the earlier checks and keeps its qualified method choices');
   assert.ok(paragraphs[9].endsWith('Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.'), 'the draft retains the problem-fit and outcome-monitoring checks');
   assert.ok(paragraphs[11].startsWith("Tshembeka eka wena n'winyi"));
   assert.deepEqual(draft.quiz.map(question => question.sourceCorrectIndex), source.quiz.map(question => question.correct));

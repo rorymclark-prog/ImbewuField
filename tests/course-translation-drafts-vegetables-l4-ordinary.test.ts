@@ -1,4 +1,6 @@
+import { vegetablesBeforeAssessmentOrdinary } from './vegetables-assessment-ordinary-checks.ts';
 import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
+import { registerVegetablesPestPrecisionTests, vegetablesBeforePestPrecision, vegetablesDeckBeforePestPrecision, vegetablesWithPestPrecisionCompletion } from './vegetables-pest-precision-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -73,6 +75,7 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
   for (const language of Object.keys(drafts) as Language[]) {
     const expected = structuredClone(baseline.drafts[language]);
     const current = drafts[language];
+    const historicalCurrent = vegetablesBeforePestPrecision(language, current);
     for (const row of applied.fields.filter((field: any) => field.language === language)) {
       const prior = pairAt(baseline.drafts[language], row.fieldPath);
       const source = canonicalSource(row.fieldPath);
@@ -81,7 +84,7 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
         `${language}/${row.fieldPath}: source snapshot remains the original field`);
       assert.equal(targetText(prior, language, row.fieldPath), row.currentTarget,
         `${language}/${row.fieldPath}: recorded before-state is exact`);
-      const live = pairAt(current, row.fieldPath);
+      const live = pairAt(historicalCurrent, row.fieldPath);
       assert.equal(targetText(live, language, row.fieldPath), row.appliedTarget,
         `${language}/${row.fieldPath}: the accepted target reaches the source-paired draft`);
       assert.equal(live.reviewStatus, row.appliedReviewStatus, `${language}/${row.fieldPath}: draft status is preserved`);
@@ -117,7 +120,11 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
         `${language}/${row.fieldPath}: reconciliation preserves the frozen localized wording`);
     }
     // 6 October: preserve whole-module coverage while adding the exact reviewed L3 leaf/status layer.
-    assert.deepEqual(current, vegetablesWithL3Completion(language, expected), `${language}: every unlisted learner field and status remains exact after the separately checked 6 October L3 layer`);
+    const afterL3 = vegetablesWithL3Completion(language, expected);
+    // 6 October: independently validate the complete later accepted18 quiz layer
+    // before rewinding it for this older pest-only whole-module assertion.
+    assert.deepEqual(vegetablesBeforeAssessmentOrdinary(language, current), vegetablesWithPestPrecisionCompletion(language, afterL3),
+      `${language}: every unlisted learner field and status remains exact after the separately checked 6 October L3 and pest precision layers`);
     const lessonDraft = current.lessons.find(item => item.id === 'vegetables-staples-l4')!;
     assert.deepEqual(lessonDraft.quiz.map((question: any) => question.sourceCorrectIndex), [1, 0],
       `${language}: correct-answer positions remain unchanged`);
@@ -163,7 +170,8 @@ test('Vegetables L4 paired decks reuse only 12 exact-source rows and preserve ev
 
   for (const language of ['st', 've', 'ts'] as const) {
     const path = `docs/narration/vegetables-staples.${language}.paired-draft.json`;
-    const live = JSON.parse(readFileSync(path, 'utf8'));
+    const liveCurrent = JSON.parse(readFileSync(path, 'utf8'));
+    const live = vegetablesDeckBeforePestPrecision(language, liveCurrent);
     const expected = structuredClone(baseline.pairedDrafts[path]);
     const sourceSlides = englishSlideRecords(readFileSync('docs/narration/vegetables-staples.en.md', 'utf8'));
     const validated = validatePairedDraft(live, sourceSlides, language);
@@ -207,3 +215,5 @@ test('Vegetables L4 paired decks reuse only 12 exact-source rows and preserve ev
     assert.deepEqual(live, expected, `${language}: all unlisted source, target, status, heading and metadata fields remain unchanged`);
   }
 });
+
+registerVegetablesPestPrecisionTests();

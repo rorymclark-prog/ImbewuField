@@ -7,6 +7,7 @@ import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-s
 import { TSHIVENDA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ve-soil-health.ts';
 import { XITSONGA_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-ts-soil-health.ts';
 import { introAssetSizesBeforeOrdinary, introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
+import { vegetablesAssetSizesBeforePestPrecision } from './vegetables-pest-precision-media-history-checks.ts';
 
 const root = 'docs/study-translation-reviews/soil-ordinary-deck-2026-10-06/';
 const sha = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
@@ -122,7 +123,8 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
 }
 
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
-  let prior = introAssetSizesBeforeOrdinary(currentManifest);
+  let prior = vegetablesAssetSizesBeforePestPrecision(currentManifest);
+  prior = introAssetSizesBeforeOrdinary(prior);
   prior = checkCurrentAssetsAndManifest(prior);
   for (const row of assets) {
     const current = `'${row.url}': ${row.bytes}`;

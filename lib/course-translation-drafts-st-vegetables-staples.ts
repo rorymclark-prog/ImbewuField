@@ -50,7 +50,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
-          "sesothoDraft": "Hloma dijalo tse hlokang qalo e sireletsehileng; jala ka kotloloho dijalo tse sa rateng ho tshwenngwa ha metso",
+          "sesothoDraft": "Hloma dijalo tse hlokang head start; jala ka kotloloho dijalo tse sa rateng ho tshwenngwa ha metso",
           "reviewStatus": "machine-draft"
         },
         {
@@ -167,7 +167,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Intercropped plants can still compete; manage space, timing and water",
-          "sesothoDraft": "Dimela tse kopantsweng di ntse di ka lwela phepo; laola sebaka, nako le metsi",
+          "sesothoDraft": "Dimela tse kopantsweng di ntse di ka compete; laola sebaka, nako le metsi",
           "reviewStatus": "machine-draft"
         }
       ],
@@ -264,7 +264,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       "keyPoints": [
         {
           "sourceEnglish": "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
-          "sesothoDraft": "Poone e iphedisang ka moya (open-pollinated maize) e o dumella ho boloka peo; peo ya hybrid ha e na ho tswala se tshwanang hantle sehla se tlang",
+          "sesothoDraft": "Open-pollinated maize e o dumella ho boloka peo; hybrid seed won't breed true next season",
           "reviewStatus": "machine-draft"
         },
         {
@@ -370,7 +370,7 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
-        "sesothoDraft": "Pest pressure hangata e a eketseha ka lebaka le itseng.\n\nDimela tse nang le stress. One crop dominating the ground. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.\n\nKa hona, pele o phekola eng kapa eng, sheba system yohle.\n\nNa semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?\n\nLekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.\n\nSebetsa ka mehato e mene, ka tatellano.\n\nNtlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.\n\nNtlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.\n\nNtlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena.\n\nNtlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho ho crop care di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.\n\nHa treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nIpolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
+        "sesothoDraft": "Pest pressure hangata e a eketseha ka lebaka le itseng.\n\nDimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.\n\nKa hona, pele o phekola eng kapa eng, sheba system yohle.\n\nNa semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?\n\nLekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.\n\nSebetsa ka mehato e mene, ka tatellano.\n\nNtlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.\n\nNtlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.\n\nNtlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena.\n\nNtlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.\n\nHa treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nIpolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
