@@ -161,13 +161,17 @@ export function registerVegetablesPestPrecisionTests() {
       const current: any = drafts[language];
       const expectedFromBefore = vegetablesWithPestPrecisionCompletion(language, before.drafts[language]);
       assert.deepEqual(expectedFromBefore, after.drafts[language], `${language}: full after snapshot is exactly the authorized layer`);
-      assert.deepEqual(vegetablesBeforeAssessmentOrdinary(language, current), expectedFromBefore, `${language}: every unlisted native field and status remains byte-equivalent in structure`);
+      const beforeFinalNativeOrdinary = vegetablesBeforeAssessmentOrdinary(language, current);
+      assert.deepEqual(beforeFinalNativeOrdinary, expectedFromBefore, `${language}: every unlisted native field and status remains byte-equivalent in structure after the validated newest layer is rewound`);
       const lesson = lessonAt(current);
+      const historicalLesson = lessonAt(beforeFinalNativeOrdinary);
       const previousLesson = lessonAt(before.drafts[language]);
       assert.equal(lesson.body.reviewStatus, previousLesson.body.reviewStatus);
       assert.equal(lesson.body.sourceEnglish, sourceLesson('vegetables-staples-l4').body);
-      assert.equal(paragraphs(lesson.body, language)[10], paragraphs(previousLesson.body, language)[10],
-        `${language}: pesticide product, label, protection, harvest-wait and no-mixture instructions are unchanged`);
+      // The final native overlay independently translated this safety ending after
+      // the pest snapshot. Compare the old claim against its validated rewind.
+      assert.equal(paragraphs(historicalLesson.body, language)[10], paragraphs(previousLesson.body, language)[10],
+        `${language}: before the 6 October overlay, all pesticide and no-improvisation clauses were unchanged`);
       assert.deepEqual(lesson.quiz.map((question: any) => question.sourceCorrectIndex),
         previousLesson.quiz.map((question: any) => question.sourceCorrectIndex), `${language}: answer positions remain unchanged`);
       const shown = resolveLearnerLessonPresentation(sourceLesson('vegetables-staples-l4'), language);

@@ -50,7 +50,7 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
   lessons: [
     {
       id: sourceLesson.id,
-      infographicAlt: hold(sourceLesson.infographicAlt!),
+      infographicAlt: pair(sourceLesson.infographicAlt!, "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana."),
       title: pair("Succession Planting and Intercropping", "Succession planting na intercropping"),
       body: pair(bodySourceEnglish, draftParagraphs.join('\n\n')),
       keyPoints: sourceLesson.keyPoints.map((sourceText, index) => index === 0

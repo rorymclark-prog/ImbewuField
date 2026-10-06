@@ -2765,3 +2765,66 @@ test('Soil and Water ordinary-prose refresh retires exactly the redrawn regional
   assert.equal(puts, 1, 'later activation leaves learner-selected replacement bytes intact');
   assert.doesNotMatch(body, /\bfetch\s*\(/, 'cache activation never downloads replacement stills');
 });
+
+test('the final Vegetables and Market paired refresh retires exactly thirteen stills once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateNativePairedResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assertActivationOrder(source, 'migrateIntroFullOrdinaryCompletionStills', 'migrateNativePairedResidualStills',
+    'the final regional still refresh runs after the existing Intro migration');
+
+  const origin = 'https://field.test';
+  const changed = [
+    ...(['st', 'ts', 've'] as const).flatMap(language => [5, 16].map(slide =>
+      `/course-decks/vegetables-staples/${language}/slide-${String(slide).padStart(2, '0')}.webp`)),
+    ...(['st', 'ts', 've'] as const).flatMap(language =>
+      (language === 'st' ? [6, 11] : language === 've' ? [6, 11] : [6, 12, 18]).map(slide =>
+        `/course-decks/market-community/${language}/slide-${String(slide).padStart(2, '0')}.webp`)),
+  ];
+  assert.equal(changed.length, 13, 'the manifested render batch has exactly thirteen URLs');
+  const staleUrls = changed.flatMap(path => [
+    new URL(path, origin).href,
+    new URL(path + '?saved=old', origin).href,
+    new URL(path + '?width=small', origin).href,
+  ]);
+  const preserved = [
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-07.webp',
+    '/course-decks/market-community/ve/slide-12.webp',
+    '/course-decks/market-community/ts/slide-11.webp',
+    '/course-decks/vegetables-staples/en/slide-05.jpg',
+    '/course-decks/market-community/zu/slide-06.jpg',
+    '/course-audio/vegetables-staples/st/slide-05.mp3',
+    '/course-audio/market-community/ts/full.mp3',
+    '/course-animations/vegetables-staples/flow-bed-preparation.mp4',
+    '/course-decks/soil-health/st/slide-04.webp',
+  ].map(path => new URL(path + '?keep=1', origin).href);
+  const rows = new Map<string, Response>([
+    ...staleUrls.map(url => [url, new Response('previous paired still')] as const),
+    ...preserved.map(url => [url, new Response('unrelated saved media')] as const),
+  ]);
+  let puts = 0;
+  const cache = {
+    match: async (key: string) => rows.get(origin + key),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => rows.delete(request.url),
+    put: async (key: string, response: Response) => { puts += 1; rows.set(origin + key, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+
+  for (const url of staleUrls) assert.equal(rows.has(url), false, url);
+  for (const url of preserved) assert.equal(rows.has(url), true, url);
+  const marker = origin + '/course-decks/.native-paired-residual-stills-20261006';
+  assert.equal(rows.has(marker), true);
+  assert.equal(rows.size - preserved.length, 1, 'only the once-only marker is added beside preserved media');
+  assert.equal(puts, 1, 'the first activation records one migration marker');
+
+  const laterDownload = new URL(changed[0], origin).href;
+  rows.set(laterDownload, new Response('replacement selected and downloaded later'));
+  await run({ open: async () => cache }, 'imbewufield-course-v1', Response);
+  assert.equal(await rows.get(laterDownload)!.text(), 'replacement selected and downloaded later');
+  for (const url of preserved) assert.equal(rows.has(url), true, url);
+  assert.equal(puts, 1, 'later activation leaves the learner-selected replacement intact');
+  assert.doesNotMatch(body, /\bfetch\s*\(/, 'activation retires old cache entries without downloading replacements');
+});

@@ -1,0 +1,50 @@
+{
+  "lib/course-translation-drafts-st-vegetables-staples.ts": {
+    "before": "c5dcc1f26b55003520c6a6cfe377c93c4262875b5c3b88ed9806ecbbfbd9fba1",
+    "after": "812eeac520e3684b2692abb637e4ab2922a87b54602748f868cc0a48e44a6e50"
+  },
+  "lib/course-translation-drafts-ve-vegetables-staples.ts": {
+    "before": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+    "after": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86"
+  },
+  "lib/course-translation-drafts-ts-vegetables-staples.ts": {
+    "before": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+    "after": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62"
+  },
+  "lib/course-translation-drafts-st-market-community.ts": {
+    "before": "6755b70aa886250822cf44f9d28ff5dd9a7f3356703b2b8c21facf61efe6f171",
+    "after": "6755b70aa886250822cf44f9d28ff5dd9a7f3356703b2b8c21facf61efe6f171"
+  },
+  "lib/course-translation-drafts-ve-market-community.ts": {
+    "before": "ab464ed8353016d618d399c07426f955063b885836f41214293da6e39f583f2a",
+    "after": "ab464ed8353016d618d399c07426f955063b885836f41214293da6e39f583f2a"
+  },
+  "lib/course-translation-drafts-ts-market-community.ts": {
+    "before": "9c3103782d72a6144b21cee569c57e7d6f8b5f6b0041fdb6f7261bc5f39f26eb",
+    "after": "de07f47c00b91b6e7794c1e716c8577ab5d907118ca27ec8af13abe9da31e8f8"
+  },
+  "docs/narration/vegetables-staples.st.paired-draft.json": {
+    "before": "f8bbb28e594ef3f1225c89462efe18a2ea4b45f45bd779eb45e82b725d106f11",
+    "after": "a5e2da37170c56f3498613c7c7608509a87aca85fb2556b135bb5c46b3e18d88"
+  },
+  "docs/narration/vegetables-staples.ve.paired-draft.json": {
+    "before": "797dfe0c41e75a737095aad138a8ba2e971fa92d22c973d70d78462381c512df",
+    "after": "e4c53ab0bb822c8ea70943dc1e60f28066ebf6bf001fc9fa9990f66bc4051b4c"
+  },
+  "docs/narration/vegetables-staples.ts.paired-draft.json": {
+    "before": "4baec2d8ed0f8ac5298e350bf5ee76ee7b5952f9501fa25c8f2f21c1c3d71796",
+    "after": "e08e26316ad374f4b81a922a921b2fad7b808440380a2cd04a72bb8e1f14d66e"
+  },
+  "docs/narration/market-community.st.paired-draft.json": {
+    "before": "4c6a44b2d475adfedd176f230dcdd5eee284036d77571377aeba3f733e211c02",
+    "after": "8046170b4cfd3a96fde790e9c53ce7ab73cf6846ddf8d75f1109c9dbcbefc160"
+  },
+  "docs/narration/market-community.ve.paired-draft.json": {
+    "before": "84893eaa81d087870a7bee96e81fe07b64f28fd576c977d970b0d0905839c42f",
+    "after": "f08ae7470ff8913d315017275054a3e9582e5c6b5df523b36c9c95971f389620"
+  },
+  "docs/narration/market-community.ts.paired-draft.json": {
+    "before": "035b0f61dde3c456a89c5037d0b926a7c2e1e39958580c545ab39c3ee36f2d9a",
+    "after": "6de3ddc49bb912422eeab2a7ecd8b330e9ec25d38bab3d4dcc29e4f60f783286"
+  }
+}

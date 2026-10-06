@@ -8,6 +8,7 @@ import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-draft
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
+import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 
 const firstObservationsProof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-IMPLEMENTATION-2026-10-05.json', import.meta.url), 'utf8')) as {
   pairedFieldsApplied: Array<{
@@ -22,6 +23,7 @@ const firstObservationsProof = JSON.parse(readFileSync(new URL('../docs/study-tr
 };
 
 const packet = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-REMAINING-ORDINARY-CANDIDATES-2026-10-04.json', import.meta.url), 'utf8'));
+const finalNativeFields = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/applied-native-fields.json', import.meta.url), 'utf8')).fields;
 const candidates = packet.candidateFields as Array<{
   language: 've' | 'ts';
   lessonId: string;
@@ -94,14 +96,21 @@ const currentParagraph = (language: Language, lessonId: string, index: number) =
 // rather than the current registry, authorizes each change to a historical paragraph.
 const expectedParagraph = (language: Language, lessonId: string, index: number, historical: string): string => {
   const row = learnerApplied.entries.find(item => item.languageCode === language && item.lessonId === lessonId && item.field === 'body');
-  if (!row) return historical;
   const source = module.lessons.find(item => item.id === lessonId)!;
+  if (row) {
   assert.equal(row.exactSource, source.body, 'a superseding review must bind to the exact current source');
   assert.equal(row.currentTarget.split('\n\n').length, source.body.split('\n\n').length);
   assert.equal(row.currentTarget.split('\n\n')[index], historical,
     'superseding authorization starts from the preserved historical paragraph');
   assert.equal(row.appliedTarget.split('\n\n').length, source.body.split('\n\n').length);
-  return row.appliedTarget.split('\n\n')[index];
+  historical = row.appliedTarget.split('\n\n')[index];
+  }
+  const final = finalNativeFields.find((item: any) => item.field.language === language && item.field.lessonId === lessonId && item.field.fieldLocator === `body.paragraph[${index}]`);
+  if (final) {
+    assert.equal(final.sourceEnglish, source.body.split('\n\n')[index], `${final.order}: newest native overlay stays source-bound`);
+    historical = final.appliedTarget;
+  }
+  return historical;
 };
 const assertFallback = (language: Language, lessonId: string, sourceParagraph: string) => {
   const source = module.lessons.find(item => item.id === lessonId)!;
@@ -111,6 +120,13 @@ const assertFallback = (language: Language, lessonId: string, sourceParagraph: s
   assert.equal(fallback.status, 'english-fallback', 'changed source withdraws the stale translation');
   assert.equal(fallback.content.body, changed.body, 'fallback displays the updated English instruction');
 };
+
+test('6 October native Reading overlay is validated as a complete source-bound object before older snapshot claims', () => {
+  // These older Reading proofs predate localized water-works and frost fields. Validate
+  // the full current objects first; expectedParagraph layers the exact accepted targets
+  // over their historical ancestry below.
+  for (const language of ['st', 've', 'ts'] as const) nativeOrdinaryBeforeFinalBatch(allDrafts[language]);
+});
 
 test('Reading observation drafts retain their exact source and geometry through reviewed ordinary-prose extensions', () => {
   const source = englishSlideRecords(readFileSync(new URL('../docs/narration/reading-landscape.en.md', import.meta.url), 'utf8'));
@@ -252,8 +268,10 @@ test('Reading body extensions preserve checked field ancestry, crop age and site
   assert.match(tsMap, /kavanyetiweke.*swona ntsena a ku kombisi.*tsindziyerile/, 'presence alone still cannot diagnose compaction');
   const tsWater = currentParagraph('ts', 'reading-landscape-l1', 2);
   assert.match(tsWater, /ti nga engetela erosion.*tswongaka mati hi ku nonoka.*nga khoma mati yo tala ngopfu/);
-  assert.match(tsWater, /Hlawula any water works for the site.*kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke/);
-  assert.doesNotMatch(tsWater, /suitable water works/, 'source any scope remains without an added placement rule');
+  // The 6 October accepted ordinary wording localizes suitability while keeping
+  // the exact technical phrase and the source's safe excess-water route.
+  assert.match(tsWater, /Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo.*kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke/);
+  assert.doesNotMatch(tsWater, /suitable water works/, 'the source does not add a general suitability rule beyond choosing for this site');
 });
 
 test('Reading frost observations keep full-season comparisons, weather conditions and damage limits after localization', () => {
@@ -296,7 +314,8 @@ test('Reading frost observations keep full-season comparisons, weather condition
     const rationalePair = lesson(language, 'reading-landscape-l3').quiz[0].rationale;
     const rationale = bodyText(rationalePair);
     assert.equal(rationalePair.sourceEnglish, module.lessons[2].quiz[0].rationale);
-    assert.match(rationale, /through the local frost season/);
+    assert.match(rationale, language === 'st' ? /pholletsa le sehla sa frost sa sebakeng seo/ : /through the local frost season/,
+      'the full frost-season comparison remains explicit in both the exact English anchor and localized wording');
     assert.match(rationale, language === 'st' ? /hase sesupo se le seng feela.*ha ho na.*tiisang/ : language === 've' ? /a si yone fhedzi.*a hu na.*fulufhedzisa/ : /a hi yona ntsena.*a ku na.*tiyisekisaka/,
       'visible frost is not the only sign and no hillside placement guarantees freedom from frost');
     const blight = currentParagraph(language, 'reading-landscape-l3', 3);

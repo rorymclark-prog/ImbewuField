@@ -1,0 +1,853 @@
+{
+  "title": "Accepted native ordinary field application proof and source-bound independent review",
+  "createdAt": "2026-10-06",
+  "baseCommit": "05c677d852c30b29cf7c06516b3f7aaaee4a8f62",
+  "acceptedFieldCount": 28,
+  "heldFields": [
+    {
+      "order": 64,
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[1].option[0]"
+      },
+      "sourceEnglish": "Whether it's actually a soil nutrient or watering issue",
+      "currentTarget": "Loko hakunene ku ri soil nutrient or watering issue",
+      "reason": "Candidate begins with “Loko” (if), making the option conditional. Source asks “Whether it is actually…”. Preserve the interrogative whether scope; no defensible localized repair was established, so retain current field pending a source-faithful formulation."
+    }
+  ],
+  "excludedNoops": [
+    {
+      "order": 72,
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "reason": "Candidate is byte-identical to currentTarget; it yields no translation change."
+    }
+  ],
+  "fields": [
+    {
+      "order": 11,
+      "candidateIndexes": [
+        11
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ve",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]"
+      },
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "nativePairSourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani any water works for the site nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "appliedTarget": "A hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_READING_LANDSCAPE_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "canonicalModuleId": "reading-landscape",
+      "resolvedLessonId": "reading-landscape-l1",
+      "beforeWholeTarget": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha tshitentsi tshaṋu. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nLevel ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani any water works for the site nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "appliedWholeTarget": "Musi ni sa athu kuvhanganya maḓi, thomani nga u guda hune a ya hone zwino. Sedzani musi hu na mvula khulu ni fhethu ho tsireledzeaho. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Sedzani rills, hune maḓi a phaḓaladzana hone (fans out), hune a kuvhangana hone (ponds), na hune a bva hone kha tshitentsi tshaṋu. Maḓi maṅwe a re manzhisa a ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo, uri a si ite tshenyo.\n\nLevel ya A-frame i nga ni thusa u swaya points at the same height na u tevhela contour line. Its marks are an observation; a si pulane kana thendelo ya earthworks. Musi ni sa athu bwa swale, dam kana tshiṅwe tshivhumbeo, itani uri fhethu hu ṱolwe. Mavu, u sendama ha mavu, na nḓila ine maḓi a bva ngayo, u elela ha maḓi musi hu na mvula khulu na nḓila yo tsireledzeaho ya u bvisa maḓi manzhisa zwiṅwe na zwiṅwe ndi zwa ndeme. Vhudzisani mueletshedzi wa zwa vhulimi wa henefho o gudiswaho.\n\nA hu na mulayo muthihi wa fhethu une wa shuma kha u sendama ha mavu hoṱhe. Ṱhogomelani hune maḓi a tshimbila na hune a kuvhangana hone. Dzi-contour dzo vhewaho nga nḓila i songo teaho dzi nga engedza erosion, nahone mavu ane a nwa maḓi nga u lenga a nga fara maḓi manzhisa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono nahone ni pulane nḓila yo tsireledzeaho ya u bvisa maḓi a re manzhisa.",
+      "appliedPairSourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 13,
+      "candidateIndexes": [
+        13
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "ts",
+        "lessonId": "reading-landscape-l1",
+        "fieldLocator": "body.paragraph[2]"
+      },
+      "sourceEnglish": "There is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "nativePairSourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "currentTarget": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "appliedTarget": "A ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_READING_LANDSCAPE_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts.ts",
+      "canonicalModuleId": "reading-landscape",
+      "resolvedLessonId": "reading-landscape-l1",
+      "beforeWholeTarget": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nA-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Its marks are an observation; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.\n\nA ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula any water works for the site, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "appliedWholeTarget": "Loko u nga se hlengeleta mati, tiva laha ma tshamaka ma ya kona. Hlalela u ri endhawini leyi hlayisekeke loko ku na mpfula ya matimba. Loko swi hlayisekile endzhaku, fambafamba eka misava ya wena. Languta mikhandlu leyitsongo ya mati, tindhawu laha mati ma hangalakaka kona, laha ma halakaka ma yima, na laha ma humaka kona eka ndhawu ya wena. Mati man'wana lama taleke ma lava ndlela leyi hlayisekeke yo famba leswaku ma nga endli khombo.\n\nA-frame level yi nga ku pfuna ku fungha points at the same height ni ku landzelela contour line. Its marks are an observation; a hi design kumbe mpfumelelo wa earthworks. U nga se cela swale, dam, kumbe xivumbeko xin’wana, tiyisisa leswaku ndhawu yi kamberiwile. Soil, slope, drainage, storm flow, na ndlela leyi hlayisekeke yo khulukisa mati lama taleke i swa nkoka. Vutisa trained local adviser.\n\nA ku na nawu wun’we wa ndhawu lowu faneleke eka slope yin’wana ni yin’wana. Xiya laha mati ma fambaka kona ni laha ma hlengeletanaka kona. Tikhontara leti endliweke hi ndlela yo biha ti nga engetela erosion, naswona misava leyi tswongaka mati hi ku nonoka yi nga khoma mati yo tala ngopfu. Hlawula water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo, kutani u kunguhata ndlela leyi hlayisekeke yo humesa mati lama taleke.",
+      "appliedPairSourceEnglish": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 15,
+      "candidateIndexes": [
+        15
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "body.paragraph[1]"
+      },
+      "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+      "nativePairSourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "currentTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "appliedTarget": "Bosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_READING_LANDSCAPE_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "canonicalModuleId": "reading-landscape",
+      "resolvedLessonId": "reading-landscape-l3",
+      "beforeWholeTarget": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\nSerame (frost) ke leqhwa le iphelang hodima ntho e batang. Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+      "appliedWholeTarget": "Moya o ka senya dijalo polasing e nyane. Nqa le matla a moya o senyang di fetoha ho latela sebaka, sehla le matswapo le dikgeo tsa setsha sa hao. Tsamaya lefatsheng matsatsing a nang le moya. Rekota moo moya o tswang teng le seo o se amang. Hlahloba ditlaleho tsa boemo ba lehodimo tsa lehae pele o etsa qeto ya moo tshireletso e hlokwang teng.\n\nBosiu bo hlakileng, bo kgutsitseng, moya o batang o ka phalla ho theosa leralla mme wa bokellana dibakeng tse tlase. Dibaka tsena di ka bata ho feta matswapo a haufi. Mekgwa ya serame (frost) le yona e itshetlehile ka setsha. Bapisa dibaka tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa lehae tsa motjheso o tlase-tlase (minimum-temperature records) moo di fumanehang teng. Haeba ditlaleho di sa fumanehe, tswela pele ho shebella masiu a batang mme o botse moeletsi wa temo wa lehae pele o kgetha lehae la nako e telele bakeng sa tender seedlings.\n\nSerame (frost) ke leqhwa le iphelang hodima ntho e batang. Mohodi o le mong ha o bontshe hore leqhwa le entswe, mme tshenyo ya serame e ka etsahala ntle le leqhwa le bonwang. Batla leqhwa le tshenyo ya dimela, bapisa mobu o tlase le matswapo, mme o hlahlobe motjheso o tlase-tlase moo o ka kgonang. Tshwaya dibaka tseo ho bata kapa tshenyo e nkang nako e telele ka ho fetisisa. Boloka dimela tse kotsing habonolo hole le dipokotho tse batang (cold pockets) tseo o di hlokomelang.\n\nBakeng sa tamati (tomatoes) e tshwenngwang ke late blight, phallo ya moya le letsatsi la hoseng di ka thusa mahlaku ho oma. Late blight e ntse e ka ata nakong ya lehodimo le phodileng, le nang le mongobo le nkang nako e telele. Ho suthisa bethe ya serapa feela ho ke ke ha e laola; batla le tataiso ya bophelo bo botle ba dijalo sebakeng sa heno.",
+      "appliedPairSourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 16,
+      "candidateIndexes": [
+        16
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "reading-landscape",
+        "language": "st",
+        "lessonId": "reading-landscape-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "nativePairSourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "currentTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "appliedTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_READING_LANDSCAPE_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+      "canonicalModuleId": "reading-landscape",
+      "resolvedLessonId": "reading-landscape-l3",
+      "beforeWholeTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona through the local frost season. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "appliedWholeTarget": "Moya o batang o ka dula dibakeng tse tlase masiu a hlakileng, a kgutsitseng. Bapisa dibaka tsa kereche tseo e ka bang tsona ho pholletsa le sehla sa frost sa sebakeng seo. Hlahloba ditlaleho tsa motjheso o tlase-tlase tsa lehae kapa o botse moeletsi wa temo wa lehae pele o etsa qeto ya nako e telele. Serame se bonwang hase sesupo se le seng feela sa tshenyo ya serame, mme ha ho na sebaka sa lehlakoreng la leralla se tiisang ho se be le serame.",
+      "appliedPairSourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 25,
+      "candidateIndexes": [
+        25
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+      "nativePairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "currentTarget": "Raised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.",
+      "appliedTarget": "Raised beds di loketse mobu o metsi, where water needs somewhere to drain away to.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l1",
+      "beforeWholeTarget": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.\n\nTshireletso e bonolo. Permanent paths, le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi.\n\nOne metre to one point two metres wide. Ke yona working number. Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla.\n\nJwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.\n\nHa ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.\n\nQala ka least disturbance e rarollang bothata ba hao.\n\nNo-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo.\n\nU se ke ua cheka wet clay. Ha compaction kapa poor drainage e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha deeper cultivation.\n\nRaised beds di loketse wet ground, moo metsi a hlokang somewhere to drain away to.\n\nSunken beds di loketse dry ground, moo o batlang ho tshwara le ho boloka pula eo o e fumanang.\n\nKa mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.\n\nDijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.\n\nTse ding di sebetsa hantle ho feta ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.\n\nSebedisa spacing guidance bakeng sa crop, variety le local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.\n\nPele o lema, tshwaya bethe.\n\nBophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso.\n\nSebedisa pegs le string. Tshwaya rectangle, le ho tshwaya ditsela ka bobedi tsa ho kena.\n\nJwale lokisetsa ho ya ka mobu wa hao — qala ka no-dig, mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka.\n\nMohala wa thapo o fetola mohopolo qeto. Ha ditsela di se di le teng, di boloke. Ha sebaka sa temo se se se le teng, se sireletse.\n\nBethe eo e ba bonolo ho e ntlafatsa sehla se seng le se seng, hobane o kgaolitse ho e hata.",
+      "appliedWholeTarget": "Mobu o petetsaneng o lahlehelwa ke dibaka tsa wona tsa moya. Metso e hola butle. Metsi a monyela ka tsela e fapaneng. Bethe e thatafala ho sebetsa sehleng se seng le se seng.\n\nTshireletso e bonolo. Permanent paths, le bethe e tshesane hoo o ka fihlang ka hare ho yona ho tswa mahlakoreng ka bobedi.\n\nOne metre to one point two metres wide. Ke yona working number. Ka bophara boo, o ka fihla bohareng o tswa tseleng efe kapa efe, mme maoto a hao ha a ame sebaka se lemwang le ka mohla.\n\nJwale nahana ka dibethe tsa hao. Na o ka fihla bohareng ntle le ho hata ka hare? Eya o leke pele o lema eng kapa eng hape.\n\nHa ho sebopeho se le seng sa bethe se loketseng dibaka tsohle.\n\nQala ka least disturbance e rarollang bothata ba hao.\n\nNo-dig e loketse boholo ba mobu wa dirapa. Tlohela structure e le jwalo, mme o hahe fertility hodimo.\n\nU se ke ua cheka wet clay. Ha compaction kapa poor drainage e le matla haholo, fumana sesosa ka keletso ya sebaka sa heno pele o kgetha deeper cultivation.\n\nRaised beds di loketse mobu o metsi, where water needs somewhere to drain away to.\n\nSunken beds di loketse dry ground, moo o batlang ho tshwara le ho boloka pula eo o e fumanang.\n\nKa mora pula e matla, sheba hore na metsi a sala hokae kapa a phalla a fete hokae. Kopanya seo o se boneng le keletso mabapi le mobu le phallo ya metsi pele o kgetha bethe.\n\nDijalo tse ding ha di rate hore metso ya tsona e tshwenngwe. They do better ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.\n\nTse ding di sebetsa hantle ho feta ka qalo e sireletsehileng ho nursery, ebe transplanting. Tomatoes le brassicas ke tsa sehlopha seo.\n\nSebedisa spacing guidance bakeng sa crop, variety le local conditions. Hlahloba packet le local grower advice. Sheba crowding ha plants di ntse di hola.\n\nPele o lema, tshwaya bethe.\n\nBophara ba One point two metres. Bolelele ba Three metres. Bethe e le nngwe ya boikwetliso.\n\nSebedisa pegs le string. Tshwaya rectangle, le ho tshwaya ditsela ka bobedi tsa ho kena.\n\nJwale lokisetsa ho ya ka mobu wa hao — qala ka no-dig, mme o cheke ho teba feela ha mobu wa hao o hlile o ho hloka.\n\nMohala wa thapo o fetola mohopolo qeto. Ha ditsela di se di le teng, di boloke. Ha sebaka sa temo se se se le teng, se sireletse.\n\nBethe eo e ba bonolo ho e ntlafatsa sehla se seng le se seng, hobane o kgaolitse ho e hata.",
+      "appliedPairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 26,
+      "candidateIndexes": [
+        26
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "nativePairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "currentTarget": "Musi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.",
+      "appliedTarget": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l1",
+      "beforeWholeTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.\n\nTsireledzo ndi yo leluwaho. Permanent paths, na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili.\n\nOne metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami growing area na luthihi.\n\nZwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.\n\nA hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.\n\nThomani nga least disturbance ine ya tandulula thaidzo yaṋu.\n\nNo-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.\n\nNi songo bwa wet clay. Arali compaction kana poor drainage zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha deeper cultivation.\n\nRaised beds dzi tea wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.\n\nSunken beds dzi tea dry ground, hune na ṱoḓa u fara na u vhulunga mvula ine na i wana.\n\nMusi heavy rain yo no na, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na soil and drainage advice ni sa athu khetha bed.\n\nZwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.\n\nZwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.\n\nShumisani spacing guidance ya crop, variety na local conditions. Sedzani packet na local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.\n\nNi sa athu ṱavha, swayani bed.\n\nOne point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed).\n\nShumisani zwipiki na thambo. Swayani rectangle, nahone ni swaye paths dzoṱhe mbili dza u swikelela bed.\n\nNga murahu ni lugiselele u ya nga mavu aṋu — thomani nga no-dig, nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma.\n\nString line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze.\n\nBed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo.",
+      "appliedWholeTarget": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.\n\nTsireledzo ndi yo leluwaho. Permanent paths, na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili.\n\nOne metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami growing area na luthihi.\n\nZwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.\n\nA hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.\n\nThomani nga least disturbance ine ya tandulula thaidzo yaṋu.\n\nNo-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.\n\nNi songo bwa wet clay. Arali compaction kana poor drainage zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha deeper cultivation.\n\nRaised beds dzi tea wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.\n\nSunken beds dzi tea dry ground, hune na ṱoḓa u fara na u vhulunga mvula ine na i wana.\n\nNga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.\n\nZwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.\n\nZwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.\n\nShumisani spacing guidance ya crop, variety na local conditions. Sedzani packet na local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.\n\nNi sa athu ṱavha, swayani bed.\n\nOne point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed).\n\nShumisani zwipiki na thambo. Swayani rectangle, nahone ni swaye paths dzoṱhe mbili dza u swikelela bed.\n\nNga murahu ni lugiselele u ya nga mavu aṋu — thomani nga no-dig, nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma.\n\nString line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze.\n\nBed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo.",
+      "appliedPairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 27,
+      "candidateIndexes": [
+        27
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "nativePairSourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedTarget": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l1",
+      "beforeWholeTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedWholeTarget": "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa.",
+      "appliedPairSourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 28,
+      "candidateIndexes": [
+        28
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.",
+      "nativePairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "currentTarget": "Endzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.",
+      "appliedTarget": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l1",
+      "beforeWholeTarget": "Compacted soil yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.\n\nNsirhelelo wu olova. Permanent paths, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi.\n\nOne metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi growing area nikatsongo.\n\nSweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.\n\nA ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.\n\nSungula hi least disturbance leyi lulamisaka xiphiqo xa wena.\n\nNo-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.\n\nU nga keli wet clay. Loko compaction kumbe poor drainage swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula deeper cultivation.\n\nRaised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.\n\nSunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.\n\nEndzhaku ka heavy rain, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni soil and drainage advice u nga si hlawula bed.\n\nSwibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.\n\nSwin'wana swi tirha ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.\n\nLandzelela spacing guidance ya crop, variety na local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.\n\nLoko u nga si byala, fungha bed.\n\nOne point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta.\n\nTirhisa pegs na string. Fungha rectangle, kutani u fungha tindlela hatimbirhi to nghena.\n\nKutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava.\n\nNtila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele.\n\nBed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona.",
+      "appliedWholeTarget": "Compacted soil yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana.\n\nNsirhelelo wu olova. Permanent paths, ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi.\n\nOne metre to one point two metres hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi growing area nikatsongo.\n\nSweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana.\n\nA ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato.\n\nSungula hi least disturbance leyi lulamisaka xiphiqo xa wena.\n\nNo-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla.\n\nU nga keli wet clay. Loko compaction kumbe poor drainage swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula deeper cultivation.\n\nRaised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona.\n\nSunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka.\n\nEndzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.\n\nSwibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.\n\nSwin'wana swi tirha ku antswa loko swi sungula swi sirhelelekile eka nursery, kutani transplanting. Tomatoes na brassicas swi wela eka ntlawa wolowo.\n\nLandzelela spacing guidance ya crop, variety na local conditions. Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula.\n\nLoko u nga si byala, fungha bed.\n\nOne point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta.\n\nTirhisa pegs na string. Fungha rectangle, kutani u fungha tindlela hatimbirhi to nghena.\n\nKutani lulamisa hi ku ya hi misava ya wena — sungula hi no-dig, kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava.\n\nNtila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele.\n\nBed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona.",
+      "appliedPairSourceEnglish": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 29,
+      "candidateIndexes": [
+        29
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l1",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "nativePairSourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "currentTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedTarget": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l1",
+      "beforeWholeTarget": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedWholeTarget": "Raised bed leyi nga kwalomu ka 1.2 metres hi ku anama, yi ri ni tindlela ematlhelo hamambirhi, leswaku munhu a kota ku fika exikarhini hi tlhelo rin'wana na rin'wana a nga tshuki a yima ehenhla ka misava leyi ku byariwaka eka yona.",
+      "appliedPairSourceEnglish": "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 38,
+      "candidateIndexes": [
+        38
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l2",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "nativePairSourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "currentTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "appliedTarget": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_L2_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l2",
+      "beforeWholeTarget": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "appliedWholeTarget": "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana.",
+      "appliedPairSourceEnglish": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 43,
+      "candidateIndexes": [
+        43,
+        44
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "nativePairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedTarget": "Ha treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Pest pressure hangata e a eketseha ka lebaka le itseng.\n\nDimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.\n\nKa hona, pele o phekola eng kapa eng, sheba system yohle.\n\nNa semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?\n\nLekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.\n\nSebetsa ka mehato e mene, ka tatellano.\n\nNtlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.\n\nNtlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.\n\nNtlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena.\n\nNtlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.\n\nHa treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nIpolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
+      "appliedWholeTarget": "Pest pressure hangata e a eketseha ka lebaka le itseng.\n\nDimela tse nang le stress. Sejalo se le seng se laolang sebaka. Kapa broad chemical use e seng e tlositse predators tse neng di o thusa.\n\nKa hona, pele o phekola eng kapa eng, sheba system yohle.\n\nNa semela se haellwa ke metsi? Na mobu o petetsane kapa ha o na phepo e lekaneng? Na dibatana tsa disenyi di se di thusa ho rarolla bothata?\n\nLekhasi le lesehla ha le bolele ka boyona hore ho na le disenyi. Bothata e ka ba metsi, phepo ya semela kapa tshenyo ya metso. Fumana hore na ke efe pele o nka kgato.\n\nSebetsa ka mehato e mene, ka tatellano.\n\nNtlha ya pele: Sheba. Sheba mokgwa oo tshenyo e hlahang ka wona, bokatlase ba lekhasi, kutu le dimela tse haufinyane.\n\nNtlha ya bobedi: Lekola dintho tse bakang kgatello semeleng: mongobo wa mobu, metso, sebaka pakeng tsa dimela, phepo le phallo ya metsi.\n\nNtlha ya boraro: Sireletsa se o thusang. Beneficial insects (likokoanyana tse molemo) li etsa mosebetsi oo u neng u tla o etsa ka bouena.\n\nNtlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.\n\nHa treatment e hlokahala, sebedisa product registered for that crop and pest, mme o latele label ya yona. Sena se kenyeletsa neem products. Hlahloba protection and harvest waiting instructions. O se ke wa itirela metswako kapa stronger doses.\n\nIpolelle nnete, hore na ke mohato ofe oo hangata o o tlolang.",
+      "appliedPairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 45,
+      "candidateIndexes": [
+        45
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "nativePairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedTarget": "Pest e holim'a lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhali: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedWholeTarget": "Pest e holim'a lekhasi, le ditsela tse tharo tsa ho e laola ntle le dikhemikhali: kokoanyana e molemo, physical barrier, le ho e tlosa ka letsoho.",
+      "appliedPairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 46,
+      "candidateIndexes": [
+        46
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "st",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "nativePairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "appliedTarget": "Crop, pest, dose, protection le harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e bolokehe kapa e lokele.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Crop, pest, dose, protection and harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e be safe or suitable.",
+      "appliedWholeTarget": "Crop, pest, dose, protection le harvest waiting instructions di bohlokwa. Natural origin ha e etse hore improvised treatment e bolokehe kapa e lokele.",
+      "appliedPairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 48,
+      "candidateIndexes": [
+        48,
+        49
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "nativePairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedTarget": "Arali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Pest pressure i anzela u engedzea nga tshiitisi.\n\nZwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.\n\nNgazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.\n\nNaa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?\n\nYellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.\n\nTevhelani vhukando vhuṋa nga u tevhekana.\n\nTsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.\n\nTsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage.\n\nTsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita.\n\nTsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.\n\nArali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nNi ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka.",
+      "appliedWholeTarget": "Pest pressure i anzela u engedzea nga tshiitisi.\n\nZwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.\n\nNgazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.\n\nNaa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?\n\nYellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.\n\nTevhelani vhukando vhuṋa nga u tevhekana.\n\nTsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.\n\nTsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage.\n\nTsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita.\n\nTsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.\n\nArali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.\n\nNi ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka.",
+      "appliedPairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 51,
+      "candidateIndexes": [
+        51
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "nativePairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedTarget": "Pest kha ṱari, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedWholeTarget": "Pest kha ṱari, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa.",
+      "appliedPairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 52,
+      "candidateIndexes": [
+        52
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ve",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "nativePairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "appliedTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe tsireledzea kana i fanelee.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe safe or suitable.",
+      "appliedWholeTarget": "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe tsireledzea kana i fanelee.",
+      "appliedPairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 56,
+      "candidateIndexes": [
+        56,
+        57
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "nativePairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "currentTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+      "appliedTarget": "Loko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Pest pressure hi ntolovelo yi engetseka hi xivangelo.\n\nSwibyariwa leswi nga na stress. Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.\n\nKutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu.\n\nXana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?\n\nA yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza.\n\nTirha hi magoza ya mune, hi ku landzelelana.\n\nXo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi.\n\nVumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage.\n\nVunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe.\n\nVumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.\n\nLoko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nTshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula.",
+      "appliedWholeTarget": "Pest pressure hi ntolovelo yi engetseka hi xivangelo.\n\nSwibyariwa leswi nga na stress. Xibyariwa xin’we lexi lawulaka ndhawu. Kumbe broad chemical use leyi se yi suseke predators leti a ti ku pfuna.\n\nKutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu.\n\nXana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?\n\nA yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza.\n\nTirha hi magoza ya mune, hi ku landzelelana.\n\nXo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi.\n\nVumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage.\n\nVunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe.\n\nVumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna. Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo.\n\nLoko treatment yi laveka, tirhisa product registered for that crop and pest, kutani u landzelela label ya yona. Leswi swi katsa neem products. Kambela protection and harvest waiting instructions. U nga tiendleli swihlanganisi kumbe stronger doses.\n\nTshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula.",
+      "appliedPairSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 59,
+      "candidateIndexes": [
+        59
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "infographicAlt"
+      },
+      "sourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "nativePairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "currentTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedTarget": "Pest eka tluka, ni tindlela tinharhu to yi lawula handle ka tikhemikhali: beneficial insect, physical barrier, ni ku yi susa hi voko.",
+      "previousReviewStatus": "hold",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedWholeTarget": "Pest eka tluka, ni tindlela tinharhu to yi lawula handle ka tikhemikhali: beneficial insect, physical barrier, ni ku yi susa hi voko.",
+      "appliedPairSourceEnglish": "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 60,
+      "candidateIndexes": [
+        60
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "vegetables-staples",
+        "language": "ts",
+        "lessonId": "vegetables-staples-l4",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "nativePairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "currentTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "appliedTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi hlayiseka kumbe yi faneleka.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_VEGETABLES_STAPLES_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+      "canonicalModuleId": "vegetables-staples",
+      "resolvedLessonId": "vegetables-staples-l4",
+      "beforeWholeTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi va safe or suitable.",
+      "appliedWholeTarget": "Crop, pest, dose, protection and harvest waiting instructions i swa nkoka. Natural origin a yi endli leswaku improvised treatment yi hlayiseka kumbe yi faneleka.",
+      "appliedPairSourceEnglish": "Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 65,
+      "candidateIndexes": [
+        65
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "nativePairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?",
+      "appliedTarget": "Ke dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l1",
+      "beforeWholeTarget": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).\n\nHo rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.\n\nSebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.\n\nNgola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.\n\nNgola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.\n\nSebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.\n\nO se ke wa itshetleha ka mohopolo qetellong ya sehla.\n\nSehla se le seng sa direkoto se araba dipotso tse sebetsang.\n\nKe dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return for each hour of work?\n\nKe dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?\n\nRekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.\n\nPele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.\n\nMohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.\n\nHlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.\n\nSebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.\n\nKhetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.\n\nLetsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+      "appliedWholeTarget": "Kotulo e ka fepa lelapa, ya rekiswa, ya arolelanwa, kapa ya senyeha (ya lahleha).\n\nHo rekota ditsela tsena tse fapaneng tsa tshebediso ho o thusa ho bona seo polasi e se hlahisang le se fihlang ho bareki.\n\nSebedisa lesedi leo ho sireletsa dijo tsa lelapa le ho etsa diqeto tse betere tsa kgwebo.\n\nNgola fatshe kotulo e nngwe le e nngwe hang ha e etsahala.\n\nNgola kilograms tsa tamati, dozens tsa mahe le bundles tsa morogo, ebe u ngola hore e nngwe le e nngwe e ile hokae.\n\nSebedisa mokgwa ona o bonolo o tshwanang bakeng sa dijo tse bolokwang lapeng, dihlahiswa tse rekisitsweng, tse fanweng e le mpho, le tse entsweng compost.\n\nO se ke wa itshetleha ka mohopolo qetellong ya sehla.\n\nSehla se le seng sa direkoto se araba dipotso tse sebetsang.\n\nKe dijalo dife tse fanang ka best yield per bed? Ke dife tse fanang ka the most return bakeng sa hora e nngwe le e nngwe ya mosebetsi?\n\nKe dijalo dife tse sebedisang dipeo, metsi le compost tse ngata ho feta seo di se kgutlisang?\n\nRekoto e boetse e bontsha dikgwedi tseo lelapa le qetellang le reka dijo ka tsona.\n\nPele o beha theko, rekota ditjeo tsa tlhahiso, ho paka le ho rekisa, ho kenyeletsa mosebetsi le dipalangoang.\n\nMohlala ona ke wa ho ruta, eseng theko ya mmaraka: ditamati di bitsa R18 ka kilogram ho di hlahisa, empa di rekiswa ka R15 ka kilogram. Theko eo ha e koahele ditjeo tse boletsweng.\n\nHlahloba theko, ditjeo le ho lema ho latelang. Sheba seo bareki ba tla se reka e le kannete; theko e hodimo eo o e kopang ha e tiise thekiso.\n\nSebelisa rekoto ya hao ho fumana hore na dijo tsa lelapa di a haella neng.\n\nKhetha dijalo tse loketseng sebaka sa heno, mme o rale o kgutlela morao ho tloha kotulong eo o e hlokang. Hlahloba maemo a ho jala le nako e lebelletsweng ya kotulo.\n\nLetsatsi le sebetsang polasing e nngwe le ka nna la se sebetse mona. Kenyelletsa leano la bobedi haeba pula, metsi kapa dijalo di hloleha.",
+      "appliedPairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 66,
+      "candidateIndexes": [
+        66
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "nativePairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?",
+      "appliedTarget": "Ndi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l1",
+      "beforeWholeTarget": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwimela zwifhio zwine zwa vhuisa the most return for each hour of work?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha khaṋo ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+      "appliedWholeTarget": "Khaṋo i nga vha zwiḽiwa zwa muṱa, ya rengiswa, ya kovhelwa, kana ya xela.\n\nU ṅwala nḓila dzo fhambanaho dza u shumisa zwibveledzwa zwi ni thusa u vhona zwine bulasi ḽa bveledza na zwine zwa swika kha vharengi.\n\nShumisani mafhungo eneo u tsireledza zwiḽiwa zwa muṱa na u ita tsheo dza bindu dza khwine.\n\nṄwalani khaṋo iṅwe na iṅwe musi i tshi itea.\n\nṄwalani kilograms dza matamatisi, dozens dza makumba, na bundles dza morogo; ni dovhe ni ṅwale uri tshiṅwe na tshiṅwe tsho ya ngafhi.\n\nShumisani maitele a sa lemelaho a fanaho kha zwiḽiwa zwine zwa dzula hayani, zwibveledzwa zwo rengiswaho, zwo ṋewaho vhaṅwe nga mpho, na zwo itwaho compost.\n\nMusi khalanwaha i tshi fhela, ni songo ḓitika nga zwine na zwi humbula.\n\nRekhodo dza khalanwaha nthihi dzi fhindula mbudziso dzine dza thusa.\n\nNdi zwimela zwifhio zwine zwa bveledza best yield per bed? Ndi zwifhio zwine zwa vhuisa the most return nga awara iṅwe na iṅwe ya mushumo?\n\nNdi zwimela zwifhio zwine zwa shumisa mbeu, maḓi na compost zwinzhi u fhira zwine zwa vhuisa?\n\nRekhodo i dovha ya sumbedza miṅwedzi ine muṱa wa renga zwiḽiwa.\n\nMusi ni sa athu vhea mutengo, ṅwalani masheleni a u bveledza, u paka na u rengisa, hu tshi katelwa mushumo na transport.\n\nTsumbo iyi ndi ya u funza, a si mutengo wa makete: matamatisi a ḓura R18 nga kilogram u a bveledza fhedzi a rengiswa nga R15 nga kilogram. Mutengo wonoyo a u swikeli cost yo bulwaho.\n\nSedzani mutengo, costs na u ṱavha hu tevhelaho. Sedzani zwine vharengi vha ḓo zwi renga zwa vhukuma; mutengo wa nṱha une na u humbela a u khwaṱhisedzi uri zwi ḓo rengiswa.\n\nShumisani rekhodo yaṋu u wana tshifhinga tshine zwiḽiwa zwa muṱa zwa vha zwi siho nga ho eḓanaho.\n\nNangani zwimela zwine zwa tea vhupo haṋu, ni dzudzanye ni tshi vhalela murahu u bva kha khaṋo ine na i ṱoḓa. Ṱolani nyimele dza u zwala na tshifhinga tsho lavhelelwaho tsha u kaṋa.\n\nḒuvha ḽine ḽa shuma bulasini ḽiṅwe ḽi nga kha ḽi sa shumi fhano. Katelani a backup plan arali mvula, maḓi kana zwimela zwa kundelwa.",
+      "appliedPairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 67,
+      "candidateIndexes": [
+        67
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l1",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Which crops give the best yield per bed? Which return the most for each hour of work?",
+      "nativePairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "currentTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?",
+      "appliedTarget": "Hi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l1",
+      "beforeWholeTarget": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return for each hour of work?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa costs, ku katsa labour ni vutleketli.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+      "appliedWholeTarget": "Ntshovelo wu nga phamela ndyangu, wu xavisiwa, wu avelaniwa, kumbe wu lahleka.\n\nKu tsala tindlela leti ntshovelo wu tirhisiwaka ha tona swi ku pfuna ku vona leswi purasi ri swi humesaka ni leswi fikelelaka vaxavi.\n\nTirhisa vuxokoxoko byole ku sirhelela swakudya swa ndyangu ni ku endla swiboho swa bindzu swo antswa.\n\nTsala ntshovelo wun'wana ni wun'wana loko wu humelela.\n\nTsala kilograms ta matamatisi, dozens ta matandza ni bundles ta morogo, kutani u tsala laha xin'wana ni xin'wana xi yeke kona.\n\nTirhisa mukhuva lowu wo olova lowu fanaka eka swakudya leswi hlayisiwaka ekaya, leswi xavisiweke, leswi nyikeriweke van’wana, na leswi endliweke compost.\n\nLoko nguva yi hela, u nga titshegi hi leswi u swi tsundzukaka.\n\nNguva yin’we ya tirhekhodo yi hlamula swivutiso leswi pfunaka.\n\nHi swihi swibyariwa leswi nyikaka best yield per bed? Hi swihi leswi vuyisaka the most return hi awara yin'wana na yin'wana ya ku tirha?\n\nHi swihi swibyariwa leswi tirhisaka mbewu, mati na compost swo tala ku tlurisa leswi swi swi vuyisaka?\n\nRekhodo yi tlhela yi komba leswaku muti wu xava swakudya hi tin’hweti tihi.\n\nU nga si veka nxavo, tsala ku humesa, ku paka ni ku xavisa costs, ku katsa labour ni vutleketli.\n\nLexi i xikombiso xo dyondzisa, a hi nxavo wa makete: matamatisi ya durha R18 hi kilogram ku ma humesa, kambe ya xavisiwa hi R15 hi kilogram. Nxavo wolowo a wu hakeli ntsengo lowu boxiweke.\n\nLanguta nxavo, costs ni ku byala loku landzelaka. Kambisisa leswi vaxavi va nga ta swi xava hakunene; nxavo wa le henhla lowu u wu kombisaka a wu tiyisisi ku xavisiwa.\n\nTirhisa rekhodo ya wena ku kuma leswaku swakudya swa ndyangu swi kayivela rini.\n\nHlawula swibyariwa leswi faneleke ndhawu ya wena, u tlhela u tirha u tlhelela endzhaku ku suka eka ntshovelo lowu u wu lavaka. Kambisisa swiyimo swa ku byala ni nkarhi lowu ntshovelo wu languteriwaka ku fika ha wona.\n\nSiku leri tirhaka epurasini rin’wana ri nga ha ka ri nga tirhi laha. Nghenisa pulani ya vumbirhi loko mpfula, mati kumbe swibyariwa swi tsandzeka.",
+      "appliedPairSourceEnglish": "A harvest can feed the household, be sold, be shared, or be lost.\n\nRecording these different uses helps you see what the farm produces and what reaches customers.\n\nUse that information to protect household food and make better business decisions.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a price, record production, packing and selling costs, including labour and transport.\n\nHere is a teaching example, not a market price: tomatoes cost R18 per kilogram but sell for R15 per kilogram. That price does not cover the stated cost.\n\nReview the price, costs and next planting. Check what customers will actually buy; a higher asking price is not a guaranteed sale.\n\nUse your record to find when household food runs short.\n\nChoose locally suitable crops and work backwards from the harvest you need. Check planting conditions and expected time to harvest.\n\nA date that works on another farm may not work here. Include a backup plan when rain, water or crops fail.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 68,
+      "candidateIndexes": [
+        68
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "st",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]"
+      },
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "nativePairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "Ho rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "appliedTarget": "Ho rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "sesothoDraft",
+      "registryExport": "SESOTHO_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-st-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l2",
+      "beforeWholeTarget": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nHo rekisa ka kotloloho ho ka retain more of the sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka tse ka mabokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Regular orders di thusa ho rera feela ha bareki le balemi ba ka phethahatsa tumellano.\n\nQala ka seo o ka reliably supply le seo bareki ba se batlang.\n\nSheba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nSebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na tjhelete e kenang e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "appliedWholeTarget": "Botsa hore moreki o hloka eng: sehlahiswa, bongata, boleng, ho tliswa le letsatsi la tefo.\n\nBapisa ditefello tsa mmaraka, dipalangoang, ho paka le dihlahiswa tse sa rekiswang, hammoho le theko ya thekiso.\n\nHlahloba melao ya mmaraka le ditlhoko tsa lehae tsa kgwebo le dijo. Setala sa informal ha se bolele ka boyona hore ha ho na melao kapa ditjeo.\n\nHo rekisa ka kotloloho ho ka boloka karolo e kgolwanyane ya sale price, empa ho boetse ho hloka nako, ho paka, dipalangoang le tlhokomelo ya bareki.\n\nMokgwa wa mabokose o fa bareki ba dumellaneng kgetho ya dihlahiswa kgafetsa.\n\nDumellanang ka tse ka mabokoseng, theko, tefo le se tla etsahala ha dijalo di haella. Regular orders di thusa ho rera feela ha bareki le balemi ba ka phethahatsa tumellano.\n\nQala ka seo o ka reliably supply le seo bareki ba se batlang.\n\nSheba ditjeo le ditlhoko tsa dijo tsa lelapa pele o tshepisa ho fana ka mabokose kgafetsa.\n\nSebaka sa tshingwana kapa palo ya bareki feela ha e bolele esale pele hore na tjhelete e kenang e tla ba bokae. Leka mokgwa oo o ka o laolang, mme o ngole diphetho.\n\nHa tlhahiso e fetoha beke le beke, qoba ho tshepisa phano e tsitsitseng eo o ke keng wa e fana.\n\nFana ka surplus eo o nang le yona, mme le dumellane ka terms tse hlakileng le bareki.\n\nHlalosa ditsela tseo o lemang ka tsona ka botshepehi. Pele o sebedisa label, hlahloba certification efe kapa efe kapa claim eo moreki a e hlokang.",
+      "appliedPairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 69,
+      "candidateIndexes": [
+        69
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ve",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[3]"
+      },
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "nativePairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "U rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "appliedTarget": "U rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "tshivendaDraft",
+      "registryExport": "TSHIVENDA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ve-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l2",
+      "beforeWholeTarget": "Vhudzisani uri mutengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nU rengisa nga ho livhisa kha vharengi zwi nga retain more of the sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na ṱhoḓea dza zwiḽiwa zwa muṱa musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.\n\nArali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.\n\nṊetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.\n\nṰalusani maitele aṋu a u alusa zwimela nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "appliedWholeTarget": "Vhudzisani uri mutengi u ṱoḓa mini: tshibveledzwa, tshivhalo, kwalithi, u isa na ḓuvha ḽa mbadelo.\n\nVhambedzani market fees, transport, u paka na zwibveledzwa zwi sa rengiswi, na mutengo wa u rengisa.\n\nSedzani milayo ya makete na ṱhoḓea dza henefho dza u rengisa na zwiḽiwa. Informal stall a zwi sokou amba uri a hu na milayo kana costs.\n\nU rengisa nga ho livhisa kha vharengi zwi nga ita uri ni sale na tshipiḓa tshihulwane tsha sale price, fhedzi zwi dovha zwa ṱoḓa tshifhinga, u paka, transport na u ṱhogomela vharengi.\n\nBox scheme i ṋetshedza regular selection kha vharengi vho tendelanaho.\n\nTendelani nga zwine zwa vha kha box, mutengo, mbadelo na zwine zwa ḓo itea arali crops dzi tshi vha dzi si gathi. Regular orders dzi thusa u pulana fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.\n\nThomani nga zwine na nga kona u tshi zwi ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.\n\nṰolani costs na ṱhoḓea dza zwiḽiwa zwa muṱa musi ni sa athu fulufhedzisa regular boxes.\n\nTshikalo tsha ngade kana tshivhalo tsha vharengi fhedzi a tshi sumbedzi uri hu ḓo vha na income nngafhani. Lingedzani nḓila ine na nga kona u langula, ni ṅwale zwe zwa bvelela.\n\nArali production i tshi shanduka vhege nga vhege, ni songo fulufhedzisa fixed delivery ine na si kone u i ṋetshedza.\n\nṊetshedzani surplus ine na vha nayo nahone ni tendelane na vharengi nga clear terms.\n\nṰalusani maitele aṋu a u alusa zwimela nga u fulufhedzea. Musi ni sa athu shumisa label, sedzani certification kana claim ine murengi a i ṱoḓa.",
+      "appliedPairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 71,
+      "candidateIndexes": [
+        71
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l2",
+        "fieldLocator": "body.paragraph[8]"
+      },
+      "sourceEnglish": "Garden area or customer count alone does not predict income. Try a manageable arrangement and record the results.",
+      "nativePairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "currentTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "appliedTarget": "Vukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l2",
+      "beforeWholeTarget": "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.\n\nPimanisa market fees, vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nKu xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi leswi nga eka box, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa ntwanano.\n\nSungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika mabokisi ya nkarhi na nkarhi.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena does not predict income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.\n\nLoko ku humesa ku cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nNyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+      "appliedWholeTarget": "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.\n\nPimanisa market fees, vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.\n\nKambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.\n\nKu xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.\n\nBox scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.\n\nPfumelelanani hi leswi nga eka box, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa ntwanano.\n\nSungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.\n\nKambisisa costs ni swilaveko swa swakudya swa ndyangu u nga se tshembisa ku nyika mabokisi ya nkarhi na nkarhi.\n\nVukulu bya ndhawu ya xirhapa kumbe nhlayo ya vaxavi ntsena a swi vhumbeli income. Ringeta ndlela leyi u nga kotaka ku yi lawula, kutani u tsala leswi humeleleke.\n\nLoko ku humesa ku cinca vhiki na vhiki, papalata ku tshembisa fixed delivery leyi u nga ta ka u nga swi koti ku yi nyika.\n\nNyika surplus leyi u nga na yona, kutani mi twanana hi clear terms ni vaxavi.\n\nHlamusela maendlelo ya wena ya ku byala hi ku vula xiviri. U nga si tirhisa label, kambisisa certification kumbe claim leyi muxavi a yi lavaka.",
+      "appliedPairSourceEnglish": "Ask what the customer needs: product, quantity, quality, delivery and payment date.\n\nCompare market fees, transport, packing and unsold produce as well as the selling price.\n\nCheck the market rules and local trading and food requirements. An informal stall does not automatically have no rules or costs.\n\nDirect selling can retain more of the sale price, but it also takes time, packing, transport and customer care.\n\nA box scheme supplies a regular selection to agreed customers.\n\nAgree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.\n\nStart from what you can reliably supply and what customers want.\n\nCheck the costs and household food needs before promising regular boxes.\n\nGarden area or customer count alone does not predict income. Try a manageable arrangement and record the results.\n\nIf production changes from week to week, avoid promising a fixed delivery you cannot supply.\n\nOffer the surplus you have and agree clear terms with customers.\n\nDescribe your growing practices honestly. Check any certification or claim the buyer requires before using a label.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 73,
+      "candidateIndexes": [
+        73
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "body.paragraph[10]"
+      },
+      "sourceEnglish": "Record the method, conditions and result so others can judge whether it may suit their land.",
+      "nativePairSourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "currentTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether it may suit their land.",
+      "appliedTarget": "Tsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l3",
+      "beforeWholeTarget": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma swihumisiwa hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni ku hlayisa ku fikela loko swi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe ku lahlekeriwa ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, vutleketli na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela whether it may suit their land.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+      "appliedWholeTarget": "Vaakelani va nga avelana different varieties ni mintirho yo hlayisa mbewu.\n\nTsala crop, variety, source ni siku ra ku hlengeleta. Pulana isolation, selection, drying ni storage leswi faneleke eka crop yin’wana ni yin’wana.\n\nKu avelana a swi vuli leswaku diversity yi ta engeteleka kumbe quality yi ta antswa hi yoxe. Kambisisa identity ni germination u nga si titshega hi shared seed. U nga si cincana mbewu, kambisisa loko variety yi sirheleriwile ni loko ku laveka permission.\n\nKu avelana switirhisiwa swo durha swi endla leswaku ntlawa wu swi kota ku swi tirhisa.\n\nPompo ya mati kumbe muchini wo sila mavele swi nga ha durha ngopfu leswaku ndyangu wun’we wu swi xava.\n\nKu tirhisa switirhisiwa swin’we swi endla leswaku ntlawa wu vuyeriwaka hi swona, naswona swi pfuna purasi rin’wana ni rin’wana ku endla mintirho leyi a ri nga ta yi kota ri ri roxe.\n\nKhoma swihumisiwa hi vukheta, u hlayisa ndzhuti lowu faneleke, packaging ni ku hlayisa ku fikela loko swi fikisiwa.\n\nMuxavi wa le kusuhi a nga ha hunguta riendzo, kambe ku lahlekeriwa ni selling costs swa ha fanele ku pimiwa.\n\nPimanisa mali leyi u yi amukelaka endzhaku ka fees, vutleketli na spoilage eka option yin’wana ni yin’wana. U nga ehleketi leswaku nearest buyer u nyika best return minkarhi hinkwato.\n\nVaakelani va nga komba vuswikoti bya nkoka naswona va pimanisa leswi humeleleke emapurasi ya vona.\n\nTsala maendlelo, swiyimo ni mbuyelo leswaku van’wana va kota ku kambela loko swi nga ha faneleka eka land ya vona.\n\nLavani qualified advice hi unfamiliar disease kumbe technical problems. Shared experience ni specialist help swi nga tirha swin’we.",
+      "appliedPairSourceEnglish": "Neighbours can share different varieties and the work of saving seed.\n\nRecord the crop, variety, source and collection date. Plan suitable isolation, selection, drying and storage for each crop.\n\nSharing does not automatically multiply diversity or improve quality. Check identity and germination before relying on shared seed. Before exchanging seed, check whether the variety is protected and whether permission is needed.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nHandle produce gently and keep suitable shade, packaging and storage through delivery.\n\nA nearby buyer may reduce the journey, but losses and selling costs still need measuring.\n\nCompare the money received after fees, transport and spoilage for each option. Do not assume the nearest buyer always gives the best return.\n\nNeighbours can demonstrate useful skills and compare what happened on their own farms.\n\nRecord the method, conditions and result so others can judge whether it may suit their land.\n\nSeek qualified advice for unfamiliar disease or technical problems. Shared experience and specialist help can work together.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 74,
+      "candidateIndexes": [
+        74
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[0].rationale"
+      },
+      "sourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "nativePairSourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "currentTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "appliedTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l3",
+      "beforeWholeTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi permission to exchange a protected variety; kambisisa applicable rights u nga si avelana.",
+      "appliedWholeTarget": "Khwalithi ya mbewu yi titshege hi crop-specific isolation, selection, labelling, storage ni germination checks. Ticheki teto a ti tiyisisi mpfumelelo wo cincana hi protected variety; kambisisa applicable rights u nga si avelana.",
+      "appliedPairSourceEnglish": "Seed quality depends on crop-specific isolation, selection, labelling, storage and germination checks. Those checks do not establish permission to exchange a protected variety; check the applicable rights before sharing.",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    },
+    {
+      "order": 75,
+      "candidateIndexes": [
+        75
+      ],
+      "field": {
+        "surface": "nativeLearner",
+        "moduleId": "market-community",
+        "language": "ts",
+        "lessonId": "market-community-l3",
+        "fieldLocator": "quiz[1].option[0]"
+      },
+      "sourceEnglish": "Always choose the highest headline price",
+      "nativePairSourceEnglish": "Always choose the highest headline price",
+      "currentTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "appliedTarget": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "previousReviewStatus": "machine-draft",
+      "appliedReviewStatus": "machine-draft",
+      "targetKey": "xitsongaDraft",
+      "registryExport": "XITSONGA_MARKET_COMMUNITY_DRAFT",
+      "registryFile": "lib/course-translation-drafts-ts-market-community.ts",
+      "canonicalModuleId": "market-community",
+      "resolvedLessonId": "market-community-l3",
+      "beforeWholeTarget": "Nkarhi hinkwawu hlawula the highest headline price.",
+      "appliedWholeTarget": "Nkarhi hinkwawu hlawula headline price leyi tlakukeke swinene.",
+      "appliedPairSourceEnglish": "Always choose the highest headline price",
+      "appliedPairReviewStatus": "machine-draft",
+      "appliedTargetWasImported": true
+    }
+  ],
+  "independentReviewFile": "/tmp/imbewu-final-native-filtered-current-independent-20261006.json",
+  "limits": "Machine-draft status retained. This is not a fluency, farming-safety, diagram-review or facilitator approval."
+}
