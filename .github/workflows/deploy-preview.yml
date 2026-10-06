@@ -87,8 +87,9 @@ jobs:
           # non-alphanumerics to '-', trim, cap at 40 chars so the hostname stays valid.
           slug=$(printf '%s' "${GITHUB_REF_NAME#*/}" \
             | tr '[:upper:]' '[:lower:]' \
-            | sed -e 's/[^a-z0-9]\+/-/g' -e 's/^-//' -e 's/-$//' \
-            | cut -c1-40)
+            | sed -E -e 's/[^a-z0-9]+/-/g' -e 's/^-//' -e 's/-$//' \
+            | cut -c1-40 \
+            | sed 's/-$//')
           vercel alias set "$url" "imbewufield-$slug.vercel.app" --token="$VERCEL_TOKEN"
           echo "imbewufield-$slug.vercel.app → $url (branch ${GITHUB_REF_NAME})"
           if [ "${GITHUB_REF_NAME}" = "codex/reference-blueprint-quality" ]; then
