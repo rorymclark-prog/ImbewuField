@@ -1045,10 +1045,12 @@
               },
               {
                 "sourceEnglish": " That is the land telling you something.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Ndi land ine ya khou ni vhudza zwiṅwe zwithu.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: land"
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -2268,29 +2270,9 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Find one thing ",
-                "status": "draft",
-                "text": "Wanani tshithu tshithihi "
-              },
-              {
-                "sourceEnglish": "planted ",
-                "status": "draft",
-                "text": "tsho ṱavhiwaho "
-              },
-              {
-                "sourceEnglish": "further away than how often you use it, ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "and write down where it should move to.",
-                "status": "draft",
-                "text": "ni ṅwale hune tsha tea u pfuluselwa hone."
-              }
-            ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "status": "draft",
+            "text": "Wanani tshithu tshithihi tsho ṱavhiwaho kule u fhira uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+            "provenance": "2026-10-06 root-accepted ordinary comparative draft; independent semantic backcheck; exact English source unchanged; visible unreviewed machine draft; no fluent approval"
           },
           {
             "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",

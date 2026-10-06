@@ -1,3 +1,4 @@
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { vegetablesL3AssetSizesBeforeOrdinary, vegetablesL3MediaBeforeEarlierProof } from './vegetables-l3-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -18,7 +19,7 @@ const expectedPaths = [
 export function marketFrameBeforeNativeResidual(path: string) {
   const url = path.startsWith('public/') ? path.slice(6) : path;
   const current = nativePairedResidualFrames.find((frame:any)=>frame.url===url);
-  if (!current) return undefined;
+  if (!current) return finalLanguageNextMediaBefore(path) ?? undefined;
   const previous = nativePairedResidualMediaBefore(url);
   assert.ok(previous, url + ': listed redraw has an exact validated predecessor');
   return {...previous, width:current.width, height:current.height};
@@ -145,7 +146,7 @@ export function marketMediaBeforeEarlierProof(path: string) {
   }
   // Only the immutable eleven-frame layer or a listed later redraw can expose
   // a predecessor. All other files fall through to actual byte/hash checks.
-  if (!expectedPaths.includes(url) && !nativePairedResidualFrames.some(frame => frame.url === url)) return undefined;
+  if (!expectedPaths.includes(url) && !nativePairedResidualFrames.some(frame => frame.url === url)) return finalLanguageNextMediaBefore(path) ?? undefined;
   const proof = validateCurrentMarketOrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   if (frame) return {sha256:frame.old.sha256,bytes:frame.old.bytes};

@@ -1,3 +1,4 @@
+import { finalLanguageNextNativeBefore } from './final-language-next-checks.ts';
 import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 import { vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
@@ -783,7 +784,8 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
   assert.doesNotMatch(l1.keyPoints[0].tshivendaDraft, /masia oṱhe/);
   assert.match(l1.quiz[0].options[1].tshivendaDraft, /either side without stepping on the growing area, avoiding compaction/);
   assert.match(l1.quiz[1].rationale.tshivendaDraft, /transplant shock/);
-  const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
+  // Later exact9 native leaves are validated before this historical English negative.
+  const l2 = finalLanguageNextNativeBefore(learnerVegetablesDraft).lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
   // Unchecked comparisons and absolutes remain English; well is not better, nor not-yet never.
   assert.equal(l2.quiz[0].options[0].tshivendaDraft, 'Zwi shumisa less seed nga u angaredza.');
   assert.equal(l2.quiz[0].options[0].reviewStatus, 'machine-draft');

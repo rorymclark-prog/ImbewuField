@@ -1,3 +1,4 @@
+import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBeforeHistory } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -37,7 +38,8 @@ function visible(target: any): string {
 export function deckBeforeNativePairedResidual<T extends { language: string; slides: any[] }>(actual: T, moduleId: 'vegetables-staples' | 'market-community'): T {
   const currentFiles: Record<string, any> = {};
   for (const path of paths) {
-    const bytes = readFileSync(path);
+    // Later 39 paired cells must pass their entire current layer before this older hash.
+    const bytes = Buffer.from(finalLanguageNextPairedBytesBefore(path, readFileSync(path)));
     const expectedHash = hashes[path];
     assert.ok(expectedHash, `${path}: newest layer has a full-file hash binding`);
     assert.equal(digest(bytes), expectedHash.after, `${path}: current complete paired file hash matches the accepted after-state`);
@@ -69,7 +71,7 @@ export function deckBeforeNativePairedResidual<T extends { language: string; sli
 
   const pairedPath = `docs/narration/${moduleId}.${actual.language}.paired-draft.json`;
   assert.ok(currentFiles[pairedPath], `${actual.language}: caller deck belongs to the validated six-file set`);
-  assert.deepEqual(actual, currentFiles[pairedPath].current, `${pairedPath}: caller supplied the verified current deck`);
+  assert.deepEqual(finalLanguageNextDeckBeforeHistory(pairedPath, actual), currentFiles[pairedPath].current, `${pairedPath}: caller supplied the verified current deck`);
   return structuredClone(currentFiles[pairedPath].previous);
 }
 

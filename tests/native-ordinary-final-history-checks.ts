@@ -1,3 +1,4 @@
+import { finalLanguageNextNativeBefore, finalLanguageNextDeckBefore, finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -137,6 +138,9 @@ function readResidualPairedFiles(): Record<string, any> {
 
 /** Validate the complete newest overlay and its full paired files before exposing the prior layer. */
 export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string, any>, pairedFiles: Record<string, any>): void {
+  // 6 October: validate all 48 later accepted fields before the dated 13-cell claim.
+  nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, finalLanguageNextNativeBefore(module)]));
+  pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, finalLanguageNextDeckBefore(path, deck)]));
   for (const exportName of residualExports) {
     assert.deepEqual(nativeModules[exportName], residualApplied[exportName], `${exportName}: complete current registry equals the frozen newest layer`);
   }
@@ -165,7 +169,7 @@ export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
   const current: any = actual;
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];
-  if (!exportName || !residualExports.has(exportName)) return actual;
+  if (!exportName || !residualExports.has(exportName)) return finalLanguageNextNativeBefore(actual);
   const modules = { ...runtimeByExport, [exportName]: current };
   validateNativeOrdinaryResidualLayer(modules, readResidualPairedFiles());
   return structuredClone(residualBefore[exportName]);
@@ -207,6 +211,8 @@ export function nativeOrdinaryBeforeFinalBatch<T>(actual: T): T {
 
 /** Rewind only listed final-layer presentation fields after validating their full imported registry. */
 export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: any }>(result: T, lessonId: string, language: string): T {
+  // The later nine source-bound leaves are validated before this dated presentation.
+  result = finalLanguageNextPresentationBefore(result as any, lessonId, language);
   const moduleId = lessonId.startsWith('reading-landscape-') ? 'reading-landscape'
     : lessonId.startsWith('vegetables-staples-') ? 'vegetables-staples' : lessonId.startsWith('market-community-') ? 'market-community' : '';
   const exportName = lessonId === 'vegetables-staples-l2' && language === 'ts' ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${moduleId}:${language}`];

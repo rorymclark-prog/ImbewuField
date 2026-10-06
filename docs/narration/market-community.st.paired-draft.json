@@ -438,8 +438,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Qala ka what you can reliably supply le seo bareki ba se batlang.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Qala ka seo o ka fanang ka sona ka ho tshepahala le seo bareki ba se batlang.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -610,9 +610,12 @@
               },
               {
                 "sourceEnglish": "check whether the variety is protected and whether permission is needed.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "hlahloba hore na variety e sireleditswe le hore na permission e a hlokahala.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: variety, permission"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -719,8 +722,8 @@
           },
           {
             "status": "draft",
-            "text": "Batla qualified advice bakeng sa unfamiliar disease or technical problems. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Batla qualified advice bakeng sa unfamiliar disease kapa mathata a technical. Boiphihlelo bo arolelanoang le thuso ya specialist di ka sebetsa mmoho.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

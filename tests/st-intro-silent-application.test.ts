@@ -1,3 +1,4 @@
+import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -26,6 +27,8 @@ function nativeBefore(language: string) {
 const get = (o: any, path: string) => path.split('/').reduce((v, k) => v[k], o);
 const joinTarget = (f: any, source?: string): string => f.status === 'mixed' ? f.segments.map((s: any) => joinTarget(s)).join('') : f.status === 'english-hold' ? f.sourceEnglish ?? f.english ?? source! : f.text;
 function validate(native: Record<string, any>, pairs: Record<string, any>) {
+  // 6 October: full latest39 paired validation precedes this dated60-field release.
+  pairs = Object.fromEntries(Object.entries(pairs).map(([language, pair]) => [language, finalLanguageNextDeckBefore(language === 'st' ? proof.outputs.newSilentST.path : proof.outputs.existingPaired[language].path, pair)]));
   assert.equal(sha(read(`${dir}/applied-proof.json`)), '356243b0a456b820208971c4349b893011a018d97e3e45943171152de9bd8d45');
   assert.equal(rows.length, 60);
   assert.equal(new Set(rows.map(r => `${r.language}/${r.fieldLocator}`)).size, 60);
@@ -47,7 +50,7 @@ function validate(native: Record<string, any>, pairs: Record<string, any>) {
     // Joined prose cannot authorize altered listed status, segmentation or reviewer provenance.
     // These immutable root-accepted file digests bind the complete applied objects first.
     const approved = language === 'st' ? proof.outputs.newSilentST : proof.outputs.existingPaired[language];
-    const bytes = read(approved.path);
+    const bytes = Buffer.from(finalLanguageNextPairedBytesBefore(approved.path, read(approved.path)));
     assert.equal(sha(bytes), approved.sha256, 'entire accepted paired output is byte-bound');
     assert.deepEqual(pairs[language], JSON.parse(bytes.toString()), 'listed paired metadata must equal the immutable approved output');
     const before = json(`${dir}/implementation-before/paired-before-${language}.json`);
@@ -141,7 +144,7 @@ test('source, approved target, status, answer index, unlisted field and pair-ord
     (p: any) => { p.ts.slides[6].target.body[1].segments[0].provenance = 'unapproved segment provenance'; },
   ]) {
     const pairs = livePairs(); mutate(pairs);
-    assert.throws(() => validate(liveNative, pairs), /listed paired metadata/);
+    assert.throws(() => validate(liveNative, pairs), /listed paired metadata|complete accepted latest paired layer/);
   }
 });
 

@@ -2374,26 +2374,27 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Find one thing ",
+                "sourceEnglish": "Find one thing planted ",
                 "status": "draft",
-                "text": "Kuma xilo xin’we lexi "
+                "text": "Kuma xilo xin’we lexi byariweke "
               },
               {
-                "sourceEnglish": "planted ",
-                "status": "draft",
-                "text": "byariweke "
+                "sourceEnglish": "further away than",
+                "status": "english-hold",
+                "reason": "Opaque distance versus use-frequency comparative retained exactly; no threshold or dimension invented."
               },
               {
-                "sourceEnglish": "further away than how often you use it, ",
-                "status": "english-hold"
+                "sourceEnglish": " how often you use it",
+                "status": "draft",
+                "text": " ku tala ka minkarhi leyi u xi tirhisaka ha yona"
               },
               {
-                "sourceEnglish": "and write down where it should move to.",
+                "sourceEnglish": ", and write down where it should move to.",
                 "status": "draft",
-                "text": "u tsala laha xi faneleke ku rhurhiseriwa kona."
+                "text": ", u tsala laha xi faneleke ku rhurhiseriwa kona."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",

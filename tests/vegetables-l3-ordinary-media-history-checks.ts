@@ -1,3 +1,4 @@
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary, vegetablesL1MediaBeforeEarlierProof } from './vegetables-l1-ordinary-media-history-checks.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 import assert from 'node:assert/strict';
@@ -96,7 +97,7 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
     // before descriptor with this L3 snapshot. L1 is later than this L3 media
     // snapshot, so its five changed cards project through their frozen before
     // descriptors; every other file is read.
-    if (laterResidualPaths.has(row.path)) {
+    if (laterResidualPaths.has(row.path) || finalLanguageNextMediaBefore('public' + row.path)) {
       const later = nativePairedResidualMediaBefore('public' + row.path);
       assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
       const l1Replacement = acceptedL1.frames.find((frame: { path: string }) => frame.path === row.path);

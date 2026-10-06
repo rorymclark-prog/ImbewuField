@@ -1,3 +1,4 @@
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { introFullAssetSizesBeforeOrdinary, introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -107,7 +108,7 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
     // The later 13-frame batch redraws three Vegetables slide-05 cards that
     // belong to this complete older inventory. Validate the live frame through
     // the newer proof, then project its exact before descriptor for this layer.
-    if (laterResidualPaths.has(row.path)) {
+    if (laterResidualPaths.has(row.path) || finalLanguageNextMediaBefore('public' + row.path)) {
       const later = nativePairedResidualMediaBefore('public' + row.path);
       assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
       assert.deepEqual(later, { bytes: row.bytes, sha256: row.sha256 }, `${row.path}: newest frame rewinds to this frozen L1 inventory`);
@@ -149,11 +150,11 @@ export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
   return before;
 }
 export function vegetablesL1MediaBeforeEarlierProof(path: string) {
-  const intro = introFullMediaBeforeEarlierProof(path);
-  if (intro) return intro;
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
-  // A miss exposes no old bytes; caller retains its actual unlisted-file check.
-  if (!expectedVegetablesL1Paths.includes(url)) return undefined;
+  // A newer projection returns the accepted L1 output for VE5. Returning that
+  // first skipped this dated L1 rewind and broke older Soil/Water preservation.
+  // Own members must pass the complete L1 guard and reach their exact old bytes.
+  if (!expectedVegetablesL1Paths.includes(url)) return introFullMediaBeforeEarlierProof(path);
   const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;

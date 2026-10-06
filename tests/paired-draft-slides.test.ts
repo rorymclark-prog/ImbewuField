@@ -1,3 +1,4 @@
+import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
 import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
@@ -11,7 +12,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync as actualReadFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, pairedSlideSelection, pairedTargetHasEnglishHolds, selectPairedSlides, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
@@ -35,6 +36,16 @@ import {
   checkCompleteSlideDrafts, checkConsistentDrafts, checkCreatureWords, checkGlossedWords, checkKeptTerms, checkNamesVerbatim,
   checkRepeatedSentences, checkSouthAfricanSesotho, checkSupportPlantTerms, checkThinningKept, sourceDraftPairs,
 } from './regional-full-draft-checks.ts';
+
+// 6 October: this dated assertion file consumes exact pre48 paired bytes only after full latest validation.
+const readFileSync: typeof actualReadFileSync = ((path: any, options?: any) => {
+  const raw = actualReadFileSync(path, options) as any;
+  if (typeof path === 'string' && path.startsWith('docs/narration/') && path.endsWith('.paired-draft.json')) {
+    const projected = finalLanguageNextPairedBytesBefore(path, raw);
+    return options ? projected : Buffer.from(projected);
+  }
+  return raw;
+}) as typeof actualReadFileSync;
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const marketSource = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));

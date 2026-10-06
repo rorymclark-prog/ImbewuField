@@ -1,3 +1,4 @@
+import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -89,7 +90,7 @@ function validateCurrentFileHashes() {
     assert.equal(sha(historical), row.sha256, `${row.path}: exact accepted native release bytes`);
   }
   for (const row of Object.values(outputs.existingPaired) as any[]) {
-    assert.equal(sha(readFileSync(row.path)), row.sha256, `${row.path}: exact accepted paired release bytes`);
+    assert.equal(sha(finalLanguageNextPairedBytesBefore(row.path, readFileSync(row.path))), row.sha256, `${row.path}: exact accepted paired release bytes`);
   }
   assert.equal(sha(readFileSync(outputs.newSilentST.path)), outputs.newSilentST.sha256,
     'new silent Sesotho paired deck matches the accepted release bytes');
@@ -145,13 +146,15 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
     nativeBeforeSilent[language] = previous;
   }
 
-  const pairedInput = input.paired ?? readCurrentIntroSilentTextInputs().paired;
+  // Only after full latest validation may the older 60-field release be reconstructed.
+  const pairedInput = Object.fromEntries(Object.entries(input.paired ?? readCurrentIntroSilentTextInputs().paired).map(([language, deck]) => [language, finalLanguageNextDeckBefore(`docs/narration/intro-permaculture.${language}.paired-draft.json`, deck)]));
   const currentSilentST = input.silentSesotho ?? readCurrentIntroSilentTextInputs().silentSesotho;
   // Bind caller-provided objects to the exact accepted files as well as the
   // row-by-row reconstruction below. This catches extra shadow properties on
   // mixed targets, which can leave their visible text unchanged.
   for (const language of ['ve', 'ts'] as const) {
-    assert.deepEqual(pairedInput[language], readJson(proof.outputs.existingPaired[language].path),
+    // Both sides are the exact guarded predecessor; the live file now carries39 later pairs.
+    assert.deepEqual(pairedInput[language], finalLanguageNextDeckBefore(proof.outputs.existingPaired[language].path, readJson(proof.outputs.existingPaired[language].path)),
       `${language}: supplied paired object is byte-source-equivalent to the accepted current registry`);
   }
   assert.deepEqual(pairedInput.st, readJson(proof.outputs.unchangedOldST.path),
