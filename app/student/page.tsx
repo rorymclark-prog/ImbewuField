@@ -27,8 +27,8 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
-import { useLanguage } from '@/lib/i18n';
-import { allTracks, hasNarration, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
+import { T_en, useLanguage } from '@/lib/i18n';
+import { allTracks, hasNarration, requiresExplicitNarrationChoice, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { resolveLearnerLessonPresentation } from '@/lib/course-localization';
@@ -221,6 +221,13 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
   const regionalFallback = (lang === 'st' || lang === 'ts' || lang === 've') && presentation.status === 'english-fallback';
   const regionalDeck = resolveDeckLang(moduleId, lang);
   const regionalNarration = resolveNarrationLang(moduleId, lang);
+  // The entry must describe the same silent default as the player, rather than promise a voice.
+  const silentDeckEntry = requiresExplicitNarrationChoice(moduleId, lang);
+  const deckDescriptionKey = silentDeckEntry
+    ? regionalNarration?.lang === 'en' ? 'studentSilentDeckDescription'
+      : regionalNarration ? 'courseDeckSilentStatus' : 'studentSilentDeckNoVoiceDescription'
+    : 'studentDeckDescription';
+  const deckCount = String(deckSlideCount(moduleId, lesson.id));
   const regionalMediaNotice = `${regionalDeck?.exact
     ? 'Source-paired draft slides are available; some text remains in English.'
     : 'Slides remain in English.'} ${regionalNarration?.exact
@@ -322,11 +329,14 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                   <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
-                      {t('studentWatchAndListen')}
+                      {t(silentDeckEntry ? 'studentViewSilentSlides' : 'studentWatchAndListen')}
                     </span>
                     <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
-                      {t('studentDeckDescription').replace('{count}', String(deckSlideCount(moduleId, lesson.id)))}
+                      {t(deckDescriptionKey).replace('{count}', deckCount)}
                     </span>
+                    {silentDeckEntry && <span lang="en" className="mt-1 block font-sans text-xs" style={{ color: '#5C5040' }}>
+                      English source: {T_en.studentViewSilentSlides}. {T_en[deckDescriptionKey].replace('{count}', deckCount)}
+                    </span>}
                   </span>
                 </button>
               )}

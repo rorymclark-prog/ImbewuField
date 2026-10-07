@@ -1,0 +1,2196 @@
+{
+  "base": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentFacilitatorVideo",
+      "sourceEnglish": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "candidate": "Video ya thupelo ya facilitators — ke ya mananeo ao batho ba kopanang ka seqo ho ona; ha se ya streaming mona.",
+      "review": "Independent final facilitator check",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitError",
+      "sourceEnglish": "Could not submit — check your connection and try again.",
+      "candidate": "Ha e a kgona ho romela — hlahloba kgokelo ya hao, ebe o leka hape.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoAdded",
+      "sourceEnglish": "Photo added — tap to change",
+      "candidate": "Senepe se kentswe — tlanya ho se fetola",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoRequired",
+      "sourceEnglish": "Add a photo (required)",
+      "candidate": "Kenya senepe (sea hlokahala)",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceAdded",
+      "sourceEnglish": "Voice note added — {name}",
+      "candidate": "Molaetsa wa lentswe o kentswe — {name}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceOptional",
+      "sourceEnglish": "Add a voice note (optional)",
+      "candidate": "Kenya molaetsa wa lentswe (ha o tlamehe)",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitting",
+      "sourceEnglish": "Submitting…",
+      "candidate": "E a romelwa…",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentResubmit",
+      "sourceEnglish": "Resubmit",
+      "candidate": "Romela hape",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSubmit",
+      "sourceEnglish": "Submit",
+      "candidate": "Romela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAlreadySubmitted",
+      "sourceEnglish": "Already submitted — submitting again replaces the photo and voice note.",
+      "candidate": "E se e rometswe — ha o romela hape, senepe le molaetsa wa lentswe di tla nkelwa sebaka.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentPortalBody",
+      "sourceEnglish": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "candidate": "E etseditswe baithuti — eseng role ya hao. Kgutlela leqepheng la hao la lapeng hore o tswele pele.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentCourseComplete",
+      "sourceEnglish": "Course complete!",
+      "candidate": "Thupelo e phethilwe!",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentProgressError",
+      "sourceEnglish": "Progress could not be loaded or saved. Check your connection or account access.",
+      "candidate": "Tsoelo-pele ha e a kgona ho jarollwa kapa ho bolokwa. Hlahloba kgokelo ya hao kapa phihlello ya akhaonto.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentSetByMentor",
+      "sourceEnglish": "Set by your mentor",
+      "candidate": "E behilwe ke moeletsi wa hao",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentProgress",
+      "sourceEnglish": "{done} of {total} done.",
+      "candidate": "{done} ho tse {total} di phethilwe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentOverdue",
+      "sourceEnglish": "{count} overdue.",
+      "candidate": "{count} di siilwe ke nako.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentDueSoon",
+      "sourceEnglish": "{count} due this week.",
+      "candidate": "{count} di lokela ho phethwa bekeng ena.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentsOrder",
+      "sourceEnglish": "Assigned modules are listed first. Everything else is still open to you.",
+      "candidate": "Dimojule tseo o di abetsweng di thathamisitswe pele. Tse ding tsohle o ntse o ka di bula.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessons",
+      "sourceEnglish": "Lessons only",
+      "candidate": "Dithuto feela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentMarkComplete",
+      "sourceEnglish": "Mark as complete",
+      "candidate": "Tshwaya e le e phethilweng",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentListenModule",
+      "sourceEnglish": "Listen to the whole module",
+      "candidate": "Mamela mojule wohle",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSubmittedResubmit",
+      "sourceEnglish": "Submitted — tap to resubmit",
+      "candidate": "E rometswe — tlanya ho e romela hape",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitModule",
+      "sourceEnglish": "Submit this module",
+      "candidate": "Romela mojule ona",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentCapstoneComplete",
+      "sourceEnglish": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "candidate": "O qetile dimojule tsohle. Haha sephuthelo sa hao sa ho qetela sa meralo ho Design Studio — ke sona mosebetsi wa hao wa ho phethela thupelo.",
+      "review": "Independent root-repair review ACCEPT_WITH_REVIEW",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentCompletionMessage",
+      "sourceEnglish": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "candidate": "O phethile kharikhulamo yohle ya ImbewuField ya permaculture. Haeba o na le moeletsi, o tla bona tsoelo-pele ena ha a boela a sheba.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentProgressFirebase",
+      "sourceEnglish": "Progress will save to Firebase once the backend is connected",
+      "candidate": "Tsoelo-pele e tla bolokwa ho Firebase hang ha backend e hoketswe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckRegion",
+      "sourceEnglish": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "candidate": "Diselaete tsa thuto. Sebedisa dinotlolo tsa metsu ya Leqele le Letona ho fetola diselaete.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseNarrationLanguage",
+      "sourceEnglish": "Narration language",
+      "candidate": "Puo ya tlhaloso e buuwang",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideImageSize",
+      "sourceEnglish": "Slide size",
+      "candidate": "Boholo ba selaete",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckTurnPhoneHint",
+      "sourceEnglish": "Turn your phone sideways for a wider animation.",
+      "candidate": "Fetolela fono ka thoko hore animation e bonahale ka bophara.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckWatch",
+      "sourceEnglish": "Watch · {seconds}s · {size}",
+      "candidate": "Shebella · {seconds}s · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImageAria",
+      "sourceEnglish": "Open still image for {title} at full size",
+      "candidate": "Bula setshwantsho se sa sisinyeheng sa {title} ka boholo bo felletseng",
+      "review": "Independent root-repair review ACCEPT_WITH_REVIEW",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImage",
+      "sourceEnglish": "View slide image · zoom",
+      "candidate": "Sheba setshwantsho sa selaete · atamisa",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationAria",
+      "sourceEnglish": "Narration for {title}",
+      "candidate": "Tlhaloso e buuwang ya {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFailed",
+      "sourceEnglish": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "candidate": "Tlhaloso e buuwang ha e a kgona ho bapala. Hlahloba kgokelo ya hao, ebe o tobetsa Bapala thuto hape, kapa o bale selaete sena ka tlase.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckAnimationFailed",
+      "sourceEnglish": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "candidate": "Animation ha e a kgona ho buleha. O ka tswela pele ho mamela, wa bala selaete, kapa wa tlanya Shebella ho leka hape.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideLanguage",
+      "sourceEnglish": "This slide is in {language}.",
+      "candidate": "Selaete sena se ka {language}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFallback",
+      "sourceEnglish": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "candidate": "Tlhaloso e buuwang e ka {spokenLanguage}. Tlhaloso ya {appLanguage} ha e eso fumanehe bakeng sa mojule ona.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSilentStatus",
+      "sourceEnglish": "No narration will play. Use Next to read at your own pace.",
+      "candidate": "Ha ho tlhaloso e buuwang e tla bapala. Sebedisa E latelang ho bala ka lebelo la hao.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlayAria",
+      "sourceEnglish": "Play the lesson",
+      "candidate": "Bapala thuto",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlay",
+      "sourceEnglish": "Play lesson",
+      "candidate": "Bapala thuto",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioListen",
+      "sourceEnglish": "Listen",
+      "candidate": "Mamela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioLanguageMissing",
+      "sourceEnglish": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "candidate": "Mojule ona ha o eso rekotwa ka {appLanguage} — jwale ho bapala {playingLanguage}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPauseTrack",
+      "sourceEnglish": "Pause {title}",
+      "candidate": "Emisa {title} nakwana",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayTrack",
+      "sourceEnglish": "Play {title}",
+      "candidate": "Bapala {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayFailed",
+      "sourceEnglish": "Could not play this clip — check your connection and try again.",
+      "candidate": "Ha e a kgona ho bapala sekotwana sena — hlahloba kgokelo ya hao, ebe o leka hape.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadUnsupported",
+      "sourceEnglish": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "candidate": "Sebadi sena ha se kgone ho boloka dithuto hore di sebediswe ntle le marang-rang. Chrome fonong ya Android e ka kgona.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineGetSlidesWhileSignal",
+      "sourceEnglish": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "candidate": "Boloka diselaete le ditshwantsho tse bontshwang fonong ena. Jwale diselaete di sebetsa ntle le marang-rang, empa ha di na tlhaloso e buuwang kapa video.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineGetWhileSignal",
+      "sourceEnglish": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "candidate": "Fumana diselaete, tlhaloso e buuwang le dikotwana fonong ena ha o ntse o na le kgokelo. Jwale di sebetsa ntle le airtime.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineEnglishMediaFallback",
+      "sourceEnglish": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "candidate": "Sephuthelo sena se na le diselaete kapa tlhaloso e buuwang ka Senyesemane moo puo eo o e kgethileng e so fumanehe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineRemovePack",
+      "sourceEnglish": "Remove saved lessons",
+      "candidate": "Tlosa dithuto tse bolokilweng",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadBytesProgress",
+      "sourceEnglish": "{current} of {total}",
+      "candidate": "{current} ho {total}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineStopDownload",
+      "sourceEnglish": "Stop",
+      "candidate": "Emisa",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineFinishDownload",
+      "sourceEnglish": "Finish download · {size} left",
+      "candidate": "Qetella ho jarolla · {size} e setse",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalPackChoice",
+      "sourceEnglish": "Regional deck download contents",
+      "candidate": "Dintho tse jarollwang bakeng sa diselaete tsa puo eo o e kgethileng",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMedia",
+      "sourceEnglish": "Slides + English narration and clips",
+      "candidate": "Diselaete + tlhaloso e buuwang ya Senyesemane le dikotwana",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMediaNote",
+      "sourceEnglish": "The full pack includes available English source narration, animations and lesson images.",
+      "candidate": "Sephuthelo se felletseng se kenyeletsa tlhaloso e buuwang ya mohlodi wa Senyesemane e fumanehang, di-animation le ditshwantsho tsa dithuto.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadQuality",
+      "sourceEnglish": "Download quality",
+      "candidate": "Boleng ba ho jarolla",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandard",
+      "sourceEnglish": "Standard",
+      "candidate": "Tlwaelehileng",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandardNote",
+      "sourceEnglish": "for phones on data",
+      "candidate": "bakeng sa difono tse sebedisang data",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigher",
+      "sourceEnglish": "Higher quality",
+      "candidate": "Boleng bo hodimo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigherNote",
+      "sourceEnglish": "facilitators & funders · wifi",
+      "candidate": "batsamaisi le bafani ba ditjhelete · wifi",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesProgress",
+      "sourceEnglish": "{done} of {total} files",
+      "candidate": "Difaele tse {done} ho tse {total}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesFailed",
+      "sourceEnglish": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "candidate": "Difaele tse {count} ha di a jarollwa. Tlanya Qetella ho jarolla hape ha o ntse o na le kgokelo — tse ding di se di bolokilwe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineSavedMayClear",
+      "sourceEnglish": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "candidate": "Di bolokilwe, empa fono ena e ka di hlakola ha sebaka sa polokelo se fokotseha. Hlahloba dithuto tse bolokilweng hape pele o tloha moo kgokelo e leng teng.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "offlineLowStorage",
+      "sourceEnglish": "This phone is low on space — the download may not fit.",
+      "candidate": "Sebaka sa polokelo fonong ena se a fokola — ho ka etsahala hore download e se lekane.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCorrect",
+      "sourceEnglish": "Correct",
+      "candidate": "Swi lulamile",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentFacilitatorVideo",
+      "sourceEnglish": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "candidate": "Vhidiyo ya ndzetelo wa mufambisi — ya minhlangano ya vanhu lava hlanganaka hi ku kongoma; a yi tlangiwi laha.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitError",
+      "sourceEnglish": "Could not submit — check your connection and try again.",
+      "candidate": "A swi kotekanga ku rhumela — kambela connection ya wena, kutani u ringeta nakambe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoAdded",
+      "sourceEnglish": "Photo added — tap to change",
+      "candidate": "Xifaniso xi engeteriwile — tinya ku cinca",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoRequired",
+      "sourceEnglish": "Add a photo (required)",
+      "candidate": "Engetela xifaniso (swa laveka)",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceAdded",
+      "sourceEnglish": "Voice note added — {name}",
+      "candidate": "Rhekhodo ya rito yi engeteriwile — {name}",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceOptional",
+      "sourceEnglish": "Add a voice note (optional)",
+      "candidate": "Engetela rhekhodo ya rito (swa hlawuleka)",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitting",
+      "sourceEnglish": "Submitting…",
+      "candidate": "Swa rhumeriwa…",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentResubmit",
+      "sourceEnglish": "Resubmit",
+      "candidate": "Rhumela nakambe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAlreadySubmitted",
+      "sourceEnglish": "Already submitted — submitting again replaces the photo and voice note.",
+      "candidate": "Se u rhumerile — loko u tlhela u rhumela, swi siva xifaniso ni rhekhodo ya rito.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentPortalBody",
+      "sourceEnglish": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "candidate": "Yi endleriwe vadyondzi — a hi ya role ya wena. Tlhela eka kaya ra wena u ya mahlweni.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCourseComplete",
+      "sourceEnglish": "Course complete!",
+      "candidate": "Khoso yi herile!",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentModulesComplete",
+      "sourceEnglish": "{done} of {total} modules complete",
+      "candidate": "Ku herile {done} eka {total} wa timodule",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressError",
+      "sourceEnglish": "Progress could not be loaded or saved. Check your connection or account access.",
+      "candidate": "A swi kotekanga ku layicha kumbe ku hlayisa nhluvuko wa wena. Kambela connection ya wena kumbe mpfumelelo wa account.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentRemaining",
+      "sourceEnglish": "remaining",
+      "candidate": "swi sele",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentSetByMentor",
+      "sourceEnglish": "Set by your mentor",
+      "candidate": "Yi vekiwile hi mentor wa wena",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentProgress",
+      "sourceEnglish": "{done} of {total} done.",
+      "candidate": "{done} eka {total} swi endliwile.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentOverdue",
+      "sourceEnglish": "{count} overdue.",
+      "candidate": "{count} swi hundzile nkarhi.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentDueSoon",
+      "sourceEnglish": "{count} due this week.",
+      "candidate": "{count} swi fanele ku endliwa vhiki leri.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentsOrder",
+      "sourceEnglish": "Assigned modules are listed first. Everything else is still open to you.",
+      "candidate": "Timodule leti u averiweke tona ti kombisiwa ku sungula. Letin'wana hinkwato ta ha pfulekile eka wena.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveBeforeSignal",
+      "sourceEnglish": "Save lessons to this phone before you leave signal",
+      "candidate": "Hlayisa tidyondzo eka riqingho leri u nga si suka laha ku nga na signal",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveAvailable",
+      "sourceEnglish": "Save available lessons to this phone",
+      "candidate": "Hlayisa tidyondzo leti kumekaka eka riqingho leri",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentModules",
+      "sourceEnglish": "modules",
+      "candidate": "timodule",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentAssigned",
+      "sourceEnglish": "Assigned",
+      "candidate": "Averiwile",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentLessonOne",
+      "sourceEnglish": "lesson",
+      "candidate": "dyondzo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveModule",
+      "sourceEnglish": "Save {title} to this phone",
+      "candidate": "Hlayisa {title} eka riqingho leri",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmittedResubmit",
+      "sourceEnglish": "Submitted — tap to resubmit",
+      "candidate": "Se u rhumerile — tinya u rhumela nakambe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitModule",
+      "sourceEnglish": "Submit this module",
+      "candidate": "Rhumela module leyi",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneComplete",
+      "sourceEnglish": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "candidate": "U hetile module yin'wana na yin'wana. Endla seti ya wena ya pulani ya dizayini yo hetelela eka Design Studio — hi yona mbuyelo lowu hetiselaka khoso ya wena.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneLocked",
+      "sourceEnglish": "Finish and submit all {count} modules to unlock your capstone design.",
+      "candidate": "Hetisa u tlhela u rhumela timodule hinkwato ta {count} ku pfula capstone ya wena ya dizayini.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCompletionMessage",
+      "sourceEnglish": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "candidate": "U hetile kharikhulamu ya permaculture ya ImbewuField hinkwayo. Loko u ri na mentor, u ta vona nhluvuko lowu loko a tlhela a wu kambela.",
+      "review": "Independent root-repair review REPAIR; only acute removal, concord suffix unchanged",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressFirebase",
+      "sourceEnglish": "Progress will save to Firebase once the backend is connected",
+      "candidate": "Nhluvuko wu ta hlayisiwa eka Firebase loko backend yi hlanganisiwile",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentCategoryBusiness",
+      "sourceEnglish": "Business",
+      "candidate": "Bindzu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckRegion",
+      "sourceEnglish": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "candidate": "Slides ta dyondzo. Tirhisa tikhii ta miseve ya Ximatsi na Xinene ku cinca slides.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseNarrationLanguage",
+      "sourceEnglish": "Narration language",
+      "candidate": "Ririmi ra nhlamuselo hi rito",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideImageSize",
+      "sourceEnglish": "Slide size",
+      "candidate": "Vukulu bya slide",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckTurnPhoneHint",
+      "sourceEnglish": "Turn your phone sideways for a wider animation.",
+      "candidate": "Hundzuluxa riqingho ra wena ri va hi tlhelo leswaku animation yi anama.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckWatch",
+      "sourceEnglish": "Watch · {seconds}s · {size}",
+      "candidate": "Vona · {seconds}s · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImageAria",
+      "sourceEnglish": "Open still image for {title} at full size",
+      "candidate": "Pfula still image ya {title} hi vukulu hinkwabyo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImage",
+      "sourceEnglish": "View slide image · zoom",
+      "candidate": "Vona xifaniso xa slide · zoom",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationAria",
+      "sourceEnglish": "Narration for {title}",
+      "candidate": "Nhlamuselo hi rito ya {title}",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFailed",
+      "sourceEnglish": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "candidate": "Nhlamuselo hi rito a yi tlanganga. Kambela connection ya wena kutani u tshikelela Tlanga dyondzo nakambe, kumbe u hlaya slide leyi laha hansi.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckAnimationFailed",
+      "sourceEnglish": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "candidate": "Animation a yi kotanga ku layicha. U nga ya mahlweni u yingisela, u hlaya slide, kumbe u tinya Vona leswaku u ringeta nakambe.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideLanguage",
+      "sourceEnglish": "This slide is in {language}.",
+      "candidate": "Slide leyi yi hi {language}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFallback",
+      "sourceEnglish": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "candidate": "Nhlamuselo hi rito yi hi {spokenLanguage}. Nhlamuselo hi rito ya {appLanguage} a yi kumeki eka module leyi sweswi.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSilentStatus",
+      "sourceEnglish": "No narration will play. Use Next to read at your own pace.",
+      "candidate": "A ku nge tlangi nhlamuselo hi rito. Tirhisa Landzelaka ku hlaya hi rivilo ra wena.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckReadSlide",
+      "sourceEnglish": "Read this slide · {language}",
+      "candidate": "Hlaya slide leyi · {language}",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioListen",
+      "sourceEnglish": "Listen",
+      "candidate": "Yingisela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioLanguageMissing",
+      "sourceEnglish": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "candidate": "Module leyi a yi rhekhodiwanga hi {appLanguage} sweswi — ku tlanga {playingLanguage}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPauseTrack",
+      "sourceEnglish": "Pause {title}",
+      "candidate": "Yimisa {title} swa xinkarhana",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayTrack",
+      "sourceEnglish": "Play {title}",
+      "candidate": "Tlanga {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayFailed",
+      "sourceEnglish": "Could not play this clip — check your connection and try again.",
+      "candidate": "A swi kotekanga ku tlanga clip leyi — kambela connection ya wena kutani u ringeta nakambe.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadUnsupported",
+      "sourceEnglish": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "candidate": "Browser leyi a yi koti ku hlayisa tidyondzo leswaku ti tirhisiwa offline. Chrome eka Android yi nga swi kota.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetSlidesWhileSignal",
+      "sourceEnglish": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "candidate": "Hlayisa slides ni ti-poster leti kombisiwaka eka riqingho leri. Kutani deck yi ta tirha offline handle ka narration kumbe vhidiyo.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetWhileSignal",
+      "sourceEnglish": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "candidate": "Kuma slides, narration ni ti-clip eka riqingho leri loko u ri na signal. Kutani swi ta tirha handle ka airtime.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishSlidesFallback",
+      "sourceEnglish": "Some slides remain in English where your chosen language is not available yet.",
+      "candidate": "Slides tin’wana ti ha ri hi Xinghezi laha ririmi leri u ri hlawuleke ri nga si kumekaka.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishMediaFallback",
+      "sourceEnglish": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "candidate": "Pack leyi yi katsa slides kumbe narration hi Xinghezi laha ririmi leri u ri hlawuleke ri nga si kumekaka.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineOnThisPhone",
+      "sourceEnglish": "On this phone · {size}",
+      "candidate": "Eka riqingho leri · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadBytesProgress",
+      "sourceEnglish": "{current} of {total}",
+      "candidate": "{current} eka {total}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFinishDownload",
+      "sourceEnglish": "Finish download · {size} left",
+      "candidate": "Hetisa ku dawuniloda · ku sele {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadPack",
+      "sourceEnglish": "Download · {size}",
+      "candidate": "Dawuniloda · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalPackChoice",
+      "sourceEnglish": "Regional deck download contents",
+      "candidate": "Leswi swi dawunilodiwaka eka slides ta ririmi leri u ri hlawuleke.",
+      "review": "Independent root-repair review REPAIR; final source-context check confirms selected-language scope, excludes geography",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalSlidesOnly",
+      "sourceEnglish": "Slides only",
+      "candidate": "Slides ntsena",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMedia",
+      "sourceEnglish": "Slides + English narration and clips",
+      "candidate": "Slides + nhlamuselo hi rito ya Xinghezi ni ti-clip",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMediaNote",
+      "sourceEnglish": "The full pack includes available English source narration, animations and lesson images.",
+      "candidate": "Pack leyi heleleke yi katsa nhlamuselo hi rito ya English source leyi kumekaka, ti-animation ni swifaniso swa tidyondzo.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadQuality",
+      "sourceEnglish": "Download quality",
+      "candidate": "Quality ya download",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandardNote",
+      "sourceEnglish": "for phones on data",
+      "candidate": "eka tifoni leti tirhisaka data",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigher",
+      "sourceEnglish": "Higher quality",
+      "candidate": "Quality ya le henhla",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigherNote",
+      "sourceEnglish": "facilitators & funders · wifi",
+      "candidate": "vafambisi ni vaseketeri hi timali · wifi",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesProgress",
+      "sourceEnglish": "{done} of {total} files",
+      "candidate": "{done} eka {total} wa tifayela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesFailed",
+      "sourceEnglish": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "candidate": "{count} wa tifayela a ma dawunilodiwanga. Tinya Hetisa ku dawuniloda nakambe loko u ri na signal — letin’wana se ti hlayisiwile.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineSavedMayClear",
+      "sourceEnglish": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "candidate": "Swi hlayisiwile, kambe riqingho leri ri nga swi susa loko ndhawu yo hlayisa yi ri yitsongo. Kambela tidyondzo leti hlayisiweke nakambe u nga si suka eka signal.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "offlineLowStorage",
+      "sourceEnglish": "This phone is low on space — the download may not fit.",
+      "candidate": "Riqingho leri ri sala ri nga ri na ndhawu yo enela — download yi nga ha ka yi nga ringani.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCorrect",
+      "sourceEnglish": "Correct",
+      "candidate": "Zwo luga",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentListenOrRead",
+      "sourceEnglish": "Listen or read",
+      "candidate": "Thetshelesani kana ni vhale",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentWatchAndListen",
+      "sourceEnglish": "Watch and listen",
+      "candidate": "Vhonani ni thetshelese",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentFacilitatorVideo",
+      "sourceEnglish": "Facilitator training video — for in-person sessions, not for streaming here.",
+      "candidate": "Vidiyo ya u gudisa facilitator — ya miṱangano ya vhathu vha re fhethu huthihi, hu si ya streaming hafha.",
+      "review": "Independent root-repair review REPAIR; retains root independently checked training verb, accepts narrow streaming repair",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitError",
+      "sourceEnglish": "Could not submit — check your connection and try again.",
+      "candidate": "A zwi koni u rumela — ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoAdded",
+      "sourceEnglish": "Photo added — tap to change",
+      "candidate": "Tshifanyiso tsho engedzwa — tobani uri ni tshi shandule.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoRequired",
+      "sourceEnglish": "Add a photo (required)",
+      "candidate": "Engedzani tshifanyiso (zwi a ṱoḓea).",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceAdded",
+      "sourceEnglish": "Voice note added — {name}",
+      "candidate": "Voice note yo engedzwa — {name}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceOptional",
+      "sourceEnglish": "Add a voice note (optional)",
+      "candidate": "Engedzani voice note (ni nga khetha).",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitting",
+      "sourceEnglish": "Submitting…",
+      "candidate": "I khou rumela…",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentResubmit",
+      "sourceEnglish": "Resubmit",
+      "candidate": "Rumelani hafhu",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmit",
+      "sourceEnglish": "Submit",
+      "candidate": "Rumelani",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAlreadySubmitted",
+      "sourceEnglish": "Already submitted — submitting again replaces the photo and voice note.",
+      "candidate": "Zwo no rumelwa — musi ni tshi rumela hafhu, zwi ḓo dzhiela tshifanyiso na voice note vhudzuloni.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentPortal",
+      "sourceEnglish": "Learning Portal",
+      "candidate": "Fhethu ha u guda",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalTitle",
+      "sourceEnglish": "This is the Learning Portal",
+      "candidate": "Hafha ndi fhethu ha u guda",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalBody",
+      "sourceEnglish": "It's set up for students — not your role. Head back to your own home to keep going.",
+      "candidate": "Ho itelwa vhagudi — a si role yaṋu. Vhuyelani kha siaṱari ḽaṋu ḽa hayani uri ni bvele phanḓa.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentBackHome",
+      "sourceEnglish": "Back to my home",
+      "candidate": "Murahu kha siaṱari ḽanga ḽa hayani",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentRevisit",
+      "sourceEnglish": "Revisit your studies",
+      "candidate": "Sedzani ngudo dzaṋu hafhu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCourseComplete",
+      "sourceEnglish": "Course complete!",
+      "candidate": "Khoso yo fhela!",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentSetByMentor",
+      "sourceEnglish": "Set by your mentor",
+      "candidate": "Zwo vhewa nga mentor waṋu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentProgress",
+      "sourceEnglish": "{done} of {total} done.",
+      "candidate": "Zwo fhela: {done} kha {total}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentOverdue",
+      "sourceEnglish": "{count} overdue.",
+      "candidate": "{count} dzo fhirelwa nga tshifhinga.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentDueSoon",
+      "sourceEnglish": "{count} due this week.",
+      "candidate": "{count} dzi tea u fhedzwa ino vhege.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentsOrder",
+      "sourceEnglish": "Assigned modules are listed first. Everything else is still open to you.",
+      "candidate": "Modulu dzo ni nangelwaho dzi sumbedzwa u thoma. Zwiṅwe zwoṱhe ni kha ḓi kona u zwi vula.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentLocked",
+      "sourceEnglish": "Locked",
+      "candidate": "Zwo valelwa",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentComplete",
+      "sourceEnglish": "Complete",
+      "candidate": "Yo fhela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessons",
+      "sourceEnglish": "Lessons only",
+      "candidate": "Ngudo fhedzi",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentAssigned",
+      "sourceEnglish": "Assigned",
+      "candidate": "Zwo ni nangelwaho",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentDone",
+      "sourceEnglish": "Done",
+      "candidate": "Zwo fhela",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentListenModule",
+      "sourceEnglish": "Listen to the whole module",
+      "candidate": "Thetshelesani modulu yoṱhe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmittedResubmit",
+      "sourceEnglish": "Submitted — tap to resubmit",
+      "candidate": "Zwo rumelwa — tobani uri ni rumele hafhu.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitModule",
+      "sourceEnglish": "Submit this module",
+      "candidate": "Rumelani modulu iyi",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstone",
+      "sourceEnglish": "Capstone: your farm design",
+      "candidate": "Mushumo wa u fhedza: pulane ya bulasi yaṋu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneComplete",
+      "sourceEnglish": "You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.",
+      "candidate": "No fhedza modulu dzoṱhe. Kha Design Studio, itani plan-set ya pulane yaṋu ya u fhedza — ndi yone mushumo waṋu wa u fhedza khoso.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneLocked",
+      "sourceEnglish": "Finish and submit all {count} modules to unlock your capstone design.",
+      "candidate": "Fhedzani ni rumedze modulu dzoṱhe dza {count} uri ni vule pulane yaṋu ya u fhedza.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCompletionMessage",
+      "sourceEnglish": "You have completed the full ImbewuField permaculture curriculum. If you have a mentor, they will see this progress next time they check in.",
+      "candidate": "No fhedza khoso yoṱhe ya permaculture ya ImbewuField. Arali ni na mentor, u ḓo vhona mvelaphanḓa iyi musi a tshi ni kwama hafhu.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressFirebase",
+      "sourceEnglish": "Progress will save to Firebase once the backend is connected",
+      "candidate": "Mvelaphanḓa i ḓo vhulungwa kha Firebase musi backend yo no ṱumanywa.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentCategoryBusiness",
+      "sourceEnglish": "Business",
+      "candidate": "Bindu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckRegion",
+      "sourceEnglish": "Lesson slides. Use Left and Right arrow keys to change slides.",
+      "candidate": "Slides dza ngudo. Shumisani keys dza misevhe ya Left na Right u shandula slides.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseNarrationLanguage",
+      "sourceEnglish": "Narration language",
+      "candidate": "Luambo lwa ṱhalutshedzo nga ipfi",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExitAria",
+      "sourceEnglish": "Exit full screen",
+      "candidate": "Bvani kha tshikirini tshoṱhe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnterAria",
+      "sourceEnglish": "Show slides full screen",
+      "candidate": "Sumbedzani slides nga tshikirini tshoṱhe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExit",
+      "sourceEnglish": "Exit full screen",
+      "candidate": "Bvani kha tshikirini tshoṱhe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnter",
+      "sourceEnglish": "Full screen",
+      "candidate": "Tshikirini tshoṱhe",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckClose",
+      "sourceEnglish": "Close",
+      "candidate": "Valani",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideImageSize",
+      "sourceEnglish": "Slide size",
+      "candidate": "Saizi ya slide",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckTurnPhoneHint",
+      "sourceEnglish": "Turn your phone sideways for a wider animation.",
+      "candidate": "Shandukisani founu yaṋu nga matungo uri animation i vhe na vhuphara vhunzhi.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckWatch",
+      "sourceEnglish": "Watch · {seconds}s · {size}",
+      "candidate": "Vhonani · {seconds}s · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImageAria",
+      "sourceEnglish": "Open still image for {title} at full size",
+      "candidate": "Vulani still image ya {title} nga vhuhulwane ho fhelelaho.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImage",
+      "sourceEnglish": "View slide image · zoom",
+      "candidate": "Vhonani tshifanyiso tsha slide · zoom",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationAria",
+      "sourceEnglish": "Narration for {title}",
+      "candidate": "Ṱhalutshedzo nga ipfi ya {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFailed",
+      "sourceEnglish": "Narration could not play. Check your connection and press Play lesson again, or read this slide below.",
+      "candidate": "Ṱhalutshedzo nga ipfi a yo ngo tamba. Ṱolani vhuṱumani haṋu ni tobani Tshimbidzani ngudo hafhu, kana ni vhale slide iyi afho fhasi.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideLanguage",
+      "sourceEnglish": "This slide is in {language}.",
+      "candidate": "Slide iyi i kha {language}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFallback",
+      "sourceEnglish": "Narration is in {spokenLanguage}. {appLanguage} narration is not available for this module yet.",
+      "candidate": "Ṱhalutshedzo nga ipfi i kha {spokenLanguage}. Ṱhalutshedzo nga ipfi ya {appLanguage} a i athu wanala ya modulu iyi.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSilentStatus",
+      "sourceEnglish": "No narration will play. Use Next to read at your own pace.",
+      "candidate": "A hu nga ḓo tamba ṱhalutshedzo nga ipfi. Shumisani Tevhelaho u vhala nga luvhilo lwaṋu.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStopAria",
+      "sourceEnglish": "Stop the lesson",
+      "candidate": "Imisani ngudo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlayAria",
+      "sourceEnglish": "Play the lesson",
+      "candidate": "Tshimbidzani ngudo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStop",
+      "sourceEnglish": "Stop",
+      "candidate": "Imisani",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlay",
+      "sourceEnglish": "Play lesson",
+      "candidate": "Tshimbidzani ngudo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckBack",
+      "sourceEnglish": "‹ Back",
+      "candidate": "‹ Murahu",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNext",
+      "sourceEnglish": "Next ›",
+      "candidate": "Tevhelaho ›",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckReadSlide",
+      "sourceEnglish": "Read this slide · {language}",
+      "candidate": "Vhalani slide iyi · {language}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioListen",
+      "sourceEnglish": "Listen",
+      "candidate": "Thetshelesani",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioLanguageMissing",
+      "sourceEnglish": "This module has not been recorded in {appLanguage} yet — playing {playingLanguage}.",
+      "candidate": "Modulu iyi a i athu u rekhodiwa nga {appLanguage} — hu khou tambiwa {playingLanguage}.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPauseTrack",
+      "sourceEnglish": "Pause {title}",
+      "candidate": "Imisani lwa tshifhinganyana {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayTrack",
+      "sourceEnglish": "Play {title}",
+      "candidate": "Tshimbidzani {title}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayFailed",
+      "sourceEnglish": "Could not play this clip — check your connection and try again.",
+      "candidate": "A zwi koni u tamba clip iyi — ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadUnsupported",
+      "sourceEnglish": "This browser cannot store lessons for offline use. Chrome on Android can.",
+      "candidate": "Browser iyi a i koni u vhulunga ngudo uri dzi shume ni si na inthanethe. Chrome kha Android i a kona.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetSlidesWhileSignal",
+      "sourceEnglish": "Save the slides and their displayed posters on this phone. The deck then works offline without narration or video.",
+      "candidate": "Vhulungani slides na posters dzine dza sumbedzwa kha founu iyi. Nga murahu deck i ḓo shuma ni si na inthanethe hu si na ṱhalutshedzo nga ipfi kana video.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishSlidesFallback",
+      "sourceEnglish": "Some slides remain in English where your chosen language is not available yet.",
+      "candidate": "Dziṅwe slides dzi kha ḓi vha nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishMediaFallback",
+      "sourceEnglish": "This pack includes slides or narration in English where your chosen language is not available yet.",
+      "candidate": "Pack iyi i na slides kana ṱhalutshedzo nga ipfi nga English hune luambo lwe na lu nanga lu sa athu wanala.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineOnThisPhone",
+      "sourceEnglish": "On this phone · {size}",
+      "candidate": "Kha founu iyi · {size}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRemovePack",
+      "sourceEnglish": "Remove saved lessons",
+      "candidate": "Bvisani ngudo dzo vhulungwaho",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadBytesProgress",
+      "sourceEnglish": "{current} of {total}",
+      "candidate": "{current} kha {total}",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineStopDownload",
+      "sourceEnglish": "Stop",
+      "candidate": "Imisani",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFinishDownload",
+      "sourceEnglish": "Finish download · {size} left",
+      "candidate": "Fhedzisani download · {size} yo salaho",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalPackChoice",
+      "sourceEnglish": "Regional deck download contents",
+      "candidate": "Zwi re kha download ya slides dza luambo lwe na lu nanga",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalSlidesOnly",
+      "sourceEnglish": "Slides only",
+      "candidate": "Slides fhedzi",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMediaNote",
+      "sourceEnglish": "The full pack includes available English source narration, animations and lesson images.",
+      "candidate": "Pack yoṱhe i katela ṱhalutshedzo nga ipfi ya English source ine ya vha hone, animations na zwifanyiso zwa ngudo.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadQuality",
+      "sourceEnglish": "Download quality",
+      "candidate": "Vhuvha ha download",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandard",
+      "sourceEnglish": "Standard",
+      "candidate": "Ya nḓowelo",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandardNote",
+      "sourceEnglish": "for phones on data",
+      "candidate": "Kha dzifounu dzi shumisaho data",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigher",
+      "sourceEnglish": "Higher quality",
+      "candidate": "Vhuvha ha nṱha",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigherNote",
+      "sourceEnglish": "facilitators & funders · wifi",
+      "candidate": "facilitators na vhaṋei vha tshelede · wifi",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesProgress",
+      "sourceEnglish": "{done} of {total} files",
+      "candidate": "{done} kha {total} files",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesFailed",
+      "sourceEnglish": "{count} files did not download. Tap Finish download again while you still have signal — the rest is already saved.",
+      "candidate": "Files {count} a dzo ngo download-a. Tobani Fhedzisani download hafhu musi signal i kha hone — dziṅwe dzo no vhulungwa.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineSavedMayClear",
+      "sourceEnglish": "Saved, but this phone may clear it if storage runs low. Check your saved lessons again before leaving signal.",
+      "candidate": "Zwo vhulungwa, fhedzi founu iyi i nga zwi bvisa arali storage i tshi vha ṱhukhu. Ṱolani hafhu ngudo dzo vhulungwaho musi ni sa athu ṱuwa hune signal ya wanala.",
+      "review": "Root independent read of complete draft packet",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "offlineLowStorage",
+      "sourceEnglish": "This phone is low on space — the download may not fit.",
+      "candidate": "Founu iyi yo sala na fhethu huṱuku — download i nga vha khulwane u fhira fhethu ho salaho.",
+      "review": "Independent root-repair review ACCEPT",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentIncorrectSee",
+      "sourceEnglish": "Incorrect — see {answer}",
+      "candidate": "Karabo ha e nepahale — sheba {answer}",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentIncorrectSee",
+      "sourceEnglish": "Incorrect — see {answer}",
+      "candidate": "Phindulo a yo ngo luga — sedzani {answer}",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentIncorrectSee",
+      "sourceEnglish": "Incorrect — see {answer}",
+      "candidate": "Nhlamulo a yi lulamanga — vona {answer}",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentKeyPoints",
+      "sourceEnglish": "Key points",
+      "candidate": "Zwithu zwa ndeme",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentListenToLesson",
+      "sourceEnglish": "Listen to this lesson",
+      "candidate": "Thetshelesani ngudo iyi",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentListenToLesson",
+      "sourceEnglish": "Listen to this lesson",
+      "candidate": "Yingisela dyondzo leyi",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentMarkNotDone",
+      "sourceEnglish": "Mark as not done",
+      "candidate": "Tshwaya hore thuto ha e so phethwe",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentMarkNotDone",
+      "sourceEnglish": "Mark as not done",
+      "candidate": "Maka leswaku dyondzo leyi a yi si hela",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadAndPractise",
+      "sourceEnglish": "Read and practise",
+      "candidate": "Vhalani ni ḓiḓowedzeni",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentRelatedLessons",
+      "sourceEnglish": "Related lessons",
+      "candidate": "Ngudo dzi elanaho",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "st",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceEnglish": "{count} slides. No narration is available.",
+      "candidate": "Diselaete tse {count}. Ha ho tlhaloso e buuoang.",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ve",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceEnglish": "{count} slides. No narration is available.",
+      "candidate": "Slides dza {count}. A hu na ṱhalutshedzo nga ipfi.",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "sourceEnglish": "{count} slides. No narration is available.",
+      "candidate": "Slides ta {count}. A ku na nhlamuselo hi rito.",
+      "review": "Root independent semantic read; includes confirmed authoritative worktree bindings",
+      "status": "unreviewed-machine-draft"
+    }
+  ],
+  "holds": [
+    {
+      "language": "st",
+      "key": "studentMinutes",
+      "sourceEnglish": "min",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentHourOne",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentHours",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessCompleteDetail",
+      "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarratedDetail",
+      "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessonsDetail",
+      "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessComplete",
+      "sourceEnglish": "Fully built",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessNarrated",
+      "sourceEnglish": "Narrated slides",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ts",
+      "key": "studentMinutes",
+      "sourceEnglish": "min",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentHourOne",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentHours",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentPractitioner",
+      "sourceEnglish": "Permaculture practitioner",
+      "reason": "HOLD_PROFESSIONAL_ROLE_WORKER_IS_NOT_EXACT_PRACTITIONER",
+      "draftDecision": "draft"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessCompleteDetail",
+      "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarratedDetail",
+      "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessonsDetail",
+      "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessComplete",
+      "sourceEnglish": "Fully built",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessNarrated",
+      "sourceEnglish": "Narrated slides",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentReadinessLessons",
+      "sourceEnglish": "Lessons only",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "studentListenModule",
+      "sourceEnglish": "Listen to the whole module",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandard",
+      "sourceEnglish": "Standard",
+      "reason": "HOLD",
+      "draftDecision": "hold"
+    },
+    {
+      "language": "ve",
+      "key": "studentMinutes",
+      "sourceEnglish": "min",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentHourOne",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentHours",
+      "sourceEnglish": "h",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressError",
+      "sourceEnglish": "Progress could not be loaded or saved. Check your connection or account access.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentPractitioner",
+      "sourceEnglish": "Permaculture practitioner",
+      "reason": "HOLD_USER_IS_NOT_EXACT_PROFESSIONAL_PRACTITIONER",
+      "draftDecision": "DRAFT"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessCompleteDetail",
+      "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarratedDetail",
+      "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessonsDetail",
+      "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessComplete",
+      "sourceEnglish": "Fully built",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessNarrated",
+      "sourceEnglish": "Narrated slides",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkComplete",
+      "sourceEnglish": "Mark as complete",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckAnimationFailed",
+      "sourceEnglish": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetWhileSignal",
+      "sourceEnglish": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadPack",
+      "sourceEnglish": "Download · {size}",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMedia",
+      "sourceEnglish": "Slides + English narration and clips",
+      "reason": "HOLD",
+      "draftDecision": "HOLD"
+    },
+    {
+      "language": "ve",
+      "key": "studentCheckUnderstanding",
+      "sourceEnglish": "Check your understanding",
+      "reason": "The neighboring Tshivenda locale has no understanding/check phrase to support this wording. Kambela is attested in the Xitsonga locale only; that does not establish a Tshivenda equivalent. Retain the English source until a Tshivenda-specific term is verified."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkDone",
+      "sourceEnglish": "Mark done",
+      "reason": "The current Tshivenda locale does not provide a verified completion-state verb or a done/not-done pair. The draft may say the lesson ended, which does not prove that the progress state was marked complete. Retain the English source until an aligned toggle pair is verified."
+    },
+    {
+      "language": "ve",
+      "key": "studentMarkNotDone",
+      "sourceEnglish": "Mark as not done",
+      "reason": "The current Tshivenda locale does not provide a verified completion-state verb or a done/not-done pair. The draft may say the lesson ended, which does not prove that the progress state was marked complete. Retain the English source until an aligned toggle pair is verified."
+    }
+  ],
+  "counts": {
+    "approvedDrafts": 240,
+    "holds": 38
+  },
+  "sourceFilesUnchanged": true,
+  "status": "Root compiled approved candidates; not yet applied; no fluent approval"
+}

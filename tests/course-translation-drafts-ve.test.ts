@@ -506,7 +506,7 @@ test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind
   assert.deepEqual(staleDraft.content.quiz, changedQuizSource.quiz);
 });
 
-test('Tshivenda Study control drafts stay paired to review text and sensitive controls stay English', async () => {
+test('Tshivenda Study controls retain reviewed pairs, draft status and unresolved English fallbacks', async () => {
   const { readFileSync } = await import('node:fs');
   const review = readFileSync(new URL('../docs/study-translation-reviews/STUDY-CONTROLS-VE-AI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
   const ve = readFileSync(new URL('../lib/locales/ve.ts', import.meta.url), 'utf8');
@@ -537,17 +537,27 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
   assert.ok(studentPage.includes("t('studentTshivendaUiDraftNotice')"), 'render the explicit draft notice');
   assert.ok(ve.includes("studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft."), 'keep the review notice in exact English');
 
-  for (const [key, expectedEnglish] of [
-    ['studentSubmit', 'Submit'],
-    ['studentProgressError', 'Progress could not be loaded or saved. Check your connection or account access.'],
-    ['studentComplete', 'Complete'],
-    ['studentCourseComplete', 'Course complete!'],
-    ['studentSubmitting', 'Submitting…'],
-    ['studentLocked', 'Locked'],
+  // These five controls were deliberately English in the earlier packet. The 7 October
+  // independent checks now bind exact drafts; keep the unresolved progress error held.
+  const expandedReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/study-silent-entry-2026-10-07/imbewu-study-ui-full-approved-20261007.json', import.meta.url), 'utf8'));
+  const { default: liveVenda } = await import('../lib/locales/ve.ts');
+  for (const [key, expectedEnglish, expectedDraft] of [
+    ['studentSubmit', 'Submit', 'Rumelani'],
+    ['studentComplete', 'Complete', 'Yo fhela'],
+    ['studentCourseComplete', 'Course complete!', 'Khoso yo fhela!'],
+    ['studentSubmitting', 'Submitting…', 'I khou rumela…'],
+    ['studentLocked', 'Locked', 'Zwo valelwa'],
   ] as const) {
-    assert.ok(!new RegExp(`\\b${key}:`).test(ve), `${key}: do not introduce an unreviewed completion, submission or access translation`);
+    const pair = expandedReview.rows.find((row: { language: string; key: string }) => row.language === 've' && row.key === key);
+    assert.ok(pair, `${key}: the expanded source-bound reviewer packet must contain the control`);
+    assert.equal(pair.sourceEnglish, expectedEnglish, `${key}: preserve its exact English source`);
+    assert.equal(pair.candidate, expectedDraft, `${key}: do not silently replace the independently checked draft`);
+    assert.equal(pair.status, 'unreviewed-machine-draft');
+    assert.equal(liveVenda[key], expectedDraft, `${key}: actual locale imports must expose the checked draft`);
     assert.ok(english.includes(`${key}: '${expectedEnglish}'`), `${key}: preserve the exact English fallback`);
   }
+  assert.ok(!Object.hasOwn(liveVenda, 'studentProgressError'), 'unresolved loading/saving wording remains English');
+  assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve unresolved progress-error source');
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
