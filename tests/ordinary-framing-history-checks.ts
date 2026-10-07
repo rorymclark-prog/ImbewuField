@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
-import { followupAssetBefore, followupPairBeforeHistory } from './core-reading-vegetables-followup-history-checks.ts';
+import { followupAssetBefore, followupPairBeforeHistory, isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore, veReadingFrostSourceBefore, frostFiles, frostAssets } from './ve-reading-frost-history-checks.ts';
 
@@ -76,7 +76,7 @@ export function ensureOrdinaryFramingText() {
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
   actual = followupPairBeforeHistory(file, actual);
-  if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
+  if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   assert.deepEqual(actual, expected[file], 'caller supplies complete current layer, including unlisted source and target fields');
@@ -86,7 +86,7 @@ export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
   actual = followupPairBeforeHistory(file, actual);
-  if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
+  if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   const restored: any = structuredClone(actual);

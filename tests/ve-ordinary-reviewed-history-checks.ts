@@ -1,5 +1,6 @@
 import { ordinaryFramingPairBefore, ordinaryFramingPairBeforeHistory, ordinaryFramingPairBytesBefore, ordinaryFramingManifestBefore, ordinaryFramingAssetBefore, ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore, frostAssets } from './ve-reading-frost-history-checks.ts';
+import { isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -30,7 +31,7 @@ export function ensureVeOrdinaryReviewedText() {
   signature=next;
 }
 export function veOrdinaryPairBefore<T>(file:string,actual:T):T {
-  if (JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file,'utf8')))) actual = veReadingFrostPairBefore(file, actual);
+  if (isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureVeOrdinaryReviewedText();
   actual = ordinaryFramingPairBeforeHistory(file, actual);
   if(!(file in expected))return actual;

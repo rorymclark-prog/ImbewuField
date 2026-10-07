@@ -50,7 +50,9 @@ test('same-size unlisted disk mutation after initialization withdraws the entire
     }
   }
   try {
-    for(const name of ['docs','lib']) symlinkSync(join(originalRoot,name),join(fixture,name),'dir');
+    // The newest immutable media batch also binds the service-worker source;
+    // link it into this isolated disk-mutation fixture so the full proof can run.
+    for(const name of ['app','docs','lib']) symlinkSync(join(originalRoot,name),join(fixture,name),'dir');
     mirror(join(originalRoot,'public'),join(fixture,'public'),['course-images','vegetables-staples','vegetables-staples-l1.jpg']);
     const helper=pathToFileURL(join(originalRoot,'tests/intro-silent-media-history-checks.ts')).href;
     execFileSync(process.execPath,['--input-type=module','-e',`

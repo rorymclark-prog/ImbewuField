@@ -6,6 +6,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { currentBatchProof, ensureCurrentBatch } from './core-reading-vegetables-followup-history-checks.ts';
 import { veReadingFrostNativeBefore, veReadingFrostSourceBefore, veReadingFrostPairBefore, frostFiles, frostNative, ensureVeReadingFrostCurrent } from './ve-reading-frost-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/ve-reading-frost-placement-2026-10-07/';
@@ -119,6 +120,8 @@ test('only the two revised VE Reading stills lose stale cached copies once', asy
 });
 
 test('asset size manifest matches the two compressed cards and proof preserves every other VE Reading still', () => {
+  ensureCurrentBatch();
+  const latestAssets = new Map(currentBatchProof.assets.map(row => [row.url, row]));
   const assetProof = JSON.parse(readFileSync(folder + 'all-asset-sha-proof.json', 'utf8'));
   const changed = Object.entries(assetProof.assets).filter(([, row]: any) => row.changed).map(([path]) => path).sort();
   assert.deepEqual(changed, [
@@ -128,8 +131,14 @@ test('asset size manifest matches the two compressed cards and proof preserves e
   for (const [path, row] of Object.entries(assetProof.assets) as [string, any][]) {
     const file = 'public' + path;
     const bytes = readFileSync(file);
+    const latest = latestAssets.get(path);
+    if (latest) {
+      assert.equal(latest.beforeBytes, row.afterBytes, path + ': newest proof begins at the exact frost inventory descriptor');
+      assert.equal(latest.beforeSha256, row.afterSha256, path + ': newest proof predecessor digest matches the frost inventory');
+    }
     assert.equal(COURSE_ASSET_SIZES[path], bytes.byteLength, path + ': manifest matches actual size');
-    assert.equal(createHash('sha256').update(bytes).digest('hex'), row.afterSha256, path + ': actual file matches full after digest');
+    assert.equal(bytes.byteLength, latest?.afterBytes ?? row.afterBytes, path + ': current bytes match the latest accepted layer');
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), latest?.afterSha256 ?? row.afterSha256, path + ': actual file matches the latest full after digest');
     if (!row.changed) assert.equal(row.beforeSha256, row.afterSha256, path + ': unlisted still retains its exact before digest');
     else assert.notEqual(row.beforeSha256, row.afterSha256, path + ': revised still differs from the prior file');
   }

@@ -556,8 +556,9 @@
                 "status": "draft"
               },
               {
-                "sourceEnglish": "any water works for the site",
-                "status": "english-hold"
+              "sourceEnglish": "any water works for the site",
+              "status": "draft",
+              "text": "water works dzinwe na dzinwe dzine dza fanelea fhethu hono"
               },
               {
                 "sourceEnglish": " and plan a safe route for excess water.",
@@ -866,8 +867,9 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
-                "status": "english-hold"
+              "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+              "status": "draft",
+              "text": "Thungo na maanḓa a muya une wa tshinyadza zwi shanduka u ya nga vhupo, khalaṅwaha, na dzi-ridges and gaps dza tshitentsi tshaṋu. "
               },
               {
                 "sourceEnglish": "Walk the land on windy days. ",

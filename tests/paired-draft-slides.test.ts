@@ -1,4 +1,5 @@
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { followupPresentationBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { coreHeldOrdinaryAssetBefore } from './core-held-ordinary-history-checks.ts';
 import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
@@ -1255,8 +1256,11 @@ test('Vegetables opening frames retain exact source holds and reuse complete L1 
       'A diverse planting still struggles if you treat every yellow leaf as an insect problem.',
     ], `${lang}: only the connective sentence is newly drafted; the two source cautions remain exact English`);
 
-    const learner = resolveLearnerLessonPresentation(lesson, lang);
-    assert.equal(learner.status, 'draft');
+    const currentLearner = resolveLearnerLessonPresentation(lesson, lang);
+    assert.equal(currentLearner.status, 'draft');
+    // This deck already includes earlier L1 wording. Project only the two
+    // predicates in the newest accepted layer before comparing its changed row.
+    const learner = followupPresentationBefore(currentLearner, lesson.id, lang);
     const learnerBody = learner.content.body.split('\n\n');
     for (let index = 0; index < 14; index++) {
       const slideNumber = index < 4 ? 4 : index < 11 ? 5 : 6;

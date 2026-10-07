@@ -6,7 +6,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT as stReading } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as veMarket } from '../lib/course-translation-drafts-ve-market-community.ts';
-import { ensureFollowupCurrent, followupFiles, followupNative as followupRegistryProof, followupNativeBefore, followupPairBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
+import { currentBatchProof, ensureCurrentBatch, ensureFollowupCurrent, followupFiles, followupNative as followupRegistryProof, followupNativeBefore, followupPairBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-reading-vegetables-followup-2026-10-07/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
@@ -140,6 +140,8 @@ test('the two learner edits stay on their exact lesson and rationale clauses wit
 });
 
 test('the five approved WebPs match their exact byte proof, manifest sizes, and natural canvas', () => {
+  ensureCurrentBatch();
+  const latestAssets = new Map(currentBatchProof.assets.map(row => [row.url, row]));
   const proof = assetProof as Record<string, { beforeBytes: number; beforeSha256: string; afterBytes: number; afterSha256: string; changed: boolean }>;
   const changed = Object.entries(proof).filter(([, row]) => row.changed).map(([path]) => path).sort();
   assert.deepEqual(changed, changedPaths);
@@ -148,8 +150,13 @@ test('the five approved WebPs match their exact byte proof, manifest sizes, and 
   assert.equal(rendered.size, 5);
   for (const [path, row] of Object.entries(proof)) {
     const bytes = readFileSync('public' + path);
-    assert.equal(bytes.length, row.afterBytes, `${path}: actual file byte length`);
-    assert.equal(sha(bytes), row.afterSha256, `${path}: full current SHA-256`);
+    const latest = latestAssets.get(path);
+    if (latest) {
+      assert.equal(latest.beforeBytes, row.afterBytes, `${path}: newest proof begins at the exact predecessor described by this proof`);
+      assert.equal(latest.beforeSha256, row.afterSha256, `${path}: newest proof predecessor digest joins this proof`);
+    }
+    assert.equal(bytes.length, latest?.afterBytes ?? row.afterBytes, `${path}: actual file byte length at newest accepted layer`);
+    assert.equal(sha(bytes), latest?.afterSha256 ?? row.afterSha256, `${path}: full current SHA-256 at newest accepted layer`);
     assert.equal(COURSE_ASSET_SIZES[path], bytes.length, `${path}: published size manifest`);
     if (!row.changed) assert.equal(row.beforeSha256, row.afterSha256, `${path}: every unlisted asset retains its prior digest`);
   }

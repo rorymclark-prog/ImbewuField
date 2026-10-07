@@ -465,8 +465,9 @@
                 "status": "draft"
               },
               {
-                "sourceEnglish": "any water works for the site",
-                "status": "english-hold"
+              "sourceEnglish": "any water works for the site",
+              "status": "draft",
+              "text": "mosebetsi ofe kapa ofe wa metsi o loketseng setsha"
               },
               {
                 "sourceEnglish": " and plan a safe route for excess water.",
