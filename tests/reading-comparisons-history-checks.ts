@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { mapSourceBefore, mapNativeBefore } from './reading-map-comparisons-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
 // Later ordinary wording must preserve every unlisted byte before dated tests
@@ -48,22 +49,23 @@ export function ensureComparisonsCurrent() {
   }).join('|');
   if (current === signature) return;
   for (const [file, proof] of Object.entries(comparisonsFiles) as [string, any][]) {
-    assert.equal(readFileSync(file, 'utf8'), proof.after, file + ': entire current file');
+    assert.equal(mapSourceBefore(file, readFileSync(file, 'utf8')), proof.after, file + ': entire current file');
   }
   signature = current;
 }
 export function comparisonsSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   const proof = comparisonsFiles[file];
-  if (!proof) return bytes;
+  if (!proof) return mapSourceBefore(file, bytes);
   ensureComparisonsCurrent();
   const text = Buffer.from(bytes).toString();
   if (text === proof.before) return bytes;
-  assert.equal(text, proof.after, file + ': supplied complete accepted bytes');
+  assert.equal(Buffer.from(mapSourceBefore(file, bytes)).toString(), proof.after, file + ': supplied complete accepted bytes');
   return proof.before;
 }
 export function comparisonsNativeBefore<T>(language: 'zu' | 've' | 'ts', value: T): T {
   ensureComparisonsCurrent();
   if (JSON.stringify(value) === JSON.stringify(comparisonsNative.before[language])) return structuredClone(value);
+  value = mapNativeBefore(language, value);
   assert.deepEqual(value, comparisonsNative.after[language], 'complete Reading comparisons registry');
   return structuredClone(comparisonsNative.before[language]);
 }

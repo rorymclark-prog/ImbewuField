@@ -1,3 +1,4 @@
+import { mapNativeBefore, mapPresentationBefore } from './reading-map-comparisons-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
@@ -99,6 +100,7 @@ export function finalLanguageNextNativeBefore<T>(actual: T): T {
   // Reading's later ten-field layer independently validates the whole registry
   // before this dated native-language release reconstructs its predecessor.
   const identity = actual as any;
+  if (identity?.id === 'reading-landscape' && identity.language === 'st') actual = mapNativeBefore('st', actual);
   if (identity?.id === 'reading-landscape' && (identity.language === 've' || identity.language === 'ts')) {
     actual = comparisonsNativeBefore(identity.language, actual);
   }
@@ -132,6 +134,7 @@ export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Arr
 /** 6 October: validate the actual complete learner presentation before restoring
  * only the nine later native leaves for dated assessment claims. */
 export function finalLanguageNextPresentationBefore<T extends { status: string; content: any }>(result: T, lessonId: string, language: string): T {
+  result = mapPresentationBefore(result, lessonId, language);
   result = comparisonsPresentationBefore(result, lessonId, language);
   ensureFinalLanguageNextCurrent();
   const rows = plan.nativePlans.filter((row: any) => row.lessonId === lessonId && expectedNative[row.file].language === language);
