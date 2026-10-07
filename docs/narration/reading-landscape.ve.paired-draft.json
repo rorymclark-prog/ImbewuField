@@ -1057,7 +1057,8 @@
               },
               {
                 "sourceEnglish": " Keep sensitive plants away from the cold pockets ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets "
               },
               {
                 "sourceEnglish": "you observe.",
@@ -1148,7 +1149,8 @@
               },
               {
                 "sourceEnglish": "No hillside position guarantees freedom from frost.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "A hu na hillside position ine ya khwaṱhisedza uri a hu nga vhi na frost."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."

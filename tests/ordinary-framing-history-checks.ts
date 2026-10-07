@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
+import { veReadingFrostPairBefore } from './ve-reading-frost-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/regional-ordinary-framing-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -66,13 +67,14 @@ export function ensureOrdinaryFramingText() {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(":"); }).join("|");
   if (next === signature) return;
   for (const [file, value] of Object.entries(expected)) {
-    assert.deepEqual(JSON.parse(readFileSync(file, 'utf8')), value, 'complete 13-field layer and every unlisted source/target');
+    assert.deepEqual(veReadingFrostPairBefore(file, JSON.parse(readFileSync(file, 'utf8'))), value, 'complete 13-field layer after the newer source-bound VE frost projection and every unlisted source/target');
   }
   signature = next;
 }
 
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
+  actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   assert.deepEqual(actual, expected[file], 'caller supplies complete current layer, including unlisted source and target fields');
@@ -81,6 +83,7 @@ export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
 
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
+  actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   const restored: any = structuredClone(actual);

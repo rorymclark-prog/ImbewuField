@@ -366,10 +366,12 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
     'preserve the existing Tshivenda north/south slope and local observation paragraph byte-for-byte');
   assert.equal(l2DraftParagraphs[1], "Ḓuvha ḽa vhuria ḽi fhasi nahone ḽi kule devhula u fhira ḓuvha ḽa tshilimo. Luvhondo kana lilaṱa ḽa murunzi (shade cloth) zwi nga thivhela ndima lwa tshifhinga tshilapfu vhuria u fhira tshilimo. Musi ni sa athu vhea tshithu tshi sa rembuluswi, imani henefho fhethu nga 8am, masiari, na 4pm nga ḓuvha ḽa vhuria nahone ni sedze hune murunzi wa wela hone.",
     'preserve the existing Tshivenda winter shade observation paragraph byte-for-byte');
+  // The earlier exact phrase predated the accepted locative correction: the guard is the
+  // keep-out instruction and its destination, so pin those semantics with the explicit locative.
   assert.ok(l2DraftParagraphs[2].includes('Pawpaw na young citrus zwi a kwamea nga frost nga u leluwa.') &&
-    l2DraftParagraphs[2].includes('Ni songo vhea zwimela zwi sa konḓeleliho known low frost pockets.') &&
+    l2DraftParagraphs[2].includes('Ni songo vhea zwimela zwi sa konḓeleliho kha known low frost pockets.') &&
     l2DraftParagraphs[2].includes('Sedzani frost ya henefho musi ni sa athu ṱavha.'),
-  'preserve the named young plants, frost sensitivity, keep-out direction, and local check before planting');
+  'preserve the named young plants, frost sensitivity, explicit keep-out location, and local check before planting');
   const changedL2Source = { ...landscapeL2Source, body: landscapeL2Source.body.replace('young citrus', 'mature citrus') };
   assert.notEqual(changedL2Source.body, landscapeL2Source.body);
   assert.equal(resolveLearnerLessonPresentation(changedL2Source, 've').status, 'english-fallback',
