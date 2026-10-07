@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '70b570b9', changes: [
+    'Reading drafts clarify frost-season observation and longest or most comparisons.',
+    'A corrected silent isiZulu frost card replaces its older narration beside English.',
+  ], tour: [
+    { title: 'Read the checked wording drafts',
+      where: 'Study → Reading → isiZulu, Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed wording with English and open the silent frost card.',
+      href: '/student' },
+  ] },
   { when: '7 October 2026', sha: '9d984d54', changes: [
     'isiZulu Reading quiz drafts clarify young plants and hours of sunlight.',
     'Tshivenda Introduction image text keeps design and waste-loop terms in English.',
