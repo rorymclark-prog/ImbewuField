@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '89fc5b6f', changes: [
+    'Vegetable drafts translate water limits and increasing bed-work difficulty.',
+    'Four silent Study cards match the reviewed learner wording beside English.',
+    'The Xitsonga succession picture describes the continuing crop and new sowing.',
+  ], tour: [{ title: 'Read the fuller vegetable drafts',
+    where: 'Study → Vegetables or Introduction → Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed drafts with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: 'b099cb1d', changes: [
     'Five silent Study cards show fuller water, wind and direct-sowing drafts.',
     'Sesotho and Xitsonga vegetable lessons keep the full performance comparison.',
