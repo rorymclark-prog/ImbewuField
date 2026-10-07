@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: 'ac2e1c8d', changes: [
+    'Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'Silent slide entries say View slides and explain the optional English voice.',
+  ], tour: [{ title: 'Try the translated Study controls',
+    where: 'Study → Sesotho, Tshivenda or Xitsonga → open a lesson',
+    detail: 'Read draft buttons and silent-slide instructions beside the English source.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: '89fc5b6f', changes: [
     'Vegetable drafts translate water limits and increasing bed-work difficulty.',
     'Four silent Study cards match the reviewed learner wording beside English.',
