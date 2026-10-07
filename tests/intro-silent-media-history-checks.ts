@@ -1,3 +1,4 @@
+import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
 import { finalLanguageNextMediaProof } from './final-language-next-media-history-checks.ts';
@@ -48,12 +49,15 @@ for (const frame of finalLanguageNextMediaProof.frames) currentInventory.set(fra
 // inventory remains an actual-byte guard, including every recording/archive.
 // The subsequent 15-card layer also replaces existing stills; retain every archive check.
 for (const frame of [...coreHeldOrdinaryAssets,...veOrdinaryAssets]) currentInventory.set(frame.url,{bytes:frame.afterBytes,sha256:frame.afterSHA256});
+// These ten measured framing replacements keep the full1927-file guard current.
+for (const frame of ordinaryFramingAssets) currentInventory.set(frame.url,{bytes:frame.bytes,sha256:frame.sha256});
 const laterReplacedURLs = new Set<string>([
   ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
   ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
   ...finalLanguageNextMediaProof.frames.map((frame:any)=>frame.url),
   ...coreHeldOrdinaryAssets.map((frame:any)=>frame.url),
   ...veOrdinaryAssets.map((frame:any)=>frame.url),
+  ...ordinaryFramingAssets.map((frame:any)=>frame.url),
 ]);
 // Only these frozen, listed URLs need a historical descriptor. Bulk inventory
 // callers still check every other real file directly, without recursively
@@ -160,6 +164,6 @@ export function silentIntroMediaBefore(path: string) {
   }
   const row=silentIntroIntegration.actualAssets.find((f:any)=>f.url===url && f.beforeBytes!==null);
   if(row) return {bytes:row.beforeBytes,sha256:row.beforeSHA256};
-  if([...coreHeldOrdinaryAssets,...veOrdinaryAssets].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
+  if([...coreHeldOrdinaryAssets,...veOrdinaryAssets,...ordinaryFramingAssets].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
   return undefined;
 }

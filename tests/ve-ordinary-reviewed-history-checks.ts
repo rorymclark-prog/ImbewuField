@@ -1,3 +1,4 @@
+import { ordinaryFramingPairBefore, ordinaryFramingPairBeforeHistory, ordinaryFramingPairBytesBefore, ordinaryFramingManifestBefore, ordinaryFramingAssetBefore } from './ordinary-framing-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -24,17 +25,19 @@ let signature='';
 export function ensureVeOrdinaryReviewedText() {
   const next=Object.keys(expected).map(file=>{const s=statSync(file,{bigint:true});return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':');}).join('|');
   if(next===signature)return;
-  for(const [file,value] of Object.entries(expected))assert.deepEqual(JSON.parse(readFileSync(file,'utf8')),value,'complete checked Tshivenda layer and every unlisted source/target');
+  for(const [file,value] of Object.entries(expected))assert.deepEqual(ordinaryFramingPairBefore(file, JSON.parse(readFileSync(file,'utf8'))),value,'complete checked Tshivenda layer and every unlisted source/target');
   signature=next;
 }
 export function veOrdinaryPairBefore<T>(file:string,actual:T):T {
   ensureVeOrdinaryReviewedText();
+  actual = ordinaryFramingPairBeforeHistory(file, actual);
   if(!(file in expected))return actual;
   assert.deepEqual(actual,expected[file],'caller supplies complete current layer');
   return structuredClone(before[file]);
 }
 export function veOrdinaryPairBeforeHistory<T>(file:string,actual:T):T {
   ensureVeOrdinaryReviewedText();
+  actual = ordinaryFramingPairBeforeHistory(file, actual);
   if(!(file in expected))return actual;
   const restored:any=structuredClone(actual);
   for(const row of groups.filter((r:any)=>r.file===file)){
@@ -51,15 +54,17 @@ let finalManifest=oldManifest;
 for(const row of veOrdinaryAssets){const line=`  '${row.url}': ${row.beforeBytes},`;assert.equal(finalManifest.split(line).length,2);finalManifest=finalManifest.replace(line,`  '${row.url}': ${row.afterBytes},`);}
 const total=[...finalManifest.matchAll(/^  '[^']+': (\d+),$/gm)].reduce((sum,row)=>sum+Number(row[1]),0);
 finalManifest=finalManifest.replace(/\d+\.\d+ MB/,(total/1024/1024).toFixed(1)+' MB');
-export function veOrdinaryManifestBefore(actual:string){assert.equal(actual,finalManifest,'complete manifest after only 15 measured changes');return oldManifest;}
+export function veOrdinaryManifestBefore(actual:string){actual = ordinaryFramingManifestBefore(actual);assert.equal(actual,finalManifest,'complete manifest after only 15 measured changes');return oldManifest;}
 
 export function veOrdinaryAssetBefore(path:string,bytes:Uint8Array){
-  const row=veOrdinaryAssets.find(r=>'public'+r.url===path);if(!row)return null;
-  assert.equal(bytes.length,row.afterBytes,path+': exact reviewed bytes');assert.equal(sha(bytes),row.afterSHA256,path+': exact reviewed hash');
+  const newest = ordinaryFramingAssetBefore(path, bytes);
+  const row=veOrdinaryAssets.find(r=>'public'+r.url===path);if(!row)return newest;
+  assert.equal(newest?.bytes ?? bytes.length,row.afterBytes,path+': exact reviewed bytes');assert.equal(newest?.sha256 ?? sha(bytes),row.afterSHA256,path+': exact reviewed hash');
   return {bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1]};
 }
 export function veOrdinaryPairBytesBefore(file:string,bytes:Uint8Array):Uint8Array{
-  if(!(file in expected))return bytes;
+  const newest = ordinaryFramingPairBytesBefore(file, bytes);
+  if(!(file in expected))return newest;
   veOrdinaryPairBefore(file,JSON.parse(Buffer.from(bytes).toString()));
   assert.equal(Buffer.from(bytes).toString(),readFileSync(file,'utf8'),'caller bytes are actual current bytes');
   return readFileSync(folder+'before/'+file.split('/').pop());

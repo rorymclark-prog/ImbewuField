@@ -1,3 +1,4 @@
+import { ordinaryFramingPairBefore, ordinaryFramingAssetBefore, ordinaryFramingManifestBefore } from './ordinary-framing-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -15,7 +16,9 @@ test('18 checked ordinary fragments preserve every source, neighbour and draft s
     const before=veOrdinaryPairBefore(row.file,current);
     const index=Number(row.field.slice(5,-1));
     const old=before.slides.find((s:any)=>s.n===row.slide).target.body[index].segments[row.segmentIndex];
-    const now=current.slides.find((s:any)=>s.n===row.slide).target.body[index].segments[row.segmentIndex];
+    // New framing targets are verified in full before inspecting the unchanged dated layer.
+    const reviewed = ordinaryFramingPairBefore(row.file, current);
+    const now=reviewed.slides.find((s:any)=>s.n===row.slide).target.body[index].segments[row.segmentIndex];
     assert.equal(old.sourceEnglish,row.sourceFragment);
     // English holds may omit text: the renderer then uses their exact source fragment.
     assert.equal(old.text ?? old.sourceEnglish,row.sourceFragment);
@@ -27,7 +30,7 @@ test('18 checked ordinary fragments preserve every source, neighbour and draft s
 });
 test('15 compressed Tshivenda cards match measured bytes, reviewed hashes and the complete manifest',()=>{
   assert.equal(assets.length,15);assert.equal(new Set(assets.map((a:any)=>a.url)).size,15);
-  for(const row of assets){const bytes=readFileSync('public'+row.url);assert.equal(sha(bytes),row.afterSHA256);assert.equal(bytes.length,row.afterBytes);assert.equal(COURSE_ASSET_SIZES[row.url],row.afterBytes);assert.notEqual(row.beforeSHA256,row.afterSHA256);assert.equal(row.dimensions[0],1440);assert.ok(row.dimensions[1]>=5400);assert.deepEqual(row.dimensions,row.renderedDimensions,'compression preserves the renderer canvas without squashing');assert.ok(row.url.includes('/ve/'));}
+  for(const row of assets){const bytes=readFileSync('public'+row.url);const later=ordinaryFramingAssetBefore('public'+row.url,bytes);assert.equal(later?.sha256 ?? sha(bytes),row.afterSHA256);assert.equal(later?.bytes ?? bytes.length,row.afterBytes);assert.equal(COURSE_ASSET_SIZES[row.url],bytes.length);assert.notEqual(row.beforeSHA256,row.afterSHA256);assert.equal(row.dimensions[0],1440);assert.ok(row.dimensions[1]>=5400);assert.deepEqual(row.dimensions,row.renderedDimensions,'compression preserves the renderer canvas without squashing');assert.ok(row.url.includes('/ve/'));}
   veOrdinaryManifestBefore(readFileSync('lib/course-asset-sizes.ts','utf8'));
 });
 test('15-card Tshivenda refresh removes old query variants once and preserves recordings, other cards and later downloads', async () => {

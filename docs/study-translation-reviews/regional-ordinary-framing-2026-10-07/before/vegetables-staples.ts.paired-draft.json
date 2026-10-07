@@ -1,5 +1,5 @@
 {
-  "language": "ve",
+  "language": "ts",
   "sourceLanguage": "en",
   "reviewStatus": "unreviewed",
   "slides": [
@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Miroho ni Swibyariwa swa Masungulo",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -25,26 +27,42 @@
               {
                 "sourceEnglish": "Welcome. This is ",
                 "status": "draft",
-                "text": "Ri a ni ṱanganedza. Leyi ndi "
+                "text": "Hi mi amukela. Leyi i "
               },
               {
                 "sourceEnglish": "Vegetables and Staple Crops.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Miroho ni Swibyariwa swa Masungulo.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
                 "status": "draft",
-                "text": " Ndi muṅwe wa modules dza fumi kha ngudo ya ImbewuField."
+                "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
-            "text": "Nsimu ine ya bveledza zwavhuḓi a si ine ya vhonala yo ḓala nga ḓuvha ḽithihi fhedzi. Ndi ine ya bvela phanḓa na u isa zwiḽiwa muṱani, vhege nga vhege."
+            "text": "Nsimu leyi humesaka kahle a hi leyi vonakaka yi tele ngopfu hi siku rin'we ntsena. I leyi yi yisaka swakudya endlwini vhiki rin'wana ni rin'wana."
           },
           {
-            "status": "draft",
-            "text": "Kha minetse i si gathi i tevhelaho, ri ḓo haseledza zwithu zwiṋa. U lugisa bed. U ita uri harvest i bvele phanḓa. Uri ndi zwifhio zwimela zwa staple zwine zwa fanela u ṱavhiwa. Na zwine na nga ita musi pests dzi tshi swika."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. ",
+                "status": "draft",
+                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ndlela yo aka bed. Ku endla leswaku harvest yi ya yi ri kona. Staples tihi to ti byala. ",
+                "reason": "Preserve original complete topic-list semantic boundary; build and which-staples repairs are root accepted."
+              },
+              {
+                "sourceEnglish": "And what to do when pests arrive.",
+                "status": "draft",
+                "text": "Na ku endla yini loko pests ti fika."
+              }
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -65,41 +83,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ndi ngani zwi zwa ndeme"
+          "text": "Ha Yini Leswi Swi Ri Swa Nkoka"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Kha ri thome nga thaidzo."
+            "text": "A hi sunguleni hi xiphiqo."
           },
           {
             "status": "draft",
-            "text": "U tavha zwinzhi nga tshifhinga tshithihi zwi ita uri hu vhe na zwibveledzwa zwinzhi nga tshifhinga tshithihi. Zwoṱhe zwi lugela nga tshifhinga tshithihi. Niḽa zwine na kona, ni ṋea vhaṅwe zwiṅwe, nahone zwo salaho zwi a sina."
-          },
-          {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Then comes the gap. Nothing is ready. ",
-                "status": "draft",
-                "text": "Nga murahu ha ḓa tshifhinga tsha u shaya. A hu na tshithu tshine tsha vha tsho lugela. "
-              },
-              {
-                "sourceEnglish": "The garden is full of plants, but there's no food in it.",
-                "status": "draft",
-                "text": "Garden yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
-                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: Garden"
-              }
-            ],
-            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+            "text": "Ku byala swo tala hi nkarhi wun'we swi endla leswaku ku va ni swakudya swo tala hi nkarhi wun'we. Hinkwato swi lulamela hi nkarhi wun'we. U dya leswi u swi kotaka, u nyika van'wana swin'wana, kutani leswi salaka swa lahleka."
           },
           {
             "status": "draft",
-            "text": "U ṱavha zwipiḓa zwiṱuku nga zwifhinga zwo fhambanaho zwi ita uri hu vhe na mutevhetsindo. U ṱavha, u ṱhogomela na u kaṋa zwi bvela phanḓa zwi tshi itea nga zwifhinga zwi fanaho. Hu dzula hu na tshiṅwe tshine tsha khou lugela u kaṋiwa."
+            "text": "Kutani ku landzela nkarhi wa ku pfumala ntshovelo. Ku hava lexi lunghekeleke ku tshoveriwa. Nsimu yi tele hi swibyariwa, kambe a ku na swakudya eka yona."
           },
           {
             "status": "draft",
-            "text": "Wonoyo mutevhetsindo ndi wone une wa fusha muṱa. A si vhuhulwane ha garden."
+            "text": "Ku byala switsongo swi endla rhithimi ematshan'weni ya ku byala swo tala hi nkarhi wun'we. Ku byala, ku khathalela ni ku tshovela swa hlangana. Ku ni lexi tshamelaka ku lungheka ku tshoveriwa."
+          },
+          {
+            "status": "draft",
+            "text": "Hi rhithimi wolowo ndyangu wu kuma swakudya. A hi vukulu bya nsimu."
           }
         ]
       }
@@ -121,17 +126,70 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Zwine na ḓo guda"
+          "text": "Leswi u nga ta swi dyondza"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu."
+            "text": "Loko modula lowu wu hela, u ta kota ku endla swiboho swa mune ensin'wini ya wena."
           },
           {
-            "status": "draft",
-            "text": "Tsha u thoma. Fhaṱani bed yo teaho — ni ite uri width na bed type zwi yelane na mavu aṋu na mvula ya fhethu haṋu.",
-            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One. ",
+                "status": "draft",
+                "text": "Xo sungula. "
+              },
+              {
+                "sourceEnglish": "Build the right bed",
+                "status": "draft",
+                "text": "Aka bed leyi faneleke",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
+              },
+              {
+                "sourceEnglish": " — matching the ",
+                "status": "draft",
+                "text": " — "
+              },
+              {
+                "sourceEnglish": "width",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and the ",
+                "status": "draft",
+                "text": " na "
+              },
+              {
+                "sourceEnglish": "bed type",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " to your ",
+                "status": "draft",
+                "text": " swi fambisana ni "
+              },
+              {
+                "sourceEnglish": "soil",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " and your ",
+                "status": "draft",
+                "text": " ya wena na "
+              },
+              {
+                "sourceEnglish": "rainfall",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " ya wena."
+              }
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -139,21 +197,12 @@
               {
                 "sourceEnglish": "Two. ",
                 "status": "draft",
-                "text": "Tsha vhuvhili. "
+                "text": "Xa vumbirhi. "
               },
               {
-                "sourceEnglish": "Keep ",
+                "sourceEnglish": "Keep harvests moving, using ",
                 "status": "draft",
-                "text": "Itani uri "
-              },
-              {
-                "sourceEnglish": "harvests",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " moving, using ",
-                "status": "draft",
-                "text": " dzi bvele phanḓa, ni tshi shumisa "
+                "text": "Endla leswaku ku tshovela ku ya mahlweni hi ku tirhisa "
               },
               {
                 "sourceEnglish": "succession planting",
@@ -176,26 +225,23 @@
               {
                 "sourceEnglish": "Three. ",
                 "status": "draft",
-                "text": "Tsha vhuraru. "
+                "text": "Xa vunharhu. "
               },
               {
                 "sourceEnglish": "Choose ",
                 "status": "draft",
-                "text": "Nangani "
+                "text": "Hlawula "
               },
               {
                 "sourceEnglish": "staples",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "swakudya swa masungulo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
-                "sourceEnglish": " that protect you ",
+                "sourceEnglish": " that protect you when one crop fails.",
                 "status": "draft",
-                "text": " dzi ni tsireledzaho "
-              },
-              {
-                "sourceEnglish": "when one crop fails.",
-                "status": "draft",
-                "text": "musi crop iṅwe i tshi kundelwa."
+                "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
@@ -206,21 +252,16 @@
               {
                 "sourceEnglish": "Four. ",
                 "status": "draft",
-                "text": "Tsha vhuṋa. "
+                "text": "Xa vumune. "
               },
               {
                 "sourceEnglish": "Read a pest problem",
-                "status": "draft",
-                "text": "Ṱolani pest problem"
-              },
-              {
-                "sourceEnglish": " before you ",
-                "status": "draft",
-                "text": " ni sa athu u "
-              },
-              {
-                "sourceEnglish": "treat it.",
                 "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " before you treat it.",
+                "status": "draft",
+                "text": " u nga si xi tshungula."
               }
             ]
           },
@@ -230,17 +271,18 @@
               {
                 "sourceEnglish": "These four belong together. ",
                 "status": "draft",
-                "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+                "text": "Swilo leswi swa mune swi fambisana. "
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
                 "status": "draft",
-                "text": "A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. "
+                "text": "Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. ",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
                 "status": "draft",
-                "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+                "text": "Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
@@ -262,30 +304,20 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu."
+          "status": "english-hold"
         },
         "body": [
-          {
-            "status": "draft",
-            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe."
-          },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "The protection is simple. ",
-                "status": "draft",
-                "text": "Tsireledzo ndi yo leluwaho. "
-              },
-              {
-                "sourceEnglish": "Permanent paths",
+                "sourceEnglish": "Compacted soil",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                "sourceEnglish": " loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
                 "status": "draft",
-                "text": ", na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili."
+                "text": " yi lahlekeriwa hi swikhala swa yona swa moya. Timitsu ti nonoka. Mati ma tswonga hi ndlela yo hambana. Bed yi ya tika ku tirha eka nguva yin'wana ni yin'wana."
               }
             ]
           },
@@ -293,13 +325,35 @@
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "One metre to one point two metres wide.",
+                "sourceEnglish": "The protection is simple. ",
+                "status": "draft",
+                "text": "Nsirhelelo wu olova. "
+              },
+              {
+                "sourceEnglish": "Permanent paths",
+                "status": "draft",
+                "text": "Tindlela leti tshamaka ti ri kona",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
+              },
+              {
+                "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
+                "status": "draft",
+                "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
+              }
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One metre to one point two metres",
                 "status": "english-hold"
               },
               {
-                "sourceEnglish": " That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
+                "sourceEnglish": " wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the ",
                 "status": "draft",
-                "text": " Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami "
+                "text": " hi ku anama. Lowu hi wona mpimo lowu tirhaka. Hi ku anama koloko u nga fika exikarhini ku suka eka ndlela yin'wana ni yin'wana ya letimbirhi, naswona milenge ya wena a yi khumbi "
               },
               {
                 "sourceEnglish": "growing area",
@@ -308,13 +362,13 @@
               {
                 "sourceEnglish": ".",
                 "status": "draft",
-                "text": " na luthihi."
+                "text": " nikatsongo."
               }
             ]
           },
           {
             "status": "draft",
-            "text": "Zwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu."
+            "text": "Sweswi ehleketa hi mabedhe ya wena. Xana u nga swi kota ku fika exikarhini handle ko kandziya endzeni? Famba u ya ringeta leswi u nga si byala swin'wana."
           }
         ]
       }
@@ -336,13 +390,12 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Khethani bed u ya nga soil na rainfall."
+          "status": "english-hold"
         },
         "body": [
           {
             "status": "draft",
-            "text": "A hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe."
+            "text": "A ku na xivumbeko xa bed lexi lulameke eka tindhawu hinkwato."
           },
           {
             "status": "mixed",
@@ -350,7 +403,7 @@
               {
                 "sourceEnglish": "Start with the ",
                 "status": "draft",
-                "text": "Thomani nga "
+                "text": "Sungula hi "
               },
               {
                 "sourceEnglish": "least disturbance",
@@ -359,28 +412,13 @@
               {
                 "sourceEnglish": " that solves your problem.",
                 "status": "draft",
-                "text": " ine ya tandulula thaidzo yaṋu."
+                "text": " leyi lulamisaka xiphiqo xa wena."
               }
             ]
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "No-dig",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " suits most garden soils.",
-                "status": "draft",
-                "text": " i tea kha vhunzhi ha mavu a ngade."
-              },
-              {
-                "sourceEnglish": " Leave the structure alone and build fertility on top.",
-                "status": "draft",
-                "text": " Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha."
-              }
-            ]
+            "status": "draft",
+            "text": "No-dig yi lulamela most garden soils. Tshika soil structure yi ri tano, kutani u aka fertility ehenhla."
           },
           {
             "status": "mixed",
@@ -388,7 +426,7 @@
               {
                 "sourceEnglish": "Do not dig ",
                 "status": "draft",
-                "text": "Ni songo bwa "
+                "text": "U nga keli "
               },
               {
                 "sourceEnglish": "wet clay",
@@ -397,7 +435,7 @@
               {
                 "sourceEnglish": ". If ",
                 "status": "draft",
-                "text": ". Arali "
+                "text": ". Loko "
               },
               {
                 "sourceEnglish": "compaction",
@@ -406,7 +444,7 @@
               {
                 "sourceEnglish": " or ",
                 "status": "draft",
-                "text": " kana "
+                "text": " kumbe "
               },
               {
                 "sourceEnglish": "poor drainage",
@@ -415,7 +453,7 @@
               {
                 "sourceEnglish": " is severe, identify the cause with local advice before choosing ",
                 "status": "draft",
-                "text": " zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha "
+                "text": " swi ri severe, kuma xivangelo hi switsundzuxo swa le ndhawini u nga si hlawula "
               },
               {
                 "sourceEnglish": "deeper cultivation",
@@ -429,56 +467,16 @@
             ]
           },
           {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Raised beds",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " suit ",
-                "status": "draft",
-                "text": " dzi tea "
-              },
-              {
-                "sourceEnglish": "wet ground",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": ", where water needs somewhere to drain away to.",
-                "status": "draft",
-                "text": ", hune maḓi a ṱoḓa fhethu ha u bva hone."
-              }
-            ]
-          },
-          {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Sunken beds",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " suit ",
-                "status": "draft",
-                "text": " dzi tea "
-              },
-              {
-                "sourceEnglish": "dry ground",
-                "status": "draft",
-                "text": "mavu o omaho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
-              },
-              {
-                "sourceEnglish": ", where you want to catch and hold what rain you get.",
-                "status": "draft",
-                "text": ", hune na ṱoḓa u fara na u vhulunga mvula ine na i wana."
-              }
-            ]
+            "status": "draft",
+            "text": "Raised beds ti lulamela wet ground, laha mati ma faneleke ku kuma ndhawu yo huma ma ya kona."
           },
           {
             "status": "draft",
-            "text": "Nga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.",
+            "text": "Sunken beds ti lulamela dry ground, laha u lavaka ku khoma ni ku hlayisa mpfula leyi u yi kumaka."
+          },
+          {
+            "status": "draft",
+            "text": "Endzhaku ka mpfula leyikulu, kambisisa. Mati ma yima kumbe ma khuluka ma suka kwihi? Hlanganisa leswi u swi voneke ni switsundzuxo swa misava ni drainage u nga si hlawula bed.",
             "provenance": "unreviewed independent integration draft; exact English source partition verified; bounded retained terms listed; no fluent approval"
           }
         ]
@@ -506,7 +504,7 @@
               {
                 "sourceEnglish": "Some crops resent having their roots disturbed. ",
                 "status": "draft",
-                "text": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+                "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
               },
               {
                 "sourceEnglish": "They do better",
@@ -515,7 +513,7 @@
               {
                 "sourceEnglish": " sown straight where they'll grow. ",
                 "status": "draft",
-                "text": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+                "text": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
               },
               {
                 "sourceEnglish": "Beans, carrots",
@@ -533,7 +531,7 @@
               {
                 "sourceEnglish": " belong in that group.",
                 "status": "draft",
-                "text": " zwi wela kha tshigwada itsho."
+                "text": " swi wela eka ntlawa wolowo."
               }
             ]
           },
@@ -543,17 +541,17 @@
               {
                 "sourceEnglish": "Others ",
                 "status": "draft",
-                "text": "Zwiṅwe "
+                "text": "Swin'wana "
               },
               {
                 "sourceEnglish": "do better",
                 "status": "draft",
-                "text": "zwi ita khwine"
+                "text": "swi tirha ku antswa"
               },
               {
                 "sourceEnglish": " with a protected start in a ",
                 "status": "draft",
-                "text": " musi zwi tshi thoma zwo tsireledzea kha "
+                "text": " loko swi sungula swi sirhelelekile eka "
               },
               {
                 "sourceEnglish": "nursery",
@@ -562,7 +560,7 @@
               {
                 "sourceEnglish": ", then ",
                 "status": "draft",
-                "text": ", nga murahu "
+                "text": ", kutani "
               },
               {
                 "sourceEnglish": "transplanting.",
@@ -584,7 +582,7 @@
               {
                 "sourceEnglish": " belong there.",
                 "status": "draft",
-                "text": " zwi wela henefho."
+                "text": " swi wela eka ntlawa wolowo."
               }
             ]
           },
@@ -594,7 +592,7 @@
               {
                 "sourceEnglish": "Use ",
                 "status": "draft",
-                "text": "Shumisani "
+                "text": "Landzelela "
               },
               {
                 "sourceEnglish": "spacing guidance",
@@ -617,26 +615,16 @@
               {
                 "sourceEnglish": "local conditions",
                 "status": "draft",
-                "text": "nyimele dza henefho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "text": "swiyimo swa laha kaya",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
-                "sourceEnglish": ". Check the packet and ",
+                "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
                 "status": "draft",
-                "text": ". Sedzani packet na "
-              },
-              {
-                "sourceEnglish": "local grower advice",
-                "status": "draft",
-                "text": "nyeletshedzo ya vhalimi vha henefho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
-              },
-              {
-                "sourceEnglish": ". Watch for crowding as plants develop.",
-                "status": "draft",
-                "text": ". Sedzani crowding musi zwimela zwi tshi aluwa."
+                "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -658,16 +646,16 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Maka tshivhumbeo tshine tsha shumiswa."
+          "text": "Tshwaya xivumbeko lexi tirhaka."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Ni sa athu ṱavha, swayani bed."
+            "text": "Loko u nga si byala, fungha bed."
           },
           {
             "status": "draft",
-            "text": "One point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed)."
+            "text": "One point two metres hi ku anama. Three metres hi ku leha. I bed yin'we ya ku titoloveta."
           },
           {
             "status": "mixed",
@@ -675,7 +663,7 @@
               {
                 "sourceEnglish": "Use pegs and string. Mark the ",
                 "status": "draft",
-                "text": "Shumisani zwipiki na thambo. Swayani "
+                "text": "Tirhisa pegs na string. Fungha "
               },
               {
                 "sourceEnglish": "rectangle",
@@ -684,7 +672,7 @@
               {
                 "sourceEnglish": ", and mark both access paths.",
                 "status": "draft",
-                "text": ", nahone ni swaye paths dzoṱhe mbili dza u swikelela bed."
+                "text": ", kutani u fungha tindlela hatimbirhi to nghena."
               }
             ]
           },
@@ -694,7 +682,7 @@
               {
                 "sourceEnglish": "Then prepare for your own soil — ",
                 "status": "draft",
-                "text": "Nga murahu ni lugiselele u ya nga mavu aṋu — thomani nga "
+                "text": "Kutani lulamisa hi ku ya hi misava ya wena — sungula hi "
               },
               {
                 "sourceEnglish": "no-dig",
@@ -703,17 +691,17 @@
               {
                 "sourceEnglish": " first, and dig deeper only if your ground genuinely needs it.",
                 "status": "draft",
-                "text": ", nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma."
+                "text": ", kutani u cela ku enta ntsena loko misava ya wena hakunene yi swi lava."
               }
             ]
           },
           {
             "status": "draft",
-            "text": "String line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze."
+            "text": "Ntila wa ntambhu wu hundzula miehleketo wu va xiboho. Loko tindlela ti ri kona, ti hlayise. Loko ndhawu yo byala yi ri kona, yi sirhelele."
           },
           {
             "status": "draft",
-            "text": "Bed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo."
+            "text": "Bed yoleyo yi ya olova ku antswisa eka nguva yin'wana ni yin'wana, hikuva u tshike ku famba ehenhla ka yona."
           }
         ]
       }
@@ -743,34 +731,34 @@
             {
               "sourceEnglish": " Keeps Food Moving",
               "status": "draft",
-              "text": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+              "text": " yi endla leswaku swakudya swi hambeta swi kumeka."
             }
           ]
         },
         "body": [
           {
             "status": "draft",
-            "text": "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho."
+            "text": "Ku byala swibyariwa hi ku landzelelana i ntolovelo wa khalendara, a hi xibyariwa xo hlawuleka."
           },
           {
             "status": "draft",
-            "text": "Nangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu."
+            "text": "Hlawula swakudya leswi ndyangu wa wena wu talaka ku swi dya. Kutani byala xitsongo xa swona, u tlhela u endla tano hi ku phindha-phindha."
           },
           {
             "status": "draft",
-            "text": "Ṱavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu."
+            "text": "Byala ntila wo koma mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu."
           },
           {
             "status": "draft",
-            "text": "U tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi."
+            "text": "Ku lahleka ka swakudya ka hunguteka loko ku ri na ntshovelo wo tala. Ku va na swakudya swo tenga nkarhi wo leha. Ntirho wu hangalaka hi nkarhi wa nguva, ematshan'weni yo ku wu humelela hinkwawo hi nkarhi wun'we."
           },
           {
             "status": "draft",
-            "text": "U ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa."
+            "text": "Ku byala hi minkarhi leyi hambaneke swi nga hunguta khombo ra ku lahlekeriwa hi swilo hinkwaswo hi nkarhi wun'we. A swi tiyisisi ntshovelo loko swiyimo swo tika swi ya mahlweni."
           },
           {
             "status": "draft",
-            "text": "Ndi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku? Nangani tshithihi, ni tshi thome ino vhege."
+            "text": "Hi xihi fast crop lexi u nga xi sow hi swiphemu leswitsongo? Hlawula xin'we, u sungula hi vhege leyi."
           }
         ]
       }
@@ -791,28 +779,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ṱavhani zwiṱuku nahone lunzhi."
+          "text": "Byala switsongo naswona nkarhi na nkarhi."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Hezwi ndi zwine zwa itea ngazwo."
+            "text": "Hi leswi swi langutekaka hakona hi ku tirhisa."
           },
           {
             "status": "draft",
-            "text": "Sow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa."
+            "text": "Sow xo sungula. Endzhaku ka two to three weeks, sow xa vumbirhi. Kutani sow xa vunharhu. Kutani sow xa vumune."
           },
           {
             "status": "draft",
-            "text": "Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap. A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa."
+            "text": "Loko nkarhi wa crop wu lulamile, minkarhi ya ntshovelo yi nga sungula ku overlap. A hi minkarhi hinkwako laha ntlawa wo sungula wu nga vaka wu lunghekele ku tshoveriwa loko ku byariwa ka vumune ku endliwa."
           },
           {
             "status": "draft",
-            "text": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe."
+            "text": "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka."
           },
           {
             "status": "draft",
-            "text": "Sedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill."
+            "text": "Languta leswi humelelaka ensin'wini ya wena, u lulamisa interval. Ku xiyisisa leswi hi swona vutshila."
           }
         ]
       }
@@ -839,31 +827,31 @@
         "body": [
           {
             "status": "draft",
-            "text": "U ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo."
+            "text": "Intercropping a hi crowding ntsena ka swibyariwa swo hambana endhawini yin’we. Xibyariwa xin'wana ni xin'wana xi lava role ya xona, ni space leyi eneleke ku yi endla."
           },
           {
             "status": "draft",
-            "text": "The Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas."
+            "text": "The Three Sisters i xifaniso lexi humaka eka Indigenous farming traditions in the Americas."
           },
           {
             "status": "draft",
-            "text": "Maize i ṋea vhulapfu na tshivhumbeo."
+            "text": "Maize yi nyika ku leha ni structure."
           },
           {
             "status": "draft",
-            "text": "Beans dzi gonya maize, and store as protein."
+            "text": "Beans ti khandziya maize, and store as protein."
           },
           {
             "status": "draft",
-            "text": "Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture."
+            "text": "Pumpkin yi hangalaka ehenhla ka misava, yi endla ndzhuti ehenhla ka misava, yi tlhela yi hlayisa moisture."
           },
           {
             "status": "draft",
-            "text": "Tshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya."
+            "text": "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya."
           },
           {
             "status": "draft",
-            "text": "Zwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+            "text": "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
           }
         ]
       }
@@ -888,34 +876,37 @@
             {
               "sourceEnglish": "Plan Backwards From ",
               "status": "draft",
-              "text": "Planani ni tshi humela murahu u bva kha "
+              "text": "Hlela u tlhelela endzhaku ku suka eka "
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
             }
-          ]
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Muṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga."
+            "text": "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka."
           },
           {
             "status": "draft",
-            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
+            "text": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden."
           },
           {
             "status": "draft",
-            "text": "Ni songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu."
+            "text": "U nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena."
           },
           {
             "status": "draft",
-            "text": "Iṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo."
+            "text": "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo."
           },
           {
             "status": "draft",
-            "text": "Hezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa."
+            "text": "Leswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka."
           }
         ]
       }
@@ -935,28 +926,30 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo."
+            "text": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo."
           },
           {
             "status": "draft",
-            "text": "Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory."
+            "text": "Yi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory."
           },
           {
             "status": "draft",
-            "text": "Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela."
+            "text": "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela."
           },
           {
             "status": "draft",
-            "text": "Alusani zwivhili kana zwo engaho. Hu si tshithihi."
+            "text": "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we."
           },
           {
             "status": "draft",
-            "text": "Ndi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion."
+            "text": "Hi xihi staple lexi ndyangu wa wena wu titshegeke ngopfu hi xona sweswi? Hi xona lexi failure ya xona a yi ta vavisa ngopfu ku hundza swin’wana — hikokwalaho hi xona lexi lavaka companion."
           }
         ]
       }
@@ -978,32 +971,32 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Staples dzo fhambanaho dzi tsireledza kha khombo dzo fhambanaho."
+          "text": "Staples to hambana ti sirhelela eka makhombo yo hambana."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho."
+            "text": "Staple yin'wana ni yin'wana yi ku sirhelela eka xilo xo hambana."
           },
           {
             "status": "draft",
-            "text": "Maize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection."
+            "text": "Maize yi nyika calories naswona yi hlayiseka loko yi omile. Open-pollinated maize yi tlhela yi ku pfumelela ku hlayisa mbewu ya wena, loko u endla isolation na selection."
           },
           {
             "status": "draft",
-            "text": "Beans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa."
+            "text": "Beans na cowpeas swi nyika protein harvest leyi nga hlayisiwa."
           },
           {
             "status": "draft",
-            "text": "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa."
+            "text": "Sweet potato yi kuma drought tolerance nyana endzhaku ka loko storage roots ta yona ti vumbekile. Yi lava mati eka mavhiki yo sungula ni loko storage roots ti ha vumbeka; water stress hi nkarhi wolowo yi nga hunguta harvest. young leaves ya yona na yona ya dyiwa."
           },
           {
             "status": "draft",
-            "text": "Amadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa."
+            "text": "Amadumbe yi kota ku tiyisela eka wetter ground, laha other staples swi tikeriwaka."
           },
           {
             "status": "draft",
-            "text": "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa."
+            "text": "Xiya leswaku swibyariwa leswi swi tsandzeka eka swiyimo swo hambana. Hi yona mhaka ya kona."
           }
         ]
       }
@@ -1024,28 +1017,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "U fhambana ha zwimela zwi ita uri zwiliwa zwi dzule zwi tshi wanala."
+          "text": "Ku hambana ka swibyariwa ku endla leswaku swakudya swi hambeta swi kumeka."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Resilience a zwi ambi uri a hu na zwine zwa kundwa."
+            "text": "Resilience a swi vuli leswaku a ku na lexi tsandzekaka."
           },
           {
             "status": "draft",
-            "text": "Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu."
+            "text": "Swi vula leswaku ku tsandzeka kun'we a ku herisi kungu ra swakudya ra ndyangu wa wena."
           },
           {
             "status": "draft",
-            "text": "Tshibyariwa tshithihi ndi point nthihi ya failure."
+            "text": "Xibyariwa xin'we i \"point of failure\" yin'we."
           },
           {
             "status": "draft",
-            "text": "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa."
+            "text": "Staples swimbirhi kumbe ku fhira swi ku nyika tindlela to tala ta ku ya mahlweni u dya."
           },
           {
             "status": "draft",
-            "text": "Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo."
+            "text": "Swibyariwa swo hambana swi tirhisa mati, misava na tinguva hi tindlela to hambana. Ku hambana loku hi kona ku va nsirhelelo."
           }
         ]
       }
@@ -1070,7 +1063,7 @@
         "body": [
           {
             "status": "draft",
-            "text": "Pest pressure i anzela u engedzea nga tshiitisi."
+            "text": "Pest pressure hi ntolovelo yi engetseka hi xivangelo."
           },
           {
             "status": "mixed",
@@ -1078,7 +1071,7 @@
               {
                 "sourceEnglish": "Plants under ",
                 "status": "draft",
-                "text": "Zwimela zwi re na "
+                "text": "Swibyariwa leswi nga na "
               },
               {
                 "sourceEnglish": "stress.",
@@ -1086,12 +1079,13 @@
               },
               {
                 "sourceEnglish": " One crop dominating the ground.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Xibyariwa xin’we lexi lawulaka ndhawu."
               },
               {
                 "sourceEnglish": " Or ",
                 "status": "draft",
-                "text": " Kana "
+                "text": " Kumbe "
               },
               {
                 "sourceEnglish": "broad chemical use",
@@ -1100,7 +1094,7 @@
               {
                 "sourceEnglish": " that has already removed the ",
                 "status": "draft",
-                "text": " yo no bvisa "
+                "text": " leyi se yi suseke "
               },
               {
                 "sourceEnglish": "predators",
@@ -1109,72 +1103,21 @@
               {
                 "sourceEnglish": " that were helping you.",
                 "status": "draft",
-                "text": " dze dza vha dzi tshi ni thusa."
-              }
-            ]
-          },
-          {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "So ",
-                "status": "draft",
-                "text": "Ngazwenezwo, "
-              },
-              {
-                "sourceEnglish": "before you treat anything, ",
-                "status": "draft",
-                "text": "ni sa athu u thoma u lafha tshithu, "
-              },
-              {
-                "sourceEnglish": "look at the whole system.",
-                "status": "draft",
-                "text": "sedzani system yoṱhe."
-              }
-            ]
-          },
-          {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "Is the plant short of water?",
-                "status": "draft",
-                "text": "Naa tshimela tshi khou shaya maḓi?"
-              },
-              {
-                "sourceEnglish": " Is the soil ",
-                "status": "draft",
-                "text": " Mavu o "
-              },
-              {
-                "sourceEnglish": "compacted",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": ", or ",
-                "status": "draft",
-                "text": " kana "
-              },
-              {
-                "sourceEnglish": "hungry",
-                "status": "draft",
-                "text": "a si na pfushi"
-              },
-              {
-                "sourceEnglish": "?",
-                "status": "draft",
-                "text": "?"
-              },
-              {
-                "sourceEnglish": " Are predators already working on the problem for you?",
-                "status": "draft",
-                "text": " Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?"
+                "text": " leti a ti ku pfuna."
               }
             ]
           },
           {
             "status": "draft",
-            "text": "Yellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando."
+            "text": "Kutani, loko u nga si tshungula xin'wana ni xin'wana, languta system hinkwawu."
+          },
+          {
+            "status": "draft",
+            "text": "Xana xibyariwa xi pfumala mati? Misava yi compacted kumbe yi pfumala swakudya? Xana predators se ti ku pfuna hi ku tirha eka xiphiqo lexi?"
+          },
+          {
+            "status": "draft",
+            "text": "A yellow leaf a swi vuli automatically leswaku ku ni insect. Xivangelo xi nga va mati, nutrition, kumbe ku onhaka ka timitsu. Kuma leswaku i yini u nga si teka goza."
           }
         ]
       }
@@ -1196,40 +1139,24 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Langa tshiitisi phanḓa ha tshikhokhonono."
+          "status": "english-hold"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Tevhelani vhukando vhuṋa nga u tevhekana."
-          },
-          {
-            "status": "mixed",
-            "segments": [
-              {
-                "sourceEnglish": "One. Observe. Look at the ",
-                "status": "draft",
-                "text": "Tsha u thoma. Sedzani. Sedzani "
-              },
-              {
-                "sourceEnglish": "damage pattern",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": ", the underside of the leaf, the stem, and the plants nearby.",
-                "status": "draft",
-                "text": ", tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini."
-              }
-            ]
+            "text": "Tirha hi magoza ya mune, hi ku landzelelana."
           },
           {
             "status": "draft",
-            "text": "Tsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage."
+            "text": "Xo sungula. Languta pattern ya ku onhaka, tlhelo ra le hansi ra tluka, tsinde, ni swibyariwa leswi nga ekusuhi."
           },
           {
             "status": "draft",
-            "text": "Tsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita."
+            "text": "Vumbirhi. Kambela stress. Ndzhongo wa misava, timitsu, mpfhuka wa swimilani, nutrition na drainage."
+          },
+          {
+            "status": "draft",
+            "text": "Vunharhu. Sirhelela leswi swi ku pfunaka. Beneficial insects (switsotswana leswi pfunaka) swi endla ntirho lowu wena a wu ta wu endla hi wexe."
           },
           {
             "status": "mixed",
@@ -1237,12 +1164,12 @@
               {
                 "sourceEnglish": "Four.",
                 "status": "draft",
-                "text": "Tsha vhuṋa."
+                "text": "Vumune."
               },
               {
                 "sourceEnglish": " Only then, act — and start with ",
                 "status": "draft",
-                "text": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+                "text": " Hi kona ntsena u tekaka goza — sungula hi "
               },
               {
                 "sourceEnglish": "the lightest thing that works.",
@@ -1255,30 +1182,31 @@
               {
                 "sourceEnglish": ", barriers",
                 "status": "draft",
-                "text": ", zwithivheli",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "text": ", swisirhelelo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " or changes in ",
                 "status": "draft",
-                "text": " kana tshanduko kha nḓila ya u ṱhogomela "
+                "text": " kumbe ku cinca ndlela yo hlayisa "
               },
               {
                 "sourceEnglish": "crop care",
                 "status": "draft",
-                "text": "zwimela"
+                "text": "swibyariwa"
               },
               {
                 "sourceEnglish": " may help.",
                 "status": "draft",
-                "text": " zwi nga thusa."
+                "text": " swi nga pfuna."
               },
               {
                 "sourceEnglish": " Check that the action suits the problem and monitor the result.",
                 "status": "draft",
-                "text": " Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo."
+                "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1286,7 +1214,7 @@
               {
                 "sourceEnglish": "If a ",
                 "status": "draft",
-                "text": "Arali "
+                "text": "Loko "
               },
               {
                 "sourceEnglish": "treatment",
@@ -1295,7 +1223,7 @@
               {
                 "sourceEnglish": " is needed, use a ",
                 "status": "draft",
-                "text": " i tshi ṱoḓea, shumisani "
+                "text": " yi laveka, tirhisa "
               },
               {
                 "sourceEnglish": "product registered for that crop and pest",
@@ -1304,7 +1232,7 @@
               {
                 "sourceEnglish": ", and follow its ",
                 "status": "draft",
-                "text": ", nahone ni tevhele "
+                "text": ", kutani u landzelela "
               },
               {
                 "sourceEnglish": "label",
@@ -1313,12 +1241,12 @@
               {
                 "sourceEnglish": ".",
                 "status": "draft",
-                "text": " yayo."
+                "text": " ya yona."
               },
               {
                 "sourceEnglish": " This includes ",
                 "status": "draft",
-                "text": " Hezwi zwi katela "
+                "text": " Leswi swi katsa "
               },
               {
                 "sourceEnglish": "neem products.",
@@ -1327,7 +1255,7 @@
               {
                 "sourceEnglish": " Check ",
                 "status": "draft",
-                "text": " Ṱolani "
+                "text": " Kambela "
               },
               {
                 "sourceEnglish": "protection and harvest waiting instructions.",
@@ -1336,17 +1264,17 @@
               {
                 "sourceEnglish": " Do not improvise ",
                 "status": "draft",
-                "text": " Ni songo ḓiitela "
+                "text": " U nga tiendleli "
               },
               {
                 "sourceEnglish": "mixtures",
                 "status": "draft",
-                "text": "misanganedzo"
+                "text": "swihlanganisi"
               },
               {
                 "sourceEnglish": " or ",
                 "status": "draft",
-                "text": " kana "
+                "text": " kumbe "
               },
               {
                 "sourceEnglish": "stronger doses",
@@ -1362,7 +1290,7 @@
           },
           {
             "status": "draft",
-            "text": "Ni ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka."
+            "text": "Tshembeka eka wena n'winyi mayelana na goza leri u talaka ku ri tlula."
           }
         ]
       }
@@ -1384,12 +1312,12 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Mushumo wa tsimuni"
+          "text": "Ntirho wa le nsinini"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Zwino ngudo i fhela mavuni."
+            "text": "Sweswi, dyondzo yi hela emhlabeni."
           },
           {
             "status": "mixed",
@@ -1397,7 +1325,7 @@
               {
                 "sourceEnglish": "Build one bed that can keep feeding you. ",
                 "status": "draft",
-                "text": "Fhaṱani bed nthihi ine ya nga bvela phanḓa u ni ṋea zwiliwa. "
+                "text": "Aka bed yin'we leyi nga tshamaka yi ku nyika swakudya. "
               },
               {
                 "sourceEnglish": "One point two metres by three metres.",
@@ -1407,7 +1335,7 @@
           },
           {
             "status": "draft",
-            "text": "Swikani vhukati ha bed ni tshi bva thungo dzoṱhe mbili. Ni ite uri milenzhe yaṋu yoṱhe i dzule i kha paths fhedzi. Ṋeani zwimela spacing yo teaho kha climate yaṋu. Vheani mulch kha bed."
+            "text": "Fika exivindzini hi matlhelo hamambirhi. Tiyisisa leswaku milenge ya wena yi sala yi ri etindleleni ntsena. Siyela swimilani mpfhuka lowu faneleke eka maxelo ya wena. Tirhisa mulch eka bed."
           },
           {
             "status": "mixed",
@@ -1415,53 +1343,57 @@
               {
                 "sourceEnglish": "Check the bed regularly from planting.",
                 "status": "draft",
-                "text": "Ṱolani bed regularly u bva musi wa u ṱavha.",
-                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, regularly, ten-day photograph, assignment checkpoint"
+                "text": "Kambela bed nkarhi na nkarhi ku sukela loko yi byariwile."
               },
               {
                 "sourceEnglish": " Use the ",
                 "status": "draft",
-                "text": " Shumisani "
+                "text": " Tirhisa "
               },
               {
                 "sourceEnglish": "ten-day photograph",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "foto ra le ndzhaku ka masiku ya khume",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " as an assignment checkpoint, ",
                 "status": "draft",
-                "text": " sa assignment checkpoint, "
+                "text": " tanihi assignment checkpoint, "
               },
               {
                 "sourceEnglish": "not a reason to delay care.",
                 "status": "draft",
-                "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
+                "text": "ku nga ri xivangelo xo hlwela ku khathalela."
               }
             ],
-            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Photograph it",
-                "status": "english-hold"
+                "sourceEnglish": "Photograph it when it's planted.",
+                "status": "draft",
+                "text": "Teka foto loko bed yi byariwile."
               },
               {
-                "sourceEnglish": " when it's planted.",
+                "sourceEnglish": " Then come back after ten days",
                 "status": "draft",
-                "text": " musi bed yo no ṱavhiwa."
+                "text": " Kutani vuya endzhaku ka masiku ya khume"
               },
               {
-                "sourceEnglish": " Then come back after ten days with what you observed.",
+                "sourceEnglish": " with what you observed.",
                 "status": "draft",
-                "text": " Nga murahu ha maḓuvha a fumi ni vhuye ni na zwe na zwi vhona."
+                "text": " u ri na leswi u swi xiyeke.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
-            "text": "Tshipikwa a si tshifanyiso tsho fhelelaho. Tshipikwa ndi bed ine na khetha shape, spacing na rhythm yayo nga ndivho."
+            "text": "Xikongomelo a hi xifaniso lexi hetisekeke. Xikongomelo i bed leyi xivumbeko, spacing ni rhythm ya yona u swi hlawuleke hi vomu."
           }
         ]
       }
@@ -1485,28 +1417,28 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Nyito ya tsimuni"
+          "text": "Xiendlo xa le nsinini"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Vhege ino, shumisani bed nthihi kha production."
+            "text": "Vhiki leri, nghenisa bed yin’we eka production."
           },
           {
             "status": "draft",
-            "text": "Tshithihi. Swayani bed na paths."
+            "text": "Xin’we. Maka bed na paths."
           },
           {
             "status": "draft",
-            "text": "Mbili. Ṱavhani, ni tshi tevhedza spacing yaṋu na sowing rhythm yaṋu."
+            "text": "Mbirhi. Byala hi spacing ya wena ni sowing rhythm ya wena."
           },
           {
             "status": "draft",
-            "text": "Raru. Vhuyani nga murahu ha maḓuvha a fumi, ni na foto."
+            "text": "Nharhu. Vuya endzhaku ka masiku ya khume, u ri na foto."
           },
           {
             "status": "draft",
-            "text": "Nga murahu ni sedze. Ni lulamise. Ni ṅwale fhasi."
+            "text": "Kutani languta. Lulamisa. Tsala leswi ehansi."
           },
           {
             "status": "mixed",
@@ -1514,18 +1446,18 @@
               {
                 "sourceEnglish": "Record the sowing date.",
                 "status": "draft",
-                "text": "Ṅwalani datumu ya sowing."
+                "text": "Tsala siku ra sowing."
               },
               {
                 "sourceEnglish": " The rain.",
                 "status": "draft",
-                "text": " Mvula."
+                "text": " Mpfula."
               },
               {
                 "sourceEnglish": " What germinated.",
                 "status": "draft",
-                "text": " Zwine zwa no mela.",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "text": " Leswi nga mila.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1534,25 +1466,29 @@
               {
                 "sourceEnglish": " What you harvested.",
                 "status": "draft",
-                "text": " Zwine na no kaṋa.",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "text": " Leswi u tshoveleke."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
             "segments": [
               {
-                "sourceEnglish": "Season by season,",
+                "sourceEnglish": "Season by season, ",
                 "status": "draft",
-                "text": "Khalaṅwaha iṅwe na iṅwe,"
+                "text": "Nguva yin’wana ni yin’wana, "
               },
               {
-                "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "sourceEnglish": "your garden ",
                 "status": "draft",
-                "text": " garden yaṋu i ya i tshi fhungudza u ḓitika nga u humbulela — nahone i tshi engedza u ḓitika nga zwe na zwi vhona zwa vhukuma zwi tshi itea fhethu haṋu.",
-                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: garden"
+                "text": "ntanga wa wena "
+              },
+              {
+                "sourceEnglish": "becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+                "status": "draft",
+                "text": "wu ya wu hunguta ku titshega hi ku bvumba — naswona wu ya wu engetela ku titshega hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               }
             ],
             "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
@@ -1563,18 +1499,18 @@
               {
                 "sourceEnglish": "Use your record ",
                 "status": "draft",
-                "text": "Shumisani rekhodo yaṋu "
+                "text": "Tirhisa rhekhodo ya wena "
               },
               {
                 "sourceEnglish": "with reliable local advice",
                 "status": "draft",
-                "text": "na nyeletshedzo i fulufhedzeaho ya henefho",
+                "text": "ni xitsundzuxo xo tshembeka xa laha kaya",
                 "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
-                "text": " musi ni tshi dzhia tsheo i tevhelaho."
+                "text": " loko u endla xiboho lexi landzelaka."
               }
             ],
             "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"

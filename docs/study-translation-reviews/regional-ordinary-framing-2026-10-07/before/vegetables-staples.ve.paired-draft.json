@@ -210,8 +210,7 @@
               },
               {
                 "sourceEnglish": "Read a pest problem",
-                "status": "draft",
-                "text": "Ṱolani pest problem"
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " before you ",
@@ -234,8 +233,7 @@
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
-                "status": "draft",
-                "text": "A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. "
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
@@ -262,13 +260,12 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu."
+          "status": "english-hold"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe."
+            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
           },
           {
             "status": "mixed",
@@ -336,8 +333,7 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Khethani bed u ya nga soil na rainfall."
+          "status": "english-hold"
         },
         "body": [
           {

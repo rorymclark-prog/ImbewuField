@@ -73,8 +73,9 @@ const assets = new Map(coreHeldOrdinaryAssets.map(row => ['public'+row.url,row])
 export function coreHeldOrdinaryAssetBefore(path: string, bytes: Uint8Array) {
   const row = assets.get(path);
   if (!row) return veOrdinaryAssetBefore(path, bytes);
-  assert.equal(bytes.length,row.afterBytes,path+': exact current measured bytes');
-  assert.equal(sha(bytes),row.afterSHA256,path+': exact current SHA');
+  const newer = veOrdinaryAssetBefore(path, bytes);
+  assert.equal(newer?.bytes ?? bytes.length,row.afterBytes,path+': exact current measured bytes');
+  assert.equal(newer?.sha256 ?? sha(bytes),row.afterSHA256,path+': exact current SHA');
   return { bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1] };
 }
 const oldManifest = readFileSync(folder+'before/manifest.ts.txt','utf8');

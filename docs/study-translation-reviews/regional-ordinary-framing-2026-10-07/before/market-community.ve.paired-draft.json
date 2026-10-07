@@ -459,9 +459,8 @@
               },
               {
                 "sourceEnglish": "what happens when crops are short. Regular orders",
-                "status": "draft",
-                "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
-                "text": "zwine zwa itea musi zwimela zwi sa eḓani. Regular orders"
+                "status": "english-hold",
+                "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
               },
               {
                 "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
@@ -753,9 +752,8 @@
               },
               {
                 "sourceEnglish": "selling costs still need measuring.",
-                "status": "draft",
-                "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
-                "text": "selling costs zwi kha ḓi tea u kaliwa."
+                "status": "english-hold",
+                "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
               }
             ],
             "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
