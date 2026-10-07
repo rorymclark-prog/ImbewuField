@@ -52,9 +52,7 @@
               },
               {
                 "sourceEnglish": "practical choices for crops, trees, buildings, roads, and water",
-                "status": "draft",
-                "text": "khetho dzine dza shuma dza zwimela, miri, zwifhaṱo, bada na maḓi",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ". They are the start of good ",
@@ -272,9 +270,7 @@
               },
               {
                 "sourceEnglish": "your property",
-                "status": "draft",
-                "text": "land yaṋu",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ".",
@@ -1310,9 +1306,7 @@
               },
               {
                 "sourceEnglish": "Check the soil before deciding what the patch means for your design.",
-                "status": "draft",
-                "text": "Sedzani mavu ni sa athu u dzhia tsheo ya zwine henefho ha amba zwone kha nḓila yaṋu ya u pulana.",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
@@ -1455,9 +1449,7 @@
               },
               {
                 "sourceEnglish": "your property",
-                "status": "draft",
-                "text": "land yaṋu",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ". Note where excess water may need a safe route away.",
@@ -1574,9 +1566,7 @@
               },
               {
                 "sourceEnglish": "This is an observation",
-                "status": "draft",
-                "text": "Ndi u vhona zwine zwa vha hone",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ", not a design for ",

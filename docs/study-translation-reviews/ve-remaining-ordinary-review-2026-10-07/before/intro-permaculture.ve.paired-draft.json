@@ -425,9 +425,8 @@
               },
               {
                 "sourceEnglish": "surplus",
-                "status": "draft",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "zwo salaho"
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {
                 "sourceEnglish": " to the ",
@@ -614,9 +613,8 @@
               },
               {
                 "sourceEnglish": "safe",
-                "status": "draft",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "tsireledzea"
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {
                 "sourceEnglish": " or allowed.",
@@ -813,9 +811,8 @@
               },
               {
                 "sourceEnglish": "site",
-                "status": "draft",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "fhethu"
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {
                 "sourceEnglish": ". ",
@@ -896,9 +893,8 @@
               },
               {
                 "sourceEnglish": "site",
-                "status": "draft",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "fhethu"
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {
                 "sourceEnglish": ".",
@@ -960,9 +956,8 @@
               },
               {
                 "sourceEnglish": "before they leave your property.",
-                "status": "draft",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "musi zwi sa athu u bva kha land yaṋu."
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               }
             ]
           },
@@ -1287,9 +1282,8 @@
               },
               {
                 "sourceEnglish": "harvest",
-                "status": "draft",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07.",
-                "text": "u kaṋa"
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {
                 "sourceEnglish": " is ",

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "scripts/make-lesson-slides.mjs",
+    "reading-landscape",
+    "ve",
+    "/tmp/imbewu-ve-ordinary-render-20261007/reading-landscape",
+    "--paired-draft",
+    "docs/narration/reading-landscape.ve.paired-draft.json",
+    "--slides",
+    "1,4,18,20,21"
+  ],
+  "exitCode": 0,
+  "stdout": "\n  reading-landscape \u00b7 ve \u2014 21 slides from /Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/docs/narration/reading-landscape.en.md\n\n   1  Reading the Landscape\n   4  Lesson 1: Where Rain Goes\n  18  Let Plants Help You Read Soil\n  20  Field Assignment\n  21  Field Action\n\n  \u2713 /tmp/imbewu-ve-ordinary-render-20261007/reading-landscape\n\n",
+  "stderr": "(node:19049) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/lib/course-modules.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+}
