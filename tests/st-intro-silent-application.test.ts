@@ -1,4 +1,5 @@
 import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
+import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -27,6 +28,8 @@ function nativeBefore(language: string) {
 const get = (o: any, path: string) => path.split('/').reduce((v, k) => v[k], o);
 const joinTarget = (f: any, source?: string): string => f.status === 'mixed' ? f.segments.map((s: any) => joinTarget(s)).join('') : f.status === 'english-hold' ? f.sourceEnglish ?? f.english ?? source! : f.text;
 function validate(native: Record<string, any>, pairs: Record<string, any>) {
+  // The later fairness repair must pass its complete-source guard before this dated release is reconstructed.
+  native = { ...native, ts: fairSharingNativeBefore(native.ts) };
   // 6 October: full latest39 paired validation precedes this dated60-field release.
   pairs = Object.fromEntries(Object.entries(pairs).map(([language, pair]) => [language, finalLanguageNextDeckBefore(language === 'st' ? proof.outputs.newSilentST.path : proof.outputs.existingPaired[language].path, pair)]));
   assert.equal(sha(read(`${dir}/applied-proof.json`)), '356243b0a456b820208971c4349b893011a018d97e3e45943171152de9bd8d45');
@@ -144,7 +147,8 @@ test('source, approved target, status, answer index, unlisted field and pair-ord
     (p: any) => { p.ts.slides[6].target.body[1].segments[0].provenance = 'unapproved segment provenance'; },
   ]) {
     const pairs = livePairs(); mutate(pairs);
-    assert.throws(() => validate(liveNative, pairs), /listed paired metadata|complete accepted latest paired layer/);
+    // TS provenance drift is now caught by the newer complete-deck fairness guard first.
+    assert.throws(() => validate(liveNative, pairs), /listed paired metadata|complete accepted latest paired layer|complete TS paired deck matches the three reviewed fairness cells without source or neighbour drift/);
   }
 });
 

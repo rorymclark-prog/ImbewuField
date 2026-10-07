@@ -285,12 +285,13 @@ test('later TS Reading projection preserves the complete Intro968 shared file an
   assert.match(restored, /Hlawula any water works for the site/);
   const unlistedBytes = bytes + '\n// Unapproved shared-source change.\n';
   assert.notEqual(unlistedBytes, bytes);
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(unlistedBytes), /preserves every Intro968 and unlisted byte/);
+  // The later whole-file fairness guard now detects unlisted corruption first.
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(unlistedBytes), /entire current file matches the reviewed fairness layer/);
   const mutated = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
   mutated.lessons[0].body.sourceEnglish += ' Changed source.';
   assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, mutated), /imported current registry equals the complete reviewed applied object/);
   const alteredIndex = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
   alteredIndex.lessons[0].quiz[0].sourceCorrectIndex = 99;
   assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, alteredIndex), /imported current registry equals the complete reviewed applied object/);
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /exact accepted TS Reading body literal occurs once/);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /entire current file matches the reviewed fairness layer/);
 });

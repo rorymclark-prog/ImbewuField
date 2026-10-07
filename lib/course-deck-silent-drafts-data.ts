@@ -5,6 +5,60 @@ import type { IsiZuluSilentDeckDraftInput } from './course-deck-silent-drafts';
 export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInput[] = [
   {
     "moduleId": "intro-permaculture",
+    "slide": 6,
+    "sourceHeading": "Fair Share",
+    "sourceEnglish": [
+      "The third ethic is Fair Share.",
+      "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "A community that fences off a shared spring is breaking it too.",
+      "What does your land get back from you each season?"
+    ],
+    "correctedTitle": "Ukwabelana Ngendlela Enobulungiswa (Fair Share)",
+    "correctedTarget": [
+      "I-ethic yesithathu yi-Fair Share.",
+      "Thatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi.",
+      "Umlimi othengisa wonke ama-mielies akhe asele, angashiyi lutho lokwenza i-compost noma lokugcina imbewu, uyephula le-ethic. Akukho okubuyela ohlelweni.",
+      "Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela nawo uyayiphula le-ethic.",
+      "Umhlaba wakho utholani kuwe ngesizini ngayinye?"
+    ],
+    "sourceHash": "184721b482adc1558c5e06cbdecba6343592df84c5fa8aee4d52f6f520bba0e4",
+    "targetHash": "82cc3f4912b35c5f2ecdd795439cc98b1238012d87aeb292325c500f0bda08e6",
+    "imageUrl": "/course-decks/intro-permaculture/zu-silent/slide-06.webp",
+    "imageSha256": "82c8de6a332feb2aa24844b3f381871c49c78e2b49bd497c505afeff3d22c3f1",
+    "imageBytes": 576434,
+    "width": 1440,
+    "height": 5400,
+    "reviewStatus": "unreviewed",
+    "audioBinding": "none"
+  },
+  {
+    "moduleId": "intro-permaculture",
+    "slide": 7,
+    "sourceHeading": "Watch: One Decision, Three Ethics",
+    "sourceEnglish": [
+      "A borehole serves your household. Neighbours ask for water too.",
+      "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "Who could help you check the rules and the water supply?"
+    ],
+    "correctedTitle": "Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu",
+    "correctedTarget": [
+      "I-borehole inikeza umndeni wakho amanzi. Omakhelwane bacela amanzi nabo.",
+      "Qala uthole ukuthi ukwabelana ngamanzi kuvumelekile yini. Hlola ukuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngokwabelana ngendlela enobulungiswa bese niqhubeka nibheka izinga lamanzi. I-People Care ne-Fair Share kuqondisa isivumelwano. I-Earth Care isho ukuvikela umthombo wamanzi. Ukuqapha izinga lamanzi kukodwa akusho ukuthi ukusebenzisa amanzi engeziwe kuphephile noma kuvumelekile.",
+      "Ubani ongakusiza uhlole imithetho nokuthi amanzi akhona anele yini?"
+    ],
+    "sourceHash": "27b10b6a37078aad4cd517830b0ddb22acc67ab2f580867d25ee3239045dc12d",
+    "targetHash": "fe17f0f85f58826e9eb924730622125d60dad0132e0f09bedc4e6721f04b72de",
+    "imageUrl": "/course-decks/intro-permaculture/zu-silent/slide-07.webp",
+    "imageSha256": "c8d213ece4bac7237218115587069553121ae702f8b11d2bd28c5a8e41c1ead0",
+    "imageBytes": 372150,
+    "width": 1440,
+    "height": 5400,
+    "reviewStatus": "unreviewed",
+    "audioBinding": "none"
+  },
+  {
+    "moduleId": "intro-permaculture",
     "slide": 22,
     "sourceHeading": "Field Action",
     "sourceEnglish": [

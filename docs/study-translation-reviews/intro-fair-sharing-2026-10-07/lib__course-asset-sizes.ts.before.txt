@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1929 files, 719.2 MB total.
+// 1927 files, 718.3 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -781,8 +781,8 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/ts/slide-03.webp': 274112,
   '/course-decks/intro-permaculture/ts/slide-04.webp': 582564,
   '/course-decks/intro-permaculture/ts/slide-05.webp': 525246,
-  '/course-decks/intro-permaculture/ts/slide-06.webp': 596664,
-  '/course-decks/intro-permaculture/ts/slide-07.webp': 375340,
+  '/course-decks/intro-permaculture/ts/slide-06.webp': 596776,
+  '/course-decks/intro-permaculture/ts/slide-07.webp': 375292,
   '/course-decks/intro-permaculture/ts/slide-08.webp': 283416,
   '/course-decks/intro-permaculture/ts/slide-09.webp': 293426,
   '/course-decks/intro-permaculture/ts/slide-10.webp': 723156,
@@ -820,8 +820,6 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/intro-permaculture/ve/slide-20.webp': 495112,
   '/course-decks/intro-permaculture/ve/slide-21.webp': 221216,
   '/course-decks/intro-permaculture/ve/slide-22.webp': 268396,
-  '/course-decks/intro-permaculture/zu-silent/slide-06.webp': 576434,
-  '/course-decks/intro-permaculture/zu-silent/slide-07.webp': 372150,
   '/course-decks/intro-permaculture/zu-silent/slide-22.webp': 259382,
   '/course-decks/intro-permaculture/zu/slide-01.jpg': 115360,
   '/course-decks/intro-permaculture/zu/slide-02.jpg': 90648,

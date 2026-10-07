@@ -1,5 +1,6 @@
 import { finalLanguageNextNativeBefore, finalLanguageNextDeckBefore, finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
+import { fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -246,6 +247,7 @@ export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: 
  * Reading body literal; the caller still checks every other byte by the old SHA.
  */
 export function tsSharedSourceBeforeNativeOrdinary(bytes: string, currentReading: any = readTs): string {
+  bytes = fairSharingSourceBytesBefore('lib/course-translation-drafts-ts.ts', bytes);
   nativeOrdinaryBeforeFinalBatch(currentReading);
   const rows = fieldProof.fields.filter((row: any) => row.registryExport === 'XITSONGA_READING_LANDSCAPE_DRAFT');
   assert.equal(rows.length, 1, 'only the accepted TS Reading body field may be projected in the shared source');

@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: 'd69134eb', changes: [
+    'Introduction adds fair-sharing drafts in isiZulu and Xitsonga beside exact English.',
+    'Four silent cards use the new wording; affected old isiZulu narration stays off.',
+  ], tour: [
+    { title: 'Read fair-sharing drafts',
+      where: 'Study → Introduction → isiZulu or Xitsonga',
+      detail: 'Compare unreviewed wording with English, or save the silent slide pack.',
+      href: '/student' },
+  ] },
   { when: '7 October 2026', sha: '5b0caae5', changes: [
     '10 silent Tshivenda and Xitsonga cards add fuller drafts beside exact English.',
     'Saved slides refresh these cards while keeping recordings and other lessons.',

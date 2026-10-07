@@ -5,10 +5,20 @@ import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import {
   courseTranslationReviewState,
-  resolveLearnerLessonPresentation,
+  resolveLearnerLessonPresentation as currentPresentation,
   type LocalizedLessonContent,
 } from '../lib/course-localization.ts';
-import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
+import { COURSE_TRANSLATION_DRAFTS as currentZuluDrafts } from '../lib/course-translation-drafts.ts';
+import { fairSharingZuluBefore } from './intro-fair-sharing-history-checks.ts';
+// The later fairness correction changes three L1 leaves. Validate its complete
+// registry before retaining this dated image-addition proof and all other fields.
+const COURSE_TRANSLATION_DRAFTS = fairSharingZuluBefore(currentZuluDrafts);
+const resolveLearnerLessonPresentation: typeof currentPresentation = (lesson, language, record) => {
+  const shown = currentPresentation(lesson, language, record);
+  return lesson.id === 'intro-permaculture-l1' && language === 'zu' && shown.status === 'draft'
+    ? { ...shown, content: { ...shown.content, infographicAlt: COURSE_TRANSLATION_DRAFTS[lesson.id].infographicAlt } }
+    : shown;
+};
 import { ISIZULU_REVIEW_DRAFT_SOURCE_SNAPSHOTS } from '../lib/course-translation-draft-sources-zu.ts';
 
 type AppliedRow = {

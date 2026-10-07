@@ -1,0 +1,95 @@
+{
+  "base": "ca30ea2155f7fa28b544a03b9a75b46e4bf3bf37",
+  "reviewStatus": "unreviewed-machine-draft",
+  "scope": "Intro L1 fair/equal distinction; no allocation formula added",
+  "review": {
+    "method": "Actual native Agy prose review of all 21 Intro L1 fields in each of four languages, followed by bounded candidate grammar/meaning check. Generic scripted pass reports rejected.",
+    "model": "Gemini 3.8 Flash Medium",
+    "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+    "fluentApproval": false
+  },
+  "zuAppliedUnpublished": [
+    {
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
+      "draft": "Thola ukuthi ukwabelana ngamanzi kuvumelekile yini nokuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi. Yilapho kuphela eningavumelana khona ngokwabelana ngendlela enobulungiswa bese niqhubeka nibheka izinga lamanzi."
+    },
+    {
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
+      "draft": "Qala uthole ukuthi yikuphi ukusetshenziswa kwamanzi okuvumelekile nokuthi umthombo ungakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngendlela enobulungiswa yokwabelana. Ukuqapha izinga lamanzi kukusiza ubone ushintsho; akukuniki imvume yokusebenzisa amanzi engeziwe."
+    },
+    {
+      "field": "infographicAlt",
+      "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "draft": "Izimiso zokuziphatha ezintathu ziboniswe njengezindilinga ezintathu ezixhumene nezilingana ngosayizi: isandla esiphethe inhlabathi simele Ukunakekela Umhlaba (Earth Care), abantu ababili bamele Ukunakekela Abantu (People Care), kanti ubhasikidi odluliswa phakathi kwezandla umele Ukwabelana Ngendlela Enobulungiswa (Fair Share)."
+    }
+  ],
+  "preserved": {
+    "canonicalEnglish": true,
+    "correctIndices": [
+      2,
+      2
+    ],
+    "mathematicalEqualityDistractor": true,
+    "equalSizeCircles": true,
+    "permissionCapacityOnlyThenMonitoringNegation": true,
+    "stVeUnchanged": true,
+    "mediaArchiveUnchanged": true
+  },
+  "remaining": [
+    "Immutable ZU recordings remain unchanged. Independent silent cards6/7 and narration holds are implemented; exact-preview phone verification remains pending.",
+    "Full final suite, publication gates and phone/offline QA remain required.",
+    "All eleven learner targets preserve exact sources, answer indices and unlisted fields; four compressed source-paired cards are rendered and inspected, without fluent approval."
+  ],
+  "tsAppliedUnpublished": [
+    {
+      "field": "title",
+      "sourceEnglish": "The Three Ethics: Earth Care, People Care, Fair Share",
+      "currentDraft": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana hi Ku Ringana",
+      "candidate": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana Loku Lulameke"
+    },
+    {
+      "field": "body",
+      "sourceEnglish": "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
+      "currentDraft": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana hi Ku Ringana swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana hi Ku Ringana.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni.",
+      "candidate": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana Loku Lulameke swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana Loku Lulameke.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni."
+    },
+    {
+      "field": "keyPoints[2]",
+      "sourceEnglish": "Fair Share: return surplus to the system — seeds, water, food, knowledge",
+      "currentDraft": "Ku Avelana hi Ku Ringana: vuyisela leswi saleke eka maendlelo ya nsimu — mbewu, mati, swakudya, vutivi",
+      "candidate": "Ku Avelana Loku Lulameke: vuyisela leswi saleke eka maendlelo ya nsimu — mbewu, mati, swakudya, vutivi"
+    },
+    {
+      "field": "quiz[0].options[2]",
+      "sourceEnglish": "Fair Share — he returns nothing to the system",
+      "currentDraft": "Ku Avelana hi Ku Ringana — a nga vuyiseli nchumu eka maendlelo ya nsimu",
+      "candidate": "Ku Avelana Loku Lulameke — a nga vuyiseli nchumu eka maendlelo ya nsimu"
+    },
+    {
+      "field": "quiz[0].rationale",
+      "sourceEnglish": "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle.",
+      "currentDraft": "Ku Avelana hi Ku Ringana swi vula ku vuyisela swin'wana swa leswi u swi tekaka — tanihi mbewu, monyolo wa khompositi (compost), kumbe swakudya swa van'wana. Ku xavisa hinkwaswo handle ko siya swin'wana swi tshova ndzhendzeleko wolowo.",
+      "candidate": "Ku Avelana Loku Lulameke swi vula ku vuyisela swin'wana swa leswi u swi tekaka — tanihi mbewu, monyolo wa khompositi (compost), kumbe swakudya swa van'wana. Ku xavisa hinkwaswo handle ko siya swin'wana swi tshova ndzhendzeleko wolowo."
+    },
+    {
+      "field": "quiz[1].options[2]",
+      "sourceEnglish": "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
+      "currentDraft": "Kuma leswaku xana ku avelana swa pfumeleriwa naswona borehole yi nga kota ku tirhela vatirhisi hinkwavo. Hi kona ntsena mi nga pfumelelanaka hi ndlela yo avelana hi ku ringana naswona mi ya emahlweni mi languta xiyimo xa mati.",
+      "candidate": "Kuma leswaku xana ku avelana swa pfumeleriwa naswona borehole yi nga kota ku tirhela vatirhisi hinkwavo. Hi kona ntsena mi nga pfumelelanaka hi ndlela yo avelana leyi lulameke naswona mi ya emahlweni mi languta xiyimo xa mati."
+    },
+    {
+      "field": "quiz[1].rationale",
+      "sourceEnglish": "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
+      "currentDraft": "Rhanga u kuma leswaku hi kwihi ku tirhisiwa ka mati loku pfumeleriwaka na loko xihlovo xi nga kota ku tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona mati ma ringene, pfumelelanani hi ndlela yo avelana hi ku ringana. Ku xiyisisa swi ku pfuna ku vona ku cinca; a swi nyiki mpfumelelo wo teka mati yo tala.",
+      "candidate": "Rhanga u kuma leswaku hi kwihi ku tirhisiwa ka mati loku pfumeleriwaka na loko xihlovo xi nga kota ku tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona mati ma ringene, pfumelelanani hi ndlela yo avelana leyi lulameke. Ku xiyisisa swi ku pfuna ku vona ku cinca; a swi nyiki mpfumelelo wo teka mati yo tala."
+    },
+    {
+      "field": "infographicAlt",
+      "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
+      "currentDraft": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+      "candidate": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana Loku Lulameke."
+    }
+  ]
+}
