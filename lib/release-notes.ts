@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: 'cee6b5b8', changes: [
+    'Tshivenda Reading drafts clarify keeping sensitive plants away from frost pockets.',
+    'Two silent cards show the frost caution beside exact English.',
+  ], tour: [{ title: 'Read the frost placement drafts',
+    where: 'Study → Reading → Tshivenda → Sun, shade and frost',
+    detail: 'Compare unreviewed wording with English; no hillside guarantees frost freedom.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: 'e2151df7', changes: [
     'Reading map drafts distinguish a perfect sketch from a pretty one.',
     'The Xitsonga map draft keeps actually using a sketch beside exact English.',

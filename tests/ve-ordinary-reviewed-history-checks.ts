@@ -1,4 +1,5 @@
-import { ordinaryFramingPairBefore, ordinaryFramingPairBeforeHistory, ordinaryFramingPairBytesBefore, ordinaryFramingManifestBefore, ordinaryFramingAssetBefore } from './ordinary-framing-history-checks.ts';
+import { ordinaryFramingPairBefore, ordinaryFramingPairBeforeHistory, ordinaryFramingPairBytesBefore, ordinaryFramingManifestBefore, ordinaryFramingAssetBefore, ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
+import { veReadingFrostPairBefore, veReadingFrostAssetBefore, frostAssets } from './ve-reading-frost-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -29,6 +30,7 @@ export function ensureVeOrdinaryReviewedText() {
   signature=next;
 }
 export function veOrdinaryPairBefore<T>(file:string,actual:T):T {
+  if (JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file,'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureVeOrdinaryReviewedText();
   actual = ordinaryFramingPairBeforeHistory(file, actual);
   if(!(file in expected))return actual;
@@ -57,6 +59,16 @@ finalManifest=finalManifest.replace(/\d+\.\d+ MB/,(total/1024/1024).toFixed(1)+'
 export function veOrdinaryManifestBefore(actual:string){actual = ordinaryFramingManifestBefore(actual);assert.equal(actual,finalManifest,'complete manifest after only 15 measured changes');return oldManifest;}
 
 export function veOrdinaryAssetBefore(path:string,bytes:Uint8Array){
+  const latest = frostAssets[path.startsWith('public/') ? path.slice(6) : path]?.changed ? veReadingFrostAssetBefore(path, bytes) : null;
+  if (latest) {
+    const framing = ordinaryFramingAssets.find(row => 'public' + row.url === path);
+    if (framing) {
+      assert.equal(latest.bytes, framing.bytes, `${path}: exact root predecessor is the reviewed ordinary-framing output`);
+      assert.equal(latest.sha256, framing.sha256, `${path}: root predecessor digest binds ordinary framing`);
+      return { bytes: framing.beforeBytes, sha256: framing.beforeSHA256, width: framing.beforeDimensions[0], height: framing.beforeDimensions[1] };
+    }
+    return latest;
+  }
   const newest = ordinaryFramingAssetBefore(path, bytes);
   const row=veOrdinaryAssets.find(r=>'public'+r.url===path);if(!row)return newest;
   assert.equal(newest?.bytes ?? bytes.length,row.afterBytes,path+': exact reviewed bytes');assert.equal(newest?.sha256 ?? sha(bytes),row.afterSHA256,path+': exact reviewed hash');

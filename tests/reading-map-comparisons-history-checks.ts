@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { veReadingFrostNativeBefore, veReadingFrostSourceBefore, frostFiles, frostNative } from './ve-reading-frost-history-checks.ts';
 
 // The later perfect/actually-use repairs supersede dated whole-file claims.
 // Reconstruct only these three leaves after validating every current file byte
@@ -40,10 +41,11 @@ for (const [file, proof] of Object.entries(mapFiles) as [string,any][]) {
 }
 export function ensureMapCurrent() {
   for (const [file, proof] of Object.entries(mapFiles) as [string,any][]) {
-    assert.equal(readFileSync(file,'utf8'), proof.proposedAfter, file + ': all unlisted bytes preserved');
+    assert.equal(veReadingFrostSourceBefore(file, readFileSync(file,'utf8')), proof.proposedAfter, file + ': complete current bytes after exact latest projection and all unlisted bytes preserved');
   }
 }
 export function mapSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  if (frostFiles[file] && Buffer.from(bytes).toString() === readFileSync(file, 'utf8')) bytes = veReadingFrostSourceBefore(file, bytes) as string | Uint8Array;
   const proof = mapFiles[file];
   if (!proof) return bytes;
   ensureMapCurrent();
@@ -53,6 +55,7 @@ export function mapSourceBefore(file: string, bytes: string | Uint8Array): strin
   return proof.before;
 }
 export function mapNativeBefore<T>(language: string, actual: T): T {
+  if (language === 've' && JSON.stringify(actual) === JSON.stringify(frostNative.after)) actual = veReadingFrostNativeBefore('ve', actual);
   if (!(language in mapNative.after)) return actual;
   ensureMapCurrent();
   if (JSON.stringify(actual) === JSON.stringify(mapNative.before[language])) return structuredClone(actual);

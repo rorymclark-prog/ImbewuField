@@ -88,7 +88,11 @@ test('initialized historical descriptors still reject requested same-size corrup
       writeFileSync(path,original);nativePairedResidualMediaBefore(path);
       const manifest='lib/course-asset-sizes.ts',before=readFileSync(manifest,'utf8');
       writeFileSync(manifest,before+'\\n// unlisted corruption');
-      assert.throws(()=>nativePairedResidualMediaBefore(path),/complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/);
+      // The latest full-file VE frost proof can reject this live unlisted drift before older manifest layers run.
+      assert.throws(()=>nativePairedResidualMediaBefore(path),error=>error instanceof Error && (
+        error.message.includes('lib/course-asset-sizes.ts: complete current file after VE frost placement')
+        || /only the accepted VE Reading frost placement batch may be projected|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/.test(error.message)
+      ));
       writeFileSync(manifest,before);nativePairedResidualMediaBefore(path);
     `],{cwd:fixture,stdio:'pipe'});
   } finally {rmSync(fixture,{recursive:true,force:true});}
