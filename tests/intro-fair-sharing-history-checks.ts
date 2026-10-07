@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { precisionNativeBefore, precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 
 // The dated release tests still protect their full historical scope. Validate
 // the complete reviewed fairness layer before exposing any predecessor to them.
@@ -34,6 +35,7 @@ export function fairSharingNativeBefore<T>(actual: T): T {
 }
 
 export function fairSharingZuluBefore<T>(actual: T): T {
+  actual = precisionNativeBefore('zu', actual);
   assert.deepEqual(actual, after.zu, 'complete current ZU registry matches three reviewed fairness fields, including all unlisted lessons');
   return structuredClone(before.zu);
 }
@@ -67,6 +69,7 @@ export function fairSharingPresentationBefore<T extends { status: string; conten
 }
 
 export function fairSharingSourceBytesBefore(file: string, bytes: string | Uint8Array): string {
+  bytes = precisionSourceBytesBefore(file, bytes);
   const row = files[file];
   if (!row) return Buffer.from(bytes).toString();
   assert.equal(sha(bytes), row.after.sha256, `${file}: entire current file matches the reviewed fairness layer`);

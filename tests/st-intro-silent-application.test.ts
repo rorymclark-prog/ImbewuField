@@ -1,5 +1,6 @@
 import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
+import { precisionNativeBefore } from './study-precision-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -29,7 +30,7 @@ const get = (o: any, path: string) => path.split('/').reduce((v, k) => v[k], o);
 const joinTarget = (f: any, source?: string): string => f.status === 'mixed' ? f.segments.map((s: any) => joinTarget(s)).join('') : f.status === 'english-hold' ? f.sourceEnglish ?? f.english ?? source! : f.text;
 function validate(native: Record<string, any>, pairs: Record<string, any>) {
   // The later fairness repair must pass its complete-source guard before this dated release is reconstructed.
-  native = { ...native, ts: fairSharingNativeBefore(native.ts) };
+  native = { ...native, ve: precisionNativeBefore('ve', native.ve), ts: fairSharingNativeBefore(native.ts) };
   // 6 October: full latest39 paired validation precedes this dated60-field release.
   pairs = Object.fromEntries(Object.entries(pairs).map(([language, pair]) => [language, finalLanguageNextDeckBefore(language === 'st' ? proof.outputs.newSilentST.path : proof.outputs.existingPaired[language].path, pair)]));
   assert.equal(sha(read(`${dir}/applied-proof.json`)), '356243b0a456b820208971c4349b893011a018d97e3e45943171152de9bd8d45');
