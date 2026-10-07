@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '5b0caae5', changes: [
+    '10 silent Tshivenda and Xitsonga cards add fuller drafts beside exact English.',
+    'Saved slides refresh these cards while keeping recordings and other lessons.',
+  ], tour: [
+    { title: 'Read fuller regional cards',
+      where: 'Study → Reading, Vegetables or Market → Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
   { when: '7 October 2026', sha: '3ff76610', changes: [
     '15 silent Tshivenda Study cards add fuller drafts beside exact English.',
     'Saved slide packs refresh these cards while keeping narration and other lessons.',
