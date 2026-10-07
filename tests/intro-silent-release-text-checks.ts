@@ -1,6 +1,7 @@
 import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
 import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
+import { precisionNativeBefore, precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -85,7 +86,7 @@ function validateCurrentFileHashes() {
   for (const row of Object.values(outputs.native) as any[]) {
     // The later Reading change shares TS's file; validate its full layer and
     // rewind its one literal before preserving the entire Intro968 file digest.
-    const actual = readFileSync(row.path, 'utf8');
+    const actual = Buffer.from(precisionSourceBytesBefore(row.path, readFileSync(row.path))).toString();
     const historical = row.path === 'lib/course-translation-drafts-ts.ts'
       ? tsSharedSourceBeforeNativeOrdinary(actual) : actual;
     assert.equal(sha(historical), row.sha256, `${row.path}: exact accepted native release bytes`);
@@ -248,7 +249,7 @@ export function validateAndRewindIntroNativeHistory(language: IntroLanguage, cur
   // Explicit callers supply today's object; validate the complete later fairness
   // layer before this older release can expose its accepted predecessor.
   if (current !== undefined) native[language] = language === 'ts'
-    ? fairSharingNativeBefore(current) : current;
+    ? fairSharingNativeBefore(current) : precisionNativeBefore('ve', current);
   const validated = validateAndRewindIntroSilentTextLayer({ native });
   return validateAndRewindIntroFullNative(language, validated.nativeBeforeSilent[language]);
 }

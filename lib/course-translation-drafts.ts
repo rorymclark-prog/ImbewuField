@@ -363,7 +363,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
     ],
     "quiz": [
       {
-        "q": "Umlimi wasepulazini elincane lase-Highveld kufanele aqale abheke kuphi uma efuna indawo yesihlahla se-pawpaw esincane nesizwela i-frost?",
+        "q": "Umlimi wasepulazini elincane lase-Highveld kufanele aqale abheke kuphi uma efuna indawo yesihlahla se-pawpaw esisencane nesizwela i-frost?",
         "options": [
           "Indawo ephansi kunazo zonke lapho kuqoqana khona umoya obandayo",
           "Umgodi obandayo nosethunzini",
@@ -382,7 +382,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
           "Ukuthi inciphisa yini kuphela ukuhwamuka kwamanzi ehlobo"
         ],
         "correct": 0,
-        "rationale": "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu. I-shade cloth ingashintsha isikhathi ilanga elifika ngaso embhedeni. Ngaphambi kokuyiqinisa endaweni yayo, hlola umthunzi okhona ngempela ngo-8 ekuseni, emini, nango-4 ntambama."
+        "rationale": "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu. I-shade cloth ingashintsha amahora elanga embhedeni. Ngaphambi kokuyiqinisa endaweni yayo, hlola umthunzi okhona ngempela ngo-8 ekuseni, emini, nango-4 ntambama."
       }
     ],
     infographicAlt: "Umthambeka onelanga elisenyakatho. Izithunzi zesakhiwo nesihlahla ziwela eningizimu, zehle ngomthambeka.",

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 import { coreHeldOrdinaryPairBefore, coreHeldOrdinaryPairBeforeHistory, coreHeldOrdinaryPairBytesBefore, coreHeldOrdinaryAssetBefore, ensureCoreHeldOrdinaryText } from './core-held-ordinary-history-checks.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -113,6 +114,7 @@ export function finalLanguageNextDeckBeforeCurrent<T>(actual: T): T {
   return file ? finalLanguageNextDeckBefore(file, actual) : actual;
 }
 export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Array | string): string {
+  bytes = precisionSourceBytesBefore(file, bytes);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return Buffer.from(coreHeldOrdinaryPairBytesBefore(file,Buffer.from(bytes))).toString();
   const actual = coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.deepEqual(actual, expectedPairs[file], 'whole listed paired bytes match accepted source/target/status before dated hash view');

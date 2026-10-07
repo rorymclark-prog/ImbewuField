@@ -56,10 +56,12 @@ test('the fairness history layer rejects changed negations, answer indices, sour
   assert.throws(() => fairSharingNativeBefore(ts), /complete current TS module/);
   const wrongNegation = structuredClone(COURSE_TRANSLATION_DRAFTS);
   wrongNegation['intro-permaculture-l1'].quiz[1].rationale = 'Monitoring permits more water.';
-  assert.throws(() => fairSharingZuluBefore(wrongNegation), /complete current ZU registry/);
+  // The later full-registry precision guard now rejects these mutations first;
+  // both historical and current layers must still reject the exact same damage.
+  assert.throws(() => fairSharingZuluBefore(wrongNegation), /complete current ZU registry|complete latest precision registry/);
   const neighbour = structuredClone(COURSE_TRANSLATION_DRAFTS);
   neighbour['intro-permaculture-l2'].body += ' Unreviewed extra instruction.';
-  assert.throws(() => fairSharingZuluBefore(neighbour), /complete current ZU registry/);
+  assert.throws(() => fairSharingZuluBefore(neighbour), /complete current ZU registry|complete latest precision registry/);
   const path = 'docs/narration/intro-permaculture.ts.paired-draft.json';
   const deck = JSON.parse(readFileSync(path, 'utf8'));
   deck.slides[6].english.body[1] += ' Extra permission.';

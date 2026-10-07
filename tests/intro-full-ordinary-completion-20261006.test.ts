@@ -1,3 +1,4 @@
+import { precisionAfter, ensurePrecisionCurrent } from './study-precision-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -111,7 +112,13 @@ test('Introduction learner drafts remain visibly unreviewed and fail closed on c
     const native = introFullNativeAfter[language].lessons.find((lesson: any) => lesson.id === original.id);
     const key = language === 've' ? 'tshivendaDraft' : 'xitsongaDraft';
     assert.equal(current.content.body, native.body[key]);
-    assert.equal(current.content.infographicAlt, native.infographicAlt[key]);
+    // The later precision layer validates all unlisted bytes before replacing
+    // the old added-fruit image description with its source-bound waste loop.
+    const latestAlt = language === 've'
+      ? precisionAfter.ve.lessons.find((lesson: any) => lesson.id === original.id).infographicAlt[key]
+      : native.infographicAlt[key];
+    ensurePrecisionCurrent();
+    assert.equal(current.content.infographicAlt, latestAlt);
     for (const change of [
       { ...original, title: original.title + ' New source.' },
       { ...original, body: original.body + ' New source.' },
