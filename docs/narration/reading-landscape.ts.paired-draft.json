@@ -556,7 +556,9 @@
               },
               {
                 "sourceEnglish": "any water works for the site",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "water works yin'wana ni yin'wana leyi faneleke ndhawu yoleyo",
+                "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
               },
               {
                 "sourceEnglish": " and plan a safe route for excess water.",
@@ -869,7 +871,9 @@
             "segments": [
               {
                 "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. ",
+                "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
               },
               {
                 "sourceEnglish": "Walk the land on windy days. ",
@@ -1172,7 +1176,9 @@
               },
               {
                 "sourceEnglish": "No hillside position guarantees freedom from frost.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "A ku na hillside position leyi tiyisisaka leswaku ku nga vi na frost.",
+                "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."

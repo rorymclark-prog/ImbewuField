@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { followupSourceBefore, followupNativeBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { veReadingFrostNativeBefore, veReadingFrostSourceBefore, frostFiles, frostNative } from './ve-reading-frost-history-checks.ts';
 
@@ -45,6 +46,7 @@ export function ensureMapCurrent() {
   }
 }
 export function mapSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  if (file !== 'lib/course-asset-sizes.ts') bytes = followupSourceBefore(file, bytes);
   if (frostFiles[file] && Buffer.from(bytes).toString() === readFileSync(file, 'utf8')) bytes = veReadingFrostSourceBefore(file, bytes) as string | Uint8Array;
   const proof = mapFiles[file];
   if (!proof) return bytes;
@@ -55,6 +57,7 @@ export function mapSourceBefore(file: string, bytes: string | Uint8Array): strin
   return proof.before;
 }
 export function mapNativeBefore<T>(language: string, actual: T): T {
+  actual = followupNativeBefore(actual);
   if (language === 've' && JSON.stringify(actual) === JSON.stringify(frostNative.after)) actual = veReadingFrostNativeBefore('ve', actual);
   if (!(language in mapNative.after)) return actual;
   ensureMapCurrent();

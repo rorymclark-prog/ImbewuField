@@ -954,7 +954,9 @@
               },
               {
                 "sourceEnglish": "No hillside position guarantees freedom from frost.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ha ho hillside position e ka tiisang hore ha ho frost.",
+                "reason": "Independently semantically checked unreviewed machine draft; exact English paired. No fluent/local farming approval."
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."

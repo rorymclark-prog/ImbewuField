@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { followupAssetBefore, followupPairBeforeHistory } from './core-reading-vegetables-followup-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore, veReadingFrostSourceBefore, frostFiles, frostAssets } from './ve-reading-frost-history-checks.ts';
 
@@ -74,6 +75,7 @@ export function ensureOrdinaryFramingText() {
 
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
+  actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
@@ -83,6 +85,7 @@ export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
 
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
+  actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
@@ -115,6 +118,7 @@ assert.equal(new Set(ordinaryFramingAssets.map(row => row.url)).size, 10);
 
 const assetsByPath = new Map(ordinaryFramingAssets.map(row => ['public' + row.url, row]));
 export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
+  const followup = followupAssetBefore(path, bytes);
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const newest = frostAssets[url]?.changed ? veReadingFrostAssetBefore(path, bytes) : null;
   if (newest) {
@@ -126,9 +130,9 @@ export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
   const fairness = fairSharingAssetBefore(path, bytes);
   if (fairness) return fairness;
   const row = assetsByPath.get(path);
-  if (!row) return null;
-  assert.equal(newest?.bytes ?? bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
-  assert.equal(newest?.sha256 ?? sha(bytes), row.sha256, `${path}: exact reviewed current SHA-256`);
+  if (!row) return followup;
+  assert.equal(newest?.bytes ?? followup?.bytes ?? bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
+  assert.equal(newest?.sha256 ?? followup?.sha256 ?? sha(bytes), row.sha256, `${path}: exact reviewed current SHA-256`);
   return { bytes: row.beforeBytes, sha256: row.beforeSHA256, width: row.beforeDimensions[0], height: row.beforeDimensions[1] };
 }
 

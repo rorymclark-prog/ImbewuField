@@ -3,6 +3,7 @@ import { fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
 import { veReadingFrostAssetBefore } from './ve-reading-frost-history-checks.ts';
+import { followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import { finalLanguageNextMediaProof } from './final-language-next-media-history-checks.ts';
 import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 import assert from 'node:assert/strict';
@@ -69,7 +70,8 @@ const laterReplacedURLs = new Set<string>([
 // callers still check every other real file directly, without recursively
 // validating two thousand assets for each unchanged row.
 export function isSilentIntroLaterReplacedAsset(path: string): boolean {
-  return laterReplacedURLs.has(path.startsWith('public/') ? path.slice(6) : path);
+  const url = path.startsWith('public/') ? path.slice(6) : path;
+  return laterReplacedURLs.has(url) || Boolean(followupAssets[url]?.changed);
 }
 const observed = new Map<string,{signature:string;bytes:number;sha256:string}>();
 function fileDescriptor(path: string) {
@@ -175,6 +177,6 @@ export function silentIntroMediaBefore(path: string) {
   }
   const row=silentIntroIntegration.actualAssets.find((f:any)=>f.url===url && f.beforeBytes!==null);
   if(row) return {bytes:row.beforeBytes,sha256:row.beforeSHA256};
-  if([...coreHeldOrdinaryAssets,...veOrdinaryAssets,...ordinaryFramingAssets,...fairSharingAssets.filter(frame=>frame.before)].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
+  if(followupAssets[url]?.changed || [...coreHeldOrdinaryAssets,...veOrdinaryAssets,...ordinaryFramingAssets,...fairSharingAssets.filter(frame=>frame.before)].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
   return undefined;
 }

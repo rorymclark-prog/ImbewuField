@@ -1,6 +1,7 @@
 import { veOrdinaryPairBefore, veOrdinaryPairBeforeHistory, veOrdinaryManifestBefore, veOrdinaryAssetBefore, veOrdinaryPairBytesBefore } from './ve-ordinary-reviewed-history-checks.ts';
 import { veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
 import assert from 'node:assert/strict';
+import { followupPairBeforeHistory } from './core-reading-vegetables-followup-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
@@ -34,6 +35,7 @@ export function ensureCoreHeldOrdinaryText() {
 /** The newer layer must be checked in full before dated tests see its predecessor.
  * Explicit callers cannot hide corruption by supplying an already-rewound object. */
 export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
+  actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureCoreHeldOrdinaryText();
   actual = veOrdinaryPairBeforeHistory(file, actual);
@@ -42,6 +44,7 @@ export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
   return structuredClone(before[file]);
 }
 export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T {
+  actual = followupPairBeforeHistory(file, actual);
   ensureCoreHeldOrdinaryText();
   actual = veOrdinaryPairBeforeHistory(file, actual);
   if (!(file in expected)) return actual;

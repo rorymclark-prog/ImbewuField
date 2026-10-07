@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '400ede45', changes: [
+    'Five silent Study cards show checked ordinary drafts beside exact English.',
+    'Sesotho frost wording describes ice forming on a cold surface.',
+    'Tshivenda Market feedback keeps distance as one cost factor.',
+  ], tour: [{ title: 'Read the Study wording drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare the unreviewed wording with English; regional cards stay silent.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: 'cee6b5b8', changes: [
     'Tshivenda Reading drafts clarify keeping sensitive plants away from frost pockets.',
     'Two silent cards show the frost caution beside exact English.',

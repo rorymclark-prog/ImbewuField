@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { followupSourceBefore, followupPairBefore, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/ve-reading-frost-placement-2026-10-07/';
 const proofBytes = readFileSync(folder + 'exact-file-proof.json');
@@ -22,12 +23,13 @@ for (const [url, proof] of Object.entries(frostAssets)) if (!proof.changed) {
 
 export function ensureVeReadingFrostCurrent() {
   for (const [file, proof] of Object.entries(frostFiles)) {
-    const actual = readFileSync(file);
+    const actual = followupSourceBefore(file, readFileSync(file));
     assert.equal(createHash('sha256').update(actual).digest('hex'), proof.afterSha256, `${file}: complete current file after VE frost placement`);
   }
 }
 
 export function veReadingFrostSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = followupSourceBefore(file, bytes);
   const proof = frostFiles[file];
   if (!proof) return bytes;
   ensureVeReadingFrostCurrent();
@@ -38,6 +40,7 @@ export function veReadingFrostSourceBefore(file: string, bytes: string | Uint8Ar
 }
 
 export function veReadingFrostPairBefore<T>(file: string, actual: T): T {
+  actual = followupPairBefore(file, actual);
   const paired = 'docs/narration/reading-landscape.ve.paired-draft.json';
   if (file !== paired) return actual;
   ensureVeReadingFrostCurrent();
@@ -65,10 +68,11 @@ export function veReadingFrostNativeBefore<T>(language: string, actual: T): T {
 export function veReadingFrostAssetBefore(path: string, bytes?: Uint8Array) {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const proof = frostAssets[url];
-  if (!proof) return null;
+  if (!proof) return followupAssets[url]?.changed ? followupAssetBefore(path, bytes ?? readFileSync('public' + url)) : null;
   bytes ??= readFileSync('public' + url);
+  const newer = followupAssetBefore(path, bytes);
   const digest = createHash('sha256').update(bytes).digest('hex');
-  assert.equal(bytes.byteLength, proof.afterBytes, `${url}: exact current VE frost still bytes`);
-  assert.equal(digest, proof.afterSha256, `${url}: complete current VE frost still SHA`);
+  assert.equal(newer?.bytes ?? bytes.byteLength, proof.afterBytes, `${url}: exact current VE frost still bytes`);
+  assert.equal(newer?.sha256 ?? digest, proof.afterSha256, `${url}: complete current VE frost still SHA`);
   return { bytes: proof.beforeBytes, sha256: proof.beforeSha256 };
 }

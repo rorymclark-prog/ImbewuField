@@ -2,6 +2,7 @@ import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
+import { followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
@@ -13,6 +14,7 @@ import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPa
 // Each real current file is checked by the latest immutable measurement guard.
 const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
 const laterPaths = new Set<string>(laterAssets.map(row=>'public'+row.url));
+for (const [url, row] of Object.entries(followupAssets)) if (row.changed) laterPaths.add('public' + url);
 for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
 const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
 const veFrames = new Map(veOrdinaryAssets.map(row=>['public'+row.url,row]));
