@@ -1,10 +1,14 @@
+import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
 import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
-const laterPaths = new Set<string>(coreHeldOrdinaryAssets.map(row=>'public'+row.url));
-const laterFrames = new Map(coreHeldOrdinaryAssets.map(row=>['public'+row.url,row]));
+// The later 15-card Tshivenda layer must validate real bytes before this full
+// inventory exposes its predecessor; keep the prior 69-card proof unchanged.
+const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets.map(row=>({...row,beforeDimensions:row.beforeDimensions}))];
+const laterPaths = new Set<string>(laterAssets.map(row=>'public'+row.url));
+const laterFrames = new Map(laterAssets.map(row=>['public'+row.url,row]));
 const folder = 'docs/media/final-language-next-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const bytes = readFileSync(folder + 'frames.json');
@@ -89,7 +93,7 @@ export function finalLanguageNextMediaBefore(path: string): { bytes: number; sha
     const actual = checkedHistoricalDescriptor(normalized);
     assert.equal(actual.bytes, expected.bytes, normalized + ': requested current measured bytes'); assert.equal(actual.sha256, expected.sha256, normalized + ': exact current SHA');
   }
-  // Some of the later 69 cards were unlisted by this 36-card layer. Their
+  // Some later checked cards were unlisted by this 36-card layer. Their
   // checked predecessor still has to reach older complete inventory guards.
   if(frame) return {...frame.old};
   if(laterPaths.has(normalized)) {const actual=checkedHistoricalDescriptor(normalized);return {bytes:actual.bytes,sha256:actual.sha256,width:actual.width,height:actual.height};}

@@ -461,9 +461,7 @@
               },
               {
                 "sourceEnglish": "dry ground",
-                "status": "draft",
-                "text": "mavu o omaho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ", where you want to catch and hold what rain you get.",
@@ -612,9 +610,7 @@
               },
               {
                 "sourceEnglish": "local conditions",
-                "status": "draft",
-                "text": "nyimele dza henefho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ". Check the packet and ",
@@ -623,9 +619,7 @@
               },
               {
                 "sourceEnglish": "local grower advice",
-                "status": "draft",
-                "text": "nyeletshedzo ya vhalimi vha henefho",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ". Watch for crowding as plants develop.",
@@ -1250,9 +1244,7 @@
               },
               {
                 "sourceEnglish": ", barriers",
-                "status": "draft",
-                "text": ", zwithivheli",
-                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " or changes in ",
@@ -1519,9 +1511,7 @@
               },
               {
                 "sourceEnglish": " What germinated.",
-                "status": "draft",
-                "text": " Zwine zwa no mela.",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1529,9 +1519,7 @@
               },
               {
                 "sourceEnglish": " What you harvested.",
-                "status": "draft",
-                "text": " Zwine na no kaṋa.",
-                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
+                "status": "english-hold"
               }
             ],
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"

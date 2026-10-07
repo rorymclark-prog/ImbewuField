@@ -1,3 +1,4 @@
+import { veOrdinaryPairBefore, veOrdinaryPairBeforeHistory, veOrdinaryManifestBefore, veOrdinaryAssetBefore, veOrdinaryPairBytesBefore } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -26,19 +27,21 @@ let signature = '';
 export function ensureCoreHeldOrdinaryText() {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
-  for (const [file, value] of Object.entries(expected)) assert.deepEqual(JSON.parse(readFileSync(file,'utf8')), value, 'complete latest 109-field layer and all unlisted source/target objects');
+  for (const [file, value] of Object.entries(expected)) assert.deepEqual(veOrdinaryPairBefore(file, JSON.parse(readFileSync(file,'utf8'))), value, 'complete latest 109-field layer and all unlisted source/target objects');
   signature = next;
 }
 /** The newer layer must be checked in full before dated tests see its predecessor.
  * Explicit callers cannot hide corruption by supplying an already-rewound object. */
 export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
   ensureCoreHeldOrdinaryText();
+  actual = veOrdinaryPairBeforeHistory(file, actual);
   if (!(file in expected)) return actual;
   assert.deepEqual(actual, expected[file], 'caller supplies the complete accepted latest paired layer, including unlisted objects');
   return structuredClone(before[file]);
 }
 export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T {
   ensureCoreHeldOrdinaryText();
+  actual = veOrdinaryPairBeforeHistory(file, actual);
   if (!(file in expected)) return actual;
   // Older composition callers may already have restored other dated leaves.
   // Restore ONLY exact accepted new objects, keeping every other caller value
@@ -55,7 +58,10 @@ export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T
   return restored;
 }
 export function coreHeldOrdinaryPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
-  if (!(file in expected)) return bytes;
+  // Verify caller bytes before reversing the newer checked layer; old guards
+  // still see their exact complete predecessor, not a permissive partial view.
+  const restored=veOrdinaryPairBytesBefore(file,bytes);
+  if (!(file in expected)) return restored;
   coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.equal(Buffer.from(bytes).toString(),readFileSync(file,'utf8'),'caller bytes are actual live paired bytes');
   return readFileSync(folder+'before/'+file.replaceAll('/','__')+'.json');
@@ -66,7 +72,7 @@ export const coreHeldOrdinaryAssets: any[] = JSON.parse(assetProofBytes.toString
 const assets = new Map(coreHeldOrdinaryAssets.map(row => ['public'+row.url,row]));
 export function coreHeldOrdinaryAssetBefore(path: string, bytes: Uint8Array) {
   const row = assets.get(path);
-  if (!row) return null;
+  if (!row) return veOrdinaryAssetBefore(path, bytes);
   assert.equal(bytes.length,row.afterBytes,path+': exact current measured bytes');
   assert.equal(sha(bytes),row.afterSHA256,path+': exact current SHA');
   return { bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1] };
@@ -86,6 +92,7 @@ expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total/1024/1024).toF
 const lines = [...expectedManifest.matchAll(/^  '[^']+': \d+,$/gm)].map(row=>row[0]);
 expectedManifest = expectedManifest.replace(/(^  '[^']+': \d+,\n)+/m, lines.sort().join('\n')+'\n');
 export function coreHeldOrdinaryManifestBefore(actual: string) {
+  actual = veOrdinaryManifestBefore(actual);
   assert.equal(actual,expectedManifest,'complete current final-language manifest after checked 69-card layer');
   return oldManifest;
 }

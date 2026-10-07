@@ -1,3 +1,4 @@
+import { veOrdinaryPairBefore } from './ve-ordinary-reviewed-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -27,7 +28,8 @@ test('109 reviewed fields preserve every exact English source and unlisted paire
       if (index === undefined) slide.target.heading = row.after;
       else slide.target.body[Number(index)] = row.after;
     }
-    assert.deepEqual(read(file), expected, file);
+    // The later 18-fragment reviewed layer is checked completely before restoring this predecessor.
+    assert.deepEqual(veOrdinaryPairBefore(file, read(file)), expected, file);
   }
 });
 
