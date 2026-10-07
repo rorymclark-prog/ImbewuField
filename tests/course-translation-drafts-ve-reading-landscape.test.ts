@@ -1,3 +1,4 @@
+import { mapNativeBefore } from './reading-map-comparisons-history-checks.ts';
 import { checkMarketPriceQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -419,7 +420,10 @@ test('Tshivenda Reading soil notes keep the checked compaction limit and exact p
   assert.ok(targetParagraphs[0].includes('Engedzani nnḓu, miri, maḓi, bada, fences') &&
     targetParagraphs[0].includes('muya wa tshilimo na wa vhuria'),
     'retain fences on the map and keep summer and winter wind arrows distinct');
-  assert.equal(targetParagraphs[2], repair.previousBody.split('\n\n')[2]);
+  // The independently checked perfect-versus-beautified repair supersedes this
+  // dated whole-paragraph claim; the complete current module is checked first.
+  const prior = mapNativeBefore('ve', TSHIVENDA_READING_LANDSCAPE_DRAFT);
+  assert.equal(prior.lessons.find(item => item.id === source.id)!.body.tshivendaDraft.split('\n\n')[2], repair.previousBody.split('\n\n')[2]);
   const fullerRow = fuller.fields.find((row: { language: string; lessonId: string; paragraphIndex: number }) =>
     row.language === 've' && row.lessonId === 'reading-landscape-l4' && row.paragraphIndex === repair.paragraphIndex);
   assert.ok(fullerRow, 'the separately checked fuller body target must be recorded');
