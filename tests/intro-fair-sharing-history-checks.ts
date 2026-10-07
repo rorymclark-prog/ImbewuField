@@ -1,3 +1,4 @@
+import { reading14ManifestBefore } from './reading-comparisons-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -69,6 +70,7 @@ export function fairSharingPresentationBefore<T extends { status: string; conten
 }
 
 export function fairSharingSourceBytesBefore(file: string, bytes: string | Uint8Array): string {
+  if (file === 'lib/course-asset-sizes.ts') bytes = reading14ManifestBefore(Buffer.from(bytes).toString());
   bytes = precisionSourceBytesBefore(file, bytes);
   const row = files[file];
   if (!row) return Buffer.from(bytes).toString();

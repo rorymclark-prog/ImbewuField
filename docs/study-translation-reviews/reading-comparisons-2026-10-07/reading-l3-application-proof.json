@@ -1,0 +1,42 @@
+{
+  "base": "647fca3391c8bc816d008058167c7cb10eabd7e0",
+  "files": [
+    {
+      "path": "lib/course-translation-drafts.ts",
+      "beforeSha256": "9adde45da4fceb0354384bd990acb40a98d77b9d8d4bead9a48e087b2bc24b4f",
+      "afterSha256": "ad550296162dc51838388ebd5ca01198a8eab89fab46efbaea09e9c6af270f25",
+      "fields": [
+        "body.paragraph2",
+        "quiz.0.options.3",
+        "quiz.1.rationale",
+        "infographicAlt"
+      ]
+    },
+    {
+      "path": "lib/course-translation-drafts-ve-reading-landscape.ts",
+      "beforeSha256": "a8123a7a75db27bfe42df366d069e7cd7b75a09cecb8fc2341bf50a8638df70e",
+      "afterSha256": "4e80207956ea683ed9c56cab875c1a97edbc6b9f000a28df8e96b9bec7aa32e0",
+      "fields": [
+        "body.paragraph0",
+        "body.paragraph2",
+        "quiz.0.rationale",
+        "body.paragraph1"
+      ]
+    },
+    {
+      "path": "lib/course-translation-drafts-ts.ts",
+      "beforeSha256": "dd2d6061830fcfb722bfbbfe7e9d4eaa483503bd3f7217dbf392497f56981971",
+      "afterSha256": "8c3a560c33bed5734c4a75e3ff23c05a5af00b1adcc006a25ff6cab1b4377a81",
+      "fields": [
+        "body.paragraph0",
+        "body.paragraph1",
+        "quiz.0.rationale"
+      ]
+    }
+  ],
+  "canonicalChanged": false,
+  "mediaChanged": false,
+  "fluentApproval": false,
+  "gates": "Pending",
+  "metadataRepairs": 3
+}

@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1929 files, 719.2 MB total.
+// 1930 files, 719.7 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -1289,6 +1289,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/reading-landscape/ve/slide-20.webp': 689360,
   '/course-decks/reading-landscape/ve/slide-21.webp': 297858,
   '/course-decks/reading-landscape/zu-silent/slide-05.webp': 196820,
+  '/course-decks/reading-landscape/zu-silent/slide-14.webp': 491432,
   '/course-decks/reading-landscape/zu-silent/slide-15.webp': 432212,
   '/course-decks/reading-landscape/zu-silent/slide-16.webp': 282074,
   '/course-decks/reading-landscape/zu/slide-01.jpg': 94361,

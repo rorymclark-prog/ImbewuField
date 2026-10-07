@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
+import { comparisonsNativeBefore, comparisonsPresentationBefore } from './reading-comparisons-history-checks.ts';
 import { coreHeldOrdinaryPairBefore, coreHeldOrdinaryPairBeforeHistory, coreHeldOrdinaryPairBytesBefore, coreHeldOrdinaryAssetBefore, ensureCoreHeldOrdinaryText } from './core-held-ordinary-history-checks.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -95,6 +96,12 @@ export function ensureFinalLanguageNextCurrent() {
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
 }
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
+  // Reading's later ten-field layer independently validates the whole registry
+  // before this dated native-language release reconstructs its predecessor.
+  const identity = actual as any;
+  if (identity?.id === 'reading-landscape' && (identity.language === 've' || identity.language === 'ts')) {
+    actual = comparisonsNativeBefore(identity.language, actual);
+  }
   ensureFinalLanguageNextCurrent();
   const module = actual as any;
   const file = Object.keys(expectedNative).find(file => expectedNative[file].language === module?.language && expectedNative[file].lessons.map((lesson: any) => lesson.id).join('|') === module?.lessons?.map((lesson: any) => lesson.id).join('|'));
@@ -125,6 +132,7 @@ export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Arr
 /** 6 October: validate the actual complete learner presentation before restoring
  * only the nine later native leaves for dated assessment claims. */
 export function finalLanguageNextPresentationBefore<T extends { status: string; content: any }>(result: T, lessonId: string, language: string): T {
+  result = comparisonsPresentationBefore(result, lessonId, language);
   ensureFinalLanguageNextCurrent();
   const rows = plan.nativePlans.filter((row: any) => row.lessonId === lessonId && expectedNative[row.file].language === language);
   if (!rows.length || result.status !== 'draft') return result;

@@ -205,8 +205,9 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         `${path}.body: preserve the existing wind-observation sentence`);
       assert.ok(draftParagraphs[0].startsWith('Muya u nga tshinyadza zwimela kha shamba ḽiṱuku.'),
         `${path}.body: translate the ordinary wind/crop framing while preserving smallholding scale`);
-      assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"),
-        `${path}.body: preserve the exact difficult site-landform phrase`);
+      // The later reviewed ownership phrase localizes ordinary site framing while retaining both landform terms.
+      assert.ok(draftParagraphs[0].includes("dzi-ridges and gaps dza tshitentsi tshaṋu"),
+        `${path}.body: preserve both landforms and ownership without changing land to soil`);
       assert.ok(draftParagraphs[0].includes('Sedzani rekhodo dza mutsho wa henefho') &&
         draftParagraphs[0].includes('musi ni sa athu dzhia tsheo ya hune tsireledzo ya ṱoḓea hone'),
         `${path}.body: localize the checking verb while retaining local records and the before-deciding-shelter condition`);
@@ -214,7 +215,7 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         'Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini.'),
         `${path}.body: preserve the clear/still-night condition and can-be-colder comparison`);
       assert.ok(draftParagraphs[1].includes('Maitele a frost na one a ya nga fhethu') &&
-        draftParagraphs[1].includes('Vhambedzani candidate places through the local frost season.') &&
+        draftParagraphs[1].includes('Vhambedzani fhethu hune ha nga nangiwa hone kha khalaṅwaha yoṱhe ya tshando ya henefho.') &&
         draftParagraphs[1].includes('Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone.') &&
         draftParagraphs[1].includes('Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho') &&
         draftParagraphs[1].includes('mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.'),
@@ -229,7 +230,7 @@ test('Reading the Landscape Tshivenda draft stays paired to every exact Study so
         `${path}.body: preserve the minimum-temperature check and where-possible condition`);
       assert.ok(draftParagraphs[2].includes('tshilapfusesa'),
         `${path}.body: the field comparison still marks where cold or damage lasts longest`);
-      assert.ok(draftParagraphs[2].includes('Keep sensitive plants away from the cold pockets'),
+      assert.ok(draftParagraphs[2].includes('Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets dzine na dzi vhona'),
         `${path}.body: retain the keep-away instruction and localize the observed-pocket qualifier`);
       assert.ok(draftParagraphs[0].startsWith('Muya u nga tshinyadza zwimela kha shamba ḽiṱuku.'), `${path}.body: preserve the neighboring wind paragraph`);
       assert.ok(draftParagraphs[3].startsWith('Kha matamatisi a re na thaidzo ya late blight,'), `${path}.body: preserve the neighboring late-blight paragraph`);
@@ -584,8 +585,9 @@ test('Reading assessment drafts retain before-building shade, conditional drying
   assert.equal(frostRationale.reviewStatus, 'machine-draft');
   assert.ok(frostRationale.tshivendaDraft.includes('vhu sa na makole') && frostRationale.tshivendaDraft.includes('hu si na muya'),
     'clear, still nights retain both no-cloud and no-wind conditions');
+  // Independently checked whole-season phrasing replaces the former English hold.
   assert.ok(frostRationale.tshivendaDraft.includes('Vhambedzani fhethu hune nursery ya nga vhewa hone') &&
-    frostRationale.tshivendaDraft.includes('through the local frost season'));
+    frostRationale.tshivendaDraft.includes('kha khalaṅwaha yoṱhe ya tshando ya henefho'));
   assert.ok(frostRationale.tshivendaDraft.includes('matsalwa a minimum temperatures a henefho kana') &&
     frostRationale.tshivendaDraft.includes('mueletshedzi wa zwa vhulimi wa henefho') &&
     frostRationale.tshivendaDraft.includes('musi ni sa athu dzhia tsheo ya fhethu ha tshifhinga tshilapfu'));

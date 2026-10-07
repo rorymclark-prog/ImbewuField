@@ -1,3 +1,4 @@
+import { reading14ManifestBefore } from './reading-comparisons-media-history-checks.ts';
 import { ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
 import { finalLanguageNextManifestBefore, finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import assert from 'node:assert/strict';
@@ -80,8 +81,10 @@ function descriptor(path: string) {
 }
 
 export function nativePairedResidualManifestBefore968(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
-  const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
-  assert.equal(currentManifest, liveManifest, 'the caller must supply the exact live complete manifest');
+  // Validate the new silent-card entry before the dated residual inventory checks its predecessor.
+  currentManifest = reading14ManifestBefore(currentManifest);
+  const liveManifest = reading14ManifestBefore(readFileSync('lib/course-asset-sizes.ts', 'utf8'));
+  assert.equal(currentManifest, liveManifest, 'the caller must supply the exact verified complete manifest');
   // Dated 13-frame proof follows full latest 36-frame/unlisted verification.
   const actualManifest = finalLanguageNextManifestBefore(currentManifest);
   assert.equal(sha(actualManifest), '8954a393387397c2601e0f6bf06223814e1383a0b500afe046d9bd6e9419145f',

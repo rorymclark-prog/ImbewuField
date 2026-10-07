@@ -55,6 +55,9 @@ test('every corrected silent ZU card carries the checked full source, target and
   const expected = [...packet.rows.filter((row: any) => row.currentHold), ...fairSharingZuluSilentRows.map(row => ({
     ...row, proposedSilentTarget: row.correctedTarget, proposedSilentZuluTitle: row.correctedTitle,
   }))];
+  // A later independently checked longest-versus-long correction adds Reading14; preserve every earlier card check.
+  const reading14 = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/reading-comparisons-2026-10-07/reading-zu14-silent-row.json', import.meta.url), 'utf8'));
+  expected.push({ ...reading14, proposedSilentTarget: reading14.correctedTarget, proposedSilentZuluTitle: reading14.correctedTitle });
   const keys = (rows: readonly { moduleId: string; slide: number }[]) => rows.map(row =>
     `${row.moduleId}:${row.slide}`).sort();
   assert.deepEqual(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS), keys(expected),
@@ -338,7 +341,7 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
 test('all 25 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
   const expected = [
     'intro-permaculture:6', 'intro-permaculture:7', 'intro-permaculture:22',
-    'reading-landscape:5', 'reading-landscape:15', 'reading-landscape:16',
+    'reading-landscape:5', 'reading-landscape:14', 'reading-landscape:15', 'reading-landscape:16',
     'soil-health:1',
     'water-harvesting:10',
     'vegetables-staples:16', 'vegetables-staples:18',
