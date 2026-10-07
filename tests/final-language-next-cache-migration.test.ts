@@ -1,5 +1,7 @@
 // The newer 15-card layer checks the full manifest before dated reconstruction;
 // the same corrupt-header/unlisted-entry cases must fail at that earlier guard.
+// The complete fairness file guard now catches these mutations first; retain
+// the prior guard names for historical callers and all mutation assertions.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, mkdirSync, readdirSync, copyFileSync, symlinkSync, rmSync, statSync } from 'node:fs';
@@ -44,8 +46,8 @@ test('current 36-frame media guard rejects whole-manifest and same-size byte cor
   const header = manifest.match(/^\/\/ \d+ files, [\d.]+ MB total\.$/m)![0];
   const corrupt = manifest.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corrupt, manifest);
-  assert.throws(() => validateFinalLanguageNextMedia(corrupt), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes/);
-  assert.throws(() => validateFinalLanguageNextMedia(manifest + "  '/unlisted.webp': 1,\n"), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes/);
+  assert.throws(() => validateFinalLanguageNextMedia(corrupt), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer/);
+  assert.throws(() => validateFinalLanguageNextMedia(manifest + "  '/unlisted.webp': 1,\n"), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer/);
   const frame = finalLanguageNextMediaProof.frames[0];
   const bytes = readFileSync(frame.path); const altered = Buffer.from(bytes); altered[altered.length - 1] ^= 1;
   assert.equal(altered.length, bytes.length);
@@ -84,7 +86,7 @@ test('initialized historical descriptors still reject requested same-size corrup
       writeFileSync(path,original);nativePairedResidualMediaBefore(path);
       const manifest='lib/course-asset-sizes.ts',before=readFileSync(manifest,'utf8');
       writeFileSync(manifest,before+'\\n// unlisted corruption');
-      assert.throws(()=>nativePairedResidualMediaBefore(path),/complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes/);
+      assert.throws(()=>nativePairedResidualMediaBefore(path),/complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer/);
       writeFileSync(manifest,before);nativePairedResidualMediaBefore(path);
     `],{cwd:fixture,stdio:'pipe'});
   } finally {rmSync(fixture,{recursive:true,force:true});}

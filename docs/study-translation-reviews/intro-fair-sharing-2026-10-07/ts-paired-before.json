@@ -369,14 +369,14 @@
       "target": {
         "heading": {
           "status": "draft",
-          "text": "Ku Avelana Loku Lulameke (Fair Share)",
-          "provenance": "Unreviewed source-bound fairness terminology; independent native Agy phrase/concord check and root exact-source review; no fluent/local farming or Shangani approval."
+          "text": "Ku Avelana hi Ku Ringana (Fair Share)",
+          "provenance": "existing-unreviewed-course-term; English name retained"
         },
         "body": [
           {
             "status": "draft",
-            "text": "Nawu wa vunharhu wa mahanyelo i Ku Avelana Loku Lulameke (Fair Share).",
-            "provenance": "Unreviewed source-bound fairness terminology; independent native Agy phrase/concord check and root exact-source review; no fluent/local farming or Shangani approval."
+            "text": "Nawu wa vunharhu wa mahanyelo i Ku Avelana hi Ku Ringana (Fair Share).",
+            "provenance": "new-unreviewed-machine-draft; source paired"
           },
           {
             "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval.",
@@ -529,8 +529,8 @@
               {
                 "sourceEnglish": " can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
                 "status": "draft",
-                "text": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana leyi lulameke, mi ya mahlweni mi languta xiyimo xa mati. ",
-                "reason": "Unreviewed source-bound fair/proper sharing phrase; preserves separate enough-water condition, permission, capacity, monitoring and no-extra-use negation. Independent native Agy check; no allocation formula or fluent approval."
+                "text": " yi nga tirhela vatirhisi hinkwawo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona ku ri na mati yo ringana, pfumelelani ndlela ya ku avelana hi ku ringana, mi ya mahlweni mi languta xiyimo xa mati. ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
               },
               {
                 "sourceEnglish": "People Care",

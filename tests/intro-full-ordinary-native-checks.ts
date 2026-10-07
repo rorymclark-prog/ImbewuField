@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -36,7 +37,7 @@ export const introFullCanonicalBefore = introFullFixture('canonical-before.json'
 export const introFullTargets = introFullFixture('accepted-targets.json');
 export const introFullMetadata = introFullFixture('accepted-ts-hold-metadata-amendment.json');
 export const readCurrentIntroNative = (): Record<IntroLanguage, any> => ({
-  ve: TSHIVENDA_INTRO_PERMACULTURE_DRAFT, ts: XITSONGA_INTRO_PERMACULTURE_DRAFT,
+  ve: TSHIVENDA_INTRO_PERMACULTURE_DRAFT, ts: fairSharingNativeBefore(XITSONGA_INTRO_PERMACULTURE_DRAFT),
 });
 export function introFullField(object: any, path: string): any {
   return path.replace(/\[(\d+)\]/g, '.$1').split('.').reduce((value: any, key: string) => value[key], object);

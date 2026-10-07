@@ -1,5 +1,6 @@
 import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
+import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -242,9 +243,12 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
     expectedNative, expectedPaired, expectedSilentSesotho: silentSTBefore };
 }
 
-export function validateAndRewindIntroNativeHistory(language: IntroLanguage, current = readCurrentIntroNative()[language]) {
+export function validateAndRewindIntroNativeHistory(language: IntroLanguage, current?: any) {
   const native = { ve: readCurrentIntroNative().ve, ts: readCurrentIntroNative().ts };
-  native[language] = current;
+  // Explicit callers supply today's object; validate the complete later fairness
+  // layer before this older release can expose its accepted predecessor.
+  if (current !== undefined) native[language] = language === 'ts'
+    ? fairSharingNativeBefore(current) : current;
   const validated = validateAndRewindIntroSilentTextLayer({ native });
   return validateAndRewindIntroFullNative(language, validated.nativeBeforeSilent[language]);
 }

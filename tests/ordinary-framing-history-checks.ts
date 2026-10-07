@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/regional-ordinary-framing-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -73,7 +74,7 @@ export function ensureOrdinaryFramingText() {
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
   ensureOrdinaryFramingText();
-  if (!(file in expected)) return actual;
+  if (!(file in expected)) return fairSharingPairBefore(file, actual);
   assert.deepEqual(actual, expected[file], 'caller supplies complete current layer, including unlisted source and target fields');
   return structuredClone(before[file]);
 }
@@ -81,7 +82,7 @@ export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
   ensureOrdinaryFramingText();
-  if (!(file in expected)) return actual;
+  if (!(file in expected)) return fairSharingPairBefore(file, actual);
   const restored: any = structuredClone(actual);
   for (const row of proof.groups.filter((item: any) => item.file === file)) {
     const current = targetCell(restored, row);
@@ -95,7 +96,8 @@ export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T 
 
 /** Verify input bytes are the live complete file before returning its immutable predecessor bytes. */
 export function ordinaryFramingPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
-  if (!(file in expected)) return bytes;
+  if (!(file in expected)) return file === 'docs/narration/intro-permaculture.ts.paired-draft.json'
+    ? Buffer.from(fairSharingSourceBytesBefore(file, bytes)) : bytes;
   const text = Buffer.from(bytes).toString('utf8');
   ordinaryFramingPairBefore(file, JSON.parse(text));
   assert.equal(text, readFileSync(file, 'utf8'), 'caller bytes are the exact live paired file bytes');
@@ -110,6 +112,8 @@ assert.equal(new Set(ordinaryFramingAssets.map(row => row.url)).size, 10);
 
 const assetsByPath = new Map(ordinaryFramingAssets.map(row => ['public' + row.url, row]));
 export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
+  const fairness = fairSharingAssetBefore(path, bytes);
+  if (fairness) return fairness;
   const row = assetsByPath.get(path);
   if (!row) return null;
   assert.equal(bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
@@ -130,6 +134,7 @@ const total = [...expectedManifest.matchAll(/^  '[^']+': (\d+),$/gm)].reduce((su
 expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total / 1024 / 1024).toFixed(1) + ' MB');
 
 export function ordinaryFramingManifestBefore(actual: string): string {
+  actual = fairSharingSourceBytesBefore('lib/course-asset-sizes.ts', actual);
   assert.equal(actual, expectedManifest, 'complete current manifest after only the ten measured card changes');
   return oldManifest;
 }

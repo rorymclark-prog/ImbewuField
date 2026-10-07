@@ -1,4 +1,5 @@
 import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
+import { fairSharingAssetBefore, fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
@@ -11,6 +12,7 @@ import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryMa
 // Each real current file is checked by the latest immutable measurement guard.
 const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
 const laterPaths = new Set<string>(laterAssets.map(row=>'public'+row.url));
+for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
 const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
 const veFrames = new Map(veOrdinaryAssets.map(row=>['public'+row.url,row]));
 const coreFrames = new Map(coreHeldOrdinaryAssets.map(row=>['public'+row.url,row]));
@@ -50,6 +52,11 @@ function descriptor(path: string) {
 }
 function checkedHistoricalDescriptor(path: string) {
   let actual = descriptor(path);
+  // Validate the two later fairness redraws before reconstructing this dated
+  // inventory; no recording or unlisted still can take this path.
+  const fairness = fairSharingAssets.some(row => 'public' + row.url === path)
+    ? fairSharingAssetBefore(path, readFileSync(path)) : null;
+  if (fairness) actual = {...actual, ...fairness};
   // descriptor checks filesystem identity on every call and recomputes the digest
   // after any rewrite. Do not re-read/hash buffers again for every dated caller.
   // Each immutable layer still checks its exact successor before exposing its predecessor.

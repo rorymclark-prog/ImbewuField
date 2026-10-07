@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as currentPresentation } from '../lib/course-localization.ts';
+import { fairSharingPresentationBefore } from './intro-fair-sharing-history-checks.ts';
+// This dated full-module proof precedes the separately checked fairness layer.
+const resolveLearnerLessonPresentation: typeof currentPresentation = (lesson, language, record) =>
+  fairSharingPresentationBefore(lesson, language, currentPresentation(lesson, language, record));
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { introFullFixture, introFullNativeBefore, introFullNativeAfter, introFullCanonicalBefore,
   readCurrentIntroNative, type IntroLanguage } from './intro-full-ordinary-native-checks.ts';

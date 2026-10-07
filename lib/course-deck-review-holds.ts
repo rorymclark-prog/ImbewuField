@@ -5,6 +5,8 @@
  */
 const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number, string>>>> = Object.freeze({
   'intro-permaculture': Object.freeze({
+    6: 'The recorded heading says equal sharing where the source names Fair Share; the independent corrected silent card preserves fairness without prescribing identical amounts.',
+    7: 'The recorded agreement clause prescribes equal sharing where the source says share fairly; retain the corrected silent card and withhold the old clip while preserving permission, capacity, monitoring and no-extra-use conditions.',
     22: 'The narration omits the source superlative “worst” in “worst wind” and asks where an item can be placed instead of where it should move; retain both exact English clauses until checked equivalents preserve those meanings.',
   }),
   'reading-landscape': Object.freeze({
