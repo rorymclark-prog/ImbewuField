@@ -470,7 +470,7 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   const draftParagraphs = lesson.body.xitsongaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
 
-  assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"));
+  assert.ok(draftParagraphs[0].includes("ti-ridges and gaps ta ndhawu ya wena"));
   assert.ok(draftParagraphs[0].includes('Fambafamba eka misava hi masiku ya moya.'));
   assert.ok(!draftParagraphs[0].includes('Check local weather records before deciding where shelter is needed.'));
   assert.ok(draftParagraphs[0].includes('Kambela matsalwa ya maxelo ya laha kaya') && draftParagraphs[0].includes('u nga se teka xiboho'));

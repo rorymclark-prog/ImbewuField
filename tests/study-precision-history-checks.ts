@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { comparisonsNativeBefore, comparisonsSourceBefore } from './reading-comparisons-history-checks.ts';
 
 // Age and exposure duration are different from size and arrival time. Validate
 // this entire later layer before dated releases can show their older claims.
@@ -60,13 +61,16 @@ export function ensurePrecisionCurrent() {
   const signature = files.map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (signature === lastSignature) return;
   for (const [file, proof] of Object.entries(precisionPlan.files) as [string, any][]) {
-    assert.equal(readFileSync(file, 'utf8'), proof.after, file + ': complete live precision file, not an arbitrary historical view');
+    // The source-bound Reading comparison batch is a later, separately guarded
+    // layer; every other precision byte still has to match this dated release.
+    assert.equal(comparisonsSourceBefore(file, readFileSync(file, 'utf8')), proof.after, file + ': complete live precision file, not an arbitrary historical view');
   }
   assert.equal(sha(readFileSync('lib/course-modules.ts')), 'abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397', 'canonical English is unchanged');
   lastSignature = signature;
 }
 export function precisionNativeBefore<T>(language: 'zu' | 've', actual: T): T {
   ensurePrecisionCurrent();
+  if (language === 'zu') actual = comparisonsNativeBefore('zu', actual);
   // A higher historical layer may already have projected this exact complete
   // predecessor. Partial or mutated projections still fail the full comparison.
   if (JSON.stringify(actual) === JSON.stringify(precisionBefore[language])) return structuredClone(actual);
@@ -74,6 +78,7 @@ export function precisionNativeBefore<T>(language: 'zu' | 've', actual: T): T {
   return structuredClone(precisionBefore[language]);
 }
 export function precisionSourceBytesBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = comparisonsSourceBefore(file, bytes);
   const proof = precisionPlan.files[file];
   if (!proof) return bytes;
   ensurePrecisionCurrent();

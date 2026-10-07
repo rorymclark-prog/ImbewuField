@@ -15,7 +15,8 @@ import { fairSharingZuluBefore } from './intro-fair-sharing-history-checks.ts';
 const COURSE_TRANSLATION_DRAFTS = fairSharingZuluBefore(currentZuluDrafts);
 const resolveLearnerLessonPresentation: typeof currentPresentation = (lesson, language, record) => {
   const shown = currentPresentation(lesson, language, record);
-  return lesson.id === 'intro-permaculture-l1' && language === 'zu' && shown.status === 'draft'
+  // Whole-registry guarded later fairness and Reading layers precede this dated image proof.
+  return language === 'zu' && shown.status === 'draft' && COURSE_TRANSLATION_DRAFTS[lesson.id]
     ? { ...shown, content: { ...shown.content, infographicAlt: COURSE_TRANSLATION_DRAFTS[lesson.id].infographicAlt } }
     : shown;
 };

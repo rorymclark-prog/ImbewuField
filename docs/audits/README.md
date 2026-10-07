@@ -68,6 +68,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-07 | [Reading comparisons and remaining prose — Codex](2026-10-07/study-reading-comparisons-codex.md) |
 | 2026-10-07 | [Study wording precision — Codex](2026-10-07/study-precision-codex.md) |
 | 2026-10-07 | [Study Introduction fair sharing — Codex](2026-10-07/study-intro-fair-sharing-codex.md) |
 | 2026-10-07 | [Study ordinary framing follow-up — Codex](2026-10-07/study-ordinary-framing-codex.md) |

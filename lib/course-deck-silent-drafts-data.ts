@@ -693,5 +693,30 @@ export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInpu
     "height": 5400,
     "reviewStatus": "unreviewed",
     "audioBinding": "none"
-  }
+  },
+{
+  "moduleId": "reading-landscape",
+  "slide": 14,
+  "sourceHeading": "Cold Air Flows Downhill",
+  "sourceEnglish": [
+    "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+    "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+    "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+    "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+  ],
+  "correctedTitle": "Umoya Obandayo Wehla Ngomthambeka",
+  "correctedTarget": [
+    "Ngobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Isithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside kunazo zonke. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.",
+    "Qhathanisa izindawo ongakhetha kuzo zenkulisa yezithombo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo."
+  ],
+  "sourceHash": "f79c2625a05909b216a70cd068189b6eb1f58ad317e770153024ea6ecab8f0ba",
+  "targetHash": "cbe310ce2f72c3a32c01493c71c626a14efd7f561ff6ea51008ef897abec9bd7",
+  "imageUrl": "/course-decks/reading-landscape/zu-silent/slide-14.webp",
+  "imageSha256": "262d51fe8a03b5bf46355b79d95a73eb0271f225c5082fd135c903fa71ae5562",
+  "imageBytes": 491432,
+  "width": 1440,
+  "height": 5482,
+  "reviewStatus": "unreviewed",
+  "audioBinding": "none"
+}
 ];
