@@ -510,7 +510,9 @@
               },
               {
                 "sourceEnglish": "They do better",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Zwi ita khwine",
+                "reason": "Exact checked learner predicate reuse; unreviewed machine draft and English paired."
               },
               {
                 "sourceEnglish": " sown straight where they'll grow. ",

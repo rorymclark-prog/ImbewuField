@@ -1,5 +1,6 @@
 import { mapNativeBefore, mapPresentationBefore } from './reading-map-comparisons-history-checks.ts';
 import assert from 'node:assert/strict';
+import { followupNativeBefore, followupPresentationBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
@@ -102,6 +103,7 @@ export function ensureFinalLanguageNextCurrent() {
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
 }
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
+  actual = followupNativeBefore(actual);
   if ((actual as any)?.language === 've' && (actual as any)?.id === 'reading-landscape') actual = veReadingFrostNativeBefore('ve', actual);
   // Reading's later ten-field layer independently validates the whole registry
   // before this dated native-language release reconstructs its predecessor.
@@ -143,6 +145,7 @@ export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Arr
 /** 6 October: validate the actual complete learner presentation before restoring
  * only the nine later native leaves for dated assessment claims. */
 export function finalLanguageNextPresentationBefore<T extends { status: string; content: any }>(result: T, lessonId: string, language: string): T {
+  result = followupPresentationBefore(result, lessonId, language);
   if (lessonId === 'reading-landscape-l2' && language === 've') {
     const live = resolveLearnerLessonPresentation(COURSE_MODULES.flatMap(module => module.lessons).find(lesson => lesson.id === lessonId)!, 've');
     assert.deepEqual(result, live, 'complete current VE learner presentation before accepted frost locative projection');
