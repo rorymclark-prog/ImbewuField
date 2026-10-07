@@ -34,7 +34,7 @@ const draftParagraphs = [
   "Nkarhi wu ni nkoka. Sungulani hi ku byala maize yi rhanga, leswaku yi tiya ku ringana ku rhwala beans loko ti sungula ku khandziya.",
   "Swibyariwa swi nga ha phikizana. Nyika swibyariwa ndhawu leyi faneleke, mati ni ku vonakala. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.",
   "Ndyangu wu nga va na hungry gap: mavhiki lawa swakudya leswi hlayisiweke swi nga va switsongo ku nga si lungheka ntshovelo lowu landzelaka.",
-  "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden.",
+  "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko mati ma hunguta leswi xirhapa xi nga swi humesaka.",
   "U nga tekeleli calendar ya munhu un'wana. Rhanga hi ku vula tin'hweti ta wena.",
   "Ti tsale ehansi. Kutani hlawula xibyariwa ni siku ro byala leri nga tisa swakudya eka nkarhi wolowo.",
   "Leswi i planning backwards, naswona hi swona swi hambanisaka garden leyi vonakaka yi ri productive ni ndyangu lowu dyaka."
@@ -50,7 +50,7 @@ export const XITSONGA_VEGETABLES_STAPLES_L2_DRAFT: XitsongaCourseModuleDraft = {
   lessons: [
     {
       id: sourceLesson.id,
-      infographicAlt: pair(sourceLesson.infographicAlt!, "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, then a new sowing goes in beside a slower crop that is still growing, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana."),
+      infographicAlt: pair(sourceLesson.infographicAlt!, "Bed yin’we over three seasons: ximilana lexi hatlisaka ku kula xa tshoveriwa, kutani new sowing yi endliwa etlhelo ka xibyariwa lexi kulaka hi ku nonoka, lexi ha ha kulaka, leswaku bed yi nga tshuki yi sala yi nga ri na swimilana."),
       title: pair("Succession Planting and Intercropping", "Succession planting na intercropping"),
       body: pair(bodySourceEnglish, draftParagraphs.join('\n\n')),
       keyPoints: sourceLesson.keyPoints.map((sourceText, index) => index === 0

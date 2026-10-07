@@ -268,7 +268,7 @@
         "body": [
           {
             "status": "draft",
-            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe."
+            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho."
           },
           {
             "status": "mixed",
@@ -894,7 +894,8 @@
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Hungry gap yaṋu"
             }
           ]
         },
@@ -905,7 +906,7 @@
           },
           {
             "status": "draft",
-            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
+            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni."
           },
           {
             "status": "draft",

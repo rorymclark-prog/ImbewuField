@@ -1,3 +1,4 @@
+import { expandedAssetBefore, expandedAssets, expandedSourceBefore } from './core-ordinary-expanded-history-checks.ts';
 import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
@@ -13,7 +14,7 @@ import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPa
 // Also carry cards unlisted by the older layers (such as TS Vegetables5).
 // Each real current file is checked by the latest immutable measurement guard.
 const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
-const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path)]);
+const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path), ...expandedAssets.map((row: any) => 'public' + row.url)]);
 for (const [url, row] of Object.entries(followupAssets)) if (row.changed) laterPaths.add('public' + url);
 for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
 const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
@@ -62,6 +63,8 @@ function checkedHistoricalDescriptor(path: string) {
     assert.ok(latest, path + ': current batch image proof supplies its exact predecessor');
     actual = { ...actual, ...latest };
   }
+  const expanded = expandedAssetBefore(path, readFileSync(path));
+  if (expanded) actual = { ...actual, ...expanded };
   // Validate the two later fairness redraws before reconstructing this dated
   // inventory; no recording or unlisted still can take this path.
   const fairness = fairSharingAssets.some(row => 'public' + row.url === path)
@@ -91,6 +94,8 @@ export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   assert.equal(latest?.sha256 ?? sha(bytes), expected.sha256, path + ': exact current SHA');
 }
 export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  // Reconstruct only the byte-verified newer layer, preserving the complete old inventory guard.
+  manifest = expandedSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
   const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   if (manifest === liveManifest && frostFiles['lib/course-asset-sizes.ts']) manifest = veReadingFrostSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
   manifest = coreHeldOrdinaryManifestBefore(manifest);

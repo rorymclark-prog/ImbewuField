@@ -1,3 +1,5 @@
+// The reviewed expanded layer supersedes only its complete immutable predecessor bytes.
+import { expandedSourceBefore } from './core-ordinary-expanded-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -42,7 +44,7 @@ test('complete immutable before and after proof covers the accepted source, lear
     assert.equal(sha(row.after), row.afterSha256, `${file}: complete frozen current bytes`);
     assert.equal(Buffer.byteLength(row.before), row.beforeBytes);
     assert.equal(Buffer.byteLength(row.after), row.afterBytes);
-    assert.equal(sha(readFileSync(file)), row.afterSha256, `${file}: actual complete current file`);
+    assert.equal(sha(expandedSourceBefore(file, readFileSync(file))), row.afterSha256, `${file}: actual complete current file`);
     const previous = followupFiles[file];
     if (previous) assert.equal(row.beforeSha256, previous.afterSha256, `${file}: immutable history layers join without a gap`);
   }

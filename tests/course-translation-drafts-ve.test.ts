@@ -712,7 +712,9 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[8], /A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa/, 'suitable timing allows possible overlap without promising the first batch is ready by sowing four');
   assert.match(l2[9], /Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe/, 'heat still carries both possible faster timing and failure');
   assert.match(l2[12], /Indigenous farming traditions in the Americas/);
-  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
+  // The source-bound October 7 draft translates the ordinary water-limit
+  // clause; retain all three possible timings and the limiting-water condition.
+  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
   assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
   assert.match(l2[14], /and store as protein/);
   assert.equal(l2[15], 'Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.',

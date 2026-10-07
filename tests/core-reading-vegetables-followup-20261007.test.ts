@@ -1,3 +1,4 @@
+import { expandedAssets } from './core-ordinary-expanded-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -150,7 +151,7 @@ test('the five approved WebPs match their exact byte proof, manifest sizes, and 
   assert.equal(rendered.size, 5);
   for (const [path, row] of Object.entries(proof)) {
     const bytes = readFileSync('public' + path);
-    const latest = latestAssets.get(path);
+    const latest = expandedAssets.find((row: any) => row.url === path) ?? latestAssets.get(path);
     if (latest) {
       assert.equal(latest.beforeBytes, row.afterBytes, `${path}: newest proof begins at the exact predecessor described by this proof`);
       assert.equal(latest.beforeSha256, row.afterSha256, `${path}: newest proof predecessor digest joins this proof`);

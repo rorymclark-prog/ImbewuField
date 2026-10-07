@@ -16,6 +16,7 @@ import {
   ordinaryFramingPairBytesBefore,
 } from './ordinary-framing-history-checks.ts';
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore } from './ve-reading-frost-history-checks.ts';
+import { expandedAssetBefore } from './core-ordinary-expanded-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/regional-ordinary-framing-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -108,7 +109,9 @@ test('10 intended cards match proof-derived frames, exact natural canvas, bytes,
     assert.deepEqual(row.dimensions, exactDimensions[row.url], `${row.url}: exact reviewed unscaled canvas`);
     assert.equal(row.language, row.url.split('/')[3]);
     const bytes = readFileSync('public' + row.url);
-    const rootProjection = veReadingFrostAssetBefore('public' + row.url, bytes);
+    // October 7 also redraws VE Vegetables4 with its exact-source learner
+    // paragraph. Validate that complete later proof before checking old pixels.
+    const rootProjection = expandedAssetBefore('public' + row.url, bytes) ?? veReadingFrostAssetBefore('public' + row.url, bytes);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length, `${row.url}: live offline manifest advertises actual current bytes`);
     if (rootProjection) {
       const currentDimensions = [bytes.readUInt16LE(26) & 0x3fff, bytes.readUInt16LE(28) & 0x3fff];

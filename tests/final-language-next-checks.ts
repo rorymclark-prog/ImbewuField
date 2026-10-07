@@ -168,7 +168,8 @@ export function finalLanguageNextPresentationBefore<T extends { status: string; 
   const rows = plan.nativePlans.filter((row: any) => row.lessonId === lessonId && expectedNative[row.file].language === language);
   if (!rows.length || result.status !== 'draft') return result;
   const canonical = COURSE_MODULES.find(module => module.id === rows[0].moduleId)!.lessons.find(lesson => lesson.id === lessonId)!;
-  assert.deepEqual(result, resolveLearnerLessonPresentation(canonical, language as any), 'entire actual learner presentation source/status/index/unlisted matches accepted latest native layer');
+  // The complete actual newest resolver is guarded first; this dated owner compares its exact predecessor.
+  assert.deepEqual(result, followupPresentationBefore(resolveLearnerLessonPresentation(canonical, language as any), lessonId, language), 'entire actual learner presentation source/status/index/unlisted matches accepted latest native layer');
   const restored = structuredClone(result);
   const key = language === 've' ? 'tshivendaDraft' : 'xitsongaDraft';
   for (const row of rows) {

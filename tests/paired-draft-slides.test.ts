@@ -1306,7 +1306,8 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
         assert.equal(bindings.length, 1, `${lang} slide ${slideIndex + 1}: source paragraph has one canonical lesson binding`);
         const [{ lesson, paragraph, paragraphIndex }] = bindings;
         assert.equal(paragraph, exactSource, `${lang} slide ${slideIndex + 1}: keep the entire English lesson paragraph byte-identical`);
-        const learnerBody = resolveLearnerLessonPresentation(lesson, lang).content.body.split('\n\n');
+        // This test's read wrapper exposes the exact historical deck; compare the guarded matching learner predecessor.
+        const learnerBody = followupPresentationBefore(resolveLearnerLessonPresentation(lesson, lang), lesson.id, lang).content.body.split('\n\n');
         const part = slides[slideIndex].target.body[bodyIndex];
         const key = `${lang}:${slideIndex + 1}:${bodyIndex + 1}`;
 
