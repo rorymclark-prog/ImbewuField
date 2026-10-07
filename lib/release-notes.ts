@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: '9d984d54', changes: [
+    'isiZulu Reading quiz drafts clarify young plants and hours of sunlight.',
+    'Tshivenda Introduction image text keeps design and waste-loop terms in English.',
+  ], tour: [
+    { title: 'Read Study wording drafts',
+      where: 'Study → Reading in isiZulu or Introduction in Tshivenda',
+      detail: 'Compare the unreviewed wording with its exact English source.',
+      href: '/student' },
+  ] },
   { when: '7 October 2026', sha: 'd69134eb', changes: [
     'Introduction adds fair-sharing drafts in isiZulu and Xitsonga beside exact English.',
     'Four silent cards use the new wording; affected old isiZulu narration stays off.',
