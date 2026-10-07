@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: 'b099cb1d', changes: [
+    'Five silent Study cards show fuller water, wind and direct-sowing drafts.',
+    'Sesotho and Xitsonga vegetable lessons keep the full performance comparison.',
+    'The Xitsonga Market lesson translates the sale-price comparison beside English.',
+  ], tour: [{ title: 'Read the fuller Study drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed wording with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: '400ede45', changes: [
     'Five silent Study cards show checked ordinary drafts beside exact English.',
     'Sesotho frost wording describes ice forming on a cold surface.',
