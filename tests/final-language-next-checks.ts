@@ -1,6 +1,6 @@
 import { mapNativeBefore, mapPresentationBefore } from './reading-map-comparisons-history-checks.ts';
 import assert from 'node:assert/strict';
-import { followupNativeBefore, followupPresentationBefore } from './core-reading-vegetables-followup-history-checks.ts';
+import { followupNativeBefore, followupPresentationBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
@@ -54,7 +54,10 @@ export function validateFinalLanguageNextText(input = readFinalLanguageNextInput
   // layer before preserving these older 39-field claims against their baseline.
   input = {
     ...input,
-    native: Object.fromEntries(Object.entries(input.native).map(([file, value]: [string, any]) => [file, value.language === 've' && value.id === 'reading-landscape' ? veReadingFrostNativeBefore('ve', value) : value])),
+    native: Object.fromEntries(Object.entries(input.native).map(([file, value]: [string, any]) => {
+      value = followupNativeBefore(value);
+      return [file, value.language === 've' && value.id === 'reading-landscape' ? veReadingFrostNativeBefore('ve', value) : value];
+    })),
     paired: Object.fromEntries(Object.entries(input.paired).map(([file, value]) => [file, coreHeldOrdinaryPairBefore(file, veReadingFrostPairBefore(file, value))]))
   };
   assert.deepEqual(COURSE_MODULES, canonicalBefore, 'all canonical English and indices stay exact');
@@ -86,7 +89,10 @@ export function validateFinalLanguageNextText(input = readFinalLanguageNextInput
     }
   }
   // Whole native file bytes also protect other exports after module import.
-  for (const [file, digest] of Object.entries({"lib/course-translation-drafts-ve-vegetables-staples.ts": "811401edf7fe0a2ec6048406999fa519c748954e6cc7621a742e392db98fbdad", "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "e85fbc6aca65654f4154399ce77616f186532bed5f73db7b38422daa813e05f4", "lib/course-translation-drafts-ts-vegetables-staples.ts": "d41a4f1273cfcc1faa68b618d427418edb838f4728787a4ea4e9f167084ab78d"})) assert.equal(sha(readFileSync(file)), digest, 'complete accepted native file bytes');
+  for (const [file, digest] of Object.entries({"lib/course-translation-drafts-ve-vegetables-staples.ts": "811401edf7fe0a2ec6048406999fa519c748954e6cc7621a742e392db98fbdad", "lib/course-translation-drafts-ts-vegetables-staples-l2.ts": "e85fbc6aca65654f4154399ce77616f186532bed5f73db7b38422daa813e05f4", "lib/course-translation-drafts-ts-vegetables-staples.ts": "d41a4f1273cfcc1faa68b618d427418edb838f4728787a4ea4e9f167084ab78d"})) {
+    const predecessor = followupSourceBefore(file, readFileSync(file));
+    assert.equal(sha(predecessor), digest, 'complete native file bytes after the newest exact file layer is projected');
+  }
   // Only active silent text changes; archive/audio remain actual byte checks.
   for (const item of plan.protectedInventory) {
     const bytes = readFileSync(item.path);
@@ -178,7 +184,10 @@ export function finalLanguageNextPresentationBefore<T extends { status: string; 
  * a higher dated layer may already have restored these exact listed objects.
  * The older caller still validates its complete predecessor, including unlisted data. */
 export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): T {
-  actual = veReadingFrostPairBefore(file, actual);
+  // Historical consumers may arrive with exact leaves from an older dated
+  // snapshot already restored. Validate the live newest batch, then compose
+  // through the explicit history projection whose predecessor owner checks
+  // the complete older pair.
   ensureFinalLanguageNextCurrent();
   actual = coreHeldOrdinaryPairBeforeHistory(file, actual);
   const restored: any = structuredClone(actual);

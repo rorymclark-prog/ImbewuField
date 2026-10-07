@@ -46,8 +46,9 @@ export function ensureMapCurrent() {
   }
 }
 export function mapSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
-  if (file !== 'lib/course-asset-sizes.ts') bytes = followupSourceBefore(file, bytes);
-  if (frostFiles[file] && Buffer.from(bytes).toString() === readFileSync(file, 'utf8')) bytes = veReadingFrostSourceBefore(file, bytes) as string | Uint8Array;
+  if (file !== 'lib/course-asset-sizes.ts') bytes = frostFiles[file]
+    ? veReadingFrostSourceBefore(file, bytes) as string | Uint8Array
+    : followupSourceBefore(file, bytes);
   const proof = mapFiles[file];
   if (!proof) return bytes;
   ensureMapCurrent();

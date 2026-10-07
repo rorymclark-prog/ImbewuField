@@ -1,0 +1,16 @@
+{
+  "at_utc": "2026-10-07T10:09:38.893711+00:00",
+  "typecheck": "original npx tsc --noEmit passed",
+  "full_suite": {
+    "command": "npm test",
+    "tests": 4862,
+    "pass": 4861,
+    "fail": 0,
+    "todo": 1,
+    "existing_todo": "shape-sync-loss",
+    "duration_ms": 575088.025916,
+    "log_not_committed": "/tmp/imbewu-core-ordinary-next-gate-tests-20261007.log"
+  },
+  "whitespace": "git diff --check passed",
+  "publication": "pending exact preview, phone/offline review and CI"
+}

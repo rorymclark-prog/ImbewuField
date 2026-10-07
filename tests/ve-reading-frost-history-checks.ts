@@ -29,8 +29,12 @@ export function ensureVeReadingFrostCurrent() {
 }
 
 export function veReadingFrostSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
-  bytes = followupSourceBefore(file, bytes);
   const proof = frostFiles[file];
+  if (proof && Buffer.from(bytes).toString() === proof.before) {
+    ensureVeReadingFrostCurrent();
+    return bytes;
+  }
+  bytes = followupSourceBefore(file, bytes);
   if (!proof) return bytes;
   ensureVeReadingFrostCurrent();
   const text = Buffer.from(bytes).toString();

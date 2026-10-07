@@ -2,7 +2,7 @@ import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
-import { followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
+import { currentBatchProof, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
@@ -13,7 +13,7 @@ import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPa
 // Also carry cards unlisted by the older layers (such as TS Vegetables5).
 // Each real current file is checked by the latest immutable measurement guard.
 const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
-const laterPaths = new Set<string>(laterAssets.map(row=>'public'+row.url));
+const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path)]);
 for (const [url, row] of Object.entries(followupAssets)) if (row.changed) laterPaths.add('public' + url);
 for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
 const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
@@ -57,6 +57,11 @@ function descriptor(path: string) {
 }
 function checkedHistoricalDescriptor(path: string) {
   let actual = descriptor(path);
+  if (currentBatchProof.assets.some(row => row.path === path)) {
+    const latest = followupAssetBefore(path, readFileSync(path));
+    assert.ok(latest, path + ': current batch image proof supplies its exact predecessor');
+    actual = { ...actual, ...latest };
+  }
   // Validate the two later fairness redraws before reconstructing this dated
   // inventory; no recording or unlisted still can take this path.
   const fairness = fairSharingAssets.some(row => 'public' + row.url === path)

@@ -1,0 +1,765 @@
+{
+  "title": "Independent semantic, source and composition check of remaining ordinary-prose candidates",
+  "date": "2026-10-07",
+  "reviewedHead": "0d77b23d0254592011707ae7c8a8a1ae13cad4cb",
+  "sourcePacket": "/tmp/imbewu-core-remaining-ordinary-candidates-20261007.json",
+  "status": "Read-only data review; no source changes or fluency approval.",
+  "auditMethod": "Compared all nine candidate source spans and four held predicates with the current paired JSONs and learner draft modules at the stated HEAD. Checked exact source indices, target prefixes/suffixes, modals/comparatives, list preservation, wind scope and trailing separator. Pair JSON segment arrays were checked at the exact slide/body/segment index; code-module body strings and exact held technical predicates were corroborated. Curly versus ASCII apostrophes in the two source representations were treated as punctuation variants, not as scope changes.",
+  "counts": {
+    "ACCEPT": 7,
+    "HOLD": 6
+  },
+  "findings": [
+    {
+      "id": "RL-VE-WIND-01",
+      "language": "ve",
+      "module": "reading-landscape",
+      "sourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+      "currentBindings": [
+        {
+          "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+          "lessonOrSlide": "slide 12",
+          "field": "target.body[1].segments[0]",
+          "currentStatus": "english-hold",
+          "currentText": null,
+          "sourceSpanHasTrailingSpace": true
+        },
+        {
+          "file": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "lessonOrSlide": "reading-landscape-l3",
+          "field": "body sentence 1",
+          "currentText": "Thungo na maanḓa a muya une wa tshinyadza zwi shanduka u ya nga vhupo, khalaṅwaha, na dzi-ridges and gaps dza tshitentsi tshaṋu.",
+          "scopeCheck": "Exact full sentence meaning: direction and strength; damaging wind; region/season; ridges and gaps belonging to the site."
+        }
+      ],
+      "proposedTarget": "Thungo na maanḓa a muya une wa tshinyadza zwi shanduka u ya nga vhupo, khalaṅwaha, na dzi-ridges and gaps dza tshitentsi tshaṋu. ",
+      "backtranslation": "The direction and strength of damaging wind change according to region, season, and the ridges and gaps on your site. ",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [
+        "English “ridges and gaps” are technical anchors and remain English. Trailing ASCII space is present and must stay as a segment separator."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[1].segments[0]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "The direction and strength of damaging wind change with region, season and your site's ridges and gaps. ",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": true
+        },
+        {
+          "file": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body sentence 1",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "The direction and strength of damaging wind change with region, season and your site’s ridges and gaps.",
+          "currentPaired": "english-hold",
+          "replacement": "Thungo na maanḓa a muya une wa tshinyadza zwi shanduka u ya nga vhupo, khalaṅwaha, na dzi-ridges and gaps dza tshitentsi tshaṋu."
+        }
+      ],
+      "preservationNotes": "Exact-scope learner sentence reuse replaces only the one English-held sentence in the paired target. The source-held segment includes its trailing ASCII space; the proposal retains that exact separator before the next sentence. English landform terms remain anchors."
+    },
+    {
+      "id": "RL-ST-WATERWORKS-01",
+      "language": "st",
+      "module": "reading-landscape",
+      "sourceEnglish": "any water works for the site",
+      "currentBindings": [
+        {
+          "file": "docs/narration/reading-landscape.st.paired-draft.json",
+          "lessonOrSlide": "slide 7",
+          "field": "target.body[2].segments[1]",
+          "currentStatus": "english-hold",
+          "currentText": null
+        },
+        {
+          "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+          "lessonOrSlide": "reading-landscape-l1",
+          "field": "body source-bound phrase",
+          "currentText": "mosebetsi ofe kapa ofe wa metsi o loketseng setsha",
+          "scopeCheck": "Bound to “any water works for the site” only; does not include the preceding Choose/Nangani or following safe-route clause."
+        }
+      ],
+      "proposedTarget": "Contours tse sa etswang hantle di ka eketsa erosion, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha mosebetsi ofe kapa ofe wa metsi o loketseng setsha, mme o rere tsela e sireletsehileng bakeng sa metsi a mangata.",
+      "backtranslation": "Choose any water works that suit the site and plan a safe route for excess water.",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [
+        "“mosebetsi wa metsi” can be read literally as water-related work; retain the exact any-for-the-site scope and seek local review of whether this is the expected term for water works."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/reading-landscape.st.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[2].segments[1]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "any water works for the site",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        },
+        {
+          "file": "lib/course-translation-drafts-st-reading-landscape.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body source-bound phrase",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose ",
+          "currentPaired": "Contours tse sa etswang hantle di ka eketsa erosion, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha ",
+          "replacement": "Contours tse sa etswang hantle di ka eketsa erosion, mme mobu o monyang metsi butle o ka tshwara metsi a mangata haholo. Kgetha "
+        },
+        {
+          "source": "any water works for the site",
+          "currentPaired": "english-hold",
+          "replacement": "mosebetsi ofe kapa ofe wa metsi o loketseng setsha"
+        },
+        {
+          "source": " and plan a safe route for excess water.",
+          "currentPaired": ", mme o rere tsela e sireletsehileng bakeng sa metsi a mangata.",
+          "replacement": ", mme o rere tsela e sireletsehileng bakeng sa metsi a mangata."
+        }
+      ],
+      "preservationNotes": "Use the exact existing learner wording for this one source span only. Preserve the English anchor in the VE wording and do not duplicate the action prefix or safety-route suffix."
+    },
+    {
+      "id": "RL-VE-WATERWORKS-01",
+      "language": "ve",
+      "module": "reading-landscape",
+      "sourceEnglish": "any water works for the site",
+      "currentBindings": [
+        {
+          "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+          "lessonOrSlide": "slide 7",
+          "field": "target.body[2].segments[1]",
+          "currentStatus": "english-hold",
+          "currentText": null
+        },
+        {
+          "file": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "lessonOrSlide": "reading-landscape-l1",
+          "field": "body source-bound phrase",
+          "currentText": "water works dzinwe na dzinwe dzine dza fanelea fhethu hono",
+          "scopeCheck": "Bound to “any water works for the site” only; does not include the preceding Choose/Nangani or following safe-route clause."
+        }
+      ],
+      "proposedTarget": "Contours dzi songo vhewa zwavhuḓi dzi nga engedza erosion, nahone mavu ane a nwela madi nga u ongolowa a nga fara madi manzhi nga maanḓa. Nangani water works dzinwe na dzinwe dzine dza fanelea fhethu hono, nahone ni dzudzanye nḓila yo tsireledzeaho ya madi o engedzeaho.",
+      "backtranslation": "Choose any water works that suit the site and plan a safe route for excess water.",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [
+        "The technical noun remains explicitly “water works”; “dzinwe na dzinwe” and “fhethu hono” preserve any/every and site scope. Agreement/idiom still need Tshivenda review."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[2].segments[1]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "any water works for the site",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        },
+        {
+          "file": "lib/course-translation-drafts-ve-reading-landscape.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body source-bound phrase",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose ",
+          "currentPaired": "Contours dzi songo vhewa zwavhuḓi dzi nga engedza erosion, nahone mavu ane a nwela madi nga u ongolowa a nga fara madi manzhi nga maanḓa. Nangani ",
+          "replacement": "Contours dzi songo vhewa zwavhuḓi dzi nga engedza erosion, nahone mavu ane a nwela madi nga u ongolowa a nga fara madi manzhi nga maanḓa. Nangani "
+        },
+        {
+          "source": "any water works for the site",
+          "currentPaired": "english-hold",
+          "replacement": "water works dzinwe na dzinwe dzine dza fanelea fhethu hono"
+        },
+        {
+          "source": " and plan a safe route for excess water.",
+          "currentPaired": ", nahone ni dzudzanye nḓila yo tsireledzeaho ya madi o engedzeaho.",
+          "replacement": ", nahone ni dzudzanye nḓila yo tsireledzeaho ya madi o engedzeaho."
+        }
+      ],
+      "preservationNotes": "Use the exact existing learner wording for this one source span only. Preserve the English anchor in the VE wording and do not duplicate the action prefix or safety-route suffix."
+    },
+    {
+      "id": "VS-ST-DIRECT-SOW-01",
+      "language": "st",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they’ll grow. Beans, carrots and maize belong in that group.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l1",
+          "field": "body, direct-sowing sentence",
+          "currentText": "They do better ha di jalwa ka kotloloho moo di tla hola teng.",
+          "operation": "Replace only initial predicate; leave the already localized sowing condition and crop-list sentence untouched."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "lessonOrSlide": "slide 6",
+          "field": "target.body[0].segments[1]",
+          "currentStatus": "Di hola hantle ho feta",
+          "currentText": "Di hola hantle ho feta",
+          "followingTargetText": "ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.",
+          "operation": "Replace only “They do better”; preserve the already localized direct-sowing condition and species list."
+        }
+      ],
+      "proposedTarget": "Di sebetsa hantle ha di jalwa ka kotloloho moo di tla hola teng.",
+      "backtranslation": "They perform better when sown directly where they will grow.",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, direct-sowing sentence",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[0].segments[1]",
+          "indexedSegmentStatus": "draft",
+          "indexedCurrentTarget": "Di hola hantle ho feta",
+          "indexedSourceEnglish": "They do better",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null,
+          "expectedCurrentTarget": "Di hola hantle ho feta"
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Some crops resent having their roots disturbed. ",
+          "currentTarget": "Some crops resent having their roots disturbed. ",
+          "replacement": "Some crops resent having their roots disturbed. "
+        },
+        {
+          "source": "They do better",
+          "currentTarget": "Di hola hantle ho feta",
+          "replacement": "Di sebetsa hantle"
+        },
+        {
+          "source": " sown straight where they’ll grow. ",
+          "currentTarget": " ha di jalwa ka kotloloho moo di tla hola teng. ",
+          "replacement": " ha di jalwa ka kotloloho moo di tla hola teng. "
+        },
+        {
+          "source": "Beans, carrots and maize belong in that group.",
+          "currentTarget": "Beans, carrots le maize ke tsa sehlopha seo.",
+          "replacement": "preserve current localized crop list byte-for-byte; species terms remain unchanged"
+        }
+      ],
+      "preservationNotes": "Localizes the general “do better” comparison without narrowing it to growth. Retains the source condition: sow straight where the crops will grow. It does not change the crop names, order, or membership of the group."
+    },
+    {
+      "id": "VS-TS-DIRECT-SOW-01",
+      "language": "ts",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they’ll grow. Beans, carrots and maize belong in that group.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l1",
+          "field": "body, direct-sowing sentence",
+          "currentText": "They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+          "operation": "Replace only initial predicate; leave the already localized sowing condition and crop-list sentence untouched."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "lessonOrSlide": "slide 6",
+          "field": "target.body[0].segments[1]",
+          "currentStatus": "english-hold",
+          "currentText": null,
+          "followingTargetText": "loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.",
+          "operation": "Replace only “They do better”; preserve the already localized direct-sowing condition and species list."
+        }
+      ],
+      "proposedTarget": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+      "backtranslation": "They do better when sown directly where they will grow.",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, direct-sowing sentence",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[0].segments[1]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "They do better",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Some crops resent having their roots disturbed. ",
+          "currentTarget": "Swibyariwa swin’wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. ",
+          "replacement": "Swibyariwa swin’wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
+        },
+        {
+          "source": "They do better",
+          "currentTarget": "english-hold",
+          "replacement": "Swi tirha ku antswa"
+        },
+        {
+          "source": " sown straight where they’ll grow. ",
+          "currentTarget": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. ",
+          "replacement": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
+        },
+        {
+          "source": "Beans, carrots and maize belong in that group.",
+          "currentTarget": "Beans, carrots na maize swi wela eka ntlawa wolowo.",
+          "replacement": "preserve current localized crop list byte-for-byte; species terms remain unchanged"
+        }
+      ],
+      "preservationNotes": "Localizes the general “do better” comparison without narrowing it to growth. Retains the source condition: sow straight where the crops will grow. It does not change the crop names, order, or membership of the group."
+    },
+    {
+      "id": "VS-ST-LIGHTEST-ACTION-01",
+      "language": "st",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Only then, act — and start with the lightest thing that works.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l4",
+          "field": "body, fourth step",
+          "currentText": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa.",
+          "replaceSpan": "the lightest thing that works."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "lessonOrSlide": "slide 16",
+          "field": "target.body[4].segments[2]",
+          "currentStatus": "english-hold",
+          "sourceSpan": "the lightest thing that works.",
+          "currentPrefixText": " Ke ka morao feela moo o nkang kgato — qala ka ",
+          "nextSegmentSource": " Physical removal",
+          "nextSegmentCurrentStatus": "english-hold",
+          "nextSegmentPreserved": "yes; do not pull list content into this replacement."
+        }
+      ],
+      "proposedTarget": "ketso e bobebe ka ho fetisisa e sebetsang.",
+      "backtranslation": "the lightest effective action.",
+      "verdict": "ACCEPT",
+      "reason": "The existing Sesotho prefix preserves “Only then, act”; “ketso e bobebe ka ho fetisisa e sebetsang” backtranslates as the lightest effective action and leaves the following list untouched. This is semantic-only, not fluency approval.",
+      "specificRisks": [],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, fourth step",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[4].segments[2]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "the lightest thing that works.",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Four.",
+          "currentTarget": "Ntlha ya bone.",
+          "replacement": "preserve"
+        },
+        {
+          "source": " Only then, act — and start with ",
+          "currentTarget": " Ke ka morao feela moo o nkang kgato — qala ka ",
+          "replacement": " Ke ka morao feela moo o nkang kgato — qala ka "
+        },
+        {
+          "source": "the lightest thing that works.",
+          "currentTarget": "english-hold in deck; exact English in learner body",
+          "replacement": "ketso e bonolo ka ho fetisisa e sebetsang."
+        },
+        {
+          "source": " Physical removal, barriers or changes in crop care may help.",
+          "currentTarget": "separate following segment/list",
+          "replacement": "preserve existing localized/example segment or existing English hold; no list/species/safety content changed."
+        }
+      ],
+      "preservationNotes": "Replaces only the English-held predicate after the already-localized “Only then, act — and start with” clause. Preserves that order and leaves the adjacent physical-removal/barrier/crop-care examples and later safety instructions untouched."
+    },
+    {
+      "id": "VS-VE-LIGHTEST-ACTION-01",
+      "language": "ve",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Only then, act — and start with the lightest thing that works.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l4",
+          "field": "body, fourth step",
+          "currentText": "Tsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa.",
+          "replaceSpan": "the lightest thing that works."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "lessonOrSlide": "slide 16",
+          "field": "target.body[4].segments[2]",
+          "currentStatus": "english-hold",
+          "sourceSpan": "the lightest thing that works.",
+          "currentPrefixText": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga ",
+          "nextSegmentSource": " Physical removal",
+          "nextSegmentCurrentStatus": "english-hold",
+          "nextSegmentPreserved": "yes; do not pull list content into this replacement."
+        }
+      ],
+      "proposedTarget": "vhukando vhu leluwaho vhukuma vhune ha shuma.",
+      "backtranslation": "the easiest/lightest action that works.",
+      "verdict": "HOLD",
+      "reason": "The “Only then, act” prefix is preserved exactly in the existing localized prefix, but the proposed word can also backtranslate as “easiest” or “soft/easy.” That may describe effort rather than the source’s least-intensive effective response. Keep the English predicate until the distinction is confirmed.",
+      "specificRisks": [
+        "Potential shift from least-intensive effective response to easiest action."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, fourth step",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[4].segments[2]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "the lightest thing that works.",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Four.",
+          "currentTarget": "Tsha vhuṋa.",
+          "replacement": "preserve"
+        },
+        {
+          "source": " Only then, act — and start with ",
+          "currentTarget": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga ",
+          "replacement": " Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga "
+        },
+        {
+          "source": "the lightest thing that works.",
+          "currentTarget": "english-hold in deck; exact English in learner body",
+          "replacement": "vhukando vhu leluwaho vhukuma vhune ha shuma."
+        },
+        {
+          "source": " Physical removal, barriers or changes in crop care may help.",
+          "currentTarget": "separate following segment/list",
+          "replacement": "preserve existing localized/example segment or existing English hold; no list/species/safety content changed."
+        }
+      ],
+      "preservationNotes": "Replaces only the English-held predicate after the already-localized “Only then, act — and start with” clause. Preserves that order and leaves the adjacent physical-removal/barrier/crop-care examples and later safety instructions untouched."
+    },
+    {
+      "id": "VS-TS-LIGHTEST-ACTION-01",
+      "language": "ts",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Only then, act — and start with the lightest thing that works.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l4",
+          "field": "body, fourth step",
+          "currentText": "Vumune. Hi kona ntsena u tekaka goza — sungula hi the lightest thing that works. Physical removal, barriers kumbe ku cinca ndlela yo hlayisa swibyariwa swi nga pfuna.",
+          "replaceSpan": "the lightest thing that works."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "lessonOrSlide": "slide 16",
+          "field": "target.body[4].segments[2]",
+          "currentStatus": "english-hold",
+          "sourceSpan": "the lightest thing that works.",
+          "currentPrefixText": " Hi kona ntsena u tekaka goza — sungula hi ",
+          "nextSegmentSource": " Physical removal",
+          "nextSegmentCurrentStatus": "english-hold",
+          "nextSegmentPreserved": "yes; do not pull list content into this replacement."
+        }
+      ],
+      "proposedTarget": "goza ro olova swinene leri tirhaka.",
+      "backtranslation": "the lightest/easiest action that works.",
+      "verdict": "HOLD",
+      "reason": "The “Only then, act” prefix is preserved exactly in the existing localized prefix, but the proposed word can also backtranslate as “easiest” or “soft/easy.” That may describe effort rather than the source’s least-intensive effective response. Keep the English predicate until the distinction is confirmed.",
+      "specificRisks": [
+        "Potential shift from least-intensive effective response to easiest action."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, fourth step",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "binding": "target.body[4].segments[2]",
+          "indexedSegmentStatus": "english-hold",
+          "indexedCurrentTarget": null,
+          "indexedSourceEnglish": "the lightest thing that works.",
+          "indexMatchesExpectedStatus": true,
+          "sourceSpanMatchesBinding": true,
+          "trailingSpacePreserved": null
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Four.",
+          "currentTarget": "Vumune.",
+          "replacement": "preserve"
+        },
+        {
+          "source": " Only then, act — and start with ",
+          "currentTarget": " Hi kona ntsena u tekaka goza — sungula hi ",
+          "replacement": " Hi kona ntsena u tekaka goza — sungula hi "
+        },
+        {
+          "source": "the lightest thing that works.",
+          "currentTarget": "english-hold in deck; exact English in learner body",
+          "replacement": "goza ro olova swinene leri tirhaka."
+        },
+        {
+          "source": " Physical removal, barriers or changes in crop care may help.",
+          "currentTarget": "separate following segment/list",
+          "replacement": "preserve existing localized/example segment or existing English hold; no list/species/safety content changed."
+        }
+      ],
+      "preservationNotes": "Replaces only the English-held predicate after the already-localized “Only then, act — and start with” clause. Preserves that order and leaves the adjacent physical-removal/barrier/crop-care examples and later safety instructions untouched."
+    },
+    {
+      "id": "MC-TS-DIRECT-SELLING-01",
+      "language": "ts",
+      "module": "market-community",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-market-community.ts",
+          "lessonOrSlide": "market-community-l2",
+          "field": "body, direct-selling sentence",
+          "currentText": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+          "operation": "Replace only “retain more of the sale price”; preserve modal and the complete tradeoff suffix."
+        }
+      ],
+      "proposedTarget": "Ku xavisa hi ku kongoma swi nga hlayisa xiphemu lexikulu xa mali leyi kumiwaka eka ku xavisa, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "backtranslation": "Direct selling can keep a larger share of the money received from selling, but also takes time, packing, transport, and customer care.",
+      "verdict": "ACCEPT",
+      "reason": "Source-bound meaning, predicates, qualifiers and composition are preserved on this read-only check; not fluency approval.",
+      "specificRisks": [],
+      "sourceBindingChecks": [
+        {
+          "file": "lib/course-translation-drafts-ts-market-community.ts",
+          "existsAtReviewedHead": true,
+          "binding": "body, direct-selling sentence",
+          "currentTextPresent": true,
+          "sourceAnchorPresent": true
+        }
+      ],
+      "compositionProof": [
+        {
+          "source": "Direct selling can ",
+          "currentTarget": "Ku xavisa hi ku kongoma swi nga ",
+          "replacement": "preserve"
+        },
+        {
+          "source": "retain more of the sale price",
+          "currentTarget": "retain more of the sale price",
+          "replacement": "hlayisa xiphemu lexikulu xa mali leyi kumiwaka eka ku xavisa"
+        },
+        {
+          "source": ", but it also takes time, packing, transport and customer care.",
+          "currentTarget": ", kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+          "replacement": "preserve"
+        }
+      ],
+      "preservationNotes": "Localizes only the retained-sale-price comparison; preserves “can” and the entire balancing costs clause."
+    },
+    {
+      "id": "VS-VE-COOL-SEASON-HOLD",
+      "language": "ve",
+      "module": "vegetables-staples",
+      "sourceEnglish": "A cool-season leaf crop may hold longer.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ve-vegetables-staples.ts; vegetables-staples-l2 body",
+          "field": "current held target"
+        }
+      ],
+      "currentTarget": "A cool-season leaf crop may hold longer.",
+      "proposedTarget": null,
+      "backtranslation": null,
+      "verdict": "HOLD",
+      "reason": "The agronomic sense/duration of “hold longer” is ambiguous. Preserve may and do not narrow to maturity, harvest, or storage.",
+      "specificRisks": [
+        "Technical or agronomic meaning intentionally left exact English; no proposed rewrite."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "sourceEnglish": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+          "currentTarget": "Vhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.",
+          "field": "slide 9 body[3]",
+          "exactHoldPreserved": true
+        }
+      ],
+      "compositionProof": null,
+      "preservationNotes": "Keep the complete technical predicate exact English; no translation proposed."
+    },
+    {
+      "id": "VS-TS-COOL-SEASON-HOLD",
+      "language": "ts",
+      "module": "vegetables-staples",
+      "sourceEnglish": "A cool-season leaf crop may hold longer.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts; vegetables-staples-l2 body",
+          "field": "current held target"
+        }
+      ],
+      "currentTarget": "A cool-season leaf crop may hold longer.",
+      "proposedTarget": null,
+      "backtranslation": null,
+      "verdict": "HOLD",
+      "reason": "The agronomic sense/duration of “hold longer” is ambiguous. Preserve may and do not narrow to maturity, harvest, or storage.",
+      "specificRisks": [
+        "Technical or agronomic meaning intentionally left exact English; no proposed rewrite."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "sourceEnglish": "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+          "currentTarget": "Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu. A cool-season leaf crop may hold longer. Ku hisa ku nga endla leswaku swilo swi hatlisa kumbe swi tsandzeka.",
+          "field": "slide 9 body[3]",
+          "exactHoldPreserved": true
+        }
+      ],
+      "compositionProof": null,
+      "preservationNotes": "Keep the complete technical predicate exact English; no translation proposed."
+    },
+    {
+      "id": "VS-VE-BEANS-PROTEIN-HOLD",
+      "language": "ve",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ve-vegetables-staples-l2.ts; vegetables-staples-l2 body; paired slide 10 body[3]",
+          "field": "current held target"
+        }
+      ],
+      "currentTarget": "Beans dzi gonya maize, and store as protein.",
+      "proposedTarget": null,
+      "backtranslation": null,
+      "verdict": "HOLD",
+      "reason": "Do not recast this as beans immediately feeding maize or as a nitrogen-transfer claim; adjacent nitrogen/residue text is independently precise.",
+      "specificRisks": [
+        "Technical or agronomic meaning intentionally left exact English; no proposed rewrite."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "sourceEnglish": "Beans climb the maize, and store as protein.",
+          "currentTarget": "Beans dzi gonya maize, and store as protein.",
+          "field": "slide 10 body[3]",
+          "exactTechnicalPredicateStillEnglish": true
+        }
+      ],
+      "compositionProof": null,
+      "preservationNotes": "Leave “and store as protein” exact English for technical/source review."
+    },
+    {
+      "id": "VS-TS-BEANS-PROTEIN-HOLD",
+      "language": "ts",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "currentBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts; vegetables-staples-l2 body; paired slide 10 body[3]",
+          "field": "current held target"
+        }
+      ],
+      "currentTarget": "Beans ti khandziya maize, and store as protein.",
+      "proposedTarget": null,
+      "backtranslation": null,
+      "verdict": "HOLD",
+      "reason": "Do not recast this as beans immediately feeding maize or as a nitrogen-transfer claim; adjacent nitrogen/residue text is independently precise.",
+      "specificRisks": [
+        "Technical or agronomic meaning intentionally left exact English; no proposed rewrite."
+      ],
+      "sourceBindingChecks": [
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "existsAtReviewedHead": true,
+          "sourceEnglish": "Beans climb the maize, and store as protein.",
+          "currentTarget": "Beans ti khandziya maize, and store as protein.",
+          "field": "slide 10 body[3]",
+          "exactTechnicalPredicateStillEnglish": true
+        }
+      ],
+      "compositionProof": null,
+      "preservationNotes": "Leave “and store as protein” exact English for technical/source review."
+    }
+  ],
+  "overallNotes": [
+    "Direct-sowing candidates replace only “They do better” and preserve the direct-sowing condition and crop-list sentence; “perform/work better” keeps general performance, not growth-only.",
+    "ST pest candidate keeps the localized Only-then/action prefix and does not absorb the following physical-removal/barrier/crop-care list or treatment instructions. VE and TS pest predicates remain HOLD because their words may mean easiest/softest instead of least-intensive while effective.",
+    "Direct-selling candidate keeps “can”, a larger retained share of sale money, and every stated trade-off: time, packing, transport, customer care.",
+    "Waterworks candidates retain any/every applicability and site suitability, with preceding Choose/Nangani and following safe-route clause each preserved once. Sesotho “water-related work” terminology merits local check; Tshivenda retains “water works.”",
+    "VE wind proposal retains direction, strength, damaging wind, region, season and site ridges/gaps. It preserves the trailing ASCII space.",
+    "All four technical held predicates remain exact English; no new meaning was inferred."
+  ],
+  "limits": [
+    "No external research or language authority was used.",
+    "ACCEPT is source-scope/meaning only, never fluent/local farmer approval.",
+    "HOLD means preserve source English pending resolution of the noted exact meaning."
+  ]
+}

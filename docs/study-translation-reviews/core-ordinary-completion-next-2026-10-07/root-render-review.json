@@ -1,0 +1,24 @@
+{
+  "base": "0b611b93de9c998d601c15cbc9a9aa6476f25274",
+  "reviewStatus": "unreviewed",
+  "render": "Existing make-lesson-slides --paired-draft --slides; 1440x5400 WebP quality88/method6",
+  "rootViewed": [
+    "five-frame compressed contact sheet",
+    "compressed Sesotho Vegetables6 full card"
+  ],
+  "findings": "No clipped text seen; exact English below regional drafts; rust English holds and visible unreviewed labels retained. Phone preview is still pending.",
+  "held": [
+    "All lightest-thing predicates remain exact English; no equivalence to merely easy or physically light is claimed."
+  ],
+  "nativeAccepted": [
+    "Sesotho hamolemo preserves better without growth-only narrowing",
+    "Swi tirha ku antswa preserves general better in Xitsonga",
+    "hlayisa swo tala swa nxavo wo xavisa preserves more of sale price; can and four costs untouched"
+  ],
+  "notClaimed": [
+    "fluent speaker approval",
+    "local farming approval",
+    "Shangani comprehension",
+    "production publication of next batch"
+  ]
+}
