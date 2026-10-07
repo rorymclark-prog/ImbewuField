@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 October 2026', sha: 'e2151df7', changes: [
+    'Reading map drafts distinguish a perfect sketch from a pretty one.',
+    'The Xitsonga map draft keeps actually using a sketch beside exact English.',
+  ], tour: [{ title: 'Read the map wording drafts',
+    where: 'Study → Reading → Sesotho, Tshivenda or Xitsonga → Making a Simple Site Map',
+    detail: 'Compare the unreviewed sketch-value paragraph with its exact English source.',
+    href: '/student',
+  }] },
   { when: '7 October 2026', sha: '70b570b9', changes: [
     'Reading drafts clarify frost-season observation and longest or most comparisons.',
     'A corrected silent isiZulu frost card replaces its older narration beside English.',
