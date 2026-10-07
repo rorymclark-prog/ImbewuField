@@ -1,3 +1,4 @@
+import { expandedAssets } from './core-ordinary-expanded-history-checks.ts';
 import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
@@ -79,7 +80,16 @@ for (const frame of currentBatchProof.assets) {
   assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: newest proof predecessor digest matches the prior inventory`);
   currentInventory.set(frame.url, {bytes:frame.afterBytes,sha256:frame.afterSha256});
 }
+// The four expanded ordinary cards keep this complete live inventory authoritative.
+// Their immutable predecessor must join every prior byte guard before any old view is exposed.
+for (const frame of expandedAssets) {
+  const prior = currentInventory.get(frame.url);
+  assert.equal(prior?.bytes, frame.beforeBytes, `${frame.url}: expanded proof starts at the exact current inventory`);
+  assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: expanded predecessor SHA joins the full inventory`);
+  currentInventory.set(frame.url, {bytes: frame.afterBytes, sha256: frame.afterSha256});
+}
 const laterReplacedURLs = new Set<string>([
+  ...expandedAssets.map((frame: any) => frame.url),
   ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
   ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
   ...finalLanguageNextMediaProof.frames.map((frame:any)=>frame.url),
@@ -197,6 +207,13 @@ export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
   const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);
   assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  // These four later stills were not all listed by the preceding five-card
+  // batch. The complete live inventory above must pass before their original
+  // Intro-era descriptors are exposed; never treat a replacement as unlisted.
+  if (expandedAssets.some((frame: any) => frame.url === url)) {
+    const historical = inventory.get(url); assert.ok(historical);
+    return {bytes: historical.bytes, sha256: historical.sha256};
+  }
   const currentBatch = currentBatchAssets.get(url);
   if(currentBatch) {
     const prior=beforeCurrentBatchInventory.get(url);assert.ok(prior);

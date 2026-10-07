@@ -101,7 +101,8 @@ test('Vegetables L2 fuller drafts retain the 27 final source-bound fields and ex
   }
   const tsBody = (ts.lessons.find(item => item.id === canonicalLesson.id)!.body as any).xitsongaDraft.split('\n\n');
   const tsBaselineBody = (baseline.drafts.ts.lessons.find((item: any) => item.id === canonicalLesson.id)!.body as any).xitsongaDraft.split('\n\n');
-  assert.equal(tsBody[19], tsBaselineBody[19],
+  // Preserve both earlier gap timings; only the checked water-limiting clause supersedes the old hold.
+  assert.equal(tsBody[19], tsBaselineBody[19].replace('water limits the garden', 'mati ma hunguta leswi xirhapa xi nga swi humesaka'),
     '2026-10-05 reconciliation restores the existing localized “loko” wording instead of adding an English “when”');
   assert.match(tsBody[9], /^Mavhiki mambirhi ku ya eka manharhu i starting rhythm, a hi nawu\./,
     'the checked interval stays localized while only the uncertain technical phrase remains English');

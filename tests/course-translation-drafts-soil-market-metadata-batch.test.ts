@@ -134,7 +134,8 @@ test('Vegetables L2 full drafts keep paragraph alignment and the risky agronomic
     assert.match(paras[17], /do not assume they immediately feed the maize/);
     assert.match(paras[17], /released during decomposition/);
     assert.match(paras[18], /before the next harvest is ready|phanḓa ha musi khaṋo i tevhelaho|ku nga si lungheka ntshovelo lowu landzelaka/i);
-    assert.match(paras[19], /water limits the garden/);
+    // The same limiting condition is now an independently reviewed ordinary regional clause.
+    assert.match(paras[19], language === 've' ? /musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni/ : /loko mati ma hunguta leswi xirhapa xi nga swi humesaka/);
     assert.match(paras[20], /Don't copy somebody else's calendar|U nga tekeleli calendar|Ni songo kopolola calendar/);
     assert.match(paras[21], /sowing date|siku ro byala/);
     assert.doesNotMatch(resolved.content.body, /\.\./, `${language}: avoid doubled sentence stops from fragment recomposition`);

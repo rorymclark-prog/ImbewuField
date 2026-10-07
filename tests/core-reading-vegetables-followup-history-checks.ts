@@ -1,3 +1,4 @@
+import { ensureExpandedCurrent, expandedSourceBefore, expandedPairBefore, expandedNativeBefore, expandedPairBeforeHistory, expandedAssetBefore, expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
@@ -41,13 +42,14 @@ export function ensureFollowupCurrent() {
     assert.equal(sha(row.after), row.afterSha256);
     const newer = currentBatchProof.files[file];
     if (newer) assert.equal(newer.beforeSha256, row.afterSha256, file + ': immutable next layer carries this complete exact predecessor');
-    else assert.equal(sha(readFileSync(repositoryPath(file))), row.afterSha256, file + ': complete current source, draft and unlisted bytes');
+    else assert.equal(sha(expandedSourceBefore(file, readFileSync(repositoryPath(file)))), row.afterSha256, file + ': complete current source, draft and unlisted bytes');
   }
   signature = next;
 }
 
 /** Verify the newest accepted batch before any older history layer sees its predecessor. */
 export function ensureCurrentBatch() {
+  ensureExpandedCurrent();
   const paths = [...Object.keys(currentBatchProof.files), ...currentBatchProof.assets.map(row => row.path)];
   const next = paths.map(file => { const s = statSync(repositoryPath(file), { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
   if (next === currentBatchSignature) return;
@@ -56,7 +58,7 @@ export function ensureCurrentBatch() {
     assert.equal(sha(row.after), row.afterSha256, `${file}: frozen full current bytes`);
     assert.equal(Buffer.byteLength(row.before), row.beforeBytes, `${file}: predecessor byte length`);
     assert.equal(Buffer.byteLength(row.after), row.afterBytes, `${file}: current byte length`);
-    assert.equal(sha(readFileSync(repositoryPath(file))), row.afterSha256, `${file}: exact current source, manifest, or worker bytes`);
+    assert.equal(sha(expandedSourceBefore(file, readFileSync(repositoryPath(file)))), row.afterSha256, `${file}: exact current source, manifest, or worker bytes`);
   }
   for (const row of currentBatchProof.assets) {
     const bytes = readFileSync(row.path);
@@ -73,13 +75,15 @@ export function ensureCurrentBatch() {
 }
 /** True only for the byte-verified live file or its frozen current-batch predecessor. */
 export function isCurrentOrBatchPredecessor<T>(file: string, value: T): boolean {
+  value = expandedPairBefore(file, value);
   ensureCurrentBatch();
-  const live = JSON.parse(readFileSync(repositoryPath(file), 'utf8'));
+  const live = JSON.parse(expandedSourceBefore(file, readFileSync(repositoryPath(file), 'utf8')) as string);
   if (JSON.stringify(value) === JSON.stringify(live)) return true;
   const predecessor = currentBatchProof.files[file];
   return Boolean(predecessor && JSON.stringify(value) === JSON.stringify(JSON.parse(predecessor.before)));
 }
 export function followupSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = expandedSourceBefore(file, bytes);
   const row = followupFiles[file];
   const newer = currentBatchProof.files[file];
   if (!row && !newer) return bytes;
@@ -102,6 +106,7 @@ export function followupSourceBefore(file: string, bytes: string | Uint8Array): 
   return row.before;
 }
 export function followupPairBefore<T>(file: string, value: T): T {
+  value = expandedPairBefore(file, value);
   if (!file.endsWith('.paired-draft.json')) return value;
   const older = followupFiles[file];
   if (older && typeof value !== 'string' && JSON.stringify(value) === JSON.stringify(JSON.parse(older.before))) {
@@ -136,6 +141,7 @@ export function followupPairBefore<T>(file: string, value: T): T {
   return before;
 }
 export function followupNativeBefore<T>(value: T): T {
+  value = expandedNativeBefore(value);
   const identity = value as any;
   const currentBatchKey = Object.entries(currentBatchProof.nativeModules.after).find(([, module]: [string, any]) =>
     identity?.id === module.id && identity?.language === module.language &&
@@ -159,6 +165,7 @@ export function followupNativeBefore<T>(value: T): T {
  * live guard remains; restore only these exact reviewed objects, then let the
  * predecessor's complete object guard reject any other caller mutation. */
 export function followupPairBeforeHistory<T>(file: string, value: T): T {
+  value = expandedPairBeforeHistory(file, value);
   if (!file.endsWith('.paired-draft.json')) return value;
   const latestFields = currentBatchProof.pairedFields.filter(row => row.file === file);
   if (latestFields.length) {
@@ -182,6 +189,8 @@ export function followupPairBeforeHistory<T>(file: string, value: T): T {
   return result;
 }
 export function followupAssetBefore(path: string, bytes: Uint8Array) {
+  const expanded = expandedAssetBefore(path, bytes);
+  if (expanded) return expanded;
   const url = path.startsWith('public/') ? path.slice(6) : path;
   const latest = currentBatchAssets.get(url);
   if (latest) {
@@ -200,6 +209,7 @@ export function followupAssetBefore(path: string, bytes: Uint8Array) {
 }
 
 export function followupPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  value = expandedPresentationBefore(value, lessonId, language);
   if (value.status === 'english-fallback') return value;
   const nativeKey = Object.entries(currentBatchProof.nativeModules.after).find(([, module]: [string, any]) =>
     module.language === language && module.lessons.some((lesson: any) => lesson.id === lessonId))?.[0];

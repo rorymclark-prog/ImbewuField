@@ -1,0 +1,20 @@
+{
+  "typecheck": "original npx tsc --noEmit passed after final fixes",
+  "fullSuite": {
+    "command": "npm test",
+    "node": "24.19.0",
+    "tests": 4866,
+    "pass": 4865,
+    "fail": 0,
+    "todo": 1,
+    "existingTodo": "shape-sync-loss",
+    "durationMs": 1300132.390333,
+    "log": "/tmp/imbewu-expanded-next-full-tests-corrected-20261007.log",
+    "terminalSession": 19403,
+    "exitCode": 0
+  },
+  "whitespace": "git diff --check passed",
+  "historicalAssertions": "retained; documented exact later layer reconstruction and localized predicate claim changes",
+  "nativePhoneAndOffline": "pending exact preview",
+  "approval": "unreviewed machine drafts, no fluent/local approval"
+}

@@ -1276,7 +1276,8 @@
               },
               {
                 "sourceEnglish": "rotate through the beds",
-                "status": "english-hold",
+                "status": "draft",
+                "text": "tshimbila kha beds dzi tshi tevhekana",
                 "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
               },
               {

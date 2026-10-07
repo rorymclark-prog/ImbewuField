@@ -1,10 +1,12 @@
+// New reviewed ordinary clauses supersede dated targets; verify the complete new layer before restoring this test's predecessor.
+import { expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as resolveCurrentLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
@@ -295,3 +297,5 @@ test('later TS Reading projection preserves the complete Intro968 shared file an
   assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, alteredIndex), /imported current registry equals the complete reviewed applied object|complete Reading comparisons registry/);
   assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /entire current file matches the reviewed fairness layer|supplied complete accepted bytes/);
 });
+
+function resolveLearnerLessonPresentation(...args: Parameters<typeof resolveCurrentLearnerLessonPresentation>) { return expandedPresentationBefore(resolveCurrentLearnerLessonPresentation(...args), args[0].id, args[1]); }
