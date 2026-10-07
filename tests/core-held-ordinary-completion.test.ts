@@ -1,3 +1,4 @@
+import { ordinaryFramingAssetBefore } from './ordinary-framing-history-checks.ts';
 import { veOrdinaryPairBefore } from './ve-ordinary-reviewed-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -38,8 +39,10 @@ test('69 active compressed cards have their actual manifest bytes and reviewed i
   assert.equal(new Set(assets.map((row: any) => row.url)).size, 69);
   for (const row of assets) {
     const bytes = readFileSync('public' + row.url);
-    assert.equal(sha(bytes), row.afterSHA256, row.url);
-    assert.equal(bytes.length, row.afterBytes);
+    // New framing bytes must pass their own full measurement before this dated layer is exposed.
+    const latest = ordinaryFramingAssetBefore('public' + row.url, bytes);
+    assert.equal(latest?.sha256 ?? sha(bytes), row.afterSHA256, row.url);
+    assert.equal(latest?.bytes ?? bytes.length, row.afterBytes);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length);
     assert.notEqual(row.beforeSHA256, row.afterSHA256);
   }

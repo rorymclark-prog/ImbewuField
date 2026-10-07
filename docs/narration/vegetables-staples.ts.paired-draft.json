@@ -304,7 +304,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Timitsu ti lava loose soil; paths ti lava milenge ya wena."
         },
         "body": [
           {
@@ -390,7 +391,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlawula bed hi ku ya hi soil ni rainfall."
         },
         "body": [
           {
@@ -1139,7 +1141,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tshungula xivangelo u nga si thoma u tshungula insect."
         },
         "body": [
           {

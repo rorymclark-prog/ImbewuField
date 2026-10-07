@@ -68,6 +68,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-07 | [Study ordinary framing follow-up — Codex](2026-10-07/study-ordinary-framing-codex.md) |
 | 2026-10-06 | [Soil and Water residual translations — Codex](2026-10-06/study-soil-water-residual-codex.md) |
 | 2026-10-06 | [Sesotho Introduction silent release — Codex](2026-10-06/study-st-intro-silent-release-codex.md) |
 | 2026-10-06 | [Introduction full ordinary prose — Codex](2026-10-06/study-intro-full-ordinary-completion-codex.md) |

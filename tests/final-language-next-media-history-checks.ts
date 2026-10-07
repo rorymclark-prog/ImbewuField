@@ -1,3 +1,4 @@
+import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
@@ -6,9 +7,13 @@ import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './f
 import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
 // The later 15-card Tshivenda layer must validate real bytes before this full
 // inventory exposes its predecessor; keep the prior 69-card proof unchanged.
-const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets.map(row=>({...row,beforeDimensions:row.beforeDimensions}))];
+// Also carry cards unlisted by the older layers (such as TS Vegetables5).
+// Each real current file is checked by the latest immutable measurement guard.
+const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
 const laterPaths = new Set<string>(laterAssets.map(row=>'public'+row.url));
-const laterFrames = new Map(laterAssets.map(row=>['public'+row.url,row]));
+const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
+const veFrames = new Map(veOrdinaryAssets.map(row=>['public'+row.url,row]));
+const coreFrames = new Map(coreHeldOrdinaryAssets.map(row=>['public'+row.url,row]));
 const folder = 'docs/media/final-language-next-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const bytes = readFileSync(folder + 'frames.json');
@@ -44,13 +49,22 @@ function descriptor(path: string) {
   observations.set(path, row); return row;
 }
 function checkedHistoricalDescriptor(path: string) {
-  const actual = descriptor(path);
-  const later = laterFrames.get(path);
-  if (!later) return actual;
-  assert.equal(actual.bytes,later.afterBytes,path+': exact current measured bytes');
-  assert.equal(actual.sha256,later.afterSHA256,path+': exact current SHA');
-  return {...actual,bytes:later.beforeBytes,sha256:later.beforeSHA256,width:later.beforeDimensions[0],height:later.beforeDimensions[1]};
+  let actual = descriptor(path);
+  // descriptor checks filesystem identity on every call and recomputes the digest
+  // after any rewrite. Do not re-read/hash buffers again for every dated caller.
+  // Each immutable layer still checks its exact successor before exposing its predecessor.
+  const framing = framingFrames.get(path);
+  const ve = veFrames.get(path);
+  const core = coreFrames.get(path);
+  for (const row of [framing && {...framing, afterBytes:framing.bytes, afterSHA256:framing.sha256}, ve, core]) {
+    if (!row) continue;
+    assert.equal(actual.bytes,row.afterBytes,path+': exact current measured bytes before dated rewind');
+    assert.equal(actual.sha256,row.afterSHA256,path+': exact current SHA before dated rewind');
+    actual = {...actual,bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1]};
+  }
+  return actual;
 }
+
 export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   const frame = changed.get(path); const before = beforeInventory.find(row => row.path === path);
   assert.ok(frame || before, 'asset belongs to the complete frozen media inventory');

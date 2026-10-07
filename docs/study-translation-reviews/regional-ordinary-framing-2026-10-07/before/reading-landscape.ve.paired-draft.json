@@ -978,8 +978,7 @@
               },
               {
                 "sourceEnglish": "cold air can flow downhill and collect in low places.",
-                "status": "draft",
-                "text": "muya wo rotholelaho u nga elela u tshi ya fhasi wa kuvhangana kha low places."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " These places can be colder than nearby slopes.",
@@ -1003,8 +1002,7 @@
               },
               {
                 "sourceEnglish": "ice that forms on a cold surface.",
-                "status": "draft",
-                "text": "ice ine ya vhumbwa kha cold surface."
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": " ",
@@ -1026,8 +1024,7 @@
               },
               {
                 "sourceEnglish": "ice has formed",
-                "status": "draft",
-                "text": "ice yo no vhumbwa"
+                "status": "english-hold"
               },
               {
                 "sourceEnglish": ", and",
@@ -1036,8 +1033,7 @@
               },
               {
                 "sourceEnglish": " frost damage can happen without visible ice.",
-                "status": "draft",
-                "text": " frost damage i nga bvelela hu si na visible ice."
+                "status": "english-hold"
               }
             ],
             "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
@@ -1490,8 +1486,7 @@
               },
               {
                 "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
-                "status": "draft",
-                "text": "mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa."
+                "status": "english-hold"
               }
             ],
             "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
