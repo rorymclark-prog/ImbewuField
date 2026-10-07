@@ -16,8 +16,10 @@ export function reading14ManifestBefore(value: string): string {
   const proof = reading14Files[file];
   assert.equal(sha(proof.before), proof.beforeSha256);
   assert.equal(sha(proof.after), proof.afterSha256);
-  assert.equal(veReadingFrostSourceBefore(file, readFileSync(file, 'utf8')), proof.after, 'entire Reading14 manifest after the later two-card VE layer');
-  value = veReadingFrostSourceBefore(file, value) as string;
+  const live = readFileSync(file, 'utf8');
+  const projected = veReadingFrostSourceBefore(file, live) as string;
+  assert.equal(projected, proof.after, 'entire Reading14 manifest after exact latest VE frost projection');
+  if (value === live) value = projected;
   if (value === proof.before) return value;
   assert.equal(value, proof.after, 'supplied complete Reading14 manifest after the later two-card VE layer');
   return proof.before;

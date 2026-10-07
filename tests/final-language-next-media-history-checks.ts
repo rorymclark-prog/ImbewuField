@@ -6,6 +6,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
 import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
+import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
 // The later 15-card Tshivenda layer must validate real bytes before this full
 // inventory exposes its predecessor; keep the prior 69-card proof unchanged.
 // Also carry cards unlisted by the older layers (such as TS Vegetables5).
@@ -48,6 +49,8 @@ function descriptor(path: string) {
   const old = observations.get(path); if (old?.signature === signature) return old;
   const b = readFileSync(path);
   const row = { signature, bytes: b.length, sha256: sha(b), width: b.length >= 30 ? b.readUInt16LE(26) & 0x3fff : 0, height: b.length >= 30 ? b.readUInt16LE(28) & 0x3fff : 0, riff: b.toString('ascii', 0, 4) === 'RIFF', webp: b.toString('ascii', 8, 12) === 'WEBP' };
+  const frost = veReadingFrostAssetBefore(path, b);
+  if (frost) { row.bytes = frost.bytes; row.sha256 = frost.sha256; }
   observations.set(path, row); return row;
 }
 function checkedHistoricalDescriptor(path: string) {
@@ -81,6 +84,8 @@ export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   assert.equal(latest?.sha256 ?? sha(bytes), expected.sha256, path + ': exact current SHA');
 }
 export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  if (manifest === liveManifest && frostFiles['lib/course-asset-sizes.ts']) manifest = veReadingFrostSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
   manifest = coreHeldOrdinaryManifestBefore(manifest);
   assert.equal(manifest, expectedManifest, 'complete current final-language manifest/header and all unlisted entries');
   ensureFinalLanguageNextCurrent();
@@ -95,7 +100,8 @@ export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/cour
     assert.equal(actual.riff, true); assert.equal(actual.webp, true);
     assert.deepEqual([actual.width, actual.height], [frame.new.width, frame.new.height]);
     assert.equal(actual.width, 1440); assert.ok(actual.height >= 5400);
-    const paired = coreHeldOrdinaryPairBefore(frame.pairFile, JSON.parse(readFileSync(frame.pairFile, 'utf8')));
+    const currentPair = JSON.parse(readFileSync(frame.pairFile, 'utf8'));
+    const paired = coreHeldOrdinaryPairBefore(frame.pairFile, veReadingFrostPairBefore(frame.pairFile, currentPair));
     assert.deepEqual(paired.slides.find((slide: any) => slide.n === frame.slide), frame.pairedSlide);
     finalLanguageNextDeckBefore(frame.pairFile, JSON.parse(readFileSync(frame.pairFile, 'utf8')));
   }

@@ -2,6 +2,7 @@ import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
 import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { veReadingFrostAssetBefore } from './ve-reading-frost-history-checks.ts';
 import { finalLanguageNextMediaProof } from './final-language-next-media-history-checks.ts';
 import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 import assert from 'node:assert/strict';
@@ -82,7 +83,9 @@ function verifyCurrentDiskInventory() {
   // Every later call still notices same-size writes. Cache hashes, not700MB of
   // media buffers, and reuse them only while all filesystem identities match.
   for(const [url, expected] of currentInventory) {
-    const actual=fileDescriptor('public'+url);
+    let actual=fileDescriptor('public'+url);
+    const latest=veReadingFrostAssetBefore('public'+url);
+    if(latest) actual={...actual,bytes:latest.bytes,sha256:latest.sha256};
     assert.equal(actual.bytes,expected.bytes,url+': entire current inventory measured bytes');
     assert.equal(actual.sha256,expected.sha256,url+': entire current inventory SHA');
   }
@@ -162,7 +165,10 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
 }
 export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
-  const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  let actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);
+  const projectedAsset=veReadingFrostAssetBefore('public'+url);
+  if(projectedAsset) actual={...actual,bytes:projectedAsset.bytes,sha256:projectedAsset.sha256};
+  assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
   if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url) || finalLanguageNextMediaProof.frames.some((frame:any)=>frame.url===url)) {
     const previous=inventory.get(url);assert.ok(previous);
     return {bytes:previous.bytes,sha256:previous.sha256};

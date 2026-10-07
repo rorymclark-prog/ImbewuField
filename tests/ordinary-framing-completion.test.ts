@@ -15,6 +15,7 @@ import {
   ordinaryFramingPairBeforeHistory,
   ordinaryFramingPairBytesBefore,
 } from './ordinary-framing-history-checks.ts';
+import { veReadingFrostPairBefore, veReadingFrostAssetBefore } from './ve-reading-frost-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/regional-ordinary-framing-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -26,7 +27,7 @@ test('13 reviewed framing fields change only their paired targets and preserve c
   ensureOrdinaryFramingText();
 
   for (const [file, expected] of Object.entries(ordinaryFramingExpected)) {
-    const current = JSON.parse(source(file));
+    const current = veReadingFrostPairBefore(file, JSON.parse(source(file)));
     const frozen = ordinaryFramingBefore[file];
     assert.deepEqual(current.slides.map((slide: any) => slide.english), frozen.slides.map((slide: any) => slide.english), `${file}: no English source field changed`);
     assert.deepEqual(current.slides.map((slide: any) => slide.target), expected.slides.map((slide: any) => slide.target), `${file}: only the thirteen proof-backed target fields changed`);
@@ -52,7 +53,7 @@ test('13 reviewed framing fields change only their paired targets and preserve c
   }
 
   for (const row of ordinaryFramingGroups) {
-    const current = JSON.parse(source(row.file));
+    const current = veReadingFrostPairBefore(row.file, JSON.parse(source(row.file)));
     const slide = current.slides.find((item: any) => item.n === row.slide);
     const before = ordinaryFramingBefore[row.file].slides.find((item: any) => item.n === row.slide);
     const cell = row.field === 'heading' ? slide.target.heading : slide.target.body[row.index];
@@ -107,9 +108,14 @@ test('10 intended cards match proof-derived frames, exact natural canvas, bytes,
     assert.deepEqual(row.dimensions, exactDimensions[row.url], `${row.url}: exact reviewed unscaled canvas`);
     assert.equal(row.language, row.url.split('/')[3]);
     const bytes = readFileSync('public' + row.url);
-    assert.equal(bytes.length, row.bytes, `${row.url}: measured current byte count`);
-    assert.equal(sha(bytes), row.sha256, `${row.url}: measured current hash`);
-    assert.equal(COURSE_ASSET_SIZES[row.url], row.bytes, `${row.url}: offline manifest advertises actual bytes`);
+    const rootProjection = veReadingFrostAssetBefore('public' + row.url, bytes);
+    assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length, `${row.url}: live offline manifest advertises actual current bytes`);
+    if (rootProjection) {
+      const currentDimensions = [bytes.readUInt16LE(26) & 0x3fff, bytes.readUInt16LE(28) & 0x3fff];
+      assert.deepEqual(currentDimensions, row.url.endsWith('slide-14.webp') ? [1440, 5436] : [1440, 5400], `${row.url}: actual latest card canvas is measured separately from its historical framing descriptor`);
+    }
+    assert.equal(rootProjection?.bytes ?? bytes.length, row.bytes, `${row.url}: latest checked projection reaches the measured framing byte count`);
+    assert.equal(rootProjection?.sha256 ?? sha(bytes), row.sha256, `${row.url}: latest checked projection reaches the measured framing hash`);
     assert.notEqual(row.beforeSHA256, row.sha256, `${row.url}: current card differs from its frozen before card`);
     assert.deepEqual(ordinaryFramingAssetBefore('public' + row.url, bytes), {
       bytes: row.beforeBytes,

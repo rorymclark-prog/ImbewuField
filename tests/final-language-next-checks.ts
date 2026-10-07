@@ -8,6 +8,7 @@ import { coreHeldOrdinaryPairBefore, coreHeldOrdinaryPairBeforeHistory, coreHeld
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
+import { veReadingFrostNativeBefore, veReadingFrostPairBefore, veReadingFrostSourceBefore } from './ve-reading-frost-history-checks.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as tsL2 } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
 const folder = 'docs/study-translation-reviews/final-language-next-2026-10-06/';
@@ -50,7 +51,11 @@ export function readFinalLanguageNextInputs() {
 export function validateFinalLanguageNextText(input = readFinalLanguageNextInputs()) {
   // 7 October adds 109 reviewed paired leaves. Validate that complete newer
   // layer before preserving these older 39-field claims against their baseline.
-  input = { ...input, paired: Object.fromEntries(Object.entries(input.paired).map(([file, value]) => [file, coreHeldOrdinaryPairBefore(file, value)])) };
+  input = {
+    ...input,
+    native: Object.fromEntries(Object.entries(input.native).map(([file, value]: [string, any]) => [file, value.language === 've' && value.id === 'reading-landscape' ? veReadingFrostNativeBefore('ve', value) : value])),
+    paired: Object.fromEntries(Object.entries(input.paired).map(([file, value]) => [file, coreHeldOrdinaryPairBefore(file, veReadingFrostPairBefore(file, value))]))
+  };
   assert.deepEqual(COURSE_MODULES, canonicalBefore, 'all canonical English and indices stay exact');
   assert.equal(sha(readFileSync('lib/course-modules.ts')), plan.canonicalFileSHA256);
   assert.equal(plan.nativePlans.length, 9); assert.equal(plan.pairPlans.length, 39);
@@ -97,6 +102,7 @@ export function ensureFinalLanguageNextCurrent() {
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
 }
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
+  if ((actual as any)?.language === 've' && (actual as any)?.id === 'reading-landscape') actual = veReadingFrostNativeBefore('ve', actual);
   // Reading's later ten-field layer independently validates the whole registry
   // before this dated native-language release reconstructs its predecessor.
   const identity = actual as any;
@@ -112,6 +118,7 @@ export function finalLanguageNextNativeBefore<T>(actual: T): T {
   return structuredClone(beforeNative[file]);
 }
 export function finalLanguageNextDeckBefore<T>(file: string, actual: T): T {
+  actual = veReadingFrostPairBefore(file, actual);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return coreHeldOrdinaryPairBefore(file, actual);
   actual = coreHeldOrdinaryPairBefore(file, actual);
   assert.deepEqual(actual, expectedPairs[file], 'caller supplies the complete accepted latest paired layer');
@@ -123,17 +130,29 @@ export function finalLanguageNextDeckBeforeCurrent<T>(actual: T): T {
   return file ? finalLanguageNextDeckBefore(file, actual) : actual;
 }
 export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Array | string): string {
+  const suppliedCurrent = Buffer.from(bytes).toString();
+  assert.equal(suppliedCurrent, readFileSync(file, 'utf8'), 'passed paired bytes are actual current bytes');
+  bytes = veReadingFrostSourceBefore(file, bytes);
   bytes = precisionSourceBytesBefore(file, bytes);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return Buffer.from(coreHeldOrdinaryPairBytesBefore(file,Buffer.from(bytes))).toString();
   const actual = coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.deepEqual(actual, expectedPairs[file], 'whole listed paired bytes match accepted source/target/status before dated hash view');
-  assert.equal(Buffer.from(bytes).toString(), readFileSync(file, 'utf8'), 'passed paired bytes are actual current bytes');
   return readFileSync(folder + 'before/' + file.replaceAll('/', '__') + '.txt', 'utf8');
 }
 
 /** 6 October: validate the actual complete learner presentation before restoring
  * only the nine later native leaves for dated assessment claims. */
 export function finalLanguageNextPresentationBefore<T extends { status: string; content: any }>(result: T, lessonId: string, language: string): T {
+  if (lessonId === 'reading-landscape-l2' && language === 've') {
+    const live = resolveLearnerLessonPresentation(COURSE_MODULES.flatMap(module => module.lessons).find(lesson => lesson.id === lessonId)!, 've');
+    assert.deepEqual(result, live, 'complete current VE learner presentation before accepted frost locative projection');
+    const restored = structuredClone(result);
+    const parts = restored.content.body.split('\n\n');
+    assert.match(parts[2], /Ni songo vhea zwimela zwi sa konḓeleliho kha known low frost pockets\./);
+    parts[2] = parts[2].replace('Ni songo vhea zwimela zwi sa konḓeleliho kha known low frost pockets.', 'Ni songo vhea zwimela zwi sa konḓeleliho known low frost pockets.');
+    restored.content.body = parts.join('\n\n');
+    result = restored;
+  }
   result = mapPresentationBefore(result, lessonId, language);
   result = comparisonsPresentationBefore(result, lessonId, language);
   ensureFinalLanguageNextCurrent();
@@ -156,6 +175,7 @@ export function finalLanguageNextPresentationBefore<T extends { status: string; 
  * a higher dated layer may already have restored these exact listed objects.
  * The older caller still validates its complete predecessor, including unlisted data. */
 export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): T {
+  actual = veReadingFrostPairBefore(file, actual);
   ensureFinalLanguageNextCurrent();
   actual = coreHeldOrdinaryPairBeforeHistory(file, actual);
   const restored: any = structuredClone(actual);

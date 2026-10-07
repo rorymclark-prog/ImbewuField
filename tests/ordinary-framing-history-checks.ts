@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
-import { veReadingFrostPairBefore } from './ve-reading-frost-history-checks.ts';
+import { veReadingFrostPairBefore, veReadingFrostAssetBefore, veReadingFrostSourceBefore, frostFiles, frostAssets } from './ve-reading-frost-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/regional-ordinary-framing-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -67,14 +67,14 @@ export function ensureOrdinaryFramingText() {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(":"); }).join("|");
   if (next === signature) return;
   for (const [file, value] of Object.entries(expected)) {
-    assert.deepEqual(veReadingFrostPairBefore(file, JSON.parse(readFileSync(file, 'utf8'))), value, 'complete 13-field layer after the newer source-bound VE frost projection and every unlisted source/target');
+    assert.deepEqual(veReadingFrostPairBefore(file, JSON.parse(readFileSync(file, 'utf8'))), value, 'complete 13-field layer after the accepted latest VE frost projection and every unlisted source/target');
   }
   signature = next;
 }
 
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
-  actual = veReadingFrostPairBefore(file, actual);
+  if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   assert.deepEqual(actual, expected[file], 'caller supplies complete current layer, including unlisted source and target fields');
@@ -83,7 +83,7 @@ export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
 
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
-  actual = veReadingFrostPairBefore(file, actual);
+  if (frostFiles[file] && JSON.stringify(actual) === JSON.stringify(JSON.parse(readFileSync(file, 'utf8')))) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   const restored: any = structuredClone(actual);
@@ -115,12 +115,20 @@ assert.equal(new Set(ordinaryFramingAssets.map(row => row.url)).size, 10);
 
 const assetsByPath = new Map(ordinaryFramingAssets.map(row => ['public' + row.url, row]));
 export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
+  const url = path.startsWith('public/') ? path.slice('public'.length) : path;
+  const newest = frostAssets[url]?.changed ? veReadingFrostAssetBefore(path, bytes) : null;
+  if (newest) {
+    const row = assetsByPath.get(path);
+    if (!row) return newest;
+    assert.equal(newest.bytes, row.bytes, `${path}: exact VE frost predecessor matches the reviewed framing output size`);
+    assert.equal(newest.sha256, row.sha256, `${path}: exact VE frost predecessor matches the reviewed framing output SHA`);
+  }
   const fairness = fairSharingAssetBefore(path, bytes);
   if (fairness) return fairness;
   const row = assetsByPath.get(path);
   if (!row) return null;
-  assert.equal(bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
-  assert.equal(sha(bytes), row.sha256, `${path}: exact reviewed current SHA-256`);
+  assert.equal(newest?.bytes ?? bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
+  assert.equal(newest?.sha256 ?? sha(bytes), row.sha256, `${path}: exact reviewed current SHA-256`);
   return { bytes: row.beforeBytes, sha256: row.beforeSHA256, width: row.beforeDimensions[0], height: row.beforeDimensions[1] };
 }
 
@@ -137,6 +145,7 @@ const total = [...expectedManifest.matchAll(/^  '[^']+': (\d+),$/gm)].reduce((su
 expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total / 1024 / 1024).toFixed(1) + ' MB');
 
 export function ordinaryFramingManifestBefore(actual: string): string {
+  if (frostFiles['lib/course-asset-sizes.ts'] && actual === readFileSync('lib/course-asset-sizes.ts', 'utf8')) actual = veReadingFrostSourceBefore('lib/course-asset-sizes.ts', actual) as string;
   actual = fairSharingSourceBytesBefore('lib/course-asset-sizes.ts', actual);
   assert.equal(actual, expectedManifest, 'complete current manifest after only the ten measured card changes');
   return oldManifest;

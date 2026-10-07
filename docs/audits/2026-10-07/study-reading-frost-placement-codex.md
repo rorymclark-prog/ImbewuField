@@ -23,10 +23,10 @@ The preceding source-semantic check accepted the L2 `kha` locative insertion, th
 
 ## Verification
 
-- Typecheck: not run; root will run original gates after review.
-- Full test suite: not run; root will run original gates after review.
+- Typecheck: original `npx tsc --noEmit` passed before both full-suite runs; another original run is required after the pending history-check repairs.
+- Full test suite: original latest run completed 4,851 tests: 4,845 passed, five failed, one existing shape-sync TODO. The five failures expose dated proof assertions superseded by this accepted source/asset batch: 69-card predecessor hash, Reading observation predecessor fields, newer full-manifest corruption error, and ordinary-framing target/image predecessors. Repair those claims with exact current-file/asset proof guards and immutable predecessor reconstruction; keep all unlisted/source-drift/corruption coverage. No publication gate is claimed.
 - Focused tests: recorded in the handoff; no publication claim is made.
-- Whitespace: pending root review.
+- Whitespace: must be rerun after the pending history-check changes. The original command chain stopped at full-suite failure.
 - Output inspected: root rendered and inspected only the compressed VE Reading slides 14 and 15; no other frames were rendered in this continuation.
 - Proofs: `current-binding.json`, `root-accepted-plan.json`, `exact-file-proof.json`, `native-registry-proof.json`, and `all-asset-sha-proof.json`. The exact file/native history layer validates the complete current files and registry before reconstructing older dated claims.
 - Limits: source-semantic acceptance is not fluent-speaker or local farming approval. No language approval or publication has occurred. `PLAN_VERSION` was not changed. Main jobs and deployment remain pending.
@@ -34,3 +34,13 @@ The preceding source-semantic check accepted the L2 `kha` locative insertion, th
 ## Next continuation
 
 Root review the complete diff and the two rendered frames, run the repository’s original typecheck/full-suite/whitespace gates, then complete the existing native-preview and publication checks. Until those steps finish, the accepted candidate remains an unpublished machine draft.
+
+## Agy audit received in this continuation
+
+The shared Downloads handoff now contains a dated audit at `ac579258`. It claims full semantic review only for Tshivenda Reading; its other-ten-module/language scan is structural, not exhaustive fluency evidence. The quoted missing locative and beautified-map wording are stale relative to the current checked files (the latter is already in production through PR978). Other proposals require independent current-source checks, especially same-height geometry, moving a bed, and patch scope. Broad rollback of mixed-English drafts is not authorized by the audit and would undo the requested difficult-term policy. A text-only independent triage is pending; no Agy proposal was copied into learner content in this continuation.
+
+## Original gates after reviewed history repairs
+
+The original command sequence completed successfully: `npx tsc --noEmit`, `npm test`, then `git diff --check`. Full suite: 4,851 total, 4,850 pass, zero fail, one unchanged shape-sync TODO; 477,043 ms. Log retained outside the repository at `/tmp/imbewu-ve-reading-frost-full-tests-reviewed-20261007.log`. The five failed predecessor claims now reconstruct only exact accepted current files/assets, preserve immutable older snapshots and unlisted targets, and retain both same-size asset-corruption and full-manifest drift probes. Four affected focused files also passed 14 tests. The earlier failed-run history above remains evidence of why those claim updates were needed.
+
+Release notes are present locally; notes gate passed against saved content `ac579258`. Final branch save, exact-head PR/push jobs, phone/source/offline preview, merge, main jobs and production build-info remain pending. No publication or fluent review is claimed.
