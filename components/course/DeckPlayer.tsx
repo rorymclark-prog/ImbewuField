@@ -99,6 +99,12 @@ function IsiZuluSourcePairContent({ draft, pair, hold, source, fallbackHeading }
         <h5>{draft?.sourceHeading ?? pair?.sourceHeading ?? fallbackHeading}</h5>
         {(draft?.sourceEnglish ?? pair?.source ?? source ?? []).map((paragraph, i) => <p key={i}>{paragraph}</p>)}
       </section>
+      {draft?.supplementalImageCue && (
+        <section lang={draft.supplementalImageCue.language} aria-label={draft.supplementalImageCue.label}>
+          <h4>{draft.supplementalImageCue.label}</h4>
+          <p>{draft.supplementalImageCue.text}</p>
+        </section>
+      )}
     </>
   );
 }
