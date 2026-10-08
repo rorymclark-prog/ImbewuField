@@ -538,7 +538,8 @@ test('Tshivenda Study controls retain reviewed pairs, draft status and unresolve
   assert.ok(ve.includes("studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft."), 'keep the review notice in exact English');
 
   // These five controls were deliberately English in the earlier packet. The 7 October
-  // independent checks now bind exact drafts; keep the unresolved progress error held.
+  // independent checks now bind exact drafts; subsequent context checks also resolve
+  // loading/saving and completion actions without claiming professional status.
   const expandedReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/study-silent-entry-2026-10-07/imbewu-study-ui-full-approved-20261007.json', import.meta.url), 'utf8'));
   const { default: liveVenda } = await import('../lib/locales/ve.ts');
   for (const [key, expectedEnglish, expectedDraft] of [
@@ -556,8 +557,16 @@ test('Tshivenda Study controls retain reviewed pairs, draft status and unresolve
     assert.equal(liveVenda[key], expectedDraft, `${key}: actual locale imports must expose the checked draft`);
     assert.ok(english.includes(`${key}: '${expectedEnglish}'`), `${key}: preserve the exact English fallback`);
   }
-  assert.ok(!Object.hasOwn(liveVenda, 'studentProgressError'), 'unresolved loading/saving wording remains English');
-  assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve unresolved progress-error source');
+  const contextReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/STUDY-CONTEXT-CONTROLS-APPLIED-2026-10-08.json', import.meta.url), 'utf8'));
+  const progressPair = contextReview.rows.find((row: { language: string; key: string }) => row.language === 've' && row.key === 'studentProgressError');
+  assert.ok(progressPair, 'the loading/saving recovery message needs its independently checked context pair');
+  assert.equal(progressPair.sourceEnglish, 'Progress could not be loaded or saved. Check your connection or account access.');
+  assert.equal(progressPair.status, 'unreviewed-machine-draft');
+  assert.equal(liveVenda.studentProgressError, progressPair.candidate);
+  assert.ok(liveVenda.studentProgressError.includes('laisiwa kana u vhulungwa'), 'retain both load and save failure, not only one failure mode');
+  assert.ok(liveVenda.studentProgressError.includes('vhuṱumani haṋu kana account access'), 'retain both connection and permission recovery choices');
+  assert.ok(!Object.hasOwn(liveVenda, 'studentPractitioner'), 'completion must not create an unreviewed translated professional credential');
+  assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve the exact progress-error source');
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
