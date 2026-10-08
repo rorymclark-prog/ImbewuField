@@ -870,6 +870,13 @@ const dict: Dict = {
   studentReadAndPractise: "Vhalani ni ḓiḓowedzeni",
   studentRelatedLessons: "Ngudo dzi elanaho",
   studentSilentDeckNoVoiceDescription: "Slides dza {count}. A hu na ṱhalutshedzo nga ipfi.",
+  // Context drafts are independently checked; the Study notice keeps human review explicit.
+  studentProgressError: "Mvelaphanḓa a yo ngo kona u laisiwa kana u vhulungwa. Ṱolani vhuṱumani haṋu kana account access yaṋu.",
+  offlineRegionalFullMedia: "Slides + ṱhalutshedzo nga ipfi ya English source na clips",
+  studentCheckUnderstanding: "Ṱolani u pfesesa haṋu",
+  studentMarkDone: "Swayani uri modulu iyi yo fhela",
+  studentMarkNotDone: "Swayani uri modulu iyi a yo ngo fhela",
+  studentMarkComplete: "Swayani uri modulu iyi yo fhela",
 };
 
 export default dict;
