@@ -14,6 +14,7 @@ import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as vegTsL2 } from '../lib/course-t
 import { SESOTHO_MARKET_COMMUNITY_DRAFT as marketSt } from '../lib/course-translation-drafts-st-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as marketVe } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as marketTs } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
 
 const root = '../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/';
 const baseline = JSON.parse(readFileSync(new URL(`${root}baseline-native-modules.json`, import.meta.url), 'utf8'));
@@ -167,6 +168,9 @@ export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string
 
 /** Return the immutable 28-field layer only after validating the complete newest 13-cell overlay. */
 export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
+  // 8 October: first validate the complete VE-control and ST observation layer.
+  // Its learner fragment supersedes the full native object used by the older dated claim.
+  actual = studyRemainingControlsNativeBefore(actual);
   const current: any = actual;
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];

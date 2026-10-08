@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+import { studyRemainingControlsSourceBefore } from './study-remaining-controls-next-history-checks.ts';
 
 // The five reviewed clauses and two learner repairs supersede dated snapshots.
 // Check the complete newest files first; history receives only their exact predecessor.
@@ -42,7 +43,7 @@ export function ensureFollowupCurrent() {
     assert.equal(sha(row.after), row.afterSha256);
     const newer = currentBatchProof.files[file];
     if (newer) assert.equal(newer.beforeSha256, row.afterSha256, file + ': immutable next layer carries this complete exact predecessor');
-    else assert.equal(sha(expandedSourceBefore(file, readFileSync(repositoryPath(file)))), row.afterSha256, file + ': complete current source, draft and unlisted bytes');
+    else assert.equal(sha(expandedSourceBefore(file, studyRemainingControlsSourceBefore(file, readFileSync(repositoryPath(file))))), row.afterSha256, file + ': complete current source, draft and unlisted bytes after the exact newer study-controls layer');
   }
   signature = next;
 }
@@ -58,7 +59,7 @@ export function ensureCurrentBatch() {
     assert.equal(sha(row.after), row.afterSha256, `${file}: frozen full current bytes`);
     assert.equal(Buffer.byteLength(row.before), row.beforeBytes, `${file}: predecessor byte length`);
     assert.equal(Buffer.byteLength(row.after), row.afterBytes, `${file}: current byte length`);
-    assert.equal(sha(expandedSourceBefore(file, readFileSync(repositoryPath(file)))), row.afterSha256, `${file}: exact current source, manifest, or worker bytes`);
+    assert.equal(sha(expandedSourceBefore(file, studyRemainingControlsSourceBefore(file, readFileSync(repositoryPath(file))))), row.afterSha256, `${file}: exact current source, manifest, or worker bytes after the exact newer study-controls layer`);
   }
   for (const row of currentBatchProof.assets) {
     const bytes = readFileSync(row.path);
@@ -83,6 +84,8 @@ export function isCurrentOrBatchPredecessor<T>(file: string, value: T): boolean 
   return Boolean(predecessor && JSON.stringify(value) === JSON.stringify(JSON.parse(predecessor.before)));
 }
 export function followupSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  // 8 October learner-only changes supersede this exact-file snapshot; validate/project them first.
+  bytes = studyRemainingControlsSourceBefore(file, bytes);
   bytes = expandedSourceBefore(file, bytes);
   const row = followupFiles[file];
   const newer = currentBatchProof.files[file];

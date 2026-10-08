@@ -10,6 +10,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { veReadingFrostNativeBefore, veReadingFrostPairBefore, veReadingFrostSourceBefore } from './ve-reading-frost-history-checks.ts';
+import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as tsL2 } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
 const folder = 'docs/study-translation-reviews/final-language-next-2026-10-06/';
@@ -109,6 +110,8 @@ export function ensureFinalLanguageNextCurrent() {
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
 }
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
+  // 8 October: validate/project the newer ST observation clause before dated language snapshots.
+  actual = studyRemainingControlsNativeBefore(actual);
   actual = followupNativeBefore(actual);
   if ((actual as any)?.language === 've' && (actual as any)?.id === 'reading-landscape') actual = veReadingFrostNativeBefore('ve', actual);
   // Reading's later ten-field layer independently validates the whole registry
