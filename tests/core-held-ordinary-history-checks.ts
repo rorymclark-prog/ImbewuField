@@ -2,6 +2,7 @@ import { veOrdinaryPairBefore, veOrdinaryPairBeforeHistory, veOrdinaryManifestBe
 import { veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
 import assert from 'node:assert/strict';
 import { followupPairBeforeHistory, isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
+import { readingTitleLightestPairBefore, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 
@@ -29,12 +30,16 @@ let signature = '';
 export function ensureCoreHeldOrdinaryText() {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
-  for (const [file, value] of Object.entries(expected)) assert.deepEqual(veOrdinaryPairBefore(file, JSON.parse(readFileSync(file,'utf8'))), value, 'complete latest 109-field layer and all unlisted source/target objects');
+  for (const [file, value] of Object.entries(expected)) {
+    const newest = readingTitleLightestPairBefore(file, JSON.parse(readFileSync(file,'utf8')));
+    assert.deepEqual(veOrdinaryPairBefore(file, newest), value, 'complete latest 109-field layer and all unlisted source/target objects');
+  }
   signature = next;
 }
 /** The newer layer must be checked in full before dated tests see its predecessor.
  * Explicit callers cannot hide corruption by supplying an already-rewound object. */
 export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
+  actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureCoreHeldOrdinaryText();
@@ -44,6 +49,7 @@ export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
   return structuredClone(before[file]);
 }
 export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T {
+  actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   ensureCoreHeldOrdinaryText();
   actual = veOrdinaryPairBeforeHistory(file, actual);
@@ -65,6 +71,7 @@ export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T
 export function coreHeldOrdinaryPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
   // Verify caller bytes before reversing the newer checked layer; old guards
   // still see their exact complete predecessor, not a permissive partial view.
+  bytes = readingTitleLightestFileBytesBefore(file, bytes) as Uint8Array;
   const restored=veOrdinaryPairBytesBefore(file,bytes);
   if (!(file in expected)) return restored;
   coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));

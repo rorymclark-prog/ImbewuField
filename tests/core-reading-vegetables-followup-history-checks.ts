@@ -1,9 +1,11 @@
 import { ensureExpandedCurrent, expandedSourceBefore, expandedPairBefore, expandedNativeBefore, expandedPairBeforeHistory, expandedAssetBefore, expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readingTitleLightestNativeBefore, readingTitleLightestPresentationBeforeHistory } from './reading-title-lightest-next-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+import { lightestAssetBefore, lightestRenderProof } from './reading-title-lightest-media-history-checks.ts';
 
 // The five reviewed clauses and two learner repairs supersede dated snapshots.
 // Check the complete newest files first; history receives only their exact predecessor.
@@ -61,7 +63,7 @@ export function ensureCurrentBatch() {
     assert.equal(sha(expandedSourceBefore(file, readFileSync(repositoryPath(file)))), row.afterSha256, `${file}: exact current source, manifest, or worker bytes`);
   }
   for (const row of currentBatchProof.assets) {
-    const bytes = readFileSync(row.path);
+    const bytes = lightestAssetBefore(row.path, readFileSync(row.path));
     assert.equal(bytes.byteLength, row.afterBytes, `${row.path}: current still byte length`);
     assert.equal(sha(bytes), row.afterSha256, `${row.path}: current still SHA-256`);
     const older = followupAssets[row.url];
@@ -141,6 +143,7 @@ export function followupPairBefore<T>(file: string, value: T): T {
   return before;
 }
 export function followupNativeBefore<T>(value: T): T {
+  value = readingTitleLightestNativeBefore(value);
   value = expandedNativeBefore(value);
   const identity = value as any;
   const currentBatchKey = Object.entries(currentBatchProof.nativeModules.after).find(([, module]: [string, any]) =>
@@ -189,26 +192,43 @@ export function followupPairBeforeHistory<T>(file: string, value: T): T {
   return result;
 }
 export function followupAssetBefore(path: string, bytes: Uint8Array) {
-  const expanded = expandedAssetBefore(path, bytes);
-  if (expanded) return expanded;
+  // This 8 October proof is the newest still layer. Validate the real live
+  // bytes and project only its exact predecessor before older asset owners run.
+  const newestBytes = lightestAssetBefore(path, bytes);
   const url = path.startsWith('public/') ? path.slice(6) : path;
+  const assetPath = path.startsWith('public/') ? path : 'public' + path;
+  const newestProof = lightestRenderProof.cards.find(row => row.asset === assetPath);
+  const newestRow = newestProof && {
+    beforeBytes: newestProof.beforeBytes, beforeSha256: newestProof.beforeSha256,
+    afterBytes: newestProof.afterBytes, afterSha256: newestProof.afterSha256,
+    width: newestProof.afterDimensions[0], height: newestProof.afterDimensions[1],
+  };
+  const newestIsCurrent = Boolean(newestRow && sha(bytes) === newestRow.afterSha256 && bytes.byteLength === newestRow.afterBytes);
+  const expanded = expandedAssetBefore(path, newestBytes);
+  if (expanded) return expanded;
   const latest = currentBatchAssets.get(url);
   if (latest) {
     ensureCurrentBatch();
-    assert.equal(bytes.byteLength, latest.afterBytes, url + ': actual bytes from the complete current batch');
-    assert.equal(sha(bytes), latest.afterSha256, url + ': actual SHA from the complete current batch');
+    assert.equal(newestBytes.byteLength, latest.afterBytes, url + ': exact newest-layer predecessor bytes from the complete current batch');
+    assert.equal(sha(newestBytes), latest.afterSha256, url + ': exact newest-layer predecessor SHA from the complete current batch');
     const older = followupAssets[url];
     if (older) assert.equal(latest.beforeSha256, older.afterSha256, url + ': exact predecessor of this still matches the prior layer');
     return { bytes: latest.beforeBytes, sha256: latest.beforeSha256, width: latest.dimensions[0], height: latest.dimensions[1] };
   }
   const row = followupAssets[url];
-  if (!row?.changed) return null;
-  assert.equal(bytes.byteLength, row.afterBytes, url + ': actual current bytes');
-  assert.equal(sha(bytes), row.afterSha256, url + ': actual current SHA, including same-size corruption');
-  return { bytes: row.beforeBytes, sha256: row.beforeSha256, width: 1440, height: 5400 };
+  if (row?.changed) {
+    assert.equal(newestBytes.byteLength, row.afterBytes, url + ': exact newest-layer predecessor bytes before the dated asset layer');
+    assert.equal(sha(newestBytes), row.afterSha256, url + ': exact newest-layer predecessor SHA, including same-size corruption');
+    return { bytes: row.beforeBytes, sha256: row.beforeSha256, width: 1440, height: 5400 };
+  }
+  if (!newestRow || !newestIsCurrent) return null;
+  assert.equal(newestBytes.byteLength, newestRow.beforeBytes, url + ': exact measured predecessor byte length');
+  assert.equal(sha(newestBytes), newestRow.beforeSha256, url + ': exact measured predecessor SHA');
+  return { bytes: newestRow.beforeBytes, sha256: newestRow.beforeSha256, width: newestRow.width, height: newestRow.height };
 }
 
 export function followupPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   value = expandedPresentationBefore(value, lessonId, language);
   if (value.status === 'english-fallback') return value;
   const nativeKey = Object.entries(currentBatchProof.nativeModules.after).find(([, module]: [string, any]) =>

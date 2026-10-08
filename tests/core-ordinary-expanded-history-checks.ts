@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (file: string) => resolve(repositoryRoot, file);
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
@@ -23,7 +24,9 @@ export function ensureExpandedCurrent() {
   for (const [file, r] of Object.entries(expandedProof.files) as [string, any][]) {
     assert.equal(sha(r.before), r.beforeSha256, file + ': full predecessor');
     assert.equal(sha(r.after), r.afterSha256, file + ': full current source and unlisted bytes');
-    assert.equal(readFileSync(repositoryPath(file), 'utf8'), r.after, file + ': actual live bytes match complete reviewed proof');
+    const actual = readFileSync(repositoryPath(file));
+    const predecessor = readingTitleLightestFileBytesBefore(file, actual);
+    assert.equal(Buffer.from(predecessor).toString(), r.after, file + ': current newest full-file guard projects to this exact historical layer');
   }
   for (const r of expandedAssets) {
     const bytes = readFileSync(repositoryPath('public' + r.url));
@@ -34,6 +37,7 @@ export function ensureExpandedCurrent() {
 /** Older owners still reject caller corruption against their complete snapshots.
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = readingTitleLightestFileBytesBefore(file, bytes);
   const row = expandedProof.files[file];
   if (!row) return bytes;
   ensureExpandedCurrent();
@@ -42,6 +46,7 @@ export function expandedSourceBefore(file: string, bytes: string | Uint8Array): 
   return typeof bytes === 'string' ? row.before : Buffer.from(row.before);
 }
 export function expandedPairBefore<T>(file: string, value: T): T {
+  value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;
   ensureExpandedCurrent();
@@ -49,6 +54,7 @@ export function expandedPairBefore<T>(file: string, value: T): T {
   return JSON.stringify(value) === JSON.stringify(JSON.parse(row.after)) ? JSON.parse(row.before) : value;
 }
 export function expandedNativeBefore<T>(value: T): T {
+  value = readingTitleLightestNativeBeforeHistory(value);
   const obj = value as any;
   const key = Object.keys(native.after).find(k => native.after[k].id === obj?.id && native.after[k].language === obj?.language && native.after[k].lessons.map((l: any) => l.id).join('|') === obj?.lessons?.map((l: any) => l.id).join('|'));
   if (!key) return value;
@@ -74,6 +80,7 @@ export function expandedPresentationBefore<T extends { status?: string; content:
   return { ...structuredClone(value), content: before };
 }
 export function expandedPairBeforeHistory<T>(file: string, value: T): T {
+  value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;
   ensureExpandedCurrent();

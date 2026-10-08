@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { followupSourceBefore, followupPairBefore, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
+import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/ve-reading-frost-placement-2026-10-07/';
 const proofBytes = readFileSync(folder + 'exact-file-proof.json');
@@ -72,8 +73,9 @@ export function veReadingFrostNativeBefore<T>(language: string, actual: T): T {
 export function veReadingFrostAssetBefore(path: string, bytes?: Uint8Array) {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const proof = frostAssets[url];
+  bytes ??= readFileSync(path.startsWith('public/') ? path : 'public' + url);
+  bytes = lightestAssetBefore(path, bytes);
   if (!proof) return followupAssets[url]?.changed ? followupAssetBefore(path, bytes ?? readFileSync('public' + url)) : null;
-  bytes ??= readFileSync('public' + url);
   const newer = followupAssetBefore(path, bytes);
   const digest = createHash('sha256').update(bytes).digest('hex');
   assert.equal(newer?.bytes ?? bytes.byteLength, proof.afterBytes, `${url}: exact current VE frost still bytes`);

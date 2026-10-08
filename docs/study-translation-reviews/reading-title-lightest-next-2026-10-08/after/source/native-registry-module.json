@@ -1,7 +1,4 @@
-/** Unpublished, source-paired Sesotho machine draft; review data only. */
-import type { SesothoCourseModuleDraft } from './course-translation-drafts-st.ts';
-
-export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
+{
   "id": "vegetables-staples",
   "language": "st",
   "reviewStatus": "machine-draft",
@@ -469,4 +466,4 @@ export const SESOTHO_VEGETABLES_STAPLES_DRAFT: SesothoCourseModuleDraft = {
       ]
     }
   ]
-};
+}

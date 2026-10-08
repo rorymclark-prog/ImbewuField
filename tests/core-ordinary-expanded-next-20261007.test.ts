@@ -7,6 +7,7 @@ import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts'
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
+import { readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
 const load = (name: string) => JSON.parse(readFileSync(folder + name, 'utf8'));
@@ -21,7 +22,10 @@ test('only the independently reviewed six fields and three source-identical deck
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
     assert.equal(hash(row.before), row.beforeSha256);
     assert.equal(hash(row.after), row.afterSha256);
-    assert.equal(readFileSync(file, 'utf8'), row.after, file + ': complete changed and unlisted bytes');
+    const current = readFileSync(file);
+    const projected = readingTitleLightestFileBytesBefore(file, current);
+    assert.equal(Buffer.from(projected).toString('utf8'), row.after,
+      file + ': complete changed and unlisted bytes after the exact newer four-card owner projection');
     if (file.includes('paired-draft') || file.startsWith('lib/course-translation')) expected[file] = row.before;
   }
   const accepted = plan.rows.filter((r: any) => r.effectiveDecision === 'accept');
@@ -100,7 +104,9 @@ test('only four measured stills change size and all published bytes match the re
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.byteLength);
     expected = expected.replace(`'${row.url}': ${row.beforeBytes},`, `'${row.url}': ${row.afterBytes},`);
   }
-  assert.equal(readFileSync('lib/course-asset-sizes.ts', 'utf8'), expected);
+  const predecessor = readingTitleLightestFileBytesBefore('lib/course-asset-sizes.ts', readFileSync('lib/course-asset-sizes.ts'));
+  assert.equal(Buffer.from(predecessor).toString('utf8'), expected,
+    'the complete older manifest assertion receives only its exact four-card predecessor');
 });
 
 const changedStills = ['/course-decks/vegetables-staples/ve/slide-04.webp', '/course-decks/intro-permaculture/ve/slide-14.webp', '/course-decks/vegetables-staples/ve/slide-11.webp', '/course-decks/vegetables-staples/ts/slide-11.webp'].sort();

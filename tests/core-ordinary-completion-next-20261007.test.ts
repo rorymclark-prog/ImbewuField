@@ -21,6 +21,8 @@ import {
   followupPresentationBefore,
   followupSourceBefore,
 } from './core-reading-vegetables-followup-history-checks.ts';
+import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
+import { readingTitleLightestNativeBefore } from './reading-title-lightest-next-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-ordinary-completion-next-2026-10-07/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
@@ -52,11 +54,12 @@ test('complete immutable before and after proof covers the accepted source, lear
   assert.equal(currentBatchProof.assets.length, 5);
   assert.deepEqual(currentBatchProof.assets.map(row => row.url).sort(), changedStills);
   for (const asset of currentBatchProof.assets) {
-    const bytes = readFileSync(asset.path);
-    assert.equal(bytes.length, asset.afterBytes);
-    assert.equal(sha(bytes), asset.afterSha256);
+    const currentBytes = readFileSync(asset.path);
+    const bytes = Buffer.from(lightestAssetBefore(asset.path, currentBytes));
+    assert.equal(bytes.length, asset.afterBytes, `${asset.url}: exact four-card predecessor is the complete current-batch output`);
+    assert.equal(sha(bytes), asset.afterSha256, `${asset.url}: complete current-batch output SHA after newest-layer projection`);
     assert.deepEqual([bytes.readUInt16LE(26) & 0x3fff, bytes.readUInt16LE(28) & 0x3fff], asset.dimensions);
-    assert.equal(COURSE_ASSET_SIZES[asset.url], bytes.length, `${asset.url}: complete size manifest matches actual output`);
+    assert.equal(COURSE_ASSET_SIZES[asset.url], currentBytes.length, `${asset.url}: live size manifest matches actual newest output`);
   }
 });
 
@@ -118,7 +121,7 @@ test('native learner predicates preserve the general comparative, sale-price com
   assert.deepEqual(followupNativeBefore(tsMarket), currentBatchProof.nativeModules.before.mt);
   for (const [file, snapshot] of Object.entries(currentBatchProof.nativeModules.after)) {
     const actual = file === 'st' ? stVegetables : file === 'ts' ? tsVegetables : tsMarket;
-    assert.deepEqual(actual, snapshot, `${file}: complete imported registry equals the full after snapshot`);
+    assert.deepEqual(readingTitleLightestNativeBefore(actual), snapshot, `${file}: complete imported registry after exact newest native-layer projection equals the full historical after snapshot`);
   }
 
   const stSource = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
