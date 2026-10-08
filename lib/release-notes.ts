@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 October 2026', sha: 'c782a81a', changes: [
+    'Ten silent Sesotho Introduction cards show fuller unreviewed drafts beside English.',
+    'Saved slide packs refresh those ten cards and keep other course media.',
+  ], tour: [{ title: 'Read the fuller Sesotho Introduction drafts',
+    where: 'Study → Introduction → Sesotho → View slides',
+    detail: 'Compare the draft with exact English; narration remains optional.',
+    href: '/student',
+  }] },
   { when: '8 October 2026', sha: '8b30c345', changes: [
     'More Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
     'The Tshivenda download choice clearly names optional English narration.',
