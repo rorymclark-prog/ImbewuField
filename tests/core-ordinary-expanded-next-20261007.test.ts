@@ -5,6 +5,10 @@ import { createHash } from 'node:crypto';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
+import {
+  stIntroRuntimeResidualManifestBefore,
+  stIntroRuntimeResidualSourceBefore,
+} from './st-intro-runtime-residual-history-checks.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
 
@@ -21,7 +25,13 @@ test('only the independently reviewed six fields and three source-identical deck
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
     assert.equal(hash(row.before), row.beforeSha256);
     assert.equal(hash(row.after), row.afterSha256);
-    assert.equal(readFileSync(file, 'utf8'), row.after, file + ': complete changed and unlisted bytes');
+    // The 8 October silent-edition refresh supersedes the dated worker and manifest.
+    // Verify its entire authorized layer before retaining this earlier complete-file claim.
+    const current = readFileSync(file);
+    const afterExpandedLayer = file === 'lib/course-asset-sizes.ts'
+      ? stIntroRuntimeResidualManifestBefore(current.toString())
+      : stIntroRuntimeResidualSourceBefore(file, current);
+    assert.equal(Buffer.from(afterExpandedLayer).toString(), row.after, file + ': complete changed and unlisted bytes after exact newer-layer projection');
     if (file.includes('paired-draft') || file.startsWith('lib/course-translation')) expected[file] = row.before;
   }
   const accepted = plan.rows.filter((r: any) => r.effectiveDecision === 'accept');
@@ -100,7 +110,9 @@ test('only four measured stills change size and all published bytes match the re
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.byteLength);
     expected = expected.replace(`'${row.url}': ${row.beforeBytes},`, `'${row.url}': ${row.afterBytes},`);
   }
-  assert.equal(readFileSync('lib/course-asset-sizes.ts', 'utf8'), expected);
+  // Ten newer silent-edition measurements must pass their complete manifest guard
+  // before the four-card predecessor assertion can inspect the earlier layer.
+  assert.equal(stIntroRuntimeResidualManifestBefore(readFileSync('lib/course-asset-sizes.ts', 'utf8')), expected);
 });
 
 const changedStills = ['/course-decks/vegetables-staples/ve/slide-04.webp', '/course-decks/intro-permaculture/ve/slide-14.webp', '/course-decks/vegetables-staples/ve/slide-11.webp', '/course-decks/vegetables-staples/ts/slide-11.webp'].sort();

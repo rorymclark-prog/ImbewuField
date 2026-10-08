@@ -72,6 +72,7 @@ test('initialized historical descriptors still reject requested same-size corrup
     }
   }
   try {
+    symlinkSync(join(root,'app'),join(fixture,'app'),'dir');
     symlinkSync(join(root,'docs'),join(fixture,'docs'),'dir');
     mirror(join(root,'lib'),join(fixture,'lib'),['course-asset-sizes.ts']);
     mirror(join(root,'public'),join(fixture,'public'),['course-images','vegetables-staples','vegetables-staples-l1.jpg']);
@@ -92,6 +93,7 @@ test('initialized historical descriptors still reject requested same-size corrup
       assert.throws(()=>nativePairedResidualMediaBefore(path),error=>error instanceof Error && (
         error.message.includes('lib/course-asset-sizes.ts: complete current file after VE frost placement')
         || error.message.includes('lib/course-asset-sizes.ts: complete current source, draft and unlisted bytes')
+        || error.message.includes('complete live generated asset-size manifest digest')
         || /only the accepted VE Reading frost placement batch may be projected|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/.test(error.message)
       ));
       writeFileSync(manifest,before);nativePairedResidualMediaBefore(path);

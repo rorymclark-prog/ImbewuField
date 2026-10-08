@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { stIntroRuntimeResidualSourceBefore, stIntroRuntimeResidualManifestBefore,
+  stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (file: string) => resolve(repositoryRoot, file);
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
@@ -23,7 +25,11 @@ export function ensureExpandedCurrent() {
   for (const [file, r] of Object.entries(expandedProof.files) as [string, any][]) {
     assert.equal(sha(r.before), r.beforeSha256, file + ': full predecessor');
     assert.equal(sha(r.after), r.afterSha256, file + ': full current source and unlisted bytes');
-    assert.equal(readFileSync(repositoryPath(file), 'utf8'), r.after, file + ': actual live bytes match complete reviewed proof');
+    const source = readFileSync(repositoryPath(file));
+    const actual = file === 'lib/course-asset-sizes.ts'
+      ? stIntroRuntimeResidualManifestBefore(source.toString())
+      : stIntroRuntimeResidualSourceBefore(file, source);
+    assert.equal(Buffer.from(actual).toString(), r.after, file + ': actual live bytes match complete reviewed proof after the exact newest source projection');
   }
   for (const r of expandedAssets) {
     const bytes = readFileSync(repositoryPath('public' + r.url));
@@ -34,6 +40,9 @@ export function ensureExpandedCurrent() {
 /** Older owners still reject caller corruption against their complete snapshots.
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = file === 'lib/course-asset-sizes.ts'
+    ? stIntroRuntimeResidualManifestBeforeHistory(Buffer.from(bytes).toString())
+    : stIntroRuntimeResidualSourceBefore(file, bytes);
   const row = expandedProof.files[file];
   if (!row) return bytes;
   ensureExpandedCurrent();
