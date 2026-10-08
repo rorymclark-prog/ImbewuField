@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/';
 const pairPath = 'docs/narration/intro-permaculture.st.silent-draft.json';
@@ -133,7 +134,8 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   return before;
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
-  const live = read(manifestPath).toString();
+  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, read(manifestPath))).toString();
+  actual = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, actual)).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
   if (actual === live) return beforeManifestBytes.toString();
@@ -141,7 +143,8 @@ export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath)
   return actual;
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
-  const live = read(manifestPath).toString();
+  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, read(manifestPath))).toString();
+  actual = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, actual)).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
   if (actual === live) return beforeManifestBytes.toString();
@@ -149,10 +152,10 @@ export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file !== workerPath) return bytes;
-  const live = read(workerPath);
+  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(workerPath, read(workerPath)));
   assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
   assert.equal(live.length, proof.worker.afterBytes, 'complete live service-worker source size');
-  const supplied = Buffer.from(bytes);
+  const supplied = Buffer.from(studyVegetablesTwoResidualSourceBefore(file, bytes));
   if (!supplied.equals(live)) return bytes;
   return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
 }

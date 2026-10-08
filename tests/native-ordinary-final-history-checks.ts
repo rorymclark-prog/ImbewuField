@@ -15,6 +15,7 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT as marketSt } from '../lib/course-transl
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as marketVe } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as marketTs } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
+import { studyVegetablesTwoResidualNativeBefore, studyVegetablesTwoResidualPairedBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const root = '../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/';
 const baseline = JSON.parse(readFileSync(new URL(`${root}baseline-native-modules.json`, import.meta.url), 'utf8'));
@@ -140,6 +141,10 @@ function readResidualPairedFiles(): Record<string, any> {
 
 /** Validate the complete newest overlay and its full paired files before exposing the prior layer. */
 export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string, any>, pairedFiles: Record<string, any>): void {
+  // 8 October: project only the newest VE/TS Vegetables target leaves before the
+  // immutable residual-layer snapshots inspect every field and paired cell.
+  nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, studyVegetablesTwoResidualNativeBefore(module)]));
+  pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, studyVegetablesTwoResidualPairedBefore(path, deck)]));
   // 6 October: validate all 48 later accepted fields before the dated 13-cell claim.
   nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, finalLanguageNextNativeBefore(module)]));
   pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, finalLanguageNextDeckBefore(path, deck)]));
@@ -171,6 +176,7 @@ export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
   // 8 October: first validate the complete VE-control and ST observation layer.
   // Its learner fragment supersedes the full native object used by the older dated claim.
   actual = studyRemainingControlsNativeBefore(actual);
+  actual = studyVegetablesTwoResidualNativeBefore(actual);
   const current: any = actual;
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];
