@@ -42,6 +42,16 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 October 2026', sha: '3d86afb9', changes: [
+    'Reading cards have unreviewed Sesotho, Tshivenda and Xitsonga headings.',
+    'Sesotho pest guidance pairs its revised draft wording with exact English.',
+    'Saved slide packs refresh those four cards and keep other media.',
+  ], tour: [{
+    title: 'Read the updated Study drafts',
+    where: 'Study → Reading Landscape / Vegetables',
+    detail: 'Compare the unreviewed headings and pest guidance with exact English.',
+    href: '/student',
+  }] },
   { when: '8 October 2026', sha: '24276363', changes: [
     'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
     'The Sesotho land-reading lesson keeps the observation phrase beside English.',

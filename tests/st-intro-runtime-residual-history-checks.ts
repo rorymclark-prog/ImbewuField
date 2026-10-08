@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { readingTitleLightestMain985PostLayerBefore, readingTitleLightestThroughMain985Before } from './reading-title-lightest-main985-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/';
 const pairPath = 'docs/narration/intro-permaculture.st.silent-draft.json';
@@ -133,26 +134,24 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   return before;
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
-  const live = read(manifestPath).toString();
-  assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
-  assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
-  assert.equal(actual, beforeManifestBytes.toString(), 'caller supplies the exact current manifest or its exact immediate predecessor');
-  return actual;
+  const postMain = Buffer.from(readingTitleLightestMain985PostLayerBefore(manifestPath, read(manifestPath))).toString();
+  assert.equal(postMain, expectedManifest, 'complete PR985 manifest projection is exact main837');
+  const afterMain = Buffer.from(readingTitleLightestThroughMain985Before(manifestPath, actual)).toString();
+  assert.equal(sha(afterMain), proof.manifest.beforeSha256, 'A and main837 layers project to exact pre-PR985 manifest');
+  assert.equal(afterMain, beforeManifestBytes.toString(), 'complete pre-PR985 manifest retains every unlisted entry');
+  return afterMain;
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
   const live = read(manifestPath).toString();
-  assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
-  assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
+  const postMain = Buffer.from(readingTitleLightestMain985PostLayerBefore(manifestPath, live)).toString();
+  assert.equal(postMain, expectedManifest, 'complete PR985 manifest projection is exact main837');
+  if (actual === live || actual === postMain) return beforeManifestBytes.toString();
   return actual;
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file !== workerPath) return bytes;
-  const live = read(workerPath);
-  assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
-  assert.equal(live.length, proof.worker.afterBytes, 'complete live service-worker source size');
-  const supplied = Buffer.from(bytes);
-  if (!supplied.equals(live)) return bytes;
+  const before = readingTitleLightestThroughMain985Before(file, bytes);
+  assert.equal(sha(before), proof.worker.beforeSha256, 'A and main837 layers project to exact pre-PR985 worker');
+  assert.equal(Buffer.from(before).toString(), workerBefore.toString(), 'complete pre-PR985 worker source and unlisted bytes');
   return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
 }

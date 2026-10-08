@@ -11,6 +11,7 @@ import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { veReadingFrostNativeBefore, veReadingFrostPairBefore, veReadingFrostSourceBefore } from './ve-reading-frost-history-checks.ts';
 import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
+import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as tsL2 } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
 const folder = 'docs/study-translation-reviews/final-language-next-2026-10-06/';
@@ -112,6 +113,7 @@ export function ensureFinalLanguageNextCurrent() {
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
   // 8 October: validate/project the newer ST observation clause before dated language snapshots.
   actual = studyRemainingControlsNativeBefore(actual);
+  actual = readingTitleLightestNativeBeforeHistory(actual);
   actual = followupNativeBefore(actual);
   if ((actual as any)?.language === 've' && (actual as any)?.id === 'reading-landscape') actual = veReadingFrostNativeBefore('ve', actual);
   // Reading's later ten-field layer independently validates the whole registry
@@ -129,6 +131,7 @@ export function finalLanguageNextNativeBefore<T>(actual: T): T {
   return structuredClone(beforeNative[file]);
 }
 export function finalLanguageNextDeckBefore<T>(file: string, actual: T): T {
+  actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = veReadingFrostPairBefore(file, actual);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return coreHeldOrdinaryPairBefore(file, actual);
   actual = coreHeldOrdinaryPairBefore(file, actual);
@@ -143,6 +146,7 @@ export function finalLanguageNextDeckBeforeCurrent<T>(actual: T): T {
 export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Array | string): string {
   const suppliedCurrent = Buffer.from(bytes).toString();
   assert.equal(suppliedCurrent, readFileSync(file, 'utf8'), 'passed paired bytes are actual current bytes');
+  bytes = readingTitleLightestFileBytesBefore(file, bytes);
   bytes = veReadingFrostSourceBefore(file, bytes);
   bytes = precisionSourceBytesBefore(file, bytes);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return Buffer.from(coreHeldOrdinaryPairBytesBefore(file,Buffer.from(bytes))).toString();
@@ -193,6 +197,7 @@ export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): 
   // through the explicit history projection whose predecessor owner checks
   // the complete older pair.
   ensureFinalLanguageNextCurrent();
+  actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = coreHeldOrdinaryPairBeforeHistory(file, actual);
   const restored: any = structuredClone(actual);
   for (const row of plan.pairPlans.filter((row: any) => row.file === file)) {

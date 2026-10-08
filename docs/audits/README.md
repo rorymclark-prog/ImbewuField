@@ -58,6 +58,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Reading titles and least-intensive action — 8 October 2026](2026-10-08/study-reading-title-lightest-codex.md).
+
 - [Market residual ordinary prose and precise cost terms — 6 October 2026](2026-10-06/study-market-ordinary-residual-codex.md).
 
 This seeds the archive with the 30 documents Claude collected on 20 September,

@@ -450,7 +450,9 @@ test('Sesotho pest step framing preserves diagnosis before action and treatment 
   assert.match(paragraphs[2], /pele o phekola eng kapa eng.*system yohle/);
   assert.match(paragraphs[5], /mehato e mene, ka tatellano/);
   assert.match(paragraphs[9], /Ke ka morao feela/);
-  assert.ok(paragraphs[9].includes('lightest thing that works'));
+  // 8 October 2026: the source-bound native draft now translates this phrase;
+  // retain the same least-intensive effective-action assertion in Sesotho.
+  assert.ok(paragraphs[9].includes('ketso e bobebe ka ho fetisisa e sebetsang'));
   assert.ok(paragraphs[9].includes('Netefatsa hore ketso e loketse bothata') &&
     paragraphs[9].includes('behe leihlo sephethong'),
   'the action-fit and result-monitoring clauses are localized without changing the preceding treatment safeguards');
