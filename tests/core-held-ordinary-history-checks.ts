@@ -5,6 +5,8 @@ import { followupPairBeforeHistory, isCurrentOrBatchPredecessor } from './core-r
 import { readingTitleLightestPairBefore, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { stIntroRuntimeResidualPairBefore, stIntroRuntimeResidualPairBeforeHistory, stIntroRuntimeResidualPairBytesBefore,
+  stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualAssetBytesBefore, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-held-ordinary-completion-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -31,8 +33,9 @@ export function ensureCoreHeldOrdinaryText() {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
   for (const [file, value] of Object.entries(expected)) {
-    const newest = readingTitleLightestPairBefore(file, JSON.parse(readFileSync(file,'utf8')));
-    assert.deepEqual(veOrdinaryPairBefore(file, newest), value, 'complete latest 109-field layer and all unlisted source/target objects');
+    const afterLatest = readingTitleLightestPairBefore(file, JSON.parse(readFileSync(file,'utf8')));
+    const afterRuntime = stIntroRuntimeResidualPairBefore(file, afterLatest);
+    assert.deepEqual(veOrdinaryPairBefore(file, afterRuntime), value, 'complete latest layers and all unlisted source/target objects');
   }
   signature = next;
 }
@@ -40,6 +43,7 @@ export function ensureCoreHeldOrdinaryText() {
  * Explicit callers cannot hide corruption by supplying an already-rewound object. */
 export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
   actual = readingTitleLightestPairBeforeHistory(file, actual);
+  actual = stIntroRuntimeResidualPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureCoreHeldOrdinaryText();
@@ -50,6 +54,7 @@ export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
 }
 export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T {
   actual = readingTitleLightestPairBeforeHistory(file, actual);
+  actual = stIntroRuntimeResidualPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   ensureCoreHeldOrdinaryText();
   actual = veOrdinaryPairBeforeHistory(file, actual);
@@ -72,7 +77,8 @@ export function coreHeldOrdinaryPairBytesBefore(file: string, bytes: Uint8Array)
   // Verify caller bytes before reversing the newer checked layer; old guards
   // still see their exact complete predecessor, not a permissive partial view.
   bytes = readingTitleLightestFileBytesBefore(file, bytes) as Uint8Array;
-  const restored=veOrdinaryPairBytesBefore(file,bytes);
+  const runtimePrevious = stIntroRuntimeResidualPairBytesBefore(file, bytes);
+  const restored=veOrdinaryPairBytesBefore(file,runtimePrevious);
   if (!(file in expected)) return restored;
   coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.equal(Buffer.from(bytes).toString(),readFileSync(file,'utf8'),'caller bytes are actual live paired bytes');
@@ -84,10 +90,13 @@ export const coreHeldOrdinaryAssets: any[] = JSON.parse(assetProofBytes.toString
 const assets = new Map(coreHeldOrdinaryAssets.map(row => ['public'+row.url,row]));
 export function coreHeldOrdinaryAssetBefore(path: string, bytes: Uint8Array) {
   const row = assets.get(path);
-  if (!row) return veOrdinaryAssetBefore(path, bytes);
-  const newer = veOrdinaryAssetBefore(path, bytes);
-  assert.equal(newer?.bytes ?? bytes.length,row.afterBytes,path+': exact current measured bytes');
-  assert.equal(newer?.sha256 ?? sha(bytes),row.afterSHA256,path+': exact current SHA');
+  const runtimeBytes = stIntroRuntimeResidualAssetBytesBefore(path, bytes);
+  const runtimePrevious = runtimeBytes ? stIntroRuntimeResidualAssetBefore(path, bytes) : undefined;
+  if (!row) return runtimePrevious ?? veOrdinaryAssetBefore(path, runtimeBytes ?? bytes);
+  const currentLayerBytes = runtimeBytes ?? bytes;
+  const newer = veOrdinaryAssetBefore(path, currentLayerBytes);
+  assert.equal(newer?.bytes ?? currentLayerBytes.length,row.afterBytes,path+': exact current measured bytes');
+  assert.equal(newer?.sha256 ?? sha(currentLayerBytes),row.afterSHA256,path+': exact current SHA');
   return { bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1] };
 }
 const oldManifest = readFileSync(folder+'before/manifest.ts.txt','utf8');
@@ -105,6 +114,7 @@ expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total/1024/1024).toF
 const lines = [...expectedManifest.matchAll(/^  '[^']+': \d+,$/gm)].map(row=>row[0]);
 expectedManifest = expectedManifest.replace(/(^  '[^']+': \d+,\n)+/m, lines.sort().join('\n')+'\n');
 export function coreHeldOrdinaryManifestBefore(actual: string) {
+  actual = stIntroRuntimeResidualManifestBeforeHistory(actual);
   actual = veOrdinaryManifestBefore(actual);
   assert.equal(actual,expectedManifest,'complete current final-language manifest after checked 69-card layer');
   return oldManifest;

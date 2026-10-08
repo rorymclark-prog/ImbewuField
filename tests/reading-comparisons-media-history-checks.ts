@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { veReadingFrostSourceBefore } from './ve-reading-frost-history-checks.ts';
 import { lightestManifestBefore } from './reading-title-lightest-media-history-checks.ts';
+import { stIntroRuntimeResidualManifestBefore, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/reading-comparisons-2026-10-07/';
 const sha = (bytes: string | Uint8Array) => createHash('sha256').update(bytes).digest('hex');
@@ -19,13 +20,14 @@ export function reading14ManifestBefore(value: string): string {
   assert.equal(sha(proof.before), proof.beforeSha256);
   assert.equal(sha(proof.after), proof.afterSha256);
   const live = readFileSync(file, 'utf8');
-  const projected = veReadingFrostSourceBefore(file, live) as string;
+  const runtimePrevious = stIntroRuntimeResidualManifestBefore(live);
+  const projected = veReadingFrostSourceBefore(file, runtimePrevious) as string;
   assert.equal(projected, proof.after, 'entire Reading14 manifest after exact latest VE frost projection');
-  // The newest four-card layer first validates its full current manifest and
-  // exact HEAD predecessor. Older owners then project through expanded,
-  // current-batch, followup and frost snapshots in their existing order.
+  // Validate/project newest four-card layer, then the exact PR985 ten-card layer.
   const lightestPredecessor = lightestManifestBefore(live);
-  if (value === live || value === expandedSourceBefore(file, live) || value === lightestPredecessor) value = projected;
+  const runtimeFromLatest = stIntroRuntimeResidualManifestBefore(lightestPredecessor);
+  value = stIntroRuntimeResidualManifestBeforeHistory(value);
+  if (value === live || value === lightestPredecessor || value === runtimeFromLatest || value === expandedSourceBefore(file, live)) value = projected;
   if (value === proof.before) return value;
   assert.equal(value, proof.after, 'supplied complete Reading14 manifest after the later two-card VE layer');
   return proof.before;

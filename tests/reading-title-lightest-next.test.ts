@@ -101,7 +101,10 @@ test('the four rendered cards and full asset manifest are source-bound to exact 
     '/course-decks/vegetables-staples/st/slide-16.webp',
   ].sort());
   for (const row of rows) assert.equal(COURSE_ASSET_SIZES[row.url], row.afterBytes, `${row.url}: declared download bytes match actual card`);
-  assert.equal(lightestManifestBefore(), readFileSync(folder + 'before/course-asset-sizes.ts', 'utf8'));
+  // PR985 merged after the original four-card proof. The exact predecessor for
+  // this layer is now its complete main837 snapshot; the original base29 proof
+  // remains immutable in the archived applied packet.
+  assert.equal(lightestManifestBefore(), readFileSync(folder + 'main-985-composition/before-main837/course-asset-sizes.ts.txt', 'utf8'));
 });
 
 test('the once-only cache migration deletes exactly four still paths and query variants, never media or later packs', async () => {

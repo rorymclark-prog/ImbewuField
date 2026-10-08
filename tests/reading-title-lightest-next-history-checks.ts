@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { lightestManifestBefore } from './reading-title-lightest-media-history-checks.ts';
+import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (file: string) => resolve(root, file);
@@ -46,6 +46,10 @@ function ensureCurrentLayer(): void {
     const after = readFileSync(repositoryPath(file));
     assert.equal(before.byteLength, row.beforeBytes, `${file}: frozen full predecessor size`);
     assert.equal(sha(before), row.beforeSha256, `${file}: frozen full predecessor SHA`);
+    if (file === 'app/sw.js/route.ts' || file === 'lib/course-asset-sizes.ts') {
+      readingTitleLightestMain985PostLayerBefore(file, after);
+      continue;
+    }
     assert.equal(after.byteLength, row.afterBytes, `${file}: current complete file size`);
     assert.equal(sha(after), row.afterSha256, `${file}: current source, target, status and unlisted bytes`);
   }
@@ -115,14 +119,8 @@ export function readingTitleLightestFileBytesBefore(file: string, bytes: Uint8Ar
   // The complete binary/manifest owner validates the exact live asset layer.
   // Once it has projected the live manifest, older source owners receive their
   // own exact frozen intermediate snapshots unchanged for their assertions.
-  if (file === 'lib/course-asset-sizes.ts') {
-    const live = readFileSync(repositoryPath(file));
-    if (sha(Buffer.from(bytes).toString()) === sha(live.toString())) {
-      const predecessor = lightestManifestBefore(live.toString());
-      return typeof bytes === 'string' ? predecessor : Buffer.from(predecessor);
-    }
-    return bytes;
-  }
+  if (file === 'lib/course-asset-sizes.ts' || file === 'app/sw.js/route.ts')
+    return readingTitleLightestMain985PostLayerBefore(file, bytes);
   if (!(file in proof.completeFiles)) return bytes;
   ensureCurrentLayer();
   const current = Buffer.from(bytes).toString();

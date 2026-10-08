@@ -26,11 +26,16 @@ test('extra or unlisted manifest entries and wrong measured aggregate cannot exp
     assert.notEqual(mutated,actual);assert.throws(()=>silentIntroAssetSizesBefore(mutated));
   }
 });
-test('the newest four-card manifest rewinds exactly to HEAD before older16-row histories and rejects caller drift',()=>{
+test('the newest four-card manifest rewinds exactly to main837 before older16-row histories and rejects caller drift',()=>{
   const live=readFileSync('lib/course-asset-sizes.ts','utf8');
   const predecessor=lightestManifestBefore(live);
-  const frozenHead=readFileSync(lightestManifestProof.beforeSnapshot,'utf8');
-  assert.equal(predecessor,frozenHead,'the new media layer exposes the exact complete pre-render manifest');
+  // PR985 became main after the original A snapshot. The exact A predecessor is
+  // therefore its complete post-PR985/main837 manifest, not the older base29 file.
+  const frozenHead=readFileSync('docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/before-main837/course-asset-sizes.ts.txt','utf8');
+  assert.equal(predecessor,frozenHead,'the newest media layer exposes the exact complete main837 manifest');
+  const originalBase29=readFileSync(lightestManifestProof.beforeSnapshot);
+  assert.equal(createHash('sha256').update(originalBase29).digest('hex'),lightestManifestProof.beforeSha256,
+    'the original immutable base29 proof snapshot remains intact after main integration');
   const beforeEntries=Object.fromEntries([...predecessor.matchAll(/^  '([^']+)': (\d+),$/gm)].map(m=>[m[1],Number(m[2])]));
   const afterEntries=Object.fromEntries([...live.matchAll(/^  '([^']+)': (\d+),$/gm)].map(m=>[m[1],Number(m[2])]));
   const olderRows=[

@@ -4,6 +4,8 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
+import { stIntroRuntimeResidualSourceBefore, stIntroRuntimeResidualManifestBefore,
+  stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (file: string) => resolve(repositoryRoot, file);
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
@@ -24,9 +26,12 @@ export function ensureExpandedCurrent() {
   for (const [file, r] of Object.entries(expandedProof.files) as [string, any][]) {
     assert.equal(sha(r.before), r.beforeSha256, file + ': full predecessor');
     assert.equal(sha(r.after), r.afterSha256, file + ': full current source and unlisted bytes');
-    const actual = readFileSync(repositoryPath(file));
-    const predecessor = readingTitleLightestFileBytesBefore(file, actual);
-    assert.equal(Buffer.from(predecessor).toString(), r.after, file + ': current newest full-file guard projects to this exact historical layer');
+    const source = readFileSync(repositoryPath(file));
+    const afterLightest = readingTitleLightestFileBytesBefore(file, source);
+    const actual = file === 'lib/course-asset-sizes.ts'
+      ? stIntroRuntimeResidualManifestBefore(Buffer.from(afterLightest).toString())
+      : stIntroRuntimeResidualSourceBefore(file, afterLightest);
+    assert.equal(Buffer.from(actual).toString(), r.after, file + ': exact newest layers project to this immutable historical layer');
   }
   for (const r of expandedAssets) {
     const bytes = readFileSync(repositoryPath('public' + r.url));
@@ -38,6 +43,9 @@ export function ensureExpandedCurrent() {
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   bytes = readingTitleLightestFileBytesBefore(file, bytes);
+  bytes = file === 'lib/course-asset-sizes.ts'
+    ? stIntroRuntimeResidualManifestBeforeHistory(Buffer.from(bytes).toString())
+    : stIntroRuntimeResidualSourceBefore(file, bytes);
   const row = expandedProof.files[file];
   if (!row) return bytes;
   ensureExpandedCurrent();

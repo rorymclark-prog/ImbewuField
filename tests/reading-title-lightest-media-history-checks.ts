@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
+import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/';
 const sha = (value: Uint8Array | string) => createHash('sha256').update(value).digest('hex');
@@ -23,25 +24,11 @@ assert.equal(lightestManifestProof.rows.length, 4);
 
 /** Verify all current bytes and return the full exact predecessor manifest. */
 export function lightestManifestBefore(current = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
-  const live = readFileSync('lib/course-asset-sizes.ts');
-  assert.equal(sha(live), lightestManifestProof.afterSha256, 'complete current asset manifest is exact');
-  assert.equal(live.length, lightestManifestProof.afterBytes, 'complete current asset manifest byte length');
-  assert.equal(sha(current), lightestManifestProof.afterSha256, 'caller cannot bypass the current manifest guard');
-  const before = readFileSync(lightestManifestProof.beforeSnapshot);
-  assert.equal(sha(before), lightestManifestProof.beforeSha256, 'complete prior asset manifest snapshot is exact');
-  assert.equal(before.length, lightestManifestProof.beforeBytes);
-  for (const row of lightestManifestProof.rows) {
-    const old = `  '${row.url}': ${row.beforeBytes},\n`;
-    const next = `  '${row.url}': ${row.afterBytes},\n`;
-    assert.equal(before.toString().split(old).length, 2, `${row.url}: exact predecessor manifest row`);
-    assert.equal(live.toString().split(next).length, 2, `${row.url}: exact current manifest row`);
-  }
-  let projected = before.toString();
-  for (const row of lightestManifestProof.rows) {
-    projected = projected.replace(`  '${row.url}': ${row.beforeBytes},\n`, `  '${row.url}': ${row.afterBytes},\n`);
-  }
-  assert.equal(projected, live.toString(), 'only the four measured still byte entries changed in the full manifest');
-  return before.toString();
+  const live = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const predecessor = Buffer.from(readingTitleLightestMain985PostLayerBefore('lib/course-asset-sizes.ts', live)).toString();
+  assert.equal(Buffer.from(readingTitleLightestMain985PostLayerBefore('lib/course-asset-sizes.ts', current)).toString(), predecessor,
+    'caller must be the complete current manifest or exact main837 predecessor');
+  return predecessor;
 }
 
 export function lightestAssetRows() {

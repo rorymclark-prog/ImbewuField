@@ -48,8 +48,11 @@ test('current 36-frame media guard rejects whole-manifest and same-size byte cor
   const header = manifest.match(/^\/\/ \d+ files, [\d.]+ MB total\.$/m)![0];
   const corrupt = manifest.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corrupt, manifest);
-  assert.throws(() => validateFinalLanguageNextMedia(corrupt), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/);
-  assert.throws(() => validateFinalLanguageNextMedia(manifest + "  '/unlisted.webp': 1,\n"), /complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/);
+  // The composed main837 guard now rejects whole-file size/digest drift before
+  // these older dated claims; keep the original mutation probes and accept only
+  // those exact current-file failures as an additional valid rejection point.
+  assert.throws(() => validateFinalLanguageNextMedia(corrupt), /lib\/course-asset-sizes\.ts: live complete current (?:size|digest)|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/);
+  assert.throws(() => validateFinalLanguageNextMedia(manifest + "  '/unlisted.webp': 1,\n"), /lib\/course-asset-sizes\.ts: live complete current (?:size|digest)|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/);
   const frame = finalLanguageNextMediaProof.frames[0];
   const bytes = readFileSync(frame.path); const altered = Buffer.from(bytes); altered[altered.length - 1] ^= 1;
   assert.equal(altered.length, bytes.length);
@@ -72,6 +75,7 @@ test('initialized historical descriptors still reject requested same-size corrup
     }
   }
   try {
+    symlinkSync(join(root,'app'),join(fixture,'app'),'dir');
     symlinkSync(join(root,'docs'),join(fixture,'docs'),'dir');
     mirror(join(root,'lib'),join(fixture,'lib'),['course-asset-sizes.ts']);
     mirror(join(root,'public'),join(fixture,'public'),['course-images','vegetables-staples','vegetables-staples-l1.jpg']);
@@ -92,6 +96,9 @@ test('initialized historical descriptors still reject requested same-size corrup
       assert.throws(()=>nativePairedResidualMediaBefore(path),error=>error instanceof Error && (
         error.message.includes('lib/course-asset-sizes.ts: complete current file after VE frost placement')
         || error.message.includes('lib/course-asset-sizes.ts: complete current source, draft and unlisted bytes')
+        || error.message.includes('lib/course-asset-sizes.ts: live complete current size')
+        || error.message.includes('lib/course-asset-sizes.ts: live complete current digest')
+        || error.message.includes('complete live generated asset-size manifest digest')
         || /only the accepted VE Reading frost placement batch may be projected|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/.test(error.message)
       ));
       writeFileSync(manifest,before);nativePairedResidualMediaBefore(path);

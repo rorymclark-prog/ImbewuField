@@ -8,6 +8,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
 import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
+import { stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualAssets, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
 import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
 // The later 15-card Tshivenda layer must validate real bytes before this full
@@ -15,7 +16,7 @@ import { lightestAssetBefore } from './reading-title-lightest-media-history-chec
 // Also carry cards unlisted by the older layers (such as TS Vegetables5).
 // Each real current file is checked by the latest immutable measurement guard.
 const laterAssets = [...coreHeldOrdinaryAssets, ...veOrdinaryAssets, ...ordinaryFramingAssets];
-const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path), ...expandedAssets.map((row: any) => 'public' + row.url)]);
+const laterPaths = new Set<string>([...laterAssets.map(row=>'public'+row.url), ...currentBatchProof.assets.map(row => row.path), ...expandedAssets.map((row: any) => 'public' + row.url), ...stIntroRuntimeResidualAssets.map((row:any) => 'public' + row.url)]);
 for (const [url, row] of Object.entries(followupAssets)) if (row.changed) laterPaths.add('public' + url);
 for (const row of fairSharingAssets) if (row.before) laterPaths.add('public' + row.url);
 const framingFrames = new Map(ordinaryFramingAssets.map(row=>['public'+row.url,row]));
@@ -74,6 +75,9 @@ function checkedHistoricalDescriptor(path: string) {
   const fairness = fairSharingAssets.some(row => 'public' + row.url === path)
     ? fairSharingAssetBefore(path, newestPredecessor) : null;
   if (fairness) actual = {...actual, ...fairness};
+  // 8 October: validate the ten latest silent ST bytes and restore only their exact predecessor descriptors.
+  const runtimeResidual = stIntroRuntimeResidualAssetBefore(path, readFileSync(path));
+  if (runtimeResidual) actual = { ...actual, ...runtimeResidual };
   // descriptor checks filesystem identity on every call and recomputes the digest
   // after any rewrite. Do not re-read/hash buffers again for every dated caller.
   // Each immutable layer still checks its exact successor before exposing its predecessor.
@@ -99,6 +103,8 @@ export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   assert.equal(latest?.sha256 ?? sha(newestPredecessor), expected.sha256, path + ': exact current SHA');
 }
 export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  // 8 October's exact ST layer is newest; validate and rewind it before older source/history layers.
+  manifest = stIntroRuntimeResidualManifestBeforeHistory(manifest);
   // Reconstruct only the byte-verified newer layer, preserving the complete old inventory guard.
   manifest = expandedSourceBefore('lib/course-asset-sizes.ts', manifest) as string;
   const liveManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');

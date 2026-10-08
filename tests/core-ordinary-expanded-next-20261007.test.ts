@@ -5,9 +5,14 @@ import { createHash } from 'node:crypto';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
+import {
+  stIntroRuntimeResidualManifestBefore,
+  stIntroRuntimeResidualSourceBefore,
+} from './st-intro-runtime-residual-history-checks.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
 import { readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
+import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
 const load = (name: string) => JSON.parse(readFileSync(folder + name, 'utf8'));
@@ -22,10 +27,13 @@ test('only the independently reviewed six fields and three source-identical deck
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
     assert.equal(hash(row.before), row.beforeSha256);
     assert.equal(hash(row.after), row.afterSha256);
+    // Both newer reviewed layers are checked in source order before this dated claim.
     const current = readFileSync(file);
-    const projected = readingTitleLightestFileBytesBefore(file, current);
-    assert.equal(Buffer.from(projected).toString('utf8'), row.after,
-      file + ': complete changed and unlisted bytes after the exact newer four-card owner projection');
+    const afterLightest = readingTitleLightestFileBytesBefore(file, current);
+    const afterExpandedLayer = file === 'lib/course-asset-sizes.ts'
+      ? stIntroRuntimeResidualManifestBefore(Buffer.from(afterLightest).toString())
+      : stIntroRuntimeResidualSourceBefore(file, afterLightest);
+    assert.equal(Buffer.from(afterExpandedLayer).toString(), row.after, file + ': complete changed and unlisted bytes after exact newer-layer projections');
     if (file.includes('paired-draft') || file.startsWith('lib/course-translation')) expected[file] = row.before;
   }
   const accepted = plan.rows.filter((r: any) => r.effectiveDecision === 'accept');
@@ -104,9 +112,28 @@ test('only four measured stills change size and all published bytes match the re
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.byteLength);
     expected = expected.replace(`'${row.url}': ${row.beforeBytes},`, `'${row.url}': ${row.afterBytes},`);
   }
+  // The exact four-card projection is followed by PR985's exact ten-card predecessor.
   const predecessor = readingTitleLightestFileBytesBefore('lib/course-asset-sizes.ts', readFileSync('lib/course-asset-sizes.ts'));
-  assert.equal(Buffer.from(predecessor).toString('utf8'), expected,
-    'the complete older manifest assertion receives only its exact four-card predecessor');
+  assert.equal(Buffer.from(stIntroRuntimeResidualManifestBefore(Buffer.from(predecessor).toString())).toString('utf8'), expected,
+    'the complete older manifest assertion receives only its exact four-card and then ten-card predecessors');
+});
+
+test('the merged four-card layer reaches exact main837 snapshots and rejects changed whole-file callers', () => {
+  const proof = JSON.parse(readFileSync('docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/composition-proof.json', 'utf8'));
+  for (const file of ['app/sw.js/route.ts', 'lib/course-asset-sizes.ts']) {
+    const live = readFileSync(file);
+    const expected = readFileSync(proof.files[file].beforePath);
+    const projected = readingTitleLightestMain985PostLayerBefore(file, live);
+    assert.deepEqual(Buffer.from(projected), expected, `${file}: current full file projects to exact main837/PR985-after snapshot`);
+  }
+  const worker = readFileSync('app/sw.js/route.ts', 'utf8');
+  assert.throws(() => stIntroRuntimeResidualSourceBefore('app/sw.js/route.ts', worker.replace('self.clients.claim()', 'self.clients.claimed()')),
+    'unlisted worker changes cannot pass as either accepted full-file layer');
+  const manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const unrelated = manifest.replace("'/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,", "'/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248425,");
+  assert.notEqual(unrelated, manifest);
+  assert.throws(() => stIntroRuntimeResidualManifestBefore(unrelated),
+    'an unlisted manifest row mutation cannot be hidden by the dated predecessor chain');
 });
 
 const changedStills = ['/course-decks/vegetables-staples/ve/slide-04.webp', '/course-decks/intro-permaculture/ve/slide-14.webp', '/course-decks/vegetables-staples/ve/slide-11.webp', '/course-decks/vegetables-staples/ts/slide-11.webp'].sort();
