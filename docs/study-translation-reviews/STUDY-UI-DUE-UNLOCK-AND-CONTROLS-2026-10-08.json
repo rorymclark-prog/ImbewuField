@@ -4,7 +4,7 @@
   "branch": "codex/study-due-unlock-runtime-next-20261008",
   "baseHead": "fb6c4b58aed409c9d907b56affd69e0117a189fc",
   "productionSourceHead": "83759bbdf67754acdb323a9f7250247e2fce25f5",
-  "status": "Root semantic/source review accepted candidate wording for unreviewed machine drafts; fluent review remains pending. Implementation is wired in this branch. Typecheck and focused tests pass; root proof review and visual phone-layout validation remain pending. No full suite, commit or push was performed.",
+  "status": "Unreviewed machine drafts; root semantic/source review accepted candidate wording. This B snapshot was locally checkpointed and history-merged with main 69a6a935; it remains unpushed. Node 24 typecheck and the focused 80-test set pass on the integrated tree. Root proof review, phone-layout validation, and fluent review remain pending; full suite was not run.",
   "inputs": {
     "dueUnlockPacket": {
       "path": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
@@ -866,10 +866,25 @@
     "guard": "tests/study-ui-due-unlock-history-checks.ts"
   },
   "verificationStatus": {
-    "typecheck": "PASS: npx tsc --noEmit",
-    "focusedTests": "PASS: 80 tests across assignment, gating, student-simple, VE translation draft, and the connected locale-history tests",
-    "diffCheck": "PASS: git diff --check",
-    "notRun": ["full test suite", "build", "commit", "push"],
-    "pending": ["root proof/diff review", "phone-layout validation for English source companions", "fluent review"]
+    "typecheck": "PASS under bundled Node 24.19.0: npx tsc --noEmit (rerun after integrating main 69a6a935).",
+    "focusedTests": "PASS: 80 focused tests across assignment, gating, student-simple, VE translation draft, connected locale-history, offline-simple and student overview tests (rerun after integrating main 69a6a935).",
+    "diffCheck": "PASS: git diff --check on staged B checkpoint and merge parent range.",
+    "notRun": [
+      "full test suite (not started while C paired test is active)",
+      "build",
+      "push"
+    ],
+    "pending": [
+      "root proof/diff review",
+      "phone-layout validation for English source companions",
+      "fluent review"
+    ],
+    "integrationCheckpoint": {
+      "bImplementationCommit": "2c8597e73295b255c0e2759ce358be692d176ea3",
+      "mainMergedCommit": "69a6a935",
+      "localMergeCommit": "e8bc1144",
+      "pushed": false,
+      "untrackedQA": "output/playwright/** retained untracked and unstaged"
+    }
   }
 }
