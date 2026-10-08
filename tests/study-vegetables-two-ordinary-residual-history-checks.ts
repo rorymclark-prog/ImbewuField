@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { studyBAProjectToB } from './study-b-a-source-composition-history-checks.ts';
 
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (path: string) => resolve(repositoryRoot, path);
@@ -70,10 +71,11 @@ function projectNativeBefore<T>(actual: T): T {
 export function studyVegetablesTwoResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file === 'app/sw.js/route.ts' || file === 'lib/course-asset-sizes.ts') {
     const row = mediaPacket.sourceFiles[file];
-    const supplied = Buffer.from(bytes);
-    const digest = sha(supplied);
     const live = readFileSync(repositoryPath(file));
-    assert.equal(sha(live), row.afterSha256, `${file}: complete current source hash for two-card media change`);
+    const liveB = Buffer.from(studyBAProjectToB(file, live));
+    assert.equal(sha(liveB), row.afterSha256, `${file}: complete B-only source after verified A projection`);
+    const supplied = Buffer.from(studyBAProjectToB(file, bytes));
+    const digest = sha(supplied);
     if (digest === row.beforeSha256) return bytes;
     if (digest === row.afterSha256) {
       let prior = supplied.toString();
@@ -202,7 +204,8 @@ export function ensureStudyVegetablesTwoResidualCurrent(): void {
       `${row.id}: exact source field remains at its expected index`);
   }
   for (const [file, source] of Object.entries(mediaPacket.sourceFiles) as [string, any][]) {
-    assert.equal(sha(readFileSync(repositoryPath(file))), source.afterSha256, `${file}: current two-card media-layer source bytes`);
+    assert.equal(sha(studyBAProjectToB(file, readFileSync(repositoryPath(file)))), source.afterSha256,
+      `${file}: exact two-card media-layer source after removing only A's separately proven layer`);
   }
   for (const asset of mediaPacket.assets) {
     const bytes = readFileSync(repositoryPath('public' + asset.url));

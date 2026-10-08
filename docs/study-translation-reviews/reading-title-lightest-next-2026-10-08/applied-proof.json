@@ -1,0 +1,175 @@
+{
+  "date": "2026-10-08",
+  "baseHead": "29b6ef1d63e0a661a032b8dd7d24029155a87acd",
+  "scope": "Three source-paired Reading Landscape slide 12 heading targets; one Sesotho Vegetables Staples L4 native body paragraph (paragraph index 9 of 12) and paired slide 16 body[4] segment[2]; four measured compressed still replacements and a selective once-only cache refresh. No canonical English edits, other learner fields, audio, shared films, or other stills.",
+  "reviewPackets": {
+    "readingTitles": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/accepted-reading-title-review.json",
+      "sha256": "bba1262c83500afacf90b3a857d6ee82321b6bac6a21a327ca56d5a4165cee07"
+    },
+    "stLightestAction": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/accepted-lightest-action-review.json",
+      "sha256": "ed86f06d52c22c0d53fa9b1250465b16cb1d224a83f8bb622f4ac9c7c9584512"
+    }
+  },
+  "rows": [
+    {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 12,
+      "field": "target.heading.text",
+      "status": "draft",
+      "sourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "before": "Thuto 3: Read Wind, Frost, and Slope",
+      "after": "Thuto 3: Bala Moya, Frost le Letswapo"
+    },
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 12,
+      "field": "target.heading.text",
+      "status": "draft",
+      "sourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "before": "Ngudo 3: Read Wind, Frost, and Slope",
+      "after": "Ngudo 3: Vhalani Muya, Frost, na u sendama ha mavu"
+    },
+    {
+      "file": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slide": 12,
+      "field": "target.heading.text",
+      "status": "draft",
+      "sourceEnglish": "Lesson 3: Read Wind, Frost, and Slope",
+      "before": "Dyondzo 3: Read Wind, Frost, and Slope",
+      "after": "Dyondzo 3: Hlaya Moya, Frost, na Slope"
+    },
+    {
+      "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slide": 16,
+      "field": "target.body[4].segments[2]",
+      "sourceEnglish": "the lightest thing that works.",
+      "before": {
+        "sourceEnglish": "the lightest thing that works.",
+        "status": "english-hold"
+      },
+      "after": {
+        "sourceEnglish": "the lightest thing that works.",
+        "status": "draft",
+        "text": "ketso e bobebe ka ho fetisisa e sebetsang."
+      },
+      "preserveFollowingSource": " Physical removal"
+    }
+  ],
+  "nativeParagraph": {
+    "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+    "field": "SESOTHO_VEGETABLES_STAPLES_DRAFT.lessons.find(lesson => lesson.id === \"vegetables-staples-l4\").body.sesothoDraft.split(\"\\n\\n\")[9]",
+    "paragraphIndex": 9,
+    "paragraphCount": 12,
+    "sourceEnglish": "Four. Only then, act \u2014 and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+    "before": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato \u2014 qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+    "after": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato \u2014 qala ka ketso e bobebe ka ho fetisisa e sebetsang. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa. Netefatsa hore ketso e loketse bothata, mme o behe leihlo sephethong.",
+    "replaceOnly": {
+      "from": "the lightest thing that works.",
+      "to": "ketso e bobebe ka ho fetisisa e sebetsang."
+    },
+    "reviewStatus": "machine-draft; no fluent or local-farming approval",
+    "fullSourceEnglish": "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act \u2014 and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip."
+  },
+  "canonicalEnglishSources": {
+    "reading": {
+      "sha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "beforeSnapshotSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "unchanged": true
+    },
+    "vegetables": {
+      "sha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "beforeSnapshotSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "unchanged": true
+    }
+  },
+  "completeFiles": {
+    "docs/narration/reading-landscape.st.paired-draft.json": {
+      "beforeSha256": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa",
+      "afterSha256": "7fdb421810cef7f6913ab6fc16d3d5907ceb99a489db2d81fbab980595febfd1",
+      "beforeBytes": 59686,
+      "afterBytes": 59687
+    },
+    "docs/narration/reading-landscape.ve.paired-draft.json": {
+      "beforeSha256": "0588311fe71775c599c101bd6e9c6556ae6ddbbb40a4cedea4647c4141423e65",
+      "afterSha256": "4d7a9806070c8c563787bd7239fa88a5af0f8727b693aa804227f15d7e8519ca",
+      "beforeBytes": 68029,
+      "afterBytes": 68043
+    },
+    "docs/narration/reading-landscape.ts.paired-draft.json": {
+      "beforeSha256": "b43d4435fcb77ca7f74accf359ae93990a537543091ffbb7946bbd37d64dd732",
+      "afterSha256": "bf6b7de9af4c6b69269aace469e37d2b123e0cb3e68683e1ffc0d5229209b4c0",
+      "beforeBytes": 69943,
+      "afterBytes": 69943
+    },
+    "docs/narration/vegetables-staples.st.paired-draft.json": {
+      "beforeSha256": "afc341e508f0cc202d19bdcde59f4f30ea1b3a694512ee976df64273146232d8",
+      "afterSha256": "33e9205aca4c2c098f3ced2ddd6a7cbf8978c06d0dff9615ff9be2fc476c0c83",
+      "beforeBytes": 65910,
+      "afterBytes": 65973
+    },
+    "lib/course-translation-drafts-st-vegetables-staples.ts": {
+      "beforeSha256": "26e54b53f8022447ec91224e769a2e19b54fd0b182392c1c35f49fa2d7a9d29d",
+      "afterSha256": "b218fe44de243e4f23cf8b2ebd91ea18042a0abe2ee6bb856755197a08b27bfb",
+      "beforeBytes": 39665,
+      "afterBytes": 39677
+    },
+    "docs/narration/reading-landscape.en.md": {
+      "beforeSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "afterSha256": "c708166a922783e5a963440ae7ce8002530bade9a5c169adedfc5f5e30e3bc6f",
+      "beforeBytes": 7929,
+      "afterBytes": 7929
+    },
+    "docs/narration/vegetables-staples.en.md": {
+      "beforeSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "afterSha256": "9cfb6fc5784818d529fdfeecb28f367183fce8a28b6dee28c8f88142640d5bd3",
+      "beforeBytes": 10460,
+      "afterBytes": 10460
+    },
+    "app/sw.js/route.ts": {
+      "beforeSha256": "91b01455f2068a5d112d14ec37c783531018af15ad26516d2ae08058e94f2e2c",
+      "afterSha256": "e258bd958be25939c7f9ac4e29d545c618fcb2a678e288ed9756c8ab721acc4b",
+      "beforeBytes": 127541,
+      "afterBytes": 128474
+    },
+    "lib/course-asset-sizes.ts": {
+      "beforeSha256": "0cbd25e386ef8619736374ce18b9a1869f3c53b4d499ad7e3eda1c71b71b104d",
+      "afterSha256": "3e1a01d8887aaef8d4963a30b53432054dbf2ba934546a9b0a8d6e29881c6e58",
+      "beforeBytes": 117011,
+      "afterBytes": 117011
+    }
+  },
+  "unlistedGuard": "Full before/after source and paired files are snapshotted and hashed. Implementation tests compare the complete current files to the exact approved after snapshots, and mutation guards reject drift in source, target, status, index, or any unlisted field.",
+  "releaseStatus": "draft source update and rendered candidate assets only; visual approval and publication remain pending",
+  "nativeModuleSnapshots": {
+    "before": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/before/native-registry-module.json",
+      "sha256": "ff2d200387899f2bc3831d3f78505fc07eea550780d55abf10921d5d3fe96d8e"
+    },
+    "after": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/after/source/native-registry-module.json",
+      "sha256": "d2b5dc7e659dbef7e1386d531cd4b624b9700940f6ddd5595769d7e30a39412e"
+    }
+  },
+  "media": {
+    "renderProof": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/render-proof.json",
+      "sha256": "4989110c3f4a17786f296a008212e725c54ca11311a97c0f94b5e98e2161d755"
+    },
+    "manifestProof": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/manifest-proof.json",
+      "sha256": "020f98dde5da03597239b56242a1526d3d767147901085877f7f56c0e0292c96"
+    },
+    "contact": {
+      "path": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/compressed-four-card-contact.webp",
+      "sha256": "d9092be7cff358cab0c8eecc1885ffb360e1f8dc33ad5f8b76aad47d4e97b4da",
+      "bytes": 510006,
+      "dimensions": [
+        960,
+        3600
+      ]
+    },
+    "assetCount": 4
+  }
+}

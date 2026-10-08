@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT as st } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { ensureStudyUiDueUnlockCurrent, studyUiDueUnlockLocaleBefore, studyUiDueUnlockSourceBefore } from './study-ui-due-unlock-history-checks.ts';
+import { readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/study-remaining-controls-next-2026-10-08/';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
@@ -15,6 +16,11 @@ const packetBytes = readFileSync(repositoryPath(folder + 'applied-packet.json'))
 assert.equal(sha(packetBytes), '374b035a328352a818dd5be85c1fb69e19fd864ffa4d203e8d2f68c9e4ccf33a', 'immutable 8 October source-bound layer packet');
 const packet = JSON.parse(packetBytes.toString());
 assert.equal(packet.baseHead, '81174107268ec951ac3b1deb8dd57a3b36268d43');
+export function studyRemainingControlsPairedBefore(bytes: Uint8Array | string = readFileSync(repositoryPath(packet.protectedPaired.path))): Uint8Array | string {
+  const projected = readingTitleLightestFileBytesBefore(packet.protectedPaired.path, bytes);
+  assert.equal(sha(projected), packet.protectedPaired.sha256, 'complete paired predecessor remains exact after the four-card projection');
+  return projected;
+}
 const readProof = (path: string, expectedSha256: string) => {
   const bytes = readFileSync(repositoryPath(folder + path));
   assert.equal(sha(bytes), expectedSha256, path + ': exact saved review evidence');
@@ -120,8 +126,11 @@ assert.deepEqual(st, afterSt, 'complete live Sesotho registry equals the exact o
 assert.deepEqual(anchors.pairedSlide6.segment, { sourceEnglish: stLayer.heldSourceFragment, status: packet.protectedPaired.status });
 assert.equal(anchors.pairedSlide6.path, packet.protectedPaired.path);
 assert.equal(anchors.pairedSlide6.segment.status, 'english-hold');
-const pairedBytes = readFileSync(repositoryPath(packet.protectedPaired.path));
-assert.equal(sha(pairedBytes), packet.protectedPaired.sha256, 'recorded Reading paired deck remains exact and untouched');
+// The four-card batch changed only this paired file's Reading12 heading.
+// Validate that complete current layer, then project the exact accepted heading
+// change to this packet's frozen predecessor; main985 leaves this file intact.
+const pairedBytes = studyRemainingControlsPairedBefore();
+assert.equal(sha(pairedBytes), packet.protectedPaired.sha256, 'the complete paired predecessor matches the packet after the exact four-card composition');
 assert.equal(sha(pairedBytes), packet.protectedPaired.beforeSnapshotSha256, 'the complete paired deck matches its saved predecessor bytes');
 const paired = JSON.parse(pairedBytes.toString());
 const slide = paired.slides.find((item: any) => item.n === packet.protectedPaired.slide);
@@ -133,7 +142,8 @@ export function ensureStudyRemainingControlsCurrent() {
   ensureStudyUiDueUnlockCurrent();
   assert.equal(sha(studyUiDueUnlockSourceBefore('lib/locales/ve.ts', readFileSync(repositoryPath('lib/locales/ve.ts')))), packet.locale.afterSourceSha256, 'complete VE locale source bytes after projecting only the exact newest due/unlock layer');
   assert.equal(sha(readFileSync(repositoryPath(stLayer.path))), stLayer.afterSourceSha256, 'complete live Sesotho registry source bytes');
-  assert.equal(sha(pairedBytes), packet.protectedPaired.sha256, 'paired Reading bytes remain unchanged');
+  const currentPairedPredecessor = studyRemainingControlsPairedBefore(readFileSync(repositoryPath(packet.protectedPaired.path)));
+  assert.equal(sha(currentPairedPredecessor), packet.protectedPaired.sha256, 'live paired Reading still composes to its complete exact predecessor');
 }
 
 export function assertStudyRemainingControlsLocale(actual: unknown) {

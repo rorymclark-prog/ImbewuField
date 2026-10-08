@@ -10,6 +10,7 @@ import { finalLanguageNextDeckBefore, ensureFinalLanguageNextCurrent } from './f
 import { coreHeldOrdinaryAssets, coreHeldOrdinaryAssetBefore, coreHeldOrdinaryManifestBefore, coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
 import { stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualAssets, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
 import { veReadingFrostAssetBefore, veReadingFrostSourceBefore, veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
+import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
 // The later 15-card Tshivenda layer must validate real bytes before this full
 // inventory exposes its predecessor; keep the prior 69-card proof unchanged.
 // Also carry cards unlisted by the older layers (such as TS Vegetables5).
@@ -52,24 +53,27 @@ function descriptor(path: string) {
   const signature = [s.ino, s.dev, s.size, s.mtimeNs, s.ctimeNs].join(':');
   const old = observations.get(path); if (old?.signature === signature) return old;
   const b = readFileSync(path);
-  const row = { signature, bytes: b.length, sha256: sha(b), width: b.length >= 30 ? b.readUInt16LE(26) & 0x3fff : 0, height: b.length >= 30 ? b.readUInt16LE(28) & 0x3fff : 0, riff: b.toString('ascii', 0, 4) === 'RIFF', webp: b.toString('ascii', 8, 12) === 'WEBP' };
-  const frost = veReadingFrostAssetBefore(path, b);
+  const newest = lightestAssetBefore(path, b);
+  const newestBuffer = Buffer.from(newest);
+  const row = { signature, bytes: newestBuffer.length, sha256: sha(newestBuffer), width: newestBuffer.length >= 30 ? newestBuffer.readUInt16LE(26) & 0x3fff : 0, height: newestBuffer.length >= 30 ? newestBuffer.readUInt16LE(28) & 0x3fff : 0, riff: newestBuffer.toString('ascii', 0, 4) === 'RIFF', webp: newestBuffer.toString('ascii', 8, 12) === 'WEBP' };
+  const frost = veReadingFrostAssetBefore(path, newest);
   if (frost) { row.bytes = frost.bytes; row.sha256 = frost.sha256; }
   observations.set(path, row); return row;
 }
 function checkedHistoricalDescriptor(path: string) {
   let actual = descriptor(path);
+  const newestPredecessor = lightestAssetBefore(path, readFileSync(path));
   if (currentBatchProof.assets.some(row => row.path === path)) {
-    const latest = followupAssetBefore(path, readFileSync(path));
+    const latest = followupAssetBefore(path, newestPredecessor);
     assert.ok(latest, path + ': current batch image proof supplies its exact predecessor');
     actual = { ...actual, ...latest };
   }
-  const expanded = expandedAssetBefore(path, readFileSync(path));
+  const expanded = expandedAssetBefore(path, newestPredecessor);
   if (expanded) actual = { ...actual, ...expanded };
   // Validate the two later fairness redraws before reconstructing this dated
   // inventory; no recording or unlisted still can take this path.
   const fairness = fairSharingAssets.some(row => 'public' + row.url === path)
-    ? fairSharingAssetBefore(path, readFileSync(path)) : null;
+    ? fairSharingAssetBefore(path, newestPredecessor) : null;
   if (fairness) actual = {...actual, ...fairness};
   // 8 October: validate the ten latest silent ST bytes and restore only their exact predecessor descriptors.
   const runtimeResidual = stIntroRuntimeResidualAssetBefore(path, readFileSync(path));
@@ -93,9 +97,10 @@ export function verifyFinalLanguageNextAsset(path: string, bytes: Uint8Array) {
   const frame = changed.get(path); const before = beforeInventory.find(row => row.path === path);
   assert.ok(frame || before, 'asset belongs to the complete frozen media inventory');
   const expected = frame?.new ?? before;
-  const latest = coreHeldOrdinaryAssetBefore(path, bytes);
-  assert.equal(latest?.bytes ?? bytes.length, expected.bytes, path + ': exact current measured bytes');
-  assert.equal(latest?.sha256 ?? sha(bytes), expected.sha256, path + ': exact current SHA');
+  const newestPredecessor = lightestAssetBefore(path, bytes);
+  const latest = coreHeldOrdinaryAssetBefore(path, newestPredecessor);
+  assert.equal(latest?.bytes ?? newestPredecessor.length, expected.bytes, path + ': exact current measured bytes');
+  assert.equal(latest?.sha256 ?? sha(newestPredecessor), expected.sha256, path + ': exact current SHA');
 }
 export function validateFinalLanguageNextMedia(manifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
   // 8 October's exact ST layer is newest; validate and rewind it before older source/history layers.

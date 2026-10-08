@@ -9,6 +9,7 @@ import {
   assertStudyRemainingControlsLocale,
   assertStudyRemainingControlsNative,
   ensureStudyRemainingControlsCurrent,
+  studyRemainingControlsPairedBefore,
   studyRemainingControlsNativeBefore,
 } from './study-remaining-controls-next-history-checks.ts';
 
@@ -67,6 +68,13 @@ test('Tshivenda Study controls preserve reviewed sources, placeholders, status a
 
 test('Sesotho Reading A-frame observation changes only its held learner fragment before historical snapshots', () => {
   ensureStudyRemainingControlsCurrent();
+  const pairedBytes = readFileSync(packet.protectedPaired.path);
+  const alteredPaired = Buffer.from(pairedBytes);
+  const unlistedTarget = alteredPaired.indexOf(Buffer.from('Khoso ea permaculture'));
+  assert.ok(unlistedTarget >= 0, 'an unrelated current slide target is present for the preservation probe');
+  alteredPaired[unlistedTarget] = 'X'.charCodeAt(0);
+  assert.equal(alteredPaired.length, pairedBytes.length, 'the unlisted paired corruption keeps exact byte length');
+  assert.throws(() => studyRemainingControlsPairedBefore(alteredPaired), /complete paired predecessor remains exact/, 'same-size caller corruption is rejected after the exact PR985 projection');
   const changed = st.lessons.find(lesson => lesson.id === packet.sesotho.lessonId)!;
   const canonical = COURSE_MODULES.find(module => module.id === 'reading-landscape')!.lessons.find(lesson => lesson.id === packet.sesotho.lessonId)!;
   const beforeLesson = beforeSt.lessons.find((lesson: any) => lesson.id === packet.sesotho.lessonId)!;
