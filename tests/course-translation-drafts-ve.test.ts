@@ -565,7 +565,15 @@ test('Tshivenda Study controls retain reviewed pairs, draft status and unresolve
   assert.equal(liveVenda.studentProgressError, progressPair.candidate);
   assert.ok(liveVenda.studentProgressError.includes('laisiwa kana u vhulungwa'), 'retain both load and save failure, not only one failure mode');
   assert.ok(liveVenda.studentProgressError.includes('vhuṱumani haṋu kana account access'), 'retain both connection and permission recovery choices');
-  assert.ok(!Object.hasOwn(liveVenda, 'studentPractitioner'), 'completion must not create an unreviewed translated professional credential');
+  const runtimeReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/STUDY-UI-DUE-UNLOCK-AND-CONTROLS-2026-10-08.json', import.meta.url), 'utf8'));
+  const practitionerPair = runtimeReview.rows.find((row: { id: string }) => row.id === 'study-ui/ve/studentPractitioner');
+  assert.ok(practitionerPair, 'the dated source-bound review must include the VE practitioner label');
+  assert.equal(practitionerPair.sourceEnglish, 'Permaculture practitioner');
+  assert.equal(practitionerPair.targetAfter, 'Muthu ane a shumisa Permaculture');
+  assert.match(practitionerPair.candidateReview, /fluent review pending/);
+  assert.ok(practitionerPair.semanticConstraints.some((reason: string) => /Do not imply expert status, professional credential, or certification/.test(reason)),
+    'the ordinary person-using paraphrase must not upgrade course completion into a credential');
+  assert.equal(liveVenda.studentPractitioner, practitionerPair.targetAfter, 'the shipped value must match the reviewed draft exactly');
   assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve the exact progress-error source');
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });

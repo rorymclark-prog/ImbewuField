@@ -5,6 +5,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT as st } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { ensureStudyUiDueUnlockCurrent, studyUiDueUnlockLocaleBefore, studyUiDueUnlockSourceBefore } from './study-ui-due-unlock-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/study-remaining-controls-next-2026-10-08/';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
@@ -129,14 +130,15 @@ assert.deepEqual(slide.target.body[2].segments[4], { sourceEnglish: stLayer.held
 
 /** Validate this complete newest layer before any historical snapshot projects it back. */
 export function ensureStudyRemainingControlsCurrent() {
-  assert.equal(sha(readFileSync(repositoryPath('lib/locales/ve.ts'))), packet.locale.afterSourceSha256, 'complete live VE locale source bytes');
+  ensureStudyUiDueUnlockCurrent();
+  assert.equal(sha(studyUiDueUnlockSourceBefore('lib/locales/ve.ts', readFileSync(repositoryPath('lib/locales/ve.ts')))), packet.locale.afterSourceSha256, 'complete VE locale source bytes after projecting only the exact newest due/unlock layer');
   assert.equal(sha(readFileSync(repositoryPath(stLayer.path))), stLayer.afterSourceSha256, 'complete live Sesotho registry source bytes');
   assert.equal(sha(pairedBytes), packet.protectedPaired.sha256, 'paired Reading bytes remain unchanged');
 }
 
 export function assertStudyRemainingControlsLocale(actual: unknown) {
   ensureStudyRemainingControlsCurrent();
-  assert.deepEqual(actual, afterLocale, 'VE dictionary rejects any unlisted or altered locale value');
+  assert.deepEqual(studyUiDueUnlockLocaleBefore(actual), afterLocale, 'VE dictionary rejects any unlisted or altered locale value after the exact newest due/unlock layer');
 }
 
 /** The exact predecessor is returned only after the full new ST object and source layer validate. */
@@ -158,6 +160,10 @@ export function assertStudyRemainingControlsNative(actual: unknown) {
 
 /** Project exact source bytes only after the complete current file and native layer validate. */
 export function studyRemainingControlsSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  if (file === 'lib/locales/ve.ts') {
+    ensureStudyRemainingControlsCurrent();
+    return studyUiDueUnlockSourceBefore(file, bytes);
+  }
   if (file !== stLayer.path) return bytes;
   ensureStudyRemainingControlsCurrent();
   const supplied = Buffer.from(bytes);
