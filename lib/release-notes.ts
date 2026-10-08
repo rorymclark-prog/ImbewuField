@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 October 2026', sha: 'b73208c1', changes: [
+    'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
+    'The Sesotho land-reading lesson keeps the observation phrase beside English.',
+  ], tour: [{ title: 'Check the remaining Study drafts', where: 'Study', href: '/student',
+    detail: 'Read Tshivenda messages and the Sesotho observation with its English source.',
+  }] },
   { when: '8 October 2026', sha: '8b30c345', changes: [
     'More Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
     'The Tshivenda download choice clearly names optional English narration.',
