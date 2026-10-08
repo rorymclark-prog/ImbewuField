@@ -9,6 +9,7 @@ import { lightestAssetBefore } from './reading-title-lightest-media-history-chec
 import { SESOTHO_READING_LANDSCAPE_DRAFT as stReading } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as veMarket } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { currentBatchProof, ensureCurrentBatch, ensureFollowupCurrent, followupFiles, followupNative as followupRegistryProof, followupNativeBefore, followupPairBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
+import { assertStudyRemainingControlsNative, studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-reading-vegetables-followup-2026-10-07/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
@@ -52,13 +53,16 @@ test('complete immutable snapshots reject edits outside the reviewed fields', ()
     assert.throws(() => followupPairBefore(file, corrupted), `${file}: unlisted source changes cannot be hidden by the five reviewed projections`);
   }
 
-  assert.deepEqual(followupNativeBefore(stReading), followupRegistryProof.before.st,
+  // 8 October validates/projects its single exact observation hold before this older full-module claim.
+  const stBeforeNextLayer = studyRemainingControlsNativeBefore(stReading);
+  assert.deepEqual(followupNativeBefore(stBeforeNextLayer), followupRegistryProof.before.st,
     'the full Sesotho module is checked before its two current learner fields are projected');
   assert.deepEqual(followupNativeBefore(veMarket), followupRegistryProof.before.ve,
     'the full Tshivenda module is checked before its two current learner fields are projected');
   const corruptedNative = structuredClone(stReading);
   corruptedNative.description.sesothoDraft += ' altered';
-  assert.throws(() => followupNativeBefore(corruptedNative), 'unlisted native registry changes invalidate historical reconstruction');
+  assert.throws(() => assertStudyRemainingControlsNative(corruptedNative), 'the complete newest layer rejects unlisted native edits');
+  assert.throws(() => followupNativeBefore(studyRemainingControlsNativeBefore(corruptedNative)), 'unlisted native registry changes invalidate historical reconstruction');
 });
 
 test('five paired clauses preserve exact source, order, neighbouring segments and safety meaning', () => {
