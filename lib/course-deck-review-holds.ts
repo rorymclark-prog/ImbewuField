@@ -15,6 +15,9 @@ const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number,
     15: 'The narration says cool, damp weather may favour disease, but the ZU wording says it may allow disease to spread; retain the conditional favouring clause.',
     16: 'The target may narrow “your whole smallholding” to a piece or plot of land; retain “smallholding” until the property scope is clear.',
   }),
+  'food-forest': Object.freeze({
+    11: 'The silent draft keeps the exact approved-local-species-list check in English because the recorded isiZulu wording may narrow what is approved. Withhold the older isiZulu check beside the silent English hold; preserve the original recording and binding unchanged.',
+  }),
   'soil-health': Object.freeze({
     1: 'The source specifies making safe compost, while the target says only making compost; retain the safety qualifier so the overview does not imply every compost process is safe.',
   }),

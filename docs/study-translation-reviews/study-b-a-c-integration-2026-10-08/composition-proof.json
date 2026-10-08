@@ -1,0 +1,163 @@
+{
+  "schema": "imbewufield.study-b-a-c-composed-source-proof.v1",
+  "status": "prepared-unreviewed-B-A-C-full-source-history-proof",
+  "tips": {
+    "main": "69a6a935e7d8eda805e4b7de5bed092d36c97be6",
+    "B": "8538e9a5011601e040c8dbcf02f2a4c167befed5",
+    "A": "973c91b4cff11dcc7438eed608135b298af0d194",
+    "AIntegrated": "02103dfa",
+    "C": "666b57bf962447cacf3e6aa1afcd22bf2718a6e4"
+  },
+  "owners": {
+    "BAProofSha256": "9def43557e73b2bcf892359c0d74c094d15540ed54076333155b443b05cb4ddd",
+    "CProofSha256": "cb195a30adcc990fe520a36d2cab1413e1f811d04fa8959b55f4c1d5d41eb0d8",
+    "BMediaProofSha256": "de15dd6662fa5fbd88f98f3c38a8fac00e8e9cbaf62ab80739ad758c42be4117",
+    "AManifestProofSha256": "020f98dde5da03597239b56242a1526d3d767147901085877f7f56c0e0292c96"
+  },
+  "files": [
+    {
+      "path": "app/sw.js/route.ts",
+      "snapshots": {
+        "main69": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-main69.txt",
+          "bytes": 128882,
+          "sha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615"
+        },
+        "afterB": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-afterB.txt",
+          "bytes": 129699,
+          "sha256": "c3cc2e2003e2fd74f34ac2136179cdd42114961ba70419ac0d0e0442edd593ce"
+        },
+        "afterA": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-afterA.txt",
+          "bytes": 129815,
+          "sha256": "4dd252fd1e8c3b77868243113499478286ea9006d775c31340dd939aa95f3196"
+        },
+        "afterC": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-afterC.txt",
+          "bytes": 129863,
+          "sha256": "e8ed62ce738666c95def305c504e7325fa9f59dbb80a35d16a1a6f2214f0df9e"
+        },
+        "afterAB": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-afterAB.txt",
+          "bytes": 130632,
+          "sha256": "882353b2d758d6cb523ce9f9be67b86e4a76e345113f6d70f5448b2e183048ab"
+        },
+        "integrated": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/worker-integrated.txt",
+          "bytes": 131613,
+          "sha256": "9407f9ab768d82a9b5aa0ff377d2279941b2154a256b4707307472f95b333508"
+        }
+      }
+    },
+    {
+      "path": "lib/course-asset-sizes.ts",
+      "snapshots": {
+        "main69": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-main69.txt",
+          "bytes": 117011,
+          "sha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991"
+        },
+        "afterB": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-afterB.txt",
+          "bytes": 117011,
+          "sha256": "4e090846230392100ef2318160f90346d25567899d3ff37a56b751a6551df646"
+        },
+        "afterA": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-afterA.txt",
+          "bytes": 117011,
+          "sha256": "21b04b97dff9093d75c4c1bbe3d53003f61166d85bcfe922816c19135c49bf8a"
+        },
+        "afterC": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-afterC.txt",
+          "bytes": 117408,
+          "sha256": "a3ea35e4f5cbb244278dc5c5b3d8ca754aebc1ae4dac202df086e5e08c0c7f16"
+        },
+        "afterAB": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-afterAB.txt",
+          "bytes": 117011,
+          "sha256": "a1a855618a27fd146e38d9313463308ae538b9bf74d59c5e495d1539f6eb6558"
+        },
+        "integrated": {
+          "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-integrated.txt",
+          "bytes": 117408,
+          "sha256": "3e69dec807e2d24bab0b31007576ef4fd9948d7198767d6f776a0622eba9b3ec"
+        }
+      }
+    }
+  ],
+  "workerMigrations": {
+    "B": {
+      "function": "migrateVegetablesTwoOrdinaryResidualStills",
+      "marker": "// These two newly reviewed text spans change their paired stills.",
+      "activationCall": ".then(migrateVegetablesTwoOrdinaryResidualStills)"
+    },
+    "A": {
+      "function": "migrateReadingTitleLightestFourStills",
+      "marker": "// The 8 October Reading title and Vegetables lightest-action cards refresh four",
+      "activationCall": ".then(migrateReadingTitleLightestFourStills)"
+    },
+    "C": {
+      "function": "migrateZuluSilentSafetyStills",
+      "marker": "// The isiZulu silent safety cards replace six cached recorded JPEG stills.",
+      "activationCall": ".then(migrateZuluSilentSafetyStills)"
+    }
+  },
+  "manifest": {
+    "CAddedRows": {
+      "/course-decks/food-forest/zu-silent/slide-07.webp": 326734,
+      "/course-decks/food-forest/zu-silent/slide-11.webp": 318444,
+      "/course-decks/food-forest/zu-silent/slide-12.webp": 334446,
+      "/course-decks/intro-permaculture/zu-silent/slide-14.webp": 459916,
+      "/course-decks/reading-landscape/zu-silent/slide-04.webp": 280664,
+      "/course-decks/reading-landscape/zu-silent/slide-07.webp": 347366
+    },
+    "BRows": [
+      {
+        "url": "/course-decks/vegetables-staples/ve/slide-10.webp",
+        "beforeBytes": 780116,
+        "afterBytes": 779884
+      },
+      {
+        "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+        "beforeBytes": 466162,
+        "afterBytes": 464820
+      }
+    ],
+    "ARows": [
+      {
+        "url": "/course-decks/reading-landscape/st/slide-12.webp",
+        "beforeBytes": 472172,
+        "afterBytes": 472466
+      },
+      {
+        "url": "/course-decks/reading-landscape/ve/slide-12.webp",
+        "beforeBytes": 471730,
+        "afterBytes": 476936
+      },
+      {
+        "url": "/course-decks/reading-landscape/ts/slide-12.webp",
+        "beforeBytes": 473304,
+        "afterBytes": 473120
+      },
+      {
+        "url": "/course-decks/vegetables-staples/st/slide-16.webp",
+        "beforeBytes": 570296,
+        "afterBytes": 592226
+      }
+    ],
+    "integratedEntryCount": 1936,
+    "summary": {
+      "path": "docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/snapshots/manifest-integrated.txt",
+      "bytes": 117408,
+      "sha256": "3e69dec807e2d24bab0b31007576ef4fd9948d7198767d6f776a0622eba9b3ec"
+    }
+  },
+  "preservation": {
+    "C": "Deletes only six previous /zu/ slide JPEG paths and their query variants; retains the newly rendered /zu-silent/ WebPs.",
+    "A": "Retires four existing learner WebP still URL variants once.",
+    "B": "Retires two existing learner WebP still URL variants once.",
+    "media": "No narration audio or film migration, network fetch, or new still eviction is introduced."
+  },
+  "projections": "Exact full-file projections must reconstruct main69, B-only, A-only, C-only, and A+B snapshots from integrated bytes; never project by silently accepting unlisted caller mutations."
+}

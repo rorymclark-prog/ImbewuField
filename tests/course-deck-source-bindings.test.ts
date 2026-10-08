@@ -13,6 +13,7 @@ import {
 } from '../lib/course-deck-source-bindings.ts';
 import { COURSE_TRANSCRIPTS } from '../lib/course-transcripts.ts';
 import { ISIZULU_SILENT_DECK_DRAFT_ROWS } from '../lib/course-deck-silent-drafts-data.ts';
+import { ISIZULU_SILENT_DECK_TEXT_CANDIDATES } from '../lib/course-deck-silent-safety-text-candidates.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { englishSlideRecords } from '../scripts/paired-draft-slides.mjs';
 import {
@@ -47,22 +48,27 @@ function webpDimensions(bytes: Buffer): { width: number; height: number } {
   throw new Error('No supported encoded WebP dimensions');
 }
 
-test('every corrected silent ZU card carries the checked full source, target and actual image without releasing its old voice', () => {
+test('every corrected silent ZU card carries its checked source and image while voice playback follows exact wording holds', () => {
   const packet = JSON.parse(readFileSync(new URL(
     '../docs/study-translation-reviews/ISIZULU-SILENT-HELD-SLIDE-CANDIDATES-2026-10-05.json', import.meta.url), 'utf8'));
   // Fair/equal distinctions add two independent silent revisions; the prior
-  // 23 full source/target/asset checks remain in this complete enumeration.
+  // Earlier full source/target/asset checks remain in this complete enumeration.
   const expected = [...packet.rows.filter((row: any) => row.currentHold), ...fairSharingZuluSilentRows.map(row => ({
     ...row, proposedSilentTarget: row.correctedTarget, proposedSilentZuluTitle: row.correctedTitle,
   }))];
   // A later independently checked longest-versus-long correction adds Reading14; preserve every earlier card check.
   const reading14 = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/reading-comparisons-2026-10-07/reading-zu14-silent-row.json', import.meta.url), 'utf8'));
   expected.push({ ...reading14, proposedSilentTarget: reading14.correctedTarget, proposedSilentZuluTitle: reading14.correctedTitle });
+  expected.push(...ISIZULU_SILENT_DECK_TEXT_CANDIDATES.map((row) => ({
+    ...row, proposedSilentTarget: row.correctedTarget, proposedSilentZuluTitle: row.correctedTitle,
+  })));
   const keys = (rows: readonly { moduleId: string; slide: number }[]) => rows.map(row =>
     `${row.moduleId}:${row.slide}`).sort();
   assert.deepEqual(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS), keys(expected),
     'no approved card is silently omitted, duplicated, or replaced by a temporary English-only input');
-  assert.deepEqual(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS), keys(isiZuluDeckReviewHoldEntries()));
+  const registeredKeys = new Set(keys(ISIZULU_SILENT_DECK_DRAFT_ROWS));
+  assert.ok(isiZuluDeckReviewHoldEntries().every((row) => registeredKeys.has(`${row.moduleId}:${row.slide}`)),
+    'every playback hold has its exact silent visual source pair registered');
   for (const row of ISIZULU_SILENT_DECK_DRAFT_ROWS) {
     const checked = expected.find((candidate: any) => candidate.moduleId === row.moduleId && candidate.slide === row.slide);
     assert.deepEqual(row.sourceEnglish, checked.sourceEnglish);
@@ -86,11 +92,38 @@ test('every corrected silent ZU card carries the checked full source, target and
     assert.deepEqual(slideImageFor(row.moduleId, 'zu', row.slide), {
       url: row.imageUrl, lang: 'zu', exact: true, aspectRatio: row.width / row.height,
     });
-    assert.equal(trackUrl(row.moduleId, 'zu', row.slide), null,
-      'corrected visual wording is not a binding to the older recorded words');
+    const binding = ISIZULU_DECK_SOURCE_BINDINGS.find((candidate) =>
+      candidate.moduleId === row.moduleId && candidate.slide === row.slide);
+    assert.ok(binding, `${row.moduleId}:${row.slide}: source and recorded media identity remains registered`);
+    assert.equal(trackUrl(row.moduleId, 'zu', row.slide),
+      isiZuluDeckReviewHold(row.moduleId, row.slide) ? null : binding.audioUrl,
+      'old speech remains playable only when no exact-slide meaning hold applies');
     assert.equal(animationUrls(row.moduleId, row.slide, 'zu'), null);
     assert.equal(row.audioBinding, 'none');
     assert.equal(row.reviewStatus, 'unreviewed');
+  }
+  for (const candidate of ISIZULU_SILENT_DECK_TEXT_CANDIDATES) {
+    const row = ISIZULU_SILENT_DECK_DRAFT_ROWS.find((draft) => draft.moduleId === candidate.moduleId && draft.slide === candidate.slide)!;
+    const binding = ISIZULU_DECK_SOURCE_BINDINGS.find((item) => item.moduleId === candidate.moduleId && item.slide === candidate.slide)!;
+    assert.equal(row.correctedTitle, candidate.correctedTitle);
+    assert.deepEqual(row.correctedTarget, candidate.correctedTarget);
+    assert.equal(row.targetHash, candidate.targetHash);
+    assert.deepEqual(slideImageFor(candidate.moduleId, 'zu', candidate.slide), {
+      url: row.imageUrl, lang: 'zu', exact: true, aspectRatio: row.width / row.height,
+    }, `${candidate.moduleId}:${candidate.slide}: the selected ZU still is the new silent card`);
+    assert.equal(trackUrl(candidate.moduleId, 'zu', candidate.slide),
+      isiZuluDeckReviewHold(candidate.moduleId, candidate.slide) ? null : binding.audioUrl,
+      `${candidate.moduleId}:${candidate.slide}: old speech is held only when the visible silent target differs`);
+    assert.equal(sha256(readFileSync(new URL(binding.audioUrl.slice(1), publicRoot))), binding.audioSha256,
+      `${candidate.moduleId}:${candidate.slide}: original recorded bytes and binding stay unchanged`);
+    assert.equal(sha256(readFileSync(new URL(binding.imageUrl.slice(1), publicRoot))), binding.imageSha256,
+      `${candidate.moduleId}:${candidate.slide}: original isiZulu JPEG stays unchanged`);
+    assert.equal(animationUrls(candidate.moduleId, candidate.slide, 'zu'), null,
+      `${candidate.moduleId}:${candidate.slide}: no animation or added media binding`);
+    if (!isiZuluDeckReviewHold(candidate.moduleId, candidate.slide)) {
+      assert.deepEqual(binding.recordedTarget, candidate.correctedTarget,
+        `${candidate.moduleId}:${candidate.slide}: unchanged recording wording remains safely aligned to its silent text`);
+    }
   }
 });
 
@@ -220,6 +253,101 @@ test('silent ZU registry freezes copies and stops resolving after live source dr
     'a checked card stops resolving if its live English source changes');
 });
 
+test('the Reading 7 image-only English cue stays a separately attributed source, outside both transcript strings', () => {
+  const binding = ISIZULU_DECK_SOURCE_BINDINGS.find(({ moduleId, slide }) =>
+    moduleId === 'reading-landscape' && slide === 7)!;
+  const cue = {
+    language: 'en' as const,
+    label: 'English cue from original slide image — not narration source',
+    text: 'Check safe overflow with a trained local adviser',
+    sourceImageUrl: '/course-decks/reading-landscape/en/slide-07.jpg',
+    sourceImageSha256: '16eb6ee68e24f69ab115a29f2e9588c094715cc14983ecf312f84b1cdb8cd348',
+    identitySha256: '5b366035bbf36ef0efaf1c951c7bf6576f50ea95b57137b436d429cbf0a19e9b',
+  };
+  const row: MutableSilentDraft = {
+    ...silentDraftFixture(),
+    moduleId: binding.moduleId,
+    slide: binding.slide,
+    sourceHeading: binding.sourceHeading,
+    sourceEnglish: [...binding.source],
+    sourceHash: binding.sourceHash,
+    imageUrl: `/course-decks/${binding.moduleId}/zu-silent/slide-07.webp`,
+    supplementalImageCue: cue,
+  };
+  const registry = createIsiZuluSilentDeckDraftRegistry([row]);
+  const resolved = resolveSilentDraftFromRegistry(registry, binding.moduleId, binding.slide);
+  assert.ok(resolved);
+  assert.deepEqual(resolved.supplementalImageCue, cue);
+  assert.ok(!resolved.sourceEnglish.includes(cue.text), 'image-only authored cue is not added to canonical narration source');
+  assert.ok(!resolved.correctedTarget.includes(cue.text), 'English image cue is not represented as translated isiZulu text');
+  assert.equal(assetSha256(cue.sourceImageUrl), cue.sourceImageSha256,
+    'the supplemental cue remains bound to the checked English source image');
+  const { identitySha256, ...cueIdentity } = cue;
+  assert.equal(sha256(Buffer.from(JSON.stringify(cueIdentity))), identitySha256,
+    'the cue content and original image digest have their own independent identity');
+
+  const missingCue = { ...row };
+  delete missingCue.supplementalImageCue;
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([missingCue]), /Supplemental image cue is required/);
+  const changedCue = { ...row, supplementalImageCue: { ...cue, text: 'Check overflow with a trained local adviser' } };
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([changedCue]), /Supplemental image cue identity drifted/);
+  const changedSourceIdentity = { ...row, supplementalImageCue: { ...cue, sourceImageSha256: '0'.repeat(64) } };
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([changedSourceIdentity]), /Supplemental image cue identity drifted/);
+  const changedCueIdentity = { ...row, supplementalImageCue: { ...cue, identitySha256: '0'.repeat(64) } };
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([changedCueIdentity]), /Supplemental image cue identity drifted/);
+  const movedCue = { ...silentDraftFixture(), supplementalImageCue: cue };
+  assert.throws(() => createIsiZuluSilentDeckDraftRegistry([movedCue]), /Supplemental image cue identity drifted/);
+});
+
+test('the six accepted silent safety cards are source-bound, rendered and runtime-registered as unreviewed', () => {
+  const snapshot = JSON.parse(readFileSync(new URL(
+    '../docs/study-translation-reviews/zulu-six-silent-safety-text-candidates-2026-10-08.json', import.meta.url), 'utf8'));
+  const expectedKeys = [
+    'intro-permaculture:14', 'reading-landscape:4', 'reading-landscape:7',
+    'food-forest:7', 'food-forest:11', 'food-forest:12',
+  ].sort();
+  const key = (row: { moduleId: string; slide: number }) => `${row.moduleId}:${row.slide}`;
+  assert.deepEqual(ISIZULU_SILENT_DECK_TEXT_CANDIDATES.map(key).sort(), expectedKeys);
+  assert.deepEqual(snapshot.rows.map(key).sort(), expectedKeys);
+  assert.equal(snapshot.status, 'accepted source-bound text; locally rendered and runtime-registered, unreviewed');
+  assert.equal(snapshot.acceptedPacketSha256,
+    '80b56bf5ee4a2f60877f9c11254d9c0e792f80a2f97fee235c301059834d3be3');
+
+  for (const row of ISIZULU_SILENT_DECK_TEXT_CANDIDATES) {
+    const snap = snapshot.rows.find((candidate: any) => key(candidate) === key(row));
+    const binding = ISIZULU_DECK_SOURCE_BINDINGS.find((candidate) => key(candidate) === key(row));
+    assert.ok(binding);
+    assert.deepEqual(row.sourceEnglish, binding.source);
+    assert.equal(row.sourceHeading, binding.sourceHeading);
+    assert.equal(row.sourceHash, binding.sourceHash);
+    assert.equal(row.sourceHash, sha256(Buffer.from(JSON.stringify(row.sourceEnglish))));
+    assert.equal(row.targetHash, sha256(Buffer.from(JSON.stringify({
+      heading: row.correctedTitle, body: row.correctedTarget,
+    }))));
+    assert.equal(row.reviewStatus, 'unreviewed');
+    assert.equal(row.audioBinding, 'none');
+    assert.deepEqual(snap, row);
+  }
+  const forest11 = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === 'food-forest:11')!;
+  assert.ok(forest11.correctedTarget.some((paragraph) => paragraph.includes(
+    'Check each plant against frost, soil, mature size and the approved local species list.')));
+  const reading7 = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === 'reading-landscape:7')!;
+  assert.ok(reading7.supplementalImageCue);
+  assert.ok(!reading7.sourceEnglish.includes(reading7.supplementalImageCue.text));
+  assert.ok(!reading7.correctedTarget.includes(reading7.supplementalImageCue.text));
+  assert.equal(reading7.sourceHash, ISIZULU_DECK_SOURCE_BINDINGS.find((row) => key(row) === key(reading7))!.sourceHash,
+    'the image-authored adviser cue does not alter canonical narration source identity');
+  assert.equal(resolveRegisteredSilentDraft('reading-landscape', 14)?.imageUrl,
+    '/course-decks/reading-landscape/zu-silent/slide-14.webp', 'the existing Reading 14 correction is unchanged');
+  for (const candidate of ISIZULU_SILENT_DECK_TEXT_CANDIDATES) {
+    const runtime = resolveRegisteredSilentDraft(candidate.moduleId, candidate.slide);
+    assert.ok(runtime, `${key(candidate)} resolves through the runtime registry`);
+    assert.equal(runtime!.imageSha256, ISIZULU_SILENT_DECK_DRAFT_ROWS.find((row) => key(row) === key(candidate))!.imageSha256);
+    assert.equal(runtime!.reviewStatus, 'unreviewed');
+    assert.equal(runtime!.audioBinding, 'none');
+  }
+});
+
 test('silent ZU registry rejects duplicate identities and invalid image/hash metadata', () => {
   const binding = ISIZULU_DECK_SOURCE_BINDINGS[0];
   assert.throws(() => createIsiZuluSilentDeckDraftRegistry([silentDraftFixture(), silentDraftFixture()]), /Duplicate.*identity/);
@@ -293,8 +421,18 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
         }, `${binding.moduleId} slide ${binding.slide}: flagged wording uses English until a corrected still is registered`);
       }
     } else {
-      assert.deepEqual(shown, { url: binding.imageUrl, lang: 'zu', exact: true },
-        `${binding.moduleId} slide ${binding.slide}: an unflagged exact pair keeps its ZU still`);
+      const silentDraft = resolveRegisteredSilentDraft(binding.moduleId, binding.slide);
+      if (silentDraft) {
+        assert.deepEqual(shown, {
+          url: silentDraft.imageUrl,
+          lang: 'zu',
+          exact: true,
+          aspectRatio: silentDraft.width / silentDraft.height,
+        }, `${binding.moduleId} slide ${binding.slide}: the exact-source silent still is selected`);
+      } else {
+        assert.deepEqual(shown, { url: binding.imageUrl, lang: 'zu', exact: true },
+          `${binding.moduleId} slide ${binding.slide}: an unflagged pair without a silent revision keeps its ZU still`);
+      }
     }
   }
 
@@ -338,10 +476,11 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
   }, 'ST Introduction uses its new exact-source silent pair; archived bytes remain protected above');
 });
 
-test('all 25 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
+test('all 27 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
   const expected = [
     'intro-permaculture:6', 'intro-permaculture:7', 'intro-permaculture:22',
     'reading-landscape:5', 'reading-landscape:14', 'reading-landscape:15', 'reading-landscape:16',
+    'food-forest:11',
     'soil-health:1',
     'water-harvesting:10',
     'vegetables-staples:16', 'vegetables-staples:18',
@@ -353,6 +492,10 @@ test('all 25 independent isiZulu meaning flags suppress only their exact slides 
   ];
   const entries = isiZuluDeckReviewHoldEntries();
   assert.deepEqual(entries.map(({ moduleId, slide }) => `${moduleId}:${slide}`).sort(), [...expected].sort());
+  assert.equal(fullNarrationUrl('food-forest', 'zu'), null,
+    'the isiZulu Food Forest continuous track stays unavailable beside its exact slide-11 hold');
+  assert.equal(fullNarrationUrl('food-forest', 'en'), '/course-audio/food-forest/en/full.mp3',
+    'the isiZulu hold does not affect the English narration');
   assert.ok(entries.every(({ reason }) => reason.trim().length > 40), 'every hold names its specific source risk');
   const soilSlide13 = ISIZULU_DECK_SOURCE_BINDINGS.find(({ moduleId, slide }) => moduleId === 'soil-health' && slide === 13);
   assert.ok(soilSlide13, 'Soil Health slide 13 has an immutable English/recorded ZU pair');
@@ -462,13 +605,14 @@ test('a drifted registered isiZulu source or title falls back to English and sup
   }
 });
 
-test('one changed source row withdraws a formerly usable ZU continuous narration track', () => {
+test('one changed source row withdraws its clip while an independently held full ZU track stays unavailable', () => {
   const moduleId = 'food-forest';
   const slide = 1;
   const mutableTranscripts = COURSE_TRANSCRIPTS as unknown as Record<string, Record<string, Record<number, string[]>>>;
   const target = mutableTranscripts[moduleId].zu[slide];
   assert.equal(isiZuluDeckReviewHold(moduleId, slide), null);
-  assert.equal(fullNarrationUrl(moduleId, 'zu'), `/course-audio/${moduleId}/zu/full.mp3`);
+  assert.equal(fullNarrationUrl(moduleId, 'zu'), null,
+    'another slide has an exact meaning hold, so the continuous recording is already unavailable');
 
   try {
     mutableTranscripts[moduleId].zu[slide] = [...target, 'A new unpaired sentence.'];

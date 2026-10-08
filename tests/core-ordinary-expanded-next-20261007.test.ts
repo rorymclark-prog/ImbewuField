@@ -11,8 +11,9 @@ import {
 } from './st-intro-runtime-residual-history-checks.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT as ve } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples-l2.ts';
-import { readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
+import { readingTitleLightestFileBytesBefore, readingTitleLightestPairBeforeHistory } from './reading-title-lightest-next-history-checks.ts';
 import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
+import { studyVegetablesTwoResidualNativeBefore, studyVegetablesTwoResidualPairedBefore, studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
 const load = (name: string) => JSON.parse(readFileSync(folder + name, 'utf8'));
@@ -29,10 +30,10 @@ test('only the independently reviewed six fields and three source-identical deck
     assert.equal(hash(row.after), row.afterSha256);
     // Both newer reviewed layers are checked in source order before this dated claim.
     const current = readFileSync(file);
-    const afterLightest = readingTitleLightestFileBytesBefore(file, current);
+    const afterVegetables = studyVegetablesTwoResidualSourceBefore(file, current);
     const afterExpandedLayer = file === 'lib/course-asset-sizes.ts'
-      ? stIntroRuntimeResidualManifestBefore(Buffer.from(afterLightest).toString())
-      : stIntroRuntimeResidualSourceBefore(file, afterLightest);
+      ? stIntroRuntimeResidualManifestBefore(Buffer.from(readingTitleLightestFileBytesBefore(file, afterVegetables)).toString())
+      : stIntroRuntimeResidualSourceBefore(file, readingTitleLightestFileBytesBefore(file, afterVegetables));
     assert.equal(Buffer.from(afterExpandedLayer).toString(), row.after, file + ': complete changed and unlisted bytes after exact newer-layer projections');
     if (file.includes('paired-draft') || file.startsWith('lib/course-translation')) expected[file] = row.before;
   }
@@ -72,13 +73,20 @@ test('only the independently reviewed six fields and three source-identical deck
   match.target.body[reuse.body].text = reuse.afterTarget;
   expected[reuse.file] = JSON.stringify(matching);
   for (const [file, value] of Object.entries(expected)) {
-    if (file.endsWith('.json')) assert.deepEqual(JSON.parse(readFileSync(file, 'utf8')), JSON.parse(value), file + ': all source cells, safety tails and unrelated drafts stay exact');
-    else assert.equal(readFileSync(file, 'utf8'), value, file + ': no additional learner edits');
+    if (file.endsWith('.json')) {
+      const current = JSON.parse(readFileSync(file, 'utf8'));
+      const afterVegetables = studyVegetablesTwoResidualPairedBefore(file, current);
+      const historical = readingTitleLightestPairBeforeHistory(file, afterVegetables);
+      assert.deepEqual(historical, JSON.parse(value), file + ': all source cells, safety tails and unrelated drafts stay exact after exact newer-layer projections');
+    }
+    else assert.equal(Buffer.from(studyVegetablesTwoResidualSourceBefore(file, readFileSync(file))).toString(), value,
+      file + ': no additional learner edits after exact newer learner-source projection');
   }
 });
 
 test('resolver-used native modules preserve every source, quiz index and non-target field; changed source falls back', () => {
-  for (const [lang, module] of Object.entries({ ve, ts })) {
+  for (const [lang, currentModule] of Object.entries({ ve, ts })) {
+    const module = lang === 've' ? studyVegetablesTwoResidualNativeBefore(currentModule) : currentModule;
     assert.deepEqual(module, native.after[lang]);
     const result: any = structuredClone(module);
     for (const row of plan.rows.filter((r: any) => r.effectiveDecision === 'accept' && r.binding.file.startsWith('lib/') && r.language.includes(`(${lang})`))) {
@@ -113,7 +121,8 @@ test('only four measured stills change size and all published bytes match the re
     expected = expected.replace(`'${row.url}': ${row.beforeBytes},`, `'${row.url}': ${row.afterBytes},`);
   }
   // The exact four-card projection is followed by PR985's exact ten-card predecessor.
-  const predecessor = readingTitleLightestFileBytesBefore('lib/course-asset-sizes.ts', readFileSync('lib/course-asset-sizes.ts'));
+  const afterVegetables = studyVegetablesTwoResidualSourceBefore('lib/course-asset-sizes.ts', readFileSync('lib/course-asset-sizes.ts'));
+  const predecessor = readingTitleLightestFileBytesBefore('lib/course-asset-sizes.ts', afterVegetables);
   assert.equal(Buffer.from(stIntroRuntimeResidualManifestBefore(Buffer.from(predecessor).toString())).toString('utf8'), expected,
     'the complete older manifest assertion receives only its exact four-card and then ten-card predecessors');
 });

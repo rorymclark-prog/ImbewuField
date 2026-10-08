@@ -1,5 +1,6 @@
 import { COURSE_NARRATION, trackTitle } from './course-audio';
 import { COURSE_TRANSCRIPTS } from './course-transcripts';
+import { READING_7_SILENT_IMAGE_CUE } from './course-deck-silent-cues';
 import {
   ISIZULU_DECK_SOURCE_BINDINGS,
   resolveIsiZuluDeckSourcePair,
@@ -15,6 +16,19 @@ export interface IsiZuluSilentDeckDraft {
   readonly sourceEnglish: readonly string[];
   readonly correctedTitle: string;
   readonly correctedTarget: readonly string[];
+  /**
+   * A separately attributed English cue authored on a source slide image. It is not part of the
+   * narration transcript or the corrected isiZulu target, and its source image has an independent
+   * identity so replacing that source cannot silently keep the supplement attached.
+   */
+  readonly supplementalImageCue?: Readonly<{
+    readonly language: 'en';
+    readonly label: string;
+    readonly text: string;
+    readonly sourceImageUrl: string;
+    readonly sourceImageSha256: string;
+    readonly identitySha256: string;
+  }>;
   /** The immutable legacy English source digest, not a digest of the new target. */
   readonly sourceHash: string;
   readonly targetHash: string;
@@ -74,6 +88,16 @@ function validateSilentDraft(
   if (candidate.sourceHash !== legacy.sourceHash) {
     throw new Error(`Source hash differs from the immutable pair at ${candidate.moduleId} slide ${candidate.slide}`);
   }
+  const needsReading7ImageCue = candidate.moduleId === 'reading-landscape' && candidate.slide === 7;
+  if (needsReading7ImageCue && !candidate.supplementalImageCue) {
+    throw new Error(`Supplemental image cue is required at ${candidate.moduleId} slide ${candidate.slide}`);
+  }
+  if (candidate.supplementalImageCue !== undefined) {
+    if (candidate.moduleId !== 'reading-landscape' || candidate.slide !== 7 ||
+        JSON.stringify(candidate.supplementalImageCue) !== JSON.stringify(READING_7_SILENT_IMAGE_CUE)) {
+      throw new Error(`Supplemental image cue identity drifted at ${candidate.moduleId} slide ${candidate.slide}`);
+    }
+  }
   if (typeof candidate.correctedTitle !== 'string' || !candidate.correctedTitle.trim() ||
       !Array.isArray(candidate.correctedTarget) || candidate.correctedTarget.length === 0 ||
       candidate.correctedTarget.some((paragraph) => typeof paragraph !== 'string' || !paragraph.trim())) {
@@ -113,6 +137,9 @@ export function createIsiZuluSilentDeckDraftRegistry(
       ...candidate,
       sourceEnglish: Object.freeze([...candidate.sourceEnglish]),
       correctedTarget: Object.freeze([...candidate.correctedTarget]),
+      ...(candidate.supplementalImageCue ? {
+        supplementalImageCue: Object.freeze({ ...candidate.supplementalImageCue }),
+      } : {}),
     });
   }
   const registry = Object.freeze(rows);
@@ -133,6 +160,7 @@ export function resolveIsiZuluSilentDeckDraft(
   const candidate = registry[identity(moduleId, slide)];
   if (!candidate || !Object.isFrozen(candidate) || !Object.isFrozen(candidate.sourceEnglish) ||
       !Object.isFrozen(candidate.correctedTarget)) return null;
+  if (candidate.supplementalImageCue && !Object.isFrozen(candidate.supplementalImageCue)) return null;
   try {
     validateSilentDraft(candidate, transcripts, titles ?? manifestTitles(moduleId, slide) ?? undefined);
   } catch {

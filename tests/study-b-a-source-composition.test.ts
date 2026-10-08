@@ -16,7 +16,7 @@ test('B+A source layers recover their exact independent worker and manifest pred
     const corrupted = Buffer.from(live);
     corrupted[corrupted.length - 2] = corrupted[corrupted.length - 2] === 0x20 ? 0x21 : 0x20;
     assert.equal(corrupted.length, live.length, 'same-size source corruption remains detectable');
-    assert.throws(() => assertStudyBAComposedBytes(file, corrupted), /complete integrated source/,
+    assert.throws(() => assertStudyBAComposedBytes(file, corrupted), /byte-exact integrated source/,
       `${file}: same-size unlisted corruption cannot satisfy the current full-source proof`);
   }
 });

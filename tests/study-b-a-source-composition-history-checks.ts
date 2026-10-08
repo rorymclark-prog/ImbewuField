@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { studyABCProjectToAB, ensureStudyBACCompositionCurrent } from './study-b-a-c-source-composition-history-checks.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const path = (value: string) => resolve(root, value);
@@ -74,7 +75,11 @@ function project(file: string, bytes: string | Uint8Array, target: 'A' | 'B'): s
   const row = fileRow(file);
   if (!row) return bytes;
   ensureStudyBACompositionCurrent();
-  const supplied = Buffer.from(bytes);
+  const raw = Buffer.from(bytes);
+  const currentLive = readFileSync(path(file));
+  const supplied = sha(raw) === sha(currentLive)
+    ? Buffer.from(studyABCProjectToAB(file, raw))
+    : raw;
   const integrated = row.snapshots.integrated;
   const expectedTarget = row.snapshots[target === 'A' ? 'afterA' : 'afterB'];
   if (sha(supplied) === expectedTarget.sha256) return bytes;
@@ -100,18 +105,21 @@ export function assertStudyBAComposedBytes(file: string, bytes: string | Uint8Ar
   const row = fileRow(file);
   assert.ok(row, `${file}: source is owned by the B+A composition proof`);
   const expected = row.snapshots.integrated;
-  assert.equal(Buffer.byteLength(bytes), expected.bytes, `${file}: complete integrated source has expected size`);
-  assert.equal(sha(bytes), expected.sha256, `${file}: complete integrated source and all unlisted bytes match the immutable proof`);
+  const projected = Buffer.from(studyABCProjectToAB(file, bytes));
+  assert.equal(projected.byteLength, expected.bytes, `${file}: validated current source projects to the complete B+A owner size`);
+  assert.equal(sha(projected), expected.sha256, `${file}: complete B+A owner and all unlisted bytes match the immutable proof`);
 }
 
 export function ensureStudyBACompositionCurrent(): void {
   assert.equal(proof.status, 'prepared-unreviewed-final-B-A-source-history-proof');
+  ensureStudyBACCompositionCurrent();
   for (const row of proof.files) {
     const main = snapshot(row, 'main69');
     const afterB = snapshot(row, 'afterB');
     const afterA = snapshot(row, 'afterA');
     const integrated = snapshot(row, 'integrated');
-    assert.equal(sha(readFileSync(path(row.path))), row.snapshots.integrated.sha256, `${row.path}: complete integrated live source and unlisted bytes`);
+    const liveAtAB = Buffer.from(studyABCProjectToAB(row.path, readFileSync(path(row.path))));
+    assert.equal(sha(liveAtAB), row.snapshots.integrated.sha256, `${row.path}: complete B+A live layer projected from the validated B+A+C source`);
     assertStudyBAComposedBytes(row.path, integrated);
     if (row.path === 'app/sw.js/route.ts') {
       assert.equal(sha(main), aComposition.files[row.path].main837AfterSha256, 'main69 is the exact shared main837/PR985-after worker state');

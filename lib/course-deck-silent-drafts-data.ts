@@ -1,8 +1,9 @@
 import type { IsiZuluSilentDeckDraftInput } from './course-deck-silent-drafts';
+import { ISIZULU_SILENT_DECK_TEXT_CANDIDATES } from './course-deck-silent-safety-text-candidates';
 
 // Corrected visual drafts have independent asset/text identity; the old recording stays withheld.
 // Source checks and rendered-file proof are recorded in ISIZULU-SILENT-HELD-SLIDE-* review packets.
-export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInput[] = [
+const PREVIOUSLY_RELEASED_SILENT_ROWS: readonly IsiZuluSilentDeckDraftInput[] = [
   {
     "moduleId": "intro-permaculture",
     "slide": 6,
@@ -719,4 +720,47 @@ export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInpu
   "reviewStatus": "unreviewed",
   "audioBinding": "none"
 }
+];
+
+const ZULU_SILENT_SAFETY_IMAGE_PROOF = {
+  'intro-permaculture:14': {
+    imageUrl: '/course-decks/intro-permaculture/zu-silent/slide-14.webp',
+    imageSha256: 'b1d29764cb14c182348d041652b8278bb67ad251727d88b77581130d29e72232',
+    imageBytes: 459916, width: 1440, height: 5400,
+  },
+  'reading-landscape:4': {
+    imageUrl: '/course-decks/reading-landscape/zu-silent/slide-04.webp',
+    imageSha256: '579b64b6caeae8888bee14251257a53c69d7cf30693e8c04278f2341b35f9e7c',
+    imageBytes: 280664, width: 1440, height: 5400,
+  },
+  'reading-landscape:7': {
+    imageUrl: '/course-decks/reading-landscape/zu-silent/slide-07.webp',
+    imageSha256: '9305960cbede78b02c3541baf22032366027a978e958ac9b8425606950de34e0',
+    imageBytes: 347366, width: 1440, height: 5400,
+  },
+  'food-forest:7': {
+    imageUrl: '/course-decks/food-forest/zu-silent/slide-07.webp',
+    imageSha256: 'd0eeb63b0934a754cee0cff86154e4ae2622139ee249d12602f6dfc5b8093aa3',
+    imageBytes: 326734, width: 1440, height: 5400,
+  },
+  'food-forest:11': {
+    imageUrl: '/course-decks/food-forest/zu-silent/slide-11.webp',
+    imageSha256: '5b4300bbdc77d039b33263feab7d3165ea2b17012c5acca70444921c42db7370',
+    imageBytes: 318444, width: 1440, height: 5400,
+  },
+  'food-forest:12': {
+    imageUrl: '/course-decks/food-forest/zu-silent/slide-12.webp',
+    imageSha256: 'cb5d59ce24f5cc9367e2410d1ae80d52f715cacda6c868f2671375359d3b8d48',
+    imageBytes: 334446, width: 1440, height: 5400,
+  },
+} satisfies Record<string, Pick<IsiZuluSilentDeckDraftInput,
+  'imageUrl' | 'imageSha256' | 'imageBytes' | 'width' | 'height'>>;
+
+export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInput[] = [
+  ...PREVIOUSLY_RELEASED_SILENT_ROWS,
+  ...ISIZULU_SILENT_DECK_TEXT_CANDIDATES.map((candidate) => {
+    const proof = ZULU_SILENT_SAFETY_IMAGE_PROOF[`${candidate.moduleId}:${candidate.slide}` as keyof typeof ZULU_SILENT_SAFETY_IMAGE_PROOF];
+    if (!proof) throw new Error(`Missing rendered isiZulu safety still proof for ${candidate.moduleId}:${candidate.slide}`);
+    return { ...candidate, ...proof };
+  }),
 ];

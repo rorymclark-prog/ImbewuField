@@ -30,8 +30,8 @@ export function ensureExpandedCurrent() {
     assert.equal(sha(r.before), r.beforeSha256, file + ': full predecessor');
     assert.equal(sha(r.after), r.afterSha256, file + ': full current source and unlisted bytes');
     const source = readFileSync(repositoryPath(file));
-    const afterLightest = readingTitleLightestFileBytesBefore(file, source);
-    const latestProjected = studyVegetablesTwoResidualSourceBefore(file, afterLightest);
+    const afterVegetables = studyVegetablesTwoResidualSourceBefore(file, source);
+    const latestProjected = readingTitleLightestFileBytesBefore(file, afterVegetables);
     const actual = file === 'lib/course-asset-sizes.ts'
       ? stIntroRuntimeResidualManifestBefore(latestProjected.toString())
       : stIntroRuntimeResidualSourceBefore(file, latestProjected);
@@ -46,8 +46,8 @@ export function ensureExpandedCurrent() {
 /** Older owners still reject caller corruption against their complete snapshots.
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
-  bytes = readingTitleLightestFileBytesBefore(file, bytes);
   bytes = studyVegetablesTwoResidualSourceBefore(file, bytes);
+  bytes = readingTitleLightestFileBytesBefore(file, bytes);
   bytes = file === 'lib/course-asset-sizes.ts'
     ? stIntroRuntimeResidualManifestBeforeHistory(Buffer.from(bytes).toString())
     : stIntroRuntimeResidualSourceBefore(file, bytes);
@@ -63,8 +63,8 @@ export function expandedPairBefore<T>(file: string, value: T): T {
   // accepted leaves already projected. Use the history-aware exact-leaf
   // projection here; the expanded full-file snapshot below still rejects any
   // unrelated or unlisted caller mutation.
-  value = readingTitleLightestPairBeforeHistory(file, value);
   value = studyVegetablesTwoResidualPairedBefore(file, value);
+  value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;
   ensureExpandedCurrent();
@@ -72,8 +72,8 @@ export function expandedPairBefore<T>(file: string, value: T): T {
   return JSON.stringify(value) === JSON.stringify(JSON.parse(row.after)) ? JSON.parse(row.before) : value;
 }
 export function expandedNativeBefore<T>(value: T): T {
-  value = readingTitleLightestNativeBeforeHistory(value);
   value = studyVegetablesTwoResidualNativeBefore(value);
+  value = readingTitleLightestNativeBeforeHistory(value);
   const obj = value as any;
   const key = Object.keys(native.after).find(k => native.after[k].id === obj?.id && native.after[k].language === obj?.language && native.after[k].lessons.map((l: any) => l.id).join('|') === obj?.lessons?.map((l: any) => l.id).join('|'));
   if (!key) return value;
@@ -83,8 +83,8 @@ export function expandedNativeBefore<T>(value: T): T {
   return structuredClone(native.before[key]);
 }
 export function expandedPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
-  value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   value = studyVegetablesTwoResidualPresentationBefore(value, lessonId, language);
+  value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   if (value.status !== 'draft') return value;
   const key = Object.keys(native.after).find(k => native.after[k].language === language && native.after[k].lessons.some((l: any) => l.id === lessonId));
   if (!key) return value;
@@ -101,8 +101,8 @@ export function expandedPresentationBefore<T extends { status?: string; content:
   return { ...structuredClone(value), content: before };
 }
 export function expandedPairBeforeHistory<T>(file: string, value: T): T {
-  value = readingTitleLightestPairBeforeHistory(file, value);
   value = studyVegetablesTwoResidualPairedBefore(file, value);
+  value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;
   ensureExpandedCurrent();

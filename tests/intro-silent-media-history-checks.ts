@@ -41,6 +41,8 @@ assert.equal(inventory.size, 1927);
 // prior inventory for historical descriptors, and validate all real current bytes.
 const latest = frozen('docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06/render-proof.json',
   'f9ff13f9ee8366b0cf8881242e55f415842e972a8d2387b1252eac1faa4b59e1');
+const vegetablesResidualMedia = frozen('docs/study-translation-reviews/vegetables-two-ordinary-residual-2026-10-08/media-proof.json',
+  'de15dd6662fa5fbd88f98f3c38a8fac00e8e9cbaf62ab80739ad758c42be4117');
 const currentInventory = new Map(inventory);
 assert.equal(latest.frames.length, 13);
 for (const frame of latest.frames) {
@@ -92,6 +94,9 @@ for (const frame of expandedAssets) {
 }
 // PR985's ten Intro silent assets precede this branch's four disjoint still updates.
 for (const frame of stIntroRuntimeResidualAssets) currentInventory.set(frame.url,{bytes:frame.after.bytes,sha256:frame.after.sha256});
+// The two later Vegetables card refreshes retain their older recorded sources
+// while the complete current-disk inventory expects the measured new bytes.
+for (const frame of vegetablesResidualMedia.assets) currentInventory.set(frame.url,{bytes:frame.afterBytes,sha256:frame.afterSha256});
 // The 8 October four-card batch replaces exact existing Reading and Vegetables stills.
 // Its complete proof is checked before any older inventory descriptor is exposed.
 export const readingTitleLightestAssets = lightestAssetRows();
@@ -115,6 +120,7 @@ const laterReplacedURLs = new Set<string>([
   ...fairSharingAssets.filter(frame => frame.before).map(frame => frame.url),
   ...currentBatchProof.assets.map(frame => frame.url),
   ...readingTitleLightestAssets.map((frame: any) => frame.url),
+  ...vegetablesResidualMedia.assets.map((frame: any) => frame.url),
 ]);
 // Only these frozen, listed URLs need a historical descriptor. Bulk inventory
 // callers still check every other real file directly, without recursively

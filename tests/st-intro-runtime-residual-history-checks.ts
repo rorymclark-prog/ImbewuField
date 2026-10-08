@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
+import { ensureStudyBACCompositionCurrent, studyABCProjectToMain69 } from './study-b-a-c-source-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/';
 const pairPath = 'docs/narration/intro-permaculture.st.silent-draft.json';
@@ -12,6 +13,7 @@ const read = (path: string) => readFileSync(path);
 const proofBytes = read(folder + 'runtime-layer-proof.json');
 assert.equal(sha(proofBytes), '3f5439f84e3828bb889bc1750dba57811a4a8727bff03ad1bff17f3ac1663480', 'immutable applied layer proof');
 const proof = JSON.parse(proofBytes.toString());
+const composedProof = JSON.parse(read('docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/composition-proof.json').toString());
 const packetBytes = read(folder + 'applied-packet.json');
 assert.equal(sha(packetBytes), '8973dbe47d45c0e0229c63148c824fe7e9d04da39b17450fd71ecc493a2e116b', 'immutable root-reviewed exact-source decisions');
 const packet = JSON.parse(packetBytes.toString());
@@ -134,28 +136,51 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   return before;
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
-  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, read(manifestPath))).toString();
-  actual = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, actual)).toString();
+  const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
+  const projectedActual = Buffer.from(projectKnownSource(manifestPath, actual)).toString();
+  if (projectedActual === live) return beforeManifestBytes.toString();
   assert.equal(actual, beforeManifestBytes.toString(), 'caller supplies the exact current manifest or its exact immediate predecessor');
   return actual;
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
-  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, read(manifestPath))).toString();
-  actual = Buffer.from(studyVegetablesTwoResidualSourceBefore(manifestPath, actual)).toString();
+  const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
+  // Older dated owners pass their own immutable predecessor through this point.
+  // Their full-file guards validate those bytes after this current-source gate.
+  let projectedActual: string;
+  try { projectedActual = Buffer.from(projectKnownSource(manifestPath, actual)).toString(); }
+  catch { return actual; }
+  if (projectedActual === live) return beforeManifestBytes.toString();
   return actual;
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file !== workerPath) return bytes;
-  const live = Buffer.from(studyVegetablesTwoResidualSourceBefore(workerPath, read(workerPath)));
+  const live = Buffer.from(projectValidatedCurrent(workerPath, read(workerPath)));
   assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
   assert.equal(live.length, proof.worker.afterBytes, 'complete live service-worker source size');
-  const supplied = Buffer.from(studyVegetablesTwoResidualSourceBefore(file, bytes));
-  if (!supplied.equals(live)) return bytes;
-  return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
+  const projectedSupplied = Buffer.from(projectKnownSource(workerPath, bytes));
+  if (projectedSupplied.equals(live)) return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
+  if (sha(projectedSupplied) === proof.worker.beforeSha256) return bytes;
+  return bytes;
+}
+
+function projectValidatedCurrent(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  ensureStudyBACCompositionCurrent();
+  return studyABCProjectToMain69(file, bytes);
+}
+
+function projectKnownSource(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  const raw = Buffer.from(bytes);
+  const record = composedProof.files.find((item: any) => item.path === file);
+  if (!record) return bytes;
+  const recognized = new Set(Object.values(record.snapshots).map((item: any) => item.sha256));
+  const current = read(file);
+  if (sha(raw) === sha(current)) return projectValidatedCurrent(file, bytes);
+  if (recognized.has(sha(raw))) return bytes;
+  const ownBefore = file === workerPath ? proof.worker.beforeSha256 : proof.manifest.beforeSha256;
+  if (sha(raw) === ownBefore) return bytes;
+  assert.fail(`${file}: caller source must be a byte-exact registered composition snapshot`);
 }
