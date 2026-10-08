@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 October 2026', sha: '72bac6b9', changes: [
+    'Six silent isiZulu safety cards show unreviewed drafts beside exact English.',
+    'English narration stays optional for Forest 11 while its isiZulu voice is held.',
+  ], tour: [{ title: 'Read the isiZulu safety cards',
+    where: 'Study → Introduction, Reading or Food Forest → isiZulu', href: '/student',
+    detail: 'Compare unreviewed safety wording with English; Forest 11 voice is held.',
+  }] },
   { when: '8 October 2026', sha: '24276363', changes: [
     'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
     'The Sesotho land-reading lesson keeps the observation phrase beside English.',
