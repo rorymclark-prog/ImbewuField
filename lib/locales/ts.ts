@@ -869,6 +869,14 @@ const dict: Dict = {
   studentListenToLesson: "Yingisela dyondzo leyi",
   studentMarkNotDone: "Maka leswaku dyondzo leyi a yi si hela",
   studentSilentDeckNoVoiceDescription: "Slides ta {count}. A ku na nhlamuselo hi rito.",
+  // Context drafts are independently checked; the Study notice keeps human review explicit.
+  studentReadinessCompleteDetail: "Tidyondzo hinkwato ta {lessons} ti na swifaniso, ti na nhlamuselo hi rito hi tindzimi ta {languages}, naswona ti na slides ni ti-animation.",
+  studentReadinessNarratedDetail: "Slides leti nga ni swifaniso ni nhlamuselo hi rito ti lunghekile hi tindzimi ta {languages}. Ku kambela vuhundzuluxi ka ha laveka.",
+  studentReadinessLessonsDetail: "Ku hlaya ni swifaniso swi lunghekile. Nhlamuselo hi rito ni slides swa ha endliwa.",
+  studentReadinessComplete: "Yi akiwile hi ku helela",
+  studentReadinessNarrated: "Slides leti nga ni nhlamuselo hi rito",
+  studentReadinessLessons: "Tidyondzo ntsena",
+  studentListenModule: "Yingisela module hi ku helela",
 };
 
 export default dict;

@@ -886,6 +886,12 @@ const dict: Dict = {
   studentIncorrectSee: "Karabo ha e nepahale — sheba {answer}",
   studentMarkNotDone: "Tshwaya hore thuto ha e so phethwe",
   studentSilentDeckNoVoiceDescription: "Diselaete tse {count}. Ha ho tlhaloso e buuoang.",
+  // Context drafts are independently checked; the Study notice keeps human review explicit.
+  studentReadinessCompleteDetail: "Dithuto tsohle tse {lessons} di na le ditshwantsho, tlhaloso e buuwang ka dipuo tse {languages}, diselaete le di-animation.",
+  studentReadinessNarratedDetail: "Diselaete tse nang le ditshwantsho le tlhaloso e buuwang di se di lokile ka dipuo tse {languages}. Tlhahlobo ya phetolelo e ntse e lokela ho etswa.",
+  studentReadinessLessonsDetail: "Dithuto tsa ho bala le ditshwantsho di se di lokile. Tlhaloso e buuwang le diselaete di sa ntse di etswa.",
+  studentReadinessComplete: "E hahilwe ka botlalo",
+  studentReadinessNarrated: "Diselaete tse nang le tlhaloso e buuwang",
 };
 
 export default dict;

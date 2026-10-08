@@ -1159,7 +1159,8 @@ export default function StudentPage() {
                       {!simple && isStaff && (
                         <span
                           title={readinessTitle}
-                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          // Regional readiness labels are longer; keep every word inside the phone card.
+                          className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0 max-w-full whitespace-normal"
                           style={contentComplete
                             ? { background: '#1F4D2B', color: '#EAF3E2', border: '1px solid #1F4D2B' }
                             : { background: 'rgba(32,25,15,0.05)', color: '#755942', border: '1px solid #E2D8C4' }}
