@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
+import { stIntroRuntimeResidualPairBefore, stIntroRuntimeResidualAssetBytesBefore } from './st-intro-runtime-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-held-ordinary-completion-2026-10-07/';
 const read = (path: string) => JSON.parse(readFileSync(path, 'utf8'));
@@ -30,7 +31,7 @@ test('109 reviewed fields preserve every exact English source and unlisted paire
       else slide.target.body[Number(index)] = row.after;
     }
     // The later 18-fragment reviewed layer is checked completely before restoring this predecessor.
-    assert.deepEqual(veOrdinaryPairBefore(file, read(file)), expected, file);
+    assert.deepEqual(veOrdinaryPairBefore(file, stIntroRuntimeResidualPairBefore(file, read(file))), expected, file);
   }
 });
 
@@ -40,9 +41,11 @@ test('69 active compressed cards have their actual manifest bytes and reviewed i
   for (const row of assets) {
     const bytes = readFileSync('public' + row.url);
     // New framing bytes must pass their own full measurement before this dated layer is exposed.
-    const latest = ordinaryFramingAssetBefore('public' + row.url, bytes);
-    assert.equal(latest?.sha256 ?? sha(bytes), row.afterSHA256, row.url);
-    assert.equal(latest?.bytes ?? bytes.length, row.afterBytes);
+    const runtimePrevious = stIntroRuntimeResidualAssetBytesBefore('public' + row.url, bytes);
+    const historicalCurrent = runtimePrevious ?? bytes;
+    const latest = ordinaryFramingAssetBefore('public' + row.url, historicalCurrent);
+    assert.equal(latest?.sha256 ?? sha(historicalCurrent), row.afterSHA256, row.url);
+    assert.equal(latest?.bytes ?? historicalCurrent.length, row.afterBytes);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length);
     assert.notEqual(row.beforeSHA256, row.afterSHA256);
   }

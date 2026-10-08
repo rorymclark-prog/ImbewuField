@@ -12,6 +12,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
+import { stIntroRuntimeResidualAssets, stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualManifestBefore } from './st-intro-runtime-residual-history-checks.ts';
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const review = 'docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/';
 function frozen(path: string, digest: string) {
@@ -88,8 +89,11 @@ for (const frame of expandedAssets) {
   assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: expanded predecessor SHA joins the full inventory`);
   currentInventory.set(frame.url, {bytes: frame.afterBytes, sha256: frame.afterSha256});
 }
+// 8 October runtime ST silent residuals are the newest replacement layer for ten existing stills.
+for (const frame of stIntroRuntimeResidualAssets) currentInventory.set(frame.url,{bytes:frame.after.bytes,sha256:frame.after.sha256});
 const laterReplacedURLs = new Set<string>([
   ...expandedAssets.map((frame: any) => frame.url),
+  ...stIntroRuntimeResidualAssets.map((frame: any) => frame.url),
   ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
   ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
   ...finalLanguageNextMediaProof.frames.map((frame:any)=>frame.url),
@@ -157,7 +161,8 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   // The frozen latest batch is validated first. Existing source-history owners
   // then compose its predecessor through the followup and frost layers once.
   ensureCurrentBatch();
-  const priorManifest = nativePairedResidualManifestBefore968(manifest);
+  const runtimePreviousManifest = stIntroRuntimeResidualManifestBefore(manifest);
+  const priorManifest = nativePairedResidualManifestBefore968(runtimePreviousManifest);
   assert.equal(sha(priorManifest),silentIntroIntegration.finalManifest.sha256,'after validating all later redraws, the complete accepted silent Intro manifest remains exact');
   verifyCurrentDiskInventory();
   if(initialized) return;
@@ -194,7 +199,7 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
 }
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
   validateSilentIntroMedia(manifest);
-  let before=nativePairedResidualManifestBefore968(manifest);
+  let before=nativePairedResidualManifestBefore968(stIntroRuntimeResidualManifestBefore(manifest));
   for(const f of silentIntroIntegration.actualAssets) {
     const row=`  '${f.url}': ${f.bytes},\n`;assert.equal(before.split(row).length,2);
     before=before.replace(row,f.beforeBytes===null?'':`  '${f.url}': ${f.beforeBytes},\n`);
@@ -207,6 +212,7 @@ export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
   const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);
   assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  stIntroRuntimeResidualAssetBefore(path,readFileSync('public'+url));
   // These four later stills were not all listed by the preceding five-card
   // batch. The complete live inventory above must pass before their original
   // Intro-era descriptors are exposed; never treat a replacement as unlisted.
