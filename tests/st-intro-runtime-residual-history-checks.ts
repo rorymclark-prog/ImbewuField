@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { zuluSilentSafetySourceBefore } from './zulu-silent-safety-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/';
 const pairPath = 'docs/narration/intro-permaculture.st.silent-draft.json';
@@ -133,26 +134,29 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   return before;
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
-  const live = read(manifestPath).toString();
+  const live = Buffer.from(zuluSilentSafetySourceBefore(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
+  const projectedActual = Buffer.from(zuluSilentSafetySourceBefore(manifestPath, actual)).toString();
+  if (projectedActual === live) return beforeManifestBytes.toString();
   assert.equal(actual, beforeManifestBytes.toString(), 'caller supplies the exact current manifest or its exact immediate predecessor');
   return actual;
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
-  const live = read(manifestPath).toString();
+  const live = Buffer.from(zuluSilentSafetySourceBefore(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
-  if (actual === live) return beforeManifestBytes.toString();
+  const projectedActual = Buffer.from(zuluSilentSafetySourceBefore(manifestPath, actual)).toString();
+  if (projectedActual === live) return beforeManifestBytes.toString();
   return actual;
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file !== workerPath) return bytes;
-  const live = read(workerPath);
+  const live = Buffer.from(zuluSilentSafetySourceBefore(workerPath, read(workerPath)));
   assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
   assert.equal(live.length, proof.worker.afterBytes, 'complete live service-worker source size');
   const supplied = Buffer.from(bytes);
-  if (!supplied.equals(live)) return bytes;
+  const projectedSupplied = Buffer.from(zuluSilentSafetySourceBefore(workerPath, bytes));
+  if (!projectedSupplied.equals(live)) return bytes;
   return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
 }
