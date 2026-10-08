@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '8 October 2026', sha: 'b73208c1', changes: [
+  { when: '8 October 2026', sha: '24276363', changes: [
     'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
     'The Sesotho land-reading lesson keeps the observation phrase beside English.',
   ], tour: [{ title: 'Check the remaining Study drafts', where: 'Study', href: '/student',
