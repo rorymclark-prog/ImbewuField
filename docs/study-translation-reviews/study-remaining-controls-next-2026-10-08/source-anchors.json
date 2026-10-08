@@ -1,0 +1,80 @@
+{
+  "baseHead": "81174107268ec951ac3b1deb8dd57a3b36268d43",
+  "targetKeys": [
+    "studentReadinessCompleteDetail",
+    "studentReadinessNarratedDetail",
+    "studentReadinessLessonsDetail",
+    "studentReadinessNarrated",
+    "courseDeckAnimationFailed",
+    "offlineGetWhileSignal"
+  ],
+  "heldKeys": [
+    "studentReadinessComplete",
+    "offlineDownloadPack"
+  ],
+  "englishSources": {
+    "studentReadinessCompleteDetail": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+    "studentReadinessNarratedDetail": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+    "studentReadinessLessonsDetail": "Reading and pictures are ready. Narration and slides are still being made.",
+    "studentReadinessNarrated": "Narrated slides",
+    "courseDeckAnimationFailed": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+    "offlineGetWhileSignal": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all."
+  },
+  "sourceChecks": [
+    {
+      "key": "studentReadinessCompleteDetail",
+      "file": "lib/i18n.tsx",
+      "literalPresent": true
+    },
+    {
+      "key": "studentReadinessNarratedDetail",
+      "file": "lib/i18n.tsx",
+      "literalPresent": true
+    },
+    {
+      "key": "studentReadinessLessonsDetail",
+      "file": "lib/i18n.tsx",
+      "literalPresent": true
+    },
+    {
+      "key": "studentReadinessNarrated",
+      "file": "lib/i18n.tsx",
+      "literalPresent": true
+    },
+    {
+      "key": "courseDeckAnimationFailed",
+      "file": "lib/learner-ui-english.ts",
+      "literalPresent": true
+    },
+    {
+      "key": "offlineGetWhileSignal",
+      "file": "lib/learner-ui-english.ts",
+      "literalPresent": true
+    }
+  ],
+  "sesotho": {
+    "registryPath": "lib/course-translation-drafts-st-reading-landscape.ts",
+    "lessonId": "reading-landscape-l1",
+    "paragraphIndex": 1,
+    "canonicalBody": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+    "canonicalSourceParagraph": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+    "beforeParagraph": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Matshwao a yona ke tlhokomelo feela, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "reviewStatus": "machine-draft"
+  },
+  "pairedSlide6": {
+    "path": "docs/narration/reading-landscape.st.paired-draft.json",
+    "source": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+    "segment": {
+      "sourceEnglish": "Its marks are an observation",
+      "status": "english-hold"
+    },
+    "unchangedFileSha256": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa"
+  },
+  "beforeSnapshotSha256": {
+    "localeVe": "ffcb79f9986d3e77bbb67f9c8d308ff26a9eed8ab3415c970ce4b199d3319c44",
+    "sesothoRegistry": "218a10f4e40320f3bc5d3696336fe3008806b7c2adec44411b5167f4faf17560",
+    "pairedDeck": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa",
+    "localeSourceBytes": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+    "sesothoSourceBytes": "6c39c04042acecaebced4dec39550dfdb444ba23cf7692442b783b81728c819e"
+  }
+}
