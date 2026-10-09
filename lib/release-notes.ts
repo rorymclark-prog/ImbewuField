@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 October 2026', sha: 'a964c86e', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
   { when: '9 October 2026', sha: '4da5c22d', changes: [
     'Your monthly AI allowance is now R18, shown in rand on your Account page.',
     'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',
@@ -65,6 +73,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Study → Reading Landscape / Vegetables',
     detail: 'Compare the unreviewed headings and pest guidance with exact English.',
     href: '/student',
+  }] },
+  { when: '8 October 2026', sha: '72bac6b9', changes: [
+    'Six silent isiZulu safety cards show unreviewed drafts beside exact English.',
+    'English narration stays optional for Forest 11 while its isiZulu voice is held.',
+  ], tour: [{ title: 'Read the isiZulu safety cards',
+    where: 'Study → Introduction, Reading or Food Forest → isiZulu', href: '/student',
+    detail: 'Compare unreviewed safety wording with English; Forest 11 voice is held.',
   }] },
   { when: '8 October 2026', sha: '24276363', changes: [
     'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',

@@ -7,6 +7,7 @@ import {
   currentModuleId,
   isCapstoneUnlocked,
   unlockReason,
+  localisedUnlockReason,
   courseSubmissionDocId,
   submittedModuleIds,
   assignmentFor,
@@ -16,6 +17,10 @@ import {
   type CourseSubmission,
   type ModuleAssignment,
 } from '../lib/course-gating.ts';
+import st from '../lib/locales/st.ts';
+import ts from '../lib/locales/ts.ts';
+import ve from '../lib/locales/ve.ts';
+import zu from '../lib/locales/zu.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import type { CourseAssignment } from '../lib/course-assignments.ts';
 
@@ -169,6 +174,77 @@ test('unlockReason uses the real module title and distinguishes "finish" vs "sub
       'Submit the Introduction to Permaculture assignment to open this',
     );
   });
+});
+
+test('regional unlock explanations retain the title and keep finishing separate from submitting', () => {
+  const title = 'Introduction to Permaculture';
+  const finish = `Finish ${title} to open this`;
+  const submit = `Submit the ${title} assignment to open this`;
+  const stText = (key: string) => st[key] ?? key;
+  const veText = (key: string) => ve[key] ?? key;
+  const tsText = (key: string) => ts[key] ?? key;
+
+  const sesothoFinish = localisedUnlockReason(finish, 'st', stText)!;
+  const tshivendaSubmit = localisedUnlockReason(submit, 've', veText)!;
+  const xitsongaFinish = localisedUnlockReason(finish, 'ts', tsText)!;
+  const xitsongaSubmit = localisedUnlockReason(submit, 'ts', tsText)!;
+
+  assert.equal(sesothoFinish, `Qetella thuto e reng “${title}” hore sena se bulehe`);
+  assert.equal(tshivendaSubmit, `Rumelani mushumo wa ngudo ya “${title}” uri ni kone u vula izwi`);
+  assert.equal(xitsongaFinish, `Hetisa dyondzo ya “${title}” leswaku u kota ku pfula lexi`);
+  assert.equal(xitsongaSubmit, `Thumela xiave xa dyondzo xa “${title}” leswaku u kota ku pfula lexi`);
+  for (const rendered of [sesothoFinish, tshivendaSubmit, xitsongaFinish, xitsongaSubmit]) {
+    assert.ok(rendered.includes(title), 'the module title must not be lost');
+    assert.doesNotMatch(rendered, /\{title\}/, 'the interpolation token must be replaced');
+  }
+  assert.notEqual(xitsongaFinish, xitsongaSubmit, 'completion and assignment submission have different gates');
+
+  const localized = [
+    { lang: 'st', dict: st },
+    { lang: 've', dict: ve },
+    { lang: 'ts', dict: ts },
+  ] as const;
+  for (const { lang, dict } of localized) {
+    const t = (key: string) => dict[key] ?? key;
+    const branches = [
+      ['Opened by your mentor', 'studentOpenedByMentor', null],
+      [finish, 'studentFinishToUnlock', title],
+      [submit, 'studentSubmitToUnlock', title],
+    ] as const;
+    for (const [source, key, slot] of branches) {
+      const template = t(key);
+      const expected = slot ? template.replace('{title}', slot) : template;
+      if (slot) assert.equal(template.split('{title}').length - 1, 1, `${lang}/${key} keeps {title} once`);
+      assert.equal(localisedUnlockReason(source, lang, t), expected, `${lang}/${key} keeps its source branch`);
+    }
+  }
+});
+
+test('unlock explanations keep isiZulu, English, unknown reasons, and the canonical English source intact', () => {
+  const title = 'Introduction to Permaculture';
+  const finish = `Finish ${title} to open this`;
+  const zuText = (key: string) => zu[key] ?? key;
+  const shouldNotBeCalled = () => { throw new Error('English and unlisted languages must keep source text'); };
+  const englishTemplates: Record<string, string> = {
+    studentOpenedByMentor: 'Opened by your mentor',
+    studentFinishToUnlock: 'Finish the lesson “{title}” to open this',
+    studentSubmitToUnlock: 'Submit the “{title}” lesson task to open this',
+  };
+
+  assert.equal(localisedUnlockReason('Opened by your mentor', 'zu', zuText), 'Ivulwe umeluleki wakho');
+  assert.equal(localisedUnlockReason(finish, 'zu', zuText), `Qedela isifundo esithi “${title}” ukuze uvule lesi`);
+  assert.equal(
+    localisedUnlockReason(`Submit the ${title} assignment to open this`, 'zu', zuText),
+    `Thumela umsebenzi wesifundo esithi “${title}” ukuze uvule lesi`,
+  );
+  assert.equal(localisedUnlockReason(finish, 'en', shouldNotBeCalled), finish);
+  assert.equal(localisedUnlockReason(finish, 'xh', shouldNotBeCalled), finish);
+  assert.equal(localisedUnlockReason('A new source gate', 'st', (key) => st[key] ?? key), 'A new source gate');
+  assert.equal(
+    localisedUnlockReason(finish, 'st', (key) => englishTemplates[key]),
+    `Finish the lesson “${title}” to open this`,
+    'source companions use the canonical English template with the English module title',
+  );
 });
 
 // ── currentModuleId ────────────────────────────────────────────────────────────

@@ -1,0 +1,41 @@
+{
+  "schema": "imbewufield.study-vegetables-two-ordinary-residual-root-reviewed-release.v1",
+  "date": "2026-10-08",
+  "reviewDisposition": "Root inspected the compressed VE slide 10 and TS slide 12 WebPs and reviewed the selective two-URL cache migration, two manifest changes, complete-owner corruption tests, and pinned prepared/media proofs; root accepted this bounded scope.",
+  "contentStatus": "Both target strings remain machine drafts. The ordinary wording has not received fluent approval; the loan and concord caveats remain.",
+  "immutableEvidence": {
+    "preparedLayer": {
+      "path": "prepared-layer.json",
+      "sha256": "b0050c4c517e5f42464eb838a408f15c714535caba4f80d7904d875021c38d24",
+      "statusMeaning": "ROOT_REVIEW_PENDING records historical preparation provenance only; learner draft statuses are independently preserved."
+    },
+    "mediaProof": {
+      "path": "media-proof.json",
+      "sha256": "de15dd6662fa5fbd88f98f3c38a8fac00e8e9cbaf62ab80739ad758c42be4117"
+    }
+  },
+  "verification": {
+    "focusedTests": "11/11 passed: bounded text, older complete-owner/history, and selective cache-migration tests.",
+    "typecheck": "npx tsc --noEmit passed.",
+    "whitespace": "git diff --check passed.",
+    "fullSuite": "Not run in this checkpoint; another full suite was running."
+  },
+  "scopeFiles": {
+    "app/sw.js/route.ts": "c3cc2e2003e2fd74f34ac2136179cdd42114961ba70419ac0d0e0442edd593ce",
+    "docs/narration/vegetables-staples.ts.paired-draft.json": "2f25276c556bd584839b2a17a7ea0212cc7e7bfcbbb10ec2d5342ea88b30bc99",
+    "docs/narration/vegetables-staples.ve.paired-draft.json": "cbabf90938187fc8b5341074a424f064fc1d43926082b987e242d094d4544b6a",
+    "lib/course-asset-sizes.ts": "4e090846230392100ef2318160f90346d25567899d3ff37a56b751a6551df646",
+    "lib/course-translation-drafts-ts-vegetables-staples.ts": "4350ae1186bdba9a80b5448f6a98682cbf3351b317234f5c1a933461f99f1abe",
+    "lib/course-translation-drafts-ve-vegetables-staples.ts": "ece46fa2c11bc29f8e5cbc28d10c6abe15aeb5499bb38e9d8be770c0fa9b1c30",
+    "package.json": "4a20e6f219ee7e55120e921c40b3bca0b7ee19df2574ea83686bd44a6b26a2ac",
+    "public/course-decks/vegetables-staples/ts/slide-12.webp": "8df52c02a423e0d54cd5f3f3f477522ceda7ac40e9e7eef8bfe584953b72e6a4",
+    "public/course-decks/vegetables-staples/ve/slide-10.webp": "ed0e057d587546b85953f99f76fa2f3ad0401cb4cf01f6c6c18090c5563d3788",
+    "tests/core-ordinary-expanded-history-checks.ts": "4ee65d54f6fde21bca530792bf5286f10a0f87604af9826448aec1ef2abf810f",
+    "tests/native-ordinary-final-history-checks.ts": "1925580c26ff1bf08441e0a6a0f95004bc7d4b946e19146065a1629a2715e356",
+    "tests/st-intro-runtime-residual-history-checks.ts": "8b77544df40c997e2588d7ca81a33073732bd354c7efa78409651e32786cfa46",
+    "tests/study-vegetables-two-ordinary-residual-history-checks.ts": "60b6791ff33f2ba361c774defd082a4e25e1a05d833f2f9af3e200ef05b2bd34",
+    "tests/study-vegetables-two-ordinary-residual.test.ts": "48a496a587fab990b9b951602f766f4dab26f3e4f69281eb9dd6d004a5fe2ddf",
+    "tests/vegetables-two-ordinary-residual-media-migration.test.ts": "e94f6711d414722288005140d16e8e9efa302b32494b190742cd6efdaeeeb848"
+  },
+  "excluded": "Existing output/playwright QA files are intentionally excluded and untouched."
+}

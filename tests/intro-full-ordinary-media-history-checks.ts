@@ -6,6 +6,7 @@ import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { validateAndRewindIntroFullPaired, readCurrentIntroFullDecks } from './intro-full-ordinary-paired-checks.ts';
 import { soilWaterResidualAssetSizesBefore, soilWaterResidualValidateCurrentFrames } from './soil-water-residual-history-checks.ts';
+import { studyVegetablesTwoResidualAssetBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 const folder = 'docs/media/intro-full-ordinary-completion-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
@@ -107,6 +108,12 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
     if (later) {
       assert.equal(later.bytes, row.bytes, row.path + ': the complete newer 968/13-frame layers rewind to this frozen descriptor');
       assert.equal(later.sha256, row.sha256, row.path + ': the complete newer 968/13-frame layers rewind to this frozen descriptor');
+      continue;
+    }
+    const vegetablesResidual = studyVegetablesTwoResidualAssetBefore('public' + row.path, readFileSync('public' + row.path));
+    if (vegetablesResidual) {
+      assert.equal(vegetablesResidual.bytes, row.bytes, row.path + ': the exact newer Vegetables two-card layer rewinds to this frozen descriptor');
+      assert.equal(vegetablesResidual.sha256, row.sha256, row.path + ': the exact newer Vegetables two-card layer rewinds to this frozen descriptor');
       continue;
     }
     const actual = fileDescriptor('public' + row.path);

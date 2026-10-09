@@ -23,6 +23,7 @@ import {
 } from './core-reading-vegetables-followup-history-checks.ts';
 import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
 import { readingTitleLightestNativeBefore } from './reading-title-lightest-next-history-checks.ts';
+import { studyVegetablesTwoResidualNativeBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-ordinary-completion-next-2026-10-07/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
@@ -121,7 +122,8 @@ test('native learner predicates preserve the general comparative, sale-price com
   assert.deepEqual(followupNativeBefore(tsMarket), currentBatchProof.nativeModules.before.mt);
   for (const [file, snapshot] of Object.entries(currentBatchProof.nativeModules.after)) {
     const actual = file === 'st' ? stVegetables : file === 'ts' ? tsVegetables : tsMarket;
-    assert.deepEqual(readingTitleLightestNativeBefore(actual), snapshot, `${file}: complete imported registry after exact newest native-layer projection equals the full historical after snapshot`);
+    const afterVegetablesResidual = studyVegetablesTwoResidualNativeBefore(actual);
+    assert.deepEqual(readingTitleLightestNativeBefore(afterVegetablesResidual), snapshot, `${file}: complete imported registry after exact newest B and dated native-layer projections equals the full historical after snapshot`);
   }
 
   const stSource = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;

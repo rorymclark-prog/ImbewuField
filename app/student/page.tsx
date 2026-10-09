@@ -27,7 +27,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
-import { T_en, useLanguage } from '@/lib/i18n';
+import { T_en, translate, useLanguage } from '@/lib/i18n';
 import { allTracks, hasNarration, requiresExplicitNarrationChoice, resolveNarrationLang, tracksForLesson } from '@/lib/course-audio';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { APP_GUIDES } from '@/lib/course-app-guides';
@@ -36,11 +36,11 @@ import { regionalModuleDraftBadge, resolveCourseModulePresentation } from '@/lib
 import { guideScreens } from '@/components/studies/guide-screens';
 import OfflinePageLink from '@/components/studies/OfflinePageLink';
 import {
-  assignmentState, formatDue, orderModulesForLearner, summariseAssignments, toDateKey,
+  assignmentState, formatDue, localisedDueText, orderModulesForLearner, summariseAssignments, toDateKey,
   type AssignmentState, type CourseAssignment,
 } from '@/lib/course-assignments';
 import {
-  isModuleUnlocked, currentModuleId, isCapstoneUnlocked, unlockReason,
+  isModuleUnlocked, currentModuleId, isCapstoneUnlocked, unlockReason, localisedUnlockReason,
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
@@ -83,27 +83,7 @@ function formatDuration(mins: number, t: (key: string) => string) {
   return `${hours} ${t(hours === 1 ? 'studentHourOne' : 'studentHours')}${remaining > 0 ? ` ${remaining} ${t('studentMinutes')}` : ''}`;
 }
 
-function localisedDueText(text: string | null, lang: string, t: (key: string) => string) {
-  if (!text || lang !== 'zu') return text;
-  if (text === 'Due today') return t('studentDueToday');
-  if (text === 'Due tomorrow') return t('studentDueTomorrow');
-  const overdue = text.match(/^(\d+) day(?:s)? overdue$/);
-  if (overdue) return t('studentDaysOverdue').replace('{count}', overdue[1]);
-  const dueIn = text.match(/^Due in (\d+) days$/);
-  if (dueIn) return t('studentDueInDays').replace('{count}', dueIn[1]);
-  if (text.startsWith('Due ')) return t('studentDueDate').replace('{date}', text.slice(4));
-  return text;
-}
-
-function localisedUnlockReason(text: string | null, lang: string, t: (key: string) => string) {
-  if (!text || lang !== 'zu') return text;
-  if (text === 'Opened by your mentor') return t('studentOpenedByMentor');
-  const finish = text.match(/^Finish (.+) to open this$/);
-  if (finish) return t('studentFinishToUnlock').replace('{title}', finish[1]);
-  const submit = text.match(/^Submit the (.+) assignment to open this$/);
-  if (submit) return t('studentSubmitToUnlock').replace('{title}', submit[1]);
-  return text;
-}
+const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);
 
 const ZULU_MEDIA_LANGUAGE_NOTICES = {
   bothEnglish: {
@@ -947,6 +927,11 @@ export default function StudentPage() {
                 <GraduationCap size={13} style={{ color: '#1F4D2B' }} />
                 <span className="font-sans text-xs font-semibold" style={{ color: '#1F4D2B' }}>
                   {t('studentPractitioner')}
+                  {SOURCE_PAIRED_LANGUAGES.has(lang) && (
+                    <small lang="en" className="block mt-1 text-xs font-normal leading-snug" style={{ color: '#5C5040' }}>
+                      English source: {translate('en', 'studentPractitioner')}
+                    </small>
+                  )}
                 </span>
               </div>
             )}
@@ -1038,6 +1023,8 @@ export default function StudentPage() {
             const assignment = assignmentByModule.get(mod.id);
             const state = assignment && today ? assignmentState(assignment, doneIds, today) : null;
             const dueText = assignment && today ? localisedDueText(formatDue(assignment.due_at, today, lang), lang, t) : null;
+            const englishDueSource = SOURCE_PAIRED_LANGUAGES.has(lang) && assignment && today
+              ? formatDue(assignment.due_at, today, 'en') : null;
             const modulePresentation = resolveCourseModulePresentation(mod, lang);
             const moduleDraftBadge = lang === 'st' || lang === 'ts' || lang === 've'
               ? regionalModuleDraftBadge(mod, lang) : null;
@@ -1069,6 +1056,9 @@ export default function StudentPage() {
             // toggle either, so a locked module can't be cheated past by ticking it directly.
             if (!unlocked) {
               const reason = unlockReason(mod.id, gatingCtx, (id) => localisedModuleTitle(id, lang));
+              const englishReason = unlockReason(mod.id, gatingCtx);
+              const englishUnlockSource = SOURCE_PAIRED_LANGUAGES.has(lang) && englishReason
+                ? localisedUnlockReason(englishReason, lang, (key) => translate('en', key)) : null;
               return (
                 <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
                   style={{ border: '1px solid #DEDCCE' }}>
@@ -1095,7 +1085,14 @@ export default function StudentPage() {
                       </div>
                       <p className={`font-sans ${styles.lockedReason}`}>
                         <Lock size={14} style={{ flexShrink: 0, marginTop: 2 }} />
-                        {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
+                        <span className="min-w-0">
+                          {localisedUnlockReason(reason, lang, t) ?? t('studentLocked')}
+                          {englishUnlockSource && (
+                            <small lang="en" className="block mt-1 text-xs font-normal leading-snug" style={{ color: '#5C5040' }}>
+                              English source: {englishUnlockSource}
+                            </small>
+                          )}
+                        </span>
                       </p>
                     </div>
                   </div>
@@ -1180,7 +1177,14 @@ export default function StudentPage() {
                             border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
                           }}>
                           {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
-                          {dueText ?? t('studentAssigned')}
+                          <span className="flex flex-col">
+                            {dueText ?? t('studentAssigned')}
+                            {englishDueSource && (
+                              <small lang="en" className="mt-1 text-[10px] font-normal leading-snug" style={{ color: '#5C5040' }}>
+                                English source: {englishDueSource}
+                              </small>
+                            )}
+                          </span>
                         </span>
                       )}
                     </div>
