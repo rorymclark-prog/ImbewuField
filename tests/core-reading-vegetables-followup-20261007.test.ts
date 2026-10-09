@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
+import { studyVegetablesTwoResidualAssetBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT as stReading } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as veMarket } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { currentBatchProof, ensureCurrentBatch, ensureFollowupCurrent, followupFiles, followupNative as followupRegistryProof, followupNativeBefore, followupPairBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
@@ -156,6 +157,9 @@ test('the five approved WebPs match their exact byte proof, manifest sizes, and 
   assert.equal(rendered.size, 5);
   for (const [path, row] of Object.entries(proof)) {
     const currentBytes = readFileSync('public' + path);
+    // The current B two-card still proof validates its live image, then exposes
+    // the exact predecessor measured by this older five-card layer.
+    const vegetablesPrevious = studyVegetablesTwoResidualAssetBefore('public' + path, currentBytes);
     // 8 October: this dated five-card inventory now receives the exact
     // predecessor after the independently guarded four-card still layer.
     const bytes = Buffer.from(lightestAssetBefore('public' + path, currentBytes));
@@ -164,15 +168,18 @@ test('the five approved WebPs match their exact byte proof, manifest sizes, and 
       assert.equal(latest.beforeBytes, row.afterBytes, `${path}: newest proof begins at the exact predecessor described by this proof`);
       assert.equal(latest.beforeSha256, row.afterSha256, `${path}: newest proof predecessor digest joins this proof`);
     }
-    assert.equal(bytes.length, latest?.afterBytes ?? row.afterBytes, `${path}: actual file byte length at newest accepted layer`);
-    assert.equal(sha(bytes), latest?.afterSha256 ?? row.afterSha256, `${path}: full current SHA-256 at newest accepted layer`);
+    assert.equal(vegetablesPrevious?.bytes ?? bytes.length, latest?.afterBytes ?? row.afterBytes, `${path}: actual file byte length at newest accepted layer`);
+    assert.equal(vegetablesPrevious?.sha256 ?? sha(bytes), latest?.afterSha256 ?? row.afterSha256, `${path}: full current SHA-256 at newest accepted layer`);
     assert.equal(COURSE_ASSET_SIZES[path], currentBytes.length, `${path}: live published size manifest matches actual bytes`);
     if (!row.changed) assert.equal(row.beforeSha256, row.afterSha256, `${path}: every unlisted asset retains its prior digest`);
   }
   for (const path of changedPaths) {
     const row = proof[path];
     const render = rendered.get(path) as any;
-    const bytes = Buffer.from(lightestAssetBefore('public' + path, readFileSync('public' + path)));
+    const currentBytes = readFileSync('public' + path);
+    const vegetablesPrevious = studyVegetablesTwoResidualAssetBefore('public' + path, currentBytes);
+    const bytes = Buffer.from(lightestAssetBefore('public' + path, currentBytes));
+    const measuredFiveCardOutput = vegetablesPrevious ?? { bytes: bytes.length, sha256: sha(bytes) };
     assert.notEqual(row.beforeSha256, row.afterSha256, `${path}: changed card differs from saved version`);
     assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
     assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
@@ -180,8 +187,8 @@ test('the five approved WebPs match their exact byte proof, manifest sizes, and 
     const dimensions = [bytes.readUInt16LE(26) & 0x3fff, bytes.readUInt16LE(28) & 0x3fff];
     assert.deepEqual(dimensions, [1440, 5400], `${path}: natural rendered canvas`);
     assert.deepEqual(render.dimensions, dimensions, `${path}: render proof matches actual image dimensions`);
-    assert.equal(render.bytes, bytes.length);
-    assert.equal(render.sha256, sha(bytes));
+    assert.equal(render.bytes, measuredFiveCardOutput.bytes);
+    assert.equal(render.sha256, measuredFiveCardOutput.sha256);
   }
 });
 

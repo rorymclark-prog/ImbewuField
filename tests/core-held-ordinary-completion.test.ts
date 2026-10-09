@@ -6,6 +6,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { stIntroRuntimeResidualPairBefore, stIntroRuntimeResidualAssetBytesBefore } from './st-intro-runtime-residual-history-checks.ts';
+import { studyVegetablesTwoResidualAssetBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/core-held-ordinary-completion-2026-10-07/';
 const read = (path: string) => JSON.parse(readFileSync(path, 'utf8'));
@@ -39,13 +40,21 @@ test('69 active compressed cards have their actual manifest bytes and reviewed i
   assert.equal(assets.length, 69);
   assert.equal(new Set(assets.map((row: any) => row.url)).size, 69);
   for (const row of assets) {
-    const bytes = readFileSync('public' + row.url);
-    // New framing bytes must pass their own full measurement before this dated layer is exposed.
-    const runtimePrevious = stIntroRuntimeResidualAssetBytesBefore('public' + row.url, bytes);
-    const historicalCurrent = runtimePrevious ?? bytes;
-    const latest = ordinaryFramingAssetBefore('public' + row.url, historicalCurrent);
-    assert.equal(latest?.sha256 ?? sha(historicalCurrent), row.afterSHA256, row.url);
-    assert.equal(latest?.bytes ?? historicalCurrent.length, row.afterBytes);
+    const path = 'public' + row.url;
+    const bytes = readFileSync(path);
+    // The exact B residual proof is newest for its two stills; older dated layers
+    // receive its recorded predecessor only after it validates the live bytes.
+    const vegetablesPrevious = studyVegetablesTwoResidualAssetBefore(path, bytes);
+    let historicalCurrent = bytes;
+    let latest: { bytes: number; sha256: string } | null = null;
+    if (!vegetablesPrevious) {
+      const runtimePrevious = stIntroRuntimeResidualAssetBytesBefore(path, bytes);
+      historicalCurrent = runtimePrevious ?? bytes;
+      // New framing bytes must pass their own full measurement before this dated layer is exposed.
+      latest = ordinaryFramingAssetBefore(path, historicalCurrent);
+    }
+    assert.equal(vegetablesPrevious?.sha256 ?? latest?.sha256 ?? sha(historicalCurrent), row.afterSHA256, row.url);
+    assert.equal(vegetablesPrevious?.bytes ?? latest?.bytes ?? historicalCurrent.length, row.afterBytes, row.url);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length);
     assert.notEqual(row.beforeSHA256, row.afterSHA256);
   }

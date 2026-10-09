@@ -144,7 +144,8 @@ test('Vegetables L2 full drafts keep paragraph alignment and the risky agronomic
   }
   assert.match(ve.body.tshivendaDraft, /for longer/);
   assert.match(ve.body.tshivendaDraft, /fast crop/);
-  assert.match(ve.body.tshivendaDraft, /Beans dzi gonya maize, and store as protein/);
+  // This exact source-bound Tshivenda edit localizes only the connector; retain the technical protein loan.
+  assert.ok(ve.body.tshivendaDraft.includes('Beans dzi gonya maize, na store as protein.'), 'the intercropping relation and protein clause stay intact');
   assert.match(ts.body.xitsongaDraft, /Beans ti khandziya maize, and store as protein/);
   assert.match(ve.body.tshivendaDraft, /cool-season leaf crop may hold longer/);
   assert.match(ts.body.xitsongaDraft, /cool-season leaf crop may hold longer/);

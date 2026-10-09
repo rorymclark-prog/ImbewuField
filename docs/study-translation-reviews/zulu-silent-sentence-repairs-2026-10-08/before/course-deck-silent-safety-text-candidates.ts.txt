@@ -20,13 +20,13 @@ export const ISIZULU_SILENT_DECK_TEXT_CANDIDATES: readonly IsiZuluSilentDeckText
     "correctedTitle": "Hlanganisa, Ungahlukanisi",
     "correctedTarget": [
       "Beka into ngayinye lapho isiza khona izinto eziseduze nayo.",
-      "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Lokhu kuwukuhlanganisa. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
+      "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
       "Izinkukhu zingasiza ekudleni ezinye izinambuzane nasekufakeni umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa.",
       "Lezi zinto ezintathu uma zibiyelwe zahlukaniswa, ngayinye yenza umsebenzi wayo kuphela.",
       "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka."
     ],
     "sourceHash": "2a52f920c0efd500f63cc1d0e5e44328c637e474c8a74c0e6dbb60a0987c01d0",
-    "targetHash": "bda06454d2cf6fd558b8c584ba438077eb275d8b386fea391b406714e19dd2d4",
+    "targetHash": "086a7963a524154bf7f983b2322983ed102aebd78a81cbab59b5b5cbcd1f3051",
     "reviewStatus": "unreviewed",
     "audioBinding": "none"
   },
@@ -96,10 +96,10 @@ export const ISIZULU_SILENT_DECK_TEXT_CANDIDATES: readonly IsiZuluSilentDeckText
     ],
     "correctedTitle": "Hlola Izibonelo Zase-Highveld",
     "correctedTarget": [
-      "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Hlola isitshalo ngasinye against frost, soil, mature size and the approved local species list. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
+      "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Check each plant against frost, soil, mature size and the approved local species list. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
     ],
     "sourceHash": "5ba4359839d3beac6e20a9c32f3a23b9b14ee0b669de9d81426984580b51f5a2",
-    "targetHash": "246fcd057be649d47381cfa9454239475637ab2992843deb5eebc032bd321060",
+    "targetHash": "9d7c4985455d079169fbc70565b5fa5b57b1e0faef9c8fa69586b072ed8cc100",
     "reviewStatus": "unreviewed",
     "audioBinding": "none"
   },

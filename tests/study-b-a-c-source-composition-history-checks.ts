@@ -8,9 +8,14 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const path = (value: string) => resolve(root, value);
 const sha = (value: string | Uint8Array) => createHash('sha256').update(value).digest('hex');
 const proofPath = 'docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/composition-proof.json';
+const sentenceRepairPath = 'docs/study-translation-reviews/zulu-silent-sentence-repairs-2026-10-08/successor-proof.json';
 const proofBytes = readFileSync(path(proofPath));
 assert.equal(sha(proofBytes), '2cb8894994c3b3bdec5d501372525005595362c5d78d0f6ae913cdeb39ea0c62', 'B+A+C full source proof is immutable');
 const proof = JSON.parse(proofBytes.toString());
+const sentenceRepairBytes = readFileSync(path(sentenceRepairPath));
+assert.equal(sha(sentenceRepairBytes), 'ec4943b8bd34e031cbd082f6c402a5d2edb234d10b2470db345b39bc2c25eaf6',
+  'the two-card source/media successor proof is immutable');
+const sentenceRepair = JSON.parse(sentenceRepairBytes.toString());
 const baBytes = readFileSync(path('docs/study-translation-reviews/study-b-a-integration-2026-10-08/composition-proof.json'));
 const cBytes = readFileSync(path('docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/source-layer-proof.json'));
 const bBytes = readFileSync(path('docs/study-translation-reviews/vegetables-two-ordinary-residual-2026-10-08/media-proof.json'));
@@ -76,11 +81,69 @@ function reverseManifestOwners(source: string, retained: Set<'A' | 'B' | 'C'>): 
   return projected.replace(/^\/\/ \d+ files, [\d.]+ MB total\.$/m, summary);
 }
 
+function sentenceRepairRow(file: string): any | undefined {
+  return sentenceRepair.files.find((item: any) => item.livePath === file);
+}
+
+/** Validate the exact two-card outer layer, then expose its immutable B+A+C predecessor. */
+function unwrapSentenceRepairSuccessor(file: string, bytes: string | Uint8Array): Buffer {
+  const row = sentenceRepairRow(file);
+  assert.ok(row, `${file}: only the declared two-card worker/manifest has a successor layer`);
+  const before = readFileSync(path(`${sentenceRepairPath.slice(0, sentenceRepairPath.lastIndexOf('/'))}/${row.before.path}`));
+  const after = readFileSync(path(`${sentenceRepairPath.slice(0, sentenceRepairPath.lastIndexOf('/'))}/${row.after.path}`));
+  assert.equal(before.byteLength, row.before.bytes, `${file}: complete successor predecessor size`);
+  assert.equal(sha(before), row.before.sha256, `${file}: complete successor predecessor digest`);
+  assert.equal(after.byteLength, row.after.bytes, `${file}: complete successor source size`);
+  assert.equal(sha(after), row.after.sha256, `${file}: complete successor source digest`);
+  const integrated = snapshot(file, 'integrated');
+  assert.deepEqual(before, integrated, `${file}: successor starts at the exact immutable B+A+C state`);
+
+  const actual = Buffer.from(bytes);
+  assert.deepEqual(actual, after, `${file}: only the complete reviewed successor bytes may be projected`);
+  let projected = after.toString();
+  if (file === 'app/sw.js/route.ts') {
+    const worker = sentenceRepair.workerDelta;
+    const marker = worker.marker;
+    const markerAt = projected.indexOf(marker);
+    assert.ok(markerAt >= 0 && projected.indexOf(marker, markerAt + marker.length) === -1,
+      'the two-card cache marker appears exactly once');
+    const functionStart = projected.indexOf(`async function ${worker.function}() {`);
+    assert.ok(functionStart >= 0 && markerAt > functionStart, 'the migration marker belongs to the named bounded function');
+    const commentStart = projected.lastIndexOf('// Refresh only the two corrected ZU silent cards; all other saved ZU media stays.', functionStart);
+    assert.ok(commentStart >= 0, 'the migration has its source-specific scope explanation');
+    const match = projected.slice(functionStart).match(/async function migrateZuluSilentSentenceRepairs\(\) \{[\s\S]*?\n\}/);
+    assert.ok(match, 'the whole migration function is bounded');
+    const functionEnd = functionStart + match[0].length;
+    projected = projected.slice(0, commentStart) + projected.slice(functionEnd + 2);
+    const call = '.then(migrateZuluSilentSentenceRepairs)';
+    assert.equal(projected.split(call).length - 1, 1, 'the successor activation call appears exactly once');
+    projected = projected.replace(call, '');
+  } else {
+    const delta = sentenceRepair.manifestDelta;
+    for (const [url, values] of Object.entries(delta.changedRows) as [string, any][]) {
+      const afterLine = `  '${url}': ${values.afterBytes},`;
+      assert.equal(projected.split(afterLine).length - 1, 1, `${url}: exact successor row appears once`);
+      projected = projected.replace(afterLine, `  '${url}': ${values.beforeBytes},`);
+    }
+    assert.equal(projected.split(delta.summaryAfter).length - 1, 1, 'the generated manifest aggregate is unique');
+    projected = projected.replace(delta.summaryAfter, delta.summaryBefore);
+  }
+  const restored = Buffer.from(projected);
+  assert.deepEqual(restored, before, `${file}: reversing only the two declared changes restores the exact full predecessor`);
+  return before;
+}
+
 export function ensureStudyBACCompositionCurrent(): void {
   assert.equal(proof.status, 'prepared-unreviewed-B-A-C-full-source-history-proof');
   for (const file of ['app/sw.js/route.ts', 'lib/course-asset-sizes.ts']) {
     const integrated = snapshot(file, 'integrated');
-    assert.deepEqual(readFileSync(path(file)), integrated, `${file}: complete integrated live source and every unlisted byte`);
+    const live = readFileSync(path(file));
+    if (sentenceRepairRow(file)) {
+      assert.deepEqual(live, readFileSync(path(`${sentenceRepairPath.slice(0, sentenceRepairPath.lastIndexOf('/'))}/${sentenceRepairRow(file).after.path}`)),
+        `${file}: the live source equals the exact two-card successor snapshot`);
+      assert.deepEqual(unwrapSentenceRepairSuccessor(file, live), integrated,
+        `${file}: complete-current successor projection preserves every unlisted B+A+C byte`);
+    } else assert.deepEqual(live, integrated, `${file}: complete integrated live source and every unlisted byte`);
     const phases = ['main69', 'afterB', 'afterA', 'afterC', 'afterAB'];
     for (const phase of phases) snapshot(file, phase);
     const worker = file === 'app/sw.js/route.ts';
@@ -115,7 +178,11 @@ function project(file: string, bytes: string | Uint8Array, phase: 'afterAB' | 'a
   ensureStudyBACCompositionCurrent();
   const integrated = snapshot(file, 'integrated');
   const expected = snapshot(file, phase);
-  const supplied = Buffer.from(bytes);
+  const raw = Buffer.from(bytes);
+  const successor = sentenceRepairRow(file);
+  const supplied = successor && sha(raw) === successor.after.sha256
+    ? unwrapSentenceRepairSuccessor(file, raw)
+    : raw;
   if (sha(supplied) === sha(expected)) return bytes;
   assert.equal(sha(supplied), sha(integrated), `${file}: only a byte-exact integrated source may be projected; unknown or corrupted owners are rejected`);
   let restored = supplied.toString();

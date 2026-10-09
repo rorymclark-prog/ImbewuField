@@ -743,7 +743,8 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   // clause; retain all three possible timings and the limiting-water condition.
   assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
   assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
-  assert.match(l2[14], /and store as protein/);
+  // Tshivenda connector is localized in the accepted exact span; the protein term stays technical English.
+  assert.equal(l2[14], 'Beans dzi gonya maize, na store as protein.');
   assert.equal(l2[15], 'Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.',
     'the ground-spreading action and soil shade remain localized while the crop and moisture terms stay English');
   assert.match(l2[16], /Tshifhinga tshi a vha tsha ndeme\. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya\./, 'maize is established first and is strong enough before beans start climbing');

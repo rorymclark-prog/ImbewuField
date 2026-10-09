@@ -65,6 +65,51 @@ test('six isiZulu silent safety stills evict only their stale recorded JPEGs onc
   assert.equal(writeCount, 1);
 });
 
+test('the two corrected ZU silent cards retire only their cached WebP URL variants once', async () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const body = source.match(/async function migrateZuluSilentSentenceRepairs\(\) \{([\s\S]*?)\n\}/)?.[1];
+  assert.ok(body);
+  assertActivationOrder(source, 'migrateZuluSilentSafetyStills', 'migrateZuluSilentSentenceRepairs',
+    'the two-card refresh follows the original six-card cleanup');
+  assert.doesNotMatch(body!, /\bfetch\s*\(/, 'the cache migration never downloads replacement media');
+  const paths = [
+    '/course-decks/intro-permaculture/zu-silent/slide-14.webp',
+    '/course-decks/food-forest/zu-silent/slide-11.webp',
+  ];
+  const origin = 'https://field.test';
+  const stale = paths.flatMap(path => [path, `${path}?saved=old`, `${path}?width=small`]);
+  const keep = [
+    '/course-decks/reading-landscape/zu-silent/slide-04.webp',
+    '/course-decks/food-forest/zu-silent/slide-07.webp',
+    '/course-decks/food-forest/zu-silent/slide-12.webp',
+    '/course-decks/intro-permaculture/zu/slide-14.jpg',
+    '/course-audio/intro-permaculture/zu/slide-14.mp3',
+    '/course-audio/food-forest/zu/slide-11.mp3',
+    '/course-animations/food-forest/seasonal-cycle.mp4',
+  ];
+  const rows = new Map<string, Response>([
+    ...stale.map(path => [new URL(path, origin).href, new Response(`old:${path}`)] as const),
+    ...keep.map(path => [new URL(`${path}?saved=1`, origin).href, new Response(`keep:${path}`)] as const),
+  ]);
+  let deleteCount = 0;
+  let writeCount = 0;
+  const cache = {
+    match: async (key: string) => rows.get(new URL(key, origin).href),
+    keys: async () => [...rows.keys()].map(url => new Request(url)),
+    delete: async (request: Request) => { deleteCount++; return rows.delete(request.url); },
+    put: async (key: string, response: Response) => { writeCount++; rows.set(new URL(key, origin).href, response); },
+  };
+  const run = new Function('caches', 'COURSE_CACHE', 'Response', 'return (async () => {' + body + '})()');
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(deleteCount, stale.length, 'only exact URL paths and query variants of both changed cards are retired');
+  assert.equal(writeCount, 1);
+  for (const path of stale) assert.equal(rows.has(new URL(path, origin).href), false, path);
+  for (const path of keep) assert.equal(rows.has(new URL(`${path}?saved=1`, origin).href), true, `${path} remains cached`);
+  await run({ open: async () => cache }, 'imbewu-course-v1', Response);
+  assert.equal(deleteCount, stale.length, 'the marker makes the migration once-only');
+  assert.equal(writeCount, 1);
+});
+
 test('the nine updated Study stills refresh once without evicting other slides or narration', async () => {
   const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
   const body = source.match(/async function migrateStudyOutcomesResidualStills\(\) \{([\s\S]*?)\n\}/)?.[1];

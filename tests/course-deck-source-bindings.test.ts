@@ -326,11 +326,58 @@ test('the six accepted silent safety cards are source-bound, rendered and runtim
     }))));
     assert.equal(row.reviewStatus, 'unreviewed');
     assert.equal(row.audioBinding, 'none');
-    assert.deepEqual(snap, row);
+    if (key(row) === 'intro-permaculture:14') {
+      assert.equal(row.sourceHash, snap.sourceHash, 'the appended integration sentence does not change the bound English source');
+      assert.equal(row.correctedTarget[1], snap.correctedTarget[1].replace(
+        ' ngemva kokuvuna. Gcina izinkukhu',
+        ' ngemva kokuvuna. Lokhu kuwukuhlanganisa. Gcina izinkukhu',
+      ));
+      assert.deepEqual({ ...row, correctedTarget: snap.correctedTarget, targetHash: snap.targetHash }, snap,
+        'only the reviewed one-sentence insertion differs from the immutable six-card packet');
+    } else if (key(row) === 'food-forest:11') {
+      assert.equal(row.sourceHash, snap.sourceHash, 'the bounded imperative edit keeps the original source binding');
+      assert.deepEqual({ ...row, correctedTarget: snap.correctedTarget, targetHash: snap.targetHash }, snap,
+        'only the reviewed imperative prefix differs from the immutable six-card packet');
+    } else assert.deepEqual(snap, row);
   }
   const forest11 = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === 'food-forest:11')!;
   assert.ok(forest11.correctedTarget.some((paragraph) => paragraph.includes(
-    'Check each plant against frost, soil, mature size and the approved local species list.')));
+    'Hlola isitshalo ngasinye against frost, soil, mature size and the approved local species list.')));
+  assert.equal(forest11.targetHash, '246fcd057be649d47381cfa9454239475637ab2992843deb5eebc032bd321060');
+  assert.ok(!forest11.correctedTarget.some((paragraph) => paragraph.includes('ngokwe-')),
+    'the bounded imperative does not add an unreviewed comparison construction');
+  const intro14 = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === 'intro-permaculture:14')!;
+  assert.ok(intro14.correctedTarget[1].includes(
+    'ngemva kokuvuna. Lokhu kuwukuhlanganisa. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa.'));
+  assert.equal(intro14.targetHash, 'bda06454d2cf6fd558b8c584ba438077eb275d8b386fea391b406714e19dd2d4');
+  assert.match(isiZuluDeckReviewHold('intro-permaculture', 14) ?? '', /original recording and binding remain unchanged/,
+    'the unchanged recording is withheld beside the new explicit integration clause');
+  const repairProofBytes = readFileSync(new URL(
+    '../docs/study-translation-reviews/zulu-silent-sentence-repairs-2026-10-08/successor-proof.json', import.meta.url));
+  assert.equal(sha256(repairProofBytes), 'ec4943b8bd34e031cbd082f6c402a5d2edb234d10b2470db345b39bc2c25eaf6',
+    'the two-card source-bound successor proof stays immutable');
+  const repairProof = JSON.parse(repairProofBytes.toString());
+  for (const repair of repairProof.changes) {
+    const candidate = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === repair.key)!;
+    const prior = snapshot.rows.find((row: any) => key(row) === repair.key)!;
+    assert.deepEqual(repair.sourceEnglish, candidate.sourceEnglish, `${repair.key}: proof remains bound to exact English source`);
+    assert.equal(repair.sourceHash, candidate.sourceHash, `${repair.key}: source identity stays fixed`);
+    assert.deepEqual(repair.beforeTarget, prior.correctedTarget, `${repair.key}: exact predecessor target is retained in proof`);
+    assert.deepEqual(repair.afterTarget, candidate.correctedTarget, `${repair.key}: exact current target is proven`);
+    assert.equal(repair.reviewStatus, candidate.reviewStatus);
+    assert.equal(repair.audioBinding, candidate.audioBinding);
+  }
+  const holdProof = repairProof.playbackSafetyHold;
+  const beforeHold = readFileSync(new URL(`../docs/study-translation-reviews/zulu-silent-sentence-repairs-2026-10-08/${holdProof.before.path}`, import.meta.url));
+  const afterHold = readFileSync(new URL(`../docs/study-translation-reviews/zulu-silent-sentence-repairs-2026-10-08/${holdProof.after.path}`, import.meta.url));
+  const liveHold = readFileSync(new URL('../lib/course-deck-review-holds.ts', import.meta.url));
+  assert.equal(sha256(beforeHold), holdProof.before.sha256);
+  assert.equal(sha256(afterHold), holdProof.after.sha256);
+  assert.deepEqual(afterHold, liveHold, 'the complete playback-hold source equals its saved successor snapshot');
+  const holdLine = "    14: 'The corrected silent card explicitly names integration after the arrangement example, while the original recording only gives the arrangement; withhold the old speech beside this added distinction until its wording is checked. The original recording and binding remain unchanged.',\n";
+  assert.equal(liveHold.toString().split(holdLine).length - 1, 1, 'the playback-safety hold has one exact entry');
+  assert.deepEqual(Buffer.from(liveHold.toString().replace(holdLine, '')), beforeHold,
+    'the new hold is the only difference from its exact saved predecessor');
   const reading7 = ISIZULU_SILENT_DECK_TEXT_CANDIDATES.find((row) => key(row) === 'reading-landscape:7')!;
   assert.ok(reading7.supplementalImageCue);
   assert.ok(!reading7.sourceEnglish.includes(reading7.supplementalImageCue.text));
@@ -476,9 +523,11 @@ test('the source snapshot covers exact deck/audio assets without changing the ST
   }, 'ST Introduction uses its new exact-source silent pair; archived bytes remain protected above');
 });
 
-test('all 27 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
+test('all 28 independent isiZulu meaning flags suppress only their exact slides and affected full tracks', () => {
+  // 8 October 2026: Intro14's silent card now says the arrangement is integration;
+  // the preserved recording omits that clause, so suppress only that exact slide's audio.
   const expected = [
-    'intro-permaculture:6', 'intro-permaculture:7', 'intro-permaculture:22',
+    'intro-permaculture:6', 'intro-permaculture:7', 'intro-permaculture:14', 'intro-permaculture:22',
     'reading-landscape:5', 'reading-landscape:14', 'reading-landscape:15', 'reading-landscape:16',
     'food-forest:11',
     'soil-health:1',
