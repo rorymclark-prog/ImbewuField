@@ -212,7 +212,7 @@ export default function VisionPage() {
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                   style={{
                     background: on ? '#1F4D2B' : 'transparent',
-                    color: on ? '#F7F2E9' : '#5C5040',
+                    color: on ? 'var(--on-forest)' : '#5C5040',
                     border: 'none',
                     cursor: 'pointer',
                   }}
@@ -281,13 +281,13 @@ export default function VisionPage() {
               className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-sm font-display font-semibold"
               style={{
                 background: '#1F4D2B',
-                color: '#F7F2E9',
+                color: 'var(--on-forest)',
                 border: 'none',
                 cursor: 'pointer',
               }}
             >
               <LimaSprout size={18} />
-              <span style={{ color: '#F7F2E9' }}>{t('Ask Lima', 'Buza uLima')}</span>
+              <span style={{ color: 'var(--on-forest)' }}>{t('Ask Lima', 'Buza uLima')}</span>
             </button>
           )}
 

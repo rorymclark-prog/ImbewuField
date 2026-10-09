@@ -226,7 +226,7 @@ function TraineeCard({
               </p>
               <button onClick={() => onEnrol(trainee.id)} disabled={busy}
                 className="flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
-                style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
                 {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
                 {tr(lang, 'Enrol on the course', 'Mbhalise esifundweni')}
               </button>
@@ -572,7 +572,7 @@ export default function MentorPage() {
             <button
               onClick={() => router.push(role==='funder'?'/funder':'/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: '#1F4D2B', color: '#F7F2E9' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
             >
               <Home size={15} />
               {role==='funder' ? tr(lang, 'Open funder workspace', 'Vula indawo yabaxhasi') : tr(lang, 'Back to my home', 'Buyela ekhasini lami lasekhaya')}
@@ -645,7 +645,7 @@ export default function MentorPage() {
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-mono"
-                style={{ minWidth: 16, height: 16, fontSize: 9, padding: '0 4px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                style={{ minWidth: 16, height: 16, fontSize: 9, padding: '0 4px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
                 {badge}
               </span>
             )}

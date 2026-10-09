@@ -970,7 +970,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 : {
                     background: 'var(--report-button)',
                     border: '1px solid rgba(31,77,43,0.6)',
-                    color: '#F7F2E9',
+                    color: 'var(--on-forest)',
                     boxShadow: '0 0 16px rgba(31,77,43,0.2)',
                   }
             }
@@ -1007,7 +1007,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={() => setPanelOpen(false)}
               className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
-              style={{ background: 'var(--report-button)', color: '#F7F2E9', border: 'none' }}
+              style={{ background: 'var(--report-button)', color: 'var(--on-forest)', border: 'none' }}
             >
               <FileText size={14} />{tr('Read the report', 'Funda umbiko')}
             </button>

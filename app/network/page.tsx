@@ -440,7 +440,7 @@ export default function NetworkPage() {
                       padding: '3.5px 9px',
                       cursor: 'pointer',
                       background: on ? '#1F4D2B' : 'rgba(32,25,15,0.05)',
-                      color: on ? '#F7F2E9' : INK_SOFT,
+                      color: on ? 'var(--on-forest)' : INK_SOFT,
                       border: `1px solid ${on ? '#1F4D2B' : LINE}`,
                     }}
                   >

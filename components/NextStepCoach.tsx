@@ -279,7 +279,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
             minHeight: 44,
             borderRadius: 12,
             background: '#1F4D2B',
-            color: '#F7F2E9',
+            color: 'var(--on-forest)',
             fontSize: 15,
             border: 'none',
             cursor: 'pointer',

@@ -52,7 +52,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
               }}>
                 {p.photos?.[0]
                   ? <img data-photo-preview src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 14 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--on-forest)', fontWeight: 700, fontSize: 14 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
             </div>
           </Marker>
@@ -74,7 +74,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
                 onClick={() => onOpenProfile(active.uid)}
                 className="font-sans font-semibold"
                 style={{
-                  marginTop: 8, background: '#1F4D2B', color: '#F7F2E9', border: 'none',
+                  marginTop: 8, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none',
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >

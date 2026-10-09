@@ -207,7 +207,7 @@ export default function MessageThreadPage() {
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
                     background: mine ? '#1F4D2B' : 'var(--bg-1)',
-                    color: mine ? '#F7F2E9' : 'var(--text-primary)',
+                    color: mine ? 'var(--on-forest)' : 'var(--text-primary)',
                     border: mine ? 'none' : '1px solid var(--border)',
                     borderBottomRightRadius: mine ? 4 : 16,
                     borderBottomLeftRadius: mine ? 16 : 4,
@@ -250,7 +250,7 @@ export default function MessageThreadPage() {
           className="flex items-center justify-center rounded-full flex-shrink-0"
           style={{ width: 40, height: 40, background: body.trim() ? '#1F4D2B' : 'rgba(32,25,15,0.1)', border: 'none', cursor: body.trim() ? 'pointer' : 'default' }}
         >
-          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? '#F7F2E9' : 'var(--text-muted)' }} />}
+          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? 'var(--on-forest)' : 'var(--text-muted)' }} />}
         </button>
       </div>
     </div>

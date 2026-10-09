@@ -626,7 +626,7 @@ export default function NewListingForm({
             padding: 11,
             fontSize: 14,
             background: canPost ? EX.green : 'rgba(32,25,15,0.1)',
-            color: canPost ? '#F7F2E9' : '#755942',
+            color: canPost ? 'var(--on-forest)' : '#755942',
             border: 'none',
             cursor: canPost ? 'pointer' : 'default',
           }}
