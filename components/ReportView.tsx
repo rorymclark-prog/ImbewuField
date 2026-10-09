@@ -39,6 +39,7 @@ import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
 import { REPORT_ZU } from '@/lib/report-localisation';
+import { loadLocale, translate } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
 import { useAppLevel } from '@/lib/app-level';
@@ -297,6 +298,31 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const simple = useAppLevel() === 'simple';
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
+  // so its locale chunk may never have been fetched — load it so translate() below has real text
+  // to find rather than always falling back to English.
+  useEffect(() => { loadLocale(language); }, [language]);
+  // Climate-footnote values (lib/koppen-global.ts, lib/nasa-power.ts) come from a small fixed set
+  // of English strings, not from tr()/REPORT_ZU's proper-noun-sized dictionary — translate() falls
+  // back to the key itself when neither this language nor English has it, so comparing against
+  // the key catches a code the pending dict hasn't been told about and shows the real description
+  // instead of a raw key name.
+  const koppenDescLabel = (code: string, fallback: string) => {
+    const key = `reportKoppenDesc${code}`;
+    const result = translate(language, key);
+    return result === key ? fallback : result;
+  };
+  const rainfallPatternLabel = (pattern: 'summer' | 'winter' | 'year-round') => translate(language, pattern === 'summer' ? 'reportRainfallPatternSummer' : pattern === 'winter' ? 'reportRainfallPatternWinter' : 'reportRainfallPatternYearRound');
+  const SEASON_MONTH_KEYS: Record<string, string> = { Jan: 'surveyMonthJan', Feb: 'surveyMonthFeb', Mar: 'surveyMonthMar', Apr: 'surveyMonthApr', May: 'surveyMonthMay', Jun: 'surveyMonthJun', Jul: 'surveyMonthJul', Aug: 'surveyMonthAug', Sep: 'surveyMonthSep', Oct: 'surveyMonthOct', Nov: 'surveyMonthNov', Dec: 'surveyMonthDec' };
+  const seasonRangeLabel = (range: string) => {
+    if (range === 'year-round') return translate(language, 'reportSeasonYearRound');
+    if (range === 'none') return translate(language, 'reportSeasonNone');
+    const [start, end] = range.split('–');
+    const startKey = SEASON_MONTH_KEYS[start];
+    const endKey = SEASON_MONTH_KEYS[end];
+    if (!startKey || !endKey) return range;
+    return `${translate(language, startKey)}–${translate(language, endKey)}`;
+  };
   const displayError = (message: string) => {
     if (language !== 'zu') return message;
     const known: Record<string, string> = {
@@ -1248,8 +1274,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               ) : (
                 <>
                   <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({d.climate.koppenDesc}) ·
-                    {' '}{d.rainfall.pattern} {tr('rainfall', 'imvula')} · {d.rainfall.wetSeason} {tr('wet', 'manzi')} / {d.rainfall.drySeason} {tr('dry', 'omile')} ·
+                    {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({koppenDescLabel(d.climate.koppen, d.climate.koppenDesc)}) ·
+                    {' '}{rainfallPatternLabel(d.rainfall.pattern)} {tr('rainfall', 'imvula')} · {seasonRangeLabel(d.rainfall.wetSeason)} {tr('wet', 'manzi')} / {seasonRangeLabel(d.rainfall.drySeason)} {tr('dry', 'omile')} ·
                     {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
                   </div>
 
