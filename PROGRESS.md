@@ -52,6 +52,12 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 9 Oct 2026 — AI allowance in rand: R18/person/month
+- Rory: "keep it 18 rand". `lib/ai-budget.ts` now counts in rand: `AI_MONTHLY_CAP_ZAR` (default 18),
+  `AI_GUEST_DAILY_ZAR` (default 1), `AI_ZAR_PER_USD` (default 18). The `*_EUR` vars are gone (never set).
+- Account page shows "R x of R18 left". Note: R18 equals the whole R18/month price — AI could use all
+  of a user's revenue; the research's R6 target is one env change away.
+
 ### 6 Oct 2026 — Money book in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
 - **What:** `/records` (Picked · Sold · Spent · Charts; `/finances` redirects there) now reads
   source-keyed machine drafts in Sesotho, Tshivenda and provisional standard written Xitsonga, and
