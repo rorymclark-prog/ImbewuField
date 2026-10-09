@@ -42,6 +42,20 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 October 2026', sha: '4da5c22d', changes: [
+    'Your monthly AI allowance is now R18, shown in rand on your Account page.',
+    'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',
+  ], tour: [{
+    title: 'See your AI allowance',
+    where: 'Account → AI this month',
+    detail: 'Shows how many rand of AI are left and when it refills.',
+    href: '/account',
+  }, {
+    title: 'Use AI as normal',
+    where: 'Home',
+    detail: 'When the allowance runs out, AI keeps working on a simpler model until the 1st.',
+    href: '/home',
+  }] },
   { when: '8 October 2026', sha: '3d86afb9', changes: [
     'Reading cards have unreviewed Sesotho, Tshivenda and Xitsonga headings.',
     'Sesotho pest guidance pairs its revised draft wording with exact English.',
