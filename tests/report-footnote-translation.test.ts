@@ -65,13 +65,24 @@ test('the rainfall-pattern words and the non-range season fallbacks are pending 
   }
 });
 
-test('REPORT_FOOTNOTE_ENGLISH_PENDING is spread into every locale file, same as the other *_ENGLISH_PENDING dictionaries', () => {
+test('REPORT_FOOTNOTE_ENGLISH_PENDING is spread into T_en (lib/i18n.tsx), not the per-locale files', () => {
+  // T_en is LOADED.en, the fallback translate()/t() reach for whenever a language's own locale
+  // chunk (lib/locales/<code>.ts) lacks a key — so spreading it here, once, already shows the
+  // English pending text in every language, with no need to touch the ten locale files.
+  //
+  // Deliberately NOT spread into lib/locales/*.ts: several of those files (ve.ts among them) are
+  // byte-pinned by an active translation-audit track's own history-check tests
+  // (tests/*-history-checks.ts assert an exact sha256 of the live file against a recorded
+  // "afterSourceSha256" snapshot). Touching them here broke that unrelated chain in CI even
+  // though this track's own addition was a correct, working two-line change — see this track's
+  // PR description for the full story. T_en carries no such pin.
+  const I18N = read('../lib/i18n.tsx');
+  assert.match(I18N, /import \{ DESIGN_STUDIO_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, type Dict \} from '@\/lib\/i18n-pending';/);
+  assert.match(I18N, /export const T_en: Dict = \{\n  \.\.\.DESIGN_STUDIO_ENGLISH_PENDING,\n  \.\.\.MENTOR_ENGLISH_PENDING,\n  \.\.\.REPORT_FOOTNOTE_ENGLISH_PENDING,/);
   for (const code of ['af', 'nr', 'nso', 'ss', 'st', 'tn', 'ts', 've', 'xh', 'zu']) {
     const locale = read(`../lib/locales/${code}.ts`);
-    assert.match(locale, /REPORT_FOOTNOTE_ENGLISH_PENDING/,
-      `lib/locales/${code}.ts must import and spread REPORT_FOOTNOTE_ENGLISH_PENDING`);
-    assert.match(locale, /\.\.\.REPORT_FOOTNOTE_ENGLISH_PENDING,/,
-      `lib/locales/${code}.ts must spread REPORT_FOOTNOTE_ENGLISH_PENDING into its dict`);
+    assert.doesNotMatch(locale, /REPORT_FOOTNOTE_ENGLISH_PENDING/,
+      `lib/locales/${code}.ts must stay untouched by this track — it must not reference REPORT_FOOTNOTE_ENGLISH_PENDING`);
   }
 });
 
