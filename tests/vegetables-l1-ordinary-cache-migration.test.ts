@@ -1,3 +1,5 @@
+// The newer 15-card layer checks the full manifest before dated reconstruction;
+// the same corrupt-header/unlisted-entry cases must fail at that earlier guard.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -98,10 +100,10 @@ test('L1 historical descriptors reject aggregate and unlisted size drift before 
   const corruptedHeader = actual.replace(header, header.replace(/[\d.]+ MB/, '9999.9 MB'));
   assert.notEqual(corruptedHeader, actual, 'the negative control must really change the live aggregate');
 
-  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(corruptedHeader), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(corruptedHeader), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current|complete manifest after only 15 measured changes/);
   const path = '/course-decks/vegetables-staples/st/slide-01.webp';
   const slot = `  '${path}': ${COURSE_ASSET_SIZES[path]},`;
   assert.ok(actual.includes(slot));
-  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current/);
-  assert.throws(() => vegetablesL1AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded (?:Vegetables L1|Intro full) manifest baseline|only the complete accepted silent Intro manifest is current/);
+  assert.throws(() => validateCurrentVegetablesL1OrdinaryMedia(actual.replace(slot, `  '${path}': 1,`)), /only (?:five Vegetables sizes|36 approved sizes)|exact guarded Intro full manifest baseline|only the complete accepted silent Intro manifest is current|complete manifest after only 15 measured changes/);
+  assert.throws(() => vegetablesL1AssetSizesBeforeOrdinary(actual.replace(slot, `  '${path}': 1,`)), /exact guarded (?:Vegetables L1|Intro full) manifest baseline|only the complete accepted silent Intro manifest is current|complete manifest after only 15 measured changes/);
 });

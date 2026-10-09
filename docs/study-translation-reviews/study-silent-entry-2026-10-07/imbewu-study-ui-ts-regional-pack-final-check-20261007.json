@@ -1,0 +1,19 @@
+{
+  "reviewedHead": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "language": "ts",
+  "scope": "Source-context resolution of offlineRegionalPackChoice only.",
+  "sourceBinding": {
+    "file": "components/course/OfflineDownload.tsx",
+    "line": 238,
+    "englishSource": "Regional deck download contents",
+    "renderCondition": "regionalPackNeedsNarrationChoice(moduleIds, lang) && !busy",
+    "implementationEvidence": "regionalPackNeedsNarrationChoice returns true for lang in st/ve/ts when one selected module has a deck and its narration language is not exact; content selection is keyed by lang and moduleIds. The group offers Slides only versus Slides + English narration and clips.",
+    "authority": "lib/offline-pack.ts:55-62 and components/course/OfflineDownload.tsx:50-53, 237-252"
+  },
+  "candidate": "Leswi swi dawunilodiwaka eka slides ta ririmi leri u ri hlawuleke.",
+  "literalBacktranslation": "What is downloaded for the slides in the language you selected.",
+  "verdict": "ACCEPT",
+  "reason": "The code condition is based on the selected app language and the chosen module set, not a geographic region. This wording correctly describes the download options for slides in the selected language and avoids implying a geographic region. The options below it specify slide-only versus English narration and clips.",
+  "fluencyApproval": false
+}

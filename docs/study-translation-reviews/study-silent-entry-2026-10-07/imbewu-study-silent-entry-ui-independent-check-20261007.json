@@ -1,0 +1,132 @@
+{
+  "title": "Independent semantic backcheck of silent-slide Study UI candidates",
+  "date": "2026-10-07",
+  "input": "/tmp/imbewu-study-silent-entry-ui-candidates-20261007.json",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "checkedHead": "27dc083deda68dd33bfc67bf7c954037ee4a70f1",
+  "scope": "Read-only check of six proposed UI strings across Sesotho (st), Tshivenda (ve), and Xitsonga (ts).",
+  "limitations": [
+    "Meaning/composition check only; no fluent-speaker approval.",
+    "No code changes or tests. Candidate strings are not wired."
+  ],
+  "structuralAssertions": {
+    "allSixRowsChecked": true,
+    "allThreeCountPlaceholdersExact": true,
+    "autoStartNegationRetainedInAllThreeDescriptions": true,
+    "EnglishNarrationChoiceRetainedAsOptionalInAllThreeDescriptions": true,
+    "existingLocaleTermsChecked": {
+      "stSlides": "Diselaete is already used in offlineRegionalSlidesOnly.",
+      "veNarration": "courseDeckNoNarration uses ṱhalutshedzo nga ipfi; no verified slide word found in ve locale.",
+      "tsNarration": "courseDeckNoNarration uses nhlamuselo hi rito and Xinghezi is present in the current locale; no verified slide word found in ts locale."
+    }
+  },
+  "counts": {
+    "accept": 6,
+    "repair": 0,
+    "hold": 0
+  },
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "candidate": "Shebella diselaete",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“Look at/watch the slides.” The existing Sesotho locale already uses `Diselaete` in `offlineRegionalSlidesOnly`, so the noun is supported in this interface. `Shebella` is a natural action for opening/viewing a slide presentation.",
+      "meaningRisksAndNotes": "No meaning risk beyond ordinary review of the command/register.",
+      "placeholderCheck": {
+        "countPreservedExactly": null
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": null,
+        "EnglishNarrationChoiceRemainsOptional": null,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    },
+    {
+      "language": "st",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "candidate": "Diselaete tse {count}. Ha ho tlhaloso e buuoang e qalang ka boyona. O ka kgetha tlhaloso ya Senyesemane.",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“{count} slides. No spoken explanation starts by itself. You can choose an English explanation.” The count is preserved, the negation says nothing starts automatically, and “can choose” keeps English narration optional. `Senyesemane` is the Sesotho name for English.",
+      "meaningRisksAndNotes": "No material semantic risk. Candidate matches the existing `courseDeckNoNarration` phrasing for spoken explanation; fluent review still required.",
+      "placeholderCheck": {
+        "countPreservedExactly": true
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": true,
+        "EnglishNarrationChoiceRemainsOptional": true,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "candidate": "Vhonani slides",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“Look at the slides.” The polite/plural Tshivenda imperative is clear; `slides` is a provisional English loan, not accidental sentence contamination.",
+      "meaningRisksAndNotes": "No established Tshivenda slide term was found in the current locale. Retain `slides` as the requested provisional technical/UI loan pending language review.",
+      "placeholderCheck": {
+        "countPreservedExactly": null
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": null,
+        "EnglishNarrationChoiceRemainsOptional": null,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    },
+    {
+      "language": "ve",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "candidate": "Slides dza {count}. Ṱhalutshedzo nga ipfi a i thomi nga yoṱhe. Ni nga khetha ṱhalutshedzo ya English.",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“{count} slides. Spoken explanation does not start by itself. You can choose an English explanation.” The count placeholder, no-auto-start negation, and optional choice all remain.",
+      "meaningRisksAndNotes": "`English` is the named language and remains an explicit English loan; the surrounding clause is Tshivenda. No verified local name for English narration was found in the current locale. `slides` is also an intentional provisional loan.",
+      "placeholderCheck": {
+        "countPreservedExactly": true
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": true,
+        "EnglishNarrationChoiceRemainsOptional": true,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "candidate": "Vona slides",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“See/view the slides.” The imperative is consistent with the singular informal “you” used by this locale; `slides` is an intentional provisional English UI term.",
+      "meaningRisksAndNotes": "No established Xitsonga UI word for slides was found in the current locale. Keep the English loan provisional.",
+      "placeholderCheck": {
+        "countPreservedExactly": null
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": null,
+        "EnglishNarrationChoiceRemainsOptional": null,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    },
+    {
+      "language": "ts",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "candidate": "Slides ta {count}. Nhlamuselo hi rito a yi sunguli hi yoxe. U nga hlawula nhlamuselo ya Xinghezi.",
+      "decision": "ACCEPT",
+      "literalBackTranslation": "“{count} slides. Voice explanation does not start by itself. You can choose an English explanation.” The placeholder is intact; the sentence denies automatic start and makes the English narration selectable rather than required.",
+      "meaningRisksAndNotes": "`Xinghezi` is already used in the Xitsonga locale (for example, `sidebarBilingualToggle`), so there is no cross-language contamination. `slides` remains a provisional English loan.",
+      "placeholderCheck": {
+        "countPreservedExactly": true
+      },
+      "independentSemanticChecks": {
+        "autoStartNegationPreserved": true,
+        "EnglishNarrationChoiceRemainsOptional": true,
+        "languageContamination": "Only named English language / expressly provisional English loan `slides`; no accidental full English clause."
+      }
+    }
+  ]
+}

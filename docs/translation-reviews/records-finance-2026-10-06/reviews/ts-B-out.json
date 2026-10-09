@@ -1,0 +1,1885 @@
+[
+ {
+  "id": "R001",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R002",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R003",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R006",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R008",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R010",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R012",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R013",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R014",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R015",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R016",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R017",
+  "verdict": "ok",
+  "problem": "Tab 'Tihakelo' (payments) for Spent is ambiguous with money received but matches the app's existing expenses term; accepted.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R018",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R019",
+  "verdict": "repair",
+  "problem": "'swiharhi' means wild animals/beasts, not farm livestock; Feed for livestock should use 'swifuwo'.",
+  "repaired": "Swakudya swa swifuwo",
+  "severity": "meaning"
+ },
+ {
+  "id": "R020",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R021",
+  "verdict": "hold",
+  "problem": "'Fuyili' is an unattested respelling of 'fuel'; a blind reader could not recover the meaning (read as unknown/fertiliser). Drafter also flagged low confidence. Show English until a fluent speaker supplies the usual word.",
+  "repaired": "",
+  "severity": "wording"
+ },
+ {
+  "id": "R022",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R023",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R024",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R025",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R026",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R027",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R028",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R029",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R030",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R031",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R032",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R033",
+  "verdict": "repair",
+  "problem": "English says the item/supplier/total are 'ready' (pre-filled, to be checked). Draft says 'swi lunghekile' = 'are correct/fine', which asserts accuracy and contradicts the next sentence telling the farmer to check them.",
+  "repaired": "Xilo, muphakeri ni mali hinkwayo swi fakiwile. Swi kambele u swi ringanisa na risiti u nga se hlayisa.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R034",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R035",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R036",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R037",
+  "verdict": "repair",
+  "problem": "Fragment inserted after a crop name gives 'Xipinichi ntshovelo' (noun after noun, not grammatical; English is a past participle 'harvested').",
+  "repaired": "leswi tshoveriweke",
+  "severity": "minor"
+ },
+ {
+  "id": "R038",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R039",
+  "verdict": "ok",
+  "problem": "'Muholo' mainly means salary/wage; accepted as income because the shipped dictionary already uses it (myRecordsTotalRevenue).",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R040",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R041",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R042",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R044",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R045",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R046",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R047",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R048",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R049",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R050",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R051",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R052",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R053",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R054",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R055",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R056",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R057",
+  "verdict": "repair",
+  "problem": "Imperative verb 'Nghena' (= Enter/Come in) as a money-in column header reads as a command.",
+  "repaired": "Ku nghena",
+  "severity": "minor"
+ },
+ {
+  "id": "R058",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R059",
+  "verdict": "repair",
+  "problem": "Imperative verb 'Huma' (= Go out) as a money-out column header reads as a command.",
+  "repaired": "Ku huma",
+  "severity": "minor"
+ },
+ {
+  "id": "R060",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R061",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R062",
+  "verdict": "repair",
+  "problem": "'Swi fambelana ni' = 'go along with / match', not 'synced'.",
+  "repaired": "Swi hlanganisiwile ni foni ya wena",
+  "severity": "minor"
+ },
+ {
+  "id": "R063",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R064",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R065",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R066",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R067",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R068",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R069",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R070",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R071",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R072",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R073",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R074",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R075",
+  "verdict": "repair",
+  "problem": "'kombisiweke' = 'shown/pointed out'; the sense 'tagged to a crop' is not conveyed (back-translation was 'entries that were shown').",
+  "repaired": "Tihakelo ta switsalwa leswi hlawuleriweke xibyariwa:",
+  "severity": "wording"
+ },
+ {
+  "id": "R076",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R077",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R078",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R079",
+  "verdict": "repair",
+  "problem": "'nhova ya swakudya' is an uncertain rendering of 'food forest'; blind back-translation could not recover it.",
+  "repaired": "Ntanga wa mirhi ni mirhi ya swakudya",
+  "severity": "wording"
+ },
+ {
+  "id": "R080",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R081",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R082",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R083",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R084",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R085",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R086",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R087",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R088",
+  "verdict": "repair",
+  "problem": "First sentence ('selling ... is removed [by] payments') is ungrammatical/unclear for 'sales minus expenses'; 'ti ringetiwa' = 'are tried', English is 'guessed' (estimated) so the 'never estimate shared costs into crop profit' point is blurred; 'avelaniweke' = shared with people.",
+  "repaired": "Ku xavisa loku tsariweke loku susiweke tihakelo leti tsariweke. Tihakelo leti avelaniwaka a ti tshuki ti ringanyetiwa ku engeteriwa eka vuyelo bya xibyariwa.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R089",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R090",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R091",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R092",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R093",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R094",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R095",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R096",
+  "verdict": "repair",
+  "problem": "English 'Anything missing will appear'. Draft 'xin'wana ni xin'wana lexi nga kona' = 'anything that exists/is there' - 'missing' is lost; 'humelela' leans to 'succeed'.",
+  "repaired": "A wu na inthanete — ku kombisiwa leswi hlayisiweke eka xitirhisiwa lexi. Xin'wana ni xin'wana lexi pfumalaka xi ta vonaka loko u tlhela u kuma inthanete.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R097",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R098",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R099",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R100",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R101",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R102",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R103",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R104",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R105",
+  "verdict": "repair",
+  "problem": "Concord error: 'Tinhlayo' (class 10) takes 'ti', not 'swi' ('swi ha hlayela').",
+  "repaired": "Ntanga wa mirhi wu timiwile, hikwalaho {kg} kg a yi katsiwanga eka nhlayo ya ntshovelo: {names}. Tinhlayo ta tirhandi ti ha hlayela ku xavisa hinkwako.",
+  "severity": "wording"
+ },
+ {
+  "id": "R106",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R107",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R108",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R109",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R110",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R111",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R112",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R113",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R114",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R115",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R116",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R117",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R118",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R119",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R120",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R121",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R122",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R123",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R124",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R125",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R126",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R128",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R129",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R130",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R132",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R133",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R134",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R135",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R136",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R137",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R138",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R139",
+  "verdict": "hold",
+  "problem": "'matsavu' for vegetables not confirmed by blind reading (read as 'greens?'); this is a key dropdown choice, so do not ship an unverified crop-category word.",
+  "repaired": "",
+  "severity": "wording"
+ },
+ {
+  "id": "R140",
+  "verdict": "repair",
+  "problem": "'swirhapa' is not a recognisable word for 'plots' (blind read: unclear); also 'swakudya swa nkoka' = important foods rather than staples.",
+  "repaired": "Tindhawu ta swakudya swa nkoka",
+  "severity": "wording"
+ },
+ {
+  "id": "R141",
+  "verdict": "repair",
+  "problem": "Depends on R140 'swirhapa'; keep consistent with repaired R140.",
+  "repaired": "Leswi avelaniwaka hi mibhede ni tindhawu ta swakudya swa nkoka",
+  "severity": "wording"
+ },
+ {
+  "id": "R142",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R143",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R144",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R145",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R146",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R147",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R148",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R149",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R151",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R152",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R156",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R158",
+  "verdict": "repair",
+  "problem": "'loku nga hlawuliwaka' = 'which is not chosen' (negation-looking); English is 'Optional' (the farmer's choice).",
+  "repaired": "Ku hlaya hi AI i ku hlawula ka wena, naswona ku tirhisa inthanete ya wena. U nga tlhela u faka xihakelo hi wexe.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R159",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R160",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R161",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R162",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R163",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R164",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R165",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R166",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R167",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R168",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R169",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R170",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R171",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R172",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R173",
+  "verdict": "repair",
+  "problem": "'Rixaka' means tribe/nation/race, not 'category'; wrong and sensitive in a form field.",
+  "repaired": "Muxaka",
+  "severity": "meaning"
+ },
+ {
+  "id": "R174",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R175",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R176",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R177",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R178",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R179",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R180",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R181",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R182",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R183",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R184",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R185",
+  "verdict": "ok",
+  "problem": "Minor: 'cloud' left in English and 'hi ku hatlisa' = 'quickly' rather than 'the moment'. Acceptable; negation/tense fine.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R186",
+  "verdict": "repair",
+  "problem": "'hi byoxe' is not a clear 'on its own' (concord does not match 'swi'); meaning of automatic completion blurred. Negation 'nothing is lost' is correct.",
+  "repaired": "Inthanete ya wena yi tsemakanile loko ku ri karhi ku hlayisiwa. A nchumu wu lahlekanga — leswi swi hlayisiwile eka foni ya wena naswona swi ta heta ku rhumeriwa hi swexe.",
+  "severity": "minor"
+ },
+ {
+  "id": "R187",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R188",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R189",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R190",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R191",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R192",
+  "verdict": "repair",
+  "problem": "'xikoro' normally means 'school', so 'xikoro xa mbolekiso' reads 'school of loan' not 'credit score'; 'ku tshama ka muholo wu ri kona' = income merely being present, not consistent; 'leyi akiweke' has wrong concord for 'nkatsakanyo'. The negation 'not a credit score or loan approval' is preserved and must remain.",
+  "repaired": "Nkatsakanyo wa ntshovelo, ku xavisa ni tihakelo leti u ti tsaleke — ku tshama ka muholo wu fana, ku famba ka mali ni rhekhodo ra ku tirha, lowu akiweke ntsena hi leswi u swi tsaleke. I swilo swo vulavula na mubolekisi, a hi nhlayo ya ku tshembeka eka mbolekiso kumbe ku pfumeleriwa ka mbolekiso.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R193",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R194",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R195",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R196",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R197",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R198",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R199",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R200",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R201",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R202",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R203",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R204",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R205",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R206",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R207",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R208",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R209",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R210",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R211",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R212",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R213",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R214",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R215",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R216",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R217",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R218",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R219",
+  "verdict": "repair",
+  "problem": "'Swilo swa purasi' = 'things of the farm'; 'inputs' (items bought to farm with) is lost.",
+  "repaired": "Swilo leswi tirhisiwaka epurasini",
+  "severity": "minor"
+ },
+ {
+  "id": "R220",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R221",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R222",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R223",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R224",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R225",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R226",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R227",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R228",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R229",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R230",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R231",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R232",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R233",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R234",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R235",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R236",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R237",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R238",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R239",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R240",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R241",
+  "verdict": "repair",
+  "problem": "'hi byoxe' is not a clear 'automatically' (concord does not fit). Negation 'do not enter them again' and 'count once' are correct and must stay.",
+  "repaired": "Milayini ya swibyariwa ya invoyisi leyi hakeriweke yi nghena eka buku ya ku xavisa hi yexe, naswona yi hlayiwa kan'we. U nga yi tsali nakambe.",
+  "severity": "minor"
+ },
+ {
+  "id": "R242",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R243",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R244",
+  "verdict": "repair",
+  "problem": "'Hlayisa risiti ni xihakelo' = 'Save the receipt and the cost' - does not say the receipt must go with a cost.",
+  "repaired": "Hlayisa risiti swin'we ni xihakelo.",
+  "severity": "minor"
+ },
+ {
+  "id": "R245",
+  "verdict": "repair",
+  "problem": "Last sentence 'Hlayisa xa ku sungula xi ri xa ku hlayeka' is garbled ('keep the first, being of readable').",
+  "repaired": "Hlawula xifaniso xa JPG, PNG kumbe WebP lexi nga tluliki 10 MB. Xifaniso xa ku sungula xi fanele ku tshama xi hlayeka.",
+  "severity": "minor"
+ },
+ {
+  "id": "R246",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R247",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R248",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R249",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R250",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R251",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R252",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R253",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R254",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R255",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R256",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R257",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R258",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R259",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R260",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R261",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R262",
+  "verdict": "repair",
+  "problem": "'wu pfule nakambe' = 'open it again'; English is 'switch it back on'. Use wording consistent with the Orchard in/out toggle. Negation 'nothing was deleted' is correct.",
+  "repaired": "Ntanga wa mirhi wu timiwile, hikwalaho {kg} kg a yi katsiwanga eka nhlayo leyi hinkwayo: {names}. A ku na nchumu lowu susiweke — wu katse nakambe leswaku wu hlayiwa nakambe.",
+  "severity": "wording"
+ },
+ {
+  "id": "R263",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R264",
+  "verdict": "hold",
+  "problem": "'marhavi' for eggs not recognised (egg is normally 'tandza'/'matandza'); blind read was branches/leaves/heads. A wrong unit word beside a quantity is a real error.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R265",
+  "verdict": "hold",
+  "problem": "'swibya' = dishes/bowls; 'jars' not conveyed.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R266",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R268",
+  "verdict": "hold",
+  "problem": "'swihlanganiso' = gatherings/things joined; 'bunches' not confirmed.",
+  "repaired": "",
+  "severity": "wording"
+ },
+ {
+  "id": "R269",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R270",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ }
+]

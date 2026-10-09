@@ -1,0 +1,221 @@
+{
+  "status": "root reviewed 29 data-only fields; 27 changes accepted for next fresh source-bound batch, two unchanged accounting holds",
+  "head": "3341019a39a081a33348b2f73f9275285918f618",
+  "packetSHA256": "a8a5427110fdaa8abd412bd54fb3a92472c0837124db196ac92c34a97c72f683",
+  "bindings": [
+    {
+      "module": "intro-permaculture",
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ve",
+      "slide": 22,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 22,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "water-harvesting",
+      "language": "ve",
+      "slide": 4,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 2,
+      "bodyIndex": 3,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 6,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 7,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 2,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 17,
+      "bodyIndex": 3,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 6,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 7,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 1,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 6,
+      "pairHashMatches": true
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 7,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 12,
+      "bodyIndex": 0,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 15,
+      "bodyIndex": 3,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 18,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ve",
+      "slide": 3,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ve",
+      "slide": 12,
+      "bodyIndex": 0,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ve",
+      "slide": 18,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 3,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 10,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 11,
+      "bodyIndex": 0,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 12,
+      "bodyIndex": 0,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 15,
+      "bodyIndex": 3,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 18,
+      "bodyIndex": 2,
+      "pairHashMatches": true
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 20,
+      "bodyIndex": 1,
+      "pairHashMatches": true
+    }
+  ],
+  "disclosedOrdinaryPrecisionGaps": [
+    "VE/TS Intro22 further-away comparator retained English while frequency localized",
+    "ST Vegetables2 overlap sentence retained exact English to avoid simultaneous equivalence",
+    "TS Market11 more of sale price retained English to avoid profit/net-income ambiguity"
+  ],
+  "constraints": [
+    "No learner wiring or media generation in current PR969",
+    "Rebind exact current targets/sources before next batch",
+    "Visible unreviewed source pairing; no fluency/local approval",
+    "Original independent evidence preserved"
+  ]
+}

@@ -63,7 +63,11 @@ test('metricNumber takes the farmer\'s language and never prints a bare "Unknown
   const start = src.indexOf('function FarmMetrics');
   const end = src.indexOf('\n/* ', start + 10);
   const calls = [...src.slice(start, end).matchAll(/metricNumber\(([^()]*(?:\([^()]*\)[^()]*)*)\)/g)];
-  assert.ok(calls.length >= 9, 'expected every FarmMetrics metricNumber() call site to still be present');
+  // 10 on main, 8 now: the kept-at-home sentence used to splice four metricNumber() calls into two
+  // hand-written templates (English and isiZulu). It is now one recordsTemplate() English source with
+  // {sold}/{kept} placeholders, so Sesotho, Tshivenda and Xitsonga drafts bind to the same sentence
+  // and the two figures are each formatted once. The lang-passing rule below still covers every call.
+  assert.ok(calls.length >= 8, 'expected every FarmMetrics metricNumber() call site to still be present');
   for (const m of calls) {
     assert.match(m[1], /,\s*lang\)?$|,\s*lang$/, `metricNumber call "${m[0]}" does not pass lang through`);
   }
@@ -117,7 +121,9 @@ test('eggs and honey are direct record choices from the animal catalogue without
   assert.equal(cropEntryOption('Eggs'), null, 'a product must never acquire a bed yield or sowing rule');
   assert.ok(!CROP_ENTRY_OPTIONS.some(option => option.key.startsWith('animal-product:')));
   const picker = readFileSync(new URL('../components/CropSelect.tsx', import.meta.url), 'utf8');
-  assert.match(picker, /<optgroup label="Animal products">/);
+  // The heading goes through recordsFill so Sesotho, Tshivenda and Xitsonga drafts can name it; the
+  // English heading and the animal-product option list it labels are unchanged.
+  assert.match(picker, /<optgroup label=\{recordsFill\(lang, 'Animal products'\)\}>/);
   assert.match(picker, /ANIMAL_PRODUCT_ENTRY_OPTIONS\.find/, 'selecting an animal product must resolve the same catalogue option that was displayed');
 });
 
@@ -131,8 +137,11 @@ test('picked, quick-sale and sale-edit forms keep quantities with their units an
   assert.match(pickedAndSale, /recordQuantityPayload\(quantity, form\.unit\)/);
   assert.match(ledger, /recordQuantityPayload\(quantity, form\.unit\)/);
   assert.match(pickedAndSale, /form\.unit === 'kg' && form\.cropKey \? priceFor/, 'per-kg guide prices must never price an egg or a jar');
-  assert.match(ledger, /qty: recordQuantityLabel\(s\)/, 'sale CSV and ledger rows must retain their unit');
-  assert.match(ledger, /qty: recordQuantityLabel\(p\)/, 'picked CSV and ledger rows must retain their unit');
+  // recordsQuantityLabel(row, lang) is recordQuantityLabel with only the unit word localised: the
+  // number and unit are still printed (English output is byte-identical, pinned in
+  // tests/records-regional-drafts.test.ts), so the ledger and CSV still keep the unit with the number.
+  assert.match(ledger, /qty: recordsQuantityLabel\(s, lang\)/, 'sale CSV and ledger rows must retain their unit');
+  assert.match(ledger, /qty: recordsQuantityLabel\(p, lang\)/, 'picked CSV and ledger rows must retain their unit');
 });
 
 test('quantity controls remain labelled and counts never erase weighed produce from a summary', () => {

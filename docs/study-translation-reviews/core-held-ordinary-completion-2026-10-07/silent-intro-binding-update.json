@@ -1,0 +1,13 @@
+{
+  "status": "Five heading/image binding rows updated, all22source arrays unchanged; audioBinding remains none",
+  "beforePairSHA256": "9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f",
+  "afterPairSHA256": "7ae36d7d49004a25aadbe1ffa73d07e129afd4723e46572ee68bc23f4e1e2621",
+  "changedSlides": [
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "unchangedEnglishSourceHashes": true
+}

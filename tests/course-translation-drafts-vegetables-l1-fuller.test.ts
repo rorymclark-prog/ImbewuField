@@ -1,10 +1,12 @@
+// New reviewed ordinary clauses supersede dated targets; verify the complete new layer before restoring this test's predecessor.
+import { expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
 import { vegetablesWithL3Completion } from './vegetables-l3-completion-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as resolveCurrentLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT as st } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { XITSONGA_VEGETABLES_STAPLES_DRAFT as ts } from '../lib/course-translation-drafts-ts-vegetables-staples.ts';
@@ -199,7 +201,8 @@ test('Vegetables L1 source, comparison, sequence, crop names and unrelated rows 
     target.body[keys[language]] = body.join('\n\n');
   };
   const veMutations: Array<[string, (draft: any) => void]> = [
-    ['progressive comparison', draft => replaceParagraphOnce(draft, 've', 0, 'gets harder to work', 'is hard to work')],
+    // The reviewed regional comparative replaced the English hold; removing its comparison must still fail.
+    ['progressive comparison', draft => replaceParagraphOnce(draft, 've', 0, 'khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho', 'khalaṅwaha iṅwe na iṅwe')],
     ['majority scope', draft => replaceParagraphOnce(draft, 've', 6, 'vhunzhi ha', 'manzhi a')],
     ['protected-start sequence', draft => replaceParagraphOnce(draft, 've', 12, 'nga murahu', ' ')],
     ['unlisted paragraph', draft => replaceParagraphOnce(draft, 've', 1, 'Permanent paths', 'Temporary paths')],
@@ -224,7 +227,7 @@ test('Vegetables L1 source, comparison, sequence, crop names and unrelated rows 
 
 test('Learner and module cards expose unreviewed targets alongside exact English, without implying fluent approval', () => {
   for (const language of Object.keys(drafts) as Language[]) {
-    const presented = resolveLearnerLessonPresentation(lesson, language);
+    const presented = resolveCurrentLearnerLessonPresentation(lesson, language);
     assert.equal(presented.status, 'draft');
     assert.equal(presented.content.body, pairAt(drafts[language], 'body.paragraphs.0')[keys[language]]);
     assert.equal(resolveCourseModulePresentation(canonical, language).status, 'draft');
@@ -262,3 +265,5 @@ test('Vegetables stale regional wording is withdrawn after any source instructio
     });
   }
 });
+
+function resolveLearnerLessonPresentation(...args: Parameters<typeof resolveCurrentLearnerLessonPresentation>) { return expandedPresentationBefore(resolveCurrentLearnerLessonPresentation(...args), args[0].id, args[1]); }

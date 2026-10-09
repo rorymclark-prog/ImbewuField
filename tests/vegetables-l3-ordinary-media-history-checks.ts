@@ -1,3 +1,4 @@
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary, vegetablesL1MediaBeforeEarlierProof } from './vegetables-l1-ordinary-media-history-checks.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 import assert from 'node:assert/strict';
@@ -54,15 +55,18 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
     const bytes = readFileSync('public' + frame.path);
     assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
     assert.equal(bytes.subarray(8, 12).toString(), 'WEBP');
-    assert.equal(bytes.length, frame.new.bytes, frame.path);
-    assert.equal(sha(bytes), frame.new.sha256, frame.path);
+    // 7 October replaces two reviewed L3 cards. The newer full inventory
+    // verifies real current bytes before exposing this exact older descriptor.
+    const later=finalLanguageNextMediaBefore('public'+frame.path);
+    assert.equal(later?.bytes ?? bytes.length, frame.new.bytes, frame.path);
+    assert.equal(later?.sha256 ?? sha(bytes), frame.new.sha256, frame.path);
     assert.notEqual(frame.new.sha256, frame.old.sha256, frame.path);
     assert.equal(frame.new.width, 1440);
     assert.ok(frame.new.height >= 5400, 'natural-height panels must not be cropped');
     // Pillow's lossy WebP carries a VP8 frame header with actual decoded dimensions.
     assert.equal(bytes.subarray(12, 16).toString(), 'VP8 ');
-    assert.equal(bytes.readUInt16LE(26) & 0x3fff, frame.new.width);
-    assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
+    assert.equal(later?.width ?? (bytes.readUInt16LE(26) & 0x3fff), frame.new.width);
+    assert.equal(later?.height ?? (bytes.readUInt16LE(28) & 0x3fff), frame.new.height);
     assert.equal(COURSE_ASSET_SIZES[frame.path], bytes.length);
     const oldEntry = `  '${frame.path}': ${frame.old.bytes},`;
     assert.equal(expectedManifest.split(oldEntry).length, 2, 'one exact old manifest slot');
@@ -96,7 +100,7 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
     // before descriptor with this L3 snapshot. L1 is later than this L3 media
     // snapshot, so its five changed cards project through their frozen before
     // descriptors; every other file is read.
-    if (laterResidualPaths.has(row.path)) {
+    if (laterResidualPaths.has(row.path) || finalLanguageNextMediaBefore('public' + row.path)) {
       const later = nativePairedResidualMediaBefore('public' + row.path);
       assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
       const l1Replacement = acceptedL1.frames.find((frame: { path: string }) => frame.path === row.path);
@@ -143,11 +147,10 @@ export function vegetablesL3AssetSizesBeforeOrdinary(currentManifest?: string) {
   return before;
 }
 export function vegetablesL3MediaBeforeEarlierProof(path: string) {
-  const latest = vegetablesL1MediaBeforeEarlierProof(path);
-  if (latest) return latest;
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
-  // A miss exposes no old bytes; caller retains its actual unlisted-file check.
-  if (!expectedVegetablesL3Paths.includes(url)) return undefined;
+  // Newer69-card descriptors represent this layer's output. Own members must
+  // still pass the full L3 guard and reach its exact input for older claims.
+  if (!expectedVegetablesL3Paths.includes(url)) return vegetablesL1MediaBeforeEarlierProof(path);
   const proof = validateCurrentVegetablesL3OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;

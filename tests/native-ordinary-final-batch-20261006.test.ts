@@ -1,10 +1,12 @@
+// New reviewed ordinary clauses supersede dated targets; verify the complete new layer before restoring this test's predecessor.
+import { expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as resolveCurrentLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { SESOTHO_VEGETABLES_STAPLES_DRAFT } from '../lib/course-translation-drafts-st-vegetables-staples.ts';
 import { SESOTHO_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-st-market-community.ts';
@@ -285,12 +287,15 @@ test('later TS Reading projection preserves the complete Intro968 shared file an
   assert.match(restored, /Hlawula any water works for the site/);
   const unlistedBytes = bytes + '\n// Unapproved shared-source change.\n';
   assert.notEqual(unlistedBytes, bytes);
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(unlistedBytes), /preserves every Intro968 and unlisted byte/);
+  // The later whole-file fairness guard now detects unlisted corruption first.
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(unlistedBytes), /entire current file matches the reviewed fairness layer|supplied complete accepted bytes/);
   const mutated = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
   mutated.lessons[0].body.sourceEnglish += ' Changed source.';
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, mutated), /imported current registry equals the complete reviewed applied object/);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, mutated), /imported current registry equals the complete reviewed applied object|complete Reading comparisons registry/);
   const alteredIndex = structuredClone(XITSONGA_READING_LANDSCAPE_DRAFT);
   alteredIndex.lessons[0].quiz[0].sourceCorrectIndex = 99;
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, alteredIndex), /imported current registry equals the complete reviewed applied object/);
-  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /exact accepted TS Reading body literal occurs once/);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(bytes, alteredIndex), /imported current registry equals the complete reviewed applied object|complete Reading comparisons registry/);
+  assert.throws(() => tsSharedSourceBeforeNativeOrdinary(restored), /entire current file matches the reviewed fairness layer|supplied complete accepted bytes/);
 });
+
+function resolveLearnerLessonPresentation(...args: Parameters<typeof resolveCurrentLearnerLessonPresentation>) { return expandedPresentationBefore(resolveCurrentLearnerLessonPresentation(...args), args[0].id, args[1]); }

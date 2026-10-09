@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "packetId": "study-remaining-controls-next-2026-10-08",
+  "status": "APPLIED_SOURCE_BOUND_LAYER_PENDING_ROOT_DIFF_REVIEW",
+  "baseHead": "81174107268ec951ac3b1deb8dd57a3b36268d43",
+  "rootReviewedPacket": {
+    "path": "root-reviewed-ve-packet.json",
+    "sha256": "42787d8a0a48d13da65b640cc1154cd030b3a3a93ec4c3c5aa2b1d7eb50c7782",
+    "status": "ROOT_REVIEWED_DATA_ONLY_UNWIRED",
+    "acceptedRows": [
+      {
+        "key": "studentReadinessCompleteDetail",
+        "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+        "target": "Ngudo dzoṱhe dza {lessons} dzi na zwifanyiso, dzi na ṱhalutshedzo nga ipfi nga nyambo dza {languages}, nahone dzi na slides na animations.",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness?.text === 'Fully built'; title is attached to the readiness badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "moduleReadinessDetail is global production readiness, not readiness for the selected app language. This must not be read as a Tshivenda narration availability promise."
+        },
+        "reviewReason": "Source meaning is preserved: all lessons, pictures/illustrations, narration in the count of languages, slides, and animations. Both placeholders remain exact. Caller conditions confirm this is a global staff-only production-detail tooltip, not selected-language availability. The proposition “narrated in {languages} languages” remains attached to global readiness facts.",
+        "residualUncertainty": "Sentence agreement and compact Tshivenda wording still need fluent review. Keep global staff-only caller scope; do not describe it as availability in the selected language."
+      },
+      {
+        "key": "studentReadinessNarratedDetail",
+        "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+        "target": "Slides dzi re na zwifanyiso na ṱhalutshedzo nga ipfi dzo lugela nga nyambo dza {languages}. U sedzulusa ha vhuhunduleli hu kha ḓi sala.",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness?.text === 'Narrated slides' and readiness is not 'Fully built'; title is attached to the badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "Global staff-only production status, not a selected-language narration promise."
+        },
+        "reviewReason": "The two status clauses stay distinct: illustrated slides and narration are ready in the global language count, while translation review remains outstanding. `{languages}` is unchanged. The caller is global staff-only production status, not selected-language narration availability.",
+        "residualUncertainty": "The exact compact rendering of “translation review” needs fluent review; do not drop or reverse the still-outstanding clause."
+      },
+      {
+        "key": "studentReadinessLessonsDetail",
+        "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+        "target": "U vhala na zwifanyiso zwo lugela. Ṱhalutshedzo nga ipfi na slides zwi kha ḓi itwa.",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness is neither 'Fully built' nor 'Narrated slides'; title is attached to the badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "Global staff-only production status. Do not collapse the still-in-progress clause into a ready claim."
+        },
+        "reviewReason": "The candidate preserves both opposing aspects: reading and pictures are ready; narration and slides are still being made. The ongoing/incomplete clause has not been upgraded to ready.",
+        "residualUncertainty": "Check grammar/aspect with a fluent speaker, especially agreement in `zwo lugela` versus `zwi kha ḓi itwa`. Caller is global staff-only production status."
+      },
+      {
+        "key": "studentReadinessNarrated",
+        "sourceEnglish": "Narrated slides",
+        "target": "Slides dzi re na ṱhalutshedzo nga ipfi",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readiness badge label",
+          "condition": "Displayed for readiness?.text === 'Narrated slides' (and not 'Fully built') only when !simple && isStaff.",
+          "scopeCaveat": "Global production readiness badge; not a guarantee of narration in Tshivenda or another selected language."
+        },
+        "reviewReason": "“Slides that have narration” corresponds to “Narrated slides” as the global production badge. The caller confirms this is staff-only and says nothing about the learner’s selected language.",
+        "residualUncertainty": "Compact badge grammar needs fluent review. Preserve the global production-status scope; no language-specific narration promise."
+      },
+      {
+        "key": "courseDeckAnimationFailed",
+        "sourceEnglish": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+        "target": "Animation a yo ngo kona u laoda. Ni nga bvela phanḓa ni tshi thetshelesa, na vhala slide, kana na kwama Watch uri ni lingedze hafhu.",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "components/course/DeckPlayer.tsx",
+          "binding": "courseDeckAnimationFailed status paragraph",
+          "condition": "Rendered when animationFailed is true. Audio controls are separately rendered only when an audio source resolves for the current slide.",
+          "behavior": "Keeps the listen fallback conditional on an actual playing narration; retains read-slide and Watch-to-retry choices."
+        },
+        "reviewReason": "The added “if narration is playing” condition is absent from the exact source and narrows the unconditional offered option “You can keep listening.” The source gives three available choices: keep listening, read the slide, or tap Watch to retry. Keep all three without making narration availability a condition.",
+        "residualUncertainty": "The proposed repair removes only the unsupported condition and keeps technical/interface terms. Audio controls being separately conditional in the component does not authorize adding a condition to the source copy. Verb/aspect still needs fluent review."
+      },
+      {
+        "key": "offlineGetWhileSignal",
+        "sourceEnglish": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+        "target": "Vhulungani slides, ṱhalutshedzo nga ipfi na clips kha founu iyi ni tshi kha ḓi vha na signal. Nga murahu dzi shuma ni si na airtime.",
+        "currentTargetAbsent": true,
+        "status": "unreviewed-machine-draft",
+        "sourceAuthority": {
+          "readinessEnglish": "lib/i18n.tsx",
+          "playerAndOfflineEnglish": "lib/learner-ui-english.ts",
+          "readinessCaller": "app/student/page.tsx",
+          "animationFailureCaller": "components/course/DeckPlayer.tsx",
+          "offlineDownloadCaller": "components/course/OfflineDownload.tsx",
+          "targetLocale": "lib/locales/ve.ts",
+          "targetKeys": "All eight proposed keys are absent in the checked locale file; packet records each as absent."
+        },
+        "caller": {
+          "file": "components/course/OfflineDownload.tsx",
+          "binding": "non-compact explanatory text",
+          "condition": "Shown when !compact and not the regional slide-only pack variant.",
+          "behavior": "The full/global pack saves content actually available for that module. The candidate's `dzine dza vha hone` qualifies the media list; offline use follows the download."
+        },
+        "reviewReason": "The phrase “that are available” is not in the exact source and qualifies the requested fixed list. Preserve the source list (slides, narration, clips), “while you have signal,” and the following no-airtime result.",
+        "residualUncertainty": "This removes only the added availability qualifier. Check plurality/agreement with a fluent speaker; retain both timing and the no-airtime-after-download claim."
+      }
+    ],
+    "heldRows": [
+      {
+        "key": "studentReadinessComplete",
+        "sourceEnglish": "Fully built",
+        "decision": "hold_exact_english",
+        "reason": "“Everything has been prepared / all is ready” can describe readiness or preparation and does not securely assert the source production state “Fully built.” No exact defensible Tshivenda equivalent is established in this evidence."
+      },
+      {
+        "key": "offlineDownloadPack",
+        "sourceEnglish": "Download · {size}",
+        "decision": "hold_exact_english_technical_ui_term",
+        "reason": "`Download · {size}` is an exact English technical/action-label hold before download; it is not a translated completion claim. The exact `{size}` placeholder and middle dot are retained. Caller distinguishes the initial download button from the separate resume/partial-download label."
+      }
+    ]
+  },
+  "independentSemanticCheck": {
+    "path": "ve-independent-semantic-check.json",
+    "sha256": "cedc595bbab2a4ce48cf3c08c87baac59d66327bcb9f07cd3c438bee95df2ca3"
+  },
+  "stReviewPlan": {
+    "path": "st-reading-observation-repair-plan.json",
+    "sha256": "020a299d76b2aaac658dc01d14da33ce97840c35894c8296654f64119b974715",
+    "planId": "st-reading-landscape-aframe-observation-safe-repair-2026-10-08"
+  },
+  "locale": {
+    "path": "lib/locales/ve.ts",
+    "beforeSnapshot": "before/before-locale-ve.json",
+    "beforeSnapshotSha256": "ffcb79f9986d3e77bbb67f9c8d308ff26a9eed8ab3415c970ce4b199d3319c44",
+    "afterSnapshot": "after-locale-ve.json",
+    "beforeSourceSha256": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+    "afterSourceSha256": "e9deff4c7b627e99378bbc574111e23dd346911fcc8d4afb3ac60358c910db0e",
+    "addedKeys": [
+      "studentReadinessCompleteDetail",
+      "studentReadinessNarratedDetail",
+      "studentReadinessLessonsDetail",
+      "studentReadinessNarrated",
+      "courseDeckAnimationFailed",
+      "offlineGetWhileSignal"
+    ],
+    "heldKeys": [
+      "studentReadinessComplete",
+      "offlineDownloadPack"
+    ],
+    "rows": [
+      {
+        "key": "studentReadinessCompleteDetail",
+        "sourceEnglish": "All {lessons} lessons are illustrated, narrated in {languages} languages, and have slides and animations.",
+        "target": "Ngudo dzoṱhe dza {lessons} dzi na zwifanyiso, dzi na ṱhalutshedzo nga ipfi nga nyambo dza {languages}, nahone dzi na slides na animations.",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness?.text === 'Fully built'; title is attached to the readiness badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "moduleReadinessDetail is global production readiness, not readiness for the selected app language. This must not be read as a Tshivenda narration availability promise."
+        },
+        "placeholders": [
+          "{lessons}",
+          "{languages}"
+        ]
+      },
+      {
+        "key": "studentReadinessNarratedDetail",
+        "sourceEnglish": "Illustrated slides and narration are ready in {languages} languages. Translation review is still outstanding.",
+        "target": "Slides dzi re na zwifanyiso na ṱhalutshedzo nga ipfi dzo lugela nga nyambo dza {languages}. U sedzulusa ha vhuhunduleli hu kha ḓi sala.",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness?.text === 'Narrated slides' and readiness is not 'Fully built'; title is attached to the badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "Global staff-only production status, not a selected-language narration promise."
+        },
+        "placeholders": [
+          "{languages}"
+        ]
+      },
+      {
+        "key": "studentReadinessLessonsDetail",
+        "sourceEnglish": "Reading and pictures are ready. Narration and slides are still being made.",
+        "target": "U vhala na zwifanyiso zwo lugela. Ṱhalutshedzo nga ipfi na slides zwi kha ḓi itwa.",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readinessTitle",
+          "condition": "Used when readiness is neither 'Fully built' nor 'Narrated slides'; title is attached to the badge rendered only when !simple && isStaff.",
+          "scopeCaveat": "Global staff-only production status. Do not collapse the still-in-progress clause into a ready claim."
+        },
+        "placeholders": []
+      },
+      {
+        "key": "studentReadinessNarrated",
+        "sourceEnglish": "Narrated slides",
+        "target": "Slides dzi re na ṱhalutshedzo nga ipfi",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "app/student/page.tsx",
+          "binding": "readiness badge label",
+          "condition": "Displayed for readiness?.text === 'Narrated slides' (and not 'Fully built') only when !simple && isStaff.",
+          "scopeCaveat": "Global production readiness badge; not a guarantee of narration in Tshivenda or another selected language."
+        },
+        "placeholders": []
+      },
+      {
+        "key": "courseDeckAnimationFailed",
+        "sourceEnglish": "The animation could not load. You can keep listening, read the slide, or tap Watch to try again.",
+        "target": "Animation a yo ngo kona u laoda. Ni nga bvela phanḓa ni tshi thetshelesa, na vhala slide, kana na kwama Watch uri ni lingedze hafhu.",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "components/course/DeckPlayer.tsx",
+          "binding": "courseDeckAnimationFailed status paragraph",
+          "condition": "Rendered when animationFailed is true. Audio controls are separately rendered only when an audio source resolves for the current slide.",
+          "behavior": "Keeps the listen fallback conditional on an actual playing narration; retains read-slide and Watch-to-retry choices."
+        },
+        "placeholders": []
+      },
+      {
+        "key": "offlineGetWhileSignal",
+        "sourceEnglish": "Get the slides, the narration and the clips onto this phone while you have signal. They then work with no airtime at all.",
+        "target": "Vhulungani slides, ṱhalutshedzo nga ipfi na clips kha founu iyi ni tshi kha ḓi vha na signal. Nga murahu dzi shuma ni si na airtime.",
+        "status": "unreviewed-machine-draft",
+        "caller": {
+          "file": "components/course/OfflineDownload.tsx",
+          "binding": "non-compact explanatory text",
+          "condition": "Shown when !compact and not the regional slide-only pack variant.",
+          "behavior": "The full/global pack saves content actually available for that module. The candidate's `dzine dza vha hone` qualifies the media list; offline use follows the download."
+        },
+        "placeholders": []
+      }
+    ],
+    "beforeSourceSnapshot": "before/lib-locales-ve.ts.txt",
+    "afterSnapshotSha256": "e11dcd0b19061de333ad2b810408fde435f1b43605fdde7a68886c77f60e934a",
+    "beforeSourceSnapshotSha256": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e"
+  },
+  "sesotho": {
+    "path": "lib/course-translation-drafts-st-reading-landscape.ts",
+    "beforeSnapshot": "before/before-sesotho-reading-landscape-native.json",
+    "beforeSnapshotSha256": "218a10f4e40320f3bc5d3696336fe3008806b7c2adec44411b5167f4faf17560",
+    "afterSnapshot": "after-sesotho-reading-landscape-native.json",
+    "beforeSourceSha256": "6c39c04042acecaebced4dec39550dfdb444ba23cf7692442b783b81728c819e",
+    "afterSourceSha256": "02a8df01086660d680acaaced99c43d4865442375be68b5e55bea2113e148d1a",
+    "registryExport": "SESOTHO_READING_LANDSCAPE_DRAFT",
+    "lessonId": "reading-landscape-l1",
+    "field": "body.sesothoDraft.paragraph[1]",
+    "sourceEnglishBody": "Before you harvest water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, where it ponds, and where it leaves your property. Some excess water needs a safe route away so it does not cause damage.\n\nAn A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.\n\nThere is no one placement rule for every slope. Observe where water moves and gathers. Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+    "sourceEnglishParagraph": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+    "beforeParagraph": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Matshwao a yona ke tlhokomelo feela, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "afterParagraph": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Its marks are an observation, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "beforeStatus": "machine-draft",
+    "afterStatus": "machine-draft",
+    "targetFragment": "Matshwao a yona ke tlhokomelo feela",
+    "heldSourceFragment": "Its marks are an observation",
+    "prefix": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. ",
+    "suffix": ", eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "beforeSourceSnapshot": "before/lib-course-translation-drafts-st-reading-landscape.ts.txt",
+    "afterSnapshotSha256": "31add2edf019421c74f33fb677eb32aff9d67b002284b1a2cdfc5eb6964846a6",
+    "beforeSourceSnapshotSha256": "6c39c04042acecaebced4dec39550dfdb444ba23cf7692442b783b81728c819e",
+    "paragraphIndex": 1,
+    "reviewStatus": "machine-draft"
+  },
+  "protectedPaired": {
+    "path": "docs/narration/reading-landscape.st.paired-draft.json",
+    "beforeSnapshot": "before/before-reading-landscape-st.paired-draft.json",
+    "sha256": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa",
+    "slide": 6,
+    "field": "slides[5].target.body[2].segments[4]",
+    "sourceEnglish": "Its marks are an observation",
+    "status": "english-hold",
+    "beforeSnapshotSha256": "0c0d7932aa3e9d03c13472490cc14a89aad6e64c66ae241197c080eacb97ebfa"
+  },
+  "preservation": {
+    "canonicalCourseModulesUnchanged": true,
+    "stBodyParagraphCount": 3,
+    "allOtherSesothoObjectFieldsEqualBefore": true,
+    "localeUnlistedEntriesEqualBefore": true,
+    "localeHeldKeysRemainAbsent": true,
+    "pairedDeckWholeFileUnchanged": true,
+    "noNarrationOrAudioChanges": true,
+    "noCanonicalEdits": true,
+    "planVersionUnchanged": true
+  },
+  "testRequirements": [
+    "full VE locale dictionary exactly matches after snapshot: six reviewed keys only, all unlisted entries unchanged",
+    "source dictionary literals and caller conditions match reviewed exact English and global staff-only scope",
+    "all source placeholders stay exact; ready/outstanding/still-being-made status clauses stay distinct",
+    "animation failure preserves listening, slide-reading, and Watch retry choices without a narration-playing condition",
+    "offline explanation keeps slides, narration and clips, while-signal timing, and subsequent no-airtime result without an availability qualifier",
+    "held Fully built and Download · {size} keys remain absent from VE locale",
+    "Sesotho canonical full source and target source paragraph match exactly; machine-draft status and all three paragraph indexes/order remain exact",
+    "Sesotho target differs from before only at target fragment; prefix, no-design/no-approval suffix, all before-digging/assessment/safety/adviser wording and all other module fields remain exact",
+    "source drift on the targeted Sesotho source rejects stale draft and returns the changed exact English body",
+    "the entire paired Reading slide file and slide 6 observation english-hold remain byte-for-byte unchanged"
+  ],
+  "sourceAnchors": {
+    "path": "source-anchors.json",
+    "sha256": "b337b12602b92e8745ef29117f4c09b69f7c523d733cf8b6a7e8007bd9e4a237"
+  }
+}

@@ -1,0 +1,471 @@
+{
+  "title": "Nine native residual fields with independent/root-requested repairs composed",
+  "date": "2026-10-06",
+  "readOnly": true,
+  "repositoryEdits": false,
+  "renderingTestsCommit": false,
+  "authority": {
+    "worktree": "/Users/roryclark/.codex/worktrees/soil-water-residual-20261006/ImbewuField",
+    "head": "3d5bd8b5b8fd913af0060f9bbe4a3004d344cd25",
+    "correctedAudit": "/tmp/imbewu-core-final-scope-residual-audit-20261006.json",
+    "correctedAuditSHA256": "949f7826bdb12ad7ce65209feef23ddee2aaca4f34da7f942b277ae021d32626",
+    "scope": "All nine native residual fields listed by the corrected audit; candidates are full-field target compositions, not independent approval.",
+    "languageTagMapping": {
+      "ve": "Tshivenda",
+      "ts": "itsonga"
+    },
+    "limits": [
+      "No canonical English/source/status/indices or learner registry was edited.",
+      "No image was rendered or inspected; L2 alt proposal uses only its canonical alt text and bound infographic URL.",
+      "Root semantic review and facilitator language review are separate."
+    ]
+  },
+  "fields": [
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "fieldLocator": "infographicAlt",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l2/infographicAlt",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty."
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+        "path": "export → lessons[lessonId=vegetables-staples-l2] → infographicAlt",
+        "storedCurrentValueExact": "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+        "storedReviewStatus": "hold",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": false
+      },
+      "currentEnglishSpans": [
+        "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty."
+      ],
+      "preservedCurrentLocalizedSpans": [],
+      "candidateFullTarget": "Bed nthihi kha khalaṅwaha tharu: tshimela tshine tsha aluwa nga u ṱavhanya tshi a kaṋiwa; nga murahu, hu itwa zwalo ntswa tsini na tshimela tshiṅwe tshine tsha aluwa nga u ongolowa, tshine tsha kha ḓi aluwa, ngauralo bed a i vhuyi ya vha i si na zwimela.",
+      "newLocalizedSpans": "Bed nthihi kha khalaṅwaha tharu: tshimela tshine tsha aluwa nga u ṱavhanya tshi a kaṋiwa; nga murahu, hu itwa zwalo ntswa tsini na tshimela tshiṅwe tshine tsha aluwa nga u ongolowa, tshine tsha kha ḓi aluwa, ngauralo bed a i vhuyi ya vha i si na zwimela.",
+      "backTranslation": "One bed across three seasons: a quickly growing crop is harvested; afterward a new sowing is made beside another slowly growing crop still growing, so the bed is never without plants.",
+      "retainedEnglishTechnicalAnchors": [
+        "bed"
+      ],
+      "reason": "Actual image supports the ordered three-panel succession interpretation. Prefer result connective ngauralo and explicit never-empty over candidate u itela (in order to) and always-has-plants paraphrase. Crop speed is interpreted from this harvest/growing context, not an invented days-to-maturity claim.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "canonicalVisualBinding": {
+        "canonicalInfographicUrl": "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+        "meaningSource": "Canonical English infographicAlt on the same lesson record",
+        "pixelsInspected": false
+      },
+      "originalCandidateFullTarget": "Bed nthihi kha khalaṅwaha tharu: tshimela tshine tsha aluwa nga u ṱavhanya tshi a kaṋiwa; nga murahu, hu itwa zwalo ntswa tsini na tshimela tshiṅwe tshine tsha aluwa nga u ongolowa, tshine tsha kha ḓi aluwa, u itela uri bed i dzule i na zwimela tshifhinga tshoṱhe.",
+      "independentVerdict": "repair",
+      "independentReason": "Actual image supports the ordered three-panel succession interpretation. Prefer result connective ngauralo and explicit never-empty over candidate u itela (in order to) and always-has-plants paraphrase. Crop speed is interpreted from this harvest/growing context, not an invented days-to-maturity claim.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "fieldLocator": "quiz[1].rationale",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l2/quiz[1].rationale",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding."
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+        "path": "export → lessons[lessonId=vegetables-staples-l2] → quiz[1].rationale",
+        "storedCurrentValueExact": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding.",
+        "storedReviewStatus": "machine-draft",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "does not guarantee immediate feeding"
+      ],
+      "preservedCurrentLocalizedSpans": "u alusa beans tsini na maize",
+      "candidateFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri immediate feeding i a itea.",
+      "newLocalizedSpans": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri immediate feeding i a itea.",
+      "backTranslation": "Beans fix nitrogen with suitable root bacteria; residues release nitrogen through decomposition; growing beans beside maize does not guarantee that immediate feeding occurs.",
+      "retainedEnglishTechnicalAnchors": [
+        "Beans fix nitrogen with suitable root bacteria.",
+        "Nitrogen in their residues is released through decomposition.",
+        "beans",
+        "maize",
+        "immediate feeding"
+      ],
+      "reason": "a zwi khwaṱhisedzi retains the negative non-guarantee. Both technical agronomy clauses and existing localized u alusa beans tsini na maize remain exact; immediate feeding is an explicit English precision anchor.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 1,
+        "sourceCorrectIndex": 1,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "No guarantee; no immediate nitrogen transfer claim; nitrogen in residues is released through decomposition.",
+      "originalCandidateFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize a zwi khwaṱhisedzi uri immediate feeding i a itea.",
+      "independentVerdict": "accept",
+      "independentReason": "a zwi khwaṱhisedzi retains the negative non-guarantee. Both technical agronomy clauses and existing localized u alusa beans tsini na maize remain exact; immediate feeding is an explicit English precision anchor.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "fieldLocator": "quiz[1].rationale",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l2/quiz[1].rationale",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding."
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples-l2.ts",
+        "sha256": "2c73d441d205340548c082fe64d52318bf590a4eb0f679540ee4708e8fe5904d",
+        "path": "export → lessons[lessonId=vegetables-staples-l2] → quiz[1].rationale",
+        "storedCurrentValueExact": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize does not guarantee immediate feeding.",
+        "storedReviewStatus": "machine-draft",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "does not guarantee immediate feeding"
+      ],
+      "preservedCurrentLocalizedSpans": "ku byala beans ekusuhi na maize",
+      "candidateFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi leswaku immediate feeding yi ta humelela.",
+      "newLocalizedSpans": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi leswaku immediate feeding yi ta humelela.",
+      "backTranslation": "Beans fix nitrogen with suitable root bacteria; residues release nitrogen through decomposition; planting beans beside maize does not assure that immediate feeding will happen.",
+      "retainedEnglishTechnicalAnchors": [
+        "Beans fix nitrogen with suitable root bacteria.",
+        "Nitrogen in their residues is released through decomposition.",
+        "beans",
+        "maize",
+        "immediate feeding"
+      ],
+      "reason": "a swi tiyisisi preserves the non-guarantee; yi ta humelela remains inside that negation, not an independent prediction. Existing ku byala beans ekusuhi na maize preserved; both technical clauses stay exact.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 1,
+        "sourceCorrectIndex": 1,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "No guarantee; no immediate nitrogen transfer claim; nitrogen in residues is released through decomposition.",
+      "originalCandidateFullTarget": "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; ku byala beans ekusuhi na maize a swi tiyisisi leswaku immediate feeding yi ta humelela.",
+      "independentVerdict": "accept",
+      "independentReason": "a swi tiyisisi preserves the non-guarantee; yi ta humelela remains inside that negation, not an independent prediction. Existing ku byala beans ekusuhi na maize preserved; both technical clauses stay exact.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "fieldLocator": "title",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l3/title",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Staple Crops: Maize, Beans, and Root Vegetables"
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+        "path": "export → lessons[lessonId=vegetables-staples-l3] → title",
+        "storedCurrentValueExact": "Staple Crops: Maize, Beans, and Root Vegetables",
+        "storedReviewStatus": "hold",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "Staple Crops: "
+      ],
+      "preservedCurrentLocalizedSpans": [],
+      "candidateFullTarget": "Zwimela zwa staple: Maize, Beans, na Root Vegetables",
+      "newLocalizedSpans": "Zwimela zwa staple: Maize, Beans, na Root Vegetables",
+      "backTranslation": "Staple crops: Maize, Beans, and Root Vegetables.",
+      "retainedEnglishTechnicalAnchors": [
+        "staple",
+        "Maize",
+        "Beans",
+        "Root Vegetables"
+      ],
+      "reason": "Translate crop framing using same-module accepted alt precedent Zwimela zwiraru zwa staple. Retain dietary class staple, not important. All three crop labels and order unchanged; this advances beyond translating and alone.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "originalCandidateFullTarget": "Zwilimo zwa vhuthogwa: Maize, Beans, na Root Vegetables",
+      "independentVerdict": "repair",
+      "independentReason": "Translate crop framing using same-module accepted alt precedent Zwimela zwiraru zwa staple. Retain dietary class staple, not important. All three crop labels and order unchanged; this advances beyond translating and alone.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldLocator": "quiz[0].option[0]",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l4/quiz[0].option[0]",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "An improvised stronger mixture"
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+        "path": "export → lessons[lessonId=vegetables-staples-l4] → quiz[0].option[0]",
+        "storedCurrentValueExact": "An improvised stronger mixture",
+        "storedReviewStatus": "hold",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "An improvised stronger mixture"
+      ],
+      "preservedCurrentLocalizedSpans": [],
+      "candidateFullTarget": "Muvango wo itwaho nga u improvise, une wa vha stronger.",
+      "newLocalizedSpans": "Muvango wo itwaho nga u improvise, une wa vha stronger.",
+      "backTranslation": "A mixture made by improvising, which is stronger.",
+      "retainedEnglishTechnicalAnchors": [
+        "improvise",
+        "stronger"
+      ],
+      "reason": "Primary DSAC glossary directly gives mixture→muvango. The relative made-by-improvising clause preserves improvised without adding without a plan, without instructions, personal ownership or unregistered status. Stronger remains the precise comparative-potency anchor. This is a descriptive false-option noun label, not an instruction.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 0,
+        "optionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "Noun-label only; do not turn the distractor into an instruction or blanket ban.",
+      "originalCandidateFullTarget": "Mixture yo itwaho hu si na pulane, ine ya vha na maanḓa o engedzeaho.",
+      "independentVerdict": "repair",
+      "independentReason": "Primary DSAC glossary directly gives mixture→muvango. The relative made-by-improvising clause preserves improvised without adding without a plan, without instructions, personal ownership or unregistered status. Stronger remains the precise comparative-potency anchor. This is a descriptive false-option noun label, not an instruction.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ve",
+      "languageName": "Tshivenda",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldLocator": "quiz[1].rationale",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l4/quiz[1].rationale",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment."
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ve-vegetables-staples.ts",
+        "sha256": "ec51f36ead0b9730f76fbc8dbd937921cd324841270b48c791e9414aaf6eca86",
+        "path": "export → lessons[lessonId=vegetables-staples-l4] → quiz[1].rationale",
+        "storedCurrentValueExact": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment.",
+        "storedReviewStatus": "machine-draft",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment."
+      ],
+      "preservedCurrentLocalizedSpans": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone ",
+      "candidateFullTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone thaidzo ya soil kana u sheledza i ṱoḓa thandululo yo fhambanaho nga hoṱhe na ya pest — u thoma nga u ṱola zwi thivhela u shumisa treatment hu si na mbuelo.",
+      "newLocalizedSpans": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone thaidzo ya soil kana u sheledza i ṱoḓa thandululo yo fhambanaho nga hoṱhe na ya pest — u thoma nga u ṱola zwi thivhela u shumisa treatment hu si na mbuelo.",
+      "backTranslation": "Yellowing has several common causes; a soil or watering problem needs a completely different solution from a pest; checking first avoids treatment used without benefit.",
+      "retainedEnglishTechnicalAnchors": [
+        "soil",
+        "pest",
+        "treatment"
+      ],
+      "reason": "Current localized opening stays byte exact. Soil OR watering alternative, completely different fix, comparison against pest and checking-first consequence are preserved. hu si na mbuelo plausibly expresses wasted/ineffective treatment in this diagnosis context.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 1,
+        "sourceCorrectIndex": 0,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "Keep several possible causes, soil/watering-versus-pest distinction, different fix, and check-first to avoid wasted treatment.",
+      "originalCandidateFullTarget": "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone thaidzo ya soil kana u sheledza i ṱoḓa thandululo yo fhambanaho nga hoṱhe na ya pest — u thoma nga u ṱola zwi thivhela u shumisa treatment hu si na mbuelo.",
+      "independentVerdict": "accept",
+      "independentReason": "Current localized opening stays byte exact. Soil OR watering alternative, completely different fix, comparison against pest and checking-first consequence are preserved. hu si na mbuelo plausibly expresses wasted/ineffective treatment in this diagnosis context.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldLocator": "quiz[0].option[0]",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l4/quiz[0].option[0]",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "An improvised stronger mixture"
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+        "path": "export → lessons[lessonId=vegetables-staples-l4] → quiz[0].option[0]",
+        "storedCurrentValueExact": "An improvised stronger mixture",
+        "storedReviewStatus": "hold",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "An improvised stronger mixture"
+      ],
+      "preservedCurrentLocalizedSpans": [],
+      "candidateFullTarget": "Mpfangano lowu endliweke hi ku improvise, lowu nga stronger.",
+      "newLocalizedSpans": "Mpfangano lowu endliweke hi ku improvise, lowu nga stronger.",
+      "backTranslation": "A mixture made by improvising, which is stronger.",
+      "retainedEnglishTechnicalAnchors": [
+        "improvise",
+        "stronger"
+      ],
+      "reason": "Primary DSAC glossary directly gives mixture→mpfangano. Made-by-improvising preserves the intended improvised label rather than replacing it with without a plan. Stronger remains comparative. Noun/relative-clause label preserves false-option index0 and is not a prohibition or instruction.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 0,
+        "optionIndex": 0,
+        "sourceCorrectIndex": 1,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "Noun-label only; do not turn the distractor into an instruction or blanket ban.",
+      "originalCandidateFullTarget": "Mixture leyi endliweke handle ka pulani, leyi nga ni ntamu lowu engetelekeke.",
+      "independentVerdict": "repair",
+      "independentReason": "Primary DSAC glossary directly gives mixture→mpfangano. Made-by-improvising preserves the intended improvised label rather than replacing it with without a plan. Stronger remains comparative. Noun/relative-clause label preserves false-option index0 and is not a prohibition or instruction.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldLocator": "quiz[1].rationale",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l4/quiz[1].rationale",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment."
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+        "path": "export → lessons[lessonId=vegetables-staples-l4] → quiz[1].rationale",
+        "storedCurrentValueExact": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment.",
+        "storedReviewStatus": "machine-draft",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "soil or watering issue yi lava fix leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula ku papalata wasted treatment."
+      ],
+      "preservedCurrentLocalizedSpans": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona ",
+      "candidateFullTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona xiphiqo xa soil kumbe xa ku cheleta xi lava ku lulamisiwa hi ndlela leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula swi papalata ku tirhisa treatment swa hava.",
+      "newLocalizedSpans": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona xiphiqo xa soil kumbe xa ku cheleta xi lava ku lulamisiwa hi ndlela leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula swi papalata ku tirhisa treatment swa hava.",
+      "backTranslation": "Yellowing has several common causes, and a soil or watering problem needs a completely different solution from a pest problem; checking first avoids using treatment in vain.",
+      "retainedEnglishTechnicalAnchors": [
+        "soil",
+        "pest",
+        "treatment"
+      ],
+      "reason": "Correct the added-ke transcription drift by preserving the exact actual localized opening byte for byte, then translate only the ordinary diagnostic remainder. Source soil OR watering/completely different fix/check-first/waste consequence unchanged.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 1,
+        "sourceCorrectIndex": 0,
+        "optionOrderUnchanged": true
+      },
+      "meaningGuard": "Keep several possible causes, soil/watering-versus-pest distinction, different fix, and check-first to avoid wasted treatment.",
+      "originalCandidateFullTarget": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekekeke, naswona xiphiqo xa soil kumbe xa ku cheleta xi lava ku lulamisiwa hi ndlela leyi hambaneke hi ku helela ni leyi lavekaka eka pest — ku kambela ku sungula swi papalata ku tirhisa treatment swa hava.",
+      "independentVerdict": "repair",
+      "independentReason": "Correct the added-ke transcription drift by preserving the exact actual localized opening byte for byte, then translate only the ordinary diagnostic remainder. Source soil OR watering/completely different fix/check-first/waste consequence unchanged.",
+      "existingLocalizedSpansPreserved": true
+    },
+    {
+      "language": "ts",
+      "languageName": "itsonga",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l4",
+      "fieldLocator": "quiz[1].option[0]",
+      "namedLearnerField": "vegetables-staples/vegetables-staples-l4/quiz[1].option[0]",
+      "canonicalSource": {
+        "file": "lib/course-modules.ts",
+        "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+        "exact": "Whether it's actually a soil nutrient or watering issue"
+      },
+      "registryBinding": {
+        "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+        "sha256": "c2d0574b304d55abd7263d9c0046fbe41ad0860fc97ed29d78b7464ecbad6f62",
+        "path": "export → lessons[lessonId=vegetables-staples-l4] → quiz[1].option[0]",
+        "storedCurrentValueExact": "Loko hakunene ku ri soil nutrient or watering issue",
+        "storedReviewStatus": "machine-draft",
+        "resolverProjectionStatus": "draft",
+        "literalCurrentTargetOccursInRegistry": true
+      },
+      "currentEnglishSpans": [
+        "Loko hakunene ku ri soil nutrient or watering issue"
+      ],
+      "preservedCurrentLocalizedSpans": [],
+      "candidateFullTarget": "Xana hakunene i xiphiqo xa soil nutrient kumbe xa ku cheleta?",
+      "newLocalizedSpans": "Xana hakunene i xiphiqo xa soil nutrient kumbe xa ku cheleta?",
+      "backTranslation": "Is it actually a soil nutrient or watering problem?",
+      "retainedEnglishTechnicalAnchors": [
+        "soil nutrient"
+      ],
+      "reason": "Xana establishes the diagnostic whether/is-it question, correcting conditional Loko. hakunene retains actually, kumbe retains OR, technical soil nutrient preserved. It is the correct option at index0, not a distractor or noun-only treatment label.",
+      "disposition": "root-reviewed unreviewed machine-draft candidate; unwired until next source-bound learner batch",
+      "noEditApplied": true,
+      "notFluencyApproval": true,
+      "indices": {
+        "quizIndex": 1,
+        "optionIndex": 0,
+        "sourceCorrectIndex": 0,
+        "optionOrderUnchanged": true,
+        "whetherInterrogativePreserved": true
+      },
+      "meaningGuard": "Diagnostic WHETHER/actually soil nutrient OR watering issue; correct option index0, not a distractor; no categorical diagnosis.",
+      "originalCandidateFullTarget": "Xana hakunene i xiphiqo xa soil nutrient kumbe xa ku cheleta?",
+      "independentVerdict": "accept",
+      "independentReason": "Xana establishes the diagnostic whether/is-it question, correcting conditional Loko. hakunene retains actually, kumbe retains OR, technical soil nutrient preserved. It is the correct option at index0, not a distractor or noun-only treatment label.",
+      "existingLocalizedSpansPreserved": true
+    }
+  ],
+  "originalCandidatePacketSHA256": "d01cad57610c15bb689816496b5c933dd9a2048e94fe73bb179ca7710608c908",
+  "independentRepairedReport": "/tmp/imbewu-final-native-nine-residual-repaired-independent-check-20261006.json",
+  "independentRepairedReportSHA256": "d04142e4e579fa27a56b414a6fa4318872305a71f504042b45f6bc2fe349d6fb",
+  "rootAcceptancePending": false,
+  "sourceCurrentReverifiedAfterRepair": true,
+  "rootReview": {
+    "sourcePacketSHA256": "897198fc024b058f3792aade03fac610d4cadffa0c8bc663cb94eaa0be43c8e7",
+    "allCanonicalAndRegistryFileHashesMatched": true,
+    "preservesNegativesComparativesAndQuizIndices": true,
+    "TSExistingOpening": "Yellowing yi ni swivangelo swo hlayanyana leswi tolovelekeke, naswona ",
+    "limits": [
+      "No fluent or local farming approval.",
+      "English improvise/stronger remain precision terms in incorrect quiz options, not farming instructions.",
+      "Canonical alt is the wording authority; image panels do not independently prove season timing.",
+      "Helper lexical-source citations remain helper evidence, not a claim root opened those sources."
+    ],
+    "status": "data-only; not learner wired or published"
+  }
+}

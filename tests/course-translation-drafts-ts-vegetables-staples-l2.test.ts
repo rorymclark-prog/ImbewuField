@@ -128,7 +128,7 @@ test('Vegetables L2 drafts garden observation and seasonal possibilities while h
     'the draft keeps the soil-shading and moisture-holding effects without adding a soil-moisture location claim');
   assert.ok(draftParagraphs[19].startsWith('Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile.'));
   assert.ok(draftParagraphs[19].includes('winter greens ti nga si lulama'));
-  assert.ok(draftParagraphs[19].endsWith('Yi nga fika hi nkarhi wo oma loko water limits the garden.'),
+  assert.ok(draftParagraphs[19].endsWith('Yi nga fika hi nkarhi wo oma loko mati ma hunguta leswi xirhapa xi nga swi humesaka.'),
     'all three possible gap timings and the water-limiting condition remain present');
   assert.match(draftParagraphs[2], /mavhiki man’wana ni man’wana mambirhi ku ya eka manharhu/);
   assert.ok(draftParagraphs[7].includes('Endzhaku ka two to three weeks'));

@@ -1,7 +1,12 @@
+import { precisionAfter, ensurePrecisionCurrent } from './study-precision-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
+import { resolveLearnerLessonPresentation as currentPresentation } from '../lib/course-localization.ts';
+import { fairSharingPresentationBefore } from './intro-fair-sharing-history-checks.ts';
+// This dated full-module proof precedes the separately checked fairness layer.
+const resolveLearnerLessonPresentation: typeof currentPresentation = (lesson, language, record) =>
+  fairSharingPresentationBefore(lesson, language, currentPresentation(lesson, language, record));
 import { resolveCourseModulePresentation } from '../lib/course-module-translation-drafts.ts';
 import { introFullFixture, introFullNativeBefore, introFullNativeAfter, introFullCanonicalBefore,
   readCurrentIntroNative, type IntroLanguage } from './intro-full-ordinary-native-checks.ts';
@@ -85,7 +90,9 @@ test('the later 60-field Intro text layer rejects changed targets, sources, stat
 test('Introduction mixed pairs reject false English drafts, changed safety source and unlisted/ST mutations', () => {
   const mutations: Array<(decks: Record<string, any>) => void> = [
     decks => { decks.ve.slides[6].english.body[1] = decks.ve.slides[6].english.body[1].replace('If sharing is allowed and there is enough water', 'Whenever neighbours ask'); },
-    decks => { decks.ts.slides[13].target.body[1].segments.find((part: any) => part.sourceEnglish === 'rotate through the beds').status = 'draft'; },
+    // The later checked translation is already a draft: mutate its text into
+    // falsely labelled source English, rather than performing a status no-op.
+    decks => { const part=decks.ts.slides[13].target.body[1].segments.find((part: any) => part.sourceEnglish === 'rotate through the beds');part.status='draft';part.text=part.sourceEnglish; },
     decks => { const held = decks.ve.slides[10].target.body[0].segments.find((part: any) => part.status === 'english-hold'); held.text = held.sourceEnglish; },
     decks => { decks.ve.slides[1].target.heading.text = 'Unlisted mutation'; },
     decks => { decks.st.slides[21].target.heading.text = 'ST audio-bound mutation'; },
@@ -105,7 +112,13 @@ test('Introduction learner drafts remain visibly unreviewed and fail closed on c
     const native = introFullNativeAfter[language].lessons.find((lesson: any) => lesson.id === original.id);
     const key = language === 've' ? 'tshivendaDraft' : 'xitsongaDraft';
     assert.equal(current.content.body, native.body[key]);
-    assert.equal(current.content.infographicAlt, native.infographicAlt[key]);
+    // The later precision layer validates all unlisted bytes before replacing
+    // the old added-fruit image description with its source-bound waste loop.
+    const latestAlt = language === 've'
+      ? precisionAfter.ve.lessons.find((lesson: any) => lesson.id === original.id).infographicAlt[key]
+      : native.infographicAlt[key];
+    ensurePrecisionCurrent();
+    assert.equal(current.content.infographicAlt, latestAlt);
     for (const change of [
       { ...original, title: original.title + ' New source.' },
       { ...original, body: original.body + ' New source.' },

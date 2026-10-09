@@ -80,7 +80,7 @@ test('Intro compressed frames and manifest differ only at the approved 30 URLs w
     // 6 October 2026: verify the complete36-frame successor before using this dated actual base header/hash.
     const liveBytes = readFileSync(new URL(`../${frame.asset}`, import.meta.url));
     const later = introFullMediaBeforeEarlierProof(frame.asset);
-    const bytes = later ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
+    const bytes = later?.encodedHeaderHex ? Buffer.from(later.encodedHeaderHex, 'hex') : liveBytes;
     assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
     assert.equal(later?.bytes ?? bytes.length, frame.new.bytes);
