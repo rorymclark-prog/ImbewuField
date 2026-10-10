@@ -351,6 +351,24 @@ export const T_en: Dict = {
   tabPlaces: 'Places',
   tabFarm: 'Farm',
   siteReportOverline: 'Site report',
+  // Plain-English names for the farmer-facing biome report (lib/biome.ts's BIOME_I18N_KEYS,
+  // shown by components/DataPanel.tsx). BIOMES in lib/biome.ts keeps the same English text as the
+  // source other callers (app/api/* prompts) still read; these keys exist so DataPanel can
+  // translate the same names instead of reading them straight off the data object. English-only
+  // for now — these are technical/regional names, not everyday words, so no isiZulu draft is
+  // offered until a fluent reviewer can confirm a name rather than a transliteration; t() falls
+  // back to English.
+  biomeNameSavanna: 'Savanna',
+  biomeNameGrassland: 'Grassland',
+  biomeNameFynbos: 'Fynbos',
+  biomeNameSucculentKaroo: 'Succulent Karoo',
+  biomeNameNamaKaroo: 'Nama-Karoo',
+  biomeNameDesert: 'Desert',
+  biomeNameAlbanyThicket: 'Albany Thicket',
+  biomeNameIocb: 'Indian Ocean Coastal Belt',
+  biomeNameForest: 'Afromontane Forest',
+  biomeNameOutside: 'Outside South Africa',
+  biomeNameUnavailable: 'Climate data unavailable',
   suitabilityGoodFit: 'Good fit',
   suitabilityFairSite: 'Fair site',
   suitabilityChallenging: 'Challenging',
@@ -378,12 +396,57 @@ export const T_en: Dict = {
   savedToPlaces: 'Saved to places',
   cardKeySpecies: 'Key species',
   cardMainChallenges: 'Main challenges',
+  // Plain-English key-species and challenge lists for each biome (lib/biome.ts's
+  // BIOME_I18N_KEYS), shown as the "Key species" and "Main challenges" cards in
+  // components/DataPanel.tsx. Each is a single string of items separated by " | " — DataPanel
+  // splits on that separator to render the chips/rows, the same list BIOMES in lib/biome.ts
+  // holds as an array for other callers. Common names come first, with the scientific name in
+  // brackets where the common name alone would not identify the plant. English-only for now —
+  // confirming species names and plain translations of farming risks needs a fluent reviewer, so
+  // no isiZulu draft is offered yet; t() falls back to English.
+  biomeSpeciesSavanna: 'Marula (Sclerocarya birrea) | Mopane (Colophospermum mopane) | Wild Fig (Ficus sycomorus) | Leadwood (Combretum imberbe) | Fever Tree (Vachellia xanthophloea) | Buffalo Thorn (Ziziphus mucronata)',
+  biomeChallengesSavanna: 'Storms are heavy but hard to predict | Grass competes with young trees for water and light | Frost can damage plants at higher ground | Termites can damage wood and young plants',
+  biomeSpeciesGrassland: 'Buffalo Thorn (Ziziphus mucronata) | Wild Olive (Olea europaea subsp. africana) | Highveld Protea (Protea caffra) | Red Grass (Themeda triandra) | Bulbine (Bulbine spp.) | Wild Garlic (Tulbaghia violacea)',
+  biomeChallengesGrassland: 'Hard frosts, down to about –10°C | Hailstorms | Clay soil washes away easily on slopes | Wet low ground (vlei) can be hard to drain',
+  biomeSpeciesFynbos: 'King Protea (Protea cynaroides) | Conebush (Leucadendron spp.) | Buchu (Agathosma betulina) | Cape Reed (Restio spp.) | Rooibos (Aspalathus linearis) | Honeybush (Cyclopia spp.)',
+  biomeChallengesFynbos: 'Needs occasional fire to stay healthy, roughly every 10–15 years | Banned invasive plants can take over | No edible Fynbos plants — bring in soil for any food garden | Hot, dry summers',
+  biomeSpeciesSucculentKaroo: 'Ice Plant (Mesembryanthemum spp.) | Bitter Aloe (Aloe ferox) | Quiver Tree (Aloidendron dichotomum) | Vygie (Lampranthus spp.)',
+  biomeChallengesSucculentKaroo: 'Very dry, hot summers | Soil is alkaline (high lime content) | Few food plants suit this climate | Strong sun and wind',
+  biomeSpeciesNamaKaroo: 'Karoo Bush (Pentzia spp.) | Driedoring (Rhigozum trichotomum) | Ganna (Salsola spp.) | Bitter Aloe (Aloe ferox) | Wild Olive (Olea europaea subsp. africana)',
+  biomeChallengesNamaKaroo: 'A hard, cemented soil layer underground | Very high evaporation — can be 3 times the rainfall | Salty soil in low-lying ground | Few tree species suit this climate',
+  biomeSpeciesDesert: "Camelthorn (Vachellia erioloba) | Kokerboom / Quiver Tree (Aloidendron dichotomum) | Shepherd's Tree (Boscia albitrunca) | Nara Melon (Acanthosicyos horridus)",
+  biomeChallengesDesert: 'Extreme heat, over 45°C | Flash floods are rare but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow away topsoil',
+  biomeSpeciesAlbanyThicket: 'Spekboom (Portulacaria afra) | Wild Plum (Harpephyllum caffrum) | Waterberry (Syzygium cordatum) | Noorsdoring (Euphorbia coerulescens)',
+  biomeChallengesAlbanyThicket: 'Severely damaged by too much goat grazing | Thick, thorny vegetation | A banned invasive cactus needs to be controlled | Limited water in the dry season',
+  biomeSpeciesIocb: 'Natal Wild Banana (Strelitzia nicolai) | Wild Plum (Harpephyllum caffrum) | Natal Mahogany (Trichilia emetica) | Pigeonwood (Trema orientalis) | Fever Tree (Vachellia xanthophloea) | Sycamore Fig (Ficus sycomorus) | Forest Silver Oak (Brachylaena discolor)',
+  biomeChallengesIocb: 'Cyclones and storms can cause damage | High humidity encourages fungal disease | Steep slopes risk erosion | Landslide risk on clay slopes',
+  biomeSpeciesForest: 'Yellowwood (Afrocarpus falcatus) | Cape Holly (Ilex mitis) | Wild Peach (Kiggelaria africana) | Stinkwood (Ocotea bullata) | Outeniqua Yellowwood (Afrocarpus falcatus)',
+  biomeChallengesForest: 'Not much sunlight reaches the ground under thick tree cover | Forest is legally protected — it cannot be cleared | Banned invasive plants can spread here | Slugs and snails can damage crops',
   limaContextPrefix: 'Lima · ',
   statSolar: 'Solar',
   statSolarSub: 'm²/day avg',
   statEToEst: 'ETo est.',
   statEToSub: 'evapotransp/day',
   waterHarvestingStrategyHeader: 'Water harvesting strategy',
+  // Plain-English water-harvesting advice for each biome (lib/biome.ts's BIOME_I18N_KEYS),
+  // shown under the header above by components/DataPanel.tsx. BIOMES in lib/biome.ts keeps the
+  // denser, jargon-heavy original text as the source for other callers (app/api/* prompts);
+  // these sentences say the same thing in shorter, plainer words, naming a technique once in
+  // brackets (e.g. "channels along the slope (swales)") rather than only by its technical name.
+  // English-only for now — getting this advice wrong in translation could cost a farmer a real
+  // harvest, so no isiZulu draft is offered until a fluent reviewer checks it; t() falls back to
+  // English.
+  biomeWaterSavanna: 'Heavy summer storms arrive fast. Dig channels along the slope (swales) and small ponds before the rains start in August or September, so the water soaks in instead of running off. Make tanks big: at least 50 litres for every square metre of roof that drains into them. Dig dams long and narrow — about 3 times longer than wide — on gentle slopes.',
+  biomeWaterGrassland: 'Summer brings short, heavy thunderstorms. On every slope, dig channels that follow the land gently downhill (about a 1m drop for every 1,000m across) to spread the water instead of letting it rush away. Winters are dry, so storing water matters. As a rule: 1 square metre of roof catches about 1 litre of water for every 1mm of rain.',
+  biomeWaterFynbos: 'Rain falls only in winter, so do earthworks in late autumn (March to May), before the rain comes. Small banks along the contour and shallow mulched basins work well. Size your water tanks carefully — summer (December to February) is dry. Reused household water (greywater) is fine for food-growing areas, but never for the natural Fynbos — it is too rich in nutrients for it.',
+  biomeWaterSucculentKaroo: 'On slopes facing west, shade netting can catch water from fog. Build a small raised rim around each plant to trap every drop of rain where it falls. Reusing household water (greywater) is worth doing here. Every 100mm of rain matters — even a small roof tank is valuable.',
+  biomeWaterNamaKaroo: 'Storms are rare and unpredictable, so catch water everywhere you can. Build small curved banks just above each plant. Catch runoff from farm roads into shallow basins. Underground water tanks help you get through dry spells — try to capture every drop of rain that falls.',
+  biomeWaterDesert: 'Shade netting can catch water from fog in the air. Design channels to catch sudden flash floods safely. Store water underground, where it stays cool and does not evaporate. Plant trees as windbreaks — they reduce evaporation and give shade before you plant crops.',
+  biomeWaterAlbanyThicket: 'Rain falls in both winter and summer. Use shallow channels and banks along the contour. A food forest based on Spekboom copes well with drought and uses water efficiently. Small tanks with gravity-fed drip irrigation work well. On clay soil, take care not to waterlog plants.',
+  biomeWaterIocb: 'Rain is heavy, so managing floods matters more than collecting water. Use shallow channels to slow water down on steep slopes. Raised beds stop plants sitting in water. Channels along the contour also help prevent landslides on clay soil. Run downpipes from your roof into underground tanks.',
+  biomeWaterForest: "The forest makes its own water cycle through fog and the trees breathing out moisture. Keeping the tree canopy intact keeps the ground moist. Channels at the forest edge catch any runoff. Springs inside the forest give a reliable water supply all year.",
+  biomeWaterOutside: 'Select a location within South Africa for site-specific analysis.',
+  biomeWaterUnavailable: 'Retry the site analysis before acting on location-specific water advice.',
   statTexture: 'Texture',
   statPH: 'pH',
   phAcidic: 'Acidic — add lime',
@@ -400,6 +463,20 @@ export const T_en: Dict = {
   textureSilt: 'Silt',
   textureClay: 'Clay',
   soilStrategyHeader: 'Soil strategy',
+  // Plain-English soil advice for each biome (lib/biome.ts's BIOME_I18N_KEYS), shown under the
+  // header above by components/DataPanel.tsx. Same relationship to BIOMES in lib/biome.ts, and
+  // same reviewer gate, as the water-strategy keys above.
+  biomeSoilSavanna: 'The soil holds a lot of iron but little of the nutrients plants need most (phosphorus and nitrogen). Cover the soil with mopane leaves, but only a thin layer — too much can stop other plants growing nearby. Plant acacia trees nearby; their roots add nitrogen to the soil. Moringa trees also pull nutrients up from deep soil. Add compost and biochar (charcoal mixed into soil) until the soil holds at least 2% carbon.',
+  biomeSoilGrassland: 'Grazing animals often compact this soil hard. Loosen it below the surface before digging channels or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually mildly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Build up organic matter with compost and biochar.',
+  biomeSoilFynbos: 'Do not add compost, lime or phosphorus to natural Fynbos areas — it kills the plants, which are adapted to poor soil. Grow food separately, on soil brought in from elsewhere. Mulch food beds with Fynbos plant material. Cape reeds help hold the banks of water channels in place naturally.',
+  biomeSoilSucculentKaroo: 'Cover the soil with stones rather than organic mulch — it is cheaper and works well here. Only add compost to the food-growing area. Succulent plants need soil that drains well, not soil that holds water. For food beds, add biochar and gypsum. Worm farms are a good way to make a strong liquid fertiliser.',
+  biomeSoilNamaKaroo: 'A hard, cemented layer (calcrete) often sits under the topsoil and may need breaking up with a chisel plough so roots can grow down. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it hold onto water. Bitter Aloe grows well here and can be sold.',
+  biomeSoilDesert: 'Any organic matter here is valuable — use manure from goats or camels. Plant shade trees first, before any food crops. In low-lying areas, only plant salt-tolerant species. Raised sandy beds with a wick (a strip of absorbent material drawing water up) work well for vegetables.',
+  biomeSoilAlbanyThicket: 'Spekboom is the key plant here: you can eat it, it stores a lot of carbon, and it copes well with drought. To restore damaged land, plant cuttings of Spekboom directly — no need to grow them in a nursery first. Clay soil needs good air flow, so use raised beds for vegetables.',
+  biomeSoilIocb: 'The soil is acidic and nutrients wash out quickly. Add lime to raise the pH to about 6.5. Cover the soil with mulch and plant cover crops to stop nutrients washing away. A mix of biochar and compost (terra preta) greatly improves how much food you can grow. Coffee, avocado, banana and sugar cane all grow well here.',
+  biomeSoilForest: 'Forest soil is rich — disturb it as little as possible. Use small, deep planting holes (keyhole beds) for vegetables rather than large cleared areas. Cover the soil with fallen leaves as mulch. Working with the forest\'s own structure (a food-forest approach) gives the best results. Leave most of the forest undisturbed.',
+  biomeSoilOutside: 'Select a location within South Africa for site-specific analysis.',
+  biomeSoilUnavailable: 'Retry the site analysis before acting on location-specific soil advice.',
   soilHealthScoreHeader: 'Soil health score',
   soilHealthScoreHealthy: 'Healthy',
   soilHealthScoreModerate: 'Moderate',

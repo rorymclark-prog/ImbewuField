@@ -33,6 +33,7 @@ import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage, translate } from '@/lib/i18n';
+import { BIOME_I18N_KEYS } from '@/lib/biome';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
@@ -174,6 +175,20 @@ const TAB_ICONS: Record<string, JSX.Element> = {
   Reports: <FileText size={16} />,
   Farm: <Wheat size={16} />,
 };
+
+// lib/biome.ts's BIOMES stays the English jargon source for other callers (app/api/* prompts);
+// these read the plain-language t() keys BIOME_I18N_KEYS points to for the same biome, falling
+// back to the raw BIOMES text (via `fallback`) for a biome code the table has no entry for.
+function biomeText(code: string, field: 'name' | 'water' | 'soil', fallback: string, t: (key: string) => string): string {
+  const key = BIOME_I18N_KEYS[code]?.[field];
+  return key ? t(key) : fallback;
+}
+
+function biomeList(code: string, field: 'species' | 'challenges', fallback: string[], t: (key: string) => string): string[] {
+  const key = BIOME_I18N_KEYS[code]?.[field];
+  if (!key) return fallback;
+  return t(key).split(' | ');
+}
 
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
   return (
@@ -789,7 +804,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {headerCollapsed ? (
         <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border)' }}>
           <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
-            {displayName || data.biome.name}
+            {displayName || biomeText(data.biome.code, 'name', data.biome.name, t)}
           </span>
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
                 style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
@@ -817,12 +832,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {displayName}
                 </div>
                 <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
-                  {data.biome.name}
+                  {biomeText(data.biome.code, 'name', data.biome.name, t)}
                 </div>
               </>
             ) : (
               <div className="font-display font-semibold leading-tight" style={{ fontSize: 15, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                {data.biome.name}
+                {biomeText(data.biome.code, 'name', data.biome.name, t)}
               </div>
             )}
             {data.vegetation && (
@@ -922,7 +937,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div className="min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14.5, color: '#FBF6EC' }}>{t('saveThisPlace')}</div>
                   <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#F7C97E', lineHeight: 1.4 }}>
-                    {placeName || data.biome.name}
+                    {placeName || biomeText(data.biome.code, 'name', data.biome.name, t)}
                   </div>
                 </div>
               </button>
@@ -1188,7 +1203,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('cardKeySpecies')}</Label>
               <div className="flex flex-wrap gap-1.5">
-                {data.biome.keySpecies.slice(0, 6).map((s) => (
+                {biomeList(data.biome.code, 'species', data.biome.keySpecies, t).slice(0, 6).map((s) => (
                   <span
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
@@ -1204,7 +1219,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('cardMainChallenges')}</Label>
               <div className="space-y-1.5">
-                {data.biome.challenges.slice(0, 4).map((c, i) => (
+                {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
                   <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
                     {c}
@@ -1241,7 +1256,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('waterHarvestingStrategyHeader')}</Label>
               <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {data.biome.waterStrategy}
+                {biomeText(data.biome.code, 'water', data.biome.waterStrategy, t)}
               </p>
             </Card>
           </>
@@ -1292,7 +1307,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('soilStrategyHeader')}</Label>
               <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {data.biome.soilStrategy}
+                {biomeText(data.biome.code, 'soil', data.biome.soilStrategy, t)}
               </p>
             </Card>
 
