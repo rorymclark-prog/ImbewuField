@@ -95,7 +95,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
             {t('homeReopenMap')}<ChevronRight size={13} />
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
               <div className="font-display font-semibold text-sm" style={{ color: 'var(--color-ink)' }}>{s.value}</div>

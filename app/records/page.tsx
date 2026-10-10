@@ -780,6 +780,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   }
 
   const accent = isIn ? '#2E6B3A' : '#C07A1E';
+  const idPrefix = alwaysOpen ? 'ledger-modal' : 'ledger';
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
@@ -861,10 +862,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 
         {!isIn && (
           <div>
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+            <label htmlFor={`${idPrefix}-expense-crop`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
               {recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
-            <input type="text" placeholder={recordsText(lang, 'Leave blank if it served the whole garden', 'Shiya kungenalutho uma bekusetshenziselwa ingadi yonke')}
+            <input id={`${idPrefix}-expense-crop`} type="text" placeholder={recordsText(lang, 'Leave blank if it served the whole garden', 'Shiya kungenalutho uma bekusetshenziselwa ingadi yonke')}
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
@@ -873,10 +874,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         )}
 
         <div>
-          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+          <label htmlFor={`${idPrefix}-crop`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {isIn ? recordsFill(lang, 'Produce / product') : recordsText(lang, 'What for', 'Bekungokwani')}
           </label>
-          <input type="text" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}
+          <input id={`${idPrefix}-crop`} type="text" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}
             value={form.crop} onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
@@ -885,8 +886,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         <div className="grid grid-cols-2 gap-3">
           {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
           <div className="col-span-2">
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
-            <input type="number" placeholder="0.00" step="0.01" min="0"
+            <label htmlFor={`${idPrefix}-price`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
+            <input id={`${idPrefix}-price`} type="number" placeholder="0.00" step="0.01" min="0"
               value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
@@ -894,11 +895,11 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         </div>
 
         <div>
-          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+          <label htmlFor={`${idPrefix}-buyer`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {recordsText(lang, isIn ? 'Buyer' : 'Supplier', isIn ? 'Umthengi' : 'Umhlinzeki')}
             <span className="ml-1 normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
           </label>
-          <input type="text" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}
+          <input id={`${idPrefix}-buyer`} type="text" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}
             value={form.buyer} onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
@@ -907,10 +908,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {/* Expense category — preset chips (Money out only) */}
         {!isIn && (
           <div>
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+            <label id={`${idPrefix}-category-label`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
               {recordsText(lang, 'Category', 'Isigaba')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div role="group" aria-labelledby={`${idPrefix}-category-label`} className="flex flex-wrap gap-1.5">
               {EXPENSE_CATEGORIES.map((c) => (
                 <button key={c} type="button"
                   onClick={() => setForm((f) => ({ ...f, category: f.category === c ? null : c }))}

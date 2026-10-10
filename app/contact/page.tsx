@@ -423,10 +423,11 @@ export default function ContactPage() {
               {/* Subject — Simple hides this behind "Add a subject" until asked for; All tools shows it plainly. */}
               {(!simple || showSubject) ? (
                 <div>
-                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                  <label htmlFor="contact-subject" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
                     {ui('Subject (optional)', 'Isihloko (akuphoqelekile)')}
-                  </div>
+                  </label>
                   <input
+                    id="contact-subject"
                     type="text"
                     placeholder={ui('e.g. Farm visit request', 'isib. Isicelo sokuvakashela ipulazi')}
                     value={subject}
@@ -452,10 +453,11 @@ export default function ContactPage() {
 
               {/* Message body */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+                <label htmlFor="contact-message" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
                   {ui('Message', 'Umlayezo')}
-                </div>
+                </label>
                 <textarea
+                  id="contact-message"
                   rows={5}
                   placeholder={ui('Write your message here…', 'Bhala umlayezo wakho lapha…')}
                   value={body}
