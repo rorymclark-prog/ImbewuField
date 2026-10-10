@@ -3,6 +3,7 @@
 import type { LocationData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
+import { numberLabel } from '@/lib/format-figures';
 
 interface Props {
   locationData: LocationData;
@@ -28,6 +29,21 @@ function formatDrySeason(drySeason: string, t: (key: string) => string, lang: st
   };
   const translated = sourceLabels[drySeason];
   return translated ? `${translated[0]}–${translated[1]} (${drySeason})` : drySeason;
+}
+
+// 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
+// and once the amount is large, counting it in standard 5 000 L tanks is easier to picture than a
+// bare litre figure. Same helper as components/DataPanel.tsx's litresLabel, kept local here to
+// avoid a dependency between the two (DataPanel already imports this component).
+const TANK_SIZE_L = 5000;
+function litresLabel(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  if (litres >= TANK_SIZE_L * 3) {
+    return t('estVolumeTanksLabel')
+      .replace('{tanks}', String(Math.round(litres / TANK_SIZE_L)))
+      .replace('{size}', numberLabel(TANK_SIZE_L));
+  }
+  return t('estVolumeLitresLabel').replace('{litres}', numberLabel(litres));
 }
 
 function peopleFromAdults(adults: string | undefined): number {
@@ -226,10 +242,10 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="grid grid-cols-2 gap-2">
         <StatBox label={t('waterBalancePeopleEstimated')} value={String(people)} sub={t('waterBalanceHouseholdMonthly').replace('{litres}', (monthlyHouseKL * 1000).toFixed(0))} color="#235E86" />
         {capacity > 0
-          ? <StatBox label={t('waterBalanceStorageCapacity')} value={`${capacity.toFixed(0)} kL`} sub={t('waterBalanceMinSafe').replace('{amount}', minSafe.toFixed(0))} color="#1F4D2B" />
+          ? <StatBox label={t('waterBalanceStorageCapacity')} value={litresLabel(capacity, t)} sub={t('waterBalanceMinSafe').replace('{amount}', litresLabel(minSafe, t))} color="#1F4D2B" />
           : <StatBox label={t('waterBalanceStorage')} value={t('waterBalanceNotMapped')} sub={t('waterBalanceDrawWaterArea')} color="#755942" />
         }
-        {hasVeg && <StatBox label={t('waterBalanceVegIrrigation')} value={`${(months.find(m => m.isDry)?.irrigVeg ?? 0).toFixed(1)} kL`} sub={t('waterBalancePerDryMonthEstimate')} color="#C07A1E" />}
+        {hasVeg && <StatBox label={t('waterBalanceVegIrrigation')} value={litresLabel(months.find(m => m.isDry)?.irrigVeg ?? 0, t)} sub={t('waterBalancePerDryMonthEstimate')} color="#C07A1E" />}
         {hasFruit && <StatBox label={t('waterBalanceFruitTrees')} value={`${fruitTrees}`} sub={`${(months.find(m => m.isDry)?.irrigFruit ?? 0).toFixed(1)} ${t('waterBalancePerDryMonthUnit')}`} color="#C07A1E" />}
       </div>
 

@@ -190,6 +190,33 @@ function biomeList(code: string, field: 'species' | 'challenges', fallback: stri
   return t(key).split(' | ');
 }
 
+// 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
+// and once the number is large, counting it in standard 5 000 L tanks is easier to picture than
+// a bare litre figure.
+const TANK_SIZE_L = 5000;
+function litresLabel(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  if (litres >= TANK_SIZE_L * 3) {
+    return t('estVolumeTanksLabel')
+      .replace('{tanks}', String(Math.round(litres / TANK_SIZE_L)))
+      .replace('{size}', numberLabel(TANK_SIZE_L));
+  }
+  return t('estVolumeLitresLabel').replace('{litres}', numberLabel(litres));
+}
+
+// Same split as litresLabel, for a card that shows a big number with a small unit caption
+// underneath it (rather than litresLabel's one combined string).
+function litresBigValue(kl: number): string {
+  const litres = Math.round(kl * 1000);
+  return litres >= TANK_SIZE_L * 3 ? String(Math.round(litres / TANK_SIZE_L)) : numberLabel(litres);
+}
+function litresUnit(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  return litres >= TANK_SIZE_L * 3
+    ? t('estVolumeTanksUnit').replace('{size}', numberLabel(TANK_SIZE_L))
+    : t('estVolumeLitresUnit');
+}
+
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
   return (
     <div
@@ -850,7 +877,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}°C avg
+                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             <div className="font-mono mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
@@ -1015,8 +1042,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(siteMetrics.water.estVolumeKL)}</div>
-                        <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>kL est.</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{litresBigValue(siteMetrics.water.estVolumeKL)}</div>
+                        <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{litresUnit(siteMetrics.water.estVolumeKL, t)}</div>
                       </div>
                     </div>
                     {siteMetrics.water.features && siteMetrics.water.features.some(f => f.name) && (
@@ -1026,7 +1053,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{numberLabel(f.estVolumeKL)} kL</span>
+                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{litresLabel(f.estVolumeKL, t)}</span>
                           </div>
                         ) : null)}
                       </div>
@@ -1279,7 +1306,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 sub={data.soil.organicCarbon < 1.5 ? t('organicCarbonLow') : t('organicCarbonOk')}
                 color={data.soil.organicCarbon < 1.5 ? '#D4922A' : '#1F4D2B'}
               />
-              <Stat label={t('statBulkDensity')} value={`${data.soil.bulkDensity} g/cm³`} sub={data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} />
+              {!simple && (
+                <Stat
+                  label={t('statBulkDensity')}
+                  value={`${data.soil.bulkDensity} g/cm³`}
+                  sub={`${data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} · ${t('bulkDensityExplainer')}`}
+                />
+              )}
             </div>
             <Card>
               <Label>{t('textureCompositionHeader')}</Label>
@@ -1491,10 +1524,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
-                  Köppen {kp} — {zoneLabel}
-                </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5 }}>{zoneSummary}</div>
+                {!simple && (
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
+                    {t('koppenClimateCodeLabel')} {kp} — {zoneLabel}
+                  </div>
+                )}
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }}>{zoneSummary}</div>
                 <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7 }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

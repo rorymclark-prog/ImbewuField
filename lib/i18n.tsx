@@ -212,7 +212,7 @@ export const T_en: Dict = {
   waterBalancePeopleEstimated: 'People estimated',
   waterBalanceHouseholdMonthly: '{litres} L/month household',
   waterBalanceStorageCapacity: 'Storage capacity',
-  waterBalanceMinSafe: 'Min safe: {amount} kL',
+  waterBalanceMinSafe: 'Min safe: {amount}',
   waterBalanceStorage: 'Storage',
   waterBalanceNotMapped: 'Not mapped',
   waterBalanceDrawWaterArea: 'Draw a water area to calculate',
@@ -347,7 +347,9 @@ export const T_en: Dict = {
   tabArea: 'Area',
   tabPhotos: 'Photos',
   tabDesign: 'Design',
-  tabAI: 'AI',
+  // Was the bare letters 'AI' — jargon a farmer has no reason to know, for a tab that shows
+  // generated site advice (components/InsightsPanel.tsx). 'Insights' says what the tab is for.
+  tabAI: 'Insights',
   tabPlaces: 'Places',
   tabFarm: 'Farm',
   siteReportOverline: 'Site report',
@@ -386,6 +388,21 @@ export const T_en: Dict = {
   harvestingAreas: 'Harvesting areas',
   catchmentAreaLabel: 'catchment area',
   estimatedVolumeUnit: 'kL est.',
+  // Plain-litres volume labels (components/DataPanel.tsx, components/WaterBalance.tsx) —
+  // 'kL' (kilolitres) is a unit a farmer sizing a tank has no reason to know. Litres is what a
+  // tank is actually sold in; once the amount gets into the tens of thousands, "about N tanks of
+  // 5 000 L" says the same number in the unit a farmer shops for.
+  estVolumeLitresLabel: '{litres} L',
+  estVolumeTanksLabel: 'about {tanks} tanks of {size} L',
+  // Split versions of the same two labels, for a card that shows a big number with a small unit
+  // caption underneath it rather than one combined string (components/DataPanel.tsx).
+  estVolumeLitresUnit: 'L est.',
+  estVolumeTanksUnit: 'tanks of {size} L est.',
+  // '°C average' and 'mm a year' replace the hardcoded '°C avg' / 'mm/yr' suffixes in
+  // app/home/page.tsx and components/DataPanel.tsx's BRU line — same reasoning, spelled out
+  // instead of abbreviated.
+  unitTempAverage: '°C average',
+  unitRainPerYear: 'mm a year',
   plantingCalendarHeader: 'Planting calendar',
   calendarGrow: 'Grow',
   calendarDry: 'Dry',
@@ -456,6 +473,10 @@ export const T_en: Dict = {
   organicCarbonLow: 'Low — target 2–3%',
   organicCarbonOk: 'Acceptable',
   statBulkDensity: 'Bulk Density',
+  // Shown only in All tools (components/DataPanel.tsx hides this stat card in Simple mode) —
+  // 'Bulk Density' is a soil-science term, so the card keeps a one-line plain explanation beside
+  // it rather than leaving the term to speak for itself.
+  bulkDensityExplainer: 'How tightly packed the soil is — a high number means roots struggle to grow',
   bulkDensityCompacted: 'Compacted',
   bulkDensityOk: 'OK',
   textureCompositionHeader: 'Texture composition',
@@ -490,9 +511,9 @@ export const T_en: Dict = {
   soilImprovementPhAcidic: 'pH {ph} is acidic — add agricultural lime (1–2 t/ha)',
   soilImprovementPhAlkaline: 'pH {ph} is alkaline — add elemental sulphur or pine-needle mulch',
   soilImprovementLowCarbon: 'Organic carbon {oc}% is low — layer compost 5 cm deep, add kraal manure or biochar',
-  soilImprovementCompacted: 'Bulk density {bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile',
+  soilImprovementCompacted: 'The soil is compacted ({bd} g/cm³) — deep-rooted cover crops and a digging fork help open it up',
   soilImprovementHighClay: 'High clay ({clay}%) — gypsum + organic matter improve drainage and workability',
-  soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and boost CEC with compost and biochar',
+  soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and add compost and biochar so it holds more water and nutrients',
   statKoppen: 'Köppen',
   statSolarClimate: 'Solar',
   statSolarClimateUnit: 'kWh/m²/day',
@@ -787,6 +808,10 @@ export const T_en: Dict = {
   allSectionFiveYearVision: '5-Year Vision',
   allSectionYear1Priorities: 'Year 1 Priorities',
   climateZone: 'Climate zone',
+  // The bare 'Köppen {code}' line under the zone name (components/DataPanel.tsx) is shown only in
+  // All tools — Simple mode already has the plain zone name and summary above it, so the
+  // technical classification code adds nothing a Simple-mode farmer needs.
+  koppenClimateCodeLabel: 'Climate code (Köppen)',
   goodForGrowing: 'Good for growing',
   rainfallMmMonth: 'Rainfall — mm / month',
   monthlyTempC: 'Monthly temperature — °C',
@@ -881,7 +906,9 @@ export const T_en: Dict = {
   homeStatRain: 'Rain',
   homeStatTemp: 'Temp',
   homeStatSoilPH: 'Soil pH',
-  homeStatASL: 'ASL',
+  // Was the bare abbreviation 'ASL' (above sea level) — every other locale already translates
+  // this as a plain word for "height"; English was the one left showing the jargon initials.
+  homeStatASL: 'Height above sea',
   homeMainSite: 'Main site',
   homeSetAsMain: 'Set as main site',
   homeMainSiteLabel: 'Main',   // the ★ that used to prefix this is a Lucide icon's job, not a string's
