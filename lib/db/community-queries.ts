@@ -13,6 +13,7 @@ import {
 import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { communityEnabled } from '@/lib/community/flag';
+import { withWriteTimeout } from '@/lib/db/queries';
 import type {
   CommunityProfile, BoardPost, BoardCategory, BoardKind,
   MessageThread, ThreadMessage, CommunityReportTargetType,
@@ -85,21 +86,21 @@ export async function createBoardPost(row: {
   if (!communityEnabled()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
   const me = await getMyCommunityProfile();
-  await addDoc(collection(f.db, 'board_posts'), {
+  await withWriteTimeout(addDoc(collection(f.db, 'board_posts'), {
     ...row, owner_id: u, owner_name: me?.display_name ?? 'A farmer', status: 'active', created_at: serverTimestamp(),
-  });
+  }));
 }
 
 export async function closeBoardPost(id: string): Promise<void> {
   if (!communityEnabled()) return;
   const f = fb(); if (!f) return;
-  await updateDoc(doc(f.db, 'board_posts', id), { status: 'closed' });
+  await withWriteTimeout(updateDoc(doc(f.db, 'board_posts', id), { status: 'closed' }));
 }
 
 export async function deleteBoardPost(id: string): Promise<void> {
   if (!communityEnabled()) return;
   const f = fb(); if (!f) return;
-  await deleteDoc(doc(f.db, 'board_posts', id));
+  await withWriteTimeout(deleteDoc(doc(f.db, 'board_posts', id)));
 }
 
 // ---- 1:1 messaging ----
@@ -112,11 +113,11 @@ export async function getOrCreateThread(otherUid: string, otherName: string): Pr
   const existing = rows<MessageThread>(s).find((t) => t.participants.includes(otherUid));
   if (existing) return existing.id;
   const me = await getMyCommunityProfile();
-  const r = await addDoc(collection(f.db, 'message_threads'), {
+  const r = await withWriteTimeout(addDoc(collection(f.db, 'message_threads'), {
     participants: [u, otherUid],
     participant_names: { [u]: me?.display_name ?? 'You', [otherUid]: otherName },
     last_message: '', last_message_at: serverTimestamp(), created_at: serverTimestamp(),
-  });
+  }));
   return r.id;
 }
 
@@ -137,22 +138,30 @@ export async function getThread(threadId: string): Promise<MessageThread | null>
   return s.exists() ? ({ id: s.id, ...s.data() } as unknown as MessageThread) : null;
 }
 
-export function subscribeMessages(threadId: string, cb: (msgs: ThreadMessage[]) => void): Unsubscribe | null {
+// bug-14: a denied or dropped listener used to leave the thread silently empty forever — no
+// error reached the caller, so there was nothing to show and nothing to retry. onError, when
+// given, is how the page now learns the listener itself failed (as opposed to the thread just
+// having no messages yet).
+export function subscribeMessages(
+  threadId: string,
+  cb: (msgs: ThreadMessage[]) => void,
+  onError?: (err: Error) => void,
+): Unsubscribe | null {
   if (!communityEnabled()) return null;
   const f = fb(); if (!f) return null;
   const q = query(collection(f.db, 'message_threads', threadId, 'messages'), orderBy('created_at', 'asc'));
-  return onSnapshot(q, (snap) => cb(rows<ThreadMessage>(snap)));
+  return onSnapshot(q, (snap) => cb(rows<ThreadMessage>(snap)), (err) => onError?.(err));
 }
 
 export async function sendMessage(threadId: string, body: string): Promise<void> {
   if (!communityEnabled()) return;
   const f = fb(); const u = uid(); if (!f || !u || !body.trim()) return;
-  await addDoc(collection(f.db, 'message_threads', threadId, 'messages'), {
+  await withWriteTimeout(addDoc(collection(f.db, 'message_threads', threadId, 'messages'), {
     sender_id: u, body: body.trim(), created_at: serverTimestamp(),
-  });
-  await updateDoc(doc(f.db, 'message_threads', threadId), {
+  }));
+  await withWriteTimeout(updateDoc(doc(f.db, 'message_threads', threadId), {
     last_message: body.trim(), last_message_at: serverTimestamp(),
-  });
+  }));
 }
 
 // ---- report/block (v1: create-only, admin-readable) ----
@@ -161,7 +170,7 @@ export async function reportContent(
 ): Promise<void> {
   if (!communityEnabled()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'community_reports'), {
+  await withWriteTimeout(addDoc(collection(f.db, 'community_reports'), {
     reporter_id: u, target_type, target_id, target_owner_id, reason, created_at: serverTimestamp(),
-  });
+  }));
 }

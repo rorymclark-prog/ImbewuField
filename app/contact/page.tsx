@@ -11,7 +11,7 @@ import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured, getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
-import { getMyProfile } from '@/lib/db/queries';
+import { getMyProfile, withWriteTimeout } from '@/lib/db/queries';
 import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } from 'firebase/firestore';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
@@ -138,7 +138,10 @@ export default function ContactPage() {
           ));
           return;
         }
-        await addDoc(collection(fb.db, 'contact_messages'), {
+        // bug-04: a weak-signal write with no timeout could hang this screen on "Sending…"
+        // indefinitely instead of failing into the catch below, where the typed message is
+        // still sitting safely in `body` (handleSend never clears it before this resolves).
+        await withWriteTimeout(addDoc(collection(fb.db, 'contact_messages'), {
           from_uid: user.uid,
           from_name: prof?.full_name ?? user.displayName ?? user.email,
           // The org whose inbox this message belongs in — firestore.rules scopes the mentor and
@@ -149,7 +152,7 @@ export default function ContactPage() {
           body: body.trim(),
           status: 'unread',
           created_at: serverTimestamp(),
-        });
+        }));
       }
       setSent(true);
     } catch {

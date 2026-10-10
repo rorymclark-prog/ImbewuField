@@ -89,6 +89,172 @@ test('My Records surfaces a failed read instead of quietly showing an empty ledg
   assert.match(i18n, /myRecordsRetry:/);
 });
 
+test('the money book keeps the last-loaded sales/expenses/production instead of blanking them when a read fails', () => {
+  const records = source('../app/records/page.tsx');
+  // bug-02: Promise.allSettled already guarded against one rejection blanking every list, but the
+  // handler still unconditionally called setSales/setProduction/setExpenses with [] on rejection —
+  // replacing real, previously-loaded rows with an empty ledger that looked like lost data.
+  assert.doesNotMatch(records, /setProduction\(prodResult\.status === 'fulfilled' \? prodResult\.value : \[\]\)/,
+    'a rejected production read must not overwrite the existing list with []');
+  assert.doesNotMatch(records, /setSales\(salesResult\.status === 'fulfilled' \? salesResult\.value : \[\]\)/,
+    'a rejected sales read must not overwrite the existing list with []');
+  assert.doesNotMatch(records, /setExpenses\(expenseResult\.status === 'fulfilled' \? expenseResult\.value : \[\]\)/,
+    'a rejected expenses read must not overwrite the existing list with []');
+  assert.match(records, /const \[listError, setListError\] = useState/,
+    'a failed read must be tracked separately from a genuinely empty ledger');
+  assert.match(records, /setListError\(prodResult\.status === 'rejected' \|\| salesResult\.status === 'rejected' \|\| expenseResult\.status === 'rejected'\)/,
+    'any one rejected stream must flip the shared retry banner');
+  assert.match(records, /\{listError && !dataLoading && \(/, 'a failed read must render a retry banner');
+  assert.match(records, /t\('myRecordsLoadError'\)/, 'the money book must reuse the existing load-error copy');
+});
+
+test('deleting a sale or expense that fails offline shows the error instead of vanishing silently', () => {
+  const records = source('../app/records/page.tsx');
+  // bug-01: handleDeleteSale/handleDeleteExpense removed the row optimistically, then called
+  // deleteSale()/deleteExpense() inside try { ... } finally { void loadData(); } with no catch —
+  // a rejection was an unhandled promise rejection and loadData() silently brought the row back
+  // once it re-read the (undeleted) server copy, with nothing on screen to say a delete had failed.
+  assert.match(records, /async function handleDeleteSale\(id: string\) \{[\s\S]*?\} catch \(err\) \{[\s\S]*?setActionError\([\s\S]*?\}[\s\S]*?\n  \}/,
+    'handleDeleteSale must catch a failed delete and record it, not let it propagate unhandled');
+  assert.match(records, /async function handleDeleteExpense\(id: string\) \{[\s\S]*?\} catch \(err\) \{[\s\S]*?setActionError\([\s\S]*?\}[\s\S]*?\n  \}/,
+    'handleDeleteExpense must catch a failed delete and record it, not let it propagate unhandled');
+  assert.match(records, /const \[actionError, setActionError\] = useState/,
+    'a failed delete must be tracked in its own state, not just discarded');
+  assert.match(records, /\{actionError && \(/, 'a failed delete must render a visible message');
+
+  const i18n = source('../lib/i18n.tsx');
+  assert.match(i18n, /myRecordsDeleteError:/, 'myRecordsDeleteError must exist in the translation dictionary the money book reads');
+});
+
+test('a journal entry that fails to save when storage is full keeps the sheet open with the draft', () => {
+  const field = source('../components/journal/FieldJournal.tsx');
+  // bug-03: handleSave used to call setSheet({ open: false, entry: null }) unconditionally,
+  // closing the sheet (and discarding its typed draft) even when saveJournal() reported !ok —
+  // a storage-full failure that looked, to the farmer, exactly like a successful save.
+  assert.match(field, /function persist\(next: JournalEntry\[\]\): boolean \{/,
+    'persist must report whether the save actually landed, so callers can decide whether to close the sheet');
+  assert.match(field, /const ok = persist\(upsertJournalEntry\(entries, entry\)\);[\s\S]*?if \(ok\) setSheet\(\{ open: false, entry: null \}\);/,
+    'handleSave must only close the sheet when persist() succeeded');
+  assert.doesNotMatch(field, /persist\(upsertJournalEntry\(entries, entry\)\);\s*\n\s*setSheet\(\{ open: false, entry: null \}\);/,
+    'handleSave must not unconditionally close the sheet after persist()');
+  assert.match(field, /const \[sheetError, setSheetError\] = useState/,
+    'a failed save must be tracked separately so it can be shown inside the still-open sheet');
+  assert.match(field, /error=\{sheetError\}/, 'the sheet must receive the failed-save message as a prop');
+
+  const sheet = source('../components/journal/JournalEntrySheet.tsx');
+  assert.match(sheet, /error\?: string \| null;/, 'JournalEntrySheet must accept an error prop for a failed save');
+  assert.match(sheet, /\{error && \(/, 'JournalEntrySheet must render the failed-save message without closing itself');
+});
+
+test('deleting a journal entry needs two taps, like the money book\'s SalesLedger', () => {
+  const sheet = source('../components/journal/JournalEntrySheet.tsx');
+  // bug-12: the Delete button used to call onDelete(entry.id) directly on one tap, with no
+  // confirmation and no way back — unlike every other delete in the app.
+  assert.match(sheet, /const \[confirmDelete, setConfirmDelete\] = useState/,
+    'the sheet must track an armed/confirm state before actually deleting');
+  assert.doesNotMatch(sheet, /onClick=\{\(\) => onDelete\(entry\.id\)\}/,
+    'the delete button must not call onDelete on a single tap');
+  assert.match(sheet, /function requestDelete\(\) \{[\s\S]*?if \(confirmDelete\) \{[\s\S]*?onDelete\(entry\.id\);/,
+    'a second tap, while armed, must be the one that actually deletes');
+  assert.match(sheet, /setTimeout\(\(\) => setConfirmDelete\(false\), 3500\)/,
+    'the armed state must revert on its own, matching SalesLedger\'s 3.5s window');
+});
+
+test('community writes (board posts, threads, messages, reports) are bounded by withWriteTimeout', () => {
+  const queries = source('../lib/db/community-queries.ts');
+  // bug-04: addDoc/updateDoc/deleteDoc calls here had no timeout at all, so a weak-signal write
+  // could hang forever instead of rejecting into a catch the UI could show and recover from.
+  assert.match(queries, /import \{ withWriteTimeout \} from '@\/lib\/db\/queries';/,
+    'community-queries.ts must reuse the existing withWriteTimeout, not grow a second one');
+  for (const fn of ['createBoardPost', 'closeBoardPost', 'deleteBoardPost', 'getOrCreateThread', 'sendMessage', 'reportContent']) {
+    const start = queries.indexOf(`export async function ${fn}(`);
+    assert.ok(start > 0, `${fn} must still exist`);
+    const end = queries.indexOf('\n}\n', start);
+    const body = queries.slice(start, end);
+    assert.match(body, /withWriteTimeout\(/, `${fn} must wrap its write(s) in withWriteTimeout`);
+  }
+});
+
+test('the community message listener reports a failure instead of leaving the thread silently empty', () => {
+  const queries = source('../lib/db/community-queries.ts');
+  // bug-14: onSnapshot was given only a success callback, so a denied or dropped listener never
+  // told the caller anything went wrong — the thread just stayed empty forever.
+  assert.match(queries, /export function subscribeMessages\(\s*\n\s*threadId: string,\s*\n\s*cb: \(msgs: ThreadMessage\[\]\) => void,\s*\n\s*onError\?: \(err: Error\) => void,/,
+    'subscribeMessages must accept an optional error callback');
+  assert.match(queries, /onSnapshot\(q, \(snap\) => cb\(rows<ThreadMessage>\(snap\)\), \(err\) => onError\?\.\(err\)\)/,
+    'subscribeMessages must forward onSnapshot\'s error argument, not just the success one');
+
+  const page = source('../app/community/messages/[threadId]/page.tsx');
+  assert.match(page, /const \[listenError, setListenError\] = useState/,
+    'the thread page must track a listener failure as its own state');
+  assert.match(page, /subscribeMessages\(threadId, setMessages, \(\) => setListenError\(true\)\)/,
+    'the thread page must pass an error callback into subscribeMessages');
+  assert.match(page, /\{listenError && \(/, 'a listener failure must render a visible, retryable banner');
+  assert.match(page, /setListenRetryKey\(\(k\) => k \+ 1\)/, 'the retry button must be able to force a resubscribe');
+
+  const i18n = source('../lib/i18n.tsx');
+  assert.match(i18n, /communityMessagesListenError:/, 'communityMessagesListenError must exist in the translation dictionary');
+});
+
+test('contact form and inbox replies bound their writes with withWriteTimeout', () => {
+  const contact = source('../app/contact/page.tsx');
+  assert.match(contact, /withWriteTimeout\(addDoc\(collection\(fb\.db, 'contact_messages'\)/,
+    'sending a contact message must go through withWriteTimeout');
+  // The typed message must still be sitting in `body` if the write above rejects — i.e. nothing
+  // between handleSend's try and its catch may clear it before the write actually succeeds.
+  const handleSendStart = contact.indexOf('async function handleSend(');
+  const handleSendEnd = contact.indexOf('\n  }\n', handleSendStart);
+  const handleSendBody = contact.slice(handleSendStart, handleSendEnd);
+  assert.doesNotMatch(handleSendBody, /setBody\(''\)/,
+    'handleSend must not clear the typed message before a send is confirmed');
+
+  const inbox = source('../components/ContactInbox.tsx');
+  assert.match(inbox, /withWriteTimeout\(addDoc\(collection\(fb\.db, 'contact_replies'\)/,
+    'posting a reply must go through withWriteTimeout');
+  assert.match(inbox, /withWriteTimeout\(updateDoc\(doc\(fb\.db, 'contact_messages', msg\.id\), \{ status: 'replied' \}\)\)/,
+    'marking the original message replied must also go through withWriteTimeout');
+});
+
+test('a failed consent read shows an error with retry instead of every sharing toggle reading as OFF', () => {
+  const panel = source('../components/ConsentPanel.tsx');
+  // bug-06: getMyConsent().catch(() => setLoading(false)) left `consent` at its initial null,
+  // and hasConsent(null, id) is false for every scope — a read failure rendered identically to a
+  // farmer who had deliberately switched everything off.
+  assert.match(panel, /const \[loadError, setLoadError\] = useState/,
+    'a failed consent read must be tracked separately from "nothing is shared"');
+  assert.match(panel, /\.catch\(\(\) => \{ setLoadError\(true\); setLoading\(false\); \}\)/,
+    'the initial read must flip loadError on rejection, not just stop the spinner');
+  assert.match(panel, /\) : loadError \? \(/, 'a load failure must branch before the toggle list renders');
+  // The toggle list (CONSENT_SCOPES.map) must sit in the branch AFTER the loadError check, not
+  // render unconditionally alongside it.
+  const loadErrorBranch = panel.indexOf(') : loadError ? (');
+  const toggleList = panel.indexOf('CONSENT_SCOPES.map(');
+  assert.ok(loadErrorBranch > 0 && toggleList > loadErrorBranch,
+    'the toggle list must be reached only once the loadError branch has been ruled out');
+});
+
+test('saving the account profile cannot hang on "Saving…" forever, and a failed avatar upload is shown', () => {
+  const page = source('../app/account/page.tsx');
+  // bug-07: saveProfile had no try/catch at all, so a rejected updateMyProfile() left `saving`
+  // stuck true forever (the button frozen on its loading label) with nothing explaining why.
+  const saveStart = page.indexOf('async function saveProfile(');
+  const saveEnd = page.indexOf('\n  }\n', saveStart);
+  const saveBody = page.slice(saveStart, saveEnd);
+  assert.match(saveBody, /catch \(err\) \{/, 'saveProfile must catch a failed write');
+  assert.match(saveBody, /setProfileError\(/, 'a failed profile save must be tracked in its own error state');
+  assert.match(saveBody, /\} finally \{\s*\n\s*setSaving\(false\);/, 'setSaving(false) must run even when the save throws');
+
+  // bug-07: handlePhotoChange already had try/finally, but no catch — an avatar upload failure
+  // was swallowed silently, unlike the logo upload right below it which already showed one.
+  const photoStart = page.indexOf('async function handlePhotoChange(');
+  const photoEnd = page.indexOf('\n  }\n', photoStart);
+  const photoBody = page.slice(photoStart, photoEnd);
+  assert.match(photoBody, /catch \(err\) \{/, 'handlePhotoChange must catch a failed avatar upload');
+  assert.match(photoBody, /setPhotoError\(/, 'a failed avatar upload must be tracked in its own error state');
+  assert.match(page, /\{photoError && \(/, 'a failed avatar upload must render a visible message');
+  assert.match(page, /\{profileError && \(/, 'a failed profile save must render a visible message');
+});
+
 test('a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero', () => {
   const dashboard = source('../components/NgoDashboard.tsx');
   assert.match(dashboard, /const \[gardenerError, setGardenerError\] = useState/,

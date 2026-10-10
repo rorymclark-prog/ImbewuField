@@ -17,7 +17,7 @@
  *    than six toggles to find and flip.
  */
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ShieldCheck, Loader2 } from 'lucide-react';
 import { CONSENT_PANEL_HEADING, CONSENT_SCOPES, grantedScopes, hasConsent, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import { getMyConsent, revokeAllMyConsent, setMyConsentScope } from '@/lib/db/queries';
@@ -28,10 +28,23 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   const isZulu = lang === 'zu';
   const [consent, setConsent] = useState<FarmerConsent | null>(null);
   const [loading, setLoading] = useState(true);
+  // bug-06: a failed read used to leave `consent` null and just stop the spinner — every toggle
+  // then rendered unchecked (hasConsent(null, id) is false), which reads as "sharing nothing"
+  // whether or not that's true. loadError says the read itself failed, with a way to retry it,
+  // instead of a farmer seeing confident-looking OFF switches that were never actually read.
+  const [loadError, setLoadError] = useState(false);
   const [busy, setBusy] = useState<ConsentScope | 'all' | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => { getMyConsent().then((c) => { setConsent(c); setLoading(false); }).catch(() => setLoading(false)); }, []);
+  const load = useCallback(() => {
+    setLoading(true);
+    setLoadError(false);
+    return getMyConsent()
+      .then((c) => { setConsent(c); setLoading(false); })
+      .catch(() => { setLoadError(true); setLoading(false); });
+  }, []);
+
+  useEffect(() => { void load(); }, [load]);
 
   async function toggle(scope: ConsentScope, next: boolean) {
     setBusy(scope); setError(null);
@@ -73,6 +86,21 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
       {loading ? (
         <div className="flex items-center gap-2 py-4 text-sm font-display" style={{ color: 'var(--text-muted)' }}>
           <Loader2 size={14} className="animate-spin" /> <span><span className="block">Loading…</span>{isZulu && <span className="block">Kusalayishwa… <span className="font-semibold">(isiZulu machine draft)</span></span>}</span>
+        </div>
+      ) : loadError ? (
+        <div className="mt-3 rounded-lg px-3 py-3 text-sm font-display flex items-center justify-between gap-3" style={{ background: '#F6E7E1', color: '#8A3B1C' }}>
+          <span>
+            <span className="block">Couldn't load your sharing settings. Check your connection and try again.</span>
+            {isZulu && <span className="block mt-1">Izilungiselelo zokwabelana azikwazi ukulayishwa. Hlola uxhumano lwakho bese uzama futhi. <span className="font-sans text-[10px]">(isiZulu machine draft)</span></span>}
+          </span>
+          <button
+            type="button"
+            onClick={() => void load()}
+            className="flex-shrink-0 font-display font-semibold text-xs"
+            style={{ color: '#8A3B1C', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            Retry
+          </button>
         </div>
       ) : (
         <>
