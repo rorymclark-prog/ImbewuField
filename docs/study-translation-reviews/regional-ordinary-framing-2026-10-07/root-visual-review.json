@@ -1,0 +1,20 @@
+{
+  "status": "unreviewed machine drafts; not published",
+  "base": "94c9ec530722c483667d590cbfdaa29a5408a163",
+  "reviewedContacts": 4,
+  "frames": 10,
+  "noClippingObserved": true,
+  "naturalCanvasPreserved": true,
+  "sourceFieldsUnchanged": true,
+  "remainingGates": [
+    "selective offline migration",
+    "meaningful historical-layer and source-preservation tests",
+    "typecheck and full suite",
+    "release notes",
+    "PR and preview",
+    "actual phone and offline QA",
+    "main deployment/build-info"
+  ],
+  "fluentApproval": false,
+  "rejectedInitialSelection": "Initial manually supplied Reading21 replaced by actual checked Reading20. Reading21 byte-identical restored; complete rendered set now equals applied-plan frame set. Corrected compressed Reading20 root-viewed."
+}

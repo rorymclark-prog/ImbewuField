@@ -1,0 +1,9 @@
+{
+  "reviewed_against_head": "9b87fdb73995bcf8b6e1ed1b1be17e99419984a8",
+  "image": "public/course-images/vegetables-staples/vegetables-staples-l2.jpg",
+  "sha256": "892c33566d537dce0c3ded26e72b15d8ba553cd3e48bdac67ebe9298dc8d68f8",
+  "root_image_review": "Actual image shows three stages: harvesting in left bed, seedlings beside a continuing larger crop in middle, both developing in right. This supports the canonical sequence described by the alt; no new species, quantities, or timing inferred.",
+  "future_alt_candidate": "VS-TS-L2-INFOGRAPHIC-SEQUENCE",
+  "scope": "Keep source new sowing as English technical anchor rather than change it to transplanting or planting established plants. Candidate remains data-only for next fresh batch.",
+  "approval": "No fluent/local farming approval."
+}

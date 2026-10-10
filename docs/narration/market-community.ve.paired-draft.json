@@ -431,7 +431,9 @@
               },
               {
                 "sourceEnglish": "transport",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "u endedza",
+                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": " and customer care.",
@@ -457,8 +459,9 @@
               },
               {
                 "sourceEnglish": "what happens when crops are short. Regular orders",
-                "status": "english-hold",
-                "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
+                "status": "draft",
+                "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
+                "text": "zwine zwa itea musi zwimela zwi sa eḓani. Regular orders"
               },
               {
                 "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
@@ -492,8 +495,8 @@
         "body": [
           {
             "status": "draft",
-            "text": "Thomani nga what you can reliably supply na zwine vharengi vha zwi ṱoḓa.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Thomani nga zwine na nga kona u ṋetshedza nga u fulufhedzea na zwine vharengi vha zwi ṱoḓa.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -750,8 +753,9 @@
               },
               {
                 "sourceEnglish": "selling costs still need measuring.",
-                "status": "english-hold",
-                "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
+                "status": "draft",
+                "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
+                "text": "selling costs zwi kha ḓi tea u kaliwa."
               }
             ],
             "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
@@ -794,8 +798,8 @@
           },
           {
             "status": "draft",
-            "text": "Ṱoḓani qualified advice nga ha unfamiliar disease or technical problems. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
-            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+            "text": "Ṱoḓani qualified advice nga ha unfamiliar disease kana thaidzo dza technical. Tshenzhemo yo kovhekaniwaho na specialist help zwi nga shuma khathihi.",
+            "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

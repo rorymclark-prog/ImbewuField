@@ -207,7 +207,7 @@ export const TSHIVENDA_MARKET_COMMUNITY_DRAFT: TshivendaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Distance affects costs, but it is not the only factor. Use actual returns and losses to compare the options.",
-            "tshivendaDraft": "Distance affects costs, but it is not the only factor. Shumisani actual returns na losses u vhambedza options.",
+            "tshivendaDraft": "Distance i kwama costs, fhedzi a si yone factor nthihi fhedzi. Shumisani actual returns na losses u vhambedza options.",
             "reviewStatus": "machine-draft"
           }
         }

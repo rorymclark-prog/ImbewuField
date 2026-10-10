@@ -16,7 +16,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Miroho ni Swibyariwa swa Masungulo",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -29,14 +31,17 @@
               },
               {
                 "sourceEnglish": "Vegetables and Staple Crops.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Miroho ni Swibyariwa swa Masungulo.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " It's one of the ten modules in the ImbewuField training.",
                 "status": "draft",
                 "text": " I yin'we ya timoduli ta khume eka dyondzo ya ImbewuField."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -48,13 +53,16 @@
               {
                 "sourceEnglish": "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. ",
                 "status": "draft",
-                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ku lulamisa bed. Ku endla leswaku harvest yi ya yi ri kona. Ti staple crops leti u faneleke ku ti byala. "
+                "text": "Eka timinete ti nga ri tingani leti landzelaka, hi ta bula swilo swa mune. Ndlela yo aka bed. Ku endla leswaku harvest yi ya yi ri kona. Staples tihi to ti byala. ",
+                "reason": "Preserve original complete topic-list semantic boundary; build and which-staples repairs are root accepted."
               },
               {
                 "sourceEnglish": "And what to do when pests arrive.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Na ku endla yini loko pests ti fika."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }
@@ -135,7 +143,9 @@
               },
               {
                 "sourceEnglish": "Build the right bed",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Aka bed leyi faneleke",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, width, bed type, soil, rainfall"
               },
               {
                 "sourceEnglish": " — matching the ",
@@ -178,7 +188,8 @@
                 "status": "draft",
                 "text": " ya wena."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -223,14 +234,17 @@
               },
               {
                 "sourceEnglish": "staples",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "swakudya swa masungulo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " that protect you when one crop fails.",
                 "status": "draft",
                 "text": " leti ku sirhelelaka loko xibyariwa xin'we xi tsandzeka."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -261,13 +275,17 @@
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Hambi bed leyi endliweke kahle ya tsandzeka loko swilo hinkwaswo swi byariwa hi siku rin’we. ",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ku byala mixaka yo hambanaka ka ha swi tikela loko u teka tluka rin’wana ni rin’wana ra xitshopana ku ri xiphiqo xa switsotswana."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -286,7 +304,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Timitsu ti lava loose soil; paths ti lava milenge ya wena."
         },
         "body": [
           {
@@ -313,14 +332,17 @@
               },
               {
                 "sourceEnglish": "Permanent paths",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Tindlela leti tshamaka ti ri kona",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": ", and a bed narrow enough to reach into from both sides.",
                 "status": "draft",
                 "text": ", ni bed leyi nga anamangiki ngopfu leswaku u ta kota ku fika endzeni ka yona ku suka ematlhelweni haswimbirhi."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -369,7 +391,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Hlawula bed hi ku ya hi soil ni rainfall."
         },
         "body": [
           {
@@ -486,8 +509,9 @@
                 "text": "Swibyariwa swin'wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
               },
               {
-                "sourceEnglish": "They do better",
-                "status": "english-hold"
+              "sourceEnglish": "They do better",
+              "status": "draft",
+              "text": "Swi tirha ku antswa"
               },
               {
                 "sourceEnglish": " sown straight where they'll grow. ",
@@ -593,14 +617,17 @@
               },
               {
                 "sourceEnglish": "local conditions",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "swiyimo swa laha kaya",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": ". Check the packet and local grower advice. Watch for crowding as plants develop.",
                 "status": "draft",
                 "text": ". Kambela leswi tsariweke eka phakiti ni switsundzuxo swa varimi va le ndhawini. Langutela crowding loko swibyariwa swi ri karhi swi kula."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -856,9 +883,12 @@
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Nkarhi Wa Wena Wa Ku Kayivela Ka Swakudya",
+              "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
             }
-          ]
+          ],
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -867,7 +897,7 @@
           },
           {
             "status": "draft",
-            "text": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko water limits the garden."
+            "text": "Hungry gap ya wena yi nga fika endzhaku ka loko maize leyi hlayisiweke yi herile. Yi nga fika loko winter greens ti nga si lulama. Yi nga fika hi nkarhi wo oma loko mati ma hunguta leswi xirhapa xi nga swi humesaka."
           },
           {
             "status": "draft",
@@ -899,7 +929,9 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Swakudya Swa Masungulo I Nsirhelelo Wa Swakudya",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
         },
         "body": [
           {
@@ -1110,7 +1142,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Tshungula xivangelo u nga si thoma u tshungula insect."
         },
         "body": [
           {
@@ -1152,7 +1185,9 @@
               },
               {
                 "sourceEnglish": ", barriers",
-                "status": "english-hold"
+                "status": "draft",
+                "text": ", swisirhelelo",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " or changes in ",
@@ -1174,7 +1209,8 @@
                 "status": "draft",
                 "text": " Kambela leswaku goza ri fambisana ni xiphiqo, kutani u ya mahlweni u kambela vuyelo."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1320,7 +1356,9 @@
               },
               {
                 "sourceEnglish": "ten-day photograph",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "foto ra le ndzhaku ka masiku ya khume",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " as an assignment checkpoint, ",
@@ -1332,7 +1370,8 @@
                 "status": "draft",
                 "text": "ku nga ri xivangelo xo hlwela ku khathalela."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1349,9 +1388,12 @@
               },
               {
                 "sourceEnglish": " with what you observed.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " u ri na leswi u swi xiyeke.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "draft",
@@ -1417,7 +1459,9 @@
               },
               {
                 "sourceEnglish": " What germinated.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Leswi nga mila.",
+                "reason": "Root-reviewed source-bound machine draft; not fluent reviewed."
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1429,7 +1473,7 @@
                 "text": " Leswi u tshoveleke."
               }
             ],
-            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -1445,24 +1489,13 @@
                 "text": "ntanga wa wena "
               },
               {
-                "sourceEnglish": "becomes less dependent on guesswork",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " — and more on ",
+                "sourceEnglish": "becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
                 "status": "draft",
-                "text": " — naswona wu titshega ngopfu hi "
-              },
-              {
-                "sourceEnglish": "what you've actually seen happen",
-                "status": "draft",
-                "text": "leswi u swi voneke swi humelela hakunene"
-              },
-              {
-                "sourceEnglish": " on your own ground.",
-                "status": "english-hold"
+                "text": "wu ya wu hunguta ku titshega hi ku bvumba — naswona wu ya wu engetela ku titshega hi leswi u swi voneke swi humelela hakunene eka misava ya wena.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1474,14 +1507,17 @@
               },
               {
                 "sourceEnglish": "with reliable local advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "ni xitsundzuxo xo tshembeka xa laha kaya",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
                 "text": " loko u endla xiboho lexi landzelaka."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

@@ -5,6 +5,60 @@ import type { IsiZuluSilentDeckDraftInput } from './course-deck-silent-drafts';
 export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInput[] = [
   {
     "moduleId": "intro-permaculture",
+    "slide": 6,
+    "sourceHeading": "Fair Share",
+    "sourceEnglish": [
+      "The third ethic is Fair Share.",
+      "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+      "A community that fences off a shared spring is breaking it too.",
+      "What does your land get back from you each season?"
+    ],
+    "correctedTitle": "Ukwabelana Ngendlela Enobulungiswa (Fair Share)",
+    "correctedTarget": [
+      "I-ethic yesithathu yi-Fair Share.",
+      "Thatha lokho okudingayo kuphela, bese ubuyisela okusele ohlelweni — imbewu, ukudla, amanzi nolwazi.",
+      "Umlimi othengisa wonke ama-mielies akhe asele, angashiyi lutho lokwenza i-compost noma lokugcina imbewu, uyephula le-ethic. Akukho okubuyela ohlelweni.",
+      "Umphakathi ovalela indawo yomthombo osetshenziswa ngokuhlanganyela nawo uyayiphula le-ethic.",
+      "Umhlaba wakho utholani kuwe ngesizini ngayinye?"
+    ],
+    "sourceHash": "184721b482adc1558c5e06cbdecba6343592df84c5fa8aee4d52f6f520bba0e4",
+    "targetHash": "82cc3f4912b35c5f2ecdd795439cc98b1238012d87aeb292325c500f0bda08e6",
+    "imageUrl": "/course-decks/intro-permaculture/zu-silent/slide-06.webp",
+    "imageSha256": "82c8de6a332feb2aa24844b3f381871c49c78e2b49bd497c505afeff3d22c3f1",
+    "imageBytes": 576434,
+    "width": 1440,
+    "height": 5400,
+    "reviewStatus": "unreviewed",
+    "audioBinding": "none"
+  },
+  {
+    "moduleId": "intro-permaculture",
+    "slide": 7,
+    "sourceHeading": "Watch: One Decision, Three Ethics",
+    "sourceEnglish": [
+      "A borehole serves your household. Neighbours ask for water too.",
+      "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+      "Who could help you check the rules and the water supply?"
+    ],
+    "correctedTitle": "Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu",
+    "correctedTarget": [
+      "I-borehole inikeza umndeni wakho amanzi. Omakhelwane bacela amanzi nabo.",
+      "Qala uthole ukuthi ukwabelana ngamanzi kuvumelekile yini. Hlola ukuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngokwabelana ngendlela enobulungiswa bese niqhubeka nibheka izinga lamanzi. I-People Care ne-Fair Share kuqondisa isivumelwano. I-Earth Care isho ukuvikela umthombo wamanzi. Ukuqapha izinga lamanzi kukodwa akusho ukuthi ukusebenzisa amanzi engeziwe kuphephile noma kuvumelekile.",
+      "Ubani ongakusiza uhlole imithetho nokuthi amanzi akhona anele yini?"
+    ],
+    "sourceHash": "27b10b6a37078aad4cd517830b0ddb22acc67ab2f580867d25ee3239045dc12d",
+    "targetHash": "fe17f0f85f58826e9eb924730622125d60dad0132e0f09bedc4e6721f04b72de",
+    "imageUrl": "/course-decks/intro-permaculture/zu-silent/slide-07.webp",
+    "imageSha256": "c8d213ece4bac7237218115587069553121ae702f8b11d2bd28c5a8e41c1ead0",
+    "imageBytes": 372150,
+    "width": 1440,
+    "height": 5400,
+    "reviewStatus": "unreviewed",
+    "audioBinding": "none"
+  },
+  {
+    "moduleId": "intro-permaculture",
     "slide": 22,
     "sourceHeading": "Field Action",
     "sourceEnglish": [
@@ -639,5 +693,30 @@ export const ISIZULU_SILENT_DECK_DRAFT_ROWS: readonly IsiZuluSilentDeckDraftInpu
     "height": 5400,
     "reviewStatus": "unreviewed",
     "audioBinding": "none"
-  }
+  },
+{
+  "moduleId": "reading-landscape",
+  "slide": 14,
+  "sourceHeading": "Cold Air Flows Downhill",
+  "sourceEnglish": [
+    "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+    "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+    "Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.",
+    "Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before choosing a permanent position."
+  ],
+  "correctedTitle": "Umoya Obandayo Wehla Ngomthambeka",
+  "correctedTarget": [
+    "Ngobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Isithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside kunazo zonke. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.",
+    "Qhathanisa izindawo ongakhetha kuzo zenkulisa yezithombo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo."
+  ],
+  "sourceHash": "f79c2625a05909b216a70cd068189b6eb1f58ad317e770153024ea6ecab8f0ba",
+  "targetHash": "cbe310ce2f72c3a32c01493c71c626a14efd7f561ff6ea51008ef897abec9bd7",
+  "imageUrl": "/course-decks/reading-landscape/zu-silent/slide-14.webp",
+  "imageSha256": "262d51fe8a03b5bf46355b79d95a73eb0271f225c5082fd135c903fa71ae5562",
+  "imageBytes": 491432,
+  "width": 1440,
+  "height": 5482,
+  "reviewStatus": "unreviewed",
+  "audioBinding": "none"
+}
 ];

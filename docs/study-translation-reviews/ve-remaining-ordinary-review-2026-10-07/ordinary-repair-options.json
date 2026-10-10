@@ -1,0 +1,1073 @@
+{
+  "title": "Source-bound ordinary Tshivenda repair options",
+  "date": "2026-10-07",
+  "status": "read-only review proposals; no learner wiring",
+  "authority": "Options are semantic drafts only. English holds remain explicit; no claim of fluent Tshivenda approval or external linguistic authority.",
+  "counts": {
+    "rows": 16,
+    "repairProposals": 11,
+    "holdWithDraftOption": 4,
+    "technicalEnglishHold": 1
+  },
+  "structuralAssertionsPassed": [
+    "Each selected candidate row is an exact-pending binding from the current binding audit.",
+    "Every composition is rebuilt from the full actual segment array; only the indexed source segment is changed for repair proposals.",
+    "Each proposed segmentIndex sourceEnglish exactly matches its sourceFragment after trimming outer whitespace.",
+    "The combined slide 18 body[5] output applies both completed-observation repairs at segment indexes 2 and 4 while preserving every other segment.",
+    "Leading/trailing whitespace from each indexed source segment is preserved around its proposal; the combined body field remains correctly spaced and punctuated.",
+    "Held alternatives include a full indexed draft-option composition for review, while the learner-facing review composition remains unchanged."
+  ],
+  "combinedFieldOutputs": [
+    {
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "slide": 18,
+        "field": "body[5]"
+      },
+      "appliedCandidateRowIndexes": [
+        86,
+        93
+      ],
+      "fullContextComposition": "Ṅwalani datumu ya sowing. Mvula. Zwine zwa no mela. Pest pressure. Zwine na no kaṋa.",
+      "note": "Both proposed completed-observation forms are composed together; surrounding sowing date, rain, and pest pressure segments are copied unchanged."
+    }
+  ],
+  "rows": [
+    {
+      "candidateRowIndex": 2,
+      "identifier": {
+        "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "intro-permaculture",
+        "slide": 6,
+        "field": "body[1]",
+        "segmentIndex": 2,
+        "sourceFragment": "surplus"
+      },
+      "sourceContext": "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+      "currentComposedTarget": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone vhuedzedzani surplus kha system — mbeu, zwiḽiwa, maḓi, nḓivho.",
+      "decision": "repair-proposal",
+      "candidateOption": "zwo salaho",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone vhuedzedzani zwo salaho kha system — mbeu, zwiḽiwa, maḓi, nḓivho.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Take only what you need, and ",
+          "status": "draft",
+          "composedText": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "return the ",
+          "status": "draft",
+          "composedText": "vhuedzedzani "
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": "surplus",
+          "status": "english-hold",
+          "composedText": "zwo salaho",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": " to the ",
+          "status": "draft",
+          "composedText": " kha "
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": "system",
+          "status": "english-hold",
+          "composedText": "system"
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": " —",
+          "status": "english-hold",
+          "composedText": " —"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": " seeds, food, water, knowledge.",
+          "status": "draft",
+          "composedText": " mbeu, zwiḽiwa, maḓi, nḓivho."
+        }
+      ],
+      "explanation": "“What remains” represents the surplus after taking only what is needed and avoids the unsupported “all” quantifier in zwoṱhe. Risk: verify that this idiom means remainder/surplus, not simply what is left in a different sense.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 12,
+      "identifier": {
+        "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "intro-permaculture",
+        "slide": 11,
+        "field": "body[0]",
+        "segmentIndex": 4,
+        "sourceFragment": "before they leave your property."
+      },
+      "sourceContext": "Harvest rain, sun and biomass before they leave your property.",
+      "currentComposedTarget": "Harvest mvula, ḓuvha na biomass before they leave your property.",
+      "decision": "repair-proposal",
+      "candidateOption": "musi zwi sa athu u bva kha land yaṋu.",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Harvest mvula, ḓuvha na biomass musi zwi sa athu u bva kha land yaṋu.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Harvest",
+          "status": "english-hold",
+          "composedText": "Harvest"
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": " rain, sun and ",
+          "status": "draft",
+          "composedText": " mvula, ḓuvha na "
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": "biomass",
+          "status": "english-hold",
+          "composedText": "biomass"
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": " ",
+          "status": "english-hold",
+          "composedText": " "
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": "before they leave your property.",
+          "status": "english-hold",
+          "composedText": "musi zwi sa athu u bva kha land yaṋu.",
+          "reviewAction": "replace-indexed-segment"
+        }
+      ],
+      "explanation": "This means before they leave your land/property; retaining English “land” avoids the country/world reading of shango while yaṋu carries the source possession in the surrounding Tshivenda clause. Risk: fluent review should confirm the noun phrase and agreement with the rain, sun, and biomass antecedents.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 29,
+      "identifier": {
+        "file": "docs/narration/intro-permaculture.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "intro-permaculture",
+        "slide": 21,
+        "field": "body[1]",
+        "segmentIndex": 5,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+      "currentComposedTarget": "Maka Zone 0 na Zone 1 u thome, ni bvele nga nnḓa u swika hune land yaṋu ya guma hone.",
+      "decision": "repair-proposal",
+      "candidateOption": "land",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Maka Zone 0 na Zone 1 u thome, ni bvele nga nnḓa u swika hune land yaṋu ya guma hone.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Mark ",
+          "status": "draft",
+          "composedText": "Maka "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "Zone 0",
+          "status": "english-hold",
+          "composedText": "Zone 0"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " and ",
+          "status": "draft",
+          "composedText": " na "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "Zone 1",
+          "status": "english-hold",
+          "composedText": "Zone 1"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": " first, then work outward as far as your ",
+          "status": "draft",
+          "composedText": " u thome, ni bvele nga nnḓa u swika hune "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": " goes.",
+          "status": "draft",
+          "composedText": " yaṋu ya guma hone."
+        }
+      ],
+      "explanation": "Source is the bounded land of the farmer’s smallholding; leave land as an explicit English hold while the neighboring segment already supplies yaṋu. This yields “...hune land yaṋu ya guma hone.” Risk: the English noun remains unreviewed; this is not a Tshivenda lexical translation.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 30,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 2,
+        "field": "body[1]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "Rain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.",
+      "currentComposedTarget": "Mvula yo no tevhela mitalo kha land. Ḓuvha ḽo no dudedza fhethu huṅwe u fhira huṅwe. Muya wo no wana gaps and ridges. Muya wo rotholaho wo no dzula kha hollows.",
+      "decision": "hold-with-draft-option",
+      "candidateOption": "land",
+      "appliedInReviewComposition": false,
+      "fullContextComposition": "Mvula yo no tevhela mitalo kha land. Ḓuvha ḽo no dudedza fhethu huṅwe u fhira huṅwe. Muya wo no wana gaps and ridges. Muya wo rotholaho wo no dzula kha hollows.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Rain already follows lines across the ",
+          "status": "draft",
+          "composedText": "Mvula yo no tevhela mitalo kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "retain-exact-source-hold"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ". The sun already warms some places more than others. Wind already finds ",
+          "status": "draft",
+          "composedText": ". Ḓuvha ḽo no dudedza fhethu huṅwe u fhira huṅwe. Muya wo no wana "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "gaps and ridges",
+          "status": "english-hold",
+          "composedText": "gaps and ridges"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ". Cold air already settles in ",
+          "status": "draft",
+          "composedText": ". Muya wo rotholaho wo no dzula kha "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "hollows",
+          "status": "english-hold",
+          "composedText": "hollows"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ".",
+          "status": "draft",
+          "composedText": "."
+        }
+      ],
+      "explanation": "The source means the physical site/terrain across which rain follows lines. Retain English land at this index; do not substitute shango. Risk: local phrasing for a non-possessive physical site remains unresolved.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ],
+      "draftOptionFullContextComposition": "Mvula yo no tevhela mitalo kha land. Ḓuvha ḽo no dudedza fhethu huṅwe u fhira huṅwe. Muya wo no wana gaps and ridges. Muya wo rotholaho wo no dzula kha hollows.",
+      "draftOptionApplied": false
+    },
+    {
+      "candidateRowIndex": 31,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 2,
+        "field": "body[2]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the land.",
+      "currentComposedTarget": "Musi ni tshi thoma nga u vhala phetheni idzi, ni vhea madi, zwimela, miri na zwifhaṱo fhethu hune zwa nga shuma na land.",
+      "decision": "hold-with-draft-option",
+      "candidateOption": "land",
+      "appliedInReviewComposition": false,
+      "fullContextComposition": "Musi ni tshi thoma nga u vhala phetheni idzi, ni vhea madi, zwimela, miri na zwifhaṱo fhethu hune zwa nga shuma na land.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "When you read these patterns first, you place water, crops, trees, and buildings where they can work with the ",
+          "status": "draft",
+          "composedText": "Musi ni tshi thoma nga u vhala phetheni idzi, ni vhea madi, zwimela, miri na zwifhaṱo fhethu hune zwa nga shuma na "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "retain-exact-source-hold"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ".",
+          "status": "draft",
+          "composedText": "."
+        }
+      ],
+      "explanation": "The source means the physical land/site that water, crops, trees, and buildings work with. Retain English land at this index; do not substitute shango. Risk: local phrasing for terrain/ecological site remains unresolved.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ],
+      "draftOptionFullContextComposition": "Musi ni tshi thoma nga u vhala phetheni idzi, ni vhea madi, zwimela, miri na zwifhaṱo fhethu hune zwa nga shuma na land.",
+      "draftOptionApplied": false
+    },
+    {
+      "candidateRowIndex": 32,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 3,
+        "field": "body[0]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "By the end of this module, you will be able to follow water across your land and find where it leaves.",
+      "currentComposedTarget": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi kha land yaṋu na u wana hune a bva hone.",
+      "decision": "repair-proposal",
+      "candidateOption": "land",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi kha land yaṋu na u wana hune a bva hone.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "By the end of this module, you will be able to follow water across your ",
+          "status": "draft",
+          "composedText": "Musi modulu uyu u tshi fhela, ni ḓo kona u tevhela maḓi kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " and find where it leaves.",
+          "status": "draft",
+          "composedText": " yaṋu na u wana hune a bva hone."
+        }
+      ],
+      "explanation": "Source says “your land”; retain English land at this index while the next localized segment already supplies yaṋu, yielding “land yaṋu”. Risk: confirm the app’s mixed-language possessive construction with a facilitator.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 33,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 4,
+        "field": "body[1]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentComposedTarget": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Ṱodani rills, fhethu hune madi a phadalala, ponds na hune madi a bva kha your property.",
+      "decision": "repair-proposal",
+      "candidateOption": "land",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Ṱodani rills, fhethu hune madi a phadalala, ponds na hune madi a bva kha your property.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your ",
+          "status": "draft",
+          "composedText": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ". Look for ",
+          "status": "draft",
+          "composedText": " yaṋu. Ṱodani "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "rills",
+          "status": "english-hold",
+          "composedText": "rills"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ", places where water fans out, ",
+          "status": "draft",
+          "composedText": ", fhethu hune madi a phadalala, "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "ponds",
+          "status": "english-hold",
+          "composedText": "ponds"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ", and where water leaves ",
+          "status": "draft",
+          "composedText": " na hune madi a bva kha "
+        },
+        {
+          "segmentIndex": 7,
+          "sourceEnglish": "your property",
+          "status": "english-hold",
+          "composedText": "your property"
+        },
+        {
+          "segmentIndex": 8,
+          "sourceEnglish": ".",
+          "status": "draft",
+          "composedText": "."
+        }
+      ],
+      "explanation": "This is the farmer’s physical land walked after heavy rain; retain English land at this index while adjacent localized text supplies yaṋu. Do not use shango. Risk: the technical land/property distinction remains in English.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 34,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 6,
+        "field": "body[1]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "Walk it across the land to find points at the same height. Join these points to trace a contour line.",
+      "currentComposedTarget": "Tshimbidzani nayo kha land u wana points at the same height. Ṱanganyisani points idzi u tevhela contour line.",
+      "decision": "hold-with-draft-option",
+      "candidateOption": "land",
+      "appliedInReviewComposition": false,
+      "fullContextComposition": "Tshimbidzani nayo kha land u wana points at the same height. Ṱanganyisani points idzi u tevhela contour line.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Walk it across the ",
+          "status": "draft",
+          "composedText": "Tshimbidzani nayo kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "retain-exact-source-hold"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " to find ",
+          "status": "draft",
+          "composedText": " u wana "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "points at the same height",
+          "status": "english-hold",
+          "composedText": "points at the same height"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ". Join these points to trace a ",
+          "status": "draft",
+          "composedText": ". Ṱanganyisani points idzi u tevhela "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "contour line",
+          "status": "english-hold",
+          "composedText": "contour line"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ".",
+          "status": "draft",
+          "composedText": "."
+        }
+      ],
+      "explanation": "This contour instruction concerns the bounded physical site walked with an A-frame. Retain English land at this index; shango risks country scope. Risk: local term for surveyed land is unresolved.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ],
+      "draftOptionFullContextComposition": "Tshimbidzani nayo kha land u wana points at the same height. Ṱanganyisani points idzi u tevhela contour line.",
+      "draftOptionApplied": false
+    },
+    {
+      "candidateRowIndex": 35,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 20,
+        "field": "body[0]",
+        "segmentIndex": 1,
+        "sourceFragment": "land"
+      },
+      "sourceContext": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "currentComposedTarget": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha land yaṋu. Swayani rills, hune madi a phadalala, ponds na hune madi a bva kha your property. Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo.",
+      "decision": "repair-proposal",
+      "candidateOption": "land",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha land yaṋu. Swayani rills, hune madi a phadalala, ponds na hune madi a bva kha your property. Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "When it is safe after heavy rain, walk your ",
+          "status": "draft",
+          "composedText": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ". Mark ",
+          "status": "draft",
+          "composedText": " yaṋu. Swayani "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "rills",
+          "status": "english-hold",
+          "composedText": "rills"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ", spreading water, ",
+          "status": "draft",
+          "composedText": ", hune madi a phadalala, "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "ponds",
+          "status": "english-hold",
+          "composedText": "ponds"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ", and where water leaves ",
+          "status": "draft",
+          "composedText": " na hune madi a bva kha "
+        },
+        {
+          "segmentIndex": 7,
+          "sourceEnglish": "your property",
+          "status": "english-hold",
+          "composedText": "your property"
+        },
+        {
+          "segmentIndex": 8,
+          "sourceEnglish": ". Note where excess water may need a safe route away.",
+          "status": "draft",
+          "composedText": ". Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo."
+        }
+      ],
+      "explanation": "This is the farmer’s land walked after heavy rain; retain English land at this index while adjacent localized text supplies yaṋu. Do not use shango. Risk: local term for the bounded property is unresolved.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 50,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 4,
+        "field": "body[1]",
+        "segmentIndex": 7,
+        "sourceFragment": "your property"
+      },
+      "sourceContext": "Watch from a safe place during heavy rain. When it is safe afterward, walk your land. Look for rills, places where water fans out, ponds, and where water leaves your property.",
+      "currentComposedTarget": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Ṱodani rills, fhethu hune madi a phadalala, ponds na hune madi a bva kha your property.",
+      "decision": "repair-proposal",
+      "candidateOption": "land yaṋu",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha land yaṋu. Ṱodani rills, fhethu hune madi a phadalala, ponds na hune madi a bva kha land yaṋu.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Watch from a safe place during heavy rain. When it is safe afterward, walk your ",
+          "status": "draft",
+          "composedText": "Lavhelesani ni fhethu ho tsireledzeaho nga tshifhinga tsha mvula khulu. Musi zwo no tsireledzea nga murahu, tshimbilani kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ". Look for ",
+          "status": "draft",
+          "composedText": " yaṋu. Ṱodani "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "rills",
+          "status": "english-hold",
+          "composedText": "rills"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ", places where water fans out, ",
+          "status": "draft",
+          "composedText": ", fhethu hune madi a phadalala, "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "ponds",
+          "status": "english-hold",
+          "composedText": "ponds"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ", and where water leaves ",
+          "status": "draft",
+          "composedText": " na hune madi a bva kha "
+        },
+        {
+          "segmentIndex": 7,
+          "sourceEnglish": "your property",
+          "status": "english-hold",
+          "composedText": "land yaṋu",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 8,
+          "sourceEnglish": ".",
+          "status": "draft",
+          "composedText": "."
+        }
+      ],
+      "explanation": "In “where water leaves your property,” land yaṋu explicitly keeps the farmer’s bounded property referent while the rest of the drainage sentence remains unchanged. Risk: this code-mixed phrase needs fluent confirmation; it is not a translated English noun.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 51,
+      "identifier": {
+        "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "reading-landscape",
+        "slide": 20,
+        "field": "body[0]",
+        "segmentIndex": 7,
+        "sourceFragment": "your property"
+      },
+      "sourceContext": "When it is safe after heavy rain, walk your land. Mark rills, spreading water, ponds, and where water leaves your property. Note where excess water may need a safe route away.",
+      "currentComposedTarget": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha land yaṋu. Swayani rills, hune madi a phadalala, ponds na hune madi a bva kha your property. Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo.",
+      "decision": "repair-proposal",
+      "candidateOption": "land yaṋu",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha land yaṋu. Swayani rills, hune madi a phadalala, ponds na hune madi a bva kha land yaṋu. Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "When it is safe after heavy rain, walk your ",
+          "status": "draft",
+          "composedText": "Musi zwo no tsireledzea nga murahu ha mvula khulu, tshimbilani kha "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "land",
+          "status": "english-hold",
+          "composedText": "land"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": ". Mark ",
+          "status": "draft",
+          "composedText": " yaṋu. Swayani "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "rills",
+          "status": "english-hold",
+          "composedText": "rills"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": ", spreading water, ",
+          "status": "draft",
+          "composedText": ", hune madi a phadalala, "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "ponds",
+          "status": "english-hold",
+          "composedText": "ponds"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": ", and where water leaves ",
+          "status": "draft",
+          "composedText": " na hune madi a bva kha "
+        },
+        {
+          "segmentIndex": 7,
+          "sourceEnglish": "your property",
+          "status": "english-hold",
+          "composedText": "land yaṋu",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 8,
+          "sourceEnglish": ". Note where excess water may need a safe route away.",
+          "status": "draft",
+          "composedText": ". Ṱhogomelani hune maḓi o engedzeaho a nga ṱoḓa nḓila yo tsireledzeaho ya u bva ngayo."
+        }
+      ],
+      "explanation": "This flood-observation instruction marks where water leaves the farmer’s own property before planning an excess-water route. Land yaṋu preserves that bounded referent without shango’s country risk. Risk: verify the mixed possessive phrase in Tshivenda.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 74,
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "vegetables-staples",
+        "slide": 6,
+        "field": "body[0]",
+        "segmentIndex": 1,
+        "sourceFragment": "They do better"
+      },
+      "sourceContext": "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+      "currentComposedTarget": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "decision": "repair-proposal",
+      "candidateOption": "Zwi aluwa better",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. Zwi aluwa better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Some crops resent having their roots disturbed. ",
+          "status": "draft",
+          "composedText": "Zwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "They do better",
+          "status": "english-hold",
+          "composedText": "Zwi aluwa better",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " sown straight where they'll grow. ",
+          "status": "draft",
+          "composedText": " musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. "
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": "Beans, carrots",
+          "status": "english-hold",
+          "composedText": "Beans, carrots"
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": " and ",
+          "status": "draft",
+          "composedText": " na "
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": "maize",
+          "status": "english-hold",
+          "composedText": "maize"
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": " belong in that group.",
+          "status": "draft",
+          "composedText": " zwi wela kha tshigwada itsho."
+        }
+      ],
+      "explanation": "The source says these crops do better when sown directly, compared with disturbing/transplanting their roots. This draft preserves the explicit comparative “better” as an English hold while localizing “They grow”; it does not turn the comparison into merely “grow well.” Risk: better remains English and the fluent reviewer must confirm the comparison construction and its reference to the following sowing clause.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 77,
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "vegetables-staples",
+        "slide": 8,
+        "field": "heading",
+        "segmentIndex": 0,
+        "sourceFragment": "A Sowing Rhythm"
+      },
+      "sourceContext": "A Sowing Rhythm Keeps Food Moving",
+      "currentComposedTarget": "A Sowing Rhythm i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+      "decision": "hold-with-draft-option",
+      "candidateOption": "maitele a u ṱavha a dovhololaho",
+      "appliedInReviewComposition": false,
+      "fullContextComposition": "A Sowing Rhythm i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "A Sowing Rhythm",
+          "status": "english-hold",
+          "composedText": "A Sowing Rhythm",
+          "reviewAction": "retain-exact-source-hold"
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": " Keeps Food Moving",
+          "status": "draft",
+          "composedText": " i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala."
+        }
+      ],
+      "explanation": "This option explicitly describes sowing practices that repeat, unlike the current “time of planting.” Do not apply yet: as a plural subject it may require agreement changes in the neighboring current “i ita” clause, and that adjacent segment is out of scope here. Risk: both natural Tshivenda phrasing and agreement need facilitator review; retain the current English title meanwhile.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ],
+      "draftOptionFullContextComposition": "maitele a u ṱavha a dovhololaho i ita uri zwiliwa zwi bvele phanḓa zwi tshi wanala.",
+      "draftOptionApplied": false
+    },
+    {
+      "candidateRowIndex": 81,
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "vegetables-staples",
+        "slide": 15,
+        "field": "body[1]",
+        "segmentIndex": 4,
+        "sourceFragment": "broad chemical use"
+      },
+      "sourceContext": "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+      "currentComposedTarget": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "decision": "hold",
+      "candidateOption": "broad chemical use",
+      "appliedInReviewComposition": false,
+      "fullContextComposition": "Zwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Plants under ",
+          "status": "draft",
+          "composedText": "Zwimela zwi re na "
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": "stress.",
+          "status": "english-hold",
+          "composedText": "stress."
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " One crop dominating the ground.",
+          "status": "english-hold",
+          "composedText": " One crop dominating the ground."
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": " Or ",
+          "status": "draft",
+          "composedText": " Kana "
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": "broad chemical use",
+          "status": "english-hold",
+          "composedText": "broad chemical use",
+          "reviewAction": "retain-exact-source-hold"
+        },
+        {
+          "segmentIndex": 5,
+          "sourceEnglish": " that has already removed the ",
+          "status": "draft",
+          "composedText": " yo no bvisa "
+        },
+        {
+          "segmentIndex": 6,
+          "sourceEnglish": "predators",
+          "status": "english-hold",
+          "composedText": "predators"
+        },
+        {
+          "segmentIndex": 7,
+          "sourceEnglish": " that were helping you.",
+          "status": "draft",
+          "composedText": " dze dza vha dzi tshi ni thusa."
+        }
+      ],
+      "explanation": "The phrase is a technical category in the sentence about predators removed by broad chemical use. Keep this exact English technical hold because the supplied candidate narrows chemicals to insect-killing medicine. Risk: no broader, source-bounded Tshivenda equivalent is established.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 86,
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "vegetables-staples",
+        "slide": 18,
+        "field": "body[5]",
+        "segmentIndex": 2,
+        "sourceFragment": " What germinated."
+      },
+      "sourceContext": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "currentComposedTarget": "Ṅwalani datumu ya sowing. Mvula. What germinated. Pest pressure. What you harvested.",
+      "decision": "repair-proposal",
+      "candidateOption": " Zwine zwa no mela.",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Ṅwalani datumu ya sowing. Mvula. Zwine zwa no mela. Pest pressure. What you harvested.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Record the sowing date.",
+          "status": "draft",
+          "composedText": "Ṅwalani datumu ya sowing."
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": " The rain.",
+          "status": "draft",
+          "composedText": " Mvula."
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " What germinated.",
+          "status": "english-hold",
+          "composedText": " Zwine zwa no mela.",
+          "reviewAction": "replace-indexed-segment"
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": " Pest pressure.",
+          "status": "english-hold",
+          "composedText": " Pest pressure."
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": " What you harvested.",
+          "status": "english-hold",
+          "composedText": " What you harvested."
+        }
+      ],
+      "explanation": "This says what has already germinated/sprouted, preserving the completed observation in a field record rather than the generic “what grows.” Risk: confirm that no prefix or perfective form is missing for the intended Tshivenda tense/aspect.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    },
+    {
+      "candidateRowIndex": 93,
+      "identifier": {
+        "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "language": "Tshivenda",
+        "module": "vegetables-staples",
+        "slide": 18,
+        "field": "body[5]",
+        "segmentIndex": 4,
+        "sourceFragment": " What you harvested."
+      },
+      "sourceContext": "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+      "currentComposedTarget": "Ṅwalani datumu ya sowing. Mvula. What germinated. Pest pressure. What you harvested.",
+      "decision": "repair-proposal",
+      "candidateOption": " Zwine na no kaṋa.",
+      "appliedInReviewComposition": true,
+      "fullContextComposition": "Ṅwalani datumu ya sowing. Mvula. What germinated. Pest pressure. Zwine na no kaṋa.",
+      "segmentComposition": [
+        {
+          "segmentIndex": 0,
+          "sourceEnglish": "Record the sowing date.",
+          "status": "draft",
+          "composedText": "Ṅwalani datumu ya sowing."
+        },
+        {
+          "segmentIndex": 1,
+          "sourceEnglish": " The rain.",
+          "status": "draft",
+          "composedText": " Mvula."
+        },
+        {
+          "segmentIndex": 2,
+          "sourceEnglish": " What germinated.",
+          "status": "english-hold",
+          "composedText": " What germinated."
+        },
+        {
+          "segmentIndex": 3,
+          "sourceEnglish": " Pest pressure.",
+          "status": "english-hold",
+          "composedText": " Pest pressure."
+        },
+        {
+          "segmentIndex": 4,
+          "sourceEnglish": " What you harvested.",
+          "status": "english-hold",
+          "composedText": " Zwine na no kaṋa.",
+          "reviewAction": "replace-indexed-segment"
+        }
+      ],
+      "explanation": "This says what you have already harvested, preserving the completed observation in the field record rather than a generic/current harvest. Risk: confirm the aspect and naturalness with a fluent reviewer.",
+      "uncertainIssues": [
+        "This is an unreviewed source-paired draft option, not fluent-speaker approval.",
+        "No external Tshivenda linguistic authority was consulted."
+      ]
+    }
+  ]
+}

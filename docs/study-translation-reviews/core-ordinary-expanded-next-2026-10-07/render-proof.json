@@ -1,0 +1,62 @@
+[
+  {
+    "url": "/course-decks/intro-permaculture/ve/slide-14.webp",
+    "renderPixels": [
+      1440,
+      5414
+    ],
+    "publishedPixels": [
+      1440,
+      5400
+    ],
+    "beforeBytes": 456122,
+    "beforeSha256": "7fad0c7909ca184d9c6a80be0031741e95312a05773ca7eea6641ad5ee3254cb",
+    "afterBytes": 478238,
+    "afterSha256": "b019a68aef20e582be51c39c7a7fbdea8f87ffaa5de6b1a258f6e1a0f99441fc"
+  },
+  {
+    "url": "/course-decks/vegetables-staples/ve/slide-11.webp",
+    "renderPixels": [
+      1440,
+      5400
+    ],
+    "publishedPixels": [
+      1440,
+      5400
+    ],
+    "beforeBytes": 400706,
+    "beforeSha256": "da45da4cecc04a8a89b86c7ea46dc0b5c590f12adafd778fb2038777e152c808",
+    "afterBytes": 405364,
+    "afterSha256": "bdda9e0ebaaf6215b646936ba256ca919266d9e1fb6a2b71854d9efe9867f201"
+  },
+  {
+    "url": "/course-decks/vegetables-staples/ts/slide-11.webp",
+    "renderPixels": [
+      1440,
+      5400
+    ],
+    "publishedPixels": [
+      1440,
+      5400
+    ],
+    "beforeBytes": 411772,
+    "beforeSha256": "e65d5f7897f6c3d269abb80839bf1d6a8b061054ed6cfb71e4459b2f76b1ee89",
+    "afterBytes": 417894,
+    "afterSha256": "ce7f693097edb29dff3d3594e41eae515cc6aa94ed264cd98d1861fecd60b1af"
+  },
+  {
+    "url": "/course-decks/vegetables-staples/ve/slide-04.webp",
+    "renderPixels": [
+      1440,
+      5400
+    ],
+    "publishedPixels": [
+      1440,
+      5400
+    ],
+    "beforeBytes": 721330,
+    "beforeSha256": "8600ca71e490e728e8300cee6890cbe759d6f3459a4c302b6e07f311251ba5a1",
+    "afterBytes": 725656,
+    "afterSha256": "8c89d5b6bcd8a0a17c007403baced644b9e91c52208df4d7f2a48007d1db928a"
+  }
+]

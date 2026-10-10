@@ -1,0 +1,8 @@
+{
+  "base": "0b611b93de9c998d601c15cbc9a9aa6476f25274",
+  "pairedFields": 5,
+  "learnerFields": 3,
+  "exactAllNeighborSourceAndStatus": true,
+  "nativeExactOnlyAcceptedPredicateReplacement": true,
+  "verification": "Each complete JSON and native file reconstructed from git HEAD with only accepted operations; source segment joins checked for every paired body."
+}

@@ -1,0 +1,1687 @@
+{
+  "base": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentFacilitatorVideo",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitError",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentPhotoRequired",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentVoiceOptional",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitting",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAlreadySubmitted",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentPortalBody",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentCourseComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentProgressError",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentSetByMentor",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentOverdue",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentDueSoon",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentAssignmentsOrder",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentReadinessLessons",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentMarkComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentListenModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmittedResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSubmitModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentCapstoneComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentCompletionMessage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentProgressFirebase",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckRegion",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseNarrationLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideImageSize",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckTurnPhoneHint",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckWatch",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImageAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckOpenImage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckAnimationFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSlideLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckNarrationFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckSilentStatus",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlayAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseDeckPlay",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseAudioListen",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseAudioLanguageMissing",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPauseTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "courseAudioPlayFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadUnsupported",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineGetSlidesWhileSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineGetWhileSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineEnglishMediaFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineRemovePack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadBytesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineStopDownload",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineFinishDownload",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalPackChoice",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMedia",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineRegionalFullMediaNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineDownloadQuality",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandard",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityStandardNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigher",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineQualityHigherNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineFilesFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineSavedMayClear",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "offlineLowStorage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCorrect",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentFacilitatorVideo",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitError",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPhotoRequired",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentVoiceOptional",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitting",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAlreadySubmitted",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentPortalBody",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCourseComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentModulesComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressError",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentRemaining",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentSetByMentor",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentOverdue",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentDueSoon",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssignmentsOrder",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveBeforeSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveAvailable",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentModules",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentAssigned",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentLessonOne",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSaveModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmittedResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSubmitModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCapstoneLocked",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCompletionMessage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentProgressFirebase",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentCategoryBusiness",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckRegion",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseNarrationLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideImageSize",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckTurnPhoneHint",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckWatch",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImageAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckOpenImage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckAnimationFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSlideLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckNarrationFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckSilentStatus",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseDeckReadSlide",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioListen",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioLanguageMissing",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPauseTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "courseAudioPlayFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadUnsupported",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetSlidesWhileSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineGetWhileSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishSlidesFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineEnglishMediaFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineOnThisPhone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadBytesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineFinishDownload",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadPack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalPackChoice",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalSlidesOnly",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMedia",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineRegionalFullMediaNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineDownloadQuality",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityStandardNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigher",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineQualityHigherNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineFilesFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineSavedMayClear",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "offlineLowStorage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCorrect",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentListenOrRead",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentWatchAndListen",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentFacilitatorVideo",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitError",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPhotoRequired",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceAdded",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentVoiceOptional",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitting",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAlreadySubmitted",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalTitle",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentPortalBody",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentBackHome",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentRevisit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCourseComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentSetByMentor",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentOverdue",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentDueSoon",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssignmentsOrder",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentLocked",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadinessLessons",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentAssigned",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentDone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentListenModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmittedResubmit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSubmitModule",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneComplete",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCapstoneLocked",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCompletionMessage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentProgressFirebase",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentCategoryBusiness",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckRegion",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseNarrationLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExitAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnterAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenExit",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckFullscreenEnter",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckClose",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideImageSize",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckTurnPhoneHint",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckWatch",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImageAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckOpenImage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSlideLanguage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNarrationFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckSilentStatus",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStopAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlayAria",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckStop",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckPlay",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckBack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckNext",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseDeckReadSlide",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioListen",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioLanguageMissing",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPauseTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayTrack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "courseAudioPlayFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadUnsupported",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineGetSlidesWhileSignal",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishSlidesFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineEnglishMediaFallback",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineOnThisPhone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineRemovePack",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadBytesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineStopDownload",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineFinishDownload",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalPackChoice",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalSlidesOnly",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineRegionalFullMediaNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineDownloadQuality",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandard",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityStandardNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigher",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineQualityHigherNote",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesProgress",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineFilesFailed",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineSavedMayClear",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "offlineLowStorage",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentIncorrectSee",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentIncorrectSee",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentIncorrectSee",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentKeyPoints",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentListenToLesson",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentListenToLesson",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentMarkNotDone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentMarkNotDone",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentReadAndPractise",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentRelatedLessons",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "st",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ve",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    },
+    {
+      "language": "ts",
+      "key": "studentSilentDeckNoVoiceDescription",
+      "exactSource": true,
+      "exactTarget": true,
+      "placeholders": true
+    }
+  ],
+  "count": 240,
+  "claims": "Source/target/placeholder fidelity only; not fluent approval"
+}

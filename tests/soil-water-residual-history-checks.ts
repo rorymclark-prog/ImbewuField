@@ -1,3 +1,4 @@
+import { finalLanguageNextDeckBeforeHistory } from './final-language-next-checks.ts';
 import { silentIntroAssetSizesBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -85,6 +86,8 @@ export function soilWaterResidualNativeBefore<T extends Data>(language: 'st' | '
 /** Verify all 19 cells and every unlisted deck object before rewinding this layer. */
 export function soilWaterResidualPairedBefore<T extends { slides: Data[] }>(deck: T, path: string): T {
   assertBoundProof();
+  // Later39 cells are validated against live files before this dated full predecessor check.
+  deck = finalLanguageNextDeckBeforeHistory(path, deck);
   const prior = structuredClone(baseline.pairedBefore[path]) as T;
   assert.ok(prior, path);
   const expected = structuredClone(prior) as T;

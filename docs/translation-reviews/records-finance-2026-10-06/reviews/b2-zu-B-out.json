@@ -1,0 +1,12 @@
+[
+{"id":"R271","verdict":"ok","problem":"Matches (isivuno/umkhiqizo mirrors produce/product).","repaired":"","severity":"minor"},
+{"id":"R276","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R277","verdict":"ok","problem":"Perfect 'you have added' matches past tense.","repaired":"","severity":"minor"},
+{"id":"R278","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R279","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R280","verdict":"ok","problem":"'Thayipha' is a loan verb but understood; 'Bhala' is the native alternative.","repaired":"","severity":"wording"},
+{"id":"R281","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R282","verdict":"ok","problem":"'Imali ngesandla' (money by hand) is understandable as cash and reads as a way of paying after 'Invoice ·'; not the only possible term, speaker check advised.","repaired":"","severity":"wording"},
+{"id":"R283","verdict":"ok","problem":"'Ikhadi' reads as a payment card; bare but matches English.","repaired":"","severity":"minor"},
+{"id":"R284","verdict":"hold","problem":"'Ifoni' = telephone device only; after 'Invoice ·' it does not read as paying by mobile money (could mean phoned/invoiced by phone). 'Imali yefoni' and 'Ngefoni' are both unconfirmed guesses, so not repaired.","repaired":"","severity":"meaning"}
+]

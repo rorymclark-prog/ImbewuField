@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-07",
+  "base": "4e2f1078eaa1a2cd505cb293f13c4b0ada6b8625",
+  "sourceAuthority": "docs/study-translation-reviews/ve-reading-frost-placement-2026-10-07/root-accepted-plan.json",
+  "canonicalLearnerSource": {
+    "lessonId": "reading-landscape-l2",
+    "paragraphIndex": 2,
+    "english": "Pawpaw and young citrus are sensitive to frost. Keep tender plants out of known low frost pockets. Observe local frost before planting."
+  },
+  "currentLearnerDraft": {
+    "lessonId": "reading-landscape-l2",
+    "paragraphIndex": 2,
+    "tshivenda": "Pawpaw na young citrus zwi a kwamea nga frost nga u leluwa. Ni songo vhea zwimela zwi sa konḓeleliho kha known low frost pockets. Sedzani frost ya henefho musi ni sa athu ṱavha."
+  },
+  "pairedDeckBindings": [
+    {
+      "slide": 14,
+      "bodyIndex": 2,
+      "sourceClause": "Keep sensitive plants away from the cold pockets you observe.",
+      "changedSourceSegment": " Keep sensitive plants away from the cold pockets ",
+      "currentTargetSegment": " Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets ",
+      "retainedObservedSuffix": "dzine na dzi vhona."
+    },
+    {
+      "slide": 15,
+      "bodyIndex": 0,
+      "sourceClause": "No hillside position guarantees freedom from frost.",
+      "currentTargetSegment": "A hu na hillside position ine ya khwaṱhisedza uri a hu nga vhi na frost."
+    }
+  ],
+  "fluentApproval": false,
+  "publicationStatus": "unpublished; awaiting root review and original gates"
+}

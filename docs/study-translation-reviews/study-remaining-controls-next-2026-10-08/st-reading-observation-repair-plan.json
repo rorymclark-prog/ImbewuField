@@ -1,0 +1,147 @@
+{
+  "planId": "st-reading-landscape-aframe-observation-safe-repair-2026-10-08",
+  "status": "prepared-not-applied",
+  "scope": "One learner-only paragraph fragment in the Sesotho Reading the Landscape L1 draft. The recorded paired slide 6 stays byte-for-byte unchanged.",
+  "evidence": {
+    "reviewPacket": "/Users/roryclark/.codex/worktrees/st-intro-silent-review-20261008/ImbewuField/docs/study-translation-reviews/study-ui-context-next-2026-10-07/imbewu-st-aframe-observation-repair-candidates-20261007.json",
+    "reviewPacketSha256": "977ac29cc8a19d02e648af0e8492e9dc3cf5d641d86b98f3fe94fbb673e3a7ae",
+    "decision": "HOLD_LOCALIZED_OBSERVATION_CLAUSE",
+    "reviewVerdict": "HOLD",
+    "exactCurrentSource": "An A-frame level can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging a swale, dam, or other structure, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser.",
+    "sourceOccursExactlyOnceInRegistry": true,
+    "exactCurrentLearnerParagraph": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Matshwao a yona ke tlhokomelo feela, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "currentLearnerParagraphOccursExactlyOnceInRegistry": true,
+    "lessonId": "reading-landscape-l1",
+    "paragraphIndex": 1,
+    "registryFile": "lib/course-translation-drafts-st-reading-landscape.ts",
+    "registryReviewStatus": "machine-draft",
+    "registrySourcePairUnchanged": true,
+    "targetPrefix": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. ",
+    "targetFragment": "Matshwao a yona ke tlhokomelo feela",
+    "heldSourceFragment": "Its marks are an observation",
+    "targetSuffix": ", eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "exactProposedLearnerParagraph": "Level ya A-frame e ka o thusa ho tshwaya dintlha tse bophahamong bo lekanang le ho latela mola wa contour. Its marks are an observation, eseng moralo kapa tumello ya ho tjheka mobu (earthworks). Pele o tjheka mokero (swale), letamo, kapa sebopeho se seng, etsa hore sebaka se hlahlojwe. Mofuta wa mobu, letswapo, tsamaiso ya metsi, phallo ya sefefo, le tsela e sireletsehileng ya ho phalla ha metsi a tletse (overflow route) kaofela di a hlokahala. Botsa moeletsi wa lehae ya kwetlisitsweng (trained local adviser).",
+    "pairedSlide": {
+      "file": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slide": 6,
+      "field": "slides[5].target.body[2].segments[4]",
+      "currentSourceEnglish": "Its marks are an observation",
+      "currentStatus": "english-hold",
+      "action": "leave unchanged",
+      "targetParagraph": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "An A-frame",
+            "status": "draft",
+            "text": "A-frame"
+          },
+          {
+            "sourceEnglish": " can help you ",
+            "text": " e ka u thusa ho ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "mark points at the same height and trace a contour line",
+            "status": "draft",
+            "text": "tshwaya dintlha tse bophahamo bo lekanang mme o latele contour line"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Its marks are an observation",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", not a design or approval for ",
+            "text": "; ha se moralo kapa tumello ya ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "earthworks",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". Before digging, have the site assessed. Soil, ",
+            "text": ". Pele u cheka, etsa hore sebaka se hlahlojoe. Mobu, ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "slope",
+            "status": "draft",
+            "text": "moepa"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "drainage",
+            "status": "draft",
+            "text": "ho ntsha metsi mobung"
+          },
+          {
+            "sourceEnglish": ", ",
+            "text": ", ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "storm flow",
+            "status": "draft",
+            "text": "phallo ya metsi a sefefo (storm flow)"
+          },
+          {
+            "sourceEnglish": ", and a ",
+            "text": " le ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "safe overflow route",
+            "status": "draft",
+            "text": "tsela e sireletsehileng ya ho ntsha metsi a mangata"
+          },
+          {
+            "sourceEnglish": " all matter. Ask a trained local adviser.",
+            "text": " kaofela di bohlokwa. Botsa moeletsi ea koetlisitsoeng oa sebakeng seo.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      },
+      "sourceEnglishBody": "An A-frame can help you mark points at the same height and trace a contour line. Its marks are an observation, not a design or approval for earthworks. Before digging, have the site assessed. Soil, slope, drainage, storm flow, and a safe overflow route all matter. Ask a trained local adviser."
+    }
+  },
+  "preserveExactly": [
+    "The three learner body paragraphs and their order; only the single observation fragment in body paragraph index 1 changes.",
+    "The complete canonical English source body and sourceEnglish in the Sesotho pair; current source must still exactly equal the reviewed source before applying.",
+    "The learner paragraph prefix: A-frame setup, equal-height points, and tracing a contour line.",
+    "Every character after the held fragment: the statement that marks are not a design or approval for earthworks; before-digging condition and named swale, dam, or other structure; site assessment; soil, slope, drainage, storm flow, safe overflow route; trained local adviser.",
+    "Module/lesson identity, status machine-draft, title, description, infographic, key points, quiz, rationale, ordering, and all other target text.",
+    "Paired slide 6, including its English source, localized prefix/suffix, segment order, and exact english-hold segment “Its marks are an observation”."
+  ],
+  "applicationGuardRequirements": [
+    "Before applying, assert exact canonical COURSE_MODULES reading-landscape-l1 body equals this exact sourceEnglish and its paragraph index 1 equals the exact source paragraph.",
+    "Assert the live Sesotho body and target paragraph equal the exact before snapshot above, the registry reviewStatus is machine-draft, and the targeted fragment occurs exactly once between the exact prefix and suffix.",
+    "Construct after by replacing only the exact fragment once with exact source text “Its marks are an observation”; assert prefix and suffix remain byte-for-byte equal and all other object fields remain deeply equal.",
+    "Require source drift to prevent application and preserve runtime English fallback rather than using this candidate for changed source.",
+    "Do not update the paired deck or audio; its current exact source-bound english-hold remains untouched."
+  ],
+  "testImplications": {
+    "existingMeaningfulAssertions": [
+      "The native history helper checks the imported complete module against the complete reviewed object and source-bound field proof, including exact canonical source and visible machine-draft status; this can reject any unrecorded text/source/status/order/unlisted-field mutation.",
+      "The Reading Landscape test checks source body binding, paragraph count/order, learner output equality to the registry, and that changed source withdraws the stale translation to exact English fallback.",
+      "The paired-slide observation test explicitly retains the exact “Its marks are an observation” source segment and checks that mark observations confer neither earthworks design nor approval; slide 6 remains unchanged."
+    ],
+    "afterAChange": "The complete-object historic snapshot assertion will need the newest dated native-layer guard applied first, then retain the exact prior-layer and unrelated-field assertions. Add exact before/after source-bound proof for this one leaf; do not delete/weaken the existing object, source, fallback, or paired observation/design-approval claims.",
+    "semanticGap": "Current explicit observation-versus-approval wording assertion is on the paired deck path. The learner-only paragraph is protected by exact full-object equality, but lacks a direct localized/held-clause semantic assertion separate from that snapshot; the new leaf proof should explicitly assert the retained exact English source clause and preserved negative approval suffix."
+  },
+  "riskAndLimitations": [
+    "This is the exact technical hold already selected in the reviewed source-bound packet, not a new translation or fluency claim.",
+    "The packet rejects the suggested Sesotho rendering as uncertain; this plan preserves the approved surrounding warning/adviser language unchanged.",
+    "No runtime, paired content, render, test, or audio change is authorized by this preparation."
+  ]
+}

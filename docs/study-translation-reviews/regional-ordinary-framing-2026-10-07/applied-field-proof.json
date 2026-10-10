@@ -1,0 +1,511 @@
+{
+  "base": "94c9ec530722c483667d590cbfdaa29a5408a163",
+  "status": "unreviewed machine drafts; root and independent semantic checks, no fluent approval",
+  "groups": [
+    {
+      "id": "VE-N03",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body",
+      "index": 0,
+      "source": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Vhusiku vhu sa na makole, hu si na muya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "draft",
+            "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "On a clear, still night, ",
+            "status": "draft",
+            "text": "Vhusiku vhu sa na makole, hu si na muya, "
+          },
+          {
+            "sourceEnglish": "cold air can flow downhill and collect in low places.",
+            "status": "draft",
+            "text": "muya wo rotholelaho u nga elela u tshi ya fhasi wa kuvhangana kha low places."
+          },
+          {
+            "sourceEnglish": " These places can be colder than nearby slopes.",
+            "status": "draft",
+            "text": " Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini."
+          }
+        ],
+        "provenance": "Unreviewed machine draft; exact English source paired; facilitator review pending."
+      }
+    },
+    {
+      "id": "VE-N04",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 14,
+      "field": "body",
+      "index": 1,
+      "source": "Frost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is ",
+            "status": "draft",
+            "text": " ndi "
+          },
+          {
+            "sourceEnglish": "ice that forms on a cold surface.",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mist",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " alone",
+            "status": "draft",
+            "text": " fhedzi"
+          },
+          {
+            "sourceEnglish": " does not show that ",
+            "status": "draft",
+            "text": " a i sumbedzi uri "
+          },
+          {
+            "sourceEnglish": "ice has formed",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ", and",
+            "status": "draft",
+            "text": ", nahone"
+          },
+          {
+            "sourceEnglish": " frost damage can happen without visible ice.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " is ",
+            "status": "draft",
+            "text": " ndi "
+          },
+          {
+            "sourceEnglish": "ice that forms on a cold surface.",
+            "status": "draft",
+            "text": "ice ine ya vhumbwa kha cold surface."
+          },
+          {
+            "sourceEnglish": " ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mist",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " alone",
+            "status": "draft",
+            "text": " fhedzi"
+          },
+          {
+            "sourceEnglish": " does not show that ",
+            "status": "draft",
+            "text": " a i sumbedzi uri "
+          },
+          {
+            "sourceEnglish": "ice has formed",
+            "status": "draft",
+            "text": "ice yo no vhumbwa"
+          },
+          {
+            "sourceEnglish": ", and",
+            "status": "draft",
+            "text": ", nahone"
+          },
+          {
+            "sourceEnglish": " frost damage can happen without visible ice.",
+            "status": "draft",
+            "text": " frost damage i nga bvelela hu si na visible ice."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; publish for facilitator feedback; fluent review remains open."
+      }
+    },
+    {
+      "id": "VE-N05",
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slide": 20,
+      "field": "body",
+      "index": 1,
+      "source": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Vhuyelelani nga "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Swayani "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Return at ",
+            "status": "draft",
+            "text": "Vhuyelelani nga "
+          },
+          {
+            "sourceEnglish": "dawn on a cold June morning. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "Mark ",
+            "status": "draft",
+            "text": "Swayani "
+          },
+          {
+            "sourceEnglish": "mist, frozen dew, and the places frost lasts longest.",
+            "status": "draft",
+            "text": "mist, frozen dew, na fhethu hune frost ya dzula hone lwa tshifhinga tshilapfusesa."
+          }
+        ],
+        "provenance": "Unreviewed mixed machine draft; exact source clauses remain paired, with uncertain timing and observation/site terms held verbatim in English. Facilitator review pending."
+      }
+    },
+    {
+      "id": "VE-N06",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body",
+      "index": 4,
+      "source": "Four. Read a pest problem before you treat it.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four. ",
+            "status": "draft",
+            "text": "Tsha vhuṋa. "
+          },
+          {
+            "sourceEnglish": "Read a pest problem",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " before you ",
+            "status": "draft",
+            "text": " ni sa athu u "
+          },
+          {
+            "sourceEnglish": "treat it.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Four. ",
+            "status": "draft",
+            "text": "Tsha vhuṋa. "
+          },
+          {
+            "sourceEnglish": "Read a pest problem",
+            "status": "draft",
+            "text": "Ṱolani pest problem"
+          },
+          {
+            "sourceEnglish": " before you ",
+            "status": "draft",
+            "text": " ni sa athu u "
+          },
+          {
+            "sourceEnglish": "treat it.",
+            "status": "english-hold"
+          }
+        ]
+      }
+    },
+    {
+      "id": "VE-N07",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 3,
+      "field": "body",
+      "index": 5,
+      "source": "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "These four belong together. ",
+            "status": "draft",
+            "text": "Zwithu izwi zwiṋa zwi tshimbila zwoṱhe. "
+          },
+          {
+            "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
+            "status": "draft",
+            "text": "A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. "
+          },
+          {
+            "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+            "status": "draft",
+            "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+      }
+    },
+    {
+      "id": "VE-N14",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 11,
+      "field": "body",
+      "index": 2,
+      "source": "Agree the contents, price, payment and what happens when crops are short. Regular orders help planning only when customers and growers can keep the agreement.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Agree the contents, price, payment and ",
+            "status": "draft",
+            "text": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na ",
+            "reason": "Preserve existing Tendelanani prefix; box is retained contextual borrowed packaging noun."
+          },
+          {
+            "sourceEnglish": "what happens when crops are short. Regular orders",
+            "status": "english-hold",
+            "reason": "Crop-shortage predicate and regular-order frequency retained exact English, not narrowed to few plants or always."
+          },
+          {
+            "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
+            "status": "draft",
+            "text": " dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Agree the contents, price, payment and ",
+            "status": "draft",
+            "text": "Tendelanani nga zwine zwa vha kha box, mutengo, mbadelo na ",
+            "reason": "Preserve existing Tendelanani prefix; box is retained contextual borrowed packaging noun."
+          },
+          {
+            "sourceEnglish": "what happens when crops are short. Regular orders",
+            "status": "draft",
+            "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
+            "text": "zwine zwa itea musi zwimela zwi sa eḓani. Regular orders"
+          },
+          {
+            "sourceEnglish": " help planning only when customers and growers can keep the agreement.",
+            "status": "draft",
+            "text": " dzi thusa u dzudzanya fhedzi musi vharengi na vhalimi vha tshi kona u tevhedza thendelano.",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      }
+    },
+    {
+      "id": "VE-N15",
+      "file": "docs/narration/market-community.ve.paired-draft.json",
+      "slide": 17,
+      "field": "body",
+      "index": 1,
+      "source": "A nearby buyer may reduce the journey, but losses and selling costs still need measuring.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A nearby buyer may reduce the journey, but losses and ",
+            "status": "draft",
+            "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "selling costs still need measuring.",
+            "status": "english-hold",
+            "reason": "Root-accepted independent repair: source-exact still need measuring, not should try/test."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "A nearby buyer may reduce the journey, but losses and ",
+            "status": "draft",
+            "text": "Murengi wa tsini a nga fhungudza lwendo, fhedzi ndozwo na ",
+            "reason": "Source-bound ordinary clause; existing localized framing preserved; unreviewed draft."
+          },
+          {
+            "sourceEnglish": "selling costs still need measuring.",
+            "status": "draft",
+            "reason": "2026-10-07 root and independent semantic check: ordinary shortage/measurement wording drafted; Regular orders/selling costs retained English. No fluent approval.",
+            "text": "selling costs zwi kha ḓi tea u kaliwa."
+          }
+        ],
+        "provenance": "2026-10-06 root accepted independent Market ordinary composition; exact English source paired; NOT fluent reviewed"
+      }
+    },
+    {
+      "id": "VE-N18",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 4,
+      "field": "body",
+      "index": 0,
+      "source": "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+      "before": {
+        "status": "draft",
+        "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+      },
+      "after": {
+        "status": "draft",
+        "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i ya i tshi konḓa u shuma nayo kha khalaṅwaha iṅwe na iṅwe."
+      }
+    },
+    {
+      "id": "vegetables-staples:ve:slide-4:heading",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 4,
+      "field": "heading",
+      "source": "Roots Need Loose Soil, Paths Need Your Feet",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu."
+      }
+    },
+    {
+      "id": "vegetables-staples:ve:slide-5:heading",
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slide": 5,
+      "field": "heading",
+      "source": "Choose the Bed for the Soil and Rainfall",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Khethani bed u ya nga soil na rainfall."
+      }
+    },
+    {
+      "id": "vegetables-staples:ts:slide-4:heading",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 4,
+      "field": "heading",
+      "source": "Roots Need Loose Soil, Paths Need Your Feet",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Timitsu ti lava loose soil; paths ti lava milenge ya wena."
+      }
+    },
+    {
+      "id": "vegetables-staples:ts:slide-5:heading",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 5,
+      "field": "heading",
+      "source": "Choose the Bed for the Soil and Rainfall",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Hlawula bed hi ku ya hi soil ni rainfall."
+      }
+    },
+    {
+      "id": "vegetables-staples:ts:slide-16:heading",
+      "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slide": 16,
+      "field": "heading",
+      "source": "Treat the Cause Before the Insect",
+      "before": {
+        "status": "english-hold"
+      },
+      "after": {
+        "status": "draft",
+        "text": "Tshungula xivangelo u nga si thoma u tshungula insect."
+      }
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { nativePairedResidualFrames, nativePairedResidualMediaBefore, nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
+import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 
 const expectedFrames = [
   ['/course-decks/vegetables-staples/st/slide-15.webp', 573684, 1440, 5400, 'c6e362ef53e745a398e43cb2eb5bcee15d67881d4bbbcc3c00520f28304336c2'],
@@ -23,9 +24,10 @@ test('Vegetables L4 compressed precision frames retain the reviewed full canvas 
     const later = nativePairedResidualMediaBefore(`public${url}`);
     if (later) {
       assert.deepEqual(later, { bytes, sha256 }, `${url} is preserved as the exact input to the newer approved redraw`);
-      const currentLaterFrame = nativePairedResidualFrames.find(frame => frame.url === url);
+      // This dated frame can now be superseded by either checked redraw layer.
+      const currentLaterFrame = nativePairedResidualFrames.find(frame => frame.url === url) ?? coreHeldOrdinaryAssets.find(frame=>frame.url===url);
       assert.ok(currentLaterFrame, `${url} newer frame remains in the approved source-bound render set`);
-      assert.deepEqual([currentLaterFrame.width, currentLaterFrame.height], [width, height], `${url} keeps the reviewed full canvas`);
+      assert.deepEqual(currentLaterFrame.beforeDimensions ?? [currentLaterFrame.width,currentLaterFrame.height], [width, height], `${url} preserves the reviewed prior full canvas before the later content expansion`);
       assert.equal(beforeNativeResidual.split(`  '${url}': ${bytes},`).length, 2, `${url} prior manifest retains the exact six-frame size`);
       continue;
     }

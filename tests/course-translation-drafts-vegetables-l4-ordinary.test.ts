@@ -149,8 +149,8 @@ test('Vegetables L4 ordinary drafts change only the 38 accepted source-bound lea
     assert.match(paragraphs[6], /nearby|haufinyane|tsini|ekusuhi/i, 'the observation step still includes nearby plants');
     assert.match(paragraphs[9], /Only then|Ke ka morao feela|Ndi hone fhedzi|Hi kona ntsena/i,
       'action stays after observation and diagnosis');
-    assert.match(paragraphs[9], /lightest thing that works/,
-      'the least intensive effective action remains explicit');
+    assert.match(paragraphs[9], language === 'st' ? /ketso e bobebe ka ho fetisisa e sebetsang/ : /lightest thing that works/,
+      'the least intensive effective action remains explicit in the exact Sesotho candidate or the unchanged English targets');
     for (const safeguard of ['registered for that crop and pest', 'label', 'neem products', 'protection and harvest waiting instructions']) {
       assert.ok(paragraphs[10].includes(safeguard), `the full treatment restriction remains explicit: ${safeguard}`);
     }
