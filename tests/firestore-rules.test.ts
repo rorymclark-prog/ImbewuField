@@ -971,6 +971,39 @@ test('cross-org isolation matrix: production, sales and expense logs', async () 
   }
 });
 
+// sec-06 fix-up (integrator review): the first draft compared request.resource.data.org_id to
+// myOrg(), which bare-accesses prof().org_id. A self-signup profile (lib/auth.tsx's signUp ->
+// updateMyProfile never sets org_id at all, matching the profiles create rule's own
+// `!('org_id' in request.resource.data) || ... == null`) has no org_id KEY — not even an
+// explicit null — and dot access on a genuinely absent key errors the whole create rule closed.
+// That would have silently blocked every org-less farmer from saving production, sales or costs,
+// which is most self-signed-up farmers before a mentor assigns their org. ORG_LESS_FARMER below
+// is seeded with the key truly absent (not org_id: null) to prove the fix actually covers it —
+// the profile()/logData() helpers elsewhere in this file always include the key.
+const ORG_LESS_FARMER = 'org-less-farmer';
+test('sec-06: an org-less (self-signup) farmer can still save their own logs', async () => {
+  await env.withSecurityRulesDisabled(async (c) => {
+    const db = c.firestore();
+    // Deliberately NOT using the profile() helper — it always writes an org_id key, even as
+    // null, which does not reproduce the real self-signup shape this test exists to cover.
+    await setDoc(doc(db, 'profiles', ORG_LESS_FARMER), {
+      role: 'farmer', full_name: 'Org-less Farmer', language: 'en', created_at: '2026-10-10T00:00:00.000Z',
+    });
+  });
+  const db = env.authenticatedContext(ORG_LESS_FARMER).firestore();
+
+  for (const collectionName of LOG_COLLECTIONS) {
+    // The client (lib/db/queries.ts) always writes org_id explicitly, defaulting to null —
+    // matching what an org-less farmer's own profile resolves to under the same `.get()` default.
+    const honest = { ...logData(ORG_LESS_FARMER, null, collectionName), profile_id: ORG_LESS_FARMER };
+    await assertSucceeds(setDoc(doc(db, collectionName, `${ORG_LESS_FARMER}-honest-${collectionName}`), honest));
+
+    // Still cannot forge a real org's id just because they have none of their own.
+    const forged = { ...logData(ORG_LESS_FARMER, ORG_A, collectionName), profile_id: ORG_LESS_FARMER };
+    await assertFails(setDoc(doc(db, collectionName, `${ORG_LESS_FARMER}-forged-${collectionName}`), forged));
+  }
+});
+
 test('cross-org isolation matrix: designs', async () => {
   const staffADb = env.authenticatedContext(STAFF_A).firestore();
   const staffBDb = env.authenticatedContext(STAFF_B).firestore();
@@ -1277,20 +1310,32 @@ test('cross-org isolation matrix: per-user collections (not org-scoped by design
   // community_profiles, board_posts and community_reports (the discovery directory and trade
   // board) remain a DELIBERATELY cross-org feature — gated by the communityOn() kill switch plus
   // signedIn() only, by product design. message_threads (1:1 messaging) is the one exception:
-  // sec-07 (2026-10-10 audit) scoped thread CREATION to same-org, see the next test — any two
-  // signed-in users, any org, could previously open a thread with each other.
+  // sec-07 (2026-10-10 audit) scoped thread CREATION to same-org-or-opted-into-community, see the
+  // next test — any two signed-in users, any org, could previously open a thread with each other.
 });
 
-test('sec-07: a message thread can only be opened between two same-org users, with capped names', async () => {
+test('sec-07: a message thread needs same org or mutual community opt-in, with capped names', async () => {
+  const ORGLESS_MSG_A = 'orgless-msg-a';
+  const ORGLESS_MSG_B = 'orgless-msg-b';
   await env.withSecurityRulesDisabled(async (c) => {
     const db = c.firestore();
     await setDoc(doc(db, 'app_config', 'community'), { enabled: true });
+    // Deliberately no org_id key at all — the same self-signup shape as ORG_LESS_FARMER above.
+    // Only ORGLESS_MSG_A has opted into the community layer (a community_profiles doc).
+    await Promise.all([
+      setDoc(doc(db, 'profiles', ORGLESS_MSG_A), { role: 'farmer', full_name: 'Org-less A', language: 'en', created_at: '2026-10-10T00:00:00.000Z' }),
+      setDoc(doc(db, 'profiles', ORGLESS_MSG_B), { role: 'farmer', full_name: 'Org-less B', language: 'en', created_at: '2026-10-10T00:00:00.000Z' }),
+      setDoc(doc(db, 'community_profiles', ORGLESS_MSG_A), { uid: ORGLESS_MSG_A }),
+      setDoc(doc(db, 'community_profiles', ORGLESS_MSG_B), { uid: ORGLESS_MSG_B }),
+    ]);
   });
 
   const farmerADb = env.authenticatedContext(FARMER_A).firestore();
+  const orglessADb = env.authenticatedContext(ORGLESS_MSG_A).firestore();
   const longName = 'x'.repeat(101);
 
-  // Cross-org: FARMER_A (org-a) cannot open a thread with FARMER_B (org-b).
+  // Cross-org: FARMER_A (org-a) cannot open a thread with FARMER_B (org-b) — neither has
+  // opted into community either.
   await assertFails(setDoc(doc(farmerADb, 'message_threads', 'thread-a-b'), {
     participants: [FARMER_A, FARMER_B],
     participant_names: { [FARMER_A]: 'Farmer A', [FARMER_B]: 'Farmer B' },
@@ -1308,6 +1353,22 @@ test('sec-07: a message thread can only be opened between two same-org users, wi
   await assertFails(setDoc(doc(farmerADb, 'message_threads', 'thread-a-mentor-2'), {
     participants: [FARMER_A, MENTOR_A],
     participant_names: { [FARMER_A]: longName, [MENTOR_A]: 'Mentor A' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // Two org-less farmers, BOTH opted into community: allowed even though neither has an org —
+  // same-org-only would have disabled community messaging for exactly this pairing.
+  await assertSucceeds(setDoc(doc(orglessADb, 'message_threads', 'thread-orgless-a-b'), {
+    participants: [ORGLESS_MSG_A, ORGLESS_MSG_B],
+    participant_names: { [ORGLESS_MSG_A]: 'Org-less A', [ORGLESS_MSG_B]: 'Org-less B' },
+    last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
+  }));
+
+  // An org-less farmer who opted into community messaging someone who is neither in their org
+  // (they have none) nor opted in themselves: denied.
+  await assertFails(setDoc(doc(orglessADb, 'message_threads', 'thread-orgless-a-farmerA'), {
+    participants: [ORGLESS_MSG_A, FARMER_A],
+    participant_names: { [ORGLESS_MSG_A]: 'Org-less A', [FARMER_A]: 'Farmer A' },
     last_message: '', last_message_at: '2026-10-10T00:00:00.000Z', created_at: '2026-10-10T00:00:00.000Z',
   }));
 });
