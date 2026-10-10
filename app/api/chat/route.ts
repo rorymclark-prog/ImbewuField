@@ -4,6 +4,7 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
 import { quantityTotals, recordQuantityLabel, recordQuantityPayload, recordUnit, type RecordQuantityRow } from '@/lib/farm-records';
+import { contextTooLarge, imageTooLarge, messageTooLong, tooManyMessages } from '@/lib/api-request-limits';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -164,6 +165,20 @@ export async function POST(req: NextRequest) {
   }
   const messages: ChatMsg[] = Array.isArray(body.messages) ? body.messages : [];
   const ctx = body.context as Ctx | undefined;
+  const image = body.image as { data: string; mediaType: string } | undefined;
+
+  if (tooManyMessages(messages.length)) {
+    return new Response('Too many messages in this conversation.', { status: 413 });
+  }
+  if (messageTooLong(messages.filter((m): m is ChatMsg => typeof m?.content === 'string'))) {
+    return new Response('One of your messages is too long.', { status: 413 });
+  }
+  if (contextTooLarge(ctx)) {
+    return new Response('Too much context data sent with this request.', { status: 413 });
+  }
+  if (imageTooLarge(image)) {
+    return new Response('Photo is too large.', { status: 413 });
+  }
 
   const ctxBlock = buildContext(ctx);
   const langName = ctx?.language ? LANG_NAMES[ctx.language] : undefined;
@@ -179,7 +194,6 @@ export async function POST(req: NextRequest) {
     .map((m) => ({ role: m.role, content: m.content }));
 
   // Optional photo on the latest user turn → multimodal diagnosis
-  const image = body.image as { data: string; mediaType: string } | undefined;
   if (image?.data && clean.length) {
     const suppliedType = image.mediaType || 'image/jpeg';
     const mediaType: AllowedMediaType = (ALLOWED_MEDIA_TYPES as readonly string[]).includes(suppliedType)
