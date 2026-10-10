@@ -58,7 +58,7 @@ import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
 import { applyConsent, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
 import { buildCohortSeries, type CohortLedger } from '@/lib/cohort-series';
-import { buildFarmerMetrics, coarsenFarmerLocation, type NetworkFarmer } from '@/lib/network';
+import { buildFarmerMetrics, coarsenFarmerLocation, withServerIdentity } from '@/lib/network';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
@@ -130,12 +130,15 @@ export async function GET(req: NextRequest) {
     const salesRows = rows<SalesLog>(sales);
     const expenseRows = rows<ExpenseLog>(expenses);
 
-    const farmer = {
+    // sec-05: identity fields (id/name/orgId) must come from the server, not the farmer's own
+    // `network` map — see withServerIdentity() for why.
+    const farmer = withServerIdentity(doc.data().network, {
       id: doc.id,
       name: (doc.data().full_name as string) ?? 'Unnamed',
-      orgId,
-      ...(doc.data().network ?? {}),
-    } as unknown as NetworkFarmer;
+      // orgId was already checked truthy above, before loadFarmer is ever invoked — TS can't see
+      // that across this nested function declaration's hoisting boundary.
+      orgId: orgId!,
+    });
 
     const raw = {
       farmer,
