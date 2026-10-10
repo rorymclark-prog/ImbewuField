@@ -60,8 +60,13 @@ test('FieldJournal: Simple leads with entries and one add-note action, hiding th
 });
 
 test('FieldJournal: the primary add-note/new-entry action opens the same entry sheet in both modes', () => {
-  const opens = [...JOURNAL.matchAll(/onClick=\{\(\) => setSheet\(\{ open: true, entry: null \}\)\}/g)];
-  assert.ok(opens.length >= 1, 'at least one control must open a blank entry via setSheet({ open: true, entry: null })');
+  // bug-03 wrapped the bare setSheet({ open: true, entry: null }) calls in an openSheet(entry)
+  // helper (it also clears the storage-full sheetError from any previous attempt), so the open
+  // action is still unconditionally reachable here, just through that one extra function.
+  const opens = [...JOURNAL.matchAll(/onClick=\{\(\) => openSheet\(null\)\}/g)];
+  assert.ok(opens.length >= 1, 'at least one control must open a blank entry via openSheet(null)');
+  assert.match(JOURNAL, /function openSheet\(entry: JournalEntry \| null\) \{\s*\n\s*setSheetError\(null\);\s*\n\s*setSheet\(\{ open: true, entry \}\);\s*\n\s*\}/,
+    'openSheet must still end up calling setSheet({ open: true, entry })');
   // The primary sticky action button (not the empty-state example CTA) must be reachable
   // regardless of simple — it is not wrapped in any !simple/simple-only guard of its own.
   assert.match(JOURNAL, /<Plus size=\{20\} \/>\s*\{simple \? ui\('Add a note'/, 'the sticky primary button must render its icon + label pair unconditionally');
