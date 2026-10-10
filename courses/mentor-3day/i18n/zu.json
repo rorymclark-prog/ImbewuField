@@ -1,0 +1,713 @@
+{
+  "_lang": "zu",
+  "_status": "DRAFT — machine-assisted; must be read back by a first-language isiZulu speaker who farms before printing",
+  "posters": {
+    "M-P01": {
+      "headline": "Hamba eceleni, hhayi phambili",
+      "labels": [
+        "Phambili: ngiyahola",
+        "Emuva: ngiyaphusha",
+        "Eceleni: sihamba ndawonye"
+      ],
+      "question": ""
+    },
+    "M-P02": {
+      "headline": "Isethembiso someluleki",
+      "labels": [
+        "Ngilalela kuqala",
+        "Ngithembisa okuyiqiniso kuphela",
+        "Indaba yakho iyimfihlo",
+        "Azikho izipho ezibophayo",
+        "Ngikugcina uphephile"
+      ],
+      "question": ""
+    },
+    "M-P03": {
+      "headline": "Lalela ngezindlebe, amehlo, inhliziyo",
+      "labels": [
+        "Izindlebe: myeke aqede",
+        "Amehlo: ezingeni elifanayo",
+        "Inhliziyo: bona imizwa",
+        "Phinda akushilo"
+      ],
+      "question": ""
+    },
+    "M-P04": {
+      "headline": "Khwela ileli lemibuzo",
+      "labels": [
+        "Ovaliwe: yebo noma cha",
+        "Ovulekile: kanjani, yini",
+        "Ojulile: kwenzekani",
+        "Icebo lomlimi: yini enye?"
+      ],
+      "question": ""
+    },
+    "M-P05": {
+      "headline": "Ngiyenza · Siyenza · Uyenza",
+      "labels": [
+        "Ngiyenza: ngibonisa kanye",
+        "Siyenza: ndawonye",
+        "Uyenza: buka uthule",
+        "Xoxa: yini esebenzile?"
+      ],
+      "question": ""
+    },
+    "M-P06": {
+      "headline": "Umsebenzi owodwa, umuntu oyedwa, usuku olulodwa",
+      "labels": [
+        "Yini?",
+        "Ubani?",
+        "Kuze kube nini?",
+        "Sizokwazi kanjani?"
+      ],
+      "question": ""
+    },
+    "M-P07": {
+      "headline": "Iminwe emihlanu, izinyathelo ezinhlanu",
+      "labels": [
+        "Bheka okwedlule",
+        "Hamba ubheke",
+        "Lalela ubuze",
+        "Zama ndawonye",
+        "Vumelana ubhale"
+      ],
+      "question": ""
+    },
+    "M-P08": {
+      "headline": "Okufanele ukubheke, isigaba ngesigaba",
+      "labels": [
+        "Isiqalo",
+        "Ukutshala nezikhala",
+        "Ukukhula nezinambuzane",
+        "Ukuvuna nokukala",
+        "Ukuthengisa okusalayo",
+        "Ukubuyekeza nembewu"
+      ],
+      "question": ""
+    },
+    "M-P09": {
+      "headline": "Ubani ongidinga kakhulu?",
+      "labels": [
+        "Obomvu: njalo emavikini ama-2",
+        "Ophuzi: njalo ngenyanga",
+        "Oluhlaza: iqembu neselula"
+      ],
+      "question": ""
+    },
+    "M-P10": {
+      "headline": "Isonto lomeluleki",
+      "labels": [
+        "Iqembu elilodwa ngosuku",
+        "Umhlangano weqembu njalo ngesonto",
+        "Kude kuqala",
+        "NgoLwesihlanu: iselula, amarekhodi"
+      ],
+      "question": ""
+    },
+    "M-P11": {
+      "headline": "Funda engadini yomakhelwane",
+      "labels": [
+        "Ukwamukela nokubhalisa",
+        "Uhambo lomsingathi",
+        "Zama ndawonye",
+        "Isiyingi sokuxoxa",
+        "Wonke umuntu uvuma umsebenzi owodwa"
+      ],
+      "question": ""
+    },
+    "M-P12": {
+      "headline": "Imizuzu eli-10 ocingweni",
+      "labels": [
+        "Bingelela",
+        "Bheka okwedlule",
+        "Ngikhombise",
+        "Yini elandelayo?",
+        "Usuku"
+      ],
+      "question": ""
+    },
+    "M-P13": {
+      "headline": "Izinyanga eziyisi-6 nabalimi bethu",
+      "labels": [
+        "Isiqalo",
+        "Ukuqalisa",
+        "Ukukhula",
+        "Ukuvuna",
+        "Ukuthengisa",
+        "Ukubuyekeza"
+      ],
+      "question": ""
+    },
+    "M-P14": {
+      "headline": "Iselula noma iphepha: amarekhodi afanayo",
+      "labels": [
+        "Kala ubhale",
+        "Imali engenayo, ephumayo",
+        "Gcina irisidi",
+        "Nika umthengi i-invoyisi",
+        "Funda isizini yonke"
+      ],
+      "question": ""
+    },
+    "M-P15": {
+      "headline": "Uma kunzima",
+      "labels": [
+        "Hlala uzolile",
+        "Lalela",
+        "Yini angayenza?",
+        "Ubani omunye ongasiza?"
+      ],
+      "question": ""
+    },
+    "M-P16": {
+      "headline": "Ngikhombise okushintshile",
+      "labels": [
+        "Ngaphambi",
+        "Ngemuva",
+        "Usuku",
+        "Esikubonile"
+      ],
+      "question": ""
+    }
+  },
+  "slides": {
+    "M-D1-01": {
+      "title": "Siyanamukela",
+      "screen": [
+        "Walking With Farmers (Sihamba Nabalimi)",
+        "Usuku 1 kwezi-3: lalela, buza, qeqesha"
+      ]
+    },
+    "M-D1-02": {
+      "title": "Amaqembu ethu nesivumelwano sethu",
+      "screen": [
+        "Amaqembu aba-5, aqanjwe ngezitshalo",
+        "Umholi · Ogcina isikhathi · Ophethe impahla · Obhalayo · Obikayo",
+        "Imithetho emihlanu esivumelana ngayo"
+      ]
+    },
+    "M-D1-03": {
+      "title": "Ukuvakasha okubili",
+      "screen": [
+        "Ukuvakasha A noma B?",
+        "Yikuphi okukwenza uzame futhi?"
+      ]
+    },
+    "M-D1-04": {
+      "title": "Hamba eceleni",
+      "screen": [
+        "Phambili: ngiyahola",
+        "Emuva: ngiyaphusha",
+        "Eceleni: sihamba ndawonye"
+      ]
+    },
+    "M-D1-05": {
+      "title": "Isethembiso someluleki",
+      "screen": [
+        "Lalela kuqala · thembisa okuyiqiniso kuphela",
+        "Imfihlo · azikho izipho ezibophayo",
+        "Gcina abantu bephephile"
+      ]
+    },
+    "M-D1-06": {
+      "title": "Ningenzani?",
+      "screen": [
+        "Ikhadi elilodwa eqenjini · imizuzu engu-8",
+        "Obikayo uphendula ngomzuzu o-1"
+      ]
+    },
+    "M-D1-07": {
+      "title": "Lalela ngezindlebe, amehlo, inhliziyo",
+      "screen": [
+        "Izindlebe: myeke aqede",
+        "Amehlo: ezingeni elifanayo, iselula ibekiwe",
+        "Inhliziyo: bona imizwa · phinda akushilo"
+      ]
+    },
+    "M-D1-08": {
+      "title": "Ukulalela ngabathathu",
+      "screen": [
+        "Okhulumayo · Olalelayo · Obukayo",
+        "Imizuzu emi-5 ukukhuluma + emi-3 impendulo",
+        "Shintshanani kathathu"
+      ]
+    },
+    "M-D1-09": {
+      "title": "Khwela ileli lemibuzo",
+      "screen": [
+        "Ovaliwe → Ovulekile → Ojulile",
+        "→ Icebo lomlimi uqobo",
+        "\"Yini enye?\""
+      ]
+    },
+    "M-D1-10": {
+      "title": "Qalani ngokusebenzayo",
+      "screen": [
+        "I-fishbowl: izindlela ezimbili zokuqala",
+        "\"Yiziphi izinkinga onazo?\"",
+        "\"Yini oziqhenya ngayo?\""
+      ]
+    },
+    "M-D1-11": {
+      "title": "Ngiyenza · Siyenza · Uyenza",
+      "screen": [
+        "Ngiyenza: ngibonisa kanye, kancane",
+        "Siyenza: izandla zomlimi",
+        "Uyenza: buka uthule · bese nixoxa"
+      ]
+    },
+    "M-D1-12": {
+      "title": "Imizuliswano yokuqeqesha",
+      "screen": [
+        "Umqeqeshi · Umlimi · Ababukeli aba-3",
+        "Imizuzu eyi-12 ukuqeqesha + emi-3 impendulo",
+        "Imizuliswano emibili"
+      ]
+    },
+    "M-D1-13": {
+      "title": "Ukwenzile noma udinga usizo?",
+      "screen": [
+        "Yedwa futhi kahle = Demonstrated (Ukwenzile)",
+        "Ngosizo = Needs further support (Usadinga usizo)",
+        "Akukona ukwehluleka: icebo elilandelayo"
+      ]
+    },
+    "M-D1-14": {
+      "title": "Isivumelwano somsebenzi",
+      "screen": [
+        "Yini? Ubani?",
+        "Kuze kube nini?",
+        "Sizokwazi kanjani?"
+      ]
+    },
+    "M-D1-15": {
+      "title": "Ngikhombise okushintshile",
+      "screen": [
+        "Ngaphambi · ngemuva · usuku",
+        "Vala kuphela uma kunobufakazi",
+        "Akwenziwanga? Yini evimbile?"
+      ]
+    },
+    "M-D1-16": {
+      "title": "Isiyingi sokuvala",
+      "screen": [
+        "Igama elilodwa ngalamuhla",
+        "Kusasa: izingadi zangempela, sihamba ngo-10:05",
+        "Izicathulo ezivaliwe, isigqoko, amanzi"
+      ]
+    },
+    "M-D2-01": {
+      "title": "Usuku 2: ukuvakasha epulazini",
+      "screen": [
+        "Walking With Farmers",
+        "Usuku 2 kwezi-3: ukuvakasha epulazini"
+      ]
+    },
+    "M-D2-02": {
+      "title": "Isandla Sokuvakasha",
+      "screen": [
+        "Bheka okwedlule · Hamba ubheke",
+        "Lalela ubuze · Zama ndawonye",
+        "Vumelana ubhale"
+      ]
+    },
+    "M-D2-03": {
+      "title": "Imizuzu engama-60, iminwe emihlanu",
+      "screen": [
+        "Imizuzu eyi-10 · 15 · 10 · 15 · 10",
+        "Ungalokothi unqamule umunwe weringi noma ucikicane"
+      ]
+    },
+    "M-D2-04": {
+      "title": "Ukuzilolonga ngokushesha",
+      "screen": [
+        "Ngababili · imizuzu eyi-10",
+        "Imizuzu emi-2 umunwe ngamunye"
+      ]
+    },
+    "M-D2-05": {
+      "title": "Okufanele ukubheke, isigaba ngesigaba",
+      "screen": [
+        "Isiqalo · ukutshala · ukukhula",
+        "Ukuvuna · ukuthengisa · ukubuyekeza",
+        "Khetha izinto ezi-3–5 zokuhlola"
+      ]
+    },
+    "M-D2-06": {
+      "title": "[APP] Record visit",
+      "screen": [
+        "Mentor workspace → People & gardens",
+        "Record visit → iminwe emi-5, izikhala ezi-5",
+        "Londoloza ungekho ku-inthanethi · kuzongena kamuva"
+      ]
+    },
+    "M-D2-07": {
+      "title": "[PAPER] Ifomu lokuvakasha",
+      "screen": [
+        "Amabhokisi ama-5 = iminwe emi-5",
+        "Yigcwalise epulazini",
+        "Mfundele · shiya ikhadi"
+      ]
+    },
+    "M-D2-08": {
+      "title": "Iqembu lenu labathathu",
+      "screen": [
+        "Umeluleki uyahola · Obhalayo ubhala agcine isikhathi",
+        "Obukayo uyabuka, akasho lutho",
+        "Azikho izethembiso · azikho izipho · imvume"
+      ]
+    },
+    "M-D2-09": {
+      "title": "Ukuvakasha epulazini",
+      "screen": [
+        "Imizuzu engama-60 nomlimi wangempela",
+        "Imizuzu emi-5 yokuxoxa: izinkanyezi ezimbili, isifiso",
+        "Ukulandwa ngo-11:45"
+      ]
+    },
+    "M-D2-10": {
+      "title": "Umhlangano weqembu",
+      "screen": [
+        "Ukwamukela · Uhambo lomsingathi · Zama",
+        "Isiyingi sokuxoxa · Wonke umuntu uvuma umsebenzi owodwa"
+      ]
+    },
+    "M-D2-11": {
+      "title": "Iziteshi nesiyingi sokuxoxa",
+      "screen": [
+        "Iziteshi ezi-3 · imizuzu engu-8 lilinye",
+        "Abalimi baphendula abalimi kuqala"
+      ]
+    },
+    "M-D2-12": {
+      "title": "Abalimi bafunda kubalimi",
+      "screen": [
+        "Inhlabathi efanayo, imvula efanayo",
+        "Ukubona kuwukukholwa",
+        "Shintshanisa umsingathi"
+      ]
+    },
+    "M-D2-13": {
+      "title": "Ukuxoxa ngemuva kokuvakasha",
+      "screen": [
+        "Umeluleki kuqala · bese Obukayo · bese Obhalayo",
+        "Izinkanyezi ezimbili nesifiso"
+      ]
+    },
+    "M-D2-14": {
+      "title": "Ibalazwe lesandla",
+      "screen": [
+        "Ichashaza eliluhlaza: umunwe wethu ongcono",
+        "Ichashaza le-ochre: umunwe wethu onzima kakhulu"
+      ]
+    },
+    "M-D2-15": {
+      "title": "Ubani okhulume kakhulu?",
+      "screen": [
+        "Umlimi ukhuluma ngaphezu kwengxenye",
+        "Cela umngane akubuke njalo ngenyanga"
+      ]
+    },
+    "M-D3-01": {
+      "title": "Usuku 3: fikelela wonke umlimi",
+      "screen": [
+        "Walking With Farmers",
+        "Usuku 3 kwezi-3: isizini"
+      ]
+    },
+    "M-D3-02": {
+      "title": "Ubani ongidinga kakhulu?",
+      "screen": [
+        "Obomvu: njalo emavikini ama-2",
+        "Ophuzi: njalo ngenyanga",
+        "Oluhlaza: umhlangano weqembu + iselula"
+      ]
+    },
+    "M-D3-03": {
+      "title": "Hlelani amakhadi",
+      "screen": [
+        "Amakhadi angama-40 · R, A, G",
+        "Imizuzu eyi-10 · shonini ukuthi kungani"
+      ]
+    },
+    "M-D3-04": {
+      "title": "Yenza isibalo",
+      "screen": [
+        "Obomvu × 2 + Ophuzi = ukuvakasha okudingekayo",
+        "Izinsuku zokuphuma × ukuvakasha ngosuku = okutholakalayo",
+        "Shiya isikhathi esingeziwe"
+      ]
+    },
+    "M-D3-05": {
+      "title": "Isonto lomeluleki",
+      "screen": [
+        "Iqembu elilodwa ngosuku",
+        "Qalani kude, nibuyele emuva",
+        "NgoLwesihlanu: iselula, amarekhodi, icebo"
+      ]
+    },
+    "M-D3-06": {
+      "title": "Umhlangano weqembu, izingxenye eziyisi-6",
+      "screen": [
+        "Amahora angu-2–3 · abalimi abangu-8–12",
+        "Umsingathi uyafundisa, abalimi bayazama",
+        "Shintsha umsingathi njalo ngenyanga"
+      ]
+    },
+    "M-D3-07": {
+      "title": "Lihleleni, nenze ingxenye",
+      "screen": [
+        "Hlelani umhlangano weqembu wenyanga yenu",
+        "Wenzeni imizuzu eyi-10 kwelinye iqembu"
+      ]
+    },
+    "M-D3-08": {
+      "title": "Usuku lwensimu lwabalimi",
+      "screen": [
+        "Abalimi bakhombisa abalimi",
+        "Isivuno sokuqala · ukubuyekeza isizini",
+        "Abantu abangu-20 kuya ku-60"
+      ]
+    },
+    "M-D3-09": {
+      "title": "Imizuzu eli-10 ocingweni",
+      "screen": [
+        "Bingelela · Bheka okwedlule · Ngikhombise",
+        "Yini elandelayo? · Usuku"
+      ]
+    },
+    "M-D3-10": {
+      "title": "Izinyanga eziyisi-6 nabalimi bethu",
+      "screen": [
+        "Isiqalo · ukuqalisa · ukukhula",
+        "Ukuvuna · ukuthengisa · ukubuyekeza"
+      ]
+    },
+    "M-D3-11": {
+      "title": "Amaqembu enu ebalazweni",
+      "screen": [
+        "Fakani umhlangano weqembu enyangeni yawo",
+        "Bekani uphawu ezinsukwini zensimu"
+      ]
+    },
+    "M-D3-12": {
+      "title": "Qeqesha amarekhodi nemali",
+      "screen": [
+        "Iselula noma iphepha: amarekhodi afanayo",
+        "Umsebenzi owodwa ngokuvakasha, imizuzu eyi-10–15",
+        "Izandla zomlimi"
+      ]
+    },
+    "M-D3-13": {
+      "title": "[APP] Isivuno, imali, irisidi",
+      "screen": [
+        "Kala → Picked (kg)",
+        "Sold no-Spent · hlola ngaphambi kokufaka",
+        "Irisidi: Lima iyayifunda, wena uyahlola"
+      ]
+    },
+    "M-D3-14": {
+      "title": "[PAPER] Ikhasi lesivuno, incwadi yemali",
+      "screen": [
+        "Usuku · isitshalo · kg · kuyephi",
+        "Imali engenayo · imali ephumayo · inombolo yerisidi"
+      ]
+    },
+    "M-D3-15": {
+      "title": "Nika umthengi i-invoyisi",
+      "screen": [
+        "I-app: Invoice builder · Saved · Share PDF",
+        "Iphepha: incwadi yamakhophi · ikhophi iyasala",
+        "I-invoyisi akuyona inkokhelo"
+      ]
+    },
+    "M-D3-16": {
+      "title": "Uma kunzima",
+      "screen": [
+        "Hlala uzolile · Lalela",
+        "Yini angayenza?",
+        "Ubani omunye ongasiza?"
+      ]
+    },
+    "M-D3-17": {
+      "title": "Icebo lami lesizini nomngane wami",
+      "screen": [
+        "Hlelani inyanga 1 nesonto 1",
+        "Shintshanani izinombolo nomngane",
+        "Ukuvakasha okukodwa okubukwayo enyangeni 1"
+      ]
+    },
+    "M-D3-18": {
+      "title": "Siyabonga",
+      "screen": [
+        "Hambani eceleni kwabalimi benu",
+        "Ukuhlola · izitifiketi"
+      ]
+    },
+    "M-ON-01": {
+      "title": "Walking With Farmers ku-inthanethi",
+      "screen": [
+        "Amasonto ayisi-6 · ikilasi le-WhatsApp",
+        "Umsebenzi wensimu njalo ngesonto"
+      ]
+    },
+    "M-ON-02": {
+      "title": "Indlela esifunda ngayo ku-inthanethi",
+      "screen": [
+        "Ama-voice note ≤ imizuzu emi-2",
+        "Imvume ngaphambi kwamagama noma ubuso",
+        "Amakhadi aphrintiwe esandleni sakho"
+      ]
+    },
+    "M-ON-03": {
+      "title": "Isonto 1: hamba eceleni ulalele",
+      "screen": [
+        "Eceleni, hhayi phambili",
+        "Izindlebe · amehlo · inhliziyo",
+        "Umsebenzi wensimu: lalela imizuzu engama-20"
+      ]
+    },
+    "M-ON-04": {
+      "title": "Isonto 2: khwela ileli",
+      "screen": [
+        "Ovaliwe → ovulekile → ojulile → icebo lomlimi",
+        "Qala ngokusebenzayo"
+      ]
+    },
+    "M-ON-05": {
+      "title": "Isonto 2: qeqesha ikhono",
+      "screen": [
+        "Ngiyenza · Siyenza · Uyenza",
+        "Umsebenzi wensimu: isithombe sezandla zomlimi"
+      ]
+    },
+    "M-ON-06": {
+      "title": "Isonto 3: isivumelwano somsebenzi",
+      "screen": [
+        "Yini · Ubani · Kuze kube nini",
+        "Sizokwazi kanjani?"
+      ]
+    },
+    "M-ON-07": {
+      "title": "Isonto 3: Isandla Sokuvakasha",
+      "screen": [
+        "Iminwe emihlanu, izinyathelo ezinhlanu",
+        "Umsebenzi wensimu: ukuvakasha okuphelele, umngane uyabuka"
+      ]
+    },
+    "M-ON-08": {
+      "title": "Isonto 4: bhala ukuvakasha",
+      "screen": [
+        "I-app: Record visit, i-draft ungekho ku-inthanethi",
+        "Iphepha: amabhokisi ama-5, mfundele",
+        "Umsebenzi wensimu: buyela, uvale umsebenzi"
+      ]
+    },
+    "M-ON-09": {
+      "title": "Isonto 5: irobhothi",
+      "screen": [
+        "Obomvu · Ophuzi · Oluhlaza",
+        "Yenza isibalo sakho"
+      ]
+    },
+    "M-ON-10": {
+      "title": "Isonto 5: isizini",
+      "screen": [
+        "Imihlangano yeqembu · izinsuku zensimu · iselula",
+        "Umsebenzi wensimu: hlela umhlangano weqembu"
+      ]
+    },
+    "M-ON-11": {
+      "title": "Isonto 6: amarekhodi nemali",
+      "screen": [
+        "Isivuno · imali · irisidi · i-invoyisi",
+        "I-app noma iphepha, ukuhlola okufanayo"
+      ]
+    },
+    "M-ON-12": {
+      "title": "Isonto 6: izikhathi ezinzima necebo lakho",
+      "screen": [
+        "Hlala uzolile · Lalela · Okungenziwa nguye · Usizo",
+        "Thumela icebo lakho lesizini"
+      ]
+    }
+  },
+  "glossary": {
+    "mentor": "umeluleki",
+    "farmer": "umlimi (pl. abalimi)",
+    "garden": "ingadi",
+    "visit": "ukuvakasha",
+    "cluster": "iqembu",
+    "cluster visit": "umhlangano weqembu",
+    "host (farmer)": "umsingathi",
+    "field day": "usuku lwensimu",
+    "field task": "umsebenzi wensimu",
+    "action agreement": "isivumelwano somsebenzi",
+    "action": "umsebenzi",
+    "records": "amarekhodi",
+    "invoice": "i-invoyisi",
+    "till slip / slip": "irisidi",
+    "payment": "inkokhelo",
+    "harvest": "isivuno",
+    "weigh": "ukukala",
+    "baseline": "isiqalo",
+    "establish": "ukuqalisa",
+    "review": "ukubuyekeza",
+    "season": "isizini",
+    "spacing": "izikhala",
+    "pests": "izinambuzane",
+    "seed": "imbewu",
+    "phone": "iselula",
+    "phone check-in (on the phone)": "ocingweni",
+    "voice note": "i-voice note (ama-voice note)",
+    "online": "ku-inthanethi",
+    "offline": "ungekho ku-inthanethi",
+    "app": "i-app",
+    "paper": "iphepha",
+    "traffic light": "irobhothi",
+    "Red": "Obomvu",
+    "Amber": "Ophuzi",
+    "Green": "Oluhlaza",
+    "evidence": "ubufakazi",
+    "consent": "imvume",
+    "privacy / private": "imfihlo",
+    "promise": "isethembiso",
+    "gift that binds": "isipho esibophayo",
+    "buddy": "umngane",
+    "coach (verb)": "qeqesha",
+    "coach (person)": "umqeqeshi",
+    "observer": "obukayo",
+    "recorder": "obhalayo",
+    "speaker": "okhulumayo",
+    "listener": "olalelayo",
+    "reporter": "obikayo",
+    "timekeeper": "ogcina isikhathi",
+    "leader": "umholi",
+    "skill": "ikhono",
+    "question ladder": "ileli lemibuzo",
+    "closed question": "umbuzo ovaliwe",
+    "open question": "umbuzo ovulekile",
+    "deeper question": "umbuzo ojulile",
+    "Visit Hand": "Isandla Sokuvakasha",
+    "Look back": "Bheka okwedlule",
+    "Walk and look": "Hamba ubheke",
+    "Listen and ask": "Lalela ubuze",
+    "Try it together": "Zama ndawonye",
+    "Agree and record": "Vumelana ubhale",
+    "ring finger": "umunwe weringi",
+    "little finger": "ucikicane",
+    "I do · We do · You do": "Ngiyenza · Siyenza · Uyenza",
+    "share circle": "isiyingi sokuxoxa",
+    "station": "isiteshi (iziteshi)",
+    "say it back": "phinda akushilo",
+    "Show me": "Ngikhombise",
+    "Stay calm": "Hlala uzolile",
+    "plan": "icebo",
+    "sum": "isibalo",
+    "map": "ibalazwe",
+    "two stars and a wish": "izinkanyezi ezimbili nesifiso",
+    "Walking With Farmers (course name)": "Walking With Farmers (Sihamba Nabalimi) — kept in English",
+    "Demonstrated (app value)": "Demonstrated (Ukwenzile)",
+    "Needs further support (app value)": "Needs further support (Usadinga usizo)"
+  }
+}
