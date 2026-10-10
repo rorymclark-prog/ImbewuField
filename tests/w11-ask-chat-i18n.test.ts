@@ -162,3 +162,43 @@ test("ProfileSheet.tsx leaves the close button's size alone (another track owns 
   const s = source('components/ProfileSheet.tsx');
   assert.match(s, /width: 38,\s*\n\s*height: 38,/, 'the close button size changed unexpectedly');
 });
+
+// lang-07: app/error.tsx rendered error.message straight to the farmer (a raw JS stack-trace
+// fragment is unreadable and unactionable), and app/error.tsx/not-found.tsx/global-error.tsx
+// were English-only. None of the three can rely on useLanguage()/t() — a route-segment error
+// can fire because the root layout (which mounts LanguageProvider) itself failed, and
+// global-error.tsx replaces that layout outright — so lib/error-page-copy.ts reads
+// localStorage directly and safely instead.
+test('lib/error-page-copy.ts reads the saved language safely and never throws', () => {
+  const s = source('lib/error-page-copy.ts');
+  assert.match(s, /function readErrorPageLang/, 'the safe language reader is missing');
+  assert.match(s, /try \{[\s\S]*?window\.localStorage\.getItem\('permamap_lang'\)[\s\S]*?\} catch/, 'the localStorage read is not wrapped in try/catch');
+  assert.match(s, /errorTitle:/, 'the English copy pair is missing');
+  assert.match(s, /errorTitle: 'Kukhona okungahambi kahle'/, 'the isiZulu copy pair is missing');
+});
+
+test('app/error.tsx never renders the raw JS error message and reads language safely', () => {
+  const s = source('app/error.tsx');
+  assert.doesNotMatch(s, /\{error\.message/, 'the raw error.message can still reach the farmer');
+  assert.match(s, /console\.error\(error\)/, 'the real error should still be logged for debugging');
+  assert.match(s, /readErrorPageLang/, 'app/error.tsx must use the safe language reader, not useLanguage()');
+  assert.doesNotMatch(s, /useLanguage/, 'app/error.tsx must not depend on the language provider, which may have failed');
+});
+
+test('app/not-found.tsx and app/global-error.tsx are translated and read language safely', () => {
+  for (const path of ['app/not-found.tsx', 'app/global-error.tsx']) {
+    const s = source(path);
+    assert.match(s, /readErrorPageLang/, `${path} must use the safe language reader, not useLanguage()`);
+    assert.doesNotMatch(s, /useLanguage/, `${path} must not depend on the language provider, which may have failed`);
+    assert.match(s, /copy\.(notFoundTitle|errorTitle)/, `${path} does not render translated copy`);
+  }
+});
+
+test('app/global-error.tsx does not rely on globals.css custom properties (it replaces the root layout that loads it)', () => {
+  const s = source('app/global-error.tsx');
+  const styleBlocks = s.match(/style=\{\{[^}]*\}\}/g) ?? [];
+  assert.ok(styleBlocks.length > 0, 'expected inline style objects to check — did the markup change?');
+  for (const block of styleBlocks) {
+    assert.doesNotMatch(block, /var\(--/, `global-error.tsx uses a CSS variable that app/globals.css may never have loaded here: ${block}`);
+  }
+});
