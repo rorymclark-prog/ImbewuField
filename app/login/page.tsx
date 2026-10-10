@@ -7,6 +7,7 @@ import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
 import { translate, useLanguage } from '@/lib/i18n';
+import { safeLoginRedirect } from '@/lib/safe-redirect';
 
 import Illustration from '@/components/Illustration';
 
@@ -99,8 +100,7 @@ function LoginPageInner() {
   const searchParams = useSearchParams();
   // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
   // honour it when it's a same-app relative path — never an absolute/external URL.
-  const fromParam = searchParams.get('from');
-  const from = fromParam && fromParam.startsWith('/') ? fromParam : null;
+  const from = safeLoginRedirect(searchParams.get('from'));
   const { signIn, signUp, signInWithGoogle, resetPassword } = useAuth();
 
   const [mode, setMode] = useState<Mode>('signin');

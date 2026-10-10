@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test, { after, before } from 'node:test';
 import { NextRequest } from 'next/server';
 
-import { GET } from '@/app/api/contours/route';
+import { GET, buildThresholds } from '@/app/api/contours/route';
 import { contourCacheKey } from '@/lib/contour-cache-key';
 import { sharedLimiter } from '@/lib/api-rate-limit';
 
@@ -68,4 +68,39 @@ test('cache key collapses sub-pixel jitter but keeps distinct farms apart', () =
   // Different request parameters (interval/major) must not collide either.
   const otherInterval = contourCacheKey(30.1, -25.1, 30.1005, -25.0995, 10, 25);
   assert.notEqual(otherInterval, base, 'a different contour interval must not reuse another interval\'s cache entry');
+});
+
+// sec-01: a tiny, finite, positive interval (e.g. 1e-9) used to pass validation outright and let
+// the threshold-building loop run (max - min) / interval times before anything capped it — an
+// unauthenticated caller could run the server out of memory/CPU with one request.
+test('a near-zero or absurdly large interval is rejected with 400, not accepted', async () => {
+  const bbox = '?minLon=30&minLat=-25.01&maxLon=30.01&maxLat=-25';
+  // '0' and non-numeric strings are not covered here: parseFloat(...) || 5 already replaces any
+  // falsy parse result (0, NaN) with the default of 5 before validation ever sees it — a separate,
+  // pre-existing behaviour this task does not change. Infinity survives that fallback (it's
+  // truthy), which is exactly the case Number.isFinite() below exists to catch.
+  for (const interval of ['1e-9', '0.0001', '-5', '150', 'Infinity', '-Infinity']) {
+    const res = await GET(contoursRequest('203.0.113.50', `${bbox}&interval=${interval}`));
+    assert.equal(res.status, 400, `interval=${interval} must be rejected`);
+  }
+});
+
+test('an interval inside the allowed 0.5-100m range passes validation (fails later only on DEM fetch)', async () => {
+  const bbox = '?minLon=30&minLat=-25.01&maxLon=30.01&maxLat=-25';
+  const res = await GET(contoursRequest('203.0.113.51', `${bbox}&interval=5`));
+  // No Mapbox token configured in this test environment, so the route must fail AFTER its own
+  // validation (500 "Mapbox token not configured"), never with the 400 validation error.
+  assert.notEqual(res.status, 400, 'a valid interval must pass this route\'s own validation');
+});
+
+test('buildThresholds stops at maxCount instead of building the full range first', () => {
+  // A pathologically small interval over a normal elevation range would otherwise build millions
+  // of entries before any cap was applied. The loop itself must bail out at maxCount.
+  const thresholds = buildThresholds(0, 1000, 0.0001, 400);
+  assert.equal(thresholds.length, 400, 'the loop must stop at maxCount, not slice afterwards');
+});
+
+test('buildThresholds returns every multiple of interval across the range when under the cap', () => {
+  const thresholds = buildThresholds(10, 20, 5, 400);
+  assert.deepEqual(thresholds, [10, 15, 20]);
 });
