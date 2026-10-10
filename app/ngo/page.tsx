@@ -94,9 +94,9 @@ export default function NgoPage() {
   if (!loading && user && isLive && !sample && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
-        <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>{tr(lang, 'This is the organisation area', 'Le yindawo yenhlangano')}</p>
-          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>{tr(lang, 'This dashboard is for Organisation programme teams and administrators.', 'Le deshibhodi ingeyamaqembu ohlelo nabaphathi benhlangano.')}</p>
+        <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>{tr(lang, 'This is the organisation area', 'Le yindawo yenhlangano')}</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: 'var(--text-muted)' }}>{tr(lang, 'This dashboard is for Organisation programme teams and administrators.', 'Le deshibhodi ingeyamaqembu ohlelo nabaphathi benhlangano.')}</p>
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ export default function NgoPage() {
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: '#5C5040' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</h1>
+        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--text-muted)' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</h1>
         {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
             gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
@@ -123,7 +123,7 @@ export default function NgoPage() {
           <Link
             href="/network"
             className="text-xs font-display hidden sm:block"
-            style={{ color: '#1F4D2B', textDecoration: 'none', marginRight: 4 }}
+            style={{ color: 'var(--color-forest-800)', textDecoration: 'none', marginRight: 4 }}
           >
             {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
           </Link>
@@ -165,8 +165,8 @@ export default function NgoPage() {
               minHeight: 44,
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? '#1F4D2B' : '#506158',
-              borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
+              color: view === key ? 'var(--color-forest-800)' : 'var(--text-muted)',
+              borderBottom: view === key ? '2px solid var(--color-forest-800)' : '2px solid transparent',
               marginBottom: -1,
             }}
           >
@@ -177,7 +177,7 @@ export default function NgoPage() {
                 // Was fontSize 9, under the 12px micro-label floor and genuinely hard to read on a
                 // laptop. Raised with the pill grown to match, since a 12px digit does not fit a
                 // 16px circle.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                 {badge}
               </span>
             )}
@@ -185,7 +185,7 @@ export default function NgoPage() {
         ))}
       </DashboardTabs>
 
-      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: '#5C5040' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
+      {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
 
       {view === 'evidence' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /></div>}
       {/* Simple only — stands in for the All-tools Training & progress and Assessments tabs,
