@@ -32,6 +32,7 @@ import { BreakMark } from '@/components/ChartBreakMark';
 import { randLabel, randTick } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { recordsFill, recordsTemplate, recordsLabel, isRecordsRegionalLang } from '@/lib/records-regional-drafts';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -75,7 +76,7 @@ export default function CashflowChart({
   wide?: boolean;
 }) {
   const { lang } = useLanguage();
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const [windowMonths, setWindowMonths] = useState(12);
   const [picked, setPicked] = useState<string | null>(null);
 
@@ -138,6 +139,8 @@ export default function CashflowChart({
             {series.earlierRecords ? text('Nothing recorded in these months', 'Akukho okurekhodiwe kulezi zinyanga') : text('No money recorded yet', 'Ayikho imali erekhodiwe okwamanje')}
           </p>
           <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
+            template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined}
+            vars={{ month: series.firstRecordLabel ?? '' }}
             english={series.earlierRecords
               ? `Your records start in ${series.firstRecordLabel}. Try a longer window above to reach them.`
               : 'Log a sale or a cost and this chart draws itself. Two or three months of entries is enough to see a pattern.'}
@@ -158,7 +161,7 @@ export default function CashflowChart({
       {header}
 
       <div className="px-4 py-3.5 flex flex-wrap items-baseline" style={{ gap: '4px 20px' }}>
-        <Figure label={`${text('In', 'Ingenayo')}, ${series.windowMonths} ${text('months', 'izinyanga')}`} value={randLabel(series.totalInZar)} tone={IN_TEXT} />
+        <Figure label={recordsTemplate(lang, 'In, {n} months', 'Ingenayo, {n} izinyanga', { n: series.windowMonths })} value={randLabel(series.totalInZar)} tone={IN_TEXT} />
         <Figure label={text('Out', 'Ephumayo')} value={randLabel(series.totalOutZar)} tone={OUT_TEXT} />
         <Figure
           label={series.totalNetZar < 0 ? text('Cash shortfall', 'Imali esilelayo') : text('Cash surplus', 'Imali esele')}
@@ -257,9 +260,7 @@ function Panels({
   return (
     <div className="px-2">
       <svg viewBox={`0 0 ${W} ${totalH}`} width="100%" style={{ display: 'block' }} role="img"
-          aria-label={lang === 'zu'
-            ? `Imali engenayo nephumayo enyangeni ngayinye kwezingu-${n} ezedlule, nesamba esiqhubekayo ngezansi. English source: Money in and money out for each of the last ${n} months, with a running total below.`
-            : `Money in and money out for each of the last ${n} months, with a running total below.`}>
+          aria-label={recordsLabel(lang, 'Money in and money out for each of the last {n} months, with a running total below.', 'Imali engenayo nephumayo enyangeni ngayinye kwezingu-{n} ezedlule, nesamba esiqhubekayo ngezansi.', { n })}>
         {/* Zero line for the bars, and the two extents of the shared scale. */}
         <line x1={PAD.left} x2={W - PAD.right} y1={zeroY} y2={zeroY} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
         {maxIn > 0 && (
@@ -331,9 +332,7 @@ function Panels({
               fill="transparent" style={{ cursor: 'pointer' }}
               onClick={() => onPick(m.key)}
             >
-              <title>{lang === 'zu'
-                ? `${m.longLabel} — ingenayo ${randLabel(m.moneyInZar)}, ephumayo ${randLabel(m.moneyOutZar)}. English source: ${m.longLabel} — in ${randLabel(m.moneyInZar)}, out ${randLabel(m.moneyOutZar)}`
-                : `${m.longLabel} — in ${randLabel(m.moneyInZar)}, out ${randLabel(m.moneyOutZar)}`}</title>
+              <title>{recordsLabel(lang, '{month} — in {moneyIn}, out {moneyOut}', '{month} — ingenayo {moneyIn}, ephumayo {moneyOut}', { month: m.longLabel, moneyIn: randLabel(m.moneyInZar), moneyOut: randLabel(m.moneyOutZar) })}</title>
             </rect>
           </g>
         ))}
@@ -351,22 +350,29 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
   const outScale = cappedScale(months.map((m) => m.moneyOutZar));
   const cutEnglish: string[] = [];
   const cutZulu: string[] = [];
+  const cutLocal: string[] = [];
   for (const m of months) {
     if (inScale.isClipped(m.moneyInZar)) {
-      cutEnglish.push(`${m.longLabel}, ${randLabel(m.moneyInZar)} in`);
-      cutZulu.push(`${m.longLabel}, ${randLabel(m.moneyInZar)} ingenayo`);
+      const vars = { month: m.longLabel, amount: randLabel(m.moneyInZar) };
+      cutEnglish.push(recordsTemplate('en', '{month}, {amount} in', null, vars));
+      cutZulu.push(recordsTemplate('zu', '{month}, {amount} in', '{month}, {amount} ingenayo', vars));
+      cutLocal.push(recordsTemplate(lang, '{month}, {amount} in', null, vars));
     }
     if (outScale.isClipped(m.moneyOutZar)) {
-      cutEnglish.push(`${m.longLabel}, ${randLabel(m.moneyOutZar)} out`);
-      cutZulu.push(`${m.longLabel}, ${randLabel(m.moneyOutZar)} ephumayo`);
+      const vars = { month: m.longLabel, amount: randLabel(m.moneyOutZar) };
+      cutEnglish.push(recordsTemplate('en', '{month}, {amount} out', null, vars));
+      cutZulu.push(recordsTemplate('zu', '{month}, {amount} out', '{month}, {amount} ephumayo', vars));
+      cutLocal.push(recordsTemplate(lang, '{month}, {amount} out', null, vars));
     }
   }
   if (cutEnglish.length === 0) return null;
   return (
     <div className="px-4 py-2" style={{ borderTop: '1px solid var(--border)' }}>
       <div className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
-        {lang === 'zu' ? (
+        {lang === 'zu' || isRecordsRegionalLang(lang) ? (
           <IsiZuluDraftSource lang={lang} zulu={`Amanani aphezulu kunendawo yawo eshadini anqanyulwe ophawini ukuze ezinye izinyanga zihlale zibonakala: ${cutZulu.join('; ')}.`}
+            template="Too tall for this chart, and cut off at the mark so the other months stay readable: {list}."
+            vars={{ list: cutLocal.join('; ') }}
             english={`Too tall for this chart, and cut off at the mark so the other months stay readable: ${cutEnglish.join('; ')}.`} />
         ) : <>Too tall for this chart, and cut off at the mark so the other months stay readable: <b style={{ fontWeight: 600 }}>{cutEnglish.join('; ')}</b>.</>}
       </div>
@@ -375,7 +381,7 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
 }
 
 function Readout({ month, lang }: { month: FinanceMonthPoint; lang: string }) {
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   return (
     <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid ${HAIRLINE}` }}>
       <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{month.longLabel}</span>

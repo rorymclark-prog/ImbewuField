@@ -72,11 +72,27 @@ be confirmed") can be read as re-entering the cost, which would duplicate it. Bo
 isiZulu reviewers flagged this. The English source is canonical here, so it is unchanged and
 translated faithfully.
 
+## Round 2 (10 October): the Charts tab
+
+Batch 3 adds the five Charts-tab components (`CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`,
+`HarvestReconciliation`, `AreaReturnCards`) and `IsiZuluDraftSource`: 119 more English templates (figures and
+names are `{placeholders}`, so a draft is bound to the sentence, not to one amount), 12 of them isiZulu
+fallback fills. Same method: per-language drafting lane, independent blind back-translation review, the same
+integration rules, plus an automatic hold for any draft that contains a word already rejected in an earlier
+backcheck (Tshivenda "Mbuelo"/"Masheleni o salaho"; Xitsonga "xitirhisiwa", "Vatirhi", "Rixaka", "Muxaka",
+"swiharhi"). Drafters were told to hold finance concepts they were unsure of; these show English: running
+total, cash surplus/shortfall, benchmark, harvest reconciliation, net profit and overheads, and "returns per
+growing area" in Sesotho and Tshivenda (it can read as profit). Month names and the month labels in the charts
+stay English on purpose (a machine-drafted month name was already caught wrong once). Crop names are
+catalogue data and are never translated.
+
+Layout fix found by looking at the phone: the drafted "Harvested X · Sold Y" line was cut off at 390px, so the
+harvest-reconciliation rows now wrap.
+
 ## Not covered (remaining dependencies)
 
-- Charts-tab components: `CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`,
-  `HarvestReconciliation`, `AreaReturnCards` (isiZulu-only inline text; st/ve/ts still English).
-  They overlap crop planning and plan-vs-actual, which are out of this scope.
+- Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
+  production-plan page names, and every held row listed in `draft-<lang>.json`.
 - Dates print with English month abbreviations (`en-ZA`), and user-entered text is never translated.
 - `/invoice` document and tool wording, global navigation and Lima chat.
 - Held strings: see `status: "held"` rows in each `draft-<lang>.json` (units such as eggs, jars,

@@ -3782,5 +3782,1575 @@
    "app/records/page.tsx"
   ],
   "context": "payment method word (mobile money/phone payment), e.g. \"Invoice · Mobile\""
+ },
+ {
+  "id": "R285",
+  "english": "A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown — usually picking that never got written down, sometimes a sale out of an earlier month’s harvest.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R286",
+  "english": "Entries land in the month you recorded them; the logging forms have no date field yet.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R287",
+  "english": "Log a sale or a cost and this chart draws itself. Two or three months of entries is enough to see a pattern.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R288",
+  "english": "Log what you pick and what you sell, and this graph shows how much of your harvest is leaving the farm and how much is staying on it.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R289",
+  "english": "Trace your beds in the Design Studio, then plan a season, and this graph compares the plan against what you actually pick.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R290",
+  "english": "Your crop plan is empty, so there is nothing to compare your harvest against.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R291",
+  "english": "“Kept” is what you picked less what you sold — food eaten at home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components (const text)"
+  ],
+  "context": "Charts tab of the money book: const"
+ },
+ {
+  "id": "R292",
+  "english": "Returns per growing area",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:18"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R293",
+  "english": "This calendar year",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:19"
+  ],
+  "context": "period label"
+ },
+ {
+  "id": "R294",
+  "english": "This month",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:19"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R295",
+  "english": "This season",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:19"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R296",
+  "english": "What your growing space returns",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:19"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R297",
+  "english": "Recorded sales minus assigned costs, per mapped m². Compare the same period and area over time.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:21"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R298",
+  "english": "Combined",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:24"
+  ],
+  "context": "card title: vegetable beds and staple plots together"
+ },
+ {
+  "id": "R299",
+  "english": "{area} m² mapped · {n} assigned entries",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:26"
+  ],
+  "context": "small line on a card: mapped growing area in m² and the number of sales/costs entries assigned to it"
+ },
+ {
+  "id": "R300",
+  "english": "Assign sales and costs to see a result.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:27"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R301",
+  "english": "{sales} sales · {costs} costs",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:27"
+  ],
+  "context": "small line: rand total of sales and rand total of costs for a growing area"
+ },
+ {
+  "id": "R302",
+  "english": "{n} entries still unassigned: {sales} sales and {costs} costs. Edit a Sold or Spent entry and choose its growing area.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:30"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R303",
+  "english": "Shared costs ({shared}) reduce Combined only. Orchard and other activities stay separate. These figures exclude unassigned costs and may omit overheads or labour; they are not full net profit. The denominator is today’s mapped area, not a historical measurement or harvested area.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/AreaReturnCards.tsx:39"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R304",
+  "english": "Money in against money out, month by month, from what you have recorded.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:119"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R305",
+  "english": "Reading your records…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:128"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R306",
+  "english": "No money recorded yet",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:139"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R307",
+  "english": "Nothing recorded in these months",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:139"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R308",
+  "english": "Your records start in {month}. Try a longer window above to reach them.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:142",
+   "components/FinanceGraphs.tsx:276"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R309",
+  "english": "In, {n} months",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:164"
+  ],
+  "context": "caption under a rand figure: total money in over the last N months"
+ },
+ {
+  "id": "R310",
+  "english": "Cash shortfall",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:167"
+  ],
+  "context": "caption under a negative net rand figure (more spent than received)"
+ },
+ {
+  "id": "R311",
+  "english": "Cash surplus",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:167"
+  ],
+  "context": "caption under a positive net rand figure"
+ },
+ {
+  "id": "R312",
+  "english": "Money received minus recorded spending for these months. Unrecorded costs are not included.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:174"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R313",
+  "english": "The lower band is the running total across these months only, starting from zero — not a bank balance.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:185"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R314",
+  "english": "Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month you caught up on later will sit in the month you typed it.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:188"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R315",
+  "english": "Money in and money out for each of the last {n} months, with a running total below.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:263"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R316",
+  "english": "{month} — in {moneyIn}, out {moneyOut}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:335"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R317",
+  "english": "{month}, {amount} in",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:357",
+   "components/CashflowChart.tsx:358",
+   "components/CashflowChart.tsx:359"
+  ],
+  "context": "list item naming a month and a rand figure of money in, e.g. \"Mar 2026, R6 600 in\""
+ },
+ {
+  "id": "R318",
+  "english": "{month}, {amount} out",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:363",
+   "components/CashflowChart.tsx:364",
+   "components/CashflowChart.tsx:365"
+  ],
+  "context": "list item: month and rand of money out"
+ },
+ {
+  "id": "R319",
+  "english": "Too tall for this chart, and cut off at the mark so the other months stay readable: {list}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:374",
+   "components/FinanceGraphs.tsx:433"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R320",
+  "english": "in",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:390"
+  ],
+  "context": "small label after a rand figure in a chart readout, meaning money in, e.g. \"R500 in\""
+ },
+ {
+  "id": "R321",
+  "english": "out",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:391"
+  ],
+  "context": "small label after a rand figure in a chart readout, meaning money out, e.g. \"R120 out\""
+ },
+ {
+  "id": "R322",
+  "english": "running total",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:392"
+  ],
+  "context": "label after a rand figure: the running total of money across the months shown (not a bank balance)"
+ },
+ {
+  "id": "R323",
+  "english": "nothing recorded this month",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:396",
+   "components/FinanceGraphs.tsx:408"
+  ],
+  "context": "short note replacing figures for a month with no records"
+ },
+ {
+  "id": "R324",
+  "english": "Cash flow",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/CashflowChart.tsx:95"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R325",
+  "english": "No growing area mapped yet",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:101"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R326",
+  "english": "Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:102"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R327",
+  "english": "Open the Design Studio",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:104",
+   "components/FinanceGraphs.tsx:474"
+  ],
+  "context": "link text to the design page"
+ },
+ {
+  "id": "R328",
+  "english": "Two crops are booked into the same ground",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:115"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R329",
+  "english": "{beds} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:117"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R330",
+  "english": "Fix it in the production plan",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:121"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R331",
+  "english": "Nothing due to be picked yet",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:132"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R332",
+  "english": "Your crop plan is empty. Plan a season and this card fills itself in.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:135"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R333",
+  "english": "Nothing in the plan starts picking in the next {n} months.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:136"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R334",
+  "english": "Open the production plan",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:139",
+   "components/FinanceGraphs.tsx:474"
+  ],
+  "context": "link text to the crop production plan page"
+ },
+ {
+  "id": "R335",
+  "english": "Plan your crops",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:139"
+  ],
+  "context": "link text to the crop plan page"
+ },
+ {
+  "id": "R336",
+  "english": "Expected to pick",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:151"
+  ],
+  "context": "Charts tab of the money book: text"
+ },
+ {
+  "id": "R337",
+  "english": "If sold",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:154"
+  ],
+  "context": "caption under a rand figure: what the expected harvest would be worth if sold"
+ },
+ {
+  "id": "R338",
+  "english": "Kept at home, at shop prices",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:155"
+  ],
+  "context": "caption under a rand figure: expected harvest kept at home valued at shop prices"
+ },
+ {
+  "id": "R339",
+  "english": "Set your loss and sale assumptions to see what it is worth",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:163"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R340",
+  "english": "Each figure is a whole crop’s harvest counted in the month its picking starts — not what you pick during that month. Planning estimates, not promises.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:169"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R341",
+  "english": "{n} crops",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:213"
+  ],
+  "context": "row label, e.g. \"3 crops\""
+ },
+ {
+  "id": "R342",
+  "english": "picking runs into {month}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:235"
+  ],
+  "context": "note beside a crop: harvest continues into the named month (English month name inserted)"
+ },
+ {
+  "id": "R343",
+  "english": "Coming up",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:74"
+  ],
+  "context": "card heading: harvests due soon from the crop plan"
+ },
+ {
+  "id": "R344",
+  "english": "What your crop plan says is due to be picked over the next {n} month.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:78"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R345",
+  "english": "What your crop plan says is due to be picked over the next {n} months.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:78"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R346",
+  "english": "Reading your crop plan…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/ComingUpHarvests.tsx:89",
+   "components/FinanceGraphs.tsx:451"
+  ],
+  "context": "Charts tab of the money book: text, tx"
+ },
+ {
+  "id": "R347",
+  "english": "Harvest graphs",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:126"
+  ],
+  "context": "Charts tab of the money book: tx"
+ },
+ {
+  "id": "R348",
+  "english": "Picked & sold",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:129"
+  ],
+  "context": "tab/segment name for a chart view of kilograms picked and sold"
+ },
+ {
+  "id": "R349",
+  "english": "Plan vs actual",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:130"
+  ],
+  "context": "tab/segment name comparing the crop plan with what was actually picked"
+ },
+ {
+  "id": "R350",
+  "english": "{n} months",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:155"
+  ],
+  "context": "button label for a chart window, e.g. \"12 months\""
+ },
+ {
+  "id": "R351",
+  "english": "Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:193"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R352",
+  "english": "Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:194"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R353",
+  "english": "Recorded produce, {n} months",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:256"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R354",
+  "english": "Picked: {qty}",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:257"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R355",
+  "english": "Sold: {qty}",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:258"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R356",
+  "english": "No produce weights recorded in these months. Egg and package counts keep their own units; kilogram totals and kept weight are unknown.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:259"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R357",
+  "english": "View your records",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:260"
+  ],
+  "context": "Charts tab of the money book: recordsFill"
+ },
+ {
+  "id": "R358",
+  "english": "No harvest recorded yet",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:273"
+  ],
+  "context": "Charts tab of the money book: recordsFill"
+ },
+ {
+  "id": "R359",
+  "english": "Nothing picked or sold in these months",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:273"
+  ],
+  "context": "Charts tab of the money book: recordsFill"
+ },
+ {
+  "id": "R360",
+  "english": "Log a harvest",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:279"
+  ],
+  "context": "Charts tab of the money book: tx"
+ },
+ {
+  "id": "R361",
+  "english": "Weighed produce picked, {n} months",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:324"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R362",
+  "english": "Weighed produce sold",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:325"
+  ],
+  "context": "Charts tab of the money book: recordsFill"
+ },
+ {
+  "id": "R363",
+  "english": "Weighed produce kept on the farm",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:329",
+   "components/FinanceGraphs.tsx:330"
+  ],
+  "context": "Charts tab of the money book: recordsFill"
+ },
+ {
+  "id": "R364",
+  "english": "This chart shows recorded kilograms only. Counted produce stays in its recorded units.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:333"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R365",
+  "english": "Also picked: {qty}",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:334"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R366",
+  "english": "Also sold: {qty}",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:335"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R367",
+  "english": "Kilograms picked each month for {n} months, split into sold and kept on the farm.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:340"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R368",
+  "english": "{month} — picked {picked}, sold {sold}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:390"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R369",
+  "english": "sold",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:401"
+  ],
+  "context": "small label after a kilogram figure, e.g. \"40 kg sold\""
+ },
+ {
+  "id": "R370",
+  "english": "sold more than was logged picked",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:403"
+  ],
+  "context": "short note under a month: more was sold than the logged harvest accounts for"
+ },
+ {
+  "id": "R371",
+  "english": "kept",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:404"
+  ],
+  "context": "small label after a kilogram figure: harvested minus sold, kept on the farm e.g. \"12 kg kept\""
+ },
+ {
+  "id": "R372",
+  "english": "picked in total",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:405"
+  ],
+  "context": "small label after a kilogram figure: total picked (harvested)"
+ },
+ {
+  "id": "R373",
+  "english": "Orchard is switched off, so this card leaves out {picked} picked and {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:418"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R374",
+  "english": "Orchard is switched off, so this card leaves out {picked} picked: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:418"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R375",
+  "english": "Orchard is switched off, so this card leaves out {sold} sold: {names}. The rands elsewhere on this page still count those sales — only the kilograms here are filtered.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:418"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R376",
+  "english": "Nothing to compare yet",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:467"
+  ],
+  "context": "Charts tab of the money book: tx"
+ },
+ {
+  "id": "R377",
+  "english": "Nothing in your plan has a verified yield figure to compare against yet — {names}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:469"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R378",
+  "english": "Each crop’s plan benchmark, with what you have logged picking this year on top of it.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:494"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R379",
+  "english": "plan benchmark",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:505"
+  ],
+  "context": "legend word: the crop plan's expected total for one complete crop cycle"
+ },
+ {
+  "id": "R380",
+  "english": "logged picked",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:506"
+  ],
+  "context": "legend word: what the farmer logged as picked"
+ },
+ {
+  "id": "R381",
+  "english": "after your {pct}% loss allowance",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:510"
+  ],
+  "context": "Charts tab of the money book: recordsTemplate"
+ },
+ {
+  "id": "R382",
+  "english": "Set your loss allowance to mark it on these bars",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:514"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R383",
+  "english": "Nothing from the orchard is compared here. A tree is not planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales still count everywhere else on this page.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:525"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R384",
+  "english": "The benchmark is what one complete crop cycle on that much ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is not finished, or that picking was not written down. It is not proof of a lost harvest.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:529"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R385",
+  "english": "Too long for these bars, and cut off at the mark so the smaller crops still have one: {list}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:533"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R386",
+  "english": "Left out — no verified yield figure yet: {names}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:539"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R387",
+  "english": "Harvested but not in the plan, so not compared: {names}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:545"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R388",
+  "english": "of {benchmark}",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:568"
+  ],
+  "context": "inserted after a kilogram figure: \"12 kg of 40 kg\" (harvested of benchmark)"
+ },
+ {
+  "id": "R389",
+  "english": "After your {pct}% loss allowance: {kg}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:581"
+  ],
+  "context": "Charts tab of the money book: recordsLabel"
+ },
+ {
+  "id": "R390",
+  "english": "Sold {kg} — more than was logged picked, so the green bar is short of what really came off.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/FinanceGraphs.tsx:590"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R391",
+  "english": "Harvested {kg}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:104"
+  ],
+  "context": "ledger fragment, e.g. \"Harvested 12 kg\""
+ },
+ {
+  "id": "R392",
+  "english": "Sold {kg}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:106"
+  ],
+  "context": "ledger fragment, e.g. \"Sold 5 kg\""
+ },
+ {
+  "id": "R393",
+  "english": "“{label}” could be several crops — log a fuller name to count it against the right one.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:114"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R394",
+  "english": "Harvest reconciliation",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:156"
+  ],
+  "context": "Charts tab of the money book: tx"
+ },
+ {
+  "id": "R395",
+  "english": "Loading…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:161"
+  ],
+  "context": "loading indicator text"
+ },
+ {
+  "id": "R396",
+  "english": "No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:166"
+  ],
+  "context": "Charts tab of the money book: english"
+ },
+ {
+  "id": "R397",
+  "english": "Other activity — not in your crop plan",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:187"
+  ],
+  "context": "Charts tab of the money book: tx"
+ },
+ {
+  "id": "R398",
+  "english": "Harvested {harvested} · Sold {sold}",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:45"
+  ],
+  "context": "row figures for a crop"
+ },
+ {
+  "id": "R399",
+  "english": "Plan context: {kg} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:50"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R400",
+  "english": "Harvested {harvested}, sold {sold} — {kept} kept: eaten at home, given away, fed out, saved for seed or spoiled.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:56"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R401",
+  "english": "Sold {sold} but only {harvested} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:67"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R402",
+  "english": "No harvest logged this year",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:89"
+  ],
+  "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "R403",
+  "english": "No harvest logged this year · {kg} one-cycle benchmark",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "components/HarvestReconciliation.tsx:89"
+  ],
+  "context": "Charts tab of the money book: template"
  }
 ]

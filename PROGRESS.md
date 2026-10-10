@@ -72,9 +72,17 @@ must provision — not buildable from code alone).
   Reviewer repairs of whole sentences were not re-reviewed, so those, and every reviewer hold,
   show English. Packet, briefs, verdicts and held rows: `docs/translation-reviews/records-finance-2026-10-06/`.
 - **Existing-wording fixes:** "Save sale & invoice" no longer drops "& invoice" in isiZulu and Sesotho.
-- **Still open:** Charts-tab components are isiZulu-only inline (`CashflowChart`, `FinanceGraphs`,
-  `ComingUpHarvests`, `HarvestReconciliation`, `AreaReturnCards`); held strings (units such as eggs
-  and jars, fuel, the lender disclaimer, Tshivenda Export); everything needs a fluent speaker.
+- **Still open:** held strings (units such as eggs and jars, fuel, the lender disclaimer, Tshivenda
+  Export, running total / benchmark / reconciliation wording); month names; everything needs a fluent speaker.
+
+### 10 Oct 2026 — Charts tab in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`, `HarvestReconciliation`,
+  `AreaReturnCards` and `IsiZuluDraftSource` read the same source-keyed lookup as the money book
+  (119 more templates, figures as `{placeholders}`). isiZulu keeps its wording and gains fills for the six
+  strings that were English-only. Held concepts (running total, benchmark, reconciliation, net profit,
+  surplus/shortfall) show English. No chart arithmetic, scale, colour or data changed.
+- **Review and layout:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`);
+  reconciliation rows now wrap so a drafted line is not cut off at 390px.
 
 ### 1 Oct 2026 — Calendar sections; food chart month on top; phone gutter removed
 - **Four calendar sections** (`CalendarSectionHeader`, `CalendarSectionNote` in
