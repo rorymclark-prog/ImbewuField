@@ -8,7 +8,7 @@ import { finalLanguageNextMediaProof } from './final-language-next-media-history
 import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 import { currentBatchProof, ensureCurrentBatch, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
@@ -176,7 +176,39 @@ let initialized=false;
 // 6 October 2026: the new silent ST release and three VE/TS stills supersede the
 // published post-967 media layer. Full real current validation precedes any dated
 // descriptor; immutable manifests stay checked on every call without rereading1902 files.
+let validatedManifest: string | undefined;
+let validatedDiskSignature: string | undefined;
+function liveHistorySignature() {
+  const files = new Set<string>([
+    ...[...currentInventory.keys()].map(url => 'public' + url),
+    ...applied.verification.oldSTProtectedByteInventory.map((row: any) => row.path),
+    'app/sw.js/route.ts',
+  ]);
+  // Source projections compose across several modules. Include the whole live
+  // source directories rather than guessing which latest owner reads a file.
+  for (const directory of ['lib', 'docs/narration-reviews']) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (entry.isFile()) files.add(directory + '/' + entry.name);
+    }
+  }
+  return [...files].sort().map(path => {
+    const s = statSync(path, { bigint: true });
+    return [path, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':');
+  }).join('|');
+}
 export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
+  // Both CI jobs reached GitHub's six-hour limit by re-entering the full
+  // historical projection for every dated asset. Reuse a successful whole-disk
+  // validation only for identical caller bytes and identical filesystem state.
+  // ctime/mtime nanoseconds and inode retain the existing same-size corruption
+  // and replacement checks; failures never populate this cache.
+  const signature = liveHistorySignature();
+  if (validatedManifest === manifest && validatedDiskSignature === signature) return;
+  validateSilentIntroMediaUncached(manifest);
+  validatedManifest = manifest;
+  validatedDiskSignature = signature;
+}
+function validateSilentIntroMediaUncached(manifest: string) {
   // The frozen latest batch is validated first. Existing source-history owners
   // then compose its predecessor through the followup and frost layers once.
   ensureCurrentBatch();
