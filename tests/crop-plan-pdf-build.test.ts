@@ -154,6 +154,26 @@ const pdfText = async (blob: Blob) => Buffer.from(await blob.arrayBuffer()).toSt
 const visibleText = (raw: string) => [...raw.matchAll(/\(((?:\\.|[^\\)])*)\)\s*Tj/g)]
   .map(match => match[1].replace(/\\([\\()])/g, '$1')).join(' ');
 
+test('a fictional example stays labelled when individual pages are separated from its cover', async () => {
+  const notice = 'FICTIONAL EXAMPLE - banana and animal months are made-up records';
+  const labelled = await pdfText(await buildCropPlanPdf(input({
+    meta: { ...input().meta, documentNotice: notice },
+  })));
+  const objects = new Map([...labelled.matchAll(/(\d+) 0 obj\s*([\s\S]*?)\s*endobj/g)]
+    .map(match => [match[1], match[2]]));
+  const pageContents = [...objects.values()].filter(body => /\/Type \/Page\b/.test(body))
+    .map(body => body.match(/\/Contents\s+(\d+) 0 R/)?.[1]);
+  assert.ok(pageContents.length > 5, 'the example must exercise separated calendar, buying and field-sheet pages');
+  for (const [i, objectId] of pageContents.entries()) {
+    assert.ok(objectId, 'page ' + (i + 1) + ' has no content stream');
+    assert.ok(visibleText(objects.get(objectId) ?? '').includes(notice),
+      'page ' + (i + 1) + ' lost the fictional example notice when separated from the cover');
+  }
+  const ordinary = await pdfText(await buildCropPlanPdf(input()));
+  assert.ok(!visibleText(ordinary).includes(notice),
+    'a real farm export must not acquire a demonstration notice');
+});
+
 test('the detailed benchmark-only summary cannot contradict the dated picking calendar', async () => {
   const beds: PlanBed[] = [
     { id: 'existing-bed', label: 'Already growing', areaM2: 10, kind: 'bed' },
@@ -571,4 +591,56 @@ test('a complete animal-food section stays together when it fits a fresh calenda
   assert.ok(new Set(sources.map(p=>p.page)).size>1,'this fixture no longer tests continuation');
   assert.ok(oversized.some(p=>p.text==='Animal products (continued)'), 'continued animal rows lost their section heading');
   for(const p of oversized) assert.ok(p.left>=-0.1&&p.right<=p.width+0.1&&p.baseline>=0&&p.baseline<p.height-15,`continued section put '${p.text}' outside its page`);
+});
+
+test('bold wrapped area names remain inside their table rows when the planting plan continues', async () => {
+  // In the real complete example, "(spinach)" and "(peanuts)" were painted over by the
+  // next row. The normal font fit fewer lines than the bold group label that was drawn.
+  const beds: PlanBed[] = Array.from({ length: 40 }, (_, i) => ({
+    id: 'wrapped-area-' + i,
+    label: (i % 2 ? 'Groundnuts (peanuts)' : 'Swiss chard (spinach)') + (i < 2 ? '' : ' ' + (i + 1)),
+    areaM2: 20, kind: 'bed',
+  }));
+  const plantings: Planting[] = beds.map((bed, i) => ({
+    id: 'wrapped-planting-' + i, bedId: bed.id, cropKey: i % 2 ? 'groundnuts' : 'swiss-chard', sowMonth: 11,
+  }));
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+  const originalRect = doc.rect.bind(doc);
+  const originalText = doc.text.bind(doc);
+  let background: { page: number; top: number; bottom: number } | undefined;
+  const areaLines: { text: string; page: number; baseline: number; bottom: number }[] = [];
+  const headings: number[] = [];
+  const areaLabels: string[] = [];
+  doc.rect = ((x: number, y: number, width: number, height: number, style?: string) => {
+    if (style === 'F' && x === 40 && width > doc.internal.pageSize.getWidth() - 100) {
+      background = { page: doc.getNumberOfPages(), top: y, bottom: y + height };
+    }
+    return originalRect(x, y, width, height, style);
+  }) as typeof doc.rect;
+  doc.text = ((text: string | string[], x: number, y: number, opts: { align?: 'left' | 'center' | 'right' | 'justify'; lineHeightFactor?: number } = {}) => {
+    if (x === 48 && background?.page === doc.getNumberOfPages()) {
+      const lines = Array.isArray(text) ? text : [text];
+      if (lines.join(' ') !== 'Area' && lines.some(Boolean)) areaLabels.push(lines.join(' '));
+      for (const [index, line] of (Array.isArray(text) ? text : [text]).entries()) {
+        if (line === 'Area') headings.push(doc.getNumberOfPages());
+        else if (line) areaLines.push({
+          text: line, page: doc.getNumberOfPages(),
+          baseline: y + index * doc.getFontSize() * (opts.lineHeightFactor ?? doc.getLineHeightFactor()),
+          bottom: background.bottom,
+        });
+      }
+    }
+    return originalText(text, x, y, opts);
+  }) as typeof doc.text;
+  drawCropPlanPages(doc, input({ plantings, beds, tasks: [], sections: ['plan'] }));
+  assert.ok(areaLines.length > beds.length, 'the fixture must actually exercise wrapped area names');
+  assert.deepEqual(areaLabels, beds.map(bed => bed.label),
+    'each area needs its full label, including the last planting');
+  for (const line of areaLines) assert.ok(line.baseline + 2 <= line.bottom + 0.1,
+    'the next row paints over area label "' + line.text + '" on page ' + line.page);
+  const pages = new Set(areaLines.map(line => line.page));
+  assert.ok(pages.size > 1, 'the fixture must exercise continued planting tables');
+  for (const page of pages) assert.ok(headings.includes(page),
+    'continued planting page ' + page + ' lost the table headings');
 });

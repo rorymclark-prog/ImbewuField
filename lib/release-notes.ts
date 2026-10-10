@@ -42,6 +42,17 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: 'e7dac9b1', changes: [
+    'Explore an example farm with vegetables, staples, fruit, eggs, milk, honey and fish.',
+    'The example shows monthly food, young plant ages and clearly marked made-up records.',
+    'Print its short booklet or picture calendar, with a separate detailed reference.',
+    'Long area names stay fully visible in the detailed printed planting plan.',
+  ], tour: [{
+    title: 'Explore a complete production example',
+    where: 'Examples → Complete production plan',
+    detail: 'Compare all food groups over the months, look ahead by plant age and print the plan.',
+    href: '/samples/production',
+  }] },
   { when: '10 October 2026', sha: '810c2537', changes: [
     'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
     'Fruit, nuts, seeds and animal products use pictures that match the vegetables.',

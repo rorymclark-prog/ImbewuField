@@ -23,7 +23,7 @@ import type { PoultryGuidance } from '@/lib/animal-enterprises';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
   ALL_SECTIONS, FARMER_SECTIONS, availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
-  type CropPlanAvailability, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta,
+  type CropPlanAvailability, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta, type CropPlanSection,
 } from '@/lib/crop-export-pdf';
 import { loadPdfIcons } from '@/lib/pdf-icons';
 import {
@@ -35,6 +35,11 @@ export interface CropPlanExportCardProps {
   beds: PlanBed[];
   tasks: CropTask[];
   meta: CropPlanPdfMeta;
+  /** A dated example must keep its calendar axis when exported on another day. */
+  now?: Date;
+  /** Example farms can start with a concise booklet and keep the full reference as a separate export. */
+  sections?: CropPlanSection[];
+  availabilityDetails?: boolean;
   yearReport?: string[];
   /** The accepted suggestion's own notes, so the printed plan carries the
    * reasons behind it and not just the rows. */
@@ -54,7 +59,7 @@ export interface CropPlanExportCardProps {
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -66,7 +71,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('ics');
     setStatus(null);
     try {
-      const ics = buildCropPlanIcs(tasks, { calendarName: `ImbewuField - ${meta.planTitle}` });
+      const ics = buildCropPlanIcs(tasks, { calendarName: `ImbewuField - ${meta.planTitle}`, now, stamp: new Date() });
       // The charset matters: crop names carry an emoji icon and bed labels
       // carry 'ü' (Hügel). Without it some clients guess Latin-1 and the
       // farmer sees mojibake in every event title.
@@ -109,7 +114,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: FARMER_SECTIONS, ...overrides };
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, now, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: sections ?? FARMER_SECTIONS, availabilityDetails, ...overrides };
       // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
       const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar') || input.sections.includes('projection');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
@@ -152,7 +157,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
   const referencePdf = () => withPdf((blob) => {
     downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'reference'));
     return 'Detailed reference saved to your downloads.';
-  }, { sections: ALL_SECTIONS });
+  }, { sections: ALL_SECTIONS, availabilityDetails: true });
 
   const futurePdf = () => withPdf((blob) => {
     downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'future-harvest'));
@@ -211,7 +216,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           disabled={busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(false, busy !== null)}
-          title="See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs"
+          title={sections ? 'Download the selected plan sections shown below' : 'See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs'}
         >
           {busy === 'pdf'
             ? <><Hourglass size={14} aria-hidden /> Building…</>
@@ -275,7 +280,10 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
         <summary style={{ cursor: 'pointer', minHeight: 44, paddingTop: 12 }}>What each file contains</summary>
         The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
         first of their month — this plan works in months, not exact days — with a reminder three days before.
-        The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick. It also has what to buy, monthly tick-off jobs and a harvest record. Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The full plan includes future harvests by plant age. The separate Future harvest PDF has the ten-year graph and age groups. Calendar &amp; jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan and benchmarks.
+        The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.
+        {!sections && ' It also has what to buy, monthly tick-off jobs and a harvest record.'}
+        {' '}Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar &amp; jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.
+        {sections && <p>Selected booklet sections: {sections.map(section => ({ calendar: 'bed calendar', availability: 'food calendar', projection: 'future harvest', taskSummary: 'monthly jobs', dashboard: 'overview', numbers: 'benchmarks', guidance: 'guidance', plan: 'planting plan', buying: 'buying lists', fieldsheets: 'field sheets', record: 'harvest records' })[section]).join(', ')}.</p>}
       </details>
 
       {status && (

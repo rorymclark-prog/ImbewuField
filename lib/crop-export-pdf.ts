@@ -59,6 +59,8 @@ import type { PoultryGuidance } from '@/lib/animal-enterprises';
 export interface CropPlanPdfMeta {
   /** The design/site this plan belongs to. */
   planTitle: string;
+  /** Optional page-level notice for clearly identified demonstrations and other special documents. */
+  documentNotice?: string;
   /**
    * "KZN Midlands · Summer rainfall", or an honest "No site set" line.
    *
@@ -316,11 +318,13 @@ class Sheet {
   y = 0;
   margin = 40;
   private footerNote: string;
+  private documentNotice?: string;
   private format: CropPlanPageFormat;
 
-  constructor(doc: Doc, footerNote: string, format: CropPlanPageFormat = 'a4') {
+  constructor(doc: Doc, footerNote: string, format: CropPlanPageFormat = 'a4', documentNotice?: string) {
     this.doc = doc;
     this.footerNote = footerNote;
+    this.documentNotice = documentNotice;
     this.format = format;
   }
 
@@ -341,6 +345,14 @@ class Sheet {
   stampFooter(): void {
     this.font(7.5);
     this.ink(INK.faint);
+    // A fictional example can be printed page by page; its status must survive a lost cover.
+    if (this.documentNotice) {
+      this.font(7.5, true);
+      this.ink(INK.muted);
+      this.doc.text(truncateToWidth(this.doc, pdfSafe(this.documentNotice), this.contentWidth), this.margin, this.height - 37);
+      this.font(7.5);
+      this.ink(INK.faint);
+    }
     // Just the plan name on the left: "ImbewuField crop plan - Ubhejane Creche"
     // ran straight into the centred note on a portrait page. A short title
     // still can, on a narrow enough page (A4 portrait, most facilitators'
@@ -1675,11 +1687,20 @@ function table(
   let lastGroup: string | undefined;
 
   for (const row of rows) {
-    s.font(size);
-    const heights = columns.map((c, i) => (s.doc.splitTextToSize(pdfSafe(row[c.key] ?? ''), widths[i] - 16) as string[]).length);
-    const rowH = Math.max(18, Math.max(...heights) * leading + 12);
+    // A bold group label can need more lines than the normal font. Measure the
+    // exact text and font that will be painted, then reuse those lines below.
+    const prepare = () => {
+      const groupStart = opts.groupKey !== undefined && row[opts.groupKey] !== lastGroup;
+      const lines = columns.map((c, i) => {
+        s.font(size, groupStart && i === 0);
+        const shown = opts.groupKey !== undefined && i === 0 && !groupStart ? '' : row[c.key] ?? '';
+        return s.doc.splitTextToSize(pdfSafe(shown), widths[i] - 16) as string[];
+      });
+      return { groupStart, lines, height: Math.max(18, Math.max(...lines.map(cell => cell.length)) * leading + 12) };
+    };
+    let prepared = prepare();
 
-    if (s.need(rowH + 24)) {
+    if (s.need(prepared.height + 24)) {
       if (opts.band) masthead(s, opts.band);
       if (opts.title) {
         s.font(11, true);
@@ -1689,9 +1710,11 @@ function table(
       }
       drawHead();
       lastGroup = undefined;
+      // A continuation repeats its area label, so its height must include that label.
+      prepared = prepare();
     }
 
-    const groupStart = opts.groupKey !== undefined && row[opts.groupKey] !== lastGroup;
+    const { groupStart, lines, height: rowH } = prepared;
     if (opts.groupKey !== undefined) lastGroup = row[opts.groupKey];
 
     s.fill(groupStart ? INK.panelGreen : zebra ? INK.panelGrey : INK.white);
@@ -1706,11 +1729,8 @@ function table(
       // top of every continuation page, because `lastGroup` is cleared on a
       // break. Without that, page two of the bed plan opened with a column of
       // crops belonging to a bed it never named.
-      const raw = row[c.key] ?? '';
-      const shown = opts.groupKey !== undefined && i === 0 && !groupStart ? '' : raw;
-      const lines = s.doc.splitTextToSize(pdfSafe(shown), widths[i] - 16) as string[];
       const tx = c.align === 'right' ? x + widths[i] - 8 : x + 8;
-      s.doc.text(lines, tx, s.y + 14, { align: c.align === 'right' ? 'right' : 'left', lineHeightFactor: 1.32 });
+      s.doc.text(lines[i], tx, s.y + 14, { align: c.align === 'right' ? 'right' : 'left', lineHeightFactor: 1.32 });
       x += widths[i];
     });
     s.stroke(INK.hair);
@@ -2204,7 +2224,7 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
   const now = input.now ?? new Date();
   const nowMonth = now.getMonth() + 1;
   const want = new Set(input.sections ?? ALL_SECTIONS);
-  const s = new Sheet(doc, input.meta.planTitle, pageFormat);
+  const s = new Sheet(doc, input.meta.planTitle, pageFormat, input.meta.documentNotice);
 
   const workload = buildWorkloadSeries(input.tasks, nowMonth, input.plantings, input.beds);
   const calendar = buildOccupancyCalendar(input.plantings, input.beds, nowMonth);

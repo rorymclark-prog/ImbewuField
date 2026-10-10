@@ -217,8 +217,12 @@ test('Simple farmers can confirm crop timing and get a picture calendar without 
   assert.match(page, /<TreeSeasonsCard/);
   assert.match(page, /\{simple && <CropPlanExportCard/);
   const card = readFileSync(new URL('../components/crops/CropPlanExportCard.tsx', import.meta.url), 'utf8');
-  assert.match(card, /sections: FARMER_SECTIONS/);
+  // An example may choose a short booklet, but a real farm with no override must
+  // still get every farmer section. Pin the fallback, not its former code shape.
+  assert.match(card, /sections:\s*sections\s*\?\?\s*FARMER_SECTIONS/);
   assert.match(card, /sections: \['availability', 'calendar', 'taskSummary'\]/);
+  assert.match(card, /sections: ALL_SECTIONS, availabilityDetails: true/,
+    'a short example booklet must not hide the full detailed reference');
   assert.doesNotMatch(card, /Quick print \(2 pages\)|Two pages only/);
 });
 
