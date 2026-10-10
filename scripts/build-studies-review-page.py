@@ -22,7 +22,7 @@ for module, count in modules.items():
     slides = []
     for n in range(1, count + 1):
         stem = f'slide-{n:02}'
-        for suffix, folder in [('mp3', 'course-audio'), ('jpg', 'course-decks')]:
+        for suffix, folder in [('mp3', 'course-audio'), ('webp', 'course-decks')]:
             shutil.copy2(repo/f'public/{folder}/{module}/en/{stem}.{suffix}', en/f'{stem}.{suffix}')
         clips = list((repo/f'public/course-animations/{module}').glob(f'watch-{n:02}-*.mp4'))
         clips += [repo/c['asset'] for c in flows if c['module'] == module and c['slide'] == n]
@@ -32,7 +32,7 @@ for module, count in modules.items():
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, dest)
             videos.append({'path': str(dest.relative_to(pack)), 'name': source.stem.replace('-', ' ')})
-        slides.append({'n': n, 'image': str((en/f'{stem}.jpg').relative_to(pack)),
+        slides.append({'n': n, 'image': str((en/f'{stem}.webp').relative_to(pack)),
                        'audioEn': str((en/f'{stem}.mp3').relative_to(pack)),
                        'en': (en/f'{stem}.txt').read_text().strip(),
                        'zu': (zu/f'{stem}.txt').read_text().strip(), 'videos': videos})

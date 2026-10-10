@@ -110,7 +110,7 @@ for (const [slide, path] of Object.entries(pairedArt)) {
 }
 const pairedSourceSlides = pairedSlides?.map(({ n }) => pairedArt[n]
   ? resolve(pairedArt[n])
-  : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
+  : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.webp`))) ?? null;
 for (const sourceSlide of pairedSourceSlides ?? []) {
   if (!existsSync(sourceSlide)) throw new Error(`paired draft needs its illustrated English source slide: ${sourceSlide}`);
 }
