@@ -1860,8 +1860,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: groupPhotos.length > 0 || count === 0 ? 11 : 0 }}>
-                      <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
-                        {EVIDENCE_GROUP_ICON[group.key]}
+                      <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        {(() => { const GroupIcon = EVIDENCE_GROUP_ICON[group.key]; return <GroupIcon size={16} />; })()}
                       </div>
                       <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)' }}>{REPORT_GROUP_LABEL[group.key] ?? group.label}</span>
                     </div>
@@ -1901,8 +1901,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
-                      {EVIDENCE_GROUP_ICON.site_photos}
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <EVIDENCE_GROUP_ICON.site_photos size={16} />
                     </div>
                     <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
                     {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}
