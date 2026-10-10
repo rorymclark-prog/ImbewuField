@@ -179,8 +179,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(firebaseUser);
 
       try {
-        const nextProfile = firebaseUser ? await getMyProfile() : null;
+        let nextProfile = firebaseUser ? await getMyProfile() : null;
         if (!isStillCurrent()) return;
+        // bug-09: getMyProfile() resolving to null (as opposed to throwing) means the doc
+        // genuinely doesn't exist yet — most often because signUp()'s own profile write failed
+        // after the account was already created. Retry it here, on ordinary first load, the
+        // same default-profile write the Google sign-in path already does for a brand-new user.
+        if (firebaseUser && !nextProfile) {
+          try {
+            await updateMyProfile({ full_name: firebaseUser.displayName ?? '', role: 'farmer', language: 'en' });
+            if (!isStillCurrent()) return;
+            nextProfile = await getMyProfile();
+            if (!isStillCurrent()) return;
+          } catch (err) {
+            console.error('profile retry failed:', err);
+          }
+        }
         setProfile(nextProfile);
       } catch (err) {
         console.error('syncProfile failed:', err);
@@ -240,9 +254,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const signupUid = cred.user.uid;
       migrateGuestWorkToAccount(signupUid);
       if (fb.auth.currentUser?.uid !== signupUid) return null;
-      await updateProfile(cred.user, { displayName: fullName });
-      if (fb.auth.currentUser?.uid !== signupUid) return null;
-      await updateMyProfile({ full_name: fullName, role, language: 'en' });
+      // bug-09: the account above is already created and cannot be created again — a retry
+      // after this point would fail with "email already in use" with no way back in except
+      // support. So from here, a failed write is not a failed sign-up: log it and let the
+      // onAuthStateChanged handler's own missing-profile retry (below) pick it up on first load,
+      // the same way it already does for a brand-new Google sign-in.
+      try {
+        await updateProfile(cred.user, { displayName: fullName });
+        if (fb.auth.currentUser?.uid !== signupUid) return null;
+        await updateMyProfile({ full_name: fullName, role, language: 'en' });
+      } catch (err) {
+        console.error('signUp profile write failed (account created; will retry on next load):', err);
+      }
       if (fb.auth.currentUser?.uid !== signupUid) return null;
       await syncProfile(cred.user);
       return null;

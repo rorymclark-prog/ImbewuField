@@ -9,7 +9,7 @@ import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
-import { FIELD_FOCUS, FIELD_PROGRAMMES, summariseFieldWork, completeSampleFieldWorkspace, fieldVisitReportLines, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, validFieldVisit, type FieldFocus, type FieldProgramme, type FieldTeam, type FieldVisit, type FieldWorkspace } from '@/lib/field-teams';
+import { FIELD_FOCUS, FIELD_PROGRAMMES, summariseFieldWork, completeSampleFieldWorkspace, fieldVisitReportLines, freshFieldWorkspace, localTodayISODate, projectFieldWorkspace, validFieldTeam, validFieldVisit, type FieldFocus, type FieldProgramme, type FieldTeam, type FieldVisit, type FieldWorkspace } from '@/lib/field-teams';
 import VisitCapture from './VisitCapture';
 import VenueLocation from './VenueLocation';
 import workStyles from './FieldWork.module.css';
@@ -25,7 +25,7 @@ import { useLanguage } from '@/lib/i18n-context';
 import { translate } from '@/lib/i18n';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
-const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:new Date().toISOString().slice(0,10),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
+const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:localTodayISODate(),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
 
 // isiZulu labels for lib/field-teams.ts's FIELD_PROGRAMMES — English-only there next to the
 // translated FIELD_FOCUS tags this same component already renders with ui() below. Kept local to
@@ -126,7 +126,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     try {
       const nextVisit={...visit,mentorId:data.selfId,photoCount:visit.photos?.length??0};
       let confirmedVisit:FieldVisit|undefined; let queued=false;
-      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,new Date().toISOString().slice(0,10),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
+      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,localTodayISODate(),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
       if (isSampleMode()) {
         if(!data.sample)throw Error('The workspace changed. Reopen field teams.');
         const all = completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace));
@@ -164,7 +164,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   const garden = (id: string) => data?.people.find(p => p.id === id)?.gardenName || data?.teams.find(t => t.farmerIds.includes(id))?.location;
   const assigned = [...new Set(data?.teams.flatMap(t => t.farmerIds) ?? [])];
   const captureScope=currentScope(),captureVersion=requestVersion.current;
-  const today=new Date().toISOString().slice(0,10);
+  const today=localTodayISODate();
   const summary=data?summariseFieldWork(data,from,to,farmerFilter,today):null;
   const recordedVisits=summary?.visits??[];
   const scopeValid=!from||!to||from<=to;
@@ -229,7 +229,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
           <fieldset disabled={readOnlyVisit||busy||photosBusy||captureBusy||!photosReady} style={{border:0,padding:0,minWidth:0}}>
             <div className={styles.grid}>
               <label>{paired('mentorParticipantLabel')}<select required value={visit.farmerId} onChange={e=>setVisit({...visit,farmerId:e.target.value,location:data.people.find(p=>p.id===e.target.value)?.gardenName??'',latitude:null,longitude:null})}><option value="">{paired('mentorChooseParticipant')}</option>{[...new Set([...assigned,...(visit.farmerId?[visit.farmerId]:[])])].map(id=><option key={id} value={id}>{name(id)}</option>)}</select></label>
-              <label>{paired('mentorVisitDateLabel')}<input required type="date" max={new Date().toISOString().slice(0,10)} value={visit.date} onChange={e=>setVisit({...visit,date:e.target.value})}/></label>
+              <label>{paired('mentorVisitDateLabel')}<input required type="date" max={localTodayISODate()} value={visit.date} onChange={e=>setVisit({...visit,date:e.target.value})}/></label>
             </div>
             <label>{paired('mentorSiteLocationLabel')}<input maxLength={240} value={visit.location??''} placeholder={t('mentorSiteLocationPlaceholder')} onChange={e=>setVisit({...visit,location:e.target.value})}/></label>
             <details><summary>{paired('mentorLocationMapDirections')}</summary><VenueLocation key={`${visit.id}|${visit.farmerId}`} latitude={visit.latitude??null} longitude={visit.longitude??null} sample={data.sample} recordKind="visit" venue={visit.location} onChange={point=>{if(captureScope===currentScope()&&captureVersion===requestVersion.current)setVisit(current=>({...current,...point}));}}/></details>

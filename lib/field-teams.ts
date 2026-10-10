@@ -1,6 +1,20 @@
 import type { UserRole } from './db/types';
 import { validEvidenceImage } from './invoice-logo';
 
+/**
+ * bug-11: the calendar date in the DEVICE'S OWN TIME ZONE, not UTC. `new Date().toISOString()`
+ * always renders the UTC date — between 00:00 and 02:00 SAST (UTC+2) that is still yesterday,
+ * so a form defaulting to it, or a date picker's `max` bounded by it, named yesterday and
+ * refused today until well into the morning. Date's own getFullYear/getMonth/getDate read the
+ * runtime's local time zone, which on a farmer's or mentor's phone is the device's own.
+ */
+export function localTodayISODate(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
 export type FieldMember = { id: string; name: string; role: UserRole; photoUrl?: string | null; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export const FIELD_PROGRAMMES = { general: 'General garden support', 'act-sef-food-security': 'ACT · SEF food security' } as const;
 export type FieldProgramme = keyof typeof FIELD_PROGRAMMES;
@@ -168,7 +182,7 @@ export function completeSampleFieldWorkspace(data: FieldWorkspace): FieldWorkspa
 }
 
 /** One scoped calculation drives the worklist, coverage cards and exported report. */
-export function summariseFieldWork(data: FieldWorkspace, from = '', to = '', farmerId = '', today = new Date().toISOString().slice(0,10)) {
+export function summariseFieldWork(data: FieldWorkspace, from = '', to = '', farmerId = '', today = localTodayISODate()) {
   const assigned = [...new Set(data.teams.flatMap(team=>team.farmerIds))].filter(id=>!farmerId || id===farmerId);
   const visits = data.visits.filter(v=>(!from || v.date>=from) && (!to || v.date<=to) && (!farmerId || v.farmerId===farmerId)).sort((a,b)=>b.date.localeCompare(a.date)||a.id.localeCompare(b.id));
   const visited = new Set(visits.map(v=>v.farmerId).filter(id=>assigned.includes(id)));

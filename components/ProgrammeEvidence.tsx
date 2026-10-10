@@ -8,7 +8,7 @@ import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { readSampleProgramme } from './SampleProgramme';
-import { completeSampleFieldWorkspace, freshFieldWorkspace, projectFieldWorkspace } from '@/lib/field-teams';
+import { completeSampleFieldWorkspace, freshFieldWorkspace, localTodayISODate, projectFieldWorkspace } from '@/lib/field-teams';
 import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { completeSampleEvidence, freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
@@ -35,7 +35,7 @@ const ERROR_DRAFTS: Record<string, string> = {
   'Use members of your current assigned group.': 'Sebenzisa amalungu eqembu owabelwe lona njengamanje.',
   'Enter an observed total and evidence reference.': 'Faka isamba esiqashelwe nereferensi yobufakazi.',
 };
-const today=()=>new Date().toISOString().slice(0,10);
+const today=()=>localTodayISODate();
 const emptySession=():TrainingRecord=>({id:crypto.randomUUID(),project:'',title:'',date:today(),venue:'',latitude:null,longitude:null,facilitator:'',ownerId:'',attendance:[],presentCount:0,registeredCount:0,report:'',nextSteps:'',assessmentId:'',published:false,photos:[],photoCount:0,updatedAt:''});
 const emptyTarget=():ProgrammeMilestone=>({id:crypto.randomUUID(),project:'',category:'other',title:'',unit:'',baseline:null,target:null,due:today(),owner:'',method:'',published:false,observations:[],updatedAt:''});
 export default function ProgrammeEvidence({ funder=false, mentor=false, initialTab='progress' }: { funder?:boolean; mentor?:boolean; initialTab?:Tab }) {
