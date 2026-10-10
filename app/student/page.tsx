@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
@@ -21,7 +22,19 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
-import DeckPlayer from '@/components/course/DeckPlayer';
+// perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
+// deck is actually opened — load its chunk then, not with the rest of Studies.
+const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="w-full rounded-xl flex items-center justify-center"
+      style={{ aspectRatio: '16 / 9', background: 'rgba(32,25,15,0.04)' }}
+    >
+      <Loader2 size={24} className="animate-spin" style={{ color: '#5C5040' }} />
+    </div>
+  ),
+});
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
