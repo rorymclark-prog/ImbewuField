@@ -59,6 +59,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 ## Date index
 
 - [App-wide audit, second round: 63 open findings — 10 October 2026](2026-10-10/app-wide-audit-claude.md).
+
 - [App-wide audit close-out: all 92 findings dispositioned — 10 October 2026](2026-10-10/app-wide-closeout-claude.md).
 
 - [Reading titles and least-intensive action — 8 October 2026](2026-10-08/study-reading-title-lightest-codex.md).
