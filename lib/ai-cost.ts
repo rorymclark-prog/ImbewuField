@@ -11,9 +11,12 @@
 // price it, and let the real number replace the guess.
 
 /** USD per million tokens. Keep in step with the model IDs actually used by app/api/**. */
-const RATES: Record<string, { input: number; output: number }> = {
+const RATES: Record<string, { input: number; output: number; cacheRead?: number }> = {
   'claude-opus-5': { input: 5, output: 25 },
   'claude-sonnet-5': { input: 2, output: 10 },
+  // Sonnet 5.5 cache reads cost $0.10/MTok, half the older Sonnet's read rate.
+  // https://platform.claude.com/docs/en/models/sonnet-5-5/overview
+  'claude-sonnet-5-5': { input: 2, output: 10, cacheRead: 0.1 },
   'claude-opus-4-8': { input: 5, output: 25 },
   'claude-sonnet-4-6': { input: 3, output: 15 },
   'gemini-2.5-flash-lite': { input: 0.1, output: 0.4 },
@@ -58,12 +61,15 @@ export function costOf(model: string, usage: AiUsage | null | undefined): AiCost
   const outputTokens = n(usage?.output_tokens);
   const cacheWriteTokens = n(usage?.cache_creation_input_tokens);
   const cacheReadTokens = n(usage?.cache_read_input_tokens);
+  const cacheReadMultiplier = rate?.cacheRead === undefined
+    ? CACHE_READ_MULTIPLIER
+    : rate.cacheRead / rate.input;
 
   // input_tokens already EXCLUDES cached tokens; the cache counters are reported separately.
   const effectiveInputTokens =
     inputTokens
     + cacheWriteTokens * CACHE_WRITE_MULTIPLIER
-    + cacheReadTokens * CACHE_READ_MULTIPLIER;
+    + cacheReadTokens * cacheReadMultiplier;
 
   // An unknown model must not silently price at zero and read as "this call was free".
   const usd = rate

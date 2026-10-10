@@ -23,6 +23,17 @@ test('prices a plain call at the model rate', () => {
   assert.equal(c.effectiveInputTokens, 1_000_000);
 });
 
+test('Sonnet 5.5 report spend includes its published cache-read discount', () => {
+  const c = costOf('claude-sonnet-5-5', {
+    input_tokens: 1_000_000,
+    output_tokens: 1_000_000,
+    cache_creation_input_tokens: 1_000_000,
+    cache_read_input_tokens: 1_000_000,
+  });
+  assert.ok(Math.abs(c.usd - 14.6) < 1e-12, '$2 input + $10 output + $2.50 cache write + $0.10 cache read');
+  assert.equal(c.effectiveInputTokens, 2_300_000);
+});
+
 test('an unknown model is NaN, never a silent zero', () => {
   const c = costOf('claude-imaginary-9', { input_tokens: 1_000_000, output_tokens: 0 });
   assert.ok(Number.isNaN(c.usd), 'an unpriced model must not read as a free call');

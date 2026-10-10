@@ -45,7 +45,7 @@ The first three things to peg out or move on the ground.
 Be direct and concrete. This is a real plan a facilitator will act on.${langLine}`;
 
   const stream = await ai.messages.stream({
-    model: AI_MODELS.main,
+    model: AI_MODELS.report,
     max_tokens: 1600,
     messages: [{ role: 'user', content: prompt }],
   });

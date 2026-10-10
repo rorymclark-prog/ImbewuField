@@ -18,8 +18,10 @@ import { clientIp } from './api-rate-limit';
  * is cheaper per token than the one it replaces, and the current Opus costs the same as the old one.
  */
 export const AI_MODELS = {
-  /** Reports, chat, photo reading — the everyday writer. */
+  /** Chat and photo reading — the everyday writer. */
   main: 'claude-sonnet-5',
+  /** Site reports and design reviews use Rory's chosen Sonnet upgrade. */
+  report: 'claude-sonnet-5-5',
   /** Whole-farm spatial judgement, where the hardest reasoning pays for itself. */
   deep: 'claude-opus-5',
   /** Short, cheap jobs — and every call once an allowance is spent. */
@@ -27,7 +29,7 @@ export const AI_MODELS = {
 } as const;
 
 /** Models on the newer tokenizer, which counts about 30% more tokens for the same text. */
-const NEW_TOKENIZER = new Set<string>([AI_MODELS.main, AI_MODELS.deep]);
+const NEW_TOKENIZER = new Set<string>([AI_MODELS.main, AI_MODELS.report, AI_MODELS.deep]);
 
 type Shapeable = { model: string; max_tokens: number; thinking?: Anthropic.ThinkingConfigParam };
 
@@ -39,7 +41,11 @@ export function shapeParams<P extends Shapeable>(params: P, model: string): P {
     out.max_tokens = Math.ceil(params.max_tokens * 1.3);
     // These models think unless told not to. The routes were written for no thinking; keep it
     // that way so cost and output length stay what the routes were tuned for.
-    if (!params.thinking) out.thinking = { type: 'disabled' };
+    if (model === AI_MODELS.report && (!params.thinking || params.thinking.type === 'disabled')) {
+      // Sonnet 5.5 rejects "disabled". The installed SDK predates its equivalent wire setting.
+      // https://platform.claude.com/docs/en/models/sonnet-5-5/whats-new-sonnet-5-5
+      out.thinking = { type: 'between_tools' } as unknown as Anthropic.ThinkingConfigParam;
+    } else if (!params.thinking) out.thinking = { type: 'disabled' };
   }
   if (model === CHEAP_MODEL) delete out.thinking;
   return out;
