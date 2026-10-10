@@ -168,7 +168,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
     : 'rounded-2xl p-4 flex flex-col gap-3';
   const shellStyle = compact
     ? undefined
-    : { background: 'rgba(31,77,43,0.05)', border: '1px solid #E2D8C4' };
+    : { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
   return (
     <div className={shell} style={shellStyle}>

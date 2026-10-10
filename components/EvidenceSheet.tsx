@@ -179,7 +179,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
           <p>Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.</p>
           <p>The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.</p>
-          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'#fff',color:'var(--text-primary)'}}/></label>
+          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'var(--input-bg)',color:'var(--text-primary)'}}/></label>
           <button disabled={uploading||!resultNote.trim()} onClick={()=>{
             if(getEvidenceItems(siteId,itemKey).length>=4){setFileError('Remove an older entry before adding another.');return;}
             if(!addEvidenceItem(siteId,itemKey,{type:'note',name:'Reported test results',note:resultNote.trim()})){setFileError('The results could not be saved. Keep a copy and try again.');return;}
@@ -305,7 +305,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               {docItems.map((ev) => (
                 <div key={ev.id} style={{
                   display: 'flex', alignItems: 'center', gap: 12,
-                  background: '#fff', border: '1px solid #EBE3D2', borderRadius: 11, padding: '10px 13px',
+                  background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 11, padding: '10px 13px',
                 }}>
                   <div style={{
                     width: 38, height: 44, borderRadius: 6, background: '#F0F4F8', border: '1px solid #DCE5EC',
@@ -342,7 +342,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               {quickFields.map((f) => (
                 <div key={f.key}>
                   {editingField === f.key ? (
-                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: '#fff', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-1)', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
                       <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
                       <input
                         autoFocus
@@ -360,8 +360,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                     <button
                       onClick={() => startEditField(f.key)}
                       style={{
-                        display: 'flex', alignItems: 'center', gap: 10, background: '#fff',
-                        border: '1px solid #EBE3D2', borderRadius: 11, padding: '10px 13px',
+                        display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg-1)',
+                        border: '1px solid var(--border)', borderRadius: 11, padding: '10px 13px',
                         width: '100%', cursor: 'pointer', textAlign: 'left',
                       }}
                     >
