@@ -35,11 +35,13 @@ export async function POST(req: NextRequest) {
   try {
     statusRes = await fetch(statusUrl!, { headers: { Authorization: `Key ${key}` } });
   } catch (e) {
-    return NextResponse.json({ error: `Network error: ${String(e)}` }, { status: 502 });
+    console.error('[ai-render/poll] status fetch failed:', e);
+    return NextResponse.json({ error: 'Could not check the render status — please try again.' }, { status: 502 });
   }
   if (!statusRes.ok) {
     const d = await statusRes.text().catch(() => '');
-    return NextResponse.json({ error: `fal status ${statusRes.status}`, detail: d.slice(0, 300) }, { status: 502 });
+    console.error(`[ai-render/poll] status check failed: ${statusRes.status} ${d.slice(0, 300)}`);
+    return NextResponse.json({ error: 'Could not check the render status — please try again.' }, { status: 502 });
   }
   const status = (await statusRes.json().catch(() => ({}))) as { status?: string };
   if (status.status !== 'COMPLETED') {
@@ -51,16 +53,19 @@ export async function POST(req: NextRequest) {
   try {
     resultRes = await fetch(responseUrl!, { headers: { Authorization: `Key ${key}` } });
   } catch (e) {
-    return NextResponse.json({ error: `Network error: ${String(e)}` }, { status: 502 });
+    console.error('[ai-render/poll] result fetch failed:', e);
+    return NextResponse.json({ error: 'Could not fetch the finished image — please try again.' }, { status: 502 });
   }
   if (!resultRes.ok) {
     const d = await resultRes.text().catch(() => '');
-    return NextResponse.json({ error: `fal result ${resultRes.status}`, detail: d.slice(0, 300) }, { status: 502 });
+    console.error(`[ai-render/poll] result fetch failed: ${resultRes.status} ${d.slice(0, 300)}`);
+    return NextResponse.json({ error: 'Could not fetch the finished image — please try again.' }, { status: 502 });
   }
   const result = (await resultRes.json().catch(() => ({}))) as { images?: { url?: string }[] };
   const imgUrl = result.images?.[0]?.url;
   if (!imgUrl) {
-    return NextResponse.json({ error: 'fal result had no image.', detail: JSON.stringify(result).slice(0, 300) }, { status: 502 });
+    console.error('[ai-render/poll] result had no image:', JSON.stringify(result).slice(0, 300));
+    return NextResponse.json({ error: 'The render finished with no image — please try again.' }, { status: 502 });
   }
 
   // Only server-fetch fal's own CDN (avoid a second-order SSRF if the result URL is ever

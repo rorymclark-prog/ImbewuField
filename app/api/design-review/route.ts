@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { parseJsonBody } from '@/lib/api-json-body';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -11,11 +12,9 @@ export async function POST(req: NextRequest) {
   const metered = await meteredAi(req, auth, '/api/design-review', client);
   if (metered.response) return metered.response;
   const { ai } = metered;
-  const { layoutText, siteText, language }: {
-    layoutText: string;
-    siteText?: string;
-    language?: string;
-  } = await req.json();
+  const parsed = await parseJsonBody<{ layoutText?: string; siteText?: string; language?: string }>(req);
+  if (parsed.response) return parsed.response;
+  const { layoutText, siteText, language } = parsed.data;
 
   if (!layoutText?.trim()) return NextResponse.json({ error: 'No layout provided' }, { status: 400 });
 

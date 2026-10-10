@@ -13,6 +13,12 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { APP_HEADER_INSET } from '@/lib/app-header';
+import { resizeForStorage } from '@/lib/site-evidence';
+
+// A 12 MP phone photo (the common case on the cheap Android phones this app targets) is several
+// MB — well over what the API will accept — and uploading it uses mobile data the farmer is
+// paying for. Downscale to this before sending; the full-resolution file is never uploaded.
+const VISION_UPLOAD_MAX_PX = 1600;
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -121,24 +127,26 @@ export default function VisionPage() {
   const handleFile = useCallback((file: File) => {
     if (!file.type.startsWith('image/')) return;
 
-    // Show preview via object URL (SSR-safe: this only runs in the browser event handler)
+    // Show preview via object URL (SSR-safe: this only runs in the browser event handler) — the
+    // preview stays full quality since it never leaves the device; only the upload is downscaled.
     const url = URL.createObjectURL(file);
     setPreview(url);
     setResult(null);
     setNetworkError(null);
     setShowDetail(false);
+    setImagePayload(null);
 
-    // Read base64 via FileReader (browser-only — safe inside event callback)
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target?.result as string;
-      const [header, data] = dataUrl.split(',');
-      // Extract mediaType from data:image/jpeg;base64 → image/jpeg
-      const mediaType = header.match(/:(.*?);/)?.[1] ?? 'image/jpeg';
-      setImagePayload({ data, mediaType });
-    };
-    reader.readAsDataURL(file);
-  }, []);
+    resizeForStorage(file, VISION_UPLOAD_MAX_PX)
+      .then((dataUrl) => {
+        const [header, data] = dataUrl.split(',');
+        // Extract mediaType from data:image/jpeg;base64 → image/jpeg
+        const mediaType = header.match(/:(.*?);/)?.[1] ?? 'image/jpeg';
+        setImagePayload({ data, mediaType });
+      })
+      .catch(() => {
+        setNetworkError(t('Could not process this photo — try again.', 'Asikwazanga ukucubungula lesi sithombe — zama futhi.'));
+      });
+  }, [t]);
 
   async function askLima() {
     if (!imagePayload) return;
@@ -155,7 +163,11 @@ export default function VisionPage() {
       });
 
       if (!res.ok) {
-        setNetworkError(t(`Server error ${res.status} — please try again.`, `Kube nenkinga kuseva (${res.status}). Zama futhi.`));
+        if (res.status === 413) {
+          setNetworkError(t('This photo is too large — try again with a clearer, closer photo.', 'Lesi sithombe sikhulu kakhulu — zama futhi ngesithombe esicacile, esiseduze.'));
+        } else {
+          setNetworkError(t(`Server error ${res.status} — please try again.`, `Kube nenkinga kuseva (${res.status}). Zama futhi.`));
+        }
         return;
       }
 

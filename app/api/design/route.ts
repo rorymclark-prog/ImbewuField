@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { imageTooLarge, MAX_FREE_TEXT_CHARS, MAX_IMAGES_PER_REQUEST } from '@/lib/api-request-limits';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -27,6 +28,15 @@ export async function POST(req: NextRequest) {
   const { images, locationData, photoAnalysis, language, tone } = body;
 
   if (!images?.length) return NextResponse.json({ error: 'No sketch provided' }, { status: 400 });
+  if (images.length > MAX_IMAGES_PER_REQUEST) {
+    return NextResponse.json({ error: 'Too many images — send up to 6.' }, { status: 413 });
+  }
+  if (images.some((img) => imageTooLarge(img))) {
+    return NextResponse.json({ error: 'One of the images is too large.' }, { status: 413 });
+  }
+  if (typeof photoAnalysis === 'string' && photoAnalysis.length > MAX_FREE_TEXT_CHARS) {
+    return NextResponse.json({ error: 'Photo analysis text is too long.' }, { status: 413 });
+  }
 
   if (!locationData?.biome || !locationData.rainfall || !locationData.elevation
       || !locationData.soil || !locationData.climate

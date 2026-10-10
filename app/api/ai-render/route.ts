@@ -828,7 +828,7 @@ export async function POST(req: NextRequest) {
   const photos = (body.photos ?? []).slice(0, 3).map(stripDataUrl).filter(Boolean);
   const prompt = buildPrompt(body.context ?? {});
   const provider = body.provider ?? 'gemini';
-  const geminiModel: GeminiModel = (body.geminiModel && body.geminiModel in GEMINI_MODELS) ? body.geminiModel : 'flash';
+  const geminiModel: GeminiModel = (body.geminiModel && Object.hasOwn(GEMINI_MODELS, body.geminiModel)) ? body.geminiModel : 'flash';
 
   if (provider === 'openai') {
     const openaiKey = process.env.OPENAI_API_KEY;
