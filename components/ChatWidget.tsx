@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useId } from 'react';
 import { usePathname } from 'next/navigation';
 import { listenForOverlay } from '@/lib/overlay-signal';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
 import { useLanguage } from '@/lib/i18n';
+
+// Elements a keyboard user can land on, for the sheet's own focus trap below.
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 /**
  * Lima — the almanac field guide persona. Docked at the bottom of every page
@@ -31,6 +34,44 @@ export default function ChatWidget() {
   const pathname = usePathname() || '';
   const { t, lang } = useLanguage();
   const [open, setOpen] = useState(false);
+  const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
+
+  // Real dialog semantics (a11y-03): move focus in when the sheet opens, trap Tab inside it,
+  // close on Escape, and return focus to whatever opened it — the FAB, or a LimaBar deep link.
+  useEffect(() => {
+    if (!open) return;
+    openerRef.current = document.activeElement as HTMLElement | null;
+    const toFocus = closeButtonRef.current ?? panelRef.current;
+    toFocus?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const focusable = Array.from(panelRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
+        .filter((el) => el.offsetParent !== null || el === document.activeElement);
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      openerRef.current?.focus?.();
+    };
+  }, [open]);
   // Hide the FAB while the map is in boundary-draw mode (the draw bar owns the
   // bottom-left corner). The farmer map broadcasts this via a window event.
   const [drawing, setDrawing] = useState(false);
@@ -197,20 +238,29 @@ export default function ChatWidget() {
             aria-hidden="true"
           />
           <div
-            className="no-print u-glass u-anim-sheet fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            tabIndex={-1}
+            className="no-print u-anim-sheet fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
             style={{
-              // .u-glass supplies the warm cream glass background + border + blur
-              // (with an @supports solid fallback for low-end Android). .u-anim-sheet
-              // gives the settle entrance. Only the warm shadow is left inline.
+              // Themed (a11y-03): the old .u-glass class is a fixed warm-cream glass used by
+              // several other sheets, so it stayed a bright block in dark mode here. This sheet
+              // keeps the same blur feel with tokens that actually follow the theme instead.
               height: '82dvh',
               maxHeight: 720,
+              background: 'var(--bg-0)',
+              border: '1px solid var(--border)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
             }}
           >
             {/* Header */}
             <div
               className="flex-shrink-0 flex items-center gap-3 px-4 py-3"
-              style={{ borderBottom: '1px solid var(--border)', background: 'rgba(255,254,250,0.55)' }}
+              style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
             >
               <div
                 className="flex items-center justify-center rounded-lg flex-shrink-0"
@@ -220,32 +270,34 @@ export default function ChatWidget() {
               </div>
               <div className="flex flex-col">
                 <span
+                  id={titleId}
                   className="font-display italic font-semibold text-base leading-tight"
-                  style={{ color: '#20190F' }}
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   Lima
                 </span>
                 <span
                   className="text-xs leading-tight"
-                  style={{ color: '#5C5040' }}
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   {t('limaFieldGuideSubtitle')}
                 </span>
               </div>
               <div className="flex-1" />
               <button
+                ref={closeButtonRef}
                 onClick={() => setOpen(false)}
                 aria-label={t('limaClosePhotoDialog')}
-                className="flex items-center justify-center rounded-lg"
+                className="flex items-center justify-center rounded-lg flex-shrink-0"
                 style={{
-                  width: 32,
-                  height: 32,
-                  background: '#F0E9D9',
-                  border: '1px solid #E2D8C4',
-                  color: '#5C5040',
+                  width: 44,
+                  height: 44,
+                  background: 'var(--bg-2)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text-secondary)',
                 }}
               >
-                <X size={16} />
+                <X size={18} />
               </button>
             </div>
 

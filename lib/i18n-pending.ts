@@ -43,6 +43,35 @@ export const LIMA_ENGLISH_PENDING: Dict = {
   limaPhotoButton: 'Photo',
 };
 
+/*
+ * The Ask tab's chat panel (components/ChatPanel.tsx) — wave 11, lang-01. The panel was entirely
+ * hard-coded English, including a developer test button ("Load Ubhejane farm data") that writes
+ * demo records straight to a real farmer's device. That button now only renders in sample mode
+ * (components/ChatPanel.tsx checks isSampleMode() from lib/sample-mode); it keeps its English-only
+ * copy since it is a tester tool, never shown to a farmer. Everything else here is genuinely
+ * farmer-facing and gets the same explicit-gap treatment as the blocks above.
+ */
+export const CHAT_PANEL_ENGLISH_PENDING: Dict = {
+  chatGreeting: "Hi — I'm Lima.",
+  chatIntro: 'Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.',
+  chatSampleDataLoaded: 'Ubhejane farm data loaded — tap to clear',
+  chatSampleDataLoad: 'Load Ubhejane farm data (to test finance questions)',
+  chatSuggestionPlant: 'What should I plant on my site this season?',
+  chatSuggestionBestCrop: 'Which of my crops makes the most money per kg?',
+  chatSuggestionContract: 'What are my contract obligations and am I on track?',
+  chatSuggestionPest: 'Natural ways to deal with pests & disease?',
+  chatSuggestionWater: 'How do I harvest and store rainwater here?',
+  chatPhotoAttached: 'Photo attached',
+  chatRemovePhoto: 'remove',
+  chatTakePhotoTitle: 'Take / attach a photo',
+  chatInputPlaceholder: 'Ask Lima anything...',
+  chatThinking: 'Thinking…',
+  chatDefaultPhotoQuestion: 'Please diagnose this photo.',
+  chatErrorMessage: 'Sorry, something went wrong. Please try again.',
+  chatPhotoOpenError: 'This photo could not be opened. Please try another photo or a JPEG image.',
+  chatZuluDraftNotice: 'The isiZulu wording in Lima chat is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',

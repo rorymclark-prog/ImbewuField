@@ -1,0 +1,85 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import test from 'node:test';
+
+// swarm/w11-ask-photos-zu, lang-01 + a11y-03 + the chat part of a11y-01: components/ChatPanel.tsx
+// was entirely hard-coded English, including a developer "Load Ubhejane farm data" button that
+// writes demo records straight to a real farmer's device whenever Ask was opened — not gated on
+// sample mode at all. A failed send also surfaced its message by overwriting the bubble's content
+// with raw English, which this test pins as a state flag (`error`) instead so every language
+// renders its own translated message, never the literal string.
+//
+// components/ChatWidget.tsx's sheet drew itself as a plain div with no role, no Escape handling,
+// a 32px close button and a hard-coded cream background that stayed bright in dark mode; this
+// pins the dialog semantics, the 44px close target and the themed background.
+
+const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+
+test('ChatPanel.tsx routes its chrome through t(), not literal English', () => {
+  const s = source('components/ChatPanel.tsx');
+  assert.match(s, /const \{ t, lang \} = useLanguage\(\)/, 'ChatPanel must read t()/lang from useLanguage()');
+  assert.match(s, /from '@\/lib\/sample-mode'/, 'ChatPanel must import the shared sample-mode helper');
+
+  for (const call of [
+    "t('chatGreeting')",
+    "t('chatIntro')",
+    "t('chatSampleDataLoaded')",
+    "t('chatSampleDataLoad')",
+    "t('chatPhotoAttached')",
+    "t('chatRemovePhoto')",
+    "t('chatTakePhotoTitle')",
+    "t('chatInputPlaceholder')",
+    "t('chatThinking')",
+    "t('chatDefaultPhotoQuestion')",
+  ]) {
+    assert.ok(s.includes(call), `ChatPanel.tsx no longer calls ${call}`);
+  }
+
+  // Regression guard: these exact hard-coded English literals must not come back.
+  assert.doesNotMatch(s, /Hi — I&apos;m Lima\./, 'the greeting regressed to hard-coded English');
+  assert.doesNotMatch(s, /placeholder="Ask Lima anything\.\.\."/, 'the input placeholder regressed to hard-coded English');
+  assert.doesNotMatch(s, /"Ubhejane farm data loaded — tap to clear"/, 'the sample-data label regressed to a hard-coded string');
+});
+
+test('the Ubhejane test-data button only renders in sample mode', () => {
+  const s = source('components/ChatPanel.tsx');
+  assert.match(s, /\{isSampleMode\(\) && \(/, 'the sample-data button is not gated on isSampleMode()');
+});
+
+test('a failed send or an unreadable photo sets an error flag, never raw server/JS text', () => {
+  const s = source('components/ChatPanel.tsx');
+  assert.match(s, /error\?: boolean/, 'Msg needs an error flag instead of embedding error text in content');
+  assert.doesNotMatch(s, /content: 'Sorry, something went wrong/, 'the catch block still writes raw English into message content');
+  assert.doesNotMatch(s, /content: 'This photo could not be opened/, 'the photo-open failure still writes raw English into message content');
+  assert.match(s, /error: true \}/, 'the catch block must set the error flag instead');
+  assert.match(s, /t\(m\.errorKind === 'photo' \? 'chatPhotoOpenError' : 'chatErrorMessage'\)/,
+    'the rendered error bubble must come from t(), not raw content');
+});
+
+test('the Lima chat sheet is a real modal dialog with a 44px close target and themed background', () => {
+  const s = source('components/ChatWidget.tsx');
+  assert.match(s, /role="dialog"/, 'the sheet does not identify itself as a dialog');
+  assert.match(s, /aria-modal="true"/, 'the sheet does not mark itself modal');
+  assert.match(s, /aria-labelledby=\{titleId\}/, 'the sheet has no accessible name tied to its title');
+  assert.match(s, /id=\{titleId\}/, 'the title span is never given the id the dialog points to');
+  assert.match(s, /e\.key === 'Escape'/, 'the sheet does not listen for Escape');
+  assert.match(s, /width: 44,\s*\n\s*height: 44,/, 'the close button is not a 44px tap target');
+  assert.doesNotMatch(s, /className="[^"]*u-glass/, 'the sheet still uses the fixed warm-cream .u-glass class instead of theme tokens');
+  assert.match(s, /background: 'var\(--bg-0\)'/, 'the sheet panel background is not a theme token');
+  assert.match(s, /background: 'var\(--bg-1\)'/, 'the sheet header background is not a theme token');
+});
+
+test('opening the Lima sheet moves focus in and closing it returns focus to the opener', () => {
+  const s = source('components/ChatWidget.tsx');
+  assert.match(s, /openerRef\.current = document\.activeElement/, 'the sheet never records what opened it');
+  assert.match(s, /toFocus\?\.focus\(\)/, 'the sheet never moves focus in when it opens');
+  assert.match(s, /openerRef\.current\?\.focus\?\.\(\)/, 'the sheet never returns focus to the opener on close');
+  assert.match(s, /FOCUSABLE_SELECTOR/, 'the sheet has no Tab focus trap');
+});
+
+// Another track changes only ChatWidget's ChatPanel import to next/dynamic — this guards that
+// this track's edits stayed off that import line.
+test('ChatWidget still imports ChatPanel directly (another track owns the dynamic-import change)', () => {
+  const s = source('components/ChatWidget.tsx');
+  assert.match(s, /^import ChatPanel from '\.\/ChatPanel';$/m, 'the ChatPanel import line changed unexpectedly');
+});

@@ -11,8 +11,13 @@ import { getLastSite } from '@/lib/last-site';
 import SampleLimaConversation from './SampleLimaConversation';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useLanguage } from '@/lib/i18n';
+import { isSampleMode } from '@/lib/sample-mode';
 
-interface Msg { role: 'user' | 'assistant'; content: string; image?: string }
+// A message's content is never a raw server/JS error — a failed send or an unreadable photo sets
+// `error: true` instead, and the bubble renders t('chatErrorMessage')/t('chatPhotoOpenError') for
+// it, same in every language. See CLAUDE.md lang-01.
+interface Msg { role: 'user' | 'assistant'; content: string; image?: string; error?: boolean; errorKind?: 'photo' }
 
 interface Props {
   locationData: LocationData | null;
@@ -29,13 +34,13 @@ interface Props {
   onInitialConsumed?: () => void;
 }
 
-const SUGGESTIONS = [
-  'What should I plant on my site this season?',
-  'Which of my crops makes the most money per kg?',
-  'What are my contract obligations and am I on track?',
-  'Natural ways to deal with pests & disease?',
-  'How do I harvest and store rainwater here?',
-];
+const SUGGESTION_KEYS = [
+  'chatSuggestionPlant',
+  'chatSuggestionBestCrop',
+  'chatSuggestionContract',
+  'chatSuggestionPest',
+  'chatSuggestionWater',
+] as const;
 
 // Downscale a photo to keep the upload small and within model limits.
 function fileToPayload(file: File): Promise<{ data: string; mediaType: string; preview: string }> {
@@ -69,6 +74,7 @@ export default function ChatPanel(props: Props) {
 }
 
 function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, initialFile, onInitialConsumed }: Props) {
+  const { t, lang } = useLanguage();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -152,7 +158,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
     const q = text.trim();
     const img = pendingImage;
     if ((!q && !img) || loading) return;
-    const history = [...messages, { role: 'user' as const, content: q || (img ? 'Please diagnose this photo.' : ''), image: img?.preview }];
+    const history = [...messages, { role: 'user' as const, content: q || (img ? t('chatDefaultPhotoQuestion') : ''), image: img?.preview }];
     setMessages([...history, { role: 'assistant', content: '' }]);
     setInput('');
     setPendingImage(null);
@@ -182,12 +188,12 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       }
     } catch (e) {
       if ((e as Error)?.name !== 'AbortError') {
-        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }; return c; });
+        setMessages((m) => { const c = [...m]; c[c.length - 1] = { role: 'assistant', content: '', error: true }; return c; });
       }
     } finally {
       setLoading(false);
     }
-  }, [messages, loading, buildContext, pendingImage]);
+  }, [messages, loading, buildContext, pendingImage, t]);
 
   const onPickFile = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -215,7 +221,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
     let active = true;
     fileToPayload(initialFile).then(
       (image) => { if (active) setPendingImage(image); },
-      () => { if (active) setMessages([{ role: 'assistant', content: 'This photo could not be opened. Please try another photo or a JPEG image.' }]); },
+      () => { if (active) setMessages([{ role: 'assistant', content: '', error: true, errorKind: 'photo' }]); },
     );
     return () => { active = false; };
   }, [initialFile]);
@@ -250,36 +256,42 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
       {/* Intro / empty state */}
       {messages.length === 0 && !initialFile && (
         <div className="space-y-3">
+          {lang === 'zu' && (
+            <p role="note" className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('chatZuluDraftNotice')}</p>
+          )}
           <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="flex items-center gap-1.5 mb-1">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F4D2B" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/>
                 <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
               </svg>
-              <div className="text-sm font-display font-semibold italic" style={{ color: 'var(--color-forest-800)' }}>Hi — I&apos;m Lima.</div>
+              <div className="text-sm font-display font-semibold italic" style={{ color: 'var(--color-forest-800)' }}>{t('chatGreeting')}</div>
             </div>
             <div className="text-xs" style={{ color: 'var(--text-secondary)' }}>
-              Ask about your site, crops, soil &amp; water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic &amp; regenerative only.
+              {t('chatIntro')}
             </div>
           </div>
 
-          {/* Sample data — so finance/crop answers can be tested without real records */}
-          <button
-            onClick={() => (hasSample ? clearSampleFarmData() : loadSampleFarmData())}
-            className="w-full text-left px-3 py-2 rounded-lg text-xs font-display transition-all"
-            style={hasSample
-              ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)' }
-              : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: 'var(--color-forest-800)' }}>
-            <FlaskConical size={13} className="inline mr-1" />
-            {hasSample ? "Ubhejane farm data loaded — tap to clear" : "Load Ubhejane farm data (to test finance questions)"}
-          </button>
+          {/* Sample data — a tester tool that writes demo records to the device, so it only
+              renders in sample mode; a real farmer never sees it. */}
+          {isSampleMode() && (
+            <button
+              onClick={() => (hasSample ? clearSampleFarmData() : loadSampleFarmData())}
+              className="w-full text-left px-3 py-2 rounded-lg text-xs font-display transition-all"
+              style={hasSample
+                ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)' }
+                : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: 'var(--color-forest-800)' }}>
+              <FlaskConical size={13} className="inline mr-1" />
+              {hasSample ? t('chatSampleDataLoaded') : t('chatSampleDataLoad')}
+            </button>
+          )}
 
           <div className="flex flex-col gap-1.5">
-            {SUGGESTIONS.map((s) => (
-              <button key={s} onClick={() => send(s)}
+            {SUGGESTION_KEYS.map((key) => (
+              <button key={key} onClick={() => send(t(key))}
                 className="text-left px-3 py-2 rounded-lg font-display hover:bg-[rgba(31,77,43,0.05)] transition-colors"
                 style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 13 }}>
-                {s}
+                {t(key)}
               </button>
             ))}
           </div>
@@ -294,9 +306,9 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
               ? { maxWidth: '85%', background: '#1F4D2B', color: '#F2EBDD', borderRadius: '16px 4px 16px 16px', whiteSpace: 'pre-wrap' }
               : { maxWidth: '92%', background: 'var(--bg-1)', border: '1px solid #E7DDC9', color: 'var(--text-primary)', borderRadius: '4px 16px 16px 16px', whiteSpace: 'pre-wrap', lineHeight: 1.55 }}>
             {m.image && <img src={m.image} alt="" className="rounded-lg mb-1.5" style={{ maxWidth: 180, maxHeight: 180, objectFit: 'cover' }} />}
-            {m.role === 'assistant' && m.content.startsWith('Sorry,')
-              ? <span style={{ color: 'var(--orange)' }}>{m.content}</span>
-              : m.content || (loading && i === messages.length - 1 ? <span className="lima-shimmer">Thinking…</span> : '')}
+            {m.role === 'assistant' && m.error
+              ? <span style={{ color: 'var(--orange)' }}>{t(m.errorKind === 'photo' ? 'chatPhotoOpenError' : 'chatErrorMessage')}</span>
+              : m.content || (loading && i === messages.length - 1 ? <span className="lima-shimmer">{t('chatThinking')}</span> : '')}
           </div>
         </div>
       ))}
@@ -307,15 +319,15 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
         {pendingImage && (
           <div className="flex items-center gap-2 mb-1.5">
             <img src={pendingImage.preview} alt="" className="rounded-lg" style={{ width: 44, height: 44, objectFit: 'cover' }} />
-            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>Photo attached</span>
+            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('chatPhotoAttached')}</span>
             <button onClick={() => setPendingImage(null)} className="flex items-center gap-0.5 text-xs" style={{ color: 'var(--gold)' }}>
-              <X size={12} />remove
+              <X size={12} />{t('chatRemovePhoto')}
             </button>
           </div>
         )}
         <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="flex gap-2">
           <input ref={fileRef} type="file" accept="image/*" capture="environment" onChange={onPickFile} className="hidden" />
-          <button type="button" onClick={() => fileRef.current?.click()} title="Take / attach a photo"
+          <button type="button" onClick={() => fileRef.current?.click()} title={t('chatTakePhotoTitle')}
             className="flex-shrink-0 rounded-xl flex items-center justify-center hover:bg-[rgba(31,77,43,0.08)] transition-colors"
             style={{ minHeight: 46, minWidth: 46, background: 'rgba(226,216,196,0.4)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
             <Camera size={18} />
@@ -323,9 +335,9 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Lima anything..."
+            placeholder={t('chatInputPlaceholder')}
             className="flex-1 rounded-xl px-3 outline-none min-w-0 font-display"
-            style={{ background: '#fff', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 16, minHeight: 46, borderRadius: 12 }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 16, minHeight: 46, borderRadius: 12 }}
           />
           <button type="submit" disabled={isDisabled}
             className="px-4 rounded-xl font-display font-semibold flex-shrink-0 flex items-center justify-center transition-all"

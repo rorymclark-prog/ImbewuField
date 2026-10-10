@@ -1,12 +1,13 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   // FieldTeams.tsx's own unreviewed isiZulu drafts, carried over from its old inline `ui(en, zu)`
   // helper into real per-key overrides now that the component reads these through t(). English is
@@ -2012,6 +2013,28 @@ const dict: Dict = {
   surveyHddsSugarsHoney: "Ushukela noju",
   surveyHddsSpicesBeverages: "Izinongo neziphuzo",
   surveyZuluDraftNotice: "ISIZULU DRAFT — This survey’s isiZulu wording has not been reviewed. If anything is unclear, switch to English before saving your answers. / IsiZulu sisaluhlaka — Umbhalo wesiZulu wale nhlolovo uwuhlaka olungakabuyekezwa yisikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni. Uma kukhona okungacacile, shintshela esiNgisini ngaphambi kokugcina izimpendulo.",
+
+  // Ask tab chat panel (components/ChatPanel.tsx) — wave 11, lang-01. Unreviewed isiZulu drafts,
+  // overriding the English spread from CHAT_PANEL_ENGLISH_PENDING above, the same direct-override
+  // pattern as mentorZuluDraftNotice. One banner (chatZuluDraftNotice) marks the whole panel as an
+  // unreviewed draft, the same single-notice pattern app/student/page.tsx uses for lesson text,
+  // rather than pairing every short suggestion/button individually.
+  chatZuluDraftNotice: "Umbhalo wesiZulu ku-Lima chat uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  chatGreeting: "Sawubona — ngiyi-Lima.",
+  chatIntro: "Buza ngesayithi sakho, izitshalo, inhlabathi namanzi, izimali, noma iphrojekthi yakho. Thinta ikhamera ukuthwebula isithombe sesitshalo noma isinambuzane ukuthola ukuxilongwa. Okwemvelo nokuvuselela kuphela.",
+  chatSuggestionPlant: "Yini engifanele ngiyitshale endaweni yami ngesikhathi esizayo?",
+  chatSuggestionBestCrop: "Yisiphi isitshalo sami esenza imali eningi ngekhilogremu?",
+  chatSuggestionContract: "Yiziphi izibopho zami zesivumelwano futhi ngikulandela yini?",
+  chatSuggestionPest: "Yiziphi izindlela zemvelo zokubhekana nezinambuzane nezifo?",
+  chatSuggestionWater: "Ngivuna futhi ngigcina kanjani amanzi emvula la?",
+  chatPhotoAttached: "Isithombe sinamathiselwe",
+  chatRemovePhoto: "susa",
+  chatTakePhotoTitle: "Thatha / namathisela isithombe",
+  chatInputPlaceholder: "Buza u-Lima noma yini...",
+  chatThinking: "Ucabanga…",
+  chatDefaultPhotoQuestion: "Ngicela uxilonge lesi sithombe.",
+  chatErrorMessage: "Uxolo, kukhona okungahambi kahle. Sicela uzame futhi.",
+  chatPhotoOpenError: "Lesi sithombe asikwazi kuvulwa. Sicela uzame esinye isithombe noma isithombe se-JPEG.",
 };
 
 export default dict;
