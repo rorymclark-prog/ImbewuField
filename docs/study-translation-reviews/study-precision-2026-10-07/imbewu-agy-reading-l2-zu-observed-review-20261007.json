@@ -1,0 +1,29 @@
+{
+  "lessonId": "reading-landscape-l2",
+  "language": "zu",
+  "nativeConversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "observedCompleted": true,
+  "modelVerdict": "Aligned",
+  "rootAdoptsBlanketVerdict": false,
+  "fluentApproval": false,
+  "observedChecks": [
+    "north/south and winter/summer phrase evidence",
+    "8am/midday/4pm retained",
+    "quiz indices 2 and 0 retained"
+  ],
+  "openRootQuestions": [
+    {
+      "field": "quiz0.question",
+      "sourcePhrase": "frost-tender young pawpaw",
+      "draftPhrase": "yesihlahla se-pawpaw esincane nesizwela i-frost",
+      "reason": "esincane can describe small size; model cited it without establishing young age. Independent repair or exact age anchor required."
+    },
+    {
+      "field": "quiz1.rationale",
+      "sourcePhrase": "can change the hours of sun on a bed",
+      "draftPhrase": "ingashintsha isikhathi ilanga elifika ngaso embhedeni",
+      "reason": "Check duration versus arrival time before accepting model alignment."
+    }
+  ],
+  "learnerEdits": false
+}

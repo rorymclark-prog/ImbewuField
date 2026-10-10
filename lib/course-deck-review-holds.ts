@@ -5,9 +5,12 @@
  */
 const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number, string>>>> = Object.freeze({
   'intro-permaculture': Object.freeze({
+    6: 'The recorded heading says equal sharing where the source names Fair Share; the independent corrected silent card preserves fairness without prescribing identical amounts.',
+    7: 'The recorded agreement clause prescribes equal sharing where the source says share fairly; retain the corrected silent card and withhold the old clip while preserving permission, capacity, monitoring and no-extra-use conditions.',
     22: 'The narration omits the source superlative “worst” in “worst wind” and asks where an item can be placed instead of where it should move; retain both exact English clauses until checked equivalents preserve those meanings.',
   }),
   'reading-landscape': Object.freeze({
+    14: 'The recorded isiZulu wording says cold or damage lasts a long time where the source says longest; the independently checked corrected silent card preserves that site comparison and the old clip remains withheld.',
     5: 'The slide heading changes slower water flow into water decreasing; retain “slows” until the flow-speed comparison is preserved.',
     15: 'The narration says cool, damp weather may favour disease, but the ZU wording says it may allow disease to spread; retain the conditional favouring clause.',
     16: 'The target may narrow “your whole smallholding” to a piece or plot of land; retain “smallholding” until the property scope is clear.',

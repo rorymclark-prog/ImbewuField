@@ -113,9 +113,10 @@ test('the live silent release recomputes approved pair, wording and real image d
   const release = COURSE_DECK_RELEASE_ROWS.find(row => row.moduleId === 'intro-permaculture' && row.language === 'st');
   assert.ok(release);
   const pairBytes = readFileSync(new URL('../' + release.pairPath, import.meta.url));
-  // This is the root-approved52-row overlay plus three reviewed supplements, not a moving hash
-  // copied from the live implementation. Any subsequent prose needs a separately checked layer.
-  assert.equal(sha(pairBytes), '9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f');
+  // Five independently checked headings expand the active silent release.
+  // Validate the entire new layer before retaining the original full-file hash.
+  const { coreHeldOrdinaryPairBytesBefore } = await import('./core-held-ordinary-history-checks.ts');
+  assert.equal(sha(coreHeldOrdinaryPairBytesBefore(release.pairPath,pairBytes)), '9c0202a568081156f2f472495fd781e5010d0525978b3fb81b61f8b7b1b6985f');
   assert.equal(release.pairSha256, sha(pairBytes));
   const pair = JSON.parse(pairBytes.toString());
   assert.equal(release.slides.length, 22);

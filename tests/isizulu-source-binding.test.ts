@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { runInNewContext } from 'node:vm';
+import { fairSharingNativeBefore, fairSharingZuluBefore, fairSharingPairBefore } from './intro-fair-sharing-history-checks.ts';
+import { ordinaryFramingPairBytesBefore } from './ordinary-framing-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import {
   courseTranslationReviewState,
@@ -13,6 +16,89 @@ import { ISIZULU_REVIEW_DRAFT_SOURCE_SNAPSHOTS } from '../lib/course-translation
 import { SESOTHO_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-st.ts';
 import { XITSONGA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { TSHIVENDA_INTRO_PERMACULTURE_DRAFT } from '../lib/course-translation-drafts-ve.ts';
+
+// Unlisted audio is binary: decoding it as UTF-8 changes the evidence bytes even
+// when the recording on disk is unchanged.
+test('historical text projections leave unlisted binary recording bytes untouched', () => {
+  const recording = Buffer.from([0xff, 0xfe, 0x00, 0xc3, 0x28, 0x80]);
+  assert.strictEqual(ordinaryFramingPairBytesBefore('public/course-audio/example.mp3', recording), recording);
+});
+
+// Fair sharing does not prescribe identical amounts. The equal-size illustration
+// and the “all three equally” distractor still have their original meanings.
+test('Intro sharing drafts preserve water gates without prescribing equal allocations', () => {
+  const lesson = COURSE_MODULES.find(module => module.id === 'intro-permaculture')!.lessons[0];
+  const zu = resolveLearnerLessonPresentation(lesson, 'zu');
+  const ts = resolveLearnerLessonPresentation(lesson, 'ts');
+  assert.equal(zu.status, 'draft');
+  assert.equal(ts.status, 'draft');
+  assert.deepEqual(zu.content.quiz.map(row => row.correct), [2, 2]);
+  assert.deepEqual(ts.content.quiz.map(row => row.correct), [2, 2]);
+  assert.equal(zu.content.quiz[0].options[3], 'Womathathu ngokulinganayo');
+  assert.match(ts.content.quiz[0].options[3], /swinharhu hi ku ringana$/);
+  assert.match(zu.content.infographicAlt!, /nezilingana ngosayizi/);
+  assert.match(ts.content.infographicAlt!, /leswi ringanaka hi vukulu/);
+  assert.match(zu.content.quiz[1].options[2], /Yilapho kuphela.*ngendlela enobulungiswa.*izinga lamanzi/);
+  assert.match(zu.content.quiz[1].rationale, /akukuniki imvume yokusebenzisa amanzi engeziwe/);
+  assert.match(ts.content.quiz[1].options[2], /Hi kona ntsena.*hi ndlela yo avelana leyi lulameke.*xiyimo xa mati/);
+  assert.match(ts.content.quiz[1].rationale, /Loko ku avelana ku pfumeleriwa naswona mati ma ringene/);
+  assert.match(ts.content.quiz[1].rationale, /a swi nyiki mpfumelelo wo teka mati yo tala/);
+  assert.doesNotMatch(ts.content.quiz[1].options[2], /avelana hi ku ringana/);
+  assert.doesNotMatch(zu.content.quiz[1].options[2], /ngokwabelana ngokulinganayo/);
+  const sourceChanged = { ...lesson, body: `${lesson.body} Changed source condition.` };
+  assert.equal(resolveLearnerLessonPresentation(sourceChanged, 'zu').status, 'english-fallback');
+  assert.equal(resolveLearnerLessonPresentation(sourceChanged, 'ts').status, 'english-fallback');
+});
+
+test('the fairness history layer rejects changed negations, answer indices, sources and unlisted lessons', () => {
+  const ts = structuredClone(XITSONGA_INTRO_PERMACULTURE_DRAFT);
+  ts.lessons[0].quiz[1].sourceCorrectIndex = 0;
+  assert.throws(() => fairSharingNativeBefore(ts), /complete current TS module/);
+  const wrongNegation = structuredClone(COURSE_TRANSLATION_DRAFTS);
+  wrongNegation['intro-permaculture-l1'].quiz[1].rationale = 'Monitoring permits more water.';
+  // The later whole-registry Reading/precision guards now reject these mutations first;
+  // both historical and current layers must still reject the exact same damage.
+  assert.throws(() => fairSharingZuluBefore(wrongNegation), /complete current ZU registry|complete latest precision registry|complete Reading comparisons registry/);
+  const neighbour = structuredClone(COURSE_TRANSLATION_DRAFTS);
+  neighbour['intro-permaculture-l2'].body += ' Unreviewed extra instruction.';
+  assert.throws(() => fairSharingZuluBefore(neighbour), /complete current ZU registry|complete latest precision registry|complete Reading comparisons registry/);
+  const path = 'docs/narration/intro-permaculture.ts.paired-draft.json';
+  const deck = JSON.parse(readFileSync(path, 'utf8'));
+  deck.slides[6].english.body[1] += ' Extra permission.';
+  assert.throws(() => fairSharingPairBefore(path, deck), /without source or neighbour drift/);
+});
+
+test('fairness cards refresh once including queries without evicting recordings or later downloads', async () => {
+  const source = readFileSync('app/sw.js/route.ts', 'utf8');
+  const body = source.match(/async function migrateIntroFairSharingStills\(\) \{([\s\S]*?)\n\}/)![1];
+  const urls = ['ts', 'zu-silent'].flatMap(language => [6, 7].map(slide =>
+    `/course-decks/intro-permaculture/${language}/slide-0${slide}.webp`));
+  const retained = ['/course-audio/intro-permaculture/zu/slide-07.mp3',
+    '/course-audio/intro-permaculture/st/slide-01.mp3',
+    '/course-decks/intro-permaculture/ts/slide-08.webp', '/course-animations/intro-permaculture/film.mp4'];
+  const entries = new Map<string, unknown>();
+  const absolute = (path: string) => new URL(path, 'https://example.test').href;
+  for (const path of [...urls.flatMap(url => [url, `${url}?revision=old`]), ...retained]) entries.set(absolute(path), 'saved');
+  const cache = {
+    match: async (path: string) => entries.get(absolute(path)),
+    put: async (path: string, response: unknown) => { entries.set(absolute(path), response); },
+    keys: async () => [...entries.keys()].map(url => ({ url })),
+    delete: async (request: { url: string }) => entries.delete(request.url),
+  };
+  const migrate = runInNewContext(`(async function () {${body}\n})`, {
+    caches: { open: async () => cache }, COURSE_CACHE: 'course', URL, Response,
+    fetch: () => { throw new Error('Migration must not fetch'); },
+  });
+  await migrate();
+  for (const url of urls) {
+    assert.equal(entries.has(absolute(url)), false);
+    assert.equal(entries.has(absolute(`${url}?revision=old`)), false);
+  }
+  for (const url of retained) assert.equal(entries.get(absolute(url)), 'saved');
+  for (const url of urls) entries.set(absolute(url), 'newly downloaded');
+  await migrate();
+  for (const url of urls) assert.equal(entries.get(absolute(url)), 'newly downloaded');
+});
 
 const allLessons = COURSE_MODULES.flatMap(module => module.lessons);
 const checkedZuluLessons = allLessons.filter(lesson => courseTranslationReviewState(lesson.id).status === 'review-draft');

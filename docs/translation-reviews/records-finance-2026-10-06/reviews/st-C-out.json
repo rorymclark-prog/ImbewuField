@@ -1,0 +1,8 @@
+[
+ {
+  "key": "myRecordsSaveSale",
+  "problem": "English is 'Save sale & invoice'; the existing 'Boloka thekiso' drops the '& invoice' clause, so the button no longer says an invoice is also created",
+  "suggested": "Boloka thekiso le invoyese",
+  "severity": "meaning"
+ }
+]

@@ -1,0 +1,23 @@
+{
+ "lang": "ve",
+ "counts": {
+  "total": 268,
+  "ok": 258,
+  "repair": 9,
+  "hold": 1
+ },
+ "phase_C": "No demonstrated meaning errors in the 28 existing strings; C-out is empty.",
+ "top_issues": [
+  "R254 (repair, meaning): 'Luhuhi 2026' is February in Tshivenda; English says July 2026. Replace with 'Fulwana 2026'. A wrong month on a price guide misleads.",
+  "R049/R099/R202/R187 (repair, meaning): Export is rendered with 'Bvisani'/'U bvisa' = remove, the same word as shipped Delete (R120, existing Delete string). 'Remove this month' / 'to remove your own records' reads as deleting records. Proposed 'Dauniloudani' (loanword, low confidence) - needs speaker decision; the same collision already exists in the shipped locale ('Bvisani PDF').",
+  "R088 (hold, meaning): profit formula sentence; 'dzo bviswa mbadelo' reads 'sales were removed by expenses' and 'never guessed' became 'cannot be estimated'. Needs speaker.",
+  "R248 (ok, but flag to product): the English itself says 'retry this cost' when only the receipt failed; draft faithfully copies it, which could prompt a duplicate cost entry. Consider English 'retry the receipt'.",
+  "R247 (repair, wording): 'Risidi a ro ngo kona u vhulungwa' has wrong subject concord (ro = we), ungrammatical; rewritten as 'A ro ngo kona u vhulunga risidi...'.",
+  "R262 (repair, wording): orchard 'yo dzimwa' (switched off) but told to 'i shumiseni' (use) rather than switch on; proposed 'i vhaseni hafhu'. R053/R105/R263 use the same 'dzimwa' pattern and are fine.",
+  "R241 (repair, wording): 'automatically' lost and replaced by 'ya ṋoṋe' (own), reading 'your own sales book'. Negation 'Ni songo zwi ṅwala hafhu' correct.",
+  "R003 (repair, wording): 'Authentication required' rendered as 'confirming it is you is required'; does not tell the farmer to sign in. Proposed 'Ni fanela u dzhena.'",
+  "Vocabulary I cannot verify (no fluent-speaker approval): kaṋwa/khaṋo for picked/harvest (khaṋo also used for Yield, so Picked and Yield tabs are indistinguishable), mikwiḓi (R001), magagulo (R002), lushaka for Category (R173), vhungoho for 'Sure?' (R121, shipped), khalaṅwaha for season, tshisaka for forest, hezi (R084).",
+  "Distinction checks passed: View (Vhonani) / Recover (Vhumbani hafhu) / Create (Itani) / Retry (Lingedzani hafhu) are all different; negations (R186, R241, R252, R262) preserved; saved=past vs will reach=future correct; buyer (Murengi) vs supplier (Muṋetshedzi) correct; placeholders {kg} {names} {sold} {kept} {amount} {moneyIn} {moneyOut} {low} {high} {wholesale} {retail} {crop} identical to English; 'greater than zero' preserved. Mutengo is used for both Price and Amount (existing convention)."
+ ],
+ "confidence_limits": "I am a machine reviewer, not a fluent Tshivenda speaker, and this is not a speaker approval. My Tshivenda is moderate: I can detect structural problems (concord, negation, tense, clause order, month names, collisions between buttons) but cannot reliably judge naturalness, register or rarely used vocabulary. The 258 'ok' verdicts mean 'no demonstrable meaning error found', not 'natural or correct'; items listed as unverifiable should be checked by a native speaker before shipping, and the Export-vs-Delete wording and R088 in particular."
+}

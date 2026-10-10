@@ -135,8 +135,13 @@ test('Reading full learner drafts keep all fields source-bound, ordered, withdra
     const frostDuration = code === 'st'
       ? 'ho pholletsa le sehla sa frost sa sebakeng seo'
       : 'through the local frost season';
-    assert.ok(l3Body.includes(frostDuration), `${code}: compare sites throughout the full local frost season`);
-    assert.ok(frostRationale.includes(frostDuration),
+    // The separately checked Xitsonga duration explicitly covers the entire local season.
+    // The newly checked Venda body sentence, like its rationale, says the entire local season.
+    const bodyDuration = code === 've' ? 'kha khalaṅwaha yoṱhe ya tshando ya henefho'
+      : code === 'ts' ? 'eka nguva hinkw' + 'ayo ya xirhami ya laha kaya' : frostDuration;
+    const rationaleDuration = code === 've' ? 'kha khalaṅwaha yoṱhe ya tshando ya henefho' : bodyDuration;
+    assert.ok(l3Body.includes(bodyDuration), `${code}: compare sites throughout the full local frost season`);
+    assert.ok(frostRationale.includes(rationaleDuration),
       `${code}: nursery comparison covers the full local frost season in the assessment too`);
     const l3Rationale = text(code, 'reading-landscape-l3', 'quiz1rationale');
     assert.ok(/prolonged|tshifhinga tshilapfu|nkarhi wo leha|nako e telele/i.test(l3Rationale),

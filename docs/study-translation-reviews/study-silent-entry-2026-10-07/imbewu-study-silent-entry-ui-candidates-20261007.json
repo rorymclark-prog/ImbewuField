@@ -1,0 +1,73 @@
+{
+  "head": "27dc083deda68dd33bfc67bf7c954037ee4a70f1",
+  "scope": "Silent deck entry only; existing audio choice helper authority; no source changes",
+  "rows": [
+    {
+      "language": "st",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "draft": "Shebella diselaete",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    },
+    {
+      "language": "st",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "draft": "Diselaete tse {count}. Ha ho tlhaloso e buuoang e qalang ka boyona. O ka kgetha tlhaloso ya Senyesemane.",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "draft": "Vhonani slides",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    },
+    {
+      "language": "ve",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "draft": "Slides dza {count}. Ṱhalutshedzo nga ipfi a i thomi nga yoṱhe. Ni nga khetha ṱhalutshedzo ya English.",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    },
+    {
+      "language": "ts",
+      "key": "studentViewSilentSlides",
+      "sourceEnglish": "View slides",
+      "draft": "Vona slides",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    },
+    {
+      "language": "ts",
+      "key": "studentSilentDeckDescription",
+      "sourceEnglish": "{count} slides. No narration starts automatically. You can choose English narration.",
+      "draft": "Slides ta {count}. Nhlamuselo hi rito a yi sunguli hi yoxe. U nga hlawula nhlamuselo ya Xinghezi.",
+      "status": "candidate-unreviewed",
+      "risks": [
+        "Backcheck auto-start negation and optional-choice meaning",
+        "Slides loan provisional for ve/ts; use established locale term if independently defensible"
+      ]
+    }
+  ],
+  "approval": "Not independently checked or wired"
+}

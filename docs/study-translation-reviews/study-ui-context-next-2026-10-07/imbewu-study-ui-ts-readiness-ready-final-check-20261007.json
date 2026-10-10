@@ -1,0 +1,14 @@
+{
+  "language": "ts",
+  "key": "studentReadinessLessonsDetail",
+  "file": "app/student/page.tsx",
+  "line": 1052,
+  "englishSource": "Reading and pictures are ready. Narration and slides are still being made.",
+  "candidate": "Ku hlaya ni swifaniso swi lunghekile. Nhlamuselo hi rito ni slides swa ha endliwa.",
+  "verdict": "ACCEPT_SEMANTICALLY_PENDING_GRAMMAR_REVIEW",
+  "literalBacktranslation": "Reading and pictures are ready. Spoken narration and slides are still being made.",
+  "semanticCheck": "Keeps “reading” as the reading action/content rather than replacing it with texts/materials; says both reading and pictures are ready; and retains narration and slides as still in progress.",
+  "agreementCheck": "The proposal uses plural concord (`swi` / `swa`) for each coordinated pair. That avoids explicitly making the singular “ku hlaya” the only subject, but I cannot verify from text-only inspection that this mixed infinitive-plus-plural coordination is natural Xitsonga. Have a first-language reviewer confirm concord and naturalness.",
+  "context": "This tooltip is in the global staff-only readiness badge; it does not describe selected-language voice availability.",
+  "status": "Draft check only; no fluency approval."
+}

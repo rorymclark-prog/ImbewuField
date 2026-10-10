@@ -1,4 +1,7 @@
+import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBefore } from './final-language-next-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
+import { fairSharingNativeBefore } from './intro-fair-sharing-history-checks.ts';
+import { precisionNativeBefore, precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -83,15 +86,15 @@ function validateCurrentFileHashes() {
   for (const row of Object.values(outputs.native) as any[]) {
     // The later Reading change shares TS's file; validate its full layer and
     // rewind its one literal before preserving the entire Intro968 file digest.
-    const actual = readFileSync(row.path, 'utf8');
+    const actual = Buffer.from(precisionSourceBytesBefore(row.path, readFileSync(row.path))).toString();
     const historical = row.path === 'lib/course-translation-drafts-ts.ts'
       ? tsSharedSourceBeforeNativeOrdinary(actual) : actual;
     assert.equal(sha(historical), row.sha256, `${row.path}: exact accepted native release bytes`);
   }
   for (const row of Object.values(outputs.existingPaired) as any[]) {
-    assert.equal(sha(readFileSync(row.path)), row.sha256, `${row.path}: exact accepted paired release bytes`);
+    assert.equal(sha(finalLanguageNextPairedBytesBefore(row.path, readFileSync(row.path))), row.sha256, `${row.path}: exact accepted paired release bytes`);
   }
-  assert.equal(sha(readFileSync(outputs.newSilentST.path)), outputs.newSilentST.sha256,
+  assert.equal(sha(finalLanguageNextPairedBytesBefore(outputs.newSilentST.path,readFileSync(outputs.newSilentST.path))), outputs.newSilentST.sha256,
     'new silent Sesotho paired deck matches the accepted release bytes');
   assert.equal(sha(readFileSync(outputs.unchangedOldST.path)), outputs.unchangedOldST.sha256,
     'the archived Sesotho paired deck remains byte-identical');
@@ -145,18 +148,22 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
     nativeBeforeSilent[language] = previous;
   }
 
-  const pairedInput = input.paired ?? readCurrentIntroSilentTextInputs().paired;
-  const currentSilentST = input.silentSesotho ?? readCurrentIntroSilentTextInputs().silentSesotho;
+  // Only after full latest validation may the older 60-field release be reconstructed.
+  const pairedInput = Object.fromEntries(Object.entries(input.paired ?? readCurrentIntroSilentTextInputs().paired).map(([language, deck]) => [language, finalLanguageNextDeckBefore(`docs/narration/intro-permaculture.${language}.paired-draft.json`, deck)]));
+  // Active silent headings were expanded on7 October; check the complete live
+  // source/target layer before retaining this older silent release's claims.
+  const currentSilentST = finalLanguageNextDeckBefore(proof.outputs.newSilentST.path,input.silentSesotho ?? readCurrentIntroSilentTextInputs().silentSesotho);
   // Bind caller-provided objects to the exact accepted files as well as the
   // row-by-row reconstruction below. This catches extra shadow properties on
   // mixed targets, which can leave their visible text unchanged.
   for (const language of ['ve', 'ts'] as const) {
-    assert.deepEqual(pairedInput[language], readJson(proof.outputs.existingPaired[language].path),
+    // Both sides are the exact guarded predecessor; the live file now carries39 later pairs.
+    assert.deepEqual(pairedInput[language], finalLanguageNextDeckBefore(proof.outputs.existingPaired[language].path, readJson(proof.outputs.existingPaired[language].path)),
       `${language}: supplied paired object is byte-source-equivalent to the accepted current registry`);
   }
   assert.deepEqual(pairedInput.st, readJson(proof.outputs.unchangedOldST.path),
     'supplied archived Sesotho paired object is the exact accepted archived registry');
-  assert.deepEqual(currentSilentST, readJson(proof.outputs.newSilentST.path),
+  assert.deepEqual(currentSilentST, finalLanguageNextDeckBefore(proof.outputs.newSilentST.path,readJson(proof.outputs.newSilentST.path)),
     'supplied silent Sesotho object is the exact accepted current registry');
   const pairedRows = proof.scope.changedRows.filter((row: any) => row.fieldLocator.startsWith('pairedSlides/'));
   assert.equal(pairedRows.length, 55);
@@ -237,9 +244,12 @@ export function validateAndRewindIntroSilentTextLayer(input: Inputs = {}) {
     expectedNative, expectedPaired, expectedSilentSesotho: silentSTBefore };
 }
 
-export function validateAndRewindIntroNativeHistory(language: IntroLanguage, current = readCurrentIntroNative()[language]) {
+export function validateAndRewindIntroNativeHistory(language: IntroLanguage, current?: any) {
   const native = { ve: readCurrentIntroNative().ve, ts: readCurrentIntroNative().ts };
-  native[language] = current;
+  // Explicit callers supply today's object; validate the complete later fairness
+  // layer before this older release can expose its accepted predecessor.
+  if (current !== undefined) native[language] = language === 'ts'
+    ? fairSharingNativeBefore(current) : precisionNativeBefore('ve', current);
   const validated = validateAndRewindIntroSilentTextLayer({ native });
   return validateAndRewindIntroFullNative(language, validated.nativeBeforeSilent[language]);
 }

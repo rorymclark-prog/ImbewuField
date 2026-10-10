@@ -1,3 +1,4 @@
+import { finalLanguageNextNativeBefore } from './final-language-next-checks.ts';
 import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 import { vegetablesL3PresentationBeforeOrdinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { vegetablesBeforePestPrecision } from './vegetables-pest-precision-checks.ts';
@@ -505,7 +506,7 @@ test('Tshivenda Introduction L3 preserves zone frequencies and the observed wind
   assert.deepEqual(staleDraft.content.quiz, changedQuizSource.quiz);
 });
 
-test('Tshivenda Study control drafts stay paired to review text and sensitive controls stay English', async () => {
+test('Tshivenda Study controls retain reviewed pairs, draft status and unresolved English fallbacks', async () => {
   const { readFileSync } = await import('node:fs');
   const review = readFileSync(new URL('../docs/study-translation-reviews/STUDY-CONTROLS-VE-AI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
   const ve = readFileSync(new URL('../lib/locales/ve.ts', import.meta.url), 'utf8');
@@ -536,17 +537,36 @@ test('Tshivenda Study control drafts stay paired to review text and sensitive co
   assert.ok(studentPage.includes("t('studentTshivendaUiDraftNotice')"), 'render the explicit draft notice');
   assert.ok(ve.includes("studentTshivendaUiDraftNotice: 'Unreviewed Tshivenda interface draft."), 'keep the review notice in exact English');
 
-  for (const [key, expectedEnglish] of [
-    ['studentSubmit', 'Submit'],
-    ['studentProgressError', 'Progress could not be loaded or saved. Check your connection or account access.'],
-    ['studentComplete', 'Complete'],
-    ['studentCourseComplete', 'Course complete!'],
-    ['studentSubmitting', 'Submitting…'],
-    ['studentLocked', 'Locked'],
+  // These five controls were deliberately English in the earlier packet. The 7 October
+  // independent checks now bind exact drafts; subsequent context checks also resolve
+  // loading/saving and completion actions without claiming professional status.
+  const expandedReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/study-silent-entry-2026-10-07/imbewu-study-ui-full-approved-20261007.json', import.meta.url), 'utf8'));
+  const { default: liveVenda } = await import('../lib/locales/ve.ts');
+  for (const [key, expectedEnglish, expectedDraft] of [
+    ['studentSubmit', 'Submit', 'Rumelani'],
+    ['studentComplete', 'Complete', 'Yo fhela'],
+    ['studentCourseComplete', 'Course complete!', 'Khoso yo fhela!'],
+    ['studentSubmitting', 'Submitting…', 'I khou rumela…'],
+    ['studentLocked', 'Locked', 'Zwo valelwa'],
   ] as const) {
-    assert.ok(!new RegExp(`\\b${key}:`).test(ve), `${key}: do not introduce an unreviewed completion, submission or access translation`);
+    const pair = expandedReview.rows.find((row: { language: string; key: string }) => row.language === 've' && row.key === key);
+    assert.ok(pair, `${key}: the expanded source-bound reviewer packet must contain the control`);
+    assert.equal(pair.sourceEnglish, expectedEnglish, `${key}: preserve its exact English source`);
+    assert.equal(pair.candidate, expectedDraft, `${key}: do not silently replace the independently checked draft`);
+    assert.equal(pair.status, 'unreviewed-machine-draft');
+    assert.equal(liveVenda[key], expectedDraft, `${key}: actual locale imports must expose the checked draft`);
     assert.ok(english.includes(`${key}: '${expectedEnglish}'`), `${key}: preserve the exact English fallback`);
   }
+  const contextReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/STUDY-CONTEXT-CONTROLS-APPLIED-2026-10-08.json', import.meta.url), 'utf8'));
+  const progressPair = contextReview.rows.find((row: { language: string; key: string }) => row.language === 've' && row.key === 'studentProgressError');
+  assert.ok(progressPair, 'the loading/saving recovery message needs its independently checked context pair');
+  assert.equal(progressPair.sourceEnglish, 'Progress could not be loaded or saved. Check your connection or account access.');
+  assert.equal(progressPair.status, 'unreviewed-machine-draft');
+  assert.equal(liveVenda.studentProgressError, progressPair.candidate);
+  assert.ok(liveVenda.studentProgressError.includes('laisiwa kana u vhulungwa'), 'retain both load and save failure, not only one failure mode');
+  assert.ok(liveVenda.studentProgressError.includes('vhuṱumani haṋu kana account access'), 'retain both connection and permission recovery choices');
+  assert.ok(!Object.hasOwn(liveVenda, 'studentPractitioner'), 'completion must not create an unreviewed translated professional credential');
+  assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve the exact progress-error source');
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
 
@@ -711,7 +731,9 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   assert.match(l2[8], /A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa/, 'suitable timing allows possible overlap without promising the first batch is ready by sowing four');
   assert.match(l2[9], /Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe/, 'heat still carries both possible faster timing and failure');
   assert.match(l2[12], /Indigenous farming traditions in the Americas/);
-  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho when water limits the garden\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
+  // The source-bound October 7 draft translates the ordinary water-limit
+  // clause; retain all three possible timings and the limiting-water condition.
+  assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
   assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
   assert.match(l2[14], /and store as protein/);
   assert.equal(l2[15], 'Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.',
@@ -783,7 +805,8 @@ test('Tshivenda Vegetables assessments keep source answers and withdraw after qu
   assert.doesNotMatch(l1.keyPoints[0].tshivendaDraft, /masia oṱhe/);
   assert.match(l1.quiz[0].options[1].tshivendaDraft, /either side without stepping on the growing area, avoiding compaction/);
   assert.match(l1.quiz[1].rationale.tshivendaDraft, /transplant shock/);
-  const l2 = learnerVegetablesDraft.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
+  // Later exact9 native leaves are validated before this historical English negative.
+  const l2 = finalLanguageNextNativeBefore(learnerVegetablesDraft).lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
   // Unchecked comparisons and absolutes remain English; well is not better, nor not-yet never.
   assert.equal(l2.quiz[0].options[0].tshivendaDraft, 'Zwi shumisa less seed nga u angaredza.');
   assert.equal(l2.quiz[0].options[0].reviewStatus, 'machine-draft');

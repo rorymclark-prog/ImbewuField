@@ -1,3 +1,4 @@
+import { nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 import { validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
 import { isSilentIntroLaterReplacedAsset, silentIntroMediaBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
@@ -122,12 +123,12 @@ export function introFullAssetSizesBeforeOrdinary(currentManifest?: string) {
   assert.equal(currentManifest, before, 'only the exact guarded Intro full manifest baseline may be exposed');
   return before;
 }
-export function introFullMediaBeforeEarlierProof(path: string) {
+export function introFullMediaBeforeEarlierProof(path: string): {bytes:number;sha256:string;encodedHeaderHex?:string} | undefined {
   const url = path.startsWith('public/') ? path.slice(6) : path;
   // Unlisted files receive no historical descriptor. Their caller checks actual
   // bytes; validating the whole inventory per unrelated path made Soil/Water
   // preservation quadratic. Every listed rewind still validates the full layer.
-  if (!expectedIntroFullPaths.includes(url)) return undefined;
+  if (!expectedIntroFullPaths.includes(url)) return nativePairedResidualMediaBefore(path) ?? undefined;
   validateCurrentIntroFullMedia();
   const frame = introFullMediaProof.frames.find((row: any) => row.path === url);
   return frame ? frame.old as { sha256: string; bytes: number; encodedHeaderHex: string } : undefined;

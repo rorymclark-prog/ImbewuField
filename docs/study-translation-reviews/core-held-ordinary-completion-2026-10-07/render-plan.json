@@ -1,0 +1,266 @@
+{
+  "status": "All ten complete paired documents and selected text layouts validated. Sequential image generation still pending.",
+  "frameCount": 69,
+  "groups": [
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "pairFile": "docs/narration/intro-permaculture.st.silent-draft.json",
+      "slides": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "intro-permaculture",
+        "st",
+        "/tmp/imbewu-held-ordinary-render-20261007/intro-permaculture-st",
+        "--paired-draft",
+        "docs/narration/intro-permaculture.st.silent-draft.json",
+        "--slides",
+        "10,11,12,13,14"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/intro-permaculture-st"
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "pairFile": "docs/narration/intro-permaculture.ts.paired-draft.json",
+      "slides": [
+        4,
+        6,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        19,
+        20
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "intro-permaculture",
+        "ts",
+        "/tmp/imbewu-held-ordinary-render-20261007/intro-permaculture-ts",
+        "--paired-draft",
+        "docs/narration/intro-permaculture.ts.paired-draft.json",
+        "--slides",
+        "4,6,10,11,12,13,14,15,19,20"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/intro-permaculture-ts"
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "pairFile": "docs/narration/market-community.st.paired-draft.json",
+      "slides": [
+        11,
+        15
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "market-community",
+        "st",
+        "/tmp/imbewu-held-ordinary-render-20261007/market-community-st",
+        "--paired-draft",
+        "docs/narration/market-community.st.paired-draft.json",
+        "--slides",
+        "11,15"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/market-community-st"
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "pairFile": "docs/narration/market-community.ts.paired-draft.json",
+      "slides": [
+        17,
+        18
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "market-community",
+        "ts",
+        "/tmp/imbewu-held-ordinary-render-20261007/market-community-ts",
+        "--paired-draft",
+        "docs/narration/market-community.ts.paired-draft.json",
+        "--slides",
+        "17,18"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/market-community-ts"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "slides": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        12,
+        14,
+        15,
+        19,
+        20,
+        21
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "st",
+        "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-st",
+        "--paired-draft",
+        "docs/narration/reading-landscape.st.paired-draft.json",
+        "--slides",
+        "2,4,5,6,7,8,10,12,14,15,19,20,21"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-st"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "slides": [
+        1,
+        4,
+        5,
+        7,
+        8,
+        14,
+        15,
+        18,
+        19,
+        20,
+        21
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "ts",
+        "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-ts",
+        "--paired-draft",
+        "docs/narration/reading-landscape.ts.paired-draft.json",
+        "--slides",
+        "1,4,5,7,8,14,15,18,19,20,21"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-ts"
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "slides": [
+        8,
+        15
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "reading-landscape",
+        "ve",
+        "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-ve",
+        "--paired-draft",
+        "docs/narration/reading-landscape.ve.paired-draft.json",
+        "--slides",
+        "8,15"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/reading-landscape-ve"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "pairFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "slides": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        15,
+        16,
+        18
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "st",
+        "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-st",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.st.paired-draft.json",
+        "--slides",
+        "1,2,3,4,5,6,7,8,10,11,12,15,16,18"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-st"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "pairFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "slides": [
+        1,
+        3,
+        4,
+        6,
+        11,
+        12,
+        16,
+        17,
+        18
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "ts",
+        "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-ts",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.ts.paired-draft.json",
+        "--slides",
+        "1,3,4,6,11,12,16,17,18"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-ts"
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "pairFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "slides": [
+        3
+      ],
+      "command": [
+        "node",
+        "scripts/make-lesson-slides.mjs",
+        "vegetables-staples",
+        "ve",
+        "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-ve",
+        "--paired-draft",
+        "docs/narration/vegetables-staples.ve.paired-draft.json",
+        "--slides",
+        "3"
+      ],
+      "outputDir": "/tmp/imbewu-held-ordinary-render-20261007/vegetables-staples-ve"
+    }
+  ],
+  "resourcePolicy": "One process group at a time; no browser, tests or renderer concurrency; use installed dependencies only."
+}

@@ -1,0 +1,16 @@
+[
+{"id":"R271","back":"Choose what is produced / product (plural-polite imperative)","flags":["Contains a literal ' / ' with two alternatives ('zwo bveledzwaho' = 'that which was produced' / 'tshibveledzwa' = 'product'); looks like an unresolved either-or draft, wrong for a single dropdown prompt; first alternative is a relative clause, not a noun"]},
+{"id":"R272","back":"List of crops / things cultivated","flags":["'Mutevhe' as 'list' is not something I can fully confirm; 'zwiliṅwa' = things cultivated/planted, fine"]},
+{"id":"R273","back":"Fruits and nuts (?)","flags":["'dzinati' appears to be a loanword 'nuts' with class-10 prefix; plausible but unconfirmed"]},
+{"id":"R274","back":"Fruits of the wild/bush (?)","flags":["'sialala' is not a form I recognise; Tshivenda nouns of this class normally start 'tshi-' (tshialala?); may be an orthographic slip, a Sotho-influenced form, or a rare word; meaning unclear (wild? indigenous?)"]},
+{"id":"R275","back":"Other plants of the forest/thicket of foods","flags":["Calque of 'food forest' ('tshisaka tsha zwiḽiwa'); cryptic for a farmer, category unclear"]},
+{"id":"R276","back":"Products of livestock/domestic animals","flags":["'zwifuwo' = domestic animals/livestock; fine for eggs/milk"]},
+{"id":"R277","back":"Products that were added by you","flags":[]},
+{"id":"R278","back":"Add another product...","flags":[]},
+{"id":"R279","back":"Name of the new product","flags":[]},
+{"id":"R280","back":"Write the name of the product","flags":[]},
+{"id":"R281","back":"Keep/save the product (polite plural imperative)","flags":[]},
+{"id":"R282","back":"In the shillings / in money (locative)","flags":["'Masheleni' is a locative ('in/at the shillings/money'), not a plain noun for 'cash'; after 'Invoice ·' it could read as 'in money' (i.e. a currency amount) rather than a payment method; uncertain"]},
+{"id":"R283","back":"Card","flags":["Loanword 'khadi'; bare - could be any card"]},
+{"id":"R284","back":"Phone","flags":["'Founu' = telephone device only; does not read as a payment method; no mobile-money meaning; also a non-standard loan spelling"]}
+]

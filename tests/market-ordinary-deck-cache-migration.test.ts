@@ -1,3 +1,5 @@
+// The newer 15-card layer checks the full manifest before dated reconstruction;
+// the same corrupt-header/unlisted-entry cases must fail at that earlier guard.
 import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
 import { marketAssetSizesBeforeOrdinary, validateCurrentMarketOrdinaryMedia, marketFrameBeforeNativeResidual } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
@@ -176,12 +178,12 @@ test('Market historical media reconstruction rejects arbitrary headers and unlis
   const prior = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   assert.equal(marketAssetSizesBeforeOrdinary(actual), prior, 'exact full accepted layer restores the frozen historical text');
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(/MB total\./, 'MB total. corrupted')),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|the caller must supply the exact live complete manifest/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|complete manifest after only 15 measured changes|the caller must supply the exact live complete manifest/);
   assert.throws(() => marketAssetSizesBeforeOrdinary(prior.replace('709.4 MB total.', '709.5 MB total.')),
     /exact guarded Market baseline/);
   const unlisted = '/course-decks/market-community/st/slide-01.webp';
   const slot = `  '${unlisted}': ${COURSE_ASSET_SIZES[unlisted]},`;
   assert.ok(actual.includes(slot));
   assert.throws(() => validateCurrentMarketOrdinaryMedia(actual.replace(slot, `  '${unlisted}': 1,`)),
-    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|the caller must supply the exact live complete manifest/);
+    /only (eleven sizes and the actual aggregate|eight Vegetables sizes and the measured aggregate) comment change|exact guarded Vegetables L3 manifest baseline|only the complete accepted silent Intro manifest is current|complete manifest after only 15 measured changes|the caller must supply the exact live complete manifest/);
 });

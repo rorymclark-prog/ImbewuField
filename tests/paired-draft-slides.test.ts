@@ -1,3 +1,6 @@
+import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { followupPresentationBefore } from './core-reading-vegetables-followup-history-checks.ts';
+import { coreHeldOrdinaryAssetBefore } from './core-held-ordinary-history-checks.ts';
 import { deckBeforeNativePairedResidual } from './native-paired-residual-history-checks.ts';
 import { vegetablesBeforeL3Ordinary, vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
 import { marketDeckBeforeOrdinary } from './market-ordinary-deck-checks.ts';
@@ -11,7 +14,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync as actualReadFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { englishSlideRecords, pairedDraftLanguageLabel, pairedSlideSelection, pairedTargetHasEnglishHolds, selectPairedSlides, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
@@ -35,6 +38,16 @@ import {
   checkCompleteSlideDrafts, checkConsistentDrafts, checkCreatureWords, checkGlossedWords, checkKeptTerms, checkNamesVerbatim,
   checkRepeatedSentences, checkSouthAfricanSesotho, checkSupportPlantTerms, checkThinningKept, sourceDraftPairs,
 } from './regional-full-draft-checks.ts';
+
+// 6 October: this dated assertion file consumes exact pre48 paired bytes only after full latest validation.
+const readFileSync: typeof actualReadFileSync = ((path: any, options?: any) => {
+  const raw = actualReadFileSync(path, options) as any;
+  if (typeof path === 'string' && path.startsWith('docs/narration/') && path.endsWith('.paired-draft.json')) {
+    const projected = finalLanguageNextPairedBytesBefore(path, raw);
+    return options ? projected : Buffer.from(projected);
+  }
+  return raw;
+}) as typeof actualReadFileSync;
 
 const source = englishSlideRecords(readFileSync('docs/narration/intro-permaculture.en.md', 'utf8'));
 const marketSource = englishSlideRecords(readFileSync('docs/narration/market-community.en.md', 'utf8'));
@@ -1243,8 +1256,11 @@ test('Vegetables opening frames retain exact source holds and reuse complete L1 
       'A diverse planting still struggles if you treat every yellow leaf as an insect problem.',
     ], `${lang}: only the connective sentence is newly drafted; the two source cautions remain exact English`);
 
-    const learner = resolveLearnerLessonPresentation(lesson, lang);
-    assert.equal(learner.status, 'draft');
+    const currentLearner = resolveLearnerLessonPresentation(lesson, lang);
+    assert.equal(currentLearner.status, 'draft');
+    // This deck already includes earlier L1 wording. Project only the two
+    // predicates in the newest accepted layer before comparing its changed row.
+    const learner = followupPresentationBefore(currentLearner, lesson.id, lang);
     const learnerBody = learner.content.body.split('\n\n');
     for (let index = 0; index < 14; index++) {
       const slideNumber = index < 4 ? 4 : index < 11 ? 5 : 6;
@@ -1290,7 +1306,8 @@ test('Vegetables middle slides reuse whole source-matched lesson paragraphs and 
         assert.equal(bindings.length, 1, `${lang} slide ${slideIndex + 1}: source paragraph has one canonical lesson binding`);
         const [{ lesson, paragraph, paragraphIndex }] = bindings;
         assert.equal(paragraph, exactSource, `${lang} slide ${slideIndex + 1}: keep the entire English lesson paragraph byte-identical`);
-        const learnerBody = resolveLearnerLessonPresentation(lesson, lang).content.body.split('\n\n');
+        // This test's read wrapper exposes the exact historical deck; compare the guarded matching learner predecessor.
+        const learnerBody = followupPresentationBefore(resolveLearnerLessonPresentation(lesson, lang), lesson.id, lang).content.body.split('\n\n');
         const part = slides[slideIndex].target.body[bodyIndex];
         const key = `${lang}:${slideIndex + 1}:${bodyIndex + 1}`;
 
@@ -2471,9 +2488,11 @@ test('the 18 Study outcomes still paragraphs stay exact to source, segment order
       // outcomes render. Tie the old hash to the new render's before-hash, then verify current bytes.
       assert.equal(currentRender.beforeSha256, frame.sha256,
         `${frame.path}: later redraw starts from the frozen outcomes still`);
-      assert.equal(bytes.byteLength, currentRender.bytes,
+      // Validate the newer actual card before retaining this dated render proof.
+      const later=coreHeldOrdinaryAssetBefore(frame.path,bytes);
+      assert.equal(later?.bytes ?? bytes.byteLength, currentRender.bytes,
         `${frame.path}: current redraw byte count matches the full-deck render proof`);
-      assert.equal(digest, currentRender.sha256,
+      assert.equal(later?.sha256 ?? digest, currentRender.sha256,
         `${frame.path}: current redraw hash matches the full-deck render proof`);
     } else {
       // 2026-10-06: the approved Intro ordinary batch redraws VE/TS slide 22. Validate

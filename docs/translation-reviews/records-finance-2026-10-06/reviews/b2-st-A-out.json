@@ -1,0 +1,16 @@
+[
+{"id":"R271","back":"Choose a product / produce item","flags":["'Kgetha' is the Northern Sotho/Setswana-style spelling; Lesotho/most Sesotho text uses 'Khetha' (minor, orthographic; SA Sesotho does use kg- in some words)"]},
+{"id":"R272","back":"List of crops (lit. 'list of the plantings/crops')","flags":["'Lenane' = list/menu; as a group heading it reads as 'list of crops' rather than 'Crops' - a bit wordy but understandable"]},
+{"id":"R273","back":"Fruits and nuts (?)","flags":["'dinate' is not a word I can confirm for 'nuts' in Sesotho; could be read as something else (uncertain)"]},
+{"id":"R274","back":"Fruits of nature (wild/natural fruits)","flags":["'tsa tlhaho' = 'of nature/natural'; reasonable for wild fruit"]},
+{"id":"R275","back":"Other plants of the 'forest of food' (other food-forest plants)","flags":["'sekgwa sa dijo' is a calque 'food forest'; 'Dimela' = plants; meaning of 'sekgwa' (woodland/bush) for a farmer is unclear and heading is cryptic; cannot tell what category it denotes"]},
+{"id":"R276","back":"Animal products","flags":[]},
+{"id":"R277","back":"Products that you have added","flags":[]},
+{"id":"R278","back":"Add another product...","flags":["'se seng' = 'another/a different'; does not convey 'one not in the list' strongly but acceptable"]},
+{"id":"R279","back":"Name of the new product","flags":[]},
+{"id":"R280","back":"Write the name of the product","flags":[]},
+{"id":"R281","back":"Save the product (lit. keep/store the product)","flags":[]},
+{"id":"R282","back":"Money of the hands / hand money (cash in hand)","flags":["'ya matsoho' = 'of the hands' - literal idiom for 'cash (in hand)'; after 'Invoice ·' it can read as a cash-on-hand balance rather than a payment method; understandable but not fully idiomatic"]},
+{"id":"R283","back":"Card","flags":["Loanword 'karete'; bare 'card' with no 'bank'/'pay' context - could be read as any card (e.g. ID card, playing card)"]},
+{"id":"R284","back":"Phone / telephone","flags":["'Fono' means only the telephone device; does NOT read as a payment method after 'Invoice ·' - ambiguous, could mean 'phoned' or 'by telephone'; no mobile-money meaning"]}
+]

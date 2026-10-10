@@ -160,7 +160,7 @@ export const TSHIVENDA_INTRO_PERMACULTURE_DRAFT: TshivendaCourseModuleDraft = {
       id: "intro-permaculture-l2",
       infographicAlt: pair(
         "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
-        "Maitele a fumi na mavhili a mufhaṱo o vhekanywaho sa zwipiḓa u monymona na tshimela tshiṱuku tsha vhukati, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na mudzinginyo wa u vhuedzedza mitshelo na malaṱwa.",
+        "Maitele a fumi na mavhili a design o vhekanywaho sa zwipiḓa around a central seedling, tshiṅwe na tshiṅwe tsho sumbedzwa sa tshifanyiso tsho leluwaho — iṱo ḽa u sedza, ḓoḓi ḽa u fara maḓi, ḓuvha ḽa maanḓa, na loop for returning waste.",
       ),
       title: pair(
         "Twelve Principles: Designing with Nature",

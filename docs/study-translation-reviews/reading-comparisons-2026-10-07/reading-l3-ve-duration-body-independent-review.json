@@ -1,0 +1,23 @@
+{
+  "language": "ve",
+  "field": "body.paragraph1",
+  "sourceEnglish": "On a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.",
+  "before": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani candidate places through the local frost season. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.",
+  "candidate": "Vhusiku vhu sa na makole, hu si na muya, muya wo rotholaho u nga elela u tshi ya fhasi ha kuvhangana fhethu ho tsaho. Fhethu afho hu nga rothola u fhira u sendama ha mavu ha tsini. Maitele a frost na one a ya nga fhethu. Vhambedzani fhethu hune ha nga nangiwa hone kha khalaṅwaha yoṱhe ya tshando ya henefho. Ṱolani rekhodo dza minimum temperatures dza henefho hune dza wanala hone. Arali dzi sa wanali, bvelani phanḓa ni tshi sedza nga vhusiku vhu rotholaho, ni vhudzise mueletshedzi wa zwa vhulimi wa henefho musi ni sa athu nanga fhethu ha tshifhinga tshilapfu ha tender seedlings.",
+  "fluentApproval": false,
+  "status": "Independently machine-checked candidate; not learner-wired. Exact-source application and root review required.",
+  "independentMachineCheck": {
+    "tool": "Antigravity desktop",
+    "model": "Gemini 3.8 Flash Medium",
+    "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+    "observedResponseTime": "6:22",
+    "verdict": "ACCEPT",
+    "checked": [
+      "candidate places",
+      "entire local frost season",
+      "records where available",
+      "if no records: continue observing AND consult local adviser before permanent choice"
+    ],
+    "fluentApproval": false
+  }
+}
