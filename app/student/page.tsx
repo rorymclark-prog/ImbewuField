@@ -1412,7 +1412,7 @@ export default function StudentPage() {
         <div className={styles.coursePreviews}>
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="design-pathway-title">
-            <img src="/studies-guides/sketch-the-site.jpg" alt="" loading="lazy" width={150} height={100} />
+            <img src="/studies-guides/thumbs/sketch-the-site.webp" alt="" loading="lazy" width={150} height={100} />
             <div><span className={styles.choiceLabel}>{t('studentDesignEnglishPreview')}</span>
               <h2 id="design-pathway-title" className="font-display">{t('studentDesignPreviewTitle')}</h2></div>
           </summary>
@@ -1426,7 +1426,7 @@ export default function StudentPage() {
 
         <details className={`${styles.companions} ${styles.collapsible}`}>
           <summary className={styles.previewSummary} aria-labelledby="finance-course-title">
-            <img src="/studies-guides/expense-record.jpg" alt="" loading="lazy" width={150} height={100} />
+            <img src="/studies-guides/thumbs/expense-record.webp" alt="" loading="lazy" width={150} height={100} />
             <div><span className={styles.choiceLabel}>{t('studentFinanceEnglishPreview')}</span>
               <h2 id="finance-course-title" className="font-display">{t('studentFinancePreviewTitle')}</h2></div>
           </summary>
