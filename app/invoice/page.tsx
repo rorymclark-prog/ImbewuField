@@ -742,18 +742,19 @@ export default function InvoicePage() {
           onClick={shareInvoice}
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+          style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--color-canvas)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
-          <Share2 size={13} />{ui('Share PDF', 'Yabelana nge-PDF')}
+          <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
         <button
           onClick={printInvoice}
           disabled={!valid}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          aria-label={ui('Print', 'Phrinta')}
+          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
+          style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
-          <Printer size={13} />{ui('Print', 'Phrinta')}
+          <Printer size={16} /><span className="hidden sm:inline">{ui('Print', 'Phrinta')}</span>
         </button>
         <SettingsButton />
       </header>
@@ -1235,13 +1236,13 @@ export default function InvoicePage() {
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#25D366' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--color-canvas)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#C07A1E' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>

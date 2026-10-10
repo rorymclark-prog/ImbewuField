@@ -247,7 +247,7 @@ export default function ExchangeBoard() {
                 width: '100%',
                 padding: '10px 12px 10px 34px',
                 fontSize: 13.5,
-                background: '#fff',
+                background: 'var(--input-bg)',
                 border: `1px solid ${EX.inputBorder}`,
                 color: EX.ink,
                 outline: 'none',
@@ -359,7 +359,7 @@ export default function ExchangeBoard() {
             onChange={(e) => setSort(e.target.value as ListingSort)}
             aria-label={tx('Sort listings', 'Hlela izikhangiso')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-            style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+            style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
             {(Object.keys(SORT_LABEL) as ListingSort[]).map((s) => (
               <option key={s} value={s}>{tx(SORT_LABEL[s], ({ newest: 'Ezintsha kuqala', nearest: 'Eziseduze kuqala', price_low: 'Intengo ephansi kuqala', price_high: 'Intengo ephezulu kuqala', crop: 'Ngesitshalo', quantity: 'Inani elikhulu kuqala' } as const)[s])}</option>
@@ -372,7 +372,7 @@ export default function ExchangeBoard() {
             onChange={(e) => setViewpointId(e.target.value)}
             aria-label={tx('Where you are viewing from', 'Indawo engibuka ngikuyo')}
             className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-            style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+            style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
           >
             <option value="none">{tx('nowhere in particular', 'Akukho ndawo ethile')}</option>
             {viewpoints.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
@@ -384,7 +384,7 @@ export default function ExchangeBoard() {
               onChange={(e) => setWithinKm(e.target.value)}
               aria-label={tx('Distance limit', 'Umkhawulo webanga')}
               className="rounded-lg px-2 py-1.5 font-sans font-semibold"
-              style={{ fontSize: 12.5, background: '#fff', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
+              style={{ fontSize: 12.5, background: 'var(--input-bg)', border: `1px solid ${EX.inputBorder}`, color: EX.ink }}
             >
               {WITHIN_OPTIONS.map((o) => <option key={o.value} value={o.value}>{tx(o.label, o.value === '' ? 'Noma yiliphi ibanga' : `Phakathi kuka-${o.value} km`)}</option>)}
             </select>

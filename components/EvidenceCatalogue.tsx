@@ -71,7 +71,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
             {EVIDENCE_CATALOGUE.map((group) => {
               const count = getGroupCount(siteId, group.key);
               return (
-                <div key={group.key} style={{ background: '#fff', border: '1px solid #EBE3D2', borderRadius: 14, padding: '16px 17px' }}>
+                <div key={group.key} style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 14, padding: '16px 17px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 13 }}>
                     <div style={{ width: 34, height: 34, borderRadius: 9, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 18 }}>
                       {EVIDENCE_GROUP_ICON[group.key]}
