@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { loadPlaces, savePlace, deletePlace, generateId, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import type { LocationData } from '@/lib/types';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props {
   locationData: LocationData | null;
@@ -11,17 +12,18 @@ interface Props {
   onJumpTo: (lat: number, lon: number) => void;
 }
 
-function timeAgo(iso: string): string {
+function timeAgo(iso: string, t: (key: string) => string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const d = Math.floor(diff / 86400000);
-  if (d === 0) return 'today';
-  if (d === 1) return 'yesterday';
-  if (d < 7) return `${d}d ago`;
-  if (d < 30) return `${Math.floor(d / 7)}w ago`;
-  return `${Math.floor(d / 30)}mo ago`;
+  if (d === 0) return t('savedPlacesTimeToday');
+  if (d === 1) return t('savedPlacesTimeYesterday');
+  if (d < 7) return t('savedPlacesTimeDaysAgo').replace('{d}', String(d));
+  if (d < 30) return t('savedPlacesTimeWeeksAgo').replace('{w}', String(Math.floor(d / 7)));
+  return t('savedPlacesTimeMonthsAgo').replace('{mo}', String(Math.floor(d / 30)));
 }
 
 export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
+  const { t } = useLanguage();
   const appConfirm = useAppConfirm();
   const [places, setPlaces] = useState<SavedPlace[]>([]);
   const [saving, setSaving] = useState(false);
@@ -109,7 +111,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
   return (
     <div className="space-y-3">
       <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
-        Saved Places
+        {t('savedPlacesHeader')}
       </div>
 
       {/* Save current location */}
@@ -121,14 +123,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
-              placeholder="Place name..."
+              placeholder={t('savedPlacesNamePlaceholder')}
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             />
             <textarea
               value={notes}
               onChange={e => setNotes(e.target.value)}
-              placeholder="Notes (optional)..."
+              placeholder={t('savedPlacesNotesPlaceholder')}
               rows={2}
               className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
@@ -140,14 +142,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                 className="flex-1 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(31,77,43,0.14)', border: '1px solid rgba(31,77,43,0.28)', color: 'var(--color-forest-700)' }}
               >
-                Save
+                {t('saveBtn')}
               </button>
               <button
                 onClick={() => setSaving(false)}
                 className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all"
                 style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
               >
-                Cancel
+                {t('cancelBtn')}
               </button>
             </div>
           </div>
@@ -160,12 +162,12 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: 'var(--color-forest-700)' }
             }
           >
-            {saved ? 'Saved' : 'Save this location'}
+            {saved ? t('savedPlacesSavedLabel') : t('savedPlacesSaveThisLocation')}
           </button>
         )
       ) : (
         <p className="text-xs font-display text-center" style={{ color: 'var(--text-secondary)' }}>
-          Select a location on the map first
+          {t('savedPlacesSelectFirst')}
         </p>
       )}
 
@@ -188,7 +190,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                         {place.name}
                       </span>
                       <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
-                        {timeAgo(place.savedAt)}
+                        {timeAgo(place.savedAt, t)}
                       </span>
                     </div>
                     <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)' }}>
@@ -205,14 +207,14 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                         className="flex-1 py-1 rounded-lg text-xs font-display font-medium transition-all"
                         style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.20)', color: 'var(--color-forest-700)' }}
                       >
-                        Go to
+                        {t('placePopupGoTo')}
                       </button>
                       <button
                         onClick={() => handleDelete(place.id)}
                         className="px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
                         style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
                       >
-                        Remove
+                        {t('savedPlacesRemove')}
                       </button>
                     </div>
                   </div>
@@ -223,9 +225,9 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
         </div>
       ) : (
         <div className="text-center py-6">
-          <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>No saved places yet</p>
+          <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>{t('savedPlacesEmptyTitle')}</p>
           <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
-            Analyse a location then save it here
+            {t('savedPlacesEmptyHint')}
           </p>
         </div>
       )}

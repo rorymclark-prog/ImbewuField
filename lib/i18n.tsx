@@ -55,6 +55,23 @@ export const T_en: Dict = {
   tagline: 'Permaculture Intelligence',
   // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
   designStudioLabel: 'Design Studio',
+  // components/SiteDesign.tsx (the sketch-upload card on the site report) was entirely
+  // English-only, named the assistant "Claude" instead of "Lima", and said "click to upload"
+  // instead of "tap". Network/file-error messages in that file are left to another track and are
+  // not among these keys.
+  siteDesignOpenStudio: 'Open the Design Studio',
+  siteDesignStudioDesc: 'Place tanks, trees & zones on your land at real scale — step-by-step guidance, or one-tap auto-design.',
+  siteDesignStartDesigning: 'Start designing this site →',
+  siteDesignSelectLocation: 'Select a location on the map to open the Design Studio for it.',
+  siteDesignSketchHeader: 'Sketch → AI Design',
+  siteDesignUploadIntro: "Upload a hand-drawn plan of your land (or a photo of one). Lima reads it and lays out a permaculture design on your sketch, using this site's climate, soil, sun and wind.",
+  siteDesignDropSketch: 'Drop your site sketch here or tap to upload',
+  siteDesignSketchHint: 'a hand drawing, plan, or photo of one',
+  siteDesignToneSimple: 'Simple',
+  siteDesignToneDetailed: 'Detailed',
+  siteDesignGenerating: 'Designing your site…',
+  siteDesignGenerateButton: 'Generate design',
+  siteDesignPhotoAnalysisNote: 'Your photo analysis will be used in the design',
   welcomeTitle: 'Welcome to ImbewuField',
   welcomeSub: 'Smart permaculture planning for South African land.',
   pickLang: 'Choose your language',
@@ -105,6 +122,12 @@ export const T_en: Dict = {
   mapSaveSpotTitle: 'Save this spot to your Places',
   mapSelectSpotTitle: 'Tap a spot on the map first',
   mapPrintBaseTitle: 'Print a clean base map (boundary, house outlines and contours, no hatching) to sketch your design by hand',
+  // The printed base-map window (components/Map.tsx) is a separate browser window/tab built from
+  // a raw HTML string (window.open + document.write), outside React — so it reads t() into plain
+  // variables rather than JSX, same mapPrintBaseTitle action the button above it offers.
+  mapPrintWindowTabTitle: 'ImbewuField — base map',
+  mapPrintWindowHeading: 'Site base map',
+  mapPrintWindowInstructions: 'Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.',
   siteSummaryRainEssential: 'Only {mm}mm of rain so water harvesting is essential.',
   siteSummaryRainEstimate: '{mm}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.',
   siteSummarySoilTested: 'Use your soil test and local crop requirements to plan amendments.',
@@ -213,7 +236,7 @@ export const T_en: Dict = {
   waterBalancePeopleEstimated: 'People estimated',
   waterBalanceHouseholdMonthly: '{litres} L/month household',
   waterBalanceStorageCapacity: 'Storage capacity',
-  waterBalanceMinSafe: 'Min safe: {amount} kL',
+  waterBalanceMinSafe: 'Min safe: {amount}',
   waterBalanceStorage: 'Storage',
   waterBalanceNotMapped: 'Not mapped',
   waterBalanceDrawWaterArea: 'Draw a water area to calculate',
@@ -288,6 +311,22 @@ export const T_en: Dict = {
   savePlaceSheetTitleEdit: 'Edit place',
   savePlaceSheetTitleNew: 'Save this place',
   savePlaceNamePlaceholder: 'Name it — e.g. Home plot',
+  // components/SavedPlaces.tsx (the Places tab's own save-current-location form and list) was
+  // entirely English-only.
+  savedPlacesHeader: 'Saved Places',
+  savedPlacesNamePlaceholder: 'Place name...',
+  savedPlacesNotesPlaceholder: 'Notes (optional)...',
+  savedPlacesSavedLabel: 'Saved',
+  savedPlacesSaveThisLocation: 'Save this location',
+  savedPlacesSelectFirst: 'Select a location on the map first',
+  savedPlacesRemove: 'Remove',
+  savedPlacesEmptyTitle: 'No saved places yet',
+  savedPlacesEmptyHint: 'Analyse a location then save it here',
+  savedPlacesTimeToday: 'today',
+  savedPlacesTimeYesterday: 'yesterday',
+  savedPlacesTimeDaysAgo: '{d}d ago',
+  savedPlacesTimeWeeksAgo: '{w}w ago',
+  savedPlacesTimeMonthsAgo: '{mo}mo ago',
   savePlaceLabelHeader: 'Label',
   savePlaceCustomColourLabel: 'Custom colour',
   savePlacePickColourPrompt: 'Pick a colour',
@@ -319,6 +358,15 @@ export const T_en: Dict = {
   waterPointNamingDeleteButton: 'Delete',
   waterPointNamingSkipButton: 'Skip',
   waterPointNamingConfirmButton: 'Save',
+  // Site element rename/note sheet (components/Map.tsx) — mirrors the water point naming sheet
+  // above, which already has its own translated buttons; this one was English-only.
+  elementEditingNamePlaceholder: 'e.g. {label}',
+  elementEditingCustomButton: 'Custom',
+  elementEditingLitresPlaceholder: 'litres',
+  elementEditingOtherButton: 'Other',
+  elementEditingSpeciesPlaceholder: 'species name',
+  elementEditingHowMany: 'how many',
+  elementEditingNotePlaceholder: 'Note — e.g. leaking, needs new tap',
   elementCountFewer: 'Fewer',
   elementCountMore: 'More',
   threeDWarning: 'In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.',
@@ -348,10 +396,30 @@ export const T_en: Dict = {
   tabArea: 'Area',
   tabPhotos: 'Photos',
   tabDesign: 'Design',
-  tabAI: 'AI',
+  // Was the bare letters 'AI' — jargon a farmer has no reason to know, for a tab that shows
+  // generated site advice (components/InsightsPanel.tsx). 'Insights' says what the tab is for.
+  tabAI: 'Insights',
   tabPlaces: 'Places',
   tabFarm: 'Farm',
   siteReportOverline: 'Site report',
+  // Plain-English names for the farmer-facing biome report (lib/biome.ts's BIOME_I18N_KEYS,
+  // shown by components/DataPanel.tsx). BIOMES in lib/biome.ts keeps the same English text as the
+  // source other callers (app/api/* prompts) still read; these keys exist so DataPanel can
+  // translate the same names instead of reading them straight off the data object. English-only
+  // for now — these are technical/regional names, not everyday words, so no isiZulu draft is
+  // offered until a fluent reviewer can confirm a name rather than a transliteration; t() falls
+  // back to English.
+  biomeNameSavanna: 'Savanna',
+  biomeNameGrassland: 'Grassland',
+  biomeNameFynbos: 'Fynbos',
+  biomeNameSucculentKaroo: 'Succulent Karoo',
+  biomeNameNamaKaroo: 'Nama-Karoo',
+  biomeNameDesert: 'Desert',
+  biomeNameAlbanyThicket: 'Albany Thicket',
+  biomeNameIocb: 'Indian Ocean Coastal Belt',
+  biomeNameForest: 'Afromontane Forest',
+  biomeNameOutside: 'Outside South Africa',
+  biomeNameUnavailable: 'Climate data unavailable',
   suitabilityGoodFit: 'Good fit',
   suitabilityFairSite: 'Fair site',
   suitabilityChallenging: 'Challenging',
@@ -369,6 +437,21 @@ export const T_en: Dict = {
   harvestingAreas: 'Harvesting areas',
   catchmentAreaLabel: 'catchment area',
   estimatedVolumeUnit: 'kL est.',
+  // Plain-litres volume labels (components/DataPanel.tsx, components/WaterBalance.tsx) —
+  // 'kL' (kilolitres) is a unit a farmer sizing a tank has no reason to know. Litres is what a
+  // tank is actually sold in; once the amount gets into the tens of thousands, "about N tanks of
+  // 5 000 L" says the same number in the unit a farmer shops for.
+  estVolumeLitresLabel: '{litres} L',
+  estVolumeTanksLabel: 'about {tanks} tanks of {size} L',
+  // Split versions of the same two labels, for a card that shows a big number with a small unit
+  // caption underneath it rather than one combined string (components/DataPanel.tsx).
+  estVolumeLitresUnit: 'L est.',
+  estVolumeTanksUnit: 'tanks of {size} L est.',
+  // '°C average' and 'mm a year' replace the hardcoded '°C avg' / 'mm/yr' suffixes in
+  // app/home/page.tsx and components/DataPanel.tsx's BRU line — same reasoning, spelled out
+  // instead of abbreviated.
+  unitTempAverage: '°C average',
+  unitRainPerYear: 'mm a year',
   plantingCalendarHeader: 'Planting calendar',
   calendarGrow: 'Grow',
   calendarDry: 'Dry',
@@ -379,12 +462,57 @@ export const T_en: Dict = {
   savedToPlaces: 'Saved to places',
   cardKeySpecies: 'Key species',
   cardMainChallenges: 'Main challenges',
+  // Plain-English key-species and challenge lists for each biome (lib/biome.ts's
+  // BIOME_I18N_KEYS), shown as the "Key species" and "Main challenges" cards in
+  // components/DataPanel.tsx. Each is a single string of items separated by " | " — DataPanel
+  // splits on that separator to render the chips/rows, the same list BIOMES in lib/biome.ts
+  // holds as an array for other callers. Common names come first, with the scientific name in
+  // brackets where the common name alone would not identify the plant. English-only for now —
+  // confirming species names and plain translations of farming risks needs a fluent reviewer, so
+  // no isiZulu draft is offered yet; t() falls back to English.
+  biomeSpeciesSavanna: 'Marula (Sclerocarya birrea) | Mopane (Colophospermum mopane) | Wild Fig (Ficus sycomorus) | Leadwood (Combretum imberbe) | Fever Tree (Vachellia xanthophloea) | Buffalo Thorn (Ziziphus mucronata)',
+  biomeChallengesSavanna: 'Storms are heavy but hard to predict | Grass competes with young trees for water and light | Frost can damage plants at higher ground | Termites can damage wood and young plants',
+  biomeSpeciesGrassland: 'Buffalo Thorn (Ziziphus mucronata) | Wild Olive (Olea europaea subsp. africana) | Highveld Protea (Protea caffra) | Red Grass (Themeda triandra) | Bulbine (Bulbine spp.) | Wild Garlic (Tulbaghia violacea)',
+  biomeChallengesGrassland: 'Hard frosts, down to about –10°C | Hailstorms | Clay soil washes away easily on slopes | Wet low ground (vlei) can be hard to drain',
+  biomeSpeciesFynbos: 'King Protea (Protea cynaroides) | Conebush (Leucadendron spp.) | Buchu (Agathosma betulina) | Cape Reed (Restio spp.) | Rooibos (Aspalathus linearis) | Honeybush (Cyclopia spp.)',
+  biomeChallengesFynbos: 'Needs occasional fire to stay healthy, roughly every 10–15 years | Banned invasive plants can take over | No edible Fynbos plants — bring in soil for any food garden | Hot, dry summers',
+  biomeSpeciesSucculentKaroo: 'Ice Plant (Mesembryanthemum spp.) | Bitter Aloe (Aloe ferox) | Quiver Tree (Aloidendron dichotomum) | Vygie (Lampranthus spp.)',
+  biomeChallengesSucculentKaroo: 'Very dry, hot summers | Soil is alkaline (high lime content) | Few food plants suit this climate | Strong sun and wind',
+  biomeSpeciesNamaKaroo: 'Karoo Bush (Pentzia spp.) | Driedoring (Rhigozum trichotomum) | Ganna (Salsola spp.) | Bitter Aloe (Aloe ferox) | Wild Olive (Olea europaea subsp. africana)',
+  biomeChallengesNamaKaroo: 'A hard, cemented soil layer underground | Very high evaporation — can be 3 times the rainfall | Salty soil in low-lying ground | Few tree species suit this climate',
+  biomeSpeciesDesert: "Camelthorn (Vachellia erioloba) | Kokerboom / Quiver Tree (Aloidendron dichotomum) | Shepherd's Tree (Boscia albitrunca) | Nara Melon (Acanthosicyos horridus)",
+  biomeChallengesDesert: 'Extreme heat, over 45°C | Flash floods are rare but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow away topsoil',
+  biomeSpeciesAlbanyThicket: 'Spekboom (Portulacaria afra) | Wild Plum (Harpephyllum caffrum) | Waterberry (Syzygium cordatum) | Noorsdoring (Euphorbia coerulescens)',
+  biomeChallengesAlbanyThicket: 'Severely damaged by too much goat grazing | Thick, thorny vegetation | A banned invasive cactus needs to be controlled | Limited water in the dry season',
+  biomeSpeciesIocb: 'Natal Wild Banana (Strelitzia nicolai) | Wild Plum (Harpephyllum caffrum) | Natal Mahogany (Trichilia emetica) | Pigeonwood (Trema orientalis) | Fever Tree (Vachellia xanthophloea) | Sycamore Fig (Ficus sycomorus) | Forest Silver Oak (Brachylaena discolor)',
+  biomeChallengesIocb: 'Cyclones and storms can cause damage | High humidity encourages fungal disease | Steep slopes risk erosion | Landslide risk on clay slopes',
+  biomeSpeciesForest: 'Yellowwood (Afrocarpus falcatus) | Cape Holly (Ilex mitis) | Wild Peach (Kiggelaria africana) | Stinkwood (Ocotea bullata) | Outeniqua Yellowwood (Afrocarpus falcatus)',
+  biomeChallengesForest: 'Not much sunlight reaches the ground under thick tree cover | Forest is legally protected — it cannot be cleared | Banned invasive plants can spread here | Slugs and snails can damage crops',
   limaContextPrefix: 'Lima · ',
   statSolar: 'Solar',
   statSolarSub: 'm²/day avg',
   statEToEst: 'ETo est.',
   statEToSub: 'evapotransp/day',
   waterHarvestingStrategyHeader: 'Water harvesting strategy',
+  // Plain-English water-harvesting advice for each biome (lib/biome.ts's BIOME_I18N_KEYS),
+  // shown under the header above by components/DataPanel.tsx. BIOMES in lib/biome.ts keeps the
+  // denser, jargon-heavy original text as the source for other callers (app/api/* prompts);
+  // these sentences say the same thing in shorter, plainer words, naming a technique once in
+  // brackets (e.g. "channels along the slope (swales)") rather than only by its technical name.
+  // English-only for now — getting this advice wrong in translation could cost a farmer a real
+  // harvest, so no isiZulu draft is offered until a fluent reviewer checks it; t() falls back to
+  // English.
+  biomeWaterSavanna: 'Heavy summer storms arrive fast. Dig channels along the slope (swales) and small ponds before the rains start in August or September, so the water soaks in instead of running off. Make tanks big: at least 50 litres for every square metre of roof that drains into them. Dig dams long and narrow — about 3 times longer than wide — on gentle slopes.',
+  biomeWaterGrassland: 'Summer brings short, heavy thunderstorms. On every slope, dig channels that follow the land gently downhill (about a 1m drop for every 1,000m across) to spread the water instead of letting it rush away. Winters are dry, so storing water matters. As a rule: 1 square metre of roof catches about 1 litre of water for every 1mm of rain.',
+  biomeWaterFynbos: 'Rain falls only in winter, so do earthworks in late autumn (March to May), before the rain comes. Small banks along the contour and shallow mulched basins work well. Size your water tanks carefully — summer (December to February) is dry. Reused household water (greywater) is fine for food-growing areas, but never for the natural Fynbos — it is too rich in nutrients for it.',
+  biomeWaterSucculentKaroo: 'On slopes facing west, shade netting can catch water from fog. Build a small raised rim around each plant to trap every drop of rain where it falls. Reusing household water (greywater) is worth doing here. Every 100mm of rain matters — even a small roof tank is valuable.',
+  biomeWaterNamaKaroo: 'Storms are rare and unpredictable, so catch water everywhere you can. Build small curved banks just above each plant. Catch runoff from farm roads into shallow basins. Underground water tanks help you get through dry spells — try to capture every drop of rain that falls.',
+  biomeWaterDesert: 'Shade netting can catch water from fog in the air. Design channels to catch sudden flash floods safely. Store water underground, where it stays cool and does not evaporate. Plant trees as windbreaks — they reduce evaporation and give shade before you plant crops.',
+  biomeWaterAlbanyThicket: 'Rain falls in both winter and summer. Use shallow channels and banks along the contour. A food forest based on Spekboom copes well with drought and uses water efficiently. Small tanks with gravity-fed drip irrigation work well. On clay soil, take care not to waterlog plants.',
+  biomeWaterIocb: 'Rain is heavy, so managing floods matters more than collecting water. Use shallow channels to slow water down on steep slopes. Raised beds stop plants sitting in water. Channels along the contour also help prevent landslides on clay soil. Run downpipes from your roof into underground tanks.',
+  biomeWaterForest: "The forest makes its own water cycle through fog and the trees breathing out moisture. Keeping the tree canopy intact keeps the ground moist. Channels at the forest edge catch any runoff. Springs inside the forest give a reliable water supply all year.",
+  biomeWaterOutside: 'Select a location within South Africa for site-specific analysis.',
+  biomeWaterUnavailable: 'Retry the site analysis before acting on location-specific water advice.',
   statTexture: 'Texture',
   statPH: 'pH',
   phAcidic: 'Acidic — add lime',
@@ -394,6 +522,10 @@ export const T_en: Dict = {
   organicCarbonLow: 'Low — target 2–3%',
   organicCarbonOk: 'Acceptable',
   statBulkDensity: 'Bulk Density',
+  // Shown only in All tools (components/DataPanel.tsx hides this stat card in Simple mode) —
+  // 'Bulk Density' is a soil-science term, so the card keeps a one-line plain explanation beside
+  // it rather than leaving the term to speak for itself.
+  bulkDensityExplainer: 'How tightly packed the soil is — a high number means roots struggle to grow',
   bulkDensityCompacted: 'Compacted',
   bulkDensityOk: 'OK',
   textureCompositionHeader: 'Texture composition',
@@ -401,6 +533,20 @@ export const T_en: Dict = {
   textureSilt: 'Silt',
   textureClay: 'Clay',
   soilStrategyHeader: 'Soil strategy',
+  // Plain-English soil advice for each biome (lib/biome.ts's BIOME_I18N_KEYS), shown under the
+  // header above by components/DataPanel.tsx. Same relationship to BIOMES in lib/biome.ts, and
+  // same reviewer gate, as the water-strategy keys above.
+  biomeSoilSavanna: 'The soil holds a lot of iron but little of the nutrients plants need most (phosphorus and nitrogen). Cover the soil with mopane leaves, but only a thin layer — too much can stop other plants growing nearby. Plant acacia trees nearby; their roots add nitrogen to the soil. Moringa trees also pull nutrients up from deep soil. Add compost and biochar (charcoal mixed into soil) until the soil holds at least 2% carbon.',
+  biomeSoilGrassland: 'Grazing animals often compact this soil hard. Loosen it below the surface before digging channels or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is usually mildly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Build up organic matter with compost and biochar.',
+  biomeSoilFynbos: 'Do not add compost, lime or phosphorus to natural Fynbos areas — it kills the plants, which are adapted to poor soil. Grow food separately, on soil brought in from elsewhere. Mulch food beds with Fynbos plant material. Cape reeds help hold the banks of water channels in place naturally.',
+  biomeSoilSucculentKaroo: 'Cover the soil with stones rather than organic mulch — it is cheaper and works well here. Only add compost to the food-growing area. Succulent plants need soil that drains well, not soil that holds water. For food beds, add biochar and gypsum. Worm farms are a good way to make a strong liquid fertiliser.',
+  biomeSoilNamaKaroo: 'A hard, cemented layer (calcrete) often sits under the topsoil and may need breaking up with a chisel plough so roots can grow down. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it hold onto water. Bitter Aloe grows well here and can be sold.',
+  biomeSoilDesert: 'Any organic matter here is valuable — use manure from goats or camels. Plant shade trees first, before any food crops. In low-lying areas, only plant salt-tolerant species. Raised sandy beds with a wick (a strip of absorbent material drawing water up) work well for vegetables.',
+  biomeSoilAlbanyThicket: 'Spekboom is the key plant here: you can eat it, it stores a lot of carbon, and it copes well with drought. To restore damaged land, plant cuttings of Spekboom directly — no need to grow them in a nursery first. Clay soil needs good air flow, so use raised beds for vegetables.',
+  biomeSoilIocb: 'The soil is acidic and nutrients wash out quickly. Add lime to raise the pH to about 6.5. Cover the soil with mulch and plant cover crops to stop nutrients washing away. A mix of biochar and compost (terra preta) greatly improves how much food you can grow. Coffee, avocado, banana and sugar cane all grow well here.',
+  biomeSoilForest: 'Forest soil is rich — disturb it as little as possible. Use small, deep planting holes (keyhole beds) for vegetables rather than large cleared areas. Cover the soil with fallen leaves as mulch. Working with the forest\'s own structure (a food-forest approach) gives the best results. Leave most of the forest undisturbed.',
+  biomeSoilOutside: 'Select a location within South Africa for site-specific analysis.',
+  biomeSoilUnavailable: 'Retry the site analysis before acting on location-specific soil advice.',
   soilHealthScoreHeader: 'Soil health score',
   soilHealthScoreHealthy: 'Healthy',
   soilHealthScoreModerate: 'Moderate',
@@ -414,9 +560,9 @@ export const T_en: Dict = {
   soilImprovementPhAcidic: 'pH {ph} is acidic — add agricultural lime (1–2 t/ha)',
   soilImprovementPhAlkaline: 'pH {ph} is alkaline — add elemental sulphur or pine-needle mulch',
   soilImprovementLowCarbon: 'Organic carbon {oc}% is low — layer compost 5 cm deep, add kraal manure or biochar',
-  soilImprovementCompacted: 'Bulk density {bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile',
+  soilImprovementCompacted: 'The soil is compacted ({bd} g/cm³) — deep-rooted cover crops and a digging fork help open it up',
   soilImprovementHighClay: 'High clay ({clay}%) — gypsum + organic matter improve drainage and workability',
-  soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and boost CEC with compost and biochar',
+  soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and add compost and biochar so it holds more water and nutrients',
   statKoppen: 'Köppen',
   statSolarClimate: 'Solar',
   statSolarClimateUnit: 'kWh/m²/day',
@@ -711,6 +857,10 @@ export const T_en: Dict = {
   allSectionFiveYearVision: '5-Year Vision',
   allSectionYear1Priorities: 'Year 1 Priorities',
   climateZone: 'Climate zone',
+  // The bare 'Köppen {code}' line under the zone name (components/DataPanel.tsx) is shown only in
+  // All tools — Simple mode already has the plain zone name and summary above it, so the
+  // technical classification code adds nothing a Simple-mode farmer needs.
+  koppenClimateCodeLabel: 'Climate code (Köppen)',
   goodForGrowing: 'Good for growing',
   rainfallMmMonth: 'Rainfall — mm / month',
   monthlyTempC: 'Monthly temperature — °C',
@@ -774,6 +924,56 @@ export const T_en: Dict = {
   reportItemSingular: 'item',
   reportItemPlural: 'items',
   reportPhotosCount: '{n} photos',
+  // components/EvidenceSheet.tsx and components/EvidenceCatalogue.tsx were English-only — the
+  // storage-full and land-papers warnings (the two a farmer most needs to understand) come
+  // first, and English-only for now: getting a storage/backup warning wrong in an unreviewed
+  // translation could cost a farmer their only proof of land rights, so this uses "pending
+  // English" per the repo's draft pattern rather than inventing a draft.
+  evidenceSheetStorageFull: 'Storage full — photo not saved. Delete some items to free space.',
+  evidenceSheetDismiss: 'Dismiss',
+  evidenceSheetLandLegalWarningTitle: 'This app is not a backup.',
+  evidenceSheetLandLegalWarningBody: 'A photo you scan here is shrunk small; a PDF you upload keeps only its file name, not the document. Both live on this phone alone, and old items can be deleted automatically to make room for new ones. Keep the real papers safe too — with your mentor, at home, or wherever they were issued.',
+  evidenceSheetClose: 'Close',
+  evidenceSheetLandLegalDesc: 'Documents that prove your right to farm this land',
+  evidenceSheetDocOnlyDesc: 'PDFs, scans and test reports',
+  evidenceSheetWaterDesc: 'Borehole tests, usage & municipal bills',
+  evidenceSheetTreesDesc: 'Snap canopy first, then base & trunk',
+  evidenceSheetDefaultDesc: 'Photos, scans and documents',
+  evidenceSheetLabUploadInstructions: 'Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.',
+  evidenceSheetLabReadNote: 'The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.',
+  evidenceSheetLabResultsLabel: 'Results and sampling details',
+  evidenceSheetLabResultsPlaceholder: 'Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments.',
+  evidenceSheetSaveTestResults: 'Save test results',
+  evidenceSheetLabMaxEntries: 'This test folder holds four entries. Remove an older entry before adding another.',
+  evidenceSheetReportedResultsName: 'Reported test results',
+  evidenceSheetAccountChanged: 'The account or workspace changed. Reopen the upload.',
+  evidenceSheetFileSaveFailed: 'The file could not be saved. Please try again.',
+  evidenceSheetResultsSaveFailed: 'The results could not be saved. Keep a copy and try again.',
+  evidenceSheetPdfUnavailable: 'This original PDF is unavailable here. Upload it again from your original copy.',
+  evidenceSheetPdfOpenFailed: 'The PDF could not be opened.',
+  evidenceSheetTakePhoto: 'Take / scan photo',
+  evidenceSheetUploadFile: 'Upload file / PDF',
+  evidenceSheetRemoveItem: 'Remove {name}',
+  evidenceSheetRemovePhotoFallback: 'photo',
+  evidenceSheetRemoveDocumentFallback: 'document',
+  evidenceSheetPhotosCount: 'Photos · {n}',
+  evidenceSheetOnFileCount: 'On file · {n}',
+  evidenceSheetDownloadOriginalPdf: 'Download original PDF',
+  evidenceSheetFilenameOnly: 'Filename reference only. Upload the PDF again to retain its contents.',
+  evidenceSheetQuickNumbersOptional: 'Quick numbers (optional)',
+  evidenceSheetTapToAdd: 'Tap to add',
+  evidenceSheetSave: 'Save',
+  evidenceSheetLimaLabNote: 'Site evidence · keep your original documents',
+  evidenceSheetLimaDefaultNote: 'Lima · reads bills & reports for you',
+  evidenceCatalogueTitle: 'Evidence library',
+  evidenceCatalogueHeading: 'The more the land tells us, the better the plan',
+  evidenceCatalogueIntro: 'A good site report works down the scale of permanence — water first, then structures & access, soil, living things, and animal systems.',
+  evidenceCatalogueDroneTitle: 'Drone & aerial — captured by a mentor',
+  evidenceCatalogueDroneBody: 'When a mentor visits, their drone shots drop straight onto this site — a true overhead to design over, plus before/after records for funders.',
+  evidenceCatalogueMentorOnly: 'Mentor only',
+  evidenceCatalogueEdiblesHeading: 'Existing indigenous trees are free yield and free shade — Lima keeps them in the design instead of clearing them.',
+  evidenceCatalogueEdiblesProtected: 'protected',
+  evidenceCatalogueEdiblesFooter: "Don't see yours? Snap it — Lima logs the unknown and a botanist or mentor can confirm it later.",
   zoneHumidSubtropicalSummerRain: 'Humid subtropical · summer rain',
   zoneHumidSubtropicalMistBelt: 'Humid subtropical · mist belt',
   zoneMediterraneanCoastal: 'Mediterranean · coastal',
@@ -805,7 +1005,9 @@ export const T_en: Dict = {
   homeStatRain: 'Rain',
   homeStatTemp: 'Temp',
   homeStatSoilPH: 'Soil pH',
-  homeStatASL: 'ASL',
+  // Was the bare abbreviation 'ASL' (above sea level) — every other locale already translates
+  // this as a plain word for "height"; English was the one left showing the jargon initials.
+  homeStatASL: 'Height above sea',
   homeMainSite: 'Main site',
   homeSetAsMain: 'Set as main site',
   homeMainSiteLabel: 'Main',   // the ★ that used to prefix this is a Lucide icon's job, not a string's

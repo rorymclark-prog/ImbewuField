@@ -1779,18 +1779,18 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       if (!dataUrl) return;
       const w = window.open('', '_blank');
       if (!w) return;
-      w.document.write(`<!doctype html><html><head><title>ImbewuField — base map</title>`
+      w.document.write(`<!doctype html><html><head><title>${t('mapPrintWindowTabTitle')}</title>`
         + `<style>@page{size:A4 landscape;margin:8mm}*{box-sizing:border-box}`
         + `body{margin:0;font-family:Georgia,serif;color:#20190f}`
         + `h1{font-size:16px;margin:0 0 4px}.s{font-size:11px;color:#6b5a42;margin:0 0 8px}`
         + `img{width:100%;height:auto;border:1px solid #d8cdb6;border-radius:6px}</style></head>`
-        + `<body><h1>Site base map</h1>`
-        + `<div class="s">Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.</div>`
+        + `<body><h1>${t('mapPrintWindowHeading')}</h1>`
+        + `<div class="s">${t('mapPrintWindowInstructions')}</div>`
         + `<img src="${dataUrl}" onload="setTimeout(function(){window.print();},300)"/></body></html>`);
       w.document.close();
     });
     map.triggerRepaint();
-  }, [showFeatures, showHatch]);
+  }, [showFeatures, showHatch, t]);
 
   // Tell the parent when reticle drawing is active (so it can hide the mobile "Results" FAB).
   // Also broadcast globally so the Lima FAB (rendered in the root layout) can step aside.
@@ -2318,7 +2318,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             <div className="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 font-sans z-[25]"
               style={{ bottom: 'calc(72px + env(safe-area-inset-bottom) + 12px)', background: 'rgba(16,22,14,0.9)', backdropFilter: 'blur(14px)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '10px 14px' }}>
               <Move size={16} style={{ color: 'rgba(234,243,226,0.55)', flexShrink: 0 }} />
-              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#EAF3E2' }}>Drag <span style={{ color: resolveColor(p) }}>{p.name}</span> to new spot</span>
+              <span style={{ fontSize: 13.5, fontWeight: 700, color: '#EAF3E2' }}>
+                {t('movePinBarText')} <span style={{ color: resolveColor(p) }}>{p.name}</span> {t('movePinBarSuffix')}
+              </span>
               <button onClick={() => setMovingPin(null)}
                 className="flex items-center justify-center active:scale-90 transition-all"
                 style={{ width: 32, height: 32, borderRadius: 9, background: 'rgba(247,242,233,0.12)', border: '1px solid rgba(234,243,226,0.18)', cursor: 'pointer' }}>
@@ -4231,7 +4233,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 </span>
               </div>
               <input value={elName} onChange={(e) => setElName(e.target.value)} autoFocus
-                placeholder={`e.g. ${getElementMeta(elementEditing.type).label}`}
+                placeholder={t('elementEditingNamePlaceholder').replace('{label}', getElementMeta(elementEditing.type).label)}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
 
@@ -4248,13 +4250,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <button type="button" onClick={() => setElTankCustomOpen((o) => !o)}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
                       style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                      Custom
+                      {t('elementEditingCustomButton')}
                     </button>
                   </div>
                   {elTankCustomOpen && (
                     <input type="number" min={0} step={100} value={elLitres ?? ''}
                       onChange={(e) => setElLitres(Math.max(0, parseInt(e.target.value, 10) || 0))}
-                      placeholder="litres" autoFocus
+                      placeholder={t('elementEditingLitresPlaceholder')} autoFocus
                       className="w-full font-sans rounded-xl px-3 py-2 outline-none"
                       style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
@@ -4274,17 +4276,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <button type="button" onClick={() => { setElTreeCustomOpen((o) => !o); setElSpecies(''); }}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
                       style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                      Other
+                      {t('elementEditingOtherButton')}
                     </button>
                   </div>
                   {elTreeCustomOpen && (
                     <input type="text" value={elSpecies} onChange={(e) => setElSpecies(e.target.value)}
-                      placeholder="species name" autoFocus
+                      placeholder={t('elementEditingSpeciesPlaceholder')} autoFocus
                       className="w-full font-sans rounded-xl px-3 py-2 outline-none mb-1.5"
                       style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                   <div className="flex items-center justify-between px-0.5">
-                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>how many</span>
+                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('elementEditingHowMany')}</span>
                     <div className="flex items-center gap-2">
                       <button type="button" onClick={() => setElCount((c) => Math.max(1, c - 1))}
                         aria-label={lang === 'zu'
@@ -4309,7 +4311,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               )}
 
               <input value={elNote} onChange={(e) => setElNote(e.target.value)}
-                placeholder="Note — e.g. leaking, needs new tap"
+                placeholder={t('elementEditingNotePlaceholder')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
                 style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="flex gap-2">
@@ -4317,11 +4319,11 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={pendingDeleteElement === elementEditing.id
                     ? { fontSize: 14, background: MAP_COLOR_ALERT, border: '1px solid ${MAP_COLOR_ALERT}', color: '#fff', cursor: 'pointer' }
                     : { fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: MAP_COLOR_ALERT, cursor: 'pointer' }}>
-                  {pendingDeleteElement === elementEditing.id ? 'Sure?' : 'Delete'}
+                  {pendingDeleteElement === elementEditing.id ? t('mapDeleteConfirmShort') : t('mapDeleteButton')}
                 </button>
                 <button onClick={() => { setElementEditing(null); setPendingDeleteElement(null); }}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
-                  Skip
+                  {t('waterPointNamingSkipButton')}
                 </button>
                 <button onClick={() => {
                   const updated: SiteElement = {

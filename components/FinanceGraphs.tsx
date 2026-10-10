@@ -340,8 +340,8 @@ function MeasuredView({
           aria-label={lang === 'zu' ? `Amakhilogremu avunyiwe ngenyanga ezinyangeni ezingu-${n}, ahlukaniswe ngokudayisiwe nokusele epulazini.` : `Kilograms picked each month for ${n} months, split into sold and kept on the farm.`}>
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + PLOT_H} y2={PAD.top + PLOT_H} stroke="rgba(140,122,98,0.45)" strokeWidth="0.8" />
           <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{Math.round(maxKg)}</text>
-          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>0</text>
+          <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{Math.round(maxKg)}</text>
+          <text x={PAD.left - 4} y={PAD.top + PLOT_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>0</text>
 
           {months.map((m, i) => {
             const x = cx(i) - barW / 2;
@@ -375,7 +375,7 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`x-${m.key}`}>
               {showLabel(i) && (
-                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.label}</text>
+                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.label}</text>
               )}
             </g>
           ))}

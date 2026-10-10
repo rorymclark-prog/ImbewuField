@@ -33,6 +33,7 @@ import { gatherSiteInputs, surveyFilledCount, SURVEY_TOTAL_FIELDS } from '@/lib/
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage, translate } from '@/lib/i18n';
+import { BIOME_I18N_KEYS } from '@/lib/biome';
 import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
@@ -174,6 +175,47 @@ const TAB_ICONS: Record<string, JSX.Element> = {
   Reports: <FileText size={16} />,
   Farm: <Wheat size={16} />,
 };
+
+// lib/biome.ts's BIOMES stays the English jargon source for other callers (app/api/* prompts);
+// these read the plain-language t() keys BIOME_I18N_KEYS points to for the same biome, falling
+// back to the raw BIOMES text (via `fallback`) for a biome code the table has no entry for.
+function biomeText(code: string, field: 'name' | 'water' | 'soil', fallback: string, t: (key: string) => string): string {
+  const key = BIOME_I18N_KEYS[code]?.[field];
+  return key ? t(key) : fallback;
+}
+
+function biomeList(code: string, field: 'species' | 'challenges', fallback: string[], t: (key: string) => string): string[] {
+  const key = BIOME_I18N_KEYS[code]?.[field];
+  if (!key) return fallback;
+  return t(key).split(' | ');
+}
+
+// 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
+// and once the number is large, counting it in standard 5 000 L tanks is easier to picture than
+// a bare litre figure.
+const TANK_SIZE_L = 5000;
+function litresLabel(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  if (litres >= TANK_SIZE_L * 3) {
+    return t('estVolumeTanksLabel')
+      .replace('{tanks}', String(Math.round(litres / TANK_SIZE_L)))
+      .replace('{size}', numberLabel(TANK_SIZE_L));
+  }
+  return t('estVolumeLitresLabel').replace('{litres}', numberLabel(litres));
+}
+
+// Same split as litresLabel, for a card that shows a big number with a small unit caption
+// underneath it (rather than litresLabel's one combined string).
+function litresBigValue(kl: number): string {
+  const litres = Math.round(kl * 1000);
+  return litres >= TANK_SIZE_L * 3 ? String(Math.round(litres / TANK_SIZE_L)) : numberLabel(litres);
+}
+function litresUnit(kl: number, t: (key: string) => string): string {
+  const litres = Math.round(kl * 1000);
+  return litres >= TANK_SIZE_L * 3
+    ? t('estVolumeTanksUnit').replace('{size}', numberLabel(TANK_SIZE_L))
+    : t('estVolumeLitresUnit');
+}
 
 function Card({ children, className = '', accent }: { children: React.ReactNode; className?: string; accent?: string }) {
   return (
@@ -789,7 +831,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       {headerCollapsed ? (
         <div className="flex-shrink-0 px-5 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border)' }}>
           <span className="font-display font-semibold truncate" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
-            {displayName || data.biome.name}
+            {displayName || biomeText(data.biome.code, 'name', data.biome.name, t)}
           </span>
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-md flex-shrink-0"
                 style={{ background: suitability.bg, border: `1px solid ${suitability.border}` }}>
@@ -817,12 +859,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {displayName}
                 </div>
                 <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
-                  {data.biome.name}
+                  {biomeText(data.biome.code, 'name', data.biome.name, t)}
                 </div>
               </>
             ) : (
               <div className="font-display font-semibold leading-tight" style={{ fontSize: 15, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
-                {data.biome.name}
+                {biomeText(data.biome.code, 'name', data.biome.name, t)}
               </div>
             )}
             {data.vegetation && (
@@ -835,7 +877,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}°C avg
+                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             <div className="font-mono mt-1" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
@@ -922,7 +964,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div className="min-w-0">
                   <div className="font-display font-semibold" style={{ fontSize: 14.5, color: '#FBF6EC' }}>{t('saveThisPlace')}</div>
                   <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: '#F7C97E', lineHeight: 1.4 }}>
-                    {placeName || data.biome.name}
+                    {placeName || biomeText(data.biome.code, 'name', data.biome.name, t)}
                   </div>
                 </div>
               </button>
@@ -1000,8 +1042,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{numberLabel(siteMetrics.water.estVolumeKL)}</div>
-                        <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>kL est.</div>
+                        <div className="font-display font-bold" style={{ fontSize: 15, color: 'var(--text-primary)', lineHeight: 1 }}>{litresBigValue(siteMetrics.water.estVolumeKL)}</div>
+                        <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)' }}>{litresUnit(siteMetrics.water.estVolumeKL, t)}</div>
                       </div>
                     </div>
                     {siteMetrics.water.features && siteMetrics.water.features.some(f => f.name) && (
@@ -1011,7 +1053,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
-                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{numberLabel(f.estVolumeKL)} kL</span>
+                            <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{litresLabel(f.estVolumeKL, t)}</span>
                           </div>
                         ) : null)}
                       </div>
@@ -1188,7 +1230,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('cardKeySpecies')}</Label>
               <div className="flex flex-wrap gap-1.5">
-                {data.biome.keySpecies.slice(0, 6).map((s) => (
+                {biomeList(data.biome.code, 'species', data.biome.keySpecies, t).slice(0, 6).map((s) => (
                   <span
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
@@ -1204,7 +1246,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('cardMainChallenges')}</Label>
               <div className="space-y-1.5">
-                {data.biome.challenges.slice(0, 4).map((c, i) => (
+                {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
                   <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
                     {c}
@@ -1241,7 +1283,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('waterHarvestingStrategyHeader')}</Label>
               <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {data.biome.waterStrategy}
+                {biomeText(data.biome.code, 'water', data.biome.waterStrategy, t)}
               </p>
             </Card>
           </>
@@ -1264,7 +1306,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 sub={data.soil.organicCarbon < 1.5 ? t('organicCarbonLow') : t('organicCarbonOk')}
                 color={data.soil.organicCarbon < 1.5 ? '#D4922A' : '#1F4D2B'}
               />
-              <Stat label={t('statBulkDensity')} value={`${data.soil.bulkDensity} g/cm³`} sub={data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} />
+              {!simple && (
+                <Stat
+                  label={t('statBulkDensity')}
+                  value={`${data.soil.bulkDensity} g/cm³`}
+                  sub={`${data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} · ${t('bulkDensityExplainer')}`}
+                />
+              )}
             </div>
             <Card>
               <Label>{t('textureCompositionHeader')}</Label>
@@ -1292,7 +1340,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <Card>
               <Label>{t('soilStrategyHeader')}</Label>
               <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                {data.biome.soilStrategy}
+                {biomeText(data.biome.code, 'soil', data.biome.soilStrategy, t)}
               </p>
             </Card>
 
@@ -1476,10 +1524,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div style={cardSt}>
                 <div style={{ ...ovlSt, marginBottom: 8 }}>{t('climateZone')}</div>
                 <div style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: 18, color: '#2A2317', lineHeight: 1.15 }}>{zoneLabel}</div>
-                <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
-                  Köppen {kp} — {zoneLabel}
-                </div>
-                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5 }}>{zoneSummary}</div>
+                {!simple && (
+                  <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 12.5, color: 'var(--text-muted)', margin: '3px 0 11px' }}>
+                    {t('koppenClimateCodeLabel')} {kp} — {zoneLabel}
+                  </div>
+                )}
+                <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 15, color: '#4A4030', lineHeight: 1.5, marginTop: simple ? 6 : 0 }}>{zoneSummary}</div>
                 <div style={{ marginTop: 14, background: '#F1F4EA', border: '1px solid #DCE6CE', borderRadius: 12, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 7 }}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3C6B3F" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -1810,8 +1860,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: groupPhotos.length > 0 || count === 0 ? 11 : 0 }}>
-                      <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
-                        {EVIDENCE_GROUP_ICON[group.key]}
+                      <div style={{ width: 30, height: 30, borderRadius: 8, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        {(() => { const GroupIcon = EVIDENCE_GROUP_ICON[group.key]; return <GroupIcon size={16} />; })()}
                       </div>
                       <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)' }}>{REPORT_GROUP_LABEL[group.key] ?? group.label}</span>
                     </div>
@@ -1851,8 +1901,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px', cursor: 'pointer', textAlign: 'left' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
-                    <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
-                      {EVIDENCE_GROUP_ICON.site_photos}
+                    <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <EVIDENCE_GROUP_ICON.site_photos size={16} />
                     </div>
                     <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: 'var(--text-primary)', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
                     {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}

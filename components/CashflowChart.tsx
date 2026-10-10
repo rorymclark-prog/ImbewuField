@@ -265,14 +265,14 @@ function Panels({
         {maxIn > 0 && (
           <>
             <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top} y2={PAD.top} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-            <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(maxIn)}</text>
+            <text x={PAD.left - 4} y={PAD.top + 3} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(maxIn)}</text>
           </>
         )}
-        <text x={PAD.left - 4} y={zeroY + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>R0</text>
+        <text x={PAD.left - 4} y={zeroY + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>R0</text>
         {maxOut > 0 && (
           <>
             <line x1={PAD.left} x2={W - PAD.right} y1={PAD.top + BARS_H} y2={PAD.top + BARS_H} stroke="rgba(140,122,98,0.16)" strokeWidth="0.8" strokeDasharray="3,3" />
-            <text x={PAD.left - 4} y={PAD.top + BARS_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(maxOut)}</text>
+            <text x={PAD.left - 4} y={PAD.top + BARS_H + 2.5} textAnchor="end" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(maxOut)}</text>
           </>
         )}
 
@@ -300,20 +300,20 @@ function Panels({
         <path d={runPath} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
         {runMax > 0 && (
-          <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(runMax)}</text>
+          <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(runMax)}</text>
         )}
         {runMin < 0 && (
-          <text x={PAD.left - 4} y={runTop + RUN_H} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'monospace' }}>{randTick(runMin)}</text>
+          <text x={PAD.left - 4} y={runTop + RUN_H} textAnchor="end" fontSize="6.5" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{randTick(runMin)}</text>
         )}
 
         {/* Month labels, and a year mark wherever the axis crosses into January. */}
         {months.map((m, i) => (
           <g key={`x-${m.key}`}>
             {showLabel(i) && (
-              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.label}</text>
+              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.label}</text>
             )}
             {(m.month === 1 || i === 0) && (
-              <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'monospace' }}>{m.year}</text>
+              <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.year}</text>
             )}
           </g>
         ))}

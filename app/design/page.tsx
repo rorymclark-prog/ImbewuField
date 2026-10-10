@@ -9,7 +9,7 @@ import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, typ
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
+import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
@@ -3163,7 +3163,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <div
           title={saveError ?? undefined}
           style={{
-            display: isPhone ? 'none' : undefined,
+            display: isPhone ? 'none' : 'flex',
+            alignItems: 'center',
+            gap: 4,
             fontSize: 12,
             opacity: saveError ? 1 : 0.6,
             fontWeight: saveError ? 800 : 400,
@@ -3172,7 +3174,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             lineHeight: 1.15,
           }}
         >
-          {saveError ? tr('⚠ NOT saved — storage full', '⚠ AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
+          {saveError && <AlertTriangle size={12} style={{ flexShrink: 0 }} />}
+          {saveError ? tr('NOT saved — storage full', 'AKUGCINWANGA — indawo yokugcina igcwele') : saved ? tr('Saved', 'Kugciniwe') : tr('Saving…', 'Kuyagcinwa…')}
         </div>
       </header>
 
@@ -3916,7 +3919,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onClick={onDripAllBeds}
             style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.10)', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5, flexShrink: 0 }}
           >
-            <span aria-hidden>💧</span>
+            <Droplets size={15} style={{ flexShrink: 0 }} />
             <span><span style={{ fontWeight: 800 }}>{tr('Drip all beds', 'Faka imigqa yokunisela kuyo yonke imibhede')}</span> — {tr('one line down the centre of each', 'umugqa owodwa phakathi nendawo embhedeni ngamunye')}</span>
           </button>
           {dripNote && (

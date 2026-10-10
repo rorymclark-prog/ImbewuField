@@ -1,5 +1,7 @@
 // Scale-of-permanence evidence catalogue for ImbewuField site assessments
 
+import { Droplets, Home, Sprout, TreeDeciduous, PawPrint, Zap, Camera, type LucideIcon } from 'lucide-react';
+
 export interface EvidenceCatalogueItem {
   key: string;
   label: string;
@@ -146,7 +148,7 @@ export const QUICK_NUMBERS: Record<string, { key: string; label: string; unit: s
 };
 
 /**
- * Emoji badge per catalogue group, PLUS the ad hoc 'site_photos' bucket the Reports tab and
+ * Icon badge per catalogue group, PLUS the ad hoc 'site_photos' bucket the Reports tab and
  * evidence sheets use for the farm's general/all-groups photo roll — it is not a catalogue
  * group (no items[] of its own), but it opens the same EvidenceSheet and needs the same badge.
  *
@@ -155,15 +157,18 @@ export const QUICK_NUMBERS: Record<string, { key: string; label: string; unit: s
  * did not, so its header badge sat blank — a catalogue entry known in one file and missing from
  * the file that renders it. One map now, so a new group can only ever be un-iconed everywhere
  * or nowhere.
+ *
+ * Lucide components, not emoji — CLAUDE.md's "No emoji as UI icons" rule. Each caller renders
+ * this as `<Icon size={..} />`.
  */
-export const EVIDENCE_GROUP_ICON: Record<string, string> = {
-  water: '💧',
-  structures: '🏠',
-  soil: '🌱',
-  trees: '🌿',
-  animals: '🐓',
-  energy: '⚡',
-  site_photos: '📸',
+export const EVIDENCE_GROUP_ICON: Record<string, LucideIcon> = {
+  water: Droplets,
+  structures: Home,
+  soil: Sprout,
+  trees: TreeDeciduous,
+  animals: PawPrint,
+  energy: Zap,
+  site_photos: Camera,
 };
 
 const evidenceGroupsByKey = new Map(EVIDENCE_CATALOGUE.map((group) => [group.key, group]));
