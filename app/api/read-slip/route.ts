@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { meteredLowCostAi } from '@/lib/low-cost-ai';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { parseJsonBody } from '@/lib/api-json-body';
 
 // A receipt is a single photographed document — nowhere near the multi-photo analyse-photos
 // ceiling (7,000,000 base64 chars). Keeps one oversized guest upload from costing more than the
@@ -15,7 +16,9 @@ export async function POST(req: NextRequest) {
   const metered = await meteredLowCostAi(req, auth, '/api/read-slip');
   if (metered.response) return metered.response;
   const { ai } = metered;
-  const { image }: { image?: { data: string; mediaType: string } } = await req.json();
+  const parsed = await parseJsonBody<{ image?: { data: string; mediaType: string } }>(req);
+  if (parsed.response) return parsed.response;
+  const { image } = parsed.data;
   if (!image?.data || !['image/jpeg','image/png','image/webp'].includes(image.mediaType)) return NextResponse.json({ error: 'No image provided' }, { status: 400 });
   if (image.data.length > MAX_SLIP_IMAGE_B64_CHARS) return NextResponse.json({ error: 'Photo is too large — try a clearer, closer photo of just the slip.' }, { status: 413 });
 

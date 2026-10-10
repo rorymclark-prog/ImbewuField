@@ -181,7 +181,7 @@ export async function POST(req: NextRequest) {
   }
 
   const ctxBlock = buildContext(ctx);
-  const langName = ctx?.language ? LANG_NAMES[ctx.language] : undefined;
+  const langName = ctx?.language && Object.hasOwn(LANG_NAMES, ctx.language) ? LANG_NAMES[ctx.language] : undefined;
   const langLine = langName && langName !== 'English'
     ? `\n\nThe farmer's preferred language is ${langName} — reply in ${langName} unless they clearly write in another language.`
     : '';
