@@ -100,6 +100,34 @@ test('malformed geometry, coordinates, zoom and records are rejected', () => {
   for (const value of invalid) assert.equal(normaliseSharedSiteData(value), null)
 })
 
+// sec-11: unbounded geojson/places/waterPoints arrays let one shared-site create be as large as
+// the writer liked. These caps are mirrored by firestore.rules' shared_sites create rule.
+test('oversized geojson, places or water-point arrays are rejected', () => {
+  const base = validShare()
+  const feature = base.geojson.features[0]
+  const place = base.places[0]
+  const waterPoint = base.waterPoints[0]
+
+  assert.equal(normaliseSharedSiteData({
+    ...base,
+    geojson: { ...base.geojson, features: Array.from({ length: 501 }, () => feature) },
+  }), null)
+  assert.equal(normaliseSharedSiteData({
+    ...base,
+    places: Array.from({ length: 301 }, () => place),
+  }), null)
+  assert.equal(normaliseSharedSiteData({
+    ...base,
+    waterPoints: Array.from({ length: 301 }, () => waterPoint),
+  }), null)
+
+  // Right at the cap still passes.
+  assert.ok(normaliseSharedSiteData({
+    ...base,
+    geojson: { ...base.geojson, features: Array.from({ length: 500 }, () => feature) },
+  }))
+})
+
 test('sample mode rejects a public write before touching Firebase', async () => {
   session.setItem('imbewu_sample_mode', '1')
   await assert.rejects(saveSharedSite(validShare()), /switched off in the sample farm/)

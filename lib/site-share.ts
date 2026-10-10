@@ -7,6 +7,12 @@ import { doc, getDoc, runTransaction, serverTimestamp } from 'firebase/firestore
 import { getFirebase } from '@/lib/firebase/init'
 import { isSampleMode } from './sample-mode'
 
+// sec-11: caps mirrored by firestore.rules' shared_sites create rule — see the comment there.
+// A shared-site snapshot is one farm's map; a few hundred of each is already generous headroom.
+const MAX_GEOJSON_FEATURES = 500
+const MAX_PLACES = 300
+const MAX_WATER_POINTS = 300
+
 export interface SharedSiteData {
   geojson: FeatureCollection
   places: Place[]
@@ -103,10 +109,11 @@ export function normaliseSharedSiteData(value: unknown): SharedSiteData | null {
     return null
   }
   if (!record(clean) || !validFeatureCollection(clean.geojson)
-      || !Array.isArray(clean.places) || !clean.places.every(
+      || clean.geojson.features.length > MAX_GEOJSON_FEATURES
+      || !Array.isArray(clean.places) || clean.places.length > MAX_PLACES || !clean.places.every(
         (place) => isValidSavedPlace(place) && Number.isFinite(Date.parse(place.savedAt)),
       )
-      || !Array.isArray(clean.waterPoints) || !clean.waterPoints.every(isValidWaterPoint)
+      || !Array.isArray(clean.waterPoints) || clean.waterPoints.length > MAX_WATER_POINTS || !clean.waterPoints.every(isValidWaterPoint)
       || !Array.isArray(clean.mapCenter) || clean.mapCenter.length !== 2
       || !finite(clean.mapCenter[0]) || clean.mapCenter[0] < -180 || clean.mapCenter[0] > 180
       || !finite(clean.mapCenter[1]) || clean.mapCenter[1] < -90 || clean.mapCenter[1] > 90
@@ -121,6 +128,8 @@ export async function saveSharedSite(data: SharedSiteData): Promise<string> {
   if (isSampleMode()) throw new Error('Sharing is switched off in the sample farm.')
   const fb = getFirebase()
   if (!fb) throw new Error('Firestore unavailable')
+  const uid = fb.auth.currentUser?.uid
+  if (!uid) throw new Error('Sign in before sharing this site.')
   const firestore = fb.db
   const safe = normaliseSharedSiteData(data)
   if (!safe) throw new Error('Invalid site data')
@@ -132,6 +141,7 @@ export async function saveSharedSite(data: SharedSiteData): Promise<string> {
     })
     transaction.set(doc(firestore, 'shared_sites', code), {
       code,
+      creator: uid,
       ...safe,
       createdAt: serverTimestamp(),
     })
@@ -148,6 +158,7 @@ export async function loadSharedSite(code: string): Promise<SharedSiteData | nul
 
   const snap = await getDoc(doc(firestore, 'shared_sites', safeCode))
   if (!snap.exists()) return null
-  const { code: _code, createdAt: _ts, ...data } = snap.data()
+  // creator (sec-11, ownership check only) is never meant for other viewers of a public code.
+  const { code: _code, createdAt: _ts, creator: _creator, ...data } = snap.data()
   return normaliseSharedSiteData(data)
 }

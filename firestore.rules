@@ -113,6 +113,28 @@ service cloud.firestore {
         && get(/databases/$(database)/documents/app_config/community).data.enabled == true;
     }
 
+    // sec-07: message_threads create had no check at all on WHO the other participant is — any
+    // two signed-in users, any org, could open a thread with each other. There is no connection/
+    // accepted-contact collection in this schema today, so the gate is same org, read straight off
+    // each participant's own profile (never trusts the thread doc's own fields for this).
+    function sameOrgThread(participants) {
+      return myOrg() != null
+        && get(/databases/$(database)/documents/profiles/$(participants[0])).data.org_id == myOrg()
+        && get(/databases/$(database)/documents/profiles/$(participants[1])).data.org_id == myOrg();
+    }
+    // sec-07: participant_names is denormalised display text the OTHER participant renders
+    // as-is — unbounded, it let one user pin an arbitrarily large string (and nothing but
+    // `is string` type-checked it at all) into the other's thread list forever. Map must be
+    // exactly the two participants, each a short string.
+    function validThreadNames(data) {
+      return data.participant_names is map
+        && data.participant_names.size() == 2
+        && data.participant_names[data.participants[0]] is string
+        && data.participant_names[data.participants[0]].size() <= 100
+        && data.participant_names[data.participants[1]] is string
+        && data.participant_names[data.participants[1]].size() <= 100;
+    }
+
     match /profiles/{uid} {
       // `get` and `list` are split deliberately. A LIST is authorised once, up front, before
       // any document has been read, so the per-document `uid == request.auth.uid` term below
@@ -567,10 +589,24 @@ service cloud.firestore {
       // never once executed, because no workflow ran `test:rules`.
       allow get:  if true;
       allow list: if false;
+      // sec-11: a shared site had no owner at all (not even a creator field) and no size bound,
+      // so anybody signed in could create an unlimited number of unbounded documents under any
+      // id. code must match the actual docId (so nobody can later point a DIFFERENT code's doc
+      // at mismatched data) and creator must be the writer's own uid — lib/site-share.ts now
+      // writes it. geojson/places/waterPoints are capped to the same limits saveSharedSite()
+      // enforces client-side (a few hundred of each is already generous for one farm's map).
       allow create: if request.auth != null
         && request.resource.data.code is string
         && request.resource.data.code.size() == 6
-        && request.resource.data.geojson is map;
+        && request.resource.data.code == code
+        && request.resource.data.creator == request.auth.uid
+        && request.resource.data.geojson is map
+        && request.resource.data.geojson.features is list
+        && request.resource.data.geojson.features.size() <= 500
+        && request.resource.data.places is list
+        && request.resource.data.places.size() <= 300
+        && request.resource.data.waterPoints is list
+        && request.resource.data.waterPoints.size() <= 300;
       allow update, delete: if false;
     }
 
@@ -601,8 +637,14 @@ service cloud.firestore {
 
     match /message_threads/{threadId} {
       allow read:   if communityOn() && signedIn() && request.auth.uid in resource.data.participants;
+      // sec-07: any two signed-in users could previously open a thread with each other, with
+      // whatever sender name either of them chose. Now requires the two participants to share an
+      // org (see sameOrgThread() — there is no connections/accepted-contact collection in this
+      // schema to check instead) and caps both display names.
       allow create: if communityOn() && signedIn() && request.auth.uid in request.resource.data.participants
-        && request.resource.data.participants.size() == 2;
+        && request.resource.data.participants.size() == 2
+        && sameOrgThread(request.resource.data.participants)
+        && validThreadNames(request.resource.data);
       // Membership AND participant_names are immutable after creation — only
       // last_message/last_message_at may change (set when a message is sent).
       // Otherwise either participant could rewrite the other's denormalised
