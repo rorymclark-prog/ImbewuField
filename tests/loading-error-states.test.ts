@@ -89,6 +89,43 @@ test('My Records surfaces a failed read instead of quietly showing an empty ledg
   assert.match(i18n, /myRecordsRetry:/);
 });
 
+test('the money book keeps the last-loaded sales/expenses/production instead of blanking them when a read fails', () => {
+  const records = source('../app/records/page.tsx');
+  // bug-02: Promise.allSettled already guarded against one rejection blanking every list, but the
+  // handler still unconditionally called setSales/setProduction/setExpenses with [] on rejection —
+  // replacing real, previously-loaded rows with an empty ledger that looked like lost data.
+  assert.doesNotMatch(records, /setProduction\(prodResult\.status === 'fulfilled' \? prodResult\.value : \[\]\)/,
+    'a rejected production read must not overwrite the existing list with []');
+  assert.doesNotMatch(records, /setSales\(salesResult\.status === 'fulfilled' \? salesResult\.value : \[\]\)/,
+    'a rejected sales read must not overwrite the existing list with []');
+  assert.doesNotMatch(records, /setExpenses\(expenseResult\.status === 'fulfilled' \? expenseResult\.value : \[\]\)/,
+    'a rejected expenses read must not overwrite the existing list with []');
+  assert.match(records, /const \[listError, setListError\] = useState/,
+    'a failed read must be tracked separately from a genuinely empty ledger');
+  assert.match(records, /setListError\(prodResult\.status === 'rejected' \|\| salesResult\.status === 'rejected' \|\| expenseResult\.status === 'rejected'\)/,
+    'any one rejected stream must flip the shared retry banner');
+  assert.match(records, /\{listError && !dataLoading && \(/, 'a failed read must render a retry banner');
+  assert.match(records, /t\('myRecordsLoadError'\)/, 'the money book must reuse the existing load-error copy');
+});
+
+test('deleting a sale or expense that fails offline shows the error instead of vanishing silently', () => {
+  const records = source('../app/records/page.tsx');
+  // bug-01: handleDeleteSale/handleDeleteExpense removed the row optimistically, then called
+  // deleteSale()/deleteExpense() inside try { ... } finally { void loadData(); } with no catch —
+  // a rejection was an unhandled promise rejection and loadData() silently brought the row back
+  // once it re-read the (undeleted) server copy, with nothing on screen to say a delete had failed.
+  assert.match(records, /async function handleDeleteSale\(id: string\) \{[\s\S]*?\} catch \(err\) \{[\s\S]*?setActionError\([\s\S]*?\}[\s\S]*?\n  \}/,
+    'handleDeleteSale must catch a failed delete and record it, not let it propagate unhandled');
+  assert.match(records, /async function handleDeleteExpense\(id: string\) \{[\s\S]*?\} catch \(err\) \{[\s\S]*?setActionError\([\s\S]*?\}[\s\S]*?\n  \}/,
+    'handleDeleteExpense must catch a failed delete and record it, not let it propagate unhandled');
+  assert.match(records, /const \[actionError, setActionError\] = useState/,
+    'a failed delete must be tracked in its own state, not just discarded');
+  assert.match(records, /\{actionError && \(/, 'a failed delete must render a visible message');
+
+  const i18n = source('../lib/i18n.tsx');
+  assert.match(i18n, /myRecordsDeleteError:/, 'myRecordsDeleteError must exist in the translation dictionary the money book reads');
+});
+
 test('a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero', () => {
   const dashboard = source('../components/NgoDashboard.tsx');
   assert.match(dashboard, /const \[gardenerError, setGardenerError\] = useState/,

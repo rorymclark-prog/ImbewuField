@@ -1139,6 +1139,7 @@ export const T_en: Dict = {
   myRecordsChoosePhoto: 'Choose photo…',
   myRecordsProdValidationError: 'Crop name and a positive kg are required.',
   myRecordsSaveError: 'Failed to save. Try again.',
+  myRecordsDeleteError: 'Failed to delete. Try again.',
   myRecordsSaveHarvest: 'Save harvest',
   myRecordsLogSaleHeader: 'Log sale',
   myRecordsKgSoldLabel: 'Kg sold',

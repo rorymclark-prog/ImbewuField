@@ -1380,6 +1380,12 @@ export default function RecordsPage() {
   const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [dataLoading, setDataLoading] = useState(false);
+  // bug-02: a rejected read used to blank that list to [], looking exactly like lost data.
+  // listError drives a retry banner instead; the previous rows stay on screen.
+  const [listError, setListError] = useState(false);
+  // bug-01: a delete that fails offline used to swallow the error — the row reappeared
+  // (loadData() below re-reads the server copy) with no explanation why.
+  const [actionError, setActionError] = useState('');
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
   const [desktopEntrySaving, setDesktopEntrySaving] = useState(false);
@@ -1450,13 +1456,15 @@ export default function RecordsPage() {
       setSales(getSandboxSales());
       setExpenses(getSandboxExpenses());
       setInvoices(loadInvoices());
+      setListError(false);
       return;
     }
     setDataLoading(true);
     try {
       // allSettled, NOT all: one failing read (e.g. a missing Firestore composite index
       // on production_logs) must not blank the ENTIRE ledger — sales/expenses that read
-      // fine should still show. Failures degrade to an empty list for that stream only.
+      // fine should still show. A rejected stream now keeps its last-loaded value instead
+      // of being overwritten with [] (bug-02); listError drives the retry banner below.
       const [prodResult, salesResult, expenseResult] = await Promise.allSettled([
         myProduction(),
         mySales(),
@@ -1465,9 +1473,10 @@ export default function RecordsPage() {
       if (prodResult.status === 'rejected') console.error('[finances] production read failed:', prodResult.reason);
       if (salesResult.status === 'rejected') console.error('[finances] sales read failed:', salesResult.reason);
       if (expenseResult.status === 'rejected') console.error('[finances] expenses read failed:', expenseResult.reason);
-      setProduction(prodResult.status === 'fulfilled' ? prodResult.value : []);
-      setSales(salesResult.status === 'fulfilled' ? salesResult.value : []);
-      setExpenses(expenseResult.status === 'fulfilled' ? expenseResult.value : []);
+      setListError(prodResult.status === 'rejected' || salesResult.status === 'rejected' || expenseResult.status === 'rejected');
+      if (prodResult.status === 'fulfilled') setProduction(prodResult.value);
+      if (salesResult.status === 'fulfilled') setSales(salesResult.value);
+      if (expenseResult.status === 'fulfilled') setExpenses(expenseResult.value);
       setInvoices(loadInvoices());
     } finally {
       setDataLoading(false);
@@ -1497,12 +1506,28 @@ export default function RecordsPage() {
   }, []);
 
   async function handleDeleteSale(id: string) {
+    setActionError('');
     setSales((prev) => prev.filter((s) => s.id !== id));
-    try { if (isSampleMode()) deleteSandboxSale(id); else await deleteSale(id); } finally { void loadData(); }
+    try {
+      if (isSampleMode()) deleteSandboxSale(id); else await deleteSale(id);
+    } catch (err) {
+      // bug-01: this used to be swallowed — the row reappeared once loadData() re-read the
+      // (undeleted) server copy below, with no sign of why the delete itself had failed.
+      setActionError(err instanceof Error ? err.message : t('myRecordsDeleteError'));
+    } finally {
+      void loadData();
+    }
   }
   async function handleDeleteExpense(id: string) {
+    setActionError('');
     setExpenses((prev) => prev.filter((x) => x.id !== id));
-    try { if (isSampleMode()) deleteSandboxExpense(id); else await deleteExpense(id); } finally { void loadData(); }
+    try {
+      if (isSampleMode()) deleteSandboxExpense(id); else await deleteExpense(id);
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : t('myRecordsDeleteError'));
+    } finally {
+      void loadData();
+    }
   }
 
   const hasAnyData = sales.length > 0 || expenses.length > 0 || production.length > 0 || invoices.length > 0;
@@ -1635,6 +1660,48 @@ export default function RecordsPage() {
               })}
             </div>
             {lang === 'zu' && <p role="note" className="mt-1 text-xs text-stone-600"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu tab-label drafts. English: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</span></p>}
+
+            {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
+                ledger, so this banner — not a blank list — is what says the data may be stale. */}
+            {listError && !dataLoading && (
+              <div
+                className="flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5"
+                style={{ background: 'color-mix(in srgb, var(--orange) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--orange) 25%, transparent)' }}
+              >
+                <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--orange)' }}>
+                  {t('myRecordsLoadError')}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => { void loadData(); }}
+                  className="font-sans font-semibold flex-shrink-0"
+                  style={{ fontSize: 12, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  {t('myRecordsRetry')}
+                </button>
+              </div>
+            )}
+
+            {/* bug-01: a failed delete used to be swallowed — the row reappeared once loadData()
+                re-read the (undeleted) server copy, with no sign of why. This says why. */}
+            {actionError && (
+              <div
+                className="flex items-center justify-between gap-3 rounded-2xl px-3.5 py-2.5"
+                style={{ background: 'rgba(196,58,58,0.08)', border: '1px solid rgba(196,58,58,0.25)' }}
+              >
+                <span className="font-sans" style={{ fontSize: 12.5, color: '#B23A3A' }}>
+                  {actionError}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setActionError('')}
+                  className="font-sans font-semibold flex-shrink-0"
+                  style={{ fontSize: 12, color: '#B23A3A', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  {recordsText(lang, 'Close', 'Vala')}
+                </button>
+              </div>
+            )}
 
             <div data-book-tab={tab} className={`${styles.bookPage} space-y-4`}>
             {/* PICKED and SOLD both take their forms from the same mounted MyRecords, in the same
