@@ -33,12 +33,11 @@ export interface ReleaseNote {
   sha?: string;
 }
 
-export interface UpdateTourStop {
-  title: string;
-  where: string;
-  detail: string;
-  href: string;
-}
+// perf-02: UpdateTourStop and MAX_TOUR_STOPS now live in lib/release-notes-types.ts (a tiny
+// module with no RELEASE_NOTES value) and are re-exported here so existing imports keep working.
+export type { UpdateTourStop } from './release-notes-types';
+export { MAX_TOUR_STOPS } from './release-notes-types';
+import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
@@ -4633,9 +4632,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
 
 /** Never let the banner become a wall of text over the map. */
 export const MAX_SHOWN = 5;
-// The saved update guide keeps five stops; showing more here makes its preview disagree
-// with the guide a farmer can actually open after refreshing.
-export const MAX_TOUR_STOPS = 5;
 
 /** The lines to render, flattened and capped. Kept pure so it is testable without a DOM. */
 export function visibleNotes(notes: ReleaseNote[] = RELEASE_NOTES, max = MAX_SHOWN): string[] {
