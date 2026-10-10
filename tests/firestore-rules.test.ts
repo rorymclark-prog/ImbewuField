@@ -891,10 +891,25 @@ test('cross-org isolation matrix: gardens and members', async () => {
   await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-b')));
   await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-b', 'members', FARMER_B)));
 
-  // KNOWN, DELIBERATELY UNCHANGED GAP (RULES-FIX-PROPOSAL-2026-08-01.md Part 3 #3): garden and
-  // garden-member WRITES are still bare isStaff(), with no same-org requirement at all. NOT
-  // fixed or asserted here (report-only backlog item; see the PR description) — only the READ
-  // side is this PR's scope, matching the four collections #375 already fixed the same way.
+  // sec-02 (2026-10-10 audit): garden and garden-member WRITES were bare isStaff(), with no
+  // same-org requirement at all — ANY provisioned ngo/funder/admin account, in ANY org, could
+  // edit or delete ANY other org's garden or member list. Now same-org staff (+ admin), matching
+  // the read rule's own isAdmin()/sameOrg() pairing immediately above it.
+  await assertSucceeds(updateDoc(doc(staffADb, 'gardens', 'garden-a'), { name: 'Garden A (renamed)' }));
+  await assertFails(updateDoc(doc(staffBDb, 'gardens', 'garden-a'), { name: 'hacked' }));
+  await assertFails(updateDoc(doc(staffADb, 'gardens', 'garden-b'), { name: 'hacked' }));
+  await assertSucceeds(updateDoc(doc(staffBDb, 'gardens', 'garden-b'), { name: 'Garden B (renamed)' }));
+
+  await assertSucceeds(setDoc(doc(staffADb, 'gardens', 'garden-a', 'members', 'new-member-a'), {
+    garden_id: 'garden-a', profile_id: 'new-member-a', plot: 'A2', size_m2: 15, lat: null, lon: null,
+  }));
+  await assertFails(setDoc(doc(staffBDb, 'gardens', 'garden-a', 'members', 'new-member-a'), {
+    garden_id: 'garden-a', profile_id: 'new-member-a', plot: 'A3', size_m2: 15, lat: null, lon: null,
+  }));
+
+  // Admin's write bypass, same as its read bypass above — its own org_id is null, so sameOrg()
+  // alone would fail it closed on every garden regardless of which org it belongs to.
+  await assertSucceeds(updateDoc(doc(adminDb, 'gardens', 'garden-b'), { name: 'Garden B (admin edit)' }));
 });
 
 test('cross-org isolation matrix: production, sales and expense logs', async () => {
@@ -928,6 +943,14 @@ test('cross-org isolation matrix: production, sales and expense logs', async () 
     // than assumed.
     await assertFails(updateDoc(doc(staffADb, collectionName, rowB), { crop: 'hacked', item: 'hacked' }));
     await assertFails(deleteDoc(doc(mentorADb, collectionName, rowB)));
+
+    // sec-06 (2026-10-10 audit): create had no org_id check at all, so a farmer could stamp a
+    // brand-new row with ANOTHER org's id and pollute that org's mentor/NGO dashboards with a
+    // row that was never theirs to see. org_id is now pinned to the writer's own profile org.
+    const forged = { ...logData(FARMER_A, ORG_B, collectionName), profile_id: FARMER_A };
+    await assertFails(setDoc(doc(farmerADb, collectionName, `${FARMER_A}-forged-${collectionName}`), forged));
+    const honest = { ...logData(FARMER_A, ORG_A, collectionName), profile_id: FARMER_A };
+    await assertSucceeds(setDoc(doc(farmerADb, collectionName, `${FARMER_A}-honest-${collectionName}`), honest));
   }
 });
 

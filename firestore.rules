@@ -184,7 +184,10 @@ service cloud.firestore {
         (isMentor() && inMyOrg(resource.data)) ||
         exists(/databases/$(database)/documents/gardens/$(gid)/members/$(request.auth.uid))
       );
-      allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
+      // sec-02: isStaff() alone has no org term, so ANY provisioned ngo/funder/admin account, in
+      // ANY org, could edit or delete ANY other org's garden. Swapped for the same isAdmin() +
+      // sameOrg() pairing the read rule immediately above already uses.
+      allow write: if signedIn() && (isAdmin() || sameOrg(resource.data) || resource.data.supervisor_id == request.auth.uid);
 
       match /members/{pid} {
         // Scope to the parent garden — same-org staff, the supervisor, a mentor, the member
@@ -202,8 +205,14 @@ service cloud.firestore {
           (isMentor() && myOrg() != null && get(/databases/$(database)/documents/gardens/$(gid)).data.org_id == myOrg()) ||
           pid == request.auth.uid
         );
-        allow write: if signedIn() && (isStaff() ||
-          get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid);
+        // sec-02: same isStaff()-any-org gap as the parent garden's write rule above — any
+        // provisioned staff account could add/remove members of ANY org's garden. Scoped to the
+        // parent garden's own org (+ admin), matching this match block's own read rule above.
+        allow write: if signedIn() && (
+          isAdmin() ||
+          sameOrg(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
+          get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid
+        );
       }
     }
     // NOTE: the blanket `match /{path=**}/members/{pid}` recursive read was removed — it
@@ -212,8 +221,12 @@ service cloud.firestore {
 
     match /production_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'production') || (isMentor() && inMyOrg(resource.data));
+      // sec-06: org_id is pinned to the WRITER'S OWN org (never the client's choice) — without
+      // this, a farmer could stamp production rows with another org's id and pollute that org's
+      // mentor/NGO dashboards with rows that were never theirs to see.
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
@@ -234,8 +247,10 @@ service cloud.firestore {
 
     match /sales_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'sales') || (isMentor() && inMyOrg(resource.data));
+      // sec-06: org_id pinned to the writer's own org — see the note on production_logs above.
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && validProduceQuantity(request.resource.data)
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
@@ -258,8 +273,10 @@ service cloud.firestore {
 
     match /expense_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'expenses') || (isMentor() && inMyOrg(resource.data));
+      // sec-06: org_id pinned to the writer's own org — see the note on production_logs above.
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.item is string && request.resource.data.item.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
