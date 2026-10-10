@@ -2788,7 +2788,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9' }}>
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--color-canvas)' }}>
               <Check size={17} />
               <span style={{ fontSize: 11, marginTop: 3 }}>{t('editDoneButton')}</span>
             </button>
@@ -3276,7 +3276,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <button onClick={cancelDraw}
                 className="px-2 py-1 rounded-lg text-xs font-display transition-all"
-                style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
+                style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 44 }}>
                 <X size={13} className="inline mr-1" />{t('drawCancelButton')}
               </button>
             </>
@@ -3303,7 +3303,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   recompute();
                 }}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 32, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
+                style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 44, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
                 <Undo2 size={12} className="inline mr-1" />{t('nativeEditUndoButton')}
               </button>
               <button onClick={() => {
@@ -3312,19 +3312,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   openShapeNaming(editingFeatureId, type);
                 }}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: MAP_COLOR_BOUNDARY_FILL, minHeight: 32 }}>
+                style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: MAP_COLOR_BOUNDARY_FILL, minHeight: 44 }}>
                 <PenLine size={12} className="inline mr-1" />{t('nativeEditRenameButton')}
               </button>
               <button onClick={() => requestDelete(editingFeatureId)}
                 className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={pendingDelete === editingFeatureId
-                  ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
-                  : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
+                  ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 44 }
+                  : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 44 }}>
                 <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? t('nativeEditConfirmDeleteButton') : t('nativeEditDeleteButton')}
               </button>
               <button onClick={finishEditing}
                 className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.6)', color: '#F7F2E9', minHeight: 32 }}>
+                style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--color-canvas)', minHeight: 44 }}>
                 <Check size={12} className="inline mr-1" />{t('nativeEditSaveButton')}
               </button>
             </>

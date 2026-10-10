@@ -837,7 +837,22 @@ body.is-sample-mode .pwa-update-notifier {
 .chrome-handle:focus-visible { outline: 2px solid var(--ochre, #C07A1E); outline-offset: 1px; border-radius: 999px; }
 .chrome-handle:hover > span:last-child, .chrome-handle:active > span:last-child { background: rgba(11, 18, 11, 0.55); }
 
+/* a11y-13: the block below only ever covered the three named animations it was written for
+   (the sheet/dialog entrance and the crop-availability month chips) — every other animated or
+   transitioning element in the app (toasts, chart reveals, button presses, the hundred-odd
+   ad-hoc `transition:` declarations in component inline styles) had no reduced-motion fallback
+   at all. This is the global safety net: near-zero duration on everything, so motion settles
+   instantly rather than firing, while the targeted rules below still choose their own calmer
+   replacement (e.g. a fade instead of a slide) by winning on specificity over this universal
+   selector. scroll-behavior is reset too, so a reduced-motion user doesn't get a smooth-scroll
+   animation on top of an "instant" transition. */
 @media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
   .u-anim-sheet, .u-anim-sheet.u-anim-dialog { animation: u-fadeIn var(--dur-base) linear !important; }
   .crop-availability-month { transition: none; }
   .crop-availability-month:active { transform: none; }

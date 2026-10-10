@@ -19,11 +19,13 @@ function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; 
       aria-checked={on}
       aria-label={label}
       onClick={onClick}
+      className="u-tap-target"
       style={{
         width: 46, height: 28, borderRadius: 999, border: 'none', cursor: 'pointer', flexShrink: 0,
         background: on ? 'var(--emerald)' : 'var(--border)', position: 'relative',
         transition: 'background 0.15s ease', padding: 0,
-      }}
+        '--tap-inset': '-8px',
+      } as React.CSSProperties}
     >
       <span style={{
         position: 'absolute', top: 3, left: on ? 21 : 3, width: 22, height: 22, borderRadius: '50%',

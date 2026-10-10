@@ -844,7 +844,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         className={`${styles.toolbar} no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3`}
         style={{ background: 'var(--report-panel)', borderBottom: '1px solid var(--report-border)' }}
       >
-        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
+        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 min-h-11 rounded-lg transition-all flex-shrink-0"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
           {tr('Back', 'Emuva')}
         </button>
@@ -863,7 +863,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         {!isWide && (
           <button
             onClick={() => setPanelOpen((v) => !v)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all min-h-11 flex-shrink-0"
             style={panelOpen
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
               : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
@@ -881,7 +881,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={handleSaveReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium min-h-11 transition-all"
               style={saveFailed
                 ? { background: 'rgba(154,52,18,0.12)', border: '1px solid rgba(154,52,18,0.45)', color: '#9A3412' }
                 : justSaved
@@ -900,7 +900,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={exportPdf}
               disabled={pdfState === 'working'}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium min-h-11 transition-all"
               style={{
                 background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
                 border: '1px solid rgba(192,122,30,0.35)',
@@ -916,7 +916,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={shareReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium min-h-11 transition-all"
               style={{
                 background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
                 border: '1px solid rgba(35,94,134,0.3)',
@@ -937,7 +937,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <button
             onClick={generate}
             disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
-            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
+            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold min-h-11 transition-all"
             style={
               loading || selected.size === 0
                 ? { background: 'rgba(226,216,196,0.6)', color: 'var(--report-muted)', border: '1px solid var(--report-border)' }

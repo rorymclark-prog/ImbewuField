@@ -290,8 +290,8 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
           onClick={onClose}
           aria-label="Close"
           style={{
-            width: 38,
-            height: 38,
+            width: 44,
+            height: 44,
             borderRadius: 11,
             background: 'rgba(32,25,15,0.06)',
             border: '1px solid var(--border)',
