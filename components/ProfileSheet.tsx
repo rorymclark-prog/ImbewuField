@@ -560,7 +560,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               : isBusy
               ? 'rgba(32,25,15,0.1)'
               : '#1F4D2B',
-            color: isBusy && !savedFlash ? 'rgba(32,25,15,0.3)' : '#F7F2E9',
+            color: isBusy && !savedFlash ? 'rgba(32,25,15,0.3)' : 'var(--on-forest)',
             border: 'none',
             fontSize: 15,
             cursor: isBusy ? 'default' : 'pointer',

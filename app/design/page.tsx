@@ -124,7 +124,6 @@ import { resolveBaseLayers, type MapRefLayers } from '@/lib/base-layers';
 import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, {
-  type DesignMode,
   type PlantingSublayerVisibility,
   type WaterInfrastructureVisibility,
 } from '@/components/design/DesignPalette';
@@ -621,11 +620,6 @@ function DesignStudioInner() {
     }
   }, [hasSite, lat, lon]);
 
-  // The Studio now always exposes its tools. Guidance is an additional bottom-panel aid, not a
-  // mode that can hide working controls, so an old saved Pro/Guided preference cannot change
-  // what a farmer can reach on their next visit.
-  const designMode: DesignMode = 'guided';
-
   // Geometry Lock — off by default, but persisted when the farmer turns it on for testing.
   const [geometryLock, setGeometryLock] = useState(false);
   useEffect(() => {
@@ -1022,20 +1016,16 @@ function DesignStudioInner() {
     () => normaliseBedBlockSpec({ bedLengthM: 3, bedWidthM: 1.2, pathWidthM: 0.5, count: 4 }),
   );
   const [bedBlockArmed, setBedBlockArmed] = useState(false);
-  // Switching INTO guided restores every layer — a first-timer should never land in guided
-  // with a layer invisibly hidden. Layer toggles now exist in guided too, but this reset is
-  // still the safe default on mode switch.
+  // On mount, restore every layer — a first-timer should never land in the Studio with a layer
+  // invisibly hidden.
   //
   // `boundary` is preserved rather than reset, alongside contours and sector. What the reset
   // protects against is an ELEMENT layer being off: those also filter the palette, so a hidden
   // one takes the farmer's tools away and leaves them hunting. The fence is a pure reference
-  // overlay with no palette effect, so turning it off is a deliberate presentation choice —
-  // and switching modes putting it back is just the fence returning uninvited.
+  // overlay with no palette effect, so turning it off is a deliberate presentation choice.
   useEffect(() => {
-    if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, references: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
-    }
-  }, [designMode]);
+    setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, references: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
+  }, []);
 
   // Item edit sheet — the item currently being edited via DesignCanvas's onEditItem.
   const [editItemId, setEditItemId] = useState<string | null>(null);
@@ -3318,7 +3308,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               boundary: refLayers.boundary.length > 2,
               house: refLayers.house.length > 2,
             }}
-            mode={designMode}
           />
         </div>
       )}
@@ -3959,7 +3948,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             step={canvasState.step}
             state={canvasState}
             ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
-            mode={designMode}
             onArm={armSubStep}
             monthlyRainfallMm={locationData?.rainfall?.monthly}
             onDailyWaterUseLChange={(dailyWaterUseL) => {
@@ -4137,7 +4125,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           onBottomStopChange={setBottomStop}
           hiddenSections={simple ? undefined : { count: dismissed.length, onRestore: showAllSections }}
           step={canvasState.step}
-          mode={designMode}
           tool={tool}
           setTool={handleSetTool}
           placeDefId={placeDefId}

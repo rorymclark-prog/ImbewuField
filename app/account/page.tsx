@@ -318,7 +318,7 @@ export default function AccountPage() {
               <div className="flex gap-2 pt-1">
                 <button onClick={saveProfile} disabled={saving} aria-busy={saving}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
+                  style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
                   <Check size={14} />{saving ? copy('Saving...', 'Kuyalondolozwa...') : copy('Save', 'Londoloza')}
                 </button>
                 <button onClick={() => setEditing(false)} disabled={saving}
@@ -408,7 +408,7 @@ export default function AccountPage() {
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                      style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
                       <Lock size={13} />{pwSaving ? copy('Updating...', 'Kuyabuyekezwa...') : copy('Update password', 'Buyekeza iphasiwedi')}
                     </button>
                     <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}

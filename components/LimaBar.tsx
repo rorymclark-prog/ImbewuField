@@ -76,7 +76,7 @@ export default function LimaBar({ chatHref = '/farmer?chat=1' }: LimaBarProps) {
             style={{
               minHeight: 46, borderRadius: 12, textDecoration: 'none',
               background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
-              color: '#F7F2E9', fontSize: 15, fontWeight: 700,
+              color: 'var(--on-forest)', fontSize: 15, fontWeight: 700,
               boxShadow: '0 2px 8px rgba(31,77,43,0.22)',
             }}
           >

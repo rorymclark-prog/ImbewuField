@@ -58,6 +58,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [App-wide audit close-out: all 92 findings dispositioned — 10 October 2026](2026-10-10/app-wide-closeout-claude.md).
+
 - [Reading titles and least-intensive action — 8 October 2026](2026-10-08/study-reading-title-lightest-codex.md).
 
 - [Market residual ordinary prose and precise cost terms — 6 October 2026](2026-10-06/study-market-ordinary-residual-codex.md).

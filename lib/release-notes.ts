@@ -42,6 +42,20 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: '142a5988', changes: [
+    'Site report climate and rainfall words now follow your language as they are translated.',
+    'Buttons and text on dark green look the same in every colour theme.',
+  ], tour: [{
+    title: 'Read your site report',
+    where: 'Farm → Site report',
+    detail: 'The climate and rainfall notes at the bottom of the report now switch with your language.',
+    href: '/farmer',
+  }, {
+    title: 'Try a colour theme',
+    where: 'Home → Settings',
+    detail: 'Light text on the green buttons now changes with the theme instead of staying fixed.',
+    href: '/home',
+  }] },
   { when: '9 October 2026', sha: 'a964c86e', changes: [
     'More Study due dates and unlock messages show unreviewed regional drafts.',
     'Two isiZulu safety cards pair corrected draft wording with exact English.',

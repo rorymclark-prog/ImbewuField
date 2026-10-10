@@ -577,6 +577,56 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
 };
 
 /*
+ * The printed/exported site report's climate footnote (components/ReportView.tsx, around the
+ * "Köppen climate class" line) interpolates values straight out of lib/koppen-global.ts and
+ * lib/nasa-power.ts — a fixed, small set of English strings — so a non-English report showed
+ * this jargon in English regardless of the report's own language setting. Each DESCRIPTIONS
+ * entry in lib/koppen-global.ts is keyed here by its Köppen code (reportKoppenDesc + code) so
+ * ReportView can look a translation up without duplicating the description text; the three
+ * rainfall-pattern words and the two non-range season labels (lib/nasa-power.ts) get their own
+ * keys. Month-range seasons (e.g. "Oct–Mar") are NOT duplicated here — ReportView builds those
+ * from the existing surveyMonth* keys already translated for isiZulu.
+ */
+export const REPORT_FOOTNOTE_ENGLISH_PENDING: Dict = {
+  reportKoppenDescAf: 'Tropical rainforest',
+  reportKoppenDescAm: 'Tropical monsoon',
+  reportKoppenDescAw: 'Tropical savanna, dry winter',
+  reportKoppenDescAs: 'Tropical savanna, dry summer',
+  reportKoppenDescBWh: 'Hot desert',
+  reportKoppenDescBWk: 'Cold desert',
+  reportKoppenDescBSh: 'Hot semi-arid steppe',
+  reportKoppenDescBSk: 'Cold semi-arid steppe',
+  reportKoppenDescCfa: 'Humid subtropical',
+  reportKoppenDescCfb: 'Temperate oceanic',
+  reportKoppenDescCfc: 'Subpolar oceanic',
+  reportKoppenDescCsa: 'Mediterranean, hot summer',
+  reportKoppenDescCsb: 'Mediterranean, warm summer',
+  reportKoppenDescCsc: 'Mediterranean, cold summer',
+  reportKoppenDescCwa: 'Humid subtropical, dry winter',
+  reportKoppenDescCwb: 'Subtropical highland, dry winter',
+  reportKoppenDescCwc: 'Subtropical highland, short summer',
+  reportKoppenDescDfa: 'Cold, no dry season, hot summer',
+  reportKoppenDescDfb: 'Cold, no dry season, warm summer',
+  reportKoppenDescDfc: 'Subarctic',
+  reportKoppenDescDfd: 'Extremely cold subarctic',
+  reportKoppenDescDwa: 'Cold, dry winter, hot summer',
+  reportKoppenDescDwb: 'Cold, dry winter, warm summer',
+  reportKoppenDescDwc: 'Subarctic, dry winter',
+  reportKoppenDescDwd: 'Extremely cold, dry winter',
+  reportKoppenDescDsa: 'Cold, dry summer, hot summer',
+  reportKoppenDescDsb: 'Cold, dry summer, warm summer',
+  reportKoppenDescDsc: 'Subarctic, dry summer',
+  reportKoppenDescDsd: 'Extremely cold, dry summer',
+  reportKoppenDescET: 'Tundra',
+  reportKoppenDescEF: 'Ice cap',
+  reportRainfallPatternSummer: 'summer',
+  reportRainfallPatternWinter: 'winter',
+  reportRainfallPatternYearRound: 'year-round',
+  reportSeasonYearRound: 'year-round',
+  reportSeasonNone: 'none',
+};
+
+/*
  * Mentor-facing chrome for components/FieldTeams.tsx, components/MemberAccessPreview.tsx and
  * components/PeoplePanel.tsx — all three already read `lang`/`useLanguage()` but rendered their
  * on-screen text as literal English (FieldTeams.tsx also carries a `ui(en, zu)` helper with real

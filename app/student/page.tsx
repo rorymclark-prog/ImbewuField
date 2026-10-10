@@ -785,7 +785,7 @@ export default function StudentPage() {
             <button
               onClick={() => router.push('/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: '#1F4D2B', color: '#F7F2E9' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
             >
               <Home size={15} />
               {t('studentBackHome')}
@@ -1394,7 +1394,7 @@ export default function StudentPage() {
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: '#1F4D2B', color: '#F7F2E9', textDecoration: 'none' }}>
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none' }}>
               {t('studentOpenDesignStudio')}
             </Link>
           )}
