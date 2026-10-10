@@ -215,6 +215,46 @@ test('contact form and inbox replies bound their writes with withWriteTimeout', 
     'marking the original message replied must also go through withWriteTimeout');
 });
 
+test('a failed consent read shows an error with retry instead of every sharing toggle reading as OFF', () => {
+  const panel = source('../components/ConsentPanel.tsx');
+  // bug-06: getMyConsent().catch(() => setLoading(false)) left `consent` at its initial null,
+  // and hasConsent(null, id) is false for every scope — a read failure rendered identically to a
+  // farmer who had deliberately switched everything off.
+  assert.match(panel, /const \[loadError, setLoadError\] = useState/,
+    'a failed consent read must be tracked separately from "nothing is shared"');
+  assert.match(panel, /\.catch\(\(\) => \{ setLoadError\(true\); setLoading\(false\); \}\)/,
+    'the initial read must flip loadError on rejection, not just stop the spinner');
+  assert.match(panel, /\) : loadError \? \(/, 'a load failure must branch before the toggle list renders');
+  // The toggle list (CONSENT_SCOPES.map) must sit in the branch AFTER the loadError check, not
+  // render unconditionally alongside it.
+  const loadErrorBranch = panel.indexOf(') : loadError ? (');
+  const toggleList = panel.indexOf('CONSENT_SCOPES.map(');
+  assert.ok(loadErrorBranch > 0 && toggleList > loadErrorBranch,
+    'the toggle list must be reached only once the loadError branch has been ruled out');
+});
+
+test('saving the account profile cannot hang on "Saving…" forever, and a failed avatar upload is shown', () => {
+  const page = source('../app/account/page.tsx');
+  // bug-07: saveProfile had no try/catch at all, so a rejected updateMyProfile() left `saving`
+  // stuck true forever (the button frozen on its loading label) with nothing explaining why.
+  const saveStart = page.indexOf('async function saveProfile(');
+  const saveEnd = page.indexOf('\n  }\n', saveStart);
+  const saveBody = page.slice(saveStart, saveEnd);
+  assert.match(saveBody, /catch \(err\) \{/, 'saveProfile must catch a failed write');
+  assert.match(saveBody, /setProfileError\(/, 'a failed profile save must be tracked in its own error state');
+  assert.match(saveBody, /\} finally \{\s*\n\s*setSaving\(false\);/, 'setSaving(false) must run even when the save throws');
+
+  // bug-07: handlePhotoChange already had try/finally, but no catch — an avatar upload failure
+  // was swallowed silently, unlike the logo upload right below it which already showed one.
+  const photoStart = page.indexOf('async function handlePhotoChange(');
+  const photoEnd = page.indexOf('\n  }\n', photoStart);
+  const photoBody = page.slice(photoStart, photoEnd);
+  assert.match(photoBody, /catch \(err\) \{/, 'handlePhotoChange must catch a failed avatar upload');
+  assert.match(photoBody, /setPhotoError\(/, 'a failed avatar upload must be tracked in its own error state');
+  assert.match(page, /\{photoError && \(/, 'a failed avatar upload must render a visible message');
+  assert.match(page, /\{profileError && \(/, 'a failed profile save must render a visible message');
+});
+
 test('a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero', () => {
   const dashboard = source('../components/NgoDashboard.tsx');
   assert.match(dashboard, /const \[gardenerError, setGardenerError\] = useState/,
