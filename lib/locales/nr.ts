@@ -1,12 +1,15 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   tagline: 'Ubuhlakani be-Permaculture',
   welcomeTitle: 'Wamukelekile ku-ImbewuField',

@@ -43,6 +43,114 @@ export const LIMA_ENGLISH_PENDING: Dict = {
   limaPhotoButton: 'Photo',
 };
 
+/*
+ * The Ask tab's chat panel (components/ChatPanel.tsx) — wave 11, lang-01. The panel was entirely
+ * hard-coded English, including a developer test button ("Load Ubhejane farm data") that writes
+ * demo records straight to a real farmer's device. That button now only renders in sample mode
+ * (components/ChatPanel.tsx checks isSampleMode() from lib/sample-mode); it keeps its English-only
+ * copy since it is a tester tool, never shown to a farmer. Everything else here is genuinely
+ * farmer-facing and gets the same explicit-gap treatment as the blocks above.
+ */
+export const CHAT_PANEL_ENGLISH_PENDING: Dict = {
+  chatGreeting: "Hi — I'm Lima.",
+  chatIntro: 'Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.',
+  chatSampleDataLoaded: 'Ubhejane farm data loaded — tap to clear',
+  chatSampleDataLoad: 'Load Ubhejane farm data (to test finance questions)',
+  chatSuggestionPlant: 'What should I plant on my site this season?',
+  chatSuggestionBestCrop: 'Which of my crops makes the most money per kg?',
+  chatSuggestionContract: 'What are my contract obligations and am I on track?',
+  chatSuggestionPest: 'Natural ways to deal with pests & disease?',
+  chatSuggestionWater: 'How do I harvest and store rainwater here?',
+  chatPhotoAttached: 'Photo attached',
+  chatRemovePhoto: 'remove',
+  chatTakePhotoTitle: 'Take / attach a photo',
+  chatInputPlaceholder: 'Ask Lima anything...',
+  chatThinking: 'Thinking…',
+  chatDefaultPhotoQuestion: 'Please diagnose this photo.',
+  chatErrorMessage: 'Sorry, something went wrong. Please try again.',
+  chatPhotoOpenError: 'This photo could not be opened. Please try another photo or a JPEG image.',
+  chatZuluDraftNotice: 'The isiZulu wording in Lima chat is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
+/*
+ * The Photos tab (components/PhotoUpload.tsx) — wave 11, lang-02. Was entirely hard-coded
+ * English, named the model "Claude Vision" instead of Lima, said "click" instead of "tap", and
+ * showed raw server/JS error text (a bare `Server error ${res.status}`, `err.message`) straight
+ * to the farmer. Decode failures keep a {file} placeholder so the farmer still knows which photo
+ * failed; everything the farmer would see goes through a translated key instead of the thrown
+ * Error's own message.
+ */
+export const PHOTO_UPLOAD_ENGLISH_PENDING: Dict = {
+  photoAnalysisHeading: 'Site photo analysis',
+  photoSatelliteViewTitle: 'Current satellite view',
+  photoSatelliteViewDesc: 'Captured from map — Lima will analyse what it sees',
+  photoAnalysingEllipsis: 'Analysing...',
+  photoAnalyseButton: 'Analyse',
+  photoAnalysingImagery: 'Lima is analysing the imagery...',
+  photoSendingToLima: 'Sending to Lima...',
+  photoReadsDesc: 'Reads vegetation, water, terrain & assets · ~15–30s',
+  photoDropOrTap: 'Drop site photos here or tap to add a photo',
+  photoUpToFive: 'Up to 5 photos · soil, vegetation, terrain, structures',
+  photoAnalysePhotosSingular: 'Analyse 1 photo',
+  photoAnalysePhotosPlural: 'Analyse {count} photos',
+  photoAnalysingPhotosButton: 'Analysing photos...',
+  photoClearButton: 'Clear',
+  photoSelectLocationFirst: 'Select a location on the map first',
+  photoAddedToReportPrefix: 'Added to your report — tap',
+  photoAddedToReportSuffix: 'above',
+  photoErrorUnreadable: 'Could not read {file}',
+  photoErrorUndecodable: '{file} could not be decoded — try JPEG or PNG',
+  photoErrorZeroDimensions: '{file} has zero dimensions',
+  photoErrorBlankHeic: '{file} appears blank after resize — try a JPEG or PNG instead of HEIC',
+  photoErrorGeneric: 'Photo {n} failed',
+  photoErrorBlankOrDark: 'Lima could not read the photo — it appears blank or very dark. Retake in good light or convert to JPEG/PNG first.',
+  photoErrorAnalysisFailed: 'Something went wrong analysing your photo. Please check your connection and try again.',
+  photoZuluDraftNotice: 'The isiZulu wording in Photos is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
+/*
+ * The farmer's own profile sheet (components/ProfileSheet.tsx) — wave 11, lang-06. Was entirely
+ * hard-coded English. The location-sharing switch is translated first and gets a plain-language
+ * explanation it did not have before (it only had a bare label) — it is the one control here that
+ * tells other people in the programme where the farmer's land is.
+ */
+export const PROFILE_SHEET_ENGLISH_PENDING: Dict = {
+  profileZuluDraftNotice: 'The isiZulu wording in your profile is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+  profileShowOnMapLabel: 'Show my location on the project map',
+  profileShowOnMapExplanation: 'Other people in your programme — mentors, NGO staff and other farmers — can see a pin at your farm on the shared map. You can turn this off again at any time.',
+  profileTitle: 'Your profile',
+  profileClose: 'Close',
+  profilePhotoAlt: 'Profile photo',
+  profileChangePhoto: 'Change photo',
+  profileFullNameLabel: 'Full name',
+  profileFullNamePlaceholder: 'Your name',
+  profileRoleLabel: 'Role',
+  profileRoleSetByAdmin: 'Roles are set by your programme admin',
+  profileRoleFarmer: 'Farmer',
+  profileRoleMentor: 'Mentor',
+  profileRoleStudent: 'Student',
+  profileRoleNgo: 'NGO Staff',
+  profileRoleFunder: 'Funder',
+  profileRoleAdmin: 'Admin',
+  profileAboutYouLabel: 'About you',
+  profileBioCharsLeft: '{n} left',
+  profileBioPlaceholder: 'A short introduction — your background, what you grow, what you love about permaculture…',
+  profileSkillsLabel: 'Skills & interests',
+  profileSkillSoilHealth: 'soil health',
+  profileSkillWaterHarvesting: 'water harvesting',
+  profileSkillAgroforestry: 'agroforestry',
+  profileSkillLivestock: 'livestock',
+  profileSkillComposting: 'composting',
+  profileSkillFoodForest: 'food forest',
+  profileSkillMarketGardening: 'market gardening',
+  profileSkillSeedSaving: 'seed saving',
+  profileMapVisibilityLabel: 'Map visibility',
+  profileLocationWillBePlaced: 'Your location will be placed at the current map view centre when you save.',
+  profilePanMapFirst: 'Pan the map to where you want to appear, then return here to save.',
+  profileSaveButton: 'Save',
+  profileSavedFlash: 'Saved!',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',

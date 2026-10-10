@@ -1,12 +1,15 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   // FieldTeams.tsx's own unreviewed isiZulu drafts, carried over from its old inline `ui(en, zu)`
   // helper into real per-key overrides now that the component reads these through t(). English is
@@ -2012,6 +2015,94 @@ const dict: Dict = {
   surveyHddsSugarsHoney: "Ushukela noju",
   surveyHddsSpicesBeverages: "Izinongo neziphuzo",
   surveyZuluDraftNotice: "ISIZULU DRAFT — This survey’s isiZulu wording has not been reviewed. If anything is unclear, switch to English before saving your answers. / IsiZulu sisaluhlaka — Umbhalo wesiZulu wale nhlolovo uwuhlaka olungakabuyekezwa yisikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni. Uma kukhona okungacacile, shintshela esiNgisini ngaphambi kokugcina izimpendulo.",
+
+  // Ask tab chat panel (components/ChatPanel.tsx) — wave 11, lang-01. Unreviewed isiZulu drafts,
+  // overriding the English spread from CHAT_PANEL_ENGLISH_PENDING above, the same direct-override
+  // pattern as mentorZuluDraftNotice. One banner (chatZuluDraftNotice) marks the whole panel as an
+  // unreviewed draft, the same single-notice pattern app/student/page.tsx uses for lesson text,
+  // rather than pairing every short suggestion/button individually.
+  chatZuluDraftNotice: "Umbhalo wesiZulu ku-Lima chat uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  chatGreeting: "Sawubona — ngiyi-Lima.",
+  chatIntro: "Buza ngesayithi sakho, izitshalo, inhlabathi namanzi, izimali, noma iphrojekthi yakho. Thinta ikhamera ukuthwebula isithombe sesitshalo noma isinambuzane ukuthola ukuxilongwa. Okwemvelo nokuvuselela kuphela.",
+  chatSuggestionPlant: "Yini engifanele ngiyitshale endaweni yami ngesikhathi esizayo?",
+  chatSuggestionBestCrop: "Yisiphi isitshalo sami esenza imali eningi ngekhilogremu?",
+  chatSuggestionContract: "Yiziphi izibopho zami zesivumelwano futhi ngikulandela yini?",
+  chatSuggestionPest: "Yiziphi izindlela zemvelo zokubhekana nezinambuzane nezifo?",
+  chatSuggestionWater: "Ngivuna futhi ngigcina kanjani amanzi emvula la?",
+  chatPhotoAttached: "Isithombe sinamathiselwe",
+  chatRemovePhoto: "susa",
+  chatTakePhotoTitle: "Thatha / namathisela isithombe",
+  chatInputPlaceholder: "Buza u-Lima noma yini...",
+  chatThinking: "Ucabanga…",
+  chatDefaultPhotoQuestion: "Ngicela uxilonge lesi sithombe.",
+  chatErrorMessage: "Uxolo, kukhona okungahambi kahle. Sicela uzame futhi.",
+  chatPhotoOpenError: "Lesi sithombe asikwazi kuvulwa. Sicela uzame esinye isithombe noma isithombe se-JPEG.",
+
+  // Photos tab (components/PhotoUpload.tsx) — wave 11, lang-02. Unreviewed isiZulu drafts,
+  // direct overrides of the English spread from PHOTO_UPLOAD_ENGLISH_PENDING above.
+  photoZuluDraftNotice: "Umbhalo wesiZulu ku-Photos uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  photoAnalysisHeading: "Ukuhlaziywa kwesithombe sesayithi",
+  photoSatelliteViewTitle: "Okubonwa ngesathelayithi njengamanje",
+  photoSatelliteViewDesc: "Kuthwetshulwe kusuka ebalazweni — u-Lima uzohlaziya lokho akubonayo",
+  photoAnalysingEllipsis: "Kuhlaziywa...",
+  photoAnalyseButton: "Hlaziya",
+  photoAnalysingImagery: "U-Lima uhlaziya izithombe...",
+  photoSendingToLima: "Kuthunyelwa ku-Lima...",
+  photoReadsDesc: "Ifunda izitshalo, amanzi, umhlaba nezinto zokusetshenziswa · ~15–30s",
+  photoDropOrTap: "Faka izithombe zesayithi lapha noma thinta ukufaka isithombe",
+  photoUpToFive: "Kuze kube izithombe 5 · inhlabathi, izitshalo, umhlaba, izakhiwo",
+  photoAnalysePhotosSingular: "Hlaziya isithombe 1",
+  photoAnalysePhotosPlural: "Hlaziya izithombe {count}",
+  photoAnalysingPhotosButton: "Kuhlaziywa izithombe...",
+  photoClearButton: "Sula",
+  photoSelectLocationFirst: "Khetha indawo ebalazweni kuqala",
+  photoAddedToReportPrefix: "Kungezwe embikweni wakho — thinta",
+  photoAddedToReportSuffix: "ngenhla",
+  photoErrorUnreadable: "Ayikwazi kufundwa {file}",
+  photoErrorUndecodable: "{file} ayikwazi ukuhlukaniswa — zama i-JPEG noma i-PNG",
+  photoErrorZeroDimensions: "{file} inobubanzi obuyizero",
+  photoErrorBlankHeic: "{file} ibonakala ingenalutho ngemva kokulinganiswa kabusha — zama i-JPEG noma i-PNG esikhundleni se-HEIC",
+  photoErrorGeneric: "Isithombe {n} sehlulekile",
+  photoErrorBlankOrDark: "U-Lima akakwazi kufunda isithombe — sibonakala singenalutho noma simnyama kakhulu. Thatha kabusha ekukhanyeni okuhle noma uguqule kube i-JPEG/PNG kuqala.",
+  photoErrorAnalysisFailed: "Kukhona okungahambi kahle ngesikhathi kuhlaziywa isithombe sakho. Sicela uhlole ukuxhuma kwakho bese uzama futhi.",
+
+  // The farmer's own profile sheet (components/ProfileSheet.tsx) — wave 11, lang-06. Unreviewed
+  // isiZulu drafts, direct overrides of the English spread from PROFILE_SHEET_ENGLISH_PENDING
+  // above. The location-sharing switch's label and explanation are translated first.
+  profileZuluDraftNotice: "Umbhalo wesiZulu kuphrofayela yakho uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  profileShowOnMapLabel: "Bonisa indawo yami ebalazweni lephrojekthi",
+  profileShowOnMapExplanation: "Abantu abanye ohlelweni lwakho — abeluleki, abasebenzi be-NGO nabanye abalimi — bazobona uphini epulazini lakho ebalazweni elabiwayo. Ungakuvala futhi noma nini.",
+  profileTitle: "Iphrofayela yakho",
+  profileClose: "Vala",
+  profilePhotoAlt: "Isithombe sephrofayela",
+  profileChangePhoto: "Shintsha isithombe",
+  profileFullNameLabel: "Igama eliphelele",
+  profileFullNamePlaceholder: "Igama lakho",
+  profileRoleLabel: "Indima",
+  profileRoleSetByAdmin: "Izindima zisethwa umqondisi wohlelo lwakho",
+  profileRoleFarmer: "Umlimi",
+  profileRoleMentor: "Umeluleki",
+  profileRoleStudent: "Umfundi",
+  profileRoleNgo: "Isisebenzi se-NGO",
+  profileRoleFunder: "Umxhasi",
+  profileRoleAdmin: "Umqondisi",
+  profileAboutYouLabel: "Mayelana nawe",
+  profileBioCharsLeft: "{n} eziseleyo",
+  profileBioPlaceholder: "Isingeniso esifushane — umlando wakho, okukhulisayo, nalokho okuthandayo ngokulima okuvuselelayo…",
+  profileSkillsLabel: "Amakhono nezithakazelo",
+  profileSkillSoilHealth: "impilo yomhlabathi",
+  profileSkillWaterHarvesting: "ukuvuna amanzi",
+  profileSkillAgroforestry: "ukulima nezihlahla ndawonye",
+  profileSkillLivestock: "izinkomo nemfuyo",
+  profileSkillComposting: "ukwenza umquba",
+  profileSkillFoodForest: "ihlathi lokudla",
+  profileSkillMarketGardening: "ukulima okuthengiswayo",
+  profileSkillSeedSaving: "ukugcina imbewu",
+  profileMapVisibilityLabel: "Ukubonakala ebalazweni",
+  profileLocationWillBePlaced: "Indawo yakho izobekwa phakathi nendawo ebonakala ebalazweni lamanje uma ugcina.",
+  profilePanMapFirst: "Hambisa ibalazwe lifike lapho ufuna ukubonakala khona, bese ubuyela lapha ukugcina.",
+  profileSaveButton: "Gcina",
+  profileSavedFlash: "Kugciniwe!",
 };
 
 export default dict;
