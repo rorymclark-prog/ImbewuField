@@ -345,7 +345,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ...result, engine: 'claude' });
   } catch (err) {
     console.error('design-detect error:', err);
-    const message = err instanceof Error ? err.message : 'Auto-detect failed — please try again.';
-    return NextResponse.json({ error: message }, { status: 502 });
+    return NextResponse.json({ error: 'Could not analyse this image — please try again.' }, { status: 502 });
   }
 }

@@ -251,8 +251,8 @@ export async function POST(req: NextRequest) {
           }
         }
       } catch (err) {
-        const msg = err instanceof Error ? err.message : String(err);
-        controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
+        console.error('[api/chat] stream error:', err);
+        controller.enqueue(new TextEncoder().encode('\n\n⚠ Something went wrong — please try again.'));
       } finally {
         controller.close();
         // Usage is priced, logged and added to the person's allowance by lib/metered-ai.ts.
