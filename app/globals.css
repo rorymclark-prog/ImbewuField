@@ -299,6 +299,12 @@ html[data-theme="earth"] {
   --gradient-from: #3A7518;
   --gradient-mid: #5CA030;
   --gradient-to: #9E5C08;
+
+  /* a11y-01: text inputs hardcoded a literal #fff background against the themed
+     --text-primary colour, so typed text went pale-on-white once dark mode made
+     --text-primary light. #FFFFFF here keeps earth light pixel-identical to the
+     old hardcoded value. */
+  --input-bg: #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -366,6 +372,10 @@ html[data-theme="earth"].dark {
   --gradient-from: #A8E860;
   --gradient-mid: #82C844;
   --gradient-to: #D8A840;
+
+  /* One step lighter than --bg-1 so a text input reads as its own control inside
+     a --bg-1 sheet/panel, instead of disappearing into it. */
+  --input-bg: #22190E;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -430,6 +440,8 @@ html[data-theme="slate"] {
   --gradient-from: #0D6B52;
   --gradient-mid: #199870;
   --gradient-to: #AA5C08;
+
+  --input-bg: #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -497,6 +509,8 @@ html[data-theme="slate"].dark {
   --gradient-from: #50CCA0;
   --gradient-mid: #18A878;
   --gradient-to: #E8A030;
+
+  --input-bg: #1A2540;
 }
 
 /* ═══════════════════════════════════════════════════════

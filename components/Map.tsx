@@ -4045,7 +4045,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
                 placeholder={t('savePlaceNamePlaceholder')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('savePlaceLabelHeader')}</div>
               <div className="grid grid-cols-4 gap-2 mb-3">
                 {PLACE_LABELS.map((l) => {
@@ -4109,7 +4109,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <input value={shapeName} onChange={(e) => setShapeName(e.target.value)} autoFocus
                 placeholder={t(shapeNaming.type === 'water' ? 'shapeNamingPlaceholderWater' : 'shapeNamingPlaceholderLand')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('shapeNamingCategoryHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {SHAPE_CATEGORIES[shapeNaming.type].map((c) => {
@@ -4174,7 +4174,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <input value={wpName} onChange={(e) => setWpName(e.target.value)} autoFocus
                 placeholder={t('waterPointNamingPlaceholder')}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('waterPointNamingTypeHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
                 {WATER_POINT_CATEGORIES.map((c) => {
@@ -4233,7 +4233,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <input value={elName} onChange={(e) => setElName(e.target.value)} autoFocus
                 placeholder={`e.g. ${getElementMeta(elementEditing.type).label}`}
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
 
               {elementEditing.type === 'jojo_tank' && (
                 <div className="mb-3">
@@ -4241,13 +4241,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     {TANK_SIZE_OPTIONS_L.map((l) => (
                       <button key={l} type="button" onClick={() => { setElLitres(l); setElTankCustomOpen(false); }}
                         className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                        style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        style={elLitres === l ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                         {numberLabel(l)} L
                       </button>
                     ))}
                     <button type="button" onClick={() => setElTankCustomOpen((o) => !o)}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                      style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                      style={elTankCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       Custom
                     </button>
                   </div>
@@ -4256,7 +4256,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       onChange={(e) => setElLitres(Math.max(0, parseInt(e.target.value, 10) || 0))}
                       placeholder="litres" autoFocus
                       className="w-full font-sans rounded-xl px-3 py-2 outline-none"
-                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                      style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                 </div>
               )}
@@ -4267,13 +4267,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     {TREE_SPECIES_OPTIONS.map((s) => (
                       <button key={s} type="button" onClick={() => { setElSpecies(s); setElTreeCustomOpen(false); }}
                         className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                        style={elSpecies === s ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                        style={elSpecies === s ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                         {s}
                       </button>
                     ))}
                     <button type="button" onClick={() => { setElTreeCustomOpen((o) => !o); setElSpecies(''); }}
                       className="px-3 py-1.5 rounded-full font-sans font-semibold"
-                      style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                      style={elTreeCustomOpen ? { fontSize: 13, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#fff', cursor: 'pointer' } : { fontSize: 13, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       Other
                     </button>
                   </div>
@@ -4281,7 +4281,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <input type="text" value={elSpecies} onChange={(e) => setElSpecies(e.target.value)}
                       placeholder="species name" autoFocus
                       className="w-full font-sans rounded-xl px-3 py-2 outline-none mb-1.5"
-                      style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                      style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                   <div className="flex items-center justify-between px-0.5">
                     <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>how many</span>
@@ -4311,7 +4311,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <input value={elNote} onChange={(e) => setElNote(e.target.value)}
                 placeholder="Note — e.g. leaking, needs new tap"
                 className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
-                style={{ fontSize: 15, background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="flex gap-2">
                 <button onClick={() => requestDeleteElement(elementEditing.id)}
                   className="px-4 py-2.5 rounded-xl font-sans font-semibold" style={pendingDeleteElement === elementEditing.id

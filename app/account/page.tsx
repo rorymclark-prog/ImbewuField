@@ -243,7 +243,7 @@ export default function AccountPage() {
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               </label>
 
               <label className="block">
@@ -252,7 +252,7 @@ export default function AccountPage() {
                   placeholder="+27 ..."
                   type="tel"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               </label>
 
               {/* The trading name the buyer knows — it HEADS every invoice, and the person's
@@ -264,7 +264,7 @@ export default function AccountPage() {
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
                 </div>
@@ -277,7 +277,7 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
-                    style={{ width: 56, height: 56, background: '#fff', border: '1px solid #D8CBB2' }}>
+                    style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid #D8CBB2' }}>
                     {profile?.farm_logo
                       /* eslint-disable-next-line @next/next/no-img-element -- farmer-supplied data URL */
                       ? <img src={profile.farm_logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -287,7 +287,7 @@ export default function AccountPage() {
                     <div className="flex gap-1.5 flex-wrap">
                       <button type="button" onClick={() => logoInputRef.current?.click()} disabled={logoUploading}
                         className="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
-                        style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--color-forest-800)', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
+                        style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--color-forest-800)', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
                         {logoUploading ? copy('Adding…', 'Iyengezwa…') : profile?.farm_logo ? copy('Replace', 'Faka olunye') : copy('Add a logo', 'Faka uphawu')}
                       </button>
                       {profile?.farm_logo && !logoUploading && (
@@ -310,7 +310,7 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 appearance-none"
-                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}>
+                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}>
                   {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
                 </select>
               </label>
@@ -393,7 +393,7 @@ export default function AccountPage() {
                         value={pwForm[field]}
                         onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
                         className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 pr-10"
-                        style={{ background: '#fff', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                        style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                       {field === 'current' && (
                         <button type="button" onClick={() => setShowPw((s) => !s)}
                           aria-label={showPw ? copy('Hide passwords', 'Fihla amaphasiwedi') : copy('Show passwords', 'Bonisa amaphasiwedi')}

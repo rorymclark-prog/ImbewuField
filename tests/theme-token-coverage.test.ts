@@ -42,7 +42,7 @@ const MUST_BE_THEME_AWARE = [
   '--text-primary', '--text-secondary', '--text-muted',
   '--color-forest-800', '--color-forest-700', '--color-muted',
   '--gold', '--gold-dim', '--blue', '--emerald', '--orange', '--teal', '--violet',
-  '--color-sage-100',
+  '--color-sage-100', '--input-bg',
 ];
 
 /** Tokens that are `:root`-only by design. Naming them here is the warning, not an exemption. */
