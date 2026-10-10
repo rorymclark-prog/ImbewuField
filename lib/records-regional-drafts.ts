@@ -113,3 +113,19 @@ export function recordsDraftNotice(lang: RecordsRegionalLang): string {
   const provisional = lang === 'ts' ? ' (provisional standard written Xitsonga)' : '';
   return `Unreviewed ${LANGUAGE_NAMES[lang]} machine draft${provisional}. English source is shown beside instructions; text not yet drafted stays in English.`;
 }
+
+/**
+ * Text for a tooltip or accessible name, where there is no room for a second paragraph.
+ * isiZulu keeps its existing pattern (its own wording, then "English source: …"); a regional
+ * language shows the English first and the draft after it, and plain English when there is no draft.
+ */
+export function recordsLabel(lang: string, englishTemplate: string, isiZuluTemplate: string | null, vars: Record<string, string | number> = {}): string {
+  const english = fillRecordsTemplate(englishTemplate, vars);
+  if (lang === 'zu') {
+    return isiZuluTemplate && samePlaceholders(englishTemplate, isiZuluTemplate)
+      ? `${fillRecordsTemplate(isiZuluTemplate, vars)} English source: ${english}`
+      : english;
+  }
+  const local = recordsTemplate(lang, englishTemplate, null, vars);
+  return local !== english ? `${english} — ${local}` : english;
+}

@@ -42,6 +42,15 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: '788daf2', changes: [
+    'Records → Charts adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Harvest rows no longer cut off the line "Harvested · Sold" on narrow phones.',
+  ], tour: [
+    { title: 'Compare Charts drafts',
+      where: 'Records → Charts',
+      detail: 'Read unreviewed chart wording beside exact English.',
+      href: '/records' },
+  ] },
   { when: '9 October 2026', sha: '4da5c22d', changes: [
     'Your monthly AI allowance is now R18, shown in rand on your Account page.',
     'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',

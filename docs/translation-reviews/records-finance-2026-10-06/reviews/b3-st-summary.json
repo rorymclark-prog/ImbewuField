@@ -1,0 +1,22 @@
+{
+ "language": "st",
+ "counts": {
+  "ok": 95,
+  "repair": 8,
+  "hold": 2
+ },
+ "total": 105,
+ "top_issues": [
+  "R292 and R296 (hold): 'se se busetsang' (what it gives back) is not a reliable term for 'returns' and could read as yield, money kept or profit; heading of a money card.",
+  "R319 (repair): 'balehang' means flee/escape; intended 'stay readable' (balega).",
+  "R312 (repair): 'tse sebedisitsweng' reads as 'things used' and does not agree with 'tjhelete'; money minus spending must read as money spent.",
+  "R339 (repair): 'worth' became 'di bohlokwa bokae' (how important), not rand value.",
+  "R401 (repair): lost the 'either ... or' structure of the two reasons for an unknown kept amount; use 'ekaba ... kapa'.",
+  "R348/R349 (repair, minor): segment labels 22-24 chars vs English 13-14; too long for narrow segments.",
+  "R287 (repair): 'e a ipaka' is an unclear calque for 'draws itself'.",
+  "R396 (repair, minor): 'aha o mong' = build another one, implies a plan exists.",
+  "R303 (ok, caveat): long caveat keeps 'ha se phaello e felletseng' (not full profit) and 'ha di kenyelletse' (do not include), but 'net' is dropped and 'labour' became 'mosebetsi' (work/job); acceptable, native check advised.",
+  "Kept = harvested minus sold: R291, R338, R356, R363, R367, R371, R400, R401 all use 'se/e setseng polasing' / 'hae' (remaining on the farm), never money kept - verified. Money in/out (R304, R309, R316-R321) uses 'e kenang'/'e tswang' consistently with no profit wording; R397 'Mosebetsi o mong' and R343 'Tse tlang' are acceptable but terse."
+ ],
+ "confidence_limits": "Machine review by a non-native reader of Sesotho. I checked meaning, negation, tense, placeholders (all identical to English in the drafts), and the kept/money-in/profit distinctions against my own back-translations, but I cannot judge idiom, register or regional naturalness. Verbs I flagged (balehang vs balega, paka, jarolla/loading, timilwe) rest on my own vocabulary knowledge and need a fluent Sesotho speaker to confirm. 'ok' means no meaning error found, not native approval."
+}

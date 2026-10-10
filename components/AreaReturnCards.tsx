@@ -8,10 +8,11 @@ import type { FinancePeriod } from '@/lib/farm-metrics';
 import { buildAreaReturns } from '@/lib/area-returns';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
 
 export default function AreaReturnCards({ beds, sales, expenses, invoices, period, now, loading }: { beds: PlanBed[]; sales: SalesLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; period: FinancePeriod; now: Date; loading: boolean; sample?: boolean }) {
   const { lang } = useLanguage();
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const result = useMemo(() => buildAreaReturns(beds, sales, expenses, invoices, period, now), [beds, sales, expenses, invoices, period, now]);
   const rand = (n: number) => `R ${numberLabel(n, 2)}`;
   return <section aria-label={text('Returns per growing area', 'Imali etholwa endaweni yokulima')} className="record-paper my-6 rounded-2xl border p-5" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)' }}>
@@ -22,10 +23,12 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">{result.cards.map(card => <article key={card.key} className="rounded-xl border p-4" style={{ background: 'var(--bg-2)', borderColor: 'var(--border)' }}>
       <h3 className="text-sm font-semibold">{text(({ vegetables: 'Vegetable beds', staples: 'Staple plots', combined: 'Combined' })[card.key], ({ vegetables: 'Imibhede yemifino', staples: 'Amasimu ezitshalo eziyisisekelo', combined: 'Kuhlanganisiwe' })[card.key])}</h3>
       <p className="text-3xl font-display font-semibold my-3" style={{ color: card.contributionPerM2 !== null && card.contributionPerM2 < 0 ? 'var(--danger)' : 'var(--color-forest-800)' }}>{loading ? '…' : card.contributionPerM2 === null ? '—' : rand(card.contributionPerM2)} <span className="text-sm">/m²</span></p>
-      <p className="text-xs">{numberLabel(card.areaM2)} m² {text('mapped', 'ebalazweni')} · {card.entries} {text('assigned entries', 'okufakiwe okwabelwe indawo')}</p>
-      {!loading && <p className="text-xs mt-2">{card.entries ? `${rand(card.sales)} ${text('sales', 'okudayisiwe')} · ${rand(card.costs)} ${text('costs', 'izindleko')}` : text('Assign sales and costs to see a result.', 'Yabela okudayisiwe nezindleko ukuze ubone umphumela.')}</p>}
+      <p className="text-xs">{lang === 'zu' ? <>{numberLabel(card.areaM2)} m² ebalazweni · {card.entries} okufakiwe okwabelwe indawo</> : recordsTemplate(lang, '{area} m² mapped · {n} assigned entries', null, { area: numberLabel(card.areaM2), n: card.entries })}</p>
+      {!loading && <p className="text-xs mt-2">{card.entries ? (lang === 'zu' ? `${rand(card.sales)} okudayisiwe · ${rand(card.costs)} izindleko` : recordsTemplate(lang, '{sales} sales · {costs} costs', null, { sales: rand(card.sales), costs: rand(card.costs) })) : text('Assign sales and costs to see a result.', 'Yabela okudayisiwe nezindleko ukuze ubone umphumela.')}</p>}
     </article>)}</div>
     <IsiZuluDraftSource className="text-sm mt-4" lang={lang}
+      template={result.unassignedEntries ? '{n} entries still unassigned: {sales} sales and {costs} costs. Edit a Sold or Spent entry and choose its growing area.' : undefined}
+      vars={{ n: result.unassignedEntries, sales: rand(result.unassignedSales), costs: rand(result.unassignedCosts) }}
       english={result.unassignedEntries
         ? `${result.unassignedEntries} entries still unassigned: ${rand(result.unassignedSales)} sales and ${rand(result.unassignedCosts)} costs. Edit a Sold or Spent entry and choose its growing area.`
         : 'Only explicitly assigned entries are included.'}
@@ -33,6 +36,8 @@ export default function AreaReturnCards({ beds, sales, expenses, invoices, perio
         ? `${result.unassignedEntries} okufakile akukabelwa indawo: ukuthengisa okungu-${rand(result.unassignedSales)} nezindleko ezingu-${rand(result.unassignedCosts)}. Hlela okufakile ngaphansi kwe-Sold noma i-Spent, bese ukhetha indawo yakho yokulima.`
         : 'Kubalwa okufakile kuphela okwabelwe indawo ngokusobala.'} />
     <IsiZuluDraftSource className="text-xs mt-2" lang={lang}
+      template="Shared costs ({shared}) reduce Combined only. Orchard and other activities stay separate. These figures exclude unassigned costs and may omit overheads or labour; they are not full net profit. The denominator is today’s mapped area, not a historical measurement or harvested area."
+      vars={{ shared: rand(result.sharedCosts) }}
       english={`Shared costs (${rand(result.sharedCosts)}) reduce Combined only. Orchard and other activities stay separate. These figures exclude unassigned costs and may omit overheads or labour; they are not full net profit. The denominator is today’s mapped area, not a historical measurement or harvested area.`}
       zulu={`Izindleko ezabiwe (${rand(result.sharedCosts)}) zehlisa isamba esihlanganisiwe kuphela. Ingadi yezithelo neminye imisebenzi kubalwa ngokwehlukana. Lezi zibalo azifaki izindleko ezingabelwe indawo futhi zingase zingafaki izindleko ezijwayelekile noma umsebenzi; azimeleli yonke inzuzo ngemva kwezindleko. Indawo ehlukanisa lezi zibalo yileyo ebalwe emephini namuhla, hhayi isilinganiso sakudala noma indawo evuniwe.`} />
   </section>;
