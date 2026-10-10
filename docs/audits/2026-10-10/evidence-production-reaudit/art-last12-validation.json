@@ -1,0 +1,206 @@
+[
+  {
+    "speciesId": "prunus-persica",
+    "path": "public/fruit-art/prunus-persica.png",
+    "bytes": 9776,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.40435791015625
+  },
+  {
+    "speciesId": "prunus-salicina",
+    "path": "public/fruit-art/prunus-salicina.png",
+    "bytes": 11240,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.436767578125
+  },
+  {
+    "speciesId": "psidium-guajava",
+    "path": "public/fruit-art/psidium-guajava.png",
+    "bytes": 11073,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5164794921875
+  },
+  {
+    "speciesId": "punica-granatum",
+    "path": "public/fruit-art/punica-granatum.png",
+    "bytes": 12383,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.47943115234375
+  },
+  {
+    "speciesId": "rhoicissus-tomentosa",
+    "path": "public/fruit-art/rhoicissus-tomentosa.png",
+    "bytes": 11077,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5618896484375
+  },
+  {
+    "speciesId": "rubus-idaeus",
+    "path": "public/fruit-art/rubus-idaeus.png",
+    "bytes": 11625,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.51934814453125
+  },
+  {
+    "speciesId": "sclerocarya-birrea-subsp-caffra",
+    "path": "public/fruit-art/sclerocarya-birrea-subsp-caffra.png",
+    "bytes": 24275,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.553955078125
+  },
+  {
+    "speciesId": "strychnos-spinosa",
+    "path": "public/fruit-art/strychnos-spinosa.png",
+    "bytes": 12554,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.3868408203125
+  },
+  {
+    "speciesId": "syzygium-cordatum",
+    "path": "public/fruit-art/syzygium-cordatum.png",
+    "bytes": 11350,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.4990234375
+  },
+  {
+    "speciesId": "vaccinium-corymbosum",
+    "path": "public/fruit-art/vaccinium-corymbosum.png",
+    "bytes": 11186,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5457763671875
+  },
+  {
+    "speciesId": "vangueria-infausta",
+    "path": "public/fruit-art/vangueria-infausta.png",
+    "bytes": 10220,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5587158203125
+  },
+  {
+    "speciesId": "vitis-vinifera",
+    "path": "public/fruit-art/vitis-vinifera.png",
+    "bytes": 10795,
+    "mode": "RGBA",
+    "dimensions": [
+      128,
+      128
+    ],
+    "cornerAlpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.55322265625
+  }
+]

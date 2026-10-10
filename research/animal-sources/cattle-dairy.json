@@ -41,18 +41,18 @@
         "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
         "page": 239
       },
-      "notes": "The handbook's own sentence states that a seasonal calving pattern is not an option for SA dairy farmers because processors need a year-round, even milk flow - i.e. milk is produced/supplied continuously through the year, which is the source's own year-round statement (not a months figure derived by this researcher from a breeding season)."
+      "notes": "The handbook describes the commercial processor requirement for an even year-round milk supply. These twelve months are that commercial herd-supply reference, not observed production for each cow or every smallholder farm. Local calving and milking months must be confirmed before marking the farm calendar."
     }
   ],
   "seasonalPattern": {
-    "value": "SA dairy processors need a steady year-round milk supply, so seasonal (batch) calving is not viable for SA dairy farmers - milk is produced continuously all year.",
+    "value": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
     "evidence": {
       "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
       "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
       "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
       "page": 239
     },
-    "notes": "Same source as productionMonths; South Africa, commercial/small-commercial dairy."
+    "notes": "The handbook discusses pasture-based commercial dairy systems and processor supply on printed pages 231-232 (PDF page 239 for the quoted passage). It does not establish a year-round lactation for each cow, the production months of every smallholder herd or a processor contract for the mapped farm. Local calving and milking months need confirmation."
   },
   "timeToFirstProductWeeks": {
     "value": [
@@ -73,7 +73,7 @@
       2.02
     ],
     "evidence": {
-      "quote": "Table 2 indicates that the average length of productive life was 739.33 ± 434.31 and 696.81 ± 415.44 days",
+      "quote": "Table 2 indicates that the average length of productive life was 739.33 \u00b1 434.31 and 696.81 \u00b1 415.44 days",
       "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12560872/",
       "doc": "Cow Longevity and Reasons and Risk Factors for Culling in South African Holstein and Jersey Dairy Herds, Animals 2025 (PMC12560872)",
       "page": null
@@ -109,7 +109,7 @@
   "spaceM2PerAnimal": {
     "value": null,
     "evidence": null,
-    "notes": "Withdrawn in editor review: 4-5 m² is shade per cow from the Dairy Farming Handbook, not housing space (kept as a welfare point). No source gives housing space per dairy cow."
+    "notes": "Withdrawn in editor review: 4-5 m\u00b2 is shade per cow from the Dairy Farming Handbook, not housing space (kept as a welfare point). No source gives housing space per dairy cow."
   },
   "welfare": [
     {
@@ -149,9 +149,9 @@
       }
     },
     {
-      "point": "Cows on pasture or in open camps need shade: shade structures should give at least 4 to 5 m² of shade per cow.",
+      "point": "Cows on pasture or in open camps need shade: shade structures should give at least 4 to 5 m\u00b2 of shade per cow.",
       "evidence": {
-        "quote": "Shade structures should provide at least 4 to \n5 m² shade space per cow.",
+        "quote": "Shade structures should provide at least 4 to \n5 m\u00b2 shade space per cow.",
         "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
         "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
         "page": 129
@@ -211,6 +211,6 @@
     "A separate LWCC 'Code of Practice for the Welfare of Dairy Cattle' PDF exists but has an irrecoverably garbled custom font encoding under pypdf, pymupdf and WebFetch alike, so no quote could be taken from it.",
     "spaceM2PerAnimal: no SA source was found giving indoor freestall/cubicle housing floor space per dairy cow (SA small-scale dairying is mostly pasture/camp-based per the Elsenburg handbook); the figure used (4-5 m2) is pasture shade-structure space, not enclosed housing, and is noted as such.",
     "A web-search AI summary had claimed brucellosis testing is compulsory only for dairy/export herds and voluntary for others under a specific scheme reference; this exact differentiated claim could not be verified verbatim in any actually-fetched primary source, so it was NOT used - the brucellosis point above cites only the reporting-obligation language that was independently verified.",
-    "Editor review 2026-09-28 (round 2): the Breeds of Dairy Cattle URL 404'd and now points at the KZN DARD Dairying in KwaZulu-Natal copy. Its notes had the table wrong in places (the yields are the Milk column, not FCM; Grade Ayrshire first calving is 32 months; there is no crossbred row) and now say the herds are milk-recording herds 50% above the national herd. The productive-life quote was not in the paper as given (its ± figures were wrong) and is replaced by the paper's own sentence, same means. Shade space moved from spaceM2PerAnimal to welfare. The Meat Safety Act quote now carries the abattoir rule and its point drops 'for sale'. PMC quotes were checked against the Europe PMC full text of the same articles."
+    "Editor review 2026-09-28 (round 2): the Breeds of Dairy Cattle URL 404'd and now points at the KZN DARD Dairying in KwaZulu-Natal copy. Its notes had the table wrong in places (the yields are the Milk column, not FCM; Grade Ayrshire first calving is 32 months; there is no crossbred row) and now say the herds are milk-recording herds 50% above the national herd. The productive-life quote was not in the paper as given (its \u00b1 figures were wrong) and is replaced by the paper's own sentence, same means. Shade space moved from spaceM2PerAnimal to welfare. The Meat Safety Act quote now carries the abattoir rule and its point drops 'for sale'. PMC quotes were checked against the Europe PMC full text of the same articles."
   ]
 }

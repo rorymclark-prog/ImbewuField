@@ -18,7 +18,7 @@ import {
   unidentifiedPlantGroups,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
+import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, projectedKgLabel, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
 import { estimatedYieldKgAdjusted, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { calendarProduceByMonth } from '@/lib/calendar-produce';
 import { printableAvailability } from '@/lib/crop-export-availability';
@@ -116,6 +116,113 @@ test('double-booked vegetables cannot inflate the combined orchard and vegetable
   const p: Planting = { id: 'one', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
   const projection = buildProductionProjection({ plantings: [p, { ...p, id: 'two' }], beds, trees: [], choices: {}, now: projectionNow });
   assert.ok(projection.years.every(y => y.vegetableKg === null && y.combinedKg === null && y.partial));
+});
+
+test('the same bed used in separate future years keeps its production instead of a phantom conflict', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 10, once: '2028-10' };
+  const q = { ...p, id: 'next', once: '2029-10' };
+  const kg = estimatedYieldKgAdjusted(p, 10, [p, q]);
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.deepEqual(projection.years.map(y => y.vegetableKg), [0, 0, kg, kg, 0, 0, 0, 0, 0, 0]);
+  assert.ok(projection.years.every(y => !y.partial));
+});
+
+test('a real dated future bed conflict blocks that period without erasing all the other years', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 10, once: '2028-10' };
+  const q = { ...p, id: 'overlap', sowMonth: 11, once: '2028-11' };
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[2].vegetableKg, null);
+  assert.equal(projection.years[2].combinedKg, null);
+  assert.deepEqual(projection.years[2].vegetableMissing, ['Resolve double-booked beds']);
+  assert.ok(projection.years.filter((_, i) => i !== 2).every(y => y.vegetableKg === 0 && !y.partial));
+});
+
+test('a current one-off overlap stops blocking a recurring crop after the observed cohort finishes', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const recurring: Planting = { id: 'annual', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  const existing = { ...recurring, id: 'observed', existing: true, confirmedOnceSowing: '2026-10' };
+  const kg = estimatedYieldKgAdjusted(recurring, 10, [recurring]);
+  const projection = buildProductionProjection({ plantings: [recurring, existing], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[0].vegetableKg, null);
+  assert.ok(projection.years.slice(1).every(y => y.vegetableKg === kg && !y.partial));
+});
+
+test('dated occupation and harvest stay in their real years over December and January', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'december', bedId: 'bed', cropKey: 'carrots', sowMonth: 12, once: '2027-12' };
+  const q = { ...p, id: 'january', sowMonth: 1, once: '2028-01' };
+  const kg = estimatedYieldKgAdjusted(p, 10, [p]);
+  const single = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(single.years[0].vegetableKg, 0);
+  assert.equal(single.years[1].vegetableKg, kg);
+  const conflict = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(conflict.years[0].vegetableKg, 0);
+  assert.equal(conflict.years[1].vegetableKg, null);
+  assert.equal(conflict.years[2].vegetableKg, 0);
+});
+
+test('a crop-cycle conflict before the year boundary still blocks the crop harvested after it', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 5, once: '2027-05' };
+  const q = { ...p, id: 'next', sowMonth: 9, once: '2027-09' };
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[0].vegetableKg, null, 'whole-bed crops conflict in September');
+  assert.equal(projection.years[1].vegetableKg, null, 'January picking cannot undo the same crop-cycle conflict');
+  assert.ok(projection.years.slice(2).every(y => y.vegetableKg === 0 && !y.partial));
+});
+
+test('invalid or inconsistent sowing dates cannot create crop kilograms absent from the calendar', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const base: Planting = { id: 'invalid', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  for (const p of [
+    ...[0, 13, NaN, 1.5].map(sowMonth => ({ ...base, sowMonth })),
+    { ...base, once: '' },
+    { ...base, once: '2028-11' },
+    { ...base, confirmedOnceSowing: '2026-11', existing: true },
+  ]) {
+    const projection = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+    assert.ok(projection.years.every(y => y.vegetableKg === 0 && y.partial));
+    assert.ok(projection.years.every(y => y.vegetableMissing.includes('Carrots: check sowing date')));
+  }
+});
+
+test('a damaged growing area remains missing instead of entering a negative or nonfinite crop total', () => {
+  const p: Planting = { id: 'crop', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  for (const areaM2 of [0, -1, NaN, Infinity]) {
+    const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2 }];
+    const projection = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+    assert.ok(projection.years.every(y => y.vegetableKg === 0 && y.partial));
+    assert.ok(projection.years.every(y => y.vegetableMissing.includes('Fixture bed: check growing area')));
+  }
+});
+
+test('invalid age or kg drafts do not change a reference season when the saved projection rejects them', () => {
+  for (const yields of [[{ age: -1, kg: 2 }], [{ age: 0, kg: -1 }], [{ age: 0, kg: NaN }]]) {
+    const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields }] };
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart), false);
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart + 36), true);
+    const cleaned = cleanTreeSeasonChoices({ 'persea-americana': choice })['persea-americana'];
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart), ageReadyForSeason(youngAvocado, cleaned, projectionStart));
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart + 36), ageReadyForSeason(youngAvocado, cleaned, projectionStart + 36));
+  }
+});
+
+test('contradictory yield ages are visible even before the first crop reference', () => {
+  const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [{ age: 0, kg: 0 }, { age: 0, kg: 0 }] }] };
+  const p = treeAgeProjection(youngAvocado, choice, projectionStart, projectionStart + 11);
+  assert.equal(p.kg, null);
+  assert.ok(p.missing.includes('Check duplicate yield ages'));
+});
+
+test('small positive production keeps its decimals in the shared app and printed label', () => {
+  assert.equal(projectedKgLabel([0.4, 0.4]), '0.4 kg');
+  assert.equal(projectedKgLabel([0.004, 0.08]), '0.004–0.08 kg');
+  assert.equal(projectedKgLabel([0.0004, 0.0004]), '<0.001 kg');
+  assert.equal(projectedKgLabel([0, 0]), '0 kg');
+  assert.equal(projectedKgLabel(null), 'Needs information');
+  assert.equal(projectedKgLabel([NaN, Infinity]), 'Needs information');
 });
 
 test('recorded young tree ages suppress premature seasonal references in both the app and the printed calendar', () => {
@@ -395,4 +502,10 @@ test('berries and moringa: harvest records only for what a primary source gave',
   assert.equal(speciesIdForPlaced({ defId: 'tree_moringa' }), 'moringa-oleifera');
   // Blueberry's chill figure is in hours, which the chill-units field must not carry.
   assert.equal(PERENNIAL_HARVEST['vaccinium-corymbosum'].chillUnits, null);
+});
+
+
+test('projected food labels stay readable while small positive harvests remain visible', () => {
+  assert.equal(projectedKgLabel([66.27, 66.27]), '66.3 kg');
+  assert.equal(projectedKgLabel([0.083, 0.4]), '0.083–0.4 kg');
 });

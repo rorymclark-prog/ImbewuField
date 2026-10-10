@@ -5,7 +5,8 @@ import { join } from 'node:path';
 import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText } from '@/lib/calendar-produce';
 import { ANIMAL_ENTERPRISES, sourcedProductMonths } from '@/lib/animal-enterprises';
 import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
-import { FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
+import { PNG } from 'pngjs';
+import { FRUIT_ART_PNG, FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
 
 const MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
 const mango = PERENNIAL_HARVEST['mangifera-indica'];
@@ -23,6 +24,22 @@ test('every species with a harvest record has a fruit icon, and it is fruit art,
   }
   assert.equal(speciesFruitArtworkUrl('not-a-species'), null);
   assert.equal(speciesFruitArtworkUrl(null), null);
+});
+
+test('painted product icons stay small, transparent and wired to real files', () => {
+  // A missing file or opaque tile in a month cell must fail before farmers export it.
+  for (const id of FRUIT_ART_PNG) {
+    assert.ok((FRUIT_ART_SPECIES as readonly string[]).includes(id), `unrecognised art key ${id}`);
+    const url = speciesFruitArtworkUrl(id)!;
+    assert.ok(url.endsWith('.png'), id);
+    const bytes = readFileSync(join(process.cwd(), 'public', url));
+    assert.ok(bytes.length <= 25000, `${id} is too large for the shared-calendar art budget`);
+    assert.equal(bytes[25], 6, `${id} must preserve true RGBA`);
+    const png = PNG.sync.read(bytes);
+    assert.equal(png.width, 128, id); assert.equal(png.height, 128, id);
+    for (const pixel of [0, 127, 127 * 128, 128 * 128 - 1]) assert.equal(png.data[pixel * 4 + 3], 0, `${id} corner alpha`);
+    assert.ok(png.data.some((channel, i) => i % 4 === 3 && channel > 0), `${id} must not be empty`);
+  }
 });
 
 test('a tree shows only in locally confirmed months, with what it gives and how many are proposed', () => {
