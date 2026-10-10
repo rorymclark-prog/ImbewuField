@@ -17,7 +17,7 @@
  * source a farmer can change this season; a tree is years away and a flock is not a sowing.
  *
  * This is availability, not sufficiency. A month with one fresh crop is "fresh" here whether
- * that crop feeds the household or not; the chart's bars carry the amounts.
+ * that crop feeds the household or not; the availability bars count crop kinds, not kilograms.
  */
 
 import type { CropDef, RainPattern } from './crop-catalog';

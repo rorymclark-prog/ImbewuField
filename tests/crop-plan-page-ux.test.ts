@@ -747,3 +747,23 @@ test('the comparison bands never ship without their derivation caveat', () => {
   const nextDriver = page.indexOf('Ground standing bare', pullsDown);
   assert.ok(water > pullsDown && water < nextDriver, 'water must be the FIRST driver named');
 });
+
+
+test('animal save failures remain visible until both choices and production months are safely saved', () => {
+  const fn = (name: string) => {
+    const declaration = pageNodes((node): node is ts.FunctionDeclaration => ts.isFunctionDeclaration(node)).find(node => node.name?.text === name);
+    assert.ok(declaration);
+    return ts.transpileModule(declaration.getText(productionTree), { compilerOptions: { target: ts.ScriptTarget.ES2020 } }).outputText;
+  };
+  for (const enterpriseSaved of [false, true]) for (const seasonsSaved of [false, true]) {
+    let failed: boolean | undefined;
+    const values = { canvasSite: 'fixture', animalChoices: { chicken: 'chicken-layer' }, animalSeasons: {}, setAnimalChoices: () => {}, setAnimalSeasons: () => {},
+      saveEnterpriseChoices: () => enterpriseSaved, saveAnimalSeasonChoices: () => seasonsSaved, setAnimalSaveFailed: (next: boolean) => { failed = next; } };
+    for (const [name, args] of [['chooseAnimalEnterprise', ['chicken', 'chicken-layer']], ['chooseAnimalSeason', ['chicken', 'chicken-layer', [10]]]] as const) {
+      failed = undefined;
+      new Function(...Object.keys(values), `${fn(name)}; return ${name};`)(...Object.values(values))(...args);
+      assert.equal(failed, !enterpriseSaved || !seasonsSaved, `${name} must not claim saving while one record failed`);
+    }
+  }
+  assert.match(productionPage, /animalSaveFailed && <p role="alert"[^>]*>Animal products and production months could not be saved/);
+});

@@ -5,14 +5,16 @@
 
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { PNG } from 'pngjs';
 
 import { monthAxisSlots } from '@/lib/month-axis';
 import { animalEntries, forestEntries, printableAvailability } from '@/lib/crop-export-availability';
 import { pdfIconUrl } from '@/lib/pdf-icons';
 import { speciesFruitArtworkUrl, speciesPickerArtworkUrl } from '@/lib/species-art';
 import { buildTreeAvailability, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
-import { loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
+import { ANIMAL_ENTERPRISES, ELEMENT_HOUSING, loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
+import { ANIMAL_PRODUCT_ART, animalProductArtUrl, enterpriseProductArtUrl, housingArtUrl } from '@/lib/animal-art';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 
 test('the month axis names the current month and every year it crosses', () => {
@@ -81,10 +83,77 @@ test('every icon key resolves to the app art the chart itself shows', () => {
     assert.equal(pdfIconUrl(`tree:${id}`), speciesFruitArtworkUrl(id));
   }
   assert.equal(pdfIconUrl('tree:olea-europaea-subsp-europaea'), speciesPickerArtworkUrl('olea-europaea-subsp-europaea'), 'a food plant without product art keeps its own available plant picture');
-  assert.equal(pdfIconUrl('animal:chicken-layer'), '/animal-art/chicken-layer.png');
+  // A chosen food enterprise pictures its product; the old portrait assertion hid eggs
+  // behind a hen and contradicted the crop calendar's produce artwork convention.
+  assert.equal(pdfIconUrl('animal:chicken-layer'), animalProductArtUrl('eggs'));
+  assert.equal(pdfIconUrl('housing:chicken'), housingArtUrl('chicken'));
   assert.equal(pdfIconUrl('element:banana_circle'), '/element-art/banana_circle-v3.png');
   assert.equal(pdfIconUrl('nonsense'), null);
   assert.equal(pdfIconUrl('planet:mars'), null);
+});
+
+test('every animal product picture is a small true RGBA PNG with real transparency and visible produce', () => {
+  const products = [...new Set(Object.values(ANIMAL_ENTERPRISES).map(enterprise => enterprise.product))].sort();
+  assert.deepEqual(Object.keys(ANIMAL_PRODUCT_ART).sort(), products, 'each researched product needs its own picture without unclaimed product assets');
+  const expectedFiles = products.map(product => `${product}.png`).sort();
+  const directory = new URL('../public/animal-product-art/', import.meta.url);
+  assert.deepEqual(readdirSync(directory).filter(file => file.endsWith('.png')).sort(), expectedFiles);
+  for (const product of products) {
+    const url = animalProductArtUrl(product);
+    assert.equal(url, `/animal-product-art/${product}.png`, `${product}: product artwork escaped its own namespace`);
+    const bytes = readFileSync(new URL(`../public${url}`, import.meta.url));
+    assert.ok(bytes.length <= 25_000, `${product}: a small calendar picture exceeds the 25KB brief (${bytes.length} bytes)`);
+    assert.equal(bytes[25], 6, `${product}: PNG must store true RGBA, not an opaque RGB or indexed background`);
+    const { width, height, data } = PNG.sync.read(bytes);
+    assert.deepEqual([width, height], [128, 128], `${product}: deployed food art is 128px`);
+    for (const [x, y] of [[0, 0], [127, 0], [0, 127], [127, 127]]) {
+      assert.equal(data[(y * width + x) * 4 + 3], 0, `${product}: corner (${x},${y}) has a baked background`);
+    }
+    let transparent = 0;
+    for (let offset = 3; offset < data.length; offset += 4) if (data[offset] === 0) transparent++;
+    const fraction = transparent / (width * height);
+    assert.ok(fraction > 0.10 && fraction < 0.85, `${product}: image is blank, padded too far or has a filled background (${fraction})`);
+  }
+});
+
+test('enterprises producing the same product share its calendar picture while housing keeps an unassigned portrait', () => {
+  const productUrls = new Set(Object.values(ANIMAL_PRODUCT_ART));
+  for (const enterprise of Object.values(ANIMAL_ENTERPRISES)) {
+    const product = animalProductArtUrl(enterprise.product);
+    assert.equal(enterpriseProductArtUrl(enterprise.enterpriseId), product, `${enterprise.enterpriseId}: enterprise identity replaced the product picture`);
+    assert.equal(pdfIconUrl(`animal:${enterprise.enterpriseId}`), product, `${enterprise.enterpriseId}: PDF and app product pictures diverged`);
+  }
+  for (const housing of new Set(Object.values(ELEMENT_HOUSING))) {
+    const portrait = housingArtUrl(housing);
+    assert.match(portrait ?? '', /^\/animal-art\/.+\.png$/, `${housing}: unassigned housing lost its portrait`);
+    assert.equal(pdfIconUrl(`housing:${housing}`), portrait);
+    assert.ok(!productUrls.has(portrait!), `${housing}: a bare structure promises a chosen product`);
+    assert.ok(readFileSync(new URL(`../public${portrait}`, import.meta.url)).length > 0, `${housing}: portrait is missing`);
+  }
+  assert.equal(enterpriseProductArtUrl('unknown-enterprise'), null);
+  assert.equal(housingArtUrl('unknown-housing'), null);
+  assert.equal(pdfIconUrl('housing:unknown-housing'), null);
+});
+
+test('unassigned and incompatible housing choices print portraits without acquiring a product or dated production', () => {
+  const animalGroups = placedAnimalGroups(Object.keys(ELEMENT_HOUSING).map(defId => ({ defId, status: 'existing' as const })));
+  const unassigned = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [], animalGroups });
+  assert.equal(unassigned.animals, undefined);
+  assert.equal(unassigned.undated?.length, animalGroups.length);
+  for (const group of animalGroups) {
+    const row = unassigned.undated?.find(entry => entry.iconKey === `housing:${group.housing}`);
+    assert.ok(row, `${group.housing}: unassigned housing disappeared or became a product`);
+    assert.match(row.detail, /No product or production dates assumed/);
+    assert.ok(pdfIconUrl(row.iconKey));
+  }
+  const incompatible = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [],
+    animalGroups: placedAnimalGroups([{ defId: 'chicken_coop', status: 'existing' }]), animalChoices: { chicken: 'cattle-dairy' } });
+  assert.equal(incompatible.undated?.[0].iconKey, 'housing:chicken', 'an incompatible dairy choice cannot turn a coop into milk');
+  const chosen = printableAvailability({ yearMode: 'fromToday', veg: [], utilization: [],
+    animalGroups: placedAnimalGroups([{ defId: 'chicken_coop', status: 'existing' }]), animalChoices: { chicken: 'chicken-layer' } });
+  assert.equal(chosen.undated?.[0].iconKey, 'animal:chicken-layer');
+  assert.equal(pdfIconUrl(chosen.undated?.[0].iconKey ?? ''), animalProductArtUrl('eggs'));
+  assert.equal(chosen.animals, undefined, 'choosing an egg product supplies no local laying month');
 });
 
 test('banana, hives and coops survive printing without invented products or harvest months', () => {

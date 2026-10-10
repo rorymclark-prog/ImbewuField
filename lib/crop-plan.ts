@@ -137,6 +137,21 @@ function stampIndexOf(stamp: unknown): number | null {
   return match ? Number(match[1]) * 12 + (Number(match[2]) - 1) : null;
 }
 
+/** A dated projection must use the saved year, not the next month with that name.
+ * Keeping the resolver here makes bed occupation and projected picking agree. */
+export function datedPlantingSowIndex(planting: Planting, originIndex: number): number | null {
+  if (!Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) return null;
+  const stamp = planting.confirmedOnceSowing ?? planting.once;
+  if (stamp !== undefined) {
+    const index = stampIndexOf(stamp);
+    return index !== null && index % 12 + 1 === planting.sowMonth ? index : null;
+  }
+  const originMonth = originIndex % 12 + 1;
+  return originIndex + (planting.existing
+    ? existingSowOffset(planting.sowMonth, originMonth)
+    : ((planting.sowMonth - originMonth + 12) % 12));
+}
+
 /**
  * Whether a `once` row's stamp names a month that has already passed,
  * relative to nowYear/nowMonth. Mirrors settleOnceRows' own past/current test
@@ -653,6 +668,7 @@ function benchmarkAreaConflictBeds(
   plantings: Planting[],
   beds: PlanBed[],
   nowMonth?: number,
+  period?: { startIndex: number; endIndex: number; originIndex: number },
 ): BedConflictRecord[] {
   const bedById = new Map(beds.map((bed) => [bed.id, bed]));
   const records = new Map<string, BedConflictRecord>();
@@ -672,9 +688,9 @@ function benchmarkAreaConflictBeds(
 
   // Rolling-horizon occupancy (offsets from nowMonth, repeating annual plan)
   // when a month is known; year-free calendar months when it is not. Both walks
-  // now carry the CONTRIBUTING planting ids alongside the share total, which is
-  // the only new information — the arithmetic and the conflict thresholds are
-  // unchanged.
+  // carry the contributing planting ids alongside the share total. An absolute
+  // period uses the same walk, but respects saved years and checks only that
+  // period; year-free callers keep their existing calendar behavior.
   type OccupiedRow = { id: string; bedId: string; start: number; span: number; fraction: number; existing: boolean; once: boolean };
   const rows: OccupiedRow[] = [];
   const calendarMonths = new Map<string, number[]>();
@@ -684,11 +700,19 @@ function benchmarkAreaConflictBeds(
     if (planting.awaitingSowingConfirmation || planting.finishedOnceSowing) continue;
     const bed = bedById.get(planting.bedId);
     if (!bed) continue;
+    const datedSow = period ? datedPlantingSowIndex(planting, period.originIndex) : null;
+    const datedSpan = period ? occupiedMonthsForPlanting(planting).length : 0;
+    const crop = cropByKey(planting.cropKey);
+    const datedStart = datedSow === null || !period ? null
+      : datedSow + (crop?.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0) - period.startIndex;
+    const oneTime = planting.existing === true || planting.once !== undefined || planting.confirmedOnceSowing !== undefined;
+    if (period && (datedStart === null || datedStart > period.endIndex - period.startIndex
+      || (oneTime && datedSpan > 0 && datedStart + datedSpan - 1 < 0))) continue;
     const fraction = planting.areaFraction ?? 1;
     // A share above a whole bed is only detectable as invalid where the
     // rolling walk runs; the year-free walk has always let it through into the
     // month totals instead. Keep each branch's own rule.
-    const invalidShare = nowMonth !== undefined
+    const invalidShare = nowMonth !== undefined || period
       ? (!Number.isFinite(fraction) || fraction <= 0 || fraction > 1.0001)
       : (!Number.isFinite(fraction) || fraction <= 0);
     if (invalidShare) {
@@ -697,7 +721,6 @@ function benchmarkAreaConflictBeds(
       record.invalidShareIds.add(planting.id);
       continue;
     }
-    const crop = cropByKey(planting.cropKey);
     if (crop?.timingVerified === false && hasPlanningYield(crop)) {
       const bucket = uncertain.get(bed.id) ?? { share: 0, ids: [] };
       bucket.share += fraction;
@@ -705,16 +728,16 @@ function benchmarkAreaConflictBeds(
       uncertain.set(bed.id, bucket);
       continue;
     }
-    if (nowMonth !== undefined) {
+    if (nowMonth !== undefined || period) {
       const span = occupiedMonthsForPlanting(planting).length;
       // Planned cohorts can start up to twelve months ahead (plus nursery
       // lead time). A one-month horizon silently dropped every future crop,
       // so an unknown-timing whole-bed crop appeared not to overlap anything.
-      const [start] = plantingBedEntryOffsets(planting, nowMonth, 24);
+      const start = period ? datedStart! : plantingBedEntryOffsets(planting, nowMonth!, 24)[0];
       if (!span || start === undefined) continue;
       const end = start + span - 1;
       if (planting.existing && end < 0) continue;
-      rows.push({ id: planting.id, bedId: bed.id, start, span, fraction, existing: planting.existing === true, once: typeof planting.once === 'string' });
+      rows.push({ id: planting.id, bedId: bed.id, start, span, fraction, existing: planting.existing === true, once: period ? oneTime : typeof planting.once === 'string' });
     } else {
       // A one-time starter is a single dated cohort; folding it into the
       // year-free ANNUAL month totals would report a conflict with ground it
@@ -732,11 +755,11 @@ function benchmarkAreaConflictBeds(
   const occupancy = new Map<string, number[]>();
   const contributors = new Map<string, Set<string>[]>();
 
-  if (nowMonth !== undefined) {
+  if (nowMonth !== undefined || period) {
     const maxExistingEnd = rows
       .filter((row) => row.existing)
       .reduce((maximum, row) => Math.max(maximum, row.start + row.span - 1), 0);
-    const horizon = Math.max(
+    const horizon = period ? period.endIndex - period.startIndex : Math.max(
       24,
       maxExistingEnd,
       ...rows.filter((row) => !row.existing).map((row) => row.start + row.span + 11),
@@ -787,7 +810,7 @@ function benchmarkAreaConflictBeds(
     const who = contributors.get(bedId) ?? [];
     const crowdedIndexes = totals
       .map((share, index) => (share + bucket.share > 1.0001 ? index : -1))
-      .filter((index) => index >= 0 && (nowMonth !== undefined || index > 0));
+      .filter((index) => index >= 0 && (nowMonth !== undefined || period || index > 0));
     if (bucket.share <= 1.0001 && crowdedIndexes.length === 0) continue;
     const record = recordFor(bedId);
     for (const id of bucket.ids) {
@@ -808,6 +831,19 @@ export function benchmarkAreaConflictBedLabels(
   nowMonth?: number,
 ): string[] {
   return [...new Set(benchmarkAreaConflictBeds(plantings, beds, nowMonth).map((record) => record.bedLabel))]
+    .sort((a, b) => a.localeCompare(b));
+}
+
+/** The same conflict check, restricted to real dated occupation in one projection period.
+ * A one-off conflict today must not erase nine later years of otherwise usable ground. */
+export function benchmarkDatedAreaConflictBedLabels(
+  plantings: Planting[],
+  beds: PlanBed[],
+  period: { startIndex: number; endIndex: number; originIndex: number; plantingId?: string },
+): string[] {
+  const records = benchmarkAreaConflictBeds(plantings, beds, undefined, period)
+    .filter(record => !period.plantingId || record.plantingIds.has(period.plantingId));
+  return [...new Set(records.map(record => record.bedLabel))]
     .sort((a, b) => a.localeCompare(b));
 }
 

@@ -21,7 +21,6 @@ export function forestEntries(slots: readonly TreeAvailabilityItem[][]): Availab
 const shortName = (name: string) => name.replace(/\s*\([^)]*\)\s*$/, '');
 
 const HOUSING_PRINT: Record<HousingKind, string> = { chicken: 'Coops / chicken tractors', bee: 'Hives', goat: 'Goat pens', rabbit: 'Hutches', duck: 'Duck ponds', pig: 'Pig pens', kraal: 'Kraals', pond: 'Small ponds' };
-const HOUSING_ICON: Record<HousingKind, string> = { chicken: 'chicken-indigenous', bee: 'bees', goat: 'goat-meat', rabbit: 'rabbit', duck: 'duck', pig: 'pig-pork', kraal: 'cattle-beef', pond: 'fish-tilapia' };
 const mapCounts = (g: { existing: number; proposed: number }) => `${g.existing} existing${g.proposed ? `; ${g.proposed} proposed` : ''}`;
 
 /** Never lose a placed food source just because it cannot honestly be assigned a harvest date. */
@@ -59,9 +58,9 @@ export function undatedAvailability(opts: {
       const season = fits ? confirmedAnimalMonths(g.housing, e.enterpriseId, opts.animalSeasons ?? {}) : [];
       if (season.length > 0 && g.proposed === 0) continue;
       entries.push({
-        iconKey: `animal:${fits ? e.enterpriseId : HOUSING_ICON[g.housing]}`,
+        iconKey: fits ? `animal:${e.enterpriseId}` : `housing:${g.housing}`,
         label: fits ? `${HOUSING_PRINT[g.housing]} — ${PRODUCT_LABEL[e.product].toLowerCase()}` : HOUSING_PRINT[g.housing],
-        detail: `Structures on map: ${mapCounts(g)}; animal numbers are not recorded. ${fits ? e.flowNote?.text ?? (season.length ? 'Proposed housing has no animals yet.' : 'Confirm production months for this farm before expecting this product.') : 'Choose what they are kept for. No product or production dates assumed.'}`,
+        detail: `Structures on map: ${mapCounts(g)}. Structure counts do not show animal numbers. ${fits ? e.flowNote?.text ?? (season.length ? 'Proposed housing has no animals yet.' : 'Confirm production months for this farm before expecting this product.') : 'Choose what they are kept for. No product or production dates assumed.'}`,
       });
     }
   }

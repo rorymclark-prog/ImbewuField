@@ -81,7 +81,12 @@ export const STAPLE_CROP_KEYS: string[] = Object.keys(COURSE_BY_KEY);
 export const STAPLE_COURSE_SEQUENCE: StapleCourse[] = ['pulse', 'grain', 'tuber', 'cucurbit'];
 
 export function isStapleCrop(crop: CropDef): boolean {
-  return COURSE_BY_KEY[crop.key] !== undefined;
+  return isStapleCropKey(crop.key);
+}
+
+// The picture calendar uses the same named field crops as the planning controls.
+export function isStapleCropKey(key: string): boolean {
+  return COURSE_BY_KEY[key] !== undefined;
 }
 
 export function stapleCourseOf(crop: CropDef): StapleCourse | undefined {

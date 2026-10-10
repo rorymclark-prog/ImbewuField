@@ -10,7 +10,8 @@ test('the printed plan retains the ten-year age projection, missing yields and e
   const treeGroups = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
   const treeSeasons = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
   const projection = buildProductionProjection({ plantings: [], beds: [], trees: treeGroups, choices: treeSeasons, now: new Date(2026, 9, 4) });
-  const text = visibleText(await rawPdf({ sections: ['availability'], productionProjection: projection, treeGroups, treeSeasons }));
+  // Future production is selectable separately from the concise picture calendar and jobs.
+  const text = visibleText(await rawPdf({ sections: ['availability', 'projection'], productionProjection: projection, treeGroups, treeSeasons }));
   for (const phrase of ['As your plants grow', 'Fruit, nuts and berries by age', 'Oct 2035', 'known subtotal only', 'no growth multiplier', 'first-crop reference', '? kg']) assert.ok(text.includes(phrase), phrase);
   assert.ok(!text.includes('100 kg'), 'the mature avocado trial figure leaked into a planting with no farm yield schedule');
 });

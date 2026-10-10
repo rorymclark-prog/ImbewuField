@@ -147,7 +147,44 @@ export const FRUIT_ART_SPECIES = [
 ] as const;
 
 /** Species whose painted PNG has landed in public/fruit-art/ (replaces the placeholder SVG). */
-export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([]);
+export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([
+  'carica-papaya',
+  'carissa-macrocarpa',
+  'carpobrotus-edulis',
+  'carya-illinoinensis',
+  'citrus-limon',
+  'citrus-reticulata',
+  'dovyalis-afra',
+  'englerophytum-magalismontanum',
+  'ficus-carica',
+  'fragaria-x-ananassa',
+  'garcinia-livingstonei',
+  'grewia-occidentalis',
+  'harpephyllum-caffrum',
+  'litchi-chinensis',
+  'macadamia-integrifolia',
+  'mangifera-indica',
+  'mimusops-zeyheri',
+  'moringa-oleifera',
+  'musa-acuminata-aaa-group',
+  'pappea-capensis',
+  'passiflora-edulis',
+  'persea-americana',
+  'phoenix-reclinata',
+  'physalis-peruviana',
+  'prunus-persica',
+  'prunus-salicina',
+  'psidium-guajava',
+  'punica-granatum',
+  'rhoicissus-tomentosa',
+  'rubus-idaeus',
+  'sclerocarya-birrea-subsp-caffra',
+  'strychnos-spinosa',
+  'syzygium-cordatum',
+  'vaccinium-corymbosum',
+  'vangueria-infausta',
+  'vitis-vinifera',
+]);
 
 export function speciesFruitArtworkUrl(speciesId?: string | null): string | null {
   if (!speciesId || !(FRUIT_ART_SPECIES as readonly string[]).includes(speciesId)) return null;

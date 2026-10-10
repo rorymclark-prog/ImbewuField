@@ -99,12 +99,21 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "spaceM2": null,
     "welfare": [
       {
+        "point": "Keep hives away from playgrounds, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before adding a hive.",
+        "source": {
+          "quote": "away from playgrounds ... near a fresh water supply ... fairly dry, away from swampy or flooding valley",
+          "url": "https://www.fao.org/4/t0104e/T0104E08.htm",
+          "doc": "FAO: Beekeeping in Africa, Site selection (general African apiary guidance)",
+          "page": null
+        }
+      },
+      {
         "point": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
         "source": {
           "quote": "Every beekeeper shall conduct regular inspections of every colony kept in beehives at each apiary site to detect- (a)clinical symptoms of notifiable bee diseases; or (b)Capensis-infected colonies.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, Government Notice No. R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 5
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       },
       {
@@ -119,57 +128,66 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     ],
     "legal": [
       {
-        "point": "Every beekeeper (commercial or hobbyist) must register with the national Department between 1 January and 31 March each year.",
+        "point": "Register with the Department before beekeeping. Registration lasts 24 months from registration or renewal and must be renewed when it expires.",
         "source": {
-          "quote": "Every beekeeper shall register with the Department between 1 January and 31 March of each year.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 3
+          "quote": "Every person who carries out any beekeeping activities shall register with the Department. ... Registration shall be for a period of twenty four months from the date of registration or renewal of registration and shall be renewable on expiry of the registration period.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(1) and 2(4)",
+          "page": 4
         }
       },
       {
-        "point": "A beekeeper who fails to re-register annually is automatically deregistered.",
+        "point": "A beekeeper who fails to renew registration at expiry will be deregistered and face penalties under the Act.",
         "source": {
-          "quote": "In the case of failure to comply with control measure 2 (1), a registered beekeeper shall be deregistered.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+          "quote": "In the case of failure to comply with control measure 2(4), a registered beekeeper shall be deregistered and shall face penalties in terms of the Act.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measure 2(5)",
           "page": 4
+        }
+      },
+      {
+        "point": "Beekeeping activities and hired beekeeping services require a valid registration certificate. Check the certificate before using a beekeeper.",
+        "source": {
+          "quote": "No person may conduct any beekeeping activities unless they are in possession of a valid registration certificate issued in terms of control measure 2 (1). ... No person may utilise the services of a beekeeper for the purposes of carrying out any beekeeping activities unless the beekeeper is in possession of a valid registration certificate issued in terms of control measure 2 (1).",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(8) and 2(9)",
+          "page": 5
         }
       },
       {
         "point": "Every beehive must be clearly and legibly marked with the beekeeper's registration number.",
         "source": {
           "quote": "Every beekeeper must mark his beehives to display clearly and legibly the registration number allocated to him in terms of control measure 2 (3).",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 4
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 5
         }
       },
       {
-        "point": "Keep written records of how many colonies you keep, where each apiary is, and any disease found.",
+        "point": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
         "source": {
-          "quote": "Every beekeeper shall, during the period of registration, keep written records of the- (a)number of colonies kept; (b)location of every apiary; (c)presence of any notifiable or other disease in the apiaries kept by the beekeeper;",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 4
+          "quote": "Every beekeeper shall, during the period of registration, keep written records of the— (a) number of colonies kept; (b) location of every apiary; (c) presence of any notifiable or other disease in the apiaries kept by the beekeeper; (d) management measures used to control any detected disease; and (e) number of colonies that ceased to exist, and the reasons for the loss.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 5
         }
       },
       {
         "point": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
         "source": {
           "quote": "No person may- (a)remove honey-bees across the line; ... (b)remove or keep Cape bees north of the line; (c)remove any Capensis-infected colony, without the prior written approval of executive officer.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 5
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       },
       {
         "point": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
         "source": {
           "quote": "Every beekeeper shall notify the executive officer or area official of the presence or suspected presence of any notifiable disease or Capensis-infected colony ... instruct a beekeeper to destroy a colony, beehive or bee product.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015), Annexure A: List of Notifiable Diseases",
-          "page": 8
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       }
     ]
@@ -347,7 +365,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       }
     ],
     "seasonalPattern": {
-      "text": "SA dairy processors need a steady year-round milk supply, so seasonal (batch) calving is not viable for SA dairy farmers - milk is produced continuously all year.",
+      "text": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
       "source": {
         "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
         "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",

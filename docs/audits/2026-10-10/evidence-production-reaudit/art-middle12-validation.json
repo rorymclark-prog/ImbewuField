@@ -1,0 +1,194 @@
+[
+  {
+    "id": "harpephyllum-caffrum",
+    "bytes": 10205,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.51800537109375,
+    "colours": 256
+  },
+  {
+    "id": "litchi-chinensis",
+    "bytes": 11241,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5343017578125,
+    "colours": 256
+  },
+  {
+    "id": "macadamia-integrifolia",
+    "bytes": 9675,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.55670166015625,
+    "colours": 256
+  },
+  {
+    "id": "mangifera-indica",
+    "bytes": 9559,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.3697509765625,
+    "colours": 256
+  },
+  {
+    "id": "mimusops-zeyheri",
+    "bytes": 10410,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5103759765625,
+    "colours": 256
+  },
+  {
+    "id": "moringa-oleifera",
+    "bytes": 23201,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.624755859375,
+    "colours": null
+  },
+  {
+    "id": "musa-acuminata-aaa-group",
+    "bytes": 10273,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.52850341796875,
+    "colours": 256
+  },
+  {
+    "id": "pappea-capensis",
+    "bytes": 12182,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.417236328125,
+    "colours": 256
+  },
+  {
+    "id": "passiflora-edulis",
+    "bytes": 11485,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.51739501953125,
+    "colours": 256
+  },
+  {
+    "id": "persea-americana",
+    "bytes": 12228,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.4295654296875,
+    "colours": 256
+  },
+  {
+    "id": "phoenix-reclinata",
+    "bytes": 11585,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.5147705078125,
+    "colours": 256
+  },
+  {
+    "id": "physalis-peruviana",
+    "bytes": 10488,
+    "width": 128,
+    "height": 128,
+    "channels": 4,
+    "colorType": 6,
+    "corners": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "transparentFraction": 0.53924560546875,
+    "colours": 256
+  }
+]

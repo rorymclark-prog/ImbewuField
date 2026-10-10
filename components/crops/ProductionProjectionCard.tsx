@@ -16,14 +16,14 @@ export default function ProductionProjectionCard({ projection }: { projection: P
     <div style={{ overflowX: 'auto' }}><div style={{ minWidth: 260 }}>
       {projection.years.map((y, i) => <button key={y.label} type="button" aria-pressed={i === selected} onClick={() => setSelected(i)} className="grid gap-2 items-center w-full rounded-lg px-2 py-2 text-left" style={{ gridTemplateColumns: '85px 1fr 100px', background: i === selected ? 'var(--bg-2)' : 'transparent', border: 'none', minHeight: 44, cursor: 'pointer', color: 'var(--text-primary)' }}>
         <span style={{ fontSize: 12, fontWeight: i === selected ? 700 : 400 }}>{y.label.split(' – ')[0]}</span>
-        <span className="flex rounded-full overflow-hidden" style={{ height: 14, background: 'var(--border)', position: 'relative' }}><span style={{ width: `${100 * (y.vegetableKg ?? 0) / maximum}%`, background: 'var(--emerald)' }} /><span style={{ width: `${100 * y.treeKg[1] / maximum}%`, background: 'var(--gold)', opacity: 0.75 }} /></span>
+        <span className="flex rounded-full overflow-hidden" style={{ height: 14, background: 'var(--border)', position: 'relative' }}><span style={{ width: `${100 * (y.vegetableKg ?? 0) / maximum}%`, background: 'var(--emerald)' }} /><span style={{ width: `${100 * y.treeKg[0] / maximum}%`, background: 'var(--gold)', opacity: 0.75 }} /><span style={{ width: `${100 * (y.treeKg[1] - y.treeKg[0]) / maximum}%`, background: 'repeating-linear-gradient(135deg, var(--gold) 0 2px, transparent 2px 5px)' }} /></span>
         <span style={{ fontSize: 11, textAlign: 'right' }}>{y.combinedKg ? projectedKgLabel(y.combinedKg) : 'Check beds'}{y.partial ? ' *' : ''}</span>
       </button>)}
     </div></div>
-    <p className="mt-2" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>* Known subtotal only. Missing production is not zero. Bars show the upper end of each range.</p>
+    <p className="mt-2" style={{ fontSize: 11, color: 'var(--text-secondary)' }}>* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.</p>
     <div className="mt-4 rounded-xl p-3" style={{ background: 'var(--bg-0)', border: '1px solid var(--border)' }}>
       <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}>{year.label}</h3>
-      <p className="mt-2" style={{ fontSize: 13, color: 'var(--text-primary)' }}>Vegetables &amp; staples: {year.vegetableKg === null ? 'Resolve bed conflicts' : `${Math.round(year.vegetableKg)} kg from cycles starting harvest in this period`}</p>
+      <p className="mt-2" style={{ fontSize: 13, color: 'var(--text-primary)' }}>Vegetables &amp; staples: {year.vegetableKg === null ? 'Resolve bed conflicts' : `${projectedKgLabel([year.vegetableKg, year.vegetableKg])} from cycles starting harvest in this period`}</p>
       {year.vegetableMissing.length > 0 && <p style={{ fontSize: 12, color: 'var(--gold)' }}>Not quantified: {year.vegetableMissing.join('; ')}</p>}
       {year.trees.map(tree => <div key={tree.speciesId} className="flex items-start gap-2 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
         {speciesFruitArtworkUrl(tree.speciesId) && <img src={speciesFruitArtworkUrl(tree.speciesId)!} alt="" width={32} height={32} />}
