@@ -42,6 +42,9 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: 'cc418724', changes: [
+    'Site reports and design reviews now use Claude Sonnet 5.5.',
+  ] },
   { when: '10 October 2026', sha: '142a5988', changes: [
     'Site report climate and rainfall words now follow your language as they are translated.',
     'Buttons and text on dark green look the same in every colour theme.',

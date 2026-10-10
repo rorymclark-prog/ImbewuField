@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { allowanceFrom, budgetConfig, CHEAP_MODEL, ledgerKey, loadAiBudget, monthlyResetDate, pickModel, type AiSpendStore } from '@/lib/ai-budget';
-import { AI_MODELS, meteredAi, shapeParams } from '@/lib/metered-ai';
+import { AI_MODELS, meter, meteredAi, shapeParams } from '@/lib/metered-ai';
 
 const NOW = new Date('2026-09-27T10:00:00Z');
 const cfg = budgetConfig({});
@@ -76,6 +76,40 @@ test('requests are fitted to the model they run on', () => {
   assert.equal(cheap.model, CHEAP_MODEL);
   assert.equal(cheap.max_tokens, 1000);
   assert.equal('thinking' in cheap, false);
+});
+
+test('Sonnet 5.5 report requests keep their answer budget without sending rejected thinking settings', () => {
+  const base = { model: AI_MODELS.report, max_tokens: 1000, messages: [] };
+  for (const request of [base, { ...base, thinking: { type: 'disabled' as const } }]) {
+    const fitted = shapeParams(request, AI_MODELS.report);
+    assert.equal(fitted.max_tokens, 1300);
+    assert.deepEqual((fitted as { thinking?: unknown }).thinking, { type: 'between_tools' });
+    assert.equal(request.max_tokens, 1000, 'fitting a request must not mutate the caller');
+  }
+});
+
+test('upgraded report calls still fall back after the allowance is spent and record their actual cost', async () => {
+  const usage = { input_tokens: 1000, output_tokens: 100, cache_read_input_tokens: 1000 };
+  for (const capped of [false, true]) {
+    const startingSpend = capped ? 1 : 0;
+    const store = memoryStore({ 'u_upgrade_2026-09': startingSpend });
+    const budget = await loadAiBudget({ kind: 'user', uid: 'upgrade' }, '/api/generate-report', {
+      store, now: NOW, env: {},
+    });
+    const expectedModel = capped ? CHEAP_MODEL : AI_MODELS.report;
+    const client = { messages: { async create(params: Record<string, unknown>) {
+      assert.equal(params.model, expectedModel);
+      assert.equal(params.max_tokens, capped ? 1000 : 1300);
+      if (capped) assert.equal('thinking' in params, false);
+      else assert.deepEqual(params.thinking, { type: 'between_tools' });
+      return { usage, content: [{ type: 'text', text: 'Report text' }] };
+    } } };
+    const ai = meter(client as never, budget, '/api/generate-report');
+    assert.equal(ai.model(AI_MODELS.report), expectedModel);
+    await ai.messages.create({ model: AI_MODELS.report, max_tokens: 1000, messages: [] });
+    assert.ok(store.data['u_upgrade_2026-09'] > startingSpend, 'the new model must not disappear from the spend ledger');
+    if (!capped) assert.ok(Math.abs(store.data['u_upgrade_2026-09'] - 0.0031) < 1e-12);
+  }
 });
 
 test('the in-memory fallback ledger still counts spend', async () => {

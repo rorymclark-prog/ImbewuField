@@ -144,7 +144,7 @@ export async function POST(req: NextRequest) {
   if (metered.response) return metered.response;
   const { ai } = metered;
   // The model this report really runs on — the cheap one once the allowance is spent.
-  const reportModel = ai.model(AI_MODELS.main);
+  const reportModel = ai.model(AI_MODELS.report);
   let body: {
     locationData: LocationData;
     photoAnalysis?: string;
@@ -701,7 +701,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     try {
       for (let attempt = 0; attempt < 2; attempt += 1) {
         const msg = await ai.messages.create({
-          model: AI_MODELS.main,
+          model: AI_MODELS.report,
           max_tokens: perBatchTokens,
           // THE ANTI-INVENTION RULE, and why it is a system prompt rather than another
           // paragraph in the user message: sections are generated in independent parallel
