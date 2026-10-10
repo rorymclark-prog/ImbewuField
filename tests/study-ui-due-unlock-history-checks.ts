@@ -43,7 +43,15 @@ assert.deepEqual(currentLocale, expectedLocale, 'only the nine accepted VE label
 export function ensureStudyUiDueUnlockCurrent() {
   const liveSource = readFileSync(path('lib/locales/ve.ts'));
   assert.equal(sha(liveSource), '0062c005b859e3723ce3ca24923cd8880d7f078c09f2b8c67f3df91a92790a69', 'complete live VE source bytes for the newest accepted layer');
-  assert.equal(sha(readFileSync(path('lib/i18n.tsx'))), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact');
+  // Main #990 adds report-footnote keys to the shared app dictionary, outside
+  // Studies. Check the complete new file before rewinding precisely its two
+  // additions; the original whole-file Study predecessor check still binds.
+  const english = readFileSync(path('lib/i18n.tsx'), 'utf8');
+  assert.equal(sha(english), 'd37673fb5c1a65ea78b4981b9ef24ade6f174365c7c999f20c3f03bc8326f3c7', 'complete app dictionary after the reviewed report-footnote layer remains exact');
+  const predecessor = english
+    .replace('MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, type Dict', 'MENTOR_ENGLISH_PENDING, type Dict')
+    .replace('  ...REPORT_FOOTNOTE_ENGLISH_PENDING,\n', '');
+  assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   assert.equal(sha(readFileSync(path('lib/locales/zu.ts'))), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
 }

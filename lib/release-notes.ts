@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: 'fca9c26e', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
   { when: '10 October 2026', sha: '142a5988', changes: [
     'Site report climate and rainfall words now follow your language as they are translated.',
     'Buttons and text on dark green look the same in every colour theme.',
@@ -55,14 +63,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Home → Settings',
     detail: 'Light text on the green buttons now changes with the theme instead of staying fixed.',
     href: '/home',
-  }] },
-  { when: '9 October 2026', sha: 'a964c86e', changes: [
-    'More Study due dates and unlock messages show unreviewed regional drafts.',
-    'Two isiZulu safety cards pair corrected draft wording with exact English.',
-    'Saved slide packs refresh changed cards and keep other media.',
-  ], tour: [{ title: 'Compare the updated Study drafts',
-    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
-    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
   }] },
   { when: '9 October 2026', sha: '4da5c22d', changes: [
     'Your monthly AI allowance is now R18, shown in rand on your Account page.',
