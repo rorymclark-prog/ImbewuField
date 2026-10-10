@@ -126,6 +126,40 @@ test('deleting a sale or expense that fails offline shows the error instead of v
   assert.match(i18n, /myRecordsDeleteError:/, 'myRecordsDeleteError must exist in the translation dictionary the money book reads');
 });
 
+test('a journal entry that fails to save when storage is full keeps the sheet open with the draft', () => {
+  const field = source('../components/journal/FieldJournal.tsx');
+  // bug-03: handleSave used to call setSheet({ open: false, entry: null }) unconditionally,
+  // closing the sheet (and discarding its typed draft) even when saveJournal() reported !ok —
+  // a storage-full failure that looked, to the farmer, exactly like a successful save.
+  assert.match(field, /function persist\(next: JournalEntry\[\]\): boolean \{/,
+    'persist must report whether the save actually landed, so callers can decide whether to close the sheet');
+  assert.match(field, /const ok = persist\(upsertJournalEntry\(entries, entry\)\);[\s\S]*?if \(ok\) setSheet\(\{ open: false, entry: null \}\);/,
+    'handleSave must only close the sheet when persist() succeeded');
+  assert.doesNotMatch(field, /persist\(upsertJournalEntry\(entries, entry\)\);\s*\n\s*setSheet\(\{ open: false, entry: null \}\);/,
+    'handleSave must not unconditionally close the sheet after persist()');
+  assert.match(field, /const \[sheetError, setSheetError\] = useState/,
+    'a failed save must be tracked separately so it can be shown inside the still-open sheet');
+  assert.match(field, /error=\{sheetError\}/, 'the sheet must receive the failed-save message as a prop');
+
+  const sheet = source('../components/journal/JournalEntrySheet.tsx');
+  assert.match(sheet, /error\?: string \| null;/, 'JournalEntrySheet must accept an error prop for a failed save');
+  assert.match(sheet, /\{error && \(/, 'JournalEntrySheet must render the failed-save message without closing itself');
+});
+
+test('deleting a journal entry needs two taps, like the money book\'s SalesLedger', () => {
+  const sheet = source('../components/journal/JournalEntrySheet.tsx');
+  // bug-12: the Delete button used to call onDelete(entry.id) directly on one tap, with no
+  // confirmation and no way back — unlike every other delete in the app.
+  assert.match(sheet, /const \[confirmDelete, setConfirmDelete\] = useState/,
+    'the sheet must track an armed/confirm state before actually deleting');
+  assert.doesNotMatch(sheet, /onClick=\{\(\) => onDelete\(entry\.id\)\}/,
+    'the delete button must not call onDelete on a single tap');
+  assert.match(sheet, /function requestDelete\(\) \{[\s\S]*?if \(confirmDelete\) \{[\s\S]*?onDelete\(entry\.id\);/,
+    'a second tap, while armed, must be the one that actually deletes');
+  assert.match(sheet, /setTimeout\(\(\) => setConfirmDelete\(false\), 3500\)/,
+    'the armed state must revert on its own, matching SalesLedger\'s 3.5s window');
+});
+
 test('a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero', () => {
   const dashboard = source('../components/NgoDashboard.tsx');
   assert.match(dashboard, /const \[gardenerError, setGardenerError\] = useState/,
