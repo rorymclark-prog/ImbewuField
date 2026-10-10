@@ -1,13 +1,14 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...JOURNAL_ENGLISH_PENDING,
   ...LIMA_ENGLISH_PENDING,
   ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   // FieldTeams.tsx's own unreviewed isiZulu drafts, carried over from its old inline `ui(en, zu)`
   // helper into real per-key overrides now that the component reads these through t(). English is
@@ -2035,6 +2036,34 @@ const dict: Dict = {
   chatDefaultPhotoQuestion: "Ngicela uxilonge lesi sithombe.",
   chatErrorMessage: "Uxolo, kukhona okungahambi kahle. Sicela uzame futhi.",
   chatPhotoOpenError: "Lesi sithombe asikwazi kuvulwa. Sicela uzame esinye isithombe noma isithombe se-JPEG.",
+
+  // Photos tab (components/PhotoUpload.tsx) — wave 11, lang-02. Unreviewed isiZulu drafts,
+  // direct overrides of the English spread from PHOTO_UPLOAD_ENGLISH_PENDING above.
+  photoZuluDraftNotice: "Umbhalo wesiZulu ku-Photos uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  photoAnalysisHeading: "Ukuhlaziywa kwesithombe sesayithi",
+  photoSatelliteViewTitle: "Okubonwa ngesathelayithi njengamanje",
+  photoSatelliteViewDesc: "Kuthwetshulwe kusuka ebalazweni — u-Lima uzohlaziya lokho akubonayo",
+  photoAnalysingEllipsis: "Kuhlaziywa...",
+  photoAnalyseButton: "Hlaziya",
+  photoAnalysingImagery: "U-Lima uhlaziya izithombe...",
+  photoSendingToLima: "Kuthunyelwa ku-Lima...",
+  photoReadsDesc: "Ifunda izitshalo, amanzi, umhlaba nezinto zokusetshenziswa · ~15–30s",
+  photoDropOrTap: "Faka izithombe zesayithi lapha noma thinta ukufaka isithombe",
+  photoUpToFive: "Kuze kube izithombe 5 · inhlabathi, izitshalo, umhlaba, izakhiwo",
+  photoAnalysePhotosSingular: "Hlaziya isithombe 1",
+  photoAnalysePhotosPlural: "Hlaziya izithombe {count}",
+  photoAnalysingPhotosButton: "Kuhlaziywa izithombe...",
+  photoClearButton: "Sula",
+  photoSelectLocationFirst: "Khetha indawo ebalazweni kuqala",
+  photoAddedToReportPrefix: "Kungezwe embikweni wakho — thinta",
+  photoAddedToReportSuffix: "ngenhla",
+  photoErrorUnreadable: "Ayikwazi kufundwa {file}",
+  photoErrorUndecodable: "{file} ayikwazi ukuhlukaniswa — zama i-JPEG noma i-PNG",
+  photoErrorZeroDimensions: "{file} inobubanzi obuyizero",
+  photoErrorBlankHeic: "{file} ibonakala ingenalutho ngemva kokulinganiswa kabusha — zama i-JPEG noma i-PNG esikhundleni se-HEIC",
+  photoErrorGeneric: "Isithombe {n} sehlulekile",
+  photoErrorBlankOrDark: "U-Lima akakwazi kufunda isithombe — sibonakala singenalutho noma simnyama kakhulu. Thatha kabusha ekukhanyeni okuhle noma uguqule kube i-JPEG/PNG kuqala.",
+  photoErrorAnalysisFailed: "Kukhona okungahambi kahle ngesikhathi kuhlaziywa isithombe sakho. Sicela uhlole ukuxhuma kwakho bese uzama futhi.",
 };
 
 export default dict;

@@ -83,3 +83,38 @@ test('ChatWidget still imports ChatPanel directly (another track owns the dynami
   const s = source('components/ChatWidget.tsx');
   assert.match(s, /^import ChatPanel from '\.\/ChatPanel';$/m, 'the ChatPanel import line changed unexpectedly');
 });
+
+// lang-02: components/PhotoUpload.tsx was entirely hard-coded English, named the model
+// "Claude Vision" instead of Lima, said "click" instead of "tap", and showed raw server/JS
+// error text (`Server error ${res.status}`, a thrown Error's own .message) straight to the
+// farmer.
+test('PhotoUpload.tsx routes its chrome through t(), names Lima, and says "tap"', () => {
+  const s = source('components/PhotoUpload.tsx');
+  assert.match(s, /const \{ t, lang \} = useLanguage\(\)/, 'PhotoUpload must read t()/lang from useLanguage()');
+
+  for (const call of [
+    "t('photoAnalysisHeading')",
+    "t('photoSatelliteViewTitle')",
+    "t('photoSatelliteViewDesc')",
+    "t('photoDropOrTap')",
+    "t('photoUpToFive')",
+    "t('photoClearButton')",
+    "t('photoSelectLocationFirst')",
+    "t('photoErrorBlankOrDark')",
+    "t('photoErrorAnalysisFailed')",
+  ]) {
+    assert.ok(s.includes(call), `PhotoUpload.tsx no longer calls ${call}`);
+  }
+
+  assert.doesNotMatch(s, /Claude Vision/, 'the model is still named "Claude Vision" instead of Lima');
+  assert.doesNotMatch(s, /Claude is analysing/, 'the loading copy still names Claude instead of Lima');
+  assert.doesNotMatch(s, /click to upload/, 'the upload zone still says "click" instead of "tap"');
+});
+
+test('PhotoUpload.tsx never shows a raw server status or thrown-error message to the farmer', () => {
+  const s = source('components/PhotoUpload.tsx');
+  assert.doesNotMatch(s, /setError\(`Server error/, 'a raw server status can still reach setError');
+  assert.doesNotMatch(s, /setError\(err instanceof Error \? err\.message/, 'a raw thrown-error message can still reach setError');
+  assert.match(s, /setError\(t\('photoErrorAnalysisFailed'\)\)/, 'the catch block must set a translated message');
+  assert.match(s, /console\.error\('Photo analysis failed:'/, 'the real error should still be logged for debugging');
+});

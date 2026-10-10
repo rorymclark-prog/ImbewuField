@@ -72,6 +72,42 @@ export const CHAT_PANEL_ENGLISH_PENDING: Dict = {
   chatZuluDraftNotice: 'The isiZulu wording in Lima chat is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
 };
 
+/*
+ * The Photos tab (components/PhotoUpload.tsx) — wave 11, lang-02. Was entirely hard-coded
+ * English, named the model "Claude Vision" instead of Lima, said "click" instead of "tap", and
+ * showed raw server/JS error text (a bare `Server error ${res.status}`, `err.message`) straight
+ * to the farmer. Decode failures keep a {file} placeholder so the farmer still knows which photo
+ * failed; everything the farmer would see goes through a translated key instead of the thrown
+ * Error's own message.
+ */
+export const PHOTO_UPLOAD_ENGLISH_PENDING: Dict = {
+  photoAnalysisHeading: 'Site photo analysis',
+  photoSatelliteViewTitle: 'Current satellite view',
+  photoSatelliteViewDesc: 'Captured from map — Lima will analyse what it sees',
+  photoAnalysingEllipsis: 'Analysing...',
+  photoAnalyseButton: 'Analyse',
+  photoAnalysingImagery: 'Lima is analysing the imagery...',
+  photoSendingToLima: 'Sending to Lima...',
+  photoReadsDesc: 'Reads vegetation, water, terrain & assets · ~15–30s',
+  photoDropOrTap: 'Drop site photos here or tap to add a photo',
+  photoUpToFive: 'Up to 5 photos · soil, vegetation, terrain, structures',
+  photoAnalysePhotosSingular: 'Analyse 1 photo',
+  photoAnalysePhotosPlural: 'Analyse {count} photos',
+  photoAnalysingPhotosButton: 'Analysing photos...',
+  photoClearButton: 'Clear',
+  photoSelectLocationFirst: 'Select a location on the map first',
+  photoAddedToReportPrefix: 'Added to your report — tap',
+  photoAddedToReportSuffix: 'above',
+  photoErrorUnreadable: 'Could not read {file}',
+  photoErrorUndecodable: '{file} could not be decoded — try JPEG or PNG',
+  photoErrorZeroDimensions: '{file} has zero dimensions',
+  photoErrorBlankHeic: '{file} appears blank after resize — try a JPEG or PNG instead of HEIC',
+  photoErrorGeneric: 'Photo {n} failed',
+  photoErrorBlankOrDark: 'Lima could not read the photo — it appears blank or very dark. Retake in good light or convert to JPEG/PNG first.',
+  photoErrorAnalysisFailed: 'Something went wrong analysing your photo. Please check your connection and try again.',
+  photoZuluDraftNotice: 'The isiZulu wording in Photos is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',
