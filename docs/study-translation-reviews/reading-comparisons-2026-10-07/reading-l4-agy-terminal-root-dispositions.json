@@ -1,0 +1,101 @@
+{
+  "conversation": "4f86c16d-4d01-4d56-ba43-297385b06ff6",
+  "terminalObserved": true,
+  "fluentApproval": false,
+  "rootDisposition": "Data-only findings; native full-paragraph proposals are not learner-ready. Source/current binding and independent repair checks required.",
+  "findings": [
+    {
+      "language": "zu",
+      "field": "body.paragraph2",
+      "issue": "long versus longest",
+      "candidateChange": [
+        "isikhathi eside",
+        "isikhathi eside kunazo zonke"
+      ]
+    },
+    {
+      "language": "zu",
+      "field": "quiz.1.options.1",
+      "issue": "wind-sensitive narrows tender",
+      "candidateChange": [
+        "ezizwela umoya",
+        "ezithambile"
+      ],
+      "needsCheck": "tender term could describe physical softness, retain technical English if uncertain"
+    },
+    {
+      "language": "st",
+      "field": "body.paragraph0",
+      "issue": "fences hold",
+      "disposition": "Reject proposed ditshepe/literata slash alternatives until exact physical-fence sense independently resolved"
+    },
+    {
+      "language": "st",
+      "field": "body.paragraph3",
+      "issue": "pretty versus perfect",
+      "candidateChange": [
+        "se setle haholo",
+        "se phethahetseng"
+      ]
+    },
+    {
+      "language": "ve",
+      "field": "body.paragraph0",
+      "issue": "fences hold",
+      "disposition": "Do not release dzitsheto without independent physical-fence evidence; full proposal also changes land to soil"
+    },
+    {
+      "language": "ve",
+      "field": "body.paragraph1",
+      "issue": "patch/design English",
+      "disposition": "Design technical hold allowed; verify patch scope independently, preserve checked ordinary prefixes"
+    },
+    {
+      "language": "ve",
+      "field": "body.paragraph3",
+      "issue": "beautified versus perfect",
+      "candidateChange": [
+        "yo nakiswaho",
+        "yo fhelelaho"
+      ],
+      "needsCheck": "complete versus perfect scope"
+    },
+    {
+      "language": "ve",
+      "field": "quiz.0.rationale",
+      "issue": "patch/design English",
+      "disposition": "Technical hold not automatically defect; no model proposal copied"
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph0",
+      "issue": "fences hold",
+      "disposition": "Do not copy marhangu; wall versus fence unresolved and prior audit already held it"
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph1",
+      "issue": "very long versus longest",
+      "candidateChange": [
+        "nkarhi wo leha ngopfu",
+        "nkarhi wo leha swinene ku tlula hinkwako"
+      ],
+      "needsCheck": "Independent superlative scope and grammar check required; no learner wiring."
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph3",
+      "issue": "actually use versus use well",
+      "candidateChange": [
+        "lexi u xi tirhisaka kahle",
+        "lexi hakunene u xi tirhisaka"
+      ]
+    },
+    {
+      "language": "ts",
+      "field": "quiz.0.rationale",
+      "issue": "design loan spelling",
+      "disposition": "Technical English permitted; not a required translation defect by itself"
+    }
+  ]
+}

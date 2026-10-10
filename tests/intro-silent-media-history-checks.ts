@@ -1,8 +1,19 @@
+import { expandedAssets } from './core-ordinary-expanded-history-checks.ts';
+import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
+import { fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
+import { veOrdinaryAssets } from './ve-ordinary-reviewed-history-checks.ts';
+import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
+import { frostAssets } from './ve-reading-frost-history-checks.ts';
+import { finalLanguageNextMediaProof } from './final-language-next-media-history-checks.ts';
+import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
+import { currentBatchProof, ensureCurrentBatch, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
+import { lightestAssetBefore, lightestAssetRows, lightestManifestBefore } from './reading-title-lightest-media-history-checks.ts';
+import { stIntroRuntimeResidualAssets, stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualManifestBefore } from './st-intro-runtime-residual-history-checks.ts';
 const sha = (b: Uint8Array | string) => createHash('sha256').update(b).digest('hex');
 const review = 'docs/study-translation-reviews/st-intro-silent-completion-2026-10-06/';
 function frozen(path: string, digest: string) {
@@ -38,15 +49,79 @@ for (const frame of latest.frames) {
   currentInventory.set(url, {bytes: frame.bytes, sha256: frame.sha256});
 }
 assert.equal(currentInventory.size, inventory.size, 'later redraws add no unlisted assets');
+// 6 October: complete later 36-frame layer is validated before older descriptors.
+for (const frame of finalLanguageNextMediaProof.frames) currentInventory.set(frame.url, frame.new);
+// 7 October redraws only these69 reviewed source-paired cards. The full
+// inventory remains an actual-byte guard, including every recording/archive.
+// The subsequent 15-card layer also replaces existing stills; retain every archive check.
+for (const frame of [...coreHeldOrdinaryAssets,...veOrdinaryAssets]) currentInventory.set(frame.url,{bytes:frame.afterBytes,sha256:frame.afterSHA256});
+// These ten measured framing replacements keep the full1927-file guard current.
+for (const frame of ordinaryFramingAssets) currentInventory.set(frame.url,{bytes:frame.bytes,sha256:frame.sha256});
+// Two replacements and two new silent ZU cards extend the actual disk guard;
+// no audio or archive is removed from its complete current inventory.
+for (const frame of fairSharingAssets) currentInventory.set(frame.url,{bytes:frame.bytes,sha256:frame.sha256});
+// VE Reading's accepted frost stills follow the earlier regional card layers.
+for (const [url, frame] of Object.entries(frostAssets)) if (frame.changed) {
+  const prior=currentInventory.get(url);
+  assert.equal(prior?.bytes, frame.beforeBytes, `${url}: frost proof starts at the exact earlier inventory size`);
+  assert.equal(prior?.sha256, frame.beforeSha256, `${url}: frost proof predecessor digest matches the earlier inventory`);
+  currentInventory.set(url, {bytes:frame.afterBytes,sha256:frame.afterSha256});
+}
+// The five-clause followup redraws are later than the earlier 69-card layer.
+// Keep their exact outputs in the live inventory before the newest batch.
+for (const [url, frame] of Object.entries(followupAssets)) if (frame.changed) {
+  currentInventory.set(url, {bytes:frame.afterBytes, sha256:frame.afterSha256});
+}
+// The newest accepted batch supersedes five of those stills. Freeze the older
+// inventory as the exact predecessor, then expose the newest complete proof.
+const beforeCurrentBatchInventory = new Map(currentInventory);
+const currentBatchAssets = new Map(currentBatchProof.assets.map(row => [row.url, row]));
+for (const frame of currentBatchProof.assets) {
+  const prior = beforeCurrentBatchInventory.get(frame.url);
+  assert.equal(prior?.bytes, frame.beforeBytes, `${frame.url}: newest proof starts at the complete prior inventory`);
+  assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: newest proof predecessor digest matches the prior inventory`);
+  currentInventory.set(frame.url, {bytes:frame.afterBytes,sha256:frame.afterSha256});
+}
+// The four expanded ordinary cards keep this complete live inventory authoritative.
+// Their immutable predecessor must join every prior byte guard before any old view is exposed.
+for (const frame of expandedAssets) {
+  const prior = currentInventory.get(frame.url);
+  assert.equal(prior?.bytes, frame.beforeBytes, `${frame.url}: expanded proof starts at the exact current inventory`);
+  assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: expanded predecessor SHA joins the full inventory`);
+  currentInventory.set(frame.url, {bytes: frame.afterBytes, sha256: frame.afterSha256});
+}
+// PR985's ten Intro silent assets precede this branch's four disjoint still updates.
+for (const frame of stIntroRuntimeResidualAssets) currentInventory.set(frame.url,{bytes:frame.after.bytes,sha256:frame.after.sha256});
+// The 8 October four-card batch replaces exact existing Reading and Vegetables stills.
+// Its complete proof is checked before any older inventory descriptor is exposed.
+export const readingTitleLightestAssets = lightestAssetRows();
+const beforeReadingTitleLightestInventory = new Map(currentInventory);
+export const readingTitleLightestBeforeInventory = beforeReadingTitleLightestInventory;
+for (const frame of readingTitleLightestAssets) {
+  const prior = currentInventory.get(frame.url);
+  assert.equal(prior?.bytes, frame.beforeBytes, `${frame.url}: newest card proof starts at exact current inventory bytes`);
+  assert.equal(prior?.sha256, frame.beforeSha256, `${frame.url}: newest card proof starts at exact current inventory hash`);
+  currentInventory.set(frame.url, {bytes: frame.afterBytes, sha256: frame.afterSha256});
+}
 const laterReplacedURLs = new Set<string>([
+  ...expandedAssets.map((frame: any) => frame.url),
+  ...stIntroRuntimeResidualAssets.map((frame: any) => frame.url),
   ...silentIntroIntegration.actualAssets.map((frame:any)=>frame.url),
   ...latest.frames.map((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')),
+  ...finalLanguageNextMediaProof.frames.map((frame:any)=>frame.url),
+  ...coreHeldOrdinaryAssets.map((frame:any)=>frame.url),
+  ...veOrdinaryAssets.map((frame:any)=>frame.url),
+  ...ordinaryFramingAssets.map((frame:any)=>frame.url),
+  ...fairSharingAssets.filter(frame => frame.before).map(frame => frame.url),
+  ...currentBatchProof.assets.map(frame => frame.url),
+  ...readingTitleLightestAssets.map((frame: any) => frame.url),
 ]);
 // Only these frozen, listed URLs need a historical descriptor. Bulk inventory
 // callers still check every other real file directly, without recursively
 // validating two thousand assets for each unchanged row.
 export function isSilentIntroLaterReplacedAsset(path: string): boolean {
-  return laterReplacedURLs.has(path.startsWith('public/') ? path.slice(6) : path);
+  const url = path.startsWith('public/') ? path.slice(6) : path;
+  return laterReplacedURLs.has(url) || Boolean(followupAssets[url]?.changed);
 }
 const observed = new Map<string,{signature:string;bytes:number;sha256:string}>();
 function fileDescriptor(path: string) {
@@ -57,6 +132,9 @@ function fileDescriptor(path: string) {
   const value={signature,bytes:bytes.length,sha256:sha(bytes)};observed.set(path,value);return value;
 }
 function verifyCurrentDiskInventory() {
+  // Verify the immutable latest five-file proof before any older layer can
+  // return a predecessor descriptor.
+  ensureCurrentBatch();
   // Every later call still notices same-size writes. Cache hashes, not700MB of
   // media buffers, and reuse them only while all filesystem identities match.
   for(const [url, expected] of currentInventory) {
@@ -67,7 +145,7 @@ function verifyCurrentDiskInventory() {
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
     const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
       ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
-      : fileDescriptor(output.path).sha256;
+      : sha(finalLanguageNextPairedBytesBefore(output.path, readFileSync(output.path)));
     assert.equal(sourceHash,output.sha256,'approved Intro native/paired files remain exact after the validated later Reading projection');
   }
   for(const old of applied.verification.oldSTProtectedByteInventory) {
@@ -93,7 +171,12 @@ let initialized=false;
 // published post-967 media layer. Full real current validation precedes any dated
 // descriptor; immutable manifests stay checked on every call without rereading1902 files.
 export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
-  const priorManifest = nativePairedResidualManifestBefore968(manifest);
+  // The frozen latest batch is validated first. Existing source-history owners
+  // then compose its predecessor through the followup and frost layers once.
+  ensureCurrentBatch();
+  const lightestPredecessor = lightestManifestBefore(manifest);
+  const runtimePreviousManifest = stIntroRuntimeResidualManifestBefore(lightestPredecessor);
+  const priorManifest = nativePairedResidualManifestBefore968(runtimePreviousManifest);
   assert.equal(sha(priorManifest),silentIntroIntegration.finalManifest.sha256,'after validating all later redraws, the complete accepted silent Intro manifest remains exact');
   verifyCurrentDiskInventory();
   if(initialized) return;
@@ -108,14 +191,14 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   for (const output of [...Object.values(applied.outputs.native),...Object.values(applied.outputs.existingPaired),applied.outputs.newSilentST] as any[]) {
     const sourceHash = output.path === 'lib/course-translation-drafts-ts.ts'
       ? sha(tsSharedSourceBeforeNativeOrdinary(readFileSync(output.path, 'utf8')))
-      : sha(readFileSync(output.path));
+      : sha(finalLanguageNextPairedBytesBefore(output.path, readFileSync(output.path)));
     assert.equal(sourceHash,output.sha256,'approved complete Intro source/status/provenance after the validated later Reading projection');
   }
   for (const f of render.frames) {
     const bound=silentIntroIntegration.actualAssets.find((a:any)=>a.path===f.destination);assert.ok(bound);
     assert.equal(bound.sha256,f.sha256);assert.equal(bound.bytes,f.bytes);
-    assert.equal(sha(readFileSync(f.pairedDraft)),f.pairedDraftSHA256);
-    const pair=JSON.parse(readFileSync(f.pairedDraft,'utf8'));const slide=pair.slides[f.slide-1];
+    assert.equal(sha(finalLanguageNextPairedBytesBefore(f.pairedDraft, readFileSync(f.pairedDraft))),f.pairedDraftSHA256);
+    const pair=JSON.parse(finalLanguageNextPairedBytesBefore(f.pairedDraft, readFileSync(f.pairedDraft)));const slide=pair.slides[f.slide-1];
     assert.equal(slide.n,f.slide);assert.deepEqual(slide.english,f.englishSource);assert.deepEqual(slide.target,f.target);
     verifySilentIntroFrame(bound,readFileSync(f.destination));
   }
@@ -129,7 +212,8 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   initialized=true;
 }
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
-  validateSilentIntroMedia(manifest);let before=nativePairedResidualManifestBefore968(manifest);
+  validateSilentIntroMedia(manifest);
+  let before=nativePairedResidualManifestBefore968(stIntroRuntimeResidualManifestBefore(lightestManifestBefore(manifest)));
   for(const f of silentIntroIntegration.actualAssets) {
     const row=`  '${f.url}': ${f.bytes},\n`;assert.equal(before.split(row).length,2);
     before=before.replace(row,f.beforeBytes===null?'':`  '${f.url}': ${f.beforeBytes},\n`);
@@ -140,11 +224,48 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
 }
 export function silentIntroMediaBefore(path: string) {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
-  const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
-  if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url)) {
+  const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);
+  assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
+  // The live whole-inventory guard above validates both layers. Check the current
+  // card projection before returning its exact predecessor descriptor.
+  if (readingTitleLightestAssets.some((frame: any) => frame.url === url)) {
+    const projected = lightestAssetBefore('public' + url, readFileSync('public' + url));
+    const prior = beforeReadingTitleLightestInventory.get(url);
+    assert.ok(prior, `${url}: newest still replaces an existing verified inventory asset`);
+    assert.deepEqual({ bytes: projected.length, sha256: sha(projected) }, prior,
+      `${url}: newest compressed bytes project to the exact predecessor in the complete earlier inventory`);
+    const historical = inventory.get(url);
+    assert.ok(historical, `${url}: exact predecessor remains in the frozen original inventory`);
+    return historical;
+  }
+  stIntroRuntimeResidualAssetBefore(path,readFileSync('public'+url));
+  // These four later stills were not all listed by the preceding five-card
+  // batch. The complete live inventory above must pass before their original
+  // Intro-era descriptors are exposed; never treat a replacement as unlisted.
+  if (expandedAssets.some((frame: any) => frame.url === url)) {
+    const historical = inventory.get(url); assert.ok(historical);
+    return {bytes: historical.bytes, sha256: historical.sha256};
+  }
+  const currentBatch = currentBatchAssets.get(url);
+  if(currentBatch) {
+    const prior=beforeCurrentBatchInventory.get(url);assert.ok(prior);
+    assert.deepEqual({bytes:currentBatch.beforeBytes,sha256:currentBatch.beforeSha256},prior,
+      `${url}: exact newest predecessor is the saved earlier inventory descriptor`);
+    const projected=followupAssetBefore('public'+url,readFileSync('public'+url));assert.ok(projected);
+    assert.deepEqual({bytes:projected.bytes,sha256:projected.sha256},prior,
+      `${url}: current caller bytes are verified before exposing the newest predecessor`);
+    // Older Intro inventories predate several of these later layers. Continue
+    // the exact chain to that frozen baseline rather than returning the
+    // immediately previous (still post-Intro) descriptor above.
+    const historical=inventory.get(url);assert.ok(historical, `${url}: newest current asset belongs to the complete older inventory`);
+    return historical;
+  }
+  if(latest.frames.some((frame:any)=>'/' + frame.repositoryPath.replace(/^public\//,'')===url) || finalLanguageNextMediaProof.frames.some((frame:any)=>frame.url===url)) {
     const previous=inventory.get(url);assert.ok(previous);
     return {bytes:previous.bytes,sha256:previous.sha256};
   }
   const row=silentIntroIntegration.actualAssets.find((f:any)=>f.url===url && f.beforeBytes!==null);
-  return row?{bytes:row.beforeBytes,sha256:row.beforeSHA256}:undefined;
+  if(row) return {bytes:row.beforeBytes,sha256:row.beforeSHA256};
+  if(followupAssets[url]?.changed || [...coreHeldOrdinaryAssets,...veOrdinaryAssets,...ordinaryFramingAssets,...fairSharingAssets.filter(frame=>frame.before)].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
+  return undefined;
 }

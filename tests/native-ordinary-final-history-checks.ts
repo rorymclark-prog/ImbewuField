@@ -1,4 +1,6 @@
+import { finalLanguageNextNativeBefore, finalLanguageNextDeckBefore, finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
+import { fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -12,6 +14,7 @@ import { XITSONGA_VEGETABLES_STAPLES_L2_DRAFT as vegTsL2 } from '../lib/course-t
 import { SESOTHO_MARKET_COMMUNITY_DRAFT as marketSt } from '../lib/course-translation-drafts-st-market-community.ts';
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as marketVe } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as marketTs } from '../lib/course-translation-drafts-ts-market-community.ts';
+import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
 
 const root = '../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/';
 const baseline = JSON.parse(readFileSync(new URL(`${root}baseline-native-modules.json`, import.meta.url), 'utf8'));
@@ -137,6 +140,9 @@ function readResidualPairedFiles(): Record<string, any> {
 
 /** Validate the complete newest overlay and its full paired files before exposing the prior layer. */
 export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string, any>, pairedFiles: Record<string, any>): void {
+  // 6 October: validate all 48 later accepted fields before the dated 13-cell claim.
+  nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, finalLanguageNextNativeBefore(module)]));
+  pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, finalLanguageNextDeckBefore(path, deck)]));
   for (const exportName of residualExports) {
     assert.deepEqual(nativeModules[exportName], residualApplied[exportName], `${exportName}: complete current registry equals the frozen newest layer`);
   }
@@ -162,10 +168,13 @@ export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string
 
 /** Return the immutable 28-field layer only after validating the complete newest 13-cell overlay. */
 export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
+  // 8 October: first validate the complete VE-control and ST observation layer.
+  // Its learner fragment supersedes the full native object used by the older dated claim.
+  actual = studyRemainingControlsNativeBefore(actual);
   const current: any = actual;
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];
-  if (!exportName || !residualExports.has(exportName)) return actual;
+  if (!exportName || !residualExports.has(exportName)) return finalLanguageNextNativeBefore(actual);
   const modules = { ...runtimeByExport, [exportName]: current };
   validateNativeOrdinaryResidualLayer(modules, readResidualPairedFiles());
   return structuredClone(residualBefore[exportName]);
@@ -207,6 +216,8 @@ export function nativeOrdinaryBeforeFinalBatch<T>(actual: T): T {
 
 /** Rewind only listed final-layer presentation fields after validating their full imported registry. */
 export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: any }>(result: T, lessonId: string, language: string): T {
+  // The later nine source-bound leaves are validated before this dated presentation.
+  result = finalLanguageNextPresentationBefore(result as any, lessonId, language);
   const moduleId = lessonId.startsWith('reading-landscape-') ? 'reading-landscape'
     : lessonId.startsWith('vegetables-staples-') ? 'vegetables-staples' : lessonId.startsWith('market-community-') ? 'market-community' : '';
   const exportName = lessonId === 'vegetables-staples-l2' && language === 'ts' ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${moduleId}:${language}`];
@@ -240,6 +251,7 @@ export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: 
  * Reading body literal; the caller still checks every other byte by the old SHA.
  */
 export function tsSharedSourceBeforeNativeOrdinary(bytes: string, currentReading: any = readTs): string {
+  bytes = fairSharingSourceBytesBefore('lib/course-translation-drafts-ts.ts', bytes);
   nativeOrdinaryBeforeFinalBatch(currentReading);
   const rows = fieldProof.fields.filter((row: any) => row.registryExport === 'XITSONGA_READING_LANDSCAPE_DRAFT');
   assert.equal(rows.length, 1, 'only the accepted TS Reading body field may be projected in the shared source');

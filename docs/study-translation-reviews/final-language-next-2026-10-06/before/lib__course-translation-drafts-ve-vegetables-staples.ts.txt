@@ -1,0 +1,261 @@
+import type { TshivendaCourseModuleDraft, TshivendaSourcePair } from './course-translation-drafts-ve.ts';
+import { COURSE_MODULES } from './course-modules.ts';
+
+/** Source-paired review records for unreviewed conceptual passages in Vegetables L3. */
+export const TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT = {
+  moduleId: 'vegetables-staples',
+  lessonId: 'vegetables-staples-l3',
+  language: 've',
+  reviewStatus: 'machine-draft',
+  bodyConcept: {
+    paragraphIndex: 0,
+    sourceEnglish: 'A staple earns its place because it feeds the household beyond the day of harvest.',
+    tshivendaDraft: 'Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.',
+    reviewStatus: 'machine-draft',
+  },
+  secondBodyConcept: {
+    paragraphIndex: 12,
+    sourceEnglish: "It means one failure doesn't finish your household's food plan.",
+    tshivendaDraft: 'Zwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.',
+    reviewStatus: 'machine-draft',
+  },
+  additionalBodyConcepts: [
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'It carries energy or protein.',
+      tshivendaDraft: 'Tshiḽiwa tsha vhuthogwa tshi fara energy kana protein.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'It stores, or it stays in the ground until you need it.',
+      tshivendaDraft: 'Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 1,
+      sourceEnglish: 'And often it carries cultural memory too.',
+      tshivendaDraft: 'Nahone kanzhi tshi na cultural memory.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 2,
+      sourceEnglish: 'One staple leaves you vulnerable.',
+      tshivendaDraft: 'Tshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 2,
+      sourceEnglish: 'Two or more give you options when weather or pests hit.',
+      tshivendaDraft: 'Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 5,
+      sourceEnglish: 'Each staple protects you against something different.',
+      tshivendaDraft: 'Tshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 15,
+      sourceEnglish: 'Different crops use water, soil and seasons differently.',
+      tshivendaDraft: 'Zwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 11,
+      sourceEnglish: "Resilience doesn't mean nothing fails.",
+      tshivendaDraft: 'Resilience a zwi ambi uri a hu na zwine zwa kundwa.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 13,
+      sourceEnglish: 'One crop is one point of failure.',
+      tshivendaDraft: 'Tshibyariwa tshithihi ndi point nthihi ya failure.',
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 3,
+      sourceEnglish: "Grow at least two. Not one.",
+      tshivendaDraft: "Alusani zwivhili kana zwo engaho. Hu si tshithihi.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 10,
+      sourceEnglish: "Notice that they fail in different conditions. That's the whole point.",
+      tshivendaDraft: "Ṱhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 14,
+      sourceEnglish: "Two or more staples give you more ways to keep eating.",
+      tshivendaDraft: "Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.",
+      reviewStatus: 'machine-draft',
+    },
+    {
+      paragraphIndex: 15,
+      sourceEnglish: "That difference is the protection.",
+      tshivendaDraft: "Phambano yeneyo ndi yone tsireledzo.",
+      reviewStatus: 'machine-draft',
+    },
+  ],
+  exactEnglishHoldPaths: [
+    'module title and description',
+    'lesson title',
+    'infographicAlt',
+    'body counterfactual/companion consequence and technical crop/agronomic clauses within paragraphs 7–10',
+    'keyPoints',
+    'quiz questions, options, and rationales',
+  ],
+} as const;
+
+const pair = (sourceEnglish: string, tshivendaDraft: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft, reviewStatus: 'machine-draft' });
+const hold = (sourceEnglish: string): TshivendaSourcePair => ({ sourceEnglish, tshivendaDraft: sourceEnglish, reviewStatus: 'hold' });
+const sourceModule = COURSE_MODULES.find(module => module.id === TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT.moduleId)!;
+const vegetablesL1 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l1')!;
+
+const vegetablesL2 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l2')!;
+
+const vegetablesL4 = sourceModule.lessons.find(lesson => lesson.id === 'vegetables-staples-l4')!;
+
+export const TSHIVENDA_VEGETABLES_STAPLES_L3_DRAFT: TshivendaCourseModuleDraft = {
+  id: "vegetables-staples", language: 've', reviewStatus: 'machine-draft',
+  sourceMetadata: { durationMins: 30, category: "plants" },
+  title: pair("Vegetables and Staple Crops", "Miroho na Staple Crops"),
+  description: pair("Bed prep, succession planting, staple crops and pest management — the daily work of growing food.", "U lugisa beds, succession planting, staple crops na pest management — mushumo wa ḓuvha ḽiṅwe na ḽiṅwe wa u lima zwiḽiwa."),
+  lessons: [{
+    id: "vegetables-staples-l3",
+    infographicAlt: pair("Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.", "Zwimela zwiraru zwa staple zwo ṱangana: tsinde ḽilapfu ḽa grain, vine ine ya namela kha thanda, na tshimela tsha midzi tsho sumbedzwaho hafu yatsho i fhasi ha mavu."),
+    title: hold("Staple Crops: Maize, Beans, and Root Vegetables"),
+    // Bind the entire reviewed body to its literal source so changed guidance fails closed.
+    body: pair("A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.", "Tshiḽiwa tsha vhuthogwa [staple] tshi wana vhuimo hatsho ngauri tshi ṋea muṱa zwiḽiwa u fhirisa ḓuvha ḽa khaṋo.\n\nTshiḽiwa tsha vhuthogwa tshi fara energy kana protein. Tshi a vhulungea kana tshi sala tshi mavuni u swika ni tshi tshi ṱoḓa. Nahone kanzhi tshi na cultural memory.\n\nTshiḽiwa tshithihi tsha vhuthogwa tshi ni sia ni vulnerable. Zwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea khetho musi mutsho kana zwikhokhonono zwi tshi kwama zwimela.\n\nAlusani zwivhili kana zwo engaho. Hu si tshithihi.\n\nNdi tshiḽiwa tsha vhuthogwa tshifhio tshine muṱa waṋu wa ḓitika ngatsho nga maanḓa u fhira zwiṅwe zwino? Ndi tshone tshine failure yatsho ya vha i tshi ḓo vhaisa vhukuma u fhira zwiṅwe — ngauralo ndi tshone tshine tsha ṱoḓa companion.\n\nTshiḽiwa tsha vhuthogwa tshiṅwe na tshiṅwe tshi ni tsireledza kha zwithu zwo fhambanaho.\n\nMaize i ṋea calories nahone i a vhulungea yo oma. Open-pollinated maize i dovha ya ni tendela ni vhulunga mbeu yaṋu, arali ni tshi langula isolation na selection.\n\nBeans na cowpeas zwi ṋea protein harvest ine ya nga vhulungwa.\n\nSweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dza yo dzo no vhumbea. I ṱoḓa maḓi kha vhege dza u thoma na musi storage roots dzi tshi kha ḓi vhumbea; water stress nga tshifhinga tshenetsho i nga fhungudza harvest. young leaves ayo na one a a ḽiwa.\n\nAmadumbe i a konḓelela mavu ane a vha na maḓi manzhi u fhira, hune zwiṅwe zwimela zwa vhuthogwa zwa konḓelwa.\n\nṰhogomelani uri zwi kundwa kha conditions dzo fhambanaho. Ndi zwone zwine zwa vha ndeme nga maanḓa.\n\nResilience a zwi ambi uri a hu na zwine zwa kundwa.\n\nZwi amba uri u kundwa huṅwe huthihi a hu fhedzi pulane ya zwiḽiwa ya muṱa waṋu.\n\nTshibyariwa tshithihi ndi point nthihi ya failure.\n\nZwiḽiwa zwa vhuthogwa zwivhili kana zwo engaho zwi ni ṋea dziṅwe nḓila nnzhi dza u bvela phanḓa ni tshiḽa.\n\nZwimela zwo fhambanaho zwi shumisa maḓi, mavu na khalaṅwaha nga nḓila dzo fhambanaho. Phambano yeneyo ndi yone tsireledzo."),
+    keyPoints: [
+      pair("Open-pollinated maize lets you save seed; hybrid seed won't breed true next season", "Open-pollinated maize i ni tendela u vhulunga mbeu; mbeu ya hybrid a i nga ḓo breed true khalaṅwaha i tevhelaho"),
+      pair("Beans are the key protein crop — productive, storable, and nitrogen-fixing", "Beans ndi tshimela tsha ndeme tsha protein — tshi a bveledza zwavhuḓi, tshi a vhulungea, nahone ndi nitrogen-fixing"),
+      pair("Sweet potato develops some drought tolerance after storage roots form, but needs water early; young leaves are edible", "Sweet potato i wana drought tolerance nyana nga murahu ha musi storage roots dzo no vhumbea, fhedzi i ṱoḓa maḓi mathomoni; young leaves ayo a a lea"),
+      pair("Amadumbe (taro) is an underused traditional staple suited to wetter KZN and coastal ground", "Amadumbe (taro) ndi staple ya sialala i sa shumiswi nga ho eḓanaho, i fanele mavu a KZN ane a vha na maḓi manzhi u fhira na mavu a tsini ha lwanzhe."),
+    ],
+    quiz: [
+      {
+        question: pair("Why choose open-pollinated maize over a hybrid variety if you plan to save your own seed?", "Ndi ngani ni tshi khetha open-pollinated maize u fhira lushaka lwa hybrid arali ni tshi dzudzanya u vhulunga mbeu yaṋu?"),
+        options: [pair("Open-pollinated varieties yield more", "Varieties dza open-pollinated yield more."), pair("Hybrid seed won't breed true — the next generation won't match the parent plant", "Mbeu ya hybrid a i nga ḓo breed true — zwimela zwa murafho u tevhelaho a zwi nga ḓo fana na tshimela tsha mubebi"), pair("Open-pollinated maize is always more drought-tolerant", "Open-pollinated maize i dzulela u vha more drought-tolerant"), pair("Hybrids can't be planted in South Africa", "Hybrids a dzi koni u ṱavhiwa Afurika Tshipembe")],
+        sourceCorrectIndex: 1,
+        rationale: pair("Seed saved from an F1 hybrid may grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when saving seed.", "Mbeu yo vhulungwaho kha F1 hybrid i nga mela, fhedzi zwimela zwa murafho u tevhelaho zwi nga fhambana. Mvelelo dza lushaka lwa open-pollinated lu re stable lune pollination ya lo ya langwa dzi a leluwa u bvumba u fhira, musi ni tshi vhulunga mbeu."),
+      },
+      {
+        question: pair("Why is amadumbe (taro) a good staple choice for parts of KZN?", "Ndi ngani amadumbe (taro) i tshi vha khetho yavhuḓi ya staple kha zwiṅwe zwipiḓa zwa KZN?"),
+        options: [pair("It thrives on very dry, sandy soil", "I aluwa zwavhuḓi kha mavu o omaho vhukuma, a muṱavha"), pair("It tolerates wetter ground than maize, suiting coastal and high-rainfall conditions", "I konḓelela mavu a re na maḓi manzhi u fhira ane maize ya konḓelela, zwine zwa ita uri i fanele mavu a tsini ha lwanzhe na nyimele dza mvula nnzhi."), pair("It requires no cultivation at all", "A i ṱoḓi cultivation na luthihi"), pair("It's the only staple that stores for multiple years", "Ndi tshone staple tshithihi fhedzi tshi vhulungeaho miṅwaha i fhiraho muthihi")],
+        sourceCorrectIndex: 1,
+        rationale: pair("Amadumbe actually prefers damper ground where maize would struggle — it fills a niche other staples can't handle well.", "Amadumbe actually prefers damper ground where maize would struggle — i ḓadza niche ine other staples can't handle well."),
+      },
+    ],
+  },
+  {
+    id: 'vegetables-staples-l1',
+    title: pair("Preparing and Planting Your Beds", "U Lugisela na u Ṱavha Beds dzaṋu"),
+    infographicAlt: pair(vegetablesL1.infographicAlt!, "A raised bed ine ya vha na vhuphara ha about 1.2 metres, i re na paths nga matungo mavhili, uri muthu a swike vhukati a tshi bva kha thungo iṅwe na iṅwe a sa vhuye a ima kha mavu ane a khou limiwa."),
+    body: pair("Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDo not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed.\n\nSome crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.\n\nOthers do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.\n\nUse spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.", "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe.\n\nTsireledzo ndi yo leluwaho. Permanent paths, na bed ine ya vha tsekene lune na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili.\n\nOne metre to one point two metres wide. Wonoyo ndi mpimo une wa shumiswa. Kha honoho vhuphara ni nga swikelela vhukati ni tshi bva kha iṅwe na iṅwe ya paths mbili, nahone milenzhe yaṋu a i kwami growing area na luthihi.\n\nZwino humbulani nga ha beds dzaṋu. Ni nga swikelela vhukati ni sa kande nga ngomu? Iyani ni lingedze zwenezwo ni sa athu ṱavha tshiṅwe tshithu.\n\nA hu na tshivhumbeo tshithihi tsha bed tshine tsha tea fhethu hoṱhe.\n\nThomani nga least disturbance ine ya tandulula thaidzo yaṋu.\n\nNo-dig i tea kha vhunzhi ha mavu a ngade. Litshani structure ya mavu i sa shanduke, nahone ni fhaṱe fertility nga nṱha.\n\nNi songo bwa wet clay. Arali compaction kana poor drainage zwi tshi vha severe, wanani tshiitisi nga nyeletshedzo ya henefho ni sa athu khetha deeper cultivation.\n\nRaised beds dzi tea wet ground, hune maḓi a ṱoḓa fhethu ha u bva hone.\n\nSunken beds dzi tea dry ground, hune na ṱoḓa u fara na u vhulunga mvula ine na i wana.\n\nNga murahu ha mvula khulu, ṱhogomelani. Maḓi a dzula ngafhi kana a elela a bva ngafhi? Ṱanganyisani zwe na vhona na nyeletshedzo nga ha soil and drainage ni sa athu khetha bed.\n\nZwimela zwiṅwe a zwi takaleli musi midzi yazwo i tshi kavanyedzwa. They do better musi zwi tshi zwaliwa nga ho livhaho hune zwa ḓo aluwa hone. Beans, carrots na maize zwi wela kha tshigwada itsho.\n\nZwiṅwe zwi ita khwine musi zwi tshi thoma zwo tsireledzea kha nursery, nga murahu transplanting. Tomatoes na brassicas zwi wela henefho.\n\nShumisani spacing guidance ya crop, variety na local conditions. Sedzani packet na local grower advice. Sedzani crowding musi zwimela zwi tshi aluwa.\n\nNi sa athu ṱavha, swayani bed.\n\nOne point two metres wide. Three metres long. Bed nthihi ya vhuḓowedzi (practice bed).\n\nShumisani zwipiki na thambo. Swayani rectangle, nahone ni swaye paths dzoṱhe mbili dza u swikelela bed.\n\nNga murahu ni lugiselele u ya nga mavu aṋu — thomani nga no-dig, nahone ni bwe u tsa fhedzi arali mavu aṋu a tshi zwi ṱoḓa vhukuma.\n\nString line i shandula muhumbulo wa vha tsheo. Musi paths dzi no vha hone, ni dzi litshe dzi dzule hone. Musi growing area i no vha hone, ni i tsireledze.\n\nBed yeneyo i a leluwa u khwinifhadza khalaṅwaha iṅwe na iṅwe, ngauri no litsha u tshimbila khayo."),
+    keyPoints: [
+      pair("Keep beds 1-1.2m wide so you never need to step on the growing area", "Beds dzaṋu dzi vhe 1-1.2m wide uri ni sa vhuye na tea u kanda growing area."),
+      pair("Assess compaction and drainage before choosing deeper cultivation; do not work wet clay", "Assess compaction na drainage ni sa athu khetha deeper cultivation; ni songo shuma wet clay"),
+      pair("Transplant crops needing a head start; direct-seed crops that resent root disturbance", "Transplant zwimela zwine zwa ṱoḓa head start; direct-seed zwimela zwine zwa si takalele root disturbance"),
+      pair("Crowded plants underperform — space generously for your local climate", "Zwimela zwo tsitsikanaho underperform — space generously u ya nga local climate yaṋu"),
+    ],
+    quiz: [
+      {
+        question: pair("Why keep a vegetable bed to 1-1.2m wide rather than wider?", "Ndi ngani ni tshi vhulunga bed ya miroho i na vhuphara ha 1-1.2m, nṱhani ha u i ita wider?"),
+        options: [
+          pair("Wider beds get too much sun", "Beds dzo ṱanḓavhuwaho dzi wana ḓuvha ḽinzhi nga maanḓa"),
+          pair("You can reach the centre from either side without stepping on the growing area, avoiding compaction", "Ni nga swikelela vhukati ni tshi bva kha ḽiṅwe na ḽiṅwe ḽa masia mavhili ni sa kande fhethu hune zwimela zwa mela, na thivhela compaction."),
+          pair("Narrow beds drain better in all conditions", "Narrow beds drain better kha nyimele dzoṱhe"),
+          pair("It's a fixed rule with no practical reason", "Ndi mulayo wo vhewaho une wa si vha na tshiitisi tsha u shumisa."),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: pair("Stepping on growing soil compacts it and damages roots — a bed you can reach into from both sides means you never have to.", "U kanda growing soil zwi ita compaction na u tshinyadza midzi — bed ine na nga swikelela nga ngomu ni tshi bva kha masia oṱhe mavhili i amba uri ni nga si vhuye na tea u kanda growing soil."),
+      },
+      {
+        question: pair("Which crop is best suited to direct-seeding rather than transplanting?", "Ndi tshimela tshifhio tshine tsha vha best suited to direct-seeding rather than transplanting?"),
+        options: [
+          pair("Tomatoes, which need an early start", "Tomatoes, dzine dza ṱoḓa early start"),
+          pair("Brassicas, which need protection while small", "Brassicas, dzine dza ṱoḓa tsireledzo musi dzi tshee ṱhukhu"),
+          pair("Beans, which resent root disturbance", "Beans, dzine dza si takalele root disturbance"),
+          pair("Peppers, which are slow to germinate", "Peppers, dzine dza ongolowa u mela"),
+        ],
+        sourceCorrectIndex: 2,
+        rationale: pair("Beans and other quick, sensitive-rooted crops establish poorly after transplant shock — sowing them straight into the bed avoids that setback entirely.", "Beans and other quick, sensitive-rooted crops establish poorly nga murahu ha transplant shock — u zwi zwala nga ho livhaho kha bed zwi thivhela setback yeneyo nga hoṱhe."),
+      },
+    ],
+  },
+  {
+    id: 'vegetables-staples-l2',
+    title: pair("Succession Planting and Intercropping", "Succession Planting na Intercropping"),
+    infographicAlt: hold(vegetablesL2.infographicAlt!),
+    body: pair("Succession planting is a calendar habit, not a special crop.\n\nChoose something your household actually eats often. Then sow a small amount of it, again and again.\n\nPlant a short row every two to three weeks.\n\nLess waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.\n\nSeparate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.\n\nWhich fast crop could you sow in small batches? Decide on one, and start it this week.\n\nHere's what it looks like in practice.\n\nSow one. Then two to three weeks later, sow two. Then sow three. Then sow four.\n\nWith suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.\n\nTwo to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.\n\nWatch what your own garden does, and adjust the interval. That observation is the skill.\n\nIntercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.\n\nThe Three Sisters is an example from Indigenous farming traditions in the Americas.\n\nMaize gives height and structure.\n\nBeans climb the maize, and store as protein.\n\nPumpkin spreads across the ground, shading the soil and holding moisture.\n\nTiming matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThe plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nA household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nDon't copy somebody else's calendar. Name your own months first.\n\nWrite them down. Then choose the crop and the sowing date that puts food into that gap.\n\nThat's planning backwards, and it's the difference between a garden that looks productive and a household that eats.", "Succession planting ndi maitele a kalenda, hu si tshimela tsho khetheaho.\n\nNangani tshithu tshine muṱa waṋu wa tshi ḽa kanzhi vhukuma. Nga murahu, sow zwiṱuku zwa tshithu itsho, ni dovhe ni ite tano hafhu na hafhu.\n\nṰavhani muduba mupfufhi vhege dziṅwe na dziṅwe dza mbili u swika kha tharu.\n\nU tambisea ha zwiḽiwa hu a fhungudzea musi hu na khaṋo nnzhi. Zwiḽiwa zwiswa zwi a wanala for longer. Na mushumo u a phaḓalala kha khalaṅwaha, u sa ni lemedza woṱhe nga tshifhinga tshithihi.\n\nU ṱavha nga zwifhinga zwo fhambanaho hu nga fhungudza khombo ya u xelelwa nga zwoṱhe nga tshifhinga tshithihi. A zwi khwaṱhisedzi uri ni ḓo wana khaṋo arali nyimele dzi konḓaho dzi tshi bvela phanḓa.\n\nNdi fast crop ifhio ine na nga sow nga zwipiḓa zwiṱuku? Nangani tshithihi, ni tshi thome ino vhege.\n\nHezwi ndi zwine zwa itea ngazwo.\n\nSow tsha u thoma. Nga murahu ha two to three weeks, sow tsha vhuvhili. Nga murahu, sow tsha vhuraru. Nga murahu, sow tsha vhuṋa.\n\nArali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap. A si tshifhinga tshoṱhe tshine tshigwada tsha u thoma tsha vha tsho lugela u kaṋiwa musi ni tshi zwala lwa vhuṋa.\n\nVhege mbili u swika kha tharu ndi maitele a u thoma, hu si mulayo. A cool-season leaf crop may hold longer. Musi hu tshi fhisa, zwi nga ṱavhanyisa zwithu kana zwa ita uri zwi kundelwe.\n\nSedzani zwine zwa itea tsimuni yaṋu, ni shandule interval. U sedza nga nḓila iyi ndi yone skill.\n\nU ṱavha zwimela zwo fhambanaho fhethu huthihi a si u tou zwi kuvhanganya fhedzi. Tshimela tshiṅwe na tshiṅwe tshi ṱoḓa mushumo watsho, na fhethu ho eḓanaho uri tshi kone u ita wonoyo mushumo.\n\nThe Three Sisters ndi tsumbo ya Indigenous farming traditions in the Americas.\n\nMaize i ṋea vhulapfu na tshivhumbeo.\n\nBeans dzi gonya maize, and store as protein.\n\nPumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.\n\nTshifhinga tshi a vha tsha ndeme. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya.\n\nZwimela zwi nga kha ḓi konkurisana. Ni zwi fhe fhethu ho teaho, maḓi na tshedza. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition.\n\nMuṱa u nga vha na hungry gap: vhege dzine zwiḽiwa zwo vhulungwaho zwa vha zwi tshi khou fhungudzea phanḓa ha musi khaṋo i tevhelaho i tshi luga.\n\nHungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden.\n\nNi songo kopolola calendar ya muṅwe muthu. Thomani nga u bula miṅwedzi yaṋu.\n\nIṅwaleni fhasi. Ni kone u khetha crop na sowing date ine ya isa zwiḽiwa kha hungry gap yeneyo.\n\nHezwi ndi planning backwards, nahone ndi zwone zwi fhambanyisaho garden ine ya vhonala i tshi bveledza na muṱa une wa wana zwiḽiwa."),
+    keyPoints: [
+      pair("Stagger sowings and adjust the interval for crop, weather and household use", "Shumisani staggered sowings, ni shandule interval u ya nga crop, weather na household use."),
+      pair("The Three Sisters comes from Indigenous farming traditions in the Americas", "The Three Sisters zwi bva kha Indigenous farming traditions in the Americas."),
+      pair("Use household food records to identify and plan for a hungry gap", "Shumisani household food records u wana na u pulana hungry gap."),
+      pair("Intercropped plants can still compete; manage space, timing and water", "Zwimela zwo ṱavhiwaho zwo ṱanganelana zwi nga kha ḓi konkurisana; langani space, timing na maḓi."),
+    ],
+    quiz: [
+      {
+        question: pair("Why sow lettuce in small batches every 2-3 weeks instead of all at once?", "Ndi ngani ni tshi sow lettuce nga zwipiḓa zwiṱuku vhege dziṅwe na dziṅwe dza mbili u swika kha tharu, nṱhani ha u i sow all at once?"),
+        options: [
+          pair("It uses less seed overall", "Zwi shumisa less seed nga u angaredza."),
+          pair("It gives a steady harvest instead of a glut followed by a gap", "Zwi ita uri ni kaṋe zwiḽiwa nga u tevhekana, nṱhani ha khaṋo nnzhi nga tshifhinga tshithihi yo tevhelwa nga tshikhala tshi si na khaṋo."),
+          pair("Lettuce germinates better in small batches", "Lettuce i mela better nga zwipiḓa zwiṱuku."),
+          pair("It reduces pest pressure", "Zwi fhungudza pest pressure."),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: pair("A single large sowing matures all at once — staggering the sowing spreads the harvest out to match what a household can actually use.", "U sowa hoṱhe luthihi nga vhunzhi zwi vhibva zwoṱhe nga tshifhinga tshithihi — u sowa nga u tevhekana zwi phaḓaladza khaṋo uri i lingane na zwine muṱa wa kona u shumisa zwa vhukuma."),
+      },
+      {
+        question: pair("When can nitrogen in bean crop residues become available to other plants?", "Ndi lini nitrogen in bean crop residues i nga become available kha zwimela zwiṅwe?"),
+        options: [
+          pair("Immediately whenever a bean touches maize", "Nga u ṱavhanya tshifhinga tshoṱhe musi bean i tshi kwama maize."),
+          pair("As soil organisms decompose the residues", "Musi soil organisms dzi tshi decompose residues."),
+          pair("Only when pumpkin leaves shade them", "Fhedzi musi maṱari a pumpkin a tshi ita murunzi kha them."),
+          pair("It can never be released", "I nga never be released."),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: pair("Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; growing beans beside maize does not guarantee immediate feeding.", "Beans fix nitrogen with suitable root bacteria. Nitrogen in their residues is released through decomposition; u alusa beans tsini na maize does not guarantee immediate feeding."),
+      },
+    ],
+  },
+  {
+    id: 'vegetables-staples-l4',
+    title: pair("Observe and Manage Pests and Disease", "Sedzani ni lange Pests na Disease."),
+    infographicAlt: pair(vegetablesL4.infographicAlt!, "Pest kha ṱari, na nḓila tharu dza u i langa hu si na chemicals: beneficial insect, physical barrier, na u i bvisa nga tshanḓa."),
+    body: pair("Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.\n\nIf a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.\n\nBe honest with yourself about which step you usually skip.", "Pest pressure i anzela u engedzea nga tshiitisi.\n\nZwimela zwi re na stress. One crop dominating the ground. Kana broad chemical use yo no bvisa predators dze dza vha dzi tshi ni thusa.\n\nNgazwenezwo, ni sa athu u thoma u lafha tshithu, sedzani system yoṱhe.\n\nNaa tshimela tshi khou shaya maḓi? Mavu o compacted kana a si na pfushi? Predators dzi khou shuma kha thaidzo iyi dzi tshi ni thusa already naa?\n\nYellow leaf a i ambi automatically uri ndi insect. Zwenezwo zwi nga vha maḓi, nutrition, kana u vhaisala ha midzi. Wanani uri ndi zwifhio ni sa athu dzhia vhukando.\n\nTevhelani vhukando vhuṋa nga u tevhekana.\n\nTsha u thoma. Sedzani. Sedzani damage pattern, tlhelo ḽa fhasi ḽa ḽiṱari, tsinde, na zwimela zwi re tsini.\n\nTsha vhuvhili. Sedzani stress. Soil moisture, midzi, spacing ya zwimela, nutrition na drainage.\n\nTsha vhuraru. Tsireledzani zwine zwa khou ni thusa. Beneficial insects (zwikhokhonono zwine zwa thusa) zwi khou ni itela mushumo une na inwi na vha ni tshi ḓo u ita.\n\nTsha vhuṋa. Ndi hone fhedzi ni tshi dzhia vhukando — thomani nga the lightest thing that works. Physical removal, barriers kana tshanduko kha nḓila ya u ṱhogomela zwimela zwi nga thusa. Ṱolani arali vhukando vhu tshi tea thaidzo, ni bvele phanḓa ni tshi sedza mvelelo.\n\nArali treatment i tshi ṱoḓea, shumisani product registered for that crop and pest, nahone ni tevhele label yayo. Hezwi zwi katela neem products. Ṱolani protection and harvest waiting instructions. Ni songo ḓiitela misanganedzo kana stronger doses.\n\nNi ḓi ambele ngoho nga ha vhukando vhune na anzela u vhu pfuka."),
+    keyPoints: [
+      pair("Identify the cause before treating damage", "Wanani tshiitisi tsha damage ni sa athu u ita treatment."),
+      pair("Check water, roots, nutrition and beneficial insects", "Ṱolani maḓi, roots, nutrition na beneficial insects."),
+      pair("Use suitable physical or crop-care measures and monitor results", "Shumisani physical kana crop-care measures zwo teaho, nahone ni bvele phanḓa ni tshi sedza mvelelo."),
+      pair("If treatment is needed, use a registered product for the crop and pest and follow the label", "Arali treatment i tshi ṱoḓea, shumisani registered product for the crop and pest nahone ni tevhele label."),
+    ],
+    quiz: [
+      {
+        question: pair("If a pest problem needs a treatment product, what should guide its use?", "Arali pest problem i tshi ṱoḓa treatment product, ndi mini tshine tsha fanela u langa u shumiswa hayo?"),
+        options: [
+          hold("An improvised stronger mixture"),
+          pair("A product registered for the crop and pest, used according to its label", "Product registered for the crop and pest, yo shumiswaho u ya nga label yayo"),
+          pair("Any product described as natural", "Product iṅwe na iṅwe ine ya ṱaluswa sa natural."),
+          pair("A neighbour’s dose for a different crop", "Dose ya muhura ya crop yo fhambanaho"),
+        ],
+        sourceCorrectIndex: 1,
+        rationale: pair("Crop, pest, dose, protection and harvest waiting instructions matter. A natural origin does not make an improvised treatment safe or suitable.", "Crop, pest, dose, protection and harvest waiting instructions ndi zwa ndeme. Natural origin a i iti uri improvised treatment i vhe tsireledzea kana i fanelee."),
+      },
+      {
+        question: pair("A farmer's brassica leaves are turning yellow. Before assuming pests, what should she check first?", "Musi maṱari a brassica a murimi a tshi khou vha yellow, u sa athu humbulela uri ndi pests, u fanela u thoma u ṱola mini?"),
+        options: [
+          pair("Whether it's actually a soil nutrient or watering issue", "Arali hu vhukuma thaidzo ya soil nutrient kana watering."),
+          pair("Whether the moon phase is right for treatment", "Arali moon phase i tshi tea treatment"),
+          pair("Whether her neighbour has the same problem", "Arali muhura wawe a tshi na thaidzo i fanaho."),
+          pair("Whether it's aphids specifically", "Arali hu aphids specifically"),
+        ],
+        sourceCorrectIndex: 0,
+        rationale: pair("Yellowing has several common causes, and a soil or watering issue needs a completely different fix than a pest does — checking first avoids wasted treatment.", "Yellowing i na zwivhangi zwo vhalaho zwo ḓoweleaho, nahone soil or watering issue i ṱoḓa fix yo fhambanaho nga hoṱhe na ya pest — u ṱola u thoma zwi thivhela wasted treatment."),
+      },
+    ],
+  }],
+};

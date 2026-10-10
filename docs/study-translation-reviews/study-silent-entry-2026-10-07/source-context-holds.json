@@ -1,0 +1,27 @@
+{
+  "base": "25f6baaefc56e82a4fae5f679a43aa5f605d66f0",
+  "status": "Read-only source-context review; no further locale entries applied",
+  "findings": [
+    {
+      "keys": "studentReadiness*",
+      "evidence": "app/student/page.tsx readiness badge renders only when !simple && isStaff. Counts derive from moduleReadinessDetail globally, not selected language.",
+      "nextAction": "Review global staff status wording separately; do not treat these labels as selected-language narration promises."
+    },
+    {
+      "key": "studentListenModule",
+      "evidence": "Audio-only entry renders only when no deck and hasNarration(mod.id). CourseAudioPlayer owns actual language selection.",
+      "nextAction": "Candidate can be checked as an action label; inspect player fallback before claiming selected voice availability."
+    },
+    {
+      "key": "offlineRegionalFullMedia",
+      "evidence": "Only explicit regional full-pack choice; silent slides-only remains default. Existing English note says available English source media.",
+      "nextAction": "Can translate explicit choice without changing default or implying regional voice."
+    },
+    {
+      "key": "offlineGetWhileSignal",
+      "evidence": "Regional slides variant already uses separate slides-only copy. Full/global variant uses this source.",
+      "nextAction": "Preserve available media scope; do not rewrite protected English to promise missing files."
+    }
+  ],
+  "approvalClaims": false
+}

@@ -1,0 +1,46 @@
+{
+  "status": "Root local pixel review; not preview/phone/offline approval; not fluent approval.",
+  "contactSheetsViewed": 9,
+  "framesInContacts": 69,
+  "fullCompressedFramesViewed": [
+    {
+      "path": "public/course-decks/vegetables-staples/st/slide-05.webp",
+      "sha256": "ea69b4b68ea28d201c7c8612b7e30a6ecc87c765537ac2246be4ff5f0f4902dd"
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/ts/slide-14.webp",
+      "sha256": "ad16964d5ea3b13a40f5f8a3c663d852730b57082d96686421dfd87183d4b365"
+    },
+    {
+      "path": "public/course-decks/reading-landscape/ts/slide-14.webp",
+      "sha256": "848edbe5206ffbc1b264b0b5c01e27108e5cd071710f9973445c2107bc971a76"
+    },
+    {
+      "path": "public/course-decks/intro-permaculture/st-silent/slide-12.webp",
+      "sha256": "176cd94c6f61c6f4769889892b98e6bb41827fc0a48dc23e4c4894ec31a37343"
+    },
+    {
+      "path": "public/course-decks/vegetables-staples/ve/slide-03.webp",
+      "sha256": "d93053f9da1764d0202b70e6b85404432a8ed1da46c21e17ea25eb6343f17f49"
+    }
+  ],
+  "observations": [
+    "Unreviewed language labels and exact-English panels visible.",
+    "No clipping or overlap observed in nine contacts and five full compressed representatives.",
+    "Long ST Vegetables5 and TS Introduction14 targets fit inside their panels.",
+    "Technical English holds remain visible; ordinary-English holds elsewhere remain unfinished."
+  ],
+  "remainingGates": [
+    "full suite",
+    "exact-head CI/preview",
+    "390px actual learner/source/audio controls",
+    "one offline pack/cache proof",
+    "main deploy/build-info"
+  ],
+  "reviewFlags": [
+    {
+      "frame": "reading-landscape/ts/slide-14",
+      "flag": "Existing longest-duration wording uses nkari wo leha ngopfu; independent semantic recheck against longest before claiming final completeness. Not changed by the current ordinary segment update."
+    }
+  ]
+}

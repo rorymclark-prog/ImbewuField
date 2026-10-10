@@ -9,6 +9,8 @@ import {
   loadCustomCropNames,
   saveCustomCropName,
 } from '@/lib/crop-entry';
+import { useLanguage } from '@/lib/i18n';
+import { recordsFill } from '@/lib/records-regional-drafts';
 
 interface CropSelectProps {
   value: string;
@@ -79,7 +81,10 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     onChange(catalogue?.label ?? saved, catalogue?.key ?? null);
   }
 
-  const label = (english: string, isiZulu: string) => language === 'zu' ? isiZulu : english;
+  // isiZulu keeps its existing wording; Sesotho, Tshivenda and Xitsonga read the money book's
+  // source-keyed drafts, and the crop names themselves are never translated or respelled.
+  const { lang } = useLanguage();
+  const label = (english: string, isiZulu: string) => language === 'zu' ? isiZulu : recordsFill(lang, english);
 
   return (
     <div className="space-y-2">
@@ -90,7 +95,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
       >
-        <option value="">Choose produce / product</option>
+        <option value="">{recordsFill(lang, 'Choose produce / product')}</option>
         <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
           {CROP_ENTRY_OPTIONS.map((crop) => (
             <option key={crop.key} value={`catalogue:${crop.key}`}>{crop.label}</option>
@@ -111,24 +116,24 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             ))}
           </optgroup>
         ))}
-        <optgroup label="Animal products">
+        <optgroup label={recordsFill(lang, 'Animal products')}>
           {ANIMAL_PRODUCT_ENTRY_OPTIONS.map((product) => <option key={product.key} value={`catalogue:${product.key}`}>{product.label}</option>)}
         </optgroup>
         {savedNames.length > 0 && (
-          <optgroup label="Products you added">
+          <optgroup label={recordsFill(lang, 'Products you added')}>
             {savedNames.map((name, index) => (
               <option key={name.toLocaleLowerCase('en-ZA')} value={`custom:${index}`}>{name}</option>
             ))}
           </optgroup>
         )}
-        <option value="__add__">＋ Add another product…</option>
+        <option value="__add__">＋ {recordsFill(lang, 'Add another product…')}</option>
       </select>
 
       {adding && (
         <div className="flex gap-2">
           <input
             autoFocus
-            aria-label="New product name"
+            aria-label={recordsFill(lang, 'New product name')}
             value={newName}
             onChange={(event) => setNewName(event.target.value)}
             onKeyDown={(event) => {
@@ -137,7 +142,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
                 addCrop();
               }
             }}
-            placeholder="Type the product name"
+            placeholder={recordsFill(lang, 'Type the product name')}
             className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
           />
@@ -152,7 +157,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >
-            Save product
+            {recordsFill(lang, 'Save product')}
           </button>
         </div>
       )}

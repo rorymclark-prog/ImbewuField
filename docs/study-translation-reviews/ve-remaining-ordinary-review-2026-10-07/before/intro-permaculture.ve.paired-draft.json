@@ -1,0 +1,2322 @@
+{
+  "language": "ve",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "provenance": {
+    "newDrafts": "Slides 1–3: selected orientation and learning-outcome phrases; slides 4–6: ethics label openings. Unreviewed machine candidates; exact English source remains visible. Slides 8–14: six concept headings, factual attribution and framing statements; independently back-checked candidates. Actionable farm, water, safety, permission, windbreak, zone/sector field instructions and uncertain ecological claims remain exact English. Slides 16–22: selected reflective question and headings, plus slide 20 closing sentence; generated with Agy Gemini 3.8 Flash Low and independently back-checked with Agy Gemini 3.1 Pro Low. Slide 15 heading and slide 17 reflective question remain held after back-check. Slides 2 and 4: ordinary reflective questions; slide 17: short transition. These are unreviewed machine drafts paired with the unchanged English source. One unreviewed AI draft for the farmer example on slide 5 body paragraph 3; exact English source stays visible. Slide 5 body paragraphs 2 and 5 now have unreviewed, source-paired ordinary-language candidates; the purpose sentence in paragraph 4 remains an English hold pending fluent review. 1 Oct: nontechnical orientation prompts source-paired on slide 16 body 3; no practical farm procedure changed.",
+    "reusedDrafts": "Ethics labels follow existing unreviewed course lesson terminology; no fluent/local approval.",
+    "holds": "Unverified spade wording, the land-works-with-you contrast, the shared-spring example, ethics decision scenarios, site and crop advice, money claims, water/seed/spring language, ethics decisions and zones/sectors instructions remain exact English. The slide 6 example passages and every slide 8 body passage remain exact English. All zone examples and frequencies, farm layout suggestions, observation or sketching steps, weather directions, shelter claims and site-specific field actions on slides 15–22 remain exact English."
+  },
+  "reviewNotes": [
+    "A fluent Tshivenda speaker should check the dig/plot wording, smallholding and work terms, register, ethics term and named labels before classroom reliance.",
+    "This is an unreviewed machine draft, not local farming approval.",
+    "Slides 15–22 contain only a few Agy machine candidates: slide 16 reflection, slide 18 heading and reflection, slide 19 heading, slide 20 heading and closing sentence, and slides 21–22 headings. Agy Pro Low rejected the slide 15 heading for changing visit frequency to timing and rejected slide 17 question for changing “without thinking” to “without thinking anymore”; both remain exact English. Every practical zone, sector, windbreak and field instruction is held in exact English. Fluent Tshivenda and local farming review remains required. The slide 5 farmer example is an unreviewed AI draft; fluent Tshivenda review must check register and whether “nothing back for the family table” is clear. Slide 6 and slide 8 examples remain exact English holds.",
+    "Slide 5 body paragraphs 2 and 5 are semantic-only unreviewed drafts paired with the unchanged English. The purpose sentence in paragraph 4 remains held because the available candidate wording for feeding and operating the farm needs fluent review. Do not treat any candidate as fluent or local approval.",
+    "1 Oct orientation additions are unreviewed machine drafts. Exact English stays visible. Independent semantic backcheck found no directional error; a fluent speaker and intended learner group still need to assess wording and comprehension."
+  ],
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Introduction to Permaculture",
+        "body": [
+          "Before you dig anything, it helps to know how the decisions get made.",
+          "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "Think about your own plot. Which part of it do you visit most often?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Introduction to ",
+              "status": "draft",
+              "text": "U thomiwa ha ",
+              "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+            },
+            {
+              "sourceEnglish": "Permaculture",
+              "status": "english-hold",
+              "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+            }
+          ],
+          "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Musi ni sa athu u gwa, zwi a thusa u ḓivha uri tsheo dzi dzhiiwa hani.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "This module is the foundation for everything else in the course. ",
+                "status": "draft",
+                "text": "Modulu uyu ndi mutheo wa zwoṱhe zwiṅwe kha ngudo ino. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Three ethics",
+                "status": "draft",
+                "text": "Ethics tharu",
+                "reason": "Formal noun retained with capitalization and postposed count; whole noun phrase is one semantic unit. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ", a set of ",
+                "status": "draft",
+                "text": ", tshigwada tsha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "design principles",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ", and one simple way to organise ",
+                "status": "draft",
+                "text": ", na nḓila nthihi yo leluwaho ya u dzudzanya ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "your land",
+                "status": "draft",
+                "text": "land yaṋu",
+                "reason": "Postposed possessive belongs with the retained land noun; punctuation must not falsely carry the source your meaning. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "A zwi ṱoḓi tshelede. Zwoṱhe zwi shandula hune na vhea zwithu, na uri ni tshimbila vhukale vhu ngafhani ḓuvha ḽiṅwe na ḽiṅwe.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Humbulani nga ha tsimu yaṋu. Ndi tshipiḓa tshifhio tshine na tshi dalela lunzhi?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A good design saves work before you pick up a spade.",
+          "Most of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.",
+          "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+          "Think of one job on your farm that takes longer than it should. Where does the time actually go?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ndi ngani hezwi zwi zwa ndeme",
+          "provenance": "new-unreviewed-machine-draft; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Design yavhuḓi i fhungudza mushumo ni sa athu u fara spade.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Mushumo munzhi kha bulasi ḽiṱuku a si wa u zwala kana u kaṋa. Ndi wa u tshimbila, u hwala na u lugisa zwe zwa vhewa fhethu hu songo teaho.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Permaculture ndi nḓila ya u dzhia tsheo ya hune zwithu zwa tea u vha hone, uri mavu a shume na inwi, hu si u ni thivhela.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Humbulani nga mushumo muthihi bulasini yaṋu une wa dzhia tshifhinga tshilapfu u fhira tshine tsha ṱoḓea. Tshifhinga tshi khou ya ngafhi zwa vhukuma?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module you will be able to do three things.",
+          "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+          "Name the design principles that matter most on your land, and say why.",
+          "Sketch your zones and your sectors on one sheet of paper.",
+          "That sketch is the skeleton of every plan you make after this."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mvelelo dza Ngudo",
+          "provenance": "2026-10-06 source-bound accepted unreviewed draft; facilitator fluency review pending"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Musi modzhulu uyu wo no fhela, ni ḓo kona u ita zwithu zwiraru.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Name ",
+                "status": "draft",
+                "text": "Bulani ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "the three ethics",
+                "status": "draft",
+                "text": "Ethics tharu",
+                "reason": "Formal noun capitalization and postposed count need a full noun phrase pairing. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ", and use them to settle a decision that has no obvious answer.",
+                "status": "draft",
+                "text": ", ni dzi shumise u dzhia tsheo ine ya si vhe na phindulo i vhonalaho.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Name the ",
+                "status": "draft",
+                "text": "Bulani "
+              },
+              {
+                "sourceEnglish": "design principles",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " that matter most on your land, and say why.",
+                "status": "draft",
+                "text": " dzi re dza ndeme nga maanḓa kha land yaṋu, ni bule na uri ndi ngani."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch your ",
+                "status": "draft",
+                "text": "Olani ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "zones",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and your ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "sectors",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " dzaṋu kha bammbiri ḽithihi.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Tshifanyiso itsho ndi mutheo wa pulane iṅwe na iṅwe ine na ḓo i ita nga murahu ha izwi.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Earth Care",
+        "body": [
+          "The first ethic is Earth Care.",
+          "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+          "A system you use up stops paying you. A system you protect keeps paying you.",
+          "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "U Ṱhogomela Mavu na Mupo (Earth Care)",
+          "provenance": "existing-unreviewed-course-term; English name retained"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mulayo wa vhuḓifari wa u thoma ndi U Ṱhogomela Mavu na Mupo (Earth Care).",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "It means treating soil, water, plants and animals as ",
+                "status": "draft",
+                "text": "Zwi amba u dzhia mavu, maḓi, zwimela na zwipuka sa “",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "living systems",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " to protect, not ",
+                "status": "draft",
+                "text": " dza u tsireledza, hu si ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "resources",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "to use up.",
+                "status": "draft",
+                "text": "dza u fhedza nga u shumisa.”",
+                "reason": "Complete consume/exhaust predicate includes unchanged target closing quotation punctuation; punctuation alone is not a translated clause. Retained English is not claimed translated."
+              }
+            ]
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "draft",
+            "text": "System ine na shumisa na fhedza i a ima: “a i tsha ni badela.” System ine na tsireledza i bvela phanda: “i bvela phanḓa u ni badela.”",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          },
+          {
+            "status": "draft",
+            "text": "Sedzani tshipiḓa tshithihi tsha mavu a songo tibedzwaho tsimuni yaṋu. Hu na tshithu tshine tsha khou tsireledza mavu eneo zwino?",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "People Care",
+        "body": [
+          "The second ethic is People Care.",
+          "Your family's needs come first, then your community's.",
+          "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+          "The farm is meant to feed the household that runs it.",
+          "What comes off your land that your own family never eats?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "U Ṱhogomela Vhathu (People Care)",
+          "provenance": "existing-unreviewed-course-term; English name retained"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mulayo wa vhuḓifari wa vhuvhili ndi U Ṱhogomela Vhathu (People Care).",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ṱhoḓea dza muṱa waṋu dzi ḓa u thoma, nga murahu hu tevhela dza tshitshavha tsha haṋu.",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
+          },
+          {
+            "status": "draft",
+            "text": "Murimi ane a rengisa makumba oṱhe na miroho yoṱhe, a si vhee na tshithu tsha uḽa ha muṱa, ha tevheli People Care.",
+            "provenance": "unreviewed-ai-draft; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Bulasi ḽo itelwa u ṋea zwiḽiwa muṱa une wa ḽi shumisa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi mini zwine zwa bva shangoni ḽaṋu zwine muṱa waṋu wa sa vhuye wa zwiḽa?",
+            "provenance": "independently-semantics-checked-unreviewed-draft; source paired; fluent review required"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Fair Share",
+        "body": [
+          "The third ethic is Fair Share.",
+          "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+          "A community that fences off a shared spring is breaking it too.",
+          "What does your land get back from you each season?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "U Kovhelana ho Fanelaho (Fair Share)",
+          "provenance": "existing-unreviewed-course-term; English name retained"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Mulayo wa vhuḓifari wa vhuraru ndi U Kovhelana ho Fanelaho (Fair Share).",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Take only what you need, and ",
+                "status": "draft",
+                "text": "Dzhiani fhedzi zwine na zwi ṱoḓa, nahone ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "return the ",
+                "status": "draft",
+                "text": "vhuedzedzani ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "surplus",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " to the ",
+                "status": "draft",
+                "text": " kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "system",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " —",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": " seeds, food, water, knowledge.",
+                "status": "draft",
+                "text": " mbeu, zwiḽiwa, maḓi, nḓivho.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A farmer who sells all his surplus mielies and keeps nothing back for ",
+                "status": "draft",
+                "text": "Mulimi ane a rengisa mielies dzawe dzoṱhe dza surplus, a si vhulunge na tshithu tsha ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "compost",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " or for seed is breaking this one. Nothing goes back.",
+                "status": "draft",
+                "text": " kana mbeu, u khou pfuka uyu mulayo. A hu na tshithu tshi vhuyelelaho.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Tshitshavha tshi vhofhaho tsime ḽine ḽa shumiswa nga vhoṱhe nga fence tshi khou pfuka Fair Share na tshone.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Land yaṋu i wana mini kha inwi kha khalaṅwaha iṅwe na iṅwe?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Watch: One Decision, Three Ethics",
+        "body": [
+          "A borehole serves your household. Neighbours ask for water too.",
+          "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+          "Who could help you check the rules and the water supply?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "provenance": "2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Watch: One Decision, ",
+              "status": "draft",
+              "text": "Sedzani: Tsheo Nthihi, ",
+              "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+            },
+            {
+              "sourceEnglish": "Three Ethics",
+              "status": "draft",
+              "text": "Ethics Tharu",
+              "reason": "Count follows the retained formal noun in target grammar; splitting it would mispair Three with no count and Ethics with the count. Retained English is not claimed translated."
+            }
+          ]
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A borehole",
+                "status": "draft",
+                "text": "Borehole",
+                "reason": "Article absorbed and initial capitalization changes; noun is retained English, not translated. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " serves your household.",
+                "status": "draft",
+                "text": " i shumela muṱa waṋu."
+              },
+              {
+                "sourceEnglish": " Neighbours ask for water too.",
+                "status": "draft",
+                "text": " Vhahura vha khou humbela maḓi na vhone."
+              }
+            ]
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "status": "draft",
+                "sourceEnglish": "First find out if sharing is allowed.",
+                "text": "Thomani nga u wana arali u kovhelana ho tendelwa."
+              },
+              {
+                "sourceEnglish": " Check whether the ",
+                "status": "draft",
+                "text": " Ṱolani arali ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "borehole",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " can serve all users without taking too much. ",
+                "status": "draft",
+                "text": " i nga kona u shumela vhashumisi vhoṱhe hu si na u dzhia maḓi manzhi lwo kalaho. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. ",
+                "status": "draft",
+                "text": "Arali u kovhelana ho tendelwa nahone hu na maḓi o eḓanaho, tendelanani uri ni kovhelane nga ndinganyo ni dzule ni tshi sedza vhuimo ha maḓi. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "People Care",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Fair Share",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " guide the agreement. ",
+                "status": "draft",
+                "text": " zwi livhisa u tendelana. ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Earth Care",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " means protecting the source. ",
+                "status": "draft",
+                "text": " zwi amba u tsireledza tshiko. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Watching the level alone does not make extra use ",
+                "status": "draft",
+                "text": "U sedza vhuimo ha maḓi fhedzi a zwi ambi uri u shumisa maḓi o engedzeaho zwi ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "safe",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " or allowed.",
+                "status": "draft",
+                "text": " kana zwo tendelwa.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              }
+            ]
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "draft",
+            "text": "Ndi nnyi ane a nga ni thusa u sedza milayo na mphakelo wa maḓi?",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "When There Is No Rulebook",
+        "body": [
+          "This is what the ethics are actually for.",
+          "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "Build these three into how you think before you build anything on the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Musi hu si na bugu ya milayo",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Hezwi ndi zwone zwine milayo ya vhuḓifari ya itelwa zwone."
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A neighbour asks to graze cattle after a drought. ",
+                "status": "draft",
+                "text": "Muhura u humbela u fulisa kholomo nga murahu ha gomelelo. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "A flood damages your swales.",
+                "status": "draft",
+                "text": "Mandindi a tshinyadza dzi-swale dzaṋu.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " Nobody has written down the answer.",
+                "status": "draft",
+                "text": " A hu na muthu o ṅwalaho phindulo.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Milayo ya vhuḓifari i ni thusa u pima khetho na u ṱalutshedza tsheo yaṋu. Ṱolani milayo nahone ni humbele thendelo hune zwa ṱoḓea hone.",
+            "provenance": "Root-reviewed source-paired machine draft; NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Dzhiani ethics idzi tharu ni dzi ite tshipiḓa tsha nḓila ine na humbula ngayo, ni sa athu fhaṱa zwithu kha mavu.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Twelve Principles",
+        "body": [
+          "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+          "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "We will take those three one at a time."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Milayo ya fumi-mbili",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "David Holmgren o vhea milayo ya fumi-mbili ya nzudzanyo (twelve design principles) kha Essence of Permaculture. Bill Mollison na David Holmgren vho thoma muhumbulo wa permaculture vhothe.",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "A zwi ṱoḓi uri ni vhe na yoṱhe ya fumi-mbili u itela u thoma. Zwipiḓa zwiraru zwavhuḓi zwa u thoma ngudo ino ndi: u lavhelesa na u shumisana (observe and interact), u fara na u vhulunga maanḓa (catch and store energy), na u shumisa mikombero na u dzhiela nṱha zwipiḓa zwa thungo (use edges and value the marginal).",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+          },
+          {
+            "status": "draft",
+            "text": "Ri ḓo dzhia hezwo zwiraru tshithihi nga tshithihi.",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Observe and Interact",
+        "body": [
+          "Watch your land through a full season before you commit to major earthworks.",
+          "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+          "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+          "Where does water leave your land? Do you actually know, or are you guessing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "english-hold"
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch your land",
+                "status": "draft",
+                "text": "Sedzani land yaṋu"
+              },
+              {
+                "sourceEnglish": " through a full season before you commit to ",
+                "status": "draft",
+                "text": " kha khalaṅwaha yoṱhe ni sa athu u ḓiṋekedza kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "major earthworks",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "One storm shows you one moment. ",
+                "status": "draft",
+                "text": "Ḓumbu ḽithihi ḽi sumbedza tshifhinga tshithihi. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "A full wet season shows you the ",
+                "status": "draft",
+                "text": "Khalaṅwaha ya mvula yoṱhe i sumbedza ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "pattern",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " — where water runs, where it pools, where it never reaches.",
+                "status": "draft",
+                "text": ": hune maḓi a elela, hune a kuvhangana, na hune a sa swike hone.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              }
+            ]
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "This helps you understand the ",
+                "status": "draft",
+                "text": "Izwi zwi thusa uri ni pfesese ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "site",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "It does not by itself show that a ",
+                "status": "draft",
+                "text": "Fhedzi izwi fhedzi a zwi sumbedzi uri ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "swale",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " is suitable or safe to build. ",
+                "status": "draft",
+                "text": " yo tea kana yo safe u fhaṱiwa. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Before digging, check the soil, ",
+                "status": "draft",
+                "text": "Ni sa athu cela, sedzani mavu, ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "slope",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ", ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "drainage",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and a ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "safe overflow route",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " that will not cause ",
+                "status": "draft",
+                "text": " ine ya sa ise kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "erosion",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " or send damaging water to neighbours. ",
+                "status": "draft",
+                "text": " kana u rumela maḓi a tshinyadzaho kha vhahura. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Ask a trained local adviser to assess the ",
+                "status": "draft",
+                "text": "Humbelani mueletshedzi wa henefho o gudedzwaho uri a sedze ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "site",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Maḓi a bva ngafhi kha land yaṋu? Ni a ḓivha zwa vhukuma, kana ni khou humbulela?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Catch and Store Energy",
+        "body": [
+          "Harvest rain, sun and biomass before they leave your property.",
+          "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+          "Compare the cost and work with the benefit on your own farm.",
+          "Name one thing that arrives on your land free and leaves again without being used."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ni fare nahone ni vhulunge maanḓa",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " rain, sun and ",
+                "status": "draft",
+                "text": " mvula, ḓuvha na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "biomass",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "before they leave your property.",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Zwoṱhe izwi zwi swika mahala, zwa dovha zwa ṱuwa mahala. Maḓi a elela a tshi bva, maṱari a fhufha a tshi ṱuwa, ḓuvha ḽi wela kha mavu a songo fukedzwaho.",
+            "provenance": "Root-reviewed source-paired machine draft; NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Compare the ",
+                "status": "draft",
+                "text": "Vhambedzani ",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              },
+              {
+                "sourceEnglish": "cost",
+                "status": "english-hold",
+                "reason": "Exact source English term retained as a precision anchor; unreviewed machine draft."
+              },
+              {
+                "sourceEnglish": " and work with the benefit on your own farm.",
+                "status": "draft",
+                "text": " na mushumo na mbuelo kha bulasi yaṋu.",
+                "reason": "Root-reviewed source-bound localized wording; machine draft only, facilitator fluency review remains open."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; 2026-10-06 root-reviewed ordinary comparison composition; cost retained as exact English; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Bulani tshithu tshithihi tshine tsha swika kha mavu aṋu mahala tsha dovha tsha ṱuwa tshi songo shumiswa.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Use Edges and Value the Marginal",
+        "body": [
+          "The edge is where two things meet — a fence line or the strip beside a path.",
+          "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "Which edge on your plot is doing nothing at the moment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ni shumise mikano nahone ni dzhiele nṱha zwa magumoni",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The edge",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is where two things meet",
+                "status": "draft",
+                "text": " ndi hune zwithu zwivhili zwa ṱangana"
+              },
+              {
+                "sourceEnglish": " — a fence line or the strip beside a path.",
+                "status": "draft",
+                "text": " — muduba wa fence kana tshipiḓa tshi re tsini na nḓila (strip).",
+                "reason": "Meaning-bounded alternatives clause. Fence/strip retained technical labels change noun order; entire source clause is paired with its full translated context."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 accepted ordinary remainder; facilitator fluency review pending"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "These can be useful places to observe. Look at what already grows well along yours.",
+                "status": "draft",
+                "text": "Hezwi zwi nga vha fhethu hu vhuedzaho ha u sedza. Sedzani zwine zwa mela zwavhuḓi kha edge yaṋu."
+              },
+              {
+                "sourceEnglish": " That is the land telling you something.",
+                "status": "draft",
+                "text": " Ndi land ine ya khou ni vhudza zwiṅwe zwithu.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: land"
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi edge ifhio ya plot yaṋu ine zwa zwino ya si shume tshithu?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Use and Value Diversity",
+        "body": [
+          "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+          "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "What would one bad day cost you right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ni shumise nahone ni dzhiele nṱha u fhambana",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Use and value diversity. ",
+                "status": "draft",
+                "text": "Shumisani diversity ni i dzhiele nṱha. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Hail injury",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " to ",
+                "status": "draft",
+                "text": " kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "maize",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " depends on the storm and ",
+                "status": "draft",
+                "text": " i ya nga ḓumbu na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "the crop’s growth stage",
+                "status": "draft",
+                "text": "growth stage ya crop",
+                "reason": "Possessive noun order changes; crop and growth stage are precise retained English within a whole source noun phrase. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": " This principle does not promise that a ",
+                "status": "draft",
+                "text": " Principle iyi a i fulufhedzisi uri ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "crop",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " will survive every event.",
+                "status": "draft",
+                "text": " i ḓo ponyoka kha tshiwo tshiṅwe na tshiṅwe.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Two others worth knowing: ",
+                "status": "draft",
+                "text": "Maṅwe maitele mavhili ane zwa vhuedza u a ḓivha ndi haya: ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "produce no waste",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ", so scraps become ",
+                "status": "draft",
+                "text": ", ngauralo masalela a vha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "compost",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "compost",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " becomes soil. ",
+                "status": "draft",
+                "text": " ya vha mavu. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "And ",
+                "status": "draft",
+                "text": "Nahone ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "use small and slow solutions",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " —",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": " a bucket can irrigate a ",
+                "status": "draft",
+                "text": " bakete ḽi nga sheledza ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "bed",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " with no electricity at all.",
+                "status": "draft",
+                "text": " hu si na muḓagasi na luthihi.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Ḓuvha ḽithihi ḽivhi ḽi nga ni durisa mini zwino?",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Integrate Rather Than Segregate",
+        "body": [
+          "Put each element where it works for its neighbours.",
+          "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+          "The same three things, fenced apart, do only their own job.",
+          "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ni ṱanganye nṱhani ha u fhambanya",
+          "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Vheani tshithu tshiṅwe na tshiṅwe (each element) fhethu hune tsha shumela zwi re tsini natsho (its neighbours).",
+            "provenance": "new-unreviewed-machine-draft; independently back-checked; source paired"
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "A garden, fruit trees and a ",
+                "status": "draft",
+                "text": "Serapa, miri ya mitshelo na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " arranged so the chickens ",
+                "status": "draft",
+                "text": " zwi nga dzudzanywa uri khuhu dzi ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "rotate through the beds",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " after ",
+                "status": "draft",
+                "text": " nga murahu ha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "harvest",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": "; izwi ndi ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "integration",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Keep chickens away from ",
+                "status": "draft",
+                "text": "Ni songo tendela khuhu dzi tshi swika kha ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "crops",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " being harvested for food. ",
+                "status": "draft",
+                "text": " dzine dza khou harvestiwa uri dzi ḽiwe. ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "Fresh manure",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " can carry ",
+                "status": "draft",
+                "text": " i nga hwalela ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "germs",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "Ask ",
+                "status": "draft",
+                "text": "Vhudzisani ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "an extension adviser",
+                "status": "draft",
+                "text": "mueletshedzi wa extension",
+                "reason": "Role noun precedes retained extension modifier in target grammar; no trained/local qualifier substituted. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " ",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              },
+              {
+                "sourceEnglish": "how to manage the bed safely before edible crops return",
+                "status": "draft",
+                "text": "uri bed i langulwe hani safely, crops dzine dza ḽiwa dzi sa athu vhuya",
+                "reason": "Question and before-return subject order require the whole management/timing clause; precise bed/safely/crops labels remain English, return is not replanting. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ". ",
+                "status": "english-hold",
+                "reason": "Complete unchanged source sentence; no text key."
+              },
+              {
+                "sourceEnglish": "The chickens can clean up ",
+                "status": "draft",
+                "text": "Khuhu dzi nga thusa u bvisa ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "pests",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and add ",
+                "status": "draft",
+                "text": " na u engedza ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "fertility",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " instead of sitting idle in ",
+                "status": "draft",
+                "text": ", nṱhani ha uri dzi dzule dzi sa shumi kha ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "a fixed pen",
+                "status": "draft",
+                "text": "pen yo dzulaho fhethu huthihi",
+                "reason": "Fixed-location qualifier follows retained pen; source noun phrase preserved as a whole. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Izwi zwithu zwiraru, zwo fhandekanywaho nga fence, zwi ita mushumo wa tshone tshithihi tshithihi fhedzi.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Pick two or three principles that speak to your biggest problem and apply them hard. ",
+                "status": "draft",
+                "text": "Khethani maitele mavhili kana mararu ane a amba na thaidzo yaṋu khulwane ni a shumise nga maanḓa. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "The rest become obvious as you go.",
+                "status": "draft",
+                "text": "Maṅwe a ḓo tou vha khagala musi ni tshi bvela phanḓa.",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Zones: Organising by How Often You Visit",
+        "body": [
+          "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+          "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Zones: ",
+              "status": "english-hold",
+              "reason": "Formal design term and separator retained exactly."
+            },
+            {
+              "sourceEnglish": "Organising by How Often You Visit",
+              "status": "draft",
+              "text": "U Dzudzanya u Ya nga uri Ni Dalela Lunzhi-lini"
+            }
+          ],
+          "provenance": "2026-10-06 source-bound accepted unreviewed draft; facilitator fluency review pending"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " run from 0 to 5, and they are about your feet, not your fences.",
+                "status": "draft",
+                "text": " dzi bva kha 0 u ya kha 5, nahone ndi nga ha u tshimbila haṋu, hu si fences yaṋu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 0",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is the house. In this example, ",
+                "status": "draft",
+                "text": " ndi nḓu. Kha hei tsumbo, "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " is near the house and holds ",
+                "status": "draft",
+                "text": " i tsini na nḓu nahone i na "
+              },
+              {
+                "sourceEnglish": "herbs",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "salad greens",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " picked often.",
+                "status": "draft",
+                "text": " zwine na zwi kaṋa lunzhi."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 2",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " ndi ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "main garden",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and the ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "chicken run",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ", visited once or twice a day. ",
+                "status": "draft",
+                "text": ", ni zwi dalela luthihi kana luvhili nga ḓuvha. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 3",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is the ",
+                "status": "draft",
+                "text": " ndi ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "main field",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ", visited weekly.",
+                "status": "draft",
+                "text": ", ni i dalela vhege iṅwe na iṅwe.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zone 4",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is ",
+                "status": "draft",
+                "text": " ndi ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "semi-wild",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " — fruit trees and ",
+                "status": "draft",
+                "text": ": miri ya mitshelo na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "fodder",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " that need occasional attention. ",
+                "status": "draft",
+                "text": " zwine zwa ṱoḓa ṱhogomelo nga zwiṅwe zwifhinga. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 5",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " is left ",
+                "status": "draft",
+                "text": " i sala i ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "wild",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Exact source ending retained."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Keep Daily Crops Close",
+        "body": [
+          "Herbs you pick often are easier to tend near the house.",
+          "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "Think about the paths you walk each day.",
+          "What do you visit often that could be closer?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "provenance": "2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+          "status": "draft",
+          "text": "Vheani Crops dzine na dzi Shumisa Ḓuvha ḽiṅwe na ḽiṅwe Tsini",
+          "reason": "Daily use qualifier follows the crop noun in a target relative clause. Whole heading preserves keep/daily/close meaning without falsely mapping Daily to no target. Retained English is not claimed translated."
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Herbs",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " you pick often are easier to tend near the house.",
+                "status": "draft",
+                "text": " dzine na dzi kaṋa lunzhi dzi a leluwa u dzi ṱhogomela dzi tsini na nḓu."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Arali na dzi vhea kule, lwendo lulapfu lu nga ita uri ni kundelwe u dzi dalela. Herbs dzi nga litshelelwa.",
+            "provenance": "Root-reviewed source-paired machine draft; NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Humbulani nga nḓila dzine na tshimbila khadzo ḓuvha ḽiṅwe na ḽiṅwe.",
+            "provenance": "unreviewed-machine-draft; exact English source paired; independently semantic-checked; fluent/local review pending"
+          },
+          {
+            "status": "draft",
+            "text": "Ndi zwifhio zwine na zwi dalela kanzhi zwine zwa nga vha tsini?",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Zones Plan Your Labour",
+        "body": [
+          "This is the point of the whole exercise.",
+          "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "Stand at your kitchen door. What can you reach without thinking about it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "mixed",
+          "segments": [
+            {
+              "sourceEnglish": "Zones",
+              "status": "english-hold",
+              "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+            },
+            {
+              "sourceEnglish": " Plan Your Labour",
+              "status": "draft",
+              "text": " dzi Dzudzanya Mushumo waṋu",
+              "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+            }
+          ],
+          "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ndivho ya nyito yoṱhe ndi iyi.",
+            "provenance": "new-unreviewed-machine-draft; source paired"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+                "status": "draft",
+                "text": " zwi thusa u dzudzanya fhethu u ya nga mushumo waṋu — u tshimbila, u hwala na u sedza zwine zwa ḓadza ḓuvha ḽa vhukuma."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tshithu tshi ni ṱoḓaho lunzhi tshi dzula tsini na inwi. Zwenezwo zwi nga fhungudza u tshimbila na mushumo kha khalaṅwaha.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Imani muṋangoni wa khishini. Ndi zwifhio zwine na swikelela khazwo ni sa humbuli?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Sectors: The Energies Arriving From Outside",
+        "body": [
+          "Zones come from inside your land. Sectors come from outside it.",
+          "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+          "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+          "Which direction does the weather that damages you come from?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dzisekithara (Sectors): Maanḓa A Bvaho Nnḓa",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Zones",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from inside your land. ",
+                "status": "draft",
+                "text": " dzi bva ngomu ha land yaṋu. "
+              },
+              {
+                "sourceEnglish": "Sectors",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " come from outside it.",
+                "status": "draft",
+                "text": " dzi bva nnḓa ha yona."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sun, wind, rain, ",
+                "status": "draft",
+                "text": "Ḓuvha, muya, mvula, ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "flood",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and fire all arrive across your ",
+                "status": "draft",
+                "text": " na mulilo zwi pfuka ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "boundary",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " whether you plan for them or not.",
+                "status": "draft",
+                "text": " yaṋu hu sa londwi arali ni tshi zwi pulanela kana hai.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Watch where strong wind comes from on your farm. ",
+                "status": "draft",
+                "text": "Sedzani hune muya u re na maanḓa u bva hone kha bulasi yaṋu. ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Nearby weather-station records",
+                "status": "draft",
+                "text": "Rekhodo dza weather station ya tsini",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " can help you check ",
+                "status": "draft",
+                "text": " dzi nga ni thusa u sedza ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "wind direction",
+                "status": "draft",
+                "text": "thungo ya muya",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": ". Watch where rainwater enters and flows across your land.",
+                "status": "draft",
+                "text": ". Sedzani hune maḓi a mvula a dzhena hone na hune a elela hone kha mavu aṋu.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Mutsho une wa ni vhaisa u bva lufhio lurumbu?",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Watch: Shelter Between Wind and Crops",
+        "body": [
+          "Look at this example. The wind comes from the north-west.",
+          "The trees and shrubs stand between that wind and the crops.",
+          "Some air passes through the windbreak. Other air moves over it or around its ends.",
+          "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+          "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ṱolisisani: Tsireledzo Vhukati Ha Muya Na Zwimela",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Look at this example. The wind comes from the ",
+                "status": "draft",
+                "text": "Sedzani uyu tsumbo. Muya u bva ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "north-west",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Exact source ending retained."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The trees and ",
+                "status": "draft",
+                "text": "Miri na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "shrubs",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " stand between that wind and the ",
+                "status": "draft",
+                "text": " dzi ima vhukati ha muya uyo na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "crops",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Exact source ending retained."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Muṅwe muya u fhira nga ngomu ha windbreak. Muṅwe u ya nṱha ha yone kana u mona na magumo ayo.",
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "The shelter can reduce wind speed behind it. ",
+                "status": "draft",
+                "text": "Tsireledzo i nga fhungudza luvhilo lwa muya nga murahu hayo. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "The design and care of the ",
+                "status": "draft",
+                "text": "Design na u ṱhogomela ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "windbreak",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " matter.",
+                "status": "draft",
+                "text": " ndi zwa ndeme.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "On your own site",
+                "status": "draft",
+                "text": "Kha site yaṋu",
+                "reason": "Target possession follows site, so the whole own-site prepositional phrase is paired; its modifier is not falsely attached to observing winds. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": ", observe the damaging winds before choosing where to plant",
+                "status": "draft",
+                "text": ", ṱhogomelani meya i tshinyadzaho ni sa athu khetha hune na ṱavha hone",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": ". This picture is not a ",
+                "status": "draft",
+                "text": ". Tshifanyiso itshi a si ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "planting plan",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "english-hold",
+                "reason": "Unchanged literal source connective/punctuation; not a translated draft."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Sketch It And You Have A Design",
+        "body": [
+          "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+          "Then draw arrows in from outside for sun, wind, fire and water.",
+          "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+          "It does not need to be neat. It needs to be true."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zwi Olani Ndi Hone Ni Tshi Vha Na Nzudzanyo (Design)",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Draw your boundary. ",
+                "status": "draft",
+                "text": "Olani mukano waṋu. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Mark the house. ",
+                "status": "draft",
+                "text": "Maka nnḓu. ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "Draw the ",
+                "status": "draft",
+                "text": "Olani ",
+                "reason": "Complete source sentence framing paired with root-accepted target; contextual technical labels are separately documented, not claimed translated."
+              },
+              {
+                "sourceEnglish": "rings",
+                "status": "english-hold",
+                "reason": "Exact English precision term/phrase retained at the corresponding semantic source position; not translated."
+              },
+              {
+                "sourceEnglish": " outward by how often you visit.",
+                "status": "draft",
+                "text": " dzi tshi ya nnḓa u ya nga uri ni dalela hani lunzhi.",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              }
+            ]
+          },
+          {
+            "status": "draft",
+            "text": "Nga murahu olani misevhe i tshi dzhena i tshi bva nnḓa u sumbedza ḓuvha, muya, mulilo na maḓi.",
+            "provenance": "Root-reviewed source-paired machine draft; NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "draft",
+            "text": "Bammbiri iḽi ndi mutheo wa pulane yaṋu. Zwiṅwe zwoṱhe kha ngudo iyi zwi fhaṱiwa khaḽo."
+          },
+          {
+            "status": "draft",
+            "text": "A zwi ṱoḓei uri zwi vhe zwo naka tshoṱhe. Zwi tea u vha ngoho.",
+            "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Sketch your own zones and sectors on one sheet of paper.",
+          "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+          "Photograph the sketch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mushumo Wa Masimuni",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+        },
+        "body": [
+          {
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Sketch your own zones and sectors",
+                "status": "draft",
+                "text": "Olani zones na sectors dzaṋu",
+                "reason": "Possession follows both retained formal names; splitting your own before zones would mispair its qualifier. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " on one sheet of paper.",
+                "status": "draft",
+                "text": " kha bammbiri ḽithihi."
+              }
+            ]
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Mark ",
+                "status": "draft",
+                "text": "Maka ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 0",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " and ",
+                "status": "draft",
+                "text": " na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " first, then work outward as far as your ",
+                "status": "draft",
+                "text": " u thome, ni bvele nga nnḓa u swika hune ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "land",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " goes.",
+                "status": "draft",
+                "text": " yaṋu ya guma hone.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Add an arrow for each ",
+                "status": "draft",
+                "text": "Engedzani musevhe muthihi kha ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "energy",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " that arrives from outside, and label where it comes from.",
+                "status": "draft",
+                "text": " iṅwe na iṅwe ine ya swika i tshi bva nnḓa, ni ṅwale hune ya bva hone.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "provenance": "Unreviewed machine draft; exact English source remains paired; facilitator review open.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "draft",
+            "text": "Dzhiani tshifanyiso tsha nyolo.",
+            "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Walk out and check your sketch against the ground.",
+          "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Nyito Masimuni",
+          "provenance": "gemini-3.8-flash-low candidate; independently back-checked with gemini-3.1-pro-low; unreviewed machine draft"
+        },
+        "body": [
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Walk out and check your sketch against the ",
+                "status": "draft",
+                "text": "Tshimbilani ni sedzani nyolo yaṋu ni tshi i vhambedza na ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "ground",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": ".",
+                "status": "draft",
+                "text": " ya vhukuma.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ],
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06."
+          },
+          {
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Stand at the kitchen door and count what is really in ",
+                "status": "draft",
+                "text": "Imani munyangoni wa khishi ni vhale zwine zwa vha zwa vhukuma kha "
+              },
+              {
+                "sourceEnglish": "Zone 1",
+                "status": "english-hold"
+              },
+              {
+                "sourceEnglish": " today.",
+                "status": "draft",
+                "text": " namusi."
+              }
+            ],
+            "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Wanani tshithu tshithihi tsho ṱavhiwaho kule u fhira uri ni tshi shumisa kangani, ni ṅwale hune tsha tea u pfuluselwa hone.",
+            "provenance": "2026-10-06 root-accepted ordinary comparative draft; independent semantic backcheck; exact English source unchanged; visible unreviewed machine draft; no fluent approval"
+          },
+          {
+            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "status": "mixed",
+            "segments": [
+              {
+                "sourceEnglish": "Then ask ",
+                "status": "draft",
+                "text": "Nga murahu ni humbele ",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": "one older neighbour",
+                "status": "draft",
+                "text": "older neighbour muthihi",
+                "reason": "Count follows the retained age-comparative noun phrase; one/older both remain semantically bound. Retained English is not claimed translated."
+              },
+              {
+                "sourceEnglish": " which direction",
+                "status": "draft",
+                "text": " uri a ni vhudze sia",
+                "reason": "Meaning-bounded source clause/framing between explicit semantic anchors; exact root-accepted target; no character-diff segmentation."
+              },
+              {
+                "sourceEnglish": " the ",
+                "status": "draft",
+                "text": " ine ",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              },
+              {
+                "sourceEnglish": "worst wind",
+                "status": "english-hold",
+                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+              },
+              {
+                "sourceEnglish": " comes from, and compare their answer with your arrow.",
+                "status": "draft",
+                "text": " ya bva ngaḽo, ni vhambedze phindulo yawe na musevhe waṋu.",
+                "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

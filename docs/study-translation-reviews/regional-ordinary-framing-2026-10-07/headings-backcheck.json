@@ -1,0 +1,276 @@
+{
+  "title": "Independent semantic backcheck — regional headings and framing candidates",
+  "date": "2026-10-07",
+  "packetReviewed": "/tmp/imbewu-regional-headings-framing-candidates-20261007.json",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-completion-20261006/ImbewuField",
+  "checkedHead": "94c9ec530722c483667d590cbfdaa29a5408a163",
+  "scope": "Read-only semantic/source-bound check of all 11 unapproved proposals. Decisions address semantic fidelity only; accept never means fluent approval, readiness, or application.",
+  "structuralAudit": {
+    "proposalCount": 11,
+    "headingCount": 10,
+    "comparisonCount": 1,
+    "allBindingsVerified": true,
+    "comparisonIndexOnlyCompositionVerified": true,
+    "allEnglishSourceBindingsExact": true
+  },
+  "decisions": [
+    {
+      "id": "vegetables-staples:ve:slide-4:heading",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sourceFileSha256": "7603cebd738df04e08ef679fabc806384f154599be95af02a790ad423cad7482",
+      "language": "ve",
+      "slide": 4,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Roots Need Loose Soil, Paths Need Your Feet",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu.",
+      "completeComposedTarget": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu.",
+      "proposalBackTranslation": "Roots need loose soil; paths need your feet.",
+      "independentSemanticBackcheck": "The two halves preserve the source parallel: roots need loose soil; paths need your feet. In the neighboring instructions, the feet are kept on paths so they do not touch the growing area. No factual condition is added. Accept for source meaning only; mixed English technical terms and concord remain unreviewed.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:ve:slide-5:heading",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sourceFileSha256": "7603cebd738df04e08ef679fabc806384f154599be95af02a790ad423cad7482",
+      "language": "ve",
+      "slide": 5,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Choose the Bed for the Soil and Rainfall",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Khethani bed u ya nga soil na rainfall.",
+      "completeComposedTarget": "Khethani bed u ya nga soil na rainfall.",
+      "proposalBackTranslation": "Choose the bed according to soil and rainfall.",
+      "independentSemanticBackcheck": "“Choose the bed according to soil and rainfall” preserves the choice and both criteria without suggesting one universally correct bed. The following source body confirms both are selection factors. Accept for source meaning only; retained technical terms and Tshivenda wording need fluent check.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:ve:slide-10:heading",
+      "decision": "hold",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sourceFileSha256": "7603cebd738df04e08ef679fabc806384f154599be95af02a790ad423cad7482",
+      "language": "ve",
+      "slide": 10,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Each Crop Earns Its Place",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Crop iṅwe na iṅwe i tea u vha na mushumo wayo.",
+      "completeComposedTarget": "Crop iṅwe na iṅwe i tea u vha na mushumo wayo.",
+      "proposalBackTranslation": "Each crop should have its own job/role.",
+      "independentSemanticBackcheck": "“Each crop should have its own job” captures a role but does not itself express that the crop merits/justifies the place it occupies. The body makes job and enough space the rationale, but the proposed heading loses the earn/justify value claim. No minimal repair is defensible without a reliable phrasing for contributing enough to justify its space.",
+      "minimalRepair": {
+        "text": null,
+        "reason": "No reliable Tshivenda formulation for the “contribution justifies the space/place” meaning was established; keep exact-English heading on hold."
+      }
+    },
+    {
+      "id": "vegetables-staples:ve:slide-15:heading",
+      "decision": "hold",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "sourceFileSha256": "7603cebd738df04e08ef679fabc806384f154599be95af02a790ad423cad7482",
+      "language": "ve",
+      "slide": 15,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Pests Are Messengers Before They Are Enemies",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Pests ndi zwiga zwine zwa sumbedza uri hu na thaidzo, ri sa athu zwi dzhia sa maswina.",
+      "completeComposedTarget": "Pests ndi zwiga zwine zwa sumbedza uri hu na thaidzo, ri sa athu zwi dzhia sa maswina.",
+      "proposalBackTranslation": "Pests are signs that show there is a problem, before we regard them as enemies.",
+      "independentSemanticBackcheck": "“Signs that show there is a problem” changes messengers into evidence that a problem exists. The source says pests are messengers before enemies; it does not make each pest occurrence proof of a separate problem or diagnosis. Keep broad “Pests” scope. No safe ordinary-language repair verified.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:st:slide-15:heading",
+      "decision": "hold",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.st.paired-draft.json",
+      "sourceFileSha256": "b74a903b3e274ce775fe9cc29c0ee5952ced66582071035e6f6bce3edf7e609b",
+      "language": "st",
+      "slide": 15,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Pests Are Messengers Before They Are Enemies",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Pests ke matshwao a bothata pele di nkuwa e le dira.",
+      "completeComposedTarget": "Pests ke matshwao a bothata pele di nkuwa e le dira.",
+      "proposalBackTranslation": "Pests are signs of a problem before they are regarded as enemies.",
+      "independentSemanticBackcheck": "“Signs of a problem” is not equivalent to the source messenger metaphor and can imply categorical evidence. Keep broad “Pests” scope. Also the candidate spelling “matshwao” is not standard South African Sesotho orthography; a corrected form would use “matšoao”, but that spelling-only correction does not fix the semantic loss. No defensible replacement verified.",
+      "minimalRepair": {
+        "text": "Pests ke matšoao a bothata pele di nkuwa e le dira.",
+        "scope": "orthographic repair only; still HOLD semantically",
+        "note": "South African Sesotho uses “matšoao” spelling; this retains the candidate meaning flaw and is not recommended for application."
+      }
+    },
+    {
+      "id": "vegetables-staples:ts:slide-4:heading",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sourceFileSha256": "1e212c0d4b0319aa924bd1be8c4e8ebcfc05fd7f9b6561d953ec6a00d2a66b6d",
+      "language": "ts",
+      "slide": 4,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Roots Need Loose Soil, Paths Need Your Feet",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Timitsu ti lava loose soil; paths ti lava milenge ya wena.",
+      "completeComposedTarget": "Timitsu ti lava loose soil; paths ti lava milenge ya wena.",
+      "proposalBackTranslation": "Roots need loose soil; paths need your feet.",
+      "independentSemanticBackcheck": "The back-translation retains both halves and the directional implication that feet belong on paths rather than loose growing soil. This matches the neighboring body’s instruction that feet never touch the growing area. Accept for source meaning only; “paths ti” agreement with a retained English noun needs a Tsonga speaker check.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:ts:slide-5:heading",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sourceFileSha256": "1e212c0d4b0319aa924bd1be8c4e8ebcfc05fd7f9b6561d953ec6a00d2a66b6d",
+      "language": "ts",
+      "slide": 5,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Choose the Bed for the Soil and Rainfall",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Hlawula bed hi ku ya hi soil ni rainfall.",
+      "completeComposedTarget": "Hlawula bed hi ku ya hi soil ni rainfall.",
+      "proposalBackTranslation": "Choose the bed according to soil and rainfall.",
+      "independentSemanticBackcheck": "The wording says to choose a bed according to soil and rainfall; it does not turn the title into one universal bed recommendation. This matches the source body’s soil/rainfall-conditioned examples. Accept for source meaning only; grammar with retained English nouns remains unchecked.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:ts:slide-10:heading",
+      "decision": "hold",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sourceFileSha256": "1e212c0d4b0319aa924bd1be8c4e8ebcfc05fd7f9b6561d953ec6a00d2a66b6d",
+      "language": "ts",
+      "slide": 10,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Each Crop Earns Its Place",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Crop yin’wana ni yin’wana yi fanele yi va ni xiave xa yona.",
+      "completeComposedTarget": "Crop yin’wana ni yin’wana yi fanele yi va ni xiave xa yona.",
+      "proposalBackTranslation": "Each crop should have its own contribution/role.",
+      "independentSemanticBackcheck": "“Each crop should have its own contribution/role” is closer than a generic job, but it still does not state that its contribution justifies its place/space. It weakens the source’s earn/justify metaphor. No minimal repair is defensible without more language confidence.",
+      "minimalRepair": {
+        "text": null,
+        "reason": "No reliable Tsonga formulation for the “contribution justifies the space/place” meaning was established; keep exact-English heading on hold."
+      }
+    },
+    {
+      "id": "vegetables-staples:ts:slide-15:heading",
+      "decision": "hold",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sourceFileSha256": "1e212c0d4b0319aa924bd1be8c4e8ebcfc05fd7f9b6561d953ec6a00d2a66b6d",
+      "language": "ts",
+      "slide": 15,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Pests Are Messengers Before They Are Enemies",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Pests i swikombiso leswi hi byelaka leswaku ku ni xiphiqo, hi nga si swi teka swi ri valala.",
+      "completeComposedTarget": "Pests i swikombiso leswi hi byelaka leswaku ku ni xiphiqo, hi nga si swi teka swi ri valala.",
+      "proposalBackTranslation": "Pests are signs that tell us there is a problem before we regard them as enemies.",
+      "independentSemanticBackcheck": "“Signs that tell us there is a problem” makes a categorical problem claim that the heading does not make, and is weaker/different from a messenger. It does retain broad “Pests” rather than narrowing to insects, but does not preserve the exact metaphor/function safely. No repair verified.",
+      "minimalRepair": null
+    },
+    {
+      "id": "vegetables-staples:ts:slide-16:heading",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "sourceFileSha256": "1e212c0d4b0319aa924bd1be8c4e8ebcfc05fd7f9b6561d953ec6a00d2a66b6d",
+      "language": "ts",
+      "slide": 16,
+      "field": "heading",
+      "segmentIndex": null,
+      "exactSourceField": "Treat the Cause Before the Insect",
+      "exactCurrentTargetField": {
+        "status": "english-hold"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "Tshungula xivangelo u nga si thoma u tshungula insect.",
+      "completeComposedTarget": "Tshungula xivangelo u nga si thoma u tshungula insect.",
+      "proposalBackTranslation": "Treat the cause before you start treating the insect.",
+      "independentSemanticBackcheck": "The candidate preserves cause-first order and keeps “insect” exactly as the source. Its full back-translation, “Treat the cause before you start treating the insect,” fits the following ordered observe/check/protect/act steps and does not introduce a product or treatment instruction. Accept for source meaning only; confirm Tsonga verb sense/concord and whether the cause/object wording is idiomatic.",
+      "minimalRepair": null
+    },
+    {
+      "id": "reading-landscape:ve:slide-19:body[2]:segment-2",
+      "decision": "accept",
+      "decisionScope": "semantic backcheck only; not fluent approval or application",
+      "sourceFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "sourceFileSha256": "9e2074b05391049a2c358cb592407ffcbb20ffc64513c86da1589cfc5c5c27b5",
+      "language": "ve",
+      "slide": 19,
+      "field": "body[2]",
+      "segmentIndex": 2,
+      "exactSourceField": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "exactCurrentTargetField": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Update the sketch season by season. ",
+            "status": "draft",
+            "text": "I vusuluseni khalaṅwaha nga khalaṅwaha. "
+          },
+          {
+            "sourceEnglish": "A pencil map you actually use is worth more than ",
+            "status": "draft",
+            "text": "Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira "
+          },
+          {
+            "sourceEnglish": "a perfect map drawn once.",
+            "status": "english-hold"
+          }
+        ],
+        "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
+      },
+      "currentBindingMatchesHead94c9ec53": true,
+      "proposal": "perfect map ine ya olwa luthihi fhedzi",
+      "completeComposedTarget": "I vusuluseni khalaṅwaha nga khalaṅwaha. Pencil map ine na shumisaho zwa vhukuma i na ndeme u fhira perfect map ine ya olwa luthihi fhedzi",
+      "proposalBackTranslation": "Update the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
+      "independentSemanticBackcheck": "The indexed fragment says a perfect map that is drawn only once. Composed with the two unchanged neighboring segments, the entire sentence retains the comparison: a pencil map actually used is worth more than a perfect map drawn once. “Perfect map” remains explicitly English, so the candidate does not claim a translation for the uncertain evaluative adjective. Accept for source meaning only; confirm Tshivenda passive and once-only phrasing.",
+      "minimalRepair": null
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "conversation": "48686326-d31a-4a61-a252-ae3bc13ca69c",
+  "observedCompleted": [
+    "zu",
+    "st",
+    "ve"
+  ],
+  "fluentApproval": false,
+  "blanketModelAlignmentAdopted": false,
+  "acceptedScope": [
+    "hours/timing and direction evidence inspected",
+    "young citrus and young pawpaw English anchors retain age in ST/VE",
+    "indices2/0 observed in all three"
+  ],
+  "openRootQuestions": [
+    {
+      "language": "st",
+      "fields": [
+        "body.0",
+        "keyPoints.0"
+      ],
+      "phrase": "a na le mongobo",
+      "source": "moister",
+      "reason": "Model glosses moisture as more moisture without explicit comparative evidence; separate check required."
+    },
+    {
+      "language": "ve",
+      "fields": [
+        "body.0",
+        "keyPoints.0"
+      ],
+      "phrase": "hu fhola ha vha na vhunyisi",
+      "source": "cooler and moister",
+      "reason": "Model repeats aligned verdict without demonstrating comparative strength. Do not mark complete from this scan."
+    }
+  ],
+  "appliedRepairs": "See applied-candidates.json; three fields only, no other learner edits."
+}

@@ -1,0 +1,39 @@
+{
+  "beforeSnapshot": "docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/before/course-asset-sizes.ts.txt",
+  "beforeSha256": "0cbd25e386ef8619736374ce18b9a1869f3c53b4d499ad7e3eda1c71b71b104d",
+  "beforeBytes": 117011,
+  "afterSha256": "3e1a01d8887aaef8d4963a30b53432054dbf2ba934546a9b0a8d6e29881c6e58",
+  "afterBytes": 117011,
+  "beforeHeader": "// 1930 files, 719.7 MB total.",
+  "afterHeader": "// 1930 files, 719.7 MB total.",
+  "rows": [
+    {
+      "url": "/course-decks/reading-landscape/st/slide-12.webp",
+      "beforeBytes": 472172,
+      "afterBytes": 472466,
+      "beforeSha256": "12682c3891c9ad88a47cfc67af60b7de64c123f2fc3850fe46b24a4556b3d418",
+      "afterSha256": "72baa7bf43e1ea969f5456f0f91985490cb24983ae0db10aeaeffc8497a206c1"
+    },
+    {
+      "url": "/course-decks/reading-landscape/ve/slide-12.webp",
+      "beforeBytes": 471730,
+      "afterBytes": 476936,
+      "beforeSha256": "a8c60da35333d647ff65f10e4deb52e7d1ea8d94901ee36a5ed355647a10d90a",
+      "afterSha256": "7fbf695cd27db5032f2dfc7e1d6697f5c509fe6ea3a141351c2482b9be66b29e"
+    },
+    {
+      "url": "/course-decks/reading-landscape/ts/slide-12.webp",
+      "beforeBytes": 473304,
+      "afterBytes": 473120,
+      "beforeSha256": "0081f3d65b19ece3ff731397445eadf4e41abeca1b31b42f2e77423b6c5d6dca",
+      "afterSha256": "0384ba29e168c177a600f7fd0031760557d173c67331ff06699d9dd75a31ef2c"
+    },
+    {
+      "url": "/course-decks/vegetables-staples/st/slide-16.webp",
+      "beforeBytes": 570296,
+      "afterBytes": 592226,
+      "beforeSha256": "49a3f5c356b0dc9683181231ab0322c42673269c815994a5f77538c43833fa02",
+      "afterSha256": "4a8fbc7940696996062f9b27e9ac1008ea7c879045a2654e26a6e47aa9e5b118"
+    }
+  ]
+}

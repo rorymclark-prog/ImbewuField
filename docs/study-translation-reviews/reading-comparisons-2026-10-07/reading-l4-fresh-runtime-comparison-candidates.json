@@ -1,0 +1,72 @@
+{
+  "lessonId": "reading-landscape-l4",
+  "sourceRevision": "647fca3391c8bc816d008058167c7cb10eabd7e0",
+  "sourceEnglish": {
+    "id": "reading-landscape-l4",
+    "infographicUrl": "/course-images/reading-landscape/reading-landscape-l4.jpg",
+    "infographicAlt": "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
+    "title": "Making a Simple Site Map: Your Design Starts on Paper",
+    "body": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+    "keyPoints": [
+      "A site map needs only paper, a tape measure, a compass, and observation",
+      "Mark water flow, wind direction, frost pockets, and existing vegetation",
+      "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+      "Overlay zones and sectors on your base map to complete the design skeleton"
+    ],
+    "quiz": [
+      {
+        "q": "You notice thick blackjack growing in one corner every year. What should you do next?",
+        "options": [
+          "The soil there is exceptionally fertile",
+          "That area has a higher water table",
+          "Mark the patch and check the soil; the plant alone cannot show compaction",
+          "Blackjack only grows in shade, so there's a hidden seep"
+        ],
+        "correct": 2,
+        "rationale": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design."
+      },
+      {
+        "q": "Why mark summer and winter wind separately on your site map?",
+        "options": [
+          "Wind direction never changes in SA",
+          "They can come from different directions, changing where windbreaks and tender crops should go",
+          "Wind only matters in winter on the Highveld",
+          "Wind direction only affects buildings"
+        ],
+        "correct": 1,
+        "rationale": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately."
+      }
+    ]
+  },
+  "fluentApproval": false,
+  "scope": "Data-only exact actual runtime paragraph2 comparisons. All other paragraph/lesson/source bytes preserved. Independently check perfect-vs-complete and actually-use-vs-use-well before wiring. Earlier model paragraph3 labels rejected.",
+  "candidates": [
+    {
+      "language": "st",
+      "field": "body.paragraph2",
+      "before": "Beha dibaka tsa hao (zones) le makala (sectors) hodima sona setshwantsho seo sa pele. Se ntjhafatse sehla ka sehla. Setshwantsho sa pentshele seo o hlileng o se sebedisang se na le boleng bo boholo ho feta se setle haholo se takilweng hanngwe feela.",
+      "candidate": "Beha dibaka tsa hao (zones) le makala (sectors) hodima sona setshwantsho seo sa pele. Se ntjhafatse sehla ka sehla. Setshwantsho sa pentshele seo o hlileng o se sebedisang se na le boleng bo boholo ho feta se phethahetseng se takilweng hanngwe feela.",
+      "sourceEnglish": "Overlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+      "changedClauseBefore": "se setle haholo se takilweng hanngwe feela",
+      "changedClauseCandidate": "se phethahetseng se takilweng hanngwe feela"
+    },
+    {
+      "language": "ve",
+      "field": "body.paragraph2",
+      "before": "Vheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo nakiswaho yo olwaho luthihi fhedzi.",
+      "candidate": "Vheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo fhelelaho yo olwaho luthihi fhedzi.",
+      "sourceEnglish": "Overlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+      "changedClauseBefore": "yo nakiswaho yo olwaho luthihi fhedzi",
+      "changedClauseCandidate": "yo fhelelaho yo olwaho luthihi fhedzi"
+    },
+    {
+      "language": "ts",
+      "field": "body.paragraph2",
+      "before": "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+      "candidate": "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi hakunene u xi tirhisaka xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+      "sourceEnglish": "Overlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+      "changedClauseBefore": "lexi u xi tirhisaka kahle",
+      "changedClauseCandidate": "lexi hakunene u xi tirhisaka"
+    }
+  ]
+}

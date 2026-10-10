@@ -42,6 +42,175 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 October 2026', sha: '4da5c22d', changes: [
+    'Your monthly AI allowance is now R18, shown in rand on your Account page.',
+    'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',
+  ], tour: [{
+    title: 'See your AI allowance',
+    where: 'Account → AI this month',
+    detail: 'Shows how many rand of AI are left and when it refills.',
+    href: '/account',
+  }, {
+    title: 'Use AI as normal',
+    where: 'Home',
+    detail: 'When the allowance runs out, AI keeps working on a simpler model until the 1st.',
+    href: '/home',
+  }] },
+  { when: '8 October 2026', sha: '3d86afb9', changes: [
+    'Reading cards have unreviewed Sesotho, Tshivenda and Xitsonga headings.',
+    'Sesotho pest guidance pairs its revised draft wording with exact English.',
+    'Saved slide packs refresh those four cards and keep other media.',
+  ], tour: [{
+    title: 'Read the updated Study drafts',
+    where: 'Study → Reading Landscape / Vegetables',
+    detail: 'Compare the unreviewed headings and pest guidance with exact English.',
+    href: '/student',
+  }] },
+  { when: '8 October 2026', sha: '24276363', changes: [
+    'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',
+    'The Sesotho land-reading lesson keeps the observation phrase beside English.',
+  ], tour: [{ title: 'Check the remaining Study drafts', where: 'Study', href: '/student',
+    detail: 'Read Tshivenda messages and the Sesotho observation with its English source.',
+  }] },
+  { when: '8 October 2026', sha: 'c782a81a', changes: [
+    'Ten silent Sesotho Introduction cards show fuller unreviewed drafts beside English.',
+    'Saved slide packs refresh those ten cards and keep other course media.',
+  ], tour: [{ title: 'Read the fuller Sesotho Introduction drafts',
+    where: 'Study → Introduction → Sesotho → View slides',
+    detail: 'Compare the draft with exact English; narration remains optional.',
+    href: '/student',
+  }] },
+  { when: '8 October 2026', sha: '8b30c345', changes: [
+    'More Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'The Tshivenda download choice clearly names optional English narration.',
+    'Study labels fit inside the card on small screens.',
+  ], tour: [{
+    title: 'Study language drafts', where: 'Study', href: '/student',
+    detail: 'Check the draft notice, completion buttons and optional English download.',
+  }] },
+  { when: '7 October 2026', sha: 'ac2e1c8d', changes: [
+    'Study buttons show unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'Silent slide entries say View slides and explain the optional English voice.',
+  ], tour: [{ title: 'Try the translated Study controls',
+    where: 'Study → Sesotho, Tshivenda or Xitsonga → open a lesson',
+    detail: 'Read draft buttons and silent-slide instructions beside the English source.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '89fc5b6f', changes: [
+    'Vegetable drafts translate water limits and increasing bed-work difficulty.',
+    'Four silent Study cards match the reviewed learner wording beside English.',
+    'The Xitsonga succession picture describes the continuing crop and new sowing.',
+  ], tour: [{ title: 'Read the fuller vegetable drafts',
+    where: 'Study → Vegetables or Introduction → Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed drafts with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'b099cb1d', changes: [
+    'Five silent Study cards show fuller water, wind and direct-sowing drafts.',
+    'Sesotho and Xitsonga vegetable lessons keep the full performance comparison.',
+    'The Xitsonga Market lesson translates the sale-price comparison beside English.',
+  ], tour: [{ title: 'Read the fuller Study drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare unreviewed wording with exact English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '400ede45', changes: [
+    'Five silent Study cards show checked ordinary drafts beside exact English.',
+    'Sesotho frost wording describes ice forming on a cold surface.',
+    'Tshivenda Market feedback keeps distance as one cost factor.',
+  ], tour: [{ title: 'Read the Study wording drafts',
+    where: 'Study → Reading, Vegetables or Market → Sesotho, Tshivenda or Xitsonga',
+    detail: 'Compare the unreviewed wording with English; regional cards stay silent.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'cee6b5b8', changes: [
+    'Tshivenda Reading drafts clarify keeping sensitive plants away from frost pockets.',
+    'Two silent cards show the frost caution beside exact English.',
+  ], tour: [{ title: 'Read the frost placement drafts',
+    where: 'Study → Reading → Tshivenda → Sun, shade and frost',
+    detail: 'Compare unreviewed wording with English; no hillside guarantees frost freedom.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: 'e2151df7', changes: [
+    'Reading map drafts distinguish a perfect sketch from a pretty one.',
+    'The Xitsonga map draft keeps actually using a sketch beside exact English.',
+  ], tour: [{ title: 'Read the map wording drafts',
+    where: 'Study → Reading → Sesotho, Tshivenda or Xitsonga → Making a Simple Site Map',
+    detail: 'Compare the unreviewed sketch-value paragraph with its exact English source.',
+    href: '/student',
+  }] },
+  { when: '7 October 2026', sha: '70b570b9', changes: [
+    'Reading drafts clarify frost-season observation and longest or most comparisons.',
+    'A corrected silent isiZulu frost card replaces its older narration beside English.',
+  ], tour: [
+    { title: 'Read the checked wording drafts',
+      where: 'Study → Reading → isiZulu, Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed wording with English and open the silent frost card.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '9d984d54', changes: [
+    'isiZulu Reading quiz drafts clarify young plants and hours of sunlight.',
+    'Tshivenda Introduction image text keeps design and waste-loop terms in English.',
+  ], tour: [
+    { title: 'Read Study wording drafts',
+      where: 'Study → Reading in isiZulu or Introduction in Tshivenda',
+      detail: 'Compare the unreviewed wording with its exact English source.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: 'd69134eb', changes: [
+    'Introduction adds fair-sharing drafts in isiZulu and Xitsonga beside exact English.',
+    'Four silent cards use the new wording; affected old isiZulu narration stays off.',
+  ], tour: [
+    { title: 'Read fair-sharing drafts',
+      where: 'Study → Introduction → isiZulu or Xitsonga',
+      detail: 'Compare unreviewed wording with English, or save the silent slide pack.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '5b0caae5', changes: [
+    '10 silent Tshivenda and Xitsonga cards add fuller drafts beside exact English.',
+    'Saved slides refresh these cards while keeping recordings and other lessons.',
+  ], tour: [
+    { title: 'Read fuller regional cards',
+      where: 'Study → Reading, Vegetables or Market → Tshivenda or Xitsonga',
+      detail: 'Compare unreviewed drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '3ff76610', changes: [
+    '15 silent Tshivenda Study cards add fuller drafts beside exact English.',
+    'Saved slide packs refresh these cards while keeping narration and other lessons.',
+  ], tour: [
+    { title: 'Read fuller Tshivenda cards',
+      where: 'Study → Introduction, Reading, Vegetables or Market → Tshivenda',
+      detail: 'Compare unreviewed wording with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '7 October 2026', sha: '41c5323b', changes: [
+    '69 silent Study cards add fuller regional drafts beside exact English.',
+    'Saved slide packs refresh those cards while keeping narration and other lessons.',
+  ], tour: [
+    { title: 'Read fuller silent Study cards',
+      where: 'Study → Introduction, Reading, Vegetables or Market',
+      detail: 'Compare unreviewed regional wording with English, or save the slides-only pack.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '5f410753', changes: [
+    '36 silent regional slides add fuller drafts beside exact English.',
+    'Vegetables lessons add clearer unreviewed regional drafts.',
+  ], tour: [
+    { title: 'Read fuller regional drafts',
+      where: 'Study → Introduction, Reading, Vegetables, Market or Water',
+      detail: 'Compare unreviewed regional drafts with English, or save the silent slides.',
+      href: '/student' },
+  ] },
+  { when: '6 October 2026', sha: '59fba04', changes: [
+    'Records add unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
+    'Save sale & invoice now says "& invoice" in isiZulu and Sesotho.',
+  ], tour: [
+    { title: 'Compare money-book drafts',
+      where: 'Records → Sold or Spent',
+      detail: 'Add a sale or cost and read the unreviewed wording beside exact English.',
+      href: '/records' },
+  ] },
   { when: '6 October 2026', sha: 'b06536d2', changes: [
     'Reading, Vegetables and Market add fuller unreviewed regional lesson drafts.',
     '13 silent Vegetables and Market slides match the fuller lesson drafts.',

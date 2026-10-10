@@ -58,17 +58,17 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
       "id": "intro-permaculture-l1",
       "title": {
         "sourceEnglish": "The Three Ethics: Earth Care, People Care, Fair Share",
-        "xitsongaDraft": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana hi Ku Ringana",
+        "xitsongaDraft": "Mahanyelo Manharhu: Ku Hlayisa Misava, Ku Hlayisa Vanhu, Ku Avelana Loku Lulameke",
         "reviewStatus": "machine-draft"
       },
       "infographicAlt": {
         "sourceEnglish": "The three ethics as three linked circles of equal size: a hand holding soil for Earth Care, two people for People Care, and a basket passing between hands for Fair Share.",
-        "xitsongaDraft": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana hi Ku Ringana.",
+        "xitsongaDraft": "Mahanyelo lawa manharhu ma kombisiwa hi swirhendzevutana swinharhu leswi hlanganisiweke, leswi ringanaka hi vukulu: voko leri khomeke misava ra Ku Hlayisa Misava; vanhu vambirhi va Ku Hlayisa Vanhu; na baskiti leri hundziseriwaka hi mavoko ra Ku Avelana Loku Lulameke.",
         "reviewStatus": "machine-draft"
       },
       "body": {
         "sourceEnglish": "Permaculture rests on three ethics. Earth Care means treating soil, water, plants and animals as living systems to protect, not resources to use up. People Care means your family's needs come first, then your community's. Fair Share means taking only what you need and returning the surplus — seeds, food, water, knowledge — back into the system.\n\nThese aren't abstract ideas. A farmer who sells every egg and vegetable but keeps nothing back for the family table is skipping People Care. A community that fences off a shared spring is breaking Fair Share.\n\nEthics matter because they help you decide when there's no rulebook — a neighbour asking to graze cattle after a drought, a flood damaging your swales. Build these three into how you think before you build anything on the ground.",
-        "xitsongaDraft": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana hi Ku Ringana swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana hi Ku Ringana.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni.",
+        "xitsongaDraft": "Permaculture yi seketeriwe eka mahanyelo manharhu. Ku Hlayisa Misava swi vula ku teka misava, mati, swimilana na swiharhi tanihi maendlelo lama hanyaka lama faneleke ku sirheleriwa, ku nga ri switirhisiwa swo hela hi ku tirhisiwa. Ku Hlayisa Vanhu swi vula leswaku swilaveko swa ndyangu wa wena swi rhanga emahlweni, kutani ku landzela swa vaaki va ka n'wina. Ku Avelana Loku Lulameke swi vula ku teka ntsena leswi u swi lavaka kutani u vuyisela leswi saleke — mbewu, swakudya, mati, vutivi — endzeni ka maendlelo ya nsimu.\n\nLawa a hi mianakanyo ntsena leyi nga riki ya xiviri. Murimi loyi a xavisaka matandza hinkwawo na matsavu kambe a nga siyi nchumu etafuleni ra ndyangu u tlula Ku Hlayisa Vanhu. Vaaki lava biyelaka xihlovo lexi avelaneriwaka va tlula Ku Avelana Loku Lulameke.\n\nMahanyelo i ya nkoka hikuva ma ku pfuna ku endla swiboho loko ku nga ri na buku ya milawu — muakelani loyi a kombelaka ku risa tihomu endzhaku ka dyandza, kumbe ndhambi leyi onhaka swisele (swales) swa wena. Aka mahanyelo lawa manharhu eka ndlela leyi u anakanyaka ha yona u nga si aka nchumu emisaveni.",
         "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -84,7 +84,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
         },
         {
           "sourceEnglish": "Fair Share: return surplus to the system — seeds, water, food, knowledge",
-          "xitsongaDraft": "Ku Avelana hi Ku Ringana: vuyisela leswi saleke eka maendlelo ya nsimu — mbewu, mati, swakudya, vutivi",
+          "xitsongaDraft": "Ku Avelana Loku Lulameke: vuyisela leswi saleke eka maendlelo ya nsimu — mbewu, mati, swakudya, vutivi",
           "reviewStatus": "machine-draft"
         },
         {
@@ -113,7 +113,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Fair Share — he returns nothing to the system",
-              "xitsongaDraft": "Ku Avelana hi Ku Ringana — a nga vuyiseli nchumu eka maendlelo ya nsimu",
+              "xitsongaDraft": "Ku Avelana Loku Lulameke — a nga vuyiseli nchumu eka maendlelo ya nsimu",
               "reviewStatus": "machine-draft"
             },
             {
@@ -125,7 +125,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Fair Share means returning some of what you take — as seed, compost, or food for others. Selling everything and keeping nothing back breaks that cycle.",
-            "xitsongaDraft": "Ku Avelana hi Ku Ringana swi vula ku vuyisela swin'wana swa leswi u swi tekaka — tanihi mbewu, monyolo wa khompositi (compost), kumbe swakudya swa van'wana. Ku xavisa hinkwaswo handle ko siya swin'wana swi tshova ndzhendzeleko wolowo.",
+            "xitsongaDraft": "Ku Avelana Loku Lulameke swi vula ku vuyisela swin'wana swa leswi u swi tekaka — tanihi mbewu, monyolo wa khompositi (compost), kumbe swakudya swa van'wana. Ku xavisa hinkwaswo handle ko siya swin'wana swi tshova ndzhendzeleko wolowo.",
             "reviewStatus": "machine-draft"
           }
         },
@@ -148,7 +148,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Find out if sharing is allowed and if the borehole can serve all users. Only then agree how to share fairly and keep watching the water level.",
-              "xitsongaDraft": "Kuma leswaku xana ku avelana swa pfumeleriwa naswona borehole yi nga kota ku tirhela vatirhisi hinkwavo. Hi kona ntsena mi nga pfumelelanaka hi ndlela yo avelana hi ku ringana naswona mi ya emahlweni mi languta xiyimo xa mati.",
+              "xitsongaDraft": "Kuma leswaku xana ku avelana swa pfumeleriwa naswona borehole yi nga kota ku tirhela vatirhisi hinkwavo. Hi kona ntsena mi nga pfumelelanaka hi ndlela yo avelana leyi lulameke naswona mi ya emahlweni mi languta xiyimo xa mati.",
               "reviewStatus": "machine-draft"
             },
             {
@@ -160,7 +160,7 @@ export const XITSONGA_INTRO_PERMACULTURE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "First find out what water use is allowed and whether the source can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.",
-            "xitsongaDraft": "Rhanga u kuma leswaku hi kwihi ku tirhisiwa ka mati loku pfumeleriwaka na loko xihlovo xi nga kota ku tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona mati ma ringene, pfumelelanani hi ndlela yo avelana hi ku ringana. Ku xiyisisa swi ku pfuna ku vona ku cinca; a swi nyiki mpfumelelo wo teka mati yo tala.",
+            "xitsongaDraft": "Rhanga u kuma leswaku hi kwihi ku tirhisiwa ka mati loku pfumeleriwaka na loko xihlovo xi nga kota ku tirhela vatirhisi hinkwavo handle ko teka mati yo tala ngopfu. Loko ku avelana ku pfumeleriwa naswona mati ma ringene, pfumelelanani hi ndlela yo avelana leyi lulameke. Ku xiyisisa swi ku pfuna ku vona ku cinca; a swi nyiki mpfumelelo wo teka mati yo tala.",
             "reviewStatus": "machine-draft"
           }
         }
@@ -671,7 +671,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "Wind can damage crops on a smallholding. The direction and strength of damaging wind change with region, season and your site's ridges and gaps. Walk the land on windy days. Record where the wind comes from and what it affects. Check local weather records before deciding where shelter is needed.\n\nOn a clear, still night, cold air can flow downhill and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare candidate places through the local frost season. Check local minimum-temperature records where available. If records are not available, keep observing across cold nights and ask a local agriculture adviser before choosing a permanent home for tender seedlings.\n\nFrost is ice that forms on a cold surface. Mist alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold pockets you observe.\n\nFor tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Moving a bed alone will not control it; seek local crop-health guidance too.",
-        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na your site's ridges and gaps. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nEka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.\n\nFrost i ice leyi vumbekaka ehenhla ka surface leyi titimelaka. Mist ntsena a yi kombisi leswaku ice yi vumbekile, naswona frost damage yi nga endleka handle ka ice leyi vonakaka. Languta ice ni ku onhaka ka swimilana, pimanisa misava ya le hansi ni tindhawu to rhelela, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilana leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lama karhatiwaka hi late blight, ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi nga ya mahlweni yi hangalaka loko ku titimela ni ku tsakama swi teka nkarhi wo leha. Ku rhurhisa mubhedhi ntsena a swi nge yi lawuli; tlhela u lava xitsundzuxo xa rihanyo ra swimilana xa laha kaya.",
+        "xitsongaDraft": "Moya wu nga onha swibyariwa eka purasi leritsongo. Tlhelo na matla ya moya lowu onhaka swi cinca hi muganga, nguva na ti-ridges and gaps ta ndhawu ya wena. Fambafamba eka misava hi masiku ya moya. Tsala laha moya wu humaka kona ni leswi wu swi khumbaka. Kambela matsalwa ya maxelo ya laha kaya u nga se teka xiboho xa laha nsirhelelo wu lavekaka kona.\n\nEka vusiku byo tenga ni byo rhula, moya wo titimela wu nga khulukela ehansi wu tlhela wu hlengeletana etindhawini ta le hansi. Tindhawu leti ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi. Maendlelo ya frost na wona ya ya hi ndhawu. Pimanisa tindhawu leti nga hlawuriwaka eka nguva hinkwayo ya xirhami ya laha kaya. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka. Loko ma nga ri kona, yana mahlweni u ri karhi u languta eka vusiku byo titimela, u tlhela u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga si hlawula ndhawu ya nkarhi wo leha ya tender seedlings.\n\nFrost i ice leyi vumbekaka ehenhla ka surface leyi titimelaka. Mist ntsena a yi kombisi leswaku ice yi vumbekile, naswona frost damage yi nga endleka handle ka ice leyi vonakaka. Languta ice ni ku onhaka ka swimilana, pimanisa misava ya le hansi ni tindhawu to rhelela, u tlhela u kambela minimum temperatures laha swi kotekaka. Fungha tindhawu laha cold or damage swi tshamaka kona nkarhi wo leha ngopfu. Hlayisa swimilana leswi khumbekaka hi ku olova swi ri ekule ni cold pockets leti u ti vonaka.\n\nEka matamatisi lama karhatiwaka hi late blight, ku famba ka moya ni dyambu ra nimixo swi nga pfuna leswaku matluka ma oma. Late blight yi nga ya mahlweni yi hangalaka loko ku titimela ni ku tsakama swi teka nkarhi wo leha. Ku rhurhisa mubhedhi ntsena a swi nge yi lawuli; tlhela u lava xitsundzuxo xa rihanyo ra swimilana xa laha kaya.",
               "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -728,7 +728,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
           "sourceCorrectIndex": 2,
           "rationale": {
             "sourceEnglish": "Cold air can settle in low places on clear, still nights. Compare candidate nursery sites through the local frost season. Check local minimum-temperature records or ask a local agriculture adviser before making a permanent choice. Visible frost is not the only sign of frost damage, and no hillside position guarantees freedom from frost.",
-            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery through the local frost season. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
+            "xitsongaDraft": "Moya wo titimela wu nga hlengeletana etindhawini ta le hansi hi vusiku byo tenga ni byo rhula. Pimanisa tindhawu leti nga tirhisiwaka ku veka nursery eka nguva hinkwayo ya xirhami ya laha kaya. Kambela matsalwa ya mahiselo ya le hansi swinene ya laha kaya kumbe u vutisa mutsundzuxi wa swa vurimi wa laha kaya u nga se teka xiboho xa ndhawu ya nkarhi wo leha. Frost leyi vonakaka a hi yona ntsena mhaka leyi kombisaka frost damage, naswona a ku na ndhawu ya le xintshabyanini leyi tiyisekisaka leswaku a ku nge vi na frost.",
               "reviewStatus": "machine-draft"
           }
         },
@@ -783,7 +783,7 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
       },
       "body": {
         "sourceEnglish": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
-        "xitsongaDraft": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, fences. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nTsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun’hwaka yi tsakama hi tin’hweti leti omeke, ni laha khakibos kumbe blackjack yi milaka yi talile. Swimilana leswi swi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka swona ntsena a ku kombisi leswaku misava yi tsindziyerile. Kambela misava u nga se teka xiboho xa leswi ndhawu leyi yi vulaka swona eka design ya wena.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+        "xitsongaDraft": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, fences. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nTsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun’hwaka yi tsakama hi tin’hweti leti omeke, ni laha khakibos kumbe blackjack yi milaka yi talile. Swimilana leswi swi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka swona ntsena a ku kombisi leswaku misava yi tsindziyerile. Kambela misava u nga se teka xiboho xa leswi ndhawu leyi yi vulaka swona eka design ya wena.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi hakunene u xi tirhisaka xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
               "reviewStatus": "machine-draft"
       },
       "keyPoints": [
@@ -884,18 +884,6 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
   ],
   "holds": [
     {
-      "lessonId": "reading-landscape-l3",
-      "field": "body",
-      "sourceText": "through the local frost season",
-      "reason": "Preserve the full observation-season duration; during-season wording is insufficient."
-    },
-    {
-      "lessonId": "reading-landscape-l3",
-      "field": "quiz[0].rationale",
-      "sourceText": "through the local frost season",
-      "reason": "Preserve the full observation-season duration; during-season wording is insufficient."
-    },
-    {
       "lessonId": "reading-landscape-l1",
       "field": "body",
       "sourceText": "trained local adviser",
@@ -904,8 +892,8 @@ export const XITSONGA_READING_LANDSCAPE_DRAFT: XitsongaCourseModuleDraft = {
     {
       "lessonId": "reading-landscape-l3",
       "field": "body",
-      "sourceText": "your site's ridges and gaps",
-      "reason": "Keep the site-landform terms exact until a fluent reviewer confirms the meaning."
+      "sourceText": "ridges and gaps",
+      "reason": "Keep the technical site-landform terms exact; ordinary ownership framing is now a source-paired unreviewed draft."
     },
     {
       "lessonId": "reading-landscape-l3",

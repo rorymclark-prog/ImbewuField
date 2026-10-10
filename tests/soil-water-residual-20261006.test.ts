@@ -1,3 +1,5 @@
+import { finalLanguageNextDeckBeforeHistory } from './final-language-next-checks.ts';
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { silentIntroAssetSizesBefore } from './intro-silent-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -95,7 +97,7 @@ function expectedNativeDrafts(): Record<string, Data> {
 }
 
 function actualPairedDeck(path: string): Data {
-  return JSON.parse(readFileSync(path, 'utf8').toString());
+  return finalLanguageNextDeckBeforeHistory(path, JSON.parse(readFileSync(path, 'utf8').toString()));
 }
 
 test('the accepted residual layer reconstructs all six native drafts and preserves unlisted fields', () => {
@@ -279,12 +281,14 @@ test('the 18 approved frames and every protected media inventory match the durab
   assert.equal(media.soilAndWaterDeckAssets.filter((row: Data) => row.changed).length, 18);
   for (const row of media.soilAndWaterDeckAssets.filter((item: Data) => !item.changed)) {
     assert.equal(row.sha256Before, row.sha256After, row.path);
-    assert.equal(digest(readFileSync(row.path)), row.sha256After, row.path);
+    // Later36 bytes are verified in full before this exact dated unlisted descriptor.
+    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(readFileSync(row.path)), row.sha256After, row.path);
   }
   for (const rows of [media.unlistedCourseAudio, media.unlistedCourseAnimations, media.introSesothoStills] as Data[][]) {
     for (const row of rows) {
       assert.equal(row.sha256Before, row.sha256After, row.path);
-      assert.equal(digest(readFileSync(row.path)), row.sha256After, row.path);
+      // Later36 bytes are verified in full before this exact dated unlisted descriptor.
+    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(readFileSync(row.path)), row.sha256After, row.path);
     }
   }
   assert.equal(media.unlistedCourseAudio.length, 523);

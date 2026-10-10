@@ -1,0 +1,2451 @@
+import { NextResponse } from 'next/server';
+import { APP_GUIDES } from '@/lib/course-app-guides';
+import { STUDIES_PATHWAY_PAGES } from '@/lib/studies-pathway-pack';
+
+// Evaluate BUILD_ID once at build time (not per request) so the worker body is
+// stable within a deploy but changes between deploys.
+export const dynamic = 'force-static';
+
+// WHY a route handler instead of a static public/sw.js: a static file is byte-identical
+// across deploys, so the browser's spec-mandated byte-comparison update check never fires
+// and old workers (and the stale JS they serve) persist forever. Vercel bakes a fresh
+// commit SHA into every deployment's environment, so reading it here at build/cold-start
+// time gives every deploy a different sw.js body "for free" — no manual version bump,
+// no separate build script to maintain.
+// Use || not ?? — in this GitHub-Action + `vercel build` flow VERCEL_GIT_COMMIT_SHA
+// is an EMPTY STRING (not undefined), which ?? would keep, freezing the version and
+// defeating update detection. || falls through empty strings to a build-time stamp.
+const BUILD_ID =
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.VERCEL_DEPLOYMENT_ID ||
+  process.env.GITHUB_SHA ||
+  String(Date.now());
+
+const SW_SOURCE = `
+const CACHE_VERSION = ${JSON.stringify(BUILD_ID)};
+const SHELL_CACHE = 'imbewufield-shell-' + CACHE_VERSION;
+const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
+// THE APP SHELL MUST BE IN HERE OR THE APP CANNOT OPEN OFFLINE. This list held a manifest and two
+// icons — no HTML, no JS — so nothing a farmer could actually open was ever precached. Combined
+// with RUNTIME_CACHE being version-named (the activate sweep below drops the previous build's), a
+// farmer who loaded a new build on the last bar of signal and then went home had NOTHING: the
+// navigate fallback reached for '/', which was never precached either.
+// These are the routes a farmer opens on a phone with no signal.
+const PRECACHE_URLS = [
+  '/manifest.json', '/icon-192.png', '/icon-512.png',
+  '/', '/home', '/farmer', '/student', '/prices', '/offline',
+];
+
+// COURSE DOWNLOADS — deliberately NOT versioned by CACHE_VERSION, and deliberately spared by the
+// activate sweep below.
+//
+// Everything else here is per-deploy and disposable: a new build should drop the old shell. This
+// one is the opposite. It holds a module a farmer chose to download in town, with their own
+// airtime, to use for weeks at a homestead with no signal. Naming it with CACHE_VERSION would have
+// deleted it on the next deploy — the farmer would open the app, see it had updated, and find the
+// lessons they paid for gone, with no way to get them back until the next trip.
+//
+// Written only by lib/offline-cache.ts, on an explicit tap. This worker never adds to it.
+const COURSE_CACHE = 'imbewu-course-v1';
+const COURSE_PATH = /^(?:\\/course-(decks|audio|animations|images)|\\/finance-course)\\//;
+
+// PLANT & ELEMENT ART — the same idea as COURSE_CACHE, with one honest difference.
+//
+// This art lived in RUNTIME_CACHE, which is named with CACHE_VERSION and swept on every
+// activate. Tens of MB of map canopies and picker sprites, identical bytes deploy after
+// deploy, re-downloaded on a farmer's airtime every time we shipped anything at all —
+// a copy fix on the login page cost her the whole art set again.
+//
+// The difference from course files: art DOES occasionally change in place. A regenerated
+// canopy keeps its filename, so a cache that never expires would pin the old drawing
+// forever. Hence the hand-bumped version in the name: bump it in the SAME commit that
+// ships a visual refresh of existing files, and the activate sweep below (which spares
+// only the exact current name) deletes the old cache in the field. New files under a new
+// filename do NOT need a bump — a miss falls through to the network and is cached on
+// first sight. Ordinary deploys leave the constant alone and the art survives.
+const ART_CACHE = 'imbewu-art-v1';
+const ART_PATH = /^\\/(element-art|element-art-2|render-assets|report-art)\\//;
+
+// A first visit loads its scripts BEFORE the worker controls the page. Saving HTML alone
+// therefore cannot boot that page after closing the browser. Publish each cached document
+// only after all its same-origin build assets (including CSS fonts) are safely stored.
+const pendingAssets = new Map();
+function buildAssets(text, base) {
+  const matches = text.match(/(?:\\/|\\.\\.\\/)[^\\s"'<>\\\\()]+/g) || [];
+  return Array.from(new Set(matches.map(function (value) {
+    try { const url = new URL(value.replace(/&amp;/g, '&'), base);
+      return url.origin === self.location.origin && url.pathname.indexOf('/_next/static/') === 0 ? url.href : null;
+    } catch (_) { return null; }
+  }).filter(Boolean)));
+}
+function cacheAsset(cache, url) {
+  if (pendingAssets.has(url)) return pendingAssets.get(url);
+  const work = (async function () {
+    let response = await cache.match(url);
+    if (!response) {
+      response = await fetch(url);
+      if (!response.ok) throw new Error('Startup asset unavailable: ' + url);
+      await cache.put(url, response.clone());
+    }
+    if (new URL(url).pathname.endsWith('.css')) {
+      await Promise.all(buildAssets(await response.text(), url).map(function (child) {
+        return cacheAsset(cache, child);
+      }));
+    }
+  })();
+  pendingAssets.set(url, work);
+  return work.finally(function () { pendingAssets.delete(url); });
+}
+async function cachePage(cache, url, suppliedResponse) {
+  const response = suppliedResponse || await fetch(url, { cache: 'reload' });
+  if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) {
+    throw new Error('Startup page unavailable: ' + url);
+  }
+  const assets = buildAssets(await response.clone().text(), new URL(url, self.location.origin));
+  if (!assets.some(function (asset) { return new URL(asset).pathname.endsWith('.js'); })) {
+    throw new Error('Startup page has no application scripts');
+  }
+  await Promise.all(assets.map(function (asset) { return cacheAsset(cache, asset); }));
+  await cache.put(url, response);
+}
+self.addEventListener('install', function (event) {
+  event.waitUntil((async function () {
+    const cache = await caches.open(SHELL_CACHE);
+    // The installed app launches /home. If preparing it fails, reject this update and
+    // leave the previous working worker and its caches in control.
+    await cachePage(cache, '/home');
+    await Promise.all(PRECACHE_URLS.map(function (url) {
+      if (url === '/home') return;
+      return (url.endsWith('.json') || url.endsWith('.png')
+        ? cache.add(url) : cachePage(cache, url)).catch(function () {});
+    }));
+    await self.skipWaiting();
+  })());
+});
+
+const FIELD_PAGES = ['/home','/offline','/farmer','/student','/records','/invoice','/journal','/facilitator/crops','/cropplan','/reports','/design','/calendar','/assessments','/mentor','/ngo','/funder','/network'];
+const GUIDE_PAGES = ${JSON.stringify(APP_GUIDES.map(guide => guide.href))};
+const STUDIES_PATHWAY_PAGES = ${JSON.stringify(STUDIES_PATHWAY_PAGES)};
+async function assetReady(cache, url, seen) {
+  if (seen.has(url)) return true;
+  seen.add(url);
+  const response = await cache.match(url);
+  if (!response) return false;
+  if (!new URL(url).pathname.endsWith('.css')) return true;
+  const children = buildAssets(await response.text(), url);
+  return (await Promise.all(children.map(function (child) { return assetReady(cache, child, seen); }))).every(Boolean);
+}
+self.addEventListener('message', function (event) {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+  if (!event.ports[0] || !event.data || !['PREPARE_FIELD_PAGES','FIELD_PAGE_STATUS'].includes(event.data.type)) return;
+  const port = event.ports[0];
+  event.waitUntil((async function () {
+    const cache = await caches.open(SHELL_CACHE);
+    const requested = Array.isArray(event.data.paths) ? event.data.paths.filter(function (path) { return FIELD_PAGES.includes(path) || GUIDE_PAGES.includes(path) || STUDIES_PATHWAY_PAGES.includes(path); }) : FIELD_PAGES;
+    for (const path of requested) {
+      let error = '';
+      if (event.data.type === 'PREPARE_FIELD_PAGES') {
+        try { await cachePage(cache, path); } catch (_) { error = 'Could not finish downloading this page.'; }
+      }
+      const response = await cache.match(path);
+      let ready = false;
+      if (response) {
+        const assets = buildAssets(await response.text(), new URL(path, self.location.origin));
+        ready = assets.length > 0 && (await Promise.all(assets.map(function (url) { return assetReady(cache, url, new Set()); }))).every(Boolean);
+      }
+      port.postMessage({ path, ready, error });
+    }
+    port.postMessage({ done: true });
+  })().catch(function () { port.postMessage({ done: true, error: 'Device storage is unavailable.' }); }));
+});
+
+// The guild lesson changed from 20 recordings to 51. Keep other downloaded lessons,
+// but do not pair their old guild speech with the new slide order. This marker survives
+// ordinary deploys so the replacement is invalidated once, not on every app update.
+async function migrateGuildNarration() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/plant-guilds/.revision-20260909';
+  if (await cache.match(marker)) return;
+  const keys = await cache.keys();
+  for (const request of keys) {
+    if (new URL(request.url).pathname.indexOf('/course-audio/plant-guilds/en/') === 0) {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('51-slide guild narration'));
+}
+
+// Corrected teaching reused existing URLs. Without this one-time migration, a farmer's
+// deliberate download would keep the old speech forever beside the new lesson text.
+// Remove only replaced files; never clear the whole course or silently spend data refetching.
+async function migrateStudiesMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.studies-corrections-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    "/course-audio/food-forest/en/full.mp3",
+    "/course-audio/food-forest/en/slide-01.mp3",
+    "/course-audio/food-forest/en/slide-02.mp3",
+    "/course-audio/food-forest/en/slide-03.mp3",
+    "/course-audio/food-forest/en/slide-04.mp3",
+    "/course-audio/food-forest/en/slide-05.mp3",
+    "/course-audio/food-forest/en/slide-06.mp3",
+    "/course-audio/food-forest/en/slide-07.mp3",
+    "/course-audio/food-forest/en/slide-08.mp3",
+    "/course-audio/food-forest/en/slide-09.mp3",
+    "/course-audio/food-forest/en/slide-10.mp3",
+    "/course-audio/food-forest/en/slide-11.mp3",
+    "/course-audio/food-forest/en/slide-12.mp3",
+    "/course-audio/food-forest/en/slide-13.mp3",
+    "/course-audio/food-forest/en/slide-14.mp3",
+    "/course-audio/food-forest/en/slide-15.mp3",
+    "/course-audio/food-forest/en/slide-16.mp3",
+    "/course-audio/food-forest/en/slide-17.mp3",
+    "/course-audio/food-forest/en/slide-18.mp3",
+    "/course-audio/food-forest/en/slide-19.mp3",
+    "/course-audio/food-forest/en/slide-20.mp3",
+    "/course-audio/market-community/en/full.mp3",
+    "/course-audio/market-community/en/slide-01.mp3",
+    "/course-audio/market-community/en/slide-02.mp3",
+    "/course-audio/market-community/en/slide-03.mp3",
+    "/course-audio/market-community/en/slide-04.mp3",
+    "/course-audio/market-community/en/slide-05.mp3",
+    "/course-audio/market-community/en/slide-06.mp3",
+    "/course-audio/market-community/en/slide-07.mp3",
+    "/course-audio/market-community/en/slide-08.mp3",
+    "/course-audio/market-community/en/slide-09.mp3",
+    "/course-audio/market-community/en/slide-10.mp3",
+    "/course-audio/market-community/en/slide-11.mp3",
+    "/course-audio/market-community/en/slide-12.mp3",
+    "/course-audio/market-community/en/slide-13.mp3",
+    "/course-audio/market-community/en/slide-14.mp3",
+    "/course-audio/market-community/en/slide-15.mp3",
+    "/course-audio/market-community/en/slide-16.mp3",
+    "/course-audio/market-community/en/slide-17.mp3",
+    "/course-audio/market-community/en/slide-18.mp3",
+    "/course-audio/market-community/en/slide-19.mp3",
+    "/course-audio/market-community/en/slide-20.mp3",
+    "/course-audio/reading-landscape/en/full.mp3",
+    "/course-audio/reading-landscape/en/slide-14.mp3",
+    "/course-audio/small-livestock/en/full.mp3",
+    "/course-audio/small-livestock/en/slide-01.mp3",
+    "/course-audio/small-livestock/en/slide-02.mp3",
+    "/course-audio/small-livestock/en/slide-03.mp3",
+    "/course-audio/small-livestock/en/slide-04.mp3",
+    "/course-audio/small-livestock/en/slide-05.mp3",
+    "/course-audio/small-livestock/en/slide-06.mp3",
+    "/course-audio/small-livestock/en/slide-07.mp3",
+    "/course-audio/small-livestock/en/slide-08.mp3",
+    "/course-audio/small-livestock/en/slide-09.mp3",
+    "/course-audio/small-livestock/en/slide-10.mp3",
+    "/course-audio/small-livestock/en/slide-11.mp3",
+    "/course-audio/small-livestock/en/slide-12.mp3",
+    "/course-audio/small-livestock/en/slide-13.mp3",
+    "/course-audio/small-livestock/en/slide-14.mp3",
+    "/course-audio/small-livestock/en/slide-15.mp3",
+    "/course-audio/small-livestock/en/slide-16.mp3",
+    "/course-audio/small-livestock/en/slide-17.mp3",
+    "/course-audio/small-livestock/en/slide-18.mp3",
+    "/course-audio/small-livestock/en/slide-19.mp3",
+    "/course-audio/small-livestock/en/slide-20.mp3",
+    "/course-audio/soil-health/en/full.mp3",
+    "/course-audio/soil-health/en/slide-01.mp3",
+    "/course-audio/soil-health/en/slide-02.mp3",
+    "/course-audio/soil-health/en/slide-03.mp3",
+    "/course-audio/soil-health/en/slide-04.mp3",
+    "/course-audio/soil-health/en/slide-05.mp3",
+    "/course-audio/soil-health/en/slide-06.mp3",
+    "/course-audio/soil-health/en/slide-07.mp3",
+    "/course-audio/soil-health/en/slide-08.mp3",
+    "/course-audio/soil-health/en/slide-09.mp3",
+    "/course-audio/soil-health/en/slide-10.mp3",
+    "/course-audio/soil-health/en/slide-11.mp3",
+    "/course-audio/soil-health/en/slide-12.mp3",
+    "/course-audio/soil-health/en/slide-13.mp3",
+    "/course-audio/soil-health/en/slide-14.mp3",
+    "/course-audio/soil-health/en/slide-15.mp3",
+    "/course-audio/soil-health/en/slide-16.mp3",
+    "/course-audio/soil-health/en/slide-17.mp3",
+    "/course-audio/soil-health/en/slide-18.mp3",
+    "/course-audio/soil-health/en/slide-19.mp3",
+    "/course-audio/soil-health/en/slide-20.mp3",
+    "/course-audio/vegetables-staples/en/full.mp3",
+    "/course-audio/vegetables-staples/en/slide-01.mp3",
+    "/course-audio/vegetables-staples/en/slide-02.mp3",
+    "/course-audio/vegetables-staples/en/slide-03.mp3",
+    "/course-audio/vegetables-staples/en/slide-04.mp3",
+    "/course-audio/vegetables-staples/en/slide-05.mp3",
+    "/course-audio/vegetables-staples/en/slide-06.mp3",
+    "/course-audio/vegetables-staples/en/slide-07.mp3",
+    "/course-audio/vegetables-staples/en/slide-08.mp3",
+    "/course-audio/vegetables-staples/en/slide-09.mp3",
+    "/course-audio/vegetables-staples/en/slide-10.mp3",
+    "/course-audio/vegetables-staples/en/slide-11.mp3",
+    "/course-audio/vegetables-staples/en/slide-12.mp3",
+    "/course-audio/vegetables-staples/en/slide-13.mp3",
+    "/course-audio/vegetables-staples/en/slide-14.mp3",
+    "/course-audio/vegetables-staples/en/slide-15.mp3",
+    "/course-audio/vegetables-staples/en/slide-16.mp3",
+    "/course-audio/vegetables-staples/en/slide-17.mp3",
+    "/course-audio/vegetables-staples/en/slide-18.mp3",
+    "/course-audio/water-harvesting/en/full.mp3",
+    "/course-audio/water-harvesting/en/slide-01.mp3",
+    "/course-audio/water-harvesting/en/slide-02.mp3",
+    "/course-audio/water-harvesting/en/slide-03.mp3",
+    "/course-audio/water-harvesting/en/slide-04.mp3",
+    "/course-audio/water-harvesting/en/slide-05.mp3",
+    "/course-audio/water-harvesting/en/slide-06.mp3",
+    "/course-audio/water-harvesting/en/slide-07.mp3",
+    "/course-audio/water-harvesting/en/slide-08.mp3",
+    "/course-audio/water-harvesting/en/slide-09.mp3",
+    "/course-audio/water-harvesting/en/slide-10.mp3",
+    "/course-audio/water-harvesting/en/slide-11.mp3",
+    "/course-audio/water-harvesting/en/slide-12.mp3",
+    "/course-audio/water-harvesting/en/slide-13.mp3",
+    "/course-audio/water-harvesting/en/slide-14.mp3",
+    "/course-audio/water-harvesting/en/slide-15.mp3",
+    "/course-audio/water-harvesting/en/slide-16.mp3",
+    "/course-audio/water-harvesting/en/slide-17.mp3",
+    "/course-audio/water-harvesting/en/slide-18.mp3",
+    "/course-audio/water-harvesting/en/slide-19.mp3",
+    "/course-audio/water-harvesting/en/slide-20.mp3",
+    "/course-audio/water-harvesting/en/slide-21.mp3",
+    "/course-audio/water-harvesting/en/slide-22.mp3",
+    "/course-audio/water-harvesting/en/slide-23.mp3",
+    "/course-audio/water-harvesting/en/slide-24.mp3",
+    "/course-images/market-community/market-community-l1.jpg",
+    "/course-images/reading-landscape/reading-landscape-l2.jpg",
+    "/course-images/reading-landscape/reading-landscape-l3.jpg",
+    "/course-images/soil-health/soil-health-l1.jpg",
+    "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
+    "/course-images/water-harvesting/water-harvesting-l3.jpg"
+]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Studies media; unaffected downloads preserved'));
+}
+
+// The chicken Watch scene now shows foraging, not a moving pen. Invalidate only its
+// old speech and slide; otherwise a saved lesson would describe an action no longer shown.
+async function migrateChickenForagingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.chicken-foraging-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/small-livestock/en/slide-04.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+    '/course-decks/small-livestock/en/slide-04.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Foraging scene and matching narration'));
+}
+
+// This tour names each layer as it is highlighted. Old speech would label the wrong
+// plant, so replace just this scene's saved speech and still, once.
+async function migrateForestLayerMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.forest-layers-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/food-forest/en/slide-05.mp3',
+    '/course-audio/food-forest/en/full.mp3',
+    '/course-decks/food-forest/en/slide-05.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Forest layer tour and matching narration'));
+}
+
+// The soil close-ups now follow three spoken observations. Remove only the old
+// scene's speech and still so saved lessons cannot mix the two versions.
+async function migrateSoilObservationMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.soil-observation-20260920';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/soil-health/en/slide-05.mp3',
+    '/course-audio/soil-health/en/full.mp3',
+    '/course-decks/soil-health/en/slide-05.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Soil observation tour and matching narration'));
+}
+
+// The young-forest close-ups replace a planting sequence. Old saved speech would
+// describe different pictures; preserve all other downloads and let learners choose data use.
+async function migrateForestEstablishmentMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.forest-establishment-20260921';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/food-forest/en/slide-15.mp3',
+    '/course-audio/food-forest/en/full.mp3',
+    '/course-decks/food-forest/en/slide-15.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Young forest tour and matching narration'));
+}
+
+// The site-map lesson no longer calls an unmeasured sketch "to scale" or treats
+// weeds as proof of compaction. Retire the old speech only; keep every other saved
+// slide so a learner can choose when to fetch the corrected recordings.
+async function migrateLandscapeSiteMapNarration() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.landscape-site-map-source-correction-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/reading-landscape/en/slide-16.mp3',
+    '/course-audio/reading-landscape/en/slide-18.mp3',
+    '/course-audio/reading-landscape/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected site-map and soil-observation narration'));
+}
+
+// The L3 still now shows the mulch layer in the teaching sequence. Remove only the
+// superseded saved still once; keep every other downloaded course asset intact.
+async function migrateForestMulchInfographic() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-images/food-forest/.mulch-layer-correction-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-images/food-forest/food-forest-l3.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected food forest mulch layer still'));
+}
+
+// The older wide movie ends with bare cardboard, and the authored composite is awaiting Rory's
+// approval. Retire only those saved pairs; the learner chooses whether to download the Flow close-up.
+async function migrateForestSheetMulchingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/food-forest/.flow-sheet-mulching-closeup-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/food-forest/flow-sheet-mulching.mp4',
+    '/course-animations/food-forest/posters/flow-sheet-mulching.jpg',
+    '/course-animations/food-forest/sheet-mulching-layer-order.mp4',
+    '/course-animations/food-forest/posters/sheet-mulching-layer-order.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Food forest Flow sheet mulch close-up'));
+}
+
+// Slide 6's older film stops before the seedling plug is seated. Retire that saved pair only;
+// the reviewed lesson still remains available without downloading a replacement film.
+async function migrateVegetableChoiceMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/vegetables-staples/.seed-or-seedling-choice-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/vegetables-staples/flow-seed-or-seedling.mp4',
+    '/course-animations/vegetables-staples/posters/flow-seed-or-seedling.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Seed or seedling lesson still'));
+}
+
+// Rory requires explicit visual clearance before code-drawn lesson animations are shown. Remove
+// only the three preview candidates from saved packs; their lesson stills and all other media stay.
+async function migrateUnapprovedStudyAnimations() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/.unapproved-code-drawn-retired-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/plant-guilds/thin-selected-support.mp4',
+    '/course-animations/plant-guilds/posters/thin-selected-support.jpg',
+    '/course-animations/vegetables-staples/seed-or-seedling-choice.mp4',
+    '/course-animations/vegetables-staples/posters/seed-or-seedling-choice.jpg',
+    '/course-animations/vegetables-staples/pest-decision-path.mp4',
+    '/course-animations/vegetables-staples/posters/pest-decision-path.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Unapproved lesson animations retired'));
+}
+
+// Rory has not cleared the locally rendered diagrams and tours. Remove every public copy from a
+// saved pack so a learner sees the lesson still while one-at-a-time Flow replacements are reviewed.
+// This is a new marker because earlier clients may already have run the narrower retirement above.
+async function migrateHeldAuthoredStudyAnimations() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/.held-authored-media-retired-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-09-vetiver-contour.mp4',
+    '/course-animations/water-harvesting/posters/watch-09-vetiver-contour.jpg',
+    '/course-animations/water-harvesting/watch-12-dam-spillway.mp4',
+    '/course-animations/water-harvesting/posters/watch-12-dam-spillway.jpg',
+    '/course-animations/water-harvesting/watch-16-first-flush-tank.mp4',
+    '/course-animations/water-harvesting/posters/watch-16-first-flush-tank.jpg',
+    '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4',
+    '/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg',
+    '/course-animations/intro-permaculture/watch-07-three-ethics.mp4',
+    '/course-animations/intro-permaculture/posters/watch-07-three-ethics.jpg',
+    '/course-animations/intro-permaculture/watch-13-diversity.mp4',
+    '/course-animations/intro-permaculture/posters/watch-13-diversity.jpg',
+    '/course-animations/intro-permaculture/motion-windbreak.mp4',
+    '/course-animations/intro-permaculture/posters/motion-windbreak.jpg',
+    '/course-animations/intro-permaculture/watch-19-windbreak.mp4',
+    '/course-animations/intro-permaculture/posters/watch-19-windbreak.jpg',
+    '/course-animations/reading-landscape/watch-05-water-movement.mp4',
+    '/course-animations/reading-landscape/posters/watch-05-water-movement.jpg',
+    '/course-animations/reading-landscape/watch-09-sun-shadows.mp4',
+    '/course-animations/reading-landscape/posters/watch-09-sun-shadows.jpg',
+    '/course-animations/reading-landscape/watch-13-wind-cold-air.mp4',
+    '/course-animations/reading-landscape/posters/watch-13-wind-cold-air.jpg',
+    '/course-animations/reading-landscape/watch-17-site-map.mp4',
+    '/course-animations/reading-landscape/posters/watch-17-site-map.jpg',
+    '/course-animations/soil-health/tour-soil-observation.mp4',
+    '/course-animations/soil-health/posters/tour-soil-observation.jpg',
+    '/course-animations/soil-health/watch-05-living-soil.mp4',
+    '/course-animations/soil-health/posters/watch-05-living-soil.jpg',
+    '/course-animations/soil-health/watch-10-compost-heap.mp4',
+    '/course-animations/soil-health/posters/watch-10-compost-heap.jpg',
+    '/course-animations/soil-health/watch-14-mulch-protection.mp4',
+    '/course-animations/soil-health/posters/watch-14-mulch-protection.jpg',
+    '/course-animations/food-forest/tour-seven-layers.mp4',
+    '/course-animations/food-forest/posters/tour-seven-layers.jpg',
+    '/course-animations/food-forest/watch-05-seven-layers.mp4',
+    '/course-animations/food-forest/posters/watch-05-seven-layers.jpg',
+    '/course-animations/food-forest/watch-10-climate-match.mp4',
+    '/course-animations/food-forest/posters/watch-10-climate-match.jpg',
+    '/course-animations/food-forest/tour-young-forest.mp4',
+    '/course-animations/food-forest/posters/tour-young-forest.jpg',
+    '/course-animations/food-forest/watch-15-forest-sequence.mp4',
+    '/course-animations/food-forest/posters/watch-15-forest-sequence.jpg',
+    '/course-animations/small-livestock/bee-hive-and-blossom.mp4',
+    '/course-animations/small-livestock/posters/bee-hive-and-blossom.jpg',
+    '/course-animations/small-livestock/watch-04-chicken-tractor.mp4',
+    '/course-animations/small-livestock/posters/watch-04-chicken-tractor.jpg',
+    '/course-animations/small-livestock/watch-09-bee-pollination.mp4',
+    '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg',
+    '/course-animations/small-livestock/watch-14-nutrient-loop.mp4',
+    '/course-animations/small-livestock/posters/watch-14-nutrient-loop.jpg',
+    '/course-animations/market-community/watch-04-farm-record.mp4',
+    '/course-animations/market-community/posters/watch-04-farm-record.jpg',
+    '/course-animations/market-community/watch-09-surplus-routes.mp4',
+    '/course-animations/market-community/posters/watch-09-surplus-routes.jpg',
+    '/course-animations/market-community/watch-14-community-network.mp4',
+    '/course-animations/market-community/posters/watch-14-community-network.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Held authored study media retired'));
+}
+
+// The two water swale clips are held pending safety and visual review. Remove only their
+// saved movies and posters, including URL variants, so unrelated course media remains offline.
+async function migrateHeldWaterSwaleMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/water-harvesting/.swale-clips-held-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-04-swale-infiltration.mp4',
+    '/course-animations/water-harvesting/posters/watch-04-swale-infiltration.jpg',
+    '/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4',
+    '/course-animations/water-harvesting/posters/watch-07-swale-overflow-pond.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water swale clips held for review'));
+}
+
+// Slide 9's route choices were too small at phone fit; replace only its saved still.
+async function migrateMarketL2RouteStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.l2-route-still-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = '/course-decks/market-community/en/slide-09.jpg';
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === obsolete) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Market L2 route still replaced'));
+}
+
+// Historical migration from the original drawn bee route to the now-withdrawn composite. Keep its
+// marker for clients crossing that release; the broader migration above retires both generations.
+async function migrateBeeHiveAndBlossomMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/small-livestock/.bee-hive-and-blossom-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/small-livestock/watch-09-bee-pollination.mp4',
+    '/course-animations/small-livestock/posters/watch-09-bee-pollination.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Bee hive and blossom teaching clip'));
+}
+
+// The greywater diagram now names the permitted planting and excluded source water.
+// Remove only its old saved movie and poster once; a fresh download stays the learner's choice.
+async function migrateGreywaterTeachingMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-animations/water-harvesting/.greywater-labels-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-animations/water-harvesting/watch-21-greywater-mulch.mp4',
+    '/course-animations/water-harvesting/posters/watch-21-greywater-mulch.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Greywater source and planting labels'));
+}
+
+// Greywater L4 now teaches source and exposure decisions instead of a generic reuse route.
+// Retire only the stale English cards and speech so a saved pack cannot show the old recipe.
+async function migrateWaterL4DecisionOnly() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/en/.l4-greywater-safety-20260924';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/water-harvesting/en/slide-19.jpg',
+    '/course-decks/water-harvesting/en/slide-20.jpg',
+    '/course-decks/water-harvesting/en/slide-21.jpg',
+    '/course-decks/water-harvesting/en/slide-22.jpg',
+    '/course-audio/water-harvesting/en/slide-19.mp3',
+    '/course-audio/water-harvesting/en/slide-20.mp3',
+    '/course-audio/water-harvesting/en/slide-21.mp3',
+    '/course-audio/water-harvesting/en/slide-22.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water L4 source and exposure safety lesson'));
+}
+
+// The corrected greywater lesson suppresses an infographic that pictured a direct washwater pipe
+// to tree roots. The owner-authorized isiZulu draft also replaces unpublished ZU media. Clear only
+// those Water Harvesting assets once; learners can download the new labelled draft again.
+async function migrateWaterHarvestingZuluDraft() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.zulu-review-draft-20260924';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set();
+  obsolete.add('/course-images/water-harvesting/water-harvesting-l4.jpg');
+  for (let slide = 1; slide <= 24; slide += 1) {
+    const number = String(slide).padStart(2, '0');
+    obsolete.add('/course-decks/water-harvesting/zu/slide-' + number + '.jpg');
+    obsolete.add('/course-audio/water-harvesting/zu/slide-' + number + '.mp3');
+  }
+  obsolete.add('/course-audio/water-harvesting/zu/full.mp3');
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Water Harvesting isiZulu review draft assets'));
+}
+
+// The windbreak now explains through-flow, with matching speech. Keep other
+// saved lessons and never fetch a replacement without the learner choosing it.
+async function migrateWindbreakMedia() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/.windbreak-motion-20260921';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/intro-permaculture/en/slide-19.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+    '/course-decks/intro-permaculture/en/slide-19.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Windbreak motion and matching narration'));
+}
+
+// These soil-cover stills were improved in place while their narration stayed correct. Clear
+// only the two saved pictures, then let the learner choose whether to download replacements.
+async function migrateSoilCoverStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/en/.soil-cover-stills-20260922';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/soil-health/en/slide-16.jpg',
+    '/course-decks/soil-health/en/slide-18.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Improved soil-cover stills'));
+}
+
+// The Tshivenda, Sesotho and Xitsonga soil slides were refreshed in place. Retire only
+// the twelve saved stills so a learner can choose when to download their replacements.
+async function migrateSoilHealthRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [1, 2, 5, 19].map(function (slide) {
+        return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Soil Health stills'));
+}
+
+// The ST, VE and TS Reading slides were refreshed at their existing URLs. Retire only
+// those 63 saved stills once; keep every English slide, recording and other course download.
+// The replacement remains learner-chosen so activation never spends airtime downloading it.
+async function migrateReadingLandscapeRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 21 }, function (_, index) {
+        return '/course-decks/reading-landscape/' + language + '/slide-' + String(index + 1).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Reading Landscape stills'));
+}
+
+// The opening six Vegetables source-paired frames were refreshed in place. Retire just
+// those 18 regional stills once; the new images remain a deliberate learner download.
+async function migrateVegetablesOpeningRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.opening-regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 6 }, function (_, index) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(index + 1).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed opening Vegetables regional stills'));
+}
+
+// The remaining localized Vegetables slides were refreshed at their existing URLs. Retire
+// only slides 7–18 for ST, VE and TS once; English, isiZulu and saved recordings remain intact.
+// Replacement stills stay learner-chosen, so activation does not download them over mobile data.
+async function migrateVegetablesRemainingRegionalStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.remaining-regional-stills-20261003';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return Array.from({ length: 12 }, function (_, index) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(index + 7).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed remaining Vegetables regional stills'));
+}
+
+// These Water stills gained source-paired regional wording at their existing URLs.
+// Keep untouched frames and recordings; the learner chooses when to download replacements.
+async function migrateWaterRegionalDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.regional-draft-stills-20261003';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [1, 3, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 22, 23, 24],
+    ve: [1, 3, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 23, 24],
+    ts: [1, 6, 8, 9, 10, 11, 13, 14, 15, 17, 18, 19, 23, 24],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Water regional stills'));
+}
+
+// The source-paired Soil draft text changed only these stills. Keep the rest of a saved
+// course intact and let learners choose a replacement download when they have signal.
+async function migrateSoilRegionalDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.regional-draft-stills-20261003';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+    ve: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20],
+    ts: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 19, 20],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Soil regional stills'));
+}
+
+// The accepted Reading Landscape prose changed seventeen ST, VE and TS frames.
+// Retire only those saved stills once; keep every other lesson asset, and leave
+// replacement downloads to the learner so activation never spends airtime.
+async function migrateReadingLandscapeDraftStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-draft-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 7, 8, 12, 14],
+    ve: [3, 4, 7, 8, 12, 14],
+    ts: [3, 4, 7, 8, 12, 14],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape regional stills'));
+}
+
+// The next source-paired Reading batch changes four more regional frames per language.
+// Retire only those saved WebPs once and leave replacement downloads to the learner.
+async function migrateReadingLandscapeOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-ordinary-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [8, 10, 15, 21],
+    ve: [8, 10, 15, 21],
+    ts: [8, 10, 15, 21],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape ordinary regional stills'));
+}
+
+// The Intro VE and TS source-paired drafts refresh 21 stills each. Retire only those saved
+// regional frames once; leave replacement downloads to learners and keep Sesotho speech intact.
+async function migrateIntroRegionalSubstantiveStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.regional-substantive-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = {
+    ve: [1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    ts: [1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/intro-permaculture/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Introduction regional stills'));
+}
+
+// Learners can save the older Vegetables wording. Retire only the eight regional frames
+// changed with their source-bound lesson paragraphs; keep all narration and other packs.
+async function migrateVegetablesOrdinaryLessonStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.ordinary-lesson-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [16], ve: [16], ts: [4, 6, 10, 11, 15, 16] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Vegetables ordinary lesson stills'));
+}
+
+// A saved Market frame must not keep the wording superseded by the checked learner draft.
+// Refresh only these regional stills once, without fetching media or discarding narration.
+async function migrateMarketLearnerReuseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.learner-reuse-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [15, 18], ve: [8, 15, 18], ts: [15, 18] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/market-community/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Market learner draft stills'));
+}
+
+// Reading slide 16 reuses the current learner draft, and the ST cards also use checked spelling.
+// Retire only these six regional stills once; leave cache downloads to the learner.
+async function migrateReadingLandscapePairedReuseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-paired-reuse-stills-20261004';
+  if (await cache.match(marker)) return;
+  const changed = { st: [1, 3, 16, 17], ve: [16], ts: [16] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading Landscape learner-draft stills'));
+}
+
+// The latest Reading observation batch changes slides 18–20 in all three regional languages.
+// Retire only those nine saved frames once; new stills remain a learner-chosen download.
+async function migrateReadingLandscapeObservationStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-observation-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [18, 19, 20].map(function (slide) {
+        return '/course-decks/reading-landscape/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading observation stills'));
+}
+
+// Eight source-paired stills changed across the Vegetables, Intro and Reading decks.
+// Retire only those saved WebPs once; replacement downloads remain learner-chosen.
+async function migrateRegionalRecordIntroReadingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-record-intro-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired regional record and map stills'));
+}
+
+// The three Field Action learner drafts changed slide 18 in the regional Vegetables decks.
+// Retire only those saved stills once; replacement images remain learner-chosen downloads.
+async function migrateVegetablesFieldActionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.field-action-slide18-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(['st', 've', 'ts'].map(function (language) {
+    return '/course-decks/vegetables-staples/' + language + '/slide-18.webp';
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional Vegetables Field Action stills'));
+}
+
+// The field-assignment exercise refreshed three Vegetable stills and four Intro stills.
+// Retire only those seven saved frames once; leave other languages, recordings and films cached.
+async function migrateRegionalAssignmentExerciseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.regional-assignment-exercise-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...['st', 've', 'ts'].map(function (language) {
+      return '/course-decks/vegetables-staples/' + language + '/slide-17.webp';
+    }),
+    '/course-decks/intro-permaculture/ve/slide-20.webp',
+    '/course-decks/intro-permaculture/ve/slide-21.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed regional assignment exercise stills'));
+}
+
+// The Vegetables L2 VE and TS lesson panels now show source-paired ordinary prose.
+// Retire only those eight saved stills once; replacement downloads remain learner-chosen.
+async function migrateVegetablesL2OrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l2-ordinary-paired-stills-20261004';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['ve', 'ts'].flatMap(function (language) {
+      return [8, 9, 10, 11].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L2 source-paired regional stills'));
+}
+
+// Vegetables L1 now carries the accepted ordinary-prose draft in three regional decks.
+// Retire only the twelve changed saved stills once; keep audio and every other slide.
+async function migrateVegetablesL1FullerOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l1-fuller-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [4, 5, 6, 7].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L1 fuller source-paired regional stills'));
+}
+
+// L4 ordinary prose is now paired in six regional frames; retire only those saved copies once.
+async function migrateVegetablesL4OrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l4-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [15, 16].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Vegetables L4 ordinary source-paired regional stills'));
+}
+
+// L2's newly checked complete-row drafts refresh six regional saved cards. Retire
+// only those URLs once; replacement slides remain learner-chosen downloads.
+async function migrateVegetablesL2FullerOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l2-fuller-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-10.webp',
+    '/course-decks/vegetables-staples/ve/slide-08.webp',
+    '/course-decks/vegetables-staples/ve/slide-10.webp',
+    '/course-decks/vegetables-staples/ts/slide-08.webp',
+    '/course-decks/vegetables-staples/ts/slide-09.webp',
+    '/course-decks/vegetables-staples/ts/slide-10.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed six Vegetables L2 fuller source-paired regional stills'));
+}
+
+// L4 precision wording changes replace these six compressed paired cards; keep the
+// refresh scoped to their saved URL variants so narration and films stay available.
+async function migrateVegetablesPestPrecisionPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.pest-precision-paired-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set(
+    ['st', 've', 'ts'].flatMap(function (language) {
+      return [15, 16].map(function (slide) {
+        return '/course-decks/vegetables-staples/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    })
+  );
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed six Vegetables pest-precision paired stills'));
+}
+
+// Accepted L3 ordinary spans change only these eight silent cards. Refresh their
+// saved URL variants once, keeping replacement downloads and recorded media intact.
+async function migrateVegetablesL3OrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l3-ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-13.webp',
+    '/course-decks/vegetables-staples/st/slide-14.webp',
+    '/course-decks/vegetables-staples/ve/slide-12.webp',
+    '/course-decks/vegetables-staples/ve/slide-13.webp',
+    '/course-decks/vegetables-staples/ts/slide-12.webp',
+    '/course-decks/vegetables-staples/ts/slide-13.webp',
+    '/course-decks/vegetables-staples/ts/slide-14.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed eight source-paired Vegetables L3 ordinary stills'));
+}
+
+// Five accepted L1 source-paired paragraphs now have fuller ordinary wording.
+// Retire only their saved still variants once; audio and later downloads stay intact.
+async function migrateVegetablesL1OrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/.l1-ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five source-paired Vegetables L1 ordinary stills'));
+}
+
+// The full ordinary Intro batch changes only these reviewed VE/TS stills.
+// Refresh saved variants once; narration, films and later downloads stay learner-chosen.
+async function migrateIntroFullOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.full-ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-01.webp',
+    '/course-decks/intro-permaculture/ve/slide-03.webp',
+    '/course-decks/intro-permaculture/ve/slide-04.webp',
+    '/course-decks/intro-permaculture/ve/slide-06.webp',
+    '/course-decks/intro-permaculture/ve/slide-07.webp',
+    '/course-decks/intro-permaculture/ve/slide-08.webp',
+    '/course-decks/intro-permaculture/ve/slide-10.webp',
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ve/slide-12.webp',
+    '/course-decks/intro-permaculture/ve/slide-13.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/intro-permaculture/ve/slide-15.webp',
+    '/course-decks/intro-permaculture/ve/slide-16.webp',
+    '/course-decks/intro-permaculture/ve/slide-18.webp',
+    '/course-decks/intro-permaculture/ve/slide-19.webp',
+    '/course-decks/intro-permaculture/ve/slide-20.webp',
+    '/course-decks/intro-permaculture/ve/slide-21.webp',
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-01.webp',
+    '/course-decks/intro-permaculture/ts/slide-04.webp',
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/ts/slide-08.webp',
+    '/course-decks/intro-permaculture/ts/slide-09.webp',
+    '/course-decks/intro-permaculture/ts/slide-10.webp',
+    '/course-decks/intro-permaculture/ts/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+    '/course-decks/intro-permaculture/ts/slide-13.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-15.webp',
+    '/course-decks/intro-permaculture/ts/slide-16.webp',
+    '/course-decks/intro-permaculture/ts/slide-18.webp',
+    '/course-decks/intro-permaculture/ts/slide-19.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/intro-permaculture/ts/slide-21.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed 36 source-paired Intro ordinary stills'));
+}
+
+// Thirteen accepted Vegetables and Market source-paired cards changed after their previous renders.
+// Retire only those saved URL variants once; audio, films and later learner downloads stay intact.
+async function migrateNativePairedResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.native-paired-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/st/slide-05.webp',
+    '/course-decks/vegetables-staples/st/slide-16.webp',
+    '/course-decks/vegetables-staples/ts/slide-05.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-16.webp',
+    '/course-decks/market-community/st/slide-06.webp',
+    '/course-decks/market-community/st/slide-11.webp',
+    '/course-decks/market-community/ts/slide-06.webp',
+    '/course-decks/market-community/ts/slide-12.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/market-community/ve/slide-06.webp',
+    '/course-decks/market-community/ve/slide-11.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed thirteen source-paired Vegetables and Market stills'));
+}
+
+// Four Reading stills now use checked frost wording in their paired drafts.
+// Retire only those saved URLs once; replacement downloads remain learner-chosen.
+async function migrateReadingLandscapeFrostBodySyncStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.frost-body-sync-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-11.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed four source-paired Reading frost stills'));
+}
+
+// Fuller source-paired Reading cards replace these exact saved stills once, without
+// spending airtime or removing narration and shared films a learner already downloaded.
+// These Market L1 cards replace saved draft wording; all narration and other cards remain independent.
+async function migrateMarketL1OrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.regional-l1-ordinary-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/market-community/st/slide-01.webp',
+    '/course-decks/market-community/st/slide-02.webp',
+    '/course-decks/market-community/st/slide-05.webp',
+    '/course-decks/market-community/st/slide-07.webp',
+    '/course-decks/market-community/st/slide-08.webp',
+    '/course-decks/market-community/ve/slide-02.webp',
+    '/course-decks/market-community/ve/slide-05.webp',
+    '/course-decks/market-community/ve/slide-06.webp',
+    '/course-decks/market-community/ve/slide-07.webp',
+    '/course-decks/market-community/ve/slide-08.webp',
+    '/course-decks/market-community/ts/slide-01.webp',
+    '/course-decks/market-community/ts/slide-02.webp',
+    '/course-decks/market-community/ts/slide-05.webp',
+    '/course-decks/market-community/ts/slide-06.webp',
+    '/course-decks/market-community/ts/slide-07.webp',
+    '/course-decks/market-community/ts/slide-08.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Market L1 ordinary stills'));
+}
+
+async function migrateReadingLandscapeFullOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-full-ordinary-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-04.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/st/slide-08.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-12.webp',
+    '/course-decks/reading-landscape/st/slide-13.webp',
+    '/course-decks/reading-landscape/st/slide-14.webp',
+    '/course-decks/reading-landscape/st/slide-16.webp',
+    '/course-decks/reading-landscape/st/slide-19.webp',
+    '/course-decks/reading-landscape/st/slide-20.webp',
+    '/course-decks/reading-landscape/st/slide-21.webp',
+    '/course-decks/reading-landscape/ve/slide-01.webp',
+    '/course-decks/reading-landscape/ve/slide-02.webp',
+    '/course-decks/reading-landscape/ve/slide-03.webp',
+    '/course-decks/reading-landscape/ve/slide-04.webp',
+    '/course-decks/reading-landscape/ve/slide-06.webp',
+    '/course-decks/reading-landscape/ve/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-08.webp',
+    '/course-decks/reading-landscape/ve/slide-09.webp',
+    '/course-decks/reading-landscape/ve/slide-10.webp',
+    '/course-decks/reading-landscape/ve/slide-11.webp',
+    '/course-decks/reading-landscape/ve/slide-12.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-16.webp',
+    '/course-decks/reading-landscape/ve/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-19.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/reading-landscape/ve/slide-21.webp',
+    '/course-decks/reading-landscape/ts/slide-01.webp',
+    '/course-decks/reading-landscape/ts/slide-02.webp',
+    '/course-decks/reading-landscape/ts/slide-03.webp',
+    '/course-decks/reading-landscape/ts/slide-04.webp',
+    '/course-decks/reading-landscape/ts/slide-06.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-08.webp',
+    '/course-decks/reading-landscape/ts/slide-09.webp',
+    '/course-decks/reading-landscape/ts/slide-10.webp',
+    '/course-decks/reading-landscape/ts/slide-11.webp',
+    '/course-decks/reading-landscape/ts/slide-12.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-16.webp',
+    '/course-decks/reading-landscape/ts/slide-17.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-20.webp',
+    '/course-decks/reading-landscape/ts/slide-21.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Reading ordinary stills'));
+}
+
+// First-observation wording changed on eight Reading cards. Retire only those saved regional stills once.
+async function migrateReadingLandscapeFirstObservationStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/.regional-first-observation-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-02.webp',
+    '/course-decks/reading-landscape/st/slide-05.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/ve/slide-05.webp',
+    '/course-decks/reading-landscape/ve/slide-06.webp',
+    '/course-decks/reading-landscape/ts/slide-02.webp',
+    '/course-decks/reading-landscape/ts/slide-05.webp',
+    '/course-decks/reading-landscape/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed eight source-paired Reading observation stills'));
+}
+
+// These nine regional slides now show the approved source-paired learner text. Retire only
+// their saved still variants once; keep audio, films, other slides, and learner-chosen downloads.
+async function migrateStudyOutcomesResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.study-outcomes-residual-stills-20261005';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed nine source-paired Study outcome stills'));
+}
+
+// The reviewed Water predicates change only these saved stills. Retire exact paths and
+// their query variants once, so learner-chosen replacement downloads show the new wording.
+async function migrateWaterReviewedPrecisionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.reviewed-precision-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [6, 13, 14, 22],
+    ve: [6, 8, 10, 11, 13, 14, 17, 18, 22],
+    ts: [8, 13, 14, 15, 17, 18, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired Water precision stills'));
+}
+
+// The ordinary-copy pass redrew only these Water lesson cards. Retire those exact saved
+// stills once; preserve narration, shared films and every unrelated learner download.
+async function migrateWaterOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/.ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [6, 8, 13, 14, 15, 17, 18, 22],
+    ve: [6, 8, 10, 11, 13, 14, 15, 17, 18],
+    ts: [6, 8, 10, 11, 13, 14, 15, 17, 18, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/water-harvesting/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Water ordinary-completion stills'));
+}
+
+// The reviewed Soil ordinary wording reuses these still URLs. Retire their old query
+// variants once so a saved lesson cannot conceal the new source-paired draft wording.
+async function migrateSoilOrdinaryCompletionStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.ordinary-completion-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [18],
+    ve: [4, 8],
+    ts: [8, 13, 18],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Soil ordinary-completion stills'));
+}
+
+// Root-reviewed ordinary Intro targets replace exactly these VE/TS stills. Retire
+// old saved query variants once; ST narration, films and every other download stay.
+async function migrateIntroOrdinaryNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/.ordinary-next-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    ve: [1, 3, 4, 6, 8, 11, 13, 15, 16, 17, 18, 19, 20, 21, 22],
+    ts: [1, 3, 4, 6, 8, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/intro-permaculture/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Intro ordinary next stills'));
+}
+
+// 6 October 2026: accepted ordinary Market clauses change eleven saved stills.
+// Retire their stale query variants once; keep shared films, narration and later downloads.
+async function migrateMarketOrdinaryResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/.ordinary-residual-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = { st: [12, 15], ve: [7, 8, 10, 11, 15, 17], ts: [7, 10, 17] };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/market-community/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Market ordinary residual stills'));
+}
+
+// Checked learner paragraphs replace these saved Soil stills; refresh their query variants once.
+// Keep narration and shared films offline, and leave replacement downloads learner-chosen.
+async function migrateSoilFullerLearnerStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/.fuller-learner-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    st: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17],
+    ve: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17, 18],
+    ts: [4, 6, 7, 8, 9, 11, 12, 13, 15, 16, 17],
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([language, slides]) {
+    return slides.map(function (slide) {
+      return '/course-decks/soil-health/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed source-paired fuller Soil learner stills'));
+}
+
+// The Soil Health and Water Harvesting ST, VE and TS decks now pair the remaining ordinary prose with its
+// exact English. Retire only the redrawn saved stills once; replacement downloads remain learner-chosen.
+async function migrateSoilWaterOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.soil-water-ordinary-paired-stills-20261005';
+  if (await cache.match(marker)) return;
+  const changed = {
+    'soil-health': {
+      st: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ve: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      ts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    },
+    'water-harvesting': {
+      st: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+      ve: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+      ts: [1, 2, 3, 4, 5, 6, 7, 9, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+    },
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([moduleId, languages]) {
+    return Object.entries(languages).flatMap(function ([language, slides]) {
+      return slides.map(function (slide) {
+        return '/course-decks/' + moduleId + '/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed Soil Health and Water Harvesting source-paired regional stills'));
+}
+
+// 6 October 2026: the accepted residual prose layer redraws only these 18
+// Soil and Water cards. Retire their saved query variants once; leave all
+// other frames, narration, shared films and later learner downloads intact.
+async function migrateSoilWaterResidualOrdinaryPairedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.soil-water-residual-ordinary-stills-20261006';
+  if (await cache.match(marker)) return;
+  const changed = {
+    'soil-health': {
+      st: [4, 9, 12, 13, 17],
+      ts: [4, 8, 9, 17],
+      ve: [12, 13, 17],
+    },
+    'water-harvesting': {
+      ts: [22],
+      ve: [6, 15, 17, 18, 22],
+    },
+  };
+  const obsolete = new Set(Object.entries(changed).flatMap(function ([moduleId, languages]) {
+    return Object.entries(languages).flatMap(function ([language, slides]) {
+      return slides.map(function (slide) {
+        return '/course-decks/' + moduleId + '/' + language + '/slide-' + String(slide).padStart(2, '0') + '.webp';
+      });
+    });
+  }));
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed 18 Soil Health and Water Harvesting residual stills'));
+}
+
+// Slide 14 now labels the bare-versus-mulch impact comparison at phone size. Retire only
+// the old saved English still once; downloading the new still remains the learner's choice.
+async function migrateSoilL3ComparisonStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/soil-health/en/.l3-slide14-comparison-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = '/course-decks/soil-health/en/slide-14.jpg';
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === obsolete) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Phone-readable Soil Health L3 comparison still'));
+}
+
+// The corrected English L3 teaching changed slides 14, 17 and 18. A saved full narration
+// contains all three, so retire it with those clips; keep every unrelated lesson asset.
+async function migrateSoilHealthL3CorrectedNarration() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/soil-health/en/.l3-corrected-teaching-20260924';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/soil-health/en/full.mp3',
+    '/course-audio/soil-health/en/slide-14.mp3',
+    '/course-audio/soil-health/en/slide-17.mp3',
+    '/course-audio/soil-health/en/slide-18.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Soil Health L3 narration'));
+}
+
+// Slides 9 and 11 now retain their existing sentences at phone-readable type sizes.
+// Retire only those saved stills; each learner chooses when to fetch the replacements.
+async function migrateVegetablesL2ReadableStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/en/.l2-readable-stills-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/en/slide-09.jpg',
+    '/course-decks/vegetables-staples/en/slide-11.jpg',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Readable Vegetables L2 English stills'));
+}
+
+// L3 now explains when sweet potato can tolerate some drought. Old saved speech
+// and the old card would teach the broader claim beside the corrected lesson.
+// Retire only those English bytes; fetching replacements stays the learner's choice.
+async function migrateVegetablesL3SweetPotatoTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/en/.l3-sweet-potato-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/vegetables-staples/en/slide-13.jpg',
+    '/course-audio/vegetables-staples/en/slide-13.mp3',
+    '/course-audio/vegetables-staples/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Qualified sweet potato teaching'));
+}
+
+// Slide 16 now presents the existing pest-response order and conditional safeguards at phone width.
+// Retire only that saved English still; the learner chooses when to download the replacement.
+async function migrateVegetablesL4DecisionStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/vegetables-staples/en/.l4-slide16-decision-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/vegetables-staples/en/slide-16.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable Vegetables L4 decision still'));
+}
+
+// The Market record still now uses phone-size destination labels. A saved pack keeps
+// old bytes at this URL until explicitly cleared; invalidate only this picture so
+// the learner chooses when to download the replacement with their own airtime.
+async function migrateMarketRecordStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/en/.record-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/market-community/en/slide-04.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable harvest destinations'));
+}
+
+// Slide 5's English layer key changed while its narration stayed the same. Invalidate
+// only that still so a saved pack keeps every other chosen lesson asset and the learner
+// decides when to download the clearer image.
+async function migrateFoodForestLayerKeyStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/food-forest/en/.layer-key-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/food-forest/en/slide-05.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable seven-layer key'));
+}
+
+// Slide 10 now presents the existing climate comparison in large panels. Clear
+// only that saved picture; learners choose when to download its replacement.
+async function migrateFoodForestClimateMatchStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/food-forest/en/.climate-match-still-20260923-v2';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/food-forest/en/slide-10.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable climate comparison'));
+}
+
+// Slide 17's three existing statements are now laid out for phone-width reading.
+// Clear only that saved still; learners choose when to download its replacement.
+async function migrateFoodForestL3AdjustStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/food-forest/en/.adjust-trees-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/food-forest/en/slide-17.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable tree adjustment statements'));
+}
+
+// Slide 14's four sharing labels are now readable at phone fit. Invalidate only
+// that saved picture; the learner chooses when to download its replacement.
+async function migrateMarketCommunityNetworkStill() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/en/.community-network-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/market-community/en/slide-14.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Phone-readable community sharing labels'));
+}
+
+// Market Community L3's English seed-rights narration changed on slides 15 and
+// 20. Retire only the changed recordings and combined lesson audio.
+async function migrateMarketCommunityL3SeedRightsTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/en/.l3-seed-rights-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/market-community/en/slide-15.mp3',
+    '/course-audio/market-community/en/slide-20.mp3',
+    '/course-audio/market-community/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected seed rights lesson'));
+}
+
+// Slide 20's replacement card adds the seed permission caution after the audio
+// migration above may already have run for existing learners.
+async function migrateMarketCommunityL3SeedRightsCard() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/market-community/en/.l3-seed-rights-card-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/market-community/en/slide-20.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Updated seed rights slide 20 card'));
+}
+
+// Small Livestock slide 8's replacement keeps the existing teaching and URL. Retire
+// only the saved English still once so learners can choose when to download it.
+async function migrateSmallLivestockSlide8Still() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/small-livestock/en/.slide08-still-20260923';
+  if (await cache.match(marker)) return;
+  for (const request of await cache.keys()) {
+    if (new URL(request.url).pathname === '/course-decks/small-livestock/en/slide-08.jpg') {
+      await cache.delete(request);
+    }
+  }
+  await cache.put(marker, new Response('Updated Small Livestock slide 8 still'));
+}
+
+// The borehole example now asks learners to check permitted use and supply before sharing.
+// Retire only its old English pictures and speech; a saved course must not pair those
+// bytes with the corrected quiz, and replacement downloads remain the learner's choice.
+async function migrateIntroL1WaterUseTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/en/.l1-water-use-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/en/slide-07.jpg',
+    '/course-decks/intro-permaculture/en/slide-08.jpg',
+    '/course-audio/intro-permaculture/en/slide-07.mp3',
+    '/course-audio/intro-permaculture/en/slide-08.mp3',
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected English borehole example'));
+}
+
+// The old closed-circle art suggested that all nutrients come back to crops.
+// Remove only the corrected English pictures and speech from saved packs;
+// learners choose when to download the replacements using their own airtime.
+async function migrateSmallLivestockL3NutrientFlow() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/small-livestock/en/.l3-nutrient-flow-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/small-livestock/en/slide-14.jpg',
+    '/course-decks/small-livestock/en/slide-15.jpg',
+    '/course-images/small-livestock/small-livestock-l3.jpg',
+    '/course-audio/small-livestock/en/slide-14.mp3',
+    '/course-audio/small-livestock/en/slide-15.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected livestock nutrient flow'));
+}
+
+// The module's opening outcome and closing field task also mentioned a closed loop.
+// Use a separate marker: the earlier L3 migration may already have run on this phone.
+async function migrateSmallLivestockModuleFlows() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/small-livestock/en/.module-flows-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/small-livestock/en/slide-03.jpg',
+    '/course-decks/small-livestock/en/slide-19.jpg',
+    '/course-audio/small-livestock/en/slide-03.mp3',
+    '/course-audio/small-livestock/en/slide-19.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Qualified livestock module framing'));
+}
+
+// These four stills and six recordings now explain the principles without
+// promising hail protection or treating observation as permission to dig.
+// A saved pack must not pair its old media with the corrected lesson and quiz.
+async function migrateIntroL2PrinciplesTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/en/.l2-principles-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...[11, 12, 13, 14].map(n => '/course-decks/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.jpg'),
+    ...[9, 10, 11, 12, 13, 14].map(n => '/course-audio/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Introduction principles lesson'));
+}
+
+// The regional wind direction in the old sectors still was unsupported, and
+// the spoken zone example has changed. Remove only this English lesson's old
+// pictures and speech so a saved pack cannot pair them with the new quiz.
+async function migrateIntroL3ZonesAndSectorsTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/intro-permaculture/en/.l3-zones-sectors-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...[17, 18, 19].map(n => '/course-decks/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.jpg'),
+    ...[15, 16, 17, 18].map(n => '/course-audio/intro-permaculture/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/intro-permaculture/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected Introduction zones and sectors lesson'));
+}
+
+// A saved landscape lesson may still say every water exit is a loss and urge
+// earthworks from an A-frame sketch. Retire only the corrected English assets;
+// the learner chooses when to download their replacements.
+async function migrateLandscapeL1WaterObservationTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/en/.l1-water-observation-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/en/slide-04.jpg',
+    '/course-decks/reading-landscape/en/slide-07.jpg',
+    ...[4, 6, 7, 20, 21].map(n => '/course-audio/reading-landscape/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/reading-landscape/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected landscape water-observation lesson'));
+}
+
+// The old frost card and speech direct tender plants toward a wall without
+// checking cold-air pooling. Retire only L2 English media; downloads stay the
+// learner's choice and the other lessons keep their saved files.
+async function migrateLandscapeL2SunAndFrostTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/en/.l2-sun-frost-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/en/slide-11.jpg',
+    ...[8, 10, 11].map(n => '/course-audio/reading-landscape/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/reading-landscape/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected landscape sun and frost lesson'));
+}
+
+// The old wind and frost cards turn regional examples into siting rules and
+// suggest moving a tomato bed alone controls late blight. Retire only the
+// coordinated English L3 media so a saved lesson cannot mix old and new advice.
+async function migrateLandscapeL3WindAndFrostTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/en/.l3-wind-frost-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    ...[13, 14, 15].map(n => '/course-decks/reading-landscape/en/slide-' + String(n).padStart(2, '0') + '.jpg'),
+    ...[12, 13, 14, 15].map(n => '/course-audio/reading-landscape/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/reading-landscape/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected landscape wind and frost lesson'));
+}
+
+// The old swale cards and speech promise level-only earthworks, deep root
+// moisture and a safe receiver that the concept pictures cannot establish.
+// Retire only this English teaching so saved packs refresh without losing
+// unrelated water lessons or spending airtime until the learner requests it.
+async function migrateWaterL1SwaleTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/en/.l1-swale-20260923';
+  if (await cache.match(marker)) return;
+  const changed = [2, 3, 4, 5, 7];
+  const obsolete = new Set([
+    ...changed.map(n => '/course-decks/water-harvesting/en/slide-' + String(n).padStart(2, '0') + '.jpg'),
+    ...changed.map(n => '/course-audio/water-harvesting/en/slide-' + String(n).padStart(2, '0') + '.mp3'),
+    '/course-audio/water-harvesting/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected water swale lesson'));
+}
+
+// The earlier dam still and speech made catchment area sound sufficient for
+// sizing. Retire only the changed English slide and combined recording.
+async function migrateWaterL2DamSizingTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/water-harvesting/en/.l2-dam-sizing-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/water-harvesting/en/slide-12.jpg',
+    '/course-audio/water-harvesting/en/slide-12.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected dam sizing lesson'));
+}
+
+// The roof-catchment lesson now asks learners to check the collecting surface.
+// Refresh only the changed English speech; the still and other lessons stay saved.
+async function migrateWaterL3RoofSuitabilityTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-audio/water-harvesting/en/.l3-roof-suitability-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-audio/water-harvesting/en/slide-14.mp3',
+    '/course-audio/water-harvesting/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected roof suitability lesson'));
+}
+
+// The bee film does not show a hive departure or prove pollen transfer, and
+// the former range card drew a sharp regional split. Retire only matched
+// English speech and the revised range still from saved lesson packs.
+async function migrateSmallLivestockL2BeeTeaching() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/small-livestock/en/.l2-bee-teaching-20260923';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/small-livestock/en/slide-11.jpg',
+    '/course-audio/small-livestock/en/slide-09.mp3',
+    '/course-audio/small-livestock/en/slide-11.mp3',
+    '/course-audio/small-livestock/en/full.mp3',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Corrected bee lesson'));
+}
+
+// The new silent Sesotho edition uses new URLs. Only three existing regional
+// cards changed; keep the archived Sesotho recordings and all other saved media.
+async function migrateIntroSilentReleaseStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.intro-silent-release-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated regional Introduction cards'));
+}
+
+// Retire only the ten refreshed runtime silent Sesotho stills; recorded media,
+// the twelve unchanged silent cards and all unrelated saved course media remain intact.
+async function migrateStIntroRuntimeResidualStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.st-intro-runtime-residual-stills-20261008';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/st-silent/slide-10.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-13.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-14.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-15.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-16.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-18.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-19.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-20.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-21.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-22.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated ten runtime silent Sesotho Introduction cards'));
+}
+
+// These checked regional wording changes replace only the 36 named saved stills.
+// Audio, shared films and later replacement downloads remain in the course cache.
+async function migrateFinalLanguageNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.final-language-next-stills-20261006';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ts/slide-22.webp',
+    '/course-decks/intro-permaculture/ve/slide-12.webp',
+    '/course-decks/intro-permaculture/ve/slide-22.webp',
+    '/course-decks/market-community/st/slide-12.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/st/slide-18.webp',
+    '/course-decks/market-community/ts/slide-10.webp',
+    '/course-decks/market-community/ts/slide-11.webp',
+    '/course-decks/market-community/ts/slide-12.webp',
+    '/course-decks/market-community/ts/slide-15.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/market-community/ts/slide-20.webp',
+    '/course-decks/market-community/ve/slide-12.webp',
+    '/course-decks/market-community/ve/slide-18.webp',
+    '/course-decks/reading-landscape/st/slide-09.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-13.webp',
+    '/course-decks/reading-landscape/st/slide-17.webp',
+    '/course-decks/reading-landscape/ts/slide-09.webp',
+    '/course-decks/reading-landscape/ts/slide-10.webp',
+    '/course-decks/reading-landscape/ts/slide-13.webp',
+    '/course-decks/reading-landscape/ts/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-09.webp',
+    '/course-decks/reading-landscape/ve/slide-10.webp',
+    '/course-decks/reading-landscape/ve/slide-13.webp',
+    '/course-decks/reading-landscape/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/st/slide-02.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-01.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-02.webp',
+    '/course-decks/vegetables-staples/ve/slide-17.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+    '/course-decks/water-harvesting/ve/slide-04.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated source-paired regional wording'));
+}
+
+// Refresh only the newly checked regional stills; recorded Sesotho audio and its
+// archived images must survive, as must shared films and later saved downloads.
+async function migrateCoreHeldOrdinaryStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-held-ordinary-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/st-silent/slide-10.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-11.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-12.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-13.webp',
+    '/course-decks/intro-permaculture/st-silent/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-04.webp',
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-10.webp',
+    '/course-decks/intro-permaculture/ts/slide-11.webp',
+    '/course-decks/intro-permaculture/ts/slide-12.webp',
+    '/course-decks/intro-permaculture/ts/slide-13.webp',
+    '/course-decks/intro-permaculture/ts/slide-14.webp',
+    '/course-decks/intro-permaculture/ts/slide-15.webp',
+    '/course-decks/intro-permaculture/ts/slide-19.webp',
+    '/course-decks/intro-permaculture/ts/slide-20.webp',
+    '/course-decks/market-community/st/slide-11.webp',
+    '/course-decks/market-community/st/slide-15.webp',
+    '/course-decks/market-community/ts/slide-17.webp',
+    '/course-decks/market-community/ts/slide-18.webp',
+    '/course-decks/reading-landscape/st/slide-02.webp',
+    '/course-decks/reading-landscape/st/slide-04.webp',
+    '/course-decks/reading-landscape/st/slide-05.webp',
+    '/course-decks/reading-landscape/st/slide-06.webp',
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/st/slide-08.webp',
+    '/course-decks/reading-landscape/st/slide-10.webp',
+    '/course-decks/reading-landscape/st/slide-12.webp',
+    '/course-decks/reading-landscape/st/slide-14.webp',
+    '/course-decks/reading-landscape/st/slide-15.webp',
+    '/course-decks/reading-landscape/st/slide-19.webp',
+    '/course-decks/reading-landscape/st/slide-20.webp',
+    '/course-decks/reading-landscape/st/slide-21.webp',
+    '/course-decks/reading-landscape/ts/slide-01.webp',
+    '/course-decks/reading-landscape/ts/slide-04.webp',
+    '/course-decks/reading-landscape/ts/slide-05.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-08.webp',
+    '/course-decks/reading-landscape/ts/slide-14.webp',
+    '/course-decks/reading-landscape/ts/slide-15.webp',
+    '/course-decks/reading-landscape/ts/slide-18.webp',
+    '/course-decks/reading-landscape/ts/slide-19.webp',
+    '/course-decks/reading-landscape/ts/slide-20.webp',
+    '/course-decks/reading-landscape/ts/slide-21.webp',
+    '/course-decks/reading-landscape/ve/slide-08.webp',
+    '/course-decks/reading-landscape/ve/slide-15.webp',
+    '/course-decks/vegetables-staples/st/slide-01.webp',
+    '/course-decks/vegetables-staples/st/slide-02.webp',
+    '/course-decks/vegetables-staples/st/slide-03.webp',
+    '/course-decks/vegetables-staples/st/slide-04.webp',
+    '/course-decks/vegetables-staples/st/slide-05.webp',
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/st/slide-07.webp',
+    '/course-decks/vegetables-staples/st/slide-08.webp',
+    '/course-decks/vegetables-staples/st/slide-10.webp',
+    '/course-decks/vegetables-staples/st/slide-11.webp',
+    '/course-decks/vegetables-staples/st/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-15.webp',
+    '/course-decks/vegetables-staples/st/slide-16.webp',
+    '/course-decks/vegetables-staples/st/slide-18.webp',
+    '/course-decks/vegetables-staples/ts/slide-01.webp',
+    '/course-decks/vegetables-staples/ts/slide-03.webp',
+    '/course-decks/vegetables-staples/ts/slide-04.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-11.webp',
+    '/course-decks/vegetables-staples/ts/slide-12.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ts/slide-17.webp',
+    '/course-decks/vegetables-staples/ts/slide-18.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated checked regional ordinary wording'));
+}
+
+// Refresh these checked Tshivenda cards once; preserve recordings and later downloads.
+async function migrateTshivendaOrdinaryReviewedStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.tshivenda-ordinary-reviewed-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-06.webp',
+    '/course-decks/intro-permaculture/ve/slide-07.webp',
+    '/course-decks/intro-permaculture/ve/slide-10.webp',
+    '/course-decks/intro-permaculture/ve/slide-11.webp',
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/market-community/ve/slide-11.webp',
+    '/course-decks/reading-landscape/ve/slide-01.webp',
+    '/course-decks/reading-landscape/ve/slide-04.webp',
+    '/course-decks/reading-landscape/ve/slide-18.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/reading-landscape/ve/slide-21.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+    '/course-decks/vegetables-staples/ve/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-18.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated checked Tshivenda wording'));
+}
+
+// Refresh only these reviewed cards once, without spending data or removing recordings.
+async function migrateRegionalOrdinaryFramingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.regional-ordinary-framing-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/market-community/ve/slide-11.webp',
+    '/course-decks/market-community/ve/slide-17.webp',
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-20.webp',
+    '/course-decks/vegetables-staples/ts/slide-04.webp',
+    '/course-decks/vegetables-staples/ts/slide-05.webp',
+    '/course-decks/vegetables-staples/ts/slide-16.webp',
+    '/course-decks/vegetables-staples/ve/slide-03.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-05.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated reviewed ordinary wording'));
+}
+
+// Fair-sharing cards have their own checked text; refresh only these stills,
+// retaining the archived recordings and every other saved lesson.
+async function migrateIntroFairSharingStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.intro-fair-sharing-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ts/slide-06.webp',
+    '/course-decks/intro-permaculture/ts/slide-07.webp',
+    '/course-decks/intro-permaculture/zu-silent/slide-06.webp',
+    '/course-decks/intro-permaculture/zu-silent/slide-07.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Updated unreviewed fair-sharing cards'));
+}
+
+// These two VE Reading cards now show the checked frost-placement wording. Retire only
+// their saved stills once; replacement downloads stay learner-chosen and no speech is touched.
+async function migrateVeReadingFrostPlacementStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/reading-landscape/ve/.frost-placement-stills-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/ve/slide-14.webp',
+    '/course-decks/reading-landscape/ve/slide-15.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed two Tshivenda Reading frost placement stills'));
+}
+
+// These five paired cards reuse checked ordinary clauses. Refresh only their saved stills
+// once so an update does not remove speech, films or a learner's later replacement download.
+async function migrateCoreReadingVegetablesFollowupStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-reading-vegetables-followup-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-15.webp',
+    '/course-decks/reading-landscape/ts/slide-07.webp',
+    '/course-decks/reading-landscape/ts/slide-12.webp',
+    '/course-decks/reading-landscape/ts/slide-15.webp',
+    '/course-decks/vegetables-staples/ve/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five source-paired ordinary clause stills'));
+}
+
+// Refresh these corrected comparison and site-work cards once, preserving audio and later downloads.
+async function migrateCoreOrdinaryCompletionNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-ordinary-completion-next-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/reading-landscape/st/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-07.webp',
+    '/course-decks/reading-landscape/ve/slide-12.webp',
+    '/course-decks/vegetables-staples/st/slide-06.webp',
+    '/course-decks/vegetables-staples/ts/slide-06.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed five corrected source-paired ordinary cards'));
+}
+
+// These four cards changed after review. Refresh their saved still variants once;
+// retain speech, films and replacement packs downloaded after this migration.
+async function migrateCoreOrdinaryExpandedNextStills() {
+  const cache = await caches.open(COURSE_CACHE);
+  const marker = '/course-decks/.core-ordinary-expanded-next-20261007';
+  if (await cache.match(marker)) return;
+  const obsolete = new Set([
+    '/course-decks/intro-permaculture/ve/slide-14.webp',
+    '/course-decks/vegetables-staples/ve/slide-04.webp',
+    '/course-decks/vegetables-staples/ve/slide-11.webp',
+    '/course-decks/vegetables-staples/ts/slide-11.webp',
+  ]);
+  for (const request of await cache.keys()) {
+    if (obsolete.has(new URL(request.url).pathname)) await cache.delete(request);
+  }
+  await cache.put(marker, new Response('Refreshed four source-paired ordinary Study cards'));
+}
+
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys().then(function (keys) {
+      const previousShell = keys.filter(function (key) { return key.indexOf('imbewufield-shell-') === 0 && key !== SHELL_CACHE; }).pop();
+      const previousRuntime = keys.filter(function (key) { return key.indexOf('imbewufield-runtime-') === 0 && key !== RUNTIME_CACHE; }).pop();
+      return Promise.all(
+        keys
+          .filter(function (key) {
+            // COURSE_CACHE and ART_CACHE survive every deploy on purpose — see the comments on
+            // their declarations. A superseded art cache (imbewu-art-v1 after the constant moves
+            // to v2) no longer matches and is swept here like any other stale cache.
+            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE && key !== ART_CACHE && key !== previousShell && key !== previousRuntime;
+          })
+          .map(function (key) { return caches.delete(key); })
+      );
+    }).then(migrateGuildNarration).then(migrateStudiesMedia).then(migrateChickenForagingMedia).then(migrateForestLayerMedia).then(migrateSoilObservationMedia).then(migrateForestEstablishmentMedia).then(migrateLandscapeSiteMapNarration).then(migrateForestMulchInfographic).then(migrateForestSheetMulchingMedia).then(migrateVegetableChoiceMedia).then(migrateUnapprovedStudyAnimations).then(migrateBeeHiveAndBlossomMedia).then(migrateGreywaterTeachingMedia).then(migrateWaterL4DecisionOnly).then(migrateWaterHarvestingZuluDraft).then(migrateWindbreakMedia).then(migrateSoilCoverStills).then(migrateSoilHealthRegionalStills).then(migrateSoilL3ComparisonStill).then(migrateSoilHealthL3CorrectedNarration).then(migrateVegetablesL2ReadableStills).then(migrateVegetablesL3SweetPotatoTeaching).then(migrateVegetablesL4DecisionStill).then(migrateMarketRecordStill).then(migrateFoodForestLayerKeyStill).then(migrateFoodForestClimateMatchStill).then(migrateFoodForestL3AdjustStill).then(migrateHeldAuthoredStudyAnimations).then(migrateHeldWaterSwaleMedia).then(migrateMarketL2RouteStill).then(migrateMarketCommunityNetworkStill).then(migrateMarketCommunityL3SeedRightsTeaching).then(migrateMarketCommunityL3SeedRightsCard).then(migrateSmallLivestockSlide8Still).then(migrateIntroL1WaterUseTeaching).then(migrateSmallLivestockL3NutrientFlow).then(migrateSmallLivestockModuleFlows).then(migrateIntroL2PrinciplesTeaching).then(migrateIntroL3ZonesAndSectorsTeaching).then(migrateLandscapeL1WaterObservationTeaching).then(migrateLandscapeL2SunAndFrostTeaching).then(migrateLandscapeL3WindAndFrostTeaching).then(migrateWaterL1SwaleTeaching).then(migrateWaterL2DamSizingTeaching).then(migrateWaterL3RoofSuitabilityTeaching).then(migrateSmallLivestockL2BeeTeaching).then(migrateReadingLandscapeRegionalStills).then(migrateVegetablesOpeningRegionalStills).then(migrateVegetablesRemainingRegionalStills).then(migrateWaterRegionalDraftStills).then(migrateSoilRegionalDraftStills).then(migrateReadingLandscapeDraftStills).then(migrateReadingLandscapeOrdinaryStills).then(migrateIntroRegionalSubstantiveStills).then(migrateVegetablesOrdinaryLessonStills).then(migrateMarketLearnerReuseStills).then(migrateReadingLandscapePairedReuseStills).then(migrateReadingLandscapeObservationStills).then(migrateRegionalRecordIntroReadingStills).then(migrateVegetablesFieldActionStills).then(migrateRegionalAssignmentExerciseStills).then(migrateVegetablesL2OrdinaryPairedStills).then(migrateVegetablesL1FullerOrdinaryPairedStills).then(migrateVegetablesL4OrdinaryPairedStills).then(migrateVegetablesL2FullerOrdinaryPairedStills).then(migrateVegetablesPestPrecisionPairedStills).then(migrateReadingLandscapeFrostBodySyncStills).then(migrateReadingLandscapeFirstObservationStills).then(migrateStudyOutcomesResidualStills).then(migrateReadingLandscapeFullOrdinaryStills).then(migrateMarketL1OrdinaryStills).then(migrateSoilWaterOrdinaryPairedStills).then(migrateSoilFullerLearnerStills).then(migrateWaterReviewedPrecisionStills).then(migrateWaterOrdinaryCompletionStills).then(migrateSoilOrdinaryCompletionStills).then(migrateSoilWaterResidualOrdinaryPairedStills).then(migrateIntroOrdinaryNextStills).then(migrateMarketOrdinaryResidualStills).then(migrateVegetablesL3OrdinaryResidualStills).then(migrateVegetablesL1OrdinaryResidualStills).then(migrateIntroFullOrdinaryCompletionStills).then(migrateIntroSilentReleaseStills).then(migrateStIntroRuntimeResidualStills).then(migrateNativePairedResidualStills).then(migrateFinalLanguageNextStills).then(migrateCoreHeldOrdinaryStills).then(migrateTshivendaOrdinaryReviewedStills).then(migrateRegionalOrdinaryFramingStills).then(migrateIntroFairSharingStills).then(migrateVeReadingFrostPlacementStills).then(migrateCoreReadingVegetablesFollowupStills).then(migrateCoreOrdinaryCompletionNextStills).then(migrateCoreOrdinaryExpandedNextStills).then(function () {
+      // Take control of already-open tabs so this version's fetch handler
+      // (and therefore network-first HTML) runs without needing a reload first.
+      return self.clients.claim();
+    })
+  );
+});
+
+self.addEventListener('fetch', function (event) {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return; // leave Firebase/Mapbox/etc alone
+  if (url.pathname.indexOf('/api/') === 0) return; // never cache dynamic API responses
+
+  // A guide revision is part of its cache key. Stream only on a miss; never refresh a
+  // saved recording in the background and spend the learner's airtime twice.
+  if (url.pathname.indexOf('/app-guide-audio/') === 0) {
+    event.respondWith(caches.open(COURSE_CACHE).then(function (cache) {
+      return cache.match(request).then(function (hit) { return hit || fetch(request); });
+    }));
+    return;
+  }
+
+  // A DOWNLOADED course asset is answered from the download, before anything else.
+  //
+  // It has to come first because the generic handler below is stale-while-revalidate: it would
+  // return the cached copy and then fire a background fetch to refresh it. That is right for a JS
+  // chunk and wrong here — replaced files are migrated explicitly above, and a background request would spend a
+  // farmer's data re-downloading a 700 KB clip they already own, every time they open the slide.
+  //
+  // A course asset that was NOT downloaded falls through untouched, so streaming one stays the
+  // learner's choice, made on the page with the size in front of them.
+  if (COURSE_PATH.test(url.pathname) || url.pathname.indexOf('/studies-guides/') === 0) {
+    event.respondWith(
+      caches.open(COURSE_CACHE).then(function (cache) {
+        return cache.match(request, { ignoreSearch: true }).then(function (hit) {
+          return hit || fetch(request);
+        });
+      })
+    );
+    return;
+  }
+
+  // Art is cache-first with a network fill, and NO background revalidation. The generic
+  // stale-while-revalidate below would serve the cached sprite and then re-fetch the full
+  // body anyway — right for a JS chunk, wasted airtime for a canopy that changes once a
+  // season. Freshness is handled by the ART_CACHE version bump, not by re-downloading.
+  if (ART_PATH.test(url.pathname)) {
+    event.respondWith(
+      caches.open(ART_CACHE).then(function (cache) {
+        return cache.match(request).then(function (hit) {
+          if (hit) return hit;
+          return fetch(request).then(function (response) {
+            if (response && response.status === 200) {
+              event.waitUntil(cache.put(request, response.clone()).catch(function () {}));
+            }
+            return response;
+          });
+        });
+      })
+    );
+    return;
+  }
+
+  if (request.mode === 'navigate') {
+    // Network-first for HTML: a fresh deploy's shell (and therefore its new,
+    // content-hashed JS/CSS chunk URLs) always wins while online. Cache is only
+    // a fallback for offline use, not a way to skip the network.
+    event.respondWith(
+      fetch(request)
+        .then(function (response) {
+          const copy = response.clone();
+          event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) {
+            return cachePage(cache, request.url, copy);
+          }).catch(function () {}));
+          return response;
+        })
+        .catch(function () {
+          // Fall back through what a farmer can actually use: this exact page, then the app's
+          // real entry point, then the root. '/' alone was the old behaviour and it was never
+          // precached, so offline navigation simply failed.
+          // Chained, NOT a single 'hit || caches.match(next)' expression: caches.match returns a
+          // PROMISE, which is always truthy, so such a chain stops at the first match call whether
+          // or not it resolved to anything. (Backticks are banned in here — this file is one big
+          // template literal and a stray backtick silently ends it.)
+          return caches.open(RUNTIME_CACHE).then(function (cache) { return cache.match(request); })
+            .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match(request); }); })
+            .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match('/home'); }); })
+            .then(function (hit) { return hit || caches.match('/home'); })
+            .then(function (hit) { return hit || caches.match('/'); });
+        })
+    );
+    return;
+  }
+
+  // Stale-while-revalidate for static assets (JS/CSS chunks, fonts, images):
+  // instant response from cache when present, refreshed in the background so
+  // the NEXT request already has the new asset — this is what keeps offline
+  // usage working without pinning the app to old chunks forever.
+  event.respondWith(
+    caches.open(RUNTIME_CACHE).then(function (cache) { return cache.match(request); })
+      .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match(request); }); })
+      .then(function (hit) { return hit || caches.match(request); })
+      .then(function (cached) {
+      const network = fetch(request)
+        .then(function (response) {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) { return cache.put(request, copy); }).catch(function () {}));
+          }
+          return response;
+        })
+        .catch(function () { return cached; });
+      // A cached response can finish before the refresh. Keep that refresh and its
+      // cache write alive even if the user immediately closes the app.
+      event.waitUntil(network.then(function () {}).catch(function () {}));
+      return cached || network;
+    })
+  );
+});
+`;
+
+export async function GET() {
+  return new NextResponse(SW_SOURCE, {
+    headers: {
+      'Content-Type': 'application/javascript; charset=utf-8',
+      // Never let the SW *script itself* be served stale from an HTTP cache —
+      // that would defeat the whole update-detection mechanism above.
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Service-Worker-Allowed': '/',
+    },
+  });
+}

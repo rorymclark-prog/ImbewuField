@@ -1,0 +1,13 @@
+{"language":"zu","counts":{"ok":9,"repair":0,"hold":1},
+"top_issues":[
+"R284 Mobile = 'Ifoni' reads as telephone only, not mobile-money payment - HOLD",
+"R282 Cash = 'Imali ngesandla' understandable but descriptive; speaker check advised",
+"R283 'Ikhadi' bare loan",
+"R280 'Thayipha' loan verb vs native 'Bhala' (wording)",
+"R271 slash alternative mirrors English",
+"No placeholders in this batch",
+"No negation/tense issues found",
+"Only 10 items (R272-R275 not drafted for zu)",
+"Fruit/nuts and food-forest headings not covered in zu",
+"Terminology consistent with existing locale (Londoloza)"],
+"confidence":"Machine review only; isiZulu competence is better than the other three but this is not a fluent-speaker approval."}

@@ -151,7 +151,7 @@ export const XITSONGA_MARKET_COMMUNITY_DRAFT: XitsongaCourseModuleDraft = {
           "Vutisa leswaku muxavi u lava yini: xihumisiwa, nhlayo, khwalithi, ku yisa na siku ra ku hakela.",
           "Pimanisa market fees, vutleketli, ku paka ni leswi nga xavisiwangiki, swin’we ni nxavo wo xavisa.",
           "Kambisisa milawu ya makete ni swilaveko swa ndhawu swa ku xavisa ni swakudya. Informal stall a xi vuli hi xoxe leswaku a ku na milawu kumbe costs.",
-          "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+          "Ku xavisa hi ku kongoma swi nga hlayisa swo tala swa nxavo wo xavisa, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
           "Box scheme yi nyika regular selection eka vaxavi lava pfumelelaneke.",
           "Pfumelelanani hi leswi nga eka box, nxavo, ku hakela ni leswi nga ta endleka loko crops ti kala. Tioda leti vuyeleriwaka ti pfuna ku pulana ntsena loko vaxavi ni varimi va kota ku hetisisa ntwanano.",
           "Sungula hi leswi u nga kotaka ku swi nyika hi ku tshamiseka ni leswi vaxavi va swi lavaka.",

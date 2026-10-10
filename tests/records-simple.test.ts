@@ -40,10 +40,12 @@ test('Simple gets one plain-language money card, computed from the same series C
   // The headline, the money-in/out line and the honesty note — reading straight off the series,
   // never a second sum of sales/expenses.
   assert.match(card, /series\.totalNetZar/);
-  assert.match(card, /You kept \$\{fmtZAR\(net\)\}/);
-  assert.match(card, /You spent \$\{fmtZAR\(Math\.abs\(net\)\)\} more than you made/);
-  assert.match(card, /Money in \$\{fmtZAR\(series\.totalInZar\)\}/);
-  assert.match(card, /Money out \$\{fmtZAR\(series\.totalOutZar\)\}/);
+  // Templates now (recordsTemplate), so Sesotho, Tshivenda and Xitsonga drafts can bind to the exact
+  // English sentence; the amounts still come straight from the series through fmtZAR.
+  assert.match(card, /'You kept \{amount\}'[^)]*\{ amount: fmtZAR\(net\) \}/);
+  assert.match(card, /'You spent \{amount\} more than you made'[^)]*\{ amount: fmtZAR\(Math\.abs\(net\)\) \}/);
+  assert.match(card, /'Money in \{moneyIn\} · Money out \{moneyOut\}'/);
+  assert.match(card, /moneyIn: fmtZAR\(series\.totalInZar\), moneyOut: fmtZAR\(series\.totalOutZar\)/);
   assert.match(card, /Only what you have written down\./);
   assert.match(card, /font-display font-bold/, 'the headline must use the display font');
 
