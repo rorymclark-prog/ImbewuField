@@ -8,7 +8,7 @@
 // Run: node scripts/convert-slides-webp.mjs
 
 import { readdirSync, unlinkSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 
@@ -26,6 +26,19 @@ async function convertOne(jpgPath) {
   return { jpgPath, webpPath, width: meta.width, height: meta.height };
 }
 
+// Walks the whole en/zu subtree, not just its top level: seeds-sovereignty/zu/hi/ holds a
+// higher-quality twin of each slide (lib/offline-pack.ts's "high quality" download variant) at
+// the same filenames, one directory deeper.
+function findJpgs(dir) {
+  const found = [];
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) found.push(...findJpgs(full));
+    else if (entry.name.endsWith('.jpg')) found.push(full);
+  }
+  return found.sort();
+}
+
 async function main() {
   const modules = readdirSync(DECKS_DIR, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
@@ -36,11 +49,10 @@ async function main() {
     for (const lang of ['en', 'zu']) {
       const dir = join(DECKS_DIR, moduleId, lang);
       if (!existsSync(dir)) continue;
-      const jpgs = readdirSync(dir).filter((name) => name.endsWith('.jpg')).sort();
-      for (const name of jpgs) {
-        const result = await convertOne(join(dir, name));
+      for (const jpgPath of findJpgs(dir)) {
+        const result = await convertOne(jpgPath);
         results.push(result);
-        console.log(`${moduleId}/${lang}/${name} -> ${name.replace(/\.jpg$/, '.webp')}`);
+        console.log(`${relative(DECKS_DIR, jpgPath)} -> ${relative(DECKS_DIR, result.webpPath)}`);
       }
     }
   }
