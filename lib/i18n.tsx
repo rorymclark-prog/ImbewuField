@@ -460,6 +460,13 @@ export const T_en: Dict = {
   profilePanMapFirst: 'Pan the map to where you want to appear, then return here to save.',
   profileSaveButton: 'Save',
   profileSavedFlash: 'Saved!',
+  // Shared translated network-failure message — wave 11, lang-08 + bug-10. See
+  // NETWORK_FAILURE_ENGLISH_PENDING in lib/i18n-pending.ts for the isiZulu-draft notes; kept
+  // literal here since T_en is loaded eagerly and is not built from that spread.
+  networkOffline: "You're offline. Reconnect and try again.",
+  networkBusy: "That's a lot of requests right now. Please wait a moment and try again.",
+  networkFailed: 'Something went wrong. Please check your connection and try again.',
+  networkTapRefreshToRetry: ' — tap Refresh to retry.',
   saveThisPlace: 'Save this place',
   savedToPlaces: 'Saved to places',
   cardKeySpecies: 'Key species',

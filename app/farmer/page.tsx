@@ -29,6 +29,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_SITE } from '@/lib/demo-farm';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
@@ -297,14 +298,17 @@ function HomeInner() {
       const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`, {
         headers: await paidApiHeaders(),
       });
-      if (!res.ok) throw new Error(`${res.status}`);
+      if (!res.ok) {
+        if (request === locationRequest.current) setError(networkFailureMessage(t, { status: res.status }));
+        return;
+      }
       const json = await res.json();
       if (request !== locationRequest.current) return;
       if (designSiteIdFromLocation(json) !== designSiteIdFromLocation({ lat, lon })) throw Error('The loaded location did not match the selected site. Please select it again.');
       setData(json);
       try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
-      if (request === locationRequest.current) setError(err instanceof Error ? err.message : 'Failed to load data');
+      if (request === locationRequest.current) setError(err instanceof Error ? err.message : networkFailureMessage(t));
     } finally {
       if (request === locationRequest.current) setLoading(false);
     }

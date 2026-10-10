@@ -202,3 +202,42 @@ test('app/global-error.tsx does not rely on globals.css custom properties (it re
     assert.doesNotMatch(block, /var\(--/, `global-error.tsx uses a CSS variable that app/globals.css may never have loaded here: ${block}`);
   }
 });
+
+// lang-08 + bug-10: app/farmer/page.tsx's header pill, AreaPanel, AtlasExplorer and
+// SiteDesign's design-generation call each built their own ad hoc string from a bare
+// `res.status` ('500', 'API error 500', 'Server error 500', 'HTTP 429') or showed the thrown
+// Error's own .message straight to the farmer. lib/network-failure.ts is the one shared helper
+// that replaces all of them, with an offline variant and a busy (429) variant.
+test('lib/network-failure.ts classifies offline/busy/generic failures without ever echoing a status code', () => {
+  const s = source('lib/network-failure.ts');
+  assert.match(s, /function isOffline/, 'the offline check is missing');
+  assert.match(s, /function networkFailureMessage/, 'the shared message helper is missing');
+  assert.match(s, /opts\.status === 429/, 'the helper does not special-case 429');
+  assert.doesNotMatch(s, /\$\{.*status/, 'the helper must never interpolate the status into a string shown to the farmer');
+});
+
+test('the four call sites route their network failures through the shared helper, never a bare status', () => {
+  const sites: Array<{ path: string; status: string }> = [
+    { path: 'app/farmer/page.tsx', status: 'res.status' },
+    { path: 'components/AreaPanel.tsx', status: 'res.status' },
+    { path: 'components/atlas/AtlasExplorer.tsx', status: 'res.status' },
+    { path: 'components/SiteDesign.tsx', status: 'res.status' },
+  ];
+  for (const { path } of sites) {
+    const s = source(path);
+    assert.match(s, /networkFailureMessage\(t/, `${path} no longer calls networkFailureMessage(t, ...)`);
+  }
+
+  // Regression guard: these exact hard-coded fallback literals must not come back.
+  assert.doesNotMatch(source('app/farmer/page.tsx'), /throw new Error\(`\$\{res\.status\}`\)/, 'the bare status-code throw regressed');
+  assert.doesNotMatch(source('components/AreaPanel.tsx'), /throw new Error\(`API error \$\{res\.status\}`\)/, 'the "API error" throw regressed');
+  assert.doesNotMatch(source('components/atlas/AtlasExplorer.tsx'), /`HTTP \$\{res\.status\}`/, 'the "HTTP <status>" fallback regressed');
+  assert.doesNotMatch(source('components/SiteDesign.tsx'), /throw new Error\(`Server error \$\{res\.status\}`\)/, 'the "Server error" throw regressed');
+  assert.doesNotMatch(source('components/SiteDesign.tsx'), /setError\(err instanceof Error \? err\.message : 'Design failed'\)/, 'the raw-message fallback regressed');
+});
+
+test('AtlasExplorer still shows the rate-limit API\'s own farmer-facing 429 message verbatim', () => {
+  const s = source('components/atlas/AtlasExplorer.tsx');
+  assert.match(s, /serverMessage: typeof serverMessage === 'string' \? serverMessage : undefined/,
+    'the 429 rate-limit body message is no longer passed through to the helper');
+});

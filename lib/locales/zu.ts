@@ -1,7 +1,7 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
@@ -10,6 +10,7 @@ const dict: Dict = {
   ...CHAT_PANEL_ENGLISH_PENDING,
   ...PHOTO_UPLOAD_ENGLISH_PENDING,
   ...PROFILE_SHEET_ENGLISH_PENDING,
+  ...NETWORK_FAILURE_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   // FieldTeams.tsx's own unreviewed isiZulu drafts, carried over from its old inline `ui(en, zu)`
   // helper into real per-key overrides now that the component reads these through t(). English is
@@ -2103,6 +2104,13 @@ const dict: Dict = {
   profilePanMapFirst: "Hambisa ibalazwe lifike lapho ufuna ukubonakala khona, bese ubuyela lapha ukugcina.",
   profileSaveButton: "Gcina",
   profileSavedFlash: "Kugciniwe!",
+
+  // Shared translated network-failure message — wave 11, lang-08 + bug-10. Unreviewed isiZulu
+  // drafts, direct overrides of the English spread from NETWORK_FAILURE_ENGLISH_PENDING above.
+  networkOffline: "Awuxhunyiwe kuxhumano. Xhuma futhi bese uzama futhi.",
+  networkBusy: "Zinyingi izicelo manje. Sicela ulinde umzuzwana bese uzama futhi.",
+  networkFailed: "Kukhona okungahambi kahle. Sicela uhlole ukuxhuma kwakho bese uzama futhi.",
+  networkTapRefreshToRetry: " — thinta u-Refresh ukuzama futhi.",
 };
 
 export default dict;

@@ -151,6 +151,19 @@ export const PROFILE_SHEET_ENGLISH_PENDING: Dict = {
   profileSavedFlash: 'Saved!',
 };
 
+/*
+ * A shared translated network-failure message — wave 11, lang-08 + bug-10. See
+ * lib/network-failure.ts. Replaces bare '500', '429', 'Failed to fetch', 'API error 500' and
+ * 'HTTP 429' shown to the farmer in app/farmer/page.tsx's header pill, components/AreaPanel.tsx,
+ * components/atlas/AtlasExplorer.tsx and components/SiteDesign.tsx's design-generation call.
+ */
+export const NETWORK_FAILURE_ENGLISH_PENDING: Dict = {
+  networkOffline: "You're offline. Reconnect and try again.",
+  networkBusy: "That's a lot of requests right now. Please wait a moment and try again.",
+  networkFailed: 'Something went wrong. Please check your connection and try again.',
+  networkTapRefreshToRetry: ' — tap Refresh to retry.',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',
