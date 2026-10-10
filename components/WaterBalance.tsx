@@ -206,12 +206,12 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 
           {/* X axis labels */}
           {MONTHS.map((m, i) => (
-            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#755942" fontFamily="monospace">{m}</text>
+            <text key={i} x={xPoint(i)} y={H - 6} textAnchor="middle" fontSize="8" fill="#755942" fontFamily="var(--font-sans)">{m}</text>
           ))}
 
           {/* Y axis labels */}
           {ticks.filter((_, i) => i % 2 === 0).map(({ v, y, label }) => (
-            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#755942" fontFamily="monospace">{label}</text>
+            <text key={v} x={PAD.left - 3} y={y + 3} textAnchor="end" fontSize="7.5" fill="#755942" fontFamily="var(--font-sans)">{label}</text>
           ))}
         </svg>
       </div>
