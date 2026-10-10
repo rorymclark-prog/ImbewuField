@@ -190,8 +190,10 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
     budget: 23,
   },
   'components/DataPanel.tsx': {
-    reason: 'the site analysis panel — dense climate and soil figures read at a laptop',
-    budget: 32,
+    reason: 'the site analysis panel — dense climate and soil figures read at a laptop. '
+      + 'a11y-12 (2026-10-10) raised its three sub-11px attribution/legend captions to a '
+      + 'clamp(12px, …) floor, down from 32.',
+    budget: 29,
   },
 
   'components/ReportView.tsx': {

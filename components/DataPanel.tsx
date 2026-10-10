@@ -206,7 +206,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
       <Label>{label}</Label>
       <div
         className="font-display font-bold leading-none mt-1"
-        style={{ fontSize: 18, color: color ?? '#20190F', letterSpacing: '-0.02em' }}
+        style={{ fontSize: 18, color: color ?? 'var(--text-primary)', letterSpacing: '-0.02em' }}
       >
         {value}
       </div>
@@ -215,7 +215,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
           <div style={{
             height: '100%',
             width: `${Math.min(100, Math.max(4, contextPct))}%`,
-            background: color ?? '#1F4D2B',
+            background: color ?? 'var(--color-forest-800)',
             borderRadius: 2,
             transition: 'width 0.8s cubic-bezier(0.4,0,0.2,1)',
           }} />
@@ -277,9 +277,9 @@ function EmptyState() {
           <span className="relative flex h-2 w-2">
             <span
               className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
-              style={{ background: '#1F4D2B' }}
+              style={{ background: 'var(--color-forest-800)' }}
             />
-            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#1F4D2B' }} />
+            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: 'var(--color-forest-800)' }} />
           </span>
           <span className="font-display font-medium">{t('clickAnalyse')}</span>
         </div>
@@ -751,7 +751,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const suitability = (() => {
     const r = data.rainfall.annual;
     const s = data.elevation.slopeDeg;
-    if (r >= 500 && s < 15) return { label: t('suitabilityGoodFit'), bg: '#E7F0E0', border: '#BCD6B0', dot: '#1F4D2B', text: '#1F4D2B' };
+    if (r >= 500 && s < 15) return { label: t('suitabilityGoodFit'), bg: 'rgba(31,77,43,0.1)', border: 'rgba(31,77,43,0.3)', dot: 'var(--color-forest-800)', text: 'var(--color-forest-800)' };
     if (r >= 300 && s < 25) return { label: t('suitabilityFairSite'), bg: 'rgba(192,122,30,0.1)', border: 'rgba(192,122,30,0.3)', dot: '#C07A1E', text: '#9A6018' };
     return { label: t('suitabilityChallenging'), bg: 'rgba(212,110,66,0.1)', border: 'rgba(212,110,66,0.3)', dot: '#D4922A', text: '#B83A18' };
   })();
@@ -826,12 +826,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </div>
             )}
             {data.vegetation && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: displayName ? '#755942' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 12, color: displayName ? 'var(--text-muted)' : 'var(--text-muted)' }}>
                 {data.vegetation.vegUnit}
               </div>
             )}
             {data.bru && (
-              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: displayName ? '#755942' : '#5C5040' }}>
+              <div className="font-sans mt-0.5 truncate" style={{ fontSize: 11.5, color: displayName ? 'var(--text-muted)' : 'var(--text-muted)' }}>
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
@@ -842,7 +842,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               {Math.abs(data.lat).toFixed(2)}°&thinsp;S,&ensp;{data.lon.toFixed(2)}°&thinsp;E
             </div>
             {data.bru && (
-              <div className="font-mono mt-0.5" style={{ fontSize: 9.5, color: 'var(--text-muted)' }}>
+              <div className="font-mono mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
                 {data.bru.attribution} — zone name is a best-effort climate match, not verified
               </div>
             )}
@@ -877,10 +877,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               className="flex items-center gap-1.5 flex-shrink-0 transition-all duration-150"
               style={{
                 padding: '9px 12px',
-                borderBottom: tab === tabName ? '2px solid #C07A1E' : '2px solid transparent',
+                borderBottom: tab === tabName ? '2px solid var(--ochre)' : '2px solid transparent',
                 borderTop: 'none', borderLeft: 'none', borderRight: 'none',
                 background: 'transparent',
-                color: tab === tabName ? '#C07A1E' : '#5C5040',
+                color: tab === tabName ? 'var(--gold-dim)' : 'var(--text-muted)',
                 fontSize: 12.5,
                 fontFamily: 'var(--font-display)',
                 fontWeight: tab === tabName ? 600 : 400,
@@ -951,7 +951,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {siteMetrics.land && (
                   <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
                     <div className="flex items-center gap-3 px-3.5 py-2.5">
-                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
+                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: 'var(--color-forest-800)' }}>
                         <Sprout size={16} style={{ color: '#A8D88A' }} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -975,7 +975,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <div className="px-3.5 pb-2.5 space-y-1">
                         {siteMetrics.land.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
-                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#1F4D2B', opacity: 0.6 }} />
+                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--color-forest-800)', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
                             <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
@@ -988,7 +988,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {siteMetrics.water && siteMetrics.water.count > 0 && (
                   <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(35,94,134,0.06)', border: '1px solid rgba(35,94,134,0.25)' }}>
                     <div className="flex items-center gap-3 px-3.5 py-2.5">
-                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#235E86' }}>
+                      <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: 'var(--blue)' }}>
                         <Droplets size={16} style={{ color: '#CFE6F5' }} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -1008,7 +1008,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <div className="px-3.5 pb-2.5 space-y-1">
                         {siteMetrics.water.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
-                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: '#235E86', opacity: 0.6 }} />
+                            <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--blue)', opacity: 0.6 }} />
                             <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
                             <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{numberLabel(f.estVolumeKL)} kL</span>
@@ -1043,7 +1043,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <div className="flex items-center gap-3 px-4" style={{ height: 46, borderBottom: '1px solid var(--border)' }}>
                 <Snowflake size={16} style={{ color: 'var(--blue)', flexShrink: 0 }} />
                 <span className="flex-1 font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{t('statFrostRisk')}</span>
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? '#235E86' : '#20190F' }}>
+                <span className="font-display font-semibold" style={{ fontSize: 14, color: data.climate.minTemp < 2 ? 'var(--blue)' : 'var(--text-primary)' }}>
                   {frostLabel}
                 </span>
               </div>
@@ -1087,7 +1087,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             {/* Lima contextual read card */}
             <div className="flex gap-3 items-start" style={{ background: 'var(--bg-1)', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
-              <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: '#1F4D2B' }}>
+              <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--color-forest-800)' }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
@@ -1130,7 +1130,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   {([['#B5D9B5', t('calendarGrow')],['#E8C87A', t('calendarDry')],['#BFD9EE', t('calendarFrost')],['#D8CEBC', t('calendarRest')]]).map(([c,l]) => (
                     <div key={l} className="flex items-center gap-1">
                       <div className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: c }} />
-                      <span style={{ fontSize: 9.5, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{l}</span>
+                      <span style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{l}</span>
                     </div>
                   ))}
                 </div>
@@ -1174,7 +1174,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 }
               }}
               className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
-              style={{ height: 46, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
+              style={{ height: 46, background: 'var(--color-forest-800)', color: 'var(--color-canvas)', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
             >
               <Sprout size={16} />
               {t('generateFullReport')}
@@ -1256,13 +1256,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 label={t('statPH')}
                 value={data.soil.ph.toString()}
                 sub={data.soil.ph < 5.5 ? t('phAcidic') : data.soil.ph > 7.5 ? t('phAlkaline') : t('phNeutral')}
-                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C'}
+                color={data.soil.ph < 5.5 || data.soil.ph > 7.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
               />
               <Stat
                 label={t('statOrganicCarbon')}
                 value={`${data.soil.organicCarbon}%`}
                 sub={data.soil.organicCarbon < 1.5 ? t('organicCarbonLow') : t('organicCarbonOk')}
-                color={data.soil.organicCarbon < 1.5 ? '#D4922A' : '#1F4D2B'}
+                color={data.soil.organicCarbon < 1.5 ? 'var(--orange)' : 'var(--color-forest-800)'}
               />
               <Stat label={t('statBulkDensity')} value={`${data.soil.bulkDensity} g/cm³`} sub={data.soil.bulkDensity > 1.4 ? t('bulkDensityCompacted') : t('bulkDensityOk')} />
             </div>
@@ -1308,7 +1308,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const bdScore  = bd  <  1.2              ? 2.5 : bd  <  1.4               ? 1.5 : 0.5;
               const texScore = (sand < 70 && clay < 40) ? 2.5 : (sand < 80 || clay < 50) ? 1.5 : 0.5;
               const total = Math.min(10, Math.round(pHScore + ocScore + bdScore + texScore));
-              const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
+              const scoreColor = total >= 8 ? 'var(--color-forest-800)' : total >= 5 ? 'var(--gold-dim)' : 'var(--danger)';
               const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
               const improvements: { key: string; source: string; values: Record<string, string> }[] = [];
               if (pHScore < 2) {
@@ -1336,7 +1336,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                   {improvements.length > 0 && (
                     <div className="space-y-1.5">
-                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 9.5 }}>{t('priorityImprovementsHeader')}</p>
+                      <p className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)', fontSize: 'clamp(12px, 0.85vw, 13px)' }}>{t('priorityImprovementsHeader')}</p>
                       {lang === 'zu' && <p className="text-xs leading-snug" role="note" style={{ color: 'var(--text-secondary)' }}>{t('soilImprovementZuluDraftNotice')}</p>}
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
@@ -1891,7 +1891,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         <div className="fixed inset-0 z-40 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)' }}>
           <div className="w-full max-w-md font-sans" style={{ background: 'var(--bg-0)', borderRadius: '24px 24px 0 0', padding: '24px 20px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom))' }}>
             <div className="flex items-start gap-3 mb-4">
-              <div style={{ width: 44, height: 44, borderRadius: 13, background: '#1F4D2B', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 44, height: 44, borderRadius: 13, background: 'var(--color-forest-800)', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
@@ -1906,7 +1906,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div className="space-y-2">
               <button onClick={() => { setSurveyPromptOpen(false); setSurveySheetOpen(true); }}
                 className="w-full flex items-center justify-center gap-2 font-sans font-bold"
-                style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: 'pointer' }}>
+                style={{ height: 46, borderRadius: 13, background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', fontSize: 14, cursor: 'pointer' }}>
                 {t('surveyFillButton')}
               </button>
               <button onClick={() => { setSurveyPromptOpen(false); openPhotoOrReport(); }}
@@ -2008,7 +2008,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   onClick={analyseAndGenerate}
                   disabled={promptLoading}
                   className="w-full flex items-center justify-center gap-2 font-sans font-bold"
-                  style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: promptLoading ? 'default' : 'pointer', opacity: promptLoading ? 0.75 : 1 }}>
+                  style={{ height: 46, borderRadius: 13, background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', fontSize: 14, cursor: promptLoading ? 'default' : 'pointer', opacity: promptLoading ? 0.75 : 1 }}>
                   {promptLoading
                     ? <><Loader2 size={16} className="animate-spin" />{t('photoAnalysingButton')}</>
                     : <><Camera size={16} />{t('photoAnalyseGenerateButton')}</>}

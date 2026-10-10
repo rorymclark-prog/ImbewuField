@@ -85,7 +85,7 @@ export default function PublicCommunityProfilePage() {
   if (busy || loading || !communityEnabled()) {
     return (
       <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
+        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
       </div>
     );
   }
@@ -110,10 +110,10 @@ export default function PublicCommunityProfilePage() {
         ) : (
           <>
             <div className="flex items-center gap-4" style={{ marginBottom: 18 }}>
-              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {profile.photos?.[0]
                   ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--color-canvas)', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
                 <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
@@ -134,7 +134,7 @@ export default function PublicCommunityProfilePage() {
                 onClick={() => setMoreOpen((s) => !s)}
                 aria-expanded={moreOpen}
                 className="flex items-center gap-1 font-sans font-semibold"
-                style={{ fontSize: 12.5, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 14 }}
+                style={{ fontSize: 12.5, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, marginBottom: 14 }}
               >
                 {moreOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 {moreOpen ? t('communityLessLabel') : t('communityMoreLabel')}
@@ -148,7 +148,7 @@ export default function PublicCommunityProfilePage() {
             {profile.crops?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 18 }}>
                 {profile.crops.map((c) => (
-                  <span key={c} className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
+                  <span key={c} className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
                 ))}
               </div>
             )}
@@ -167,7 +167,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleMessage}
                   disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
+                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}
@@ -176,7 +176,7 @@ export default function PublicCommunityProfilePage() {
                   <button
                     onClick={() => setReportOpen((s) => !s)}
                     className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
-                    style={{ background: 'transparent', color: '#8B2020', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
+                    style={{ background: 'transparent', color: 'var(--danger)', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
                   >
                     <Flag size={14} /> {t('communityReportButton')}
                   </button>
@@ -185,7 +185,7 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {messageError && (
-              <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+              <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
                 {t('communityContactError')}
               </p>
             )}
@@ -204,12 +204,12 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleReport}
                   disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? 'var(--danger)' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>
                 {reportError && (
-                  <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+                  <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
                     {t('communityReportError')}
                   </p>
                 )}

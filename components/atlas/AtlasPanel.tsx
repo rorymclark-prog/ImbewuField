@@ -86,8 +86,8 @@ function MiniStat({ label, value, sub }: { label: React.ReactNode; value: string
   return (
     <div className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
       <div className="font-display font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{value}</div>
-      <div className="font-sans mt-0.5" style={{ color: 'var(--text-muted)', fontSize: 10 }}>{label}</div>
-      {sub && <div className="font-sans" style={{ color: 'var(--text-muted)', fontSize: 9.5 }}>{sub}</div>}
+      <div className="font-sans mt-0.5" style={{ color: 'var(--text-muted)', fontSize: 'clamp(11px, 0.8vw, 12px)' }}>{label}</div>
+      {sub && <div className="font-sans" style={{ color: 'var(--text-muted)', fontSize: 'clamp(11px, 0.8vw, 12px)' }}>{sub}</div>}
     </div>
   );
 }
@@ -96,7 +96,7 @@ function pairedLabel(english: string, zulu: string, isZulu: boolean): React.Reac
   return isZulu ? (
     <>
       <span>{zulu}</span>
-      <span className="block font-normal normal-case" style={{ fontSize: 9, letterSpacing: 0, color: 'var(--text-muted)' }}>{english}</span>
+      <span className="block font-normal normal-case" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: 0, color: 'var(--text-muted)' }}>{english}</span>
     </>
   ) : english;
 }
@@ -105,7 +105,7 @@ function heldTechnicalLabel(english: string, isZulu: boolean): React.ReactNode {
   return isZulu ? (
     <>
       <span>{english}</span>
-      <span className="block font-normal normal-case" style={{ fontSize: 9, letterSpacing: 0, color: 'var(--text-muted)' }}>isiZulu translation pending</span>
+      <span className="block font-normal normal-case" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: 0, color: 'var(--text-muted)' }}>isiZulu translation pending</span>
     </>
   ) : english;
 }
@@ -122,14 +122,14 @@ function MonthBars({ values, unit, colorFor, height = 96 }: {
     <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: height + 34, paddingTop: 2 }}>
       {values.map((v, i) => (
         <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%' }}>
-          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 9.5, color: '#766A50', marginBottom: 4 }}>{Math.round(v)}</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: '#766A50', marginBottom: 4 }}>{Math.round(v)}</span>
           <div style={{
             width: '68%', maxWidth: 20,
             height: Math.max(5, (Math.abs(v) / max) * height),
             borderRadius: '4px 4px 2px 2px',
             background: colorFor(v),
           }} />
-          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 9.5, color: '#AC9E82', marginTop: 6 }}>{MONTH_LETTERS[i]}</span>
+          <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 'clamp(11px, 0.8vw, 12px)', color: '#AC9E82', marginTop: 6 }}>{MONTH_LETTERS[i]}</span>
         </div>
       ))}
       <span className="sr-only">{unit}</span>
@@ -156,7 +156,7 @@ function SoilProvenance({ source }: { source: LocationData['soil']['soilSource']
     <div className="flex gap-2 items-start rounded-xl px-3 py-2.5 mt-3" style={{ background: st.bg, border: `1px solid ${st.border}` }}>
       <AlertTriangle size={13} style={{ color: st.color, flexShrink: 0, marginTop: 2 }} />
       <div>
-        <div className="font-sans font-bold uppercase" style={{ fontSize: 10, letterSpacing: '0.1em', color: st.color }}>{st.title}</div>
+        <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{st.title}</div>
         <p className="font-display leading-relaxed mt-0.5" style={{ fontSize: 12.5, color: '#3A2E22' }}>{text}</p>
       </div>
     </div>
@@ -248,7 +248,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             Climate data could not be fetched for this point — the figures below are placeholders, not readings. Try the point again.
           </p>
         )}
-        <p className="font-sans mt-2.5" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+        <p className="font-sans mt-2.5" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', lineHeight: 1.45 }}>
           Modelled from a coarse global climate grid (~55 km) — coastal and mountain points can read as a neighbouring climate.
         </p>
       </Card>
@@ -352,7 +352,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
               <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 1 }}>
                 Zone rainfall {Math.round(data.bru.map)} mm/yr · mean {data.bru.tmean}°C
               </div>
-              <div className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 3 }}>{data.bru.attribution}</div>
+              <div className="font-sans" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', color: 'var(--text-muted)', marginTop: 3 }}>{data.bru.attribution}</div>
             </div>
           )}
         </Card>
