@@ -18,7 +18,7 @@ function monthName(month: number): string {
   return MONTHS_SHORT[month - 1] ?? '';
 }
 
-/** What else covers a veg-gap month, as a short clause: "eggs and fruit cover it". */
+/** Other food expected in a crop-gap month; availability does not prove sufficiency. */
 function otherCover(m: YearOfFoodMonth): string | null {
   const parts = [
     ...(m.fruit.length ? ['fruit'] : []),
@@ -26,14 +26,14 @@ function otherCover(m: YearOfFoodMonth): string | null {
   ];
   if (parts.length === 0) return null;
   const list = parts.length === 1 ? parts[0] : `${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}`;
-  return `${list} ${parts.length === 1 ? 'covers' : 'cover'} it`;
+  return `${list} also expected`;
 }
 
 function MonthCell({ m }: { m: YearOfFoodMonth }) {
   const empty = m.status !== 'fresh';
   const label = [
-    m.freshVeg.length ? `${m.freshVeg.length} fresh vegetable${m.freshVeg.length === 1 ? '' : 's'}` : null,
-    m.storedVeg.length ? `${m.storedVeg.length} in store` : null,
+    m.freshVeg.length ? `${m.freshVeg.length} crop kind${m.freshVeg.length === 1 ? '' : 's'} ready to pick` : null,
+    m.storedVeg.length ? `${m.storedVeg.length} stored crop kind${m.storedVeg.length === 1 ? '' : 's'}` : null,
     m.fruit.length ? `${m.fruit.length} fruit tree kind${m.fruit.length === 1 ? '' : 's'}` : null,
     ...m.animalProducts.map((p) => PRODUCT_LABEL[p].toLowerCase()),
   ].filter(Boolean).join(', ');
@@ -90,7 +90,7 @@ const SHOWN_GAP_MONTHS = 4;
 
 /**
  * The year of food: twelve months, every source the chart carries, and sowings that would fill
- * the months with no fresh vegetable. Reads the chart's own slots (lib/year-of-food.ts), so it
+ * the months with no fresh crop. Reads the chart's own slots (lib/year-of-food.ts), so it
  * follows the chart's year mode and its tree and animal switches.
  */
 export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, climateKnown, onPlan }: {
@@ -119,14 +119,14 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
       </p>
       <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
         {yearMode === 'established' ? 'The plan as it repeats each year' : 'The next 12 months from today'}, beds, trees and animals together — the rows switched on in the chart above.
-        This shows whether food comes in, not whether it is enough; the chart's bars carry the amounts.
+        This shows whether food comes in, not whether it is enough. Availability bars count crop kinds, not kilograms.
       </p>
 
       <ol className="grid gap-1.5 grid-cols-4 sm:grid-cols-6 lg:grid-cols-12 mb-2" style={{ listStyle: 'none', padding: 0 }}>
         {year.months.map((m) => <MonthCell key={m.slot} m={m} />)}
       </ol>
       <div className="font-sans flex flex-wrap gap-x-3 gap-y-1 mb-4" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-        <span className="inline-flex items-center gap-1"><Sprout size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> fresh vegetables</span>
+        <span className="inline-flex items-center gap-1"><Sprout size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> fresh vegetables &amp; staples</span>
         <span className="inline-flex items-center gap-1"><Trees size={11} aria-hidden style={{ color: 'var(--emerald)' }} /> fruit</span>
         <span className="inline-flex items-center gap-1"><PRODUCT_ICON.eggs size={11} aria-hidden style={{ color: 'var(--gold-dim)' }} /> animal products</span>
         <span className="inline-flex items-center gap-1"><Package size={11} aria-hidden /> in store only</span>
@@ -135,7 +135,7 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
       {gapFills.length > 0 && (
         <section data-gap-fills>
           <div className="font-sans font-semibold mb-1 inline-flex items-center gap-1.5" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
-            <WandSparkles size={13} aria-hidden /> Fill the months with no fresh vegetable
+            <WandSparkles size={13} aria-hidden /> Fill the months with no fresh crop
           </div>
           <p className="font-sans mb-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
             Sowings in this region&apos;s usual window{climateKnown ? ' that your site’s temperatures allow' : ''}, on a bed with room over the crop&apos;s months.
@@ -155,7 +155,7 @@ export default function YearOfFoodCard({ year, gapFills, yearMode, hasBeds, clim
                   <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
                     <span className="font-semibold">{monthName(g.targetMonth)}</span>
                     <span style={{ color: g.hungry ? 'var(--gold-dim)' : 'var(--text-muted)' }}>
-                      {' '}— {g.hungry ? 'nothing fresh at all' : `no fresh vegetable${cover ? ` (${cover})` : ''}`}
+                      {' '}— {g.hungry ? 'nothing fresh at all' : `no fresh crop${cover ? ` (${cover})` : ''}`}
                     </span>
                   </div>
                   {g.suggestions.length > 0 ? (

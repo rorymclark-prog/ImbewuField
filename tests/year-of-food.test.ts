@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { CROPS, cropByKey, hasAutomaticPlanningBasis, type RainPattern } from '@/lib/crop-catalog';
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import * as React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import ts from 'typescript';
+import { CROPS, MONTHS_SHORT, cropByKey, hasAutomaticPlanningBasis, type RainPattern } from '@/lib/crop-catalog';
 import { climateGateFrom, judgeFieldMonths } from '@/lib/crop-climate-gate';
 import {
   bedEntryMonth,
@@ -11,9 +16,9 @@ import {
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
-import type { TreeAvailabilityItem } from '@/lib/perennial-harvest';
-import type { AnimalAvailabilityItem } from '@/lib/animal-enterprises';
-import { buildYearOfFood, freshOffsetsFromSow, suggestGapFills, type YearOfFood } from '@/lib/year-of-food';
+import { formatMonthSpan, type TreeAvailabilityItem } from '@/lib/perennial-harvest';
+import { PRODUCT_LABEL, type AnimalAvailabilityItem } from '@/lib/animal-enterprises';
+import { buildYearOfFood, freshOffsetsFromSow, suggestGapFills, type GapFillMonth, type YearOfFood } from '@/lib/year-of-food';
 
 const JAN_ORDER = Array.from({ length: 24 }, (_, i) => (i % 12) + 1);
 const veg = (key: string, status: 'fresh' | 'stored' = 'fresh'): FoodAvailabilityItem => ({ cropKey: key, name: key, icon: '', status });
@@ -190,4 +195,69 @@ test('a sprawling vine is only ever offered a whole bed', () => {
     if (['pumpkin', 'butternut', 'watermelon'].includes(s.crop.key)) assert.equal(s.areaFraction, 1);
   }
   assert.ok(cropByKey('pumpkin'));
+});
+
+type FoodCardProps = {
+  year: YearOfFood;
+  gapFills: GapFillMonth[];
+  yearMode: 'established' | 'fromToday';
+  hasBeds: boolean;
+  climateKnown: boolean;
+  onPlan: () => void;
+};
+
+const foodCardRequire = createRequire(import.meta.url);
+const foodCardDependencies: Record<string, unknown> = {
+  '@/lib/crop-catalog': { MONTHS_SHORT },
+  '@/lib/animal-enterprises': { PRODUCT_LABEL },
+  '@/lib/perennial-harvest': { formatMonthSpan },
+  './AnimalEnterprisesCard': { PRODUCT_ICON: Object.fromEntries(Object.keys(PRODUCT_LABEL).map(product => [product, () => null])) },
+};
+const foodCardModule = { exports: {} as { default?: React.ComponentType<FoodCardProps> } };
+const foodCardSource = readFileSync(new URL('../components/crops/YearOfFoodCard.tsx', import.meta.url), 'utf8');
+const foodCardJavaScript = ts.transpileModule(foodCardSource, {
+  compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
+}).outputText;
+// Render the actual card so accessible month labels, legends and the year-mode
+// caveat cannot diverge from the combined vegetable/staple slots they describe.
+new Function('require', 'module', 'exports', foodCardJavaScript)(
+  (specifier: string) => foodCardDependencies[specifier] ?? foodCardRequire(specifier),
+  foodCardModule,
+  foodCardModule.exports,
+);
+const FoodCard = foodCardModule.exports.default;
+assert.ok(FoodCard);
+
+function foodCardHtml(year: YearOfFood, yearMode: FoodCardProps['yearMode'], gapFills: GapFillMonth[] = [], hasBeds = true): string {
+  return renderToStaticMarkup(React.createElement(FoodCard!, { year, gapFills, yearMode, hasBeds, climateKnown: false, onPlan: () => {} }));
+}
+
+test('a maize and sweet-potato month is labelled as crop kinds rather than vegetables alone or kilograms', () => {
+  const year = buildYearOfFood(JAN_ORDER, slots({ 1: [veg('maize'), veg('sweet-potato')], 2: [veg('dry-beans', 'stored')] }));
+  const html = foodCardHtml(year, 'fromToday');
+  const january = html.match(/aria-label="Jan: ([^"]*)"/)?.[1] ?? '';
+  const february = html.match(/aria-label="Feb: ([^"]*)"/)?.[1] ?? '';
+  assert.match(january, /2 crop kinds.*ready to pick/i, 'the month number counts distinct bed crops, including staples');
+  assert.match(february, /1 stored crop kind.*nothing fresh/i, 'stored staples remain stored food, not a fresh harvest');
+  const text = html.replace(/<[^>]*>/g, ' ').replaceAll('&amp;', '&');
+  assert.match(text, /vegetables\s*&\s*staples/i, 'the sprout legend must describe the staple crops folded into the same count');
+  assert.match(text, /bars count crop kinds/i, 'a crop-kind count must explain its unit');
+  assert.match(text, /not kilograms/i, 'availability must not become an implied yield or food quantity');
+  assert.match(text, /not whether it is enough/i, 'having a crop in season is not proof that the household is fed');
+  assert.match(text, /next 12 months from today/i);
+});
+
+test('food-summary copy preserves established-year and missing-bed meanings without promising fruit or eggs fill a food shortage', () => {
+  const year = buildYearOfFood(JAN_ORDER, slots({ 2: [veg('maize', 'stored')] }), undefined, slots({ 3: [hens] }));
+  const gapFills: GapFillMonth[] = [{ targetMonth: 3, hungry: false, suggestions: [], noRoomCropNames: [] }];
+  const html = foodCardHtml(year, 'established', gapFills, false);
+  const text = html.replace(/<[^>]*>/g, ' ').replaceAll('&amp;', '&');
+  assert.match(text, /plan as it repeats each year/i);
+  assert.match(text, /months with no fresh crop/i, 'the gap is a missing freshly harvested bed crop, not necessarily a missing vegetable alone');
+  assert.match(text, /no fresh crop.*eggs also expected/i, 'eggs indicate another food source; their presence does not prove enough food');
+  assert.match(text, /No veg bed is mapped.*nowhere to suggest a sowing/i, 'the no-bed fallback still explains why a planting cannot be suggested');
+  const january = html.match(/aria-label="Jan: ([^"]*)"/)?.[1] ?? '';
+  assert.match(january, /nothing/i, 'an empty source list must remain visibly and accessibly empty');
+  assert.equal(year.months[1].status, 'stored-only');
+  assert.equal(year.months[2].status, 'fresh');
 });

@@ -14,11 +14,19 @@ import {
   enterprisesForHousing,
   isFoodProduct,
   formatAmountRange,
+  animalReferenceQualifier,
+  loadAnimalSeasonChoices,
+  loadEnterpriseChoices,
+  loadIncludeAnimals,
+  resetSampleAnimalChoices,
+  saveAnimalSeasonChoices,
+  saveEnterpriseChoices,
   placedAnimalGroups,
   sourcedProductMonths,
   type AnimalKind,
   type HousingKind,
 } from '@/lib/animal-enterprises';
+import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { ANIMAL_ART, ANIMAL_ART_ROOT } from '@/lib/animal-art';
 import { enterpriseFromDossier, loadDossiers } from '../scripts/build-animal-enterprises.mjs';
@@ -219,4 +227,135 @@ test('commercial first eggs are sourced as egg onset, not inferred from the earl
   assert.deepEqual(first.value, [sourcedAge, sourcedAge]);
   assert.match(first.note ?? '', /bird age from hatch/i);
   assert.match(first.note ?? '', /receiving\/housing age, not evidence of first eggs/);
+});
+
+
+test('an animal reference keeps dry matter, indoor housing and life-stage meanings beside its number', () => {
+  const dairy = ANIMAL_ENTERPRISES['cattle-dairy'];
+  assert.match(dairy.feedKgPerDay?.note ?? '', /Dry-matter.*lactating/i);
+  assert.match(animalReferenceQualifier(dairy, 'feedKgPerDay') ?? '', /Dry-matter.*lactating.*not.*fresh feed/i);
+  const layer = ANIMAL_ENTERPRISES['chicken-layer'];
+  assert.match(layer.spaceM2?.source.quote ?? '', /houses[\s\S]*perching/);
+  assert.match(animalReferenceQualifier(layer, 'spaceM2') ?? '', /Indoor.*perches.*not outdoor/i);
+  assert.match(animalReferenceQualifier(layer, 'weeksToFirstProduct') ?? '', /from hatch.*not time after buying/i);
+  assert.match(animalReferenceQualifier(layer, 'outputPerAnimal') ?? '', /laying-cycle.*not eggs per year/i);
+  assert.match(animalReferenceQualifier(ANIMAL_ENTERPRISES.rabbit, 'productiveLifeYears') ?? '', /French intensive.*not.*backyard/i);
+  assert.match(animalReferenceQualifier(ANIMAL_ENTERPRISES['cattle-beef'], 'outputPerAnimal') ?? '', /Live calf weaning weight.*not meat weight/i);
+  for (const enterprise of records) {
+    for (const field of RANGES) {
+      if (!enterprise[field]) assert.equal(animalReferenceQualifier(enterprise, field), undefined,
+        `${enterprise.enterpriseId}: an absent source cannot acquire a reference qualifier`);
+    }
+  }
+});
+
+test('processor supply guidance does not promise year-round milk from every cow or smallholder herd', () => {
+  const dairy = ANIMAL_ENTERPRISES['cattle-dairy'];
+  assert.match(dairy.seasonalPattern?.source.quote ?? '', /processors require a year-round even milk/);
+  assert.match(dairy.seasonalPattern?.text ?? '', /Commercial dairy processors/);
+  assert.match(dairy.seasonalPattern?.text ?? '', /herd supply reference, not year-round milk from each cow/);
+  assert.match(dairy.seasonalPattern?.text ?? '', /Confirm.*calving and milking months/);
+  assert.doesNotMatch(dairy.seasonalPattern?.text ?? '', /seasonal.*not viable.*SA dairy farmers|milk is produced continuously all year/i);
+});
+
+test('every numeric animal card exposes its full source conditions as well as the concise qualifier', () => {
+  const component = readFileSync(new URL('../components/crops/AnimalEnterprisesCard.tsx', import.meta.url), 'utf8');
+  for (const field of RANGES) {
+    assert.ok(component.includes(`qualifier={animalReferenceQualifier(e, '${field}')}`), `${field}: essential conditions disappeared from the fact`);
+    assert.ok(component.includes(`note={e.${field}?.note}`), `${field}: the source calculation and scope disappeared`);
+  }
+  assert.match(component, /Where this number comes from/);
+  assert.match(component, /Check the age, system and units/);
+});
+
+function withAnimalStorage(store: object, run: () => void, sample = false): void {
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: {
+    ...store, sessionStorage: { getItem: () => sample ? '1' : null },
+  } });
+  try { run(); } finally {
+    bindMountedAccountLocalStorageUid(null);
+    resetSampleAnimalChoices();
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+}
+
+test('animal choices and local months report whether the device actually stored them', () => {
+  const rows = new Map<string, string>();
+  withAnimalStorage({ localStorage: {
+    getItem: (key: string) => rows.get(key) ?? null,
+    setItem: (key: string, value: string) => rows.set(key, value),
+  } }, () => {
+    bindMountedAccountLocalStorageUid('farmer-a');
+    assert.equal(saveEnterpriseChoices('farm-a', { chicken: 'chicken-layer', bee: 'bees' }), true);
+    assert.equal(saveAnimalSeasonChoices('farm-a', { chicken: { enterpriseId: 'chicken-layer', months: [6, 9] } }), true);
+    assert.equal(saveEnterpriseChoices('farm-b', { chicken: 'chicken-indigenous' }), true);
+    assert.deepEqual(loadEnterpriseChoices('farm-a'), { chicken: 'chicken-layer', bee: 'bees' });
+    assert.deepEqual(loadAnimalSeasonChoices('farm-a'), { chicken: { enterpriseId: 'chicken-layer', months: [6, 9] } });
+    assert.deepEqual(loadAnimalSeasonChoices('farm-b'), {});
+    bindMountedAccountLocalStorageUid('farmer-b');
+    assert.deepEqual(loadEnterpriseChoices('farm-a'), {});
+    assert.deepEqual(loadAnimalSeasonChoices('farm-a'), {});
+    bindMountedAccountLocalStorageUid('farmer-a');
+    assert.deepEqual(loadEnterpriseChoices('farm-b'), { chicken: 'chicken-indigenous' });
+  });
+});
+
+test('blocked, full or corrupt device storage cannot silently claim that animal production dates were saved', () => {
+  const choices = { chicken: 'chicken-layer' } as const;
+  const months = { chicken: { enterpriseId: 'chicken-layer', months: [6] } };
+  const stores = [
+    { localStorage: { getItem: () => null, setItem: () => { throw new Error('quota'); } } },
+    { localStorage: { getItem: () => '{broken', setItem: () => assert.fail('corrupt stored data must not be overwritten') } },
+  ];
+  for (const store of stores) withAnimalStorage(store, () => {
+    assert.equal(saveEnterpriseChoices('farm-a', choices), false);
+    assert.equal(saveAnimalSeasonChoices('farm-a', months), false);
+  });
+  const blockedWindow = { sessionStorage: { getItem: () => null } };
+  Object.defineProperty(blockedWindow, 'localStorage', { enumerable: true, get: () => { throw new Error('security policy'); } });
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: blockedWindow });
+  try {
+    assert.equal(saveEnterpriseChoices('farm-a', choices), false);
+    assert.equal(saveAnimalSeasonChoices('farm-a', months), false);
+    assert.deepEqual(loadEnterpriseChoices('farm-a'), {});
+    assert.deepEqual(loadAnimalSeasonChoices('farm-a'), {});
+    assert.equal(loadIncludeAnimals(), true);
+  } finally {
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else Reflect.deleteProperty(globalThis, 'window');
+  }
+});
+
+test('sample animal choices return success without writing real device storage', () => {
+  withAnimalStorage({ localStorage: {
+    getItem: () => assert.fail('sample must not read real storage'),
+    setItem: () => assert.fail('sample must not write real storage'),
+  } }, () => {
+    assert.equal(saveEnterpriseChoices('sample-farm', { bee: 'bees' }), true);
+    assert.equal(saveAnimalSeasonChoices('sample-farm', { bee: { enterpriseId: 'bees', months: [3] } }), true);
+    assert.deepEqual(loadEnterpriseChoices('sample-farm'), { bee: 'bees' });
+    assert.deepEqual(loadAnimalSeasonChoices('sample-farm'), { bee: { enterpriseId: 'bees', months: [3] } });
+  }, true);
+});
+
+
+test('bee purchases use the amended certificate period and protect playground siting without inventing a local distance', () => {
+  const bees = ANIMAL_ENTERPRISES.bees;
+  const legal = bees.legal.map(point => point.point).join(' ');
+  assert.match(legal, /Registration lasts 24 months.*renewed when it expires/);
+  assert.match(legal, /valid registration certificate/);
+  assert.doesNotMatch(legal, /annually|each year|1 January|31 March/,
+    'the old annual rule in the original 2013 text and dated registration form was amended in 2019');
+  const amended = bees.legal.filter(point => /registration|certificate/i.test(point.point));
+  assert.ok(amended.every(point => /2019/.test(point.source.doc) && /Consolidated/.test(point.source.url)),
+    'the registration instructions must rest on the consolidated law, not the earlier form');
+  const siting = bees.welfare.find(point => /playgrounds/.test(point.point));
+  assert.ok(siting);
+  assert.match(siting.source.url, /^https:\/\/www\.fao\.org\//);
+  assert.match(siting.source.quote, /playgrounds.*fresh water.*fairly dry/);
+  assert.doesNotMatch(siting.point, /\d|metres|meters/,
+    'an African manual is not a universal South African legal distance or an approval of this farm location');
 });

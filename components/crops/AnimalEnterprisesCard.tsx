@@ -15,6 +15,7 @@ import {
   PRODUCT_LABEL,
   enterprisesForHousing,
   formatAmountRange,
+  animalReferenceQualifier,
   isFoodProduct,
   sourcedProductMonths,
   type AnimalEnterprise,
@@ -60,30 +61,38 @@ export function formatWeeks([min, max]: [number, number]): string {
   return `about ${formatRange([months(min), months(max)])} months`;
 }
 
-function SourceLink({ source }: { source: HarvestCitation }) {
+function SourceLink({ source, short = false }: { source: HarvestCitation; short?: boolean }) {
+  const citation = `${source.doc}${source.page ? `, p. ${source.page}` : ''}`;
   return (
     <a
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
-      title={source.quote}
+      title={short ? `${citation}: ${source.quote}` : source.quote}
+      aria-label={short ? `Read source: ${citation}` : undefined}
       className="inline-flex items-center gap-0.5"
       style={{ color: 'var(--blue)', fontSize: 11, textDecoration: 'underline', textUnderlineOffset: 2 }}
     >
-      {source.doc}{source.page ? `, p. ${source.page}` : ''}
+      {short ? 'Read source' : citation}
       <ExternalLink size={10} aria-hidden />
     </a>
   );
 }
 
-function Fact({ label, value, source }: { label: string; value: string | null; source?: HarvestCitation }) {
+function Fact({ label, value, source, qualifier, note }: { label: string; value: string | null; source?: HarvestCitation; qualifier?: string; note?: string }) {
   return (
     <div style={{ minWidth: 0 }}>
       <div className="font-sans uppercase" style={{ fontSize: 9.5, letterSpacing: '0.08em', color: 'var(--text-muted)' }}>{label}</div>
       <div className="font-display" style={{ fontSize: 'clamp(14px, 1.1vw, 16px)', color: value ? 'var(--text-primary)' : 'var(--text-muted)', lineHeight: 1.3 }}>
         {value ?? 'Not sourced'}
       </div>
-      {value && source && <SourceLink source={source} />}
+      {value && qualifier && <p className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{qualifier}</p>}
+      {value && source && <SourceLink source={source} short />}
+      {value && (note || source) && <details className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
+        <summary style={{ cursor: 'pointer', minHeight: 44, padding: '10px 0', boxSizing: 'border-box' }}>Where this number comes from</summary>
+        {note && <p className="mt-1">{note}</p>}
+        {source && <p className="mt-1"><SourceLink source={source} /></p>}
+      </details>}
     </div>
   );
 }
@@ -105,14 +114,15 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
       {art && (
         <img className="produce-art" src={art} alt={e.name} width={72} height={72} loading="lazy" style={{ width: 'clamp(56px, 5vw, 72px)', height: 'auto', objectFit: 'contain', marginBottom: 8 }} />
       )}
+      <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>These are research references per animal. Check the age, system and units before using a figure for your farm.</p>
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <Fact label={`${e.product === 'fish' ? 'Harvest' : PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} />
+        <Fact label={`${e.product === 'fish' ? 'Harvest' : PRODUCT_LABEL[e.product]} per ${e.animalUnit}`} value={rangeText(e.outputPerAnimal, e.outputUnit)} source={e.outputPerAnimal?.source} qualifier={animalReferenceQualifier(e, 'outputPerAnimal')} note={e.outputPerAnimal?.note} />
         <Fact label="When" value={months.length ? `${formatMonthSpan(months)}${e.windows.length === 1 ? ` · ${firstWindow.region}` : ' across SA sources'}` : null} source={firstWindow?.source} />
-        <Fact label="First product" value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value) : null} source={e.weeksToFirstProduct?.source} />
-        <Fact label="Productive life" value={rangeText(e.productiveLifeYears, 'years')} source={e.productiveLifeYears?.source} />
-        <Fact label={`Feed per ${e.animalUnit}`} value={rangeText(e.feedKgPerDay, 'kg a day')} source={e.feedKgPerDay?.source} />
-        <Fact label={`Water per ${e.animalUnit}`} value={rangeText(e.waterLPerDay, 'L a day')} source={e.waterLPerDay?.source} />
-        <Fact label={`Space per ${e.animalUnit}`} value={rangeText(e.spaceM2, 'm²')} source={e.spaceM2?.source} />
+        <Fact label="First product" value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value) : null} source={e.weeksToFirstProduct?.source} qualifier={animalReferenceQualifier(e, 'weeksToFirstProduct')} note={e.weeksToFirstProduct?.note} />
+        <Fact label="Productive life" value={rangeText(e.productiveLifeYears, 'years')} source={e.productiveLifeYears?.source} qualifier={animalReferenceQualifier(e, 'productiveLifeYears')} note={e.productiveLifeYears?.note} />
+        <Fact label={`Feed per ${e.animalUnit}`} value={rangeText(e.feedKgPerDay, 'kg a day')} source={e.feedKgPerDay?.source} qualifier={animalReferenceQualifier(e, 'feedKgPerDay')} note={e.feedKgPerDay?.note} />
+        <Fact label={`Water per ${e.animalUnit}`} value={rangeText(e.waterLPerDay, 'L a day')} source={e.waterLPerDay?.source} qualifier={animalReferenceQualifier(e, 'waterLPerDay')} note={e.waterLPerDay?.note} />
+        <Fact label={`Space per ${e.animalUnit}`} value={rangeText(e.spaceM2, 'm²')} source={e.spaceM2?.source} qualifier={animalReferenceQualifier(e, 'spaceM2')} note={e.spaceM2?.note} />
       </div>
       {!isFoodProduct(e.product) && (
         <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>

@@ -1,3 +1,5 @@
+import { ANIMAL_ENTERPRISES, type AnimalProduct, type HousingKind } from '@/lib/animal-enterprises';
+
 /**
  * Optional artwork per animal enterprise, keyed by enterpriseId (lib/animal-enterprises-data.ts).
  * A sibling lookup like lib/crop-art.ts: the dossier pipeline regenerates the enterprise table, so
@@ -30,4 +32,27 @@ export const ANIMAL_ART: Readonly<Record<string, string>> = {
 
 export function animalArtUrl(enterpriseId: string): string | null {
   return ANIMAL_ART[enterpriseId] ?? null;
+}
+
+// Food calendars picture what is produced. Housing without a chosen enterprise
+// keeps an animal portrait so a bare coop never looks like a promise of eggs.
+export const ANIMAL_PRODUCT_ART: Readonly<Record<AnimalProduct, string>> = {
+  eggs: '/animal-product-art/eggs.png', meat: '/animal-product-art/meat.png',
+  milk: '/animal-product-art/milk.png', honey: '/animal-product-art/honey.png',
+  fish: '/animal-product-art/fish.png', wool: '/animal-product-art/wool.png',
+};
+const HOUSING_PORTRAIT: Readonly<Record<HousingKind, string>> = {
+  chicken: 'chicken-indigenous', bee: 'bees', goat: 'goat-meat', rabbit: 'rabbit',
+  duck: 'duck', pig: 'pig-pork', kraal: 'cattle-beef', pond: 'fish-tilapia',
+};
+export function animalProductArtUrl(product: AnimalProduct): string {
+  return ANIMAL_PRODUCT_ART[product];
+}
+export function enterpriseProductArtUrl(enterpriseId: string): string | null {
+  const enterprise = ANIMAL_ENTERPRISES[enterpriseId];
+  return enterprise ? animalProductArtUrl(enterprise.product) : null;
+}
+export function housingArtUrl(housing: string): string | null {
+  const enterprise = HOUSING_PORTRAIT[housing as HousingKind];
+  return enterprise ? animalArtUrl(enterprise) : null;
 }

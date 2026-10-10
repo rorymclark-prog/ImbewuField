@@ -360,6 +360,58 @@ export function formatAmountRange([min, max]: [number, number]): string {
   return min === max ? f(min) : `${f(min)}–${f(max)}`;
 }
 
+
+export type AnimalRangeField = 'outputPerAnimal' | 'weeksToFirstProduct' | 'productiveLifeYears' | 'feedKgPerDay' | 'waterLPerDay' | 'spaceM2';
+
+/** Source notes distinguish a trial result from a ration or space instruction. Keep the
+ * most consequential conditions beside the number; the full dossier note remains available. */
+export function animalReferenceQualifier(e: AnimalEnterprise, field: AnimalRangeField): string | undefined {
+  if (!e[field]) return undefined;
+  const context: Partial<Record<AnimalRangeField, Partial<Record<string, string>>>> = {
+    outputPerAnimal: {
+      bees: 'National survey reference from 2008; not a forecast for this hive.',
+      'cattle-beef': 'Live calf weaning weight from communal Nguni herds in Limpopo; not meat weight.',
+      'cattle-dairy': 'Milk-recorded Jersey and Holstein herds, per lactation; not an annual total.',
+      'chicken-broiler': 'Commercial industry reference at slaughter; not a household flock forecast.',
+      'chicken-indigenous': 'Village-chicken reference from dry and wet KZN environments.',
+      'chicken-layer': 'Commercial laying-cycle reference; not eggs per year.',
+      duck: 'Non-South African study reference; live weight, not meat weight.',
+      'fish-tilapia': 'Harvest weight per Mozambique tilapia; not yield per pond.',
+      'goat-dairy': 'Milk-recorded Saanen herds, per lactation; not an annual total.',
+      'goat-meat': 'Extensive Boer-goat reference for kids weaned; not meat weight.',
+      rabbit: 'FAO backyard-system reference; not a South African farm forecast.',
+      'sheep-mutton': 'Farmer-reported lambs born; not lambs weaned or meat weight.',
+      'sheep-wool': 'Semi-arid Merino reference; pasture and management affect the clip.',
+    },
+    weeksToFirstProduct: {
+      'chicken-layer': 'Bird age from hatch; not time after buying point-of-lay birds.',
+      'cattle-dairy': 'Age at first calving; not time after buying a cow.',
+      'goat-indigenous': 'Age at first kidding; not age of the first weaned kids.',
+      'fish-tilapia': 'Mozambique tilapia grow-out reference; confirm starting stock and water conditions.',
+    },
+    productiveLifeYears: {
+      'cattle-beef': 'From first calving to culling in the study; not lifespan from birth.',
+      'cattle-dairy': 'From first calving to culling in recorded herds; not lifespan from birth.',
+      rabbit: 'French intensive commercial reference; not a backyard-doe lifespan.',
+    },
+    feedKgPerDay: {
+      'cattle-dairy': 'Dry-matter intake for lactating cows; not the weight of fresh feed.',
+      'chicken-layer': 'Commercial-system reference; confirm a suitable ration locally.',
+    },
+    waterLPerDay: {
+      'cattle-dairy': 'Lactating Holstein-type cow reference; heat and animal stage affect demand.',
+      'chicken-layer': 'Commercial reference under normal conditions; water must stay available.',
+      'pig-pork': 'Pregnant and lactating sow reference; not a rate for growing pigs.',
+    },
+    spaceM2: {
+      'chicken-layer': 'Indoor house space with suitable perches; not outdoor ranging space.',
+      duck: 'Outdoor free-range space in the study; not indoor housing space.',
+      rabbit: 'Hutch cage for one breeding adult; not floor space for a group.',
+    },
+  };
+  return context[field]?.[e.enterpriseId];
+}
+
 /** Every month any sourced window of an enterprise covers, ascending. */
 export function sourcedProductMonths(e: AnimalEnterprise): number[] {
   const months = new Set<number>();
@@ -454,21 +506,22 @@ export function loadAnimalSeasonChoices(siteId: string): AnimalSeasonChoices {
   } catch { return {}; }
 }
 
-export function saveAnimalSeasonChoices(siteId: string, seasons: AnimalSeasonChoices): void {
+export function saveAnimalSeasonChoices(siteId: string, seasons: AnimalSeasonChoices): boolean {
   const clean = cleanAnimalSeasonChoices(seasons);
-  if (isSampleMode()) { sampleAnimalSeasons = { ...sampleAnimalSeasons, [siteId]: clean }; return; }
-  if (typeof window === 'undefined') return;
+  if (isSampleMode()) { sampleAnimalSeasons = { ...sampleAnimalSeasons, [siteId]: clean }; return true; }
+  if (typeof window === 'undefined') return false;
   try {
     const key = activeAccountLocalStorageKey(ANIMAL_SEASON_KEY);
     const raw = window.localStorage.getItem(key);
     const all = raw ? JSON.parse(raw) : {};
     window.localStorage.setItem(key, JSON.stringify({ ...(all && typeof all === 'object' ? all : {}), [siteId]: clean }));
-  } catch { /* The plan remains usable when storage is unavailable. */ }
+    return true;
+  } catch { return false; }
 }
 
 export function loadIncludeAnimals(): boolean {
   if (isSampleMode()) return sandboxIncludeAnimals;
-  if (typeof window === 'undefined' || !window.localStorage) return DEFAULT_INCLUDE_ANIMALS;
+  if (typeof window === 'undefined') return DEFAULT_INCLUDE_ANIMALS;
   try {
     const raw = window.localStorage.getItem(activeAccountLocalStorageKey(INCLUDE_ANIMALS_KEY));
     return raw === null ? DEFAULT_INCLUDE_ANIMALS : raw === '1';
@@ -501,7 +554,7 @@ export function cleanChoices(raw: unknown): Partial<Record<HousingKind, string>>
 
 export function loadEnterpriseChoices(siteId: string): Partial<Record<HousingKind, string>> {
   if (isSampleMode()) return { ...(sandboxChoices[siteId] ?? {}) };
-  if (typeof window === 'undefined' || !window.localStorage) return {};
+  if (typeof window === 'undefined') return {};
   try {
     const raw = window.localStorage.getItem(activeAccountLocalStorageKey(ENTERPRISE_CHOICE_KEY));
     const all = raw ? JSON.parse(raw) : {};
@@ -511,18 +564,17 @@ export function loadEnterpriseChoices(siteId: string): Partial<Record<HousingKin
   }
 }
 
-export function saveEnterpriseChoices(siteId: string, choices: Partial<Record<HousingKind, string>>): void {
+export function saveEnterpriseChoices(siteId: string, choices: Partial<Record<HousingKind, string>>): boolean {
   const clean = cleanChoices(choices);
-  if (isSampleMode()) { sandboxChoices = { ...sandboxChoices, [siteId]: clean }; return; }
-  if (typeof window === 'undefined' || !window.localStorage) return;
+  if (isSampleMode()) { sandboxChoices = { ...sandboxChoices, [siteId]: clean }; return true; }
+  if (typeof window === 'undefined') return false;
   try {
     const key = activeAccountLocalStorageKey(ENTERPRISE_CHOICE_KEY);
     const raw = window.localStorage.getItem(key);
     const all = raw ? JSON.parse(raw) : {};
     window.localStorage.setItem(key, JSON.stringify({ ...(all && typeof all === 'object' ? all : {}), [siteId]: clean }));
-  } catch {
-    // Storage unavailable or corrupt — fail silently.
-  }
+    return true;
+  } catch { return false; }
 }
 
 /** Test seam: the sample-mode sandbox is module state, reset by a full page load. */

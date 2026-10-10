@@ -2,8 +2,9 @@
 // explicit kg-by-age assumptions beside the dated bed cycles, without making up a growth curve
 // or dividing a crop-cycle benchmark into fictitious monthly harvests.
 import { cropByKey, hasPlanningYield } from './crop-catalog';
-import { buildPlanYieldBenchmark, estimatedYieldKgAdjusted, planningMaturityMonths, TRANSPLANT_ENTRY_PLANNED_MONTHS, type Planting, type PlanBed } from './crop-plan';
-import { formatRange, type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
+import { benchmarkDatedAreaConflictBedLabels, datedPlantingSowIndex, estimatedYieldKgAdjusted, occupiedMonthsForPlanting, planningMaturityMonths, TRANSPLANT_BED_RESERVED_FROM_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS, type Planting, type PlanBed } from './crop-plan';
+import { type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
+import { numberLabel } from './format-figures';
 
 export type KgRange = [number, number];
 export interface AgeProjection {
@@ -34,6 +35,9 @@ export function plantingMonthIndex(stamp: string): number | null {
   if (!/^(19|20|21)\d{2}-(0[1-9]|1[0-2])$/.test(stamp)) return null;
   return Number(stamp.slice(0, 4)) * 12 + Number(stamp.slice(5)) - 1;
 }
+const validYieldPoints = (points: TreeAgeGroup['yields']) => points
+  .filter(p => Number.isFinite(p.age) && p.age >= 0 && p.age <= 150 && Number.isFinite(p.kg) && p.kg >= 0)
+  .sort((a, b) => a.age - b.age);
 /** Age dates qualify reference bars only; a farmer's observed harvest remains an observation. */
 export function ageReadyForSeason(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], date: number, status?: 'existing' | 'proposed'): boolean {
   const cohorts = (choice?.production ?? []).filter(c => !status || c.status === status);
@@ -42,7 +46,11 @@ export function ageReadyForSeason(g: PlacedTreeGroup, choice: TreeSeasonChoices[
   return cohorts.some(c => {
     const planted = plantingMonthIndex(c.planted);
     if (planted === null) return true;
-    const entered = c.yields.filter(p => Number.isFinite(p.age) && Number.isFinite(p.kg) && p.age <= (date - planted) / 12).sort((a, b) => a.age - b.age).at(-1);
+    const points = validYieldPoints(c.yields);
+    // A draft with a negative rate or conflicting checkpoints cannot overrule the
+    // sourced reference in the calendar while being rejected by the kg projection.
+    const entered = new Set(points.map(p => p.age)).size === points.length
+      ? points.filter(p => p.age <= (date - planted) / 12).at(-1) : undefined;
     if (entered) return date >= planted && entered.kg > 0;
     const first = g.harvest.yearsToFirstCrop?.value[0];
     return date >= planted && (first === undefined || date >= planted + Math.ceil(first * 12));
@@ -71,12 +79,12 @@ function ageGroupKg(g: TreeAgeGroup, start: number, end: number, first: number |
   const ageStart = Math.max(0, (start - planted) / 12);
   const ageEnd = Math.max(0, (end - planted) / 12);
   const age = `${ageStart.toFixed(1)}–${ageEnd.toFixed(1)} yr`;
-  const points = g.yields.filter(p => Number.isFinite(p.age) && p.age >= 0 && Number.isFinite(p.kg) && p.kg >= 0).sort((a, b) => a.age - b.age);
+  const points = validYieldPoints(g.yields);
   const base = points.filter(p => p.age <= ageStart).at(-1);
+  if (new Set(points.map(p => p.age)).size !== points.length) return { kg: null, stage: 'Check duplicate yield ages', age };
   // A complete immature period has no projected crop. A period crossing the first-crop
   // threshold remains unknown without a yield schedule; it must not quietly become zero.
   if (first !== undefined && ageEnd < first && !points.some(p => p.age <= ageEnd && p.kg > 0)) return { kg: [0, 0], stage: 'Growing · before first-crop reference', age };
-  if (new Set(points.map(p => p.age)).size !== points.length) return { kg: null, stage: 'Check duplicate yield ages', age };
   if (!base) return { kg: null, stage: 'Yield at this age needed', age };
   const values = [base.kg, ...points.filter(p => p.age > ageStart && p.age <= ageEnd).map(p => p.kg)];
   if (planted > start || (first !== undefined && ageStart < first && base.kg === 0)) values.push(0);
@@ -108,12 +116,10 @@ export function treeAgeProjection(g: PlacedTreeGroup, choice: TreeSeasonChoices[
 
 export function buildProductionProjection(input: { plantings: Planting[]; beds: PlanBed[]; trees: readonly PlacedTreeGroup[]; choices: TreeSeasonChoices; now: Date; years?: number }): ProductionProjection {
   const nowIndex = input.now.getFullYear() * 12 + input.now.getMonth();
-  const nowMonth = input.now.getMonth() + 1;
-  const benchmark = buildPlanYieldBenchmark(input.plantings, input.beds, nowMonth);
-  const blocked = benchmark.areaConflictBedLabels.length > 0;
   const years: ProductionProjectionYear[] = [];
   for (let year = 0; year < (input.years ?? 10); year++) {
     const start = nowIndex + year * 12, end = start + 11;
+    let blocked = benchmarkDatedAreaConflictBedLabels(input.plantings, input.beds, { startIndex: start, endIndex: end, originIndex: nowIndex }).length > 0;
     let vegetableKg = 0;
     const missing = new Set<string>();
     for (const p of input.plantings) {
@@ -121,11 +127,11 @@ export function buildProductionProjection(input: { plantings: Planting[]; beds: 
       const bed = input.beds.find(b => b.id === p.bedId), crop = cropByKey(p.cropKey);
       if (!bed || !crop || crop.yieldKgPerM2 === 0) continue;
       const stamped = p.confirmedOnceSowing ?? p.once;
-      let sow = stamped ? plantingMonthIndex(stamped) : null;
-      if (stamped && sow === null) { missing.add(crop.name); continue; }
-      if (sow === null) sow = nowIndex + (p.existing ? -((nowMonth - p.sowMonth + 12) % 12) : ((p.sowMonth - nowMonth + 12) % 12));
+      const sow = datedPlantingSowIndex(p, nowIndex);
+      if (sow === null) { missing.add(`${crop.name}: check sowing date`); continue; }
+      if (!Number.isFinite(bed.areaM2) || bed.areaM2 <= 0) { missing.add(`${bed.label}: check growing area`); continue; }
       const maturity = planningMaturityMonths(crop.daysToHarvest) + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
-      const oneTime = p.existing || !!stamped;
+      const oneTime = p.existing || stamped !== undefined;
       const first = sow + maturity;
       const occurrences = oneTime ? [first] : Array.from({ length: (input.years ?? 10) + 1 }, (_, i) => first + i * 12);
       for (const pick of occurrences) {
@@ -134,6 +140,11 @@ export function buildProductionProjection(input: { plantings: Planting[]; beds: 
           continue;
         }
         if (!hasPlanningYield(crop) || crop.timingVerified === false) { missing.add(crop.name); continue; }
+        // Picking can fall after the rolling-year boundary. The whole crop cycle
+        // still needs its ground: a September conflict cannot disappear in January.
+        const cycleStart = pick - maturity + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
+        const cycleEnd = cycleStart + occupiedMonthsForPlanting(p).length - 1;
+        blocked ||= benchmarkDatedAreaConflictBedLabels(input.plantings, input.beds, { startIndex: cycleStart, endIndex: cycleEnd, originIndex: nowIndex, plantingId: p.id }).length > 0;
         vegetableKg += estimatedYieldKgAdjusted(p, bed.areaM2, input.plantings);
       }
     }
@@ -144,9 +155,9 @@ export function buildProductionProjection(input: { plantings: Planting[]; beds: 
     years.push({ label: `${dateLabel(start)} – ${dateLabel(end)}`, vegetableKg: blocked ? null : vegetableKg, vegetableMissing: [...missing, ...(blocked ? ['Resolve double-booked beds'] : [])], trees, treeKg, combinedKg, partial: blocked || missing.size > 0 || trees.some(t => t.kg === null) });
   }
   return { years, assumptions: [
-    'Projection, not a harvest promise. Vegetables repeat only saved recurring sowings; dated and existing crops happen once.',
-    'Vegetable crop-cycle kilograms are counted in the year of first picking, not divided into monthly quantities. Carry-in harvests need actual records.',
-    'Vegetable estimates hold bed area, sowings and crop benchmarks constant. Revise the plan if growing trees change shade, water or available bed space.',
+    'Projection, not a harvest promise. Vegetables and staples repeat only saved recurring sowings; dated and existing crops happen once.',
+    'Vegetable and staple crop-cycle kilograms are counted in the year of first picking, not divided into monthly quantities. Carry-in harvests need actual records.',
+    'Vegetable and staple estimates hold bed area, sowings and crop benchmarks constant. Revise the plan if growing trees change shade, water or available bed space.',
     'Tree ages run from planting on this site. Separate older and younger plants into age groups. Research first-crop ages are references, not guaranteed dates.',
     'Tree kg are your farm or nursery assumptions per plant per year. Values hold until the next age you enter; no growth multiplier is invented. A range covers changes within the year. Review the schedule as plants age.',
     'Check that the variety, local climate, pollination, water and care match your yield assumptions. Ages alone do not establish site suitability or survival.',
@@ -155,5 +166,7 @@ export function buildProductionProjection(input: { plantings: Planting[]; beds: 
 }
 
 export function projectedKgLabel(kg: KgRange | null): string {
-  return kg ? `${formatRange(kg.map(n => Math.round(n)) as KgRange)} kg` : 'Needs information';
+  if (!kg || !kg.every(n => Number.isFinite(n) && n >= 0)) return 'Needs information';
+  const [from, to] = kg.map(n => n > 0 && n < 0.001 ? '<0.001' : numberLabel(n >= 1 ? Math.round(n * 10) / 10 : n));
+  return `${from === to ? from : `${from}–${to}`} kg`;
 }
