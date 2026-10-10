@@ -9,6 +9,7 @@ import {
   getSandboxCashflowSettings, setSandboxCashflowSettings,
 } from './sample-mode';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProductionRecord, type PreservedFoodRecord } from './production-records';
 // TYPE ONLY, and it has to stay that way: crop-autosuggest imports THIS module
 // at runtime, so a value import here would close the cycle. `import type` is
 // erased at compile time, so no runtime edge exists.
@@ -98,6 +99,10 @@ export interface CropPlanState {
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
+  /** Exact dated quantities travel with the plan; a housing icon cannot supply them. */
+  productionRecords?: DatedProductionRecord[];
+  /** Recorded stock months and weights, without inferred preservation or shelf life. */
+  preservedProducts?: PreservedFoodRecord[];
   /**
    * The explanatory notes from the suggested plan the farmer ACCEPTED.
    *
@@ -323,6 +328,8 @@ export function loadCropPlan(): CropPlanState {
       version: 1,
       plantings: settle(parsed.plantings),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
+      ...(Array.isArray(parsed.productionRecords) ? { productionRecords: sanitiseProductionRecords(parsed.productionRecords) } : {}),
+      ...(Array.isArray(parsed.preservedProducts) ? { preservedProducts: sanitisePreservedFoodRecords(parsed.preservedProducts) } : {}),
       // The timestamp travels ONLY with notes. A stored date on its own labels
       // nothing, and notes without a date would have to be shown undated —
       // which is the dishonesty this pair exists to prevent.

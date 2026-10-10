@@ -16,6 +16,8 @@ export interface AgeProjection {
   kg: KgRange | null;
   knownKg: KgRange;
   missing: string[];
+  /** Keep numeric failure distinct from a real zero known subtotal. */
+  numericOverflow?: boolean;
 }
 export interface ProductionProjectionYear {
   label: string;
@@ -104,13 +106,15 @@ export function treeAgeProjection(g: PlacedTreeGroup, choice: TreeSeasonChoices[
   const projections = ages.map(a => ageGroupKg(a, start, end, choice?.bearing && a.status === 'existing' ? undefined : g.harvest.yearsToFirstCrop?.value[0]));
   for (const p of projections) if (!p.kg) missing.push(p.stage);
   const partialKg = projections.reduce<KgRange>((sum, p) => p.kg ? sumRange(sum, p.kg) : sum, [0, 0]);
+  const numericOverflow = !partialKg.every(Number.isFinite);
   const unsafeCounts = over || ages.some(a => !Number.isSafeInteger(a.plants) || a.plants < 1) || ages.some(a => a.status === 'existing' && (plantingMonthIndex(a.planted) ?? -Infinity) > nowIndex);
-  const knownKg: KgRange = unsafeCounts || !partialKg.every(Number.isFinite) ? [0, 0] : partialKg;
+  const knownKg: KgRange = unsafeCounts || numericOverflow ? [0, 0] : partialKg;
   return {
     name: g.harvest.name, speciesId: g.harvest.speciesId, plants: g.existing + g.proposed,
     ages: [...new Set(projections.map(p => p.age))].join('; ') || 'Age not recorded',
     stage: [...new Set(projections.map(p => p.stage))].join('; ') || 'Add planting dates',
-    kg: missing.length || !partialKg.every(Number.isFinite) ? null : partialKg, knownKg, missing: [...new Set(missing)],
+    kg: missing.length || numericOverflow ? null : partialKg, knownKg, missing: [...new Set(missing)],
+    ...(numericOverflow ? { numericOverflow: true } : {}),
   };
 }
 

@@ -146,6 +146,7 @@ export const ELEMENT_SPECIES: Readonly<Record<string, string>> = {
   tree_waterberry: 'syzygium-cordatum',
   tree_marula: 'sclerocarya-birrea-subsp-caffra',
   tree_kei_apple: 'dovyalis-afra',
+  tree_apple: 'malus-domestica',
   tree_peach: 'prunus-persica',
   tree_fig: 'ficus-carica',
   tree_pomegranate: 'punica-granatum',

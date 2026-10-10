@@ -14,6 +14,7 @@ import { PERENNIAL_HARVEST, placedTreeGroups } from '@/lib/perennial-harvest';
 import { buildProductionProjection } from '@/lib/production-projection';
 import { cropByKey } from '@/lib/crop-catalog';
 import { STAPLE_CROP_KEYS } from '@/lib/staple-crops';
+import { buildCompleteProductionExample } from '@/lib/sample-production-plan';
 
 import {
   availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename, drawCropPlanPages, FARMER_SECTIONS, resolveAvailability, type CropPlanPdfInput,
@@ -481,7 +482,7 @@ async function drawnText(data: CropPlanPdfInput) {
   const placements: { text: string; page: number; left: number; right: number; baseline: number; width: number; height: number }[] = [];
   const original = doc.text.bind(doc);
   doc.text = ((text: string | string[], x: number, y: number, opts: { align?: 'left' | 'center' | 'right' | 'justify'; lineHeightFactor?: number } = {}) => {
-    for (const [index, line] of (Array.isArray(text) ? text : [text]).entries()) {
+    for (const [index, line] of (Array.isArray(text) ? text : [text]).flatMap(line => line.split('\n')).entries()) {
       const width = doc.getTextWidth(line);
       const left = opts.align === 'center' ? x - width / 2 : opts.align === 'right' ? x - width : x;
       placements.push({ text: line, page: doc.getNumberOfPages(), left, right: left + width, baseline: y + index * doc.getFontSize() * (opts.lineHeightFactor ?? doc.getLineHeightFactor()), width: doc.internal.pageSize.getWidth(), height: doc.internal.pageSize.getHeight() });
@@ -643,4 +644,219 @@ test('bold wrapped area names remain inside their table rows when the planting p
   assert.ok(pages.size > 1, 'the fixture must exercise continued planting tables');
   for (const page of pages) assert.ok(headings.includes(page),
     'continued planting page ' + page + ' lost the table headings');
+});
+
+test('fresh and kept graphs share a food-count scale and print exact stock records without turning references into food', async () => {
+  // An avocado reference is not confirmed food. Three extra preserved kinds make the
+  // second bar taller, but must not silently change the fresh-only chart's scale.
+  // The key distinguishes catalogue pantry plans from explicitly recorded kept stock.
+  const reference = { iconKey: 'tree:persea-americana', label: 'Avocado', planning: { label: 'Regional reference', months: [11], basis: 'Source window, not confirmed local production' } };
+  const data = input({
+    now: new Date(2026, 10, 1), plantings: [], beds: [{ id: 'graph-bed', label: 'Graph bed', areaM2: 100, kind: 'bed' }], tasks: [], sections: ['availabilityGraphs'],
+    availability: {
+      yearMode: 'fromToday', veg: Array.from({ length: 12 }, () => [{ cropKey: 'tomatoes', name: 'Tomatoes', icon: '', status: 'fresh' as const }, { cropKey: 'onions', name: 'Onions', icon: '', status: 'stored' as const }]),
+      forestPlanning: Array.from({ length: 12 }, () => [reference]), forest: [], animals: [], utilization: Array(12).fill(0.5),
+    },
+    preservedProducts: ['green-beans', 'cabbage', 'carrots'].map((key, i) => ({
+      id: 'stock-' + i, label: 'Recorded ' + key, sourceIconKey: 'crop:' + key, method: 'frozen' as const,
+      dates: Array.from({ length: 12 }, (_, month) => ({ year: month < 2 ? 2026 : 2027, month: (month + 10) % 12 + 1 })),
+      provenance: 'farm-record' as const, note: 'Recorded stock months; no amount or safe shelf life supplied.',
+    })),
+  });
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+  let chart = '';
+  const freshHeights: number[] = [];
+  const keptFreshHeights: number[] = [];
+  const originalText = doc.text.bind(doc);
+  const originalRect = doc.rect.bind(doc);
+  const originalRounded = doc.roundedRect.bind(doc);
+  const originalFill = doc.setFillColor.bind(doc);
+  let freshInk = false;
+  doc.setFillColor = ((r: number, g: number, b: number) => {
+    freshInk = r === 31 && g === 77 && b === 43;
+    return originalFill(r, g, b);
+  }) as typeof doc.setFillColor;
+  doc.text = ((text: string | string[], x: number, y: number, opts = {}) => {
+    if (typeof text === 'string' && /^[123]\. /.test(text)) chart = text;
+    return originalText(text, x, y, opts);
+  }) as typeof doc.text;
+  doc.roundedRect = ((x: number, y: number, w: number, h: number, rx: number, ry: number, style?: string) => {
+    if (chart === '1. Fresh food' && style === 'F' && w > 10 && w < 27) freshHeights.push(h);
+    return originalRounded(x, y, w, h, rx, ry, style);
+  }) as typeof doc.roundedRect;
+  doc.rect = ((x: number, y: number, w: number, h: number, style?: string) => {
+    if (chart === '2. Fresh food + kept food' && style === 'F' && w > 10 && w < 27 && freshInk) keptFreshHeights.push(h);
+    return originalRect(x, y, w, h, style);
+  }) as typeof doc.rect;
+  drawCropPlanPages(doc, data);
+  assert.equal(freshHeights.length, 12, 'fresh-only bars were omitted');
+  assert.deepEqual(keptFreshHeights, freshHeights, 'the same fresh food changes height between charts because their scales differ');
+  const text = visibleText(await pdfText(await buildCropPlanPdf(data)));
+  for (const claim of ['1. Fresh food', '2. Fresh food + kept food', '3. Used and free crop-growing space', 'Planned pantry food', 'Recorded kept food', '100 m2 of mapped beds and plots only', 'Research season references', 'not kilograms, portions or meals', 'Nov', '2026', 'Oct', '2027', 'Recorded green-beans', 'Recorded cabbage', 'Recorded carrots']) assert.ok(text.includes(claim), 'graphs lost ' + claim);
+  const placements = await drawnText(data);
+  const titles = placements.filter(p => /^[123]\. /.test(p.text));
+  for (const title of titles.slice(1)) {
+    const previousYears = placements.filter(p => /^202[67]$/.test(p.text) && p.page === title.page && p.baseline < title.baseline);
+    assert.ok(previousYears.length && title.baseline - Math.max(...previousYears.map(p => p.baseline)) > 12,
+      'a dated axis year overlaps the next chart title: ' + title.text);
+  }
+  assert.equal(new Set(titles.map(p => p.page)).size, 1, 'the three comparison plots were separated across pages');
+  for (const p of placements) assert.ok(p.left >= -0.1 && p.right <= p.width + 0.1 && p.baseline >= 0 && p.baseline < p.height - 15, 'graph text printed outside the page: ' + p.text);
+});
+
+test('a graph without preservation records says stock is unknown instead of inferring processed food from harvests', async () => {
+  const data = input({ sections: ['availabilityGraphs'], availability: { yearMode: 'fromToday', veg: [], forest: [], animals: [] } });
+  const text = visibleText(await pdfText(await buildCropPlanPdf(data)));
+  assert.ok(text.includes('No preservation records supplied'), 'a missing record became a claim of no food');
+  assert.ok(text.includes('Frozen, dried, fermented and processed food are not inferred from fresh harvest'), 'a crop harvest was treated as preserved stock');
+  assert.ok(FARMER_SECTIONS.includes('availabilityGraphs'), 'the farmer booklet drops the fresh-versus-kept and space comparisons');
+});
+
+
+test('a food graph without mapped crop area keeps space unknown instead of drawing a false free-land claim', async () => {
+  const text = visibleText(await pdfText(await buildCropPlanPdf(input({ sections: ['availabilityGraphs'], plantings: [], beds: [], tasks: [] }))));
+  assert.ok(text.includes('No mapped bed or plot area is supplied, so used and free space cannot be shown'));
+  assert.ok(!text.includes('Free beds / plots'), 'an unmapped farm acquired free growing land');
+});
+
+
+test('the complete A2 picture calendar retains its space key beside all food rows instead of printing the key alone', async () => {
+  // Rabbit/duck meat and the mapped moringa/pigeon-pea sources used to leave the
+  // space key alone on another wall sheet. Keep all those named products together.
+  const example = buildCompleteProductionExample();
+  const placements = await drawnText({ ...example.input, pageFormat: 'a2', sections: ['availability'], availabilityDetails: false });
+  const labels = ['Dairy goat - milk', 'Honeybee - honey', 'Laying hens - eggs', 'Meat duck - meat', 'Meat rabbit - meat', 'Tilapia - fish', 'Growing space used'];
+  const selected = placements.filter(p => labels.includes(p.text));
+  assert.deepEqual(selected.map(p => p.text), labels, 'the wall calendar lost a product or its growing-space key');
+  assert.equal(new Set(selected.map(p => p.page)).size, 1, 'the wall-calendar key is separated from the food it explains');
+  for (const label of ['Moringa', 'Pigeon pea']) {
+    const source = placements.find(p => p.text === label);
+    assert.ok(source, 'an undated mapped food source disappeared: ' + label);
+    assert.equal(source.page, selected[0].page, 'the mapped source was split from its wall calendar: ' + label);
+  }
+  for (const p of placements) assert.ok(p.left >= -0.1 && p.right <= p.width + 0.1 && p.baseline >= 0 && p.baseline < p.height - 15, 'wall calendar label escaped its page: ' + p.text);
+});
+
+test('printed monthly kg keep actual output, native egg and litre units, and kept stock separate', async () => {
+  // The stock is deliberately much larger than production, so leaking stored food
+  // into the production bar or converting eggs/litres to kg cannot pass unnoticed.
+  const data = input({
+    now: new Date(2026, 10, 1), plantings: [], beds: [], tasks: [], sections: ['availabilityGraphs'],
+    availability: {
+      yearMode: 'fromToday', veg: [], forest: [],
+      forestPlanning: [[{ iconKey: 'tree:mangifera-indica', label: 'Mango', planning: { label: 'Regional reference', months: [11], basis: 'Reference only' } }]],
+      animals: [],
+    },
+    productionRecords: [
+      { id: 'expected-avocado', sourceIconKey: 'tree:persea-americana', label: 'Avocado', date: { year: 2026, month: 11 }, quantity: 8, unit: 'kg', status: 'expected' },
+      { id: 'actual-avocado', sourceIconKey: 'tree:persea-americana', label: 'Avocado', date: { year: 2026, month: 11 }, quantity: 0.4, unit: 'kg', status: 'actual' },
+      { id: 'eggs', sourceIconKey: 'animal:chicken-layer', label: 'Eggs', date: { year: 2026, month: 11 }, quantity: 120, unit: 'eggs', status: 'actual' },
+      { id: 'milk', sourceIconKey: 'animal:goat-dairy', label: 'Milk', date: { year: 2026, month: 11 }, quantity: 30, unit: 'litres', status: 'expected' },
+    ],
+    preservedProducts: [{
+      id: 'stored-mango', label: 'Dried mango', sourceIconKey: 'tree:mangifera-indica', method: 'dried',
+      dates: [{ year: 2026, month: 11 }], quantities: [{ year: 2026, month: 11, kg: 900 }],
+      provenance: 'fictional-example', note: 'Synthetic bought stock quantity for testing only.',
+    }],
+  });
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+  const originalText = doc.text.bind(doc);
+  const labels: string[] = [];
+  let productionChart = false;
+  let freshChart = false;
+  let recordedFreshBars = 0;
+  const originalRounded = doc.roundedRect.bind(doc);
+  doc.roundedRect = ((x: number, y: number, w: number, h: number, rx: number, ry: number, style?: string) => {
+    if (freshChart && style === 'F' && w > 10 && w < 27 && h > 0) recordedFreshBars++;
+    return originalRounded(x, y, w, h, rx, ry, style);
+  }) as typeof doc.roundedRect;
+  doc.text = ((text: string | string[], x: number, y: number, opts: { align?: string } = {}) => {
+    if (text === '1. Fresh food') freshChart = true;
+    else if (typeof text === 'string' && /^2\. /.test(text)) freshChart = false;
+    if (text === 'Monthly kg records') productionChart = true;
+    else if (typeof text === 'string' && !opts.align && !/^\(kg\)$/.test(text)) productionChart = false;
+    if (productionChart && opts.align === 'center' && typeof text === 'string') labels.push(text);
+    return originalText(text, x, y, opts as Parameters<typeof originalText>[3]);
+  }) as typeof doc.text;
+  drawCropPlanPages(doc, data);
+  assert.equal(recordedFreshBars, 1, 'positive dated output did not enter the matching fresh-food count slot');
+  assert.ok(labels.includes('0.4'), 'a small positive harvest was rounded away');
+  for (const excluded of ['8', '120', '30', '900']) assert.ok(!labels.includes(excluded), 'the kg production bar absorbed superseded, native-unit or stock quantity ' + excluded);
+  const text = visibleText(await pdfText(await buildCropPlanPdf(data)));
+  for (const kept of ['Monthly kg records', 'Actual kg', 'Expected kg', 'Eggs', 'Litres', 'Stock kg', '120', '30', '900', 'Mango', 'Research season references', 'never added to new production']) assert.ok(text.includes(kept), 'the printed quantities lost ' + kept);
+  assert.ok(availabilityIconKeys(data).includes('preserved:dried-mango'), 'the actual preserved-product artwork was never requested');
+});
+
+test('the printed crop-cycle kg chart remains a whole-cycle benchmark with missing crop and annual tree coverage visible', async () => {
+  const example = buildCompleteProductionExample();
+  const text = visibleText(await pdfText(await buildCropPlanPdf({ ...example.input, sections: ['availabilityGraphs'] })));
+  for (const claim of ['Crop-cycle kg by first picking month', 'entire crop-cycle benchmark', 'not the weight harvested in that month', 'Monthly production kg are not recorded', 'Amadumbe', 'Monthly quantities still needed', 'Annual tree yield schedules are incomplete', 'Egg counts and litres', 'Dried mango', 'Stored macadamia nuts']) assert.ok(text.includes(claim), 'kg print lost its quantity/source qualifier: ' + claim);
+  const placements = await drawnText({ ...example.input, sections: ['availabilityGraphs'] });
+  for (const p of placements) assert.ok(p.left >= -0.1 && p.right <= p.width + 0.1 && p.baseline >= 0 && p.baseline < p.height - 15, 'production kg text escaped its page: ' + p.text);
+});
+
+test('an entirely unrecorded monthly plan stays concise while an entered zero retains its dated quantity table', async () => {
+  // Question-mark-only rows used to force a second sheet of coverage notes. A
+  // measured zero is information and must still get its full dated table.
+  const example = buildCompleteProductionExample();
+  const absent = await drawnText({ ...example.input, sections: ['availabilityGraphs'] });
+  assert.ok(absent.some(p => p.text.startsWith('No monthly quantities are recorded for this dated year')));
+  assert.ok(!absent.some(p => p.text === 'Monthly quantities in their own units'), 'an all-unknown table still wastes a sheet');
+  const missing = absent.find(p => p.text.startsWith('Annual tree yield schedules are incomplete'));
+  const kg = absent.find(p => p.text === 'Crop-cycle kg by first picking month');
+  assert.ok(missing && kg);
+  assert.equal(missing.page, kg.page, 'missing coverage was stranded on another sheet');
+  const zero = await drawnText({ ...example.input, sections: ['availabilityGraphs'], productionRecords: [
+    { id: 'zero-harvest', sourceIconKey: 'tree:musa-acuminata-aaa-group', label: 'Recorded banana zero', date: { year: 2027, month: 2 }, quantity: 0, unit: 'kg', status: 'actual' },
+  ] });
+  assert.ok(zero.some(p => p.text === 'Monthly quantities in their own units'), 'the explicit zero was treated as absent');
+  assert.equal(zero.filter(p => /^(Nov|Dec|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct) 202[67]$/.test(p.text)).length, 12, 'the zero record lost its dated monthly table');
+});
+
+
+test('six kept-food notes retain the space explanation beside their graphs instead of leaving it on an empty page', async () => {
+  // The six illustrated stock records used to fit, but their final space note
+  // spilled alone onto another A4 sheet. Keep this actual booklet case together.
+  const example = buildCompleteProductionExample();
+  const placements = await drawnText({ ...example.input, sections: ['availabilityGraphs'] });
+  const chart = placements.find(p => p.text === '1. Fresh food');
+  const space = placements.find(p => p.text.startsWith('Space is for 820 m2'));
+  assert.ok(chart && space, 'the graph or its mapped-area explanation was omitted');
+  assert.equal(space.page, chart.page, 'the mapped-space explanation is alone on another sheet');
+  for (const record of example.preservedProducts) {
+    const row = placements.find(p => p.text.startsWith(record.label + ' ('));
+    assert.ok(row, 'kept-food note omitted: ' + record.label);
+    assert.equal(row.page, chart.page, 'a kept-food record was separated from the graph: ' + record.label);
+  }
+});
+
+
+test('turning off forest and animal categories keeps their stock notes and monthly quantities outside printed graphs', async () => {
+  const data = input({
+    plantings: [], beds: [], tasks: [], sections: ['availabilityGraphs'],
+    availability: { yearMode: 'fromToday', includeTrees: false, includeAnimals: false, veg: [], forest: [], animals: [] },
+    productionRecords: [{ id: 'hidden-milk', sourceIconKey: 'animal:goat-dairy', label: 'Hidden milk record', date: { year: 2026, month: 8 }, quantity: 777, unit: 'litres', status: 'actual' }],
+    preservedProducts: [{ id: 'hidden-stock', sourceIconKey: 'tree:mangifera-indica', label: 'Hidden mango stock', method: 'dried', dates: [{ year: 2026, month: 8 }], quantities: [{ year: 2026, month: 8, kg: 888 }], provenance: 'farm-record', note: 'Hidden stock note.' }],
+  });
+  const text = visibleText(await pdfText(await buildCropPlanPdf(data)));
+  assert.ok(text.includes('No kept-stock records are shown for the selected food categories'));
+  for (const hidden of ['Hidden milk record', 'Hidden mango stock', '777', '888']) assert.ok(!text.includes(hidden), 'a switched-off category reappeared through its record: ' + hidden);
+  assert.ok(!availabilityIconKeys(data).includes('preserved:dried-mango'), 'the hidden stock still requests its artwork');
+});
+
+
+test('monthly quantities repeat their units and headings when both kg graphs force table continuation', async () => {
+  const example = buildCompleteProductionExample();
+  const placements = await drawnText({ ...example.input, sections: ['availabilityGraphs'], productionRecords: [
+    { id: 'test-kg', sourceIconKey: 'tree:musa-acuminata-aaa-group', label: 'Synthetic banana quantity', date: { year: 2027, month: 2 }, quantity: 0.4, unit: 'kg', status: 'actual' },
+  ] });
+  const rows = placements.filter(p => /^(Nov|Dec|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct) 202[67]$/.test(p.text));
+  assert.equal(rows.length, 12, 'the quantity table lost a dated month');
+  assert.ok(new Set(rows.map(p => p.page)).size > 1, 'the fixture must exercise a real table continuation');
+  for (const row of rows) for (const heading of ['Month', 'Actual kg', 'Expected kg', 'Eggs', 'Litres', 'Stock kg']) {
+    assert.ok(placements.some(p => p.page === row.page && p.text === heading), 'the continued quantities lose their column unit: ' + heading);
+  }
+  assert.ok(!placements.some(p => p.text.includes('(continued) (continued)')), 'continuation title repeats its suffix');
 });

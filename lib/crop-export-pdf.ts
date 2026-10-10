@@ -35,8 +35,10 @@
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
-import { benchmarkAreaConflictDetails, buildFieldUtilizationByMonth, buildFoodAvailability, occupiedMonthsForPlanting, plantingBedEntryOffsets, planNotesDateLabel, recurringPlanPlantings, settleOnceRows, TRANSPLANT_BED_RESERVED_FROM_MONTHS } from '@/lib/crop-plan';
+import { benchmarkAreaConflictDetails, buildFieldUtilizationByMonth, buildFoodAvailability, occupiedMonthsForPlanting, plantingBedEntryOffsets, planNotesDateLabel, recurringPlanPlantings, settleOnceRows, TRANSPLANT_BED_RESERVED_FROM_MONTHS, totalGrowingAreaM2 } from '@/lib/crop-plan';
 import { monthAxisSlots } from '@/lib/month-axis';
+import { preservedFoodIconKey } from '@/lib/preserved-food-art';
+import { buildProductionAvailabilityGraphs, buildProductionKgGraphs, isVisibleProductionFoodSource, type DatedProductionRecord, type PreservedFoodRecord } from '@/lib/crop-export-availability';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import { foodGroupOf, type FoodGroup } from '@/lib/crop-groups';
 import {
@@ -136,6 +138,10 @@ export interface CropPlanPdfInput {
   availability?: CropPlanAvailability;
   /** Keep the wall calendar concise; the full plan retains checks and sources. */
   availabilityDetails?: boolean;
+  /** Dated stock records; neither harvest months nor catalogue storage imply preservation. */
+  preservedProducts?: PreservedFoodRecord[];
+  /** Exact monthly output records, with egg counts and milk litres kept in their native units. */
+  productionRecords?: DatedProductionRecord[];
   /** Small PNG data URLs keyed 'crop:<key>' / 'tree:<speciesId>' / 'animal:<enterpriseId>'
    * (lib/pdf-icons.ts). A key without one prints as its short code. */
   icons?: Record<string, string>;
@@ -180,7 +186,7 @@ export interface CropPlanAvailability {
   undated?: { iconKey: string; label: string; detail: string; ageNote?: string }[];
 }
 
-export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'projection' | 'guidance' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
+export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'availability' | 'availabilityGraphs' | 'projection' | 'guidance' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
 
 export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 
@@ -189,11 +195,11 @@ export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
 // The full document already covers every month in detail via 'fieldsheets';
 // including both there would print the same tasks twice.
 export const ALL_SECTIONS: CropPlanSection[] = [
-  'dashboard', 'numbers', 'calendar', 'availability', 'projection', 'guidance', 'plan', 'buying', 'fieldsheets', 'record',
+  'dashboard', 'numbers', 'calendar', 'availability', 'availabilityGraphs', 'projection', 'guidance', 'plan', 'buying', 'fieldsheets', 'record',
 ];
 
 /** Rory wants the same bed timeline on paper, followed by the food pictures and field jobs. */
-export const FARMER_SECTIONS: CropPlanSection[] = ['calendar', 'availability', 'projection', 'guidance', 'buying', 'fieldsheets', 'record'];
+export const FARMER_SECTIONS: CropPlanSection[] = ['calendar', 'availability', 'availabilityGraphs', 'projection', 'guidance', 'buying', 'fieldsheets', 'record'];
 
 /**
  * jsPDF's built-in fonts are WinAnsi-encoded: they have no glyph for an emoji
@@ -248,6 +254,7 @@ const INK = {
   green: [31, 77, 43],
   gold: [176, 122, 32],
   teal: [58, 110, 110],
+  preserved: [137, 101, 143],
   terracotta: [180, 88, 58],
   brown: [122, 79, 43],
   rule: [222, 213, 196],
@@ -762,11 +769,17 @@ function barChart(
     inks: readonly (readonly number[])[];
     axis: string;
     height?: number;
+    /** A shared scale makes fresh-only and fresh-plus-kept comparisons readable. */
+    maxValue?: number;
+    /** Missing monthly records need a visible marker, distinct from an explicit zero. */
+    missing?: boolean[];
+    showZero?: boolean;
     format?: (v: number) => string;
   },
 ): void {
   const h = opts.height ?? 108;
-  s.need(h + 52);
+  const extraLabelHeight = (Math.max(1, ...opts.labels.map(label => label.split('\n').length)) - 1) * 12;
+  s.need(h + 52 + extraLabelHeight);
   s.font(11, true);
   s.ink(INK.text);
   s.doc.text(pdfSafe(opts.title), s.margin, s.y);
@@ -784,8 +797,9 @@ function barChart(
   const top = s.y;
   const base = top + h;
   // Round gridline steps (1, 2, 5 × 10ⁿ): quarters of the busiest month gave ticks like 5, 9, 14.
-  const step = niceStep(Math.max(1, ...opts.values) / 4);
-  const gridlines = Math.max(1, Math.ceil(Math.max(1, ...opts.values) / step));
+  const highest = Math.max(1, ...opts.values, opts.maxValue ?? 0);
+  const step = niceStep(highest / 4);
+  const gridlines = Math.max(1, Math.ceil(highest / step));
   const max = step * gridlines;
 
   // Faint gridlines and a value axis, so a bar can be read, not guessed.
@@ -808,13 +822,14 @@ function barChart(
     if (bh > 0) s.doc.roundedRect(x, base - bh, barW, bh, 2, 2, 'F');
     s.font(6.5, true);
     s.ink(INK.muted);
-    if (v > 0) s.doc.text(pdfSafe((opts.format ?? ((n) => n.toFixed(0)))(v)), x + barW / 2, base - bh - 4, { align: 'center' });
+    if (opts.missing?.[i]) s.doc.text('?', x + barW / 2, base - 4, { align: 'center' });
+    else if (v > 0 || opts.showZero) s.doc.text(pdfSafe((opts.format ?? ((n) => n.toFixed(0)))(v)), x + barW / 2, base - bh - 4, { align: 'center' });
     s.font(7);
     s.ink(INK.muted);
     s.doc.text(pdfSafe(opts.labels[i]), x + barW / 2, base + 11, { align: 'center' });
   });
 
-  s.y = base + 26;
+  s.y = base + 26 + extraLabelHeight;
 }
 
 /** The smallest of 1, 2 or 5 × 10ⁿ that is at least `raw`. */
@@ -1155,7 +1170,7 @@ export function resolveAvailability(input: CropPlanPdfInput, nowMonth: number): 
     { key: 'stored', title: 'Stored veg', sub: 'kept under named conditions', rgb: [212, 160, 23], cells: vegCells('stored') },
     { key: 'staples', title: 'Staple crops', sub: 'ready to harvest', rgb: [127, 174, 110], cells: vegCells('fresh', true), emptyNote: 'No staple picking months marked yet.' },
     { key: 'staples-stored', title: 'Stored staples', sub: 'kept under named conditions', rgb: [212, 160, 23], cells: vegCells('stored', true) },
-    { key: 'forest', title: 'Food forest - fruit, nuts & berries', sub: 'confirmed local picking months', rgb: [46, 107, 58],
+    { key: 'forest', title: 'Food forest - fruit, nuts & berries and other foods', sub: 'confirmed local picking months', rgb: [46, 107, 58],
       cells: entryCells(given?.includeTrees === false ? undefined : given?.forest),
       planningCells: entryCells(given?.includeTrees === false ? undefined : given?.forestPlanning),
       undated: given?.includeTrees === false ? [] : undated('forest'),
@@ -1187,6 +1202,7 @@ export function availabilityIconKeys(input: CropPlanPdfInput): string[] {
     ...bands.flatMap((b) => [...b.cells.flat(), ...(b.planningCells?.flat() ?? [])].map((e) => e.iconKey)),
     ...includedUndatedSources(input.availability).map((e) => e.iconKey),
     ...(input.productionProjection?.years[0]?.trees ?? []).map(tree => `tree:${tree.speciesId}`),
+    ...(input.preservedProducts ?? []).filter(record => isVisibleProductionFoodSource(record.sourceIconKey, input.availability ?? {})).map(preservedFoodIconKey),
   ])];
 }
 
@@ -1218,6 +1234,11 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   const labelW = 150;
   const colW = (s.contentWidth - labelW) / 12;
   const icon = Math.min(23, colW - 6);
+  // Extra food-forest sources left only the space key on another wall sheet. Keep
+  // ordinary A2 rows compact; measured multi-line labels still receive extra room.
+  const minimumRowHeight = input.pageFormat === 'a2' ? 32 : 36;
+  const bandHeaderHeight = input.pageFormat === 'a2' ? 20 : 24;
+  const bandGap = input.pageFormat === 'a2' ? 4 : 8;
   const planningLabel = (e: AvailabilityCell) => e.planning?.label.startsWith('Regional reference:') ? 'Regional season' : e.planning?.label.replace('Assumed variety:', 'Plan:') ?? '';
   const heading = () => {
     masthead(s, 'Picture calendar');
@@ -1245,14 +1266,14 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   };
   const bandHead = (band: AvailabilityBand, continued = false) => {
     s.fill(mixWithWhite(band.rgb, 0.16));
-    s.doc.rect(s.margin, s.y, s.contentWidth, 24, 'F');
+    s.doc.rect(s.margin, s.y, s.contentWidth, bandHeaderHeight, 'F');
     s.font(10.5, true); s.ink(INK.text);
     s.doc.text(pdfSafe(`${band.title}${continued ? ' (continued)' : ''}`), s.margin + 8, s.y + 16);
     if (band.key === 'forest') {
       s.font(7.5); s.ink(INK.green);
       s.doc.text('When established', s.width - s.margin - 8, s.y + 16, { align: 'right' });
     }
-    s.y += 24;
+    s.y += bandHeaderHeight;
   };
   heading(); monthHead();
   const freshPageCapacity = s.bottom - s.y;
@@ -1279,13 +1300,13 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       const planLabel = planningLabel(e);
       s.font(8);
       const planLines = planLabel ? s.doc.splitTextToSize(pdfSafe(planLabel), labelW - 39) as string[] : [];
-      const rowH = Math.max(36, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? 24 : 10));
+      const rowH = Math.max(minimumRowHeight, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? 24 : 10));
       return {e,monthsUnknown,label,planLines,rowH};
     });
-    const bandHeight = measuredRows.reduce((height,row) => height + row.rowH, 24 + 8);
+    const bandHeight = measuredRows.reduce((height,row) => height + row.rowH, bandHeaderHeight + bandGap);
     // A busy mixed-food calendar left the final fish row alone on a new page. Keep the
     // whole section together when it fits a fresh page; long sections still paginate.
-    const required = bandHeight <= freshPageCapacity ? bandHeight : 24 + measuredRows[0].rowH;
+    const required = bandHeight <= freshPageCapacity ? bandHeight : bandHeaderHeight + measuredRows[0].rowH;
     if (!s.fits(required)) { s.page('portrait'); heading(); monthHead(); }
     bandHead(band);
     for (const [rowIndex, {e,monthsUnknown,label,planLines,rowH}] of measuredRows.entries()) {
@@ -1339,7 +1360,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       s.doc.line(s.margin, s.y + rowH, s.width - s.margin, s.y + rowH);
       s.y += rowH;
     }
-    s.y += 8;
+    s.y += bandGap;
   }
   const calendarNote = 'Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Gold rows require each crop’s storage conditions; check the full plan or app. Red space figures mean the plan needs more growing space than is mapped.';
   s.font(10);
@@ -1435,6 +1456,244 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   s.paragraph(ASSURANCE_ONE_LINE, { size: 9.5, ink: INK.muted, gap: 6 });
   s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9.5, ink: INK.muted, gap: 8 });
   if (!(input.sections ?? ALL_SECTIONS).includes('dashboard')) drawPlanNotes(s, input);
+}
+
+/** Each stack is a shared authority's series, not quantities inferred by the printer. */
+function stackedMonthChart(
+  s: Sheet,
+  opts: {
+    title: string;
+    labels: string[];
+    series: { label: string; values: number[]; ink: readonly number[] }[];
+    maxValue: number;
+    axis: string;
+    height: number;
+    labelValues: number[];
+    format?: (value: number) => string;
+  },
+): void {
+  const extraLabelHeight = (Math.max(1, ...opts.labels.map(label => label.split('\n').length)) - 1) * 12;
+  s.need(opts.height + 72 + extraLabelHeight);
+  s.font(11, true); s.ink(INK.text);
+  s.doc.text(pdfSafe(opts.title), s.margin, s.y);
+  const titleW = s.doc.getTextWidth(pdfSafe(opts.title));
+  s.font(7.5); s.ink(INK.faint);
+  s.doc.text(pdfSafe('(' + opts.axis + ')'), s.margin + titleW + 5, s.y);
+  s.y += 16;
+  let keyX = s.margin + 30;
+  for (const series of opts.series) {
+    s.fill(series.ink); s.doc.rect(keyX, s.y - 6, 8, 8, 'F');
+    s.font(7.5); s.ink(INK.muted);
+    s.doc.text(pdfSafe(series.label), keyX + 12, s.y);
+    keyX += 24 + s.doc.getTextWidth(pdfSafe(series.label));
+  }
+  s.y += 16;
+  const plotX = s.margin + 30;
+  const plotW = s.contentWidth - 30;
+  const top = s.y;
+  const base = top + opts.height;
+  const step = niceStep(Math.max(1, opts.maxValue) / 4);
+  const gridlines = Math.max(1, Math.ceil(Math.max(1, opts.maxValue) / step));
+  const maximum = step * gridlines;
+  s.stroke(INK.hair); s.doc.setLineWidth(0.5);
+  for (let i = 0; i <= gridlines; i++) {
+    const y = base - opts.height * i / gridlines;
+    s.doc.line(plotX, y, plotX + plotW, y);
+    s.font(6.5); s.ink(INK.faint);
+    s.doc.text(pdfSafe(String(Number((step * i).toFixed(2)))), plotX - 5, y + 2, { align: 'right' });
+  }
+  const slot = plotW / opts.labels.length;
+  const width = Math.min(slot * 0.62, 26);
+  opts.labels.forEach((label, i) => {
+    const x = plotX + i * slot + (slot - width) / 2;
+    let bottom = base;
+    for (const series of opts.series) {
+      const h = opts.height * series.values[i] / maximum;
+      s.fill(series.ink);
+      if (h > 0) s.doc.rect(x, bottom - h, width, h, 'F');
+      bottom -= h;
+    }
+    s.font(6.5, true); s.ink(INK.muted);
+    const value = opts.labelValues[i];
+    if (value > 0) s.doc.text(pdfSafe((opts.format ?? ((n) => String(n)))(value)), x + width / 2, bottom - 4, { align: 'center' });
+    s.font(7); s.ink(INK.muted);
+    s.doc.text(pdfSafe(label), x + width / 2, base + 11, { align: 'center' });
+  });
+  s.y = base + 26 + extraLabelHeight;
+}
+
+function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const preservedRecords = (input.preservedProducts ?? []).filter(record => isVisibleProductionFoodSource(record.sourceIconKey, input.availability ?? {}));
+  const resolved = resolveAvailability(input, nowMonth);
+  const axis = monthAxisSlots(nowMonth, now.getFullYear(), 12);
+  const graph = buildProductionAvailabilityGraphs({
+    availability: resolved,
+    dates: axis.map(({ year, month }) => ({ year, month })),
+    growingAreaM2: totalGrowingAreaM2(input.beds),
+    includeTrees: input.availability?.includeTrees, includeAnimals: input.availability?.includeAnimals,
+    preservedProducts: input.preservedProducts, productionRecords: input.productionRecords,
+  });
+  const heading = () => {
+    masthead(s, 'Food and growing space');
+    pageTitle(s, input.meta.planTitle, 'Fresh food, kept food and space',
+      resolved.yearMode === 'fromToday'
+        ? 'Known food options by month. Counted once per crop or product, not kilograms, portions or meals.'
+        : 'Repeat-year comparison, not a first-year harvest forecast. Preserved stock records use exact dates.');
+  };
+  heading();
+  const labels = axis.map(slot => monthShort(slot.month) + '\n' + slot.year);
+  const scale = Math.max(1, ...graph.months.map(month => month.totalCount));
+  barChart(s, {
+    title: '1. Fresh food', axis: 'food kinds', height: 64, maxValue: scale,
+    labels, values: graph.months.map(month => month.freshCount), inks: graph.months.map(() => INK.green),
+  });
+  stackedMonthChart(s, {
+    title: '2. Fresh food + kept food', axis: 'food kinds', height: 64, maxValue: scale, labels,
+    series: [
+      { label: 'Fresh', values: graph.months.map(month => month.freshCount), ink: INK.green },
+      { label: 'Planned pantry food', values: graph.months.map(month => month.storedCount), ink: INK.gold },
+      { label: 'Recorded kept food', values: graph.months.map(month => month.preservedCount), ink: INK.preserved },
+    ],
+    labelValues: graph.months.map(month => month.totalCount),
+  });
+  if (graph.growingAreaM2 > 0) stackedMonthChart(s, {
+    title: '3. Used and free crop-growing space', axis: 'm2', height: 64, maxValue: graph.growingAreaM2, labels,
+    series: [
+      { label: 'Used beds / plots', values: graph.months.map(month => month.growingUsedM2), ink: INK.green },
+      { label: 'Free beds / plots', values: graph.months.map(month => month.growingFreeM2), ink: INK.rule },
+    ],
+    labelValues: graph.months.map(month => month.growingUsedM2), format: (value) => numberLabel(value),
+  });
+  else {
+    s.paragraph('3. Used and free crop-growing space', { size: 11, bold: true, gap: 8 });
+    s.paragraph('No mapped bed or plot area is supplied, so used and free space cannot be shown.', { size: 8, ink: INK.muted, gap: 10 });
+  }
+  const note = (text: string) => {
+    s.font(8);
+    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    if (s.need(lines.length * 11.2 + 5)) heading();
+    s.paragraph(text, { size: 8, ink: INK.muted, gap: 5 });
+  };
+  note('The two food charts share a scale. A crop present fresh and kept still counts once; kept colours add other food kinds. Dated output records update fresh counts. Research season references and sources without local dates are outside food counts.');
+  note('Pantry storage requires each crop\'s source conditions. Preserved stock is shown only for recorded months; no amount, recipe or safe shelf life is inferred.');
+  if (!graph.preservationRecordsProvided) {
+    note('No preservation records supplied. Frozen, dried, fermented and processed food are not inferred from fresh harvest.');
+  } else if (!input.preservedProducts?.length) {
+    note('No preserved stock is recorded. This is a record status, not proof that the farm has no stock.');
+  } else if (!preservedRecords.length) {
+    note('No kept-stock records are shown for the selected food categories.');
+  } else {
+    note('Preservation methods recorded: ' + [...new Set(preservedRecords.map(record => record.method))].join(', ') + '.');
+    for (const record of preservedRecords) {
+      const copy = record.label + ' (' + record.method + '): ' + record.dates.map(date => monthShort(date.month) + ' ' + date.year).join(', ') + '. ' + record.note;
+      s.font(8);
+      const lines = s.doc.splitTextToSize(pdfSafe(copy), s.contentWidth - 31) as string[];
+      const height = Math.max(28, lines.length * 11.2 + 4);
+      if (s.need(height)) heading();
+      drawIconOrCode(s, { iconKey: preservedFoodIconKey(record), code: fallbackCode(record.label) }, s.margin, s.y - 7, 23, input.icons);
+      s.font(8); s.ink(INK.muted);
+      s.doc.text(lines, s.margin + 31, s.y, { lineHeightFactor: 1.4 });
+      s.y += height;
+    }
+  }
+  if (graph.growingAreaM2 > 0) note('Space is for ' + numberLabel(graph.growingAreaM2) + ' m2 of mapped beds and plots only; trees, animal housing and ponds are outside this area. Numbers above space bars show used m2.');
+  const conflicts = benchmarkAreaConflictDetails(input.plantings, input.beds);
+  if (conflicts.length) note('Some beds or plots have overlapping or invalid planting shares. Used space is capped at their mapped area; resolve the layout before relying on this comparison.');
+  s.page('portrait');
+  drawProductionKgGraphs(s, input, now, nowMonth);
+}
+
+
+function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const resolved = resolveAvailability(input, nowMonth);
+  const dates = monthAxisSlots(nowMonth, now.getFullYear(), 12);
+  const graph = buildProductionKgGraphs({
+    availability: resolved, dates, now,
+    growingAreaM2: totalGrowingAreaM2(input.beds),
+    includeTrees: input.availability?.includeTrees, includeAnimals: input.availability?.includeAnimals,
+    plantings: input.plantings, beds: input.beds,
+    productionRecords: input.productionRecords, preservedProducts: input.preservedProducts,
+    treeGroups: input.treeGroups, treeSeasons: input.treeSeasons,
+  });
+  const heading = () => {
+    masthead(s, 'Production weights');
+    pageTitle(s, input.meta.planTitle, 'Production weights and missing records',
+      'Monthly records, crop-cycle benchmarks and food kept in stock are separate measures. Missing quantities are not zero.');
+  };
+  heading();
+  const note = (text: string) => {
+    s.font(8.5);
+    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    if (s.need(lines.length * 11.9 + 6)) heading();
+    s.paragraph(text, { size: 8.5, ink: INK.muted, gap: 6 });
+  };
+  const labels = dates.map(date => monthShort(date.month) + '\n' + date.year);
+  if (graph.months.some(month => month.recordedKg !== null)) {
+    barChart(s, {
+      title: 'Monthly kg records', axis: 'kg', height: 76, labels,
+      values: graph.months.map(month => month.recordedKg ?? 0),
+      inks: graph.months.map(month => month.expectedKg === null ? INK.green : INK.gold),
+      missing: graph.months.map(month => month.recordedKg === null), showZero: true, format: numberLabel,
+    });
+    note('Green bars contain actual kg records only. Gold bars include expected kg. Actual replaces expected for the same food source and month. These are known subtotals; missing crop, tree and animal quantities stay outside them.');
+  } else {
+    note('Monthly production kg are not recorded. The crop-cycle graph below is a planning benchmark; it does not fill in missing monthly harvest weights.');
+  }
+  const hasCycles = graph.months.some(month => month.cropCycleKgStartingHarvest !== null);
+  if (hasCycles) {
+    barChart(s, {
+      title: 'Crop-cycle kg by first picking month', axis: 'full-cycle kg', height: 76, labels,
+      values: graph.months.map(month => month.cropCycleKgStartingHarvest ?? 0),
+      inks: graph.months.map(() => INK.green),
+      missing: graph.months.map(month => month.cropCycleMissingSources.length > 0 && month.cropCycleKgStartingHarvest === null),
+      format: numberLabel,
+    });
+    note('Each bar groups the entire crop-cycle benchmark by the month picking starts. It is not the weight harvested in that month. The source does not supply a monthly picking curve; quantities are not divided across a picking window.');
+  } else note('No crop-cycle kg comparison is available for cycles starting harvest in this dated year. Check planting dates, growing space and sourced crop benchmarks.');
+  const cropMissing = graph.unquantifiedCropSources.map(source => source.label);
+  if (cropMissing.length) note('Crop quantities outside the known cycle subtotal: ' + cropMissing.join(', ') + '.');
+
+  const hasMonthlyQuantities = graph.months.some(month => Object.values(month.nativeUnits).some(value => value !== null) || month.stockKg !== null);
+  // A table containing only question marks pushed the missing-record notes onto
+  // an almost empty sheet. Preserve the dated table as soon as any quantity is
+  // entered, including zero; an unrecorded plan can state its coverage directly.
+  if (hasMonthlyQuantities) {
+    if (s.need(70)) heading();
+    s.paragraph('Monthly quantities in their own units', { size: 10, bold: true, ink: INK.green, gap: 6 });
+    const quantity = (value: number | null) => value === null ? '?' : numberLabel(value);
+    const hasItems = graph.months.some(month => month.nativeUnits.items !== null);
+    table(s, [
+    { key: 'month', header: 'Month', width: 82 },
+    { key: 'actual', header: 'Actual kg', width: 76, align: 'right' },
+    { key: 'expected', header: 'Expected kg', width: 82, align: 'right' },
+    { key: 'eggs', header: 'Eggs', width: 68, align: 'right' },
+    { key: 'milk', header: 'Litres', width: 68, align: 'right' },
+    ...(hasItems ? [{ key: 'items', header: 'Items', width: 68, align: 'right' as const }] : []),
+    { key: 'stock', header: 'Stock kg', width: 80, align: 'right' },
+    ], graph.months.map(month => ({
+    month: monthShort(month.month) + ' ' + month.year,
+    actual: quantity(month.actualKg), expected: quantity(month.expectedKg),
+    eggs: quantity(month.nativeUnits.eggs), milk: quantity(month.nativeUnits.litres),
+    items: quantity(month.nativeUnits.items), stock: quantity(month.stockKg) + (month.stockKgPartial && month.stockKg !== null ? ' *' : ''),
+    })), { band: 'Production weights', title: 'Monthly quantities in their own units', size: 8 });
+    s.y += 10;
+  } else note('No monthly quantities are recorded for this dated year in kg, eggs, litres, items or kept-stock kg. Enter expected or actual amounts in the app; the printed monthly table appears once a quantity is recorded, including zero.');
+  note('? means quantity not recorded, not zero. * marks a known stock subtotal with missing batch weights. Egg counts and litres use actual records where entered, otherwise expected records. They are never converted to kg. Stock kg are food already held; they are never added to new production.');
+
+  const unique = (entries: AvailabilityEntry[]) => [...new Map(entries.map(entry => [entry.iconKey, entry])).values()];
+  const missing = unique(graph.months.flatMap(month => month.unrecordedSources));
+  if (missing.length) note('Monthly quantities still needed: ' + missing.map(source => source.label).join(', ') + '. Research season references do not establish a harvest weight.');
+  if (graph.undatedSources.length) note('Food sources with no dated quantity: ' + graph.undatedSources.map(source => source.label).join(', ') + '.');
+  const stockMissing = unique(graph.months.flatMap(month => month.stockKgMissingSources));
+  if (stockMissing.length) note('Kept food without recorded stock kg: ' + stockMissing.map(source => source.label).join(', ') + '. Catalogue pantry windows and preservation months supply no stock weight.');
+  for (const year of graph.annualTreeEstimates) {
+    if (!year.trees.length) continue;
+    const missingTrees = year.trees.filter(tree => tree.kg === null).map(tree => tree.name);
+    if (missingTrees.length) note('Annual tree yield schedules are incomplete for ' + year.label + ': ' + missingTrees.join(', ') + '. ' + (year.trees.some(tree => tree.kg !== null) ? 'Known annual subtotal: ' + projectedKgLabel(year.knownKg) + '; unknown yields are excluded.' : 'No annual tree kg subtotal is known.'));
+    else note('Annual tree yield schedules for ' + year.label + ': ' + projectedKgLabel(year.knownKg) + '.');
+    note('Tree kg by age are annual farm assumptions. They are shown in the future harvest pages and are not spread across monthly production bars.');
+  }
+  for (const issue of graph.recordIssues) note(issue);
 }
 
 function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
@@ -2249,6 +2508,7 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
   if (!want.has('dashboard') && want.has('plan') && input.planNotes?.length) { startPage('portrait'); masthead(s, 'Plan notes'); drawPlanNotes(s, input); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
   if (want.has('availability')) { startPage('portrait'); drawAvailability(s, input, now, nowMonth); }
+  if (want.has('availabilityGraphs')) { startPage('portrait'); drawAvailabilityGraphs(s, input, now, nowMonth); }
   if (want.has('projection') && input.productionProjection) { startPage('portrait'); drawProductionProjection(s, input); }
   if (want.has('guidance') && (input.productionGuide || input.poultryGuidance)) { startPage('portrait'); drawProductionGuidance(s, input); }
   if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }

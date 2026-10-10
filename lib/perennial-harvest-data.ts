@@ -641,6 +641,43 @@ export const PERENNIAL_HARVEST_DATA: Record<string, PerennialHarvest> = {
       "note": "Changed from needs-cross-pollinator to partly-self-fertile in editor review: the same SAMAC summary measures 10-97% outcrossing by kernel genotyping (so some nuts are selfed) and says cross-pollination RAISES yield by about half, which is a partly self-fertile tree, not one that needs a pollinator to bear. SAMAC's own research summaries show macadamia is capable of self/open pollination (a cultivar-dependent 10-97% outcrossing rate was measured by kernel genotyping, and orchards without managed bee colonies still achieved 30% of full production) but that yield is substantially higher (48.5-52% more) with cross-pollination (interplanted cultivars) and managed honeybee colonies (industry recommends at least two hives/ha). This mixed picture — fruit set possible alone, but commercially reliant on cross-pollination/bee activity — is why 'needs-cross-pollinator' (the industry-recommended practice) rather than 'self-fertile' was chosen, though 'partly-self-fertile' is also defensible given the cultivar-dependent self/open-pollination yield floor; see this nuance rather than treating the choice as clear-cut."
     }
   },
+  "malus-domestica": {
+    "speciesId": "malus-domestica",
+    "name": "Apple",
+    "product": "fruit",
+    "windows": [
+      {
+        "region": "Bien Donne, Simondium, Western Cape — Afri-Star cultivar trial reference",
+        "months": [
+          12,
+          1
+        ],
+        "source": {
+          "quote": "Middle to end December or 1st/2nd week January",
+          "url": "https://culdevco.co.za/apples-cultivar-info-afri-star/",
+          "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Afri-Star apple cultivar information sheet",
+          "page": null
+        }
+      },
+      {
+        "region": "Elgin, Western Cape — Granny Smith cultivar first pick",
+        "months": [
+          3
+        ],
+        "source": {
+          "quote": "4th week March (Elgin, Western Cape)",
+          "url": "https://www.saplant.co.za/varieties/apples/granny-smith/",
+          "doc": "SAPO Trust, Granny Smith apple cultivar information sheet",
+          "page": null
+        }
+      }
+    ],
+    "yearsToFirstCrop": null,
+    "yearsToFullBearing": null,
+    "yieldKgPerTree": null,
+    "chillUnits": null,
+    "pollination": null
+  },
   "mangifera-indica": {
     "speciesId": "mangifera-indica",
     "name": "Mango",

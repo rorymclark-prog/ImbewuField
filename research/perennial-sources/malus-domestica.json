@@ -1,0 +1,75 @@
+{
+  "speciesId": "malus-domestica",
+  "commonName": "Apple (low-chill cultivars)",
+  "botanicalName": "Malus domestica",
+  "harvestMonths": [
+    {
+      "region": "Bien Donne, Simondium, Western Cape — Afri-Star cultivar trial reference",
+      "months": [12, 1],
+      "evidence": {
+        "quote": "Middle to end December or 1st/2nd week January",
+        "url": "https://culdevco.co.za/apples-cultivar-info-afri-star/",
+        "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Afri-Star apple cultivar information sheet",
+        "page": null
+      },
+      "notes": "Verified live 10 October 2026. The sheet explicitly limits its data to Bien Donne, Simondium, Western Cape and says it need not represent other areas. This is a named cultivar's harvest reference, not all apple trees or a warm KZN picking calendar."
+    },
+    {
+      "region": "Elgin, Western Cape — Granny Smith cultivar first pick",
+      "months": [3],
+      "evidence": {
+        "quote": "4th week March (Elgin, Western Cape)",
+        "url": "https://www.saplant.co.za/varieties/apples/granny-smith/",
+        "doc": "SAPO Trust, Granny Smith apple cultivar information sheet",
+        "page": null
+      },
+      "notes": "Verified live 10 October 2026. Source table calls this the harvest date (first pick); it establishes neither the full harvest duration nor dates in another production region. SAPO is the listed South African cultivar licensee and plant-improvement authority supplying this first-party sheet."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No generic numeric age-to-first-crop is stated by the verified cultivar sheets. Nursery starting age, rootstock, cultivar and local establishment must be recorded; no generic curve is inferred."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No generic numeric age-to-full-bearing is stated by the verified cultivar sheets."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Culdevco reports Afri-Star commercial production as 60–70 ton/ha but supplies no matched plant density in the sheet, so it is not converted to kg/tree. SAPO describes Granny Smith production qualitatively as high, which supplies no numeric kg/tree. Neither statement is a farm forecast."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Afri-Star's source gives 300–500 Infruitec Chilling Units; Granny Smith's sheet uses a qualitative medium-to-low requirement. The named Afri-Star range is kept in buying advice, not assigned as one requirement for all Malus domestica cultivars. Monthly mean temperatures cannot establish accumulated cultivar chilling."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "The Granny Smith sheet says self-incompatible and names Golden Delicious and Hillieri pollinators. The Afri-Star sheet does not supply pollen-compatibility guidance. Keep a cultivar-specific compatible-pollen check rather than asserting one breeding-system value for every apple."
+  },
+  "harvestProduct": "fruit",
+  "sourceChecks": [
+    {
+      "url": "https://culdevco.co.za/apples-cultivar-info-afri-star/",
+      "checkedAt": "2026-10-10",
+      "regionQuote": "Data obtained at Bien Donne, Simondium, Western Cape",
+      "observations": "The source attributes the cultivar to ARC Infruitec-Nietvoorbij. Its explicit regional disclaimer is retained in the reference label and notes. No whole-country early/middle/late union is shipped."
+    },
+    {
+      "url": "https://www.saplant.co.za/varieties/apples/granny-smith/",
+      "checkedAt": "2026-10-10",
+      "observations": "The source labels harvest as first pick and explicitly identifies Elgin, Western Cape. Its production kg/tree cell contains a qualitative adjective, not a numeric quantity."
+    }
+  ],
+  "gaps": [
+    "No locally verified KZN, Highveld, Karoo or mountain apple picking window is established here. Do not copy the two Western Cape references to a mapped apple elsewhere.",
+    "The two cultivar references are alternatives; combining them would claim the picking duration of a mixed orchard rather than one apple tree.",
+    "Numeric first-bearing age, full-bearing age and kg/tree remain missing. The per-hectare Afri-Star statement has no matched density for a defensible per-tree conversion.",
+    "Chilling and pollination must be checked for the actual named cultivar and site. No single numeric requirement or universal pollination classification is assigned at species level.",
+    "Shelf life is not supplied: commercial cold-storage statements do not establish ambient household storage or automatic kept-stock months."
+  ]
+}

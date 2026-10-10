@@ -20,6 +20,7 @@ import type { PlacedTreeGroup, TreeSeasonChoices } from '@/lib/perennial-harvest
 import type { ProductionGuide } from '@/lib/crop-export-schedule';
 import type { ProductionProjection } from '@/lib/production-projection';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
+import type { DatedProductionRecord, PreservedFoodRecord } from '@/lib/production-records';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import {
   ALL_SECTIONS, FARMER_SECTIONS, availabilityIconKeys, buildCropPlanPdf, cropPlanPdfFilename,
@@ -40,6 +41,8 @@ export interface CropPlanExportCardProps {
   /** Example farms can start with a concise booklet and keep the full reference as a separate export. */
   sections?: CropPlanSection[];
   availabilityDetails?: boolean;
+  preservedProducts?: PreservedFoodRecord[];
+  productionRecords?: DatedProductionRecord[];
   yearReport?: string[];
   /** The accepted suggestion's own notes, so the printed plan carries the
    * reasons behind it and not just the rows. */
@@ -59,7 +62,7 @@ export interface CropPlanExportCardProps {
 type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -114,7 +117,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, now, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: sections ?? FARMER_SECTIONS, availabilityDetails, ...overrides };
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, now, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: sections ?? FARMER_SECTIONS, availabilityDetails, preservedProducts, productionRecords, ...overrides };
       // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
       const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar') || input.sections.includes('projection');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
@@ -283,7 +286,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
         The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.
         {!sections && ' It also has what to buy, monthly tick-off jobs and a harvest record.'}
         {' '}Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar &amp; jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.
-        {sections && <p>Selected booklet sections: {sections.map(section => ({ calendar: 'bed calendar', availability: 'food calendar', projection: 'future harvest', taskSummary: 'monthly jobs', dashboard: 'overview', numbers: 'benchmarks', guidance: 'guidance', plan: 'planting plan', buying: 'buying lists', fieldsheets: 'field sheets', record: 'harvest records' })[section]).join(', ')}.</p>}
+        {sections && <p>Selected booklet sections: {sections.map(section => ({ calendar: 'bed calendar', availability: 'food calendar', availabilityGraphs: 'food and growing-space graphs', projection: 'future harvest', taskSummary: 'monthly jobs', dashboard: 'overview', numbers: 'benchmarks', guidance: 'guidance', plan: 'planting plan', buying: 'buying lists', fieldsheets: 'field sheets', record: 'harvest records' })[section]).join(', ')}.</p>}
       </details>
 
       {status && (

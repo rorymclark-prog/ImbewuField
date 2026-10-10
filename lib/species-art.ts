@@ -134,11 +134,16 @@ export function speciesReferenceArtworkFor(speciesId?: string | null): SpeciesRe
 
 export const FRUIT_ART_ROOT = '/fruit-art';
 
+// A mapped edible plant can have product art even while its harvest dates remain unknown.
+export const MAPPED_FOOD_PRODUCT_ART: Readonly<Record<string, string>> = {
+  'cajanus-cajan': `${FRUIT_ART_ROOT}/cajanus-cajan.png`,
+};
+
 export const FRUIT_ART_SPECIES = [
   'carica-papaya', 'carissa-macrocarpa', 'carpobrotus-edulis', 'carya-illinoinensis', 'citrus-limon',
   'citrus-reticulata', 'dovyalis-afra', 'englerophytum-magalismontanum', 'ficus-carica',
   'fragaria-x-ananassa', 'garcinia-livingstonei', 'grewia-occidentalis', 'harpephyllum-caffrum',
-  'litchi-chinensis', 'macadamia-integrifolia', 'mangifera-indica', 'mimusops-zeyheri',
+  'litchi-chinensis', 'macadamia-integrifolia', 'malus-domestica', 'mangifera-indica', 'mimusops-zeyheri',
   'moringa-oleifera', 'musa-acuminata-aaa-group', 'pappea-capensis', 'passiflora-edulis',
   'persea-americana', 'phoenix-reclinata', 'physalis-peruviana', 'prunus-persica', 'prunus-salicina',
   'psidium-guajava', 'punica-granatum', 'rhoicissus-tomentosa', 'rubus-idaeus',
@@ -163,6 +168,7 @@ export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([
   'harpephyllum-caffrum',
   'litchi-chinensis',
   'macadamia-integrifolia',
+  'malus-domestica',
   'mangifera-indica',
   'mimusops-zeyheri',
   'moringa-oleifera',
@@ -187,6 +193,7 @@ export const FRUIT_ART_PNG: ReadonlySet<string> = new Set<string>([
 ]);
 
 export function speciesFruitArtworkUrl(speciesId?: string | null): string | null {
+  if (speciesId && MAPPED_FOOD_PRODUCT_ART[speciesId]) return MAPPED_FOOD_PRODUCT_ART[speciesId];
   if (!speciesId || !(FRUIT_ART_SPECIES as readonly string[]).includes(speciesId)) return null;
   return `${FRUIT_ART_ROOT}/${speciesId}.${FRUIT_ART_PNG.has(speciesId) ? 'png' : 'svg'}`;
 }

@@ -11,11 +11,60 @@ import { PNG } from 'pngjs';
 import { monthAxisSlots } from '@/lib/month-axis';
 import { animalEntries, forestEntries, printableAvailability } from '@/lib/crop-export-availability';
 import { pdfIconUrl } from '@/lib/pdf-icons';
-import { speciesFruitArtworkUrl, speciesPickerArtworkUrl } from '@/lib/species-art';
+import { MAPPED_FOOD_PRODUCT_ART, speciesFruitArtworkUrl, speciesPickerArtworkUrl } from '@/lib/species-art';
+import { SPECIES } from '@/lib/species-catalog';
 import { buildTreeAvailability, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, unidentifiedPlantGroups } from '@/lib/perennial-harvest';
 import { ANIMAL_ENTERPRISES, ELEMENT_HOUSING, loadAnimalSeasonChoices, placedAnimalGroups, saveAnimalSeasonChoices } from '@/lib/animal-enterprises';
-import { ANIMAL_PRODUCT_ART, animalProductArtUrl, enterpriseProductArtUrl, housingArtUrl } from '@/lib/animal-art';
+import { ANIMAL_PRODUCT_ART, ANIMAL_ENTERPRISE_PRODUCT_ART, animalProductArtUrl, enterpriseProductArtUrl, housingArtUrl } from '@/lib/animal-art';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
+import { PRESERVED_FOOD_ART, preservedFoodArtUrl, preservedFoodIconKey } from '@/lib/preserved-food-art';
+
+test('a mapped food without harvest dates can still show its own produce picture', () => {
+  for (const [id, url] of Object.entries(MAPPED_FOOD_PRODUCT_ART)) {
+    assert.ok(SPECIES.some(species => species.id === id && species.uses.includes('food')), `${id}: artwork must belong to an existing edible catalogue plant`);
+    assert.equal(speciesFruitArtworkUrl(id), url);
+    assert.equal(pdfIconUrl(`tree:${id}`), url);
+    const bytes = readFileSync(new URL(`../public${url}`, import.meta.url));
+    assert.ok(bytes.length <= 25_000, `${id}: small calendar picture exceeds its budget`);
+    assert.equal(bytes[25], 6);
+    const { width, height, data } = PNG.sync.read(bytes);
+    assert.deepEqual([width, height], [128, 128]);
+    for (const [x, y] of [[0, 0], [127, 0], [0, 127], [127, 127]]) assert.equal(data[(y * width + x) * 4 + 3], 0);
+    assert.ok(data.some((value, i) => i % 4 === 3 && value > 0));
+  }
+});
+
+test('kept food pictures show the recorded form without changing the ingredient identity', () => {
+  const examples = [
+    ['dried', 'tree:mangifera-indica', 'dried-mango'],
+    ['dried', 'tree:musa-acuminata-aaa-group', 'dried-banana'],
+    ['stored', 'tree:macadamia-integrifolia', 'stored-macadamia'],
+    ['frozen', 'crop:green-beans', 'frozen-beans'],
+    ['fermented', 'crop:cabbage', 'fermented-cabbage'],
+    ['processed', 'crop:tomatoes', 'processed-tomatoes'],
+  ] as const;
+  const identities = new Set<string>();
+  for (const [method, sourceIconKey, product] of examples) {
+    const record = { method, sourceIconKey };
+    assert.equal(preservedFoodIconKey(record), `preserved:${product}`);
+    const url = PRESERVED_FOOD_ART[product];
+    assert.equal(preservedFoodArtUrl(record), url);
+    assert.equal(pdfIconUrl(`preserved:${product}`), url, 'paper and app must use the same picture');
+    assert.equal(record.sourceIconKey, sourceIconKey, 'changing a picture must not create another food source');
+    const bytes = readFileSync(new URL(`../public${url}`, import.meta.url));
+    assert.ok(bytes.length <= 25_000, `${product}: calendar art must stay small`);
+    assert.equal(bytes[25], 6, `${product}: true RGBA retains a transparent background`);
+    const { width, height, data } = PNG.sync.read(bytes);
+    assert.deepEqual([width, height], [128, 128]);
+    for (const [x, y] of [[0, 0], [127, 0], [0, 127], [127, 127]]) assert.equal(data[(y * width + x) * 4 + 3], 0);
+    assert.ok(data.some((value, i) => i % 4 === 3 && value > 0), `${product}: picture must not be blank`);
+    identities.add(bytes.toString('base64'));
+  }
+  assert.equal(identities.size, examples.length, 'six different products cannot all reuse one picture');
+  assert.deepEqual(readdirSync(new URL('../public/preserved-food-art/', import.meta.url)).filter(file => file.endsWith('.png')).sort(), Object.keys(PRESERVED_FOOD_ART).map(product => `${product}.png`).sort());
+  assert.equal(preservedFoodIconKey({ method: 'frozen', sourceIconKey: 'tree:mangifera-indica' }), 'tree:mangifera-indica', 'another process keeps the ingredient art until its own illustration exists');
+  assert.equal(preservedFoodArtUrl({ method: 'frozen', sourceIconKey: 'tree:mangifera-indica' }), null);
+});
 
 test('the month axis names the current month and every year it crosses', () => {
   const slots = monthAxisSlots(9, 2026, 24);
@@ -95,12 +144,13 @@ test('every icon key resolves to the app art the chart itself shows', () => {
 test('every animal product picture is a small true RGBA PNG with real transparency and visible produce', () => {
   const products = [...new Set(Object.values(ANIMAL_ENTERPRISES).map(enterprise => enterprise.product))].sort();
   assert.deepEqual(Object.keys(ANIMAL_PRODUCT_ART).sort(), products, 'each researched product needs its own picture without unclaimed product assets');
-  const expectedFiles = products.map(product => `${product}.png`).sort();
+  const urls = [...new Set([...Object.values(ANIMAL_PRODUCT_ART), ...Object.values(ANIMAL_ENTERPRISE_PRODUCT_ART)])];
+  const expectedFiles = urls.map(url => url.split('/').at(-1)!).sort();
   const directory = new URL('../public/animal-product-art/', import.meta.url);
   assert.deepEqual(readdirSync(directory).filter(file => file.endsWith('.png')).sort(), expectedFiles);
-  for (const product of products) {
-    const url = animalProductArtUrl(product);
-    assert.equal(url, `/animal-product-art/${product}.png`, `${product}: product artwork escaped its own namespace`);
+  for (const url of urls) {
+    const product = url.split('/').at(-1)!;
+    assert.match(url, /^\/animal-product-art\/[a-z-]+\.png$/, `${product}: product artwork escaped its own namespace`);
     const bytes = readFileSync(new URL(`../public${url}`, import.meta.url));
     assert.ok(bytes.length <= 25_000, `${product}: a small calendar picture exceeds the 25KB brief (${bytes.length} bytes)`);
     assert.equal(bytes[25], 6, `${product}: PNG must store true RGBA, not an opaque RGB or indexed background`);
@@ -116,13 +166,20 @@ test('every animal product picture is a small true RGBA PNG with real transparen
   }
 });
 
-test('enterprises producing the same product share its calendar picture while housing keeps an unassigned portrait', () => {
-  const productUrls = new Set(Object.values(ANIMAL_PRODUCT_ART));
+// The old rule shared all meat art and made rabbit look like a beef steak. Share
+// only the same food source; breeds can share eggs or goat meat, species cannot.
+test('meat and dairy retain their source identity in both calendars while bare housing keeps its portrait', () => {
+  const productUrls = new Set([...Object.values(ANIMAL_PRODUCT_ART), ...Object.values(ANIMAL_ENTERPRISE_PRODUCT_ART)]);
   for (const enterprise of Object.values(ANIMAL_ENTERPRISES)) {
-    const product = animalProductArtUrl(enterprise.product);
-    assert.equal(enterpriseProductArtUrl(enterprise.enterpriseId), product, `${enterprise.enterpriseId}: enterprise identity replaced the product picture`);
+    const product = ANIMAL_ENTERPRISE_PRODUCT_ART[enterprise.enterpriseId] ?? animalProductArtUrl(enterprise.product);
+    assert.equal(enterpriseProductArtUrl(enterprise.enterpriseId), product, `${enterprise.enterpriseId}: lost its source-product picture`);
     assert.equal(pdfIconUrl(`animal:${enterprise.enterpriseId}`), product, `${enterprise.enterpriseId}: PDF and app product pictures diverged`);
   }
+  const meats = ['chicken-broiler', 'duck', 'rabbit', 'goat-meat', 'cattle-beef', 'sheep-mutton', 'pig-pork'];
+  const meatImages = meats.map(id => readFileSync(new URL(`../public${enterpriseProductArtUrl(id)}`, import.meta.url)).toString('base64'));
+  assert.equal(new Set(meatImages).size, meats.length, 'different meat sources must have different actual pictures, not just renamed copies');
+  assert.notEqual(enterpriseProductArtUrl('goat-dairy'), enterpriseProductArtUrl('cattle-dairy'));
+  assert.equal(enterpriseProductArtUrl('goat-meat'), enterpriseProductArtUrl('goat-indigenous'), 'the same goat-meat product may share an illustration');
   for (const housing of new Set(Object.values(ELEMENT_HOUSING))) {
     const portrait = housingArtUrl(housing);
     assert.match(portrait ?? '', /^\/animal-art\/.+\.png$/, `${housing}: unassigned housing lost its portrait`);

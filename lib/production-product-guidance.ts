@@ -46,6 +46,11 @@ export const PRODUCT_PROFILES: Readonly<Record<string, Profile>> = {
     purchase: ['ARC identifies Tommy Atkins and Kent among more heat/sunburn-tolerant options; Sensation and Keitt are more susceptible. Confirm local harvest dates before choosing a succession.'],
     sources: [arc(6, '239–242')],
   },
+  'malus-domestica': {
+    care: ['Check the actual cultivar, rootstock, winter chilling and compatible pollen source before buying. A warm or cold climate-zone label alone does not establish these conditions.'],
+    purchase: ['Afri-Star is an ARC-bred low-chill candidate with a stated 300–500 Infruitec Chilling Unit requirement; its December–January dates were obtained at Bien Donne, Simondium, Western Cape and need local checking elsewhere. Granny Smith has an Elgin first-pick reference in late March; SAPO names Golden Delicious or Hillieri as pollen partners. These are separate cultivar references, not a continuous picking season or a warm KZN recommendation. Confirm current nursery stock and local performance.'],
+    sources: [{ label: 'Culdevco / ARC: Afri-Star apple cultivar information (Bien Donne, Simondium trial context; checked 10 October 2026)', url: 'https://culdevco.co.za/apples-cultivar-info-afri-star/' }, { label: 'SAPO Trust: Granny Smith apple cultivar information (Elgin first pick; checked 10 October 2026)', url: 'https://www.saplant.co.za/varieties/apples/granny-smith/' }],
+  },
   'citrus-limon': {
     care: ['Check drainage, water and cultivar/rootstock fit. Main crop timing differs between warm and cool areas; smaller additional crops are not a full-year promise.'],
     purchase: ['Request labelled lemon stock and rootstock advice from a reputable citrus nursery. A locally validated named cultivar shortlist is not established here.'],
@@ -166,6 +171,7 @@ export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly Gro
   if (id === 'citrus-limon' && (warm || allIn(['midlands-mistbelt']))) return result(windows.find(w => w.region.startsWith('KZN')), 'Regional reference: lemon main crop', 'Hot and cool main crops remain separate; smaller additional crops are not marked.', warm ? [2, 3] : [5, 6, 7]);
   if (id === 'litchi-chinensis' && warm) return result(windows.find(w => w.region.includes('Mauritius cultivar')), 'Assumed variety: Mauritius');
   if (id === 'prunus-persica' && allIn(['western-cape'])) return result(windows.find(w => w.region.includes('Earligold')), 'Assumed variety: Earligold (chilling needs checking)', 'Reference first pick, not the whole harvest duration.');
+  if (id === 'malus-domestica' && allIn(['western-cape'])) return result(windows.find(w => w.region.includes('Granny Smith')), 'Assumed variety: Granny Smith (chilling and pollen source need checking)', 'Elgin first-pick reference, not the whole harvest duration. No other apple cultivar months are joined to it.');
   if (id === 'prunus-salicina' && allIn(['western-cape'])) return result(windows[0], 'Assumed variety: African Delight', 'Reference first pick; confirm chilling and compatible pollinator.');
   if (id === 'fragaria-x-ananassa') {
     if (allIn(['western-cape'])) return result(windows.find(w => w.region === 'Western Cape'), 'Regional reference: outdoor strawberry');

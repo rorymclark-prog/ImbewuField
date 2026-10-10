@@ -27,7 +27,7 @@ const documents = [];
 for (const [filename, options] of [
   ['fictional-complete-production-plan-a4.pdf', { pageFormat: 'a4', sections: ALL_SECTIONS, availabilityDetails: true }],
   ['complete-production-example-booklet.pdf', {
-    pageFormat: 'a4', sections: ['calendar', 'availability', 'projection', 'taskSummary'], availabilityDetails: false,
+    pageFormat: 'a4', sections: ['calendar', 'availability', 'availabilityGraphs', 'projection', 'taskSummary'], availabilityDetails: false,
   }],
   ['fictional-complete-production-calendar-a2.pdf', {
     pageFormat: 'a2', sections: ['availability'], availabilityDetails: false,
@@ -61,6 +61,8 @@ writeFileSync(join(out, 'example-manifest.json'), JSON.stringify({
   animalChoices: sample.animalChoices,
   animalSeasons: sample.animalSeasons,
   availability: input.availability,
+  preservedProducts: input.preservedProducts,
+  productionRecords: input.productionRecords,
   productionProjection: input.productionProjection,
   iconKeys: Object.keys(icons),
   documents,

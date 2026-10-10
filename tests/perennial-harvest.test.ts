@@ -390,13 +390,15 @@ test('each banana circle contributes three planted bananas without changing the 
 });
 
 test('mapped food species without a harvest dossier remain counted and permit only confirmed local dates without invented yields', () => {
-  const apple = SPECIES.find(species => species.id === 'malus-domestica');
-  assert.ok(apple && apple.uses.includes('food') && apple.nemba === 'none');
-  assert.equal(perennialHarvestFor(apple.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
+  // Apple now has checked cultivar/region references. Pigeon pea keeps this test exercising
+  // the same real missing-dossier rule, rather than pinning apple's former research gap.
+  const food = SPECIES.find(species => species.id === 'cajanus-cajan');
+  assert.ok(food && food.uses.includes('food') && food.nemba === 'none');
+  assert.equal(perennialHarvestFor(food.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
   const items = [
-    { defId: 'tree_other', speciesId: apple.id, status: 'existing' as const },
-    { defId: 'tree_apple', speciesId: apple.id },
-    { defId: 'tree_other', speciesId: apple.id, status: 'proposed' as const },
+    { defId: 'tree_other', speciesId: food.id, status: 'existing' as const },
+    { defId: 'tree_apple', speciesId: food.id },
+    { defId: 'tree_other', speciesId: food.id, status: 'proposed' as const },
     { defId: 'tree_other', speciesId: 'morus-nigra', status: 'proposed' as const },
     { defId: 'tree_avocado', status: 'existing' as const },
   ];
@@ -404,21 +406,77 @@ test('mapped food species without a harvest dossier remain counted and permit on
   const groups = placedTreeGroups(items);
   assert.equal(groups.length, 3, 'unknown research must not erase known catalogue food plants');
   assert.deepEqual(unidentifiedPlantGroups(items), [], 'an identified permitted food plant uses the same month-confirmation authority');
-  const group = groups.find(entry => entry.harvest.speciesId === apple.id);
+  const group = groups.find(entry => entry.harvest.speciesId === food.id);
   assert.ok(group?.referenceMissing);
-  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, apple.commonName]);
+  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, food.commonName]);
   assert.deepEqual(group.harvest.windows, []);
   for (const key of ['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits', 'pollination'] as const) assert.equal(group.harvest[key], null);
   assert.deepEqual(buildTreeAvailability(groups, [1, 6, 12], true), [[], [], []]);
-  const choices = cleanTreeSeasonChoices({ [apple.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
-  assert.deepEqual(choices[apple.id], { bearing: true, months: [6] });
+  const choices = cleanTreeSeasonChoices({ [food.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
+  assert.deepEqual(choices[food.id], { bearing: true, months: [6] });
   const locallyConfirmed = buildTreeAvailability(groups, [1, 6, 12], true, choices);
-  assert.deepEqual(locallyConfirmed[1], [{ speciesId: apple.id, name: apple.commonName, trees: 2 }]);
+  assert.deepEqual(locallyConfirmed[1], [{ speciesId: food.id, name: food.commonName, trees: 2 }]);
   assert.deepEqual(locallyConfirmed[0], []);
   assert.deepEqual(locallyConfirmed[2], []);
-  assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, apple.commonName);
+  assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, food.commonName);
   assert.equal(locallyConfirmed[1].some(entry => entry.speciesId === 'morus-nigra'), false, 'proposed-only plants have no current picking jobs even with dates supplied');
   assert.deepEqual(items, before, 'reading an inventory must not change map geometry or status');
+});
+
+test('apple references keep cultivar and Western Cape location distinct without creating warm KZN harvests or kilograms', () => {
+  const apple = perennialHarvestFor('malus-domestica');
+  assert.ok(apple, 'the named ordinary apple must have its own source profile, separate from Kei apple');
+  assert.deepEqual(apple.windows.map(window => window.months), [[12, 1], [3]]);
+  assert.match(apple.windows[0].region, /Bien Donne, Simondium, Western Cape.*Afri-Star/);
+  assert.match(apple.windows[1].region, /Elgin, Western Cape.*Granny Smith.*first pick/);
+  for (const field of ['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits', 'pollination'] as const) {
+    assert.equal(apple[field], null, `${field} cannot be extrapolated from a cultivar date or per-hectare claim`);
+  }
+  const [group] = placedTreeGroups([{ defId: 'tree_other', speciesId: apple.speciesId, status: 'existing' },
+    { defId: 'tree_other', speciesId: apple.speciesId, status: 'proposed' }]);
+  assert.equal(group.referenceMissing, undefined, 'a checked source profile replaces the unidentified-reference fallback');
+  const conditions = { frost: 'no' as const, drySeasonWater: 'reliable' as const, drainage: 'drains-well' as const, sunlight: 'full-sun' as const };
+  assert.deepEqual(planningTreeSeasons([group], ['subtropical-coast'], conditions), [],
+    'an apple profile or low-chill label does not establish a KZN picking window');
+  const western = planningTreeSeasons([group], ['western-cape'], conditions);
+  assert.equal(western.length, 1);
+  assert.match(western[0].season.label, /Granny Smith.*chilling.*pollen/);
+  assert.deepEqual(western[0].season.months, [3], 'one assumed cultivar cannot inherit the other cultivar\'s December–January dates');
+  assert.match(western[0].season.basis, /Elgin first-pick reference.*not the whole harvest duration/);
+  assert.deepEqual(buildTreeAvailability([group], [1, 3, 12], true), [[], [], []],
+    'references must not turn an unconfirmed standing apple into local picking jobs');
+  const projection = buildProductionProjection({ plantings: [], beds: [], trees: [group], choices: {}, now: projectionNow });
+  assert.ok(projection.years.every(year => year.partial && year.trees[0].kg === null),
+    'source timing cannot supply a tree age curve, output quantity or assured zero');
+});
+
+test('default Apple Tree map elements retain their exact counts without acquiring Cape picking dates or overriding chosen non-food species', () => {
+  const items = [{ defId: 'tree_apple', status: 'existing' as const },
+    { defId: 'tree_apple', status: 'proposed' as const }];
+  const before = structuredClone(items);
+  const groups = placedTreeGroups(items);
+  assert.equal(groups.length, 1, 'the ordinary Apple Tree element must resolve to its existing catalogue identity');
+  assert.equal(groups[0].harvest.speciesId, 'malus-domestica');
+  assert.deepEqual([groups[0].existing, groups[0].proposed], [1, 1]);
+  assert.deepEqual(unidentifiedPlantGroups(items), [], 'a canonical default apple must not ask the farmer to identify it again');
+  const months = [1, 3, 12];
+  const conditions = { frost: 'no' as const, drySeasonWater: 'reliable' as const, drainage: 'drains-well' as const, sunlight: 'full-sun' as const };
+  const planning = planningTreeSeasons(groups, ['subtropical-coast'], conditions);
+  assert.deepEqual(planning, [], 'identifying a mapped apple does not copy its Western Cape references into warm KZN');
+  const localFood = buildTreeAvailability(groups, months, true);
+  assert.deepEqual(localFood, [[], [], []], 'standing plants alone do not confirm food or picking dates');
+  const printed = printableAvailability({ now: projectionNow, yearMode: 'fromToday', veg: [], utilization: [],
+    trees: localFood, treeGroups: groups, planning: { months, trees: planning } });
+  assert.deepEqual(printed.forest, [[], [], []]);
+  assert.equal(printed.forestPlanning?.flat().length, 0);
+  assert.ok(printed.undated?.some(row => row.iconKey === 'tree:malus-domestica' && /1 existing; 1 proposed/.test(row.detail)),
+    'the unknown local season still needs a counted apple row on paper');
+  const ornamental = SPECIES.find(species => !species.uses.includes('food') && species.nemba === 'none')!;
+  const explicit = [{ defId: 'tree_apple', speciesId: ornamental.id, status: 'existing' as const }];
+  assert.equal(speciesIdForPlaced(explicit[0]), ornamental.id, 'a chosen botanical identity always beats the default Apple Tree symbol');
+  assert.deepEqual(placedTreeGroups(explicit), []);
+  assert.deepEqual(unidentifiedPlantGroups(explicit), [], 'a selected non-food plant must not acquire an apple food record');
+  assert.deepEqual(items, before, 'resolving an apple inventory cannot rewrite mapped status or geometry');
 });
 
 test('generic fruit elements retain their names while restricted mapped food remains inventory without gaining production dates', () => {

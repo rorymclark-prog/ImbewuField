@@ -12,6 +12,7 @@
 import { getCropArt } from '@/lib/crop-art';
 import { speciesPickerArtworkUrl, speciesFruitArtworkUrl } from '@/lib/species-art';
 import { enterpriseProductArtUrl, housingArtUrl } from '@/lib/animal-art';
+import { PRESERVED_FOOD_ART } from '@/lib/preserved-food-art';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export type PdfIconMap = Record<string, string>;
@@ -25,6 +26,7 @@ export function pdfIconUrl(iconKey: string): string | null {
   if (kind === 'crop') return getCropArt(id) ?? null;
   if (kind === 'tree') return speciesFruitArtworkUrl(id) ?? speciesPickerArtworkUrl(id);
   if (kind === 'animal') return enterpriseProductArtUrl(id);
+  if (kind === 'preserved') return PRESERVED_FOOD_ART[id] ?? null;
   if (kind === 'housing') return housingArtUrl(id);
   if (kind === 'element') return ELEMENTS_BY_ID[id]?.art ?? null;
   return null;
