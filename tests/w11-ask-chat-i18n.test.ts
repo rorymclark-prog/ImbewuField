@@ -118,3 +118,47 @@ test('PhotoUpload.tsx never shows a raw server status or thrown-error message to
   assert.match(s, /setError\(t\('photoErrorAnalysisFailed'\)\)/, 'the catch block must set a translated message');
   assert.match(s, /console\.error\('Photo analysis failed:'/, 'the real error should still be logged for debugging');
 });
+
+// lang-06: components/ProfileSheet.tsx was entirely hard-coded English. The location-sharing
+// switch is pinned as the first field after the photo picker, and must carry a plain-language
+// explanation (not just a bare label) of who can see the farmer's pin on the map.
+test('ProfileSheet.tsx routes its chrome through t(), with the location-sharing switch first', () => {
+  const s = source('components/ProfileSheet.tsx');
+  assert.match(s, /const \{ t, lang \} = useLanguage\(\)/, 'ProfileSheet must read t()/lang from useLanguage()');
+
+  for (const call of [
+    "t('profileTitle')",
+    "t('profileClose')",
+    "t('profileChangePhoto')",
+    "t('profileFullNameLabel')",
+    "t('profileRoleLabel')",
+    "t('profileAboutYouLabel')",
+    "t('profileSkillsLabel')",
+    "t('profileMapVisibilityLabel')",
+    "t('profileShowOnMapLabel')",
+    "t('profileShowOnMapExplanation')",
+    "t('profileSaveButton')",
+  ]) {
+    assert.ok(s.includes(call), `ProfileSheet.tsx no longer calls ${call}`);
+  }
+
+  // The map-visibility block (location-sharing switch) must come before the name field.
+  const mapVisibilityAt = s.indexOf("t('profileMapVisibilityLabel')");
+  const fullNameAt = s.indexOf("t('profileFullNameLabel')");
+  assert.ok(mapVisibilityAt > -1 && fullNameAt > -1 && mapVisibilityAt < fullNameAt,
+    'the location-sharing switch must render before the full-name field');
+
+  // The switch must carry a plain-language explanation, not just a bare label.
+  assert.match(s, /label=\{t\('profileShowOnMapLabel'\)\}\s*\n\s*sub=\{t\('profileShowOnMapExplanation'\)\}/,
+    'the location-sharing switch lost its plain-language explanation');
+
+  // Regression guard: these exact hard-coded English literals must not come back.
+  assert.doesNotMatch(s, /aria-label="Your profile"/, 'the dialog label regressed to a hard-coded string');
+  assert.doesNotMatch(s, />Change photo<\//, 'the change-photo button regressed to a hard-coded string');
+  assert.doesNotMatch(s, /label="Show my location on the project map"/, 'the location switch regressed to a hard-coded label');
+});
+
+test("ProfileSheet.tsx leaves the close button's size alone (another track owns it)", () => {
+  const s = source('components/ProfileSheet.tsx');
+  assert.match(s, /width: 38,\s*\n\s*height: 38,/, 'the close button size changed unexpectedly');
+});

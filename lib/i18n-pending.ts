@@ -108,6 +108,49 @@ export const PHOTO_UPLOAD_ENGLISH_PENDING: Dict = {
   photoZuluDraftNotice: 'The isiZulu wording in Photos is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
 };
 
+/*
+ * The farmer's own profile sheet (components/ProfileSheet.tsx) — wave 11, lang-06. Was entirely
+ * hard-coded English. The location-sharing switch is translated first and gets a plain-language
+ * explanation it did not have before (it only had a bare label) — it is the one control here that
+ * tells other people in the programme where the farmer's land is.
+ */
+export const PROFILE_SHEET_ENGLISH_PENDING: Dict = {
+  profileZuluDraftNotice: 'The isiZulu wording in your profile is an unreviewed draft. A fluent isiZulu speaker and a local farming reviewer have not approved it yet.',
+  profileShowOnMapLabel: 'Show my location on the project map',
+  profileShowOnMapExplanation: 'Other people in your programme — mentors, NGO staff and other farmers — can see a pin at your farm on the shared map. You can turn this off again at any time.',
+  profileTitle: 'Your profile',
+  profileClose: 'Close',
+  profilePhotoAlt: 'Profile photo',
+  profileChangePhoto: 'Change photo',
+  profileFullNameLabel: 'Full name',
+  profileFullNamePlaceholder: 'Your name',
+  profileRoleLabel: 'Role',
+  profileRoleSetByAdmin: 'Roles are set by your programme admin',
+  profileRoleFarmer: 'Farmer',
+  profileRoleMentor: 'Mentor',
+  profileRoleStudent: 'Student',
+  profileRoleNgo: 'NGO Staff',
+  profileRoleFunder: 'Funder',
+  profileRoleAdmin: 'Admin',
+  profileAboutYouLabel: 'About you',
+  profileBioCharsLeft: '{n} left',
+  profileBioPlaceholder: 'A short introduction — your background, what you grow, what you love about permaculture…',
+  profileSkillsLabel: 'Skills & interests',
+  profileSkillSoilHealth: 'soil health',
+  profileSkillWaterHarvesting: 'water harvesting',
+  profileSkillAgroforestry: 'agroforestry',
+  profileSkillLivestock: 'livestock',
+  profileSkillComposting: 'composting',
+  profileSkillFoodForest: 'food forest',
+  profileSkillMarketGardening: 'market gardening',
+  profileSkillSeedSaving: 'seed saving',
+  profileMapVisibilityLabel: 'Map visibility',
+  profileLocationWillBePlaced: 'Your location will be placed at the current map view centre when you save.',
+  profilePanMapFirst: 'Pan the map to where you want to appear, then return here to save.',
+  profileSaveButton: 'Save',
+  profileSavedFlash: 'Saved!',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',

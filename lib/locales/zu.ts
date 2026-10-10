@@ -1,7 +1,7 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { CHAT_PANEL_ENGLISH_PENDING, DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
@@ -9,6 +9,7 @@ const dict: Dict = {
   ...LIMA_ENGLISH_PENDING,
   ...CHAT_PANEL_ENGLISH_PENDING,
   ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
   // FieldTeams.tsx's own unreviewed isiZulu drafts, carried over from its old inline `ui(en, zu)`
   // helper into real per-key overrides now that the component reads these through t(). English is
@@ -2064,6 +2065,44 @@ const dict: Dict = {
   photoErrorGeneric: "Isithombe {n} sehlulekile",
   photoErrorBlankOrDark: "U-Lima akakwazi kufunda isithombe — sibonakala singenalutho noma simnyama kakhulu. Thatha kabusha ekukhanyeni okuhle noma uguqule kube i-JPEG/PNG kuqala.",
   photoErrorAnalysisFailed: "Kukhona okungahambi kahle ngesikhathi kuhlaziywa isithombe sakho. Sicela uhlole ukuxhuma kwakho bese uzama futhi.",
+
+  // The farmer's own profile sheet (components/ProfileSheet.tsx) — wave 11, lang-06. Unreviewed
+  // isiZulu drafts, direct overrides of the English spread from PROFILE_SHEET_ENGLISH_PENDING
+  // above. The location-sharing switch's label and explanation are translated first.
+  profileZuluDraftNotice: "Umbhalo wesiZulu kuphrofayela yakho uwuhlaka olungakabuyekezwa. Isikhulumi sesiZulu esinekhono kanye nomuntu onolwazi lokulima kwasendaweni abakakuvumeli.",
+  profileShowOnMapLabel: "Bonisa indawo yami ebalazweni lephrojekthi",
+  profileShowOnMapExplanation: "Abantu abanye ohlelweni lwakho — abeluleki, abasebenzi be-NGO nabanye abalimi — bazobona uphini epulazini lakho ebalazweni elabiwayo. Ungakuvala futhi noma nini.",
+  profileTitle: "Iphrofayela yakho",
+  profileClose: "Vala",
+  profilePhotoAlt: "Isithombe sephrofayela",
+  profileChangePhoto: "Shintsha isithombe",
+  profileFullNameLabel: "Igama eliphelele",
+  profileFullNamePlaceholder: "Igama lakho",
+  profileRoleLabel: "Indima",
+  profileRoleSetByAdmin: "Izindima zisethwa umqondisi wohlelo lwakho",
+  profileRoleFarmer: "Umlimi",
+  profileRoleMentor: "Umeluleki",
+  profileRoleStudent: "Umfundi",
+  profileRoleNgo: "Isisebenzi se-NGO",
+  profileRoleFunder: "Umxhasi",
+  profileRoleAdmin: "Umqondisi",
+  profileAboutYouLabel: "Mayelana nawe",
+  profileBioCharsLeft: "{n} eziseleyo",
+  profileBioPlaceholder: "Isingeniso esifushane — umlando wakho, okukhulisayo, nalokho okuthandayo ngokulima okuvuselelayo…",
+  profileSkillsLabel: "Amakhono nezithakazelo",
+  profileSkillSoilHealth: "impilo yomhlabathi",
+  profileSkillWaterHarvesting: "ukuvuna amanzi",
+  profileSkillAgroforestry: "ukulima nezihlahla ndawonye",
+  profileSkillLivestock: "izinkomo nemfuyo",
+  profileSkillComposting: "ukwenza umquba",
+  profileSkillFoodForest: "ihlathi lokudla",
+  profileSkillMarketGardening: "ukulima okuthengiswayo",
+  profileSkillSeedSaving: "ukugcina imbewu",
+  profileMapVisibilityLabel: "Ukubonakala ebalazweni",
+  profileLocationWillBePlaced: "Indawo yakho izobekwa phakathi nendawo ebonakala ebalazweni lamanje uma ugcina.",
+  profilePanMapFirst: "Hambisa ibalazwe lifike lapho ufuna ukubonakala khona, bese ubuyela lapha ukugcina.",
+  profileSaveButton: "Gcina",
+  profileSavedFlash: "Kugciniwe!",
 };
 
 export default dict;
