@@ -54,6 +54,23 @@ export const T_en: Dict = {
   tagline: 'Permaculture Intelligence',
   // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
   designStudioLabel: 'Design Studio',
+  // components/SiteDesign.tsx (the sketch-upload card on the site report) was entirely
+  // English-only, named the assistant "Claude" instead of "Lima", and said "click to upload"
+  // instead of "tap". Network/file-error messages in that file are left to another track and are
+  // not among these keys.
+  siteDesignOpenStudio: 'Open the Design Studio',
+  siteDesignStudioDesc: 'Place tanks, trees & zones on your land at real scale — step-by-step guidance, or one-tap auto-design.',
+  siteDesignStartDesigning: 'Start designing this site →',
+  siteDesignSelectLocation: 'Select a location on the map to open the Design Studio for it.',
+  siteDesignSketchHeader: 'Sketch → AI Design',
+  siteDesignUploadIntro: "Upload a hand-drawn plan of your land (or a photo of one). Lima reads it and lays out a permaculture design on your sketch, using this site's climate, soil, sun and wind.",
+  siteDesignDropSketch: 'Drop your site sketch here or tap to upload',
+  siteDesignSketchHint: 'a hand drawing, plan, or photo of one',
+  siteDesignToneSimple: 'Simple',
+  siteDesignToneDetailed: 'Detailed',
+  siteDesignGenerating: 'Designing your site…',
+  siteDesignGenerateButton: 'Generate design',
+  siteDesignPhotoAnalysisNote: 'Your photo analysis will be used in the design',
   welcomeTitle: 'Welcome to ImbewuField',
   welcomeSub: 'Smart permaculture planning for South African land.',
   pickLang: 'Choose your language',
@@ -104,6 +121,12 @@ export const T_en: Dict = {
   mapSaveSpotTitle: 'Save this spot to your Places',
   mapSelectSpotTitle: 'Tap a spot on the map first',
   mapPrintBaseTitle: 'Print a clean base map (boundary, house outlines and contours, no hatching) to sketch your design by hand',
+  // The printed base-map window (components/Map.tsx) is a separate browser window/tab built from
+  // a raw HTML string (window.open + document.write), outside React — so it reads t() into plain
+  // variables rather than JSX, same mapPrintBaseTitle action the button above it offers.
+  mapPrintWindowTabTitle: 'ImbewuField — base map',
+  mapPrintWindowHeading: 'Site base map',
+  mapPrintWindowInstructions: 'Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.',
   siteSummaryRainEssential: 'Only {mm}mm of rain so water harvesting is essential.',
   siteSummaryRainEstimate: '{mm}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.',
   siteSummarySoilTested: 'Use your soil test and local crop requirements to plan amendments.',
@@ -287,6 +310,22 @@ export const T_en: Dict = {
   savePlaceSheetTitleEdit: 'Edit place',
   savePlaceSheetTitleNew: 'Save this place',
   savePlaceNamePlaceholder: 'Name it — e.g. Home plot',
+  // components/SavedPlaces.tsx (the Places tab's own save-current-location form and list) was
+  // entirely English-only.
+  savedPlacesHeader: 'Saved Places',
+  savedPlacesNamePlaceholder: 'Place name...',
+  savedPlacesNotesPlaceholder: 'Notes (optional)...',
+  savedPlacesSavedLabel: 'Saved',
+  savedPlacesSaveThisLocation: 'Save this location',
+  savedPlacesSelectFirst: 'Select a location on the map first',
+  savedPlacesRemove: 'Remove',
+  savedPlacesEmptyTitle: 'No saved places yet',
+  savedPlacesEmptyHint: 'Analyse a location then save it here',
+  savedPlacesTimeToday: 'today',
+  savedPlacesTimeYesterday: 'yesterday',
+  savedPlacesTimeDaysAgo: '{d}d ago',
+  savedPlacesTimeWeeksAgo: '{w}w ago',
+  savedPlacesTimeMonthsAgo: '{mo}mo ago',
   savePlaceLabelHeader: 'Label',
   savePlaceCustomColourLabel: 'Custom colour',
   savePlacePickColourPrompt: 'Pick a colour',
@@ -318,6 +357,15 @@ export const T_en: Dict = {
   waterPointNamingDeleteButton: 'Delete',
   waterPointNamingSkipButton: 'Skip',
   waterPointNamingConfirmButton: 'Save',
+  // Site element rename/note sheet (components/Map.tsx) — mirrors the water point naming sheet
+  // above, which already has its own translated buttons; this one was English-only.
+  elementEditingNamePlaceholder: 'e.g. {label}',
+  elementEditingCustomButton: 'Custom',
+  elementEditingLitresPlaceholder: 'litres',
+  elementEditingOtherButton: 'Other',
+  elementEditingSpeciesPlaceholder: 'species name',
+  elementEditingHowMany: 'how many',
+  elementEditingNotePlaceholder: 'Note — e.g. leaking, needs new tap',
   elementCountFewer: 'Fewer',
   elementCountMore: 'More',
   threeDWarning: 'In 3D you may not be able to zoom in close enough to draw boundaries or water. Turn 3D off for that.',
