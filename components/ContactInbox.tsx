@@ -8,7 +8,7 @@ import { useLanguage } from '@/lib/i18n';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite, freshSampleMessages, type SampleMessage } from '@/lib/sample-operations';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
-import { getMyProfile } from '@/lib/db/queries';
+import { getMyProfile, withWriteTimeout } from '@/lib/db/queries';
 
 interface ContactMessage {
   id: string;
@@ -132,15 +132,18 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     const me = auth.currentUser;
     setActionError(false);
     try {
-      await addDoc(collection(fb.db, 'contact_replies'), {
+      // bug-04: neither write had a timeout, so a weak-signal reply could hang on "Sending…"
+      // forever instead of failing into the catch below — replyText is only cleared once both
+      // writes actually land, so a failure here leaves the typed reply in the box.
+      await withWriteTimeout(addDoc(collection(fb.db, 'contact_replies'), {
         message_id: msg.id,
         for_uid: msg.from_uid,
         reply_body: text,
         replied_at: serverTimestamp(),
         replied_by_name: me?.displayName ?? me?.email ?? 'Your mentor',
         recipient_label: recipient,
-      });
-      await updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' });
+      }));
+      await withWriteTimeout(updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' }));
       setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, status: 'replied' as const } : m));
       setReplySent((s) => new Set(s).add(msg.id));
       setReplyText((t) => ({ ...t, [msg.id]: '' }));

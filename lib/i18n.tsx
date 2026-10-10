@@ -1106,6 +1106,7 @@ export const T_en: Dict = {
   communityMessageInputPlaceholder: 'Write a message…',
   communitySend: 'Send',
   communitySendError: 'Message didn\'t send — check your connection and try again.',
+  communityMessagesListenError: 'Couldn\'t stay connected to this conversation. Check your connection and try again.',
   communityPostError: 'Couldn\'t post — check your connection and try again.',
   communityContactError: 'Couldn\'t open the conversation — check your connection and try again.',
   communityReportReasonPlaceholder: 'What\'s wrong?',

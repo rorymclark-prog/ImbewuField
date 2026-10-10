@@ -160,6 +160,61 @@ test('deleting a journal entry needs two taps, like the money book\'s SalesLedge
     'the armed state must revert on its own, matching SalesLedger\'s 3.5s window');
 });
 
+test('community writes (board posts, threads, messages, reports) are bounded by withWriteTimeout', () => {
+  const queries = source('../lib/db/community-queries.ts');
+  // bug-04: addDoc/updateDoc/deleteDoc calls here had no timeout at all, so a weak-signal write
+  // could hang forever instead of rejecting into a catch the UI could show and recover from.
+  assert.match(queries, /import \{ withWriteTimeout \} from '@\/lib\/db\/queries';/,
+    'community-queries.ts must reuse the existing withWriteTimeout, not grow a second one');
+  for (const fn of ['createBoardPost', 'closeBoardPost', 'deleteBoardPost', 'getOrCreateThread', 'sendMessage', 'reportContent']) {
+    const start = queries.indexOf(`export async function ${fn}(`);
+    assert.ok(start > 0, `${fn} must still exist`);
+    const end = queries.indexOf('\n}\n', start);
+    const body = queries.slice(start, end);
+    assert.match(body, /withWriteTimeout\(/, `${fn} must wrap its write(s) in withWriteTimeout`);
+  }
+});
+
+test('the community message listener reports a failure instead of leaving the thread silently empty', () => {
+  const queries = source('../lib/db/community-queries.ts');
+  // bug-14: onSnapshot was given only a success callback, so a denied or dropped listener never
+  // told the caller anything went wrong — the thread just stayed empty forever.
+  assert.match(queries, /export function subscribeMessages\(\s*\n\s*threadId: string,\s*\n\s*cb: \(msgs: ThreadMessage\[\]\) => void,\s*\n\s*onError\?: \(err: Error\) => void,/,
+    'subscribeMessages must accept an optional error callback');
+  assert.match(queries, /onSnapshot\(q, \(snap\) => cb\(rows<ThreadMessage>\(snap\)\), \(err\) => onError\?\.\(err\)\)/,
+    'subscribeMessages must forward onSnapshot\'s error argument, not just the success one');
+
+  const page = source('../app/community/messages/[threadId]/page.tsx');
+  assert.match(page, /const \[listenError, setListenError\] = useState/,
+    'the thread page must track a listener failure as its own state');
+  assert.match(page, /subscribeMessages\(threadId, setMessages, \(\) => setListenError\(true\)\)/,
+    'the thread page must pass an error callback into subscribeMessages');
+  assert.match(page, /\{listenError && \(/, 'a listener failure must render a visible, retryable banner');
+  assert.match(page, /setListenRetryKey\(\(k\) => k \+ 1\)/, 'the retry button must be able to force a resubscribe');
+
+  const i18n = source('../lib/i18n.tsx');
+  assert.match(i18n, /communityMessagesListenError:/, 'communityMessagesListenError must exist in the translation dictionary');
+});
+
+test('contact form and inbox replies bound their writes with withWriteTimeout', () => {
+  const contact = source('../app/contact/page.tsx');
+  assert.match(contact, /withWriteTimeout\(addDoc\(collection\(fb\.db, 'contact_messages'\)/,
+    'sending a contact message must go through withWriteTimeout');
+  // The typed message must still be sitting in `body` if the write above rejects — i.e. nothing
+  // between handleSend's try and its catch may clear it before the write actually succeeds.
+  const handleSendStart = contact.indexOf('async function handleSend(');
+  const handleSendEnd = contact.indexOf('\n  }\n', handleSendStart);
+  const handleSendBody = contact.slice(handleSendStart, handleSendEnd);
+  assert.doesNotMatch(handleSendBody, /setBody\(''\)/,
+    'handleSend must not clear the typed message before a send is confirmed');
+
+  const inbox = source('../components/ContactInbox.tsx');
+  assert.match(inbox, /withWriteTimeout\(addDoc\(collection\(fb\.db, 'contact_replies'\)/,
+    'posting a reply must go through withWriteTimeout');
+  assert.match(inbox, /withWriteTimeout\(updateDoc\(doc\(fb\.db, 'contact_messages', msg\.id\), \{ status: 'replied' \}\)\)/,
+    'marking the original message replied must also go through withWriteTimeout');
+});
+
 test('a facilitator who opens a gardener whose full profile fails to load sees an error, not a false zero', () => {
   const dashboard = source('../components/NgoDashboard.tsx');
   assert.match(dashboard, /const \[gardenerError, setGardenerError\] = useState/,
