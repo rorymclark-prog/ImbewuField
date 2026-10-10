@@ -25,6 +25,9 @@ const SW_SOURCE = `
 const CACHE_VERSION = ${JSON.stringify(BUILD_ID)};
 const SHELL_CACHE = 'imbewufield-shell-' + CACHE_VERSION;
 const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
+// bug-08: a stalled connection used to leave navigation waiting on the network with no limit.
+// This caps that wait so the cached page below takes over instead of a blank tab.
+const NAVIGATION_TIMEOUT_MS = 4500;
 // THE APP SHELL MUST BE IN HERE OR THE APP CANNOT OPEN OFFLINE. This list held a manifest and two
 // icons — no HTML, no JS — so nothing a farmer could actually open was ever precached. Combined
 // with RUNTIME_CACHE being version-named (the activate sweep below drops the previous build's), a
@@ -2088,28 +2091,43 @@ self.addEventListener('fetch', function (event) {
     // content-hashed JS/CSS chunk URLs) always wins while online. Cache is only
     // a fallback for offline use, not a way to skip the network.
     event.respondWith(
-      fetch(request)
-        .then(function (response) {
-          const copy = response.clone();
-          event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) {
-            return cachePage(cache, request.url, copy);
-          }).catch(function () {}));
-          return response;
-        })
-        .catch(function () {
-          // Fall back through what a farmer can actually use: this exact page, then the app's
-          // real entry point, then the root. '/' alone was the old behaviour and it was never
-          // precached, so offline navigation simply failed.
-          // Chained, NOT a single 'hit || caches.match(next)' expression: caches.match returns a
-          // PROMISE, which is always truthy, so such a chain stops at the first match call whether
-          // or not it resolved to anything. (Backticks are banned in here — this file is one big
-          // template literal and a stray backtick silently ends it.)
+      (function () {
+        // Fall back through what a farmer can actually use: this exact page, then the app's
+        // real entry point, then the root. '/' alone was the old behaviour and it was never
+        // precached, so offline navigation simply failed.
+        // Chained, NOT a single 'hit || caches.match(next)' expression: caches.match returns a
+        // PROMISE, which is always truthy, so such a chain stops at the first match call whether
+        // or not it resolved to anything. (Backticks are banned in here — this file is one big
+        // template literal and a stray backtick silently ends it.)
+        const cachedPage = function () {
           return caches.open(RUNTIME_CACHE).then(function (cache) { return cache.match(request); })
             .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match(request); }); })
             .then(function (hit) { return hit || caches.open(SHELL_CACHE).then(function (cache) { return cache.match('/home'); }); })
             .then(function (hit) { return hit || caches.match('/home'); })
             .then(function (hit) { return hit || caches.match('/'); });
-        })
+        };
+
+        // bug-08: a stalled network (not a fast failure) used to leave this fetch pending with no
+        // limit, so the farmer's tab just sat there instead of falling back to the cached page.
+        // The network attempt keeps running after it loses the race — via its own event.waitUntil
+        // below — so a late response still refreshes the cache for next time.
+        const network = fetch(request).then(function (response) {
+          const copy = response.clone();
+          event.waitUntil(caches.open(RUNTIME_CACHE).then(function (cache) {
+            return cachePage(cache, request.url, copy);
+          }).catch(function () {}));
+          return response;
+        });
+        event.waitUntil(network.then(function () {}).catch(function () {}));
+
+        const timeout = new Promise(function (resolve) {
+          setTimeout(function () { resolve(null); }, NAVIGATION_TIMEOUT_MS);
+        });
+
+        return Promise.race([network, timeout])
+          .catch(function () { return null; })
+          .then(function (response) { return response || cachedPage(); });
+      })()
     );
     return;
   }
