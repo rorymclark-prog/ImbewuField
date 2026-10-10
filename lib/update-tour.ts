@@ -1,4 +1,4 @@
-import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes';
+import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 export const UPDATE_GUIDE_KEY = 'imbewu-update-guide-v1';
 export const OPEN_UPDATE_GUIDE_EVENT = 'imbewu-open-update-guide';

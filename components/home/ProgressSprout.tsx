@@ -24,10 +24,20 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    // perf-09: the Rive runtime is 870 KB for an 80px decorative sprout, so it is loaded only
+    // when the connection and device both look able to afford it; everyone else keeps the SVG
+    // fallback above, which already draws every growth stage.
+    const nav = navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+      deviceMemory?: number;
+    };
+    const connection = nav.connection;
     const update = () => {
       setRiveReady(false);
-      setMotionAllowed(!preference.matches && !connection?.saveData);
+      const slowConnection = !!connection?.saveData
+        || connection?.effectiveType === '2g' || connection?.effectiveType === 'slow-2g';
+      const lowMemory = typeof nav.deviceMemory === 'number' && nav.deviceMemory < 4;
+      setMotionAllowed(!preference.matches && !slowConnection && !lowMemory);
     };
     update();
     preference.addEventListener('change', update);

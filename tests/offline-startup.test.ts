@@ -46,7 +46,10 @@ function harness(failAsset = false) {
     },
   };
   const worker = vm.runInNewContext(literal, { BUILD_ID: 'new', APP_GUIDES, STUDIES_PATHWAY_PAGES });
-  vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches,
+  // bug-08's navigation timeout races fetch against setTimeout; unref so a timer that loses the
+  // race (the mock fetcher above always resolves immediately) cannot hold the test process open.
+  const timers = { setTimeout: (fn: () => void, ms: number) => { const t = global.setTimeout(fn, ms); t.unref?.(); return t; }, clearTimeout: global.clearTimeout };
+  vm.runInNewContext(worker, { URL, Response, Map, Set, fetch: fetcher, caches, ...timers,
     self: { location: { origin }, addEventListener: (name: string, cb: any) => { listeners[name] = cb; },
       skipWaiting: async () => { activated = true; }, clients: { claim: async () => {} } },
   });
