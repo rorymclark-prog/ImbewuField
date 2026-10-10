@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-06",
+  "mediaProofSHA256": "be9b0fecb472b21276bd3d90a0363e32c8c5a2eb18abe919c69bc21e54efd310",
+  "rootEvidence": "Root actually viewed both full compressed contacts; source/status/counters and target legible, no clipping observed. Layout accepted only; no fluent approval.",
+  "changed2": [
+    {
+      "path": "public/course-decks/intro-permaculture/ve/slide-22.webp",
+      "sha256": "b171a41b3e8ecefe94ebfda49cc312f9681e472853c46c37ffcab6e1acedac36",
+      "bytes": 268396,
+      "previous": {
+        "sha256": "bf26ff58e026fa6685b409019393ff07dfaa956190c988d40f24c35850def95d",
+        "bytes": 271926,
+        "width": 1440,
+        "height": 5400
+      }
+    },
+    {
+      "path": "public/course-decks/market-community/ts/slide-11.webp",
+      "sha256": "95a48c39249b150c40e7bc7959e27fd8757524bd779897e8bf8988a9e5e4a648",
+      "bytes": 294208,
+      "previous": {
+        "sha256": "dcb67287b36f502e93587040c4c0572f0918c2ea58dc4d13af2c003a31a08e6f",
+        "bytes": 291944,
+        "width": 1440,
+        "height": 5400
+      }
+    }
+  ],
+  "remaining34UnchangedFromPreviouslyReviewedProof": true,
+  "contacts": [
+    {
+      "path": "/tmp/imbewu-final-comparatives-render-20261006/intro-permaculture-ve/compressed-contact.png",
+      "sha256": "ba5dc0c507fb605add4af69591979c92ddc8f3ef304eab0418539a72ae9fa700"
+    },
+    {
+      "path": "/tmp/imbewu-final-comparatives-render-20261006/market-community-ts/compressed-contact.png",
+      "sha256": "1053f49358d542ba03a8ed8d097081ded3995a49834336dbddc5f0964b427476"
+    }
+  ]
+}

@@ -134,7 +134,8 @@ test('Vegetables L2 full drafts keep paragraph alignment and the risky agronomic
     assert.match(paras[17], /do not assume they immediately feed the maize/);
     assert.match(paras[17], /released during decomposition/);
     assert.match(paras[18], /before the next harvest is ready|phanḓa ha musi khaṋo i tevhelaho|ku nga si lungheka ntshovelo lowu landzelaka/i);
-    assert.match(paras[19], /water limits the garden/);
+    // The same limiting condition is now an independently reviewed ordinary regional clause.
+    assert.match(paras[19], language === 've' ? /musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni/ : /loko mati ma hunguta leswi xirhapa xi nga swi humesaka/);
     assert.match(paras[20], /Don't copy somebody else's calendar|U nga tekeleli calendar|Ni songo kopolola calendar/);
     assert.match(paras[21], /sowing date|siku ro byala/);
     assert.doesNotMatch(resolved.content.body, /\.\./, `${language}: avoid doubled sentence stops from fragment recomposition`);
@@ -169,7 +170,7 @@ test('isiZulu repairs stay on their canonical fields, keep answer positions and 
   const expected = [
     ['soil-health-l3', 'body[1]', 'Mulch can reduce evaporation, soften the impact of rain and suppress weeds.', 'I-mulch inganciphisa ukuhwamuka, ithambise ukushaya kwamaconsi emvula futhi icindezele ukhula.'],
     ['market-community-l1', 'body[10]', 'The record also shows which months leave the household buying food.', 'Irekhodi libuye libonise izinyanga umuzi othenga ngazo ukudla.'],
-    ['reading-landscape-l3', 'quiz[1].rationale', 'Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.', 'Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.'],
+    ['reading-landscape-l3', 'quiz[1].rationale', 'Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan.', 'Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight ithandwa yisimo sezulu esipholile nesinomswakama esiqhubeka isikhathi eside, kanti ukususa umbhede uwuyise kwenye indawo kukodwa akusona isu eliphelele lokulawula lesi sifo.'],
     ['soil-health-l3', 'quiz[1].rationale', 'Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.', 'I-leachate iwuketshezi oluphuma ngokwemvelo emgqonyeni wemisundu. Its composition varies, so it must not be presented as a guaranteed safe feed for edible crops.'],
     ['seeds-sovereignty-l2', 'keyPoints[2]', 'Tomatoes mostly self-pollinate but can cross; maize is wind-pollinated. Check crop- and variety-specific isolation guidance before saving seed', 'Utamatisi uvame ukuzithuthela impova kodwa ungaxubana; ummbila uthola impova ethwalwa umoya. Hlola crop- and variety-specific isolation guidance ngaphambi kokulondoloza imbewu.'],
     ['market-community-l2', 'quiz[1].options[2]', 'Committed subscription income lets you plan production around real demand instead of growing speculatively', 'Committed subscription income ikuvumela ukuthi uhlele ukukhiqiza ngokwesidingo sangempela esikhundleni sokutshala ungazi ukuthi kuzothengwa yini'],
@@ -187,6 +188,7 @@ test('isiZulu repairs stay on their canonical fields, keep answer positions and 
     ['soil-health-l3', 'title', 'Mulching and Cover Crops: Protecting and Building Soil', 'I-Mulch Nezitshalo Zokumboza Umhlabathi: Ukuvikela Umhlabathi kanye Building Soil'],
   ] as const;
 
+  // Reading L3 now translates the ordinary disease framing; its can/prolonged/cool/damp/not-complete safeguards have a separate source-bound check.
   assert.equal(expected.length, 18, 'check each short target directly; the full Livestock body edit is checked separately below');
   for (const [lessonId, path, sourceText, targetText] of expected) {
     const lesson = sourceById.get(lessonId);

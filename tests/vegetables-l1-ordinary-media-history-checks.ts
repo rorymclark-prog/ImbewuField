@@ -1,3 +1,4 @@
+import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { introFullAssetSizesBeforeOrdinary, introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -53,14 +54,18 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
   let expectedManifest = before;
   for (const frame of proof.frames) {
     assert.deepEqual(frame.pairedSource, decks[frame.language].slides[frame.slide - 1], frame.path);
-    const later = laterResidualPaths.has(frame.path) ? nativePairedResidualMediaBefore('public' + frame.path) : null;
+    const newer = finalLanguageNextMediaBefore('public'+frame.path);
+    const later = laterResidualPaths.has(frame.path) || newer ? nativePairedResidualMediaBefore('public' + frame.path) : null;
     let liveFrameBytes: number;
     if (later) {
       assert.deepEqual(later, { bytes: frame.new.bytes, sha256: frame.new.sha256 }, `${frame.path}: newest render rewinds to the exact L1 output`);
+      // Later full guards have already checked real current bytes; this layer
+      // binds the exact original L1 canvas and manifest through that descriptor.
+      assert.equal(later.bytes,frame.new.bytes);
       const currentFrame = nativePairedResidualFrames.find(item => item.path === 'public' + frame.path);
-      assert.ok(currentFrame, `${frame.path}: newer rendered frame remains in the approved complete set`);
-      assert.deepEqual([currentFrame.width, currentFrame.height], [frame.new.width, frame.new.height], `${frame.path}: full canvas remains exact`);
-      liveFrameBytes = currentFrame.bytes;
+      if(currentFrame) assert.deepEqual([currentFrame.width,currentFrame.height],[frame.new.width,frame.new.height]);
+      else assert.deepEqual([newer!.width,newer!.height],[frame.new.width,frame.new.height]);
+      liveFrameBytes = observedFile('public'+frame.path).bytes;
     } else {
       const bytes = readFileSync('public' + frame.path);
       assert.equal(bytes.subarray(0, 4).toString(), 'RIFF');
@@ -107,7 +112,7 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
     // The later 13-frame batch redraws three Vegetables slide-05 cards that
     // belong to this complete older inventory. Validate the live frame through
     // the newer proof, then project its exact before descriptor for this layer.
-    if (laterResidualPaths.has(row.path)) {
+    if (laterResidualPaths.has(row.path) || finalLanguageNextMediaBefore('public' + row.path)) {
       const later = nativePairedResidualMediaBefore('public' + row.path);
       assert.ok(later, `${row.path}: later frame has an exact previous descriptor`);
       assert.deepEqual(later, { bytes: row.bytes, sha256: row.sha256 }, `${row.path}: newest frame rewinds to this frozen L1 inventory`);
@@ -149,11 +154,11 @@ export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
   return before;
 }
 export function vegetablesL1MediaBeforeEarlierProof(path: string) {
-  const intro = introFullMediaBeforeEarlierProof(path);
-  if (intro) return intro;
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
-  // A miss exposes no old bytes; caller retains its actual unlisted-file check.
-  if (!expectedVegetablesL1Paths.includes(url)) return undefined;
+  // A newer projection returns the accepted L1 output for VE5. Returning that
+  // first skipped this dated L1 rewind and broke older Soil/Water preservation.
+  // Own members must pass the complete L1 guard and reach their exact old bytes.
+  if (!expectedVegetablesL1Paths.includes(url)) return introFullMediaBeforeEarlierProof(path);
   const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;

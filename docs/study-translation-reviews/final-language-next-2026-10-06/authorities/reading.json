@@ -1,0 +1,321 @@
+{
+  "date": "2026-10-06",
+  "scope": "Reading Landscape12fields; data-only future source-bound application",
+  "authorityHEAD": "3d5bd8b5b8fd913af0060f9bbe4a3004d344cd25",
+  "canonicalUnchanged": true,
+  "fields": [
+    {
+      "language": "st",
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "pairFileSHA256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+      "slideNumber": 9,
+      "slideArrayIndex": 8,
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglishExact": "Watch: Follow the Sun Across the Site",
+      "currentTargetExact": "Shebella: Follow the Sun Across the Site",
+      "candidateFullField": "Shebella: Latela letsatsi ho pholletsa le sebaka",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; follow + sun + across entire site"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Shebella: Latela letsatsi ho pholletsa le sebaka",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "learnerWired": false
+    },
+    {
+      "language": "st",
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "pairFileSHA256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTargetExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Hlahloba shadows tsa sebele before you build or fix a shade structure in place.",
+      "candidateFullField": "Lebota kapa shade cloth li ka etsa moriti betheng nako e telele mariha ho feta hlabula. Hlahloba meriti ea sebele pele u haha kapa u tiisa shade structure sebakeng sa eona.",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wall OR shade cloth; bed shaded longer in winter than summer; inspect actual shadows before building OR fixing/anchoring structure"
+      ],
+      "retainedEnglishTechnicalTerms": [
+        "shade cloth",
+        "bed",
+        "shade structure"
+      ],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Lebota kapa shade cloth di ka etsa moriti ho bed nako e telele mariha ho feta lehlabula. Hlahloba meriti ya sebele pele o haha kapa o fix shade structure sebakeng sa yona.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ],
+      "rootReason": "Use established South African o/ya spelling. Preserve Hlahloba and exact can/OR/winter-versus-summer/before/OR structure. Retain bed explicitly so technical-term metadata matches the actual target; retain fix as the precise fastening-in-place action rather than risk strengthen or introduce tying/bolting.",
+      "learnerWired": false
+    },
+    {
+      "language": "st",
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "pairFileSHA256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+      "slideNumber": 13,
+      "slideArrayIndex": 12,
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglishExact": "Watch: See Wind and Cold Air on the Map",
+      "currentTargetExact": "Shebella: See Wind and Cold Air on the Map",
+      "candidateFullField": "Shebella: Bona phefo le moea o batang mmapeng",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wind AND cold air; on the map"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Shebella: Bona moya le moya o batang mmapeng",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Use native established moya rather than Lesotho moea; both wind and air use moya in this current module. Bona supplies the explicit See action. Retain Shebella: exactly.",
+      "learnerWired": false
+    },
+    {
+      "language": "st",
+      "pairFile": "docs/narration/reading-landscape.st.paired-draft.json",
+      "pairFileSHA256": "0d1426088e50962f0200e9c97998984be7a5eaace8366191d1ac2ad720100de2",
+      "slideNumber": 17,
+      "slideArrayIndex": 16,
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglishExact": "Watch: Draw the Land You Already Have",
+      "currentTargetExact": "Shebella: Taka the Land You Already Have",
+      "candidateFullField": "Shebella: Thala sebaka seo u seng u e-na le sona",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; draw the land/site already in the learner’s possession"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Shebella: Taka lefatshe leo o seng o ntse o e-na le lona",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Preserve existing Shebella: Taka, replace only the English remainder. Lefatshe retains land rather than generic area; seng o ntse preserves already-state, not merely now.",
+      "learnerWired": false
+    },
+    {
+      "language": "ve",
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairFileSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+      "slideNumber": 9,
+      "slideArrayIndex": 8,
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglishExact": "Watch: Follow the Sun Across the Site",
+      "currentTargetExact": "Sedzani: Follow the Sun Across the Site",
+      "candidateFullField": "Sedzani: Tevhedzani ḓuvha fhethu haṋu hoṱhe",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; follow + sun + across entire site"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Sedzani: Tevhedzani ḓuvha fhethu haṋu hoṱhe",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "learnerWired": false
+    },
+    {
+      "language": "ve",
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairFileSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTargetExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Sedzani shadows dza vhukuma before you build or fix a shade structure in place.",
+      "candidateFullField": "Luṱango kana shade cloth zwi nga ita murunzi kha bed tshifhinga tshilapfu nga tshifhinga tsha vhuria u fhira tsha tshilimo. Sedzani murunzi wa vhukuma musi ni sa athu fhaṱa kana u khwaṱhisa shade structure fhethu hayo.",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wall OR shade cloth; bed shaded longer in winter than summer; inspect actual shadows before building OR fixing/anchoring structure"
+      ],
+      "retainedEnglishTechnicalTerms": [
+        "shade cloth",
+        "bed",
+        "shade structure"
+      ],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Luvhondo kana shade cloth zwi nga ita murunzi kha bed tshifhinga tshilapfu nga tshifhinga tsha vhuria u fhira tsha tshilimo. Sedzani mirunzi ya vhukuma musi ni sa athu fhaṱa kana u fix shade structure fhethu hayo.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ],
+      "rootReason": "Luṱango risks fence instead of wall. Luvhondo is the exact same-module wall precedent. Keep fix English because khwaṱhisa strengthens and does not independently prove fastening in place. Plural mirunzi preserves shadows. Preserve Sedzani and before/build OR fix.",
+      "learnerWired": false
+    },
+    {
+      "language": "ve",
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairFileSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+      "slideNumber": 13,
+      "slideArrayIndex": 12,
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglishExact": "Watch: See Wind and Cold Air on the Map",
+      "currentTargetExact": "Sedzani: See Wind and Cold Air kha Map",
+      "candidateFullField": "Sedzani: Phepho na muya u rotholelaho kha mapa",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wind AND cold air; on the map"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Sedzani: Vhonani muya na muya wo rotholaho kha mapa",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Original candidate names wind/cold air but omits explicit See; add Vhonani. Use same-module muya/wo rotholaho lexical precedent and preserve existing kha locative prefix.",
+      "learnerWired": false
+    },
+    {
+      "language": "ve",
+      "pairFile": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "pairFileSHA256": "aafdcf1a482fd3c16619479f60b2765b4975a2a67fafd01f81ae375033c1e579",
+      "slideNumber": 17,
+      "slideArrayIndex": 16,
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglishExact": "Watch: Draw the Land You Already Have",
+      "currentTargetExact": "Sedzani: Draw the Land You Already Have",
+      "candidateFullField": "Sedzani: Olani land ine ya no vha yaṋu",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; draw the land/site already in the learner’s possession; uses a current Tshivenda corpus already-existing construction as a bounded cue while retaining “land” as an English anchor for root review"
+      ],
+      "retainedEnglishTechnicalTerms": [
+        "land"
+      ],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "corpusPrecedent": {
+        "file": "lib/course-translation-drafts-ve-food-forest.ts",
+        "sourceMeaning": "Look at the plants that are already there before removing.",
+        "currentText": "Sedzani zwimela zwo no vha hone phanḓa ha u bvisa.",
+        "relevantForm": "zwo no vha hone (already exist/are already there)",
+        "limit": "Supports the explicit already aspect only; it does not establish that the full proposed heading is fluent."
+      },
+      "acceptedUnreviewedTarget": "Sedzani: Olani land ine na no vha nayo",
+      "retainedEnglishAnchors": [
+        "land"
+      ],
+      "rootReason": "Primary-supported already-have construction removes ordinary already English without changing have to ownership; land anchor preserves mapped site scope. Exact full heading is an unreviewed inference.",
+      "learnerWired": false
+    },
+    {
+      "language": "ts",
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairFileSHA256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+      "slideNumber": 9,
+      "slideArrayIndex": 8,
+      "fieldLocator": "slide[9].heading",
+      "sourceEnglishExact": "Watch: Follow the Sun Across the Site",
+      "currentTargetExact": "Languta: Follow the Sun Across the Site",
+      "candidateFullField": "Languta: Landzelela dyambu hinkwako endhawini ya wena",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; follow + sun + across entire site"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Languta: Landzelela dyambu hinkwako endhawini ya wena",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Preserves existing Watch prefix and follow/sun/across-site scope; no extra spatial geometry or seasonal claim. Site context makes ordinary place wording defensible.",
+      "learnerWired": false
+    },
+    {
+      "language": "ts",
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairFileSHA256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+      "slideNumber": 10,
+      "slideArrayIndex": 9,
+      "fieldLocator": "slide[10].body[1]",
+      "sourceEnglishExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Check the actual shadows before you build or fix a shade structure in place.",
+      "currentTargetExact": "A wall or shade cloth can shade a bed longer in winter than in summer. Kambela shadows ta xiviri before you build or fix a shade structure in place.",
+      "candidateFullField": "Rirhangu kumbe shade cloth swi nga endla ndzhuti ehenhla ka bed nkarhi wo leha hi xixika ku hundza hi le ximumu. Kambela mindzhuti ya xiviri u nga si aka kumbe u tiyisa shade structure endhawini ya yona.",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wall OR shade cloth; bed shaded longer in winter than summer; inspect actual shadows before building OR fixing/anchoring structure"
+      ],
+      "retainedEnglishTechnicalTerms": [
+        "shade cloth",
+        "bed",
+        "shade structure"
+      ],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Rirhangu kumbe shade cloth swi nga endla ndzhuti ehenhla ka bed nkarhi wo leha hi xixika ku hundza hi le ximumu. Kambela mindzhuti ya xiviri u nga si aka kumbe u fix shade structure endhawini ya yona.",
+      "retainedEnglishAnchors": [
+        "shade cloth",
+        "bed",
+        "fix",
+        "shade structure"
+      ],
+      "rootReason": "Can swi nga, alternative kumbe and ku hundza comparison are present. Tiyisa may strengthen rather than fix in place; retain fix English while translating before/build/OR/in-place framing. Preserve Kambela.",
+      "learnerWired": false
+    },
+    {
+      "language": "ts",
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairFileSHA256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+      "slideNumber": 13,
+      "slideArrayIndex": 12,
+      "fieldLocator": "slide[13].heading",
+      "sourceEnglishExact": "Watch: See Wind and Cold Air on the Map",
+      "currentTargetExact": "Languta: See Wind and Cold Air eka Map",
+      "candidateFullField": "Languta: Mheho ni moya wo titimela emepeni",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; wind AND cold air; on the map"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Languta: Vona moya ni moya wo titimela eka mepe",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Original candidate omits explicit See; add Vona. Use existing native moya for wind and preserve the current eka locative instead of unnecessary locative rewrite.",
+      "learnerWired": false
+    },
+    {
+      "language": "ts",
+      "pairFile": "docs/narration/reading-landscape.ts.paired-draft.json",
+      "pairFileSHA256": "c0f3c6a1baca0e23b8ef3462367180638696e2c25ea69b812de0976baf9b1655",
+      "slideNumber": 17,
+      "slideArrayIndex": 16,
+      "fieldLocator": "slide[17].heading",
+      "sourceEnglishExact": "Watch: Draw the Land You Already Have",
+      "currentTargetExact": "Languta: Dirowa the Land You Already Have",
+      "candidateFullField": "Languta: Dirowa ndhawu leyi u nga na yona sweswi",
+      "currentTargetStatus": "draft",
+      "disposition": "root-accepted-machine-draft-for-next-source-bound-batch",
+      "meaningChecks": [
+        "preserves localized prefix byte-for-byte; draw the land/site already in the learner’s possession"
+      ],
+      "retainedEnglishTechnicalTerms": [],
+      "reviewLimit": "Machine-language draft only. This packet is not a fluent-speaker, farming, or publication approval.",
+      "acceptedUnreviewedTarget": "Languta: Dirowa misava leyi se u nga na yona",
+      "retainedEnglishAnchors": [],
+      "rootReason": "Sweswi is now rather than already. Se supplies the existing state; misava is land in this mapping context. Preserve existing Languta: Dirowa.",
+      "learnerWired": false
+    }
+  ],
+  "independentReports": {
+    "initial": "e2c3a21074f0ec7c210e7f3c21a87bac9bd5ca8110fa77f8e1362905ada34da8",
+    "ve17Fuller": "1e981fd3137960fe85090a3c08c4629e0d71e08cca3ae93c6826008a9faff1ce"
+  },
+  "rootReviewed": true,
+  "limits": [
+    "No fluent/local farming or Shangani approval.",
+    "Not learner-wired; recheck exact current source/target/file hashes at application.",
+    "Technical shade-cloth/bed/fix/shade-structure and VEland anchors remain exact English; ordinary prose otherwise translated.",
+    "No canonical/media/audio/species/numbers/quizindices/geometry/PLAN_VERSION changes."
+  ]
+}

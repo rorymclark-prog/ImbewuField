@@ -1,0 +1,1286 @@
+{
+  "status": "69 compressed frames in their actual active paths. Five archive paths restored byte-for-byte before any publication. Visual/manifest/cache/tests/phone gates pending.",
+  "quality": 88,
+  "method": 6,
+  "assets": [
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "slide": 10,
+      "url": "/course-decks/intro-permaculture/st-silent/slide-10.webp",
+      "beforeSHA256": "d4168c3d6c1979922f2f7931fd1cef987a983b0e34606d242231de62a9b3ef4d",
+      "beforeBytes": 693878,
+      "afterSHA256": "45d16b62f98bae3e6de68628cbd7601f7a0d51f2458c17f734717d4112562c45",
+      "afterBytes": 689546,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "mediaDirectory": "st-silent",
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "slide": 11,
+      "url": "/course-decks/intro-permaculture/st-silent/slide-11.webp",
+      "beforeSHA256": "589e2158f42e0fba0e50eec14b6aa791209541c01bdf06d300ccfb3f1fd5ff3b",
+      "beforeBytes": 270858,
+      "afterSHA256": "52af69c57d37d87226fefaf0b734946be41b18d96ea9a25e57a6a80c6a9dc70d",
+      "afterBytes": 266416,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "mediaDirectory": "st-silent",
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "slide": 12,
+      "url": "/course-decks/intro-permaculture/st-silent/slide-12.webp",
+      "beforeSHA256": "c30cddddb1ad42bb5707d4e59bc965d59f3b1ed97e7bb9edf7deee51e7122588",
+      "beforeBytes": 255448,
+      "afterSHA256": "176cd94c6f61c6f4769889892b98e6bb41827fc0a48dc23e4c4894ec31a37343",
+      "afterBytes": 256212,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "mediaDirectory": "st-silent",
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "slide": 13,
+      "url": "/course-decks/intro-permaculture/st-silent/slide-13.webp",
+      "beforeSHA256": "de08b18fe44aba08a062437ddc530901cbc8a739568992dee3ae27a195430acd",
+      "beforeBytes": 418056,
+      "afterSHA256": "bcd11431c6cbae3044f704760355c7f6c5c70bca5b44510f2448593a28d1e310",
+      "afterBytes": 417406,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "mediaDirectory": "st-silent",
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "st",
+      "slide": 14,
+      "url": "/course-decks/intro-permaculture/st-silent/slide-14.webp",
+      "beforeSHA256": "13a8219e0000edcf96bbf7b23898c7b5ed592487b1bbede520dd6c48141a94f1",
+      "beforeBytes": 425552,
+      "afterSHA256": "270e702dc660c78880083a21352880b5f6b17493a8f493901a860e60e89cd36f",
+      "afterBytes": 417188,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "mediaDirectory": "st-silent",
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 4,
+      "url": "/course-decks/intro-permaculture/ts/slide-04.webp",
+      "beforeSHA256": "caa300ead97db6bdd62d9ce7266d4eebfcc1e8c2518d39bbde2f497fa4ac283c",
+      "beforeBytes": 579984,
+      "afterSHA256": "f81127f9bed788868614691a61113dbb8a16cde1ff2253c19106dabe5717384f",
+      "afterBytes": 582564,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 6,
+      "url": "/course-decks/intro-permaculture/ts/slide-06.webp",
+      "beforeSHA256": "ad33b18192f51a5a7cb9aa8904e057f18d049e425b12e9675d364f38fefda9f0",
+      "beforeBytes": 597178,
+      "afterSHA256": "3eabee7adfa11f34c2903cf7cc2cfcf555c51d579eb7b6d9f5f4226df6672c09",
+      "afterBytes": 596776,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 10,
+      "url": "/course-decks/intro-permaculture/ts/slide-10.webp",
+      "beforeSHA256": "d4b12e9e19bf20720ef7943f2c1a66594b670cff0f6017e772d4cf42ed54a884",
+      "beforeBytes": 723636,
+      "afterSHA256": "43387ecf70fe5714c3ec4e6a645621184744b3ff7902b49ef98d2beab97571ea",
+      "afterBytes": 723156,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 11,
+      "url": "/course-decks/intro-permaculture/ts/slide-11.webp",
+      "beforeSHA256": "58dc2f9b25f666f5c81f531edfed4e62e5a01832362f502b45af6c696dba29df",
+      "beforeBytes": 266508,
+      "afterSHA256": "9fa90bdd3a03ff172eec920e89fd4261446c76cead6e4fd6465b8ce0bb4aa6e4",
+      "afterBytes": 266734,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 12,
+      "url": "/course-decks/intro-permaculture/ts/slide-12.webp",
+      "beforeSHA256": "75daba70541ea8f4652106d702ed61fa7ed69534f2a510828f26fc033122aa66",
+      "beforeBytes": 260756,
+      "afterSHA256": "e830e7ded338cd8b52bcd219aa17612f786774d84940ebc7fefdf19e5c61e284",
+      "afterBytes": 263470,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 13,
+      "url": "/course-decks/intro-permaculture/ts/slide-13.webp",
+      "beforeSHA256": "980c2f91298391506608aedc4ab0d437430005bfbe96ea9f099621332023106a",
+      "beforeBytes": 430592,
+      "afterSHA256": "2e843d14a05304bedb2e6d5bd33ab398fd47038e02fad74bc407dee632f7caf8",
+      "afterBytes": 428330,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 14,
+      "url": "/course-decks/intro-permaculture/ts/slide-14.webp",
+      "beforeSHA256": "474224a20df162872d1e232cd56490b240ae314d2c1d38cb37d8c7710e962e6d",
+      "beforeBytes": 463406,
+      "afterSHA256": "ad16964d5ea3b13a40f5f8a3c663d852730b57082d96686421dfd87183d4b365",
+      "afterBytes": 470732,
+      "dimensions": [
+        1440,
+        5408
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 15,
+      "url": "/course-decks/intro-permaculture/ts/slide-15.webp",
+      "beforeSHA256": "08e0679b36b7bb02af70c8ec3de95200ad80e2b1ce9c7ad85127e5702638387d",
+      "beforeBytes": 351062,
+      "afterSHA256": "aa31c51468d1c8eaa99a555c25678ed799f8ff0e518a06190a4111cf99dea405",
+      "afterBytes": 358000,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 19,
+      "url": "/course-decks/intro-permaculture/ts/slide-19.webp",
+      "beforeSHA256": "a60ea929c5bea511450c1cf1347b16695301ed1f380cb66867fc8741390963e1",
+      "beforeBytes": 605862,
+      "afterSHA256": "dce84ea781555c410054c8309fbc9ae8c46b17811312989f66b29782260787d6",
+      "afterBytes": 605902,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "language": "ts",
+      "slide": 20,
+      "url": "/course-decks/intro-permaculture/ts/slide-20.webp",
+      "beforeSHA256": "de97c7d98fcf420d9f5b9a7280ff17edebb9e42d9d3df9f6b7b7c352a1aa2505",
+      "beforeBytes": 510214,
+      "afterSHA256": "acf87f68caf763a10eabc50ef82dcac7dd9256c67b31edbb56b8d3b0f87f92e1",
+      "afterBytes": 507624,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 11,
+      "url": "/course-decks/market-community/st/slide-11.webp",
+      "beforeSHA256": "a276a20264d5983324cbb6169f0c4f3e136f2b3a01d0e106fad187517e291ea9",
+      "beforeBytes": 284882,
+      "afterSHA256": "857ccf9af790d6b3092b840dce178164148c859616c2241bede60c9b44856e62",
+      "afterBytes": 286028,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "st",
+      "slide": 15,
+      "url": "/course-decks/market-community/st/slide-15.webp",
+      "beforeSHA256": "7d327febd91e7c46a09637a1c6b9c6c6821437b9e5f1ba913ac6dbd0dac809e6",
+      "beforeBytes": 533032,
+      "afterSHA256": "9381c7eb3060010976f681feab3cea4c51a02b4a115c9eeacdf8982cb5b9fae4",
+      "afterBytes": 531092,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 17,
+      "url": "/course-decks/market-community/ts/slide-17.webp",
+      "beforeSHA256": "cbcbeb0edf1fcef76fe649aade17783e9d6db42059796381a54c6f6d72bf4e69",
+      "beforeBytes": 297082,
+      "afterSHA256": "655dbc3fcd86116556cc5c354734fbda78de8b83bba7a0b2faf2a89b160ade5b",
+      "afterBytes": 300542,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "market-community",
+      "language": "ts",
+      "slide": 18,
+      "url": "/course-decks/market-community/ts/slide-18.webp",
+      "beforeSHA256": "e0436ab49c579623756c5d1a4c7fad8127ccf716c6dd73544c206736e5b8d515",
+      "beforeBytes": 540142,
+      "afterSHA256": "20165f19bc31fab7ebae5142308c2a3ba4a4e6bf62331d82393e20c674cf1800",
+      "afterBytes": 538568,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 2,
+      "url": "/course-decks/reading-landscape/st/slide-02.webp",
+      "beforeSHA256": "47762e8bb86c050a5df39d4f760a78299213e80ba930eed85343b67475d0cacf",
+      "beforeBytes": 260674,
+      "afterSHA256": "455592c74db47b8304a77986247733a3208860682cd0d57feba4c6c2400f32ca",
+      "afterBytes": 261794,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/st/slide-04.webp",
+      "beforeSHA256": "4e479e8f0fe531f72ac681b118eb12e9eb3e39938236275301114ca8ffeb30ac",
+      "beforeBytes": 265672,
+      "afterSHA256": "10643b384365b43c8a0462d07b525e1119633a4750404bf363dd420c5c01cd37",
+      "afterBytes": 265924,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 5,
+      "url": "/course-decks/reading-landscape/st/slide-05.webp",
+      "beforeSHA256": "5ae3defa8d612a995b73d870655a431828744b9f72429b956aaeb422785ad7e3",
+      "beforeBytes": 187146,
+      "afterSHA256": "cdbb9517c94e8c7a4f8be1874cbe4ae9ff58b495a5877c998c722d99e5810eaf",
+      "afterBytes": 183630,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 6,
+      "url": "/course-decks/reading-landscape/st/slide-06.webp",
+      "beforeSHA256": "4f13d85748b873a7b10042987e2ff00bba63993706913e49ba260b43a39ae29f",
+      "beforeBytes": 625512,
+      "afterSHA256": "d2b11dedee247b074a73f853d02e14a8a9a34815cfaebe11d4251daac1384575",
+      "afterBytes": 634822,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 7,
+      "url": "/course-decks/reading-landscape/st/slide-07.webp",
+      "beforeSHA256": "6bb1ab19eae5f6b795206384b6a1e48c4b17baa5122f4d07f8b637c5cac35237",
+      "beforeBytes": 282654,
+      "afterSHA256": "7673290149e53f50d5967f20b458b82000b89784a72fd84c4366f291432dc8c1",
+      "afterBytes": 287652,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/st/slide-08.webp",
+      "beforeSHA256": "b003ecd4b0383abdc1a0e6e3e9aa9085f970d0cbd5db0f98435ecb3a77fe973f",
+      "beforeBytes": 346318,
+      "afterSHA256": "0e10e9e83cd894e0f0b79ce816003a6406ed4494fada25b4a7bcf40e1f9932e9",
+      "afterBytes": 342254,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 10,
+      "url": "/course-decks/reading-landscape/st/slide-10.webp",
+      "beforeSHA256": "541a7ac36c02bdd633a692f3b55969d48ea923040b3f7bb126f9b2fe3f2c7eff",
+      "beforeBytes": 586190,
+      "afterSHA256": "b24ffba3f36a6e3f21aa3b631a3427c018e8766b14e287e04ef0e90d966734d5",
+      "afterBytes": 585502,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 12,
+      "url": "/course-decks/reading-landscape/st/slide-12.webp",
+      "beforeSHA256": "034e15ed3218313d276ded063a310e85867dd2198dbac1e31a7c3cbc3b14efbf",
+      "beforeBytes": 467344,
+      "afterSHA256": "12682c3891c9ad88a47cfc67af60b7de64c123f2fc3850fe46b24a4556b3d418",
+      "afterBytes": 472172,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 14,
+      "url": "/course-decks/reading-landscape/st/slide-14.webp",
+      "beforeSHA256": "f50932d814db8e2c7607beb5c4abf550c6a6fd9d5eb2d6e94c8dd50e68edef13",
+      "beforeBytes": 455710,
+      "afterSHA256": "8976ca004cfbaf1f6a0ee04f8569964ee427be97264f6035bf3bb12544482579",
+      "afterBytes": 471192,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 15,
+      "url": "/course-decks/reading-landscape/st/slide-15.webp",
+      "beforeSHA256": "68c5617690bda00a4063eaa58aad6ac75aea792cdc364574f73d2a04ede66b9e",
+      "beforeBytes": 432710,
+      "afterSHA256": "d0da0452978defd90f366214e62f081c19550d29b284ec025fa54716c867c033",
+      "afterBytes": 417946,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 19,
+      "url": "/course-decks/reading-landscape/st/slide-19.webp",
+      "beforeSHA256": "bb2796f8848fc27f0acb9287a79596c7b0689f4424a085b1c4f4a7a8104bdbeb",
+      "beforeBytes": 283868,
+      "afterSHA256": "3b2af9c6e807e923019a6392047fb89f79cdf00e7de32105737c339889724e12",
+      "afterBytes": 289028,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/st/slide-20.webp",
+      "beforeSHA256": "2020aa44cb3bd5373325f987d492bee6c45bd3a67f49cec4186e4817b36cc368",
+      "beforeBytes": 679954,
+      "afterSHA256": "7fb5450a867bdbc7c537918925a751c5a556f97e5a396dd4d99e010340580290",
+      "afterBytes": 685512,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "st",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/st/slide-21.webp",
+      "beforeSHA256": "4c91026821ffdbed5a1194eecc0693f5b80446448194f08c7a3303459565d796",
+      "beforeBytes": 297590,
+      "afterSHA256": "5f1e185a1a533783491d6538225db055826f8222b4352b085a5e4e8b0b9c36ff",
+      "afterBytes": 295100,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 1,
+      "url": "/course-decks/reading-landscape/ts/slide-01.webp",
+      "beforeSHA256": "c26bcc4c0251cc0a92641bef7fa5cc404df9cb980612e05a60e80582d5f08cce",
+      "beforeBytes": 282350,
+      "afterSHA256": "5de6ecc4cfd37c5575b2b3845d3266b163535721bc35e0526526dfca4b94e928",
+      "afterBytes": 278752,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/ts/slide-04.webp",
+      "beforeSHA256": "72affe92697eb1aaa90f6c05ef45772c536706eb9ae1a68acbaa39000d4f18db",
+      "beforeBytes": 270536,
+      "afterSHA256": "7738d5ea3735a771f8b4d37d818b1a555dc43f17a773fcc8d13efb98743597ec",
+      "afterBytes": 274944,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 5,
+      "url": "/course-decks/reading-landscape/ts/slide-05.webp",
+      "beforeSHA256": "ff3af93a6c5447e9bc9921ec2dedda5ea7377a7e35c7dd787bbeaf13f0efb2c3",
+      "beforeBytes": 193612,
+      "afterSHA256": "af7109664983ca5931b85df570041923c1a7f69454d5af0c75a58153d08fc268",
+      "afterBytes": 192852,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 7,
+      "url": "/course-decks/reading-landscape/ts/slide-07.webp",
+      "beforeSHA256": "9b1b9a2b92a4d0586fa429f0665cd95a526febfa0fcad43bbedfa1b307261306",
+      "beforeBytes": 285094,
+      "afterSHA256": "14633676514fca391a2c671d7af4bbecbbffc68ee8aef2ee104f0a3f0d69c62b",
+      "afterBytes": 288030,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/ts/slide-08.webp",
+      "beforeSHA256": "da73cd35791a98b93813946f6dd13f2dfc6294fc1478db4ce23bd2aea0c9b89c",
+      "beforeBytes": 352568,
+      "afterSHA256": "28d98565fe302a642117dd6c35f3981d2f845bca1796a368451a4f310be0855a",
+      "afterBytes": 353506,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 14,
+      "url": "/course-decks/reading-landscape/ts/slide-14.webp",
+      "beforeSHA256": "ba0c6d5ae3cf2ba37910615041f8790a40aa029a9694ea16934a1081d7d65b49",
+      "beforeBytes": 479164,
+      "afterSHA256": "848edbe5206ffbc1b264b0b5c01e27108e5cd071710f9973445c2107bc971a76",
+      "afterBytes": 481724,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 15,
+      "url": "/course-decks/reading-landscape/ts/slide-15.webp",
+      "beforeSHA256": "ff476a71585fea0ec971ec67e86fe2dcde26cbdfb7285afd88d3ac65686184af",
+      "beforeBytes": 435540,
+      "afterSHA256": "4a8fd88d017003a5dc60980691add7e06fd3723e68c06701eb7157ef85a85121",
+      "afterBytes": 417616,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 18,
+      "url": "/course-decks/reading-landscape/ts/slide-18.webp",
+      "beforeSHA256": "b66b9fb618ff84f1dccab407ef3418dcefef93d67bce5f321673bc8352bb682a",
+      "beforeBytes": 594350,
+      "afterSHA256": "a2b026701a29804f09c08ca423b8d0458c9f9186fb38c1d73475dc80d4c0f8a8",
+      "afterBytes": 592142,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 19,
+      "url": "/course-decks/reading-landscape/ts/slide-19.webp",
+      "beforeSHA256": "247859b5ef2459a16e7d2400abb4fb902ea24debd242bacad2fc4f6aceeaf9c6",
+      "beforeBytes": 278206,
+      "afterSHA256": "338fa6410438726ecf87e2ee7d194941328d34319ad2d3f1a603f4ce1b55fca0",
+      "afterBytes": 282288,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/ts/slide-20.webp",
+      "beforeSHA256": "c798cd1cd893eacc647b1c5be539c9f7ab6abc7115e4a15b5036be343c11f43d",
+      "beforeBytes": 679742,
+      "afterSHA256": "55af9470969340caf253d5d2517e043a56f3f994f57b525c30be7f0c06c3c3ce",
+      "afterBytes": 683528,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ts",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/ts/slide-21.webp",
+      "beforeSHA256": "7e7852b14f2af72f14344ae767831d4a91fe7e6cf214e8756103d1998996feac",
+      "beforeBytes": 295106,
+      "afterSHA256": "364256acd6fb9cd6e96411ecc35f2e2e6a0633521e85a6622be6e3dc4e9e5edb",
+      "afterBytes": 293052,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slide": 8,
+      "url": "/course-decks/reading-landscape/ve/slide-08.webp",
+      "beforeSHA256": "352f5fcdbcaa5fd9fc9f5cdb98f615c7104cd14c710f8100ccc224ee5362f4b7",
+      "beforeBytes": 350528,
+      "afterSHA256": "482671a00bb5921f847c870ef84896426b1fe3cda5c70a51559c28e7dc455646",
+      "afterBytes": 350196,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "language": "ve",
+      "slide": 15,
+      "url": "/course-decks/reading-landscape/ve/slide-15.webp",
+      "beforeSHA256": "f5de184b40074ee714735d7f18ba2a2ab5bba357365f0802f2bd273d5834d922",
+      "beforeBytes": 439240,
+      "afterSHA256": "03143d8c2f56902c7477867ffac737979a3f0b819fd2fcee59b3ac5f7e30294d",
+      "afterBytes": 428172,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 1,
+      "url": "/course-decks/vegetables-staples/st/slide-01.webp",
+      "beforeSHA256": "c97c79c0f5c80fea9b14d9e64e7c863adf45ca90fd1ed76722a1e3bc7a6a5d10",
+      "beforeBytes": 318552,
+      "afterSHA256": "906bf743d0f6c6d8acde49feaf19d932a51948f82fed551f98dcd552f4eb9350",
+      "afterBytes": 312522,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 2,
+      "url": "/course-decks/vegetables-staples/st/slide-02.webp",
+      "beforeSHA256": "a43adbc56cdcf624a51676db75b82a1d7fa422261c2aff36e15928e56e588d85",
+      "beforeBytes": 306926,
+      "afterSHA256": "3a3baf8ebd7307c56267b6ac026a5d20c67d1febfb000a0330f22f7cbd1a50b2",
+      "afterBytes": 298460,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 3,
+      "url": "/course-decks/vegetables-staples/st/slide-03.webp",
+      "beforeSHA256": "bd02f1aeef2791d7a2a2a36600dd6fba6e9d912d804a5d83fc78898ba3d4ed87",
+      "beforeBytes": 353616,
+      "afterSHA256": "1d1ac94e7c0afc43a4cc1f74d03a8bbf96adb7050e41e56a2ebcd587c1eb8d4b",
+      "afterBytes": 365306,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 4,
+      "url": "/course-decks/vegetables-staples/st/slide-04.webp",
+      "beforeSHA256": "87ff48c696791e274a5aa628fba319a473f792824441b7615a4ec9d4a6bc7b58",
+      "beforeBytes": 705574,
+      "afterSHA256": "a4b4546bfbef5d3f7fadbe841729cf02541d767f59e6acf9e9cc854b592e4c78",
+      "afterBytes": 712162,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 5,
+      "url": "/course-decks/vegetables-staples/st/slide-05.webp",
+      "beforeSHA256": "0dde3d170d4ca801cb4723bd1dbe70d407a7c9780e42048edfee851c8b0f69af",
+      "beforeBytes": 424336,
+      "afterSHA256": "ea69b4b68ea28d201c7c8612b7e30a6ecc87c765537ac2246be4ff5f0f4902dd",
+      "afterBytes": 432050,
+      "dimensions": [
+        1440,
+        5432
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 6,
+      "url": "/course-decks/vegetables-staples/st/slide-06.webp",
+      "beforeSHA256": "b257be07546844d9187e16ed0781fb3849a29c29fc92c8636e3f75b4c5a793ee",
+      "beforeBytes": 592852,
+      "afterSHA256": "2d1305265c3ca9a4fe0e6ec4d42dcb433a6960b8c51e7c6d56ef051528545b8f",
+      "afterBytes": 618898,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 7,
+      "url": "/course-decks/vegetables-staples/st/slide-07.webp",
+      "beforeSHA256": "e6c73d9201ee06765f4ca967eb6256ba8624bf81d15ff8173c578da6eebf8be9",
+      "beforeBytes": 689852,
+      "afterSHA256": "d95c83b8f21c968ec415abb05c321c6825ad92a81119354e3d8a08061c77e7f8",
+      "afterBytes": 695432,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 8,
+      "url": "/course-decks/vegetables-staples/st/slide-08.webp",
+      "beforeSHA256": "6d30593d48f6573278506c83f3e8cf2ae3e79e9baa5a8e9d434024b708830586",
+      "beforeBytes": 363718,
+      "afterSHA256": "bdd28b94e4bb6958d285ac7139d8cfff6935e1a3f5593513e1effe94d09e3db4",
+      "afterBytes": 433146,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 10,
+      "url": "/course-decks/vegetables-staples/st/slide-10.webp",
+      "beforeSHA256": "b84ed3e0e5e4a2cd46ad634118785f5ae39a226e5fd145e9dfd032e254a38d73",
+      "beforeBytes": 785054,
+      "afterSHA256": "44ca2eba0ff68be735a2a20e4591dfe8116281ced4e75da7353d245e4172f74b",
+      "afterBytes": 787104,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 11,
+      "url": "/course-decks/vegetables-staples/st/slide-11.webp",
+      "beforeSHA256": "ca8ab801336a3aa955988680dacccbce14ac54f5cac72440a10cfa3e0f5839f6",
+      "beforeBytes": 322910,
+      "afterSHA256": "c17a59c2d039b08fcc6389957b70f9f574558292bacdc57fdb3a073cf883efb2",
+      "afterBytes": 387272,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 12,
+      "url": "/course-decks/vegetables-staples/st/slide-12.webp",
+      "beforeSHA256": "af5332669355af72435e160b49ccc046aa1ca7cabd7e267327bff13cad1bf805",
+      "beforeBytes": 453456,
+      "afterSHA256": "41f1de9f4e2a35bf60440ff84605badce7583acb67fdcb16cf8a8045ed4800d2",
+      "afterBytes": 456714,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 15,
+      "url": "/course-decks/vegetables-staples/st/slide-15.webp",
+      "beforeSHA256": "c6e362ef53e745a398e43cb2eb5bcee15d67881d4bbbcc3c00520f28304336c2",
+      "beforeBytes": 573684,
+      "afterSHA256": "a32b6b14f2578af0032d2e4833b8e1d6f14c3eed80f58b1026223c14bbc69bb3",
+      "afterBytes": 578812,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 16,
+      "url": "/course-decks/vegetables-staples/st/slide-16.webp",
+      "beforeSHA256": "04fc8f88476d90bc5bf3cfcac6796ea0f8181000f8a8d2512dd8eded68ad8760",
+      "beforeBytes": 570806,
+      "afterSHA256": "49a3f5c356b0dc9683181231ab0322c42673269c815994a5f77538c43833fa02",
+      "afterBytes": 570296,
+      "dimensions": [
+        1440,
+        5576
+      ],
+      "beforeDimensions": [
+        1440,
+        5576
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "st",
+      "slide": 18,
+      "url": "/course-decks/vegetables-staples/st/slide-18.webp",
+      "beforeSHA256": "39d56dbf730a9851dc24ab9d58ea93d036e22ecc96bc1881d87928061ac24a30",
+      "beforeBytes": 328482,
+      "afterSHA256": "09ef40cfd421bce768a0266c4d2ee9c75bed62c64048ff5305023282482d35ce",
+      "afterBytes": 326068,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 1,
+      "url": "/course-decks/vegetables-staples/ts/slide-01.webp",
+      "beforeSHA256": "f73d1e8e07a79449bcc104be9363a0fce6933e1f53586a527dd7c80e6cd1c172",
+      "beforeBytes": 310660,
+      "afterSHA256": "f3dfd9a6c21c3e8fee11e8609f0cb3aac9e043333b7c7a5dd57b72cd0610a7c6",
+      "afterBytes": 306926,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 3,
+      "url": "/course-decks/vegetables-staples/ts/slide-03.webp",
+      "beforeSHA256": "df59fa5ca6667bea75c5be0c0f028d2c6cfc9bf29a387b10208d03fa7b9f68ce",
+      "beforeBytes": 369630,
+      "afterSHA256": "eaddbbc1f41e8c8bc1249d6b5918dd8a67beeacf87e332d02ecf1ed034fd55e5",
+      "afterBytes": 377738,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 4,
+      "url": "/course-decks/vegetables-staples/ts/slide-04.webp",
+      "beforeSHA256": "f16438bb4765c452573c56e8da5f7c07465085c8075156fe1af86b8131b77971",
+      "beforeBytes": 727924,
+      "afterSHA256": "3072d30c8e0c291a134fe4181483d5af6381c561eed1c69f88da98821286f0d7",
+      "afterBytes": 729312,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 6,
+      "url": "/course-decks/vegetables-staples/ts/slide-06.webp",
+      "beforeSHA256": "240369b94b8505cb6fd0aa026279d14a2b25195e66fd632de071c43d4db0480d",
+      "beforeBytes": 615486,
+      "afterSHA256": "792439e78ff332a5367fbb3837e5f81584c65d4bc8bd81adbd30b4ee26b6e598",
+      "afterBytes": 616526,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 11,
+      "url": "/course-decks/vegetables-staples/ts/slide-11.webp",
+      "beforeSHA256": "bf0ff87ae50e032aa0f0f2e30915169df3fa70fdeacd71510e3854643a7ff7cc",
+      "beforeBytes": 391148,
+      "afterSHA256": "e65d5f7897f6c3d269abb80839bf1d6a8b061054ed6cfb71e4459b2f76b1ee89",
+      "afterBytes": 411772,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 12,
+      "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+      "beforeSHA256": "68787536fa97df39a1ef9dad92f56e933f8568fe077361082dee8ac982073272",
+      "beforeBytes": 459056,
+      "afterSHA256": "6809b5e6646626052be0c0e4f3f8c91f72939c78c9f92f0de34686ad9005a1af",
+      "afterBytes": 466162,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 16,
+      "url": "/course-decks/vegetables-staples/ts/slide-16.webp",
+      "beforeSHA256": "23bac0c09a53f95c19c83af54252b69d2ab02dc289061c14f56adf0fac979b56",
+      "beforeBytes": 563958,
+      "afterSHA256": "be11677b26a07a9ff9ca7da1c77d1a1c20a3c3f2517a6aa97cd99ce1866ced7a",
+      "afterBytes": 564256,
+      "dimensions": [
+        1440,
+        5642
+      ],
+      "beforeDimensions": [
+        1440,
+        5642
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 17,
+      "url": "/course-decks/vegetables-staples/ts/slide-17.webp",
+      "beforeSHA256": "06a595f71cc80467e9f6b0a818ec2ee2f17b3c889323590ab6ffbca4fcce346f",
+      "beforeBytes": 370800,
+      "afterSHA256": "627d545e4d371621332a1ebc567cc15ff4b33161757320259ac3f1b626043c35",
+      "afterBytes": 370080,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ts",
+      "slide": 18,
+      "url": "/course-decks/vegetables-staples/ts/slide-18.webp",
+      "beforeSHA256": "78585c444170641c704a7867c3eecfaeb539fce87745e4daba2b1d5e2d395934",
+      "beforeBytes": 332356,
+      "afterSHA256": "a12083d198d00c148b9b1ba517f1fd3503517afc5f96b6d48bd3c9422ce39e48",
+      "afterBytes": 329138,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "language": "ve",
+      "slide": 3,
+      "url": "/course-decks/vegetables-staples/ve/slide-03.webp",
+      "beforeSHA256": "7c6c8b408453108067b09bcc5f1cc6c21ca6a8255ad883828321bff7419112e8",
+      "beforeBytes": 362984,
+      "afterSHA256": "d93053f9da1764d0202b70e6b85404432a8ed1da46c21e17ea25eb6343f17f49",
+      "afterBytes": 360300,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ]
+    }
+  ],
+  "pathCorrection": [
+    {
+      "archivePath": "public/course-decks/intro-permaculture/st/slide-10.webp",
+      "archiveRestoredSHA256": "f6b864e5b480b639f7f25ada16cf78fb4a3fc2509904c9ad238bab7021bee191",
+      "actualActivePath": "public/course-decks/intro-permaculture/st-silent/slide-10.webp",
+      "reason": "Active Sesotho Introduction is the declared st-silent release; recorded st paths belong to immutable audio archive."
+    },
+    {
+      "archivePath": "public/course-decks/intro-permaculture/st/slide-11.webp",
+      "archiveRestoredSHA256": "44e4ae1d408c60e409158a05de20be32c463ee398861d563cf2985394babbc6a",
+      "actualActivePath": "public/course-decks/intro-permaculture/st-silent/slide-11.webp",
+      "reason": "Active Sesotho Introduction is the declared st-silent release; recorded st paths belong to immutable audio archive."
+    },
+    {
+      "archivePath": "public/course-decks/intro-permaculture/st/slide-12.webp",
+      "archiveRestoredSHA256": "48cd0ef7de44a3c73ba45720d4c35a9dd54166e60c71fd53089eccfe80920394",
+      "actualActivePath": "public/course-decks/intro-permaculture/st-silent/slide-12.webp",
+      "reason": "Active Sesotho Introduction is the declared st-silent release; recorded st paths belong to immutable audio archive."
+    },
+    {
+      "archivePath": "public/course-decks/intro-permaculture/st/slide-13.webp",
+      "archiveRestoredSHA256": "c5257c90b0188b6bc2f7366c011d4cf9f49512e80e8896281dd0b96f71cd4671",
+      "actualActivePath": "public/course-decks/intro-permaculture/st-silent/slide-13.webp",
+      "reason": "Active Sesotho Introduction is the declared st-silent release; recorded st paths belong to immutable audio archive."
+    },
+    {
+      "archivePath": "public/course-decks/intro-permaculture/st/slide-14.webp",
+      "archiveRestoredSHA256": "e5c31d0cda31f9f61457f10e771c8263d403633f339d63b55b6cf91d745ace4a",
+      "actualActivePath": "public/course-decks/intro-permaculture/st-silent/slide-14.webp",
+      "reason": "Active Sesotho Introduction is the declared st-silent release; recorded st paths belong to immutable audio archive."
+    }
+  ]
+}

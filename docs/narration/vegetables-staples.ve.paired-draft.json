@@ -86,9 +86,12 @@
               },
               {
                 "sourceEnglish": "The garden is full of plants, but there's no food in it.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Garden yo ḓala zwimela, fhedzi a hu na zwiḽiwa khayo.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: Garden"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "draft",
@@ -126,7 +129,9 @@
             "text": "Musi ri tshi fhedza iyi module, ni ḓo kona u dzhia tsheo nṋa tsimuni yaṋu."
           },
           {
-            "status": "english-hold"
+            "status": "draft",
+            "text": "Tsha u thoma. Fhaṱani bed yo teaho — ni ite uri width na bed type zwi yelane na mavu aṋu na mvula ya fhethu haṋu.",
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -189,9 +194,11 @@
               },
               {
                 "sourceEnglish": "when one crop fails.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "musi crop iṅwe i tshi kundelwa."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           },
           {
             "status": "mixed",
@@ -203,7 +210,8 @@
               },
               {
                 "sourceEnglish": "Read a pest problem",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ṱolani pest problem"
               },
               {
                 "sourceEnglish": " before you ",
@@ -226,13 +234,16 @@
               },
               {
                 "sourceEnglish": "A well-shaped bed still fails if everything goes in on one day. ",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "A well-shaped bed i kha ḓi kundelwa arali zwoṱhe zwa ṱavhiwa nga ḓuvha ḽithihi. "
               },
               {
                 "sourceEnglish": "A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "U ṱavha mifuda yo fhambanaho hu kha ḓi konḓelwa arali na dzhia every yellow leaf sa thaidzo ya zwikhokhonono."
               }
-            ]
+            ],
+            "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
           }
         ]
       }
@@ -251,12 +262,13 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Midzi i ṱoḓa loose soil; paths dzi ṱoḓa milenzhe yaṋu."
         },
         "body": [
           {
             "status": "draft",
-            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed gets harder to work kha khalaṅwaha iṅwe na iṅwe."
+            "text": "Mavu o petetsanaho a xedza zwikhala zwa muya. Midzi i aluwa nga u ongolowa. Maḓi a nwela nga nḓila yo fhambanaho. Bed i a konḓa u shuma khayo khalaṅwaha iṅwe na iṅwe u fhira khalaṅwaha yo fhiraho."
           },
           {
             "status": "mixed",
@@ -324,7 +336,8 @@
       },
       "target": {
         "heading": {
-          "status": "english-hold"
+          "status": "draft",
+          "text": "Khethani bed u ya nga soil na rainfall."
         },
         "body": [
           {
@@ -452,7 +465,9 @@
               },
               {
                 "sourceEnglish": "dry ground",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "mavu o omaho",
+                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": ", where you want to catch and hold what rain you get.",
@@ -495,7 +510,9 @@
               },
               {
                 "sourceEnglish": "They do better",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Zwi ita khwine",
+                "reason": "Exact checked learner predicate reuse; unreviewed machine draft and English paired."
               },
               {
                 "sourceEnglish": " sown straight where they'll grow. ",
@@ -601,7 +618,9 @@
               },
               {
                 "sourceEnglish": "local conditions",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "nyimele dza henefho",
+                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": ". Check the packet and ",
@@ -610,7 +629,9 @@
               },
               {
                 "sourceEnglish": "local grower advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "nyeletshedzo ya vhalimi vha henefho",
+                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": ". Watch for crowding as plants develop.",
@@ -873,7 +894,8 @@
             },
             {
               "sourceEnglish": "Your Hungry Gap",
-              "status": "english-hold"
+              "status": "draft",
+              "text": "Hungry gap yaṋu"
             }
           ]
         },
@@ -884,7 +906,7 @@
           },
           {
             "status": "draft",
-            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho when water limits the garden."
+            "text": "Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela. I nga ḓa musi winter greens dzi sa athu u luga. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni."
           },
           {
             "status": "draft",
@@ -1235,7 +1257,9 @@
               },
               {
                 "sourceEnglish": ", barriers",
-                "status": "english-hold"
+                "status": "draft",
+                "text": ", zwithivheli",
+                "reason": "Root full-context meaning review accepted ordinary fragment; indexed independent composition check passed. Machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": " or changes in ",
@@ -1393,7 +1417,9 @@
             "segments": [
               {
                 "sourceEnglish": "Check the bed regularly from planting.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "Ṱolani bed regularly u bva musi wa u ṱavha.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: bed, regularly, ten-day photograph, assignment checkpoint"
               },
               {
                 "sourceEnglish": " Use the ",
@@ -1414,7 +1440,8 @@
                 "status": "draft",
                 "text": "hu si tshiitisi tsha u lenga u tshi ṱhogomela."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1499,7 +1526,9 @@
               },
               {
                 "sourceEnglish": " What germinated.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Zwine zwa no mela.",
+                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
               },
               {
                 "sourceEnglish": " Pest pressure.",
@@ -1507,7 +1536,9 @@
               },
               {
                 "sourceEnglish": " What you harvested.",
-                "status": "english-hold"
+                "status": "draft",
+                "text": " Zwine na no kaṋa.",
+                "reason": "Root source-bound repair removes added quantifier, preserves property scope with English land, or preserves completed observation. Independent composition checked; machine draft, not fluent reviewed.; 2026-10-07."
               }
             ],
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open"
@@ -1521,27 +1552,13 @@
                 "text": "Khalaṅwaha iṅwe na iṅwe,"
               },
               {
-                "sourceEnglish": " your garden ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "becomes less dependent on guesswork",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": " — and more on ",
-                "status": "english-hold"
-              },
-              {
-                "sourceEnglish": "what you've actually seen happen",
+                "sourceEnglish": " your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
                 "status": "draft",
-                "text": "zwe na zwi vhona zwa vhukuma zwi tshi itea"
-              },
-              {
-                "sourceEnglish": " on your own ground.",
-                "status": "english-hold"
+                "text": " garden yaṋu i ya i tshi fhungudza u ḓitika nga u humbulela — nahone i tshi engedza u ḓitika nga zwe na zwi vhona zwa vhukuma zwi tshi itea fhethu haṋu.",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: garden"
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
             "status": "mixed",
@@ -1553,14 +1570,17 @@
               },
               {
                 "sourceEnglish": "with reliable local advice",
-                "status": "english-hold"
+                "status": "draft",
+                "text": "na nyeletshedzo i fulufhedzeaho ya henefho",
+                "reason": "Meaning-bounded existing semantic units composed together; retained English nouns/comparatives have full-clause context: "
               },
               {
                 "sourceEnglish": " when making the next decision.",
                 "status": "draft",
                 "text": " musi ni tshi dzhia tsheo i tevhelaho."
               }
-            ]
+            ],
+            "provenance": "2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           }
         ]
       }

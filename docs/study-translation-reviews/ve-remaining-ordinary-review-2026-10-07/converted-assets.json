@@ -1,0 +1,320 @@
+{
+  "status": "compressed images require root visual and full gate review",
+  "assets": [
+    {
+      "module": "intro-permaculture",
+      "slide": 6,
+      "url": "/course-decks/intro-permaculture/ve/slide-06.webp",
+      "beforeSHA256": "70af79fcdbcff8bf7054e28effdc41e1af839a1a12a2054961d6227b8cddf377",
+      "afterSHA256": "240e881d4a66a677e0191d5f58f89bad877ad124799e26f182db3e1c64d594ff",
+      "beforeBytes": 591756,
+      "afterBytes": 592290,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 7,
+      "url": "/course-decks/intro-permaculture/ve/slide-07.webp",
+      "beforeSHA256": "d1fbd447a267bd954ab8182773077c1b4a396692d24ddc1bde921d28f46a1934",
+      "afterSHA256": "ba18fcaf852eb7d101b67e613050c841c2afad9cfe150d87dbfaf454da2b6c1d",
+      "beforeBytes": 362988,
+      "afterBytes": 364092,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 10,
+      "url": "/course-decks/intro-permaculture/ve/slide-10.webp",
+      "beforeSHA256": "d0b72d49087429e40a7e0acc35d0ef0f1674306767211f6905f9e9cf91d3f461",
+      "afterSHA256": "dcdb53ef06270336ed18c1c125708eb143ae9084c35ecd96a15fc7958255e0e5",
+      "beforeBytes": 706566,
+      "afterBytes": 706654,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 11,
+      "url": "/course-decks/intro-permaculture/ve/slide-11.webp",
+      "beforeSHA256": "91e747f606e5a2deee9bbc2bdee3d8b36e2ebac7bb1bbdddea6c73f5ce7dbfc6",
+      "afterSHA256": "a4e43dc2e645e410db33da8cf0c880c0888cb53b18ddfd2880690e7df4608df0",
+      "beforeBytes": 274042,
+      "afterBytes": 271102,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 14,
+      "url": "/course-decks/intro-permaculture/ve/slide-14.webp",
+      "beforeSHA256": "3ab1826ae447bf417304c17229c9139c16a891782c63714c127d7ab792db9d89",
+      "afterSHA256": "7fad0c7909ca184d9c6a80be0031741e95312a05773ca7eea6641ad5ee3254cb",
+      "beforeBytes": 457820,
+      "afterBytes": 456122,
+      "dimensions": [
+        1440,
+        5414
+      ],
+      "beforeDimensions": [
+        1440,
+        5402
+      ],
+      "renderedDimensions": [
+        1440,
+        5414
+      ]
+    },
+    {
+      "module": "market-community",
+      "slide": 11,
+      "url": "/course-decks/market-community/ve/slide-11.webp",
+      "beforeSHA256": "f047c1070038519a4d6646c4a11c47f951bc9c1ddc57fd4f90bd37fc48af570c",
+      "afterSHA256": "5cd599eeade76bfeb041e589708db61ab96ef531138842f4274019eaf288e5a5",
+      "beforeBytes": 299768,
+      "afterBytes": 298320,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 1,
+      "url": "/course-decks/reading-landscape/ve/slide-01.webp",
+      "beforeSHA256": "346d555c301242b880e16a03f888df4dd7ff0a1c1452bb7112746a6fa4f6e8ad",
+      "afterSHA256": "9fbdaf74d820aed35d26729daa47be8e397c17addba51b7ac1941451da3a6849",
+      "beforeBytes": 271350,
+      "afterBytes": 267454,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 4,
+      "url": "/course-decks/reading-landscape/ve/slide-04.webp",
+      "beforeSHA256": "156f2fc776fbf56978a56e34901196c8852d6a652fe56410bfbaaa97a9cb3a6a",
+      "afterSHA256": "776858cecf6eedf068c248881aab8c38e8ead16796516af021c5144dca181ba1",
+      "beforeBytes": 263978,
+      "afterBytes": 261798,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 18,
+      "url": "/course-decks/reading-landscape/ve/slide-18.webp",
+      "beforeSHA256": "5f431aabbcb78f1c08fbabbd4a996aa229dcb42ff59037bd7f4f7ef420fc3d97",
+      "afterSHA256": "b82bb5e3a67f43eacdf64ebe33bfb52e573cf4cd081adcae1b867e513b4f6c5c",
+      "beforeBytes": 592056,
+      "afterBytes": 591494,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 20,
+      "url": "/course-decks/reading-landscape/ve/slide-20.webp",
+      "beforeSHA256": "90e5bd933803eeae3e3c8ee61d0da22f8f03cd725635a60dca5315a71701cf5a",
+      "afterSHA256": "9f751773c2d7338f101353cc0f3c093870050e740b200e5a9d06194aae57e5bc",
+      "beforeBytes": 689538,
+      "afterBytes": 687860,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 21,
+      "url": "/course-decks/reading-landscape/ve/slide-21.webp",
+      "beforeSHA256": "47948f3d1910ad14a20615fd5421ea9ba8e38af25231bdf3aafa9760d829d7fd",
+      "afterSHA256": "a9bbffb804edb1f1615d4cedde1b0cd3758c973be293bcfec4a2efd9a2e60c81",
+      "beforeBytes": 297338,
+      "afterBytes": 297858,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 5,
+      "url": "/course-decks/vegetables-staples/ve/slide-05.webp",
+      "beforeSHA256": "769cd4bc66955a8bc720a71a5a06b4548d0884346369992455878f1be69bc735",
+      "afterSHA256": "fd066a12c86c75b08f7a399775a6070547ada07c64b3787bffb5545ded4e5e56",
+      "beforeBytes": 421732,
+      "afterBytes": 421386,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 6,
+      "url": "/course-decks/vegetables-staples/ve/slide-06.webp",
+      "beforeSHA256": "8cc1de07002dae7f0f7df4336579d97ed8e2a1bf52854827a410656f7462de0b",
+      "afterSHA256": "ae624e6c02dc5d6d3ae246e26f4a68e6bd2501992e270678b77bd6c963bdf230",
+      "beforeBytes": 602090,
+      "afterBytes": 603260,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 16,
+      "url": "/course-decks/vegetables-staples/ve/slide-16.webp",
+      "beforeSHA256": "8a59816c2e57b1f678ff93df1b5e4f17db95808ad028114188511785ed8d8036",
+      "afterSHA256": "fd74f68d5af1c37e41d2be6c299a22d5669ab4896110ce558e12acfeec03ae43",
+      "beforeBytes": 567984,
+      "afterBytes": 572626,
+      "dimensions": [
+        1440,
+        5734
+      ],
+      "beforeDimensions": [
+        1440,
+        5734
+      ],
+      "renderedDimensions": [
+        1440,
+        5734
+      ]
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 18,
+      "url": "/course-decks/vegetables-staples/ve/slide-18.webp",
+      "beforeSHA256": "6103835cc981b9e394699007b8a1c7c3c63a99f7048a191d5abd1f77443a2f87",
+      "afterSHA256": "552364b09fc8275acf2cf1dcae7bbd50dabf8d94b200ee9d84fd0f3246c57d86",
+      "beforeBytes": 332694,
+      "afterBytes": 327768,
+      "dimensions": [
+        1440,
+        5400
+      ],
+      "beforeDimensions": [
+        1440,
+        5400
+      ],
+      "renderedDimensions": [
+        1440,
+        5400
+      ]
+    }
+  ]
+}

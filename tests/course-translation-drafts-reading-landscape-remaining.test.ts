@@ -1,3 +1,4 @@
+import { comparisonsPlan } from './reading-comparisons-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,6 +10,7 @@ import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-dra
 import { XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ts.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { nativeOrdinaryBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
+import { coreHeldOrdinaryPairBefore } from './core-held-ordinary-history-checks.ts';
 
 const firstObservationsProof = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-FIRST-OBSERVATIONS-IMPLEMENTATION-2026-10-05.json', import.meta.url), 'utf8')) as {
   pairedFieldsApplied: Array<{
@@ -110,6 +112,13 @@ const expectedParagraph = (language: Language, lessonId: string, index: number, 
     assert.equal(final.sourceEnglish, source.body.split('\n\n')[index], `${final.order}: newest native overlay stays source-bound`);
     historical = final.appliedTarget;
   }
+  // The 7 October layer keeps full prior ancestry before changing only its accepted paragraph leaves.
+  const comparison = comparisonsPlan.candidates.find((r: any) => r.language === language && r.lessonId === lessonId && r.field === `body.paragraph${index}`);
+  if (comparison) {
+    assert.equal(historical, comparison.before);
+    assert.equal(source.body.split("\n\n")[index], comparison.sourceEnglish);
+    historical = comparison.candidate;
+  }
   return historical;
 };
 const assertFallback = (language: Language, lessonId: string, sourceParagraph: string) => {
@@ -135,7 +144,10 @@ test('Reading observation drafts retain their exact source and geometry through 
   assert.deepEqual(new Set(firstObservationsProof.pairedFieldsApplied.map(row => `${row.language}:${row.slide}:${row.index}`)), selected,
     'the original observation release remains identifiable independently of later authorized fields');
   for (const language of ['st', 've', 'ts'] as const) {
-    const paired = JSON.parse(readFileSync(new URL(`../docs/narration/reading-landscape.${language}.paired-draft.json`, import.meta.url), 'utf8'));
+    // Later ordinary terms replace some literal holds. Validate the complete
+    // new layer before keeping the original observation/source/geometry claims.
+    const path = `docs/narration/reading-landscape.${language}.paired-draft.json`;
+    const paired = coreHeldOrdinaryPairBefore(path,JSON.parse(readFileSync(path,'utf8')));
     const checked = validatePairedDraft(paired, source, language);
     for (const row of firstObservationsProof.pairedFieldsApplied.filter(item => item.language === language)) {
       const slide = checked[row.slide - 1];
@@ -257,7 +269,7 @@ test('Reading body extensions preserve checked field ancestry, crop age and site
     assert.match(young, language === 'st' ? /dipokotho tse tlase tse tsejwang.*pele o jala/ : language === 've' ? /known low frost pockets.*sa athu ṱavha/ : /tindhawu ta le hansi leti tiviwaka.*nga se byala/);
   }
   const veWind = currentParagraph('ve', 'reading-landscape-l3', 0);
-  assert.match(veWind, /your site's ridges and gaps/);
+  assert.match(veWind, /dzi-ridges and gaps dza tshitentsi tshaṋu/);
   assert.match(veWind, /rekhodo dza mutsho wa henefho.*sa athu dzhia tsheo/, 'local records precede choosing shelter');
   const veMap = currentParagraph('ve', 'reading-landscape-l4', 1);
   assert.match(veMap, /khakibos.*blackjack.*disturbed places/);
@@ -293,13 +305,14 @@ test('Reading frost observations keep full-season comparisons, weather condition
   const tsCold = currentParagraph('ts', 'reading-landscape-l3', 1);
   assert.match(tsCold, /vusiku byo tenga ni byo rhula.*moya wo titimela wu nga khulukela ehansi.*hlengeletana/);
   assert.match(tsCold, /ti nga titimela ku tlurisa tindhawu to rhelela leti nga ekusuhi/, 'can-be-colder and nearby slopes remain explicit');
-  assert.match(tsCold, /through the local frost season/);
+  assert.match(tsCold, /eka nguva hinkwayo ya xirhami ya laha kaya/);
   assert.match(tsCold, /matsalwa ya mahiselo ya le hansi swinene ya laha kaya loko ma kumeka/, 'minimum-temperature records retain local/availability conditions');
   assert.match(tsCold, /Loko ma nga ri kona.*vusiku byo titimela.*mutsundzuxi wa swa vurimi wa laha kaya.*nga si hlawula.*tender seedlings/, 'no-record fallback retains continued cold-night observations and adviser before placement');
   const veCold = currentParagraph('ve', 'reading-landscape-l3', 1);
   assert.match(veCold, /vhu sa na makole, hu si na muya.*u nga elela u tshi ya fhasi/i);
   assert.match(veCold, /hu nga rothola u fhira u sendama ha mavu ha tsini/);
-  assert.match(veCold, /candidate places through the local frost season/);
+  // The full-site and duration clause now has independently checked ordinary Venda wording.
+  assert.match(veCold, /Vhambedzani fhethu hune ha nga nangiwa hone kha khalaṅwaha yoṱhe ya tshando ya henefho/);
   assert.match(veCold, /minimum temperatures.*henefho hune dza wanala hone/);
   assert.match(veCold, /Arali dzi sa wanali.*vhusiku vhu rotholaho.*mueletshedzi wa zwa vhulimi wa henefho.*sa athu nanga.*tender seedlings/);
   for (const language of ['st', 've', 'ts'] as const) {
@@ -310,11 +323,11 @@ test('Reading frost observations keep full-season comparisons, weather condition
     'mist alone is not proof and damage can occur without visible ice');
     assert.match(frost, language === 'st' ? /ho bata kapa tshenyo.*nako e telele ka ho fetisisa/ : language === 've' ? /u rothola kana tshinyalo.*tshifhinga tshilapfusesa/ : /cold or damage.*nkarhi wo leha ngopfu/,
       'longest-lasting cold or damage determines where to mark');
-    assert.match(frost, language === 'st' ? /Boloka.*hole le.*cold pockets/ : language === 've' ? /Keep sensitive plants away from the cold pockets/ : /Hlayisa.*ekule ni cold pockets/);
+    assert.match(frost, language === 'st' ? /Boloka.*hole le.*cold pockets/ : language === 've' ? /Vhetshelani zwimela zwi sa konḓeleliho kule na cold pockets dzine na dzi vhona/ : /Hlayisa.*ekule ni cold pockets/);
     const rationalePair = lesson(language, 'reading-landscape-l3').quiz[0].rationale;
     const rationale = bodyText(rationalePair);
     assert.equal(rationalePair.sourceEnglish, module.lessons[2].quiz[0].rationale);
-    assert.match(rationale, language === 'st' ? /pholletsa le sehla sa frost sa sebakeng seo/ : /through the local frost season/,
+    assert.match(rationale, language === 'st' ? /pholletsa le sehla sa frost sa sebakeng seo/ : language === 've' ? /kha khalaṅwaha yoṱhe ya tshando ya henefho/ : /eka nguva hinkwayo ya xirhami ya laha kaya/,
       'the full frost-season comparison remains explicit in both the exact English anchor and localized wording');
     assert.match(rationale, language === 'st' ? /hase sesupo se le seng feela.*ha ho na.*tiisang/ : language === 've' ? /a si yone fhedzi.*a hu na.*fulufhedzisa/ : /a hi yona ntsena.*a ku na.*tiyisekisaka/,
       'visible frost is not the only sign and no hillside placement guarantees freedom from frost');

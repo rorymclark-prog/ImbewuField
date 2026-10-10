@@ -1,0 +1,198 @@
+{
+  "module": "reading-landscape",
+  "lessonId": "reading-landscape-l4",
+  "sourceRevision": "869f1d5c2063b3cbfd72802e222dd8d3fc6d7c23",
+  "sourceEnglish": {
+    "id": "reading-landscape-l4",
+    "infographicUrl": "/course-images/reading-landscape/reading-landscape-l4.jpg",
+    "infographicAlt": "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
+    "title": "Making a Simple Site Map: Your Design Starts on Paper",
+    "body": "A site map needs paper, a tape measure, a compass, and time to walk your land. Walk the boundary and make a first sketch. Mark it 'not to scale' until you have checked its distances. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick. These plants can grow in disturbed places, but their presence alone does not show whether soil is compacted. Check the soil before deciding what the patch means for your design.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+    "keyPoints": [
+      "A site map needs only paper, a tape measure, a compass, and observation",
+      "Mark water flow, wind direction, frost pockets, and existing vegetation",
+      "Mark thick khakibos or blackjack growth for a closer soil check; it does not prove compaction",
+      "Overlay zones and sectors on your base map to complete the design skeleton"
+    ],
+    "quiz": [
+      {
+        "q": "You notice thick blackjack growing in one corner every year. What should you do next?",
+        "options": [
+          "The soil there is exceptionally fertile",
+          "That area has a higher water table",
+          "Mark the patch and check the soil; the plant alone cannot show compaction",
+          "Blackjack only grows in shade, so there's a hidden seep"
+        ],
+        "correct": 2,
+        "rationale": "Blackjack can grow in disturbed ground, but its presence alone does not diagnose compaction. Observe and check the soil before deciding what the patch means for your design."
+      },
+      {
+        "q": "Why mark summer and winter wind separately on your site map?",
+        "options": [
+          "Wind direction never changes in SA",
+          "They can come from different directions, changing where windbreaks and tender crops should go",
+          "Wind only matters in winter on the Highveld",
+          "Wind direction only affects buildings"
+        ],
+        "correct": 1,
+        "rationale": "Seasonal wind shifts mean a windbreak or crop placement that works for one season can be wrong for the other — so both need marking separately."
+      }
+    ]
+  },
+  "sourceSha256": "5ea6c1fb41a2db78c829bd8a843e2584c3223fd9367cb1dc31fd260784d1b483",
+  "languages": {
+    "zu": {
+      "content": {
+        "title": "Ukwenza Imephu Elula Yendawo: Uhlelo Lwakho Luqala Ephepheni",
+        "body": "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nesikhathi sokuhamba emhlabeni wakho. Hamba emngceleni wenze umdwebo wokuqala. Maka ukuthi umdwebo awukabi ngesikali kuze kube usuwahlolile amabanga awo. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo. Dweba imicibisholo ekhombisa umoya wasehlobo nowasebusika, imithunzi, nalapho amanzi egeleza khona uma lina.\n\nQaphela izindawo lapho i-frost ihlala khona isikhathi eside, nalapho umhlabathi unuka sengathi umanzi phakathi nezinyanga ezomile. Maka lapho i-khakibos noma i-blackjack ikhula khona kakhulu. Lezi zitshalo zingakhula ezindaweni eziphazamisekile, kodwa ukuba khona kwazo kukodwa akubonisi ukuthi umhlabathi ucindezelekile. Hlola umhlabathi ngaphambi kokunquma ukuthi leyo ndawo isho ukuthini ohlelweni lwakho.\n\nBeka ama-zone nama-sector ebalazweni elifanayo. Buyekeza umdwebo wakho ngokushintsha kwezinkathi zonyaka. Umdwebo wepensela owusebenzisayo uwusizo kakhulu kunomephu ephelele edwetshwe kanye kuphela.",
+        "keyPoints": [
+          "Ukuze wenze i-site map, udinga iphepha, i-tape measure, i-compass nokubuka indawo yakho kuphela.",
+          "Maka ukugeleza kwamanzi, uhlangothi okuvela kulo umoya, izindawo eziqongelela i-frost, nezitshalo esezikhona.",
+          "Maka lapho i-khakibos noma i-blackjack ikhula khona kakhulu ukuze uhlole umhlabathi eduze; lokho kukodwa akufakazeli ukuthi umhlabathi ucindezelekile.",
+          "Beka ama-zone nama-sector ebalazweni eliyisisekelo ukuze uqedele uhlaka lomklamo."
+        ],
+        "quiz": [
+          {
+            "q": "Uyaqaphela ukuthi i-blackjack ikhula kakhulu ekhoneni elilodwa minyaka yonke. Yini okufanele uyenze ngokulandelayo?",
+            "options": [
+              "Umhlabathi lapho uvunde ngokweqile",
+              "Amanzi angaphansi komhlaba asondele kakhulu kuleyo ndawo",
+              "Maka leyo ndawo bese uhlola umhlabathi; lesi sitshalo sodwa asikwazi ukukhombisa ukuthi umhlabathi ucindezelekile",
+              "I-blackjack ikhula emthunzini kuphela, ngakho kunamanzi avuzayo angabonakali"
+            ],
+            "correct": 2,
+            "rationale": "I-blackjack ingakhula emhlabathini ophazamisekile, kodwa ukuba khona kwayo kukodwa akusho ukuthi umhlabathi ucindezelekile. Bheka futhi uhlole umhlabathi ngaphambi kokunquma ukuthi leyo ndawo isho ukuthini ohlelweni lwakho."
+          },
+          {
+            "q": "Kungani kufanele umake ngokwehlukana umoya wasehlobo nowasebusika ebalazweni lendawo yakho?",
+            "options": [
+              "Uhlangothi okuvela kulo umoya alushintshi eNingizimu Afrika",
+              "Zingavela ezinhlangothini ezahlukene, okungashintsha lapho kufanele kubekwe khona ama-windbreak nezitshalo ezizwela umoya",
+              "Umoya ubalulekile ebusika kuphela e-Highveld",
+              "Uhlangothi oluvela kulo umoya luthinta izakhiwo kuphela"
+            ],
+            "correct": 1,
+            "rationale": "Njengoba uhlangothi okuvela kulo umoya lungashintsha ngokwenkathi, i-windbreak noma indawo yezitshalo esebenza kahle kwenye inkathi ingase ingafanele kwenye. Ngakho maka zombili izinkathi ngokwehlukana."
+          }
+        ],
+        "infographicAlt": "Imephu yesiza edwetshwe ngesandla ephepheni ikhombisa inyakatho, izakhiwo, amanzi nomngcele; ingumdwebo olula, njengalowo umlimi angawudweba."
+      },
+      "status": "draft"
+    },
+    "st": {
+      "content": {
+        "title": "Ho Etsa Mmapa o Bonolo wa Setsha (Site Map): Moralo wa Hao o Qala Pampiring",
+        "body": "Mmapa wa setsha (site map) o hloka pampiri, tepi e methang (tape measure), khampase (compass), le nako ya ho tsamaya lefatsheng la hao. Tsamaya moeding mme o etse setshwantsho sa pele sa letsoho (sketch). Se tshwaye 'not to scale' ho fihlela o hlahlobile bohole ba sona. Tshwaya leboya. Kenya ntlo, difate, metsi, ditsela, fences. Taka metsu bakeng sa moya wa lehlabula le wa mariha, mekgwa ya moriti, le moo metsi a phallang teng ha pula e na.\n\nHlokomela moo serame se dulang nako e telele ka ho fetisisa, moo fatshe ho nkgang mongobo dikgweding tse omileng, le moo khakibos kapa blackjack di melang di le ngata haholo. Dimela tsena di ka mela dibakeng tse tshwenngweng (disturbed places), empa boteng ba tsona feela ha bo bontshe hore na mobu o kitlane (compacted). Hlahloba mobu pele o etsa qeto ya hore na sebaka seo se bolela eng bakeng sa moralo wa hao.\n\nBeha dibaka tsa hao (zones) le makala (sectors) hodima sona setshwantsho seo sa pele. Se ntjhafatse sehla ka sehla. Setshwantsho sa pentshele seo o hlileng o se sebedisang se na le boleng bo boholo ho feta se setle haholo se takilweng hanngwe feela.",
+        "keyPoints": [
+          "Mmapa wa setsha (site map) o hloka feela pampiri, tepi e methang, khampase, le tlhokomelo",
+          "Tshwaya phallo ya metsi, nqa ya moya, dipokotho tsa serame, le dimela tse teng",
+          "Tshwaya moo khakibos kapa blackjack di melang di le ngata, ebe o hlahloba mobu ka hloko; sena ha se pake hore mobu o kitlane.",
+          "Beha di-zone le makala (sectors) hodima mmapa wa hao wa motheo ho phethela masapo a moralo"
+        ],
+        "quiz": [
+          {
+            "q": "O hlokomela blackjack e teteaneng e mela sekgutlong se seng selemo le selemo. O lokela ho etsa eng e latelang?",
+            "options": [
+              "Mobu o teng o nonne ka mokgwa o ikgethang",
+              "Sebaka seo se na le metsi a ka tlasa lefatshe a phahameng haholo (higher water table)",
+              "Tshwaya sebaka seo mme o hlahlobe mobu; semela ka bosona se ke ke sa bontsha ho kitlana ha mobu (compaction)",
+              "Blackjack e mela feela moriting, kahoo ho na le seretse se patilweng (hidden seep)"
+            ],
+            "correct": 2,
+            "rationale": "Blackjack e ka mela mobung o tshwenngweng (disturbed ground), empa boteng ba yona feela ha bo hlahlobe ho kitlana ha mobu (compaction). Hlokomela le ho hlahloba mobu pele o etsa qeto ya hore na sebaka seo se bolela eng bakeng sa moralo wa hao."
+          },
+          {
+            "q": "Ke hobaneng ha o tshwaya moya wa lehlabula le wa mariha ka thoko mmapeng wa hao wa setsha (site map)?",
+            "options": [
+              "Nqa ya moya ha e mohla e fetohang SA",
+              "E ka tswa nqeng tse fapaneng, e fetola moo disireletsi tsa moya (windbreaks) le dijalo tse bonolo di lokelang ho ya teng",
+              "Moya o bohlokwa feela mariha Highveld",
+              "Nqa ya moya e ama feela meaho"
+            ],
+            "correct": 1,
+            "rationale": "Diphetoho tsa moya ho latela sehla di bolela hore sesireletsi sa moya (windbreak) kapa sebaka sa dijalo se sebetsang hantle sehleng se seng se ka ba fosahetseng sehleng se seng — kahoo ka bobedi di hloka ho tshwauwa ka thoko."
+          }
+        ],
+        "infographicAlt": "Mmapa wa setsha (site map) o takilweng ka letsoho pampiring o bontshang leboya, meaho, metsi, le moedi — e matsapa, jwalo ka ha molemi a ka e taka."
+      },
+      "status": "draft"
+    },
+    "ve": {
+      "content": {
+        "title": "U Ita Mmapa wo Lelewaho wa Tshitentsi (Site Map): Nyolo yaṋu i Thoma Baphani",
+        "body": "Mmapa wa tshitentsi (site map) u ṱoḓa bapha, theiphi yo kalaho (tape measure), khamphasi (compass), na tshifhinga tsha u tshimbila muvuni waṋu. Tshimbilani mukanoni nahone ni ite nyolo ya u thoma. I swayeni 'not to scale' u swikela ni tshi tola vhukule hayo. Swayani devhula (north). Engedzani nnḓu, miri, maḓi, bada, fences. Olani misevhe ya muya wa tshilimo na wa vhuria, maitele a murunzi, na hune maḓi a elela hone musi hu tshi na mvula.\n\nṰhogomelani hune tshando tsha dzula tshifhinga tshilapfusesa, hune mavu a nunukha vhunyisi kha miṅwedzi yo omaho, na hune khakibos kana blackjack zwa mela zwo tsitsikana. Zwimela izwi zwi nga mela fhethu ho vhilinganywaho (disturbed places), fhedzi u vha hone hazwo fhedzi a zwi sumbedzi arali mavu o tsitsikana (compacted). Ṱolani mavu ni sa athu dzhia tsheo ya zwine patch ya amba kha design yaṋu.\n\nVheani dzi-zone na dzi-sector dzaṋu kha yeneyo nyolo ya u thoma. I vusuluseni khalaṅwaha nga khalaṅwaha. Nyolo ya penisela ine na i shumisa vhukuma i na ndeme khulwane u fhira yo nakiswaho yo olwaho luthihi fhedzi.",
+        "keyPoints": [
+          "Mmapa wa tshitentsi u ṱoḓa fhedzi bapha, theiphi yo kalaho, khamphasi, na ṱhogomelo",
+          "Swayani u elela ha maḓi, thungo ya muya, milindi ya tshando, na zwimela zwi re hone",
+          "Swayani hune khakibos kana blackjack zwa mela zwo tsitsikana uri ni tole mavu nga vhuronwane; zwenezwi a zwi sumbedzi uri mavu o tsitsikana.",
+          "Vheani dzi-zone na dzi-sector kha mmapa waṋu wa mutheo u itela u fhedzisa marambo a nyolo"
+        ],
+        "quiz": [
+          {
+            "q": "Ni vhona blackjack yo tsitsikanaho i tshi mela kha khoṋa iṅwe ṅwaha muṅwe na muṅwe. Ni fanela u ita mini zwi no tevhela?",
+            "options": [
+              "Mavu a henefho o nona nga nḓila yo khetheaho",
+              "Henefho fhethu hu na maḓi a re fhasi ha mavu a re nṱha vhukuma (higher water table)",
+              "Swayani henefho fhethu nahone ni tole mavu; tshimela tshi tshoṱhe a tshi koni u sumbedza u tsitsikana ha mavu (compaction)",
+              "Blackjack i mela fhedzi murunzini, ngauralo hu na fhethu hu no bva maḓi ho dzumbamaho"
+            ],
+            "correct": 2,
+            "rationale": "Blackjack i nga mela kha mavu o vhilinganywaho, fhedzi u vha hone hayo hu hoṱhe a zwi sumbedzi u tsitsikana ha mavu (compaction). Ṱhogomelani nahone ni tole mavu musi ni sa athu dzhia tsheo ya uri patch i amba mini kha design yaṋu."
+          },
+          {
+            "q": "Ndi ngani ni tshi swaya muya wa tshilimo na wa vhuria thungo kha mmapa waṋu wa tshitentsi (site map)?",
+            "options": [
+              "Thungo ya muya a i shanduki na kathihi kha SA",
+              "Zwi nga bva thungo dzo fhambanaho, zwa shandula hune windbreaks na zwimela zwi sa konḓeleliho zwa fanela u vhewa hone.",
+              "Muya u vha wa ndeme fhedzi vhuria ngei Highveld",
+              "Thungo ya muya i kwama zwifhaṱo fhedzi"
+            ],
+            "correct": 1,
+            "rationale": "U shanduka ha muya kha khalaṅwaha zwi amba uri tshithivhela-muya (windbreak) kana u vhewa ha zwimela hune ha shuma kha iṅwe khalaṅwaha zwi nga vha zwo khakhea kha iṅwe — ngauralo swayani muya wa tshilimo na wa vhuria nga u fhambanya."
+          }
+        ],
+        "infographicAlt": "Mmapa wa tshitentsi (site map) wo olwaho nga tshanḓa baphani u sumbedzaho devhula (north), zwifhaṱo, maḓi, na mukano — zwi songo vhudzwaho, sa zwine mulimi a nga zwi ola ngaho."
+      },
+      "status": "draft"
+    },
+    "ts": {
+      "content": {
+        "title": "Ku Endla Mepe Wo Olova wa Ndhawu: Dizayini ya Wena yi Sungula eka Phepha",
+        "body": "Mepe wa ndhawu wu lava phepha, thepi yo pima, khompasi, na nkarhi wo fambafamba eka misava ya wena. Famba hi le mindzilakaneni u endla xifaniso xo sungula. Xi tsale 'not to scale' kukondza u kambela mipimo ya kona. Fungha n'walungu. Engetela yindlu, mirhi, mati, magondzo, fences. Dirowa miseve ya moya wa ximumu na vuxika, matirhele ya ndzhuti, na laha mati ma khulukaka kona eka mpfula.\n\nTsala laha frost yi tshamaka kona nkarhi wo leha ngopfu, laha misava yi nun’hwaka yi tsakama hi tin’hweti leti omeke, ni laha khakibos kumbe blackjack yi milaka yi talile. Swimilana leswi swi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka swona ntsena a ku kombisi leswaku misava yi tsindziyerile. Kambela misava u nga se teka xiboho xa leswi ndhawu leyi yi vulaka swona eka design ya wena.\n\nVeka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+        "keyPoints": [
+          "Mepe wa ndhawu wu lava ntsena phepha, thepi yo pima, khompasi, na ku xiyisisa",
+          "Fungha ku khuluka ka mati, tlhelo ra moya, swikhele swa xirhami, na swimilana leswi nga kona",
+          "Fungha ku mila ko tlhuma ka khakibos kumbe blackjack leswaku u kambisisa misava kahle; a swi tiyisekisi ku sindzeka ka misava",
+          "Veka ti-zone na ti-sector ehenhla ka mepe wa wena wa masungulo ku hetisa rimba ra dizayini"
+        ],
+        "quiz": [
+          {
+            "q": "U xiya blackjack leyi tlhumeke yi mila eka khona yin'we lembe na lembe. I yini lexi u faneleke ku xi endla lexi landzelaka?",
+            "options": [
+              "Misava ya kwalaho yi nonile ngopfu hi ndlela yo hlawuleka",
+              "Ndhawu yoleyo yi na xiteji xa le henhla xa mati ya le hansi ka misava",
+              "Fungha ndhawu yoleyo u tlhela u kambela misava; ximilana ntsena a xi nge kombisi ku sindzeka ka misava",
+              "Blackjack yi mila ntsena endzhutini, kutani ku na mati lama nghenaka lama tumbeleke"
+            ],
+            "correct": 2,
+            "rationale": "Blackjack yi nga kula etindhawini leti kavanyetiweke, kambe ku va kona ka yona ntsena a ku kombisi compaction. Xiya u tlhela u kambela misava u nga se teka xiboho xa leswi ndhawu yoleyo yi vulaka swona eka design ya wena."
+          },
+          {
+            "q": "Hikwalaho ka yini u fungha moya wa ximumu na wa vuxika hi ku hambana eka mepe wa wena wa ndhawu?",
+            "options": [
+              "Tlhelo ra moya a ri cinci eka SA",
+              "Ti nga huma eka matlhelo yo hambana, leswi cincaka laha windbreaks ni swimilana leswi tsaneke swi faneleke ku ya kona",
+              "Moya wu na nkoka ntsena hi vuxika eka Highveld",
+              "Tlhelo ra moya ri khumba ntsena miako"
+            ],
+            "correct": 1,
+            "rationale": "Ku cinca ka moya hi nguva swi vula leswaku windbreak kumbe ndhawu yo byala leyi tirhaka eka nguva yin’we yi nga va yi nga ri kahle eka nguva yin’wana. Hikolaho fungha tlhelo ra moya wa ximumu ni ra vuxika hi ku hambana."
+          }
+        ],
+        "infographicAlt": "Mepe wa ndhawu lowu dirowiweke hi voko ephepheni wu kombaka n'walungu, miako, mati, na ndzilakano — wo hambana-hambana, hilaha murimi a nga wu dirowaka hakona."
+      },
+      "status": "draft"
+    }
+  },
+  "fluentApproval": false
+}

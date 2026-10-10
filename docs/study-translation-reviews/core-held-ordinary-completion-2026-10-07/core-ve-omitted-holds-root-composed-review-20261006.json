@@ -1,0 +1,258 @@
+{
+  "status": "Data-only root verification/composition; not learner-wired or published; no fluent approval",
+  "inputSHA256": "625046f00f6443f6e0f393e9b2e770b9696b5eb84aca2190c65cebab1bdfe7e9",
+  "allTenCurrentBindingsVerified": [
+    "reading-landscape-ve-slide8-body[1]-segment0",
+    "reading-landscape-ve-slide8-body[1]-segment2",
+    "reading-landscape-ve-slide8-body[1]-segment4",
+    "reading-landscape-ve-slide8-body[1]-segment6",
+    "reading-landscape-ve-slide8-body[1]-segment8",
+    "reading-landscape-ve-slide8-body[1]-segment10",
+    "reading-landscape-ve-slide8-body[2]-segment1",
+    "reading-landscape-ve-slide12-body[2]-segment1",
+    "reading-landscape-ve-slide15-body[0]-segment4",
+    "vegetables-staples-ve-slide3-body[3]-segment4"
+  ],
+  "composedGroups": [
+    {
+      "file": "docs/narration/reading-landscape.ve.paired-draft.json",
+      "fileSHA256": "8983f26957deb484c0a04bd039ac814fdfb35d812315036071c71846da2f3ddb",
+      "slide": 8,
+      "field": "body[1]",
+      "sourceEnglish": "North-facing slopes often get more sun and can be warmer and drier. South-facing slopes are often cooler and moister. Frost can collect in low hollows where cold air settles.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "North-facing slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " often get more sun and can be ",
+            "text": " kanzhi dzi wana ḓuvha ḽinzhi nahone dzi nga vha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "warmer and drier",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "South-facing slopes",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " are often ",
+            "text": " kanzhi dzi vha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "cooler and moister",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " can collect in ",
+            "text": " i nga kuvhangana kha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "low hollows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " where cold air settles.",
+            "text": " hune muya wo rotholaho wa dzula hone.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Unreviewed source-bound machine draft; independent semantic backcheck; facilitator review pending; not fluent-speaker or farming approval."
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "North-facing slopes",
+            "status": "draft",
+            "text": "slopes dzine dza sedza devhula"
+          },
+          {
+            "sourceEnglish": " often get more sun and can be ",
+            "text": " kanzhi dzi wana ḓuvha ḽinzhi nahone dzi nga vha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "warmer and drier",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "South-facing slopes",
+            "status": "draft",
+            "text": "slopes dzine dza sedza tshipembe"
+          },
+          {
+            "sourceEnglish": " are often ",
+            "text": " kanzhi dzi vha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "cooler and moister",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": ". ",
+            "text": ". ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "Frost",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " can collect in ",
+            "text": " i nga kuvhangana kha ",
+            "status": "draft"
+          },
+          {
+            "sourceEnglish": "low hollows",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " where cold air settles.",
+            "text": " hune muya wo rotholaho wa dzula hone.",
+            "status": "draft"
+          }
+        ],
+        "provenance": "Source-bound unreviewed machine draft; root checked direction and crop-level failure meaning; facilitator fluency review remains open."
+      },
+      "changes": [
+        {
+          "id": "reading-landscape-ve-slide8-body[1]-segment0",
+          "segmentIndex": 0,
+          "source": "North-facing slopes",
+          "text": "slopes dzine dza sedza devhula"
+        },
+        {
+          "id": "reading-landscape-ve-slide8-body[1]-segment4",
+          "segmentIndex": 4,
+          "source": "South-facing slopes",
+          "text": "slopes dzine dza sedza tshipembe"
+        }
+      ],
+      "visibleCandidate": "slopes dzine dza sedza devhula kanzhi dzi wana ḓuvha ḽinzhi nahone dzi nga vha warmer and drier. slopes dzine dza sedza tshipembe kanzhi dzi vha cooler and moister. Frost i nga kuvhangana kha low hollows hune muya wo rotholaho wa dzula hone."
+    },
+    {
+      "file": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "fileSHA256": "3dc7d86d7a9ec0d58db7a70baaf4357ed57c58a0df9d4bc7fcb1b0d92ba11db2",
+      "slide": 3,
+      "field": "body[3]",
+      "sourceEnglish": "Three. Choose staples that protect you when one crop fails.",
+      "before": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Tsha vhuraru. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Nangani "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that protect you ",
+            "status": "draft",
+            "text": " dzi ni tsireledzaho "
+          },
+          {
+            "sourceEnglish": "when one crop fails.",
+            "status": "english-hold"
+          }
+        ]
+      },
+      "after": {
+        "status": "mixed",
+        "segments": [
+          {
+            "sourceEnglish": "Three. ",
+            "status": "draft",
+            "text": "Tsha vhuraru. "
+          },
+          {
+            "sourceEnglish": "Choose ",
+            "status": "draft",
+            "text": "Nangani "
+          },
+          {
+            "sourceEnglish": "staples",
+            "status": "english-hold"
+          },
+          {
+            "sourceEnglish": " that protect you ",
+            "status": "draft",
+            "text": " dzi ni tsireledzaho "
+          },
+          {
+            "sourceEnglish": "when one crop fails.",
+            "status": "draft",
+            "text": "musi crop iṅwe i tshi kundelwa."
+          }
+        ],
+        "provenance": "Source-bound unreviewed machine draft; root checked direction and crop-level failure meaning; facilitator fluency review remains open."
+      },
+      "changes": [
+        {
+          "id": "vegetables-staples-ve-slide3-body[3]-segment4",
+          "segmentIndex": 4,
+          "source": "when one crop fails.",
+          "text": "musi crop iṅwe i tshi kundelwa."
+        }
+      ],
+      "visibleCandidate": "Tsha vhuraru. Nangani staples dzi ni tsireledzaho musi crop iṅwe i tshi kundelwa."
+    }
+  ],
+  "rootRepairs": [
+    {
+      "id": "reading-landscape-ve-slide8-body[2]-segment1",
+      "source": "tender crops, trees, or buildings.",
+      "rejected": "zwimela, miri kana zwifhaṱo zwi pfelaho u rothola.",
+      "candidate": "tender crops, miri kana zwifhaṱo.",
+      "reason": "Tender modifies crops only; rejected target applies cold sensitivity to crops, trees and buildings. Preserve technical tender crops while translating separate trees/buildings objects. This new composition still needs independent check."
+    },
+    {
+      "id": "reading-landscape-ve-slide8-body[1]-segment6",
+      "source": "cooler and moister",
+      "rejected": "dzi tshi rothola u fhira na u nukala u fhira",
+      "reason": "u nukala may mean smelling rather than moisture; do not publish unchanged candidate. Cooler/moister comparative grammar needs repair."
+    },
+    {
+      "id": "reading-landscape-ve-slide15-body[0]-segment4",
+      "source": "No hillside position guarantees freedom from frost.",
+      "candidate": "A hu na fhethu kha hillside hune ha khwaṱhisedza u sa vha hone ha frost.",
+      "reason": "Retain hillside/frost scope anchors rather than mountain substitution; no position guarantees absence, not a claim of universal frost. New candidate needs independent check."
+    }
+  ],
+  "remainingConditions": "Warm/dry and cool/moist comparison proposals require grammar/meaning check in complete assembled clause. Frost/low hollows/slope remain precise technical holds, not falsely marked translated."
+}

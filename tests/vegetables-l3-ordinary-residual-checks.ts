@@ -1,3 +1,4 @@
+import { finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -110,7 +111,7 @@ export function vegetablesDeckBeforeL3Ordinary<T>(language: VegetablesLanguage, 
 
 export function vegetablesL3PresentationBeforeOrdinary(lesson: Lesson, language: VegetablesLanguage) {
   vegetablesBeforeL3Ordinary(language, ordinaryDrafts[language]);
-  const shown = structuredClone(resolveLearnerLessonPresentation(lesson, language));
+  const shown = finalLanguageNextPresentationBefore(structuredClone(resolveLearnerLessonPresentation(lesson, language)), lesson.id, language);
   if (lesson.id !== 'vegetables-staples-l3' || shown.status !== 'draft') return shown;
   const paragraphs = shown.content.body.split('\n\n');
   for (const row of ordinaryRows.filter(row => row.language === language)) {

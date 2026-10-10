@@ -1,0 +1,19 @@
+{
+  "status": "Data-only, not learner-wired, no release approval",
+  "baseMain": "ece319713ce4acee43951769303bc33286940dff",
+  "firstHelperReportRejected": "Generic acceptance and wrong repeated-site occurrence composition; corrected indexed report replaces it.",
+  "identityRepairRowsRejectedForApplication": [
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    81
+  ],
+  "identityReason": "Unchanged English land must remain English hold; changing status to translated would be pseudo-translation.",
+  "otherRepairs": "Require root full field composition/meaning review; do not bulk apply.",
+  "ordinaryGapPolicy": "Repair defensible ordinary wording; uncertainty in a draft packet does not count as completed translation.",
+  "noFluentApproval": true
+}

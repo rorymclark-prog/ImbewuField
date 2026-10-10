@@ -1,0 +1,856 @@
+{
+  "language": "st",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Introduction to Permaculture",
+        "body": [
+          "Before you dig anything, it helps to know how the decisions get made.",
+          "This module is the foundation for everything else in the course. Three ethics, a set of design principles, and one simple way to organise your land.",
+          "None of it needs money. All of it changes where you put things, and how far you walk every day.",
+          "Think about your own plot. Which part of it do you visit most often?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Selelekela sa Permaculture"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Pele o cheka ntho efe kapa efe, ho thusa ho tseba hore na diqeto di etswa jwang."
+          },
+          {
+            "status": "draft",
+            "text": "Thuto ena ke motheo wa tsohle tse ding thutong ena. E na le melao e meraro ya boitshwaro, melao-motheo ya moralo, le mokgwa o le mong o bonolo wa ho hlophisa mobu wa hao."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho le e nngwe ya dintho tsena e hlokang tjhelete. Tsona kaofela di fetola moo o behang dintho teng le hore o tsamaya sebaka se se kae letsatsi le leng le le leng."
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka tshimo ya hao. Ke karolo efe ya yona eo o e etelang hangata ho feta tse ding?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "A good design saves work before you pick up a spade.",
+          "Most of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.",
+          "Permaculture is a way of deciding where things go, so the land works with you instead of against you.",
+          "Think of one job on your farm that takes longer than it should. Where does the time actually go?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Lebaka Leo Sena se Leng Bohlokwa ka Lona"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Moralo o motle o fokotsa mosebetsi pele o nka garawe."
+          },
+          {
+            "status": "draft",
+            "text": "Mosebetsi o mongata polasing e nyenyane ha se ho lema kapa ho kotula. Ke ho tsamaya, ho rwala le ho lokisa se neng se behilwe sebakeng se fosahetseng."
+          },
+          {
+            "status": "draft",
+            "text": "Permaculture ke mokgwa wa ho etsa qeto ya hore dintho di be hokae, e le hore mobu o sebetse mmoho le wena ho e-na le ho o sitisa."
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka mosebetsi o le mong polasing ya hao o nkang nako e telele ho feta kamoo o lokelang. Nako eo e ya hokae?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module you will be able to do three things.",
+          "Name the three ethics, and use them to settle a decision that has no obvious answer.",
+          "Name the design principles that matter most on your land, and say why.",
+          "Sketch your zones and your sectors on one sheet of paper.",
+          "That sketch is the skeleton of every plan you make after this."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Dintho Tseo o Tla Kgona ho di Etsa"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Qetellong ya thuto ena o tla kgona ho etsa dintho tse tharo."
+          },
+          {
+            "status": "draft",
+            "text": "Bolela melao e meraro ya boitshwaro, mme o e sebedise ho rarolla qeto e se nang karabo e totobetseng."
+          },
+          {
+            "status": "draft",
+            "text": "Bolela melao-motheo ya moralo e leng bohlokwa haholo mobung wa hao, mme o bolele lebaka."
+          },
+          {
+            "status": "draft",
+            "text": "Rala zones le sectors tsa hao pampiring e le nngwe."
+          },
+          {
+            "status": "draft",
+            "text": "Setshwantsho seo ke motheo wa moralo o mong le o mong oo o tla o etsa kamora moo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Earth Care",
+        "body": [
+          "The first ethic is Earth Care.",
+          "It means treating soil, water, plants and animals as living systems to protect, not resources to use up.",
+          "A system you use up stops paying you. A system you protect keeps paying you.",
+          "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tlhokomelo ya Lefatshe"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa pele wa boitshwaro ke Tlhokomelo ya Lefatshe (Earth Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Ho bolela ho nka mobu, metsi, dimela le diphoofolo e le ditsamaiso tse phelang tse lokelang ho sireletswa, eseng mehlodi eo re ka e sebedisang ho fihlela e fela."
+          },
+          {
+            "status": "draft",
+            "text": "Tsamaiso eo o e sebedisang ho fihlela e fela ha e sa o tswela molemo. Tsamaiso eo o e sireletsang e tswela pele ho o tswela molemo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sheba karolo e le nngwe ya mobu o se nang dimela tshimong ya hao. Na ho na le ntho e o sireletsang hona jwale?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "People Care",
+        "body": [
+          "The second ethic is People Care.",
+          "Your family's needs come first, then your community's.",
+          "A farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.",
+          "The farm is meant to feed the household that runs it.",
+          "What comes off your land that your own family never eats?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Tlhokomelo ya Batho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa bobedi wa boitshwaro ke Tlhokomelo ya Batho (People Care)."
+          },
+          {
+            "status": "draft",
+            "text": "Ditlhoko tsa lelapa la hao di tla pele, ebe ho latela tsa setjhaba sa heno."
+          },
+          {
+            "status": "draft",
+            "text": "Molemi ya rekisang lehe le leng le le leng le moroho o mong le o mong, mme a sa boloke letho bakeng sa dijo tsa lelapa, o tlola People Care.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Polasi e reretswe ho fepa lelapa le e tsamaisang."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng e tswang mobung wa hao eo lelapa la hao le sa e jeng?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Fair Share",
+        "body": [
+          "The third ethic is Fair Share.",
+          "Take only what you need, and return the surplus to the system — seeds, food, water, knowledge.",
+          "A farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.",
+          "A community that fences off a shared spring is breaking it too.",
+          "What does your land get back from you each season?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Karolelano e Lokileng (Fair Share)"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Molao wa boraro wa boitshwaro ke Karolelano e Lokileng (Fair Share)."
+          },
+          {
+            "status": "draft",
+            "text": "Nka feela seo o se hlokang, mme o kgutlisetse tse setseng tsamaisong — dipeo, dijo, metsi, tsebo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Molemi ya rekisang poone yohle e setseng mme a sa boloke letho bakeng sa compost kapa peo, o tlola molao ona. Ha ho letho le kgutlelang morao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Setjhaba se teratang sediba se sebediswang ke bohle se tlola molao ona le sona.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Mobu wa hao o fumana eng ho wena sehleng ka seng?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Watch: One Decision, Three Ethics",
+        "body": [
+          "A borehole serves your household. Neighbours ask for water too.",
+          "First find out if sharing is allowed. Check whether the borehole can serve all users without taking too much. If sharing is allowed and there is enough water, agree how to share fairly and keep watching the water level. People Care and Fair Share guide the agreement. Earth Care means protecting the source. Watching the level alone does not make extra use safe or allowed.",
+          "Who could help you check the rules and the water supply?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Qeto e le Nngwe, Melao e Meraro ya Boitshwaro"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Borehole e sebeletsa lelapa la hao. Baahisani le bona ba kopa metsi.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Pele fumana hore na ho arolelana ho dumelletswe. Lekola hore na borehole e ka sebeletsa basebedisi bohle ntle le ho nka metsi a mangata haholo. Haeba ho arolelana ho dumelletswe mme metsi a lekane, dumellanang kamoo le ka arolelanang ka toka mme le tswele pele ho lekola boemo ba metsi. People Care le Fair Share di tataisa tumellano. Earth Care e bolela ho sireletsa mohlodi. Ho sheba boemo feela ha ho etse hore tshebediso e eketsehileng e bolokehe kapa e dumellwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ke mang ya ka o thusang ho sheba melao le phepelo ya metsi?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "When There Is No Rulebook",
+        "body": [
+          "This is what the ethics are actually for.",
+          "A neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.",
+          "The ethics help you weigh the choices and explain your decision. Check the rules and ask permission where it is needed.",
+          "Build these three into how you think before you build anything on the ground."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ha ho na buka ya melao.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ke ka lebaka lena melao ya boitshwaro e leng teng."
+          },
+          {
+            "status": "draft",
+            "text": "Moahisani o kopa ho fula dikgomo ka mora komello. Morwallo o senya swales tsa hao. Ha ho motho ya ngotseng karabo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Melao ya boitshwaro e o thusa ho lekanya dikgetho le ho hlalosa qeto ya hao. Lekola melao mme o kope tumello moo e hlokahalang.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Kenya melao ena e meraro tseleng eo o nahanang ka yona pele o haha eng kapa eng fatshe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Twelve Principles",
+        "body": [
+          "David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren co-originated the permaculture concept.",
+          "You do not need all twelve to start. Three useful starting points for this lesson are: observe and interact, catch and store energy, and use edges and value the marginal.",
+          "We will take those three one at a time."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Melao-motheo e Leshome le Metso e Mmedi"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "David Holmgren o hlalositse melao-motheo e leshome le metso e mmedi ya moralo bukeng ya *Essence of Permaculture*. Bill Mollison le David Holmgren ba thehile mohopolo wa permaculture mmoho."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho hlokahale hore o qale ka melao e leshome le metso e mmedi kaofela. Dintlha tse tharo tse molemo tsa ho qala thutong ena ke: observe and interact, catch and store energy, le use edges and value the marginal.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Re tla bua ka e nngwe le e nngwe ya melao-motheo eo e meraro ka bonngwe."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Observe and Interact",
+        "body": [
+          "Watch your land through a full season before you commit to major earthworks.",
+          "One storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.",
+          "This helps you understand the site. It does not by itself show that a swale is suitable or safe to build. Before digging, check the soil, slope, drainage and a safe overflow route that will not cause erosion or send damaging water to neighbours. Ask a trained local adviser to assess the site.",
+          "Where does water leave your land? Do you actually know, or are you guessing?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sheba mme o sebelisane",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Shebella setsha sa hao sehleng sohle pele o itlama ka major earthworks.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sefefo se le seng se bontsha motsotso o le mong. Sehla sohle sa dipula se bontsha mokgwa — moo metsi a phallang, moo a bokellanang, le moo a sa fihleheng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Sena se thusa ho utlwisisa setsha. Ka bosona ha se bontshe hore swale e loketse kapa e bolokehile ho aha. Pele o cheka, lekola mobu, slope, drainage le safe overflow route e ke keng ya baka erosion kapa ya romela metsi a senyang ho baahisani. Kopa trained local adviser ho lekola setsha.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Metsi a tloha kae setsheng sa hao? Na o tseba e le kannete, kapa o a hakanya?",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Catch and Store Energy",
+        "body": [
+          "Harvest rain, sun and biomass before they leave your property.",
+          "Every one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.",
+          "Compare the cost and work with the benefit on your own farm.",
+          "Name one thing that arrives on your land free and leaves again without being used."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Bokella matla mme o a boloke",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Bokella pula, letsatsi le biomass pele di tloha setsheng sa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "E nngwe le e nngwe ya tsona e fihla e sa lefellwe mme e tsamaya e sa lefellwe. Metsi a phalla a tloha, makgasi a fefolwa ke moya, letsatsi le kganyetsa mobu o se nang dimela."
+          },
+          {
+            "status": "draft",
+            "text": "Bapisa ditshenyehelo le mosebetsi le molemo polasing ya hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Bolela ntho e le nngwe e fihlang mobung wa hao e sa lefellwe, ebe e boela e tsamaya e sa sebediswa."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Use Edges and Value the Marginal",
+        "body": [
+          "The edge is where two things meet — a fence line or the strip beside a path.",
+          "These can be useful places to observe. Look at what already grows well along yours. That is the land telling you something.",
+          "Which edge on your plot is doing nothing at the moment?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sebedisa mathoko mme o ananele dibaka tse ka thoko",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Moeli ke moo lintho tse peli li kopanang teng — joalo ka mola oa terata kapa sebaka se pela tsela."
+          },
+          {
+            "status": "draft",
+            "text": "Libaka tsena li ka ba molemo bakeng sa ho shebella. Sheba hore na ke eng e seng e mela hantle pela moeli oa hao. Seo ke tsela eo mobu o u bolellang ho hong ka eona."
+          },
+          {
+            "status": "draft",
+            "text": "Ke karolo efe ea moeli setšeng sa hao e sa etse letho hona joale?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Use and Value Diversity",
+        "body": [
+          "Use and value diversity. Hail injury to maize depends on the storm and the crop’s growth stage. This principle does not promise that a crop will survive every event.",
+          "Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.",
+          "What would one bad day cost you right now?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sebedisa mefuta-futa mme o e ananele",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sebedisa diversity mme o e nke e le bohlokwa. Tshenyo ya sefako pooneng e itshetlehile ka sefefo le growth stage ya crop. Molao-motheo ona ha o tshepise hore crop e tla pholoha ketsahalo e nngwe le e nngwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tse ding tse pedi tseo ho leng molemo ho di tseba: produce no waste, kahoo masalla a fetoha compost mme compost e fetoha mobu. Hape, use small and slow solutions — bakete e ka nosetsa bed ntle le motlakase ho hang.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Letsatsi le lebe le le leng le ka o jella bokae hona jwale?",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Integrate Rather Than Segregate",
+        "body": [
+          "Put each element where it works for its neighbours.",
+          "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+          "The same three things, fenced apart, do only their own job.",
+          "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kopanya ho e-na le ho arola",
+          "provenance": "Unreviewed source-bound machine draft; root semantic/composition checks recorded in attached authority files; exact English source remains unchanged; no fluent/local farming or Shangani approval."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Beha karolo ka nngwe moo e sebeletsang tse e potileng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Serapa, difate tsa ditholwana le chicken run di hlophisitswe hore dikgoho rotate through the beds after harvest — hoo ke integration. Boloka dikgoho hole le dijalo tse kotulwang bakeng sa dijo. Manyoro a foreshe a ka jara germs. Kopa extension adviser hore a hlalose kamoo bed e lokelang ho laolwa ka polokeho pele dijalo tse jewang di kgutla. Dikgoho di ka clean up pests le ho eketsa fertility ho ena le ho dula di sa sebetse ka pen e sa fetoheng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Lintho tsona tseo tse tharo, ha li arotsoe ka terata, li etsa mosebetsi oa tsona feela."
+          },
+          {
+            "status": "draft",
+            "text": "Kgetha melao-motheo e mmedi kapa e meraro e buang ka bothata ba hao bo boholo, mme o e sebedise ka matla. Tse setseng di tla bonahala ha o ntse o tswela pele.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Zones: Organising by How Often You Visit",
+        "body": [
+          "Zones run from 0 to 5, and they are about your feet, not your fences.",
+          "Zone 0 is the house. In this example, Zone 1 is near the house and holds herbs and salad greens picked often.",
+          "Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.",
+          "Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zones: Ho hlophisa ho latela hore na o etela hangata hakae.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zones di qala ho 0 ho isa ho 5, mme di mabapi le maeto a hao, eseng terata ya hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 0 ke ntlo. Mohlaleng ona, Zone 1 e haufi le ntlo mme e na le herbs le salad greens tse kotulwa kgafetsa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 2 ke main garden le chicken run, tse etelwang hang kapa habedi ka letsatsi. Zone 3 ke main field, e etelwang beke le beke.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Zone 4 ke semi-wild — difate tsa ditholwana le fodder tse hlokang tlhokomelo ka dinako tse ding. Zone 5 e tlohelwa e le wild.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Keep Daily Crops Close",
+        "body": [
+          "Herbs you pick often are easier to tend near the house.",
+          "Put them far away, and the long walk may mean you miss a visit. The herbs may be neglected.",
+          "Think about the paths you walk each day.",
+          "What do you visit often that could be closer?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Boloka dijalo tsa letsatsi le letsatsi di le haufi.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Herbs tseo o di kotulang kgafetsa ho bonolo ho di hlokomela haufi le ntlo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ha o di beha hole, leeto le lelelele le ka etsa hore o fetwe ke ketelo. Herbs di ka hlokomolohwa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Nahana ka litsela tseo u li tsamaeang letsatsi le letsatsi."
+          },
+          {
+            "status": "draft",
+            "text": "Ke eng eo u e etelang hangata e ka bang haufi le uena?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Zones Plan Your Labour",
+        "body": [
+          "This is the point of the whole exercise.",
+          "Zones help organise space around your effort — the walking, the carrying and the checking that fills a real day.",
+          "The more often something needs you, the closer it lives. That can save walking and work over a season.",
+          "Stand at your kitchen door. What can you reach without thinking about it?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Zones di rala mosebetsi wa hao.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ena ke ntlha ea boikoetliso bona kaofela."
+          },
+          {
+            "status": "draft",
+            "text": "Zones li thusa ho hlophisa sebaka ho potoloha boiteko ba hao — ho tsamaea, ho jara le ho lekola tse tlatsang letsatsi la sebele."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ntho e o hloka hangata ho feta, e phela haufi le wena ho feta. Seo se ka fokotsa ho tsamaya le mosebetsi sehleng sohle.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ema monyako oa kichine ea hao. Ke eng eo u ka e fihlelang u sa nahana ka eona?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Sectors: The Energies Arriving From Outside",
+        "body": [
+          "Zones come from inside your land. Sectors come from outside it.",
+          "Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.",
+          "Watch where strong wind comes from on your farm. Nearby weather-station records can help you check wind direction. Watch where rainwater enters and flows across your land.",
+          "Which direction does the weather that damages you come from?"
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Sectors: Matla a fihlang a tswa kantle.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Zones li tsoa kahare ho naha ea hao. Sectors li tsoa kantle ho eona."
+          },
+          {
+            "status": "draft",
+            "text": "Letsatsi, moya, pula, flood le mollo di fihla ka mose ho moedi wa hao ho sa tsotellehe hore na o a di rera kapa tjhe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Shebella moo moya o matla o tswang teng polasing ya hao. Direkoto tsa weather station e haufi di ka o thusa ho lekola moo moya o tswang teng. Shebella moo metsi a pula a kenang teng le moo a phallang teng setsheng sa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Boemo ba leholimo bo u senyang bo tsoa ntlheng efe?"
+          }
+        ]
+      }
+    },
+    {
+      "n": 19,
+      "english": {
+        "heading": "Watch: Shelter Between Wind and Crops",
+        "body": [
+          "Look at this example. The wind comes from the north-west.",
+          "The trees and shrubs stand between that wind and the crops.",
+          "Some air passes through the windbreak. Other air moves over it or around its ends.",
+          "The shelter can reduce wind speed behind it. The design and care of the windbreak matter.",
+          "On your own site, observe the damaging winds before choosing where to plant. This picture is not a planting plan."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Shebella: Tshireletso pakeng tsa moya le dijalo.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Sheba mohlala ona. Moya o tswa north-west.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Difate le shrubs di eme pakeng tsa moya oo le dijalo.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Moya o mong o feta ka hare ho windbreak. O mong o tsamaya hodima yona kapa o e potoloha dipheletsong.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tshireletso e ka fokotsa lebelo la moya ka mora yona. Moralo le tlhokomelo ya windbreak di bohlokwa.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Setsheng sa hao, shebella meya e senyang pele o kgetha moo o ka jalang teng. Setshwantsho sena ha se moralo wa ho jala.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    },
+    {
+      "n": 20,
+      "english": {
+        "heading": "Sketch It And You Have A Design",
+        "body": [
+          "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.",
+          "Then draw arrows in from outside for sun, wind, fire and water.",
+          "That sheet of paper is the skeleton of your design. Everything else in this course hangs on it.",
+          "It does not need to be neat. It needs to be true."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "E take mme o be le design.",
+          "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thala moedi wa hao. Tshwaya ntlo. Thala rings ho ya kantle ho latela hore na o etela hangata hakae.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ebe o thala metsu e kenang ho tswa kantle bakeng sa letsatsi, moya, mollo le metsi."
+          },
+          {
+            "status": "draft",
+            "text": "Leqephe leo la pampiri ke mokokotlo wa moralo wa hao. Ntho e nngwe le e nngwe khosong ena e itshetlehile hodima lona."
+          },
+          {
+            "status": "draft",
+            "text": "Ha ho hlokahale hore e be makhethe. E lokela ho bontša se leng teng ka ’nete."
+          }
+        ]
+      }
+    },
+    {
+      "n": 21,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Sketch your own zones and sectors on one sheet of paper.",
+          "Mark Zone 0 and Zone 1 first, then work outward as far as your land goes.",
+          "Add an arrow for each energy that arrives from outside, and label where it comes from.",
+          "Photograph the sketch."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Mosebetsi oa Tšimo."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Thala zones le sectors tsa hao pampiring e le nngwe.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Tshwaya Zone 0 le Zone 1 pele, ebe o tswela kantle ho fihlela moo setsha sa hao se fellang teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Kenya motsu bakeng sa energy e nngwe le e nngwe e fihlang e tswa kantle, mme o ngole moo e tswang teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Nka senepe sa setshwantsho."
+          }
+        ]
+      }
+    },
+    {
+      "n": 22,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "Walk out and check your sketch against the ground.",
+          "Stand at the kitchen door and count what is really in Zone 1 today.",
+          "Find one thing planted further away than how often you use it, and write down where it should move to.",
+          "Then ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ketso ea Tšimo."
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Tsamaya ka ntle mme o bapise sketch ya hao le ground ya sebele.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          },
+          {
+            "status": "draft",
+            "text": "Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao.",
+            "provenance": "2026-10-06 root-reviewed source-bound machine draft; paired with exact unchanged English source; no narration bound; fluent review remains open"
+          }
+        ]
+      }
+    }
+  ]
+}

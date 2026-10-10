@@ -1,0 +1,16 @@
+[
+{"id":"R271","verdict":"ok","problem":"Mirrors the English 'produce / product' slash structure; first half is a relative clause ('what is produced'). Acceptable.","repaired":"","severity":"minor"},
+{"id":"R272","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R273","verdict":"ok","problem":"'dzinati' loanword is attested in the app's existing locale; I cannot independently confirm it.","repaired":"","severity":"minor"},
+{"id":"R274","verdict":"ok","problem":"Reuses existing locale wording. 'sialala' is unfamiliar to me (expected tshi- prefix) but I cannot show it is wrong; flagged for a speaker.","repaired":"","severity":"wording"},
+{"id":"R275","verdict":"hold","problem":"'tshisaka tsha zwiḽiwa' (food forest) is a calque the drafter already rates LOW confidence; cryptic category heading for a farmer.","repaired":"","severity":"meaning"},
+{"id":"R276","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R277","verdict":"ok","problem":"Past/perfect 'added by you' matches.","repaired":"","severity":"minor"},
+{"id":"R278","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R279","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R280","verdict":"ok","problem":"'Write' for 'Type' acceptable for a text placeholder.","repaired":"","severity":"minor"},
+{"id":"R281","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+{"id":"R282","verdict":"hold","problem":"'Masheleni' is a locative of generic 'money' ('in/at the money'), not specifically cash, and does not clearly read as a way of paying after 'Invoice ·'. Drafter says uncertain; alternatives unconfirmed.","repaired":"","severity":"meaning"},
+{"id":"R283","verdict":"ok","problem":"Loanword 'khadi' reads as card; local preference unconfirmed.","repaired":"","severity":"minor"},
+{"id":"R284","verdict":"hold","problem":"'Founu' = telephone only; after 'Invoice ·' it does not read as a payment method (mobile money). Not repairable with confidence.","repaired":"","severity":"meaning"}
+]

@@ -238,14 +238,14 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "options": [
           "Thengisa ilungelo lokuthola amanzi kumuntu okhokha kakhulu.",
           "Gcina wonke amanzi e-borehole ukuze wandise indawo yokunisela.",
-          "Thola ukuthi ukwabelana ngamanzi kuvumelekile yini nokuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi. Yilapho kuphela eningavumelana khona ngokwabelana ngokulinganayo bese niqhubeka nibheka izinga lamanzi.",
+          "Thola ukuthi ukwabelana ngamanzi kuvumelekile yini nokuthi i-borehole ingakwazi yini ukusiza bonke abasebenzisi. Yilapho kuphela eningavumelana khona ngokwabelana ngendlela enobulungiswa bese niqhubeka nibheka izinga lamanzi.",
           "Vala i-borehole ukuze uvikele amanzi angaphansi komhlaba kuphela."
         ],
         "correct": 2,
-        "rationale": "Qala uthole ukuthi yikuphi ukusetshenziswa kwamanzi okuvumelekile nokuthi umthombo ungakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngendlela yokwabelana ngokulinganayo. Ukuqapha izinga lamanzi kukusiza ubone ushintsho; akukuniki imvume yokusebenzisa amanzi engeziwe."
+        "rationale": "Qala uthole ukuthi yikuphi ukusetshenziswa kwamanzi okuvumelekile nokuthi umthombo ungakwazi yini ukusiza bonke abasebenzisi ngaphandle kokusebenzisa amanzi amaningi kakhulu. Uma ukwabelana kuvumelekile futhi kunamanzi anele, vumelanani ngendlela enobulungiswa yokwabelana. Ukuqapha izinga lamanzi kukusiza ubone ushintsho; akukuniki imvume yokusebenzisa amanzi engeziwe."
       }
     ],
-    infographicAlt: "Izimiso zokuziphatha ezintathu ziboniswe njengezindilinga ezintathu ezixhumene nezilingana ngosayizi: isandla esiphethe inhlabathi simele Ukunakekela Umhlaba (Earth Care), abantu ababili bamele Ukunakekela Abantu (People Care), kanti ubhasikidi odluliswa phakathi kwezandla umele Ukwabelana Ngokulinganayo (Fair Share).",
+    infographicAlt: "Izimiso zokuziphatha ezintathu ziboniswe njengezindilinga ezintathu ezixhumene nezilingana ngosayizi: isandla esiphethe inhlabathi simele Ukunakekela Umhlaba (Earth Care), abantu ababili bamele Ukunakekela Abantu (People Care), kanti ubhasikidi odluliswa phakathi kwezandla umele Ukwabelana Ngendlela Enobulungiswa (Fair Share).",
   },
   "intro-permaculture-l2": {
     "title": "Izimiso Eziyishumi Nambili: Ukuklama Ngokusebenzisana Nemvelo",
@@ -363,7 +363,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
     ],
     "quiz": [
       {
-        "q": "Umlimi wasepulazini elincane lase-Highveld kufanele aqale abheke kuphi uma efuna indawo yesihlahla se-pawpaw esincane nesizwela i-frost?",
+        "q": "Umlimi wasepulazini elincane lase-Highveld kufanele aqale abheke kuphi uma efuna indawo yesihlahla se-pawpaw esisencane nesizwela i-frost?",
         "options": [
           "Indawo ephansi kunazo zonke lapho kuqoqana khona umoya obandayo",
           "Umgodi obandayo nosethunzini",
@@ -382,14 +382,14 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
           "Ukuthi inciphisa yini kuphela ukuhwamuka kwamanzi ehlobo"
         ],
         "correct": 0,
-        "rationale": "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu. I-shade cloth ingashintsha isikhathi ilanga elifika ngaso embhedeni. Ngaphambi kokuyiqinisa endaweni yayo, hlola umthunzi okhona ngempela ngo-8 ekuseni, emini, nango-4 ntambama."
+        "rationale": "Ilanga lasebusika libonakala liphansi futhi lisenyakatho kakhulu. I-shade cloth ingashintsha amahora elanga embhedeni. Ngaphambi kokuyiqinisa endaweni yayo, hlola umthunzi okhona ngempela ngo-8 ekuseni, emini, nango-4 ntambama."
       }
     ],
     infographicAlt: "Umthambeka onelanga elisenyakatho. Izithunzi zesakhiwo nesihlahla ziwela eningizimu, zehle ngomthambeka.",
   },
   "reading-landscape-l3": {
     "title": "Umoya, Isithwathwa Nokuma Komhlaba: Ukuqonda Amandla Angabonakali",
-    "body": "Umoya ungalimaza izitshalo epulazini elincane. Indawo ovela kuyo namandla omoya olimazayo kuyashintsha kuye ngesifunda, inkathi yonyaka, amagquma nezikhala ezisemhlabeni wakho. Hamba uhlole umhlaba ngezinsuku ezinomoya. Bhala phansi ukuthi umoya olimazayo uvela ngakuphi nokuthi uthinta ini. Hlola amarekhodi esimo sezulu endawo ngaphambi kokunquma ukuthi kudingeka kuphi indawo yokukhosela emoyeni.\n\nNgobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Indlela isithwathwa esenzeka ngayo nayo incike endaweni. Qhathanisa izindawo ongakhetha kuzo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi, uma ekhona. Uma engekho, qhubeka ubheka okwenzeka ebusuku obubandayo futhi ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo yezithombo ezizwela amakhaza.\n\nIsithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.\n\nKumatamatisi ahlaselwe yi-late blight, ukuhamba kahle komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight isengasakazeka uma kuqhubeka isikhathi eside kubanda futhi kunomswakama. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule lesi sifo; funa iseluleko sendawo ngempilo yezitshalo.",
+    "body": "Umoya ungalimaza izitshalo epulazini elincane. Indawo ovela kuyo namandla omoya olimazayo kuyashintsha kuye ngesifunda, inkathi yonyaka, amagquma nezikhala ezisemhlabeni wakho. Hamba uhlole umhlaba ngezinsuku ezinomoya. Bhala phansi ukuthi umoya olimazayo uvela ngakuphi nokuthi uthinta ini. Hlola amarekhodi esimo sezulu endawo ngaphambi kokunquma ukuthi kudingeka kuphi indawo yokukhosela emoyeni.\n\nNgobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi. Lezi zindawo zingabanda kakhulu kunemithambeka eseduze. Indlela isithwathwa esenzeka ngayo nayo incike endaweni. Qhathanisa izindawo ongakhetha kuzo kuyo yonke inkathi yesithwathwa yasendaweni. Hlola amarekhodi endawo okushisa okuphansi, uma ekhona. Uma engekho, qhubeka ubheka okwenzeka ebusuku obubandayo futhi ubuze umeluleki wezolimo wendawo ngaphambi kokukhetha indawo ehlala njalo yezithombo ezizwela amakhaza.\n\nIsithwathwa siyizinhlayiya zeqhwa ezakheka phezu kwendawo ebandayo. Inkungu iyodwa ayisho ukuthi sekwakheke lezo zinhlayiya zeqhwa, futhi isithwathwa singalimaza izitshalo kungabonakali iqhwa. Bheka iqhwa nomonakalo ezitshalweni, uqhathanise izindawo eziphansi nemithambeka, futhi uhlole amazinga okushisa aphansi lapho ukwazi khona. Maka izindawo lapho amakhaza noma umonakalo kuhlala khona isikhathi eside kunazo zonke. Gcina izitshalo ezizwela amakhaza zikude nezindawo ezibandayo ozibonile.\n\nKumatamatisi ahlaselwe yi-late blight, ukuhamba kahle komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight isengasakazeka uma kuqhubeka isikhathi eside kubanda futhi kunomswakama. Ukususa umbhede uwuyise kwenye indawo kukodwa ngeke kusilawule lesi sifo; funa iseluleko sendawo ngempilo yezitshalo.",
     "keyPoints": [
       "Bheka ukuthi umoya olimazayo uvela ngakuphi endaweni yakho ngaphambi kokubeka indawo yokukhosela emoyeni.",
       "Ngobusuku obucacile nobungenamoya, umoya obandayo ungehla ngomthambeka uqoqane ezindaweni eziphansi.",
@@ -403,7 +403,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
           "Indawo ephansi eyaziwayo lapho kuqoqana khona isithwathwa",
           "Umugqa ophakeme wegquma ovulekele umoya, ngaphandle kokuhlola umoya",
           "Indawo enelanga nevikelekile emoyeni, engaphandle komgodi owubonile lapho kuqoqana khona isithwathwa, ngemva kokuhlola okwenzeka ebusuku obubandayo endaweni yakho",
-          "Indawo enomthunzi omkhulu, ngaphandle kokuhlola isithwathwa"
+          "Indawo enomthunzi omningi kunazo zonke, ngaphandle kokuhlola isithwathwa"
         ],
         "correct": 2,
         "rationale": "Ngobusuku obucacile nobungenamoya, umoya obandayo ungaqoqana ezindaweni eziphansi. Qhathanisa izindawo ezingakhethwa zenkulisa yezithombo kuyo yonke inkathi yesithwathwa yasendaweni. Ngaphambi kokukhetha indawo ehlala njalo, hlola amarekhodi endawo okushisa okuphansi noma ubuze umeluleki wezolimo wendawo. Ukungaboni isithwathwa akusho ukuthi izitshalo azilimalanga yiso, futhi akukho ndawo esentabeni eqinisekisa ukuthi ngeke ibe nesithwathwa."
@@ -417,10 +417,10 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
           "Eduze kodonga oluseningizimu olunomthunzi"
         ],
         "correct": 1,
-        "rationale": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. Late blight is favoured by prolonged cool, damp weather, and moving the bed alone is not a complete control plan."
+        "rationale": "Ukuhamba komoya nelanga lasekuseni kungasiza amaqabunga ome. I-late blight ithandwa yisimo sezulu esipholile nesinomswakama esiqhubeka isikhathi eside, kanti ukususa umbhede uwuyise kwenye indawo kukodwa akusona isu eliphelele lokulawula lesi sifo."
       }
     ],
-    infographicAlt: "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, cold air draining downhill into a frost hollow, nendlela yomthambeka.",
+    infographicAlt: "Umfanekiso wepulazi ulibuka phezulu, nemicibisholo ekhombisa indlela yomoya, umoya obandayo owehla ngomthambeka uya emgodini wesithwathwa (frost hollow), nendlela yomthambeka.",
   },
   "reading-landscape-l4": {
     "title": "Ukwenza Imephu Elula Yendawo: Uhlelo Lwakho Luqala Ephepheni",

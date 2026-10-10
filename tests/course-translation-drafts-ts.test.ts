@@ -447,8 +447,10 @@ test('Reading Landscape L4 translates observation framing while retaining the co
   assert.ok(draftParagraphs[1].includes('kambe ku va kona ka swona ntsena a ku kombisi leswaku misava yi tsindziyerile.'),
     'translate the ordinary plant subject while preserving the full limitation against diagnosing compaction from presence alone');
   assert.ok(draftParagraphs[1].includes('Kambela misava u nga se teka xiboho'));
-  assert.equal(draftParagraphs[2], "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi u xi tirhisaka kahle xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
-    'preserve the neighboring localized sketch-value paragraph exactly');
+  // 7 October: source means actually use, not use well. Keep same sketch,
+  // season-by-season and perfect/once while repairing only that modifier.
+  assert.equal(draftParagraphs[2], "Veka ti-zone na ti-sector ta wena ehenhla ka xifaniso xolexo. Xi pfuxete hi nguva na nguva. Xifaniso xa phensele lexi hakunene u xi tirhisaka xi ni nkoka ku tlula lexi hetisekeke lexi dirowiweke kan'we ntsena.",
+    'preserve the sketch-value paragraph after the independently checked actually-use repair');
   const { resolveLearnerLessonPresentation } = await import('../lib/course-localization.ts');
   const view = resolveLearnerLessonPresentation(sourceLesson, 'ts');
   assert.equal(view.status, 'draft');
@@ -470,7 +472,7 @@ test('Reading Landscape L3 drafts ordinary body guidance while keeping precise c
   const draftParagraphs = lesson.body.xitsongaDraft.split('\n\n');
   assert.equal(draftParagraphs.length, sourceParagraphs.length);
 
-  assert.ok(draftParagraphs[0].includes("your site's ridges and gaps"));
+  assert.ok(draftParagraphs[0].includes("ti-ridges and gaps ta ndhawu ya wena"));
   assert.ok(draftParagraphs[0].includes('Fambafamba eka misava hi masiku ya moya.'));
   assert.ok(!draftParagraphs[0].includes('Check local weather records before deciding where shelter is needed.'));
   assert.ok(draftParagraphs[0].includes('Kambela matsalwa ya maxelo ya laha kaya') && draftParagraphs[0].includes('u nga se teka xiboho'));

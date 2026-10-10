@@ -1,0 +1,290 @@
+{
+  "title": "Independent comparative-meaning repair check",
+  "date": "2026-10-07",
+  "reviewedHead": "0d77b23d0254592011707ae7c8a8a1ae13cad4cb",
+  "sourcePacket": "/tmp/imbewu-core-remaining-ordinary-candidates-20261007.json",
+  "status": "Data-only semantic check and conservative proposals; no source files edited; no fluency approval.",
+  "counts": {
+    "REPAIR": 2,
+    "HOLD": 1,
+    "ACCEPT": 1
+  },
+  "findings": [
+    {
+      "id": "VS-ST-DIRECT-SOW-01",
+      "verdict": "REPAIR",
+      "sourceSpan": "They do better",
+      "currentCandidate": "Di sebetsa hantle",
+      "repair": "Di sebetsa hantle ho feta",
+      "composedTarget": "Di sebetsa hantle ho feta ha di jalwa ka kotloloho moo di tla hola teng.",
+      "literalBacktranslation": "They perform better when sown directly where they will grow.",
+      "preserved": [
+        "General performance predicate (“perform/work”), not growth-only.",
+        "Comparative “better” via ho feta.",
+        "Existing sowing condition “when sown directly where they will grow” unchanged.",
+        "Following Beans, carrots and maize list unchanged."
+      ],
+      "proof": "Actual learner body currently has “They do better ha di jalwa ka kotloloho moo di tla hola teng.” Paired slide 6 segment[1] is “Di hola hantle ho feta”; following segment is “ha di jalwa ka kotloloho moo di tla hola teng.” Candidate “Di sebetsa hantle” loses the comparative; this repair restores it while changing only that predicate.",
+      "language": "st",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they’ll grow. Beans, carrots and maize belong in that group.",
+      "sourceBindings": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l1",
+          "field": "body, direct-sowing sentence",
+          "currentText": "They do better ha di jalwa ka kotloloho moo di tla hola teng.",
+          "operation": "Replace only initial predicate; leave the already localized sowing condition and crop-list sentence untouched."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "lessonOrSlide": "slide 6",
+          "field": "target.body[0].segments[1]",
+          "currentStatus": "Di hola hantle ho feta",
+          "currentText": "Di hola hantle ho feta",
+          "followingTargetText": "ha di jalwa ka kotloloho moo di tla hola teng. Beans, carrots le maize ke tsa sehlopha seo.",
+          "operation": "Replace only “They do better”; preserve the already localized direct-sowing condition and species list."
+        }
+      ],
+      "sourceSegments": [
+        {
+          "source": "Some crops resent having their roots disturbed. ",
+          "currentTarget": "Some crops resent having their roots disturbed. ",
+          "replacement": "Some crops resent having their roots disturbed. "
+        },
+        {
+          "source": "They do better",
+          "currentTarget": "Di hola hantle ho feta",
+          "replacement": "Di sebetsa hantle"
+        },
+        {
+          "source": " sown straight where they’ll grow. ",
+          "currentTarget": " ha di jalwa ka kotloloho moo di tla hola teng. ",
+          "replacement": " ha di jalwa ka kotloloho moo di tla hola teng. "
+        },
+        {
+          "source": "Beans, carrots and maize belong in that group.",
+          "currentTarget": "Beans, carrots le maize ke tsa sehlopha seo.",
+          "replacement": "preserve current localized crop list byte-for-byte; species terms remain unchanged"
+        }
+      ],
+      "fluencyStatus": "Not assessed; no fluent/local approval.",
+      "bindingExistenceChecks": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "exists": true,
+          "binding": "body, direct-sowing sentence"
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "exists": true,
+          "binding": "target.body[0].segments[1]"
+        }
+      ]
+    },
+    {
+      "id": "VS-TS-DIRECT-SOW-01",
+      "verdict": "ACCEPT",
+      "sourceSpan": "They do better",
+      "currentCandidate": "Swi tirha ku antswa",
+      "repair": null,
+      "composedTarget": "Swi tirha ku antswa loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+      "literalBacktranslation": "They work/perform better when sown directly where they will grow.",
+      "preserved": [
+        "General performance, not growth-only.",
+        "Comparative “better” expressed by ku antswa.",
+        "Existing direct-sowing condition and crop list retained."
+      ],
+      "proof": "Paired slide 6 segment[1] remains english-hold; the exact following target segment is “loko swi byariwa hi ku kongoma laha swi nga ta kula kona.” ku antswa is explicitly comparative (“better”).",
+      "language": "ts",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Some crops resent having their roots disturbed. They do better sown straight where they’ll grow. Beans, carrots and maize belong in that group.",
+      "sourceBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l1",
+          "field": "body, direct-sowing sentence",
+          "currentText": "They do better loko swi byariwa hi ku kongoma laha swi nga ta kula kona.",
+          "operation": "Replace only initial predicate; leave the already localized sowing condition and crop-list sentence untouched."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "lessonOrSlide": "slide 6",
+          "field": "target.body[0].segments[1]",
+          "currentStatus": "english-hold",
+          "currentText": null,
+          "followingTargetText": "loko swi byariwa hi ku kongoma laha swi nga ta kula kona. Beans, carrots na maize swi wela eka ntlawa wolowo.",
+          "operation": "Replace only “They do better”; preserve the already localized direct-sowing condition and species list."
+        }
+      ],
+      "sourceSegments": [
+        {
+          "source": "Some crops resent having their roots disturbed. ",
+          "currentTarget": "Swibyariwa swin’wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. ",
+          "replacement": "Swibyariwa swin’wana a swi tsakeli ku kavanyetiwa ka timitsu ta swona. "
+        },
+        {
+          "source": "They do better",
+          "currentTarget": "english-hold",
+          "replacement": "Swi tirha ku antswa"
+        },
+        {
+          "source": " sown straight where they’ll grow. ",
+          "currentTarget": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. ",
+          "replacement": " loko swi byariwa hi ku kongoma laha swi nga ta kula kona. "
+        },
+        {
+          "source": "Beans, carrots and maize belong in that group.",
+          "currentTarget": "Beans, carrots na maize swi wela eka ntlawa wolowo.",
+          "replacement": "preserve current localized crop list byte-for-byte; species terms remain unchanged"
+        }
+      ],
+      "fluencyStatus": "Not assessed; no fluent/local approval.",
+      "bindingExistenceChecks": [
+        {
+          "file": "lib/course-translation-drafts-ts-vegetables-staples.ts",
+          "exists": true,
+          "binding": "body, direct-sowing sentence"
+        },
+        {
+          "file": "docs/narration/vegetables-staples.ts.paired-draft.json",
+          "exists": true,
+          "binding": "target.body[0].segments[1]"
+        }
+      ]
+    },
+    {
+      "id": "VS-ST-LIGHTEST-ACTION-01",
+      "verdict": "HOLD",
+      "sourceSpan": "the lightest thing that works.",
+      "currentCandidate": "ketso e bobebe ka ho fetisisa e sebetsang.",
+      "repair": "Retain exact English predicate: “the lightest thing that works.”",
+      "composedTarget": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works.",
+      "literalBacktranslation": "Fourth. Only then do you take action — start with the lightest thing that works.",
+      "preserved": [
+        "Only then timing and action prefix remain as currently localized.",
+        "Exact effective/lightest predicate retained in English because “bobebe” may mean physically light/easy.",
+        "Following physical-removal/barriers/crop-care list stays outside this span and unchanged."
+      ],
+      "proof": "Paired slide 16 target body[4] contains the prefix “Ke ka morao feela moo o nkang kgato — qala ka ” followed by an english-hold segment for the exact source predicate; the next segment begins the separate action list. No safe localized alternative is asserted.",
+      "language": "st",
+      "module": "vegetables-staples",
+      "sourceEnglish": "Only then, act — and start with the lightest thing that works.",
+      "sourceBindings": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "lessonOrSlide": "vegetables-staples-l4",
+          "field": "body, fourth step",
+          "currentText": "Ntlha ya bone. Ke ka morao feela moo o nkang kgato — qala ka the lightest thing that works. Physical removal, barriers kapa diphetoho tlhokomelong ya dijalo di ka thusa.",
+          "replaceSpan": "the lightest thing that works."
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "lessonOrSlide": "slide 16",
+          "field": "target.body[4].segments[2]",
+          "currentStatus": "english-hold",
+          "sourceSpan": "the lightest thing that works.",
+          "currentPrefixText": " Ke ka morao feela moo o nkang kgato — qala ka ",
+          "nextSegmentSource": " Physical removal",
+          "nextSegmentCurrentStatus": "english-hold",
+          "nextSegmentPreserved": "yes; do not pull list content into this replacement."
+        }
+      ],
+      "sourceSegments": [
+        {
+          "source": "Four.",
+          "currentTarget": "Ntlha ya bone.",
+          "replacement": "preserve"
+        },
+        {
+          "source": " Only then, act — and start with ",
+          "currentTarget": " Ke ka morao feela moo o nkang kgato — qala ka ",
+          "replacement": " Ke ka morao feela moo o nkang kgato — qala ka "
+        },
+        {
+          "source": "the lightest thing that works.",
+          "currentTarget": "english-hold in deck; exact English in learner body",
+          "replacement": "ketso e bonolo ka ho fetisisa e sebetsang."
+        },
+        {
+          "source": " Physical removal, barriers or changes in crop care may help.",
+          "currentTarget": "separate following segment/list",
+          "replacement": "preserve existing localized/example segment or existing English hold; no list/species/safety content changed."
+        }
+      ],
+      "fluencyStatus": "Not assessed; no fluent/local approval.",
+      "bindingExistenceChecks": [
+        {
+          "file": "lib/course-translation-drafts-st-vegetables-staples.ts",
+          "exists": true,
+          "binding": "body, fourth step"
+        },
+        {
+          "file": "docs/narration/vegetables-staples.st.paired-draft.json",
+          "exists": true,
+          "binding": "target.body[4].segments[2]"
+        }
+      ]
+    },
+    {
+      "id": "MC-TS-DIRECT-SELLING-01",
+      "verdict": "REPAIR",
+      "sourceSpan": "retain more of the sale price",
+      "currentCandidate": "hlayisa xiphemu lexikulu xa mali leyi kumiwaka eka ku xavisa",
+      "repair": "hlayisa swo tala swa nxavo wo xavisa",
+      "composedTarget": "Ku xavisa hi ku kongoma swi nga hlayisa swo tala swa nxavo wo xavisa, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+      "literalBacktranslation": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "preserved": [
+        "Can/modal remains in swi nga.",
+        "More remains explicit as swo tala, avoiding reliance on lexikulu meaning merely large.",
+        "Retain relationship remains; no guaranteed increase claimed.",
+        "All four tradeoffs and the existing localized suffix are preserved byte-for-byte."
+      ],
+      "proof": "Current learner module retains this predicate in English: “Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.” The paired market-community Xitsonga slide 11 independently uses “Ku xavisa hi ku kongoma ku nga hlayisa swo tala swa nxavo wo xavisa...” This span-level repair follows that existing wording while preserving the learner suffix.",
+      "language": "ts",
+      "module": "market-community",
+      "sourceEnglish": "Direct selling can retain more of the sale price, but it also takes time, packing, transport and customer care.",
+      "sourceBindings": [
+        {
+          "file": "lib/course-translation-drafts-ts-market-community.ts",
+          "lessonOrSlide": "market-community-l2",
+          "field": "body, direct-selling sentence",
+          "currentText": "Ku xavisa hi ku kongoma swi nga retain more of the sale price, kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+          "operation": "Replace only “retain more of the sale price”; preserve modal and the complete tradeoff suffix."
+        }
+      ],
+      "sourceSegments": [
+        {
+          "source": "Direct selling can ",
+          "currentTarget": "Ku xavisa hi ku kongoma swi nga ",
+          "replacement": "preserve"
+        },
+        {
+          "source": "retain more of the sale price",
+          "currentTarget": "retain more of the sale price",
+          "replacement": "hlayisa xiphemu lexikulu xa mali leyi kumiwaka eka ku xavisa"
+        },
+        {
+          "source": ", but it also takes time, packing, transport and customer care.",
+          "currentTarget": ", kambe swi tlhela swi teka nkarhi, ku paka, vutleketli ni ku khathalela vaxavi.",
+          "replacement": "preserve"
+        }
+      ],
+      "fluencyStatus": "Not assessed; no fluent/local approval.",
+      "bindingExistenceChecks": [
+        {
+          "file": "lib/course-translation-drafts-ts-market-community.ts",
+          "exists": true,
+          "binding": "body, direct-selling sentence"
+        }
+      ]
+    }
+  ],
+  "auditNotes": [
+    "Sesotho “Di sebetsa hantle” says perform well; it drops the source comparative. Proposed “ho feta” restores better while preserving the direct-sowing condition.",
+    "Tshivenda direct-sowing candidate preserves general perform-better meaning through ku antswa; direct-sowing condition is not changed.",
+    "Sesotho lightest candidate remains held exact English because bobebe could mean physical lightness/ease rather than least-intensive effective intervention.",
+    "For Xitsonga direct selling, lexikulu can describe a large share without explicit more; swo tala in the existing paired slide is a more explicit comparative option. The candidate keeps can and every named tradeoff.",
+    "No changes to species, crop list, modal strength, prefixes, or suffixes are proposed beyond the exact word-span repairs above."
+  ]
+}

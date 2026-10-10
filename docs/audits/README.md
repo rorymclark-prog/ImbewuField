@@ -58,6 +58,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Reading titles and least-intensive action — 8 October 2026](2026-10-08/study-reading-title-lightest-codex.md).
+
 - [Market residual ordinary prose and precise cost terms — 6 October 2026](2026-10-06/study-market-ordinary-residual-codex.md).
 
 This seeds the archive with the 30 documents Claude collected on 20 September,
@@ -68,6 +70,12 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-07 | [Reading and Vegetables ordinary-clause follow-up — Codex](2026-10-07/study-core-followup-codex.md) |
+| 2026-10-07 | [Tshivenda Reading frost placement — Codex](2026-10-07/study-reading-frost-placement-codex.md) |
+| 2026-10-07 | [Reading comparisons and remaining prose — Codex](2026-10-07/study-reading-comparisons-codex.md) |
+| 2026-10-07 | [Study wording precision — Codex](2026-10-07/study-precision-codex.md) |
+| 2026-10-07 | [Study Introduction fair sharing — Codex](2026-10-07/study-intro-fair-sharing-codex.md) |
+| 2026-10-07 | [Study ordinary framing follow-up — Codex](2026-10-07/study-ordinary-framing-codex.md) |
 | 2026-10-06 | [Soil and Water residual translations — Codex](2026-10-06/study-soil-water-residual-codex.md) |
 | 2026-10-06 | [Sesotho Introduction silent release — Codex](2026-10-06/study-st-intro-silent-release-codex.md) |
 | 2026-10-06 | [Introduction full ordinary prose — Codex](2026-10-06/study-intro-full-ordinary-completion-codex.md) |

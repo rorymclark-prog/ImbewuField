@@ -1,3 +1,4 @@
+import { finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -13,7 +14,7 @@ test('Vegetables18 assessment leaves preserve whole canonical/source/order/indic
   }
   for (const row of assessmentRows) {
     const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === row.lessonId)!;
-    const shown = resolveLearnerLessonPresentation(source, row.language);
+    const shown = finalLanguageNextPresentationBefore(resolveLearnerLessonPresentation(source, row.language), source.id, row.language);
     assert.equal(shown.status, 'draft');
     const question = shown.content.quiz[row.questionIndex];
     const actual = row.fieldId.endsWith('.question') ? question.q : row.fieldId.endsWith('.rationale') ? question.rationale : question.options[Number(row.optionIndex)];
@@ -43,7 +44,8 @@ test('Vegetables quiz source drift falls back while nitrogen/genetics/wet-ground
     assert.equal(resolveLearnerLessonPresentation(lesson, row.language).status, 'english-fallback', row.fieldId);
   }
   for (const language of ['ve','ts'] as const) {
-    const lesson = (n: number) => resolveLearnerLessonPresentation(COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === `vegetables-staples-l${n}`)!, language).content;
+    // Validate the whole latest presentation before this dated nonguarantee predicate.
+    const lesson = (n: number) => { const source = COURSE_MODULES.find(module => module.id === 'vegetables-staples')!.lessons.find(lesson => lesson.id === `vegetables-staples-l${n}`)!; return finalLanguageNextPresentationBefore(resolveLearnerLessonPresentation(source, language), source.id, language).content; };
     assert.ok(lesson(3).quiz[0].options[0].includes('yield more'));
     assert.ok(lesson(2).quiz[1].rationale.includes('does not guarantee immediate feeding'));
     assert.ok(lesson(3).quiz[1].rationale.startsWith('Amadumbe actually prefers damper ground where maize would struggle —'));
