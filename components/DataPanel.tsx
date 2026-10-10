@@ -1174,7 +1174,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 }
               }}
               className="w-full flex items-center justify-center gap-2 font-sans font-bold transition-opacity hover:opacity-90 active:opacity-75"
-              style={{ height: 46, background: '#1F4D2B', color: '#F7F2E9', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
+              style={{ height: 46, background: 'var(--color-forest-800)', color: 'var(--on-forest)', borderRadius: 13, border: 'none', fontSize: 14, letterSpacing: '-0.01em', cursor: 'pointer' }}
             >
               <Sprout size={16} />
               {t('generateFullReport')}
@@ -1906,7 +1906,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <div className="space-y-2">
               <button onClick={() => { setSurveyPromptOpen(false); setSurveySheetOpen(true); }}
                 className="w-full flex items-center justify-center gap-2 font-sans font-bold"
-                style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: 'pointer' }}>
+                style={{ height: 46, borderRadius: 13, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', fontSize: 14, cursor: 'pointer' }}>
                 {t('surveyFillButton')}
               </button>
               <button onClick={() => { setSurveyPromptOpen(false); openPhotoOrReport(); }}
@@ -2008,7 +2008,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   onClick={analyseAndGenerate}
                   disabled={promptLoading}
                   className="w-full flex items-center justify-center gap-2 font-sans font-bold"
-                  style={{ height: 46, borderRadius: 13, background: '#1F4D2B', color: '#F7F2E9', border: 'none', fontSize: 14, cursor: promptLoading ? 'default' : 'pointer', opacity: promptLoading ? 0.75 : 1 }}>
+                  style={{ height: 46, borderRadius: 13, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', fontSize: 14, cursor: promptLoading ? 'default' : 'pointer', opacity: promptLoading ? 0.75 : 1 }}>
                   {promptLoading
                     ? <><Loader2 size={16} className="animate-spin" />{t('photoAnalysingButton')}</>
                     : <><Camera size={16} />{t('photoAnalyseGenerateButton')}</>}

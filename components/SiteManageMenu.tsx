@@ -64,7 +64,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
   const btnPrimary: React.CSSProperties = {
     flex: 1, minHeight: 40, borderRadius: 9, border: 'none', cursor: 'pointer',
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-    background: FOREST, color: '#F7F2E9', fontSize: 13.5, fontWeight: 600,
+    background: FOREST, color: 'var(--on-forest)', fontSize: 13.5, fontWeight: 600,
   };
   const btnGhost: React.CSSProperties = {
     minHeight: 40, padding: '0 12px', borderRadius: 9, border: `1px solid ${BORDER}`, cursor: 'pointer',

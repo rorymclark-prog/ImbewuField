@@ -96,7 +96,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
           </div>
           <div
             className="font-display font-bold"
-            style={{ fontSize: 54, color: '#F7F2E9', lineHeight: 1.05, marginTop: 4 }}
+            style={{ fontSize: 54, color: 'var(--on-forest)', lineHeight: 1.05, marginTop: 4 }}
           >
             R{formatPrice(price.wholesalePerKg)}
           </div>

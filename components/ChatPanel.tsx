@@ -332,7 +332,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             style={{ minHeight: 46,
               background: isDisabled ? 'rgba(226,216,196,0.4)' : '#1F4D2B',
               border: isDisabled ? '1px solid #E2D8C4' : 'none',
-              color: isDisabled ? '#755942' : '#F7F2E9' }}>
+              color: isDisabled ? '#755942' : 'var(--on-forest)' }}>
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
         </form>

@@ -287,7 +287,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
       </div>
       <span
         className="home-next-step-arrow flex items-center justify-center flex-shrink-0"
-        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: '#F7F2E9', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
+        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest)', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
       >
         <ChevronRight size={20} strokeWidth={2} />
       </span>
