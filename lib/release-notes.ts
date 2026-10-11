@@ -42,16 +42,23 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '10 October 2026', sha: 'e7dac9b1', changes: [
-    'Explore an example farm with vegetables, staples, fruit, eggs, milk, honey and fish.',
-    'The example shows monthly food, young plant ages and clearly marked made-up records.',
-    'Print its short booklet or picture calendar, with a separate detailed reference.',
-    'Long area names stay fully visible in the detailed printed planting plan.',
+  { when: '11 October 2026', sha: '1f7239d2', changes: [
+    'Compare fresh food, kept food and crop growing space in monthly graphs.',
+    'Record monthly kg, eggs and litres; an actual amount replaces its expectation.',
+    'Keep quantities and stock with your farm when switching sites or signing in.',
+    'Check more fruit, nut, indigenous plant and animal references by age and area.',
+    'Fruit, staples, meats and preserved food have matching, distinct pictures.',
+    'Print monthly food, growing space and future plant ages with the same guidance.',
   ], tour: [{
     title: 'Explore a complete production example',
     where: 'Examples → Complete production plan',
-    detail: 'Compare all food groups over the months, look ahead by plant age and print the plan.',
+    detail: 'Compare food and space graphs, try made-up quantities, and print the illustrated plan.',
     href: '/samples/production',
+  }, {
+    title: 'Record production and food in store',
+    where: 'Farm → Production plan',
+    detail: 'Open the food graphs and enter this farm’s monthly amounts in their own units.',
+    href: '/facilitator/crops',
   }] },
   { when: '10 October 2026', sha: '810c2537', changes: [
     'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
