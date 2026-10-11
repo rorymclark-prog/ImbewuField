@@ -1,0 +1,62 @@
+{
+  "speciesId": "lycium-cinereum",
+  "commonName": "Kriedoring / honey-thorn",
+  "botanicalName": "Lycium cinereum",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "food product not verified",
+  "supplementaryReferences": [
+    {
+      "title": "Exact identity; no confirmed household food part",
+      "quote": "Lycium cinereum Thunb.",
+      "url": "https://redlist.sanbi.org/species.php?species=2846-10",
+      "doc": "SANBI Red List: Lycium cinereum",
+      "page": null,
+      "note": "The checked primary assessment establishes exact identity and South African distribution only. It does not establish edible parts, food-use preparation, picking dates or yield; claims for a different Lycium species are not transferred."
+    }
+  ],
+  "productionGuidance": {
+    "products": "food product not verified",
+    "care": [
+      "Record the exact identity and obtain local expert food-use advice before counting it as household food."
+    ],
+    "purchase": [
+      "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification."
+    ]
+  },
+  "householdFoodStatus": "specialist-review",
+  "sourceChecks": [
+    {
+      "url": "https://redlist.sanbi.org/species.php?species=2846-10",
+      "checkedAt": "2026-10-11",
+      "observations": "Exact-species SANBI Red List assessment retrieved through the search index; direct endpoint returned 403. This verifies identity/distribution only, not human food use."
+    }
+  ],
+  "gaps": [
+    "No exact-species primary human-food reference verified; all routine food dates and quantities remain unassigned."
+  ]
+}

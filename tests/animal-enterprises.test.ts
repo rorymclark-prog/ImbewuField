@@ -65,6 +65,7 @@ test('every value carries a quote and a primary-source URL', () => {
     ...(e.seasonalPattern ? [{ at: `${e.enterpriseId} seasonalPattern`, c: e.seasonalPattern.source }] : []),
     ...e.welfare.map((p, i) => ({ at: `${e.enterpriseId} welfare ${i}`, c: p.source })),
     ...e.legal.map((p, i) => ({ at: `${e.enterpriseId} legal ${i}`, c: p.source })),
+    ...(e.productionReferences ?? []).map((p, i) => ({ at: `${e.enterpriseId} production reference ${i}`, c: p.source })),
   ]);
   assert.ok(citations.length > 0);
   for (const { at, c } of citations) {

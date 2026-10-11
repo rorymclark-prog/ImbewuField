@@ -1,0 +1,61 @@
+{
+  "speciesId": "asystasia-gangetica-subsp-micrantha",
+  "commonName": "Creeping foxglove",
+  "botanicalName": "Asystasia gangetica subsp. micrantha",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "leaves for cooked greens",
+  "supplementaryReferences": [
+    {
+      "title": "Documented leaf food use",
+      "quote": "Leaves have been eaten as spinach by the local people.",
+      "url": "https://pza.sanbi.org/asystasia-gangetica",
+      "doc": "SANBI PlantZAfrica: Asystasia gangetica subsp. micrantha",
+      "page": null,
+      "note": "The article explicitly identifies the catalogue subspecies and edible leaves. Spring/summer flowering is not a leaf-picking calendar."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leaves for cooked greens",
+    "care": [
+      "Use a moist growing position, with semi-shade or sun where water is adequate.",
+      "Control rooted runners so this fast groundcover does not smother neighbouring plants."
+    ],
+    "purchase": [
+      "Buy correctly identified subspecies material. Record actual leaf-cutting dates and weights; no local yield variety or first-cutting duration is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/asystasia-gangetica",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

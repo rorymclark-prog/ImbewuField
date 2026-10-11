@@ -3,7 +3,7 @@
 // or dividing a crop-cycle benchmark into fictitious monthly harvests.
 import { cropByKey, hasPlanningYield } from './crop-catalog';
 import { benchmarkDatedAreaConflictBedLabels, datedPlantingSowIndex, estimatedYieldKgAdjusted, occupiedMonthsForPlanting, planningMaturityMonths, TRANSPLANT_BED_RESERVED_FROM_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS, type Planting, type PlanBed } from './crop-plan';
-import { type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
+import { isHouseholdFoodHarvest, type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
 import { numberLabel } from './format-figures';
 
 export type KgRange = [number, number];
@@ -16,6 +16,8 @@ export interface AgeProjection {
   kg: KgRange | null;
   knownKg: KgRange;
   missing: string[];
+  /** Keep numeric failure distinct from a real zero known subtotal. */
+  numericOverflow?: boolean;
 }
 export interface ProductionProjectionYear {
   label: string;
@@ -40,6 +42,7 @@ const validYieldPoints = (points: TreeAgeGroup['yields']) => points
   .sort((a, b) => a.age - b.age);
 /** Age dates qualify reference bars only; a farmer's observed harvest remains an observation. */
 export function ageReadyForSeason(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], date: number, status?: 'existing' | 'proposed'): boolean {
+  if (!isHouseholdFoodHarvest(g.harvest)) return false;
   const cohorts = (choice?.production ?? []).filter(c => !status || c.status === status);
   const total = status ? g[status] : g.existing + g.proposed;
   if (!cohorts.length || cohorts.reduce((n, c) => n + c.plants, 0) !== total) return true;
@@ -57,6 +60,7 @@ export function ageReadyForSeason(g: PlacedTreeGroup, choice: TreeSeasonChoices[
   });
 }
 export function treeAgeCalendarNote(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], date: number): string | undefined {
+  if (!isHouseholdFoodHarvest(g.harvest)) return 'Food use needs review';
   if (ageReadyForSeason(g, choice, date) || choice?.bearing) return undefined;
   const cohorts = choice?.production ?? [];
   const dates = cohorts.map(c => plantingMonthIndex(c.planted));
@@ -94,6 +98,8 @@ function ageGroupKg(g: TreeAgeGroup, start: number, end: number, first: number |
 export function treeAgeProjection(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], start: number, end: number, nowIndex = start): AgeProjection {
   const ages = choice?.production ?? [];
   const missing: string[] = [];
+  const foodHeld = !isHouseholdFoodHarvest(g.harvest);
+  if (foodHeld) missing.push('Food use needs review before household production is planned');
   if (ages.some(a => !Number.isSafeInteger(a.plants) || a.plants < 1)) missing.push('Enter a whole number of plants');
   const counts = (status: 'existing' | 'proposed') => ages.filter(a => a.status === status).reduce((sum, a) => sum + a.plants, 0);
   const over = counts('existing') > g.existing || counts('proposed') > g.proposed;
@@ -104,13 +110,15 @@ export function treeAgeProjection(g: PlacedTreeGroup, choice: TreeSeasonChoices[
   const projections = ages.map(a => ageGroupKg(a, start, end, choice?.bearing && a.status === 'existing' ? undefined : g.harvest.yearsToFirstCrop?.value[0]));
   for (const p of projections) if (!p.kg) missing.push(p.stage);
   const partialKg = projections.reduce<KgRange>((sum, p) => p.kg ? sumRange(sum, p.kg) : sum, [0, 0]);
+  const numericOverflow = !partialKg.every(Number.isFinite);
   const unsafeCounts = over || ages.some(a => !Number.isSafeInteger(a.plants) || a.plants < 1) || ages.some(a => a.status === 'existing' && (plantingMonthIndex(a.planted) ?? -Infinity) > nowIndex);
-  const knownKg: KgRange = unsafeCounts || !partialKg.every(Number.isFinite) ? [0, 0] : partialKg;
+  const knownKg: KgRange = foodHeld || unsafeCounts || numericOverflow ? [0, 0] : partialKg;
   return {
     name: g.harvest.name, speciesId: g.harvest.speciesId, plants: g.existing + g.proposed,
     ages: [...new Set(projections.map(p => p.age))].join('; ') || 'Age not recorded',
     stage: [...new Set(projections.map(p => p.stage))].join('; ') || 'Add planting dates',
-    kg: missing.length || !partialKg.every(Number.isFinite) ? null : partialKg, knownKg, missing: [...new Set(missing)],
+    kg: missing.length || numericOverflow ? null : partialKg, knownKg, missing: [...new Set(missing)],
+    ...(numericOverflow ? { numericOverflow: true } : {}),
   };
 }
 

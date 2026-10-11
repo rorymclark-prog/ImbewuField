@@ -1,0 +1,62 @@
+{
+  "speciesId": "carpobrotus-deliciosus",
+  "commonName": "Sour fig",
+  "botanicalName": "Carpobrotus deliciosus",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "sweet and juicy when ripe",
+      "url": "https://pza.sanbi.org/carpobrotus-deliciosus",
+      "doc": "SANBI PlantZAfrica, carpobrotus-deliciosus",
+      "page": null,
+      "note": "The source identifies ripe fruit as food. June–October is flowering, not a fruit-picking window."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "This sun-loving coastal groundcover can bind sandy soil. SANBI records frost damage, so check cold exposure before using it inland."
+    ],
+    "purchase": [
+      "Confirm Carpobrotus deliciosus; do not substitute another sour-fig species merely because the common name matches."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/carpobrotus-deliciosus",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No explicit ripe-fruit months or kg per plant."
+  ]
+}

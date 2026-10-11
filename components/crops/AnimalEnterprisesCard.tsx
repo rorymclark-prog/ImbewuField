@@ -106,7 +106,7 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
   const sources: HarvestCitation[] = [
     e.outputPerAnimal?.source, ...e.windows.map((w) => w.source), e.seasonalPattern?.source,
     e.weeksToFirstProduct?.source, e.productiveLifeYears?.source, e.feedKgPerDay?.source,
-    e.waterLPerDay?.source, e.spaceM2?.source, ...e.welfare.map((p) => p.source), ...e.legal.map((p) => p.source),
+    e.waterLPerDay?.source, e.spaceM2?.source, ...(e.productionReferences ?? []).map(p => p.source), ...e.welfare.map((p) => p.source), ...e.legal.map((p) => p.source),
   ].filter((c): c is HarvestCitation => !!c);
   const art = animalArtUrl(e.enterpriseId);
   return (
@@ -134,6 +134,11 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
           {e.seasonalPattern.text} <SourceLink source={e.seasonalPattern.source} />
         </p>
       )}
+      {!!e.productionReferences?.length && <details className="mt-3 p-3 rounded-xl font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)', background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+        <summary style={{ cursor: 'pointer', minHeight: 44, paddingTop: 10, color: 'var(--text-primary)', fontWeight: 600 }}>Production by age &amp; system</summary>
+        <p className="mt-2">Match breed, stage and units to your stock. Enter your farm&apos;s expected or actual output separately.</p>
+        <ul className="mt-2 flex flex-col gap-2" style={{ listStyle: 'disc', paddingInlineStart: 20 }}>{e.productionReferences.map((reference, index) => <li key={index}>{reference.point} <SourceLink source={reference.source} /></li>)}</ul>
+      </details>}
       {e.welfare.length > 0 && (
         <div className="mt-3">
           <div className="font-sans font-semibold inline-flex items-center gap-1.5 mb-1" style={{ fontSize: 12, color: 'var(--text-primary)' }}>

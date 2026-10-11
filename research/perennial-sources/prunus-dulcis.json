@@ -1,0 +1,87 @@
+{
+  "speciesId": "prunus-dulcis",
+  "commonName": "Almond",
+  "botanicalName": "Prunus dulcis",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "South African SAPO cultivar sheet; trial location not stated — Texas Mission first pick",
+      "months": [
+        2
+      ],
+      "evidence": {
+        "quote": "3rd week February",
+        "url": "https://www.saplant.co.za/varieties/almonds/texas-mission/",
+        "doc": "SAPO Trust, Texas Mission almond cultivar information",
+        "page": null
+      },
+      "notes": "First-pick reference, not a national almond season. No region on the sheet is available for automatic climate matching."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "nuts",
+  "supplementaryReferences": [
+    {
+      "title": "Texas Mission pollen, chill and weight context",
+      "quote": "Self-incompatible",
+      "url": "https://www.saplant.co.za/varieties/almonds/texas-mission/",
+      "doc": "SAPO Trust, Texas Mission almond cultivar information",
+      "page": null,
+      "note": "Texas Mission is classified high chill and names Nonpareil as pollinator. Its 5 kg/tree production entry does not state tree age, management, trial region or whether weight is kernel or in-shell; it is not a mature annual food forecast."
+    },
+    {
+      "title": "Texas Mission named production entry",
+      "quote": "Production (kg/tree)\n5 kg/tree",
+      "url": "https://www.saplant.co.za/varieties/almonds/texas-mission/",
+      "doc": "SAPO Trust, Texas Mission almond cultivar information",
+      "page": null,
+      "note": "The Texas Mission table's Production (kg/tree) row gives 5 kg/tree. It does not state tree age, reporting period, trial region or whether this means kernels or nuts in shell. Retained as a cultivar source claim to investigate; numeric mature annual kg remains null."
+    }
+  ],
+  "productionGuidance": {
+    "products": "nuts",
+    "care": [
+      "Check the named cultivar's winter needs and compatible pollen before planting. Texas Mission is self-incompatible.",
+      "Record whether nut weights mean kernels or nuts in shell; these are different quantities."
+    ],
+    "purchase": [
+      "Texas Mission is a documented SAPO cultivar; its sheet names Nonpareil as pollen partner and describes a high chilling requirement. Confirm local suitability with the nursery."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.saplant.co.za/varieties/almonds/texas-mission/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No local-region calendar or entire harvest duration is established by the first-pick sheet.",
+    "No numeric first/full age; the isolated 5 kg/tree cell cannot become a generic mature yield or yield-by-age curve.",
+    "No kernel recovery or household safe storage duration supplied."
+  ]
+}

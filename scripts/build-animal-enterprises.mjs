@@ -59,6 +59,7 @@ export function enterpriseFromDossier(d) {
     feedKgPerDay: range(d.feedKgPerAnimalPerDay),
     waterLPerDay: range(d.waterLPerAnimalPerDay),
     spaceM2: range(d.spaceM2PerAnimal),
+    ...(d.productionReferences?.length ? { productionReferences: points(d.productionReferences) } : {}),
     welfare: points(d.welfare),
     legal: points(d.legal),
   };

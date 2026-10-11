@@ -4,14 +4,14 @@
   "botanicalName": "Psidium guajava",
   "harvestMonths": [],
   "yearsToFirstCrop": {
-    "value": [1, 2],
+    "value": [1, 1],
     "evidence": {
-      "quote": "Seedlings may flower within 2 years; clonally propagated trees often begin to bear during the first year after planting.",
+      "quote": "clonally propagated trees often begin to bear during the first year after planting.",
       "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
       "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
       "page": 1
     },
-    "notes": "This is a global horticultural-biology reference, not South Africa-specific; no SA source (ARC-ITSC's own guava page returned HTTP 503 on every attempt) was reachable to confirm or refine this for South African conditions/cultivars."
+    "notes": "International ICRAF reference for clonally propagated stock only: trees often begin bearing during the first year after planting. The seedling timing in the source concerns flowering, so no seed-grown first fruit age is assigned. This is not confirmed for South African sites."
   },
   "yearsToFullBearing": {
     "value": [5, 8],
@@ -21,7 +21,7 @@
       "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
       "page": 1
     },
-    "notes": "Same caveat as yearsToFirstCrop: global reference, not SA-specific."
+    "notes": "International ICRAF reference; growing conditions and spacing affect full bearing. This is not a South African site forecast."
   },
   "yieldKgPerTreeMature": {
     "value": [50, 70],
@@ -29,9 +29,9 @@
       "quote": "Average yields are between 30-40 kg/plant in 5 year-old plants and will reach a maximum production of 50-70 kg at about 7 years if well managed.",
       "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Psidium_guajava.PDF",
       "doc": "World Agroforestry (ICRAF), Agroforestree Database 4.0 (Orwa et al. 2009), Psidium guajava species sheet",
-      "page": 2
+      "page": 4
     },
-    "notes": "Took the 'about 7 years, well managed' maximum-production figure (50-70 kg/plant) as the mature-tree value rather than the 5-year-old figure (30-40 kg/plant), since 7 years falls within this same source's 5-8 year 'full bearing' range. Not South Africa-specific; no SA-specific per-tree yield figure was found (ARC-ITSC and a peer-reviewed SA journal article on guava wilt-disease-resistant selections were both unreachable/paywalled — see gaps)."
+    "notes": "ICRAF's international species reference reports maximum production of 50–70 kg/plant at about 7 years under good management; at age 5 it reports 30–40 kg/plant. These are not South Africa-specific farm forecasts. Match plant age, cultivar, site and care before applying this reference."
   },
   "chillUnits": {
     "value": null,

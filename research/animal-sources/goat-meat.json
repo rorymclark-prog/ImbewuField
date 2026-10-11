@@ -4,7 +4,7 @@
   "animal": "goat",
   "animalUnit": "doe",
   "product": "meat",
-  "outputUnit": "kids weaned/doe/year",
+  "outputUnit": "kids weaned/doe mated",
   "outputPerAnimal": {
     "value": [
       1.49,
@@ -16,7 +16,7 @@
       "doc": "King, F.J.M. (2009). Production Parameters for Boer Goats in South Africa (MSc dissertation, University of the Free State), citing National Dept of Agriculture data via Malan, S.W. (2000)",
       "page": null
     },
-    "notes": "Weaning rate (kids weaned/doe mated) of 149% = 1.49 kids weaned per doe per year. This is a 20-year national average for Boer does under EXTENSIVE conditions at 295 mm rainfall (low-rainfall/arid veld), not a feedlot or high-input system. The same source (Casey & Van Niekerk, 1988, quoted a few sentences later) separately reports mean litter SIZE (kids born per parturition, not per year) of 1.93 for Boer does - not merged into this per-year figure since it measures a different thing. A South Africa-wide extensive-system kidding percentage of 180% (not weaning rate) is corroborated independently in a different source (see gaps/seasonalPattern sourcing), which is consistent with the 187% kidding rate reported here."
+    "notes": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure."
   },
   "productionMonths": [],
   "seasonalPattern": {
@@ -132,6 +132,19 @@
     "Editor review 2026-09-28: legal[0] cited only the Act's general definition of 'controlled animal disease', which does not name FMD; re-cited to the SAnews statement that names FMD as a controlled disease under the Act.",
     "Editor review 2026-09-28: seasonalPattern carried a sentence with no evidence; set to null.",
     "Round 2 2026-09-28: The gaps line above stating the UFS King (2009) dissertation has 'no mention of season/spring/autumn/winter/summer anywhere in its text' is INCORRECT - re-read the full text and found Chapter 4 (Materials and methods, Northern Cape Boer goat data) gives explicit kidding-month ranges (March-April, June-July, September-October) and a stated ~4-month weaning age; used to populate productionMonths and seasonalPattern above. Also checked scielo.org.za, journals.ac.za, ajol.info, lrrd.org and boergoats.co.za for an independent Boer-specific weaning/marketing-month statement; none found beyond the King (2009) source already used.",
-    "Editor review 2026-09-28 (round 2): productionMonths withdrawn. [1,2,7,8,10,11] was worked out as King's kidding months plus a four-month weaning age (which King cites to Webb & Mamabolo 2004, not his own data), and weaning is not when meat is taken. That is the derived-month method round 2 rules out. seasonalPattern stays: the three kidding ranges and 'breeding was not restricted to any particular season' are King's own description of the Prieska/Griekwastad records (ch.4, p.36-37)."
+    "Editor review 2026-09-28 (round 2): productionMonths withdrawn. [1,2,7,8,10,11] was worked out as King's kidding months plus a four-month weaning age (which King cites to Webb & Mamabolo 2004, not his own data), and weaning is not when meat is taken. That is the derived-month method round 2 rules out. seasonalPattern stays: the three kidding ranges and 'breeding was not restricted to any particular season' are King's own description of the Prieska/Griekwastad records (ch.4, p.36-37).",
+    "11 October 2026 basis correction: the cited denominator is kids weaned/doe mated. Removed unsupported /year label; 149% and [1.49, 1.49] unchanged. Previously verified quote retained; fresh UFS retrieval returned an HTML challenge rather than the dissertation PDF.",
+    "11 October 2026 government manual now accessible. Breed/recording and uncontrolled-mating guidance retained; birth dates are not food harvest, buck replacement not doe lifespan."
+  ],
+  "productionReferences": [
+    {
+      "point": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+      "evidence": {
+        "quote": "Mating occurs throughout the year. Kids are born anytime.",
+        "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+        "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+        "page": 7
+      }
+    }
   ]
 }

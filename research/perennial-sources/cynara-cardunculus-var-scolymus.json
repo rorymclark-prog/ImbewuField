@@ -1,0 +1,69 @@
+{
+  "speciesId": "cynara-cardunculus-var-scolymus",
+  "commonName": "Globe artichoke",
+  "botanicalName": "Cynara cardunculus var. scolymus",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "unopened flower heads",
+  "supplementaryReferences": [
+    {
+      "title": "Edible unopened head and harvest stage",
+      "quote": "before the bracts begin to spread open",
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Globe%20artichoke.pdf",
+      "doc": "DAFF: Globe artichoke production guideline, printed p.8",
+      "page": 12,
+      "note": "Harvest full-sized heads while bracts remain closed; fleshy bract bases and receptacle are the food part. Annual transplanted crops and perennial crowns are different production systems. Month wording has northern-hemisphere/state context and is not assigned to a South African region."
+    },
+    {
+      "title": "Annual transplant duration",
+      "quote": "4 to 6 months",
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Globe%20artichoke.pdf",
+      "doc": "DAFF: Globe artichoke production guideline, printed p.3",
+      "page": 7,
+      "note": "Source says time from transplanting annual crops to maturity varies 4–6 months. This is a planting-cycle reference, not generic age to first crop for perennial crowns."
+    }
+  ],
+  "productionGuidance": {
+    "products": "unopened flower heads",
+    "care": [
+      "Choose a cool growing season and fertile, well-drained soil. Heat reduces bud quality and freezing can damage buds.",
+      "Record edible unopened heads by planting batch; do not use open-flower months as picking months."
+    ],
+    "purchase": [
+      "Ask a local grower or nursery which cultivar and annual/perennial system suits the site. No verified regional cultivar/food kg benchmark is assigned."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Brochure%20Globe%20artichoke.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": []
+}

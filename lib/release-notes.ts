@@ -50,6 +50,24 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
     detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
   }] },
+  { when: '11 October 2026', sha: '1f7239d2', changes: [
+    'Compare fresh food, kept food and crop growing space in monthly graphs.',
+    'Record monthly kg, eggs and litres; an actual amount replaces its expectation.',
+    'Keep quantities and stock with your farm when switching sites or signing in.',
+    'Check more fruit, nut, indigenous plant and animal references by age and area.',
+    'Fruit, staples, meats and preserved food have matching, distinct pictures.',
+    'Print monthly food, growing space and future plant ages with the same guidance.',
+  ], tour: [{
+    title: 'Explore a complete production example',
+    where: 'Examples → Complete production plan',
+    detail: 'Compare food and space graphs, try made-up quantities, and print the illustrated plan.',
+    href: '/samples/production',
+  }, {
+    title: 'Record production and food in store',
+    where: 'Farm → Production plan',
+    detail: 'Open the food graphs and enter this farm’s monthly amounts in their own units.',
+    href: '/facilitator/crops',
+  }] },
   { when: '10 October 2026', sha: '810c2537', changes: [
     'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
     'Fruit, nuts, seeds and animal products use pictures that match the vegetables.',
@@ -105,13 +123,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Study → Reading Landscape / Vegetables',
     detail: 'Compare the unreviewed headings and pest guidance with exact English.',
     href: '/student',
-  }] },
-  { when: '8 October 2026', sha: '72bac6b9', changes: [
-    'Six silent isiZulu safety cards show unreviewed drafts beside exact English.',
-    'English narration stays optional for Forest 11 while its isiZulu voice is held.',
-  ], tour: [{ title: 'Read the isiZulu safety cards',
-    where: 'Study → Introduction, Reading or Food Forest → isiZulu', href: '/student',
-    detail: 'Compare unreviewed safety wording with English; Forest 11 voice is held.',
   }] },
   { when: '8 October 2026', sha: '24276363', changes: [
     'More Study readiness and saved-pack messages show unreviewed Tshivenda drafts.',

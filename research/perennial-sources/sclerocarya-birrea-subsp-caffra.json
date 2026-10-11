@@ -33,7 +33,7 @@
       "doc": "ICRAF Agroforestree Species Profile, Sclerocarya birrea ssp. caffra (Spid=1513)",
       "page": null
     },
-    "notes": "Converted from tonnes to kg as stated by the source: 0.2 t x 1000 = 200 kg; 1.5 t x 1000 = 1500 kg. Source describes this as a wild-tree range, not necessarily a managed orchard tree. WebSearch (not fetched/verified verbatim) also surfaced other figures from Shackleton (2002) and a 2014 Agroforestry Systems paper (e.g. ~30-570 kg/tree/yr, up to ~1600 kg/tree) that roughly agree with this range but were NOT used as evidence here because they were only seen as paraphrased search-result summaries, never as verbatim fetched text."
+    "notes": "ICRAF reports 200–1,500 kg of whole fruit collected from a single wild tree in one season (0.2–1.5 tonnes x 1,000). This seasonal collection range does not establish an orchard average, edible pulp or kernel weight, or a production-by-age forecast."
   },
   "chillUnits": {
     "value": null,

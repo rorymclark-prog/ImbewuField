@@ -1,0 +1,79 @@
+{
+  "speciesId": "cydonia-oblonga",
+  "commonName": "Quince / kweper",
+  "botanicalName": "Cydonia oblonga",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Portuguese quince",
+      "months": [
+        5
+      ],
+      "evidence": {
+        "quote": "Portuguese ... May",
+        "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+        "doc": "Birkhofer et al. (2019), Effects of Ground Cover Management in Organic Deciduous Fruit Orchards in South Africa, Table 1",
+        "page": null
+      },
+      "notes": "Actual named managed orchard in the 2016/17 primary experiment. Both quince plots list May. Planting year establishes study context, not first-bearing age."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Robertson irrigation and food end-use context",
+      "quote": "Most fruits are used for drying or canning",
+      "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+      "doc": "Birkhofer et al. (2019), Effects of Ground Cover Management in Organic Deciduous Fruit Orchards in South Africa, Table 1",
+      "page": null,
+      "note": "The study documents summer irrigation and managed organic fruit production. It supplies no validated home processing recipe or shelf life."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "The Portuguese-quince May reference comes from irrigated Robertson orchards. Record local first and last picking months before treating it as food available.",
+      "Keep preserved-stock dates separate from fruit picking; a canning end use does not establish safe shelf life."
+    ],
+    "purchase": [
+      "Portuguese quince has a source-backed Robertson orchard reference. Ask for a fruiting quince cultivar: quince names used as pear rootstocks are not a fruit-harvest recommendation."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.frontiersin.org/journals/sustainable-food-systems/articles/10.3389/fsufs.2019.00107/full",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No verified local calendar elsewhere or generic first/full-bearing age, mature kg or chill requirement.",
+    "Tree counts, planting years and plot areas cannot be converted to harvest kg without harvested weight.",
+    "No species-wide pollination claim or safe preparation/storage instruction derived from the ecological trial."
+  ]
+}
