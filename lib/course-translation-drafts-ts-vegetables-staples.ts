@@ -32,7 +32,7 @@ const vegetablesL3CheckedSourceEnglish = [
 ].join('\n\n');
 const sourceParagraphs = vegetablesL3CheckedSourceEnglish.split('\n\n');
 const draftParagraphs = [...sourceParagraphs];
-draftParagraphs[0] = "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.";
+draftParagraphs[0] = "Staple yi ni nkoka hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.";
 draftParagraphs[1] = "Yi nyika energy kumbe protein. Yi hlayiseka, kumbe yi sala yi ri emavuni ku fikela loko u yi lava. Hakanyingi yi tlhela yi rhwala cultural memory.";
 draftParagraphs[2] = "Staple yin'we yi ku siya u nga sirhelelekanga. Swimbirhi kumbe ku fhira swi ku nyika tindlela to hlawula loko maxelo kumbe pests ti hlasela.";
 draftParagraphs[3] = "Byala swimbirhi kumbe ku fhira. Ku nga ri xin'we.";

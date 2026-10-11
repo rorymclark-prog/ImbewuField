@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '11 October 2026', sha: '6414556a', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
   { when: '11 October 2026', sha: '1f7239d2', changes: [
     'Compare fresh food, kept food and crop growing space in monthly graphs.',
     'Record monthly kg, eggs and litres; an actual amount replaces its expectation.',

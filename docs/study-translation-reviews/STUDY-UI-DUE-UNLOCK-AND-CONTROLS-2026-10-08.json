@@ -1,0 +1,890 @@
+{
+  "title": "Study UI dynamic due/unlock and core control draft release evidence",
+  "date": "2026-10-08",
+  "branch": "codex/study-due-unlock-runtime-next-20261008",
+  "baseHead": "fb6c4b58aed409c9d907b56affd69e0117a189fc",
+  "productionSourceHead": "83759bbdf67754acdb323a9f7250247e2fce25f5",
+  "status": "Unreviewed machine drafts; root semantic/source review accepted candidate wording. This B snapshot was locally checkpointed and history-merged with main 69a6a935; it remains unpushed. Node 24 typecheck and the focused 80-test set pass on the integrated tree. Root proof review, phone-layout validation, and fluent review remain pending; full suite was not run.",
+  "inputs": {
+    "dueUnlockPacket": {
+      "path": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+      "sha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+    },
+    "coreControlsIndependentPacket": {
+      "path": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-ui-core-visible-five-control-independent-check-2026-10-08.json",
+      "sha256": "a52bf8cfc6c62c0c923d8bcb6aff8ed456ddfda80ca771cb6d9acac99aac1df3"
+    },
+    "baseSourceFileHashes": {
+      "app/student/page.tsx": "e3b81c618245ce7634af3bc5eb6cb11c0151c1aa94cf66c53b34992f3ce008d1",
+      "components/course/OfflineDownload.tsx": "4c2e7c90bef08199dbab3783cb7089c1152566fa80731d0b8830e0f78064317e",
+      "lib/i18n.tsx": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "lib/learner-ui-english.ts": "7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74",
+      "lib/course-assignments.ts": "8c68b42376f063d8a1af567a6b0a345bac1a77bdafd99e8442a375a571f74670",
+      "lib/course-gating.ts": "802b2e29d3e171357282e156e7e4c8c4bbab7a7c303af6ec1998669d60685c1d",
+      "lib/locales/st.ts": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "lib/locales/ve.ts": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "lib/locales/ts.ts": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "lib/locales/zu.ts": "2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc"
+    }
+  },
+  "scope": {
+    "candidateRows": 28,
+    "languages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "included": "8 due/mentor/unlock keys per language, 3 practitioner labels, and TS Standard quality preset.",
+    "held": {
+      "id": "study-ui/ve/offlineDownloadPack",
+      "sourceEnglish": "Download · {size}",
+      "dictionaryValueBefore": "Download · {size}",
+      "targetAfter": null,
+      "status": "HOLD_TECHNICAL_ENGLISH_LABEL",
+      "reason": "Button action and byte-size placeholder remain English because a Tshivenda technical verb was not verified. This is not counted as translated.",
+      "requiredPlaceholders": [
+        "{size}"
+      ],
+      "renderCondition": "Course-pack start button; partial/resume branch is separate and reports remaining bytes."
+    },
+    "unchanged": [
+      "English source keys in lib/i18n.tsx and lib/learner-ui-english.ts",
+      "isiZulu locale lib/locales/zu.ts",
+      "Tshivenda Download · {size} technical button",
+      "date arithmetic, assignment state/gating data, offline pack flows and media"
+    ]
+  },
+  "rows": [
+    {
+      "id": "st/studentDueToday",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due today",
+      "dictionaryValueBefore": "Due today",
+      "targetAfter": "E lokela ho etsoa kajeno",
+      "sourceDefinition": [
+        {
+          "line": 1021,
+          "excerpt": "studentDueToday: 'Due today',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says exact same local calendar day. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentDueToday",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due today",
+      "dictionaryValueBefore": "Due today",
+      "targetAfter": "Zwi tea u itwa ṋamusi",
+      "sourceDefinition": [
+        {
+          "line": 1021,
+          "excerpt": "studentDueToday: 'Due today',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says exact same local calendar day. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentDueToday",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due today",
+      "dictionaryValueBefore": "Due today",
+      "targetAfter": "Swi fanele ku endliwa namuntlha",
+      "sourceDefinition": [
+        {
+          "line": 1021,
+          "excerpt": "studentDueToday: 'Due today',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says exact same local calendar day. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentDueTomorrow",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due tomorrow",
+      "dictionaryValueBefore": "Due tomorrow",
+      "targetAfter": "E lokela ho etsoa hosane",
+      "sourceDefinition": [
+        {
+          "line": 1022,
+          "excerpt": "studentDueTomorrow: 'Due tomorrow',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says one local calendar day ahead. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentDueTomorrow",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due tomorrow",
+      "dictionaryValueBefore": "Due tomorrow",
+      "targetAfter": "Zwi tea u itwa matshelo",
+      "sourceDefinition": [
+        {
+          "line": 1022,
+          "excerpt": "studentDueTomorrow: 'Due tomorrow',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says one local calendar day ahead. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentDueTomorrow",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due tomorrow",
+      "dictionaryValueBefore": "Due tomorrow",
+      "targetAfter": "Swi fanele ku endliwa mundzuku",
+      "sourceDefinition": [
+        {
+          "line": 1022,
+          "excerpt": "studentDueTomorrow: 'Due tomorrow',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Only when an assignment has a due date and today is available; formatDue says one local calendar day ahead. Badge is hidden for completed assignments.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentDaysOverdue",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "{count} days overdue",
+      "dictionaryValueBefore": "{count} days overdue",
+      "targetAfter": "E ne e lokela ho etsoa matsatsi a {count} a fetileng",
+      "sourceDefinition": [
+        {
+          "line": 1023,
+          "excerpt": "studentDaysOverdue: '{count} days overdue',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Only when due date is in the past; count is absolute days overdue, including source singular “1 day overdue” and plural cases.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Check count wording for source singular (1) and plural branches; retain overdue, not future due."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentDaysOverdue",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "{count} days overdue",
+      "dictionaryValueBefore": "{count} days overdue",
+      "targetAfter": "Zwo lenga nga maḓuvha a {count}",
+      "sourceDefinition": [
+        {
+          "line": 1023,
+          "excerpt": "studentDaysOverdue: '{count} days overdue',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Only when due date is in the past; count is absolute days overdue, including source singular “1 day overdue” and plural cases.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Check count wording for source singular (1) and plural branches; retain overdue, not future due."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentDaysOverdue",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "{count} days overdue",
+      "dictionaryValueBefore": "{count} days overdue",
+      "targetAfter": "Swi hundzeriwe hi nkarhi hi masiku ya {count}",
+      "sourceDefinition": [
+        {
+          "line": 1023,
+          "excerpt": "studentDaysOverdue: '{count} days overdue',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Only when due date is in the past; count is absolute days overdue, including source singular “1 day overdue” and plural cases.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Check count wording for source singular (1) and plural branches; retain overdue, not future due."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentDueInDays",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due in {count} days",
+      "dictionaryValueBefore": "Due in {count} days",
+      "targetAfter": "E lokela ho etsoa matsatsing a {count} a tlang",
+      "sourceDefinition": [
+        {
+          "line": 1024,
+          "excerpt": "studentDueInDays: 'Due in {count} days',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Only when future due date is within DUE_SOON_DAYS (currently 7); count is days until deadline, not overdue days.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Must remain a future deadline horizon, distinct from overdue.",
+        "Source indicates the deadline date is {count} days ahead. Do not word this as permission to wait until after that date or add another time period."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentDueInDays",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due in {count} days",
+      "dictionaryValueBefore": "Due in {count} days",
+      "targetAfter": "Zwi tea u itwa nga maḓuvha a {count}",
+      "sourceDefinition": [
+        {
+          "line": 1024,
+          "excerpt": "studentDueInDays: 'Due in {count} days',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Only when future due date is within DUE_SOON_DAYS (currently 7); count is days until deadline, not overdue days.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Must remain a future deadline horizon, distinct from overdue.",
+        "Source indicates the deadline date is {count} days ahead. Do not word this as permission to wait until after that date or add another time period."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentDueInDays",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due in {count} days",
+      "dictionaryValueBefore": "Due in {count} days",
+      "targetAfter": "Swi fanele ku endliwa ku nga si hela masiku ya {count}",
+      "sourceDefinition": [
+        {
+          "line": 1024,
+          "excerpt": "studentDueInDays: 'Due in {count} days',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Only when future due date is within DUE_SOON_DAYS (currently 7); count is days until deadline, not overdue days.",
+      "requiredPlaceholders": [
+        "{count}"
+      ],
+      "semanticConstraints": [
+        "Must remain a future deadline horizon, distinct from overdue.",
+        "Held in follow-up review: “endzhaku ka masiku ya {count}” can read as completing after {count} days. Source means the deadline occurs in {count} days; do not imply waiting until after the deadline. A semantically safe TS wording is not proposed here."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentDueDate",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due {date}",
+      "dictionaryValueBefore": "Due {date}",
+      "targetAfter": "E lokela ho etsoa ka {date}",
+      "sourceDefinition": [
+        {
+          "line": 1025,
+          "excerpt": "studentDueDate: 'Due {date}',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Only for due dates beyond DUE_SOON_DAYS; {date} is passed through unchanged from formatDue, including date/month/year formatting.",
+      "requiredPlaceholders": [
+        "{date}"
+      ],
+      "semanticConstraints": [
+        "Pass date slot unchanged; do not translate or reformat date/month/year."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentDueDate",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due {date}",
+      "dictionaryValueBefore": "Due {date}",
+      "targetAfter": "Zwi tea u itwa nga {date}",
+      "sourceDefinition": [
+        {
+          "line": 1025,
+          "excerpt": "studentDueDate: 'Due {date}',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Only for due dates beyond DUE_SOON_DAYS; {date} is passed through unchanged from formatDue, including date/month/year formatting.",
+      "requiredPlaceholders": [
+        "{date}"
+      ],
+      "semanticConstraints": [
+        "Pass date slot unchanged; do not translate or reformat date/month/year."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentDueDate",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Due {date}",
+      "dictionaryValueBefore": "Due {date}",
+      "targetAfter": "Swi fanele ku endliwa hi {date}",
+      "sourceDefinition": [
+        {
+          "line": 1025,
+          "excerpt": "studentDueDate: 'Due {date}',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Only for due dates beyond DUE_SOON_DAYS; {date} is passed through unchanged from formatDue, including date/month/year formatting.",
+      "requiredPlaceholders": [
+        "{date}"
+      ],
+      "semanticConstraints": [
+        "Pass date slot unchanged; do not translate or reformat date/month/year."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentOpenedByMentor",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Opened by your mentor",
+      "dictionaryValueBefore": "Opened by your mentor",
+      "targetAfter": "E butsoe ke moeletsi oa hao",
+      "sourceDefinition": [
+        {
+          "line": 1026,
+          "excerpt": "studentOpenedByMentor: 'Opened by your mentor',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Locked module explanation only when course-gating mentor override branch applies.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "Mentor/advisor lexical choice is unreviewed; do not imply the mentor completed the work."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentOpenedByMentor",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Opened by your mentor",
+      "dictionaryValueBefore": "Opened by your mentor",
+      "targetAfter": "Zwo vulwa nga mueletshedzi waṋu",
+      "sourceDefinition": [
+        {
+          "line": 1026,
+          "excerpt": "studentOpenedByMentor: 'Opened by your mentor',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Locked module explanation only when course-gating mentor override branch applies.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "Mentor/advisor lexical choice is unreviewed; do not imply the mentor completed the work."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentOpenedByMentor",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Opened by your mentor",
+      "dictionaryValueBefore": "Opened by your mentor",
+      "targetAfter": "Swi pfuriwe hi mutsundzuxi wa wena",
+      "sourceDefinition": [
+        {
+          "line": 1026,
+          "excerpt": "studentOpenedByMentor: 'Opened by your mentor',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Locked module explanation only when course-gating mentor override branch applies.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "Mentor/advisor lexical choice is unreviewed; do not imply the mentor completed the work."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "st/studentFinishToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Finish the lesson “{title}” to open this",
+      "dictionaryValueBefore": "Finish the lesson “{title}” to open this",
+      "targetAfter": "Qetella thuto e reng “{title}” hore sena se bulehe",
+      "sourceDefinition": [
+        {
+          "line": 1027,
+          "excerpt": "studentFinishToUnlock: 'Finish the lesson “{title}” to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Locked module explanation when previous module is incomplete; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Keep Finish and Submit distinct. Source templates call this a lesson/lesson task while unlockReason supplies a module title/assignment; preserve canonical source terminology pending separate review."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentFinishToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Finish the lesson “{title}” to open this",
+      "dictionaryValueBefore": "Finish the lesson “{title}” to open this",
+      "targetAfter": "Fhedzisani ngudo ya “{title}” uri ni kone u vula izwi",
+      "sourceDefinition": [
+        {
+          "line": 1027,
+          "excerpt": "studentFinishToUnlock: 'Finish the lesson “{title}” to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Locked module explanation when previous module is incomplete; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Keep Finish and Submit distinct. Source templates call this a lesson/lesson task while unlockReason supplies a module title/assignment; preserve canonical source terminology pending separate review."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentFinishToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Finish the lesson “{title}” to open this",
+      "dictionaryValueBefore": "Hetisa leswi ku pfula",
+      "targetAfter": "Hetisa dyondzo ya “{title}” leswaku u kota ku pfula lexi",
+      "sourceDefinition": [
+        {
+          "line": 1027,
+          "excerpt": "studentFinishToUnlock: 'Finish the lesson “{title}” to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Locked module explanation when previous module is incomplete; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Candidate adds the missing {title} and retains the lesson-completion-to-open relationship. Confirm “dyondzo” is suitable for the source lesson/module title in TS before wiring.",
+        "The existing TS literal is retained as provenance/current value; this proposed candidate would replace it only after independent review.",
+        "Finish remains distinct from Submit: this branch applies only when the previous module is incomplete.",
+        "The English template says “lesson” while caller title is a module title; preserve current source/caller behavior pending separate copy decision.",
+        "Existing literal omitted {title}; this candidate adds it while retaining finish-to-open meaning."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      },
+      "currentRenderedBefore": "English source key returned unchanged for TS by the previous lang === zu-only helper; module title came from regional presentation."
+    },
+    {
+      "id": "st/studentSubmitToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Submit the “{title}” lesson task to open this",
+      "dictionaryValueBefore": "Submit the “{title}” lesson task to open this",
+      "targetAfter": "Romela mosebetsi oa thuto o reng “{title}” hore sena se bulehe",
+      "sourceDefinition": [
+        {
+          "line": 1028,
+          "excerpt": "studentSubmitToUnlock: 'Submit the “{title}” lesson task to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Locked module explanation when previous module is complete but its assignment is not submitted; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Keep Finish and Submit distinct. Source templates call this a lesson/lesson task while unlockReason supplies a module title/assignment; preserve canonical source terminology pending separate review."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ve/studentSubmitToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Submit the “{title}” lesson task to open this",
+      "dictionaryValueBefore": "Submit the “{title}” lesson task to open this",
+      "targetAfter": "Rumelani mushumo wa ngudo ya “{title}” uri ni kone u vula izwi",
+      "sourceDefinition": [
+        {
+          "line": 1028,
+          "excerpt": "studentSubmitToUnlock: 'Submit the “{title}” lesson task to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Locked module explanation when previous module is complete but its assignment is not submitted; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Keep Finish and Submit distinct. Source templates call this a lesson/lesson task while unlockReason supplies a module title/assignment; preserve canonical source terminology pending separate review."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "ts/studentSubmitToUnlock",
+      "kind": "dynamic-ui",
+      "sourceEnglish": "Submit the “{title}” lesson task to open this",
+      "dictionaryValueBefore": "Submit the “{title}” lesson task to open this",
+      "targetAfter": "Thumela xiave xa dyondzo xa “{title}” leswaku u kota ku pfula lexi",
+      "sourceDefinition": [
+        {
+          "line": 1028,
+          "excerpt": "studentSubmitToUnlock: 'Submit the “{title}” lesson task to open this',"
+        }
+      ],
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Locked module explanation when previous module is complete but its assignment is not submitted; {title} is localized previous module title.",
+      "requiredPlaceholders": [
+        "{title}"
+      ],
+      "semanticConstraints": [
+        "Keep Finish and Submit distinct. Source templates call this a lesson/lesson task while unlockReason supplies a module title/assignment; preserve canonical source terminology pending separate review."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-due-unlock-candidates-2026-10-08-root-repair.json",
+        "candidatePacketSha256": "a25cafb15879c8d696ed6194291896d7e3bfabeeb61080d0afc8677a91d99107"
+      }
+    },
+    {
+      "id": "study-ui/st/studentPractitioner",
+      "kind": "static-role-label",
+      "sourceEnglish": "Permaculture practitioner",
+      "dictionaryValueBefore": "Setsebi sa permaculture",
+      "targetAfter": "Motho ea sebedisang Permaculture",
+      "sourceDefinition": {
+        "path": "lib/i18n.tsx",
+        "line": 955,
+        "literal": "studentPractitioner: 'Permaculture practitioner',",
+        "sha256": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318"
+      },
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/st.ts",
+      "targetFileHashBefore": "00cd347e8207960cacd09d37a914257f60e223a58ba7dbba81555ce6ba2b2619",
+      "renderCondition": "Exact guard !simple && pct === 100; shown only after course completion in All tools. This is a role label, not a certificate or professional credential.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "The candidate’s practice framing avoids strengthening “practitioner” into the existing `Setsebi` (expert/specialist) label, which could imply expertise/certification on course completion. Repair `sebelisang` to the project’s Sesotho spelling pattern `sebedisang` seen in current locale strings such as `Ho sebedisa ImbewuField`. Keep technical name Permaculture capitalized to match the English source. This remains a draft paraphrase (“person who uses/puts into practice Permaculture”), not fluent approval.",
+        "Do not imply expert status, professional credential, or certification. Preserve Permaculture capitalization from source."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-ui-core-visible-five-control-independent-check-2026-10-08.json",
+        "candidatePacketSha256": "a52bf8cfc6c62c0c923d8bcb6aff8ed456ddfda80ca771cb6d9acac99aac1df3",
+        "candidateId": "study-ui/st/studentPractitioner"
+      }
+    },
+    {
+      "id": "study-ui/ve/studentPractitioner",
+      "kind": "static-role-label",
+      "sourceEnglish": "Permaculture practitioner",
+      "dictionaryValueBefore": "Permaculture practitioner",
+      "targetAfter": "Muthu ane a shumisa Permaculture",
+      "sourceDefinition": {
+        "path": "lib/i18n.tsx",
+        "line": 955,
+        "literal": "studentPractitioner: 'Permaculture practitioner',",
+        "sha256": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318"
+      },
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ve.ts",
+      "targetFileHashBefore": "0870023cc68b3c9023546a7625088b5db6b800d45b9b21d45a0771b79223a25e",
+      "renderCondition": "Exact guard !simple && pct === 100; shown only after course completion in All tools. This is a role label, not a certificate or professional credential.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "“Person who uses/puts into practice Permaculture” avoids making course completion a professional certification or describing the learner as an expert. Retain exact source capitalization `Permaculture`. Whether this is the best Tshivenda expression for practitioner is unverified.",
+        "Do not imply expert status, professional credential, or certification. Preserve Permaculture capitalization from source."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-ui-core-visible-five-control-independent-check-2026-10-08.json",
+        "candidatePacketSha256": "a52bf8cfc6c62c0c923d8bcb6aff8ed456ddfda80ca771cb6d9acac99aac1df3",
+        "candidateId": "study-ui/ve/studentPractitioner"
+      }
+    },
+    {
+      "id": "study-ui/ts/studentPractitioner",
+      "kind": "static-role-label",
+      "sourceEnglish": "Permaculture practitioner",
+      "dictionaryValueBefore": "Permaculture practitioner",
+      "targetAfter": "Munhu loyi a tirhisaka Permaculture",
+      "sourceDefinition": {
+        "path": "lib/i18n.tsx",
+        "line": 955,
+        "literal": "studentPractitioner: 'Permaculture practitioner',",
+        "sha256": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318"
+      },
+      "sourceHash": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Exact guard !simple && pct === 100; shown only after course completion in All tools. This is a role label, not a certificate or professional credential.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "“Person who uses/puts into practice Permaculture” avoids adding expert status or certification. Retain exact source capitalization `Permaculture`. Whether this fully captures practitioner as ongoing practice in Xitsonga is unverified.",
+        "Do not imply expert status, professional credential, or certification. Preserve Permaculture capitalization from source."
+      ],
+      "candidateReview": "Root semantic/source review accepted as unreviewed machine draft; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-ui-core-visible-five-control-independent-check-2026-10-08.json",
+        "candidatePacketSha256": "a52bf8cfc6c62c0c923d8bcb6aff8ed456ddfda80ca771cb6d9acac99aac1df3",
+        "candidateId": "study-ui/ts/studentPractitioner"
+      }
+    },
+    {
+      "id": "study-ui/ts/offlineQualityStandard",
+      "kind": "quality-preset-label",
+      "sourceEnglish": "Standard",
+      "dictionaryValueBefore": "Standard",
+      "targetAfter": "Ya ntolovelo",
+      "sourceDefinition": {
+        "path": "lib/learner-ui-english.ts",
+        "line": 53,
+        "literal": "offlineQualityStandard: 'Standard',",
+        "sha256": "7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74"
+      },
+      "sourceHash": "7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74",
+      "targetLocaleFile": "lib/locales/ts.ts",
+      "targetFileHashBefore": "fe1ad9f015c80bfe1253f13e377b8f10aeebd8657fa41beb6ab4e5687e8bfa1f",
+      "renderCondition": "Shown as the standard option only when hasHigher && !busy && phase !== done && !simple && isStaff; paired with the note “for phones on data” and standardBytes size.",
+      "requiredPlaceholders": [],
+      "semanticConstraints": [
+        "The literal means usual/regular kind, supported locally by the same Xitsonga file’s `practiceConventionalLabel: Ya ntolovelo`. In this exact quality chooser, it is paired with `Higher quality`, a `for phones on data` note, and the Standard preset size; that context supports “usual/standard preset” and does not claim a quality guarantee. Still only a contextual candidate, not fluent approval.",
+        "Context is Standard beside Higher quality and the data-phone note; wording does not promise a quality guarantee."
+      ],
+      "candidateReview": "Root semantic/source review retained as unreviewed candidate; fluent review pending.",
+      "provenance": {
+        "candidatePacket": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/study-ui-core-visible-five-control-independent-check-2026-10-08.json",
+        "candidatePacketSha256": "a52bf8cfc6c62c0c923d8bcb6aff8ed456ddfda80ca771cb6d9acac99aac1df3",
+        "candidateId": "study-ui/ts/offlineQualityStandard"
+      }
+    }
+  ],
+  "sourceCompanionPolicy": {
+    "regionalLanguages": [
+      "st",
+      "ve",
+      "ts"
+    ],
+    "visibleEnglishSource": "Changed regional due/unlock/practitioner targets pair with English sources. Due date source uses formatDue(..., \"en\"); unlock source uses canonical English source-key template and English curriculum title. TS Standard source appears only beside the TS Standard option. EN and ZU do not gain these companions.",
+    "existingDraftNotices": "Keep the existing ST, VE and TS Study UI draft notices; do not replace or duplicate them."
+  },
+  "semanticGuards": [
+    "Due-in count describes when the deadline falls. It is not permission to wait until after it and adds no start interval. TS candidate “ku nga si hela masiku ya {count}” means before {count} days have elapsed; official Xitsonga source supports the temporal construction only.",
+    "Overdue remains past-tense and distinct from future due-in. Date interpolation is unchanged; English source companion uses English date formatting.",
+    "Finish applies when the previous module is incomplete; Submit applies when the module is complete but its assignment is not submitted. Preserve {title} exactly once.",
+    "Mentor override remains “Opened by your mentor.”",
+    "Practitioner remains an ordinary person-practicing-method label; it does not imply expert status or certification.",
+    "Ya ntolovelo is contextual “usual/standard preset”, not a quality guarantee."
+  ],
+  "officialTemporalConstructionEvidence": {
+    "title": "Constitution of the Republic of South Africa, official Xitsonga version (Department of Justice PDF)",
+    "url": "https://www.justice.gov.za/constitution/SAConstitution-web-tso.pdf",
+    "excerpt": "Huvo yi nga nyiki mpfumelelo wo nghenelela ku nga si hela masiku ya 180 endzhaku ka loko ku nghenelela ku sungurile",
+    "use": "supports the temporal construction only; it does not certify the full proposed UI sentence or fluency."
+  },
+  "beforeAfterProof": "Before: ST/VE/TS due/unlock keys fell back to English in this app because the helpers localized only zu; ST practitioner used Setsebi (expert/specialist); TS finish literal omitted {title}; TS Standard fell back to English. After: regional helper translations, each paired with exact English source; ST practitioner person-using wording; TS finish includes title; TS Standard localized with its English companion. VE Download remains an English technical hold. English source dictionaries and ZU locale bytes remain unchanged at the recorded branch-base hashes.",
+  "historyLayerProof": {
+    "description": "A newer exact-source history layer composes this implementation with the immutable 8 October predecessor instead of changing its recorded digest. The entire VE source and dictionary are snapshotted before/after; only the nine named accepted VE keys are added. English source dictionaries and ZU locale bytes have explicit unchanged-byte guards.",
+    "baseHead": "fb6c4b58aed409c9d907b56affd69e0117a189fc",
+    "predecessorSource": {
+      "path": "docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/ve-before.ts.txt",
+      "sha256": "e9deff4c7b627e99378bbc574111e23dd346911fcc8d4afb3ac60358c910db0e"
+    },
+    "currentSourceSha256": "0062c005b859e3723ce3ca24923cd8880d7f078c09f2b8c67f3df91a92790a69",
+    "predecessorDictionary": {
+      "path": "docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/ve-before.json",
+      "sha256": "e11dcd0b19061de333ad2b810408fde435f1b43605fdde7a68886c77f60e934a"
+    },
+    "currentDictionary": {
+      "path": "docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/ve-after.json",
+      "sha256": "6f705e0b0bdf20992d3767477af2ce96f8f044bd7513f336a678df9348b6a0b9"
+    },
+    "englishSourceSha256": {
+      "lib/i18n.tsx": "e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318",
+      "lib/learner-ui-english.ts": "7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74"
+    },
+    "isiZuluSourceSha256": "2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc",
+    "guard": "tests/study-ui-due-unlock-history-checks.ts"
+  },
+  "verificationStatus": {
+    "typecheck": "PASS under bundled Node 24.19.0: npx tsc --noEmit (rerun after integrating main 69a6a935).",
+    "focusedTests": "PASS: 80 focused tests across assignment, gating, student-simple, VE translation draft, connected locale-history, offline-simple and student overview tests (rerun after integrating main 69a6a935).",
+    "diffCheck": "PASS: git diff --check on staged B checkpoint and merge parent range.",
+    "notRun": [
+      "full test suite (not started while C paired test is active)",
+      "build",
+      "push"
+    ],
+    "pending": [
+      "root proof/diff review",
+      "phone-layout validation for English source companions",
+      "fluent review"
+    ],
+    "integrationCheckpoint": {
+      "bImplementationCommit": "2c8597e73295b255c0e2759ce358be692d176ea3",
+      "mainMergedCommit": "69a6a935",
+      "localMergeCommit": "e8bc1144",
+      "pushed": false,
+      "untrackedQA": "output/playwright/** retained untracked and unstaged"
+    }
+  }
+}

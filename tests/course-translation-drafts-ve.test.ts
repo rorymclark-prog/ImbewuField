@@ -565,7 +565,15 @@ test('Tshivenda Study controls retain reviewed pairs, draft status and unresolve
   assert.equal(liveVenda.studentProgressError, progressPair.candidate);
   assert.ok(liveVenda.studentProgressError.includes('laisiwa kana u vhulungwa'), 'retain both load and save failure, not only one failure mode');
   assert.ok(liveVenda.studentProgressError.includes('vhuṱumani haṋu kana account access'), 'retain both connection and permission recovery choices');
-  assert.ok(!Object.hasOwn(liveVenda, 'studentPractitioner'), 'completion must not create an unreviewed translated professional credential');
+  const runtimeReview = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/STUDY-UI-DUE-UNLOCK-AND-CONTROLS-2026-10-08.json', import.meta.url), 'utf8'));
+  const practitionerPair = runtimeReview.rows.find((row: { id: string }) => row.id === 'study-ui/ve/studentPractitioner');
+  assert.ok(practitionerPair, 'the dated source-bound review must include the VE practitioner label');
+  assert.equal(practitionerPair.sourceEnglish, 'Permaculture practitioner');
+  assert.equal(practitionerPair.targetAfter, 'Muthu ane a shumisa Permaculture');
+  assert.match(practitionerPair.candidateReview, /fluent review pending/);
+  assert.ok(practitionerPair.semanticConstraints.some((reason: string) => /Do not imply expert status, professional credential, or certification/.test(reason)),
+    'the ordinary person-using paraphrase must not upgrade course completion into a credential');
+  assert.equal(liveVenda.studentPractitioner, practitionerPair.targetAfter, 'the shipped value must match the reviewed draft exactly');
   assert.ok(english.includes("studentProgressError: 'Progress could not be loaded or saved. Check your connection or account access.'"), 'preserve the exact progress-error source');
   assert.ok(english.includes('return LOADED[lang]?.[key] ?? LOADED.en[key] ?? key;'), 'missing Tshivenda keys must fall back to English');
 });
@@ -735,7 +743,8 @@ test('Tshivenda succession and pest drafts preserve repeated sowing, uncertainty
   // clause; retain all three possible timings and the limiting-water condition.
   assert.match(l2[19], /^Hungry gap yaṋu i nga ḓa nga murahu ha musi maize yo vhulungwaho yo fhela\. I nga ḓa musi winter greens dzi sa athu u luga\. I nga ḓa nga tshifhinga tsho omaho musi maḓi a tshi fhungudza zwine zwa nga aluswa tsimuni\.$/, 'L2 p19 retains all three possible gap timings and the exact water-limits condition');
   assert.match(l2[8], /^Arali tshifhinga tsha crop tsho tea, khaṋo dzi nga thoma u overlap\. A si tshifhinga tshoṱhe.*lwa vhuṋa\.$/, 'possible overlap remains qualified by crop timing and the first-batch caveat stays intact');
-  assert.match(l2[14], /and store as protein/);
+  // Tshivenda connector is localized in the accepted exact span; the protein term stays technical English.
+  assert.equal(l2[14], 'Beans dzi gonya maize, na store as protein.');
   assert.equal(l2[15], 'Pumpkin i phadalala fhasi, i ita murunzi kha mavu na u vhulunga moisture.',
     'the ground-spreading action and soil shade remain localized while the crop and moisture terms stay English');
   assert.match(l2[16], /Tshifhinga tshi a vha tsha ndeme\. Thomani nga u ita uri maize i khwaṱhe, u itela uri i kone u tikedza beans musi dzi tshi thoma u gonya\./, 'maize is established first and is strong enough before beans start climbing');

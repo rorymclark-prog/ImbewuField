@@ -1,0 +1,46 @@
+{
+  "status": "successor source layer; pending independent/root review",
+  "baseHead": "fb6c4b58aed409c9d907b56affd69e0117a189fc",
+  "acceptedTextPacketSha256": "80b56bf5ee4a2f60877f9c11254d9c0e792f80a2f97fee235c301059834d3be3",
+  "purpose": "Project the current six-card worker and asset manifest to the exact fb6c4b58 predecessor before older immutable source-history checks run. The older proof files remain unchanged.",
+  "files": [
+    {
+      "id": "worker",
+      "path": "app/sw.js/route.ts",
+      "beforeSnapshot": "docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/before/app-sw-route.ts.txt",
+      "afterSnapshot": "docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/after/app-sw-route.ts.txt",
+      "beforeSha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615",
+      "beforeBytes": 128882,
+      "afterSha256": "e8ed62ce738666c95def305c504e7325fa9f59dbb80a35d16a1a6f2214f0df9e",
+      "afterBytes": 129863
+    },
+    {
+      "id": "manifest",
+      "path": "lib/course-asset-sizes.ts",
+      "beforeSnapshot": "docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/before/course-asset-sizes.ts.txt",
+      "afterSnapshot": "docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/after/course-asset-sizes.ts.txt",
+      "beforeSha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991",
+      "beforeBytes": 117011,
+      "afterSha256": "a3ea35e4f5cbb244278dc5c5b3d8ca754aebc1ae4dac202df086e5e08c0c7f16",
+      "afterBytes": 117408
+    }
+  ],
+  "manifestDelta": {
+    "beforeEntries": 1930,
+    "afterEntries": 1936,
+    "added": {
+      "/course-decks/food-forest/zu-silent/slide-07.webp": 326734,
+      "/course-decks/food-forest/zu-silent/slide-11.webp": 318444,
+      "/course-decks/food-forest/zu-silent/slide-12.webp": 334446,
+      "/course-decks/intro-permaculture/zu-silent/slide-14.webp": 459916,
+      "/course-decks/reading-landscape/zu-silent/slide-04.webp": 280664,
+      "/course-decks/reading-landscape/zu-silent/slide-07.webp": 347366
+    },
+    "changedExistingEntries": {},
+    "summaryBefore": "// 1930 files, 719.7 MB total.",
+    "summaryAfter": "// 1936 files, 721.7 MB total."
+  },
+  "workerChange": "Adds one cache cleanup marker for the six replaced isiZulu recorded JPEG stills, after existing migrations. It does not fetch, delete audio/video, or alter other cache paths.",
+  "preservation": "Full before/after file snapshots preserve every unlisted worker and manifest byte; the six original JPEGs/audio files and audio bindings are hash-checked separately in course-deck-source-bindings.test.ts. New stills are proven by render-proof.json and actual runtime rows.",
+  "reviewStatus": "unreviewed; no fluent approval"
+}
