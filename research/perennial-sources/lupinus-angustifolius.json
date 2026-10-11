@@ -1,0 +1,102 @@
+{
+  "speciesId": "lupinus-angustifolius",
+  "commonName": "Narrow-leaf / blue lupin",
+  "botanicalName": "Lupinus angustifolius",
+  "harvestMonths": [],
+  "householdFoodStatus": "specialist-review",
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable planting-to-first-food age. Trial days after sowing are accession, place and season specific, not a perennial age curve."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal full-bearing age applies to this annual or dual-purpose crop."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Trial grain kg/ha is retained as a reference only; it is not kg/plant or household food yield."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric crop-specific chilling requirement is verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No household-food pollination classification is inferred from a grain trial."
+  },
+  "harvestProduct": "seed/grain; household food requires confirmed food-qualified sweet material and preparation",
+  "supplementaryReferences": [
+    {
+      "title": "SA sweet narrow-leaf field grain and harvest",
+      "quote": "At Riversdale the lupins were harvested directly on 29 October",
+      "url": "https://www.proteinresearch.net/index.php?page=2004-lupino-no-19",
+      "doc": "Hardy et al.: Lupino 19 (September 2004), Crop Management, Harvesting, Tables 1–2",
+      "page": null,
+      "note": "Southern Cape 2003 rotation trial, sweet narrow-leaf Tanjil. Actual sowing / harvested grain kg/ha across camps: Riversdale 15 April / 2401–2529; Swellendam 12 May / 1003–1289; Tygerhoek 24 April / 2584–3058. Swellendam bracketed 1407–1704 figures estimate harvest losses, not weighed harvest. Riversdale’s 29 October harvest is an observed date, not generic maturity or a current-cultivar picking window. Feed-laboratory grain analysis does not certify household edible production."
+    },
+    {
+      "title": "Current supplier cultivar discussion",
+      "quote": "Cultivars: Mandellup, Lila-Baer",
+      "url": "https://www.agricol.co.za/agricol-products/sweet-lupins-narrow-leaf/",
+      "doc": "Agricol: Sweet Lupins — narrow leaf, Information section",
+      "page": null,
+      "note": "Supplier lists Mandellup and Lila-Baer, April–May planting, feed and green-manure uses. Its whole-SA region claim is not an independently verified climate-by-climate food trial. Tanjil’s earlier field amounts and dates are not transferred to these cultivars."
+    },
+    {
+      "title": "Narrow-leaf sweet and bitter types differ",
+      "quote": "low in alkaloid content",
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Legume%20poster.pdf",
+      "doc": "DAFF: Legume poster, lupin column, Description and Uses rows",
+      "page": null,
+      "note": "The narrow-leaf species includes sweet low-alkaloid and bitter high-alkaloid types. Its botanical identity alone does not qualify the seed as household food. White-lupin advice belongs to a different species; old availability statements are not treated as current facts."
+    },
+    {
+      "title": "Food qualification and preparation",
+      "quote": "no systematic and validated studies",
+      "url": "https://www.bfr.bund.de/assets/01_Ver%C3%B6ffentlichungen/Stellungnahmen_englisch/alkaloids-and-allergies-current-data-on-health-risks-from-lupin-seeds-in-food.pdf",
+      "doc": "BfR: Alkaloids and allergies — current data on health risks from lupin seeds in food, 17 September 2025, section 3.2.1.1.4",
+      "page": 11,
+      "note": "The primary food-risk assessment cannot supply a generally validated household debittering method. Use food-qualified seed/product and appropriate preparation confirmed with a qualified adviser; this is a product-care reference, not South African legislation or a home-processing recipe."
+    }
+  ],
+  "productionGuidance": {
+    "products": "seed/grain; household food requires confirmed food-qualified sweet material and preparation",
+    "care": [
+      "Confirm sweet versus bitter material and food versus feed purpose before including this planting in household food.",
+      "Keep narrow-leaf recommendations separate from white lupin. Generic grain and green-manure research does not supply edible kg or a plant age curve."
+    ],
+    "purchase": [
+      "Ask the supplier about identified sweet narrow-leaf material and whether it is qualified for the intended food use. Current Mandellup/Lila-Baer options are supplier context, not calibrated local food-yield predictions."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.proteinresearch.net/index.php?page=2004-lupino-no-19",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    },
+    {
+      "url": "https://www.agricol.co.za/agricol-products/sweet-lupins-narrow-leaf/",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    },
+    {
+      "url": "https://www.nda.gov.za/phocadownloadpap/Brochures_and_Production_Guidelines/Legume%20poster.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    },
+    {
+      "url": "https://www.bfr.bund.de/assets/01_Ver%C3%B6ffentlichungen/Stellungnahmen_englisch/alkaloids-and-allergies-current-data-on-health-risks-from-lupin-seeds-in-food.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary publication or producer page checked; product, cultivar, location and native units retained. Generic age, plant yield and calendar remain unknown."
+    }
+  ],
+  "gaps": [
+    "An actual farm cultivar, sowing date, product purpose and applicable local harvest window are required; reference trials do not create an automatic annual forecast."
+  ]
+}

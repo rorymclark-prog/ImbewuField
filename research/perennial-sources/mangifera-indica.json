@@ -37,9 +37,14 @@
     }
   ],
   "yearsToFirstCrop": {
-    "value": null,
-    "evidence": null,
-    "notes": "Not sourced to the required standard. General claims of '3-4 years' or 'up to 8 years' for South African mango bearing appear repeatedly in non-primary web content (farming blogs, tourism sites) but could not be traced to a verbatim statement in an ARC/SAMGA/Subtrop/DALRRD/peer-reviewed document during this research pass."
+    "value": [3, 4],
+    "evidence": {
+      "quote": "after 3 or 4 years",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+      "page": 20
+    },
+    "notes": "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg."
   },
   "yearsToFullBearing": {
     "value": null,
@@ -66,6 +71,16 @@
     "evidence": null,
     "notes": "Set to null in editor review: the quoted SAJS tables list which insects visited mango flowers in Limpopo and Mpumalanga; a visitor list does not state whether the flowers set fruit without a second cultivar, which is what this field claims. Withdrawn value: partly-self-fertile."
   },
+  "supplementaryReferences": [
+    {
+      "title": "Grafted mango establishment — regional guide",
+      "quote": "after 3 or 4 years",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+      "page": 20,
+      "note": "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve."
+    }
+  ],
   "harvestProduct": "fruit",
   "gaps": [
     "DALRRD/nda.gov.za and dalrrd.gov.za domains (which host the 'Mango Market Value Chain Profile 2020', a likely strong source for yield/bearing/pollination data) could not be reached: DNS resolution failed for www.dalrrd.gov.za, webapps.daff.gov.za and webapps1.daff.gov.za in this environment.",
@@ -74,6 +89,7 @@
     "Pollination evidence is a secondary-source (SAJS review) table citing two 1990s SALGA/SAMGA-yearbook-era field studies (Eardley & Mansell 1996; Carvalheiro et al.); the primary SAMGA Yearbook article itself was not independently fetched, and the table shows pollinator visitation shares, not a controlled fruit-set/exclusion-cage experiment proving pollinators are required (vs. just present) for SA mango fruit set.",
     "Agrekon paper 'Financial Analysis of Mango Production on Small-scale Emerging Commercial Farms in the Venda Region of South Africa' (Vol 38, 1999) looked promising (peer-reviewed, Limpopo-specific) but is paywalled on Tandfonline and was not fetched.",
     "Editor review 2026-09-28: early-season Tommy Atkins window excluded: its quote was not found on the re-fetched page.",
-    "Editor review 2026-09-28: pollination withdrawn — the quoted SAJS tables list which insects visited mango flowers in Limpopo and Mpumalanga; a visitor list does not state whether the flowers set fruit without a second cultivar, which is what this field claims."
+    "Editor review 2026-09-28: pollination withdrawn — the quoted SAJS tables list which insects visited mango flowers in Limpopo and Mpumalanga; a visitor list does not state whether the flowers set fruit without a second cultivar, which is what this field claims.",
+    "11 October 2026: first-bearing age 3–4 for grafted mango recovered from the visually verified KZN guide; no universal mature age or per-tree age-yield curve is established."
   ]
 }

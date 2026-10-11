@@ -41,6 +41,18 @@ export const ANIMAL_PRODUCT_ART: Readonly<Record<AnimalProduct, string>> = {
   milk: '/animal-product-art/milk.png', honey: '/animal-product-art/honey.png',
   fish: '/animal-product-art/fish.png', wool: '/animal-product-art/wool.png',
 };
+// A beef steak cannot stand for rabbit, poultry or pork. Breeds producing the same
+// food may share art; different meat sources and dairy sources keep their identity.
+export const ANIMAL_ENTERPRISE_PRODUCT_ART: Readonly<Record<string, string>> = {
+  'chicken-broiler': '/animal-product-art/chicken-meat.png',
+  duck: '/animal-product-art/duck-meat.png',
+  rabbit: '/animal-product-art/rabbit-meat.png',
+  'goat-meat': '/animal-product-art/goat-meat.png',
+  'goat-indigenous': '/animal-product-art/goat-meat.png',
+  'goat-dairy': '/animal-product-art/goat-milk.png',
+  'sheep-mutton': '/animal-product-art/mutton-meat.png',
+  'pig-pork': '/animal-product-art/pork-meat.png',
+};
 const HOUSING_PORTRAIT: Readonly<Record<HousingKind, string>> = {
   chicken: 'chicken-indigenous', bee: 'bees', goat: 'goat-meat', rabbit: 'rabbit',
   duck: 'duck', pig: 'pig-pork', kraal: 'cattle-beef', pond: 'fish-tilapia',
@@ -50,7 +62,7 @@ export function animalProductArtUrl(product: AnimalProduct): string {
 }
 export function enterpriseProductArtUrl(enterpriseId: string): string | null {
   const enterprise = ANIMAL_ENTERPRISES[enterpriseId];
-  return enterprise ? animalProductArtUrl(enterprise.product) : null;
+  return enterprise ? ANIMAL_ENTERPRISE_PRODUCT_ART[enterpriseId] ?? animalProductArtUrl(enterprise.product) : null;
 }
 export function housingArtUrl(housing: string): string | null {
   const enterprise = HOUSING_PORTRAIT[housing as HousingKind];

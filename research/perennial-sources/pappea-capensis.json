@@ -2,28 +2,7 @@
   "speciesId": "pappea-capensis",
   "commonName": "Jacket plum / doppruim",
   "botanicalName": "Pappea capensis",
-  "harvestMonths": [
-    {
-      "region": "South Africa (general)",
-      "months": [
-        12,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
-      "evidence": {
-        "quote": "The trees flower from September to May (southern hemisphere) and the rather special fruit is produced from December to July.",
-        "url": "https://pza.sanbi.org/pappea-capensis",
-        "doc": "SANBI PlantZAfrica - Pappea capensis",
-        "page": null
-      },
-      "notes": "PZA does not break this down by province; the species is described there as growing across most of the country, so this is treated as a general/national figure. It is a very long flowering/fruiting window (8 months) rather than a sharp harvest season."
-    }
-  ],
+  "harvestMonths": [],
   "yearsToFirstCrop": {
     "value": null,
     "evidence": null,
@@ -55,7 +34,18 @@
     "notes": "Species is reported as andromonoecious (male and hermaphrodite flowers on the same plant, sequentially). This does not map cleanly onto the schema's pollination categories, and no source made an explicit self-fertile/needs-cross-pollinator statement, so left null rather than forcing a category."
   },
   "harvestProduct": "fruit (seed used for oil)",
+  "supplementaryReferences": [
+    {
+      "title": "Fruit appearance, not a dated ripe picking interval",
+      "quote": "the rather special fruit is produced from December to July.",
+      "url": "https://pza.sanbi.org/pappea-capensis",
+      "doc": "SANBI PlantZAfrica - Pappea capensis",
+      "page": null,
+      "note": "SANBI describes green fruits that later split to expose edible red flesh. Its December–July fruit-production interval does not state when the fruit is ripe. Retain this as a general southern African phenology reference; local ripe picking months remain unknown."
+    }
+  ],
   "gaps": [
+    "Exact ripe picking months are not stated. The former December–July bar was withdrawn in the 11 October 2026 stage audit because fruit production includes developing green fruit; the dated observation remains a phenology reference.",
     "yearsToFirstCrop / yearsToFullBearing: searched SANBI PlantZAfrica and the ASHS 2011 abstract - neither gives an age to first fruiting or full bearing; PZA only notes germination takes six to ten weeks and that 'saplings are slow-growing especially when young'.",
     "chillUnits: no source discusses a chilling requirement for this species (it is described as both cold- and heat-tolerant on PZA, but that is not a chill-unit figure).",
     "A ScienceDirect paper on Pappea capensis gender expression (S. Afr. J. Bot., pii S0254629910002590) was found via search but the article page returned 403 Forbidden (paywalled) - could not be fetched to check for additional yield/pollination detail.",

@@ -64,9 +64,17 @@
     }
   ],
   "yearsToFirstCrop": {
-    "value": null,
-    "evidence": null,
-    "notes": "Not sourced to standard. General web claims of '5-8 years to full production' for litchi could not be traced to a verbatim quote in an ARC-ITSC, SALGA or peer-reviewed document that was actually fetched during this research pass; ISHS articles on the SA litchi industry and irrigation ('THE SOUTH AFRICAN LITCHI INDUSTRY - AN OVERVIEW', 'IRRIGATION OF LITCHIS IN SOUTH AFRICA') were only accessible as abstracts (full text is behind an Acta Horticulturae paywall)."
+    "value": [
+      4,
+      5
+    ],
+    "evidence": {
+      "quote": "fourth-fifth year",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Litchi bearing age; printed p.12",
+      "page": 16
+    },
+    "notes": "About years 4–5 in the KZN horticultural guide. Context is frost-free warm, humid subtropical production areas; cultivar, propagation age and field establishment are not specified. This is a first-crop reference, not a guaranteed local quantity or full-bearing age."
   },
   "yearsToFullBearing": {
     "value": null,
@@ -75,8 +83,13 @@
   },
   "yieldKgPerTreeMature": {
     "value": null,
-    "evidence": null,
-    "notes": "Found mature tree spacing (12 x 12 m = 64 trees/ha, with some growers planting 6 x 6 m and thinning to that at year 15) and industry-wide totals (~8000 tonnes from ~1500 ha) in the Menzel (1995) article, but did not use these to derive a kg/tree figure because the tonnage is an all-ages industry average, not a stated mature-tree/mature-orchard yield, and converting it would misrepresent an industry mean as a per-tree mature yield."
+    "evidence": {
+      "quote": "HLH Mauritius",
+      "url": "https://yearbook.litchisa.co.za/wp-content/uploads/2021/11/Pg-15-24-Evaluation-of-imported-cultivars-and-phase-1-material-in-the-litchi-breeding-programme.pdf",
+      "doc": "Froneman & Fivaz (1995), Evaluation of imported cultivars and Phase I material in the litchi breeding programme, Table 1",
+      "page": 3
+    },
+    "notes": "Nelspruit ITSC gene-pool block, 1994/95 single season: HLH Mauritius age 14 total 87.87 kg/tree, marketable 77.87; Red McLean age 14 total 30.58, marketable 28.42 kg/tree; Fay Zee Siu age 14 total 27.92, marketable 23.38 kg/tree. Ages, management and tree sizes differ, and authors caution comparisons. This does not establish a general annual or per-age curve; generic mature kg/tree remains null."
   },
   "chillUnits": {
     "value": null,
@@ -88,12 +101,22 @@
     "evidence": null,
     "notes": "Set to null in editor review: the quote is a reformatted table of flower-visitor shares (honeybee 65%...). It does not state whether a single litchi tree sets fruit alone. Withdrawn value: partly-self-fertile."
   },
+  "supplementaryReferences": [
+    {
+      "title": "Litchi output at age 14 — single-season cultivar trial",
+      "quote": "Average fruit yield (kg/tree) [...] Market fruit [...] Tree age (years) [...] HLH MAURITIUS [...] 87.87 [...] 77.87 [...] 14",
+      "url": "https://yearbook.litchisa.co.za/wp-content/uploads/2021/11/Pg-15-24-Evaluation-of-imported-cultivars-and-phase-1-material-in-the-litchi-breeding-programme.pdf",
+      "doc": "SA Litchi Growers’ Association Yearbook 1995, Evaluation of imported cultivars and Phase I material, Table 2; printed p.17",
+      "page": 3,
+      "note": "1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or copying total into saleable kg. The authors explicitly caution yield comparisons. The separate KZN guide gives conservative 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not per-age kg/tree."
+    }
+  ],
   "harvestProduct": "fruit",
   "gaps": [
     "Full text of ISHS/Acta Horticulturae articles ('THE SOUTH AFRICAN LITCHI INDUSTRY - AN OVERVIEW', 'IRRIGATION OF LITCHIS IN SOUTH AFRICA - AN OVERVIEW') is paywalled; only abstracts were accessible, so years-to-bearing, yield/tree and chilling data likely contained in these could not be extracted.",
     "arc.agric.za/arc-itsc/Pages/Litchi.aspx (ARC-ITSC's own litchi page) returned HTTP 503 Service Unavailable when fetched.",
     "No SA-specific, verifiable number found for years to first crop, years to full bearing, yield per mature tree, or a litchi chill-unit/chill-day requirement despite multiple searches; all left null per instructions rather than guessed.",
     "Editor review 2026-09-28: pollination withdrawn — the flower-visitor table does not support a self-fertility claim.",
-    "4 October 2026: SALGA cultivar page directly retrieved; cultivar seasons added. First-bearing age, yield and chilling gaps remain unresolved."
+    "11 October 2026: first-crop age 4–5 recovered from the verified KZN guide; cultivar-specific direct kg/tree recovered from one Nelspruit season. Full-bearing age, repeatable local age-yield curve and quantitative cultivar chilling remain unresolved."
   ]
 }

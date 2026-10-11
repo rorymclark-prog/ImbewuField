@@ -22,7 +22,7 @@
   "seasonalPattern": {
     "value": null,
     "evidence": null,
-    "notes": "No SA government/research, peer-reviewed or FAO source found describing a seasonal pattern (e.g. breeding season, month-to-month slaughter/production variation) specific to meat ducks; the sources used (LRRD Guyana study, SAJAS SA housing-system study) run fixed-length rearing trials without reference to calendar seasonality."
+    "notes": "No SA government/research, peer-reviewed or FAO source found describing a seasonal pattern (e.g. breeding season, month-to-month slaughter/production variation) specific to meat ducks; the sources used (LRRD Guyana study, SAJAS Poland housing-system study) run fixed-length rearing trials without reference to calendar seasonality."
   },
   "timeToFirstProductWeeks": {
     "value": [
@@ -32,10 +32,10 @@
     "evidence": {
       "quote": "P44 ducks and drakes were kept until 7 weeks of age, whereas the MR71 ducks until 10 weeks of age, and MR71 drakes until 12 weeks of age.",
       "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
-      "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+      "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
       "page": null
     },
-    "notes": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). South Africa-specific (SAJAS)."
+    "notes": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability."
   },
   "productiveLifeYears": {
     "value": null,
@@ -45,7 +45,7 @@
   "feedKgPerAnimalPerDay": {
     "value": null,
     "evidence": null,
-    "notes": "No SA government/research, peer-reviewed (SAJAS/LRRD) or FAO source gave an as-fed kg/day feed intake figure for ducks. The SAJAS SA study recorded 'feed intake (kg/bird)... in groups' but never states the resulting number in extractable text (likely only in a table image). The LRRD Guyana study reports cumulative 8-week feed intake in a table whose row/column alignment could not be reliably read from the extracted text, so it was not used to avoid an unverifiable or mis-attributed figure (see gaps)."
+    "notes": "No SA government/research, peer-reviewed (SAJAS/LRRD) or FAO source gave an as-fed kg/day feed intake figure for ducks. The SAJAS Poland study recorded 'feed intake (kg/bird)... in groups' but never states the resulting number in extractable text (likely only in a table image). The LRRD Guyana study reports cumulative 8-week feed intake in a table whose row/column alignment could not be reliably read from the extracted text, so it was not used to avoid an unverifiable or mis-attributed figure (see gaps)."
   },
   "waterLPerAnimalPerDay": {
     "value": null,
@@ -60,10 +60,10 @@
     "evidence": {
       "quote": "birds were kept according to the guidelines for intensive production system on deep litter and at a stocking density of 2.9 bird/m 2 . Thereafter, half the ducks and drakes of each genetic group was allowed to use free ranges, at a stock density of 0.08 bird/m 2 (outdoor system - OS).",
       "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
-      "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+      "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
       "page": null
     },
-    "notes": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. South Africa-specific (SAJAS)."
+    "notes": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability."
   },
   "welfare": [
     {
@@ -134,12 +134,13 @@
   ],
   "gaps": [
     "nda.gov.za: every attempted fetch (avian-influenza outbreak reports, the Act's own primary host copy) returned 'Connection reset by peer' - the host is down/blocked in this environment, consistent with the task brief's warning. Used a Western Cape provincial government mirror (westerncape.gov.za) and an Eastern Cape district municipality (eccogta.gov.za) hosted copy of the Act instead.",
-    "No SA-specific (ARC/SAJAS/provincial) absolute live-weight-at-slaughter figure in kg was found in extractable text - the SAJAS SA duck-housing paper (scielo.org.za, S0375-15892014000200001) gives slaughter AGES for Pekin (P44) and Muscovy (MR71) precisely, but its absolute weight values only appear in table images that could not be extracted as text, so the weight figure used is a non-SA (Guyana, LRRD) study instead, with the SAJAS paper used for ages and space only.",
+    "No SA-specific (ARC/SAJAS/provincial) absolute live-weight-at-slaughter figure in kg was found in extractable text - the SAJAS Poland duck-housing paper (scielo.org.za, S0375-15892014000200001) gives slaughter AGES for Pekin (P44) and Muscovy (MR71) precisely, but its absolute weight values only appear in table images that could not be extracted as text, so the weight figure used is a non-SA (Guyana, LRRD) study instead, with the SAJAS paper used for ages and space only.",
     "No feed kg/day or water L/day figure could be sourced for ducks: the SAJAS paper records 'feed intake (kg/bird)' only as a table-image value, and the LRRD paper's cumulative-feed-intake table could not be reliably attributed to specific breed/sex columns from the extracted text, so both fields are null rather than guessed.",
     "No sourced eggs/duck/year figure was found for Pekin or Muscovy ducks in any approved source - the LRRD and SAJAS papers used both study ducks reared purely for meat, not laying performance. Searched FAO's general poultry pages/PDF (fao.org) and found no duck-specific egg-production numbers there either.",
     "No source gave South African calendar months or a seasonal pattern (e.g. wet/dry season effect, moult) specific to duck meat production, so productionMonths is empty and seasonalPattern is null.",
     "Agrodok 33 (Duck keeping in the tropics, Agromisa/CTA, cgspace.cgiar.org) surfaced repeatedly in search results with likely-relevant practical feed/space/water figures, but was not used: it is not SA government/research, not peer-reviewed, and not an FAO document, so it does not fit the approved source hierarchy (the attempted download also failed with an HTTP 429 rate-limit, which is moot given this).",
     "Editor review 2026-09-28: Withdrew the welfare point that read the SAJAS trial's stocking density as what ducks \"need\" (it is the density the experiment used, and already the space figure), and the legal point resting on the Animal Diseases Act's general definition (the Western Cape factsheet point already names avian influenza as controlled). Output source relabelled as non-SA.",
-    "Round 2 2026-09-28: Re-searched for SA or FAO-fallback duck production/egg seasonality. Re-confirmed the SAJAS duck-housing paper (S0375-15892014000200001, scielo.org.za) has zero season/month keyword matches when fetched via r.jina.ai in full. Fetched FAO 'Small-scale poultry production' (fao.org/4/y5169e/y5169e03.htm) in full and read its entire Ducks section verbatim: it states the Muscovy 'is a poor layer, producing only 30 to 40 eggs per year under extensive management' with no season or month named, and separately states 'Guinea fowl are seasonal breeders, laying eggs only during the rainy season' - a real quote, but about guinea fowl, not ducks. A web-search-surfaced claim that this FAO page says Muscovy ducks are seasonal breeders with 'peak egg production in spring and early summer' was checked for verbatim and NOT found anywhere on the page (multiple targeted greps around every 'Muscovy', 'spring', 'peak egg production' and 'seasonal breeder' mention); per the no-quote-without-seeing-it-in-the-fetched-text rule, this claim was not used. No qualifying SA or FAO-general quote on duck-specific seasonality was found; productionMonths and seasonalPattern left as they were."
+    "Round 2 2026-09-28: Re-searched for SA or FAO-fallback duck production/egg seasonality. Re-confirmed the SAJAS duck-housing paper (S0375-15892014000200001, scielo.org.za) has zero season/month keyword matches when fetched via r.jina.ai in full. Fetched FAO 'Small-scale poultry production' (fao.org/4/y5169e/y5169e03.htm) in full and read its entire Ducks section verbatim: it states the Muscovy 'is a poor layer, producing only 30 to 40 eggs per year under extensive management' with no season or month named, and separately states 'Guinea fowl are seasonal breeders, laying eggs only during the rainy season' - a real quote, but about guinea fowl, not ducks. A web-search-surfaced claim that this FAO page says Muscovy ducks are seasonal breeders with 'peak egg production in spring and early summer' was checked for verbatim and NOT found anywhere on the page (multiple targeted greps around every 'Muscovy', 'spring', 'peak egg production' and 'seasonal breeder' mention); per the no-quote-without-seeing-it-in-the-fetched-text rule, this claim was not used. No qualifying SA or FAO-general quote on duck-specific seasonality was found; productionMonths and seasonalPattern left as they were.",
+    "11 October 2026 scope correction: duck age/stocking-density paper is from Polish institutions, not an SA field trial. Experimental density is not a legal minimum or validated SA backyard housing recommendation."
   ]
 }

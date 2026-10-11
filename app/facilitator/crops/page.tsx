@@ -21,6 +21,8 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
+import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
 import PoultryGuidanceCard from '@/components/crops/PoultryGuidanceCard';
 import SiteSurveySheet from '@/components/SiteSurveySheet';
@@ -31,18 +33,23 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, isHouseholdFoodHarvest, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, animalReferenceQualifier, formatAmountRange, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
+import { HOUSING_ANIMALS } from '@/lib/animal-enterprises';
 import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
 import ProductionProjectionCard from '@/components/crops/ProductionProjectionCard';
 import { buildProductionProjection, treeAgeCalendarNote } from '@/lib/production-projection';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { planningTreeSeasons, type ExpectedSeason } from '@/lib/production-product-guidance';
-import { printableAvailability } from '@/lib/crop-export-availability';
-import { animalProductArtUrl } from '@/lib/animal-art';
+import { buildProductionAvailabilityGraphs, printableAvailability, type ProductionKgGraphInput } from '@/lib/crop-export-availability';
+import { productionRecordsForSite, preservedFoodRecordsForSite, replaceProductionRecordsForSite,
+  replacePreservedFoodRecordsForSite, sanitiseProductionRecords, sanitisePreservedFoodRecords,
+  type DatedProductionRecord, type PreservedFoodRecord } from '@/lib/production-records';
+import { resolveAvailability } from '@/lib/crop-export-pdf';
+import { animalProductArtUrl, enterpriseProductArtUrl } from '@/lib/animal-art';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { speciesFruitArtworkUrl } from '@/lib/species-art';
 import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText, type CalendarAnimalLine, type CalendarProduceMonth, type CalendarTreeLine, type CalendarUnmarkedLine, type ProduceLane } from '@/lib/calendar-produce';
@@ -64,7 +71,7 @@ import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldB
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
-  buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
+  buildFieldUtilizationByMonth, totalGrowingAreaM2, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
   restampEditedOnce, confirmOnceSowing,
 } from '@/lib/crop-plan';
@@ -1160,7 +1167,9 @@ function FacilitatorCropsPageInner() {
   function chooseSite(id: string) {
     setChosenDesignId(id);
     setSwitchingSite(false);
-    if (id === 'local') return; // keep the device's local design already loaded above
+    // A cloud choice replaced the in-memory design. Returning to local must restore its
+    // map too, or local quantities are printed against the previous cloud farm's beds.
+    if (id === 'local') { setDesign(loadFacilitatorState()); return; }
     const row = myDesignsList?.find((d) => d.id === id);
     if (row) setDesign(designStateFromCloudRow(row));
   }
@@ -1600,6 +1609,53 @@ function FacilitatorCropsPageInner() {
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
   }, [beds, canvasSite, placeName, designTitle, region, pattern, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+
+  // One account holds several maps. A shared food name and month cannot tell us which
+  // farm produced it; records without a site remain saved outside this site's totals.
+  const productionSiteId = canvasSite ?? (chosenDesignId && chosenDesignId !== 'local' ? `design:${chosenDesignId}`
+    : surveySiteId ?? (design ? 'design:local' : useVirtual ? 'virtual-bed' : null));
+  const siteProductionRecords = useMemo(() => productionRecordsForSite(plan?.productionRecords, productionSiteId), [plan?.productionRecords, productionSiteId]);
+  const sitePreservedProducts = useMemo(() => preservedFoodRecordsForSite(plan?.preservedProducts, productionSiteId), [plan?.preservedProducts, productionSiteId]);
+  const unassignedProductionRecords = useMemo(() => sanitiseProductionRecords(plan?.productionRecords).filter(record => !record.siteId), [plan?.productionRecords]);
+  const unassignedPreservedProducts = useMemo(() => sanitisePreservedFoodRecords(plan?.preservedProducts).filter(record => !record.siteId), [plan?.preservedProducts]);
+
+  // The first dated year matches the print; reference trees cannot fill a real food gap.
+  const productionGraphInput = useMemo<ProductionKgGraphInput>(() => ({
+    availability: resolveAvailability({ plantings, beds, tasks: allTasks, meta: exportMeta,
+      now: new Date(currentYear, currentMonth - 1, 1), availability: printAvailability }, currentMonth),
+    dates: Array.from({ length: 12 }, (_, i) => ({
+      year: currentYear + Math.floor((currentMonth - 1 + i) / 12), month: wrapMonth(currentMonth + i),
+    })),
+    growingAreaM2: totalGrowingAreaM2(beds),
+    now: new Date(currentYear, currentMonth - 1, 1), plantings, beds,
+    treeGroups: includeTrees ? canvasTrees : undefined, treeSeasons,
+    includeTrees, includeAnimals,
+    productionRecords: siteProductionRecords, preservedProducts: sitePreservedProducts,
+  }), [plantings, beds, allTasks, exportMeta, currentYear, currentMonth, printAvailability, includeTrees, includeAnimals, canvasTrees, treeSeasons, siteProductionRecords, sitePreservedProducts]);
+  const productionAvailabilityGraphs = useMemo(() => buildProductionAvailabilityGraphs(productionGraphInput), [productionGraphInput]);
+  const recordProducts = useMemo(() => {
+    const options = new Map<string, { iconKey: string; label: string }>();
+    for (const planting of plantings) {
+      const crop = cropByKey(planting.cropKey);
+      if (crop && crop.yieldKgPerM2 !== 0) options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
+    }
+    for (const tree of canvasTrees) if (isHouseholdFoodHarvest(tree.harvest)) options.set(`tree:${tree.harvest.speciesId}`, { iconKey: `tree:${tree.harvest.speciesId}`, label: tree.harvest.name });
+    for (const group of canvasAnimals) {
+      const enterprise = ANIMAL_ENTERPRISES[animalChoices[group.housing] ?? ''];
+      if (enterprise && HOUSING_ANIMALS[group.housing].includes(enterprise.animal) && enterprise.product !== 'wool') options.set(`animal:${enterprise.enterpriseId}`, { iconKey: `animal:${enterprise.enterpriseId}`, label: `${enterprise.name} · ${PRODUCT_LABEL[enterprise.product]}` });
+    }
+    return [...options.values()];
+  }, [plantings, canvasTrees, canvasAnimals, animalChoices]);
+  function updateProductionRecords(productionRecords: DatedProductionRecord[]) {
+    if (!productionSiteId) return;
+    pushPlanHistory();
+    setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), productionRecords: replaceProductionRecordsForSite(previous?.productionRecords, productionSiteId, productionRecords), updatedAt: Date.now() }));
+  }
+  function updatePreservedProducts(preservedProducts: PreservedFoodRecord[]) {
+    if (!productionSiteId) return;
+    pushPlanHistory();
+    setPlan(previous => ({ ...(previous ?? { version: 1 as const, plantings: [] }), preservedProducts: replacePreservedFoodRecordsForSite(previous?.preservedProducts, productionSiteId, preservedProducts), updatedAt: Date.now() }));
+  }
 
   function shareTasks() {
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
@@ -2230,7 +2286,10 @@ function FacilitatorCropsPageInner() {
             {chickenGuide && <PoultryGuidanceCard guidance={chickenGuide} />}
             <AnimalEnterprisesCard groups={canvasAnimals} choices={animalChoices} onChoose={chooseAnimalEnterprise} seasons={animalSeasons} onSeasonsChange={chooseAnimalSeason} compact={simple} />
             {animalSaveFailed && <p role="alert" className="font-sans mt-2" style={{ color: 'var(--gold)', fontSize: 13 }}>Animal products and production months could not be saved on this device. Keep this page open and download the plan before leaving.</p>}
-            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} />}
+            <details className="rounded-2xl p-4 mt-4" style={{ border: '1px solid var(--border)', background: 'var(--bg-1)' }}><summary className="font-display font-semibold" style={{ cursor: 'pointer', minHeight: 32 }}>Food, production kg and growing space graphs</summary><ProductionAvailabilityGraphs series={productionAvailabilityGraphs} input={productionGraphInput} preservedProducts={sitePreservedProducts} /><p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>The map supplies growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field &amp; value → Plan-cycle value and review prices, losses and the amount sold.</p></details>
+            {(unassignedProductionRecords.length > 0 || unassignedPreservedProducts.length > 0) && <p className="font-sans text-sm mt-3" style={{ color: 'var(--text-muted)' }}>Earlier records without a site are retained outside this site's totals: {unassignedProductionRecords.length} production records and {unassignedPreservedProducts.length} stock records.</p>}
+            <ProductionRecordsEditor key={productionSiteId ?? 'no-site'} products={productionSiteId ? recordProducts : []} dates={productionGraphInput.dates} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} onProductionRecordsChange={updateProductionRecords} onPreservedProductsChange={updatePreservedProducts} />
+            {simple && <CropPlanExportCard plantings={plantings} beds={beds} tasks={allTasks} yearReport={yearReport} planNotes={plan?.planNotes} planNotesAt={plan?.planNotesAt} meta={exportMeta} availability={printAvailability} treeGroups={includeTrees ? canvasTrees : undefined} treeSeasons={treeSeasons} productionGuide={productionGuide} productionProjection={productionProjection} poultryGuidance={includeAnimals ? chickenGuide : undefined} productionRecords={siteProductionRecords} preservedProducts={sitePreservedProducts} />}
 
             {!simple && (
             <>
@@ -2540,6 +2599,8 @@ function FacilitatorCropsPageInner() {
               productionGuide={productionGuide}
               productionProjection={productionProjection}
               poultryGuidance={includeAnimals ? chickenGuide : undefined}
+              productionRecords={siteProductionRecords}
+              preservedProducts={sitePreservedProducts}
             />
 
             {/* Seed BOQ + year-ahead report */}
@@ -2896,7 +2957,7 @@ function MonthAvailabilityDetail({
             const Icon = PRODUCT_ICON[a.product];
             return (
               <div key={a.enterpriseId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-                <span className="inline-flex items-center gap-1.5"><TrayArt src={animalProductArtUrl(a.product)} label={PRODUCT_LABEL[a.product]} Fallback={Icon} color="var(--gold-dim)" /> {PRODUCT_LABEL[a.product]} · {e?.name ?? ANIMAL_LABEL[a.animal]}</span>
+                <span className="inline-flex items-center gap-1.5"><TrayArt src={enterpriseProductArtUrl(a.enterpriseId) ?? animalProductArtUrl(a.product)} label={PRODUCT_LABEL[a.product]} Fallback={Icon} color="var(--gold-dim)" /> {PRODUCT_LABEL[a.product]} · {e?.name ?? ANIMAL_LABEL[a.animal]}</span>
                 {e && (
                   <span style={{ color: 'var(--text-muted)' }}>
                     {' '}— source reference: {formatMonthSpan(sourcedProductMonths(e))}{e.outputPerAnimal ? `; ${formatAmountRange(e.outputPerAnimal.value)} ${e.outputUnit}. ${animalReferenceQualifier(e, 'outputPerAnimal') ?? e.outputPerAnimal.note ?? ''}` : ''}
@@ -3309,7 +3370,7 @@ function AnimalAvailabilityRow({ slots, axis, openMonth, onToggleMonth }: {
               {groups.map((items) => (
                 <TrayArt
                   key={items[0].enterpriseId}
-                  src={animalProductArtUrl(items[0].product)}
+                  src={enterpriseProductArtUrl(items[0].enterpriseId) ?? animalProductArtUrl(items[0].product)}
                   label={`${ANIMAL_LABEL[items[0].animal]}: ${items.map((a) => PRODUCT_LABEL[a.product].toLowerCase()).join(', ')}`}
                   Fallback={PRODUCT_ICON[items[0].product]}
                   color="var(--gold-dim)"
@@ -4013,7 +4074,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
         const Icon = PRODUCT_ICON[line.product];
         return {
           key, runs, name: `${PRODUCT_LABEL[line.product]} · ${line.name}`, text: animalLineText(line), standing: line.standing,
-          art: <TrayArt src={animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />,
+          art: <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />,
         };
       });
   const show = (id: string, el: HTMLElement) => {
@@ -4182,7 +4243,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
       style={{ position: 'sticky', left: BED_LABEL_WIDTH, maxWidth: 640, padding: '8px 12px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 10px', borderTop: '1px dashed var(--border)' }}
     >
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
-        <TrayArt src={animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
+        <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={PRODUCT_LABEL[line.product]} Fallback={Icon} color="var(--gold-dim)" />
         {unmarkedLineText(line)}
       </span>
       <span style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{noteText}</span>

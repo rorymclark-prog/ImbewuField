@@ -1,0 +1,130 @@
+{
+  "speciesId": "malus-domestica",
+  "commonName": "Apple (low-chill cultivars)",
+  "botanicalName": "Malus domestica",
+  "harvestMonths": [
+    {
+      "region": "Bien Donne, Simondium, Western Cape — Afri-Star cultivar trial reference",
+      "months": [
+        12,
+        1
+      ],
+      "evidence": {
+        "quote": "Middle to end December or 1st/2nd week January",
+        "url": "https://culdevco.co.za/apples-cultivar-info-afri-star/",
+        "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Afri-Star apple cultivar information sheet",
+        "page": null
+      },
+      "notes": "Verified live 10 October 2026. The sheet explicitly limits its data to Bien Donne, Simondium, Western Cape and says it need not represent other areas. This is a named cultivar's harvest reference, not all apple trees or a warm KZN picking calendar."
+    },
+    {
+      "region": "Elgin, Western Cape — Granny Smith cultivar first pick",
+      "months": [
+        3
+      ],
+      "evidence": {
+        "quote": "4th week March (Elgin, Western Cape)",
+        "url": "https://www.saplant.co.za/varieties/apples/granny-smith/",
+        "doc": "SAPO Trust, Granny Smith apple cultivar information sheet",
+        "page": null
+      },
+      "notes": "Verified live 10 October 2026. Source table calls this the harvest date (first pick); it establishes neither the full harvest duration nor dates in another production region. SAPO is the listed South African cultivar licensee and plant-improvement authority supplying this first-party sheet."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      3,
+      3
+    ],
+    "evidence": {
+      "quote": "Light cropping starts in year 3 and full production in year 7.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Apple bearing age; printed p.28",
+      "page": 32
+    },
+    "notes": "KZN guide reference for light cropping at year 3, in temperate apple conditions best adapted there to Dry Highland Sourveld. Rootstock, cultivar and nursery starting age are not specified. A named low-chill cultivar still needs adequate local winter chilling and establishment; this is not a warm-coast guarantee."
+  },
+  "yearsToFullBearing": {
+    "value": [
+      7,
+      7
+    ],
+    "evidence": {
+      "quote": "Light cropping starts in year 3 and full production in year 7.",
+      "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+      "doc": "KZN DARD, Fruit and Nut Production in KZN, Apple bearing age; printed p.28",
+      "page": 32
+    },
+    "notes": "Full production at year 7 in this general KZN guide. No per-tree output at that age is stated, and rootstock, cultivar and management can change bearing. The four Langkloof budgets are separate regional planning assumptions, not measured confirmation of this generic age."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "Culdevco reports Afri-Star commercial production as 60–70 ton/ha but supplies no matched plant density in the sheet, so it is not converted to kg/tree. SAPO describes Granny Smith production qualitatively as high, which supplies no numeric kg/tree. Neither statement is a farm forecast."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "Afri-Star's source gives 300–500 Infruitec Chilling Units; Granny Smith's sheet uses a qualitative medium-to-low requirement. The named Afri-Star range is kept in buying advice, not assigned as one requirement for all Malus domestica cultivars. Monthly mean temperatures cannot establish accumulated cultivar chilling."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "The Granny Smith sheet says self-incompatible and names Golden Delicious and Hillieri pollinators. The Afri-Star sheet does not supply pollen-compatibility guidance. Keep a cultivar-specific compatible-pollen check rather than asserting one breeding-system value for every apple."
+  },
+  "supplementaryReferences": [
+    {
+      "title": "Apple year 3 — Langkloof enterprise-budget output",
+      "quote": "Apples (YR 3) [...] Quantity [...] GROSS INCOME [...] 10 000,00 [...] Apple - Local market (35%) [...] Kg",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2025/02/APPLES-YR-3.pdf",
+      "doc": "Western Cape Department of Agriculture, Agricultural Economic Services, Apples (Yr 3), updated November 2024",
+      "page": 1,
+      "note": "Langkloof, Little Karoo, sandy loam: budgeted year 3 product quantity 10,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading."
+    },
+    {
+      "title": "Apple year 4–5 — Langkloof enterprise-budget output",
+      "quote": "Apples (YR 4-5) [...] Quantity [...] GROSS INCOME [...] 25 000,00 [...] Apple - Local market (35%) [...] Kg",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2025/02/APPLES-YR-4-5.pdf",
+      "doc": "Western Cape Department of Agriculture, Agricultural Economic Services, Apples (Yr 4–5), updated November 2024",
+      "page": 1,
+      "note": "Langkloof, Little Karoo, sandy loam: budgeted year 4–5 product quantity 25,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading."
+    },
+    {
+      "title": "Apple year 6–7 — Langkloof enterprise-budget output",
+      "quote": "Apples (YR 6-7) [...] Quantity [...] GROSS INCOME [...] 48 590,00 [...] Apple - Local market (35%) [...] Kg",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2025/02/APPLES-YR-6-7.pdf",
+      "doc": "Western Cape Department of Agriculture, Agricultural Economic Services, Apples (Yr 6–7), updated November 2024",
+      "page": 1,
+      "note": "Langkloof, Little Karoo, sandy loam: budgeted year 6–7 product quantity 48,590 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading."
+    },
+    {
+      "title": "Apple year 8 — Langkloof enterprise-budget output",
+      "quote": "Apples (YR 8) [...] Quantity [...] GROSS INCOME [...] 64 000,00 [...] Apple - Local market (35%) [...] Kg",
+      "url": "https://www.elsenburg.com/wp-content/uploads/2025/02/APPLES-YR-8.pdf",
+      "doc": "Western Cape Department of Agriculture, Agricultural Economic Services, Apples (Yr 8), updated November 2024",
+      "page": 1,
+      "note": "Langkloof, Little Karoo, sandy loam: budgeted year 8 product quantity 64,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading."
+    }
+  ],
+  "harvestProduct": "fruit",
+  "sourceChecks": [
+    {
+      "url": "https://culdevco.co.za/apples-cultivar-info-afri-star/",
+      "checkedAt": "2026-10-10",
+      "regionQuote": "Data obtained at Bien Donne, Simondium, Western Cape",
+      "observations": "The source attributes the cultivar to ARC Infruitec-Nietvoorbij. Its explicit regional disclaimer is retained in the reference label and notes. No whole-country early/middle/late union is shipped."
+    },
+    {
+      "url": "https://www.saplant.co.za/varieties/apples/granny-smith/",
+      "checkedAt": "2026-10-10",
+      "observations": "The source labels harvest as first pick and explicitly identifies Elgin, Western Cape. Its production kg/tree cell contains a qualitative adjective, not a numeric quantity."
+    }
+  ],
+  "gaps": [
+    "No locally verified KZN, Highveld, Karoo or mountain apple picking window is established here. Do not copy the two Western Cape references to a mapped apple elsewhere.",
+    "The two cultivar references are alternatives; combining them would claim the picking duration of a mixed orchard rather than one apple tree.",
+    "First-bearing year 3 and full-bearing year 7 are now qualified KZN guide references; kg/tree remains missing. The per-hectare Afri-Star statement has no matched density for a defensible per-tree conversion.",
+    "Chilling and pollination must be checked for the actual named cultivar and site. No single numeric requirement or universal pollination classification is assigned at species level.",
+    "Shelf life is not supplied: commercial cold-storage statements do not establish ambient household storage or automatic kept-stock months."
+  ]
+}

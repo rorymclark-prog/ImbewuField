@@ -45,7 +45,7 @@ export default function ProductionGuideCard({ guide, canSurvey, onSurvey }: {
     {!!guide.foodForest?.length && <div className="mt-4" data-product-guidance="food-forest">
       <h3 className="font-display text-lg font-semibold">Fruit, nuts and indigenous foods</h3>
       <p className="font-sans text-xs my-2" style={{ color: 'var(--text-secondary)' }}>Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.</p>
-      {guide.foodForest.map(item => <GuideItem key={item.title} item={item} product />)}
+      {guide.foodForest.map((item, i) => <GuideItem key={`${item.title}:${i}`} item={item} product />)}
     </div>}
     {!!guide.animalProducts?.length && <div className="mt-4" data-product-guidance="animals">
       <h3 className="font-display text-lg font-semibold">Animal products</h3>

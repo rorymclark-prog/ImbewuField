@@ -153,6 +153,18 @@
     "spaceM2PerAnimal (housing): no SA source gave an indoor/pen floor-space figure for a sow; the only floor-space numbers found (SAPPO/Muchenje review, quoting the Tomlinson 2000 Code of Practice) are for TRANSPORT loading density, not housing, and were used under welfare instead.",
     "journals.co.za (AOSIS, hosting the full Journal of the South African Veterinary Association) returned a Cloudflare challenge (HTTP 403, cf-mitigated: challenge) to direct fetch, and pmc.ncbi.nlm.nih.gov article pages return a Google reCAPTCHA challenge to plain curl. Used scielo.org.za mirrors of the same peer-reviewed articles instead, and verified by curl+grep that the exact quoted text exists at those SciELO URLs.",
     "nda.gov.za and dalrrd.gov.za were unreachable (connection failure) for every attempted URL (ASF disease-management strategy, controlled/notifiable disease lists).",
-    "Editor review 2026-09-28 (round 2): timeToFirstProductWeeks withdrawn (22-24 weeks is a finishing pig's commercial marketing age from a personal communication, not the time from a sow herd to its first product). The transport floor-space quote's URL 404'd; the same Muchenje review and passage is at sappo.org/wp-content/uploads/2022/09/6_Muchenje_pig_welfare.pdf, and its point now says 'recommends', for trucks, as the quote does. The FMD legal quote now carries the table heading that names pigs."
+    "Editor review 2026-09-28 (round 2): timeToFirstProductWeeks withdrawn (22-24 weeks is a finishing pig's commercial marketing age from a personal communication, not the time from a sow herd to its first product). The transport floor-space quote's URL 404'd; the same Muchenje review and passage is at sappo.org/wp-content/uploads/2022/09/6_Muchenje_pig_welfare.pdf, and its point now says 'recommends', for trucks, as the quote does. The FMD legal quote now carries the table heading that names pigs.",
+    "11 October 2026 ARC stage-specific water and care retained. Conflicting nursery-water prose/table not converted into a universal ration; grower weight and breeding-sow food output remain distinct."
+  ],
+  "productionReferences": [
+    {
+      "point": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+      "evidence": {
+        "quote": "Temperature, feedstuffs, stage of production, and health all influence the amount of water required",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/CSA%20Pig%20Production/Manual/10-Pig%20production.pdf",
+        "doc": "ARC Climate-Smart Agriculture: Pig production, farrowing/adaptation pp442–445, Table 1 p446",
+        "page": 446
+      }
+    }
   ]
 }

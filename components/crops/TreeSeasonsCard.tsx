@@ -2,7 +2,7 @@
 
 import { Trees } from 'lucide-react';
 import { MONTHS_SHORT } from '@/lib/crop-catalog';
-import { formatMonthSpan, type PlacedTreeGroup, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { formatMonthSpan, isHouseholdFoodHarvest, type PlacedTreeGroup, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import TreeAgeEditor from './TreeAgeEditor';
 
 /** Source windows remain references until the farmer confirms the plants and local months. */
@@ -22,8 +22,10 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
       {groups.map((g) => {
         const choice = choices[g.harvest.speciesId] ?? { months: [], bearing: false };
         const update = (next: typeof choice) => onChoose(g.harvest.speciesId, next);
+        const foodHeld = !isHouseholdFoodHarvest(g.harvest);
         return <details key={g.harvest.speciesId} style={{ borderTop: '1px solid var(--border)', paddingTop: 10 }}>
-          <summary className="font-sans font-semibold" style={{ cursor: 'pointer', fontSize: 13, color: 'var(--text-primary)' }}>{g.harvest.name} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} · {choice.bearing && choice.months.length ? formatMonthSpan(choice.months) : 'confirm picking months'}</summary>
+          <summary className="font-sans font-semibold" style={{ cursor: 'pointer', fontSize: 13, color: 'var(--text-primary)' }}>{g.harvest.name} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} · {foodHeld ? 'food use needs review' : choice.bearing && choice.months.length ? formatMonthSpan(choice.months) : 'confirm picking months'}</summary>
+          {foodHeld ? <p className="font-sans mt-3" style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--text-secondary)' }}>Kept as mapped inventory. Check the sourced food-use guidance below before planning household harvest. This plant is held out of ordinary food totals and picking jobs.</p> : <>
           <label className="font-sans flex items-start gap-2 mt-3" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
             <input type="checkbox" checked={choice.bearing} disabled={g.existing === 0} onChange={(event) => update({ ...choice, bearing: event.target.checked })} /> All existing plants of this kind already give food here.
           </label>
@@ -36,11 +38,12 @@ export default function TreeSeasonsCard({ groups, unidentified, choices, onChoos
               return <button key={name} type="button" aria-pressed={on} onClick={() => update({ ...choice, months: on ? choice.months.filter((m) => m !== i + 1) : [...choice.months, i + 1].sort((a, b) => a - b) })} className="font-sans rounded-lg" style={{ minWidth: 44, minHeight: 44, fontSize: 12, border: `1px solid ${on ? 'var(--emerald)' : 'var(--border)'}`, background: on ? 'var(--bg-2)' : 'transparent', color: 'var(--text-primary)', cursor: 'pointer' }}>{name}</button>;
             })}
           </div>
+          </>}
           <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             <strong>{g.referenceMissing ? 'No harvest reference is available in this plan:' : 'Reference seasons — check place and variety:'}</strong>
             {g.harvest.windows.length ? <ul style={{ listStyle: 'disc', paddingInlineStart: 18 }}>
               {g.harvest.windows.map((w, i) => <li key={i}>{w.region}: {formatMonthSpan(w.months)}. <a href={w.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>{w.source.doc}{w.source.page ? `, p. ${w.source.page}` : ''}</a></li>)}
-            </ul> : <p>No picking months are verified in the source record. Local observations can still be recorded above.</p>}
+            </ul> : <p>{foodHeld ? 'No food picking calendar is assigned while food use needs review.' : 'No picking months are verified in the source record. Local observations can still be recorded above.'}</p>}
           </div>
         </details>;
       })}

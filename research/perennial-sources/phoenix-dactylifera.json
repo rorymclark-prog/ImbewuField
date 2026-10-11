@@ -1,0 +1,96 @@
+{
+  "speciesId": "phoenix-dactylifera",
+  "commonName": "Date palm",
+  "botanicalName": "Phoenix dactylifera",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "The male palm produces the pollen and the female palm produces the fruit.",
+      "url": "https://www.fao.org/4/y4360e/y4360e0c.htm",
+      "doc": "FAO Date Palm Cultivation (2002), Chapter VIII",
+      "page": null
+    },
+    "notes": "Fundamental species breeding system. The programme describes managed pollination; no fixed stocking ratio is prescribed for an unspecified farm."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Kakamas phenology is not a picking calendar",
+      "quote": "Kakamas/RSA | 200 | September - April",
+      "url": "https://www.fao.org/4/y4360e/y4360e08.htm",
+      "doc": "FAO Date Palm Cultivation (2002), Chapter IV, Table 23",
+      "page": null,
+      "note": "Table is fruit-set-to-maturation duration, not months of ripe harvest. Its separate table lists July–August flowering. Neither becomes a food-availability bar."
+    },
+    {
+      "title": "Southern Hemisphere reference, awaiting local confirmation",
+      "quote": "In the southern hemisphere harvesting takes place in February, March and April.",
+      "url": "https://www.fao.org/4/y4360e/y4360e0d.htm",
+      "doc": "FAO Date Palm Cultivation (2002), Chapter IX",
+      "page": null,
+      "note": "Broad hemispheric context, not a measured cultivar/site calendar. Kept outside the structured local harvest windows."
+    },
+    {
+      "title": "Western Cape Medjool ripening and spoilage trial",
+      "quote": "irregular ripening and high incidences of microbial spoilage",
+      "url": "https://agris.fao.org/search/en/providers/124740/records/67053f9eb1dfe472e14689d6",
+      "doc": "Peddie (2023), Stellenbosch MScAgric thesis, university-provided abstract in FAO AGRIS",
+      "page": null,
+      "note": "2022 trial at Kleinplasie near Hermon concerns Medjool. Abstract treatment dates label ripening stages inconsistently; no harvest months are inferred. Full university handle returned HTTP 403 during checking."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Female palms need suitable male pollen. Record sex, cultivar and pollination management before forecasting fruit.",
+      "Check heat, water and rain during ripening. The Hermon trial found uneven ripening and spoilage, so regional success alone does not establish a local crop."
+    ],
+    "purchase": [
+      "Medjool is documented in the Hermon study. Obtain known fruiting female material and compatible pollen advice; a seedling's sex and eventual fruit quality are not established by its appearance."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://www.fao.org/4/y4360e/y4360e08.htm",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.fao.org/4/y4360e/y4360e0d.htm",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://agris.fao.org/search/en/providers/124740/records/67053f9eb1dfe472e14689d6",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No verified exact ripe-picking months for the mapped site: Kakamas fruiting duration and broad hemispheric dates are not substituted.",
+    "Numeric first/full bearing ages and mature per-palm kg remain unqualified for local forecasts.",
+    "No automatic shelf life, fruit-bagging recipe or safe ladder/access instructions derived from trial treatments."
+  ]
+}

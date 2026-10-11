@@ -21,6 +21,14 @@ export default function TreeAgeEditor({ group, choice, onChange }: { group: Plac
     <div style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
       {group.harvest.yearsToFirstCrop ? <p>First-crop reference: {firstCropAgeLabel(group.harvest.yearsToFirstCrop.value)} after planting. <a href={group.harvest.yearsToFirstCrop.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>Source</a></p> : <p>First-crop age is not sourced. Add a locally checked yield schedule.</p>}
       {group.harvest.yearsToFullBearing && <p>Established production reference: {formatRange(group.harvest.yearsToFullBearing.value)} years. Check the source&apos;s cultivar and conditions. <a href={group.harvest.yearsToFullBearing.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>Source</a></p>}
+      {(group.harvest.yieldKgPerTree || group.harvest.supplementaryReferences?.length || group.harvest.yearsToFirstCrop?.note || group.harvest.yearsToFullBearing?.note) && <details className="mt-2 p-3 rounded-xl" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+        <summary style={{ cursor: 'pointer', color: 'var(--text-primary)', fontWeight: 600, minHeight: 44, display: 'list-item', paddingTop: 10 }}>Age &amp; production references</summary>
+        <p className="mt-2">Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.</p>
+        {group.harvest.yearsToFirstCrop?.note && <p className="mt-2"><strong>First crop:</strong> {group.harvest.yearsToFirstCrop.note}</p>}
+        {group.harvest.yearsToFullBearing?.note && <p className="mt-2"><strong>Established production:</strong> {group.harvest.yearsToFullBearing.note}</p>}
+        {group.harvest.yieldKgPerTree && <p className="mt-2"><strong>Source production:</strong> {formatRange(group.harvest.yieldKgPerTree.value)} kg/plant. {group.harvest.yieldKgPerTree.note} <a href={group.harvest.yieldKgPerTree.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>Source</a></p>}
+        {group.harvest.supplementaryReferences?.map((reference, index) => <p key={index} className="mt-2"><strong>{reference.title}:</strong> {reference.note} <a href={reference.source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--blue)', textDecoration: 'underline' }}>Source{reference.source.page ? ` p. ${reference.source.page}` : ''}</a></p>)}
+      </details>}
     </div>
     {groups.map((g, index) => <fieldset key={index} className="mt-3 p-3 rounded-xl" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <legend style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)' }}>Age group {index + 1}</legend>
