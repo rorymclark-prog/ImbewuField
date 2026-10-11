@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '10 October 2026', sha: 'f1b40d04', changes: [
+  { when: '11 October 2026', sha: '6414556a', changes: [
     'More Study due dates and unlock messages show unreviewed regional drafts.',
     'Two isiZulu safety cards pair corrected draft wording with exact English.',
     'Saved slide packs refresh changed cards and keep other media.',
