@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '11 October 2026', sha: '788daf2', changes: [
+  { when: '11 October 2026', sha: 'd974be3a', changes: [
     'Records → Charts adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Harvest rows no longer cut off the line "Harvested · Sold" on narrow phones.',
   ], tour: [
