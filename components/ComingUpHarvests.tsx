@@ -30,6 +30,7 @@ import { planValue, type ValueChannel } from '@/lib/plan-value';
 import type { FinancePlanSource } from '@/lib/finance-plan-source';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
+import { recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
 
 const rand = (n: number): string =>
   `R${numberLabel(Math.round(n))}`;
@@ -52,7 +53,7 @@ export default function ComingUpHarvests({
   horizonMonths?: number;
 }) {
   const { lang } = useLanguage();
-  const text = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const [openMonth, setOpenMonth] = useState<string | null>(null);
 
   // A fresh Date on every render would rebuild the book on every keystroke
@@ -74,6 +75,7 @@ export default function ComingUpHarvests({
       </p>
       <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
         <IsiZuluDraftSource lang={lang}
+          template={book.horizonMonths === 1 ? 'What your crop plan says is due to be picked over the next {n} month.' : 'What your crop plan says is due to be picked over the next {n} months.'} vars={{ n: book.horizonMonths }}
           english={`What your crop plan says is due to be picked over the next ${book.horizonMonths} ${book.horizonMonths === 1 ? 'month' : 'months'}.`}
           zulu={`Uhlelo lwakho lwezitshalo lubonisa okulindeleke ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
       </div>
@@ -112,6 +114,7 @@ export default function ComingUpHarvests({
         <Empty
           title={text('Two crops are booked into the same ground', 'Izitshalo ezimbili zihlelelwe indawo efanayo')}
           body={<IsiZuluDraftSource lang={lang}
+            template="{beds} — until that is resolved, any harvest figure here would be a guess about which crop loses the space." vars={{ beds: book.areaConflictBedLabels.join(', ') }}
             english={`${book.areaConflictBedLabels.join(', ')} — until that is resolved, any harvest figure here would be a guess about which crop loses the space.`}
             zulu={`${book.areaConflictBedLabels.join(', ')} — kuze kulungiswe lokhu, noma yisiphi isibalo sesivuno lapha singaba ukuqagela ukuthi yisiphi isitshalo esizolahlekelwa yileyo ndawo.`} />}
           href="/facilitator/crops"
@@ -130,7 +133,7 @@ export default function ComingUpHarvests({
           body={
             source.plantings.length === 0
               ? <IsiZuluDraftSource lang={lang} english="Your crop plan is empty. Plan a season and this card fills itself in." zulu="Uhlelo lwakho lwezitshalo alunalutho. Hlela isizini ukuze leli khadi libonise okulindelekile." />
-              : <IsiZuluDraftSource lang={lang} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
+              : <IsiZuluDraftSource lang={lang} template="Nothing in the plan starts picking in the next {n} months." vars={{ n: book.horizonMonths }} english={`Nothing in the plan starts picking in the next ${book.horizonMonths} months.`} zulu={`Akukho ohlelweni okuzoqala ukuvunwa ezinyangeni ezingu-${book.horizonMonths} ezizayo.`} />
           }
           href="/facilitator/crops"
           cta={source.plantings.length === 0 ? text('Plan your crops', 'Hlela izitshalo zakho') : text('Open the production plan', 'Vula uhlelo lokukhiqiza')}
@@ -207,7 +210,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
           <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : month.label}</span>
           {!empty && (
             <span className="font-sans truncate" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-              {month.harvests.length === 1 ? month.harvests[0].name : lang === 'zu' ? `${month.harvests.length} izitshalo` : `${month.harvests.length} crops`}
+              {month.harvests.length === 1 ? month.harvests[0].name : recordsTemplate(lang, '{n} crops', '{n} izitshalo', { n: month.harvests.length })}
             </span>
           )}
         </span>
@@ -229,7 +232,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
                 <span aria-hidden="true">{h.icon}</span> {h.name}
                 <span style={{ color: 'var(--text-muted)' }}> · {h.bedLabel}</span>
                 {h.endMonth !== h.startMonth && (
-                  <span style={{ color: 'var(--text-muted)' }}> · {lang === 'zu' ? `ukukha kuqhubeka kuze kube u-${MONTH_ZU[h.endMonth]}` : `picking runs into ${MONTH_NAME[h.endMonth]}`}</span>
+                  <span style={{ color: 'var(--text-muted)' }}> · {recordsTemplate(lang, 'picking runs into {month}', 'ukukha kuqhubeka kuze kube u-{month}', { month: lang === 'zu' ? MONTH_ZU[h.endMonth] : MONTH_NAME[h.endMonth] })}</span>
                 )}
               </span>
               <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{kgLabel(h.kg)}</span>
@@ -265,25 +268,25 @@ function Exclusions({
   unpriced?: string[];
   lang: string;
 }) {
-  const lines: { english: string; zulu: string }[] = [];
+  const lines: { english: string; zulu: string; template: string; names: string }[] = [];
   if (book.excludedCropNames.length > 0) {
     const names = book.excludedCropNames.join(', ');
-    lines.push({ english: `Left out of the kilograms — no verified yield figure yet: ${names}.`, zulu: `Akufakwanga enanini lamakhilogremu — alikho inani lesivuno eliqinisekisiwe okwamanje: ${names}.` });
+    lines.push({ english: `Left out of the kilograms — no verified yield figure yet: ${names}.`, zulu: `Akufakwanga enanini lamakhilogremu — alikho inani lesivuno eliqinisekisiwe okwamanje: ${names}.`, template: 'Left out of the kilograms — no verified yield figure yet: {names}.', names });
   }
   if (unpriced.length > 0) {
     const names = unpriced.join(', ');
-    lines.push({ english: `Counted in kilograms but not in the Rand figure — no price on file: ${names}.`, zulu: `Kubaliwe ngamakhilogremu kodwa akufakwanga enanini lamaRandi — alikho inani lentengo eligciniwe: ${names}.` });
+    lines.push({ english: `Counted in kilograms but not in the Rand figure — no price on file: ${names}.`, zulu: `Kubaliwe ngamakhilogremu kodwa akufakwanga enanini lamaRandi — alikho inani lentengo eligciniwe: ${names}.`, template: 'Counted in kilograms but not in the Rand figure — no price on file: {names}.', names });
   }
   if (book.nonFoodCropNames.length > 0) {
     const names = book.nonFoodCropNames.join(', ');
-    lines.push({ english: `Not counted as food — soil cover: ${names}.`, zulu: `Akubalwanga njengokudla — izitshalo zokumboza inhlabathi: ${names}.` });
+    lines.push({ english: `Not counted as food — soil cover: ${names}.`, zulu: `Akubalwanga njengokudla — izitshalo zokumboza inhlabathi: ${names}.`, template: 'Not counted as food — soil cover: {names}.', names });
   }
   if (lines.length === 0) return null;
   return (
     <div className="px-4 py-2.5" style={{ borderTop: '1px solid var(--border)', background: 'var(--bg-2)' }}>
       {lines.map((line) => (
         <IsiZuluDraftSource key={line.english} className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }} lang={lang}
-          english={line.english} zulu={line.zulu} />
+          english={line.english} zulu={line.zulu} template={line.template} vars={{ names: line.names }} />
       ))}
     </div>
   );
