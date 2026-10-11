@@ -1,3 +1,4 @@
+import { liveHistorySignature } from './intro-silent-media-history-checks.ts';
 import { marketAssetSizesBeforeOrdinary } from './market-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -132,7 +133,18 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
   return manifest;
 }
 
+let validatedSoilProjection: { manifest: string; signature: string; before: string } | undefined;
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
+  const manifest = currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8');
+  const signature = liveHistorySignature();
+  // Repeated per-frame views share one complete successful reconstruction.
+  // Caller or live-source/media changes invalidate it; failures are not cached.
+  if (validatedSoilProjection?.manifest === manifest && validatedSoilProjection.signature === signature) return validatedSoilProjection.before;
+  const before = soilAssetSizesBeforeOrdinaryUncached(manifest);
+  validatedSoilProjection = { manifest, signature, before };
+  return before;
+}
+function soilAssetSizesBeforeOrdinaryUncached(currentManifest?: string) {
   // 2026-10-06: validate the complete newer Market layer before the older media history.
   soilWaterResidualAssetSizesBefore(currentManifest);
   let prior = vegetablesAssetSizesBeforePestPrecision(marketAssetSizesBeforeOrdinary());

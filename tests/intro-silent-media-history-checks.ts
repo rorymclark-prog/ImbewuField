@@ -178,7 +178,7 @@ let initialized=false;
 // descriptor; immutable manifests stay checked on every call without rereading1902 files.
 let validatedManifest: string | undefined;
 let validatedDiskSignature: string | undefined;
-function liveHistorySignature() {
+export function liveHistorySignature() {
   const files = new Set<string>([
     ...[...currentInventory.keys()].map(url => 'public' + url),
     ...applied.verification.oldSTProtectedByteInventory.map((row: any) => row.path),
@@ -186,7 +186,7 @@ function liveHistorySignature() {
   ]);
   // Source projections compose across several modules. Include the whole live
   // source directories rather than guessing which latest owner reads a file.
-  for (const directory of ['lib', 'docs/narration-reviews']) {
+  for (const directory of ['lib', 'lib/locales', 'docs/narration-reviews', 'docs/narration']) {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
       if (entry.isFile()) files.add(directory + '/' + entry.name);
     }
@@ -249,8 +249,15 @@ function validateSilentIntroMediaUncached(manifest: string) {
   assert.equal(unlisted,1902,'all other predecessor assets exact, not a prefix exclusion');
   initialized=true;
 }
+let projectedManifest: string | undefined;
+let projectedDiskSignature: string | undefined;
+let projectedPredecessor: string | undefined;
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
   validateSilentIntroMedia(manifest);
+  // The validated disk and caller bytes must still match before reusing the
+  // expensive full manifest rewind. A completed validation alone previously
+  // left every historical asset repeating this same string reconstruction.
+  if (projectedManifest === manifest && projectedDiskSignature === validatedDiskSignature) return projectedPredecessor!;
   let before=nativePairedResidualManifestBefore968(stIntroRuntimeResidualManifestBefore(lightestManifestBefore(manifest)));
   for(const f of silentIntroIntegration.actualAssets) {
     const row=`  '${f.url}': ${f.bytes},\n`;assert.equal(before.split(row).length,2);
@@ -258,6 +265,9 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
   }
   before=before.replace(silentIntroIntegration.finalManifest.summaryLine,silentIntroIntegration.expectedPredecessor.summaryLine);
   assert.equal(sha(before),'60064c611c8140cd6b20875a8f673a933b9007f523a46460933d866b493d3571','only25 slots/header rewind to exact post-967 predecessor');
+  projectedManifest = manifest;
+  projectedDiskSignature = validatedDiskSignature;
+  projectedPredecessor = before;
   return before;
 }
 export function silentIntroMediaBefore(path: string) {

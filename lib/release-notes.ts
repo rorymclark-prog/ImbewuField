@@ -42,6 +42,14 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '10 October 2026', sha: 'f1b40d04', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
   { when: '10 October 2026', sha: '810c2537', changes: [
     'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
     'Fruit, nuts, seeds and animal products use pictures that match the vegetables.',
@@ -59,14 +67,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Production plan → Share or print',
     detail: 'Choose a short calendar, a full plan or future harvests with plant ages.',
     href: '/facilitator/crops',
-  }] },
-  { when: '10 October 2026', sha: 'fca9c26e', changes: [
-    'More Study due dates and unlock messages show unreviewed regional drafts.',
-    'Two isiZulu safety cards pair corrected draft wording with exact English.',
-    'Saved slide packs refresh changed cards and keep other media.',
-  ], tour: [{ title: 'Compare the updated Study drafts',
-    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
-    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
   }] },
   { when: '10 October 2026', sha: '142a5988', changes: [
     'Site report climate and rainfall words now follow your language as they are translated.',
