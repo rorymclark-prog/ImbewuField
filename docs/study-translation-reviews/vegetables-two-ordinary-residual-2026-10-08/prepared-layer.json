@@ -1,0 +1,105 @@
+{
+  "title": "Vegetables L2/L3 two ordinary residuals: exact-source prepared layer",
+  "date": "2026-10-08",
+  "status": "PREPARED_UNREVIEWED_MACHINE_DRAFT_ROOT_REVIEW_PENDING",
+  "worktree": "/Users/roryclark/.codex/worktrees/st-intro-silent-review-20261008/ImbewuField",
+  "branch": "codex/study-due-unlock-runtime-next-20261008",
+  "baseHead": "4d04e0bb2f1e77254f87855ba6dea1b5be54a959",
+  "authority": "Current learner registry files and current source-paired deck JSON on the B worktree. Canonical source is COURSE_MODULES in lib/course-modules.ts; no archive file or historical paired copy is used as runtime authority.",
+  "rootDisposition": {
+    "path": "/Users/roryclark/Downloads/ImbewuField-translation-recovery-2026-10-07/recovery/vegetables-two-ordinary-residual-root-disposition-2026-10-08.json",
+    "sha256": "5f454ca60902a1c9a62e7661f1d7c6704f0a5ade56295ee0f943a72aca79cb3b",
+    "independentSemanticReportSha256": "f789ff1a4f015f833dc7c98be210899870c7fc50cf9f6d5e03097e3332bd2739"
+  },
+  "canonicalSourceFile": {
+    "path": "lib/course-modules.ts",
+    "sha256": "abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397",
+    "statement": "Canonical English source is unchanged."
+  },
+  "changes": [
+    {
+      "id": "VE-VEGETABLES-L2-P14",
+      "language": "ve",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l2",
+      "learnerField": "body.tshivendaDraft.paragraph[14]",
+      "pairedPath": "docs/narration/vegetables-staples.ve.paired-draft.json",
+      "pairedSlide": 10,
+      "pairedField": "target.body[3].text",
+      "sourceEnglish": "Beans climb the maize, and store as protein.",
+      "beforeTarget": "Beans dzi gonya maize, and store as protein.",
+      "afterTarget": "Beans dzi gonya maize, na store as protein.",
+      "reviewStatus": "machine-draft",
+      "semanticRationale": "The accepted change is only the ordinary connector and→na. Keep the technical/protein wording `store as protein` byte-exact; do not expand the sentence or certify its grammar.",
+      "reviewCaveats": [
+        "Unreviewed source-bound machine draft; not fluent-speaker approved.",
+        "`store as protein` remains technical English and is not counted as translated.",
+        "Connector evidence supports `na` as and/with for words or clauses, but does not establish whole-sentence Tshivenda fluency."
+      ],
+      "sourceFileHashesBefore": {
+        "learner": "f02349dfa5423543d77fd019e5b88eef0c27d9b1695c64f4bb4c5bde1ed0285c",
+        "paired": "27849541b7455724f0c6bd621a0992c2307f6d8d5335fedc30291da45b88f452"
+      },
+      "sourceFileHashesAfter": {
+        "learner": "ece46fa2c11bc29f8e5cbc28d10c6abe15aeb5499bb38e9d8be770c0fa9b1c30",
+        "paired": "cbabf90938187fc8b5341074a424f064fc1d43926082b987e242d094d4544b6a"
+      }
+    },
+    {
+      "id": "TS-VEGETABLES-L3-P0",
+      "language": "ts",
+      "moduleId": "vegetables-staples",
+      "lessonId": "vegetables-staples-l3",
+      "learnerField": "body.xitsongaDraft.paragraph[0]",
+      "pairedPath": "docs/narration/vegetables-staples.ts.paired-draft.json",
+      "pairedSlide": 12,
+      "pairedField": "target.body[0].text",
+      "sourceEnglish": "A staple earns its place because it feeds the household beyond the day of harvest.",
+      "beforeTarget": "A staple earns its place hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "afterTarget": "Staple yi ni nkoka hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "preservedReasonClause": "hikuva yi phamela ndyangu ni le ndzhaku ka siku ra ntshovelo.",
+      "reviewStatus": "machine-draft",
+      "semanticRationale": "Only the opening idiom changes. The retained clause supplies the source justification: the staple feeds the household beyond harvest day. This does not assert physical placement, planting space, financial return, yield, or added timing.",
+      "reviewCaveats": [
+        "Unreviewed source-bound machine draft; not fluent-speaker approved.",
+        "`Staple` remains a technical/loan English term; its loanword status and concord in `Staple yi ni nkoka` are unverified.",
+        "No primary-source whole-phrase approval is claimed; semantic proposal only."
+      ],
+      "sourceFileHashesBefore": {
+        "learner": "c8d3248f29a24d758da9bb04e470d1239b02a35d118941a096e9aba6743cd11e",
+        "paired": "f0a9255f3ef5d018282302cc40fd74335157beaa02cff6f8206c72c2bca738af"
+      },
+      "sourceFileHashesAfter": {
+        "learner": "4350ae1186bdba9a80b5448f6a98682cbf3351b317234f5c1a933461f99f1abe",
+        "paired": "2f25276c556bd584839b2a17a7ea0212cc7e7bfcbbb10ec2d5342ea88b30bc99"
+      }
+    }
+  ],
+  "preservation": [
+    "Only the selected target strings in the two learner files and their corresponding paired target cells may differ from this layer predecessor.",
+    "The VE target retains the exact technical English predicate `store as protein`.",
+    "The TS reason clause after the opening idiom is byte-exact, including household and beyond-harvest meaning.",
+    "Canonical English source, slide numbering, all other slide text, body order, target status `draft`, registry/module review status `machine-draft`, and every unlisted learner field remain unchanged.",
+    "No content is marked fluent-reviewed or facilitator-approved."
+  ],
+  "applicationEvidence": [
+    "Exact before/after file hashes are recorded for all four changed source files. Tests must reverse only the exact target strings and require predecessor SHA-256 equality to prove no other source bytes changed.",
+    "Tests must compare full learner body target values to exact expected values and assert source text, slide/body locator, status, unchanged preserved TS reason clause, and unlisted source drift behavior."
+  ],
+  "limitations": [
+    "These are semantic candidates only; no fluent-language, orthography, local agronomic, or publication approval is claimed.",
+    "The task authorizes the regional machine-draft edits; language review remains outstanding."
+  ],
+  "historyComposition": {
+    "purpose": "This is the next exact leaf overlay above the existing source-paired registry history; dated predecessor snapshots remain immutable.",
+    "testFile": "tests/study-vegetables-two-ordinary-residual.test.ts",
+    "byteProjectionHelper": "tests/study-vegetables-two-ordinary-residual-history-checks.ts",
+    "olderOwnerIntegration": "tests/core-ordinary-expanded-history-checks.ts projects the two leaves before the older full source/native/presentation owners compare snapshots; tests/native-ordinary-final-history-checks.ts projects before the immutable residual registry/deck owner. Older owner full-object/full-file comparisons remain authoritative for unlisted mutations.",
+    "requiredMutationCases": [
+      "Unlisted native field altered in VE registry then passed through nativeOrdinaryBeforeResidualLayer must be rejected by the complete prior owner.",
+      "Unlisted paired target cell altered in VE deck then passed through vegetablesDeckBeforeNativePairedResidual must be rejected by the complete deck owner.",
+      "Same-size unrelated byte change in a current learner source file then passed through expandedSourceBefore or followupSourceBefore must fail the older owner full-file proof after the exact selected leaf is projected."
+    ],
+    "directHelperLimit": "The exact-leaf source projection may be called with an object/byte string already projected by another dated owner. It restores only the recorded leaf; the older full snapshot owner must run afterward and reject unlisted caller changes."
+  }
+}

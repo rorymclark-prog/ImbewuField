@@ -5,12 +5,26 @@ import { poultryGuidance } from '@/lib/animal-enterprises';
 import type { ProductionGuide } from '@/lib/crop-export-schedule';
 import { buildProductionProjection } from '@/lib/production-projection';
 import { placedTreeGroups } from '@/lib/perennial-harvest';
+import { buildProductGuidance } from '@/lib/production-product-guidance';
+
+test('printed native-unit production references retain age, crop cycle and source without creating farm quantities', async () => {
+  const products = buildProductGuidance({
+    trees: placedTreeGroups(['prunus-avium', 'ananas-comosus'].map(speciesId => ({ defId: 'tree_other', speciesId, status: 'proposed' as const }))),
+    animals: [{ housing: 'rabbit' as const, existing: 0, proposed: 1 }],
+    animalChoices: { rabbit: 'rabbit' },
+  }, ['subtropical-coast']);
+  const raw = await rawPdf({ sections: ['guidance'], productionGuide: { area: 'Synthetic reference check', siteObservations: [], recordedProduction: [], cropChoices: [], ...products } });
+  const text = visibleText(raw);
+  for (const phrase of ['kg/tree in year 6', '9 t/ha', '18-month Hluhluwe cycle', 'not kg/plant/year', 'Do not connect them', 'No animal head count']) assert.ok(text.includes(phrase), `printed guidance lost ${phrase}`);
+  assert.ok(raw.includes('/URI (https://www.kzndard.gov.za/'), 'the official source must remain clickable');
+});
 
 test('the printed plan retains the ten-year age projection, missing yields and editable farm assumptions', async () => {
   const treeGroups = placedTreeGroups([{ defId: 'tree_avocado', status: 'proposed' }]);
   const treeSeasons = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
   const projection = buildProductionProjection({ plantings: [], beds: [], trees: treeGroups, choices: treeSeasons, now: new Date(2026, 9, 4) });
-  const text = visibleText(await rawPdf({ sections: ['availability'], productionProjection: projection, treeGroups, treeSeasons }));
+  // Future production is selectable separately from the concise picture calendar and jobs.
+  const text = visibleText(await rawPdf({ sections: ['availability', 'projection'], productionProjection: projection, treeGroups, treeSeasons }));
   for (const phrase of ['As your plants grow', 'Fruit, nuts and berries by age', 'Oct 2035', 'known subtotal only', 'no growth multiplier', 'first-crop reference', '? kg']) assert.ok(text.includes(phrase), phrase);
   assert.ok(!text.includes('100 kg'), 'the mature avocado trial figure leaked into a planting with no farm yield schedule');
 });

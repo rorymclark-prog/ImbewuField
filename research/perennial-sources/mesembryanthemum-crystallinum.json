@@ -1,0 +1,61 @@
+{
+  "speciesId": "mesembryanthemum-crystallinum",
+  "commonName": "Ice plant / brakslaai",
+  "botanicalName": "Mesembryanthemum crystallinum",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "leaves and fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Annual edible leaf and fruit crop",
+      "quote": "The leaves and fruits of Mesembryanthemum crystallinum are edible.",
+      "url": "https://pza.sanbi.org/mesembryanthemum-crystallinum",
+      "doc": "SANBI PlantZAfrica: Mesembryanthemum crystallinum",
+      "page": null,
+      "note": "This is an annual, not a fruit tree. The account describes boiled leaves as a spinach substitute and pickling. It supplies no food harvest duration, kg/plant or exact leaf calendar."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leaves and fruit",
+    "care": [
+      "Record planting batches and harvested leaves/fruit separately.",
+      "Match this frost-sensitive plant to dry saline/coastal conditions. Its accumulated salts can return to the soil as plants die."
+    ],
+    "purchase": [
+      "Obtain exact-species seed or plants and assess the bed soil; no regional food cultivar or annual food yield is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/mesembryanthemum-crystallinum",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

@@ -1,0 +1,74 @@
+{
+  "speciesId": "rhamnus-prinoides",
+  "commonName": "Dogwood / umglindi",
+  "botanicalName": "Rhamnus prinoides",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "leaf brewing flavour — specialist use",
+  "supplementaryReferences": [
+    {
+      "title": "Documented food-processing use is leaf bittering",
+      "quote": "bittering agent",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1155/2021/2425419",
+      "doc": "Negash et al. (2021), primary study of Rhamnus prinoides leaves",
+      "page": null,
+      "note": "The Ethiopian gesho-leaf brewing context establishes a specialist processed flavour use, not ordinary fresh fruit nutrition or a South African household recipe. No leaf kg/plant, food storage life or local harvest date is assigned."
+    },
+    {
+      "title": "South African berry phenology concerns wildlife food",
+      "quote": "Rhamnus prinoides",
+      "url": "https://pza.sanbi.org/rhamnus-prinoides",
+      "doc": "SANBI PlantZAfrica: Rhamnus prinoides",
+      "page": null,
+      "note": "December–June berries are documented in the ecology account as wildlife food; this is not a verified human berry-picking window."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leaf brewing flavour — specialist use",
+    "care": [
+      "Confirm exact identity and the intended food preparation with an experienced local adviser.",
+      "The South African account describes stream-bank/forest-slope growth and frost resistance; its berries are described as bird food."
+    ],
+    "purchase": [
+      "Buy exact-species stock for the verified intended use. Do not treat medicinal or wildlife-fruit evidence as a fresh household-food forecast."
+    ]
+  },
+  "householdFoodStatus": "specialist-review",
+  "sourceChecks": [
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/10.1155/2021/2425419",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://pza.sanbi.org/rhamnus-prinoides",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

@@ -7,7 +7,7 @@ import {
   removeSignedInLegacyLocalStorageKey,
 } from '@/lib/account-local-storage';
 
-import { DESIGN_STUDIO_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { DESIGN_STUDIO_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 import { Ctx } from '@/lib/i18n-context';
 import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
 
@@ -38,6 +38,7 @@ export const APP_LANGS = [
 export const T_en: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
   ...MENTOR_ENGLISH_PENDING,
+  ...REPORT_FOOTNOTE_ENGLISH_PENDING,
   ...LEARNER_UI_ENGLISH,
   completionScoreAria: 'Site setup completeness',
   completionScoreTitle: 'Site completeness',

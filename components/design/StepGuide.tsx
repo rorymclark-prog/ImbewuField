@@ -23,7 +23,6 @@ import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
 import SectorSummary from './SectorSummary';
 import DesignZuluDraftNotice from './DesignZuluDraftNotice';
-import type { DesignMode } from './DesignPalette';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
 const GOLD = '#F7C97E';
@@ -76,7 +75,6 @@ export interface StepGuideProps {
   step: WizardStep;
   state: DesignCanvasState;
   ctx: SubStepCtx;
-  mode: DesignMode;
   onArm: (arm: SubStepArm) => void;
   monthlyRainfallMm?: number[];
   onDailyWaterUseLChange: (dailyUseL: number | undefined) => void;

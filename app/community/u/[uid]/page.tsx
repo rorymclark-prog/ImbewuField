@@ -113,7 +113,7 @@ export default function PublicCommunityProfilePage() {
               <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {profile.photos?.[0]
                   ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
+                  : <span style={{ color: 'var(--on-forest)', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
                 <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
@@ -167,7 +167,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleMessage}
                   disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
+                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}

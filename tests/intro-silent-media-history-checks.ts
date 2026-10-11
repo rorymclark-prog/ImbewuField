@@ -8,7 +8,7 @@ import { finalLanguageNextMediaProof } from './final-language-next-media-history
 import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 import { currentBatchProof, ensureCurrentBatch, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, statSync } from 'node:fs';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
@@ -41,6 +41,8 @@ assert.equal(inventory.size, 1927);
 // prior inventory for historical descriptors, and validate all real current bytes.
 const latest = frozen('docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06/render-proof.json',
   'f9ff13f9ee8366b0cf8881242e55f415842e972a8d2387b1252eac1faa4b59e1');
+const vegetablesResidualMedia = frozen('docs/study-translation-reviews/vegetables-two-ordinary-residual-2026-10-08/media-proof.json',
+  'de15dd6662fa5fbd88f98f3c38a8fac00e8e9cbaf62ab80739ad758c42be4117');
 const currentInventory = new Map(inventory);
 assert.equal(latest.frames.length, 13);
 for (const frame of latest.frames) {
@@ -92,6 +94,9 @@ for (const frame of expandedAssets) {
 }
 // PR985's ten Intro silent assets precede this branch's four disjoint still updates.
 for (const frame of stIntroRuntimeResidualAssets) currentInventory.set(frame.url,{bytes:frame.after.bytes,sha256:frame.after.sha256});
+// The two later Vegetables card refreshes retain their older recorded sources
+// while the complete current-disk inventory expects the measured new bytes.
+for (const frame of vegetablesResidualMedia.assets) currentInventory.set(frame.url,{bytes:frame.afterBytes,sha256:frame.afterSha256});
 // The 8 October four-card batch replaces exact existing Reading and Vegetables stills.
 // Its complete proof is checked before any older inventory descriptor is exposed.
 export const readingTitleLightestAssets = lightestAssetRows();
@@ -115,6 +120,7 @@ const laterReplacedURLs = new Set<string>([
   ...fairSharingAssets.filter(frame => frame.before).map(frame => frame.url),
   ...currentBatchProof.assets.map(frame => frame.url),
   ...readingTitleLightestAssets.map((frame: any) => frame.url),
+  ...vegetablesResidualMedia.assets.map((frame: any) => frame.url),
 ]);
 // Only these frozen, listed URLs need a historical descriptor. Bulk inventory
 // callers still check every other real file directly, without recursively
@@ -170,7 +176,39 @@ let initialized=false;
 // 6 October 2026: the new silent ST release and three VE/TS stills supersede the
 // published post-967 media layer. Full real current validation precedes any dated
 // descriptor; immutable manifests stay checked on every call without rereading1902 files.
+let validatedManifest: string | undefined;
+let validatedDiskSignature: string | undefined;
+export function liveHistorySignature() {
+  const files = new Set<string>([
+    ...[...currentInventory.keys()].map(url => 'public' + url),
+    ...applied.verification.oldSTProtectedByteInventory.map((row: any) => row.path),
+    'app/sw.js/route.ts',
+  ]);
+  // Source projections compose across several modules. Include the whole live
+  // source directories rather than guessing which latest owner reads a file.
+  for (const directory of ['lib', 'lib/locales', 'docs/narration-reviews', 'docs/narration']) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      if (entry.isFile()) files.add(directory + '/' + entry.name);
+    }
+  }
+  return [...files].sort().map(path => {
+    const s = statSync(path, { bigint: true });
+    return [path, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':');
+  }).join('|');
+}
 export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
+  // Both CI jobs reached GitHub's six-hour limit by re-entering the full
+  // historical projection for every dated asset. Reuse a successful whole-disk
+  // validation only for identical caller bytes and identical filesystem state.
+  // ctime/mtime nanoseconds and inode retain the existing same-size corruption
+  // and replacement checks; failures never populate this cache.
+  const signature = liveHistorySignature();
+  if (validatedManifest === manifest && validatedDiskSignature === signature) return;
+  validateSilentIntroMediaUncached(manifest);
+  validatedManifest = manifest;
+  validatedDiskSignature = signature;
+}
+function validateSilentIntroMediaUncached(manifest: string) {
   // The frozen latest batch is validated first. Existing source-history owners
   // then compose its predecessor through the followup and frost layers once.
   ensureCurrentBatch();
@@ -211,8 +249,15 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   assert.equal(unlisted,1902,'all other predecessor assets exact, not a prefix exclusion');
   initialized=true;
 }
+let projectedManifest: string | undefined;
+let projectedDiskSignature: string | undefined;
+let projectedPredecessor: string | undefined;
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
   validateSilentIntroMedia(manifest);
+  // The validated disk and caller bytes must still match before reusing the
+  // expensive full manifest rewind. A completed validation alone previously
+  // left every historical asset repeating this same string reconstruction.
+  if (projectedManifest === manifest && projectedDiskSignature === validatedDiskSignature) return projectedPredecessor!;
   let before=nativePairedResidualManifestBefore968(stIntroRuntimeResidualManifestBefore(lightestManifestBefore(manifest)));
   for(const f of silentIntroIntegration.actualAssets) {
     const row=`  '${f.url}': ${f.bytes},\n`;assert.equal(before.split(row).length,2);
@@ -220,6 +265,9 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
   }
   before=before.replace(silentIntroIntegration.finalManifest.summaryLine,silentIntroIntegration.expectedPredecessor.summaryLine);
   assert.equal(sha(before),'60064c611c8140cd6b20875a8f673a933b9007f523a46460933d866b493d3571','only25 slots/header rewind to exact post-967 predecessor');
+  projectedManifest = manifest;
+  projectedDiskSignature = validatedDiskSignature;
+  projectedPredecessor = before;
   return before;
 }
 export function silentIntroMediaBefore(path: string) {

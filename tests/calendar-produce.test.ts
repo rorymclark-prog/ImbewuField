@@ -4,8 +4,9 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { animalLineText, animalsNotShownNote, calendarProduceByMonth, flowRecordText, produceLanes, treeLineText, unmarkedAnimalLines, unmarkedLineText } from '@/lib/calendar-produce';
 import { ANIMAL_ENTERPRISES, sourcedProductMonths } from '@/lib/animal-enterprises';
-import { PERENNIAL_HARVEST, sourcedSeasonMonths } from '@/lib/perennial-harvest';
-import { FRUIT_ART_SPECIES, speciesFruitArtworkUrl } from '@/lib/species-art';
+import { PERENNIAL_HARVEST, isHouseholdFoodHarvest, sourcedSeasonMonths } from '@/lib/perennial-harvest';
+import { PNG } from 'pngjs';
+import { FRUIT_ART_PNG, FRUIT_ART_SPECIES, MAPPED_FOOD_PRODUCT_ART, speciesFruitArtworkUrl } from '@/lib/species-art';
 
 const MONTHS = [9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8];
 const mango = PERENNIAL_HARVEST['mangifera-indica'];
@@ -14,15 +15,37 @@ const moringa = PERENNIAL_HARVEST['moringa-oleifera'];
 // farmer-confirmed test observations, keeping the existing status and month-lane coverage.
 const localTrees = { 'mangifera-indica': { months: [12, 1, 2], bearing: true }, 'moringa-oleifera': { months: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], bearing: true } };
 
-test('every species with a harvest record has a fruit icon, and it is fruit art, not the tree', () => {
-  assert.deepEqual([...FRUIT_ART_SPECIES].sort(), Object.keys(PERENNIAL_HARVEST).sort());
-  for (const id of FRUIT_ART_SPECIES) {
+test('every verified household picking reference has product art and every declared product illustration resolves', () => {
+  // The expanded evidence registry also holds tea, herbs and plants whose food use
+  // needs review. It is not a fruit-art manifest. Every dated food reference still
+  // needs a product picture; undated inventory may retain its labelled plant art.
+  for (const harvest of Object.values(PERENNIAL_HARVEST)) {
+    if (isHouseholdFoodHarvest(harvest) && harvest.windows.length) assert.ok(speciesFruitArtworkUrl(harvest.speciesId), `${harvest.speciesId}: verified picking reference has no product picture`);
+  }
+  for (const id of [...FRUIT_ART_SPECIES, ...Object.keys(MAPPED_FOOD_PRODUCT_ART)]) {
+    assert.ok(PERENNIAL_HARVEST[id], `${id}: product art has no existing research identity`);
     const url = speciesFruitArtworkUrl(id)!;
     assert.match(url, /^\/fruit-art\//, id);
     assert.ok(existsSync(join(process.cwd(), 'public', url)), `${url} is on disk`);
   }
   assert.equal(speciesFruitArtworkUrl('not-a-species'), null);
   assert.equal(speciesFruitArtworkUrl(null), null);
+});
+
+test('painted product icons stay small, transparent and wired to real files', () => {
+  // A missing file or opaque tile in a month cell must fail before farmers export it.
+  for (const id of FRUIT_ART_PNG) {
+    assert.ok((FRUIT_ART_SPECIES as readonly string[]).includes(id), `unrecognised art key ${id}`);
+    const url = speciesFruitArtworkUrl(id)!;
+    assert.ok(url.endsWith('.png'), id);
+    const bytes = readFileSync(join(process.cwd(), 'public', url));
+    assert.ok(bytes.length <= 25000, `${id} is too large for the shared-calendar art budget`);
+    assert.equal(bytes[25], 6, `${id} must preserve true RGBA`);
+    const png = PNG.sync.read(bytes);
+    assert.equal(png.width, 128, id); assert.equal(png.height, 128, id);
+    for (const pixel of [0, 127, 127 * 128, 128 * 128 - 1]) assert.equal(png.data[pixel * 4 + 3], 0, `${id} corner alpha`);
+    assert.ok(png.data.some((channel, i) => i % 4 === 3 && channel > 0), `${id} must not be empty`);
+  }
 });
 
 test('a tree shows only in locally confirmed months, with what it gives and how many are proposed', () => {

@@ -31,6 +31,7 @@ import { TSHIVENDA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_MARKET_COMMUNITY_DRAFT } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { TSHIVENDA_VEGETABLES_STAPLES_L3_REVIEW_DRAFT } from '../lib/course-translation-drafts-ve-vegetables-staples.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { READING_7_SILENT_IMAGE_CUE } from '../lib/course-deck-silent-cues.ts';
 import { resolveLearnerLessonPresentation } from '../lib/course-localization.ts';
 import { defaultOfflinePackVariant, offlinePack } from '../lib/offline-pack.ts';
 import {
@@ -124,6 +125,42 @@ test('the Sesotho pilot pairs all 22 actual English introduction slides in autho
   assert.equal(source[0].body.length, 4);
   assert.ok(source.every((slide) => slide.body.every((paragraph: string) => paragraph !== '---' && !paragraph.includes('[pause]'))));
   assert.equal(validatePairedDraft(completeHold(), source).length, 22);
+});
+
+test('the silent Reading 7 image cue is a separately source-bound English supplement', () => {
+  const reading = englishSlideRecords(actualReadFileSync('docs/narration/reading-landscape.en.md', 'utf8'));
+  const paired = {
+    language: 'zu', sourceLanguage: 'en', reviewStatus: 'unreviewed',
+    slides: reading.map((english) => ({
+      n: english.n,
+      english: structuredClone(english),
+      target: { heading: { status: 'english-hold' }, body: english.body.map(() => ({ status: 'english-hold' })) },
+      ...(english.n === 7 ? { supplementalImageCue: READING_7_SILENT_IMAGE_CUE } : {}),
+    })),
+  };
+  const validated = validatePairedDraft(paired, reading, 'zu');
+  assert.deepEqual(validated[6].supplementalImageCue, READING_7_SILENT_IMAGE_CUE);
+  const allHeldWithoutCue = structuredClone(paired);
+  delete allHeldWithoutCue.slides[6].supplementalImageCue;
+  assert.doesNotThrow(() => validatePairedDraft(allHeldWithoutCue, reading, 'zu'),
+    'an unselected all-English-hold placeholder does not acquire a translation safety requirement');
+  const missingCue = structuredClone(paired);
+  (missingCue.slides[6].target as any).heading = { status: 'draft', text: 'Bheka Amanzi Ngaphambi Kokwakha' };
+  delete missingCue.slides[6].supplementalImageCue;
+  assert.throws(() => validatePairedDraft(missingCue, reading, 'zu'), /supplemental source-image cue is required/);
+  const bodyDraftNeedsCue = structuredClone(allHeldWithoutCue);
+  (bodyDraftNeedsCue.slides[6].target.body as any)[0] = { status: 'draft', text: 'Amanzi athola isivinini namandla okuguguleka lapho eya khona.' };
+  assert.throws(() => validatePairedDraft(bodyDraftNeedsCue, reading, 'zu'), /supplemental source-image cue is required/,
+    'a translated body keeps the image-only safety instruction visible even if its title remains held');
+  const changedAsset: any = structuredClone(paired);
+  changedAsset.slides[6].supplementalImageCue.sourceImageSha256 = '0'.repeat(64);
+  assert.throws(() => validatePairedDraft(changedAsset, reading, 'zu'), /supplemental source-image cue identity drifted/);
+  const changedIdentity: any = structuredClone(paired);
+  changedIdentity.slides[6].supplementalImageCue.identitySha256 = '0'.repeat(64);
+  assert.throws(() => validatePairedDraft(changedIdentity, reading, 'zu'), /supplemental source-image cue identity drifted/);
+  const moved = structuredClone(paired);
+  moved.slides[5].supplementalImageCue = READING_7_SILENT_IMAGE_CUE;
+  assert.throws(() => validatePairedDraft(moved, reading, 'zu'), /supplemental source-image cue identity drifted/);
 });
 
 test('Market record slides reuse L1 wording and keep quantity and destination anchors beside drafts', () => {

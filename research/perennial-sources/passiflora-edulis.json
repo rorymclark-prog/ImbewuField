@@ -32,7 +32,7 @@
       "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
       "page": 14
     },
-    "notes": "6 to 8 months after transplanting = 0.5 to 0.67 years (rounded). Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    "notes": "KZN reference: 6–8 months after transplanting, about 0.5–0.67 years. This is a first-harvest interval, not a regional picking calendar."
   },
   "yearsToFullBearing": {
     "value": [
@@ -45,7 +45,7 @@
       "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
       "page": 14
     },
-    "notes": "'within 18 months' is an upper bound, stored as 1.5. Same sentence as the first-crop figure. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    "notes": "The KZN guide states full bearing within 18 months. This is an upper timing reference, not a promise of annual food kilograms."
   },
   "yieldKgPerTreeMature": {
     "value": null,

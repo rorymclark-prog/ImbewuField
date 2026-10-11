@@ -102,10 +102,10 @@ function HeroEntranceStyle() {
         .imf-progress-sprout-hit:hover .imf-progress-sprout-art > svg, .imf-progress-sprout-hit:hover .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
       }
       .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > svg, .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-art > span { transform: scale(1.34) rotate(-4deg); }
-      .imf-progress-sprout-help { position: absolute; right: 4px; bottom: 3px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #F7F2E9; color: #1F4D2B; font: 700 13px var(--font-sans, sans-serif); box-shadow: 0 2px 8px rgba(10,25,13,.3); }
+      .imf-progress-sprout-help { position: absolute; right: 4px; bottom: 3px; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--on-forest); color: #1F4D2B; font: 700 13px var(--font-sans, sans-serif); box-shadow: 0 2px 8px rgba(10,25,13,.3); }
       @keyframes imfSproutHelpCue { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
       .imf-progress-sprout-help { animation: imfSproutHelpCue 480ms 900ms ease-out 1; }
-      .imf-progress-sprout-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; gap: 4px; width: min(260px, calc(100vw - 44px)); padding: 12px 14px; border: 1px solid #D8CFBC; border-radius: 12px; background: #F7F2E9; color: #1F4D2B; box-shadow: 0 12px 28px rgba(10,25,13,.25); font: 13px/1.4 var(--font-sans, sans-serif); opacity: 0; visibility: hidden; transform: translateY(-5px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; pointer-events: none; }
+      .imf-progress-sprout-tip { position: absolute; z-index: 5; top: calc(100% + 8px); right: 0; display: flex; flex-direction: column; gap: 4px; width: min(260px, calc(100vw - 44px)); padding: 12px 14px; border: 1px solid #D8CFBC; border-radius: 12px; background: var(--on-forest); color: #1F4D2B; box-shadow: 0 12px 28px rgba(10,25,13,.25); font: 13px/1.4 var(--font-sans, sans-serif); opacity: 0; visibility: hidden; transform: translateY(-5px); transition: opacity 160ms ease, transform 160ms ease, visibility 160ms; pointer-events: none; }
       .imf-progress-sprout-tip strong { font-weight: 700; }
       .imf-progress-sprout-tip-status { margin-top: 3px; font-weight: 700; }
       .imf-progress-sprout-wrap[data-open] .imf-progress-sprout-tip, .imf-progress-sprout-hit:focus-visible + .imf-progress-sprout-tip { opacity: 1; visibility: visible; transform: translateY(0); }
@@ -164,7 +164,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <Overline>{t('homeLimaSuggests')}</Overline>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {t('homeSurveyNew')}
             </h2>
           </div>
@@ -198,7 +198,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>
               {firstName ? t('homeGreeting').replace('{name}', firstName) : t('welcomeTitle')}
             </div>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {t('welcomeHeroTitle')}
             </h2>
           </div>
@@ -252,7 +252,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <Overline>{t('homeLimaSuggests')}</Overline>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12 }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 12 }}>
               {t('continueSiteTitle').replace('{site}', mainSite.name)}
             </h2>
           </div>
@@ -305,7 +305,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             <div className="uppercase tracking-widest font-sans mb-2" style={{ fontSize: 12, color: 'rgba(234,243,226,0.72)', letterSpacing: '0.12em' }}>
               {t('homeMainSite')}
             </div>
-            <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 12, overflowWrap: 'anywhere' }}>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 12, overflowWrap: 'anywhere' }}>
               {mainSite.name}
             </h2>
           </div>
@@ -347,7 +347,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             </div>
             <span
               className="imf-hero-next-arrow flex items-center justify-center flex-shrink-0"
-              style={{ width: 40, height: 40, borderRadius: 999, background: '#1F4D2B', color: '#F7F2E9' }}
+              style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
             >
               <ChevronRight size={20} strokeWidth={2} />
             </span>
@@ -375,7 +375,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <Overline>{t('homeLimaSuggests')}</Overline>
-          <h2 className="u-display-sm" style={{ color: '#F7F2E9', marginBottom: 6 }}>
+          <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
             {t('homeSurveyNew')}
           </h2>
         </div>

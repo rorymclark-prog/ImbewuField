@@ -12,18 +12,7 @@
         "doc": "Vangueria infausta | PlantZAfrica (SANBI)",
         "page": null
       },
-      "notes": "A second source gives a wider window for the same general region: ICRAF Agroforestree Database 4.0 (Orwa et al. 2009) fact sheet, BIOLOGY section, states 'In southern Africa, the tree flowers from September to November and fruits from November to April.' -- i.e. fruits Nov-Apr rather than SANBI's Jan-Apr. Both entries are kept (this one plus the separate ICRAF-sourced entry below) rather than merged, since they are two distinct sourced statements that partially disagree on the start month."
-    },
-    {
-      "region": "southern Africa (general, per ICRAF; not South-Africa-specific wording)",
-      "months": [11, 12, 1, 2, 3, 4],
-      "evidence": {
-        "quote": "In southern Africa, the tree flowers from September to November and fruits from November to April.",
-        "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Vangueria_infausta.PDF",
-        "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section",
-        "page": 1
-      },
-      "notes": "This is the wider Nov-Apr fruiting window; see the SANBI-sourced entry above (Jan-Apr) for the narrower, South-Africa-specific 'found on the plants' window. Not averaged or reconciled into a single figure, per the no-conversion/no-averaging rule -- both are reported as separately sourced."
+      "notes": "The January–April interval follows SANBI's description of soft, edible ripe fruit and its taste. ICRAF's wider November–April statement only dates fruiting; it remains a separate phenology reference rather than extending this ripe-food window."
     }
   ],
   "yearsToFirstCrop": {
@@ -52,10 +41,20 @@
     "notes": "No source states whether the species is self-fertile, dioecious, or needs a cross-pollinator. SANBI's Ecology section states 'Butterflies and flies visit the flowers.' and ICRAF's Tree management section states 'The flowers attract insects, which in turn attract insect-eating birds.' -- both confirm insects visit/likely pollinate the flowers, but neither makes a self-fertility/cross-pollination statement, so the enum value is left null."
   },
   "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Wider fruiting observations, not a ripe picking interval",
+      "quote": "In southern Africa, the tree flowers from September to November and fruits from November to April.",
+      "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Vangueria_infausta.PDF",
+      "doc": "Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section",
+      "page": 1,
+      "note": "This account separately distinguishes green unripe and brown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval remains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready regional reference."
+    }
+  ],
   "gaps": [
     "yearsToFirstCrop, yearsToFullBearing, yieldKgPerTreeMature: none found in either fetched source (SANBI PlantZAfrica, ICRAF Agroforestree Database 4.0 PDF fact sheet).",
     "chillUnits: not stated by any source found.",
     "Self-fertility/cross-pollination requirement: not stated by any source found; only that insects (butterflies, flies) visit the flowers is confirmed.",
-    "The two fetched sources disagree slightly on the fruiting window (SANBI: January-April; ICRAF: November-April) -- both are recorded as separate entries above rather than reconciled, since neither source explains the discrepancy and no third source was found to adjudicate."
+    "The ICRAF November–April fruiting interval was withdrawn from harvestMonths in the 11 October 2026 stage audit because it does not establish ripe-food readiness. It remains supplementary phenology; the separate SANBI January–April ripe-fruit reference is retained."
   ]
 }

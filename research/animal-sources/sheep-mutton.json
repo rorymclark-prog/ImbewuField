@@ -160,6 +160,18 @@
     "No SA-specific water L/day figure was found; an Australian 'SheepConnect SA' figure surfaced in web search but was excluded as non-South African.",
     "No permanent on-farm housing/camp stocking-density figure (as opposed to a pre-transport holding pen) was found for meat sheep.",
     "Unreachable/unusable sources tried: nda.gov.za's 2012 wool/mutton value chain profiles (connection reset), webapps1.daff.gov.za Mutton Market Value Chain Profile 2021 (unreachable), a kzndard.gov.za 'Imvu - The Indigenous Sheep of KwaZulu-Natal' PDF (connection reset on repeated attempts), rpo.co.za's Code of Best Practice page (landing page only, no code text), nahf.co.za controlled-and-notifiable-diseases page (403 Forbidden), and a SASAS (sasas.co.za) paper (403 Forbidden).",
-    "Editor review 2026-09-28 (round 2): spaceM2PerAnimal withdrawn (a holding-pen minimum from the handling and transport code, kept as a welfare point). Legal points trimmed to their quotes: the FMD point no longer claims a reporting duty, the Meat Safety Act point now quotes the abattoir rule itself and drops 'for sale' and 'may not then be sold', and the scab points drop 'declared outbreak' and 'financially penalised'. outputUnit is 'lambs born per ewe' (the source's lambing percentages), without '/year', which the source does not state."
+    "Editor review 2026-09-28 (round 2): spaceM2PerAnimal withdrawn (a holding-pen minimum from the handling and transport code, kept as a welfare point). Legal points trimmed to their quotes: the FMD point no longer claims a reporting duty, the Meat Safety Act point now quotes the abattoir rule itself and drops 'for sale' and 'may not then be sold', and the scab points drop 'declared outbreak' and 'financially penalised'. outputUnit is 'lambs born per ewe' (the source's lambing percentages), without '/year', which the source does not state.",
+    "11 October 2026 official manual reviewed. Mara breeding dates are context, not national meat calendar. Housing example cites only a generic ScienceDirect domain; no new stocking density promoted as a verified local standard."
+  ],
+  "productionReferences": [
+    {
+      "point": "The government sheep manual describes controlled breeding at Mara Research Station, Limpopo: June–July mating and November–December lambing to match rain and grass. This is one station breeding calendar, not mutton harvest months. Match adapted meat-purpose stock and feed locally, then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.",
+      "evidence": {
+        "quote": "the sheep and goat breeding season in Mara Research Station is in winter (June/July)",
+        "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/sheep-training-manual.pdf",
+        "doc": "DAFF: Sheep General Information Manual, Final Draft, section 3.4.6",
+        "page": 12
+      }
+    }
   ]
 }

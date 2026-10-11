@@ -177,7 +177,7 @@ export default function NgoPage() {
                 // Was fontSize 9, under the 12px micro-label floor and genuinely hard to read on a
                 // laptop. Raised with the pill grown to match, since a 12px digit does not fit a
                 // 16px circle.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: '#1F4D2B', color: '#F7F2E9' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
                 {badge}
               </span>
             )}

@@ -3,9 +3,12 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
-import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
+import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory,
+  readingTitleLightestFileBytesBefore, readingTitleLightestPresentationBeforeHistory } from './reading-title-lightest-next-history-checks.ts';
 import { stIntroRuntimeResidualSourceBefore, stIntroRuntimeResidualManifestBefore,
   stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
+import { studyVegetablesTwoResidualNativeBefore, studyVegetablesTwoResidualPairedBefore,
+  studyVegetablesTwoResidualPresentationBefore, studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 const repositoryRoot = fileURLToPath(new URL('../', import.meta.url));
 const repositoryPath = (file: string) => resolve(repositoryRoot, file);
 const folder = 'docs/study-translation-reviews/core-ordinary-expanded-next-2026-10-07/';
@@ -27,11 +30,12 @@ export function ensureExpandedCurrent() {
     assert.equal(sha(r.before), r.beforeSha256, file + ': full predecessor');
     assert.equal(sha(r.after), r.afterSha256, file + ': full current source and unlisted bytes');
     const source = readFileSync(repositoryPath(file));
-    const afterLightest = readingTitleLightestFileBytesBefore(file, source);
+    const afterVegetables = studyVegetablesTwoResidualSourceBefore(file, source);
+    const latestProjected = readingTitleLightestFileBytesBefore(file, afterVegetables);
     const actual = file === 'lib/course-asset-sizes.ts'
-      ? stIntroRuntimeResidualManifestBefore(Buffer.from(afterLightest).toString())
-      : stIntroRuntimeResidualSourceBefore(file, afterLightest);
-    assert.equal(Buffer.from(actual).toString(), r.after, file + ': exact newest layers project to this immutable historical layer');
+      ? stIntroRuntimeResidualManifestBefore(latestProjected.toString())
+      : stIntroRuntimeResidualSourceBefore(file, latestProjected);
+    assert.equal(Buffer.from(actual).toString(), r.after, file + ': actual live bytes match complete reviewed proof after the exact newest source projection');
   }
   for (const r of expandedAssets) {
     const bytes = readFileSync(repositoryPath('public' + r.url));
@@ -42,6 +46,7 @@ export function ensureExpandedCurrent() {
 /** Older owners still reject caller corruption against their complete snapshots.
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  bytes = studyVegetablesTwoResidualSourceBefore(file, bytes);
   bytes = readingTitleLightestFileBytesBefore(file, bytes);
   bytes = file === 'lib/course-asset-sizes.ts'
     ? stIntroRuntimeResidualManifestBeforeHistory(Buffer.from(bytes).toString())
@@ -54,6 +59,11 @@ export function expandedSourceBefore(file: string, bytes: string | Uint8Array): 
   return typeof bytes === 'string' ? row.before : Buffer.from(row.before);
 }
 export function expandedPairBefore<T>(file: string, value: T): T {
+  // This older owner may receive the A→B composed snapshot with its own
+  // accepted leaves already projected. Use the history-aware exact-leaf
+  // projection here; the expanded full-file snapshot below still rejects any
+  // unrelated or unlisted caller mutation.
+  value = studyVegetablesTwoResidualPairedBefore(file, value);
   value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;
@@ -62,6 +72,7 @@ export function expandedPairBefore<T>(file: string, value: T): T {
   return JSON.stringify(value) === JSON.stringify(JSON.parse(row.after)) ? JSON.parse(row.before) : value;
 }
 export function expandedNativeBefore<T>(value: T): T {
+  value = studyVegetablesTwoResidualNativeBefore(value);
   value = readingTitleLightestNativeBeforeHistory(value);
   const obj = value as any;
   const key = Object.keys(native.after).find(k => native.after[k].id === obj?.id && native.after[k].language === obj?.language && native.after[k].lessons.map((l: any) => l.id).join('|') === obj?.lessons?.map((l: any) => l.id).join('|'));
@@ -72,6 +83,8 @@ export function expandedNativeBefore<T>(value: T): T {
   return structuredClone(native.before[key]);
 }
 export function expandedPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  value = studyVegetablesTwoResidualPresentationBefore(value, lessonId, language);
+  value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   if (value.status !== 'draft') return value;
   const key = Object.keys(native.after).find(k => native.after[k].language === language && native.after[k].lessons.some((l: any) => l.id === lessonId));
   if (!key) return value;
@@ -88,6 +101,7 @@ export function expandedPresentationBefore<T extends { status?: string; content:
   return { ...structuredClone(value), content: before };
 }
 export function expandedPairBeforeHistory<T>(file: string, value: T): T {
+  value = studyVegetablesTwoResidualPairedBefore(file, value);
   value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
   if (!row || !file.endsWith('.paired-draft.json')) return value;

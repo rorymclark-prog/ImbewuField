@@ -1,0 +1,118 @@
+{
+  "speciesId": "pyrus-communis",
+  "commonName": "Pear",
+  "botanicalName": "Pyrus communis",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Ceres, Koue Bokkeveld, Western Cape — Rosemarie Select first pick",
+      "months": [
+        1
+      ],
+      "evidence": {
+        "quote": "Ceres, Koue Bokkeveld: 1st Week Jan (Week 2)",
+        "url": "https://culdevco.co.za/pears-cultivar-rosemarie-select/",
+        "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Rosemarie Select pear cultivar sheet",
+        "page": null
+      },
+      "notes": "First-pick reference only; source week wording is internally inconsistent, so only January is retained. The sheet's general disclaimer limits data to Bien Donne, Simondium, Western Cape; local observations still needed."
+    },
+    {
+      "region": "Wolseley, Western Cape — Rosemarie Select first pick",
+      "months": [
+        1
+      ],
+      "evidence": {
+        "quote": "Wolseley: End Jan (Week 4)",
+        "url": "https://culdevco.co.za/pears-cultivar-rosemarie-select/",
+        "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Rosemarie Select pear cultivar sheet",
+        "page": null
+      },
+      "notes": "Distinct location from Ceres, not an extension of one tree's season."
+    },
+    {
+      "region": "South African cultivar sheet; test location not stated — Packham's Triumph first pick",
+      "months": [
+        2
+      ],
+      "evidence": {
+        "quote": "2nd week February",
+        "url": "https://www.saplant.co.za/varieties/pears/packhams-triumph/",
+        "doc": "SAPO Trust, Packham's Triumph pear cultivar sheet",
+        "page": null
+      },
+      "notes": "No trial location is supplied on the page. This reference must not be assigned to a climate zone without local confirmation."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "Check the actual cultivar's pollen needs; no universal classification is inferred from a named cultivar."
+  },
+  "harvestProduct": "fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Rosemarie Select pollen partners",
+      "quote": "Pollinators: December, Packham’s Triumph",
+      "url": "https://culdevco.co.za/pears-cultivar-rosemarie-select/",
+      "doc": "Culdevco / ARC Infruitec-Nietvoorbij, Rosemarie Select pear cultivar sheet",
+      "page": null,
+      "note": "These are cultivar-specific compatible-pollen candidates, not a guarantee that any two pear trees pollinate one another."
+    },
+    {
+      "title": "Packham's Triumph pollen partners",
+      "quote": "Clapp’s Favourite, December, Starkrimson",
+      "url": "https://www.saplant.co.za/varieties/pears/packhams-triumph/",
+      "doc": "SAPO Trust, Packham's Triumph pear cultivar sheet",
+      "page": null,
+      "note": "SAPO describes chilling qualitatively as low and production as high; neither supplies a numeric age or kg/tree."
+    }
+  ],
+  "productionGuidance": {
+    "products": "fruit",
+    "care": [
+      "Record the named cultivar and actual first and last picking months. January and February references are alternatives, not a mixed-orchard calendar for every tree."
+    ],
+    "purchase": [
+      "Rosemarie Select is a source-backed Western Cape candidate to discuss with the nursery. Ask about December or Packham's Triumph as compatible pollen partners.",
+      "For Packham's Triumph, ask about Clapp's Favourite, December or Starkrimson and check local winter conditions."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://culdevco.co.za/pears-cultivar-rosemarie-select/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.saplant.co.za/varieties/pears/packhams-triumph/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No verified local picking window outside the named Western Cape references.",
+    "No numeric first age, full age or mature kg; qualitative production cells and individual fruit weights cannot supply them.",
+    "Do not infer household stored-food months from commercial storage descriptions."
+  ]
+}

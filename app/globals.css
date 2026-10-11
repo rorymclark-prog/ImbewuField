@@ -299,6 +299,13 @@ html[data-theme="earth"] {
   --gradient-from: #3A7518;
   --gradient-mid: #5CA030;
   --gradient-to: #9E5C08;
+
+  /* Light text/border painted on a forest fill (--color-forest-800), the role the stale literal
+     '#F7F2E9' was hand-copied for ~40 times across app/* and components/*. That literal was the
+     same value in every theme (it never followed --color-forest-800's own per-column swing), so
+     --on-forest is declared per column rather than at :root, but keeps today's identical value in
+     all four — this pass only retires the stale hex, not re-tune dark-mode forest contrast. */
+  --on-forest: #F7F2E9;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -366,6 +373,8 @@ html[data-theme="earth"].dark {
   --gradient-from: #A8E860;
   --gradient-mid: #82C844;
   --gradient-to: #D8A840;
+
+  --on-forest: #F7F2E9;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -430,6 +439,8 @@ html[data-theme="slate"] {
   --gradient-from: #0D6B52;
   --gradient-mid: #199870;
   --gradient-to: #AA5C08;
+
+  --on-forest: #F7F2E9;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -497,6 +508,8 @@ html[data-theme="slate"].dark {
   --gradient-from: #50CCA0;
   --gradient-mid: #18A878;
   --gradient-to: #E8A030;
+
+  --on-forest: #F7F2E9;
 }
 
 /* ═══════════════════════════════════════════════════════

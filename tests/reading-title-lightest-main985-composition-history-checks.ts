@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { studyBAProjectToA } from './study-b-a-source-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/';
 const proofBytes = readFileSync(folder + 'composition-proof.json');
@@ -30,7 +31,7 @@ function validateComposition() {
     assert.equal(sha(before), pr985[file.startsWith('app/') ? 'worker' : 'manifest'].afterSha256, `${file}: cross-owner exact post985 digest`);
     assert.equal(after.length, row.afterBytes, `${file}: merged current full-file size`);
     assert.equal(sha(after), row.afterSha256, `${file}: immutable merged current full-file digest`);
-    const live = readSnapshot(file);
+    const live = Buffer.from(studyBAProjectToA(file, readSnapshot(file)));
     assert.equal(live.length, row.afterBytes, `${file}: live complete current size`);
     assert.equal(sha(live), row.afterSha256, `${file}: live complete current digest`);
     assert.deepEqual(live, after, `${file}: live whole file retains all source, migration and unlisted bytes`);
@@ -90,8 +91,8 @@ export function readingTitleLightestMain985PostLayerBefore(file: string, supplie
   const row = proof.files[file];
   const before = readSnapshot(row.beforePath);
   const prior = readSnapshot(row.pr985BeforePath);
-  const text = Buffer.from(supplied).toString();
-  const live = readSnapshot(file).toString();
+  const text = Buffer.from(studyBAProjectToA(file, supplied)).toString();
+  const live = Buffer.from(studyBAProjectToA(file, readSnapshot(file))).toString();
   if (text === live || text === before.toString()) return typeof supplied === 'string' ? before.toString() : before;
   if (text === prior.toString()) return supplied;
   // Older dated owners pass their own frozen snapshots through this projection.

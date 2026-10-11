@@ -1,0 +1,75 @@
+{
+  "speciesId": "berchemia-discolor",
+  "commonName": "Brown ivory (motsintsila)",
+  "botanicalName": "Berchemia discolor",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "ripe fruit",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The fruit is edible, very sweet in taste",
+      "url": "https://pza.sanbi.org/berchemia-discolor",
+      "doc": "SANBI PlantZAfrica, berchemia-discolor",
+      "page": null,
+      "note": "January–July is fruit appearance in SANBI's account, not an explicit ripe-picking interval."
+    },
+    {
+      "title": "Fruit-development duration has context",
+      "quote": "4-5 months from flower fertilization to fruit ripening",
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Berchemia_discolor.pdf",
+      "doc": "World Agroforestry, Agroforestree Database, Berchemia discolor",
+      "page": 1,
+      "note": "This is flower-to-fruit development, not years from planting. Its South African January–July fruiting statement is not an observed household picking window."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe fruit",
+    "care": [
+      "Use frost-free conditions: SANBI describes frost sensitivity despite drought resistance, with natural low-altitude riverbank bushveld in northern KwaZulu-Natal, Mpumalanga and Limpopo."
+    ],
+    "purchase": [
+      "Ask for Berchemia discolor, not red ivory (B. zeyheri). Record actual local ripe-picking months."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/berchemia-discolor",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    },
+    {
+      "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Berchemia_discolor.pdf",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary institutional source content checked; context and limits retained."
+    }
+  ],
+  "gaps": [
+    "No exact ripe interval, first/full-bearing age or mature kg."
+  ]
+}

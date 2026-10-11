@@ -42,7 +42,7 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '10 October 2026', sha: '788daf2', changes: [
+  { when: '11 October 2026', sha: '788daf2', changes: [
     'Records → Charts adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside English.',
     'Harvest rows no longer cut off the line "Harvested · Sold" on narrow phones.',
   ], tour: [
@@ -51,6 +51,64 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Read unreviewed chart wording beside exact English.',
       href: '/records' },
   ] },
+  { when: '11 October 2026', sha: '6414556a', changes: [
+    'More Study due dates and unlock messages show unreviewed regional drafts.',
+    'Two isiZulu safety cards pair corrected draft wording with exact English.',
+    'Saved slide packs refresh changed cards and keep other media.',
+  ], tour: [{ title: 'Compare the updated Study drafts',
+    where: 'Study → Introduction, Vegetables or Food Forest', href: '/student',
+    detail: 'Read unreviewed drafts beside English; held isiZulu narration stays silent.',
+  }] },
+  { when: '11 October 2026', sha: '1f7239d2', changes: [
+    'Compare fresh food, kept food and crop growing space in monthly graphs.',
+    'Record monthly kg, eggs and litres; an actual amount replaces its expectation.',
+    'Keep quantities and stock with your farm when switching sites or signing in.',
+    'Check more fruit, nut, indigenous plant and animal references by age and area.',
+    'Fruit, staples, meats and preserved food have matching, distinct pictures.',
+    'Print monthly food, growing space and future plant ages with the same guidance.',
+  ], tour: [{
+    title: 'Explore a complete production example',
+    where: 'Examples → Complete production plan',
+    detail: 'Compare food and space graphs, try made-up quantities, and print the illustrated plan.',
+    href: '/samples/production',
+  }, {
+    title: 'Record production and food in store',
+    where: 'Farm → Production plan',
+    detail: 'Open the food graphs and enter this farm’s monthly amounts in their own units.',
+    href: '/facilitator/crops',
+  }] },
+  { when: '10 October 2026', sha: '810c2537', changes: [
+    'Staple crops have their own monthly rows beside vegetables, fruit and animal foods.',
+    'Fruit, nuts, seeds and animal products use pictures that match the vegetables.',
+    'Young trees and dated crops keep their future harvests and show unknown amounts.',
+    'Animal care figures keep their source conditions, and failed saves stay visible.',
+    'Print a short Calendar & jobs or a separate Future harvest plan with age groups.',
+    'PDF actions say whether the file was downloaded, shared, opened or cancelled.',
+  ], tour: [{
+    title: 'Read your production calendar',
+    where: 'Farm → Production plan',
+    detail: 'Compare vegetable, staple, fruit and animal rows, then open a month for details.',
+    href: '/facilitator/crops',
+  }, {
+    title: 'Print your plan',
+    where: 'Production plan → Share or print',
+    detail: 'Choose a short calendar, a full plan or future harvests with plant ages.',
+    href: '/facilitator/crops',
+  }] },
+  { when: '10 October 2026', sha: '142a5988', changes: [
+    'Site report climate and rainfall words now follow your language as they are translated.',
+    'Buttons and text on dark green look the same in every colour theme.',
+  ], tour: [{
+    title: 'Read your site report',
+    where: 'Farm → Site report',
+    detail: 'The climate and rainfall notes at the bottom of the report now switch with your language.',
+    href: '/farmer',
+  }, {
+    title: 'Try a colour theme',
+    where: 'Home → Settings',
+    detail: 'Light text on the green buttons now changes with the theme instead of staying fixed.',
+    href: '/home',
+  }] },
   { when: '9 October 2026', sha: '4da5c22d', changes: [
     'Your monthly AI allowance is now R18, shown in rand on your Account page.',
     'Visitors who are not signed in get R1 of AI a day before being asked to sign in.',

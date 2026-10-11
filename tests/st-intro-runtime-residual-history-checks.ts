@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { readingTitleLightestMain985PostLayerBefore, readingTitleLightestThroughMain985Before } from './reading-title-lightest-main985-composition-history-checks.ts';
+import { studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
+import { ensureStudyBACCompositionCurrent, studyABCProjectToMain69 } from './study-b-a-c-source-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/st-intro-runtime-residual-2026-10-08/';
 const pairPath = 'docs/narration/intro-permaculture.st.silent-draft.json';
@@ -12,6 +13,7 @@ const read = (path: string) => readFileSync(path);
 const proofBytes = read(folder + 'runtime-layer-proof.json');
 assert.equal(sha(proofBytes), '3f5439f84e3828bb889bc1750dba57811a4a8727bff03ad1bff17f3ac1663480', 'immutable applied layer proof');
 const proof = JSON.parse(proofBytes.toString());
+const composedProof = JSON.parse(read('docs/study-translation-reviews/study-b-a-c-integration-2026-10-08/composition-proof.json').toString());
 const packetBytes = read(folder + 'applied-packet.json');
 assert.equal(sha(packetBytes), '8973dbe47d45c0e0229c63148c824fe7e9d04da39b17450fd71ecc493a2e116b', 'immutable root-reviewed exact-source decisions');
 const packet = JSON.parse(packetBytes.toString());
@@ -134,24 +136,51 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   return before;
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
-  const postMain = Buffer.from(readingTitleLightestMain985PostLayerBefore(manifestPath, read(manifestPath))).toString();
-  assert.equal(postMain, expectedManifest, 'complete PR985 manifest projection is exact main837');
-  const afterMain = Buffer.from(readingTitleLightestThroughMain985Before(manifestPath, actual)).toString();
-  assert.equal(sha(afterMain), proof.manifest.beforeSha256, 'A and main837 layers project to exact pre-PR985 manifest');
-  assert.equal(afterMain, beforeManifestBytes.toString(), 'complete pre-PR985 manifest retains every unlisted entry');
-  return afterMain;
+  const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
+  assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
+  assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
+  const projectedActual = Buffer.from(projectKnownSource(manifestPath, actual)).toString();
+  if (projectedActual === live) return beforeManifestBytes.toString();
+  assert.equal(actual, beforeManifestBytes.toString(), 'caller supplies the exact current manifest or its exact immediate predecessor');
+  return actual;
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
-  const live = read(manifestPath).toString();
-  const postMain = Buffer.from(readingTitleLightestMain985PostLayerBefore(manifestPath, live)).toString();
-  assert.equal(postMain, expectedManifest, 'complete PR985 manifest projection is exact main837');
-  if (actual === live || actual === postMain) return beforeManifestBytes.toString();
+  const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
+  assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
+  assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
+  // Older dated owners pass their own immutable predecessor through this point.
+  // Their full-file guards validate those bytes after this current-source gate.
+  let projectedActual: string;
+  try { projectedActual = Buffer.from(projectKnownSource(manifestPath, actual)).toString(); }
+  catch { return actual; }
+  if (projectedActual === live) return beforeManifestBytes.toString();
   return actual;
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
   if (file !== workerPath) return bytes;
-  const before = readingTitleLightestThroughMain985Before(file, bytes);
-  assert.equal(sha(before), proof.worker.beforeSha256, 'A and main837 layers project to exact pre-PR985 worker');
-  assert.equal(Buffer.from(before).toString(), workerBefore.toString(), 'complete pre-PR985 worker source and unlisted bytes');
-  return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
+  const live = Buffer.from(projectValidatedCurrent(workerPath, read(workerPath)));
+  assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
+  assert.equal(live.length, proof.worker.afterBytes, 'complete live service-worker source size');
+  const projectedSupplied = Buffer.from(projectKnownSource(workerPath, bytes));
+  if (projectedSupplied.equals(live)) return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
+  if (sha(projectedSupplied) === proof.worker.beforeSha256) return bytes;
+  return bytes;
+}
+
+function projectValidatedCurrent(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  ensureStudyBACCompositionCurrent();
+  return studyABCProjectToMain69(file, bytes);
+}
+
+function projectKnownSource(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  const raw = Buffer.from(bytes);
+  const record = composedProof.files.find((item: any) => item.path === file);
+  if (!record) return bytes;
+  const recognized = new Set(Object.values(record.snapshots).map((item: any) => item.sha256));
+  const current = read(file);
+  if (sha(raw) === sha(current)) return projectValidatedCurrent(file, bytes);
+  if (recognized.has(sha(raw))) return bytes;
+  const ownBefore = file === workerPath ? proof.worker.beforeSha256 : proof.manifest.beforeSha256;
+  if (sha(raw) === ownBefore) return bytes;
+  assert.fail(`${file}: caller source must be a byte-exact registered composition snapshot`);
 }

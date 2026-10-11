@@ -99,12 +99,21 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "spaceM2": null,
     "welfare": [
       {
+        "point": "Keep hives away from playgrounds, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before adding a hive.",
+        "source": {
+          "quote": "away from playgrounds ... near a fresh water supply ... fairly dry, away from swampy or flooding valley",
+          "url": "https://www.fao.org/4/t0104e/T0104E08.htm",
+          "doc": "FAO: Beekeeping in Africa, Site selection (general African apiary guidance)",
+          "page": null
+        }
+      },
+      {
         "point": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
         "source": {
           "quote": "Every beekeeper shall conduct regular inspections of every colony kept in beehives at each apiary site to detect- (a)clinical symptoms of notifiable bee diseases; or (b)Capensis-infected colonies.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, Government Notice No. R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 5
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       },
       {
@@ -119,57 +128,66 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     ],
     "legal": [
       {
-        "point": "Every beekeeper (commercial or hobbyist) must register with the national Department between 1 January and 31 March each year.",
+        "point": "Register with the Department before beekeeping. Registration lasts 24 months from registration or renewal and must be renewed when it expires.",
         "source": {
-          "quote": "Every beekeeper shall register with the Department between 1 January and 31 March of each year.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 3
+          "quote": "Every person who carries out any beekeeping activities shall register with the Department. ... Registration shall be for a period of twenty four months from the date of registration or renewal of registration and shall be renewable on expiry of the registration period.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(1) and 2(4)",
+          "page": 4
         }
       },
       {
-        "point": "A beekeeper who fails to re-register annually is automatically deregistered.",
+        "point": "A beekeeper who fails to renew registration at expiry will be deregistered and face penalties under the Act.",
         "source": {
-          "quote": "In the case of failure to comply with control measure 2 (1), a registered beekeeper shall be deregistered.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
+          "quote": "In the case of failure to comply with control measure 2(4), a registered beekeeper shall be deregistered and shall face penalties in terms of the Act.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measure 2(5)",
           "page": 4
+        }
+      },
+      {
+        "point": "Beekeeping activities and hired beekeeping services require a valid registration certificate. Check the certificate before using a beekeeper.",
+        "source": {
+          "quote": "No person may conduct any beekeeping activities unless they are in possession of a valid registration certificate issued in terms of control measure 2 (1). ... No person may utilise the services of a beekeeper for the purposes of carrying out any beekeeping activities unless the beekeeper is in possession of a valid registration certificate issued in terms of control measure 2 (1).",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(8) and 2(9)",
+          "page": 5
         }
       },
       {
         "point": "Every beehive must be clearly and legibly marked with the beekeeper's registration number.",
         "source": {
           "quote": "Every beekeeper must mark his beehives to display clearly and legibly the registration number allocated to him in terms of control measure 2 (3).",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 4
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 5
         }
       },
       {
-        "point": "Keep written records of how many colonies you keep, where each apiary is, and any disease found.",
+        "point": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
         "source": {
-          "quote": "Every beekeeper shall, during the period of registration, keep written records of the- (a)number of colonies kept; (b)location of every apiary; (c)presence of any notifiable or other disease in the apiaries kept by the beekeeper;",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 4
+          "quote": "Every beekeeper shall, during the period of registration, keep written records of the— (a) number of colonies kept; (b) location of every apiary; (c) presence of any notifiable or other disease in the apiaries kept by the beekeeper; (d) management measures used to control any detected disease; and (e) number of colonies that ceased to exist, and the reasons for the loss.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 5
         }
       },
       {
         "point": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
         "source": {
           "quote": "No person may- (a)remove honey-bees across the line; ... (b)remove or keep Cape bees north of the line; (c)remove any Capensis-infected colony, without the prior written approval of executive officer.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015)",
-          "page": 5
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       },
       {
         "point": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
         "source": {
           "quote": "Every beekeeper shall notify the executive officer or area official of the presence or suspected presence of any notifiable disease or Capensis-infected colony ... instruct a beekeeper to destroy a colony, beehive or bee product.",
-          "url": "https://faolex.fao.org/docs/pdf/saf128823.pdf",
-          "doc": "Agricultural Pests Act, 1983 (Act No. 36 of 1983) - Control Measures Relating to Honey-bees, GN R.858 of 15 November 2013 (Government Gazette No. 37015), Annexure A: List of Notifiable Diseases",
-          "page": 8
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+          "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+          "page": 6
         }
       }
     ]
@@ -347,7 +365,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       }
     ],
     "seasonalPattern": {
-      "text": "SA dairy processors need a steady year-round milk supply, so seasonal (batch) calving is not viable for SA dairy farmers - milk is produced continuously all year.",
+      "text": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
       "source": {
         "quote": "not an option for dairy farmers in South Africa, \nas processors require a year-round even milk \nflow to ensure processing plants operating at \nfull capacity for most of the year.",
         "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
@@ -410,6 +428,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       "note": "Table 21.1 gives water intake for a lactating Holstein-type cow under comfortable versus hot conditions: 58 L/day (comfortable) to 75 L/day (hot). Used as the general lactating-cow range; not broken out by breed since the table's other columns are for comfort/heat-stress states rather than breed."
     },
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "In hotter, humid KZN, KZN DARD describes Nguni × Jersey dairy trials at Makhathini to combine milk potential with local adaptation. Hand milking with the calf present highlights competition between household milk and calf growth. Discuss adapted stock and feeding locally; commercial milk-recording totals do not forecast this system. Record calving, lactation stage and milk available after calf needs.",
+        "source": {
+          "quote": "adapted cross- bred animals instead of the traditional dairy breeds offers distinct advantages in the hotter humid areas",
+          "url": "https://www.kzndard.gov.za/subsistence-dairying-in-kzn",
+          "doc": "KZN DARD: Subsistence Dairying in KZN, Makhathini Research Station trials",
+          "page": null
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
@@ -546,6 +575,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "Newer South African commercial reference: SAPA 2024 reports average slaughter at 30–31 days with bird weight 1.8–1.85 kg. The primary range above remains the earlier 2022 reference at 32–33 days. These are commercial bird weights, not dressed meat kg or a village flock target. Record hatch or purchase age, feeding system, actual harvest date and weighed product basis.",
+        "source": {
+          "quote": "Average slaughter age is now 30 – 31 days at a weight of 1.8 – 1.85 kg.",
+          "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf",
+          "doc": "SAPA Industry Profile 2024, section 7.9 Performance efficiency",
+          "page": 82
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "Floor-housed broilers: no more than 40 kg of bird per square metre.",
@@ -659,7 +699,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
         "page": 5
       },
-      "note": "Free-range/scavenging village chickens, KwaZulu-Natal: dry (40.43) vs wet (49.91) environment, difference not significant ('NS'). A managed-system ARC Irene trial of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports far higher counts, but its figures could not be checked against a fetchable text and are not recorded here."
+      "note": "Free-range/scavenging village chickens, KwaZulu-Natal: dry (40.43) vs wet (49.91) environment, difference not significant ('NS'). A managed-system ARC Irene trial of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports far higher counts, now separately verified and retained in productionReferences; managed conditions cannot replace this village range."
     },
     "windows": [],
     "seasonalPattern": null,
@@ -682,6 +722,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "The ARC Irene trial compared Potchefstroom Koekoek, Venda, Ovambo and Naked Neck under commercial feed, water and controlled lighting. Mean eggs/hen in a 52-week cycle were 195.9, 153.7, 125.5 and 138.9 respectively; first-egg ages were 138.5, 139.0, 134.5 and 129.0 days from hatch, with no significant first-egg age difference among breeds. This is managed breed context, not the yield of scavenging hens in KZN. Match feeding and housing before using a benchmark.",
+        "source": {
+          "quote": "a trial was conducted over two consecutive egg production cycles of 52 weeks each",
+          "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+          "doc": "Grobbelaar, Sutherland & Molalakgotla (2010), Egg production potentials of certain indigenous chicken breeds from South Africa: methods pp27–28, first-egg p29, Table 4 p31",
+          "page": 31
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "In extensive village systems the chickens have to find their own water and food.",
@@ -868,6 +919,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       },
       "note": "Indoor/house floor space in a Free Range or Barn system with perches: 12 birds/m2 = 1/12 = 0.083 m2/bird. The same Code's external range limit is much larger (5 birds/m2 = 0.2 m2/bird outdoors, see welfare) - not mixed into this indoor figure, per the instruction not to combine different systems. A separate cage-system table in the same document (Table 3.1) gives a different, more confined figure for battery cages, also not used here since this enterprise is framed as free-range/barn. South Africa."
     },
+    "productionReferences": [
+      {
+        "point": "SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of lay, surviving laying hens, feed, water and lighting need separate records.",
+        "source": {
+          "quote": "Breed standards in laying hens",
+          "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf",
+          "doc": "SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks",
+          "page": 39
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
@@ -986,10 +1048,10 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       "source": {
         "quote": "P44 ducks and drakes were kept until 7 weeks of age, whereas the MR71 ducks until 10 weeks of age, and MR71 drakes until 12 weeks of age.",
         "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
-        "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+        "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
         "page": null
       },
-      "note": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). South Africa-specific (SAJAS)."
+      "note": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability."
     },
     "productiveLifeYears": null,
     "feedKgPerDay": null,
@@ -1002,10 +1064,10 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       "source": {
         "quote": "birds were kept according to the guidelines for intensive production system on deep litter and at a stocking density of 2.9 bird/m 2 . Thereafter, half the ducks and drakes of each genetic group was allowed to use free ranges, at a stock density of 0.08 bird/m 2 (outdoor system - OS).",
         "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
-        "doc": "South African Journal of Animal Science 44(2): Effect of production system and slaughter age on meat quality of ducks",
+        "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
         "page": null
       },
-      "note": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. South Africa-specific (SAJAS)."
+      "note": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability."
     },
     "welfare": [
       {
@@ -1148,6 +1210,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "ARC makes tilapia suitability depend on water temperature: summer grow-out can be suitable anywhere in South Africa when water exceeds 20°C; growth is poor below 18°C and winter water below 13°C can kill farmed tilapia. The Highveld reference is a summer crop; tunnels can widen the range. Measure pond water and confirm stocking species and dates. Air climate or a mapped pond does not prove harvest months, fish numbers or food kg.",
+        "source": {
+          "quote": "they will not grow well at temperatures below 18˚C",
+          "url": "https://www.arc.agric.za/arc-api/AquacultureProductionApp/Pages/FAQs.aspx",
+          "doc": "ARC Aquaculture Production App: General FAQ, Can I grow tilapia on the Highveld?",
+          "page": null
+        }
+      }
+    ],
     "welfare": [],
     "legal": [
       {
@@ -1219,21 +1292,21 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         1073.4
       ],
       "source": {
-        "quote": "Third parity dams gave the highest lactation yields (1073.4 ± 40.0 kg, 40.6 ± 1.6 kg, 31.3 ± 1.4 kg, and 46.7 ± 1.9 kg for MY, FY, PY, and LY, respectively), whereas lowest lactation yields for these traits were estimated in the > 7th parity group (775.4 ± 56.6, 29.5 ± 2.3, 20.6 ± 2.0, and 33.0 ± 2.9 kg for MY, FY, PY, and LY, respectively).",
-        "url": "https://www.scielo.org.za/scielo.php?pid=S0375-15892024000500009&script=sci_arttext&tlng=en",
-        "doc": "Malemela, M.J., Nemutandani, K.R. & Tada, O. (2024). Non-genetic sources of variation influencing yield and composition of milk production parameters in South African Saanen goats. S. Afr. J. Anim. Sci. 54(5):620-630",
-        "page": null
+        "quote": "Third parity dams gave the highest lactation yields",
+        "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf",
+        "doc": "Malemela, Nemutandani & Tada (2024), South African Saanen goats: Table 3, 305-day milk yield by parity",
+        "page": 625
       },
-      "note": "Lowest (>7th parity) and highest (3rd parity) parity-group means for milk yield per 305-day standardised lactation, 16 407 ARC milk-recording lactations of SA Saanen goats, 1955-2018, mostly intensive/semi-intensive stud herds. Kept in kg as the source gives it."
+      "note": "Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation."
     },
     "windows": [],
     "seasonalPattern": {
-      "text": "Milk yield and lactose yield are significantly affected by season of kidding, with does that kid in spring giving the highest lactation milk yields; breeders are advised to plan mating for spring kidding.",
+      "text": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
       "source": {
-        "quote": "There was a substantial variation due to dam kidding season in all parameters except protein yield and urea concentration, with dams kidding in spring attaining the highest average lactation milk and lactose yields. ... For optimal lactation performance, planned breeding should be applied for spring kidding.",
-        "url": "https://www.scielo.org.za/scielo.php?pid=S0375-15892024000500009&script=sci_arttext&tlng=en",
-        "doc": "Malemela, M.J., Nemutandani, K.R. & Tada, O. (2024). Non-genetic sources of variation influencing yield and composition of milk production parameters in South African Saanen goats. S. Afr. J. Anim. Sci. 54(5):620-630",
-        "page": null
+        "quote": "Spring (August–October)",
+        "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf",
+        "doc": "Malemela, Nemutandani & Tada (2024), South African Saanen goats: Table 1 season definitions and kidding-season findings",
+        "page": 622
       }
     },
     "flowNote": null,
@@ -1243,6 +1316,26 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+        "source": {
+          "quote": "Table 3 Average lactation performance",
+          "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf",
+          "doc": "Malemela, Nemutandani & Tada (2024), South African Saanen goats, Table 3",
+          "page": 625
+        }
+      },
+      {
+        "point": "At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+        "source": {
+          "quote": "Stage of lactation, kidding season and parity had an influence on milk yield.",
+          "url": "https://scialert.net/fulltext/?doi=ajava.2011.274.281",
+          "doc": "Norris et al. (2011), Milk Production of Three Exotic Dairy Goat Genotypes in Limpopo Province, South Africa: methods, results and Table 2",
+          "page": null
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
@@ -1348,6 +1441,26 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+        "source": {
+          "quote": "Mating occurs throughout the year. Kids are born anytime.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+          "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+          "page": 7
+        }
+      },
+      {
+        "point": "In KZN Highland Sourveld smallholder systems, winter and early-spring feed shortage can restrict goats. Autumn-kidding does feed kids through winter; spring-kidding does face late-pregnancy feed shortage, especially with late rains. Plan local winter feed and monitor weights with extension support; this is regional care context, not kg or a universal kidding calendar.",
+        "source": {
+          "quote": "Winter nutrition is thus a definite constraint to goat production in the sourveld areas.",
+          "url": "https://www.kzndard.gov.za/goat-production-in-kwazulu-natal",
+          "doc": "KZN DARD: Goat Production in KwaZulu-Natal, Highland Sourveld research and winter nutrition",
+          "page": null
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
@@ -1431,7 +1544,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "animal": "goat",
     "animalUnit": "doe",
     "product": "meat",
-    "outputUnit": "kids weaned/doe/year",
+    "outputUnit": "kids weaned/doe mated",
     "outputPerAnimal": {
       "value": [
         1.49,
@@ -1443,7 +1556,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "doc": "King, F.J.M. (2009). Production Parameters for Boer Goats in South Africa (MSc dissertation, University of the Free State), citing National Dept of Agriculture data via Malan, S.W. (2000)",
         "page": null
       },
-      "note": "Weaning rate (kids weaned/doe mated) of 149% = 1.49 kids weaned per doe per year. This is a 20-year national average for Boer does under EXTENSIVE conditions at 295 mm rainfall (low-rainfall/arid veld), not a feedlot or high-input system. The same source (Casey & Van Niekerk, 1988, quoted a few sentences later) separately reports mean litter SIZE (kids born per parturition, not per year) of 1.93 for Boer does - not merged into this per-year figure since it measures a different thing. A South Africa-wide extensive-system kidding percentage of 180% (not weaning rate) is corroborated independently in a different source (see gaps/seasonalPattern sourcing), which is consistent with the 187% kidding rate reported here."
+      "note": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure."
     },
     "windows": [],
     "seasonalPattern": {
@@ -1462,6 +1575,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+        "source": {
+          "quote": "Mating occurs throughout the year. Kids are born anytime.",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+          "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+          "page": 7
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
@@ -1559,6 +1683,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       "note": "Table 1 gives separate ranges by physiological class of the same animal (sow): pregnant sows 10-18 L/day and lactating sows 18-23 L/day. Combined here into a single sow-herd range [10,23] spanning both states, rather than mixing in the table's other classes (nursery, grower, finishing pigs, boars), which are a different animalUnit. South Africa (general smallholder/commercial training-manual figure, not tied to one system)."
     },
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+        "source": {
+          "quote": "Temperature, feedstuffs, stage of production, and health all influence the amount of water required",
+          "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/CSA%20Pig%20Production/Manual/10-Pig%20production.pdf",
+          "doc": "ARC Climate-Smart Agriculture: Pig production, farrowing/adaptation pp442–445, Table 1 p446",
+          "page": 446
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "When pigs are trucked, the SA code of practice for handling and transporting animals recommends 0.3 m² per porker, 0.4 m² per baconer and 0.8 m² per adult pig.",
@@ -1660,7 +1795,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "animal": "rabbit",
     "animalUnit": "doe",
     "product": "meat",
-    "outputUnit": "kits weaned/doe/year",
+    "outputUnit": "young reaching slaughter/reproduction age/doe/year",
     "outputPerAnimal": {
       "value": [
         30,
@@ -1672,7 +1807,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
         "page": 107
       },
-      "note": "FAO (general, not SA-specific). Figure is explicitly for 'backyard rabbitries not based exclusively on pelleted feed' (extensive/semi-intensive, not industrial). 30 = number of young reaching slaughter/reproduction age per doe/year at the base backyard rate (6 young weaned x 5.5 litters, allowing for post-weaning loss); 35 = same backyard system but with an extra litter gained by remating 7 days earlier (day 17 vs day 24 post-kindling). The source calls a 40-50/doe target 'not a realistic goal' for many countries, so that higher industrial figure was excluded. No SA-specific (ARC/SAJAS/provincial) doe-productivity figure was found (see gaps)."
+      "note": "FAO general backyard target, not a South African observed rate. The 30–35 young per doe annually have reached slaughter or reproduction age after allowance for post-weaning loss; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, describing a 30-rabbit objective; an extra litter raises its stated objective to 35. Do not combine this backyard target with grower-house carcass weight from a different trial."
     },
     "windows": [],
     "seasonalPattern": {
@@ -1715,6 +1850,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
       },
       "note": "0.60x0.80=0.48 m2 to 0.70x1.00=0.70 m2, indoor/hutch cage per single breeding adult (one buck or doe per cage), 50-60 cm high. FAO (general, not SA-specific). A separate FAO table (p.174, Fort & Martin 1981) gives a doe's cage as 65-70 cm (front) x 50 cm (depth) = 0.325-0.35 m2 and a buck's cage as 40x50 cm = 0.20 m2 - a narrower alternative figure from the same book, not merged into the range above to avoid mixing two different tabulated sources."
     },
+    "productionReferences": [
+      {
+        "point": "South African grower reference: New Zealand White and Phendula rabbits in the 2017 Stellenbosch trial were slaughtered at about 11 weeks from birth. Overall means were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg chilled carcass and 1.26 kg reference carcass with head and red offal removed, still including bones. Balanced pellets and water were freely available in a grower house. These weights are not boneless meat or annual doe output; do not multiply them by the unrelated FAO backyard target.",
+        "source": {
+          "quote": "The rabbits were slaughtered at approximately 11 weeks old",
+          "url": "https://www.scielo.org.za/pdf/sajas/v49n5/04.pdf",
+          "doc": "North et al. (2019), Growth, carcass and meat quality traits of two South African meat rabbit breeds: methods p816, Table 2 p819",
+          "page": 819
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "It is an offence to deny a rabbit food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
@@ -1803,6 +1949,17 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "feedKgPerDay": null,
     "waterLPerDay": null,
     "spaceM2": null,
+    "productionReferences": [
+      {
+        "point": "The government sheep manual describes controlled breeding at Mara Research Station, Limpopo: June–July mating and November–December lambing to match rain and grass. This is one station breeding calendar, not mutton harvest months. Match adapted meat-purpose stock and feed locally, then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.",
+        "source": {
+          "quote": "the sheep and goat breeding season in Mara Research Station is in winter (June/July)",
+          "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/sheep-training-manual.pdf",
+          "doc": "DAFF: Sheep General Information Manual, Final Draft, section 3.4.6",
+          "page": 12
+        }
+      }
+    ],
     "welfare": [
       {
         "point": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",

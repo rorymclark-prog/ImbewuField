@@ -49,7 +49,7 @@
       "doc": "USDA FAS GAIN report, 'The Budding Blueberry Industry in South Africa' (5 Oct 2017)",
       "page": 3
     },
-    "notes": "Source wording is 'up to two to three years' for fruit of EXPORT quality, so it is an upper-ish estimate; earlier light fruiting is not excluded. USDA FAS GAIN 2017, PDF page."
+    "notes": "The USDA FAS industry reference concerns fruit of export quality after up to two to three years. Earlier light fruiting is not excluded; this is not a guaranteed first harvest date."
   },
   "yearsToFullBearing": {
     "value": [
@@ -62,7 +62,7 @@
       "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN)",
       "page": 38
     },
-    "notes": "KZN advisory notes for 'Blueberry (Vaccinium spp.)' with rabbiteye cultivars listed (Tifblue, Beckyblue, Climax), so not specific to southern highbush. Page is the PDF page number (the printed page number in the document is 4 lower for this section)."
+    "notes": "KZN advice describes Vaccinium species and lists rabbiteye cultivars Tifblue, Beckyblue and Climax. This reference is not specific to southern highbush blueberries."
   },
   "yieldKgPerTreeMature": {
     "value": null,

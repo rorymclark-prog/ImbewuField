@@ -23,7 +23,6 @@ import {
 import { translate, useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
 import DesignZuluDraftNotice from './DesignZuluDraftNotice';
-import type { DesignMode } from './DesignPalette';
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -35,7 +34,6 @@ interface DesignWizardProps {
   setStep: (s: WizardStep) => void;
   state: DesignCanvasState;
   refLayersPresent: { boundary: boolean; house: boolean };
-  mode?: DesignMode;
 }
 
 // Earthworks sits directly after Water: you decide where the water goes, then you shape the
@@ -229,10 +227,7 @@ function GuidedWizard({
 }
 
 // PRO mode (a dense, fully-tappable stepper toolbar, as an alternative to the hero card below)
-// was removed here: `mode` is only ever constructed as the literal 'guided' (app/design/page.tsx
-// `const designMode: DesignMode = 'guided'`, with no setter and no stored flag anywhere in the
-// codebase), so the branch that rendered it could never run. `mode` stays on the props/import
-// list below so the three existing call sites (app/design/page.tsx) don't need to change.
+// was removed here — guided is the only mode left reachable.
 export default function DesignWizard({
   step,
   setStep,

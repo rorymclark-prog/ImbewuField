@@ -1,0 +1,209 @@
+{
+  "status": "two source-bound isiZulu silent-card successor; pending root review; unreviewed learner text",
+  "baseHead": "8415ab270a4d086d7644b9fa0be95eb8b94425cf",
+  "priorLayerProof": "docs/study-translation-reviews/zulu-silent-safety-next-2026-10-08/source-layer-proof.json",
+  "priorLayerProofSha256": "cb195a30adcc990fe520a36d2cab1413e1f811d04fa8959b55f4c1d5d41eb0d8",
+  "priorCandidatePacketSha256": "80b56bf5ee4a2f60877f9c11254d9c0e792f80a2f97fee235c301059834d3be3",
+  "changes": [
+    {
+      "key": "intro-permaculture:14",
+      "sourceHash": "2a52f920c0efd500f63cc1d0e5e44328c637e474c8a74c0e6dbb60a0987c01d0",
+      "beforeTargetHash": "086a7963a524154bf7f983b2322983ed102aebd78a81cbab59b5b5cbcd1f3051",
+      "afterTargetHash": "bda06454d2cf6fd558b8c584ba438077eb275d8b386fea391b406714e19dd2d4",
+      "operation": "append only “ Lokhu kuwukuhlanganisa.” after the arrangement sentence; preserve all other source-bound text and conditions",
+      "sourceHeading": "Integrate Rather Than Segregate",
+      "sourceEnglish": [
+        "Put each element where it works for its neighbours.",
+        "A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. Keep chickens away from crops being harvested for food. Fresh manure can carry germs. Ask an extension adviser how to manage the bed safely before edible crops return. The chickens can clean up pests and add fertility instead of sitting idle in a fixed pen.",
+        "The same three things, fenced apart, do only their own job.",
+        "Pick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go."
+      ],
+      "correctedTitle": "Hlanganisa, Ungahlukanisi",
+      "beforeTarget": [
+        "Beka into ngayinye lapho isiza khona izinto eziseduze nayo.",
+        "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
+        "Izinkukhu zingasiza ekudleni ezinye izinambuzane nasekufakeni umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa.",
+        "Lezi zinto ezintathu uma zibiyelwe zahlukaniswa, ngayinye yenza umsebenzi wayo kuphela.",
+        "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka."
+      ],
+      "afterTarget": [
+        "Beka into ngayinye lapho isiza khona izinto eziseduze nayo.",
+        "Ingadi, izihlahla zezithelo nendawo yezinkukhu kungahlelwa ukuze izinkukhu zijikeleze emibhedeni ngemva kokuvuna. Lokhu kuwukuhlanganisa. Gcina izinkukhu zingasondeli ezitshalweni ezivunelwa ukudliwa. Umquba omusha ungaba namagciwane. Ngaphambi kokutshala futhi ukudla okuzodliwa, cela umeluleki wezolimo akutshele ukuthi umbhede ungaphathwa kanjani ngokuphepha.",
+        "Izinkukhu zingasiza ekudleni ezinye izinambuzane nasekufakeni umquba, esikhundleni sokuhlala zinganyakazi esibayeni esisodwa.",
+        "Lezi zinto ezintathu uma zibiyelwe zahlukaniswa, ngayinye yenza umsebenzi wayo kuphela.",
+        "Khetha izimiso ezimbili noma ezintathu ezihambisana nenkinga yakho enkulu, uzisebenzise. Ezinye uzoziqonda njengoba uqhubeka."
+      ],
+      "reviewStatus": "unreviewed",
+      "audioBinding": "none"
+    },
+    {
+      "key": "food-forest:11",
+      "sourceHash": "5ba4359839d3beac6e20a9c32f3a23b9b14ee0b669de9d81426984580b51f5a2",
+      "beforeTargetHash": "9d7c4985455d079169fbc70565b5fa5b57b1e0faef9c8fa69586b072ed8cc100",
+      "afterTargetHash": "246fcd057be649d47381cfa9454239475637ab2992843deb5eebc032bd321060",
+      "operation": "localize only “Check each plant” as “Hlola isitshalo ngasinye”; retain exact English clause “against frost, soil, mature size and the approved local species list.”; reject ambiguous ngokwe- construction",
+      "sourceHeading": "Check the Highveld Examples",
+      "sourceEnglish": [
+        "The original list includes pecan, walnut and indigenous fig; apple, pear, plum, black mulberry and loquat; rosemary, Wild Medlar, Cape gooseberry and Barbados cherry.",
+        "This list is not a blanket recommendation. Check each plant against frost, soil, mature size and the approved local species list.",
+        "Keep existing legal and project restrictions in force. Do not plant from a picture alone."
+      ],
+      "correctedTitle": "Hlola Izibonelo Zase-Highveld",
+      "beforeTarget": [
+        "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Check each plant against frost, soil, mature size and the approved local species list. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
+      ],
+      "afterTarget": [
+        "Izibonelo zokuqala zifaka i-pecan, i-walnut ne-indigenous fig; i-apple, i-pear, i-plum, i-black mulberry ne-loquat; i-rosemary, i-Wild Medlar, i-Cape gooseberry ne-Barbados cherry. Lezi akuzona izincomo ezisebenza kuzo zonke izindawo. Hlola isitshalo ngasinye against frost, soil, mature size and the approved local species list. Qhubeka ulandela imingcele ekhona yezomthetho neyephrojekthi; ungatshali isitshalo ngokubuka isithombe kuphela."
+      ],
+      "reviewStatus": "unreviewed",
+      "audioBinding": "none"
+    }
+  ],
+  "files": [
+    {
+      "id": "worker",
+      "livePath": "app/sw.js/route.ts",
+      "before": {
+        "path": "before/app-sw-route.ts.txt",
+        "bytes": 131613,
+        "sha256": "9407f9ab768d82a9b5aa0ff377d2279941b2154a256b4707307472f95b333508"
+      },
+      "after": {
+        "path": "after/app-sw-route.ts.txt",
+        "bytes": 132335,
+        "sha256": "5ef2ad599a54237d48794a330f4f6f32967fbaf145f02015a7d54e5c95351b39"
+      }
+    },
+    {
+      "id": "manifest",
+      "livePath": "lib/course-asset-sizes.ts",
+      "before": {
+        "path": "before/course-asset-sizes.ts.txt",
+        "bytes": 117408,
+        "sha256": "3e69dec807e2d24bab0b31007576ef4fd9948d7198767d6f776a0622eba9b3ec"
+      },
+      "after": {
+        "path": "after/course-asset-sizes.ts.txt",
+        "bytes": 117408,
+        "sha256": "e0b93c155323d3dc782d41d4f344e048eeede64852f74584515beb37447c1639"
+      }
+    },
+    {
+      "id": "candidates",
+      "livePath": "lib/course-deck-silent-safety-text-candidates.ts",
+      "before": {
+        "path": "before/course-deck-silent-safety-text-candidates.ts.txt",
+        "bytes": 9035,
+        "sha256": "28bcda038e3091110d6240117f3b29d5592730c6a19b8602b5feb2fea51022c0"
+      },
+      "after": {
+        "path": "after/course-deck-silent-safety-text-candidates.ts.txt",
+        "bytes": 9067,
+        "sha256": "91cc0b732527355868e17280764771d29348e9557f154429f5a01e5d4f822868"
+      }
+    },
+    {
+      "id": "runtimeRows",
+      "livePath": "lib/course-deck-silent-drafts-data.ts",
+      "before": {
+        "path": "before/course-deck-silent-drafts-data.ts.txt",
+        "bytes": 45528,
+        "sha256": "f8b0c01f115d5c707386240f084ad140d183ba459ada5d673c45db925ad58294"
+      },
+      "after": {
+        "path": "after/course-deck-silent-drafts-data.ts.txt",
+        "bytes": 45528,
+        "sha256": "8ba03836177d10bc46e164848da627ef62a8abe80844fa40bf648eab86929d0c"
+      }
+    },
+    {
+      "id": "introImage",
+      "livePath": "public/course-decks/intro-permaculture/zu-silent/slide-14.webp",
+      "before": {
+        "path": "before/intro-permaculture-slide-14.webp",
+        "bytes": 459916,
+        "sha256": "b1d29764cb14c182348d041652b8278bb67ad251727d88b77581130d29e72232"
+      },
+      "after": {
+        "path": "after/intro-permaculture-slide-14.webp",
+        "bytes": 465252,
+        "sha256": "0e4f8b3bfa31c0fa1bf9df3cd816f5dbf38bb3417c40b67211d9e53aa5048f6e"
+      }
+    },
+    {
+      "id": "forestImage",
+      "livePath": "public/course-decks/food-forest/zu-silent/slide-11.webp",
+      "before": {
+        "path": "before/food-forest-slide-11.webp",
+        "bytes": 318444,
+        "sha256": "5b4300bbdc77d039b33263feab7d3165ea2b17012c5acca70444921c42db7370"
+      },
+      "after": {
+        "path": "after/food-forest-slide-11.webp",
+        "bytes": 320508,
+        "sha256": "c9eb83cbdb6280b052b3ba696cca8c901fe89094a7930036c14839c9a3a85f77"
+      }
+    }
+  ],
+  "workerDelta": {
+    "marker": "/course-decks/.zu-silent-sentence-repairs-20261008",
+    "function": "migrateZuluSilentSentenceRepairs",
+    "activationOnceAfter": "migrateZuluSilentSafetyStills",
+    "deletedPaths": [
+      "/course-decks/intro-permaculture/zu-silent/slide-14.webp",
+      "/course-decks/food-forest/zu-silent/slide-11.webp"
+    ],
+    "queryVariants": "matched by URL pathname",
+    "fetches": false
+  },
+  "imageProof": {
+    "intro-permaculture:14": {
+      "path": "public/course-decks/intro-permaculture/zu-silent/slide-14.webp",
+      "sha256": "0e4f8b3bfa31c0fa1bf9df3cd816f5dbf38bb3417c40b67211d9e53aa5048f6e",
+      "bytes": 465252,
+      "dimensions": "1440x5400"
+    },
+    "food-forest:11": {
+      "path": "public/course-decks/food-forest/zu-silent/slide-11.webp",
+      "sha256": "c9eb83cbdb6280b052b3ba696cca8c901fe89094a7930036c14839c9a3a85f77",
+      "bytes": 320508,
+      "dimensions": "1440x5400"
+    },
+    "contactSheet": {
+      "path": "docs/media/zulu-silent-sentence-repairs-2026-10-08/two-card-contact.jpg",
+      "sha256": "6be029b9b2d2cdff552faa12fbf02a985ce5ef7f7fe570c2cdacc4ed53212dfc",
+      "bytes": 171038,
+      "dimensions": "1440x1080"
+    }
+  },
+  "preservation": "The canonical course-source bindings, species list, source hashes, source paragraph indices, recorded ZU pair/audio, review status, all other candidate rows, all other asset bytes and manifest rows remain unchanged. The unchanged Intro14 speech is withheld beside its revised silent text; audio bytes and binding remain unchanged. New cards remain unreviewed; this is not fluent/local-farming approval.",
+  "manifestDelta": {
+    "unchangedEntryCount": 1936,
+    "changedRows": {
+      "/course-decks/intro-permaculture/zu-silent/slide-14.webp": {
+        "beforeBytes": 459916,
+        "afterBytes": 465252
+      },
+      "/course-decks/food-forest/zu-silent/slide-11.webp": {
+        "beforeBytes": 318444,
+        "afterBytes": 320508
+      }
+    },
+    "summaryBefore": "// 1936 files, 721.7 MB total.",
+    "summaryAfter": "// 1936 files, 721.7 MB total."
+  },
+  "playbackSafetyHold": {
+    "livePath": "lib/course-deck-review-holds.ts",
+    "before": {
+      "path": "before/course-deck-review-holds.ts.txt",
+      "bytes": 6101,
+      "sha256": "48c5b905eaa85f2a1788087976e2d117a6e895eb1ef7c42e433d0611e0848b06"
+    },
+    "after": {
+      "path": "after/course-deck-review-holds.ts.txt",
+      "bytes": 6392,
+      "sha256": "f604aa11ed4eea597189be2d7fa5a10166ec7ad953445a83436b0307fc5fc50c"
+    },
+    "change": "one exact Intro14 playback hold because the silent candidate now makes the source integration distinction explicit; original recorded words, audio file and binding remain unchanged"
+  }
+}

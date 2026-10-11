@@ -5,6 +5,7 @@
  */
 const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number, string>>>> = Object.freeze({
   'intro-permaculture': Object.freeze({
+    14: 'The corrected silent card explicitly names integration after the arrangement example, while the original recording only gives the arrangement; withhold the old speech beside this added distinction until its wording is checked. The original recording and binding remain unchanged.',
     6: 'The recorded heading says equal sharing where the source names Fair Share; the independent corrected silent card preserves fairness without prescribing identical amounts.',
     7: 'The recorded agreement clause prescribes equal sharing where the source says share fairly; retain the corrected silent card and withhold the old clip while preserving permission, capacity, monitoring and no-extra-use conditions.',
     22: 'The narration omits the source superlative “worst” in “worst wind” and asks where an item can be placed instead of where it should move; retain both exact English clauses until checked equivalents preserve those meanings.',
@@ -14,6 +15,9 @@ const ISIZULU_DECK_REVIEW_HOLDS: Readonly<Record<string, Readonly<Record<number,
     5: 'The slide heading changes slower water flow into water decreasing; retain “slows” until the flow-speed comparison is preserved.',
     15: 'The narration says cool, damp weather may favour disease, but the ZU wording says it may allow disease to spread; retain the conditional favouring clause.',
     16: 'The target may narrow “your whole smallholding” to a piece or plot of land; retain “smallholding” until the property scope is clear.',
+  }),
+  'food-forest': Object.freeze({
+    11: 'The silent draft keeps the exact approved-local-species-list check in English because the recorded isiZulu wording may narrow what is approved. Withhold the older isiZulu check beside the silent English hold; preserve the original recording and binding unchanged.',
   }),
   'soil-health': Object.freeze({
     1: 'The source specifies making safe compost, while the target says only making compost; retain the safety qualifier so the overview does not imply every compost process is safe.',

@@ -326,12 +326,12 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         height: size,
                         borderRadius: '50%',
                         background: 'rgba(31,77,43,0.90)',
-                        border: '2.5px solid #F7F2E9',
+                        border: '2.5px solid var(--on-forest)',
                         boxShadow: '0 3px 12px rgba(32,25,15,0.32)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        color: '#F7F2E9',
+                        color: 'var(--on-forest)',
                         fontWeight: 700,
                         fontSize: 13,
                       }}
@@ -403,7 +403,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         background: colour,
                         border: needsAttention
                           ? `3px solid ${urgent ? ATTENTION : '#E8B04B'}`
-                          : '2.5px solid #F7F2E9',
+                          : '2.5px solid var(--on-forest)',
                         boxShadow: isSel
                           ? '0 0 0 4px rgba(31,77,43,0.22), 0 4px 14px rgba(32,25,15,0.38)'
                           : '0 2px 8px rgba(32,25,15,0.30)',
@@ -526,7 +526,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                       height: 11,
                       borderRadius: '50%',
                       background: STATUS[s].color,
-                      border: '1.5px solid #F7F2E9',
+                      border: '1.5px solid var(--on-forest)',
                       flexShrink: 0,
                     }}
                   />

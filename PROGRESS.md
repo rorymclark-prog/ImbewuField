@@ -52,6 +52,12 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 10 Oct 2026 — Wave 10: last audit leftovers (#990)
+- Report footnotes (Köppen, rainfall pattern, wet/dry season) translated per language; isiZulu pending translator CSV.
+- New `--on-forest` theme token replaces ~65 hardcoded `#F7F2E9` text colours in 28 files; guard test `tests/stale-paper-hex.test.ts`. Crop planner files left for later (Codex active there).
+- Dead `designMode` prop removed from the design wizard.
+- Audit close-out filed: `docs/audits/2026-10-10/app-wide-closeout-claude.md`. All 92 original findings dispositioned (90 implemented, 1 verified, 1 owner decision). Next app-wide work needs a fresh audit.
+
 ### 9 Oct 2026 — AI allowance in rand: R18/person/month
 - Rory: "keep it 18 rand". `lib/ai-budget.ts` now counts in rand: `AI_MONTHLY_CAP_ZAR` (default 18),
   `AI_GUEST_DAILY_ZAR` (default 1), `AI_ZAR_PER_USD` (default 18). The `*_EUR` vars are gone (never set).

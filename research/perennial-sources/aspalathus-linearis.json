@@ -1,0 +1,87 @@
+{
+  "speciesId": "aspalathus-linearis",
+  "commonName": "Rooibos",
+  "botanicalName": "Aspalathus linearis",
+  "harvestMonths": [
+    {
+      "region": "Cederberg / Western Cape winter-rainfall commercial rooibos",
+      "months": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "evidence": {
+        "url": "https://pza.sanbi.org/aspalathus-linearis",
+        "doc": "SANBI PlantZAfrica: Aspalathus linearis",
+        "page": null,
+        "quote": "from December through April"
+      },
+      "notes": "Annual shoot cutting for processing, not flower or fresh-fruit picking."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": [
+      1,
+      1.5
+    ],
+    "evidence": {
+      "url": "https://pza.sanbi.org/aspalathus-linearis",
+      "doc": "SANBI PlantZAfrica: Aspalathus linearis",
+      "page": null,
+      "quote": "12- 18 months"
+    },
+    "notes": "First commercial cutting readiness at 12–18 months in the described Cape production system. The account discusses sowing and transfer to plantations but does not explicitly define whether the clock starts at sowing or planting out. Confirm starting stock and timing locally. This is tea-shoot establishment, not fruit-tree bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "young shoots for dried rooibos tea",
+  "supplementaryReferences": [
+    {
+      "title": "Commercial tea cutting cycle and product",
+      "quote": "young branches",
+      "url": "https://pza.sanbi.org/aspalathus-linearis",
+      "doc": "SANBI PlantZAfrica: Aspalathus linearis",
+      "page": null,
+      "note": "Selected commercial rooibos forms in the Cederberg winter-rainfall region are cut annually December–April, retaining older branches. Cut shoots are chopped, bruised, oxidised and dried. Fresh shoot kg and dried tea kg are separate products. The account describes replacement after up to five harvest years, not a mature kg/plant curve."
+    }
+  ],
+  "productionGuidance": {
+    "products": "young shoots for dried rooibos tea",
+    "care": [
+      "Match planting to acidic, sandy winter-rainfall soils and locally suitable rooibos forms.",
+      "Keep fresh-cut shoot weights separate from processed dried tea; record the actual processing output."
+    ],
+    "purchase": [
+      "Ask a local rooibos nursery or adviser for correctly identified, locally proven planting material. The Cape cycle is not a nationwide tea forecast."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/aspalathus-linearis",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

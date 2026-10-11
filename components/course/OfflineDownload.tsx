@@ -9,6 +9,7 @@ import {
   CACHE_CHANGED_EVENT,
 } from '@/lib/offline-cache';
 import { useLanguage } from '@/lib/i18n-context';
+import { translate } from '@/lib/i18n';
 import { useAppLevel, isStaffRole } from '@/lib/app-level';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 
@@ -303,6 +304,11 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
                 <span className="font-sans block" style={{ fontSize: 10.5, color: '#755942' }}>{opt.note}</span>
+                {lang === 'ts' && opt.key === 'standard' && (
+                  <small lang="en" className="font-sans block mt-1" style={{ fontSize: 10, color: '#5C5040' }}>
+                    English source: {translate('en', 'offlineQualityStandard')}
+                  </small>
+                )}
               </button>
             );
           })}

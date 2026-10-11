@@ -110,7 +110,7 @@ export default function ExchangeGuide({
           padding: '11px',
           fontSize: 14,
           background: EX.green,
-          color: '#F7F2E9',
+          color: 'var(--on-forest)',
           border: 'none',
           cursor: 'pointer',
         }}

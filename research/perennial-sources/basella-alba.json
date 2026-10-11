@@ -1,0 +1,82 @@
+{
+  "speciesId": "basella-alba",
+  "commonName": "Malabar spinach",
+  "botanicalName": "Basella alba",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "leaves and tender stems",
+  "supplementaryReferences": [
+    {
+      "title": "Leaf vegetable identity and warm-climate culture",
+      "quote": "edible leaves",
+      "url": "https://gardeningsolutions.ifas.ufl.edu/plants/edibles/vegetables/tropical-spinaches/",
+      "doc": "UF/IFAS Gardening Solutions: Tropical Spinaches",
+      "page": null,
+      "note": "Florida extension confirms Malabar spinach as a warm-climate leaf vegetable. Its Florida planting and harvest calendar is not a South African calendar."
+    },
+    {
+      "title": "Cultivation context",
+      "quote": "trellis or fence",
+      "url": "https://ask.ifas.ufl.edu/publication/HS1371",
+      "doc": "UF/IFAS: Cultivation of Malabar Spinach in Florida",
+      "page": null,
+      "note": "Foreign extension reference for support, seed/cutting propagation and warm, moist conditions; no Florida months are imported into the South African plan."
+    },
+    {
+      "title": "Optimal from-seed cutting-cycle reference — Florida extension",
+      "quote": "around 70 days from seed in optimal conditions",
+      "url": "https://ask.ifas.ufl.edu/publication/HS1371",
+      "doc": "UF/IFAS: Florida Cultivation Guide for Malabar Spinach, Harvest and Storage",
+      "page": null,
+      "note": "The extension guide reports maturity around 70 days from seed under optimal conditions, followed by hand trimming leaves and young stems. This foreign optimal-condition duration is supplementary; no South African planting date, exact month window or generic tree-age value is inferred."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leaves and tender stems",
+    "care": [
+      "Provide climbing support and adequate moisture in a warm growing position.",
+      "Record successive leaf harvests by planting batch rather than using tree-age production."
+    ],
+    "purchase": [
+      "Obtain labelled Basella alba material. A South African regional cultivar, kg/plant benchmark and dated picking window remain unverified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://gardeningsolutions.ifas.ufl.edu/plants/edibles/vegetables/tropical-spinaches/",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    },
+    {
+      "url": "https://ask.ifas.ufl.edu/publication/HS1371",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified primary page, institutional abstract or downloaded primary PDF; product, region, age and native-unit limits retained."
+    }
+  ],
+  "gaps": []
+}

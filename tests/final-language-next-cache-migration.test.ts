@@ -99,6 +99,7 @@ test('initialized historical descriptors still reject requested same-size corrup
         || error.message.includes('lib/course-asset-sizes.ts: live complete current size')
         || error.message.includes('lib/course-asset-sizes.ts: live complete current digest')
         || error.message.includes('complete live generated asset-size manifest digest')
+        || error.message.includes('lib/course-asset-sizes.ts: only a byte-exact integrated source may be projected; unknown or corrupted owners are rejected')
         || /only the accepted VE Reading frost placement batch may be projected|complete current final-language manifest|complete manifest after only 15 measured changes|complete current manifest after only the ten measured card changes|entire current file matches the reviewed fairness layer|supplied complete Reading14 manifest|entire Reading14 release manifest/.test(error.message)
       ));
       writeFileSync(manifest,before);nativePairedResidualMediaBefore(path);
