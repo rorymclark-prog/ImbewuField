@@ -137,6 +137,25 @@ export const FRUIT_ART_ROOT = '/fruit-art';
 // A mapped edible plant can have product art even while its harvest dates remain unknown.
 export const MAPPED_FOOD_PRODUCT_ART: Readonly<Record<string, string>> = {
   'cajanus-cajan': `${FRUIT_ART_ROOT}/cajanus-cajan.png`,
+  'pyrus-communis': `${FRUIT_ART_ROOT}/pyrus-communis.png`,
+  'prunus-armeniaca': `${FRUIT_ART_ROOT}/prunus-armeniaca.png`,
+  'prunus-dulcis': `${FRUIT_ART_ROOT}/prunus-dulcis.png`,
+  'pistacia-vera': `${FRUIT_ART_ROOT}/pistacia-vera.png`,
+  'prunus-avium': `${FRUIT_ART_ROOT}/prunus-avium.png`,
+  'phoenix-dactylifera': `${FRUIT_ART_ROOT}/phoenix-dactylifera.png`,
+  'olea-europaea-subsp-europaea': `${FRUIT_ART_ROOT}/olea-europaea-subsp-europaea.png`,
+  'morus-nigra': `${FRUIT_ART_ROOT}/morus-nigra.png`,
+  'cydonia-oblonga': `${FRUIT_ART_ROOT}/cydonia-oblonga.png`,
+  'ceratonia-siliqua': `${FRUIT_ART_ROOT}/ceratonia-siliqua.png`,
+  'acca-sellowiana': `${FRUIT_ART_ROOT}/acca-sellowiana.png`,
+  'coffea-arabica': `${FRUIT_ART_ROOT}/coffea-arabica.png`,
+  'ananas-comosus': `${FRUIT_ART_ROOT}/ananas-comosus.png`,
+  'aspalathus-linearis': `${FRUIT_ART_ROOT}/aspalathus-linearis.png`,
+  'euclea-pseudebenus': `${FRUIT_ART_ROOT}/euclea-pseudebenus.png`,
+  'ficus-sur': `${FRUIT_ART_ROOT}/ficus-sur.png`,
+  'rhoicissus-digitata': `${FRUIT_ART_ROOT}/rhoicissus-digitata.png`,
+  'schotia-afra-var-afra': `${FRUIT_ART_ROOT}/schotia-afra-var-afra.png`,
+  'tulbaghia-violacea': `${FRUIT_ART_ROOT}/tulbaghia-violacea.png`,
 };
 
 export const FRUIT_ART_SPECIES = [

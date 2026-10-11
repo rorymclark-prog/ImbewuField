@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { CROPS } from '@/lib/crop-catalog';
 import { PERENNIAL_HARVEST_DATA } from '@/lib/perennial-harvest-data';
+import { isHouseholdFoodHarvest } from '@/lib/perennial-harvest';
 import { ANIMAL_ENTERPRISES, PRODUCT_LABEL } from '@/lib/animal-enterprises';
 import { pdfIconUrl } from '@/lib/pdf-icons';
 import { PRESERVED_FOOD_ART } from '@/lib/preserved-food-art';
-import { MAPPED_FOOD_PRODUCT_ART } from '@/lib/species-art';
+import { MAPPED_FOOD_PRODUCT_ART, speciesFruitArtworkUrl } from '@/lib/species-art';
 import { SPECIES } from '@/lib/species-catalog';
 import styles from './ProductArtworkGallery.module.css';
 
@@ -16,7 +17,7 @@ const animalFoodNames: Record<string, string> = { bees: 'Honey', 'cattle-beef': 
 const animalSourceNames: Record<string, string> = { 'chicken-layer': 'Laying hens', 'chicken-indigenous': 'Village chickens', 'goat-meat': 'Meat goats', 'goat-indigenous': 'Indigenous goats' };
 const products = {
   crops: CROPS.filter(crop => crop.yieldKgPerM2 !== 0).map(crop => ({ key: `crop:${crop.key}`, label: crop.name, detail: crop.yieldKgPerM2 === null ? 'Yield needs local information' : 'Crop product' })),
-  forest: [...Object.values(PERENNIAL_HARVEST_DATA).map(plant => ({ key: `tree:${plant.speciesId}`, label: plant.name, detail: plant.product })), ...SPECIES.filter(plant => MAPPED_FOOD_PRODUCT_ART[plant.id] && !PERENNIAL_HARVEST_DATA[plant.id]).map(plant => ({ key: `tree:${plant.id}`, label: plant.commonName, detail: 'Local picking dates need confirmation' }))],
+  forest: [...Object.values(PERENNIAL_HARVEST_DATA).filter(plant => isHouseholdFoodHarvest(plant) && speciesFruitArtworkUrl(plant.speciesId)).map(plant => ({ key: `tree:${plant.speciesId}`, label: plant.name, detail: plant.product })), ...SPECIES.filter(plant => MAPPED_FOOD_PRODUCT_ART[plant.id] && !PERENNIAL_HARVEST_DATA[plant.id]).map(plant => ({ key: `tree:${plant.id}`, label: plant.commonName, detail: 'Local picking dates need confirmation' }))],
   animals: Object.values(ANIMAL_ENTERPRISES).map(animal => ({ key: `animal:${animal.enterpriseId}`, label: animalFoodNames[animal.enterpriseId] ?? animal.name, detail: animalSourceNames[animal.enterpriseId] ?? `${PRODUCT_LABEL[animal.product]}${animal.product === 'wool' ? ' · not food' : ''}` })),
   kept: Object.keys(PRESERVED_FOOD_ART).map(key => ({ key: `preserved:${key}`, label: key.replaceAll('-', ' ').replace(/^./, value => value.toUpperCase()), detail: 'Dated stock record needed' })),
 };
@@ -25,7 +26,7 @@ export default function ProductArtworkGallery() {
   const [group, setGroup] = useState<ProductGroup>('crops');
   return <section className={styles.gallery} id="product-pictures" aria-labelledby="product-pictures-title">
     <h2 id="product-pictures-title">Product picture catalogue</h2>
-    <p>The existing production catalogue, in one illustration style. These are product pictures; suitability and production still depend on your farm’s climate, plants and animals.</p>
+    <p>Available product illustrations, in one style. The plan also includes researched plants without a product illustration. Suitability and production depend on your farm’s climate, plants and animals.</p>
     <div className={styles.filters} aria-label="Product picture groups">{(Object.keys(groups) as ProductGroup[]).map(key => <button key={key} type="button" aria-pressed={group === key} onClick={() => setGroup(key)}>{groups[key]} <span>{products[key].length}</span></button>)}</div>
     <div className={styles.grid}>{products[group].map(product => {
       const url = pdfIconUrl(product.key);

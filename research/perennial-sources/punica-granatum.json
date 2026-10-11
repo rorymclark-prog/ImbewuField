@@ -28,7 +28,7 @@
       "doc": "Post-Harvest Innovation Programme (PHI) — Pomegranate commodity page",
       "page": null
     },
-    "notes": "Given as a single figure (six years), not a range, so recorded as [6,6]."
+    "notes": "The Post-Harvest Innovation programme gives six years to a full crop. It does not provide annual per-tree output at that age."
   },
   "yieldKgPerTreeMature": {
     "value": null,

@@ -34,7 +34,7 @@
       "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
       "page": 28
     },
-    "notes": "Same source used for years-to-full-bearing; region context is the low-chill peach areas named by the source: Muden, Middelrus and Weenen river valleys, KZN."
+    "notes": "General KZN peach guide; the section identifies Muden, Middelrus and Weenen river valleys as low-chill growing areas. Confirm the cultivar and nursery starting age."
   },
   "yearsToFullBearing": {
     "value": [7, 7],
@@ -44,7 +44,7 @@
       "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
       "page": 28
     },
-    "notes": "'Commercial orchards last approximately 12-15 years' — recorded here as context, not as a schema field."
+    "notes": "The same regional guide describes commercial orchard lifespan of approximately 12–15 years; it does not provide individual-tree yields by age."
   },
   "yieldKgPerTreeMature": {
     "value": [23, 43],

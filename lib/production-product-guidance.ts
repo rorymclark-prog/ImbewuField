@@ -1,6 +1,6 @@
 // The buying shortlist and the calendar assumption answer different questions. A mixed
 // early/middle/late orchard can extend supply, but its union is not one tree's season.
-import { bananaCirclesIn, formatMonthSpan, formatRange, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
+import { bananaCirclesIn, firstCropAgeLabel, formatMonthSpan, formatRange, isHouseholdFoodHarvest, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
 import { enterprisesForHousing, HOUSING_LABEL, placedAnimalGroups, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
 import type { GrowingZoneId } from './growing-zones';
 import type { SiteProductionConditions } from './site-survey';
@@ -152,6 +152,7 @@ const COOL: GrowingZoneId[] = ['highveld', 'midlands-mistbelt', 'western-cape', 
 
 /** Only one applicable source window: never the union of all varieties/regions. */
 export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions): ExpectedSeason | undefined {
+  if (!isHouseholdFoodHarvest(group.harvest)) return undefined;
   const id = group.harvest.speciesId;
   const frostSensitive = ['persea-americana', 'carica-papaya', 'musa-acuminata-aaa-group', 'macadamia-integrifolia', 'mangifera-indica', 'litchi-chinensis', 'sclerocarya-birrea-subsp-caffra'];
   if (!zones.length || zones.includes('high-mountain') || conditions?.sunlight === 'mostly-shade' || conditions?.drainage === 'stays-wet' || (conditions?.frost === 'yes' && frostSensitive.includes(id))) return undefined;
@@ -228,18 +229,26 @@ export function planningTreeSeasons(groups: readonly PlacedTreeGroup[], zones: r
 
 function links(group: PlacedTreeGroup, profile?: Profile): Reference[] {
   const sources = [...(profile?.sources ?? []), ...group.harvest.windows.map(w => ({ label: `${w.source.doc}${w.source.page ? `, p. ${w.source.page}` : ''}`, url: w.source.url })), ...(group.harvest.pollination ? [{ label: group.harvest.pollination.source.doc, url: group.harvest.pollination.source.url }] : []), ...(group.harvest.yearsToFirstCrop ? [{ label: `${group.harvest.yearsToFirstCrop.source.doc}${group.harvest.yearsToFirstCrop.source.page ? `, p. ${group.harvest.yearsToFirstCrop.source.page}` : ''}`, url: group.harvest.yearsToFirstCrop.source.url }] : [])];
-  return sources.filter((source, i) => sources.findIndex(other => other.url === source.url) === i);
+  sources.push(...(['yearsToFullBearing', 'yieldKgPerTree', 'chillUnits'] as const).flatMap(key => {
+    const range = group.harvest[key];
+    return range ? [{ label: `${range.source.doc}${range.source.page ? `, p. ${range.source.page}` : ''}`, url: range.source.url }] : [];
+  }), ...(group.harvest.supplementaryReferences ?? []).map(reference => ({ label: `${reference.source.doc}${reference.source.page ? `, p. ${reference.source.page}` : ''}`, url: reference.source.url })));
+  return sources.filter((source, i) => sources.findIndex(other => other.url === source.url && other.label === source.label) === i);
 }
 
 export function buildProductGuidance(context: ProductGuideContext, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions): { foodForest: ProductionGuideItem[]; animalProducts: ProductionGuideItem[] } {
   const foodForest = context.trees.map(group => {
     const h = group.harvest;
-    const profile = PRODUCT_PROFILES[h.speciesId];
+    const profile = PRODUCT_PROFILES[h.speciesId] ?? (h.productionGuidance ? { ...h.productionGuidance, sources: [] } : undefined);
     const season = assumedProductSeason(group, zones, conditions);
     const lines = [
       `${group.existing} existing; ${group.proposed} proposed. Products: ${(profile?.products ?? h.product).replace(/\.$/, '')}.`,
+      ...(!isHouseholdFoodHarvest(h) ? [h.householdFoodStatus === 'not-food' ? 'Food-use review: kept as mapped inventory; the verified product is not household food. No ordinary food availability or production is assumed.' : 'Food-use review: confirm identity, edible part and appropriate preparation with a qualified local adviser before including this plant as household food. Held out of ordinary food totals and picking jobs.'] : []),
       ...(h.speciesId === 'musa-acuminata-aaa-group' && context.bananaCircles ? [`Count assumption: ${context.bananaCircles} banana circle(s) × 3 planted bananas. Followers are not additional planted trees.`] : []),
-      h.yearsToFirstCrop ? `First crop reference: ${h.speciesId === 'musa-acuminata-aaa-group' ? `${formatRange([h.yearsToFirstCrop.value[0] * 12, h.yearsToFirstCrop.value[1] * 12])} months` : h.speciesId === 'carica-papaya' ? `about ${formatRange([h.yearsToFirstCrop.value[0] * 12, h.yearsToFirstCrop.value[1] * 12])} months in KZN; 9–11 months under favourable Makhathini Flats conditions` : `${formatRange(h.yearsToFirstCrop.value)} years (source conditions)`}. Actual timing depends on starting stock, variety and site care.` : 'Time to first crop: not sourced; do not rely on newly planted stock for immediate food.',
+      h.yearsToFirstCrop ? `First crop reference: ${firstCropAgeLabel(h.yearsToFirstCrop.value)}. ${h.yearsToFirstCrop.note ?? 'Check the source conditions and starting stock.'} Actual timing depends on variety and site care.` : 'Time to first crop: not sourced; do not rely on newly planted stock for immediate food.',
+      ...(h.yearsToFullBearing ? [`Established production reference: ${formatRange(h.yearsToFullBearing.value)} years. ${h.yearsToFullBearing.note ?? 'Check cultivar, starting stock and growing conditions.'}`] : []),
+      ...(h.yieldKgPerTree ? [`Production reference: ${formatRange(h.yieldKgPerTree.value)} kg/plant. ${h.yieldKgPerTree.note ?? 'This source result is not a locally confirmed annual forecast.'}`] : []),
+      ...(h.supplementaryReferences ?? []).map(reference => `${reference.title}: ${reference.note}`),
       ...(profile?.care ?? []),
       ...(!zones.some(z => WARM.includes(z)) && zones.some(z => ['highveld', 'high-mountain', 'karoo-arid'].includes(z)) && ['musa-acuminata-aaa-group', 'carica-papaya', 'mangifera-indica', 'persea-americana'].includes(h.speciesId) ? ['Cold-area check: these subtropical references do not establish suitability here. Confirm a frost-protected position before buying.'] : []),
       ...(zones.some(z => WARM.includes(z)) && !zones.some(z => COOL.includes(z)) && conditions?.frost !== 'yes' ? h.speciesId === 'musa-acuminata-aaa-group' ? ['Assumed planting variety: Grand Nain for a warm site; use the wind/cold alternatives in the buying advice if those conditions apply. Local picking months remain unconfirmed.'] : h.speciesId === 'carica-papaya' ? ['Assumed planting variety: Sunrise Solo, subject to a frost-free, drained growing position. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.'] : h.speciesId === 'mangifera-indica' ? ['Assumed planting variety: Tommy Atkins, subject to local flowering and frost checks. Confirm its local picking months; the calendar uses a labelled regional reference where sourced.'] : [] : []),
@@ -270,7 +279,7 @@ export function buildProductGuidance(context: ProductGuideContext, zones: readon
         ? 'Buying advice: for egg production, request vaccinated point-of-lay pullets from a layer supplier, with age, feeding and vaccination records.'
         : e.enterpriseId === 'chicken-indigenous' ? 'Buying advice: Potchefstroom Koekoek is a dual-purpose option; Venda, Ovambo and Naked Neck are other ARC-conserved options. No province-specific winning breed is claimed.'
         : 'Buying advice: choose a meat strain and supplier batch plan; confirm brooding, feed, water and slaughter arrangements.' : 'Buying advice: match breed/stock to the product, local feed, climate and care capacity; confirm with a local livestock or beekeeping adviser.';
-      const sources = [...e.welfare.map(p => p.source), ...e.legal.map(p => p.source), ...[e.feedKgPerDay, e.waterLPerDay, e.spaceM2].flatMap(value => value ? [value.source] : []), ...(e.weeksToFirstProduct ? [e.weeksToFirstProduct.source] : [])];
+      const sources = [...e.welfare.map(p => p.source), ...e.legal.map(p => p.source), ...(e.productionReferences ?? []).map(p => p.source), ...[e.feedKgPerDay, e.waterLPerDay, e.spaceM2, e.outputPerAnimal, e.productiveLifeYears].flatMap(value => value ? [value.source] : []), ...(e.weeksToFirstProduct ? [e.weeksToFirstProduct.source] : [])];
       return { title: `${HOUSING_LABEL[group.housing]}: ${e.name}`, lines: [
         `${group.existing} existing; ${group.proposed} proposed structure(s). ${enterprise ? 'Selected enterprise' : 'Option — not selected'}: ${e.product}${e.product === 'wool' ? ' (non-food)' : ''}. No animal head count or output is assumed.`,
         breed,
@@ -280,12 +289,17 @@ export function buildProductGuidance(context: ProductGuideContext, zones: readon
         ...(e.product === 'milk' ? ['Plan around actual calving/kidding and lactation. Dry animals do not supply milk.'] : []),
         ...(e.product === 'honey' ? ['Harvest depends on the colony, local flowering and rainfall. Inspect ripeness and leave food for the colony; there is no fixed national honey season.'] : []),
         e.weeksToFirstProduct ? `First product reference: ${formatRange(e.weeksToFirstProduct.value)} weeks. ${e.enterpriseId === 'chicken-layer' ? 'Bird age from hatch; confirm the strain and rearing with the supplier. Point-of-lay birds start later in this cycle.' : e.weeksToFirstProduct.note ?? 'Confirm the source age/starting point with the supplier.'}` : 'Time to first product: not sourced for this enterprise.',
+        ...(e.outputPerAnimal ? [`Production reference: ${formatRange(e.outputPerAnimal.value)} ${e.outputUnit}. ${e.outputPerAnimal.note ?? 'Check the source conditions and reporting period.'}`] : []),
+        ...(e.productiveLifeYears ? [`Productive-life reference: ${formatRange(e.productiveLifeYears.value)} years. ${e.productiveLifeYears.note ?? 'Check breed, care and culling assumptions.'}`] : []),
+        ...(e.productionReferences ?? []).map(reference => `Age/system reference: ${reference.point}`),
         'Check the detailed enterprise references for feed and housing. Match the ration and space to the animal stage and housing system; provide dependable clean water.',
         ...e.welfare.map(p => p.point), ...e.legal.map(p => p.point),
-      ], sources: [...new Map(sources.map(s => [s.url, { label: `${s.doc}${s.page ? `, p. ${s.page}` : ''}`, url: s.url }])).values(), ...(e.animal === 'chicken' ? [arc(11, '468–480')] : []), ...(e.product === 'eggs' ? [{ label: 'FAO: Small-scale poultry production, egg marketing', url: 'https://www.fao.org/4/y5169e/y5169e0a.htm' }, ...(e.seasonalPattern ? [{ label: e.seasonalPattern.source.doc, url: e.seasonalPattern.source.url }] : [])] : []), ...(e.product === 'honey' ? [{ label: 'FAO, Beekeeping in Africa, honey harvesting', url: 'https://www.fao.org/4/t0104e/T0104E08.htm' }] : [])] };
+      ], sources: [...sources.filter((source, i) => sources.findIndex(other => other.url === source.url && other.doc === source.doc && other.page === source.page) === i).map(s => ({ label: `${s.doc}${s.page ? `, p. ${s.page}` : ''}`, url: s.url })), ...(e.animal === 'chicken' ? [arc(11, '468–480')] : []), ...(e.product === 'eggs' ? [{ label: 'FAO: Small-scale poultry production, egg marketing', url: 'https://www.fao.org/4/y5169e/y5169e0a.htm' }, ...(e.seasonalPattern ? [{ label: e.seasonalPattern.source.doc, url: e.seasonalPattern.source.url }] : [])] : []), ...(e.product === 'honey' ? [{ label: 'FAO, Beekeeping in Africa, honey harvesting', url: 'https://www.fao.org/4/t0104e/T0104E08.htm' }] : [])] };
     });
   });
-  return { foodForest, animalProducts };
+  // One manual can support several page-specific facts. Keep those citations,
+  // while removing exact duplicates added by shared husbandry advice.
+  return { foodForest, animalProducts: animalProducts.map(item => ({ ...item, sources: item.sources.filter((source, i, all) => all.findIndex(other => other.url === source.url && other.label === source.label) === i) })) };
 }
 
 /** Pure snapshot adapter, shared by app and site-report purchasing guidance. */
@@ -296,5 +310,5 @@ export function productContextFromItems(items: readonly PlacedPlant[]): ProductG
 export function productPurchasingMarkdown(context: ProductGuideContext, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions): string {
   const guide = buildProductGuidance(context, zones, conditions);
   if (!guide.foodForest.length && !guide.animalProducts.length) return '';
-  return ['## Production purchases and variety assumptions', 'Research checked 4 October 2026. Buy only proposed stock after checking local suitability. Existing plants and structures are inventory, not repeat purchases. Early/middle/late describes picking order; compatible flowering is a separate pollination check. Expected seasons describe established production, not guaranteed food this year.', ...[...guide.foodForest, ...guide.animalProducts].flatMap(item => [`### ${item.title}`, ...item.lines.filter(line => /existing;|Buying advice:|Assumed|Pollination:|Cold-area|Observed frost|Edible bananas|Count assumption|First crop|First product|Enterprise options:|No animal|Choose the product|For eggs/.test(line)), ...(item.sources ?? []).map(s => `Source: [${s.label}](${s.url})`)])].join('\n\n');
+  return ['## Production purchases and variety assumptions', 'Research checked 11 October 2026. Buy only proposed stock after checking local suitability. Existing plants and structures are inventory, not repeat purchases. Early/middle/late describes picking order; compatible flowering is a separate pollination check. Expected seasons describe established production, not guaranteed food this year.', ...[...guide.foodForest, ...guide.animalProducts].flatMap(item => [`### ${item.title}`, ...item.lines, ...(item.sources ?? []).map(s => `Source: [${s.label}](${s.url})`)])].join('\n\n');
 }

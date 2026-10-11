@@ -181,20 +181,24 @@ export function buildCompleteProductionExample(): CompleteProductionExample {
     trees, animals, animalChoices, bananaCircles: bananaCirclesIn(plantItems),
   });
   productionGuide.siteObservations.unshift({ title: 'Fictional example records', lines: [FICTION_NOTICE] });
-  // These mapped foods must stay visible without turning a partial research dossier or
-  // another province's pod production into this example farm's timed harvest.
+  // Grain trials and pod-development references remain visible without turning
+  // their source conditions into this example farm's timed harvest.
   const pigeonPea = trees.find(group => group.harvest.speciesId === 'cajanus-cajan')!;
   const pigeonGuide = productionGuide.foodForest!.find(item => item.title === pigeonPea.harvest.name)!;
   const pigeonSowing = pigeonPeaResearch.sowMonths['all-year'];
   const pigeonSource = pigeonSowing.evidence[0];
-  pigeonGuide.sources = [{ label: `${pigeonSource.doc}, p. ${pigeonSource.page}`, url: pigeonSource.url }];
+  const pigeonSowingSource = { label: `${pigeonSource.doc}, p. ${pigeonSource.page}`, url: pigeonSource.url };
+  // The sample adds its sowing explanation without discarding the shared grain-trial evidence.
+  if (!pigeonGuide.sources?.some(source => source.url === pigeonSowingSource.url && source.label === pigeonSowingSource.label)) {
+    pigeonGuide.sources = [...(pigeonGuide.sources ?? []), pigeonSowingSource];
+  }
   productionGuide.siteObservations.push({
     title: `${pigeonPea.harvest.name}: mapped food source`,
     lines: [
       `Reference only: the DAFF/ARC Lowveld brochure gives ${formatMonthSpan(pigeonSowing.months)} sowing. This is not a confirmed local sowing or picking record for this KZN example.`,
-      'Harvest duration, complete plant spacing and food kilograms are not supplied. This mapped source has no timed annual crop row or counted sowing recommendation; record local dates and amounts yourself.',
+      'Locally confirmed picking duration, complete plant spacing and food kilograms are not supplied for this example. This mapped source has no timed annual crop row or counted sowing recommendation; record local dates and amounts yourself.',
     ],
-    sources: pigeonGuide.sources,
+    sources: [pigeonSowingSource],
   });
   const moringa = trees.find(group => group.harvest.speciesId === 'moringa-oleifera')!;
   const moringaGuide = productionGuide.foodForest!.find(item => item.title === moringa.harvest.name)!;

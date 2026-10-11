@@ -52,7 +52,7 @@ import {
   type CalendarRow, type FieldSheetSection, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
-import { firstCropAgeLabel, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
+import { firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
 import { projectedKgLabel, treeAgeProjection, type AgeProjection, type ProductionProjection } from '@/lib/production-projection';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 import type { ExpectedSeason } from '@/lib/production-product-guidance';
@@ -1815,8 +1815,13 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
     for (const age of choice?.production ?? []) ageNote(`${group.harvest.name}: ${age.plants} ${age.status} ${age.plants === 1 ? 'plant' : 'plants'}, planted ${age.planted || 'date not recorded'}. Farm schedule: ${age.yields.filter(p => Number.isFinite(p.age) && Number.isFinite(p.kg)).map(p => `age ${p.age}: ${p.kg} kg/plant/year`).join('; ') || 'not entered'}.`);
     if (choice?.production?.length && group.harvest.yearsToFirstCrop) {
       const source = group.harvest.yearsToFirstCrop;
-      ageNote(`${group.harvest.name}: first-crop reference ${firstCropAgeLabel(source.value)} after planting. ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`, 6, 16);
+      ageNote(`${group.harvest.name}: first-crop reference ${firstCropAgeLabel(source.value)} after planting. ${source.note ?? 'Check cultivar, starting stock and source conditions.'} ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`, 6, 16);
       s.font(8.5); s.ink(INK.green); s.doc.textWithLink('First-crop source', s.margin, s.y, { url: source.source.url }); s.y += 16;
+    }
+    if (choice?.production?.length && group.harvest.yearsToFullBearing) {
+      const source = group.harvest.yearsToFullBearing;
+      ageNote(`${group.harvest.name}: established production reference ${formatRange(source.value)} years. ${source.note ?? 'Check cultivar, starting stock and source conditions.'} ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`, 6, 16);
+      s.font(8.5); s.ink(INK.green); s.doc.textWithLink('Established-production source', s.margin, s.y, { url: source.source.url }); s.y += 16;
     }
   }
 }

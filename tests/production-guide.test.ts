@@ -209,6 +209,23 @@ import { SPECIES } from '@/lib/species-catalog';
 import { GROWING_ZONE_IDS } from '@/lib/growing-zones';
 import { ANIMAL_ENTERPRISES, placedAnimalGroups, buildAnimalAvailability } from '@/lib/animal-enterprises';
 
+test('orchard and animal native-unit age references reach the guide without supplying farm production', () => {
+  const context = productContextFromItems([{ defId: 'tree_other', speciesId: 'prunus-avium', status: 'proposed' }, { defId: 'tree_other', speciesId: 'ananas-comosus', status: 'proposed' }, { defId: 'rabbit_hutch' }]);
+  const guide = buildProductGuidance({ ...context, animalChoices: { rabbit: 'rabbit' } }, ['subtropical-coast']);
+  const cherry = guide.foodForest.find(row => row.title === 'Sweet cherry')!;
+  assert.match(cherry.lines.join(' '), /4–6 kg\/tree in year 6/);
+  assert.match(cherry.lines.join(' '), /1,000 Positive Utah Chill Units, not 1,000 chill hours/);
+  assert.equal(cherry.expectedSeason, undefined, 'a combined flowering/ripening interval is not a picking calendar');
+  const pineapple = guide.foodForest.find(row => row.title === 'Pineapple')!;
+  assert.match(pineapple.lines.join(' '), /18 months/);
+  assert.match(pineapple.lines.join(' '), /50 t\/ha.*18-month/);
+  assert.equal(pineapple.expectedSeason, undefined, 'year-round planting must not create all-year fresh fruit');
+  assert.ok(cherry.sources?.some(source => /p\. 31/.test(source.label)));
+  assert.match(guide.animalProducts[0].lines.join(' '), /11 weeks/);
+  assert.match(guide.animalProducts[0].lines.join(' '), /carcass/i);
+  assert.match(guide.animalProducts[0].lines.join(' '), /No animal head count or output is assumed/);
+});
+
 test('a warm or cool avocado assumption uses Hass alone rather than the country-wide cultivar union', () => {
   const context = productContextFromItems([{ defId: 'tree_avocado', status: 'proposed' }]);
   assert.deepEqual(assumedProductSeason(context.trees[0], ['subtropical-coast', 'lowveld-bushveld'])?.months, [6, 7, 8, 9, 10]);
@@ -292,6 +309,14 @@ test('all profiles refer to existing identities, and every area and animal enter
     const guide = buildProductGuidance({ trees: [], animals, animalChoices: { [animals[0].housing]: enterprise.enterpriseId } }, ['highveld']);
     assert.equal(guide.animalProducts.length, 1);
     assert.ok(guide.animalProducts[0].sources?.length);
+    const printedSources = guide.animalProducts[0].sources ?? [];
+    assert.equal(new Set(printedSources.map(source => `${source.url}:${source.label}`)).size, printedSources.length,
+      `${enterprise.name}: repeated husbandry advice must not duplicate a source link`);
+    for (const reference of enterprise.productionReferences ?? []) {
+      assert.ok(printedSources.some(source => source.url === reference.source.url &&
+        (!reference.source.page || source.label.includes(String(reference.source.page)))),
+      `${enterprise.name}: each age/system fact must retain its manual page even when other facts use the same URL`);
+    }
     assert.match(guide.animalProducts[0].lines.join(' '), /No animal head count or output is assumed/);
     if (enterprise.product === 'wool') assert.match(guide.animalProducts[0].lines.join(' '), /non-food/);
   }

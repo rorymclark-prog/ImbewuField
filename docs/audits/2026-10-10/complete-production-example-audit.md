@@ -76,28 +76,33 @@ observations and retaining a guest draft when an account already has work.
 
 ## Research and artwork coverage
 
-The perennial authority has 37 researched profiles, 32 with dates and 50 distinct
-regional/cultivar windows. Grapes, peaches, apples, figs and pecans are covered.
-Coverage is not complete across all 122 existing catalogue entries tagged as food;
-many entries are annuals or aliases, and several perennial products still lack local
-dates or yield-by-age evidence. A mapped edible plant remains listed when a dossier
-is missing, without inventing a season or yield.
+The shared authority now has 103 researched profiles, 40 with dated references and
+63 separate regional/cultivar windows, plus 133 supplemental references. The 122
+existing food-tagged catalogue rows are reconciled through these dossiers, seven
+equivalent identity bridges, one composite citrus hold and 11 annual authorities.
+This closes missing product/care/evidence profiles, not every unknown local date
+or yield-by-age curve. See `production-research-coverage.md` and the three closure
+reports for the exact baseline and evidence limits. No earlier dossier was lost.
 
 The new Apple profile keeps two narrow references separate: Afri-Star's
 December/January dates come from the Bien Donne/Simondium Western Cape trial;
 Granny Smith's fourth-week-of-March first pick comes from Elgin. They are not a
-national season or a warm KZN harvest assumption. Generic bearing ages, annual kg,
-pollination and chill requirements remain unknown where the source is missing.
+national season or a warm KZN harvest assumption. Recovered KZN first/full bearing
+references retain their temperate-site conditions. Native hectare-budget outputs
+remain separate from per-tree annual kg; no universal growth curve is inferred.
 The existing default Apple Tree element now resolves to the existing Apple species;
 an explicit species choice still takes precedence. No catalogue species was added
 or renamed.
 
-The picture gallery covers 45 food crops, 38 forest-food pictures (37 dossiers plus
-the existing pigeon pea), 15 animal enterprises and six kept-food examples. Meat
+The picture gallery covers 45 food crops, 57 forest-food pictures, 15 animal
+enterprises and six kept-food examples. Nineteen new research-gap product pictures
+match the vegetable illustration style. Newly researched plants without a product
+picture remain in mapped inventory; the gallery labels its illustration scope. Meat
 from cattle, chickens, ducks, rabbits, goats, pigs and sheep uses different images.
 Milk from goats and cattle is distinct. Different breeds producing the same food
 may share its picture. Illustrations identify products, not climate suitability or
-production evidence. See `additional-production-art-prompts.md` for asset provenance.
+production evidence. See `additional-production-art-prompts.md` and
+`orchard-gap-art-prompts.md` for asset provenance.
 
 Eight synthetic South African zone fixtures exercise existing climate parsing,
 sowing gates and heat/frost behaviour. They use four coarse catalogue sowing columns;
@@ -107,8 +112,9 @@ plan follows its current planning month. No live climate data is fetched by the 
 
 ## Verification evidence
 
-- Focused final checks: 43 PDF tests, 51 perennial/sample tests and 30 availability
-  graph tests pass, as do six sign-in migration tests. The site-record integration
+- Focused source-closure checks: 174 production/source, identity, artwork, sample,
+  animal, food-graph and PDF tests pass. Six sign-in migration checks also pass.
+  Source-stage and geography corrections are covered by those checks. The site-record integration
   test also fails when each of five
   simulated wiring mistakes is introduced. Assertions were not removed to pass.
 - Browser checks covered desktop and a 390px phone, graph month selection, all kept
@@ -122,19 +128,29 @@ plan follows its current planning month. No live climate data is fetched by the 
   monthly quantity records.
 - The phone graph's scroll container keeps the wider month axis contained. The page
   and main container have no uncontained overflow. Stock fields stack on the phone.
-- Final source PDFs: 19-page booklet, 61-page detailed reference and one-page A2
-  calendar. All 81 pages were checked for bounds and fictional notices, with no
-  off-page text characters. Calendar, food/space graphs, kg explanations, future
-  projection, pigeon pea age row and detailed planting layout were visually inspected.
-- The current app's Download plan action succeeded. Its actual 19-page PDF was
+- The pre-closure PDFs were a 19-page booklet, 61-page detailed reference and A2
+  calendar, and all 81 pages were checked. The final frozen-source exports are a
+  20-page booklet, 66-page detailed reference and one-page A2 calendar. All 87 pages
+  were checked for bounds and fictional notices, with zero off-page text characters
+  and no missing notices. The current booklet calendar, food/space and kg graphs,
+  and A2 calendar were visually inspected. Earlier visual checks covered the future
+  projection, pigeon pea age row and detailed planting layout. Final Lemon source
+  guidance was inspected in the detailed export; the revised Guava and Marula notes
+  were checked in a separate source-layout proof because neither is mapped in this
+  sample. Guava's catalogue restriction remains effective; its isolated proof is
+  typography evidence, not a planting recommendation or mapped production total.
+- The current app's Download plan action succeeded. Its actual final 20-page PDF was
   rendered and its food/space and kg pages were inspected separately from the source
   renderer's outputs.
 
 Local evidence is under
 `/Users/roryclark/ImbewuField/output/pdf/complete-production-example-2026-10-10/`:
-`app-downloaded-booklet-final.pdf`, `app-download-final-08.png`,
-`app-download-final-09.png`, `app-fruit-product-pictures-final.png`,
-`app-food-graphs-phone-final.png`, `calendar-a2-final.png`, `bounds-check.json`.
+`app-downloaded-booklet-gap-closure.pdf`, `app-download-gap-closure-08.png`,
+`app-download-gap-closure-09.png`, `app-fruit-product-pictures-final.png`,
+`app-food-graphs-phone-final.png`, `final-frozen-calendar-a2.png`,
+`final-frozen-booklet-food-space-08.png`, `final-frozen-booklet-kg-09.png`,
+`final-frozen-lemon-guidance-31.png`, `final-yield-guidance-only-proof.pdf`,
+`final-frozen-yield-note-proof-02.png`, `bounds-check-gap-closure.json`.
 Generated evidence stays outside the source commit.
 
 The final full-suite, exact-head CI and deployed-build results will be recorded in

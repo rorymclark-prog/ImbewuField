@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { buildCompleteProductionExample } from '../lib/sample-production-plan.ts';
 import { cropByKey, type RainPattern } from '../lib/crop-catalog.ts';
 import {
@@ -12,7 +13,7 @@ import { GROWING_ZONE_IDS, growingZonesForClimate, type GrowingZoneId } from '..
 import { siteClimateFromLocationData } from '../lib/site-climate.ts';
 import { ANIMAL_ENTERPRISES, buildAnimalAvailability } from '../lib/animal-enterprises.ts';
 import { buildTreeAvailability, formatMonthSpan } from '../lib/perennial-harvest.ts';
-import { assumedProductSeason, planningTreeSeasons } from '../lib/production-product-guidance.ts';
+import { assumedProductSeason, buildProductGuidance, planningTreeSeasons } from '../lib/production-product-guidance.ts';
 import { plantingMonthIndex, treeAgeProjection } from '../lib/production-projection.ts';
 import { buildCropPlanPdf } from '../lib/crop-export-pdf.ts';
 import pigeonPeaResearch from '../research/crop-sources/pigeon-pea.json' with { type: 'json' };
@@ -76,18 +77,24 @@ test('peanuts retain the existing crop name while mapped pigeon pea and moringa 
     'a peanut alias must not duplicate the same groundnut crop, food count or ground area');
   assert.match(e.farmZones.find(zone => zone.id === 'staples')!.description, /groundnuts \(peanuts\)/i);
   assert.equal(cropByKey('pigeon-pea'), undefined,
-    'the existing partial pigeon-pea dossier must not be silently promoted into a timed annual crop');
+    'verified trial grain and maturity references must not silently become a generic timed annual crop');
   assert.equal(e.input.plantings.length, 13);
   assert.equal(e.input.beds.reduce((sum, bed) => sum + bed.areaM2, 0), 820,
     'mapped shrubs and trees cannot fabricate annual-crop ground or affect its yield denominator');
   const pigeon = e.trees.find(group => group.harvest.speciesId === 'cajanus-cajan')!;
   const moringa = e.trees.find(group => group.harvest.speciesId === 'moringa-oleifera')!;
   assert.equal(e.trees.length, 11);
-  assert.equal(pigeon.referenceMissing, true);
+  // The completed SA grain trials supply evidence, while local picking and plant kg stay unknown.
+  assert.notEqual(pigeon.referenceMissing, true, 'available grain-trial evidence must not carry the optional missing-reference flag');
+  assert.ok(pigeon.harvest.supplementaryReferences?.some(reference => /ICPL 88039 127 \/ 1823/.test(reference.note)));
   assert.deepEqual(pigeon.harvest.windows, []);
   assert.equal(pigeon.harvest.yearsToFirstCrop, null);
-  assert.deepEqual(moringa.harvest.windows.map(window => [window.region, window.months]),
-    [['North West Province (pods)', [3, 4]]]);
+  // The source dates pod development; tender green food-pod picking is a different stage.
+  assert.deepEqual(moringa.harvest.windows, [], 'March–April phenology cannot become a ripe or young-pod picking bar');
+  const podDevelopment = moringa.harvest.supplementaryReferences?.find(reference => /Pod development/.test(reference.title));
+  assert.ok(podDevelopment, 'withdrawn picking bars must retain the actual botanical observation as guidance');
+  assert.match(podDevelopment.source.quote, /March and April/);
+  assert.match(podDevelopment.note, /young, tender, green pods.*no calendar/i);
   for (const group of [pigeon, moringa]) {
     assert.deepEqual([group.existing, group.proposed], [2, 1]);
     assert.deepEqual(e.treeSeasons[group.harvest.speciesId]!.months, []);
@@ -107,9 +114,36 @@ test('peanuts retain the existing crop name while mapped pigeon pea and moringa 
   assert.ok(observation.lines[0].includes(formatMonthSpan(pigeonPeaResearch.sowMonths['all-year'].months)));
   assert.equal(observation.sources![0].url, pigeonPeaResearch.sowMonths['all-year'].evidence[0].url);
   const moringaGuide = e.input.productionGuide!.foodForest!.find(row => row.title === moringa.harvest.name)!;
-  assert.ok(moringaGuide.lines.some(line => /reference only \(pods, not leaf-picking dates\)/i.test(line)));
+  assert.ok(moringaGuide.lines.some(line => /Pod development, not a young green-pod picking calendar/i.test(line)));
   assert.ok(moringaGuide.lines.some(line => /first-crop age above is for leaves, not pods/i.test(line)));
   assert.ok(moringaGuide.lines.some(line => /not an established picking calendar for this KZN example/i.test(line)));
+});
+
+test('the example app and printed guide retain every pigeon-pea research citation alongside its distinct sowing note', async () => {
+  const e = buildCompleteProductionExample();
+  const pigeon = e.trees.find(group => group.harvest.speciesId === 'cajanus-cajan')!;
+  const guide = e.input.productionGuide!.foodForest!.find(item => item.title === pigeon.harvest.name)!;
+  const sharedGuide = buildProductGuidance({ trees: [pigeon], animals: [], animalChoices: {} }, e.zones, e.conditions).foodForest[0];
+  assert.ok(sharedGuide.sources!.length > 1, 'the verified trials and harvest-stage reference must reach shared guidance');
+  for (const source of sharedGuide.sources!) {
+    assert.ok(guide.sources!.some(row => row.url === source.url && row.label === source.label),
+      `${source.label}: adding a sample sowing note must not replace shared source evidence`);
+  }
+  const supplementalURLs = pigeon.harvest.supplementaryReferences!.map(reference => reference.source.url);
+  for (const url of supplementalURLs) assert.ok(guide.sources!.some(source => source.url === url));
+  const sowing = pigeonPeaResearch.sowMonths['all-year'].evidence[0];
+  const sowingSource = { label: `${sowing.doc}, p. ${sowing.page}`, url: sowing.url };
+  assert.equal(guide.sources!.filter(source => source.url === sowingSource.url && source.label === sowingSource.label).length, 1,
+    'a sample-only sowing reference is added once without merging different page citations');
+  assert.equal(new Set(guide.sources!.map(source => `${source.url}|${source.label}`)).size, guide.sources!.length);
+  const observation = e.input.productionGuide!.siteObservations.find(item => item.title.startsWith(pigeon.harvest.name))!;
+  assert.deepEqual(observation.sources, [sowingSource], 'the sowing observation cites its own DAFF claim rather than borrowing grain-trial citations');
+  const samplePage = readFileSync(new URL('../app/samples/production/page.tsx', import.meta.url), 'utf8');
+  assert.match(samplePage, /farm\.input\.productionGuide\?\.foodForest/);
+  assert.match(samplePage, /guide\.sources\?\.map/, 'the app must render the same guide citations passed to the PDF');
+  const blob = await buildCropPlanPdf({ ...e.input, sections: ['guidance'] });
+  const printed = Buffer.from(await blob.arrayBuffer()).toString('latin1');
+  for (const url of [...supplementalURLs, sowingSource.url]) assert.ok(printed.includes(url), `${url}: the actual PDF must retain its clickable source`);
 });
 
 test('the first dated year and all future repeating crop cycles have separate adequate ground and valid catalogue sowings', () => {

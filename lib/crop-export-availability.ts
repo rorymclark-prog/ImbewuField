@@ -14,7 +14,7 @@ import { cropByKey, hasPlanningYield } from '@/lib/crop-catalog';
 import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProductionRecord, type PreservedFoodRecord, type PreservedFoodMethod, type ProductionUnit, type ProductionDate } from '@/lib/production-records';
 export type { DatedProductionRecord, PreservedFoodRecord, PreservedFoodMethod, ProductionUnit, ProductionDate } from '@/lib/production-records';
 import { ageReadyForSeason, treeAgeCalendarNote, buildProductionProjection } from '@/lib/production-projection';
-import { confirmedTreeMonths, formatMonthSpan, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { confirmedTreeMonths, formatMonthSpan, isHouseholdFoodHarvest, perennialHarvestFor, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { ANIMAL_ENTERPRISES, HOUSING_ANIMALS, PRODUCT_LABEL, confirmedAnimalMonths, isFoodProduct, type AnimalAvailabilityItem, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 
 export function forestEntries(slots: readonly TreeAvailabilityItem[][]): AvailabilityEntry[][] {
@@ -173,7 +173,10 @@ function graphFoodKey(key: string): boolean {
     const crop = cropByKey(key.slice('crop:'.length));
     return !!crop && crop.yieldKgPerM2 !== 0;
   }
-  return key.startsWith('tree:') && foodSpeciesIds.has(key.slice('tree:'.length));
+  if (!key.startsWith('tree:')) return false;
+  const speciesId = key.slice('tree:'.length);
+  const harvest = perennialHarvestFor(speciesId);
+  return foodSpeciesIds.has(speciesId) && (!harvest || isHouseholdFoodHarvest(harvest));
 }
 
 export function isVisibleProductionFoodSource(key: string, input: Pick<ProductionAvailabilityGraphInput, 'includeTrees' | 'includeAnimals'>): boolean {

@@ -1,0 +1,68 @@
+{
+  "speciesId": "searsia-lancea-rhus-lancea",
+  "commonName": "Karee",
+  "botanicalName": "Searsia lancea (= Rhus lancea)",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "The male and female flowers occur on separate trees.",
+      "url": "https://pza.sanbi.org/searsia-lancea",
+      "doc": "SANBI PlantZAfrica, searsia-lancea",
+      "page": null
+    },
+    "notes": "Fruit-bearing counts should distinguish female trees; no male:female ratio is supplied."
+  },
+  "harvestProduct": "ripe berries",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "The fruits are edible",
+      "url": "https://pza.sanbi.org/searsia-lancea",
+      "doc": "SANBI PlantZAfrica, searsia-lancea",
+      "page": null,
+      "note": "September–January describes fruit production; exact ripe-picking dates are not stated. Do not count leaves used as livestock fodder as household food."
+    }
+  ],
+  "productionGuidance": {
+    "products": "ripe berries",
+    "care": [
+      "SANBI records this frost- and drought-resistant shade tree in Karoo and Kalahari conditions.",
+      "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation."
+    ],
+    "purchase": [
+      "Ask about male and female plants if fruit is intended. Natural distribution in the source excludes KwaZulu-Natal; broad hardiness is not a local fruit guarantee."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/searsia-lancea",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No exact ripe-picking interval or kg/tree."
+  ]
+}

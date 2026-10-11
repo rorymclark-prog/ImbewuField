@@ -1,0 +1,97 @@
+{
+  "speciesId": "pistacia-vera",
+  "commonName": "Pistachio / pistakieneut",
+  "botanicalName": "Pistacia vera",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Orange River farm near Prieska, Northern Cape — Karoo Pistachios producer observation",
+      "months": [
+        2
+      ],
+      "evidence": {
+        "quote": "We normally harvest at the end of February each year",
+        "url": "https://democlub.foodhub.org.za/Suppliers/180/karoo-pistachios",
+        "doc": "Karoo Pistachios, first-person producer questionnaire on FoodHub",
+        "page": null
+      },
+      "notes": "First-person own-farm observation, dependent on weather. Stock becomes available later after processing; that does not extend harvest months or validate household storage."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No locally qualified numeric first-crop age was established in the checked primary sources. Record planting date, nursery starting age and propagation method."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured local numeric full-bearing age was established. No yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified mature per-plant food kg with age, product basis and management context was established. Missing output remains unknown rather than zero."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No universal numeric chilling requirement is assigned. Check the actual cultivar and site's winter conditions."
+  },
+  "pollination": {
+    "value": "separate-male-female-plants",
+    "evidence": {
+      "quote": "distinct male and female trees",
+      "url": "https://www.pamun.gov.za/news/pistachio-pioneers",
+      "doc": "Prince Albert Municipality, Pistachio Pioneers, 20 October 2025",
+      "page": null
+    },
+    "notes": "Species breeding-system evidence; male trees supply pollen while female trees produce nuts. Compatible flowering and local stocking still need confirmation."
+  },
+  "harvestProduct": "nuts",
+  "supplementaryReferences": [
+    {
+      "title": "Producer's own cultivars",
+      "quote": "Shufrah and Ariyeh",
+      "url": "https://democlub.foodhub.org.za/Suppliers/180/karoo-pistachios",
+      "doc": "Karoo Pistachios, first-person producer questionnaire on FoodHub",
+      "page": null,
+      "note": "The same questionnaire confirms the nuts are grown on the producer's farm. Cultivar names are reproduced as written; spelling is not a taxonomy or catalogue change."
+    },
+    {
+      "title": "Prince Albert establishment and maturity expectation",
+      "quote": "full production in 8–10 years",
+      "url": "https://www.pamun.gov.za/news/pistachio-pioneers",
+      "doc": "Prince Albert Municipality, Pistachio Pioneers, 20 October 2025",
+      "page": null,
+      "note": "An expectation for the newly established Platberg project, not a measured universal age curve. Its planted cultivars are Shufra, Ariyeh and Sirora; irrigated Karoo context retained."
+    }
+  ],
+  "productionGuidance": {
+    "products": "nuts",
+    "care": [
+      "Female trees bear nuts and need pollen from suitable male trees. The Prieska reference comes from a dry, irrigated Karoo farm.",
+      "Confirm male and female planting material, irrigation and local winter/summer conditions; a February producer reference does not validate a humid coast."
+    ],
+    "purchase": [
+      "Discuss Shufrah and Ariyeh from the Prieska producer evidence, or Shufra, Ariyeh and Sirora from the Prince Albert project, with a specialist nursery. Select a compatible male and confirm local fit."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://democlub.foodhub.org.za/Suppliers/180/karoo-pistachios",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    },
+    {
+      "url": "https://www.pamun.gov.za/news/pistachio-pioneers",
+      "checkedAt": "2026-10-11",
+      "observations": "Verified live against the primary page or author-provided institutional abstract; regional, cultivar, product and evidence limits retained in this dossier."
+    }
+  ],
+  "gaps": [
+    "No measured numeric first-crop age or per-tree mature kg was found in the checked SA primary sources.",
+    "The municipality's projected 8–10-year full-production expectation remains contextual, not an automatic mature-yield boundary.",
+    "No household storage duration; commercial cold-room stock throughout the year is not continuous fresh harvest."
+  ]
+}

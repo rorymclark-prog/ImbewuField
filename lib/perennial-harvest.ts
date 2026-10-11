@@ -54,6 +54,13 @@ export interface SourcedRange {
   note?: string;
 }
 
+export interface ProductionReference {
+  title: string;
+  source: HarvestCitation;
+  /** The source's conditions and native units must survive into the farmer's guide. */
+  note: string;
+}
+
 export type Pollination =
   | 'self-fertile'
   | 'partly-self-fertile'
@@ -62,6 +69,8 @@ export type Pollination =
 
 export interface PerennialHarvest {
   speciesId: string;
+  /** Evidence may use an older name while each live map identity keeps its own records. */
+  evidenceSpeciesId?: string;
   /** Short produce name for a chart row: the catalogue's leading common name. */
   name: string;
   /** What is harvested: "fruit", "nuts", "leaves and fruit"... */
@@ -72,15 +81,60 @@ export interface PerennialHarvest {
   yieldKgPerTree: SourcedRange | null;
   chillUnits: SourcedRange | null;
   pollination: { value: Pollination; source: HarvestCitation; note?: string } | null;
+  supplementaryReferences?: ProductionReference[];
+  productionGuidance?: { products?: string; care: string[]; purchase: string[] };
+  householdFoodStatus?: 'confirmed-food' | 'specialist-review' | 'not-food';
+}
+
+export function isHouseholdFoodHarvest(harvest: PerennialHarvest): boolean {
+  return harvest.householdFoodStatus !== 'specialist-review' && harvest.householdFoodStatus !== 'not-food';
 }
 
 export const PERENNIAL_HARVEST: Readonly<Record<string, PerennialHarvest>> = PERENNIAL_HARVEST_DATA;
 const catalogueSpecies = new Map(SPECIES.map(species => [species.id, species]));
 
-/** The harvest record for a catalogue species, following retired ids (lib/species-aliases.ts). */
+// These are still live palette IDs, so a research link must not retire them or merge
+// the farmer's independently saved plant counts and local picking choices. Primary
+// identity checks are recorded in docs/audits/2026-10-10/annual-and-identity-research-closure.md.
+const PLANT_EVIDENCE_IDS: Readonly<Record<string, string>> = {
+  'harpephyllum-afrum': 'harpephyllum-caffrum',
+  'prunus-persica-low-chill-cultivars-200-500-chill-units': 'prunus-persica',
+  'prunus-persica-low-chill-arc-infruitec-selections': 'prunus-persica',
+  'olea-europaea-subsp-africana-o-e-subsp-cuspidata': 'olea-europaea-subsp-africana',
+  'olea-europaea-subsp-africana-subsp-cuspidata': 'olea-europaea-subsp-africana',
+  'olea-europaea-subsp-cuspidata': 'olea-europaea-subsp-africana',
+  'salvia-rosmarinus-rosmarinus-officinalis': 'salvia-rosmarinus',
+};
+
+// A joined palette label cannot supply two harvests from one mapped plant. Choosing
+// the actual lemon or mandarin catalogue entry releases this identity hold.
+const UNSELECTED_CITRUS: PerennialHarvest = {
+  speciesId: 'citrus-reticulata-citrus-limon', name: 'Soft citrus and lemon', product: 'product not selected',
+  windows: [], yearsToFirstCrop: null, yearsToFullBearing: null, yieldKgPerTree: null, chillUnits: null, pollination: null,
+  householdFoodStatus: 'specialist-review',
+  productionGuidance: {
+    products: 'choose the actual lemon or mandarin product',
+    care: ['Select the actual lemon or mandarin catalogue choice for this mapped plant before assigning a production season. One mapped plant is one plant; the two product calendars are not joined.'],
+    purchase: ['Confirm the actual citrus product and named cultivar with the supplier; this combined palette choice does not identify planting stock.'],
+  },
+};
+
+/** Retired IDs follow their replacement; live research equivalents keep their saved ID. */
 export function perennialHarvestFor(speciesId: string | null | undefined): PerennialHarvest | null {
   if (!speciesId) return null;
-  return PERENNIAL_HARVEST[canonicalSpeciesId(speciesId)] ?? null;
+  const liveId = canonicalSpeciesId(speciesId);
+  if (liveId === UNSELECTED_CITRUS.speciesId) return UNSELECTED_CITRUS;
+  const evidenceId = PLANT_EVIDENCE_IDS[liveId] ?? liveId;
+  const harvest = PERENNIAL_HARVEST[evidenceId];
+  if (!harvest || evidenceId === liveId) return harvest ?? null;
+  return {
+    ...harvest, speciesId: liveId, evidenceSpeciesId: evidenceId,
+    ...(evidenceId === 'prunus-persica' ? { productionGuidance: {
+      products: 'fruit from the selected peach or nectarine cultivar',
+      care: [...(harvest.productionGuidance?.care ?? []), 'The named peach windows are source references only. Record the actual peach or nectarine cultivar; its chilling and picking dates must be checked for this site.'],
+      purchase: [...(harvest.productionGuidance?.purchase ?? []), 'Choose identified stock for the actual product and cultivar. A generic low-chill label does not select Earligold, Cederberg or Afrisun or establish a joined season.'],
+    } } : {}),
+  };
 }
 
 /**
@@ -271,6 +325,7 @@ export interface TreeAgeGroup {
 export type TreeSeasonChoices = Partial<Record<string, { months: number[]; bearing: boolean; production?: TreeAgeGroup[] }>>;
 
 export function confirmedTreeMonths(h: PerennialHarvest, choices: TreeSeasonChoices): number[] {
+  if (!isHouseholdFoodHarvest(h)) return [];
   const choice = choices[h.speciesId];
   return choice?.bearing ? validMonths(choice.months) : [];
 }

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   buildProductionAvailabilityGraphs, buildProductionKgGraphs,
+  isVisibleProductionFoodSource,
   type PreservedFoodRecord, type PrintFoodEntry,
 } from '../lib/crop-export-availability.ts';
 import type { ResolvedAvailability } from '../lib/crop-export-pdf.ts';
@@ -219,6 +220,43 @@ test('corrupt crop/tree keys, housing, covers and wool cannot add food or record
   assert.equal(kilos.recordIssues.length, 1);
   const apple = buildProductionAvailabilityGraphs({ availability: availability([band('forest', [[entry('tree:malus-domestica')]])]), dates: [date], growingAreaM2: 0 });
   assert.equal(apple.months[0].freshCount, 1, 'an identified food species need not have a harvest dossier to retain an explicit farm observation');
+});
+
+test('a sourced food-use hold excludes real mapped plants and historical records from every food and kg channel without deleting those records', () => {
+  const ids = ['lycium-ferocissimum', 'ficus-cordata', 'barringtonia-racemosa', 'momordica-balsamina', 'citrullus-lanatus-landrace-var-citroides'];
+  const keys = ids.map(id => `tree:${id}`);
+  for (const id of ids) {
+    assert.equal(PERENNIAL_HARVEST[id]?.householdFoodStatus, 'specialist-review', `${id}: the real sourced dossier must reach the runtime gate`);
+    assert.equal(isVisibleProductionFoodSource(`tree:${id}`, {}), false, `${id}: new food-record choices must share the graph gate`);
+  }
+  const historicalProduction = keys.map(key => production(key, 100));
+  const historicalStock = keys.map(key => ({ ...record(key, 'stored'), quantities: [{ ...date, kg: 100 }] }));
+  const before = JSON.stringify({ historicalProduction, historicalStock });
+  const reference = { label: 'Source reference', months: [date.month], basis: 'Synthetic gate probe' };
+  const a = availability([
+    band('forest', [[...keys.map(key => entry(key)), entry('tree:malus-domestica')]], {
+      planningCells: [keys.map(key => ({ ...entry(key), planning: reference, code: 'He' }))],
+      undated: keys.map(key => ({ ...entry(key), code: 'He' })),
+    }),
+    band('stored', [keys.map(key => entry(key))]),
+  ]);
+  const input = { ...kgInput(), availability: a, productionRecords: historicalProduction, preservedProducts: historicalStock };
+  const foods = buildProductionAvailabilityGraphs(input).months[0];
+  assert.deepEqual(foods.fresh.map(item => item.iconKey), ['tree:malus-domestica']);
+  assert.equal(foods.totalCount, 1);
+  assert.equal(foods.referenceCount, 0);
+  assert.deepEqual(foods.stored, []);
+  assert.deepEqual(foods.preserved, []);
+  const kg = buildProductionKgGraphs(input);
+  assert.equal(kg.months[0].recordedKg, null);
+  assert.equal(kg.months[0].stockKg, null);
+  assert.deepEqual(kg.months[0].records, []);
+  assert.deepEqual(kg.months[0].stockRecords, []);
+  assert.deepEqual(kg.months[0].planningReferenceSources, []);
+  assert.deepEqual(kg.undatedSources, []);
+  assert.ok(kg.recordIssues.some(issue => /non-food production/.test(issue)));
+  assert.ok(kg.recordIssues.some(issue => /non-food stock/.test(issue)));
+  assert.equal(JSON.stringify({ historicalProduction, historicalStock }), before, 'source review must leave saved records available to inspect or remove');
 });
 
 test('a whole sourced vegetable cycle belongs to first-pick grouping and is never split across the picking window or into actual monthly kg', () => {

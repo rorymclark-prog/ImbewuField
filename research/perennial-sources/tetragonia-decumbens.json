@@ -1,0 +1,61 @@
+{
+  "speciesId": "tetragonia-decumbens",
+  "commonName": "Dune spinach / kinkelbossie",
+  "botanicalName": "Tetragonia decumbens",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "young leafy tops and stems",
+  "supplementaryReferences": [
+    {
+      "title": "Leaf vegetable harvesting and preparation",
+      "quote": "The tops and leafy stems are harvested",
+      "url": "https://pza.sanbi.org/tetragonia-decumbens",
+      "doc": "SANBI PlantZAfrica: Tetragonia decumbens",
+      "page": null,
+      "note": "New rainy-season growth gives the best tops; wash off coastal sand thoroughly and boil for the documented vegetable preparation. August–November flowering is not leaf availability."
+    }
+  ],
+  "productionGuidance": {
+    "products": "young leafy tops and stems",
+    "care": [
+      "Harvest young leafy tops; wash off sand before cooking.",
+      "Use well-drained coastal sand and keep divided plants moist until established."
+    ],
+    "purchase": [
+      "Obtain correctly identified coastal planting material; record local growth and leaf-picking months because rainy seasons differ across South Africa."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/tetragonia-decumbens",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

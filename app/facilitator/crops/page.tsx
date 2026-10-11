@@ -33,7 +33,7 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, isHouseholdFoodHarvest, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, animalReferenceQualifier, formatAmountRange, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
@@ -1639,7 +1639,7 @@ function FacilitatorCropsPageInner() {
       const crop = cropByKey(planting.cropKey);
       if (crop && crop.yieldKgPerM2 !== 0) options.set(`crop:${crop.key}`, { iconKey: `crop:${crop.key}`, label: crop.name });
     }
-    for (const tree of canvasTrees) options.set(`tree:${tree.harvest.speciesId}`, { iconKey: `tree:${tree.harvest.speciesId}`, label: tree.harvest.name });
+    for (const tree of canvasTrees) if (isHouseholdFoodHarvest(tree.harvest)) options.set(`tree:${tree.harvest.speciesId}`, { iconKey: `tree:${tree.harvest.speciesId}`, label: tree.harvest.name });
     for (const group of canvasAnimals) {
       const enterprise = ANIMAL_ENTERPRISES[animalChoices[group.housing] ?? ''];
       if (enterprise && HOUSING_ANIMALS[group.housing].includes(enterprise.animal) && enterprise.product !== 'wool') options.set(`animal:${enterprise.enterpriseId}`, { iconKey: `animal:${enterprise.enterpriseId}`, label: `${enterprise.name} · ${PRODUCT_LABEL[enterprise.product]}` });

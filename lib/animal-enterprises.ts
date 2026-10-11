@@ -74,6 +74,8 @@ export interface AnimalEnterprise {
   feedKgPerDay: SourcedRange | null;
   waterLPerDay: SourcedRange | null;
   spaceM2: SourcedRange | null;
+  /** Stage/system-specific results remain references, not automatic per-animal defaults. */
+  productionReferences?: SourcedPoint[];
   welfare: SourcedPoint[];
   legal: SourcedPoint[];
 }
