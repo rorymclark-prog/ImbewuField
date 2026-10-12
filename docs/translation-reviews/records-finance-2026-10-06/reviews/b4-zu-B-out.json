@@ -1,0 +1,128 @@
+[
+ {
+  "id": "I001",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I002",
+  "verdict": "repair",
+  "problem": "Wrong subject concord 'kudinga' for plural subject (amaqanda nezinto); meaning otherwise matches.",
+  "repaired": "Faka inani elingaphezu kuka-0. Amaqanda nezinto zidinga izinombolo eziphelele.",
+  "severity": "minor"
+ },
+ {
+  "id": "I003",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I006",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I008",
+  "verdict": "repair",
+  "problem": "Uses 'Isiqondiso' for 'guide'; page already uses 'umhlahlandlela' (INVOICE_ZU). Different word for the same thing.",
+  "repaired": "Umhlahlandlela ovela emthonjeni.",
+  "severity": "wording"
+ },
+ {
+  "id": "I009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I010",
+  "verdict": "repair",
+  "problem": "Uses 'yesiqondiso' for 'guide'; page already uses 'yomhlahlandlela'. Different word for same thing.",
+  "repaired": "intengo yomhlahlandlela yango-{date}.",
+  "severity": "wording"
+ },
+ {
+  "id": "I011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I156",
+  "verdict": "repair",
+  "problem": "'kokuthi Okulondoloziwe' is not a natural 'from' construction; makes the tab reference unclear.",
+  "repaired": "Khetha ukuthengisa okunenani neyunithi okurekhodiwe. I-invoyisi esivele ikhona kufanele ivulwe kabusha kusukela ku-Okulondoloziwe.",
+  "severity": "wording"
+ },
+ {
+  "id": "I157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I158",
+  "verdict": "repair",
+  "problem": "Uses 'Amarekhodi Ami' for 'My Records' where page uses 'Okurekhodiwe Kwami'; 'kokuthi' is an odd 'to'. Income vs produce quantities and paid/unpaid are preserved.",
+  "repaired": "Ama-invoyisi akhokhiwe engeza imali engenile namanani omkhiqizo ku-Okurekhodiwe Kwami emayunithini awo arekhodiwe. Ama-invoyisi angakhokhiwe asala engakakhokhwa.",
+  "severity": "wording"
+ },
+ {
+  "id": "I159",
+  "verdict": "repair",
+  "problem": "Uses 'Amarekhodi Ami' instead of 'Okurekhodiwe Kwami'; odd 'kokuthi'. Quantities-only (no income) is preserved.",
+  "repaired": "Ukumaka i-invoyisi ikhokhiwe kwengeza amanani ayo omkhiqizo ku-Okurekhodiwe Kwami emayunithini awo arekhodiwe.",
+  "severity": "wording"
+ }
+]

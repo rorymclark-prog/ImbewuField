@@ -1,0 +1,23 @@
+{
+ "language": "ve",
+ "counts": {
+  "ok": 129,
+  "hold": 1,
+  "repair": 2
+ },
+ "total": 132,
+ "rejected_words_check": "No 'Mbuelo' or 'Masheleni o salaho' found. 'mutengo' only for unit price (I100) and suggested price (I122); totals use 'mbalo yoṱhe'; income uses 'masheleni a dzhenaho'. No amount rendered as price.",
+ "top_issues": [
+  "I060: 'Bvisani zwiṅwe zwo vhulungwaho' (remove other saved things) for 'Free some device storage' could cause deletion of invoices/records; repaired to 'make space'.",
+  "I088: 'On receipt' rendered 'Musi i tshi wanwa' (when found); repaired to 'ṱanganedzwa' (received).",
+  "I008: 'Sourced guide' rendered 'information found'; loses guide/source meaning; held.",
+  "'u thoma' (first) used for 'original' in I005/I050/I056/I092/I128 (and genuinely 'first' in I084): ambiguous; needs native check.",
+  "I075: 'Litshani hu si na tshithu' stiff/unclear about which field to leave empty.",
+  "I114 tab 'Zwo vhulungwa' 13 chars, over ~10 guide; I156 refers to same name.",
+  "I094 vs I096 (u badela / u badelwa) differ by one letter pair; easy to confuse due date and date received.",
+  "I143 'ṱhalutshedzo' (explanation) for 'details'; I157 'mbalo yoṱhe' may read as total count not total amount.",
+  "I051/I052 'Bvisani' = remove; must differ from Remove item verb (that item not in this batch; held per drafter note).",
+  "'akhaunthu' used for both bank account (always 'ya bhanga') and app Account (I075, I141); disambiguation relies on 'ya bhanga'."
+ ],
+ "confidence_limits": "Machine reviewer, not a fluent Tshivenda speaker. Back-translations rely on partial vocabulary; items marked ok mean I found no meaning mismatch, not that wording is natural or idiomatic. Words like bindu, ṱhalutshedzo, mulaedza, mbalo, tshiphiri, and the repair texts (I060, I088) need native-speaker confirmation before shipping."
+}

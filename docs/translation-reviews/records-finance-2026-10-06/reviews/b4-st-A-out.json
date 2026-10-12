@@ -1,0 +1,740 @@
+[
+ {
+  "id": "I001",
+  "back": "Price about R{price}/kg selling direct / farm gate",
+  "flags": []
+ },
+ {
+  "id": "I002",
+  "back": "Enter a quantity greater than 0. Eggs and counted items need whole numbers.",
+  "flags": []
+ },
+ {
+  "id": "I004",
+  "back": "Keep the product, quantity, unit and total as recorded when you make an invoice for this sale.",
+  "flags": []
+ },
+ {
+  "id": "I005",
+  "back": "Reference of the original paper invoice",
+  "flags": []
+ },
+ {
+  "id": "I007",
+  "back": "Shops/bulk about R{price}/kg",
+  "flags": []
+ },
+ {
+  "id": "I008",
+  "back": "Guide from the source.",
+  "flags": [
+   "\"mohloding\" (source) is vague and could read as 'from the field/place'"
+  ]
+ },
+ {
+  "id": "I009",
+  "back": "direct/farm-gate sale about R{price}/kg",
+  "flags": []
+ },
+ {
+  "id": "I010",
+  "back": "guide price of {date}.",
+  "flags": []
+ },
+ {
+  "id": "I011",
+  "back": "shops/bulk about R{price}/kg",
+  "flags": []
+ },
+ {
+  "id": "I012",
+  "back": "14 days",
+  "flags": []
+ },
+ {
+  "id": "I013",
+  "back": "30 days",
+  "flags": []
+ },
+ {
+  "id": "I014",
+  "back": "7 days",
+  "flags": []
+ },
+ {
+  "id": "I015",
+  "back": "New invoice",
+  "flags": []
+ },
+ {
+  "id": "I016",
+  "back": "Bank account name",
+  "flags": []
+ },
+ {
+  "id": "I017",
+  "back": "Bank account number",
+  "flags": []
+ },
+ {
+  "id": "I018",
+  "back": "Add a buyer and at least one item to save, print or share.",
+  "flags": []
+ },
+ {
+  "id": "I019",
+  "back": "Add address and bank account so that buyers can be able to pay it",
+  "flags": [
+   "object concord \"o\" does not agree with invoyese (class 9, would be \"e\"); could be read as paying a person"
+  ]
+ },
+ {
+  "id": "I020",
+  "back": "Add another item",
+  "flags": []
+ },
+ {
+  "id": "I021",
+  "back": "Add item to invoice",
+  "flags": []
+ },
+ {
+  "id": "I022",
+  "back": "Address",
+  "flags": []
+ },
+ {
+  "id": "I023",
+  "back": "Invoice already written on paper",
+  "flags": []
+ },
+ {
+  "id": "I024",
+  "back": "Exactly as it is written on the paper invoice",
+  "flags": []
+ },
+ {
+  "id": "I025",
+  "back": "Crates, cartons and bunches are not converted because their weight is not known.",
+  "flags": [
+   "\"mekotla\" is bags/baskets, not obviously crates/cartons - check"
+  ]
+ },
+ {
+  "id": "I026",
+  "back": "Bakkie seller/trader",
+  "flags": [
+   "\"morekisi\" = seller, but this is a buyer type; \"bakkie\" is an Afrikaans/SA loanword"
+  ]
+ },
+ {
+  "id": "I027",
+  "back": "Bank",
+  "flags": []
+ },
+ {
+  "id": "I028",
+  "back": "Buyer who must pay",
+  "flags": []
+ },
+ {
+  "id": "I029",
+  "back": "Branch code",
+  "flags": []
+ },
+ {
+  "id": "I030",
+  "back": "Business name",
+  "flags": []
+ },
+ {
+  "id": "I031",
+  "back": "Address and contact details of the buyer",
+  "flags": []
+ },
+ {
+  "id": "I032",
+  "back": "Buyer's reference",
+  "flags": []
+ },
+ {
+  "id": "I033",
+  "back": "Choose buyer",
+  "flags": []
+ },
+ {
+  "id": "I034",
+  "back": "Choose before you save",
+  "flags": []
+ },
+ {
+  "id": "I035",
+  "back": "Choose paid or unpaid",
+  "flags": []
+ },
+ {
+  "id": "I036",
+  "back": "Choose paid or unpaid to continue.",
+  "flags": []
+ },
+ {
+  "id": "I037",
+  "back": "Choose a recorded sale",
+  "flags": []
+ },
+ {
+  "id": "I038",
+  "back": "Choose the actual date the invoice was issued, up to today.",
+  "flags": []
+ },
+ {
+  "id": "I039",
+  "back": "Choose the date the payment was received, up to today.",
+  "flags": []
+ },
+ {
+  "id": "I040",
+  "back": "Choose a correct sale",
+  "flags": [
+   "\"nepahetseng\" = correct/right; could imply a 'right' sale rather than 'valid'"
+  ]
+ },
+ {
+  "id": "I041",
+  "back": "Church",
+  "flags": []
+ },
+ {
+  "id": "I042",
+  "back": "Cooperative",
+  "flags": []
+ },
+ {
+  "id": "I043",
+  "back": "Confirm whether this sale has already been recorded.",
+  "flags": []
+ },
+ {
+  "id": "I044",
+  "back": "Connect to the internet to link this already existing sale safely.",
+  "flags": []
+ },
+ {
+  "id": "I045",
+  "back": "Connect to the internet to download the sale you have already recorded.",
+  "flags": []
+ },
+ {
+  "id": "I046",
+  "back": "Crop or product",
+  "flags": []
+ },
+ {
+  "id": "I047",
+  "back": "Crèche",
+  "flags": [
+   "Crèche left in French spelling; check it is used by Sesotho speakers"
+  ]
+ },
+ {
+  "id": "I048",
+  "back": "Buyer's name",
+  "flags": []
+ },
+ {
+  "id": "I049",
+  "back": "Types of buyers",
+  "flags": []
+ },
+ {
+  "id": "I050",
+  "back": "Date and to invoice of the original paper",
+  "flags": [
+   "ungrammatical \"Letsatsi le ho invoyese\" - 'le ho' garbled; probably meant 'Date on the original paper invoice'"
+  ]
+ },
+ {
+  "id": "I051",
+  "back": "Delete invoice",
+  "flags": []
+ },
+ {
+  "id": "I052",
+  "back": "Delete?",
+  "flags": []
+ },
+ {
+  "id": "I053",
+  "back": "Delivering on Thursday. Crates are returned with the next order.",
+  "flags": [
+   "\"Thursday\" left in English"
+  ]
+ },
+ {
+  "id": "I054",
+  "back": "Being changed",
+  "flags": []
+ },
+ {
+  "id": "I055",
+  "back": "Email",
+  "flags": [
+   "untranslated English word left (commonly used loan)"
+  ]
+ },
+ {
+  "id": "I056",
+  "back": "Enter the number or reference of the original paper invoice.",
+  "flags": []
+ },
+ {
+  "id": "I057",
+  "back": "Existing sale record",
+  "flags": []
+ },
+ {
+  "id": "I059",
+  "back": "For your R/m² records. Choose only when all rows are of this area.",
+  "flags": []
+ },
+ {
+  "id": "I060",
+  "back": "Free up some storage space on the phone before linking this sale. Its existing record has not been changed.",
+  "flags": []
+ },
+ {
+  "id": "I061",
+  "back": "Growing place/field of these sales",
+  "flags": []
+ },
+ {
+  "id": "I062",
+  "back": "Has the buyer paid?",
+  "flags": []
+ },
+ {
+  "id": "I063",
+  "back": "Seller on the street",
+  "flags": [
+   "\"morekisi\" = seller, buyer-type context"
+  ]
+ },
+ {
+  "id": "I065",
+  "back": "Invoice and payment details",
+  "flags": []
+ },
+ {
+  "id": "I066",
+  "back": "Date of issuing the invoice",
+  "flags": []
+ },
+ {
+  "id": "I067",
+  "back": "Invoice saved on this phone. Connect to the internet again and save it again to update the crop sales book.",
+  "flags": []
+ },
+ {
+  "id": "I068",
+  "back": "Invoice saved on this phone. Shared sales records have not yet confirmed it.",
+  "flags": []
+ },
+ {
+  "id": "I069",
+  "back": "Invoice saved.",
+  "flags": []
+ },
+ {
+  "id": "I070",
+  "back": "Type of invoice",
+  "flags": []
+ },
+ {
+  "id": "I071",
+  "back": "Is this sale already in My Records?",
+  "flags": []
+ },
+ {
+  "id": "I072",
+  "back": "Keep the recorded growing place of this sale.",
+  "flags": []
+ },
+ {
+  "id": "I073",
+  "back": "Keep the recorded payment date and payment status of this sale.",
+  "flags": []
+ },
+ {
+  "id": "I075",
+  "back": "Leave it empty to make the invoice in your name. Add a logo in Account.",
+  "flags": []
+ },
+ {
+  "id": "I076",
+  "back": "Items on the invoice",
+  "flags": []
+ },
+ {
+  "id": "I077",
+  "back": "Download the recorded sale before saving this invoice.",
+  "flags": []
+ },
+ {
+  "id": "I078",
+  "back": "Downloading your sales...",
+  "flags": []
+ },
+ {
+  "id": "I079",
+  "back": "Market place",
+  "flags": []
+ },
+ {
+  "id": "I080",
+  "back": "Neighbour",
+  "flags": []
+ },
+ {
+  "id": "I082",
+  "back": "There is no buyer",
+  "flags": []
+ },
+ {
+  "id": "I083",
+  "back": "There is no payment date",
+  "flags": []
+ },
+ {
+  "id": "I084",
+  "back": "There are no saved invoices so far — save your first invoice here.",
+  "flags": []
+ },
+ {
+  "id": "I085",
+  "back": "No — write it together with this invoice",
+  "flags": []
+ },
+ {
+  "id": "I086",
+  "back": "Not for now — payment still has to be paid",
+  "flags": []
+ },
+ {
+  "id": "I087",
+  "back": "Note on the invoice",
+  "flags": []
+ },
+ {
+  "id": "I088",
+  "back": "When it is received",
+  "flags": []
+ },
+ {
+  "id": "I089",
+  "back": "Choice / optional",
+  "flags": [
+   "\"boikgethelo\" literally 'choice, free will'; may read as 'choice' not 'optional'"
+  ]
+ },
+ {
+  "id": "I090",
+  "back": "Choice — printed under the buyer's name",
+  "flags": []
+ },
+ {
+  "id": "I092",
+  "back": "Number or reference of the original paper invoice",
+  "flags": []
+ },
+ {
+  "id": "I094",
+  "back": "Payment that must be paid",
+  "flags": []
+ },
+ {
+  "id": "I095",
+  "back": "Method of payment",
+  "flags": []
+ },
+ {
+  "id": "I096",
+  "back": "Date of receiving payment",
+  "flags": []
+ },
+ {
+  "id": "I097",
+  "back": "Payment received with/by",
+  "flags": [
+   "ambiguous \"ka\" - unclear whether date or method"
+  ]
+ },
+ {
+  "id": "I098",
+  "back": "Payment status",
+  "flags": []
+ },
+ {
+  "id": "I099",
+  "back": "Phone",
+  "flags": []
+ },
+ {
+  "id": "I100",
+  "back": "Price each",
+  "flags": []
+ },
+ {
+  "id": "I101",
+  "back": "Print",
+  "flags": []
+ },
+ {
+  "id": "I102",
+  "back": "It is printed on all invoices",
+  "flags": []
+ },
+ {
+  "id": "I103",
+  "back": "Some produce has been sold",
+  "flags": []
+ },
+ {
+  "id": "I106",
+  "back": "Connect to the internet again and try again.",
+  "flags": []
+ },
+ {
+  "id": "I107",
+  "back": "Write the sale only once",
+  "flags": []
+ },
+ {
+  "id": "I108",
+  "back": "Recorded sale",
+  "flags": []
+ },
+ {
+  "id": "I109",
+  "back": "Remove item",
+  "flags": []
+ },
+ {
+  "id": "I110",
+  "back": "Restaurant or lodge",
+  "flags": []
+ },
+ {
+  "id": "I111",
+  "back": "Try again to send sale",
+  "flags": []
+ },
+ {
+  "id": "I112",
+  "back": "View invoice payment",
+  "flags": []
+ },
+ {
+  "id": "I113",
+  "back": "Save invoice",
+  "flags": []
+ },
+ {
+  "id": "I114",
+  "back": "Those saved",
+  "flags": []
+ },
+ {
+  "id": "I115",
+  "back": "Saving...",
+  "flags": []
+ },
+ {
+  "id": "I116",
+  "back": "School",
+  "flags": []
+ },
+ {
+  "id": "I117",
+  "back": "Choose an existing sale to continue.",
+  "flags": []
+ },
+ {
+  "id": "I118",
+  "back": "Share PDF",
+  "flags": []
+ },
+ {
+  "id": "I119",
+  "back": "Share PDF (WhatsApp, email...)",
+  "flags": []
+ },
+ {
+  "id": "I120",
+  "back": "Spaza shop",
+  "flags": []
+ },
+ {
+  "id": "I122",
+  "back": "The suggested price has been entered — change it if you agreed something else.",
+  "flags": []
+ },
+ {
+  "id": "I123",
+  "back": "The PDF could not be built on this phone. The invoice is saved — try Print to take its place.",
+  "flags": [
+   "\"ho e nkela sebaka\" = 'take its place/replace', unclear"
+  ]
+ },
+ {
+  "id": "I124",
+  "back": "The invoice was not saved. Please try again.",
+  "flags": []
+ },
+ {
+  "id": "I125",
+  "back": "The invoice status was not changed because its crop sales were not updated. Check your internet and try again.",
+  "flags": []
+ },
+ {
+  "id": "I126",
+  "back": "Their order number — optional",
+  "flags": []
+ },
+ {
+  "id": "I127",
+  "back": "This is at the top of your invoices. Your name is printed under it.",
+  "flags": []
+ },
+ {
+  "id": "I128",
+  "back": "This invoice was not saved. Check the phone's storage space and save the basic details of any linked sale, then try again.",
+  "flags": []
+ },
+ {
+  "id": "I129",
+  "back": "This sale already belongs to another invoice.",
+  "flags": []
+ },
+ {
+  "id": "I130",
+  "back": "This sale already has an invoice. Open it on the phone it was made on; its private copy of the invoice is not available on this phone.",
+  "flags": []
+ },
+ {
+  "id": "I131",
+  "back": "This sale is not found in your records.",
+  "flags": []
+ },
+ {
+  "id": "I132",
+  "back": "Invoice not distributed / mixed",
+  "flags": [
+   "\"e sa abelwang / e tswakilweng\" (not shared out/mixed) unclear; unnatural"
+  ]
+ },
+ {
+  "id": "I134",
+  "back": "Not paid",
+  "flags": []
+ },
+ {
+  "id": "I135",
+  "back": "VAT number / tax number",
+  "flags": []
+ },
+ {
+  "id": "I137",
+  "back": "What are you writing?",
+  "flags": []
+ },
+ {
+  "id": "I138",
+  "back": "Where buyers pay you",
+  "flags": []
+ },
+ {
+  "id": "I139",
+  "back": "Yes — link existing sale",
+  "flags": []
+ },
+ {
+  "id": "I140",
+  "back": "Yes — paid in full",
+  "flags": []
+ },
+ {
+  "id": "I141",
+  "back": "Your account has changed. Open the invoice again in the correct workspace.",
+  "flags": []
+ },
+ {
+  "id": "I142",
+  "back": "Your address",
+  "flags": []
+ },
+ {
+  "id": "I143",
+  "back": "Your details and bank",
+  "flags": []
+ },
+ {
+  "id": "I144",
+  "back": "Your name and phone come from your account. Everything else here goes in the header of each invoice, and stays on this phone.",
+  "flags": []
+ },
+ {
+  "id": "I145",
+  "back": "Your pending invoice has been returned. Check it and save it to finish linking.",
+  "flags": []
+ },
+ {
+  "id": "I146",
+  "back": "Your saved buyers",
+  "flags": []
+ },
+ {
+  "id": "I150",
+  "back": "each",
+  "flags": []
+ },
+ {
+  "id": "I152",
+  "back": "+ Add another buyer...",
+  "flags": []
+ },
+ {
+  "id": "I153",
+  "back": "Invoice saved and linked to the existing sale. Their quantity and income are counted only once.",
+  "flags": []
+ },
+ {
+  "id": "I154",
+  "back": "Choose an existing sale with quantity and unit recorded from your records.",
+  "flags": []
+ },
+ {
+  "id": "I155",
+  "back": "Save the invoice, payment and quantity together.",
+  "flags": []
+ },
+ {
+  "id": "I156",
+  "back": "Choose a sale with recorded quantity and unit. An invoice that already exists must be reopened from Saved ones.",
+  "flags": []
+ },
+ {
+  "id": "I157",
+  "back": "The recorded product, quantity, unit, total and payment date stay together. This invoice is the document of that sale, without adding it again.",
+  "flags": []
+ },
+ {
+  "id": "I158",
+  "back": "Paid invoices add income and product quantity to My Records in the units they were written in. Unpaid invoices still have to be paid.",
+  "flags": []
+ },
+ {
+  "id": "I159",
+  "back": "Marking an invoice paid adds its product quantity to My Records in the units it was written in.",
+  "flags": []
+ }
+]

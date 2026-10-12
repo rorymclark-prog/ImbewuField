@@ -1119,7 +1119,10 @@ export default function InvoicePage() {
                       <Trash2 size={14} />
                     </button>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* A long drafted word for "each" (Tshivenda "tshiṅwe na tshiṅwe") pushed the price box past the
+                      card edge at 390px, so only then does the price drop to its own line. English and isiZulu
+                      keep the single row they always had. */}
+                  <div className={`flex items-center gap-2${ui('each').length > 10 ? ' flex-wrap' : ''}`}>
                     {/* parseFloat, not parseInt: UNITS includes kg and crates, and 12.5 kg of tomatoes became 12 —
                         the farmer underpaid on the document the buyer pays from, always in the same
                         direction. Worse, a sub-unit line (0.75 kg of chillies) became 0, which
@@ -1135,7 +1138,7 @@ export default function InvoicePage() {
                       className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
-                    <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
+                    <div className={`flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2${ui('each').length > 10 ? ' basis-full' : ''}`} style={FIELD}>
                       <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}

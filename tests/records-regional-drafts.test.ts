@@ -19,7 +19,7 @@ const SOURCES = ['app/records/page.tsx', 'components/MyRecords.tsx', 'components
   'components/records/RecordQuantityFields.tsx', 'components/records/RecordQuantitySummary.tsx',
   'lib/expense-receipts.ts', 'lib/duplicate-income.ts', 'lib/credit-pack-pdf.ts', 'lib/farm-records.ts',
   'lib/records-regional-drafts.ts', 'app/api/read-slip/route.ts', 'lib/api-auth.ts', 'lib/i18n.tsx',
-  'lib/i18n-pending.ts', 'lib/learner-ui-english.ts', 'components/CropSelect.tsx', 'lib/invoices.ts', 'lib/crop-entry.ts', 'components/CashflowChart.tsx', 'components/FinanceGraphs.tsx', 'components/ComingUpHarvests.tsx', 'components/HarvestReconciliation.tsx', 'components/AreaReturnCards.tsx'].map(read).join('\n');
+  'lib/i18n-pending.ts', 'lib/learner-ui-english.ts', 'components/CropSelect.tsx', 'lib/invoices.ts', 'lib/crop-entry.ts', 'components/CashflowChart.tsx', 'components/FinanceGraphs.tsx', 'components/ComingUpHarvests.tsx', 'components/HarvestReconciliation.tsx', 'components/AreaReturnCards.tsx', 'app/invoice/page.tsx', 'lib/invoice-entry.ts'].map(read).join('\n');
 
 test('English is untouched: no draft is ever returned for English, and English labels are byte-identical', () => {
   for (const key of Object.keys(RECORDS_DRAFTS)) {

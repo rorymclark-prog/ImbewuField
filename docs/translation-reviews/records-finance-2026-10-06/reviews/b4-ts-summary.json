@@ -1,0 +1,20 @@
+{
+ "counts": {
+  "ok": 117,
+  "repair": 14,
+  "hold": 0
+ },
+ "top_issues": [
+  "I153/I158: 'muholo' means salary/wage, not sale income; repaired to 'mali leyi nghenaka' (money coming in). Income vs expense distinction matters.",
+  "I122: 'wu cinca' states the price changes by itself instead of 'you may change it'; price-guide wording must not read as automatic or promised.",
+  "I043/I045/I103/I023: 'sweswi' (now/just) used for 'already'; changed to 'se'.",
+  "I075: 'Tshika ku nga ri na nchumu' is nonsense for 'Leave empty'; repaired. 'Akhawunti' is also bank account (I016/I017/I019) - bank labels depend on surrounding heading to disambiguate from app Account.",
+  "I155: imperative 'Hlayisa' + clause reads as a Save command; I145 'Yi kambela u yi hlayisa' ungrammatical.",
+  "I114/I156: tab label 'Leswi hlayisiweke' is 17 chars; shortened to 'Hlayisiwile' (also update I156 reference).",
+  "I010: 'wa {date}' does not clearly mean 'from {date}'.",
+  "I026: 'Muxavi wa bakkie' could mean buyer of a bakkie.",
+  "Minor, unrepaired: I134 'A swi hakeriwanga' uses class-8 concord for an invoice (chip reads as 'things not paid'); I132 'yo hlangana' for 'mixed' collides with 'hlanganisa' = link; I032 'Nomboro ya muxavi' could be read as buyer's phone/ID rather than reference; 'Susa' used for Delete - ensure Remove item elsewhere uses a different verb.",
+  "Rejected words xitirhisiwa/Vatirhi/Rixaka/Muxaka/swiharhi: none in any draft (xitirhisiwa appears only in a drafter note). 'device' is rendered as 'foni' (phone) throughout (I060, I067, I068, I123, I128, I144) - no tool/implement reading."
+ ],
+ "confidence": "Machine review only; not approval by a fluent Xitsonga speaker. Repairs are my best judgment of standard written Xitsonga and especially the choices 'se' (already), 'mali leyi nghenaka' (income), 'u nga wu cinca', 'Yi siye yi nga tsariwanga', 'Hlayisiwile' need native-speaker confirmation. Many 'ok' verdicts mean meaning is plausible, not that phrasing is natural. Loanwords (akhawunti, invoyisi, adirese, bhanka) and banking terms unverified. Dialect (Xitsonga vs Shangani) not assessed."
+}

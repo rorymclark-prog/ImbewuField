@@ -5352,5 +5352,1765 @@
    "components/HarvestReconciliation.tsx:89"
   ],
   "context": "Charts tab of the money book: template"
+ },
+ {
+  "id": "I001",
+  "english": "Direct/farm gate about R{price}/kg",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide, first clause: guide price per kg when selling direct from the farm"
+ },
+ {
+  "id": "I002",
+  "english": "Enter a positive quantity. Eggs and items need whole numbers.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "error shown when a line quantity is not valid for its unit"
+ },
+ {
+  "id": "I003",
+  "english": "Estimated; confirm locally.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide confidence note"
+ },
+ {
+  "id": "I004",
+  "english": "Keep the recorded produce, quantity, unit and total when documenting this sale.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "error: farmer tried to change a recorded sale when writing an invoice for it"
+ },
+ {
+  "id": "I005",
+  "english": "Original paper invoice reference",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "screen-reader label for the paper invoice number field"
+ },
+ {
+  "id": "I006",
+  "english": "Recommended price (average of prices found); confirm locally.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide confidence note"
+ },
+ {
+  "id": "I007",
+  "english": "Shops/bulk about R{price}/kg",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide, first clause: guide price per kg when selling to shops or in bulk"
+ },
+ {
+  "id": "I008",
+  "english": "Sourced guide.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide confidence note"
+ },
+ {
+  "id": "I009",
+  "english": "direct/farm gate about R{price}/kg",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide, second clause (lowercase, follows a middle dot)"
+ },
+ {
+  "id": "I010",
+  "english": "guide price from {date}.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide: how old the guide price is, ends the sentence; {date} is inserted by the app"
+ },
+ {
+  "id": "I011",
+  "english": "shops/bulk about R{price}/kg",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "price guide, second clause (lowercase, follows a middle dot)"
+ },
+ {
+  "id": "I012",
+  "english": "14 days",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "payment terms chip: when the buyer must pay (days after the invoice date); \"On receipt\" = pay when the invoice is received"
+ },
+ {
+  "id": "I013",
+  "english": "30 days",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "payment terms chip: when the buyer must pay (days after the invoice date); \"On receipt\" = pay when the invoice is received"
+ },
+ {
+  "id": "I014",
+  "english": "7 days",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "payment terms chip: when the buyer must pay (days after the invoice date); \"On receipt\" = pay when the invoice is received"
+ },
+ {
+  "id": "I015",
+  "english": "A new invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "choice: write a brand-new invoice"
+ },
+ {
+  "id": "I016",
+  "english": "Account name",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "BANK account holder name (where buyers pay), not the app Account"
+ },
+ {
+  "id": "I017",
+  "english": "Account number",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "BANK account number"
+ },
+ {
+  "id": "I018",
+  "english": "Add a buyer and at least one item to save, print or share.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I019",
+  "english": "Add an address and bank account so buyers can pay you",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I020",
+  "english": "Add another item",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I021",
+  "english": "Add line item",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I022",
+  "english": "Address",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I023",
+  "english": "An invoice already written on paper",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "choice: copy a paper invoice into the app"
+ },
+ {
+  "id": "I024",
+  "english": "As written on the paper invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I025",
+  "english": "Bags, crates and bunches are not converted because their weight is unknown.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I027",
+  "english": "Bank",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "name of the farmer's bank"
+ },
+ {
+  "id": "I028",
+  "english": "Bill to",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "who the invoice is addressed to (the buyer who must pay); label above the buyer name"
+ },
+ {
+  "id": "I029",
+  "english": "Branch code",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "bank branch code"
+ },
+ {
+  "id": "I030",
+  "english": "Business name",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I031",
+  "english": "Buyer address & contact",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I032",
+  "english": "Buyer's reference",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I033",
+  "english": "Choose a customer",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I034",
+  "english": "Choose before saving",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "drop-down placeholder, first option, forces a choice"
+ },
+ {
+  "id": "I035",
+  "english": "Choose paid or unpaid",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I036",
+  "english": "Choose paid or unpaid to continue.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I037",
+  "english": "Choose recorded sale",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I038",
+  "english": "Choose the actual invoice issue date, up to today.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I039",
+  "english": "Choose the date the payment was received, up to today.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I040",
+  "english": "Choose the exact sale",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I043",
+  "english": "Confirm whether this sale is already recorded.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I044",
+  "english": "Connect to the internet to link this existing sale safely.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I045",
+  "english": "Connect to the internet to load a sale you have already recorded.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I046",
+  "english": "Crop or product",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I048",
+  "english": "Customer name",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I049",
+  "english": "Customer types",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I050",
+  "english": "Date on the original paper invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I051",
+  "english": "Delete invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I052",
+  "english": "Delete?",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "tiny confirm button replacing the delete icon; second tap deletes the saved invoice for good"
+ },
+ {
+  "id": "I053",
+  "english": "Delivery Thursday. Crates returned with next order.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "example text in the invoice note box (placeholder); it shows farmers what a note could say"
+ },
+ {
+  "id": "I054",
+  "english": "Editing",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "badge: this invoice is already saved and is being edited (not a new one)"
+ },
+ {
+  "id": "I055",
+  "english": "Email",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I056",
+  "english": "Enter the original paper invoice number or reference.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I057",
+  "english": "Existing sale record",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "label above a drop-down of sales the farmer already recorded in My Records"
+ },
+ {
+  "id": "I059",
+  "english": "For your R/m² records. Choose only if every line belongs to this area.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I060",
+  "english": "Free some device storage before linking this sale. Its existing record has not been changed.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I061",
+  "english": "Growing area for these sales",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I062",
+  "english": "Has the buyer paid?",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I065",
+  "english": "Invoice and payment details",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "section heading"
+ },
+ {
+  "id": "I066",
+  "english": "Invoice issue date",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I067",
+  "english": "Invoice saved on this device. Reconnect and save it again to update the crop sale book.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I068",
+  "english": "Invoice saved on this device. The shared sales records have not confirmed yet.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I069",
+  "english": "Invoice saved.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I070",
+  "english": "Invoice type",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I071",
+  "english": "Is this sale already in My Records?",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I072",
+  "english": "Keep the recorded growing area for this sale.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I073",
+  "english": "Keep the recorded payment date and paid status for this sale.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I075",
+  "english": "Leave empty to invoice under your own name. Add a logo in Account.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "\"Account\" is the app's Account page (a menu item), not a bank account"
+ },
+ {
+  "id": "I076",
+  "english": "Line items",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I077",
+  "english": "Load the recorded sale before saving this invoice.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I078",
+  "english": "Loading your sales…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I082",
+  "english": "No buyer",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I083",
+  "english": "No due date",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "payment terms chip: when the buyer must pay (days after the invoice date); \"On receipt\" = pay when the invoice is received"
+ },
+ {
+  "id": "I084",
+  "english": "No saved invoices yet — save your first invoice here.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I085",
+  "english": "No — record it with this invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I086",
+  "english": "Not yet — payment outstanding",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I087",
+  "english": "Note on the invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I088",
+  "english": "On receipt",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "payment terms chip: when the buyer must pay (days after the invoice date); \"On receipt\" = pay when the invoice is received"
+ },
+ {
+  "id": "I089",
+  "english": "Optional",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I090",
+  "english": "Optional — printed under the buyer name",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I092",
+  "english": "Original paper invoice number or reference",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I094",
+  "english": "Payment due",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I095",
+  "english": "Payment method",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I096",
+  "english": "Payment received date",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I097",
+  "english": "Payment received on",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I098",
+  "english": "Payment status",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I099",
+  "english": "Phone",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I100",
+  "english": "Price each",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I101",
+  "english": "Print",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I102",
+  "english": "Printed on every invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I103",
+  "english": "Produce already sold",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "choice: an invoice for produce the farmer already recorded as sold"
+ },
+ {
+  "id": "I106",
+  "english": "Reconnect and try again.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I107",
+  "english": "Record the sale once",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "section heading: the sale is counted once (an invoice must not double count income)"
+ },
+ {
+  "id": "I108",
+  "english": "Recorded sale",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "label: a sale already recorded in My Records"
+ },
+ {
+  "id": "I109",
+  "english": "Remove item",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I111",
+  "english": "Retry sales sync",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "button shown after the invoice was saved on the phone but the shared sales records could not be reached; pressing it repeats the sync"
+ },
+ {
+  "id": "I112",
+  "english": "Review payment for invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I113",
+  "english": "Save invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "main button"
+ },
+ {
+  "id": "I114",
+  "english": "Saved",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "heading/tab: list of invoices already saved on this phone"
+ },
+ {
+  "id": "I115",
+  "english": "Saving…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "main button while saving"
+ },
+ {
+  "id": "I117",
+  "english": "Select the existing sale to continue.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I118",
+  "english": "Share PDF",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I119",
+  "english": "Share PDF (WhatsApp, email…)",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I122",
+  "english": "Suggested price filled in — change it if you agreed something else.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I123",
+  "english": "The PDF could not be built on this device. The invoice is saved — try Print instead.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I124",
+  "english": "The invoice could not be saved. Please try again.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I125",
+  "english": "The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I126",
+  "english": "Their order number — optional",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "placeholder in the buyer's reference field"
+ },
+ {
+  "id": "I127",
+  "english": "This heads your invoices. Your own name is printed underneath it.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I128",
+  "english": "This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I129",
+  "english": "This sale already belongs to another invoice.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I130",
+  "english": "This sale already has an invoice. Open it on the device where it was created; its private invoice copy is not available on this device.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I131",
+  "english": "This sale is not available in your records.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "red validation message under the Save button; a farmer sees it when saving is refused"
+ },
+ {
+  "id": "I132",
+  "english": "Unassigned / mixed invoice",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I134",
+  "english": "Unpaid",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "status chip on a saved invoice: the buyer has not paid yet"
+ },
+ {
+  "id": "I135",
+  "english": "VAT / tax no.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I137",
+  "english": "What are you recording?",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I138",
+  "english": "Where buyers pay you",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I139",
+  "english": "Yes — link the existing sale",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I140",
+  "english": "Yes — paid in full",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I141",
+  "english": "Your account changed. Open the invoice again in the correct workspace.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I142",
+  "english": "Your address",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I143",
+  "english": "Your details & banking",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I144",
+  "english": "Your name and phone come from your account. Everything else here is added to the letterhead on every invoice, and stays on this device.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I145",
+  "english": "Your pending invoice has been recovered. Review it and save to finish linking.",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I146",
+  "english": "Your saved customers",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I150",
+  "english": "each",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "short fragment after a rand figure on a line item, e.g. \"R12 each\" (price per unit)"
+ },
+ {
+  "id": "I152",
+  "english": "＋ Add another customer…",
+  "needs": [
+   "st",
+   "ve",
+   "ts"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "last entry in the buyer drop-down; opens a box to type a new customer"
+ },
+ {
+  "id": "I153",
+  "english": "Invoice saved and linked to the existing sale. Its quantity and income are counted once.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I154",
+  "english": "Choose an available sale with a recorded quantity and unit from your own records.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I155",
+  "english": "Keep the invoice, payment and quantity together.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I156",
+  "english": "Select a sale with a recorded quantity and unit. An existing invoice should be reopened from Saved.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I157",
+  "english": "The recorded produce, quantity, unit, total and payment date stay together. This invoice documents that sale without adding it again.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I158",
+  "english": "Paid invoices add income and produce quantities to My Records in their recorded units. Unpaid invoices stay outstanding.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
+ },
+ {
+  "id": "I159",
+  "english": "Marking an invoice paid adds its produce quantities to My Records in their recorded units.",
+  "needs": [
+   "st",
+   "ve",
+   "ts",
+   "zu"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": ""
  }
 ]
