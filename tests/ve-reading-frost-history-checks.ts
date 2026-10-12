@@ -1,6 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore, blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { followupSourceBefore, followupPairBefore, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import { lightestAssetBefore } from './reading-title-lightest-media-history-checks.ts';
 
@@ -23,13 +27,17 @@ for (const [url, proof] of Object.entries(frostAssets)) if (!proof.changed) {
 }
 
 export function ensureVeReadingFrostCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   for (const [file, proof] of Object.entries(frostFiles)) {
     const actual = followupSourceBefore(file, readFileSync(file));
     assert.equal(createHash('sha256').update(actual).digest('hex'), proof.afterSha256, `${file}: complete current file after VE frost placement`);
   }
+  });
 }
 
 export function veReadingFrostSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   const proof = frostFiles[file];
   if (proof && Buffer.from(bytes).toString() === proof.before) {
     ensureVeReadingFrostCurrent();
@@ -42,9 +50,12 @@ export function veReadingFrostSourceBefore(file: string, bytes: string | Uint8Ar
   if (text === proof.before) return bytes;
   assert.equal(text, proof.after, `${file}: only the accepted VE Reading frost placement batch may be projected`);
   return proof.before;
+  });
 }
 
 export function veReadingFrostPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = followupPairBefore(file, actual);
   const paired = 'docs/narration/reading-landscape.ve.paired-draft.json';
   if (file !== paired) return actual;
@@ -59,18 +70,23 @@ export function veReadingFrostPairBefore<T>(file: string, actual: T): T {
   if (JSON.stringify(actual) === JSON.stringify(before)) return actual;
   assert.deepEqual(actual, JSON.parse(proof.after), 'complete current Tshivenda Reading paired object before historical reconstruction');
   return before as T;
+  });
 }
 
 export function veReadingFrostNativeBefore<T>(language: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   if (language !== 've') return actual;
   ensureVeReadingFrostCurrent();
   if (JSON.stringify(actual) === JSON.stringify(frostNative.before)) return structuredClone(actual);
   assert.deepEqual(actual, frostNative.after, 'complete Tshivenda Reading registry before historical reconstruction');
   return structuredClone(frostNative.before) as T;
+  });
 }
 
 /** Verify the current still's measured bytes and digest before older inventory layers rewind it. */
 export function veReadingFrostAssetBefore(path: string, bytes?: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const proof = frostAssets[url];
   bytes ??= readFileSync(path.startsWith('public/') ? path : 'public' + url);
@@ -81,4 +97,5 @@ export function veReadingFrostAssetBefore(path: string, bytes?: Uint8Array) {
   assert.equal(newer?.bytes ?? bytes.byteLength, proof.afterBytes, `${url}: exact current VE frost still bytes`);
   assert.equal(newer?.sha256 ?? digest, proof.afterSha256, `${url}: complete current VE frost still SHA`);
   return { bytes: proof.beforeBytes, sha256: proof.beforeSha256 };
+  });
 }

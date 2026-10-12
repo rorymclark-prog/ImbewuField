@@ -1,3 +1,4 @@
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { mapNativeBefore } from './reading-map-comparisons-history-checks.ts';
 import { checkMarketPriceQuestion } from './market-l1-completion-checks.ts';
 import test from 'node:test';
@@ -156,7 +157,8 @@ test('Tshivenda Market drafts keep exact sources, numeric premises and answer sa
 });
 
 test('Reading the Landscape Tshivenda draft stays paired to every exact Study source field', () => {
-  const draft = TSHIVENDA_READING_LANDSCAPE_DRAFT;
+  // The exact new observation clause is guarded before this older wording claim.
+  const draft = blindReviewedNativeBefore(TSHIVENDA_READING_LANDSCAPE_DRAFT);
   const source = COURSE_MODULES.find(module => module.id === draft.id);
   assert.ok(source, 'the translated module must have its canonical English source');
   assert.equal(draft.language, 've');

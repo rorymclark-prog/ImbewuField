@@ -1,6 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -134,6 +137,7 @@ function unwrapSentenceRepairSuccessor(file: string, bytes: string | Uint8Array)
 }
 
 export function ensureStudyBACCompositionCurrent(): void {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(proof.status, 'prepared-unreviewed-B-A-C-full-source-history-proof');
   for (const file of ['app/sw.js/route.ts', 'lib/course-asset-sizes.ts']) {
     const integrated = snapshot(file, 'integrated');
@@ -172,9 +176,11 @@ export function ensureStudyBACCompositionCurrent(): void {
   }
   // Canonical/source and recorded media owners are outside these source projections.
   assert.equal(sha(readFileSync(path('lib/course-modules.ts'))), 'abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397', 'canonical module text and indices remain byte-identical to the shared main source');
+  });
 }
 
 function project(file: string, bytes: string | Uint8Array, phase: 'afterAB' | 'afterA' | 'afterB' | 'afterC' | 'main69'): string | Uint8Array {
+  bytes = blindReviewedSourceBefore(file, bytes);
   ensureStudyBACCompositionCurrent();
   const integrated = snapshot(file, 'integrated');
   const expected = snapshot(file, phase);

@@ -1,7 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { expandedSourceBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { veReadingFrostSourceBefore } from './ve-reading-frost-history-checks.ts';
 import { lightestManifestBefore } from './reading-title-lightest-media-history-checks.ts';
 import { stIntroRuntimeResidualManifestBefore, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
@@ -15,6 +17,7 @@ export const reading14Files = JSON.parse(bytes.toString());
 // New independent silent-card identity adds one manifest entry. Dated media tests
 // must validate that whole addition before reconstructing their earlier inventories.
 export function reading14ManifestBefore(value: string): string {
+  return withBlindReviewedCorrectionReadScope(() => {
   const file = 'lib/course-asset-sizes.ts';
   const proof = reading14Files[file];
   assert.equal(sha(proof.before), proof.beforeSha256);
@@ -31,4 +34,5 @@ export function reading14ManifestBefore(value: string): string {
   if (value === proof.before) return value;
   assert.equal(value, proof.after, 'supplied complete Reading14 manifest after the later two-card VE layer');
   return proof.before;
+  });
 }

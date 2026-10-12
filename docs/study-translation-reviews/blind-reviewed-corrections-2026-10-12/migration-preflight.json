@@ -1,0 +1,11 @@
+{
+  "actualStagedFunction": true,
+  "exactFivePaths": true,
+  "queryVariantsRetired": true,
+  "savedAudioRecordedSTAndUnlistedPreserved": true,
+  "noNetworkFetch": true,
+  "secondActivationRetainsRedownload": true,
+  "audioEvictionMutationRejected": true,
+  "missingMarkerMutationRejected": true,
+  "productionRuntimeVerified": false
+}

@@ -490,7 +490,7 @@ export const COURSE_TRANSLATION_DRAFTS: Record<string, LocalizedLessonContent> =
         "rationale": "Umthambeka wodwa awanele ukukhetha umsebenzi womhlaba. Umhlabathi, ukugeleza kwamanzi, ukuzinza komhlaba nokugeleza kwamanzi emvula enamandla nakho kufanele kuhlolwe."
       }
     ],
-    infographicAlt: "Umdwebo osika i-level contour swale, nesiduli somhlabathi esiphakanyisiwe ngaphansi kwayo. Imicibisholo ikhombisa amanzi ageleza phezu komhlaba (runoff) ehla ngejubane futhi asabalale; ukungena kwamanzi emhlabathini (infiltration) kuncike enhlabathini nasendaweni.",
+    infographicAlt: "Umdwebo osika i-level contour swale, nesiduli somhlabathi esiphakanyisiwe ngaphansi kwayo. Imicibisholo ikhombisa amanzi ageleza phezu komhlaba (runoff) ehlisa ijubane futhi asabalale; ukungena kwamanzi emhlabathini (infiltration) kuncike enhlabathini nasendaweni.",
   },
   "water-harvesting-l2": {
     "title": "Amadamu Namachibi Epulazini: Ukugcina Amanzi Esikhathi Esomile",

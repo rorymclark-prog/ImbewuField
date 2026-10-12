@@ -1,6 +1,12 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore, blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
@@ -73,6 +79,8 @@ function pairSnapshot(file: string, phase: 'before' | 'after/paired'): any {
 
 /** Verify this newest exact layer before a historical deck test receives its predecessor. */
 export function readingTitleLightestPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   if (!changedPairs.has(file)) return actual;
   ensureCurrentLayer();
   const before = pairSnapshot(file, 'before');
@@ -80,10 +88,13 @@ export function readingTitleLightestPairBefore<T>(file: string, actual: T): T {
   if (JSON.stringify(actual) === JSON.stringify(before)) return structuredClone(actual);
   assert.deepEqual(actual, after, `${file}: caller must supply the complete accepted current source/target/status/index and unlisted state`);
   return before as T;
+  });
 }
 
 /** Compose with older snapshots that have already rewound their own exact leaves. */
 export function readingTitleLightestPairBeforeHistory<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   if (!changedPairs.has(file)) return actual;
   ensureCurrentLayer();
   const before = pairSnapshot(file, 'before');
@@ -112,10 +123,13 @@ export function readingTitleLightestPairBeforeHistory<T>(file: string, actual: T
   `${file}: only the exact accepted predicate or its predecessor may be composed`);
   actualSegments[segmentIndex] = structuredClone(beforeSlide.target.body[4].segments[segmentIndex]);
   return restored;
+  });
 }
 
 /** Byte equivalent for historical validators that bind a whole paired file. */
 export function readingTitleLightestFileBytesBefore(file: string, bytes: Uint8Array | string): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   // The complete binary/manifest owner validates the exact live asset layer.
   // Once it has projected the live manifest, older source owners receive their
   // own exact frozen intermediate snapshots unchanged for their assertions.
@@ -138,10 +152,13 @@ export function readingTitleLightestFileBytesBefore(file: string, bytes: Uint8Ar
   if (JSON.stringify(projected) === JSON.stringify(parsed)) return bytes;
   const text = JSON.stringify(projected, null, 2) + '\n';
   return typeof bytes === 'string' ? text : Buffer.from(text);
+  });
 }
 
 /** Project the one native paragraph only after the complete registry is verified. */
 export function readingTitleLightestNativeBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   const identity = actual as any;
   if (identity?.id !== 'vegetables-staples' || identity?.language !== 'st') return actual;
   ensureCurrentLayer();
@@ -150,10 +167,13 @@ export function readingTitleLightestNativeBefore<T>(actual: T): T {
   if (JSON.stringify(actual) === JSON.stringify(before)) return structuredClone(actual);
   assert.deepEqual(actual, after, 'complete current registry: Sesotho Vegetables must match the accepted full after snapshot');
   return before as T;
+  });
 }
 
 /** Preserve old registry compositions after this exact learner paragraph is verified. */
 export function readingTitleLightestNativeBeforeHistory<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   const identity = actual as any;
   if (identity?.id !== 'vegetables-staples' || identity?.language !== 'st') return actual;
   ensureCurrentLayer();
@@ -177,10 +197,14 @@ export function readingTitleLightestNativeBeforeHistory<T>(actual: T): T {
   paragraphs[proof.nativeParagraph.paragraphIndex] = oldParagraphs[proof.nativeParagraph.paragraphIndex];
   currentLesson.body.sesothoDraft = paragraphs.join('\n\n');
   return restored;
+  });
 }
 
 /** Rewind the resolved presentation before older tests compare the whole learner lesson. */
 export function readingTitleLightestPresentationBeforeHistory<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   if (lessonId !== 'vegetables-staples-l4' || language !== 'st' || value.status !== 'draft') return value;
   ensureCurrentLayer();
   const beforeModule = JSON.parse(readFileSync(repositoryPath(proof.nativeModuleSnapshots.before.path), 'utf8'));
@@ -198,4 +222,5 @@ export function readingTitleLightestPresentationBeforeHistory<T extends { status
   if (JSON.stringify(value.content) === JSON.stringify(before)) return structuredClone(value);
   assert.deepEqual(value.content, content(afterModule), 'complete current Sesotho Vegetables learner presentation before exact paragraph projection');
   return { ...structuredClone(value), content: before };
+  });
 }

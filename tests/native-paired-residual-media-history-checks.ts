@@ -1,9 +1,12 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { reading14ManifestBefore } from './reading-comparisons-media-history-checks.ts';
 import { ensureFinalLanguageNextCurrent } from './final-language-next-checks.ts';
 import { finalLanguageNextManifestBefore, finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 
 const root = 'docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
@@ -81,6 +84,7 @@ function descriptor(path: string) {
 }
 
 export function nativePairedResidualManifestBefore968(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // Validate the new silent-card entry before the dated residual inventory checks its predecessor.
   currentManifest = reading14ManifestBefore(currentManifest);
   const liveManifest = reading14ManifestBefore(readFileSync('lib/course-asset-sizes.ts', 'utf8'));
@@ -166,11 +170,13 @@ export function nativePairedResidualManifestBefore968(currentManifest = readFile
     }
   }
   return before968;
+  });
 }
 
 /** Return a validated current residual frame's exact before-layer descriptor when one exists. */
 let descriptorManifestSignature = '';
 export function nativePairedResidualMediaBefore(path: string): { bytes: number; sha256: string } | null {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October:1900 descriptor lookups must not repeat1900-file scans. Explicit
   // manifest validation remains full; every requested real path is checked below.
   const manifestStat = statSync('lib/course-asset-sizes.ts', {bigint:true});
@@ -185,4 +191,5 @@ export function nativePairedResidualMediaBefore(path: string): { bytes: number; 
   const before = beforeByPath.get(normalized);
   assert.ok(before, `${normalized}: prior residual descriptor is frozen`);
   return { bytes: before.bytes, sha256: before.sha256 };
+  });
 }

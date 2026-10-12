@@ -1,5 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { studyVegetablesTwoResidualSourceBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 import { ensureStudyBACCompositionCurrent, studyABCProjectToMain69 } from './study-b-a-c-source-composition-history-checks.ts';
@@ -77,12 +81,17 @@ assert.equal(workerBefore.length, proof.worker.beforeBytes);
 export const stIntroRuntimeResidualAssets = proof.assets;
 function isTargetPair(file: string) { return file === pairPath; }
 export function stIntroRuntimeResidualPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   if (!isTargetPair(file)) return actual;
   validateLivePair();
   assert.deepEqual(actual, expectedPair, 'exact accepted 17-target layer, complete source/status/order and unlisted preservation');
   return structuredClone(beforePair);
+  });
 }
 export function stIntroRuntimeResidualPairBeforeHistory<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   if (!isTargetPair(file)) return actual;
   validateLivePair();
   if (JSON.stringify(actual) === JSON.stringify(expectedPair)) return structuredClone(beforePair);
@@ -101,12 +110,16 @@ export function stIntroRuntimeResidualPairBeforeHistory<T>(file: string, actual:
     }
   }
   return restored;
+  });
 }
 export function stIntroRuntimeResidualPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = Buffer.from(blindReviewedSourceBefore(file, bytes));
   if (!isTargetPair(file)) return bytes;
   validateLivePair();
   assert.equal(Buffer.from(bytes).toString(), read(pairPath).toString(), 'caller supplied exact current pair bytes');
   return beforeBytes;
+  });
 }
 function validateLivePair() {
   const live = read(pairPath);
@@ -114,6 +127,8 @@ function validateLivePair() {
   assert.deepEqual(JSON.parse(live.toString()), expectedPair, 'complete live silent pair has only the accepted target cells changed');
 }
 export function stIntroRuntimeResidualAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const row = assets.get(path.startsWith('public/') ? path : 'public' + path);
   if (!row) return undefined;
   assert.equal(bytes.length, row.after.bytes, path + ': current compressed still byte count');
@@ -124,8 +139,10 @@ export function stIntroRuntimeResidualAssetBefore(path: string, bytes: Uint8Arra
   assert.equal(compressed.readUInt16LE(26) & 0x3fff, 1440);
   assert.equal(compressed.readUInt16LE(28) & 0x3fff, 5400);
   return { bytes: row.before.bytes, sha256: row.before.sha256, width: row.before.width, height: row.before.height };
+  });
 }
 export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const row = assets.get(path.startsWith('public/') ? path : 'public' + path);
   if (!row) return undefined;
   stIntroRuntimeResidualAssetBefore(path, bytes);
@@ -134,8 +151,11 @@ export function stIntroRuntimeResidualAssetBytesBefore(path: string, bytes: Uint
   assert.equal(before.length, row.before.bytes, path + ': immutable exact prior asset bytes');
   assert.equal(sha(before), row.before.sha256, path + ': immutable exact prior asset SHA');
   return before;
+  });
 }
 export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath).toString()) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', actual)).toString();
   const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
@@ -143,8 +163,11 @@ export function stIntroRuntimeResidualManifestBefore(actual = read(manifestPath)
   if (projectedActual === live) return beforeManifestBytes.toString();
   assert.equal(actual, beforeManifestBytes.toString(), 'caller supplies the exact current manifest or its exact immediate predecessor');
   return actual;
+  });
 }
 export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', actual)).toString();
   const live = Buffer.from(projectValidatedCurrent(manifestPath, read(manifestPath))).toString();
   assert.equal(sha(live), proof.manifest.afterSha256, 'complete live generated asset-size manifest digest');
   assert.equal(live, expectedManifest, 'complete live manifest preserves all non-target rows and exact aggregate');
@@ -155,8 +178,11 @@ export function stIntroRuntimeResidualManifestBeforeHistory(actual: string) {
   catch { return actual; }
   if (projectedActual === live) return beforeManifestBytes.toString();
   return actual;
+  });
 }
 export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   if (file !== workerPath) return bytes;
   const live = Buffer.from(projectValidatedCurrent(workerPath, read(workerPath)));
   assert.equal(sha(live), proof.worker.afterSha256, 'complete live service-worker source digest');
@@ -165,6 +191,7 @@ export function stIntroRuntimeResidualSourceBefore(file: string, bytes: string |
   if (projectedSupplied.equals(live)) return typeof bytes === 'string' ? workerBefore.toString() : workerBefore;
   if (sha(projectedSupplied) === proof.worker.beforeSha256) return bytes;
   return bytes;
+  });
 }
 
 function projectValidatedCurrent(file: string, bytes: string | Uint8Array): string | Uint8Array {

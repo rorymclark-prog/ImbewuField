@@ -7,7 +7,7 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
     "moduleId": "intro-permaculture",
     "language": "st",
     "pairPath": "docs/narration/intro-permaculture.st.silent-draft.json",
-    "pairSha256": "e476474a58deab53f4d360524a53fb214d7aab19b10dd0b43aaff490ea63a310",
+    "pairSha256": "b80d92fbe011e202efa174222f4dec2892ba1f1cd0cf51c8e164f8c87725d095",
     "reviewStatus": "unreviewed",
     "audioBinding": "none",
     "slides": [
@@ -529,13 +529,13 @@ export const COURSE_DECK_RELEASE_ROWS: readonly CourseDeckRelease[] = [
           "Tsamaya ka ntle mme o bapise setshwantsho sa hao le setsha sa sebele.",
           "Ema monyako wa kichine mme o bale seo Zone 1 e nang le sona ka nnete kajeno.",
           "Fumana ntho e le nngwe e lenngweng further away than how often you use it, mme o ngole moo e lokelang ho iswa teng.",
-          "Ebe o botse older neighbour a le mong hore worst wind e tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao."
+          "Ebe o botse moahisani ya hodileng a le mong hore moya o mobe ka ho fetisisa o tswa ka lehlakoreng lefe, mme o bapise karabo ya hae le motsu wa hao."
         ],
         "sourceHash": "bc403a1fafa33ab5f3168f769eb80558f857a1861897f3ad0dc03b0217d738d1",
-        "targetHash": "177f5cbd9071f73e95b8046f70bb07f9a889ca740c93637f5a1ba09d303ed194",
+        "targetHash": "fbee8d1c6caa60e80818d0a737934a9a0fa1c589d17f4a061b022b98fdac7daf",
         "imageUrl": "/course-decks/intro-permaculture/st-silent/slide-22.webp",
-        "imageSha256": "1fd599926f5f11249886a376693aea73bfc387ca9b09d498a0177d44ab288500",
-        "imageBytes": 259458,
+        "imageSha256": "5524fa056b9fa115ef8c26e7aab725de2d18f5c4187f61023a691269f4e1cffa",
+        "imageBytes": 290480,
         "width": 1440,
         "height": 5400
       }

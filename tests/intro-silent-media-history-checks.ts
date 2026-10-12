@@ -1,3 +1,4 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { expandedAssets } from './core-ordinary-expanded-history-checks.ts';
 import { ordinaryFramingAssets } from './ordinary-framing-history-checks.ts';
 import { fairSharingAssets } from './intro-fair-sharing-history-checks.ts';
@@ -8,7 +9,9 @@ import { finalLanguageNextMediaProof } from './final-language-next-media-history
 import { coreHeldOrdinaryAssets } from './core-held-ordinary-history-checks.ts';
 import { currentBatchProof, ensureCurrentBatch, followupAssetBefore, followupAssets } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { nativePairedResidualManifestBefore968 } from './native-paired-residual-media-history-checks.ts';
 import { tsSharedSourceBeforeNativeOrdinary } from './native-ordinary-final-history-checks.ts';
@@ -126,8 +129,10 @@ const laterReplacedURLs = new Set<string>([
 // callers still check every other real file directly, without recursively
 // validating two thousand assets for each unchanged row.
 export function isSilentIntroLaterReplacedAsset(path: string): boolean {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice(6) : path;
   return laterReplacedURLs.has(url) || Boolean(followupAssets[url]?.changed);
+  });
 }
 const observed = new Map<string,{signature:string;bytes:number;sha256:string}>();
 function fileDescriptor(path: string) {
@@ -160,17 +165,21 @@ function verifyCurrentDiskInventory() {
   assert.equal(fileDescriptor('lib/course-modules.ts').sha256,applied.beforeSnapshots['canonical-before.ts.txt'].sha256);
 }
 export function verifySilentIntroAsset(url: string, bytes: Buffer) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const expected=currentInventory.get(url); assert.ok(expected, url + ': claimed current asset');
   assert.equal(bytes.length,expected.bytes,url + ': exact measured bytes');
   assert.equal(sha(bytes),expected.sha256,url + ': exact current asset SHA');
+  });
 }
 export function verifySilentIntroFrame(frame: any, bytes: Buffer) {
+  return withBlindReviewedCorrectionReadScope(() => {
   verifySilentIntroAsset(frame.url,bytes);
   assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');
   assert.equal(bytes.toString('ascii',12,16),'VP8 ');
   assert.equal(bytes.readUInt16LE(26)&0x3fff,frame.width);
   assert.equal(bytes.readUInt16LE(28)&0x3fff,frame.height);
   assert.equal(frame.width,1440);assert.ok(frame.height>=5400);
+  });
 }
 let initialized=false;
 // 6 October 2026: the new silent ST release and three VE/TS stills supersede the
@@ -179,6 +188,7 @@ let initialized=false;
 let validatedManifest: string | undefined;
 let validatedDiskSignature: string | undefined;
 export function liveHistorySignature() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const files = new Set<string>([
     ...[...currentInventory.keys()].map(url => 'public' + url),
     ...applied.verification.oldSTProtectedByteInventory.map((row: any) => row.path),
@@ -195,8 +205,10 @@ export function liveHistorySignature() {
     const s = statSync(path, { bigint: true });
     return [path, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':');
   }).join('|');
+  });
 }
 export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // Both CI jobs reached GitHub's six-hour limit by re-entering the full
   // historical projection for every dated asset. Reuse a successful whole-disk
   // validation only for identical caller bytes and identical filesystem state.
@@ -207,6 +219,7 @@ export function validateSilentIntroMedia(manifest=readFileSync('lib/course-asset
   validateSilentIntroMediaUncached(manifest);
   validatedManifest = manifest;
   validatedDiskSignature = signature;
+  });
 }
 function validateSilentIntroMediaUncached(manifest: string) {
   // The frozen latest batch is validated first. Existing source-history owners
@@ -253,6 +266,7 @@ let projectedManifest: string | undefined;
 let projectedDiskSignature: string | undefined;
 let projectedPredecessor: string | undefined;
 export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-asset-sizes.ts','utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   validateSilentIntroMedia(manifest);
   // The validated disk and caller bytes must still match before reusing the
   // expensive full manifest rewind. A completed validation alone previously
@@ -269,8 +283,10 @@ export function silentIntroAssetSizesBefore(manifest=readFileSync('lib/course-as
   projectedDiskSignature = validatedDiskSignature;
   projectedPredecessor = before;
   return before;
+  });
 }
 export function silentIntroMediaBefore(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   validateSilentIntroMedia();const url=path.startsWith('public/')?path.slice(6):path;
   const actual=fileDescriptor('public'+url);const expected=currentInventory.get(url);assert.ok(expected);
   assert.equal(actual.bytes,expected.bytes);assert.equal(actual.sha256,expected.sha256);
@@ -316,4 +332,5 @@ export function silentIntroMediaBefore(path: string) {
   if(row) return {bytes:row.beforeBytes,sha256:row.beforeSHA256};
   if(followupAssets[url]?.changed || [...coreHeldOrdinaryAssets,...veOrdinaryAssets,...ordinaryFramingAssets,...fairSharingAssets.filter(frame=>frame.before)].some((frame:any)=>frame.url===url)) { const previous=inventory.get(url);assert.ok(previous);return {bytes:previous.bytes,sha256:previous.sha256}; }
   return undefined;
+  });
 }

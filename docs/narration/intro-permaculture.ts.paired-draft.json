@@ -338,8 +338,8 @@
           },
           {
             "status": "draft",
-            "text": "Murimi la xavaka tandza hinkwato ni matsavu hinkwato, kambe a nga hlayisi na xin'we leswaku ndyangu wu ta dya, a nga landzeli People Care.",
-            "provenance": "unreviewed-ai-draft; source paired"
+            "text": "Murimi la xavisaka tandza hinkwato ni matsavu hinkwato, kambe a nga hlayisi na xin'we leswaku ndyangu wu ta dya, a nga landzeli People Care.",
+            "provenance": "2026-10-12 bounded wording independently back-translated without source; unreviewed machine draft, exact English retained; no fluent/farming/narration approval"
           },
           {
             "status": "draft",
@@ -2415,7 +2415,7 @@
             "provenance": "new-unreviewed-machine-draft; exact source paired; publish for facilitator feedback; fluent review remains open; 2026-10-06 root-accepted final ordinary regional draft; canonical source unchanged; English precision anchors remain borrowed/held, not claimed translated; facilitator fluency review pending"
           },
           {
-            "provenance": "Root-reviewed semantic clause/technical hold composition; exact source paired; machine draft NOT fluent reviewed; 2026-10-06.; 2026-10-06 root-accepted source-bound ordinary draft; technical English retained as documented; facilitator fluency review pending",
+            "provenance": "2026-10-12 bounded wording independently back-translated without source; unreviewed machine draft, exact English retained; no fluent/farming/narration approval",
             "status": "mixed",
             "segments": [
               {
@@ -2427,8 +2427,8 @@
               {
                 "sourceEnglish": "one older neighbour",
                 "status": "draft",
-                "text": "older neighbour un’we",
-                "reason": "Count follows the retained age-comparative noun phrase; one/older both remain semantically bound. Retained English is not claimed translated."
+                "text": "muakelani la kuleke un’we",
+                "reason": "Bounded older-neighbour phrase independently back-translated; remaining grammar stays unreviewed."
               },
               {
                 "sourceEnglish": " which direction the ",
@@ -2438,13 +2438,14 @@
               },
               {
                 "sourceEnglish": "worst wind",
-                "status": "english-hold",
-                "reason": "Exact English technical/precision phrase retained by root-reviewed recommendation; source identity is literal."
+                "status": "draft",
+                "reason": "Bounded worst-wind superlative independently checked; English source span unchanged.",
+                "text": "moya wo biha ku tlula hinkwayo"
               },
               {
                 "sourceEnglish": " comes from, and compare their answer with your arrow.",
                 "status": "draft",
-                "text": " yi humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
+                "text": " wu humaka hi yona, u ringanisa nhlamulo ya yena ni museve wa wena.",
                 "reason": "Root-accepted localized clause/framing; source paired. Grammatical ordering may move modifiers within the accepted full field; existing lexical borrowings/capitalized English terms are not a claim of fluent approval."
               }
             ]

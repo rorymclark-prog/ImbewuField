@@ -1,5 +1,7 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_MODULES, type Lesson } from '../lib/course-modules.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
@@ -64,6 +66,7 @@ function expected(lang: Lang) {
 // 6 October supersedes listed ordinary wording, not historical precision coverage.
 // Validate the entire live object first: otherwise a rewind could hide an unlisted regression.
 export function validateAndRewindSoilOrdinary(lang: Lang, current: Data = natives[lang]) {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(hash(fixtureBytes), '800a5b343170469b8f71873145a93cc58aed1ad69d00f724409786dcb6850820');
   assert.deepEqual(canonical, fixture.canonical);
   for (const language of Object.keys(natives) as Lang[]) {
@@ -85,10 +88,12 @@ export function validateAndRewindSoilOrdinary(lang: Lang, current: Data = native
   }
   assert.deepEqual(rewind, fixture.before[lang]);
   return rewind;
+  });
 }
 
 
 export function resolveBeforeSoilOrdinary(lesson: Lesson, language: Parameters<typeof resolveLearnerLessonPresentation>[1]) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const shown = resolveLearnerLessonPresentation(lesson, language);
   if (shown.status !== 'draft' || !['st', 've', 'ts'].includes(language)) return shown;
   const lang = language as Lang;
@@ -105,9 +110,11 @@ export function resolveBeforeSoilOrdinary(lesson: Lesson, language: Parameters<t
     parent[key] = fieldAt(prior, field.fieldPath)[keys[lang]];
   }
   return { ...shown, content };
+  });
 }
 
 export function resolveBeforeFullerSoilPresentation(lesson: Lesson, language: Parameters<typeof resolveLearnerLessonPresentation>[1]) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const shown = resolveBeforeSoilOrdinary(lesson, language);
   if (shown.status !== 'draft') return shown;
   const content = structuredClone(shown.content);
@@ -120,4 +127,5 @@ export function resolveBeforeFullerSoilPresentation(lesson: Lesson, language: Pa
     parent[key] = field.currentTarget;
   }
   return { ...shown, content };
+  });
 }

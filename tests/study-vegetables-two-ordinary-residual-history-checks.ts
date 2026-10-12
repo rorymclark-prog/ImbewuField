@@ -1,6 +1,11 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -69,6 +74,8 @@ function projectNativeBefore<T>(actual: T): T {
 }
 
 export function studyVegetablesTwoResidualSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   if (file === 'app/sw.js/route.ts' || file === 'lib/course-asset-sizes.ts') {
     const row = mediaPacket.sourceFiles[file];
     const live = readFileSync(repositoryPath(file));
@@ -126,9 +133,12 @@ export function studyVegetablesTwoResidualSourceBefore(file: string, bytes: stri
   assert.equal(currentCount, 1, `${row.id}: complete source must contain the unique current target before its projection`);
   const prior = text.replace(row.afterTarget, row.beforeTarget);
   return typeof bytes === 'string' ? prior : Buffer.from(prior);
+  });
 }
 
 export function studyVegetablesTwoResidualAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const url = path.startsWith('public/') ? path.slice(6) : path;
   const row = mediaPacket.assets.find((asset: any) => asset.url === url);
   if (!row) return null;
@@ -136,6 +146,7 @@ export function studyVegetablesTwoResidualAssetBefore(path: string, bytes: Uint8
   const digest = sha(bytes);
   assert.ok(digest === row.afterSha256 || digest === row.beforeSha256, `${url}: exact current or recorded predecessor image bytes`);
   return { bytes: digest === row.afterSha256 ? row.beforeBytes : bytes.byteLength, sha256: digest === row.afterSha256 ? row.beforeSha256 : row.beforeSha256, width: row.width, height: row.height };
+  });
 }
 
 function projectPairedBefore(path: string, actual: any): any {
@@ -163,11 +174,16 @@ function projectPairedBefore(path: string, actual: any): any {
 }
 
 export function studyVegetablesTwoResidualNativeBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   return projectNativeBefore(actual);
+  });
 }
 
 export function studyVegetablesTwoResidualPairedBefore(path: string, actual: any): any {
+  return withBlindReviewedCorrectionReadScope(() => {
   return projectPairedBefore(path, actual);
+  });
 }
 
 export function studyVegetablesTwoResidualPresentationBefore<T extends { status?: string; content: any }>(
@@ -175,6 +191,9 @@ export function studyVegetablesTwoResidualPresentationBefore<T extends { status?
   lessonId: string,
   language: string,
 ): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   const row = packet.changes.find((item: any) => item.lessonId === lessonId && item.language === language);
   if (!row || value.status !== 'draft') return value;
   ensureStudyVegetablesTwoResidualCurrent();
@@ -187,9 +206,11 @@ export function studyVegetablesTwoResidualPresentationBefore<T extends { status?
   priorParagraphs[index] = row.beforeTarget;
   projected.content.body = priorParagraphs.join('\n\n');
   return projected;
+  });
 }
 
 export function ensureStudyVegetablesTwoResidualCurrent(): void {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(packet.status, 'PREPARED_UNREVIEWED_MACHINE_DRAFT_ROOT_REVIEW_PENDING');
   assert.equal(packet.canonicalSourceFile.sha256,
     sha(readFileSync(repositoryPath('lib/course-modules.ts'))), 'canonical source file remains exact');
@@ -212,4 +233,5 @@ export function ensureStudyVegetablesTwoResidualCurrent(): void {
     assert.equal(bytes.byteLength, asset.afterBytes, `${asset.url}: current rendered card length`);
     assert.equal(sha(bytes), asset.afterSha256, `${asset.url}: current rendered card digest`);
   }
+  });
 }

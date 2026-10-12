@@ -1,6 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore, blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { reading14ManifestBefore } from './reading-comparisons-media-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { precisionNativeBefore, precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 
@@ -31,26 +35,35 @@ export const fairSharingAssets: any[] = read('assets.json').assets;
 export const fairSharingZuluSilentRows: any[] = read('zu-silent-rows.json');
 
 export function fairSharingNativeBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   assert.deepEqual(actual, after.ts, 'complete current TS module matches eight reviewed fairness fields, including all unlisted sources and indexes');
   return structuredClone(before.ts);
+  });
 }
 
 export function fairSharingZuluBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   actual = precisionNativeBefore('zu', actual);
   assert.deepEqual(actual, after.zu, 'complete current ZU registry matches three reviewed fairness fields, including all unlisted lessons');
   return structuredClone(before.zu);
+  });
 }
 
 export function fairSharingPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   if (file !== 'docs/narration/intro-permaculture.ts.paired-draft.json') return actual;
   // Some older composition layers have already projected these exact three
   // cells. Accept only that complete frozen predecessor, never a partial rewind.
   if (JSON.stringify(actual) === JSON.stringify(pairBefore)) return structuredClone(pairBefore);
   assert.deepEqual(actual, pairAfter, 'complete TS paired deck matches the three reviewed fairness cells without source or neighbour drift');
   return structuredClone(pairBefore);
+  });
 }
 
 export function fairSharingPresentationBefore<T extends { status: string; content: any }>(lesson: { id: string }, language: string, shown: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   if (lesson.id !== 'intro-permaculture-l1' || language !== 'ts' || shown.status !== 'draft') return shown;
   const prior = before.ts.lessons.find((row: any) => row.id === lesson.id);
   const text = (pair: any) => pair.reviewStatus === 'hold' ? pair.sourceEnglish : pair.xitsongaDraft;
@@ -67,9 +80,12 @@ export function fairSharingPresentationBefore<T extends { status: string; conten
       q: text(row.question), options: row.options.map(text), correct: row.sourceCorrectIndex, rationale: text(row.rationale),
     })),
   } };
+  });
 }
 
 export function fairSharingSourceBytesBefore(file: string, bytes: string | Uint8Array): string {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   if (file === 'lib/course-asset-sizes.ts') bytes = reading14ManifestBefore(Buffer.from(bytes).toString());
   bytes = precisionSourceBytesBefore(file, bytes);
   const row = files[file];
@@ -78,12 +94,16 @@ export function fairSharingSourceBytesBefore(file: string, bytes: string | Uint8
   const previous = readFileSync(folder + row.before.path);
   assert.equal(sha(previous), row.before.sha256, `${file}: exact complete predecessor`);
   return previous.toString();
+  });
 }
 
 export function fairSharingAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const row = fairSharingAssets.find(row => 'public' + row.url === path);
   if (!row) return null;
   assert.equal(bytes.length, row.bytes, `${path}: corrected card's measured byte count`);
   assert.equal(sha(bytes), row.sha256, `${path}: corrected card's full content hash`);
   return row.before && { bytes: row.before.bytes, sha256: row.before.sha256, width: row.width, height: row.height };
+  });
 }

@@ -251,9 +251,9 @@
           },
           {
             "status": "draft",
-            "text": "Sisinya dinonyana pele di senya fatshe.",
-            "provenance": "unreviewed-machine-draft; blind back-translation checked",
-            "backTranslation": "Move the birds before they damage the ground."
+            "text": "Suthisa dinonyana pele di senya fatshe.",
+            "provenance": "2026-10-12 bounded wording independently back-translated without source; unreviewed-machine-draft, exact English retained; no fluent/farming/narration approval",
+            "backTranslation": "Move [shift aside] the birds before they damage/spoil the ground. (Model-only; remaining grammar ambiguous.)"
           }
         ]
       }

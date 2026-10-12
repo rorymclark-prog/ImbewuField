@@ -1,6 +1,8 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { validateAndRewindIntroFullPaired } from './intro-full-ordinary-paired-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 
@@ -20,6 +22,7 @@ const resolve = (part: Part, source: string) => part.status === 'draft' ? part.t
 // 2026-10-06: root accepted 54 complete targets, not every earlier candidate.
 // Check the live approved layer first; restoring old fields must not conceal drift.
 export function validateAndRewindIntroOrdinary(decks = readCurrentIntroDecks()) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October 2026: validate all72 newer accepted objects and every unlisted
   // source/status first, then preserve the original54-field historical assertions.
   decks = validateAndRewindIntroFullPaired(decks);
@@ -67,9 +70,12 @@ export function validateAndRewindIntroOrdinary(decks = readCurrentIntroDecks()) 
   }
   assert.deepEqual(restored, before, 'all unlisted target/status/provenance, 330 source fields, order and ST deck remain exact');
   return restored;
+  });
 }
 
 export function introDeckBeforeOrdinary(language: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.ok(['ve', 'ts', 'st'].includes(language));
   return validateAndRewindIntroOrdinary()[language];
+  });
 }

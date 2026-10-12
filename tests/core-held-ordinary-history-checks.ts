@@ -1,9 +1,14 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { veOrdinaryPairBefore, veOrdinaryPairBeforeHistory, veOrdinaryManifestBefore, veOrdinaryAssetBefore, veOrdinaryPairBytesBefore } from './ve-ordinary-reviewed-history-checks.ts';
 import { veReadingFrostPairBefore, frostFiles } from './ve-reading-frost-history-checks.ts';
 import assert from 'node:assert/strict';
 import { followupPairBeforeHistory, isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
 import { readingTitleLightestPairBefore, readingTitleLightestPairBeforeHistory, readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { stIntroRuntimeResidualPairBefore, stIntroRuntimeResidualPairBeforeHistory, stIntroRuntimeResidualPairBytesBefore,
   stIntroRuntimeResidualAssetBefore, stIntroRuntimeResidualAssetBytesBefore, stIntroRuntimeResidualManifestBeforeHistory } from './st-intro-runtime-residual-history-checks.ts';
@@ -30,6 +35,7 @@ for (const row of plan.groups) {
 }
 let signature = '';
 export function ensureCoreHeldOrdinaryText() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
   for (const [file, value] of Object.entries(expected)) {
@@ -38,10 +44,13 @@ export function ensureCoreHeldOrdinaryText() {
     assert.deepEqual(veOrdinaryPairBefore(file, afterRuntime), value, 'complete latest layers and all unlisted source/target objects');
   }
   signature = next;
+  });
 }
 /** The newer layer must be checked in full before dated tests see its predecessor.
  * Explicit callers cannot hide corruption by supplying an already-rewound object. */
 export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = stIntroRuntimeResidualPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
@@ -51,8 +60,11 @@ export function coreHeldOrdinaryPairBefore<T>(file: string, actual: T): T {
   if (!(file in expected)) return actual;
   assert.deepEqual(actual, expected[file], 'caller supplies the complete accepted latest paired layer, including unlisted objects');
   return structuredClone(before[file]);
+  });
 }
 export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = stIntroRuntimeResidualPairBeforeHistory(file, actual);
   actual = followupPairBeforeHistory(file, actual);
@@ -72,8 +84,11 @@ export function coreHeldOrdinaryPairBeforeHistory<T>(file: string, actual: T): T
     else slide.target.body[Number(index)]=structuredClone(row.before);
   }
   return restored;
+  });
 }
 export function coreHeldOrdinaryPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = Buffer.from(blindReviewedSourceBefore(file, bytes));
   // Verify caller bytes before reversing the newer checked layer; old guards
   // still see their exact complete predecessor, not a permissive partial view.
   bytes = readingTitleLightestFileBytesBefore(file, bytes) as Uint8Array;
@@ -83,12 +98,15 @@ export function coreHeldOrdinaryPairBytesBefore(file: string, bytes: Uint8Array)
   coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.equal(Buffer.from(bytes).toString(),readFileSync(file,'utf8'),'caller bytes are actual live paired bytes');
   return readFileSync(folder+'before/'+file.replaceAll('/','__')+'.json');
+  });
 }
 const assetProofBytes=readFileSync(folder+'converted-assets.json');
 assert.equal(sha(assetProofBytes),'b6934367991b39d54fd34761f0cb88f7ae6500a13e429d7e8fd53fbbd43b642f','measured69-card before/after/dimension proof is immutable');
 export const coreHeldOrdinaryAssets: any[] = JSON.parse(assetProofBytes.toString()).assets;
 const assets = new Map(coreHeldOrdinaryAssets.map(row => ['public'+row.url,row]));
 export function coreHeldOrdinaryAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const row = assets.get(path);
   const runtimeBytes = stIntroRuntimeResidualAssetBytesBefore(path, bytes);
   const runtimePrevious = runtimeBytes ? stIntroRuntimeResidualAssetBefore(path, bytes) : undefined;
@@ -98,6 +116,7 @@ export function coreHeldOrdinaryAssetBefore(path: string, bytes: Uint8Array) {
   assert.equal(newer?.bytes ?? currentLayerBytes.length,row.afterBytes,path+': exact current measured bytes');
   assert.equal(newer?.sha256 ?? sha(currentLayerBytes),row.afterSHA256,path+': exact current SHA');
   return { bytes:row.beforeBytes,sha256:row.beforeSHA256,width:row.beforeDimensions[0],height:row.beforeDimensions[1] };
+  });
 }
 const oldManifest = readFileSync(folder+'before/manifest.ts.txt','utf8');
 let expectedManifest = oldManifest;
@@ -114,8 +133,11 @@ expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total/1024/1024).toF
 const lines = [...expectedManifest.matchAll(/^  '[^']+': \d+,$/gm)].map(row=>row[0]);
 expectedManifest = expectedManifest.replace(/(^  '[^']+': \d+,\n)+/m, lines.sort().join('\n')+'\n');
 export function coreHeldOrdinaryManifestBefore(actual: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', actual)).toString();
   actual = stIntroRuntimeResidualManifestBeforeHistory(actual);
   actual = veOrdinaryManifestBefore(actual);
   assert.equal(actual,expectedManifest,'complete current final-language manifest after checked 69-card layer');
   return oldManifest;
+  });
 }
