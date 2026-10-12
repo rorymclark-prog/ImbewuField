@@ -334,3 +334,74 @@ test('IsiZuluDraftSource: English-only when no draft, draft above exact English 
   assert.match(source, /English source: \{english\}/, 'the exact English must stay beside any draft');
   assert.match(source, /\(zulu \|\| looked\('zu'\)\)/, 'a supplied isiZulu sentence must win over the lookup');
 });
+
+/* ── Invoice page: the same guarantees for /invoice ───────────────────────────────────────────── */
+
+const INVOICE_PAGE = read('app/invoice/page.tsx');
+// Buyer-type names are the VALUE of the customer list and print as the buyer name on the invoice,
+// so their labels are deliberately not translated (see the packet README, "Round 3").
+const INVOICE_NOT_WIRED = new Set(['Neighbour', 'Spaza shop', 'Bakkie trader', 'Market stall', 'Hawker', 'School', 'Crèche', 'Church', 'Restaurant or lodge', 'Co-op']);
+const INVOICE_TECHNICAL = new Set(['kg', 'guide price from']);
+
+/** Every English sentence the invoice screen can hand to ui() or the template lookup. */
+function invoiceEnglish(): Set<string> {
+  const found = new Set<string>();
+  for (const m of INVOICE_PAGE.matchAll(/\bui\(\s*(?:'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)")/g)) found.add((m[1] ?? m[2]).replace(/\\'/g, "'"));
+  for (const m of INVOICE_PAGE.matchAll(/recordsTemplate\(lang, '((?:[^'\\\n]|\\.)*)'/g)) found.add(m[1].replace(/\\'/g, "'"));
+  for (const m of INVOICE_PAGE.matchAll(/\{ label: '((?:[^'\\\n]|\\.)*)', days:/g)) found.add(m[1]); // payment terms chips
+  for (const m of read('lib/invoice-entry.ts').matchAll(/return '((?:[^'\\\n]|\\.)*)'/g)) { if (/[a-z]{3} [a-z]{3}/.test(m[1])) found.add(m[1]); } // validation messages shown via ui(error.message)
+  for (const m of INVOICE_PAGE.matchAll(/\? '((?:Estimated|Recommended)[^']*)'|: '(Sourced guide\.)'/g)) found.add(m[1] ?? m[2]);
+  found.add('Enter a positive quantity. Eggs and items need whole numbers.');
+  for (const name of [...INVOICE_NOT_WIRED, ...INVOICE_TECHNICAL]) found.delete(name);
+  return found;
+}
+
+test('every English sentence the invoice page renders has a draft or an explicit hold in each regional language', () => {
+  const literals = invoiceEnglish();
+  assert.ok(literals.size > 120, `expected the whole invoice screen, found ${literals.size}`);
+  const packet = (lang: string) => JSON.parse(read(`docs/translation-reviews/records-finance-2026-10-06/draft-${lang}.json`)) as Array<{ english: string; status: string }>;
+  for (const lang of LANGS) {
+    const held = new Set(packet(lang).filter((row) => row.status === 'held').map((row) => row.english));
+    const missing = [...literals].filter((english) => /[A-Za-z]{2}/.test(english) && recordsDraft(lang, english) === null && !held.has(english));
+    assert.deepEqual(missing, [], `${lang}: English on the invoice page with neither a draft nor a recorded hold`);
+  }
+});
+
+test('invoice page ui(): regional languages read the English-keyed lookup, English is untouched, isiZulu keeps its wording', () => {
+  assert.match(INVOICE_PAGE, /if \(!isRecordsRegionalLang\(lang\)\) return english;/, 'any other language keeps English');
+  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) \? recordsPaired\(lang, english\) : recordsFill\(lang, english\)/, 'sentences a farmer acts on keep the English beside the draft');
+  assert.match(INVOICE_PAGE, /recordsFill\('zu', english, isiZulu \?\? INVOICE_ZU\[english\] \?\? english\)/, 'existing isiZulu wording wins; a draft only fills an English fallback');
+  assert.match(INVOICE_PAGE, /INVOICE_PAIRED_COPY\.has\(english\) && zulu !== english/, 'a paired sentence is paired only when there is a translation to pair (it used to print the English twice)');
+  assert.match(INVOICE_PAGE, /recordsFill\(lang, paymentMethodLabel\(method\)\)/);
+  assert.match(INVOICE_PAGE, /recordsQuantityLabel\(sale, lang\)/);
+  assert.doesNotMatch(INVOICE_PAGE, /recordQuantityLabel\(/, 'the recorded-sale picker must not bypass the unit-word lookup');
+  assert.match(INVOICE_PAGE, /data-records-draft-notice=\{lang\}/);
+  assert.match(INVOICE_PAGE, /The invoice a buyer receives \(print and PDF\) stays in English\./);
+});
+
+test('the price-guide sentences keep their rand figure and date when drafted', () => {
+  for (const lang of ['en', 'zu', ...LANGS]) {
+    for (const [template, vars] of [
+      ['Shops/bulk about R{price}/kg', { price: 12.5 }], ['Direct/farm gate about R{price}/kg', { price: 18 }],
+      ['direct/farm gate about R{price}/kg', { price: 18 }], ['shops/bulk about R{price}/kg', { price: 12.5 }],
+      ['guide price from {date}.', { date: 'Oct 2026' }],
+    ] as const) {
+      const shown = recordsTemplate(lang, template, null, vars);
+      assert.doesNotMatch(shown, /\{[a-zA-Z]+\}/, `${lang}: unfilled placeholder in "${template}"`);
+      for (const value of Object.values(vars)) assert.ok(shown.includes(String(value)), `${lang}: "${template}" lost its figure`);
+    }
+  }
+  assert.equal(recordsTemplate('en', 'Shops/bulk about R{price}/kg', null, { price: 12.5 }), 'Shops/bulk about R12.5/kg');
+});
+
+test('the invoice a buyer receives stays English whatever the farmer reads: print and PDF ignore the regional languages', async () => {
+  const { buildInvoiceDocument } = await import('../lib/invoice-document.ts');
+  const input = {
+    no: 44, issuedISO: '2026-06-24T08:00:00.000Z', seller: { name: 'Thandi Mbeki' }, buyer: { name: 'Spar Nquthu' },
+    items: [{ desc: 'Amadumbe', qty: 8, unit: 'bags', price: 95 }], status: 'paid' as const, paidAt: '2026-06-25T08:00:00.000Z', paymentMethod: 'eft' as const,
+    dueISO: '2026-07-24T08:00:00.000Z',
+  };
+  const english = buildInvoiceDocument({ ...input, language: 'en' });
+  for (const lang of LANGS) assert.deepEqual(buildInvoiceDocument({ ...input, language: lang }), english, `${lang}: the document must be the English one`);
+  assert.notDeepEqual(buildInvoiceDocument({ ...input, language: 'zu' }), english, 'isiZulu documents are unchanged by this round');
+});
