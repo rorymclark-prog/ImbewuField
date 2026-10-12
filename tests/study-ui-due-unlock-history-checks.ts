@@ -1,6 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -41,6 +44,7 @@ for (const [key, value] of Object.entries(acceptedAdditions)) {
 assert.deepEqual(currentLocale, expectedLocale, 'only the nine accepted VE labels are added; every pre-existing entry stays exact');
 
 export function ensureStudyUiDueUnlockCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const liveSource = readFileSync(path('lib/locales/ve.ts'));
   assert.equal(sha(liveSource), '0062c005b859e3723ce3ca24923cd8880d7f078c09f2b8c67f3df91a92790a69', 'complete live VE source bytes for the newest accepted layer');
   // Main #990 adds report-footnote keys to the shared app dictionary, outside
@@ -54,10 +58,13 @@ export function ensureStudyUiDueUnlockCurrent() {
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   assert.equal(sha(readFileSync(path('lib/locales/zu.ts'))), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
+  });
 }
 
 /** Project the exact predecessor only after the complete current source hash validates. */
 export function studyUiDueUnlockSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   if (file !== 'lib/locales/ve.ts') return bytes;
   ensureStudyUiDueUnlockCurrent();
   const supplied = Buffer.from(bytes);
@@ -65,13 +72,16 @@ export function studyUiDueUnlockSourceBefore(file: string, bytes: string | Uint8
   if (supplied.equals(predecessorSource)) return bytes;
   if (supplied.equals(live)) return typeof bytes === 'string' ? predecessorSource.toString() : predecessorSource;
   return bytes;
+  });
 }
 
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);
   return actual;
+  });
 }

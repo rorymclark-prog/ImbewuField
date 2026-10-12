@@ -1,7 +1,10 @@
+import { blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextPairedBytesBefore, finalLanguageNextDeckBeforeHistory } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
 const root = '../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/native-paired-residual-layer-2026-10-06/';
@@ -36,6 +39,9 @@ function visible(target: any): string {
 
 /** Check every current pair file/cell before returning this layer's complete previous deck. */
 export function deckBeforeNativePairedResidual<T extends { language: string; slides: any[] }>(actual: T, moduleId: 'vegetables-staples' | 'market-community'): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // The bounded current heading is validated before this complete predecessor deck.
+  actual = blindReviewedPairBefore(`docs/narration/${moduleId}.${actual.language}.paired-draft.json`, actual);
   const currentFiles: Record<string, any> = {};
   for (const path of paths) {
     // Later 39 paired cells must pass their entire current layer before this older hash.
@@ -73,8 +79,11 @@ export function deckBeforeNativePairedResidual<T extends { language: string; sli
   assert.ok(currentFiles[pairedPath], `${actual.language}: caller deck belongs to the validated six-file set`);
   assert.deepEqual(finalLanguageNextDeckBeforeHistory(pairedPath, actual), currentFiles[pairedPath].current, `${pairedPath}: caller supplied the verified current deck`);
   return structuredClone(currentFiles[pairedPath].previous);
+  });
 }
 
 export function vegetablesDeckBeforeNativePairedResidual<T extends { language: string; slides: any[] }>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   return deckBeforeNativePairedResidual(actual, 'vegetables-staples');
+  });
 }

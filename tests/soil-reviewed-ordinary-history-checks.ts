@@ -1,8 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { liveHistorySignature } from './intro-silent-media-history-checks.ts';
 import { marketAssetSizesBeforeOrdinary } from './market-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
@@ -107,7 +109,9 @@ function verifyCurrentDeck(deck: { slides: any[] }, language: string) {
 }
 
 export function soilDeckBeforeOrdinary<T extends { slides: any[] }>(deck: T, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   return verifyCurrentDeck(deck, language) as T;
+  });
 }
 
 function checkCurrentAssetsAndManifest(currentManifest?: string) {
@@ -135,6 +139,7 @@ function checkCurrentAssetsAndManifest(currentManifest?: string) {
 
 let validatedSoilProjection: { manifest: string; signature: string; before: string } | undefined;
 export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const manifest = currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const signature = liveHistorySignature();
   // Repeated per-frame views share one complete successful reconstruction.
@@ -143,6 +148,7 @@ export function soilAssetSizesBeforeOrdinary(currentManifest?: string) {
   const before = soilAssetSizesBeforeOrdinaryUncached(manifest);
   validatedSoilProjection = { manifest, signature, before };
   return before;
+  });
 }
 function soilAssetSizesBeforeOrdinaryUncached(currentManifest?: string) {
   // 2026-10-06: validate the complete newer Market layer before the older media history.
@@ -160,6 +166,7 @@ function soilAssetSizesBeforeOrdinaryUncached(currentManifest?: string) {
 }
 
 export function soilMediaBeforeOrdinary(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const residual = soilWaterResidualMediaBefore(path);
   const row = assets.find(item => 'public' + item.url === path);
   // A nonmember returns only its actual descriptor, not a historical claim.
@@ -181,10 +188,13 @@ export function soilMediaBeforeOrdinary(path: string) {
   assert.equal(sha(bytes), row.sha256, `${path}: verify current accepted image before historical rewind`);
   assert.equal(bytes.length, row.bytes);
   return { sha256: row.beforeSHA256, bytes: priorAssetBytes[row.url] };
+  });
 }
 
 export function soilMediaSHAForEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const soil = soilMediaBeforeOrdinary(path);
   const intro = introMediaBeforeEarlierProof(path);
   return intro?.sha256 ?? soil.sha256;
+  });
 }

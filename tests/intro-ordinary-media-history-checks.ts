@@ -1,10 +1,12 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import { validateAndRewindIntroFullPaired } from './intro-full-ordinary-paired-checks.ts';
 import { marketAssetSizesBeforeOrdinary, marketMediaBeforeEarlierProof } from './market-ordinary-media-history-checks.ts';
 import { vegetablesAssetSizesBeforePestPrecision } from './vegetables-pest-precision-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 
 const proofPath = 'docs/media/intro-ordinary-paired-2026-10-06/frames.json';
@@ -109,6 +111,7 @@ const priorTotalComment = '// 1905 files, 708.5 MB total.';
 
 /** Validate all 30 current Intro frames, deck bindings and unlisted media before rewinding its exact later overlay. */
 export function introAssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 2026-10-06: always validate the full accepted Market after-layer first, even
   // when the caller already supplied its exact baseline through the history chain.
   const marketPrior = marketAssetSizesBeforeOrdinary(currentManifest);
@@ -129,11 +132,13 @@ export function introAssetSizesBeforeOrdinary(currentManifest?: string) {
   assert.equal(sha(prior), priorManifestSHA256,
     'rewinding only the 30 Intro entries and their aggregate comment restores the exact pre-Intro manifest');
   return prior;
+  });
 }
 
 /** Return an earlier proof's frame descriptor only for an Intro URL superseded by this accepted overlay. */
 let guardedHistoricalManifestInitialized = false;
 export function introMediaBeforeEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October 2026: validate the entire real later media/manifest chain once
   // before exposing dated descriptors. Calling that same upstream normalization
   // for every protected asset multiplied the older Soil/Water proof work.
@@ -146,4 +151,5 @@ export function introMediaBeforeEarlierProof(path: string) {
   const frame = frames.find(row => row.asset === normalized);
   if (!frame) return marketMediaBeforeEarlierProof(path);
   return { sha256: frame.old.sha256, bytes: frame.old.bytes };
+  });
 }

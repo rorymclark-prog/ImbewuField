@@ -4,7 +4,8 @@ import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-m
 import { marketAssetSizesBeforeOrdinary, validateCurrentMarketOrdinaryMedia, marketFrameBeforeNativeResidual } from './market-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the five new stills before this dated complete Market inventory reads its predecessor.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { marketDeckBeforeOrdinary, marketDeckBeforeNativeResidual, readCurrentMarketDecks } from './market-ordinary-deck-checks.ts';

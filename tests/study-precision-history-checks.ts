@@ -1,6 +1,11 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { comparisonsNativeBefore, comparisonsSourceBefore } from './reading-comparisons-history-checks.ts';
 
@@ -57,6 +62,7 @@ for (const [file, proof] of Object.entries(precisionPlan.files) as [string, any]
 }
 let lastSignature = '';
 export function ensurePrecisionCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const files = [...Object.keys(precisionPlan.files), 'lib/course-modules.ts'];
   const signature = files.map(file => { const s = statSync(file, { bigint: true }); return [file,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (signature === lastSignature) return;
@@ -67,8 +73,11 @@ export function ensurePrecisionCurrent() {
   }
   assert.equal(sha(readFileSync('lib/course-modules.ts')), 'abfc288afe6715ec7345ec9d35d48faa54580fb73b4cb50ebaa1cf9105a7b397', 'canonical English is unchanged');
   lastSignature = signature;
+  });
 }
 export function precisionNativeBefore<T>(language: 'zu' | 've', actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   ensurePrecisionCurrent();
   if (language === 'zu') actual = comparisonsNativeBefore('zu', actual);
   // A higher historical layer may already have projected this exact complete
@@ -76,8 +85,11 @@ export function precisionNativeBefore<T>(language: 'zu' | 've', actual: T): T {
   if (JSON.stringify(actual) === JSON.stringify(precisionBefore[language])) return structuredClone(actual);
   assert.deepEqual(actual, precisionAfter[language], language + ': complete latest precision registry');
   return structuredClone(precisionBefore[language]);
+  });
 }
 export function precisionSourceBytesBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   bytes = comparisonsSourceBefore(file, bytes);
   const proof = precisionPlan.files[file];
   if (!proof) return bytes;
@@ -86,4 +98,5 @@ export function precisionSourceBytesBefore(file: string, bytes: string | Uint8Ar
   if (text === proof.before) return bytes;
   assert.equal(text, proof.after, file + ': caller supplies complete accepted precision bytes');
   return proof.before;
+  });
 }

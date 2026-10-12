@@ -1,8 +1,11 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary, vegetablesL1MediaBeforeEarlierProof } from './vegetables-l1-ordinary-media-history-checks.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { vegetablesDeckBeforeL3Ordinary } from './vegetables-l3-ordinary-residual-checks.ts';
@@ -33,6 +36,7 @@ function observedFile(path: string) {
 // 6 October 2026: eleven accepted ordinary paragraph compositions change eight
 // Vegetables frames. The complete later layer must pass before any dated rewind.
 export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October 2026: validate the later five L1 frames before reconstructing this L3 media claim.
   const acceptedL1 = validateCurrentVegetablesL1OrdinaryMedia();
   currentManifest = vegetablesL1AssetSizesBeforeOrdinary(currentManifest);
@@ -134,19 +138,23 @@ export function validateCurrentVegetablesL3OrdinaryMedia(currentManifest = readF
     assert.equal(actual.sha256, row.sha256, row.path);
   }
   return JSON.parse(proofBytes.toString());
+  });
 }
 
 
 // Expose only the exact frozen complete before state after real current validation.
 export function vegetablesL3AssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   validateCurrentVegetablesL3OrdinaryMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const before = readFileSync(folder + 'asset-sizes-before.ts.txt', 'utf8');
   if (currentManifest === undefined || currentManifest === actual) return before;
   assert.equal(currentManifest, before, 'only the exact guarded Vegetables L3 manifest baseline may be exposed');
   return before;
+  });
 }
 export function vegetablesL3MediaBeforeEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   // Newer69-card descriptors represent this layer's output. Own members must
   // still pass the full L3 guard and reach its exact input for older claims.
@@ -154,4 +162,5 @@ export function vegetablesL3MediaBeforeEarlierProof(path: string) {
   const proof = validateCurrentVegetablesL3OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;
+  });
 }

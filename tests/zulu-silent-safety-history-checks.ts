@@ -1,6 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ensureStudyBACCompositionCurrent, studyABCProjectToC } from './study-b-a-c-source-composition-history-checks.ts';
@@ -18,6 +21,8 @@ assert.equal(proof.acceptedTextPacketSha256, '80b56bf5ee4a2f60877f9c11254d9c0e79
 
 /** Project only byte-exact current worker/manifest files to this layer's saved predecessor. */
 export function zuluSilentSafetySourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   const row = proof.files.find((item: any) => item.path === file);
   if (!row) return bytes;
   ensureStudyBACCompositionCurrent();
@@ -53,4 +58,5 @@ export function zuluSilentSafetySourceBefore(file: string, bytes: string | Uint8
     : raw;
   if (supplied.equals(live)) return typeof bytes === 'string' ? before.toString() : before;
   return bytes;
+  });
 }

@@ -1,5 +1,7 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { studyBAProjectToA } from './study-b-a-source-composition-history-checks.ts';
 
@@ -86,6 +88,7 @@ function validateComposition() {
 }
 
 export function readingTitleLightestMain985PostLayerBefore(file: string, supplied: Uint8Array | string): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
   if (!watched.has(file)) return supplied;
   validateComposition();
   const row = proof.files[file];
@@ -99,10 +102,12 @@ export function readingTitleLightestMain985PostLayerBefore(file: string, supplie
   // They compare those complete bytes to their immutable claims after this full
   // live-layer validation; do not rewrite or bless those caller values here.
   return supplied;
+  });
 }
 
 /** Project newest A to exact main837/PR985-after bytes, then PR985 to its immutable older input. */
 export function readingTitleLightestThroughMain985Before(file: string, supplied: Uint8Array | string): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
   const post985 = readingTitleLightestMain985PostLayerBefore(file, supplied);
   if (!watched.has(file)) return post985;
   validateComposition();
@@ -112,4 +117,5 @@ export function readingTitleLightestThroughMain985Before(file: string, supplied:
   const prior = readSnapshot(row.pr985BeforePath);
   assert.equal(sha(prior), row.pr985BeforeSha256, `${file}: exact pre-PR985 snapshot before older owners`);
   return typeof supplied === 'string' ? prior.toString() : prior;
+  });
 }

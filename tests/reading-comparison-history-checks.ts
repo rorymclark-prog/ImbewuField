@@ -1,5 +1,7 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { SESOTHO_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-st-reading-landscape.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -17,6 +19,7 @@ export const readingComparisonAcceptedClause = 'Dibaka tsena di ka bata ho feta 
 // Validate the entire accepted overlay before rewinding the single reviewed word;
 // otherwise a historical snapshot could hide unrelated source or assessment drift.
 export function validateAndRewindReadingComparison(current: typeof SESOTHO_READING_LANDSCAPE_DRAFT) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // Later ordinary-prose fields legitimately changed this registry. Validate the
   // complete latest source/target/status overlay before testing the older one-word claim.
   const prior = nativeOrdinaryBeforeFinalBatch(current);
@@ -32,10 +35,13 @@ export function validateAndRewindReadingComparison(current: typeof SESOTHO_READI
   restored.lessons[2].body.sesothoDraft = oldBody;
   assert.deepEqual(restored, readingComparisonBefore, 'all unlisted fields, statuses, source bindings and correct indices stay exact');
   return restored;
+  });
 }
 
 export function readingBodyBeforeComparison(currentBody: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const historical = validateAndRewindReadingComparison(SESOTHO_READING_LANDSCAPE_DRAFT);
   assert.equal(currentBody, SESOTHO_READING_LANDSCAPE_DRAFT.lessons[2].body.sesothoDraft, 'passed resolved body is the actual accepted current learner body');
   return historical.lessons[2].body.sesothoDraft;
+  });
 }

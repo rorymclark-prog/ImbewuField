@@ -1,8 +1,11 @@
+import { blindReviewedSourceBefore, blindReviewedNativeBefore, blindReviewedPairBefore, withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { mapNativeBefore, mapPresentationBefore } from './reading-map-comparisons-history-checks.ts';
 import assert from 'node:assert/strict';
 import { followupNativeBefore, followupPresentationBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 import { comparisonsNativeBefore, comparisonsPresentationBefore } from './reading-comparisons-history-checks.ts';
 import { coreHeldOrdinaryPairBefore, coreHeldOrdinaryPairBeforeHistory, coreHeldOrdinaryPairBytesBefore, coreHeldOrdinaryAssetBefore, ensureCoreHeldOrdinaryText } from './core-held-ordinary-history-checks.ts';
@@ -49,9 +52,13 @@ for (const row of plan.pairPlans) {
   else slide.target.body[row.index] = row.afterObject;
 }
 export function readFinalLanguageNextInputs() {
+  return withBlindReviewedCorrectionReadScope(() => {
   return { native: structuredClone(finalLanguageNextNativeFiles), paired: Object.fromEntries(Object.keys(expectedPairs).map(file => [file, JSON.parse(readFileSync(file, 'utf8'))])) };
+
+  });
 }
 export function validateFinalLanguageNextText(input = readFinalLanguageNextInputs()) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 7 October adds 109 reviewed paired leaves. Validate that complete newer
   // layer before preserving these older 39-field claims against their baseline.
   input = {
@@ -100,17 +107,24 @@ export function validateFinalLanguageNextText(input = readFinalLanguageNextInput
     const bytes = readFileSync(item.path);
     assert.equal(coreHeldOrdinaryAssetBefore(item.path,bytes)?.sha256 ?? sha(coreHeldOrdinaryPairBytesBefore(item.path,bytes)), item.sha256, 'ST archives and audio remain exact; checked active silent cards expose their predecessor');
   }
+
+  });
 }
 // Historical accessors cache validation only while all relevant disk signatures
 // remain unchanged; explicit caller objects are always compared in full.
 let lastSignature = '';
 export function ensureFinalLanguageNextCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureCoreHeldOrdinaryText();
   const files = [...Object.keys(expectedPairs), ...Object.keys(expectedNative), 'lib/course-modules.ts', ...plan.protectedInventory.map((item: any) => item.path)];
   const signature = files.map(file => { const s = statSync(file, { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
   if (signature !== lastSignature) { validateFinalLanguageNextText(); lastSignature = signature; }
+
+  });
 }
 export function finalLanguageNextNativeBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   // 8 October: validate/project the newer ST observation clause before dated language snapshots.
   actual = studyRemainingControlsNativeBefore(actual);
   actual = readingTitleLightestNativeBeforeHistory(actual);
@@ -129,21 +143,33 @@ export function finalLanguageNextNativeBefore<T>(actual: T): T {
   if (!file) return actual;
   assert.deepEqual(actual, expectedNative[file], 'caller supplies the complete accepted latest native layer, not a pre-rewound/mutated module');
   return structuredClone(beforeNative[file]);
+
+  });
 }
 export function finalLanguageNextDeckBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = readingTitleLightestPairBeforeHistory(file, actual);
   actual = veReadingFrostPairBefore(file, actual);
   ensureFinalLanguageNextCurrent(); if (!(file in expectedPairs)) return coreHeldOrdinaryPairBefore(file, actual);
   actual = coreHeldOrdinaryPairBefore(file, actual);
   assert.deepEqual(actual, expectedPairs[file], 'caller supplies the complete accepted latest paired layer');
   return structuredClone(beforePairs[file]);
+
+  });
 }
 export function finalLanguageNextDeckBeforeCurrent<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   const deck = actual as any;
   const file = Object.keys(expectedPairs).find(file => expectedPairs[file].language === deck?.language && expectedPairs[file].slides[0].english.heading === deck?.slides?.[0]?.english?.heading);
   return file ? finalLanguageNextDeckBefore(file, actual) : actual;
+
+  });
 }
 export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Array | string): string {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Caller and disk must expose the same fully validated successor/predecessor view.
+  bytes = blindReviewedSourceBefore(file, bytes);
   const suppliedCurrent = Buffer.from(bytes).toString();
   assert.equal(suppliedCurrent, readFileSync(file, 'utf8'), 'passed paired bytes are actual current bytes');
   bytes = readingTitleLightestFileBytesBefore(file, bytes);
@@ -153,11 +179,16 @@ export function finalLanguageNextPairedBytesBefore(file: string, bytes: Uint8Arr
   const actual = coreHeldOrdinaryPairBefore(file, JSON.parse(Buffer.from(bytes).toString()));
   assert.deepEqual(actual, expectedPairs[file], 'whole listed paired bytes match accepted source/target/status before dated hash view');
   return readFileSync(folder + 'before/' + file.replaceAll('/', '__') + '.txt', 'utf8');
+
+  });
 }
 
 /** 6 October: validate the actual complete learner presentation before restoring
  * only the nine later native leaves for dated assessment claims. */
 export function finalLanguageNextPresentationBefore<T extends { status: string; content: any }>(result: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  result = blindReviewedPresentationBefore(result, lessonId, language);
   result = followupPresentationBefore(result, lessonId, language);
   if (lessonId === 'reading-landscape-l2' && language === 've') {
     const live = resolveLearnerLessonPresentation(COURSE_MODULES.flatMap(module => module.lessons).find(lesson => lesson.id === lessonId)!, 've');
@@ -186,12 +217,16 @@ export function finalLanguageNextPresentationBefore<T extends { status: string; 
     parent[parts.at(-1)] = row.beforeObject.reviewStatus === 'machine-draft' ? row.beforeObject[key] : row.beforeObject.sourceEnglish;
   }
   return restored;
+
+  });
 }
 
 /** Composition entry for dated layers: live full files are validated first;
  * a higher dated layer may already have restored these exact listed objects.
  * The older caller still validates its complete predecessor, including unlisted data. */
 export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   // Historical consumers may arrive with exact leaves from an older dated
   // snapshot already restored. Validate the live newest batch, then compose
   // through the explicit history projection whose predecessor owner checks
@@ -210,4 +245,6 @@ export function finalLanguageNextDeckBeforeHistory<T>(file: string, actual: T): 
     else slide.target.body[row.index] = structuredClone(row.beforeObject);
   }
   return restored;
+
+  });
 }

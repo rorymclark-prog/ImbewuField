@@ -89,9 +89,8 @@
       },
       "target": {
         "heading": {
-          "status": "draft",
-          "text": "Kuma True Cost.",
-          "provenance": "unreviewed-draft; independent semantic source check; exact English source paired; no fluent approval"
+          "status": "english-hold",
+          "provenance": "2026-10-12 exact canonical heading retained after blind review found different subject; no regional translation claimed"
         },
         "body": [
           {

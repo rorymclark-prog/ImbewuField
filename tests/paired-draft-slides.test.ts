@@ -1,3 +1,4 @@
+import { readBlindReviewedHistoryFile } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextPairedBytesBefore } from './final-language-next-checks.ts';
 import { followupPresentationBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { coreHeldOrdinaryAssetBefore } from './core-held-ordinary-history-checks.ts';
@@ -42,7 +43,8 @@ import {
 
 // 6 October: this dated assertion file consumes exact pre48 paired bytes only after full latest validation.
 const readFileSync: typeof actualReadFileSync = ((path: any, options?: any) => {
-  const raw = actualReadFileSync(path, options) as any;
+  // Validate the exact new cards/text before older full-slide and image byte claims.
+  const raw = readBlindReviewedHistoryFile(path, options) as any;
   if (typeof path === 'string' && path.startsWith('docs/narration/') && path.endsWith('.paired-draft.json')) {
     const projected = finalLanguageNextPairedBytesBefore(path, raw);
     return options ? projected : Buffer.from(projected);

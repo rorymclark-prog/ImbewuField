@@ -1,6 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { studyABCProjectToAB, ensureStudyBACCompositionCurrent } from './study-b-a-c-source-composition-history-checks.ts';
@@ -72,6 +75,7 @@ function replaceManifestLayer(source: string, owner: 'A' | 'B'): string {
 }
 
 function project(file: string, bytes: string | Uint8Array, target: 'A' | 'B'): string | Uint8Array {
+  bytes = blindReviewedSourceBefore(file, bytes);
   const row = fileRow(file);
   if (!row) return bytes;
   ensureStudyBACompositionCurrent();
@@ -94,23 +98,30 @@ function project(file: string, bytes: string | Uint8Array, target: 'A' | 'B'): s
 }
 
 export function studyBAProjectToA(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
   return project(file, bytes, 'A');
+  });
 }
 
 export function studyBAProjectToB(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
   return project(file, bytes, 'B');
+  });
 }
 
 export function assertStudyBAComposedBytes(file: string, bytes: string | Uint8Array): void {
+  return withBlindReviewedCorrectionReadScope(() => {
   const row = fileRow(file);
   assert.ok(row, `${file}: source is owned by the B+A composition proof`);
   const expected = row.snapshots.integrated;
   const projected = Buffer.from(studyABCProjectToAB(file, bytes));
   assert.equal(projected.byteLength, expected.bytes, `${file}: validated current source projects to the complete B+A owner size`);
   assert.equal(sha(projected), expected.sha256, `${file}: complete B+A owner and all unlisted bytes match the immutable proof`);
+  });
 }
 
 export function ensureStudyBACompositionCurrent(): void {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(proof.status, 'prepared-unreviewed-final-B-A-source-history-proof');
   ensureStudyBACCompositionCurrent();
   for (const row of proof.files) {
@@ -140,4 +151,5 @@ export function ensureStudyBACompositionCurrent(): void {
       assert.ok(count > 0, 'integrated generated manifest retains its complete size rows');
     }
   }
+  });
 }

@@ -1,7 +1,8 @@
 import { introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Exact new stills validate first; this dated unlisted inventory then sees their guarded predecessor.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { introOrdinaryRead as text, introOrdinaryDigest as digest, introOrdinaryPacket as packet, introOrdinaryChanged as changed, readCurrentIntroDecks as current, validateAndRewindIntroOrdinary as validateAndRewind, type Segment } from './intro-ordinary-paired-history-checks.ts';
 
 test('Intro applies only the 54 reviewed targets and preserves exact source, conditions and all unlisted pairs', () => {

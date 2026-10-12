@@ -1,8 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { vegetablesL3AssetSizesBeforeOrdinary } from './vegetables-l3-ordinary-media-history-checks.ts';
 import { nativePairedResidualManifestBefore968, nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 
 const sha = (bytes: Buffer | string) => createHash('sha256').update(bytes).digest('hex');
 export const vegetablesPestPrecisionFrames = [
@@ -16,6 +18,7 @@ export const vegetablesPestPrecisionFrames = [
 
 /** Validate this complete later layer before exposing any older byte or manifest claim. */
 export function validateCurrentVegetablesPestPrecisionLayer(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // The newest 13-frame after-layer is checked before the merged 968 inventory and older still layers.
   nativePairedResidualManifestBefore968();
   // The later ordinary layer is source/unlisted validated before this six-frame historical view.
@@ -37,9 +40,11 @@ export function validateCurrentVegetablesPestPrecisionLayer(currentManifest?: st
     assert.notEqual(frame.sha256, frame.beforeSHA256, `${frame.url}: approved redraw changed the frame`);
   }
   return manifest;
+  });
 }
 
 export function vegetablesPestPrecisionMediaBeforeEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const normalized = path.startsWith('public/') ? path : path.replace(/^\//, 'public/');
   const frame = vegetablesPestPrecisionFrames.find(row => 'public' + row.url === normalized);
   if (!frame) return undefined;
@@ -51,9 +56,11 @@ export function vegetablesPestPrecisionMediaBeforeEarlierProof(path: string) {
       `${frame.url}: the newer approved image projects exactly to this six-frame layer`);
   }
   return { bytes: readFileSync(path.startsWith('public/') ? path : normalized), byteLength: frame.beforeBytes, sha256: frame.beforeSHA256 };
+  });
 }
 
 export function vegetablesAssetSizesBeforePestPrecision(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   let prior = validateCurrentVegetablesPestPrecisionLayer(currentManifest);
   for (const frame of vegetablesPestPrecisionFrames) {
     const current = `'${frame.url}': ${frame.bytes}`;
@@ -63,4 +70,5 @@ export function vegetablesAssetSizesBeforePestPrecision(currentManifest?: string
     prior = prior.replace(current, previous);
   }
   return prior;
+  });
 }

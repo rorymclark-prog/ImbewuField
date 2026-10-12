@@ -1,6 +1,8 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { soilAssetSizesBeforeOrdinary, soilMediaSHAForEarlierProof } from './soil-reviewed-ordinary-history-checks.ts';
 import { introMediaBeforeEarlierProof } from './intro-ordinary-media-history-checks.ts';
 import { vegetablesPestPrecisionMediaBeforeEarlierProof } from './vegetables-pest-precision-media-history-checks.ts';
@@ -11,6 +13,7 @@ const sha = (value: Buffer | string) => createHash('sha256').update(value).diges
 // Validate the entire live deck against the saved baseline plus accepted targets,
 // including every source, status, provenance and unlisted field, before rewinding.
 export function waterDeckBeforeOrdinary<T extends { slides: any[] }>(deck: T, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.ok(language === 'st' || language === 've' || language === 'ts');
   deck = soilWaterResidualPairedBefore(deck, `docs/narration/water-harvesting.${language}.paired-draft.json`);
   const dir = 'docs/study-translation-reviews/water-ordinary-deck-2026-10-06/';
@@ -35,11 +38,13 @@ export function waterDeckBeforeOrdinary<T extends { slides: any[] }>(deck: T, la
   }
   assert.deepEqual(deck, expected, 'all current accepted ST/VE35 and TS19 target/status/provenance and unlisted fields precede rewind');
   return structuredClone(prior);
+  });
 }
 
 // These tests describe the earlier independently drafted decks. Current cells
 // must match the reviewed application before any dated snapshot is reconstructed.
 export function waterDeckBeforeReviewedPrecision<T extends { slides: any[] }>(deck: T, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   const prior = waterDeckBeforeOrdinary(deck, language);
   for (const row of proof.targetFieldChanges.filter((r: any) => r.language === language)) {
     const slide = prior.slides[row.slide - 1];
@@ -49,6 +54,7 @@ export function waterDeckBeforeReviewedPrecision<T extends { slides: any[] }>(de
   }
   assert.equal(sha(JSON.stringify(prior.slides)), proof.pairedInputs.find((r: any) => r.language === language).slidesSha256);
   return prior;
+  });
 }
 // 2026-10-06: 27 approved ordinary frames replace PR957 bytes. The archived
 // proof has hashes/counts, not old binaries: validate actual new bytes and full
@@ -106,6 +112,7 @@ function rewindOrdinaryManifest(current: string) {
   return prior;
 }
 export function waterMediaBeforeOrdinary(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   checkOrdinaryMedia();
   const bytes = readFileSync(path);
   const changed = ordinaryMedia.frames.find((row: any) => row.asset === path);
@@ -130,15 +137,19 @@ export function waterMediaBeforeOrdinary(path: string) {
     assert.equal(bytes.length, changed.new.bytes);
   }
   return { bytes, sha256: changed.old.sha256, byteLength: changed.old.bytes };
+  });
 }
 export function waterAssetSizesBeforeOrdinary(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   checkOrdinaryMedia();
   assert.equal(path, ordinaryMedia.integrity.manifestPath);
   const beforeSoil = soilAssetSizesBeforeOrdinary(readFileSync(path, 'utf8'));
   return rewindOrdinaryManifest(beforeSoil);
+  });
 }
 const media = JSON.parse(readFileSync(new URL('../docs/media/water-reviewed-precision-2026-10-05/frames.json', import.meta.url), 'utf8'));
 export function mediaSHAForEarlierSoilProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const soilRow = assetsForSoil().find((row: any) => 'public' + row.url === path);
   // Only Soil members need that historical chain; every other asset retains
   // the validated Water/Intro/Vegetables projection plus its exact prior hash.
@@ -148,6 +159,7 @@ export function mediaSHAForEarlierSoilProof(path: string) {
   if (!changed) return current;
   assert.equal(current, changed.sha256, 'new Water image must match its applied proof before reconstructing the earlier Soil media snapshot');
   return changed.baselineSha256;
+  });
 }
 
 function assetsForSoil() {

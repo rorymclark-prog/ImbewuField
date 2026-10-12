@@ -1,8 +1,11 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextDeckBeforeHistory } from './final-language-next-checks.ts';
 import { silentIntroAssetSizesBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 
 type Data = Record<string, any>;
 const root = 'docs/study-translation-reviews/soil-water-residual-2026-10-06/';
@@ -61,6 +64,7 @@ function nativeSlot(native: Data, row: Data) {
 
 /** Rebuild the exact new native objects from the immutable pre-residual snapshot. */
 export function soilWaterResidualNativeAfter(language: 'st' | 've' | 'ts', moduleId: 'soil-health' | 'water-harvesting'): Data {
+  return withBlindReviewedCorrectionReadScope(() => {
   assertBoundProof();
   const path = `lib/course-translation-drafts-${language}-${moduleId === 'soil-health' ? 'soil-health' : 'water-harvesting'}.ts`;
   const expected = structuredClone(baseline.nativeBefore[path]) as Data;
@@ -73,18 +77,23 @@ export function soilWaterResidualNativeAfter(language: 'st' | 've' | 'ts', modul
     slot.set(row.after);
   }
   return expected;
+  });
 }
 
 /** Verify the complete new live native object, then expose its exact pre-residual layer. */
 export function soilWaterResidualNativeBefore<T extends Data>(language: 'st' | 've' | 'ts', moduleId: 'soil-health' | 'water-harvesting', current: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  current = blindReviewedNativeBefore(current);
   const expected = soilWaterResidualNativeAfter(language, moduleId);
   const path = `lib/course-translation-drafts-${language}-${moduleId === 'soil-health' ? 'soil-health' : 'water-harvesting'}.ts`;
   assert.deepEqual(current, expected, `${path}: complete current residual state matches the accepted source-bound layer`);
   return structuredClone(baseline.nativeBefore[`lib/course-translation-drafts-${language}-${moduleId === 'soil-health' ? 'soil-health' : 'water-harvesting'}.ts`]) as T;
+  });
 }
 
 /** Verify all 19 cells and every unlisted deck object before rewinding this layer. */
 export function soilWaterResidualPairedBefore<T extends { slides: Data[] }>(deck: T, path: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   assertBoundProof();
   // Later39 cells are validated against live files before this dated full predecessor check.
   deck = finalLanguageNextDeckBeforeHistory(path, deck);
@@ -107,10 +116,12 @@ export function soilWaterResidualPairedBefore<T extends { slides: Data[] }>(deck
   }
   assert.deepEqual(deck, expected, `${path}: complete current residual state matches accepted cells and preserves unlisted deck data`);
   return prior;
+  });
 }
 
 /** Validate current frame bytes and rewind only the 18 measured manifest entries for earlier media guards. */
 export function soilWaterResidualAssetSizesBefore(currentManifest?: string): string {
+  return withBlindReviewedCorrectionReadScope(() => {
   assertBoundProof();
   // 6 October 2026: validate new25-slot silent Intro layer before reconstructing this dated residual manifest.
   const manifest = silentIntroAssetSizesBefore(currentManifest ?? readFileSync('lib/course-asset-sizes.ts', 'utf8'));
@@ -130,18 +141,22 @@ export function soilWaterResidualAssetSizesBefore(currentManifest?: string): str
   assert.equal(hash(Buffer.from(prior)), sizeBefore.sourceSha256,
     'rewinding only the 18 residual sizes and aggregate restores the complete prior manifest');
   return prior;
+  });
 }
 
 export function soilWaterResidualValidateCurrentFrames(): void {
+  return withBlindReviewedCorrectionReadScope(() => {
   assertBoundProof();
   for (const frame of media.renderedFrames as Data[]) {
     const bytes = readFileSync(frame.path);
     assert.equal(hash(bytes), frame.sha256After, `${frame.path}: current residual frame SHA is exact`);
     assert.equal(bytes.length, frame.bytes, `${frame.path}: current residual frame size is exact`);
   }
+  });
 }
 
 export function soilWaterResidualMediaBefore(path: string): { sha256: string; bytes: number } | null {
+  return withBlindReviewedCorrectionReadScope(() => {
   assertBoundProof();
   const frame = (media.renderedFrames as Data[]).find((row: Data) => row.path === path);
   if (!frame) return null;
@@ -149,4 +164,5 @@ export function soilWaterResidualMediaBefore(path: string): { sha256: string; by
   assert.equal(hash(bytes), frame.sha256After, `${path}: current frame must match the approved render`);
   assert.equal(bytes.length, frame.bytes, `${path}: current frame byte count must match the measured render`);
   return { sha256: frame.sha256Before, bytes: sizeBefore.entries['/' + path.replace(/^public\//, '')] };
+  });
 }

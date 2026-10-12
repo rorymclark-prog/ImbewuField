@@ -1,8 +1,14 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore, blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory,
   readingTitleLightestFileBytesBefore, readingTitleLightestPresentationBeforeHistory } from './reading-title-lightest-next-history-checks.ts';
 import { stIntroRuntimeResidualSourceBefore, stIntroRuntimeResidualManifestBefore,
@@ -23,6 +29,7 @@ const native = load('native-proof.json', '6da53a8999eb310842e3beb3dd11da2dc4c126
 export const expandedAssets = load('render-proof.json', 'a3d8470bd2e4e4249a07540b1fe8765fc9cf978545c4cd98f9993ddf8060c07d');
 let signature = '';
 export function ensureExpandedCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const paths = [...Object.keys(expandedProof.files), ...expandedAssets.map((r: any) => 'public' + r.url)];
   const next = paths.map(file => { const s = statSync(repositoryPath(file), { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
@@ -42,10 +49,13 @@ export function ensureExpandedCurrent() {
     assert.equal(bytes.byteLength, r.afterBytes); assert.equal(sha(bytes), r.afterSha256);
   }
   signature = next;
+  });
 }
 /** Older owners still reject caller corruption against their complete snapshots.
  * This stage only substitutes an exact, byte-verified new file with its predecessor. */
 export function expandedSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   bytes = studyVegetablesTwoResidualSourceBefore(file, bytes);
   bytes = readingTitleLightestFileBytesBefore(file, bytes);
   bytes = file === 'lib/course-asset-sizes.ts'
@@ -57,8 +67,11 @@ export function expandedSourceBefore(file: string, bytes: string | Uint8Array): 
   const text = Buffer.from(bytes).toString();
   if (text !== row.after) return bytes;
   return typeof bytes === 'string' ? row.before : Buffer.from(row.before);
+  });
 }
 export function expandedPairBefore<T>(file: string, value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedPairBefore(file, value);
   // This older owner may receive the A→B composed snapshot with its own
   // accepted leaves already projected. Use the history-aware exact-leaf
   // projection here; the expanded full-file snapshot below still rejects any
@@ -70,8 +83,11 @@ export function expandedPairBefore<T>(file: string, value: T): T {
   ensureExpandedCurrent();
   if (typeof value === 'string') return expandedSourceBefore(file, value) as T;
   return JSON.stringify(value) === JSON.stringify(JSON.parse(row.after)) ? JSON.parse(row.before) : value;
+  });
 }
 export function expandedNativeBefore<T>(value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedNativeBefore(value);
   value = studyVegetablesTwoResidualNativeBefore(value);
   value = readingTitleLightestNativeBeforeHistory(value);
   const obj = value as any;
@@ -81,8 +97,12 @@ export function expandedNativeBefore<T>(value: T): T {
   if (JSON.stringify(value) === JSON.stringify(native.before[key])) return structuredClone(value);
   assert.deepEqual(value, native.after[key], key + ': full caller module before only four accepted learner clauses are restored');
   return structuredClone(native.before[key]);
+  });
 }
 export function expandedPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   value = studyVegetablesTwoResidualPresentationBefore(value, lessonId, language);
   value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   if (value.status !== 'draft') return value;
@@ -99,8 +119,11 @@ export function expandedPresentationBefore<T extends { status?: string; content:
   if (JSON.stringify(value.content) === JSON.stringify(before)) return structuredClone(value);
   assert.deepEqual(value.content, content(native.after[key]), key + '/' + lessonId + ': exact complete resolver output before dated reconstruction');
   return { ...structuredClone(value), content: before };
+  });
 }
 export function expandedPairBeforeHistory<T>(file: string, value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedPairBefore(file, value);
   value = studyVegetablesTwoResidualPairedBefore(file, value);
   value = readingTitleLightestPairBeforeHistory(file, value);
   const row = expandedProof.files[file];
@@ -120,12 +143,16 @@ export function expandedPairBeforeHistory<T>(file: string, value: T): T {
     }
   }
   return result;
+  });
 }
 export function expandedAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const url = path.startsWith('public/') ? path.slice(6) : path;
   const row = expandedAssets.find((r: any) => r.url === url);
   if (!row) return null;
   ensureExpandedCurrent();
   assert.equal(bytes.byteLength, row.afterBytes); assert.equal(sha(bytes), row.afterSha256);
   return { bytes: row.beforeBytes, sha256: row.beforeSha256, width: 1440, height: 5400 };
+  });
 }

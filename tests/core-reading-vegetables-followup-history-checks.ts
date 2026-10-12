@@ -1,8 +1,14 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore, blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { ensureExpandedCurrent, expandedSourceBefore, expandedPairBefore, expandedNativeBefore, expandedPairBeforeHistory, expandedAssetBefore, expandedPresentationBefore } from './core-ordinary-expanded-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readingTitleLightestNativeBefore, readingTitleLightestPresentationBeforeHistory } from './reading-title-lightest-next-history-checks.ts';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 import { lightestAssetBefore, lightestRenderProof } from './reading-title-lightest-media-history-checks.ts';
@@ -37,6 +43,7 @@ const plan = JSON.parse(readFileSync(folder + 'accepted-plan.json', 'utf8'));
 let signature = '';
 let currentBatchSignature = '';
 export function ensureFollowupCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureCurrentBatch();
   const next = Object.keys(followupFiles).map(file => { const s = statSync(repositoryPath(file), { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
   if (next === signature) return;
@@ -48,10 +55,12 @@ export function ensureFollowupCurrent() {
     else assert.equal(sha(expandedSourceBefore(file, studyRemainingControlsSourceBefore(file, readFileSync(repositoryPath(file))))), row.afterSha256, file + ': complete current source, draft and unlisted bytes after the exact newer study-controls layer');
   }
   signature = next;
+  });
 }
 
 /** Verify the newest accepted batch before any older history layer sees its predecessor. */
 export function ensureCurrentBatch() {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureExpandedCurrent();
   const paths = [...Object.keys(currentBatchProof.files), ...currentBatchProof.assets.map(row => row.path)];
   const next = paths.map(file => { const s = statSync(repositoryPath(file), { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':'); }).join('|');
@@ -75,17 +84,22 @@ export function ensureCurrentBatch() {
     if (newer) assert.equal(newer.beforeSha256, row.afterSha256, `${file}: current batch predecessor joins the preceding immutable file layer`);
   }
   currentBatchSignature = next;
+  });
 }
 /** True only for the byte-verified live file or its frozen current-batch predecessor. */
 export function isCurrentOrBatchPredecessor<T>(file: string, value: T): boolean {
+  return withBlindReviewedCorrectionReadScope(() => {
   value = expandedPairBefore(file, value);
   ensureCurrentBatch();
   const live = JSON.parse(expandedSourceBefore(file, readFileSync(repositoryPath(file), 'utf8')) as string);
   if (JSON.stringify(value) === JSON.stringify(live)) return true;
   const predecessor = currentBatchProof.files[file];
   return Boolean(predecessor && JSON.stringify(value) === JSON.stringify(JSON.parse(predecessor.before)));
+  });
 }
 export function followupSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   // 8 October learner-only changes supersede this exact-file snapshot; validate/project them first.
   bytes = studyRemainingControlsSourceBefore(file, bytes);
   bytes = expandedSourceBefore(file, bytes);
@@ -109,8 +123,11 @@ export function followupSourceBefore(file: string, bytes: string | Uint8Array): 
   if (text === row.before) return bytes;
   assert.equal(text, row.after, file + ': complete accepted caller bytes before projection');
   return row.before;
+  });
 }
 export function followupPairBefore<T>(file: string, value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedPairBefore(file, value);
   value = expandedPairBefore(file, value);
   if (!file.endsWith('.paired-draft.json')) return value;
   const older = followupFiles[file];
@@ -144,8 +161,11 @@ export function followupPairBefore<T>(file: string, value: T): T {
   if (JSON.stringify(value) === JSON.stringify(before)) return structuredClone(value);
   assert.deepEqual(value, JSON.parse(row.after), file + ': complete accepted caller object before projection');
   return before;
+  });
 }
 export function followupNativeBefore<T>(value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedNativeBefore(value);
   value = readingTitleLightestNativeBefore(value);
   value = expandedNativeBefore(value);
   const identity = value as any;
@@ -166,11 +186,14 @@ export function followupNativeBefore<T>(value: T): T {
   if (JSON.stringify(value) === JSON.stringify(followupNative.before[key])) return structuredClone(value);
   assert.deepEqual(value, followupNative.after[key], 'complete current native registry before the two learner repairs are projected');
   return structuredClone(followupNative.before[key]) as T;
+  });
 }
 /** Older composition may have already rewound other leaves. The mandatory full
  * live guard remains; restore only these exact reviewed objects, then let the
  * predecessor's complete object guard reject any other caller mutation. */
 export function followupPairBeforeHistory<T>(file: string, value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedPairBefore(file, value);
   value = expandedPairBeforeHistory(file, value);
   if (!file.endsWith('.paired-draft.json')) return value;
   const latestFields = currentBatchProof.pairedFields.filter(row => row.file === file);
@@ -193,8 +216,11 @@ export function followupPairBeforeHistory<T>(file: string, value: T): T {
     if (JSON.stringify(segment) === JSON.stringify(row.newSegment)) cell.segments[row.segmentIndex] = structuredClone(row.oldSegment);
   }
   return result;
+  });
 }
 export function followupAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   // This 8 October proof is the newest still layer. Validate the real live
   // bytes and project only its exact predecessor before older asset owners run.
   const newestBytes = lightestAssetBefore(path, bytes);
@@ -228,9 +254,13 @@ export function followupAssetBefore(path: string, bytes: Uint8Array) {
   assert.equal(newestBytes.byteLength, newestRow.beforeBytes, url + ': exact measured predecessor byte length');
   assert.equal(sha(newestBytes), newestRow.beforeSha256, url + ': exact measured predecessor SHA');
   return { bytes: newestRow.beforeBytes, sha256: newestRow.beforeSha256, width: newestRow.width, height: newestRow.height };
+  });
 }
 
 export function followupPresentationBefore<T extends { status?: string; content: any }>(value: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   value = readingTitleLightestPresentationBeforeHistory(value, lessonId, language);
   value = expandedPresentationBefore(value, lessonId, language);
   if (value.status === 'english-fallback') return value;
@@ -265,4 +295,5 @@ export function followupPresentationBefore<T extends { status?: string; content:
   if (JSON.stringify(value.content) === JSON.stringify(before)) return structuredClone(value);
   assert.deepEqual(value.content, content(followupNative.after[key]), 'complete current learner presentation before scoped two-field repair projection');
   return { ...structuredClone(value), content: before };
+  });
 }
