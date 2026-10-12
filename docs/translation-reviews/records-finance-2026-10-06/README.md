@@ -89,11 +89,38 @@ catalogue data and are never translated.
 Layout fix found by looking at the phone: the drafted "Harvested X · Sold Y" line was cut off at 390px, so the
 harvest-reconciliation rows now wrap.
 
+## Round 3 (12 October): the Invoice page
+
+Batch 4 adds the `/invoice` screen (`app/invoice/page.tsx`): 159 more English strings, 144 for Sesotho, Tshivenda
+and Xitsonga and 18 isiZulu fallback fills (the Invoice page already carried existing isiZulu wording for the rest).
+Same method: one drafting lane per language, an independent blind back-translation review, and the same integration
+rules (meaning-level repairs of whole sentences and every hold show English; automatic hold for words rejected earlier).
+Result: Sesotho 131 accepted / 3 held, Tshivenda 123 / 11, Xitsonga 118 / 16, isiZulu 18 / 0. Held rows are the ones
+reviewers could not confirm: price-guide confidence notes, "Sourced guide", VAT / tax no., the eggs/crates/bunches
+words, "types" (Customer types, Invoice type) and "Remove item" for Tshivenda and Xitsonga, "Buyer address & contact"
+and the two-devices sentence for Xitsonga.
+
+What the screen does now: the page's `ui()` helper reads the same English-keyed lookup. A sentence a farmer acts on
+(payment status, sale linking, sync retry, delete) keeps the English beside the draft. The price-guide sentences
+became `{price}` / `{date}` templates so a figure cannot be lost. A visible notice says the drafts are unreviewed and
+that **the invoice a buyer receives stays English**: the printed page, the PDF and the document preview are not
+translated for Sesotho, Tshivenda or Xitsonga (a buyer files it and pays from it). Dates keep English month names.
+
+Changes to existing behaviour (each was a demonstrated defect):
+- isiZulu: a paired instruction with no isiZulu wording printed its English twice ("English — English"); it now shows
+  the English once. Seven isiZulu sentences that were English-only now carry machine-drafted fills that a second machine reviewed.
+- Layout, found at 390px: the long Tshivenda word for "each" pushed the line-item price box past the card edge. The
+  price box now takes its own line only when that word is long; English, isiZulu, Sesotho and Xitsonga keep one row.
+
+Deliberately not translated: the ten buyer-type names ("Neighbour", "School", "Church"...). They are the *value* of the
+customer list and print as the buyer's name on the invoice, so translating the label would put a different word on screen
+than on the document. A speaker should decide whether to show both.
+
 ## Not covered (remaining dependencies)
 
 - Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
   production-plan page names, and every held row listed in `draft-<lang>.json`.
 - Dates print with English month abbreviations (`en-ZA`), and user-entered text is never translated.
-- `/invoice` document and tool wording, global navigation and Lima chat.
+- The printed and PDF invoice (English on purpose), the buyer-type names, global navigation and Lima chat.
 - Held strings: see `status: "held"` rows in each `draft-<lang>.json` (units such as eggs, jars,
   crates and bunches, fuel, the lender disclaimer, the gross-margin line, and Tshivenda "Export").

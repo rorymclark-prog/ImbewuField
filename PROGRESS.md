@@ -52,6 +52,18 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 12 Oct 2026 — Invoice page in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `/invoice` (`app/invoice/page.tsx`) reads the same source-keyed lookup as the money book: 144 more
+  English strings for Sesotho, Tshivenda and Xitsonga, 18 isiZulu fills. Instructions a farmer acts on keep the English
+  beside the draft; price-guide sentences are `{price}`/`{date}` templates; a visible notice says the drafts are
+  unreviewed. **The invoice a buyer receives (print, PDF, preview) stays English.** Held rows (price-guide notes, VAT / tax
+  no., eggs/crates/bunches, "types", Tshivenda/Xitsonga "Remove item") show English; buyer-type names are not translated
+  because they print as the buyer's name.
+- **Fixes found on the phone / in the code:** isiZulu paired instructions with no isiZulu wording printed their English
+  twice; the long Tshivenda word for "each" pushed the price box past the card at 390px (it now wraps onto its own line).
+- **Review:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`, Round 3).
+  Machine drafts and machine review only; no fluent-speaker, local-farming or Shangani approval is claimed.
+
 ### 10 Oct 2026 — Wave 10: last audit leftovers (#990)
 - Report footnotes (Köppen, rainfall pattern, wet/dry season) translated per language; isiZulu pending translator CSV.
 - New `--on-forest` theme token replaces ~65 hardcoded `#F7F2E9` text colours in 28 files; guard test `tests/stale-paper-hex.test.ts`. Crop planner files left for later (Codex active there).
