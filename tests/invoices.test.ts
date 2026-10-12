@@ -424,7 +424,9 @@ test('the invoice and records screens wire the crop picker, price book and paid-
   // pricedAt) — the hardcoded "guide price, July 2026" literal this used to assert went stale
   // the first time a crop was priced outside July. tests/crop-prices.test.ts holds the
   // no-literal-date guard; this keeps asserting the invoice screen wires the price book's label.
-  assert.match(invoicePage, /guide price from \{priceDateLabel\(guide\)\}/);
+  // The price-guide date is still the guide's own date label. It now goes through the English-keyed
+  // lookup as a template ('guide price from {date}.'), so a draft that lost {date} shows English.
+  assert.match(invoicePage, /recordsTemplate\(lang, 'guide price from \{date\}\.', null, \{ date: priceDateLabel\(guide\) \}\)/);
   assert.match(records, /<CropSelect/);
   assert.match(records, /priceFor\(form\.cropKey, priceOverrides\)/);
 });
