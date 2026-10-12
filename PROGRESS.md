@@ -52,6 +52,15 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 12 Oct 2026 — Held finance rows retried (round 4)
+- **What:** 71 held rows were retried for Sesotho, Tshivenda, Xitsonga and isiZulu (finance-concept and unit-word rows
+  excluded); 33 now have an unreviewed draft (st 5, ve 7, ts 20, zu 1), the rest still show English. Xitsonga's
+  device-only photo warning no longer uses the ambiguous "xitirhisiwa" ("this phone only").
+- **Review:** blind machine back-translation per language, same integration rules; record in
+  `docs/translation-reviews/records-finance-2026-10-06/` (Round 4). No fluent-speaker, local-farming or Shangani approval.
+- **Not done on purpose:** month names (dates frozen; machine month-name error earlier) and navigation / Lima chat
+  (locale files are pinned by another track).
+
 ### 12 Oct 2026 — Invoice page in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
 - **What:** `/invoice` (`app/invoice/page.tsx`) reads the same source-keyed lookup as the money book: 144 more
   English strings for Sesotho, Tshivenda and Xitsonga, 18 isiZulu fills. Instructions a farmer acts on keep the English

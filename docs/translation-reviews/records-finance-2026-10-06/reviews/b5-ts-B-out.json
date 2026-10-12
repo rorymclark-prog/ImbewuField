@@ -1,0 +1,170 @@
+[
+ {
+  "id": "R023",
+  "verdict": "ok",
+  "problem": "'Ntirho' = work/labour; reads as the activity, acceptable beside Seed/Feed chips but not confirmed as 'paid labour'",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R033",
+  "verdict": "hold",
+  "problem": "'Xilo' for 'item' cannot be confirmed; 'Swi ringanise ni risiti' (ringanisa = make equal/compare) could read as 'adjust them to match the receipt' rather than 'check against'; 'mali hinkwayo' for 'total' (distinct from price) and 'swi lunghekile' (correct vs ready) also unconfirmed",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R088",
+  "verdict": "hold",
+  "problem": "Profit rendered as 'mali leyi saleke' (money left over), unconfirmed money word; 'never guessed' rendered as 'not added at all by estimating' (guess vs estimate differ, and drafter itself flags 'ni kan'we' as never as uncertain); result clause of 'minus' lost",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R096",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R128",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R130",
+  "verdict": "ok",
+  "problem": "'Xitsalwa' as entry relies on repo acceptance; 'foni' narrows device to phone",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R139",
+  "verdict": "hold",
+  "problem": "'matsavu' as vegetables cannot be confirmed (reviewer suspects greens; usual word may be 'miroho'); 'mibhede' resembles isiZulu 'imibhede'; the repo's own locale entry is machine-sourced, not independent confirmation",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R158",
+  "verdict": "repair",
+  "problem": "Main verb missing and 'Optional' became 'loko u lava ku tirhisa inthanete', reading as 'reading with AI when you want to use your internet'; the optional AI reading and the data use are not separated",
+  "repaired": "Loko u lava, ku hlaya hi AI swi tirhisa inthanete ya wena. U nga tlhela u faka xihakelo hi wexe.",
+  "severity": "meaning"
+ },
+ {
+  "id": "R191",
+  "verdict": "ok",
+  "problem": "'mubolekisi' as lender and 'tirhekhodo' as records rely on morphology and repo acceptance",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R193",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R202",
+  "verdict": "ok",
+  "problem": "'Humesa' = export relies on repo-accepted R049; literally 'take out', so keep distinct from the delete/remove verbs",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R231",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R234",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R247",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R248",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R289",
+  "verdict": "ok",
+  "problem": "'Trace' rendered as 'draw'; 'nguva' for season relies on repo acceptance",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R326",
+  "verdict": "ok",
+  "problem": "'mali yingani' for 'roughly what it is worth' copied from accepted R339; 'due' rendered 'should be'",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I031",
+  "verdict": "ok",
+  "problem": "Circumlocution for 'contact'; longer than a label may want",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I045",
+  "verdict": "ok",
+  "problem": "'rhwala' (carry/load) for load per accepted I077",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I075",
+  "verdict": "ok",
+  "problem": "'ndhawu leyi' for a form field is uncertain but the leave-blank intent is recoverable",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I122",
+  "verdict": "ok",
+  "problem": "'Ntsengo wa nkongomiso' = 'guide price' and could be read as 'price of guidance'; accepted R254 so kept; 'ntsengo' correctly keeps price distinct from amount",
+  "repaired": "",
+  "severity": "minor"
+ }
+]

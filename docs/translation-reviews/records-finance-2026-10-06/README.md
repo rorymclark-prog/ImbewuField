@@ -116,6 +116,23 @@ Deliberately not translated: the ten buyer-type names ("Neighbour", "School", "C
 customer list and print as the buyer's name on the invoice, so translating the label would put a different word on screen
 than on the document. A speaker should decide whether to show both.
 
+## Round 4 (12 October): retrying held rows
+
+Rows an earlier pass held (drafter hold, reviewer hold, meaning-level repair, or the second-session backcheck) were
+given a second try where a safe wording might exist: 6 Sesotho, 27 Tshivenda, 36 Xitsonga and 2 isiZulu rows. Rows that
+turn on a finance concept (gross margin, running total, reconcile, VAT...) or a unit word (eggs, jars, crates...) were
+not retried: a machine cannot confirm those words. Each retry drafter was told why the row was held and which words were
+already rejected, and was allowed to hold again; a second, blind reviewer then back-translated every new draft.
+Result: Sesotho 5 of 6 now accepted, Tshivenda 7 of 27, Xitsonga 20 of 36, isiZulu 1 of 2. The rest stay held and show
+English (Tshivenda "amount" rows, "lender" for Tshivenda, flat/profit/staple/category/type/cash/returns; Xitsonga
+"Remove item", category/type, cash, profit; isiZulu "Mobile"). Held rows now carry a `retry` note with the round 4 reason.
+One integrator change: the isiZulu orchard sentence uses the records page's own "Ingadi yezihlahla", not the drafter's
+"Ingadi yezithelo". Note for a speaker: the existing isiZulu keys `recordsOrchardIn/Out/OutNote` say "Isivande sezithelo"
+(isivande is a pumpkin dish), which the page does not use for the same idea; that existing wording was not changed.
+Still machine drafts and machine review only; Xitsonga "ntirho" (labour), "mubolekisi" (lender) and the payment words
+"Cash" / "Mobile" in Sesotho are the weakest and need a speaker. The Xitsonga device-only photo warning now says
+"this phone only" instead of the ambiguous "xitirhisiwa".
+
 ## Not covered (remaining dependencies)
 
 - Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
@@ -123,4 +140,4 @@ than on the document. A speaker should decide whether to show both.
 - Dates print with English month abbreviations (`en-ZA`), and user-entered text is never translated.
 - The printed and PDF invoice (English on purpose), the buyer-type names, global navigation and Lima chat.
 - Held strings: see `status: "held"` rows in each `draft-<lang>.json` (units such as eggs, jars,
-  crates and bunches, fuel, the lender disclaimer, the gross-margin line, and Tshivenda "Export").
+  crates and bunches, fuel, the lender disclaimer and the gross-margin line; Round 4 retried the rest).

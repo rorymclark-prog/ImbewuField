@@ -12,7 +12,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"mikwiḓi\" unverified by the reviewer",
-  "heldDraft": "Ho kundelwa u vhala risidi — lingedzani tshifanyiso tshi vhonalaho zwavhuḓi, tshi si na mikwiḓi, tshi na tshedza tshi linganaho."
+  "heldDraft": "Ho kundelwa u vhala risidi — lingedzani tshifanyiso tshi vhonalaho zwavhuḓi, tshi si na mikwiḓi, tshi na tshedza tshi linganaho.",
+  "retry": "round 4: drafter hold again — HOLD: 'flat' (no creases) and 'well-lit' words unverified; 'mikwiḓi' rejected, cannot drop the 'flat' clause"
  },
  {
   "id": "R002",
@@ -535,17 +536,16 @@
  {
   "id": "R039",
   "english": "Income",
-  "drafterDraft": "Mbuelo",
+  "drafterDraft": "Masheleni a dzhenaho",
   "drafterStatus": "draft",
-  "drafterNote": "Income. Existing locale: 'mbuelo yoṱhe' = total revenue.",
+  "drafterNote": "Replaces rejected 'Mbuelo' with accepted R135 'Masheleni a dzhenaho' (money in); no profit/benefit sense.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: Income \"Mbuelo\" can read as benefit/profit; income vs profit is a hard distinction",
-  "heldDraft": "Mbuelo"
+  "status": "accepted",
+  "draft": "Masheleni a dzhenaho",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R040",
@@ -677,16 +677,16 @@
  {
   "id": "R049",
   "english": "Export",
-  "drafterDraft": "Bvisani",
+  "drafterDraft": "Dauniloudani",
   "drafterStatus": "draft",
-  "drafterNote": "Existing locale uses 'Bvisani PDF' for export PDF; note existing locale also uses 'Bvisani' for Delete (R120), so Export and Delete share a word.",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'Bvisani' = remove/take out and is the same word as the shipped Delete (R120). A farmer could read Export as Delete. Use a distinct word.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Dauniloudani",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: Export wording collides with Delete; needs a speaker decision"
+  "drafterNote": "Verb now 'Dauniloudani' (download, as accepted R233), clearly different from Delete 'Bvisani'. Export rendered as download of a file; speaker may prefer a loan 'eksipoti'.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "Download loanword (not Export); differs from Delete 'Bvisani'. Speaker may prefer 'eksipoti'.",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Dauniloudani",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R050",
@@ -859,17 +859,16 @@
  {
   "id": "R062",
   "english": "Synced with your phone",
-  "drafterDraft": "Zwo lingana na founu yaṋu",
+  "drafterDraft": "Zwo ṱumanyiswa na founu yaṋu",
   "drafterStatus": "draft",
-  "drafterNote": "'Synced' rendered as 'matches your phone'.",
+  "drafterNote": "Dropped 'lingana' (equals/matches). 'ṱumanya' = join/link (as in locale 'Ṱumanyani na fhethu'); sync sense approximate: LOW-MEDIUM.",
   "reviewerVerdict": "ok",
-  "reviewerProblem": "'matches your phone' is weaker than 'synced' but no meaning reversal.",
+  "reviewerProblem": "Sync sense approximate ('joined/connected with your phone'); acceptable, past tense kept, 'lingana' gone.",
   "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"lingana\" reads as equals/matches, sync sense unclear",
-  "heldDraft": "Zwo lingana na founu yaṋu"
+  "status": "accepted",
+  "draft": "Zwo ṱumanyiswa na founu yaṋu",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R063",
@@ -1234,7 +1233,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "reviewer hold"
+  "decision": "reviewer hold",
+  "retry": "round 4: drafter hold again — HOLD: word for 'profit' unverified (Mbuelo rejected) and 'never guessed into' nuance"
  },
  {
   "id": "R089",
@@ -1379,16 +1379,16 @@
  {
   "id": "R099",
   "english": "Export this month (CSV)",
-  "drafterDraft": "Bvisani ya ṅwedzi uyu (CSV)",
+  "drafterDraft": "Dauniloudani CSV ya ṅwedzi uyu",
   "drafterStatus": "draft",
-  "drafterNote": "",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'Bvisani' = remove; 'Remove this month (CSV)' reads like deleting. Same collision as R049.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Dauniloudani ya ṅwedzi uyu (CSV)",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: Export wording collides with Delete; needs a speaker decision"
+  "drafterNote": "Same download verb as R049, not Bvisani.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "Same download verb as R049; 'this month' preserved.",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Dauniloudani CSV ya ṅwedzi uyu",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R100",
@@ -1767,7 +1767,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
-  "heldDraft": "Tshithu na mutengo zwi a ṱoḓea."
+  "heldDraft": "Tshithu na mbalo ya masheleni zwi a ṱoḓea.",
+  "retry": "round 4: reviewer hold — 'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule."
  },
  {
   "id": "R127",
@@ -1782,7 +1783,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
-  "heldDraft": "Tshibveledzwa, tshivhalo na mutengo zwi a ṱoḓea."
+  "heldDraft": "Tshibveledzwa, tshivhalo na mbalo ya masheleni zwi a ṱoḓea.",
+  "retry": "round 4: reviewer hold — 'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule."
  },
  {
   "id": "R128",
@@ -1965,7 +1967,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"zwihulwane\" reads as big foods, not staple",
-  "heldDraft": "Minda ya zwiḽiwa zwihulwane"
+  "heldDraft": "Minda ya zwiḽiwa zwihulwane",
+  "retry": "round 4: drafter hold again — HOLD: no verified word for 'staple' (zwihulwane = big)"
  },
  {
   "id": "R141",
@@ -1980,7 +1983,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"zwihulwane\" reads as big foods, not staple",
-  "heldDraft": "Zwo kovhelanwaho nga mibhede na minda ya zwiḽiwa zwihulwane"
+  "heldDraft": "Zwo kovhelanwaho nga mibhede na minda ya zwiḽiwa zwihulwane",
+  "retry": "round 4: drafter hold again — HOLD: no verified word for 'staple' (zwihulwane = big)"
  },
  {
   "id": "R142",
@@ -2163,7 +2167,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: same verb as Delete; removing a photo keeps the cost, deleting erases a record",
-  "heldDraft": "Bvisani tshifanyiso"
+  "heldDraft": "Bvisani tshifanyiso",
+  "retry": "round 4: drafter hold again — HOLD: no verified verb for remove-that-differs-from Bvisani (Delete); alternatives unverified"
  },
  {
   "id": "R155",
@@ -2360,7 +2365,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
-  "heldDraft": "Mutengo (R)"
+  "heldDraft": "Mbalo ya masheleni (R)",
+  "retry": "round 4: reviewer hold — 'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule. Label text for the amount input."
  },
  {
   "id": "R169",
@@ -2431,7 +2437,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"Lushaka\" also means nation/tribe",
-  "heldDraft": "Lushaka"
+  "heldDraft": "Lushaka",
+  "retry": "round 4: drafter hold again — HOLD: no verified word for 'category' that is not tribe/nation (Lushaka rejected; mufuda/tshigaba unverified)"
  },
  {
   "id": "R174",
@@ -2586,7 +2593,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: amount rendered with the word for price (\"mutengo\"); a farmer could enter a unit price where a total is expected",
-  "heldDraft": "Ṅwalani tshibveledzwa, tshivhalo tshi fhiraho 0 na mutengo wa thengiso."
+  "heldDraft": "Ṅwalani tshibveledzwa, tshivhalo tshi fhiraho 0 na mbalo ya masheleni ya thengiso.",
+  "retry": "round 4: reviewer hold — 'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule."
  },
  {
   "id": "R185",
@@ -2628,7 +2636,8 @@
   "reviewerRepair": "U dauniloudu ha rekhodo hu a dzimwa musi ni tshi khou vhona bulasi ya Ubhejane. Dzhenani ni dzime thura u itela u dauniloudu rekhodo dzaṋu ṋoṋe.",
   "status": "held",
   "draft": "",
-  "decision": "root hold: Export wording collides with Delete; needs a speaker decision"
+  "decision": "root hold: Export wording collides with Delete; needs a speaker decision",
+  "retry": "round 4: drafter hold again — HOLD: needs infinitive/subjunctive of the download loanword and a word for 'tour'; not safely checkable"
  },
  {
   "id": "R188",
@@ -2685,7 +2694,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
-  "heldDraft": "Rekhodo dza mubolekisi"
+  "heldDraft": "Rekhodo dza u itela mubolekisi",
+  "retry": "round 4: reviewer hold — 'mubolekisi' (lender) looks like an isiZulu form (umbolekisi / bolekisa) and is not in the locale; cannot confirm it is Tshivenda or that it means lender. 'u itela' also reads 'to do for', not clearly 'for a lender'."
  },
  {
   "id": "R192",
@@ -2840,7 +2850,9 @@
   "reviewerRepair": "Dauniloudani rekhodo dza mubolekisi",
   "status": "held",
   "draft": "",
-  "decision": "root hold: Export wording collides with Delete; needs a speaker decision"
+  "decision": "root hold: Export wording collides with Delete; needs a speaker decision",
+  "retry": "round 4: reviewer hold — Same unconfirmed 'mubolekisi' (likely Nguni word) as R191; Export/Download for records for a lender cannot be safely confirmed.",
+  "heldDraft": "Dauniloudani rekhodo dza u itela mubolekisi"
  },
  {
   "id": "R203",
@@ -3859,14 +3871,14 @@
   "english": "Other food-forest plants",
   "drafterDraft": "Zwimela zwiṅwe zwa tshisaka tsha zwiḽiwa",
   "drafterStatus": "draft",
-  "drafterNote": "'tshisaka tsha zwiḽiwa' = food forest as in batch-1 R079, which was itself LOW confidence on 'tshisaka'. Needs speaker check.",
-  "reviewerVerdict": "hold",
-  "reviewerProblem": "'tshisaka tsha zwiḽiwa' (food forest) is a calque the drafter already rates LOW confidence; cryptic category heading for a farmer.",
-  "reviewerSeverity": "meaning",
+  "drafterNote": "Unchanged from prior; reviewer gave no reason. 'tshisaka tsha zwiḽiwa' is the accepted R079/R352 wording; 'zwimela' = plants (locale photoDetailWhatsGrowing). If re-held, check 'zwimela' vs seedlings.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'tshisaka tsha zwiḽiwa' relies on accepted R079/R352; 'zwimela' = plants. I could not independently confirm 'tshisaka' = forest and not a clan/kind word; low confidence.",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "reviewer hold",
+  "status": "accepted",
+  "draft": "Zwimela zwiṅwe zwa tshisaka tsha zwiḽiwa",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error",
   "batch": 2
  },
  {
@@ -3972,7 +3984,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 2
+  "batch": 2,
+  "retry": "round 4: drafter hold again — HOLD: no verified word for physical 'cash' (masheleni is generic money)"
  },
  {
   "id": "R283",
@@ -3992,16 +4005,16 @@
  {
   "id": "R284",
   "english": "Mobile",
-  "drafterDraft": "Founu",
+  "drafterDraft": "Masheleni a founu",
   "drafterStatus": "draft",
-  "drafterNote": "'founu' = phone, as used in batch 1 ('founu yaṋu'); here payment by phone/mobile money. Speaker to confirm it reads as a payment method.",
-  "reviewerVerdict": "hold",
-  "reviewerProblem": "'Founu' = telephone only; after 'Invoice ·' it does not read as a payment method (mobile money). Not repairable with confidence.",
-  "reviewerSeverity": "meaning",
+  "drafterNote": "Was bare 'Founu' (could read as phone, not payment). Now 'masheleni a founu' (phone money), using accepted words masheleni + founu; context says mobile money. MEDIUM-LOW.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'Phone money' conveys mobile money payment method; slightly longer than a short tag but acceptable. Low-medium confidence.",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "reviewer hold",
+  "status": "accepted",
+  "draft": "Masheleni a founu",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error",
   "batch": 2
  },
  {
@@ -4182,7 +4195,8 @@
   "status": "held",
   "draft": "",
   "decision": "drafter hold",
-  "batch": 3
+  "batch": 3,
+  "retry": "round 4: drafter hold again — HOLD: 'returns' concept: any wording reads as yield or profit"
  },
  {
   "id": "R297",
@@ -4422,7 +4436,9 @@
   "status": "held",
   "draft": "",
   "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English",
-  "batch": 3
+  "batch": 3,
+  "retry": "round 4: reviewer hold — Money-out word 'mbadelo' (payment) is ambiguous between payments received and payments made, and does not clearly mean spending/costs; class concord 'o bviswa' with 'masheleni' is doubtful and 'o ni ṋewaho' (that you were given) is a clumsy rendering of 'received'. Income minus spending direction cannot be confirmed.",
+  "heldDraft": "Masheleni o ni ṋewaho o bviswa mbadelo dzo ṅwalwaho kha minwedzi iyi. Mbadelo dzi sa ṅwalwaho a dzo katelwi."
  },
  {
   "id": "R313",
@@ -5592,7 +5608,8 @@
   "status": "held",
   "draft": "",
   "decision": "drafter hold",
-  "batch": 3
+  "batch": 3,
+  "retry": "round 4: drafter hold again — HOLD: 'green bar' colour word unverified and nuanced claim"
  },
  {
   "id": "R391",
@@ -6418,7 +6435,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: No safe word for 'types' (avoid words that also mean tribe/nation); needs a speaker"
+  "decision": "drafter hold: No safe word for 'types' (avoid words that also mean tribe/nation); needs a speaker",
+  "retry": "round 4: drafter hold again — HOLD: no verified word for 'types' that is not tribe/nation"
  },
  {
   "id": "I050",
@@ -6549,17 +6567,16 @@
  {
   "id": "I060",
   "english": "Free some device storage before linking this sale. Its existing record has not been changed.",
-  "drafterDraft": "Bvisani zwiṅwe zwo vhulungwaho kha founu ni sa athu hanganyisa thengiso iyi. Rekhodo yayo yo ḓi vha hone a yo ngo shandulwa.",
+  "drafterDraft": "Itani fhethu ha u vhulunga kha founu yaṋu ni sa athu hanganyisa thengiso iyi. Rekhodo yayo yo ḓi vha hone a yo ngo shandulwa.",
   "drafterStatus": "draft",
-  "drafterNote": "Negation kept: record has NOT been changed",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "English asks to FREE device storage; 'Bvisani zwiṅwe zwo vhulungwaho' = 'Remove other saved things' could make a farmer delete invoices or records. Must say make space",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Itani fhethu ha u vhulunga kha founu ni sa athu hanganyisa thengiso iyi. Rekhodo yayo yo ḓi vha hone a yo ngo shandulwa.",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: reviewer repair is meaning-level or not safely checkable — English asks to FREE device storage; 'Bvisani zwiṅwe zwo vhulungwaho' = 'Remove other saved things' could make a farmer delete invoices or records. Must say make space",
-  "heldDraft": "Bvisani zwiṅwe zwo vhulungwaho kha founu ni sa athu hanganyisa thengiso iyi. Rekhodo yayo yo ḓi vha hone a yo ngo shandulwa."
+  "drafterNote": "Replaced 'Bvisani zwiṅwe zwo vhulungwaho' (remove saved things) with 'Itani fhethu ha u vhulunga' (make room for storage; 'fhethu ha u vhulunga' = device storage as accepted I128). No delete verb. Negation kept.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'Make a place for storing on your phone before you join this sale; its record already there has not been changed.' Meaning preserved, no delete verb, negation kept. 'Itani fhethu' (make room) is a calque; 'your phone' added for 'device'; speaker check advised.",
+  "reviewerSeverity": "wording",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Itani fhethu ha u vhulunga kha founu yaṋu ni sa athu hanganyisa thengiso iyi. Rekhodo yayo yo ḓi vha hone a yo ngo shandulwa.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I061",
@@ -6671,7 +6688,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: Same 'type' word problem as I049"
+  "decision": "drafter hold: Same 'type' word problem as I049",
+  "retry": "round 4: drafter hold again — HOLD: no verified word for 'type' that is not tribe/nation"
  },
  {
   "id": "I071",
@@ -7105,7 +7123,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: Must differ from Delete (Bvisani, accepted) and 'Remove photo' was held for the same collision; needs a speaker to supply a distinct verb"
+  "decision": "drafter hold: Must differ from Delete (Bvisani, accepted) and 'Remove photo' was held for the same collision; needs a speaker to supply a distinct verb",
+  "retry": "round 4: drafter hold again — HOLD: no verified verb for remove-item that differs from Bvisani (Delete)"
  },
  {
   "id": "I111",

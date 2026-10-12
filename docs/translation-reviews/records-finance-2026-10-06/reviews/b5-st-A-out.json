@@ -1,0 +1,8 @@
+[
+ {"id":"R275","back":"Other plants of the food forest","flags":["'sekgwa' (forest) is uncertain for Sesotho; 'moru' or 'sebaka' more usual; may be Sepedi/Setswana-flavoured","'Dimela' (plants) fine but 'tse ding' reads as 'others' - ok"]},
+ {"id":"R282","back":"Money of the hands (cash)","flags":["'Tjhelete ya matsoho' is a literal idiom for cash; plausible but unconfirmed as a payment-method word"]},
+ {"id":"R284","back":"Money of the phone (phone money)","flags":["'Tjhelete ya fono' could read as 'money of/for a phone' rather than mobile-money payment; unconfirmed"]},
+ {"id":"R296","back":"That which your place of planting gives you","flags":["Fragment with relative clause 'se o fang sona' is awkward/ungrammatical-sounding as standalone text","Unclear what noun it modifies; 'sebaka sa ho lema' = growing area"]},
+ {"id":"R319","back":"{list}: they are very high for this graph, and they are cut off at the mark so that other months stay ... run away","flags":["'kgaotswe' (cut off) is non-Sesotho spelling (Sesotho: kgaoloa/kgaotswe uncertain)","'hore dikgwedi tse ding di dule di balehe' is nonsense: 'dule' unclear, 'balehe' means 'flee/run away'","'kerafo' is a loanword for graph; unconfirmed","Meaning of 'the other months stay readable' is not conveyed"]},
+ {"id":"I103","back":"Produce that has already been sold (or: produce that are not sold - ambiguous)","flags":["'tse seng di rekisitswe' ambiguous: 'seng' can be a negative relative ('which are not') so could mean 'not yet sold'","Reads as a noun phrase (produce already sold), not clearly 'an invoice for produce'"]}
+]
