@@ -42,6 +42,13 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '12 October 2026', sha: 'aa3ae60', changes: [
+    'Money book and Invoice gain 33 more unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
+    'Held rows still show exact English; the Xitsonga device-only photo warning is clearer.',
+  ], tour: [{ title: 'Compare newer drafts',
+    where: 'Money book', href: '/records',
+    detail: 'Read unreviewed wording beside English; rows no one could confirm stay English.',
+  }] },
   { when: '12 October 2026', sha: '5f068b9b', changes: [
     'Invoice adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside exact English.',
     'The invoice you print or share as PDF stays in English for your buyer.',
