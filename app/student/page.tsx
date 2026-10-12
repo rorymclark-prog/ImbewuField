@@ -1073,7 +1073,7 @@ export default function StudentPage() {
                           {modulePresentation.title}
                         </span>
                         {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
-                          <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                          <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                             style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
                             {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                           </span>
@@ -1124,7 +1124,7 @@ export default function StudentPage() {
                   >
                     <span className={`font-display ${styles.moduleTitle}`}>{modulePresentation.title}</span>
                     {(lang === 'zu' || lang === 'st' || lang === 'ts' || lang === 've') && (
-                      <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                      <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                         style={{ background: 'rgba(192,122,30,0.08)', color: '#8C5E1A', border: '1px solid rgba(192,122,30,0.24)' }}>
                         {lang === 'zu' ? (modulePresentation.status === 'draft' ? t('studentZuluModuleDraftBadge') : t('studentZuluModuleEnglishBadge')) : moduleDraftBadge}
                       </span>
@@ -1141,7 +1141,7 @@ export default function StudentPage() {
                         </span>
                       )}
                       {isCurrent && (
-                        <span className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
+                        <span className="min-w-0 max-w-full whitespace-normal break-words text-xs font-sans font-semibold px-2 py-0.5 rounded-2xl"
                           style={{ background: '#1F4D2B18', color: '#1F4D2B', border: '1px solid #1F4D2B30' }}>
                           {t('studentContinueHere')}
                         </span>
@@ -1170,14 +1170,14 @@ export default function StudentPage() {
                         </span>
                       )}
                       {state && state !== 'done' && (
-                        <span className="flex items-center gap-1 text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
+                        <span className="flex min-w-0 max-w-full items-start gap-1 text-xs font-sans px-2 py-0.5 rounded-2xl"
                           style={{
                             background: ASSIGNMENT_TONE[state].bg,
                             color: ASSIGNMENT_TONE[state].fg,
                             border: `1px solid ${ASSIGNMENT_TONE[state].border}`,
                           }}>
-                          {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
-                          <span className="flex flex-col">
+                          {state === 'overdue' ? <AlertTriangle size={10} className="mt-0.5 shrink-0" /> : <CalendarClock size={10} className="mt-0.5 shrink-0" />}
+                          <span className="flex min-w-0 flex-col break-words">
                             {dueText ?? t('studentAssigned')}
                             {englishDueSource && (
                               <small lang="en" className="mt-1 text-[10px] font-normal leading-snug" style={{ color: '#5C5040' }}>

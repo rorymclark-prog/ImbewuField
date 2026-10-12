@@ -343,7 +343,8 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
       {tightOnSpace && phase !== 'done' && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
-          {t('offlineLowStorage')}
+          {/* The TS draft asserts insufficient space; the estimate only warrants the canonical may-not-fit warning. */}
+          {lang === 'ts' ? translate('en', 'offlineLowStorage') : t('offlineLowStorage')}
         </p>
       )}
     </div>

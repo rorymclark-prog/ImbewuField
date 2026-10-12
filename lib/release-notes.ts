@@ -49,6 +49,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Money book', href: '/records',
     detail: 'Read unreviewed wording beside English; rows no one could confirm stay English.',
   }] },
+  { when: '12 October 2026', sha: '5f80840f', changes: [
+    'Study due-date and draft-status badges wrap inside narrow phone cards.',
+    'The Xitsonga low-space warning keeps its exact English wording.',
+  ], tour: [{ title: 'Read Study dates and status',
+    where: 'Study → assigned modules', href: '/student',
+    detail: 'Long due dates and draft notices stay readable on a narrow phone.',
+  }] },
   { when: '12 October 2026', sha: '5f068b9b', changes: [
     'Invoice adds unreviewed Sesotho, Tshivenda and Xitsonga drafts beside exact English.',
     'The invoice you print or share as PDF stays in English for your buyer.',
