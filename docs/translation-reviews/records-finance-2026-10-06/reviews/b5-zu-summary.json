@@ -1,0 +1,11 @@
+{
+  "language": "zu",
+  "counts": {"ok": 1, "repair": 0, "hold": 0, "total": 1},
+  "top_issues": [
+    "R263: no meaning error found. Back-translation matches English: switched off / not in the weight above / rand total still counts everything sold, orchard included. Negation, placeholders {kg} and {names}, and the contrast 'weight excludes it, rand total includes it' are preserved.",
+    "R263 (minor): 'icishiwe' literally means put out / switched off (as a light or fire). It matches the English 'switched off', but a speaker should confirm it reads naturally for turning an orchard off in the app.",
+    "R263 (minor): 'isamba serandi' (rand total) is distinct from a price word and fits 'rand total'. 'sisabala' (still counts) is acceptable.",
+    "R263 (minor): sibling keys recordsOrchardIn/Out/OutNote still use 'Isivande sezithelo' (a sweet-pumpkin dish, not an orchard), as the drafter noted. They should be aligned to 'Ingadi yezithelo' before shipping to avoid a mixed term on one screen."
+  ],
+  "confidence": "Machine review only, not fluent-speaker approval. isiZulu agreement, locatives and the lexical sense of 'icishiwe' and 'isamba' were judged from model knowledge, not from a native speaker. The 'ok' verdict means no discrepancy with the English was detected, not that the wording is natural or approved. Recommend a native isiZulu speaker check this row before release."
+}

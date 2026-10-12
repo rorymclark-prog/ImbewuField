@@ -1,0 +1,22 @@
+{
+ "language": "ts",
+ "counts": {
+  "ok": 20,
+  "hold": 3,
+  "repair": 1
+ },
+ "total": 24,
+ "top_issues": [
+  "R033: 'Xilo' (item) unconfirmed and 'ringanise' may mean adjust-to-match instead of check; held",
+  "R088: profit as 'mali leyi saleke' and 'never guessed' as 'not added by estimating' unconfirmed; held",
+  "R139: 'matsavu' for vegetables unconfirmed (possibly greens; 'miroho' may be usual); 'mibhede' Zulu-like; held",
+  "R158: Optional AI reading ambiguous/no main verb; repaired",
+  "I122: 'Ntsengo wa nkongomiso' could read as price of guidance (fee); kept ok on repo acceptance, flag for native check",
+  "R202/R191: 'Humesa' (export) and 'mubolekisi' (lender) accepted on morphology and repo precedent only",
+  "R023: 'Ntirho' is work/labour, not confirmed as paid labour cost",
+  "I075: 'ndhawu leyi' for form field uncertain",
+  "R326: 'mali yingani' for 'worth' copied from earlier acceptance, not independently confirmed",
+  "Device = 'foni leyi' narrows device to phone across R096-R248 (acceptable for a phone-first app)"
+ ],
+ "confidence_limits": "I am a machine reviewer without fluent Xitsonga competence. Back-translations are inferred from morphology and loan words, and several 'ok' verdicts lean on earlier accepted wording in the repo rather than independent confirmation. These are not a fluent-speaker approval; native review is still required, especially for money words (mali, ntsengo, xihakelo), unit words and the items marked minor."
+}

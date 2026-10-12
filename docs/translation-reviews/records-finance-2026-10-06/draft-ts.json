@@ -291,7 +291,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "reviewer hold"
+  "decision": "reviewer hold",
+  "retry": "round 4: drafter hold again — No verified Xitsonga word for fuel as an expense category; 'Fuyili' is an unattested respelling and 'Mafurha' also means cooking oil/fat. Needs a fluent speaker."
  },
  {
   "id": "R022",
@@ -310,17 +311,16 @@
  {
   "id": "R023",
   "english": "Labour",
-  "drafterDraft": "Vatirhi",
+  "drafterDraft": "Ntirho",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "Replaced 'Vatirhi' (workers) with 'Ntirho' (work/labour, the activity not the people). Moderate confidence; as a cost chip beside Seed/Feed/Equipment it should read as paid work.",
   "reviewerVerdict": "ok",
-  "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerProblem": "'Ntirho' = work/labour; reads as the activity, acceptable beside Seed/Feed chips but not confirmed as 'paid labour'",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"Vatirhi\" means workers (people), not labour",
-  "heldDraft": "Vatirhi"
+  "status": "accepted",
+  "draft": "Ntirho",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R024",
@@ -460,7 +460,9 @@
   "reviewerRepair": "Xilo, muphakeri ni mali hinkwayo swi fakiwile. Swi kambele u swi ringanisa na risiti u nga se hlayisa.",
   "status": "held",
   "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English",
+  "retry": "round 4: reviewer hold — 'Xilo' for 'item' cannot be confirmed; 'Swi ringanise ni risiti' (ringanisa = make equal/compare) could read as 'adjust them to match the receipt' rather than 'check against'; 'mali hinkwayo' for 'total' (distinct from price) and 'swi lunghekile' (correct vs ready) also unconfirmed",
+  "heldDraft": "Xilo, muphakeri ni mali hinkwayo swi lunghekile. Swi ringanise ni risiti u nga si hlayisa."
  },
  {
   "id": "R034",
@@ -1230,7 +1232,9 @@
   "reviewerRepair": "Ku xavisa loku tsariweke loku susiweke tihakelo leti tsariweke. Tihakelo leti avelaniwaka a ti tshuki ti ringanyetiwa ku engeteriwa eka vuyelo bya xibyariwa.",
   "status": "held",
   "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English",
+  "retry": "round 4: reviewer hold — Profit rendered as 'mali leyi saleke' (money left over), unconfirmed money word; 'never guessed' rendered as 'not added at all by estimating' (guess vs estimate differ, and drafter itself flags 'ni kan'we' as never as uncertain); result clause of 'minus' lost",
+  "heldDraft": "Ku xavisa loku tsariweke, endzhaku ka ku susa tihakelo leti tsariweke. Tihakelo leti avelaniwaka a ti engeteriwi ni kan'we hi ku ringanyeta eka mali leyi saleke ya xibyariwa."
  },
  {
   "id": "R089",
@@ -1333,16 +1337,16 @@
  {
   "id": "R096",
   "english": "You are offline — showing what is saved on this device. Anything missing will appear when you have signal again.",
-  "drafterDraft": "A wu na inthanete — ku kombisiwa leswi hlayisiweke eka xitirhisiwa lexi. Xin'wana ni xin'wana lexi nga kona xi ta humelela loko u tlhela u va na inthanete.",
+  "drafterDraft": "A wu na inthanete — ku kombisiwa leswi hlayisiweke eka foni leyi. Leswi nga kumekiki swi ta vonaka loko u tlhela u va na inthanete.",
   "drafterStatus": "draft",
-  "drafterNote": "'inthanete' used for connection/signal",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "English 'Anything missing will appear'. Draft 'xin'wana ni xin'wana lexi nga kona' = 'anything that exists/is there' - 'missing' is lost; 'humelela' leans to 'succeed'.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "A wu na inthanete — ku kombisiwa leswi hlayisiweke eka xitirhisiwa lexi. Xin'wana ni xin'wana lexi pfumalaka xi ta vonaka loko u tlhela u kuma inthanete.",
-  "status": "held",
-  "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "drafterNote": "Device = 'foni leyi' (accepted I067/I123/I144), no 'xitirhisiwa'. Replaced 'humelela' (succeed) with 'vonaka' (appear); 'missing' = 'leswi nga kumekiki'. Signal = 'inthanete' as in accepted I106.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "A wu na inthanete — ku kombisiwa leswi hlayisiweke eka foni leyi. Leswi nga kumekiki swi ta vonaka loko u tlhela u va na inthanete.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R097",
@@ -1781,17 +1785,16 @@
  {
   "id": "R128",
   "english": "Cost saved. Its original receipt photo is saved on this device only.",
-  "drafterDraft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xi hlayisiwe eka xitirhisiwa lexi ntsena.",
+  "drafterDraft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xa xona xi hlayisiwile eka foni leyi ntsena.",
   "drafterStatus": "draft",
-  "drafterNote": "'device' = xitirhisiwa (also means tool)",
+  "drafterNote": "'device' = 'foni leyi' not 'xitirhisiwa'; restored 'receipt' (xa risiti) and 'its' (xa xona) which the prior draft dropped.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xi hlayisiwe eka xitirhisiwa lexi ntsena."
+  "status": "accepted",
+  "draft": "Xihakelo xi hlayisiwile. Xifaniso xa risiti xa ku sungula xa xona xi hlayisiwile eka foni leyi ntsena.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R129",
@@ -1810,32 +1813,30 @@
  {
   "id": "R130",
   "english": "The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.",
-  "drafterDraft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena.",
+  "drafterDraft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka foni leyi ntsena.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "Only change vs prior: 'xitirhisiwa lexi' -> 'foni leyi'.",
   "reviewerVerdict": "ok",
-  "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerProblem": "'Xitsalwa' as entry relies on repo acceptance; 'foni' narrows device to phone",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena."
+  "status": "accepted",
+  "draft": "Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele leswaku sevha yi xi tiyisisa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka foni leyi ntsena.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R131",
   "english": "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.",
-  "drafterDraft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena.",
+  "drafterDraft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka foni leyi ntsena.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "Only change vs prior: 'xitirhisiwa lexi' -> 'foni leyi'.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka xitirhisiwa lexi ntsena."
+  "status": "accepted",
+  "draft": "A wu na inthanete. Xitsalwa xi hlayisiwile eka foni ya wena, xi rindzele ku rhumeriwa. Xifaniso xin'wana ni xin'wana xa risiti lexi khomekeke xi tshama eka foni leyi ntsena.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R132",
@@ -1947,7 +1948,9 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "reviewer hold"
+  "decision": "reviewer hold",
+  "retry": "round 4: reviewer hold — 'matsavu' as vegetables cannot be confirmed (reviewer suspects greens; usual word may be 'miroho'); 'mibhede' resembles isiZulu 'imibhede'; the repo's own locale entry is machine-sourced, not independent confirmation",
+  "heldDraft": "Mibhede ya matsavu"
  },
  {
   "id": "R140",
@@ -2092,17 +2095,16 @@
  {
   "id": "R150",
   "english": "Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.",
-  "drafterDraft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa ni xihakelo lexi eka xitirhisiwa lexi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB.",
+  "drafterDraft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa swin'we ni xihakelo lexi eka foni leyi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "'xitirhisiwa lexi' -> 'foni leyi'; 'swin'we ni' (together with, as accepted R244); 'handle ka inthanete' matches locale studentStudyOffline.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa ni xihakelo lexi eka xitirhisiwa lexi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB."
+  "status": "accepted",
+  "draft": "Swi tirha handle ka inthanete. Xifaniso xa ku sungula xi hlayisiwa swin'we ni xihakelo lexi eka foni leyi ntsena. JPG, PNG kumbe WebP, ku fika eka 10 MB.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R151",
@@ -2159,7 +2161,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: same verb as Delete; removing a photo keeps the cost, deleting erases a record",
-  "heldDraft": "Susa xifaniso"
+  "heldDraft": "Susa xifaniso",
+  "retry": "round 4: drafter hold again — Needs a verb clearly different from accepted 'Susa' (Delete, R120/I051). 'Tshika' is Cancel (R174), 'Humesa' is Export (R049); no verified distinct verb for taking a photo off while keeping the cost."
  },
  {
   "id": "R155",
@@ -2215,7 +2218,9 @@
   "reviewerRepair": "Ku hlaya hi AI i ku hlawula ka wena, naswona ku tirhisa inthanete ya wena. U nga tlhela u faka xihakelo hi wexe.",
   "status": "held",
   "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English",
+  "retry": "round 4: reviewer repair is meaning-level — Main verb missing and 'Optional' became 'loko u lava ku tirhisa inthanete', reading as 'reading with AI when you want to use your internet'; the optional AI reading and the data use are not separated",
+  "heldDraft": "Ku hlaya hi AI loko u lava ku tirhisa inthanete ya wena. U nga tlhela u faka xihakelo hi wexe."
  },
  {
   "id": "R159",
@@ -2426,7 +2431,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"Muxaka\" can also mean clan/kind of people; category word unverified",
-  "heldDraft": "Muxaka"
+  "heldDraft": "Muxaka",
+  "retry": "round 4: drafter hold again — No verified category word that avoids Muxaka/Rixaka/Mixaka (tribe/clan/kind). 'Ntlawa' (group) and 'Xiyenge' (part) are unverified for 'category'."
  },
  {
   "id": "R174",
@@ -2669,17 +2675,16 @@
  {
   "id": "R191",
   "english": "Records for a lender",
-  "drafterDraft": "Tirhekhodo ta mubolekisi",
+  "drafterDraft": "Tirhekhodo ta ku nyika mubolekisi",
   "drafterStatus": "draft",
-  "drafterNote": "'mubolekisi' = lender",
+  "drafterNote": "Fixed possessive 'of the lender' to purposive 'for giving to a lender' (ta ku nyika mubolekisi). 'mubolekisi' (lender, from bolekisa = lend) is the uncertain word; 'tirhekhodo' accepted (R034).",
   "reviewerVerdict": "ok",
-  "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerProblem": "'mubolekisi' as lender and 'tirhekhodo' as records rely on morphology and repo acceptance",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
-  "heldDraft": "Tirhekhodo ta mubolekisi"
+  "status": "accepted",
+  "draft": "Tirhekhodo ta ku nyika mubolekisi",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R192",
@@ -2693,22 +2698,22 @@
   "reviewerRepair": "Nkatsakanyo wa ntshovelo, ku xavisa ni tihakelo leti u ti tsaleke — ku tshama ka muholo wu fana, ku famba ka mali ni rhekhodo ra ku tirha, lowu akiweke ntsena hi leswi u swi tsaleke. I swilo swo vulavula na mubolekisi, a hi nhlayo ya ku tshembeka eka mbolekiso kumbe ku pfumeleriwa ka mbolekiso.",
   "status": "held",
   "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English",
+  "retry": "round 4: drafter hold again — Several unverifiable terms in one sentence: 'credit score' (prior used 'xikoro', which means school), 'income consistency', 'track record' (prior 'rhekhodo ra ku tirha' = record of working), plus 'mubolekisi'. The negation 'not a credit score or a loan approval' is safety-relevant, so hold."
  },
  {
   "id": "R193",
   "english": "Log at least one harvest, sale or cost first — there is nothing to summarise yet.",
-  "drafterDraft": "Sungula hi ku tsala ntshovelo, ku xavisa kumbe xihakelo xin'we — a ku na nchumu wo katsakanya ku fikela sweswi.",
+  "drafterDraft": "Sungula hi ku tsala xitsalwa xin'we kumbe switsalwa swo tala swa ntshovelo, ku xavisa kumbe xihakelo — a ku na nchumu wo katsakanya ku fikela sweswi.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "'at least one' now covers all three kinds via 'xitsalwa xin'we kumbe switsalwa swo tala' (pattern of accepted I018) followed by 'swa ntshovelo, ku xavisa kumbe xihakelo'. 'ku fikela sweswi' = yet (R090). Uncertain: 'nchumu wo katsakanya' for 'nothing to summarise' (nkatsakanyo accepted R196).",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xin'we\" scopes only to the cost; \"at least one\" weakened",
-  "heldDraft": "Sungula hi ku tsala ntshovelo, ku xavisa kumbe xihakelo xin'we — a ku na nchumu wo katsakanya ku fikela sweswi."
+  "status": "accepted",
+  "draft": "Sungula hi ku tsala xitsalwa xin'we kumbe switsalwa swo tala swa ntshovelo, ku xavisa kumbe xihakelo — a ku na nchumu wo katsakanya ku fikela sweswi.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R194",
@@ -2825,17 +2830,16 @@
  {
   "id": "R202",
   "english": "Export records for a lender",
-  "drafterDraft": "Humesa tirhekhodo ta mubolekisi",
+  "drafterDraft": "Humesa tirhekhodo ta ku nyika mubolekisi",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "Same fix as R191 (purposive 'for giving to a lender'); 'Humesa' = Export (accepted R049).",
   "reviewerVerdict": "ok",
-  "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerProblem": "'Humesa' = export relies on repo-accepted R049; literally 'take out', so keep distinct from the delete/remove verbs",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: possessive \"of the lender\" rather than \"for a lender\"",
-  "heldDraft": "Humesa tirhekhodo ta mubolekisi"
+  "status": "accepted",
+  "draft": "Humesa tirhekhodo ta ku nyika mubolekisi",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R203",
@@ -2962,7 +2966,8 @@
   "status": "held",
   "draft": "",
   "decision": "root hold after independent read-only backcheck by a second session: \"Languta\" means just look",
-  "heldDraft": "Languta"
+  "heldDraft": "Languta",
+  "retry": "round 4: drafter hold again — 'Languta' means just look; no verified noun/label for 'preview' (alt text for an image). Not guessing."
  },
  {
   "id": "R212",
@@ -3233,17 +3238,16 @@
  {
   "id": "R231",
   "english": "Original photo · saved on this device only",
-  "drafterDraft": "Xifaniso xa ku sungula · xi hlayisiwile eka xitirhisiwa lexi ntsena",
+  "drafterDraft": "Xifaniso xa ku sungula · xi hlayisiwile eka foni leyi ntsena",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "'xitirhisiwa lexi' -> 'foni leyi'.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Xifaniso xa ku sungula · xi hlayisiwile eka xitirhisiwa lexi ntsena"
+  "status": "accepted",
+  "draft": "Xifaniso xa ku sungula · xi hlayisiwile eka foni leyi ntsena",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R232",
@@ -3276,17 +3280,16 @@
  {
   "id": "R234",
   "english": "No receipt photo is saved for this cost on this device. Edit the cost to attach one, or open it on the device where you saved the photo.",
-  "drafterDraft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka xitirhisiwa lexi. Cinca xihakelo lexi ku engetela xin'we, kumbe u xi pfula eka xitirhisiwa lexi u xi hlayiseke eka xona.",
+  "drafterDraft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka foni leyi. Cinca xihakelo lexi leswaku u khomekisa xifaniso, kumbe u xi pfula eka foni leyi u hlayiseke xifaniso eka yona.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "Both 'device' = 'foni leyi'; 'attach' = 'khomekisa' (from accepted khomekile R122); fixed prior 'ku engetela xin'we'. 'foni' narrows device to phone, consistent with accepted I067/I123/I144.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka xitirhisiwa lexi. Cinca xihakelo lexi ku engetela xin'we, kumbe u xi pfula eka xitirhisiwa lexi u xi hlayiseke eka xona."
+  "status": "accepted",
+  "draft": "A ku na xifaniso xa risiti lexi hlayisiweke eka xihakelo lexi eka foni leyi. Cinca xihakelo lexi leswaku u khomekisa xifaniso, kumbe u xi pfula eka foni leyi u hlayiseke xifaniso eka yona.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R235",
@@ -3459,32 +3462,30 @@
  {
   "id": "R247",
   "english": "The receipt could not be saved on this device. Storage may be full or unavailable. Keep the original photo and try again.",
-  "drafterDraft": "Risiti a yi hlayisiwanga eka xitirhisiwa lexi. Ndhawu yo hlayisa yi nga ha tala kumbe yi nga tirhi. Hlayisa xifaniso xa ku sungula u ringeta nakambe.",
+  "drafterDraft": "Risiti a yi kotekanga ku hlayisiwa eka foni leyi. Ndhawu yo hlayisa yi nga ha va yi helile kumbe yi nga kumekiki. Hlayisa xifaniso xa ku sungula u ringeta nakambe.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "'could not be saved' = 'a yi kotekanga ku hlayisiwa' (cf. I123); 'full' = 'yi helile' (used up) instead of 'yi nga ha tala' (many); device = 'foni leyi'. Uncertain: 'helile' for storage full.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Risiti a yi hlayisiwanga eka xitirhisiwa lexi. Ndhawu yo hlayisa yi nga ha tala kumbe yi nga tirhi. Hlayisa xifaniso xa ku sungula u ringeta nakambe."
+  "status": "accepted",
+  "draft": "Risiti a yi kotekanga ku hlayisiwa eka foni leyi. Ndhawu yo hlayisa yi nga ha va yi helile kumbe yi nga kumekiki. Hlayisa xifaniso xa ku sungula u ringeta nakambe.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R248",
   "english": "The cost was saved, but its receipt could not be confirmed on this device. Keep the photo and retry this cost.",
-  "drafterDraft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi tiyisisiwanga eka xitirhisiwa lexi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi.",
+  "drafterDraft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi kotekanga ku tiyisisiwa eka foni leyi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi.",
   "drafterStatus": "draft",
-  "drafterNote": "",
+  "drafterNote": "'could not be confirmed' = 'a yi kotekanga ku tiyisisiwa' (was 'not confirmed'); device = 'foni leyi'.",
   "reviewerVerdict": "ok",
   "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold after independent read-only backcheck by a second session: \"xitirhisiwa\" is ambiguous (device / tool); the device-only meaning is safety-relevant",
-  "heldDraft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi tiyisisiwanga eka xitirhisiwa lexi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi."
+  "status": "accepted",
+  "draft": "Xihakelo xi hlayisiwile, kambe risiti ya xona a yi kotekanga ku tiyisisiwa eka foni leyi. Hlayisa xifaniso u ringeta nakambe xihakelo lexi.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "R249",
@@ -3867,7 +3868,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 2
+  "batch": 2,
+  "retry": "round 4: drafter hold again — 'food forest' (accepted R079 as 'mirhi ya swakudya', itself native-check advised) combined with 'plants' was judged a muddled, cryptic heading; no clean safe wording."
  },
  {
   "id": "R276",
@@ -3972,7 +3974,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 2
+  "batch": 2,
+  "retry": "round 4: drafter hold again — 'Mali ya voko' (money of the hand) may read as pocket money; the common loan 'Kheshi' has no verified Xitsonga spelling. Payment-method word, not guessing."
  },
  {
   "id": "R283",
@@ -4002,7 +4005,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 2
+  "batch": 2,
+  "retry": "round 4: drafter hold again — 'Foni' reads as telephone only after 'Invoice ·'; 'Mali ya foni' unverified."
  },
  {
   "id": "R285",
@@ -4017,7 +4021,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 3
+  "batch": 3,
+  "retry": "round 4: drafter hold again — 'dashed outline' has no verified Xitsonga word (prior 'xivumbeko ... mikolo leyi tsemekeke' unconfirmed) and the 'kept figure is unknown' logic depends on it; not guessing."
  },
  {
   "id": "R286",
@@ -4067,16 +4072,16 @@
  {
   "id": "R289",
   "english": "Trace your beds in the Design Studio, then plan a season, and this graph compares the plan against what you actually pick.",
-  "drafterDraft": "Tsala mikolo ya mibhede ya wena eka Design Studio, kutani u kunguhata nguva, kutani chati leyi yi ta ringanisa pulani ni leswi u swi tshovelaka hakunene.",
+  "drafterDraft": "Dirowa mibhede ya wena eka Design Studio, kutani u kunguhata nguva, kutani chati leyi yi ringanisa pulani ni leswi u swi tshovelaka hakunene.",
   "drafterStatus": "draft",
-  "drafterNote": "'Design Studio' kept as in existing locale studentOpenDesignStudio; 'trace' -> 'tsala mikolo' (write the outlines), moderate",
-  "reviewerVerdict": "hold",
-  "reviewerProblem": "'Tsala mikolo ya mibhede' for 'Trace your beds': 'mikolo' unverified (lines? ceremonies?) and 'tsala' = write/record, not trace/draw. This is an instruction the farmer must act on, so a wrong word is costly.",
-  "reviewerSeverity": "meaning",
+  "drafterNote": "Replaced 'tsala mikolo' (unverified) with 'Dirowa' (loan 'draw'), already used in locale ts.ts eDrawHarvestingDesc ('Dirowa lwangu, xisele'). Rest from prior; 'kunguhata' R335, 'nguva' = season R047, 'chati' R347, 'hakunene' R257. 'Trace' rendered as 'draw'.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'Trace' rendered as 'draw'; 'nguva' for season relies on repo acceptance",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "reviewer hold",
+  "status": "accepted",
+  "draft": "Dirowa mibhede ya wena eka Design Studio, kutani u kunguhata nguva, kutani chati leyi yi ringanisa pulani ni leswi u swi tshovelaka hakunene.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error",
   "batch": 3
  },
  {
@@ -4622,16 +4627,16 @@
  {
   "id": "R326",
   "english": "Trace your beds in the Design Studio and this card will show what is due to be picked, and roughly what it is worth.",
-  "drafterDraft": "Tsala mikolo ya mibhede ya wena eka Design Studio kutani khadi leri ri ta kombisa leswi swi fanelaka ku tshoveriwa, ni leswaku swi ringana mali yingani hi ku ringanyeta.",
+  "drafterDraft": "Dirowa mibhede ya wena eka Design Studio kutani khadi leri ri ta kombisa leswi fanelaka ku tshoveriwa, ni leswaku swi ringana mali yingani hi ku ringanyeta.",
   "drafterStatus": "draft",
-  "drafterNote": "'card' = 'khadi' (R283); 'roughly' = 'hi ku ringanyeta' (R253)",
-  "reviewerVerdict": "hold",
-  "reviewerProblem": "Same 'Tsala mikolo ya mibhede' problem as R289 (trace beds unverified). The rest (due to be picked, roughly worth) is fine.",
-  "reviewerSeverity": "meaning",
+  "drafterNote": "'Dirowa mibhede' as R289; removed stray 'swi' in 'leswi swi fanelaka' (now accepted R331 'leswi fanelaka ku tshoveriwa'); 'swi ringana mali yingani' copied from accepted R339; 'hi ku ringanyeta' R253.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'mali yingani' for 'roughly what it is worth' copied from accepted R339; 'due' rendered 'should be'",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "reviewer hold",
+  "status": "accepted",
+  "draft": "Dirowa mibhede ya wena eka Design Studio kutani khadi leri ri ta kombisa leswi fanelaka ku tshoveriwa, ni leswaku swi ringana mali yingani hi ku ringanyeta.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error",
   "batch": 3
  },
  {
@@ -6198,16 +6203,16 @@
  {
   "id": "I031",
   "english": "Buyer address & contact",
-  "drafterDraft": "",
-  "drafterStatus": "hold",
-  "drafterNote": "No confident Xitsonga word for 'contact' (phone/email details).",
-  "reviewerVerdict": "",
-  "reviewerProblem": "",
-  "reviewerSeverity": "",
+  "drafterDraft": "Adirese ya muxavi ni vuxokoxoko bya ku vulavula na yena",
+  "drafterStatus": "draft",
+  "drafterNote": "'contact' rendered descriptively as 'details for speaking with him/her' (vuxokoxoko accepted I065/I143); 'adirese' I022, 'muxavi' R169. Wording is a circumlocution; native check welcome.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "Circumlocution for 'contact'; longer than a label may want",
+  "reviewerSeverity": "minor",
   "reviewerRepair": "",
-  "status": "held",
-  "draft": "",
-  "decision": "drafter hold: No confident Xitsonga word for 'contact' (phone/email details)."
+  "status": "accepted",
+  "draft": "Adirese ya muxavi ni vuxokoxoko bya ku vulavula na yena",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I032",
@@ -6338,17 +6343,16 @@
  {
   "id": "I043",
   "english": "Confirm whether this sale is already recorded.",
-  "drafterDraft": "Tiyisisa leswaku xana ku xavisa loku ku tsariwile sweswi.",
+  "drafterDraft": "Tiyisisa leswaku xana ku xavisa loku se ku tsariwile.",
   "drafterStatus": "draft",
-  "drafterNote": "",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'sweswi' = now/just: 'recorded just now', not 'already recorded'.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Tiyisisa leswaku xana ku xavisa loku se ku tsariwile.",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: reviewer repair is meaning-level or not safely checkable — 'sweswi' = now/just: 'recorded just now', not 'already recorded'.",
-  "heldDraft": "Tiyisisa leswaku xana ku xavisa loku ku tsariwile sweswi."
+  "drafterNote": "'sweswi' (just now) replaced by 'se' (already), the same marker as accepted I023 'leyi se yi tsariweke' / I103 'leswi se swi xavisiweke'.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Tiyisisa leswaku xana ku xavisa loku se ku tsariwile.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I044",
@@ -6367,17 +6371,16 @@
  {
   "id": "I045",
   "english": "Connect to the internet to load a sale you have already recorded.",
-  "drafterDraft": "Va ni inthanete leswaku u rhwala ku xavisa loku u ku tsarileke sweswi.",
+  "drafterDraft": "Va ni inthanete leswaku u rhwala ku xavisa loku u se u ku tsarile.",
   "drafterStatus": "draft",
-  "drafterNote": "",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'u ku tsarileke sweswi' = 'you recorded just now', not 'already recorded'; relative form also malformed.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Va ni inthanete leswaku u rhwala ku xavisa loku u se u ku tsarile.",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: reviewer repair is meaning-level or not safely checkable — 'u ku tsarileke sweswi' = 'you recorded just now', not 'already recorded'; relative form also malformed.",
-  "heldDraft": "Va ni inthanete leswaku u rhwala ku xavisa loku u ku tsarileke sweswi."
+  "drafterNote": "'sweswi' replaced by 'se' (already); relative clause now 'loku u se u ku tsarile' (object ku agrees with ku xavisa). 'Va ni inthanete' as accepted I106, 'rhwala' as I077.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'rhwala' (carry/load) for load per accepted I077",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Va ni inthanete leswaku u rhwala ku xavisa loku u se u ku tsarile.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I046",
@@ -6419,7 +6422,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: 'types' words in earlier rounds (Muxaka/Rixaka) were rejected as meaning tribe/clan; no safe replacement."
+  "decision": "drafter hold: 'types' words in earlier rounds (Muxaka/Rixaka) were rejected as meaning tribe/clan; no safe replacement.",
+  "retry": "round 4: drafter hold again — Only 'types' words are Muxaka/Rixaka/Mixaka (tribe/clan/kind), rejected; no verified safe replacement."
  },
  {
   "id": "I050",
@@ -6671,7 +6675,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: 'type' word unresolved (Muxaka rejected)."
+  "decision": "drafter hold: 'type' word unresolved (Muxaka rejected).",
+  "retry": "round 4: drafter hold again — Same unresolved 'type' word (Muxaka rejected)."
  },
  {
   "id": "I071",
@@ -6718,17 +6723,16 @@
  {
   "id": "I075",
   "english": "Leave empty to invoice under your own name. Add a logo in Account.",
-  "drafterDraft": "Tshika ku nga ri na nchumu leswaku u endla invoyisi hi vito ra wena. Engetela logo eka Akhawunti.",
+  "drafterDraft": "Tshika ndhawu leyi yi nga tsariwanga leswaku u endla invoyisi hi vito ra wena. Engetela logo eka Akhawunti.",
   "drafterStatus": "draft",
-  "drafterNote": "'Akhawunti' = the app's Account page (tabAccount).",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'Tshika ku nga ri na nchumu' is not meaningful Xitsonga for 'Leave empty'.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Yi siye yi nga tsariwanga leswaku u endla invoyisi hi vito ra wena. Engetela logo eka Akhawunti.",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: reviewer repair is meaning-level or not safely checkable — 'Tshika ku nga ri na nchumu' is not meaningful Xitsonga for 'Leave empty'.",
-  "heldDraft": "Tshika ku nga ri na nchumu leswaku u endla invoyisi hi vito ra wena. Engetela logo eka Akhawunti."
+  "drafterNote": "'Leave empty' now follows accepted R162 'Tshika xi nga tsariwanga' (leave unwritten), with 'ndhawu leyi' = this field/space; 'Akhawunti' = app's Account page (locale tabAccount). 'ndhawu leyi' for a form field is the uncertain bit.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'ndhawu leyi' for a form field is uncertain but the leave-blank intent is recoverable",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Tshika ndhawu leyi yi nga tsariwanga leswaku u endla invoyisi hi vito ra wena. Engetela logo eka Akhawunti.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I076",
@@ -7106,7 +7110,8 @@
   "reviewerRepair": "",
   "status": "held",
   "draft": "",
-  "decision": "drafter hold: Needs a verb different from Susa (Delete invoice); the earlier 'Remove photo' was held for the same reason and no approved verb exists."
+  "decision": "drafter hold: Needs a verb different from Susa (Delete invoice); the earlier 'Remove photo' was held for the same reason and no approved verb exists.",
+  "retry": "round 4: drafter hold again — Needs a verb clearly different from accepted 'Susa' (Delete invoice); same unresolved verb as R154."
  },
  {
   "id": "I111",
@@ -7223,17 +7228,16 @@
  {
   "id": "I122",
   "english": "Suggested price filled in — change it if you agreed something else.",
-  "drafterDraft": "Ntsengo wa nkongomiso wu tsariwile — wu cinca loko u pfumelelene swin'wana.",
+  "drafterDraft": "Ntsengo wa nkongomiso wu fakiwile — wu cince loko u pfumelelane swin'wana.",
   "drafterStatus": "draft",
-  "drafterNote": "Uses 'Ntsengo wa nkongomiso' (guide price); price-guide adjacent, reviewer to confirm.",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'wu cinca' is a statement ('it changes'), not 'change it'; reads as the price changing by itself. 'Suggested' sense of guide price kept.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Ntsengo wa nkongomiso wu tsariwile — u nga wu cinca loko u pfumelelene swin'wana.",
-  "status": "held",
-  "draft": "",
-  "decision": "root hold: reviewer repair is meaning-level or not safely checkable — 'wu cinca' is a statement ('it changes'), not 'change it'; reads as the price changing by itself. 'Suggested' sense of guide price kept.",
-  "heldDraft": "Ntsengo wa nkongomiso wu tsariwile — wu cinca loko u pfumelelene swin'wana."
+  "drafterNote": "Fixed imperative: 'wu cinca' (it changes) -> 'wu cince' (change it); 'filled in' = 'wu fakiwile' (faka, R122) instead of 'tsariwile'; 'loko u pfumelelane swin'wana' (if you agreed otherwise). Still uses 'Ntsengo wa nkongomiso' (guide price, accepted R254) for 'Suggested price'; reviewer to confirm.",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "'Ntsengo wa nkongomiso' = 'guide price' and could be read as 'price of guidance'; accepted R254 so kept; 'ntsengo' correctly keeps price distinct from amount",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Ntsengo wa nkongomiso wu fakiwile — wu cince loko u pfumelelane swin'wana.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error"
  },
  {
   "id": "I123",

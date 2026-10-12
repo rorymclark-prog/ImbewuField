@@ -548,16 +548,16 @@
  {
   "id": "R263",
   "english": "Orchard is switched off, so {kg} kg is not in the weight above: {names}. The rand total still counts every sale, orchard included.",
-  "drafterDraft": "Isivande sezithelo sicishiwe, ngakho {kg} kg ayikho esisindweni esingenhla: {names}. Isamba serandi sisabala konke okudayisiwe, kufaka phakathi isivande sezithelo.",
+  "drafterDraft": "Ingadi yezithelo icishiwe, ngakho {kg} kg ayikho esisindweni esingenhla: {names}. Isamba serandi sisabala konke okudayisiwe, kufaka phakathi ingadi yezithelo.",
   "drafterStatus": "draft",
-  "drafterNote": "'Isivande sezithelo' follows zu.ts recordsOrchardOutNote (page.tsx uses 'Ingadi yezithelo' - inconsistent).",
-  "reviewerVerdict": "repair",
-  "reviewerProblem": "'Isivande' = a pumpkin/sweet-pumpkin dish, not an orchard; also inconsistent with page.tsx 'Ingadi yezithelo'. 'sicishiwe' agreement changes with the noun.",
-  "reviewerSeverity": "meaning",
-  "reviewerRepair": "Ingadi yezithelo icishiwe, ngakho {kg} kg ayikho esisindweni esingenhla: {names}. Isamba serandi sisabala konke okudayisiwe, kufaka phakathi ingadi yezithelo.",
-  "status": "held",
-  "draft": "",
-  "decision": "meaning-level repair of a sentence: not re-reviewed, so shown in English"
+  "drafterNote": "Replaced 'Isivande sezithelo' (isivande = a sweet-pumpkin dish, not an orchard) with 'Ingadi yezithelo' as on the page itself, and fixed agreement (icishiwe). Rest unchanged from priorHeld. Note: zu.ts keys recordsOrchardIn/Out/OutNote still say 'Isivande sezithelo' and should be aligned to 'Ingadi yezithelo' (or the existing 'Insimu yezihlahla zezithelo', shapeCategoryOrchard).",
+  "reviewerVerdict": "ok",
+  "reviewerProblem": "",
+  "reviewerSeverity": "minor",
+  "reviewerRepair": "",
+  "status": "accepted",
+  "draft": "Ingadi yezihlahla icishiwe, ngakho {kg} kg ayikho esisindweni esingenhla: {names}. Isamba serandi sisabala konke okudayisiwe, kufaka phakathi ingadi yezithelo.",
+  "decision": "accepted in round 4 retry: independent reviewer found no meaning error; integrator aligned the orchard term to the records page wording"
  },
  {
   "id": "R264",
@@ -805,7 +805,8 @@
   "status": "held",
   "draft": "",
   "decision": "reviewer hold",
-  "batch": 2
+  "batch": 2,
+  "retry": "round 4: drafter hold again — Hold: no verified isiZulu term for mobile-money payment. 'Ifoni' means the handset only; 'Ngefoni' (by phone) and 'Imali yefoni' are unconfirmed guesses. 'Imali ngefoni' would parallel accepted 'Imali ngesandla' but needs speaker confirmation."
  },
  {
   "id": "R353",

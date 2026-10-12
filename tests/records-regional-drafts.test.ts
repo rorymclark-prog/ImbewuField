@@ -266,7 +266,10 @@ test('held rows stay English: after the second-session backcheck no held draft r
     assert.equal(recordsDraft('ve', english), null, `ve must show English for: ${english}`);
   }
   assert.equal(recordsDraft('st', 'Garden gross margin'), null);
-  assert.equal(recordsDraft('ts', 'Original photo · saved on this device only'), null, 'the device-only photo warning stays English until a speaker confirms it');
+  // Round 4 retried the device-only photo warning without 'xitirhisiwa' (device/tool, ambiguous): the draft now says
+  // 'this phone only'. The ambiguous word itself must still never ship.
+  const photo = recordsDraft('ts', 'Original photo · saved on this device only');
+  assert.ok(photo === null || !/xitirhisiwa/i.test(photo), 'the ambiguous device/tool word must not return');
 });
 
 /* ── Charts tab: the same guarantee for the five chart components ─────────────────────────────── */
