@@ -42,6 +42,12 @@ export interface UpdateTourStop {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '13 October 2026', sha: 'a07abc08', changes: [
+    'Study keeps five uncertain offline phrases in exact English.',
+  ], tour: [{ title: 'Read the offline instructions',
+    where: 'Study → Study offline', href: '/student',
+    detail: 'Read the exact English instructions before saving the slides on your phone.',
+  }] },
   { when: '12 October 2026', sha: 'd9b20cf', changes: [
     'Money book and Invoice gain 33 more unreviewed Sesotho, Tshivenda and Xitsonga drafts.',
     'Held rows still show exact English; the Xitsonga device-only photo warning is clearer.',
