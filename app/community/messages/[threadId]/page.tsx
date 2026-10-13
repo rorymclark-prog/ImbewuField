@@ -40,6 +40,12 @@ export default function MessageThreadPage() {
 
   const [thread, setThread] = useState<MessageThread | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
+  // bug-14: subscribeMessages used to have no error callback at all, so a denied or dropped
+  // listener left this screen showing an empty thread forever with nothing to say why and
+  // nothing to retry. listenRetryKey, bumped by the retry button below, forces the effect to
+  // tear down and resubscribe.
+  const [listenError, setListenError] = useState(false);
+  const [listenRetryKey, setListenRetryKey] = useState(0);
   const [body, setBody] = useState('');
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState(false);
@@ -60,9 +66,10 @@ export default function MessageThreadPage() {
   useEffect(() => {
     if (!user || !threadId || !communityEnabled()) return;
     getThread(threadId).then((th) => { setThread(th); setBusy(false); }).catch(() => setBusy(false));
-    const unsub = subscribeMessages(threadId, setMessages);
+    setListenError(false);
+    const unsub = subscribeMessages(threadId, setMessages, () => setListenError(true));
     return () => { unsub?.(); };
-  }, [user, threadId]);
+  }, [user, threadId, listenRetryKey]);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ block: 'end' }); }, [messages.length]);
 
@@ -193,6 +200,25 @@ export default function MessageThreadPage() {
               {t('communityReportError')}
             </p>
           )}
+        </div>
+      )}
+
+      {listenError && (
+        <div
+          className={`${workspace.workspace} ${workspace.readingWidth} flex items-center justify-between gap-3 flex-shrink-0`}
+          style={{ margin: '10px 16px 0', padding: '8px 12px', borderRadius: 12, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
+        >
+          <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>
+            {t('communityMessagesListenError')}
+          </span>
+          <button
+            type="button"
+            onClick={() => setListenRetryKey((k) => k + 1)}
+            className="font-sans font-semibold flex-shrink-0"
+            style={{ fontSize: 12, color: '#8B2020', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            {t('communityRetry')}
+          </button>
         </div>
       )}
 

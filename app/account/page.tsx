@@ -59,8 +59,15 @@ export default function AccountPage() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
+  // bug-07: saveProfile had no try/catch at all — a rejected updateMyProfile() (offline, denied)
+  // left `saving` stuck true (the button frozen on "Saving…" forever) and nothing on screen to
+  // say the edit was never written.
+  const [profileError, setProfileError] = useState<string | null>(null);
   const [form, setForm] = useState({ name: '', phone: '', farmName: '', language: 'en' });
   const [photoUploading, setPhotoUploading] = useState(false);
+  // bug-07: handlePhotoChange already had try/finally, but no catch — an avatar upload failure
+  // was swallowed with nothing shown, unlike the logo upload just below it.
+  const [photoError, setPhotoError] = useState<string | null>(null);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const [logoUploading, setLogoUploading] = useState(false);
   const [logoError, setLogoError] = useState<string | null>(null);
@@ -97,25 +104,36 @@ export default function AccountPage() {
 
   async function saveProfile() {
     setSaving(true);
-    await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, farm_name: form.farmName.trim() || null, language: form.language });
-    // AND ACTUALLY SWITCH THE APP. This select has always written profile.language to Firestore
-    // and nothing has ever read it back — a control that looked like it worked, saved without
-    // error, and changed nothing. (Same shape as the settings-panel-writes-nothing-re-reads bug
-    // class.) The profile field stays written, because it is the durable per-account preference;
-    // setLang is what makes the screen obey it now.
-    setLang(form.language);
-    await refreshProfile();
-    setSaving(false);
-    setEditing(false);
+    setProfileError(null);
+    try {
+      await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, farm_name: form.farmName.trim() || null, language: form.language });
+      // AND ACTUALLY SWITCH THE APP. This select has always written profile.language to Firestore
+      // and nothing has ever read it back — a control that looked like it worked, saved without
+      // error, and changed nothing. (Same shape as the settings-panel-writes-nothing-re-reads bug
+      // class.) The profile field stays written, because it is the durable per-account preference;
+      // setLang is what makes the screen obey it now.
+      setLang(form.language);
+      await refreshProfile();
+      setEditing(false);
+    } catch (err) {
+      // Stay in the edit form (not setEditing(false)) so nothing typed here is lost, and the
+      // farmer sees why the save didn't happen instead of a save that just silently hung.
+      setProfileError(err instanceof Error ? err.message : copy('Could not save. Try again.', 'Akukwazanga ukulondolozwa. Zama futhi.'));
+    } finally {
+      setSaving(false);
+    }
   }
 
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    setPhotoError(null);
     setPhotoUploading(true);
     try {
       const url = await uploadPhoto(await resizeFileForUpload(file), 'avatars');
       if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
+    } catch (err) {
+      setPhotoError(err instanceof Error ? err.message : copy('Could not update your photo.', 'Akukwazanga ukushintsha isithombe sakho.'));
     } finally {
       setPhotoUploading(false);
       if (photoInputRef.current) photoInputRef.current.value = '';
@@ -217,6 +235,9 @@ export default function AccountPage() {
               <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
                 {displayName ?? 'ImbewuField user'}
               </div>
+              {photoError && (
+                <div className="text-xs font-sans mt-1" style={{ color: '#A8443A' }}>{photoError}</div>
+              )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
                   style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
@@ -314,6 +335,12 @@ export default function AccountPage() {
                   {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
                 </select>
               </label>
+
+              {profileError && (
+                <div className="text-xs font-sans rounded-lg px-3 py-2" style={{ color: '#A8443A', background: '#F6E7E1', border: '1px solid #E4C9BC' }}>
+                  {profileError}
+                </div>
+              )}
 
               <div className="flex gap-2 pt-1">
                 <button onClick={saveProfile} disabled={saving} aria-busy={saving}
