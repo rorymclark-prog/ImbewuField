@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props {
   locationData: LocationData | null;
@@ -64,6 +66,7 @@ function renderDesign(text: string) {
 }
 
 export default function SiteDesign({ locationData, photoAnalysis, appLang, placeName }: Props) {
+  const { t } = useLanguage();
   const [preview, setPreview] = useState<string>('');
   const [imageData, setImageData] = useState<{ data: string; mediaType: string } | null>(null);
   const [design, setDesign] = useState('');
@@ -103,7 +106,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: [imageData], locationData, photoAnalysis, language, tone }),
       });
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
+      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -113,8 +116,8 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         text += dec.decode(value, { stream: true });
         setDesign(text);
       }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Design failed');
+    } catch {
+      setError(networkFailureMessage(t));
     } finally {
       setLoading(false);
     }

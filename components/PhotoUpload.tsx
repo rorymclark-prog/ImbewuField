@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { Camera, Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props {
   locationData: LocationData | null;
@@ -11,16 +12,20 @@ interface Props {
   mapCapture?: string | null;
 }
 
+// Rejects with a reason code rather than an English sentence, so the caller can show a translated
+// message instead of this thrown Error's own text (lang-02 — never a raw decode error to the farmer).
+type ResizeFailure = 'unreadable' | 'undecodable' | 'zero-dimensions' | 'blank-heic';
+
 async function resizeImage(file: File, maxPx = 1120): Promise<{ data: string; mediaType: string }> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error(`Could not read ${file.name}`));
+    reader.onerror = () => reject(new Error('unreadable' satisfies ResizeFailure));
     reader.onload = (e) => {
       const img = new Image();
-      img.onerror = () => reject(new Error(`${file.name} could not be decoded — try JPEG or PNG`));
+      img.onerror = () => reject(new Error('undecodable' satisfies ResizeFailure));
       img.onload = () => {
         if (!img.naturalWidth || !img.naturalHeight) {
-          reject(new Error(`${file.name} has zero dimensions`));
+          reject(new Error('zero-dimensions' satisfies ResizeFailure));
           return;
         }
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
@@ -33,7 +38,7 @@ async function resizeImage(file: File, maxPx = 1120): Promise<{ data: string; me
         const cx = Math.floor(canvas.width / 2);
         const cy = Math.floor(canvas.height / 2);
         if (ctx.getImageData(cx, cy, 1, 1).data[3] === 0) {
-          reject(new Error(`${file.name} appears blank after resize — try a JPEG or PNG instead of HEIC`));
+          reject(new Error('blank-heic' satisfies ResizeFailure));
           return;
         }
         const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
@@ -46,6 +51,7 @@ async function resizeImage(file: File, maxPx = 1120): Promise<{ data: string; me
 }
 
 export default function PhotoUpload({ locationData, onAnalysisComplete, mapCapture }: Props) {
+  const { t, lang } = useLanguage();
   const [previews, setPreviews] = useState<string[]>([]);
   const [imageData, setImageData] = useState<Array<{ data: string; mediaType: string }>>([]);
   const [loading, setLoading] = useState(false);
@@ -83,8 +89,15 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
     const ok: Array<{ idx: number; data: { data: string; mediaType: string } }> = [];
     const errs: string[] = [];
     results.forEach((r, i) => {
-      if (r.status === 'fulfilled') ok.push({ idx: i, data: r.value });
-      else errs.push(r.reason instanceof Error ? r.reason.message : `Photo ${i + 1} failed`);
+      if (r.status === 'fulfilled') { ok.push({ idx: i, data: r.value }); return; }
+      const file = valid[i].name;
+      const reason = r.reason instanceof Error ? r.reason.message : '';
+      const key = reason === 'unreadable' ? 'photoErrorUnreadable'
+        : reason === 'undecodable' ? 'photoErrorUndecodable'
+        : reason === 'zero-dimensions' ? 'photoErrorZeroDimensions'
+        : reason === 'blank-heic' ? 'photoErrorBlankHeic'
+        : null;
+      errs.push(key ? t(key).replace('{file}', file) : t('photoErrorGeneric').replace('{n}', String(i + 1)));
     });
     if (errs.length) setError(errs.join(' · '));
     if (ok.length) {
@@ -115,8 +128,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: imgs, locationData, source }),
       });
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
-      // Stream the response so text appears as Claude writes it
+      if (!res.ok) throw new Error(`server-${res.status}`);
+      // Stream the response so text appears as Lima writes it
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -129,13 +142,15 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
       if (text.trim()) {
         const isBlackFrame = /cannot extract meaningful visual|essentially a black frame|extremely dark|underexposed|appears blank/i.test(text);
         if (isBlackFrame) {
-          setError('Claude could not read the photo — it appears blank or very dark. Retake in good light or convert to JPEG/PNG first.');
+          setError(t('photoErrorBlankOrDark'));
         } else {
           onAnalysisComplete(text);
         }
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Analysis failed');
+      // Never the raw server status or JS error message — see lang-02.
+      if (err instanceof Error) console.error('Photo analysis failed:', err.message);
+      setError(t('photoErrorAnalysisFailed'));
     } finally {
       setLoading(false);
     }
@@ -174,8 +189,11 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
 
   return (
     <div className="space-y-3">
+      {lang === 'zu' && (
+        <p role="note" className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('photoZuluDraftNotice')}</p>
+      )}
       <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>
-        Site Photo Analysis
+        {t('photoAnalysisHeading')}
       </div>
 
       {/* Satellite capture option */}
@@ -186,8 +204,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         >
           <img src={`data:image/jpeg;base64,${mapCapture}`} alt="map" className="w-16 h-12 rounded-lg object-cover flex-shrink-0" style={{ border: '1px solid var(--border)' }} />
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-display font-medium mb-1" style={{ color: 'var(--text-primary)' }}>Current satellite view</div>
-            <div className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Captured from map — Claude will analyse what it sees</div>
+            <div className="text-xs font-display font-medium mb-1" style={{ color: 'var(--text-primary)' }}>{t('photoSatelliteViewTitle')}</div>
+            <div className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('photoSatelliteViewDesc')}</div>
           </div>
           <button
             onClick={() => analyse([{ data: mapCapture, mediaType: 'image/jpeg' }], 'satellite')}
@@ -200,13 +218,13 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             }}
           >
             {loading
-              ? <span className="flex items-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing...</span>
-              : 'Analyse'}
+              ? <span className="flex items-center gap-1.5"><Loader2 size={14} className="animate-spin" /> {t('photoAnalysingEllipsis')}</span>
+              : t('photoAnalyseButton')}
           </button>
         </div>
       )}
 
-      {/* Prominent loading state — appears immediately on click, before first token */}
+      {/* Prominent loading state — appears immediately on tap, before first token */}
       {loading && (
         <div
           className="rounded-xl p-4 flex items-center gap-3"
@@ -215,10 +233,10 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           <Loader2 size={20} className="animate-spin flex-shrink-0" style={{ color: 'var(--blue)' }} />
           <div className="flex-1 min-w-0">
             <div className="text-xs font-display font-medium" style={{ color: 'var(--text-primary)' }}>
-              {analysis ? 'Claude is analysing the imagery...' : 'Sending to Claude Vision...'}
+              {analysis ? t('photoAnalysingImagery') : t('photoSendingToLima')}
             </div>
             <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              Reads vegetation, water, terrain &amp; assets · ~15–30s
+              {t('photoReadsDesc')}
             </div>
           </div>
         </div>
@@ -255,8 +273,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             <div className="flex justify-center mb-1">
               <Camera size={32} style={{ color: 'var(--color-forest-800)' }} />
             </div>
-            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>Drop site photos here or click to upload</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Up to 5 photos · soil, vegetation, terrain, structures</p>
+            <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('photoDropOrTap')}</p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('photoUpToFive')}</p>
           </div>
         )}
       </div>
@@ -275,8 +293,8 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             }}
           >
             {loading
-              ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> Analysing photos...</span>
-              : `Analyse ${imageData.length} photo${imageData.length > 1 ? 's' : ''}`}
+              ? <span className="flex items-center justify-center gap-1.5"><Loader2 size={14} className="animate-spin" /> {t('photoAnalysingPhotosButton')}</span>
+              : imageData.length > 1 ? t('photoAnalysePhotosPlural').replace('{count}', String(imageData.length)) : t('photoAnalysePhotosSingular')}
           </button>
           <button
             onClick={() => {
@@ -290,7 +308,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
           >
-            Clear
+            {t('photoClearButton')}
           </button>
         </div>
       )}
@@ -309,7 +327,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             <div className="mt-3 pt-3 flex items-center gap-2" style={{ borderTop: '1px solid rgba(31,77,43,0.15)' }}>
               <span style={{ color: 'var(--color-forest-800)', fontSize: 13, fontWeight: 700 }}>+</span>
               <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
-                Added to your report — click <span style={{ color: 'var(--gold)' }}>Generate Full Report</span> above
+                {t('photoAddedToReportPrefix')} <span style={{ color: 'var(--gold)' }}>{t('generateFullReport')}</span> {t('photoAddedToReportSuffix')}
               </span>
             </div>
           )}
@@ -318,7 +336,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
 
       {!locationData && (
         <p className="text-xs font-display text-center" style={{ color: 'var(--text-muted)' }}>
-          Select a location on the map first
+          {t('photoSelectLocationFirst')}
         </p>
       )}
     </div>
