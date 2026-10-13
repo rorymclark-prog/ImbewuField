@@ -4,6 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
   ChevronLeft, Loader2, MapPin, Plus, MessageCircle, User, Camera, X,
@@ -19,7 +20,16 @@ import {
   closeBoardPost, deleteBoardPost, listMyThreads, getOrCreateThread,
 } from '@/lib/db/community-queries';
 import type { CommunityProfile, BoardPost, BoardCategory, BoardKind, MessageThread } from '@/lib/db/types';
-import NearbyMap from '@/components/community/NearbyMap';
+// perf-06: mapbox only loads once the Nearby tab actually renders a map, not with the rest of
+// Community (Board/Messages never touch it).
+const NearbyMap = dynamic(() => import('@/components/community/NearbyMap'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center rounded-2xl" style={{ background: 'var(--bg-1)' }}>
+      <Loader2 size={24} className="animate-spin" style={{ color: 'var(--text-secondary)' }} />
+    </div>
+  ),
+});
 import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';

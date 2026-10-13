@@ -2,10 +2,21 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import { listenForOverlay } from '@/lib/overlay-signal';
-import { Sprout, X } from 'lucide-react';
-import ChatPanel from './ChatPanel';
+import { Sprout, X, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+
+// perf-01: ChatPanel pulls in the farm-data catalogue (~2 MB) — only fetch it
+// once Lima is actually opened, not on every page load.
+const ChatPanel = dynamic(() => import('./ChatPanel'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center py-10" style={{ color: '#5C5040' }}>
+      <Loader2 size={20} className="animate-spin" />
+    </div>
+  ),
+});
 
 /**
  * Lima — the almanac field guide persona. Docked at the bottom of every page

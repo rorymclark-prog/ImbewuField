@@ -5,7 +5,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
-import RainfallChart from './RainfallChart';
 import { savePlace, generateId, loadPlaces, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -50,6 +49,13 @@ import { ChevronDown } from 'lucide-react';
 // Loaded on demand instead, same as the map and the report view elsewhere in this app.
 const MyRecords = dynamic(() => import('./MyRecords'), { ssr: false });
 const SiteSurveySheet = dynamic(() => import('./SiteSurveySheet'), { ssr: false });
+// perf-07: the chart library (recharts) is only needed for this one rainfall chart, deep in the
+// Water tab — load it on demand too, with a sized placeholder so the Water tab's layout holds
+// still while the chunk loads.
+const RainfallChart = dynamic(() => import('./RainfallChart'), {
+  ssr: false,
+  loading: () => <div style={{ height: 176 }} />,
+});
 
 interface Props {
   data: LocationData | null;
