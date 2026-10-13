@@ -754,7 +754,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--color-canvas)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
@@ -1259,7 +1259,7 @@ export default function InvoicePage() {
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--color-canvas)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}

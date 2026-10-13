@@ -7685,5 +7685,19 @@
   "status": "accepted",
   "draft": "U sumbedza invoisi sa yo badelwa hu engedza tshivhalo tsha zwo bveledzwaho kha Rekhodo dzanga nga zwipimo zwazwo zwo ṅwalwaho.",
   "decision": "accepted: independent reviewer found no meaning error"
+ },
+ {
+  "id": "W11-01",
+  "english": "Close",
+  "drafterDraft": "",
+  "drafterStatus": "none",
+  "drafterNote": "Wave 11 added this button (dismisses the failed-delete notice on the money book). Not drafted.",
+  "reviewerVerdict": "",
+  "reviewerProblem": "",
+  "reviewerSeverity": "",
+  "reviewerRepair": "",
+  "status": "held",
+  "draft": "",
+  "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
  }
 ]

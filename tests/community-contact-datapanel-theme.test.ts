@@ -3,7 +3,7 @@
 // crept into app/community/u/[uid]/page.tsx, app/community/messages/[threadId]/page.tsx,
 // components/ContactInbox.tsx and components/DataPanel.tsx too — plus plain hardcoded dark text
 // (#20190F, #5C5040, #755942) and card surfaces (#FFFEFA/#E2D8C4) on themed pages. All four now
-// route through var(--color-forest-800)/var(--color-canvas), var(--danger), var(--text-primary)/
+// route through var(--color-forest-800)/var(--on-forest), var(--danger), var(--text-primary)/
 // var(--text-muted) and var(--bg-1)/var(--border), the same tokens the rest of this wave uses.
 //
 // a11y-12 — three DataPanel.tsx captions (BRU attribution, calendar legend, soil-improvement

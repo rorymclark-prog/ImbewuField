@@ -4,7 +4,7 @@
 // were hardcoded light-mode hex, so they stayed bright paper and dark-on-dark against a dark
 // theme. Routed the surfaces and text through the existing var(--bg-1/2/3), var(--border),
 // var(--text-primary/muted) and var(--color-forest-700/800) tokens, and the one forest-fill +
-// white-text badge through the same var(--color-forest-800) + var(--color-canvas) pairing used
+// white-text badge through the same var(--color-forest-800) + var(--on-forest) pairing used
 // elsewhere in this wave. Deliberately left alone: the STATUS/crop category swatches (fixed,
 // non-themed accent colours by design, same precedent as the Exchange board's KIND_COLOR) and
 // the white rings on map markers drawn over satellite imagery.
@@ -36,7 +36,7 @@ test('app/ngo/page.tsx role-gate card, header title and tabs follow the theme', 
     assert.ok(!src.includes(hex), `${hex} should be gone from app/ngo/page.tsx`);
   }
   assert.match(src, /color:\s*'var\(--color-forest-800\)'/);
-  assert.match(src, /background:\s*'var\(--color-forest-800\)',\s*color:\s*'var\(--color-canvas\)'/);
+  assert.match(src, /background:\s*'var\(--color-forest-800\)',\s*color:\s*'var\(--on-forest\)'/);
 });
 
 test('components/NgoDashboard.tsx surfaces and text follow the theme outside the deliberate swatch exceptions', () => {

@@ -4,7 +4,7 @@
 // no icon-only form, so the header overflowed sideways at 360px, and both buttons sat under
 // the 44px touch-target floor. Fixed by routing the Share fill through the same themed
 // forest-fill/on-forest-text pairing already used elsewhere (var(--color-forest-800) +
-// var(--color-canvas), see tests/firstrun-theme-tokens.test.ts), the Print fill through the
+// var(--on-forest), see tests/firstrun-theme-tokens.test.ts), the Print fill through the
 // CLAUDE.md-prescribed #9A6018 "ochre fill under white type", min-h-11 on both, and a
 // `hidden sm:inline` label on the header pair so the icon alone carries it below 640px (with
 // aria-label on both, since the Print button's visible text can now disappear).
@@ -58,5 +58,5 @@ test('invoice header Share/Print clear the 44px tap-target floor and keep an ari
 test('ShareListingButton no longer fills its WhatsApp-share pill with white-on-green', () => {
   assert.doesNotMatch(shareButtonSrc, /#25D366/, 'WhatsApp green literal should be gone from ShareListingButton');
   assert.match(shareButtonSrc, /background:\s*'var\(--color-forest-800\)'/);
-  assert.match(shareButtonSrc, /color:\s*'var\(--color-canvas\)'/);
+  assert.match(shareButtonSrc, /color:\s*'var\(--on-forest\)'/);
 });

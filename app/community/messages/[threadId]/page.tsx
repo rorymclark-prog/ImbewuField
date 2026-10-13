@@ -208,14 +208,14 @@ export default function MessageThreadPage() {
           className={`${workspace.workspace} ${workspace.readingWidth} flex items-center justify-between gap-3 flex-shrink-0`}
           style={{ margin: '10px 16px 0', padding: '8px 12px', borderRadius: 12, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
         >
-          <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>
+          <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--danger)' }}>
             {t('communityMessagesListenError')}
           </span>
           <button
             type="button"
             onClick={() => setListenRetryKey((k) => k + 1)}
             className="font-sans font-semibold flex-shrink-0"
-            style={{ fontSize: 12, color: '#8B2020', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+            style={{ fontSize: 12, color: 'var(--danger)', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
           >
             {t('communityRetry')}
           </button>
@@ -233,7 +233,7 @@ export default function MessageThreadPage() {
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
                     background: mine ? 'var(--color-forest-800)' : 'var(--bg-1)',
-                    color: mine ? 'var(--color-canvas)' : 'var(--text-primary)',
+                    color: mine ? 'var(--on-forest)' : 'var(--text-primary)',
                     border: mine ? 'none' : '1px solid var(--border)',
                     borderBottomRightRadius: mine ? 4 : 16,
                     borderBottomLeftRadius: mine ? 16 : 4,
@@ -277,7 +277,7 @@ export default function MessageThreadPage() {
           className="flex items-center justify-center rounded-full flex-shrink-0"
           style={{ width: 40, height: 40, background: body.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.1)', border: 'none', cursor: body.trim() ? 'pointer' : 'default' }}
         >
-          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? 'var(--color-canvas)' : 'var(--text-muted)' }} />}
+          {sending ? <Loader2 size={16} className="animate-spin" style={{ color: '#fff' }} /> : <Send size={16} style={{ color: body.trim() ? 'var(--on-forest)' : 'var(--text-muted)' }} />}
         </button>
       </div>
     </div>

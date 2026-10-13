@@ -7,7 +7,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
   useEffect(() => { console.error(error); }, [error]);
 
   // The root layout itself failed, so this page replaces it entirely — it never loads
-  // app/globals.css (no var(--bg-0) etc. here, unlike app/error.tsx/not-found.tsx) and never has
+  // the global stylesheet (no var(--bg-0) etc. here, unlike app/error.tsx/not-found.tsx) and never has
   // LanguageProvider. Never the raw error.message: see lib/error-page-copy.ts. Starts English
   // (matching server render) and reads the saved choice once mounted.
   const [copy, setCopy] = useState(() => errorPageCopy('en'));

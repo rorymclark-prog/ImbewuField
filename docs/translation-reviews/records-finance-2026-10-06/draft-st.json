@@ -7652,5 +7652,19 @@
   "status": "accepted",
   "draft": "Ho tshwaya invoyese e lefilwe ho eketsa bongata ba dihlahiswa ba yona ho Direkoto Tsa Ka ka dyuniti tseo di ngotsweng ka tsona.",
   "decision": "accepted: independent reviewer found no meaning error"
+ },
+ {
+  "id": "W11-01",
+  "english": "Close",
+  "drafterDraft": "",
+  "drafterStatus": "none",
+  "drafterNote": "Wave 11 added this button (dismisses the failed-delete notice on the money book). Not drafted.",
+  "reviewerVerdict": "",
+  "reviewerProblem": "",
+  "reviewerSeverity": "",
+  "reviewerRepair": "",
+  "status": "held",
+  "draft": "",
+  "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
  }
 ]
