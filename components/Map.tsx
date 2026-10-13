@@ -3277,7 +3277,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 {t(activeDraw === 'water' ? 'drawingInProgressWater' : 'drawingInProgressBoundary')} · {t('drawingInProgressInstruction')}
               </div>
               <button onClick={cancelDraw}
-                className="px-2 py-1 rounded-lg text-xs font-display transition-all"
+                className="min-h-11 px-2 py-1 rounded-lg text-xs font-display transition-all"
                 style={{ background: 'rgba(212,110,66,0.15)', border: '1px solid rgba(212,110,66,0.4)', color: 'var(--orange)', minHeight: 32 }}>
                 <X size={13} className="inline mr-1" />{t('drawCancelButton')}
               </button>
@@ -3304,7 +3304,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   } catch { /* ignore */ }
                   recompute();
                 }}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(91,158,212,0.12)', border: '1px solid rgba(91,158,212,0.35)', color: '#7FC4F0', minHeight: 32, opacity: nativeEditBackupRef.current ? 1 : 0.4 }}>
                 <Undo2 size={12} className="inline mr-1" />{t('nativeEditUndoButton')}
               </button>
@@ -3313,19 +3313,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   const type = f?.properties?.featureType === 'water' ? 'water' : 'site';
                   openShapeNaming(editingFeatureId, type);
                 }}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'rgba(168,216,138,0.12)', border: '1px solid rgba(168,216,138,0.35)', color: MAP_COLOR_BOUNDARY_FILL, minHeight: 32 }}>
                 <PenLine size={12} className="inline mr-1" />{t('nativeEditRenameButton')}
               </button>
               <button onClick={() => requestDelete(editingFeatureId)}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={pendingDelete === editingFeatureId
                   ? { background: 'rgba(212,110,66,0.9)', border: '1px solid rgba(212,110,66,0.7)', color: '#fff', minHeight: 32 }
                   : { background: 'rgba(212,110,66,0.16)', border: '1px solid rgba(212,110,66,0.5)', color: 'var(--orange)', minHeight: 32 }}>
                 <Trash2 size={12} className="inline mr-1" />{pendingDelete === editingFeatureId ? t('nativeEditConfirmDeleteButton') : t('nativeEditDeleteButton')}
               </button>
               <button onClick={finishEditing}
-                className="flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
+                className="min-h-11 flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
                 style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest)', minHeight: 32 }}>
                 <Check size={12} className="inline mr-1" />{t('nativeEditSaveButton')}
               </button>

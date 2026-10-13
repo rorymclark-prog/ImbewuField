@@ -870,7 +870,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         className={`${styles.toolbar} no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3`}
         style={{ background: 'var(--report-panel)', borderBottom: '1px solid var(--report-border)' }}
       >
-        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
+        <button onClick={onClose} className="min-h-11 text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
           {tr('Back', 'Emuva')}
         </button>
@@ -889,7 +889,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         {!isWide && (
           <button
             onClick={() => setPanelOpen((v) => !v)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
+            className="min-h-11 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
             style={panelOpen
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
               : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
@@ -907,7 +907,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={handleSaveReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={saveFailed
                 ? { background: 'rgba(154,52,18,0.12)', border: '1px solid rgba(154,52,18,0.45)', color: '#9A3412' }
                 : justSaved
@@ -926,7 +926,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={exportPdf}
               disabled={pdfState === 'working'}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={{
                 background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
                 border: '1px solid rgba(192,122,30,0.35)',
@@ -942,7 +942,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {generated && (
             <button
               onClick={shareReport}
-              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
               style={{
                 background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
                 border: '1px solid rgba(35,94,134,0.3)',
@@ -963,7 +963,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <button
             onClick={generate}
             disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
-            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
+            className="min-h-11 flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
             style={
               loading || selected.size === 0
                 ? { background: 'rgba(226,216,196,0.6)', color: 'var(--report-muted)', border: '1px solid var(--report-border)' }
@@ -1021,13 +1021,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 {savedList.map((r) => (
                   <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                     <button disabled={loading} onClick={() => openSaved(r)}
-                      className="flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
+                      className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
                       <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
-                      className="px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
+                      className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
                   </div>
                 ))}
               </div>
@@ -1044,7 +1044,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
-            className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
+            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
             {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
@@ -1052,7 +1052,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {language !== 'en' && (
             <button
               onClick={() => setBilingual(!bilingual)}
-              className="w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
+              className="min-h-11 w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
               style={bilingual
                 ? { background: 'rgba(45,107,60,0.12)', border: '1px solid rgba(45,107,60,0.35)', color: 'var(--report-green)' }
                 : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
@@ -1067,7 +1067,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <div className="flex gap-1.5 mb-4">
             {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, optionLabel]) => (
               <button key={val} aria-pressed={tone === val} onClick={() => setTone(val)}
-                className="flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
+                className="min-h-11 flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
                 style={tone === val
                   ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
@@ -1090,7 +1090,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 else if (val === 'comprehensive') setSelected(new Set(ALL_SECTIONS));
                 else setSelected(prev => prev.size <= 1 ? new Set(FARMER_ESSENTIALS) : prev);
               }}
-                className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
+                className="min-h-11 w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
                 title={language === 'zu' ? ({
                   'Generate brief advice. Choose At a glance for a 1-page summary PDF.': 'Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.',
                   'Core sections for the farmer': 'Izigaba ezisemqoka zomlimi.',
@@ -1108,19 +1108,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
             <div className="flex gap-1">
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-green)', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
                 title={tr('Select the sections most useful to a small-scale farmer', 'Khetha izigaba eziwusizo kakhulu kumlimi omncane')}>
                 {tr('Farmer', 'Umlimi')}
               </button>
               <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}
                 title={tr('Select all sections', 'Khetha zonke izigaba')}>
                 {tr('All', 'Zonke')}
               </button>
               <button onClick={() => setSelected(new Set())}
-                className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-danger)', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
                 title={tr('Deselect all sections', 'Susa ukukhetha kuzo zonke izigaba')}>
                 {tr('None', 'Azikho')}
@@ -1141,7 +1141,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   next.has(s) ? next.delete(s) : next.add(s);
                   return next;
                 })}
-                className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
+                className="min-h-11 w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
                 style={
                   selected.has(s)
                     ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
@@ -1189,7 +1189,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     <button
                       key={id}
                       onClick={() => jumpToChapter(id)}
-                      className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
+                      className="min-h-11 w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
                       onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
                       onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}

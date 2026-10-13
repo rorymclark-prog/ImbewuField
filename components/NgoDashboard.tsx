@@ -465,7 +465,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           <>
             <Stat label={ui('Active gardens','Izingadi ezisebenzayo')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="var(--color-forest-800)" />
             <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('enrolled this cycle','ababhaliswe kulo mjikelezo')} color="var(--text-primary)" />
-            <Stat label={ui('Produce, season','Umkhiqizo, isizini')} value={`${dashboardTotals.produceT} t`} sub={ui('logged by supervisors','oqoshwe abaphathi')} color="var(--blue)" />
+            <Stat label={ui('Produce, season','Umkhiqizo, isizini')} value={`${dashboardTotals.produceT} t`} sub={ui('logged by mentors','oqoshwe abeluleki')} color="var(--blue)" />
             <Stat label={ui('Training done','Ukuqeqeshwa okuqediwe')} value={`${dashboardTotals.training}%`} sub={ui('across active gardens','kuzo zonke izingadi ezisebenzayo')} color="var(--gold)" />
           </>
         )}
@@ -721,7 +721,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('all gardens','zonke izingadi')}</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: 'var(--text-primary)' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}
+                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · ${ui('mentor','umeluleki')} ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}
                 </div>
                 {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'var(--bg-2)',color:'var(--color-forest-800)'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}

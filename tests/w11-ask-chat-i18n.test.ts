@@ -77,11 +77,12 @@ test('opening the Lima sheet moves focus in and closing it returns focus to the 
   assert.match(s, /FOCUSABLE_SELECTOR/, 'the sheet has no Tab focus trap');
 });
 
-// Another track changes only ChatWidget's ChatPanel import to next/dynamic — this guards that
-// this track's edits stayed off that import line.
-test('ChatWidget still imports ChatPanel directly (another track owns the dynamic-import change)', () => {
+// The lighter-first-load track turned ChatWidget's ChatPanel import into next/dynamic (perf-01);
+// this guards that the chat panel is still loaded only when Lima opens, not eagerly.
+test('ChatWidget loads ChatPanel on demand via next/dynamic', () => {
   const s = source('components/ChatWidget.tsx');
-  assert.match(s, /^import ChatPanel from '\.\/ChatPanel';$/m, 'the ChatPanel import line changed unexpectedly');
+  assert.doesNotMatch(s, /^import ChatPanel from '\.\/ChatPanel';$/m, 'ChatPanel is imported eagerly again');
+  assert.match(s, /const ChatPanel = dynamic\(\(\) => import\('\.\/ChatPanel'\)/);
 });
 
 // lang-02: components/PhotoUpload.tsx was entirely hard-coded English, named the model

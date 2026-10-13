@@ -294,7 +294,10 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
           type="button"
           onClick={onClose}
           aria-label={t('profileClose')}
+          // 38px paint, 44px hit area (a11y-08).
+          className="u-tap-target"
           style={{
+            ['--tap-inset' as string]: '-3px',
             width: 38,
             height: 38,
             borderRadius: 11,
