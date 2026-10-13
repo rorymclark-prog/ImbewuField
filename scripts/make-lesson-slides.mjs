@@ -32,6 +32,7 @@
 // Requires python3 with Pillow (already present on this machine).
 
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
@@ -94,6 +95,17 @@ const selectedSlideNumbers = pairedPath
 const pairedSlides = validatedPairedSlides
   ? selectPairedSlides(validatedPairedSlides, selectedSlideNumbers)
   : null;
+for (const pair of pairedSlides ?? []) {
+  if (!pair.supplementalImageCue) continue;
+  const cueSource = resolve(join(process.cwd(), 'public', pair.supplementalImageCue.sourceImageUrl.slice(1)));
+  const actualCueSourceSha256 = createHash('sha256').update(readFileSync(cueSource)).digest('hex');
+  const selectedSource = resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en',
+    `slide-${String(pair.n).padStart(2, '0')}.jpg`));
+  if (moduleId !== 'reading-landscape' || pair.n !== 7 || cueSource !== selectedSource ||
+      actualCueSourceSha256 !== pair.supplementalImageCue.sourceImageSha256) {
+    throw new Error(`slide ${pair.n} supplemental image cue source identity drifted`);
+  }
+}
 const pairedArt = pairedArtPath ? JSON.parse(readFileSync(pairedArtPath, 'utf8')) : {};
 if (!pairedArt || typeof pairedArt !== 'object' || Array.isArray(pairedArt)) {
   throw new Error('--paired-art must be a slide-number-to-image-path object');
@@ -113,6 +125,13 @@ const pairedSourceSlides = pairedSlides?.map(({ n }) => pairedArt[n]
   : resolve(join(process.cwd(), 'public', 'course-decks', moduleId, 'en', `slide-${String(n).padStart(2, '0')}.jpg`))) ?? null;
 for (const sourceSlide of pairedSourceSlides ?? []) {
   if (!existsSync(sourceSlide)) throw new Error(`paired draft needs its illustrated English source slide: ${sourceSlide}`);
+}
+for (const [index, pair] of (pairedSlides ?? []).entries()) {
+  if (!pair.supplementalImageCue) continue;
+  const expected = resolve(join(process.cwd(), 'public', pair.supplementalImageCue.sourceImageUrl.slice(1)));
+  if (pairedSourceSlides[index] !== expected) {
+    throw new Error(`slide ${pair.n} supplemental cue must stay paired to its exact English source image`);
+  }
 }
 const artPlanPath = resolve('docs/course-deck-art.json');
 const artPlan = !pairedSlides && existsSync(artPlanPath) ? JSON.parse(readFileSync(artPlanPath, 'utf8'))[moduleId] ?? {} : {};
@@ -415,7 +434,7 @@ if PAIRED:
                            else segment['text'] for segment in part['segments'])
         return part['text']
 
-    def panel_plan(draw, heading, body, top, bottom, n, max_extra=0):
+    def panel_plan(draw, heading, body, top, bottom, n, max_extra=0, supplemental=None):
         width = W - 192
         heading_lines = paired_lines(draw, heading, F_PAIR_TITLE, width, n)
         # The complete Xitsonga Market heading needs three lines at the readable
@@ -443,11 +462,17 @@ if PAIRED:
                 y += sum(body_pitches(lines)) + 8
             paragraphs.append(segment_plans)
             y += 4
+        supplemental_plan = None
+        if supplemental:
+            cue_label_lines = paired_lines(draw, supplemental['label'], F_PAIR_LABEL, width, n)
+            cue_text_lines = paired_lines(draw, supplemental['text'], F_PAIR_BODY, width, n)
+            y += 24 + len(cue_label_lines) * 54 + 8 + sum(body_pitches(cue_text_lines))
+            supplemental_plan = {'labelLines': cue_label_lines, 'textLines': cue_text_lines}
         required_extra = max(0, y - (bottom - 48))
         if required_extra > max_extra:
             raise ValueError('slide %d paired text needs %d px but panel has %d px at phone-readable type size (maximum extra space %d px)' %
                              (n, y - top, bottom - 48 - top, max_extra))
-        return heading_lines, paragraphs, required_extra
+        return heading_lines, paragraphs, required_extra, supplemental_plan
 
     # Measure the complete deck before writing any image. A partial deck can look complete
     # enough to register by mistake, especially when its remaining source claims are hidden.
@@ -474,18 +499,18 @@ if PAIRED:
                 } for segment in part['segments']])
             else:
                 target_body.append(source if part['status'] == 'english-hold' else part['text'])
-        paired_plans.append((
-            panel_plan(probe, target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM,
-                       pair['n'], PAIRED_MAX_TARGET_EXTENSION),
-            panel_plan(probe, pair['english']['heading'], pair['english']['body'],
-                       PAIRED_SOURCE_TOP, PAIRED_SOURCE_BOTTOM, pair['n']),
-            held,
-        ))
+        target_plan = panel_plan(probe, target_heading, target_body, PAIRED_TARGET_TOP, PAIRED_TARGET_BOTTOM,
+                                 pair['n'], PAIRED_MAX_TARGET_EXTENSION)
+        source_plan = panel_plan(probe, pair['english']['heading'], pair['english']['body'],
+                                 PAIRED_SOURCE_TOP + target_plan[2], PAIRED_SOURCE_BOTTOM + target_plan[2],
+                                 pair['n'], PAIRED_MAX_TARGET_EXTENSION if pair.get('supplementalImageCue') else 0,
+                                 pair.get('supplementalImageCue'))
+        paired_plans.append((target_plan, source_plan, held))
 
-    def draw_panel(draw, label, heading, body, top, bottom, plan, target=None):
+    def draw_panel(draw, label, heading, body, top, bottom, plan, target=None, supplemental=None):
         draw.rounded_rectangle([64, top, W - 64, bottom], radius=26, fill=(255, 252, 246), outline=RULE, width=4)
         draw.text((96, top + 32), label, font=F_PAIR_LABEL, fill=AMBER)
-        heading_lines, paragraphs, _ = plan
+        heading_lines, paragraphs, _, supplemental_plan = plan
         y = top + 120
         title_color = RUST if target and target['heading']['status'] == 'english-hold' else GREEN
         for line in heading_lines:
@@ -515,6 +540,15 @@ if PAIRED:
                     y += pitch
                 y += 8
             y += 4
+        if supplemental and supplemental_plan:
+            y += 24
+            for line in supplemental_plan['labelLines']:
+                draw.text((96, y), line, font=F_PAIR_LABEL, fill=AMBER)
+                y += 54
+            y += 8
+            for line, pitch in zip(supplemental_plan['textLines'], body_pitches(supplemental_plan['textLines'])):
+                draw.text((96, y), line, font=F_PAIR_BODY, fill=INK)
+                y += pitch
 
     if cfg.get('validateOnly'):
         print('  validated %d source-paired slides; no images written' % len(PAIRED))
@@ -524,7 +558,8 @@ if PAIRED:
     os.makedirs(cfg['outDir'], exist_ok=True)
     for pair, source_image, (target_plan, source_plan, held) in zip(PAIRED, cfg['pairedSourceSlides'], paired_plans):
         target_extra = target_plan[2]
-        image = Image.new('RGB', (W, H + target_extra), PAPER)
+        source_extra = source_plan[2]
+        image = Image.new('RGB', (W, H + target_extra + source_extra), PAPER)
         draw = ImageDraw.Draw(image)
         draw.rounded_rectangle([64, 40, W - 64, 175], radius=20, fill=RUST)
         draw.text((96, 75), PAIRED_LANGUAGE + ' AI DRAFT / NOT REVIEWED', font=F_PAIR_STATUS, fill=(255, 255, 255))
@@ -552,9 +587,10 @@ if PAIRED:
                    target_plan, target)
         draw_panel(draw, 'ENGLISH SOURCE · EXACT TEXT', pair['english']['heading'],
                    pair['english']['body'], PAIRED_SOURCE_TOP + target_extra,
-                   PAIRED_SOURCE_BOTTOM + target_extra, source_plan)
-        draw.text((96, PAIRED_FOOTER_Y + target_extra), '%d / %d' % (pair['n'], cfg.get('pairedTotalSlides') or len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
-        draw.text((W - 96, PAIRED_FOOTER_Y + target_extra), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
+                   PAIRED_SOURCE_BOTTOM + target_extra + source_extra, source_plan,
+                   supplemental=pair.get('supplementalImageCue'))
+        draw.text((96, PAIRED_FOOTER_Y + target_extra + source_extra), '%d / %d' % (pair['n'], cfg.get('pairedTotalSlides') or len(PAIRED)), font=F_PAIR_LABEL, fill=GREEN)
+        draw.text((W - 96, PAIRED_FOOTER_Y + target_extra + source_extra), 'IMBEWU FIELD · STUDY DRAFT', font=F_PAIR_LABEL, fill=GREEN, anchor='ra')
         image.save(os.path.join(cfg['outDir'], 'slide-%02d.png' % pair['n']), 'PNG')
         print('  %2d  %s' % (pair['n'], pair['english']['heading'][:58]))
     sys.exit(0)

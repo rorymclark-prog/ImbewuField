@@ -1,6 +1,11 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { followupSourceBefore, followupNativeBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { veReadingFrostNativeBefore, veReadingFrostSourceBefore, frostFiles, frostNative } from './ve-reading-frost-history-checks.ts';
@@ -41,11 +46,15 @@ for (const [file, proof] of Object.entries(mapFiles) as [string,any][]) {
   assert.deepEqual(expected, mapNative.after[language]);
 }
 export function ensureMapCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   for (const [file, proof] of Object.entries(mapFiles) as [string,any][]) {
     assert.equal(veReadingFrostSourceBefore(file, readFileSync(file,'utf8')), proof.proposedAfter, file + ': complete current bytes after exact latest projection and all unlisted bytes preserved');
   }
+  });
 }
 export function mapSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   if (file !== 'lib/course-asset-sizes.ts') bytes = frostFiles[file]
     ? veReadingFrostSourceBefore(file, bytes) as string | Uint8Array
     : followupSourceBefore(file, bytes);
@@ -56,8 +65,11 @@ export function mapSourceBefore(file: string, bytes: string | Uint8Array): strin
   if (text === proof.before) return bytes;
   assert.equal(text, proof.proposedAfter, 'supplied complete accepted bytes: map comparison layer');
   return proof.before;
+  });
 }
 export function mapNativeBefore<T>(language: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   actual = followupNativeBefore(actual);
   if (language === 've' && JSON.stringify(actual) === JSON.stringify(frostNative.after)) actual = veReadingFrostNativeBefore('ve', actual);
   if (!(language in mapNative.after)) return actual;
@@ -65,9 +77,13 @@ export function mapNativeBefore<T>(language: string, actual: T): T {
   if (JSON.stringify(actual) === JSON.stringify(mapNative.before[language])) return structuredClone(actual);
   assert.deepEqual(actual,mapNative.after[language], 'complete Reading comparisons registry: map comparison layer');
   return structuredClone(mapNative.before[language]);
+  });
 }
 
 export function mapPresentationBefore<T extends { status: string; content: any }>(value: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   if (lessonId !== mapPlan.lessonId || !(language in mapNative.after) || value.status !== 'draft') return value;
   ensureMapCurrent();
   const native = mapNative.after[language].lessons.find((l: any) => l.id === lessonId);
@@ -85,4 +101,5 @@ export function mapPresentationBefore<T extends { status: string; content: any }
   paragraphs[2] = row.before;
   result.content.body = paragraphs.join('\n\n');
   return result;
+  });
 }

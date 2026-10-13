@@ -1,3 +1,4 @@
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
@@ -298,7 +299,8 @@ test('Reading Landscape preserves source lesson fields and quiz answer indexes',
 test('Reading Landscape Xitsonga body candidates preserve paragraph order and bounded farming claims', () => {
   const readingSource = COURSE_MODULES.find(module => module.id === 'reading-landscape')!;
   const l1Source = readingSource.lessons.find(lesson => lesson.id === 'reading-landscape-l1')!;
-  const l1 = readingDraft.lessons.find(lesson => lesson.id === l1Source.id)!;
+  // Validate the complete new observation layer before checking the dated clauses.
+  const l1 = blindReviewedNativeBefore(readingDraft).lessons.find(lesson => lesson.id === l1Source.id)!;
   const l1SourceParagraphs = l1Source.body.split('\n\n');
   const l1Paragraphs = l1.body.xitsongaDraft.split('\n\n');
   assert.equal(l1.body.sourceEnglish, l1Source.body);

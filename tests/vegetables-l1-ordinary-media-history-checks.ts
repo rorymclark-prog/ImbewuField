@@ -1,7 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { introFullAssetSizesBeforeOrdinary, introFullMediaBeforeEarlierProof } from './intro-full-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
@@ -33,6 +36,7 @@ function observedFile(path: string) {
 // 6 October 2026: five accepted ordinary paragraph compositions change five
 // Vegetables frames. The complete later layer must pass before any dated rewind.
 export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October 2026: the later 36 Intro frames are fully checked before this exact dated five-card view.
   currentManifest = introFullAssetSizesBeforeOrdinary(currentManifest);
   assert.equal(sha(proofBytes), '5204a56d2d447544e069f428fa295294fa42bc11cec99ae064509874a4f84718');
@@ -140,11 +144,13 @@ export function validateCurrentVegetablesL1OrdinaryMedia(currentManifest = readF
     assert.equal(actual.sha256, row.sha256, row.path);
   }
   return JSON.parse(proofBytes.toString());
+  });
 }
 
 
 // Expose only the exact frozen complete before state after real current validation.
 export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   validateCurrentVegetablesL1OrdinaryMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const immediate = introFullAssetSizesBeforeOrdinary();
@@ -152,8 +158,10 @@ export function vegetablesL1AssetSizesBeforeOrdinary(currentManifest?: string) {
   if (currentManifest === undefined || currentManifest === actual || currentManifest === immediate) return before;
   assert.equal(currentManifest, before, 'only the exact guarded Vegetables L1 manifest baseline may be exposed');
   return before;
+  });
 }
 export function vegetablesL1MediaBeforeEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   // A newer projection returns the accepted L1 output for VE5. Returning that
   // first skipped this dated L1 rewind and broke older Soil/Water preservation.
@@ -162,4 +170,5 @@ export function vegetablesL1MediaBeforeEarlierProof(path: string) {
   const proof = validateCurrentVegetablesL1OrdinaryMedia();
   const frame = proof.frames.find((row: { path: string }) => row.path === url);
   return frame ? { sha256: frame.old.sha256, bytes: frame.old.bytes } : undefined;
+  });
 }

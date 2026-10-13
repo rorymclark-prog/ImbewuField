@@ -1,0 +1,22 @@
+{
+ "language": "st",
+ "counts": {
+  "ok": 137,
+  "repair": 5,
+  "hold": 0
+ },
+ "total": 142,
+ "top_issues": [
+  "I103 'Produce already sold': 'se seng se rekisitswe' is ambiguous (some/another produce sold vs already sold); repaired to 'Sehlahiswa seo o seng o se rekisitse'.",
+  "I114 Saved tab 'Tse bolokilweng' is 15 chars, too long for a 390px tab; repaired to 'Bolokilwe' (I156 updated to match).",
+  "I050 'Letsatsi le ho invoyese ya mantlha ya pampiri' is garbled (date on the original paper invoice); repaired.",
+  "I145 'E sheba mme o e boloke' uses an invalid imperative form; repaired to 'E hlahlobe...'.",
+  "I156 cross-reference to the Saved tab must match I114.",
+  "I053 'Thursday' left in English (Labone) - minor mixed-language placeholder.",
+  "I079 'Market stall' as 'Sebaka sa mmaraka' (market place) - loose but acceptable.",
+  "I097 'Tefo e amohetswe ka' - ambiguous 'ka'; acceptable before a date field.",
+  "Bank vs app Account distinction holds: bank items say 'akhaonto ya banka', app page says 'Akhaonto'; Delete invoice (Hlakola) vs Remove item (Tlosa) are distinct; Paid/Unpaid and Bill to (buyer) correct; no price stated as a promise ('e ka bang'); nothing implies free.",
+  "Many strings rely on 'hokela marang-rang' (connect to internet) and loanwords (poraefete, nota, khoutu) that I could not verify as natural to Sesotho speakers."
+ ],
+ "confidence": "Machine review only, not a fluent-speaker approval. Back-translation from Sesotho is reliable for common vocabulary and structure but I may miss register, regional (Lesotho vs South African orthography) and idiom problems, and could not verify 'hokela marang-rang' or loanwords. Native speaker sign-off still needed."
+}

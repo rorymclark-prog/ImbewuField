@@ -1,18 +1,18 @@
 {
  "st": {
-  "accepted": 279,
-  "held": 5
+  "accepted": 517,
+  "held": 20
  },
  "ve": {
-  "accepted": 258,
-  "held": 26
+  "accepted": 490,
+  "held": 47
  },
  "ts": {
-  "accepted": 255,
-  "held": 29
+  "accepted": 495,
+  "held": 42
  },
  "zu": {
-  "accepted": 54,
+  "accepted": 84,
   "held": 3
  }
 }

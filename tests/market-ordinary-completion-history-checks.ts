@@ -1,5 +1,7 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { nativeOrdinaryBeforeFinalBatch, nativeOrdinaryPresentationBeforeFinalBatch } from './native-ordinary-final-history-checks.ts';
 
@@ -8,6 +10,7 @@ const orderPrecision = JSON.parse(readFileSync(new URL('../docs/study-translatio
 // Phone review exposed an inherited commercial-order ambiguity. The frozen
 // original packet stays intact; this exact two-field layer is checked first.
 export function marketOrdinaryAppliedTarget(row: any): string {
+  return withBlindReviewedCorrectionReadScope(() => {
   const repair = orderPrecision.rows.find((item: any) => item.id === row.id);
   if (repair) {
     assert.equal(repair.sourceEnglish, row.sourceEnglish);
@@ -15,6 +18,7 @@ export function marketOrdinaryAppliedTarget(row: any): string {
     return repair.target;
   }
   return row.changed ? row.proposedTarget : row.currentTarget;
+  });
 }
 const languageKeys = { st: 'sesothoDraft', ve: 'tshivendaDraft', ts: 'xitsongaDraft' } as const;
 type MarketLanguage = keyof typeof languageKeys;
@@ -84,6 +88,7 @@ function expectedApplied(language: MarketLanguage) {
 
 /** Validate the exact final overlay, then reconstruct the state before this dated batch. */
 export function validateAndRewindMarketOrdinary<T extends { lessons: readonly any[]; language: MarketLanguage }>(native: T, language: MarketLanguage): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 6 October: require the complete source-bound 28-field overlay to match before
   // reconstructing this earlier Market snapshot.
   native = nativeOrdinaryBeforeFinalBatch(native);
@@ -121,10 +126,12 @@ export function validateAndRewindMarketOrdinary<T extends { lessons: readonly an
       `${language}/${binding.lessonId}: quiz option order and source strings are unchanged`);
   }
   return structuredClone(packet.nativeBeforeSnapshots[language]) as T;
+  });
 }
 
 /** Validate live resolver output and reconstruct the visible state before this batch for historical tests. */
 export function rewindMarketOrdinaryPresentation<T extends { content: any; status: string }>(original: T, lessonId: string, language: MarketLanguage): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 2026-10-06: validate and rewind the final native/residual layer before
   // testing the older 79-row source-bound presentation claim.
   const result = nativeOrdinaryPresentationBeforeFinalBatch(original, lessonId, language);
@@ -167,4 +174,5 @@ export function rewindMarketOrdinaryPresentation<T extends { content: any; statu
     }
   }
   return result;
+  });
 }

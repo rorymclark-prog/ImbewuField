@@ -101,7 +101,7 @@ function monthAbbrev(monthIndex: number, lang: string): string {
 
 /** Plain-language deadline for the learner. Null when there is no due date. `lang` only affects
  *  the month abbreviation in the far-future case below — the near-term phrasing ("Due today" etc)
- *  is localised by the caller (e.g. app/student/page.tsx's localisedDueText). */
+ *  is localised by localisedDueText below, using the same source strings this function returns. */
 export function formatDue(due_at: string | null, today: string, lang: string = 'en'): string | null {
   if (!due_at) return null;
   const days = daysBetween(today, due_at);
@@ -114,6 +114,24 @@ export function formatDue(due_at: string | null, today: string, lang: string = '
   const [y, m, d] = due_at.split('-').map(Number);
   const month = monthAbbrev(m - 1, lang);
   return `Due ${d} ${month}${y === new Date().getFullYear() ? '' : ` ${y}`}`;
+}
+
+const DUE_TEXT_LANGUAGES = new Set(['zu', 'st', 've', 'ts']);
+
+/**
+ * Localise only the known status shapes returned by formatDue. Unsupported languages keep the
+ * original English text, and the date itself stays byte-for-byte as formatDue supplied it.
+ */
+export function localisedDueText(text: string | null, lang: string, t: (key: string) => string): string | null {
+  if (!text || !DUE_TEXT_LANGUAGES.has(lang)) return text;
+  if (text === 'Due today') return t('studentDueToday');
+  if (text === 'Due tomorrow') return t('studentDueTomorrow');
+  const overdue = text.match(/^(\d+) day(?:s)? overdue$/);
+  if (overdue) return t('studentDaysOverdue').replace('{count}', overdue[1]);
+  const dueIn = text.match(/^Due in (\d+) days$/);
+  if (dueIn) return t('studentDueInDays').replace('{count}', dueIn[1]);
+  if (text.startsWith('Due ')) return t('studentDueDate').replace('{date}', text.slice(4));
+  return text;
 }
 
 const STATE_SORT: Record<AssignmentState, number> = {

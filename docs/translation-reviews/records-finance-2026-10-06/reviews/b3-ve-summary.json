@@ -1,0 +1,23 @@
+{
+ "lang": "ve",
+ "counts": {
+  "ok": 101,
+  "repair": 2,
+  "hold": 0,
+  "total": 103
+ },
+ "top_issues": [
+  "R312 (repair, meaning): 'Masheleni o ṋewaho' = money that was given; direction ambiguous (could read as money given away), inconsistent with 'a dzhenaho' money-in wording; replaced. Plain subtraction, not profit, so no profit leak.",
+  "R329 (repair, wording): conditional 'would be a guess' rendered past 'was only a guess'; use 'i nga vha'.",
+  "R285 (ok, minor): 'dashed outline' = 'outer line that is cut/broken'; depends on 'kherwa' meaning cut. Kept = zwo salaho bulasini, correct.",
+  "R401 (ok, minor): first 'fhedzi' after {sold} could be read as 'only {sold} sold' (opposite point); speaker should confirm it reads as 'but'.",
+  "R291 (ok, minor): 'does not guess' = 'a i humbuli' weak; kept definition correct (picked minus sold, on farm).",
+  "R352 (ok, minor): 'food forest' = 'tshisaka tsha zwiḽiwa' inherited from batch 1, may read as bag/sack of foods.",
+  "R348/R349 (ok, minor): segment labels long (20-24 chars) for 390px; R349 'zwo itwaho' = 'what was done' rather than 'actual harvest'.",
+  "R295/R293 (ok, minor): 'Khalaṅwaha' (season) as period label, speaker should confirm.",
+  "R329/R291: 'u humbula' used for 'guess' in two places; confirm.",
+  "R339 (ok, minor): 'Set assumptions' paraphrased as 'write what you think will be lost/sold'."
+ ],
+ "checks_passed": "No kept-as-money-kept (all 'kept' = zwo salaho bulasini); money in = a dzhenaho, out = a bvaho consistently; sales/costs not named profit; no wrong month names (only {month} placeholders); placeholders match English in all 103; negations in R285, R290, R291, R314, R364, R373-375, R387, R401 preserved; fragments R317/R318/R320/R321/R369/R371/R388 read naturally.",
+ "confidence_limits": "I am a machine reviewer, not a fluent Tshivenda speaker. My back-translations rely on partial vocabulary knowledge (e.g. kherwa, humbula, khalaṅwaha, tshisaka, mvelelo, swikelela, fhedzi) and could miss grammar/noun-class errors, register and idiom. 'ok' means no demonstrable meaning error found, not speaker approval. Native review is still needed, especially for the items listed above."
+}

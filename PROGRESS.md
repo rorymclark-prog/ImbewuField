@@ -52,6 +52,27 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 12 Oct 2026 — Held finance rows retried (round 4)
+- **What:** 71 held rows were retried for Sesotho, Tshivenda, Xitsonga and isiZulu (finance-concept and unit-word rows
+  excluded); 33 now have an unreviewed draft (st 5, ve 7, ts 20, zu 1), the rest still show English. Xitsonga's
+  device-only photo warning no longer uses the ambiguous "xitirhisiwa" ("this phone only").
+- **Review:** blind machine back-translation per language, same integration rules; record in
+  `docs/translation-reviews/records-finance-2026-10-06/` (Round 4). No fluent-speaker, local-farming or Shangani approval.
+- **Not done on purpose:** month names (dates frozen; machine month-name error earlier) and navigation / Lima chat
+  (locale files are pinned by another track).
+
+### 12 Oct 2026 — Invoice page in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `/invoice` (`app/invoice/page.tsx`) reads the same source-keyed lookup as the money book: 144 more
+  English strings for Sesotho, Tshivenda and Xitsonga, 18 isiZulu fills. Instructions a farmer acts on keep the English
+  beside the draft; price-guide sentences are `{price}`/`{date}` templates; a visible notice says the drafts are
+  unreviewed. **The invoice a buyer receives (print, PDF, preview) stays English.** Held rows (price-guide notes, VAT / tax
+  no., eggs/crates/bunches, "types", Tshivenda/Xitsonga "Remove item") show English; buyer-type names are not translated
+  because they print as the buyer's name.
+- **Fixes found on the phone / in the code:** isiZulu paired instructions with no isiZulu wording printed their English
+  twice; the long Tshivenda word for "each" pushed the price box past the card at 390px (it now wraps onto its own line).
+- **Review:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`, Round 3).
+  Machine drafts and machine review only; no fluent-speaker, local-farming or Shangani approval is claimed.
+
 ### 10 Oct 2026 — Wave 10: last audit leftovers (#990)
 - Report footnotes (Köppen, rainfall pattern, wet/dry season) translated per language; isiZulu pending translator CSV.
 - New `--on-forest` theme token replaces ~65 hardcoded `#F7F2E9` text colours in 28 files; guard test `tests/stale-paper-hex.test.ts`. Crop planner files left for later (Codex active there).
@@ -78,9 +99,17 @@ must provision — not buildable from code alone).
   Reviewer repairs of whole sentences were not re-reviewed, so those, and every reviewer hold,
   show English. Packet, briefs, verdicts and held rows: `docs/translation-reviews/records-finance-2026-10-06/`.
 - **Existing-wording fixes:** "Save sale & invoice" no longer drops "& invoice" in isiZulu and Sesotho.
-- **Still open:** Charts-tab components are isiZulu-only inline (`CashflowChart`, `FinanceGraphs`,
-  `ComingUpHarvests`, `HarvestReconciliation`, `AreaReturnCards`); held strings (units such as eggs
-  and jars, fuel, the lender disclaimer, Tshivenda Export); everything needs a fluent speaker.
+- **Still open:** held strings (units such as eggs and jars, fuel, the lender disclaimer, Tshivenda
+  Export, running total / benchmark / reconciliation wording); month names; everything needs a fluent speaker.
+
+### 10 Oct 2026 — Charts tab in Sesotho, Tshivenda and Xitsonga (unreviewed drafts)
+- **What:** `CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`, `HarvestReconciliation`,
+  `AreaReturnCards` and `IsiZuluDraftSource` read the same source-keyed lookup as the money book
+  (119 more templates, figures as `{placeholders}`). isiZulu keeps its wording and gains fills for the six
+  strings that were English-only. Held concepts (running total, benchmark, reconciliation, net profit,
+  surplus/shortfall) show English. No chart arithmetic, scale, colour or data changed.
+- **Review and layout:** same drafting + blind-review packet (`docs/translation-reviews/records-finance-2026-10-06/`);
+  reconciliation rows now wrap so a drafted line is not cut off at 390px.
 
 ### 1 Oct 2026 — Calendar sections; food chart month on top; phone gutter removed
 - **Four calendar sections** (`CalendarSectionHeader`, `CalendarSectionNote` in

@@ -88,7 +88,7 @@ export const XITSONGA_SMALL_LIVESTOCK_DRAFT: XitsongaCourseModuleDraft = {
             },
             {
               "sourceEnglish": "Only in winter to avoid heat stress",
-              "xitsongaDraft": "Ntsena hi ximumu (winter), leswaku ku papalatiwa heat stress",
+              "xitsongaDraft": "Ntsena hi xixika (winter), leswaku ku papalatiwa heat stress",
               "reviewStatus": "machine-draft"
             }
           ],

@@ -200,6 +200,18 @@
     "No free-range/smallholder-specific eggs/hen/year figure was found for commercial layer breeds; the outputPerAnimal figure used (SAPA Industry Profile Table 4a) is a national commercial (intensive/barn) average across five hybrid strains, not a smallholder free-range trial.",
     "nda.gov.za and dalrrd.gov.za were unreachable for the Animal Diseases Act (connection reset / 502 on every attempted URL, consistent with this being a known-flaky host); an eccogta.gov.za (Eastern Cape district) mirror of the same Act text was used instead and verified to match the original page count and content.",
     "Editor review 2026-09-28: outputPerAnimal was a per-year rate built from two documents (cumulative eggs ÷ a laying period from a point-of-lay age elsewhere); restored to the source's own 407.1–428.6 eggs per hen housed to 90 weeks. productiveLifeYears withdrawn on the same ground. Months relabelled as a lit commercial house (a hen without lighting is not claimed to lay all year). Legal: dropped the Act's general definition (the factsheet point names avian influenza and Newcastle) and trimmed summaries that said more than their quotes (who may sell, why nests or litter are needed).",
-    "2026-10-04 audit: Corrected receiving-age/first-egg confusion using the retrieved ARC manual, printed p. 467 (PDF p. 8)."
+    "2026-10-04 audit: Corrected receiving-age/first-egg confusion using the retrieved ARC manual, printed p. 467 (PDF p. 8).",
+    "11 October 2026 2024 standards retained as separate buying/reference context, without annualising cumulative 90-week eggs."
+  ],
+  "productionReferences": [
+    {
+      "point": "SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of lay, surviving laying hens, feed, water and lighting need separate records.",
+      "evidence": {
+        "quote": "Breed standards in laying hens",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf",
+        "doc": "SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks",
+        "page": 39
+      }
+    }
   ]
 }

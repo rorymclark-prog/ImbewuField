@@ -45,6 +45,13 @@ export function harvestFromDossier(d) {
     pollination: d.pollination && d.pollination.value && d.pollination.evidence
       ? { value: d.pollination.value, source: cite(d.pollination.evidence), ...(d.pollination.notes ? { note: d.pollination.notes } : {}) }
       : null,
+    // An age-specific trial, lifespan or hectare result may be useful without being a
+    // valid species-wide kg/plant default. Previously these citations vanished at null.
+    ...(d.supplementaryReferences?.length ? { supplementaryReferences: d.supplementaryReferences.map(reference => ({
+      title: reference.title, source: cite(reference), note: reference.note,
+    })) } : {}),
+    ...(d.productionGuidance ? { productionGuidance: d.productionGuidance } : {}),
+    ...(d.householdFoodStatus ? { householdFoodStatus: d.householdFoodStatus } : {}),
   };
 }
 

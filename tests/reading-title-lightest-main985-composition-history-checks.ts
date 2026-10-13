@@ -1,6 +1,9 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
+import { studyBAProjectToA } from './study-b-a-source-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/main-985-composition/';
 const proofBytes = readFileSync(folder + 'composition-proof.json');
@@ -30,7 +33,7 @@ function validateComposition() {
     assert.equal(sha(before), pr985[file.startsWith('app/') ? 'worker' : 'manifest'].afterSha256, `${file}: cross-owner exact post985 digest`);
     assert.equal(after.length, row.afterBytes, `${file}: merged current full-file size`);
     assert.equal(sha(after), row.afterSha256, `${file}: immutable merged current full-file digest`);
-    const live = readSnapshot(file);
+    const live = Buffer.from(studyBAProjectToA(file, readSnapshot(file)));
     assert.equal(live.length, row.afterBytes, `${file}: live complete current size`);
     assert.equal(sha(live), row.afterSha256, `${file}: live complete current digest`);
     assert.deepEqual(live, after, `${file}: live whole file retains all source, migration and unlisted bytes`);
@@ -85,23 +88,26 @@ function validateComposition() {
 }
 
 export function readingTitleLightestMain985PostLayerBefore(file: string, supplied: Uint8Array | string): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
   if (!watched.has(file)) return supplied;
   validateComposition();
   const row = proof.files[file];
   const before = readSnapshot(row.beforePath);
   const prior = readSnapshot(row.pr985BeforePath);
-  const text = Buffer.from(supplied).toString();
-  const live = readSnapshot(file).toString();
+  const text = Buffer.from(studyBAProjectToA(file, supplied)).toString();
+  const live = Buffer.from(studyBAProjectToA(file, readSnapshot(file))).toString();
   if (text === live || text === before.toString()) return typeof supplied === 'string' ? before.toString() : before;
   if (text === prior.toString()) return supplied;
   // Older dated owners pass their own frozen snapshots through this projection.
   // They compare those complete bytes to their immutable claims after this full
   // live-layer validation; do not rewrite or bless those caller values here.
   return supplied;
+  });
 }
 
 /** Project newest A to exact main837/PR985-after bytes, then PR985 to its immutable older input. */
 export function readingTitleLightestThroughMain985Before(file: string, supplied: Uint8Array | string): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
   const post985 = readingTitleLightestMain985PostLayerBefore(file, supplied);
   if (!watched.has(file)) return post985;
   validateComposition();
@@ -111,4 +117,5 @@ export function readingTitleLightestThroughMain985Before(file: string, supplied:
   const prior = readSnapshot(row.pr985BeforePath);
   assert.equal(sha(prior), row.pr985BeforeSha256, `${file}: exact pre-PR985 snapshot before older owners`);
   return typeof supplied === 'string' ? prior.toString() : prior;
+  });
 }

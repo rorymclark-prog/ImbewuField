@@ -1,3 +1,4 @@
+import { blindReviewedNativeBefore, blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { comparisonsPlan } from './reading-comparisons-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -39,7 +40,8 @@ const candidates = packet.candidateFields as Array<{
   segments: Array<{ sourceEnglish: string; targetText: string }>;
 }>;
 const module = COURSE_MODULES.find(item => item.id === 'reading-landscape')!;
-const drafts = { ve: TSHIVENDA_READING_LANDSCAPE_DRAFT, ts: XITSONGA_READING_LANDSCAPE_DRAFT };
+// Complete new observations are independently validated before these frozen before-digging claims.
+const drafts = { ve: blindReviewedNativeBefore(TSHIVENDA_READING_LANDSCAPE_DRAFT), ts: blindReviewedNativeBefore(XITSONGA_READING_LANDSCAPE_DRAFT) };
 const fullerPacket = JSON.parse(readFileSync(new URL('../docs/study-translation-reviews/READING-BODY-FULLER-ROOT-READY-2026-10-04.json', import.meta.url), 'utf8')) as {
   changedFieldCount: number;
   excludedUnchangedRows: Array<{ language: string; lessonId: string; fieldPath: string }>;
@@ -227,7 +229,8 @@ test('Reading before-digging refinements preserve every paragraph through author
     assert.match(assessment, candidate.language === 've' ? /Mavu.*sendama.*maḓi a bva.*mvula khulu.*tsireledzeaho.*maḓi manzhisa/ : /Soil, slope, drainage, storm flow.*hlayisekeke.*mati lama taleke/,
       'soil, slope, drainage, storm flow and safe overflow remain in the checked order');
     assert.match(assessment, candidate.language === 've' ? /henefho o gudiswaho/ : /trained local adviser/);
-    const shown = resolveLearnerLessonPresentation(source, candidate.language);
+    // The actual corrected learner is checked before the dated body comparison.
+    const shown = blindReviewedPresentationBefore(resolveLearnerLessonPresentation(source, candidate.language), source.id, candidate.language);
     assert.equal(shown.status, 'draft');
     assert.equal(shown.content.body, target);
     assertFallback(candidate.language, candidate.lessonId, candidate.canonicalSourceParagraph);
@@ -241,7 +244,8 @@ test('Reading body extensions preserve checked field ancestry, crop age and site
   for (const field of fullerPacket.fields) {
     const source = module.lessons.find(item => item.id === field.lessonId)!;
     const registry = lesson(field.language, field.lessonId);
-    const shown = resolveLearnerLessonPresentation(source, field.language);
+    // Compare the same validated predecessor view as the dated native registry.
+    const shown = blindReviewedPresentationBefore(resolveLearnerLessonPresentation(source, field.language), source.id, field.language);
     const combined = combinedPacket.fields.find(item => item.language === field.language && item.lessonId === field.lessonId && item.paragraphIndex === field.paragraphIndex)!;
     const second = secondPassPacket.paragraphs.find(item => item.language === field.language && item.lessonId === field.lessonId && item.bodyParagraphIndexZeroBased === field.paragraphIndex);
     assert.equal(registry.body.sourceEnglish, source.body);

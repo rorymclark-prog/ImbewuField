@@ -72,12 +72,72 @@ be confirmed") can be read as re-entering the cost, which would duplicate it. Bo
 isiZulu reviewers flagged this. The English source is canonical here, so it is unchanged and
 translated faithfully.
 
+## Round 2 (10 October): the Charts tab
+
+Batch 3 adds the five Charts-tab components (`CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`,
+`HarvestReconciliation`, `AreaReturnCards`) and `IsiZuluDraftSource`: 119 more English templates (figures and
+names are `{placeholders}`, so a draft is bound to the sentence, not to one amount), 12 of them isiZulu
+fallback fills. Same method: per-language drafting lane, independent blind back-translation review, the same
+integration rules, plus an automatic hold for any draft that contains a word already rejected in an earlier
+backcheck (Tshivenda "Mbuelo"/"Masheleni o salaho"; Xitsonga "xitirhisiwa", "Vatirhi", "Rixaka", "Muxaka",
+"swiharhi"). Drafters were told to hold finance concepts they were unsure of; these show English: running
+total, cash surplus/shortfall, benchmark, harvest reconciliation, net profit and overheads, and "returns per
+growing area" in Sesotho and Tshivenda (it can read as profit). Month names and the month labels in the charts
+stay English on purpose (a machine-drafted month name was already caught wrong once). Crop names are
+catalogue data and are never translated.
+
+Layout fix found by looking at the phone: the drafted "Harvested X · Sold Y" line was cut off at 390px, so the
+harvest-reconciliation rows now wrap.
+
+## Round 3 (12 October): the Invoice page
+
+Batch 4 adds the `/invoice` screen (`app/invoice/page.tsx`): 159 more English strings, 144 for Sesotho, Tshivenda
+and Xitsonga and 18 isiZulu fallback fills (the Invoice page already carried existing isiZulu wording for the rest).
+Same method: one drafting lane per language, an independent blind back-translation review, and the same integration
+rules (meaning-level repairs of whole sentences and every hold show English; automatic hold for words rejected earlier).
+Result: Sesotho 131 accepted / 3 held, Tshivenda 123 / 11, Xitsonga 118 / 16, isiZulu 18 / 0. Held rows are the ones
+reviewers could not confirm: price-guide confidence notes, "Sourced guide", VAT / tax no., the eggs/crates/bunches
+words, "types" (Customer types, Invoice type) and "Remove item" for Tshivenda and Xitsonga, "Buyer address & contact"
+and the two-devices sentence for Xitsonga.
+
+What the screen does now: the page's `ui()` helper reads the same English-keyed lookup. A sentence a farmer acts on
+(payment status, sale linking, sync retry, delete) keeps the English beside the draft. The price-guide sentences
+became `{price}` / `{date}` templates so a figure cannot be lost. A visible notice says the drafts are unreviewed and
+that **the invoice a buyer receives stays English**: the printed page, the PDF and the document preview are not
+translated for Sesotho, Tshivenda or Xitsonga (a buyer files it and pays from it). Dates keep English month names.
+
+Changes to existing behaviour (each was a demonstrated defect):
+- isiZulu: a paired instruction with no isiZulu wording printed its English twice ("English — English"); it now shows
+  the English once. Seven isiZulu sentences that were English-only now carry machine-drafted fills that a second machine reviewed.
+- Layout, found at 390px: the long Tshivenda word for "each" pushed the line-item price box past the card edge. The
+  price box now takes its own line only when that word is long; English, isiZulu, Sesotho and Xitsonga keep one row.
+
+Deliberately not translated: the ten buyer-type names ("Neighbour", "School", "Church"...). They are the *value* of the
+customer list and print as the buyer's name on the invoice, so translating the label would put a different word on screen
+than on the document. A speaker should decide whether to show both.
+
+## Round 4 (12 October): retrying held rows
+
+Rows an earlier pass held (drafter hold, reviewer hold, meaning-level repair, or the second-session backcheck) were
+given a second try where a safe wording might exist: 6 Sesotho, 27 Tshivenda, 36 Xitsonga and 2 isiZulu rows. Rows that
+turn on a finance concept (gross margin, running total, reconcile, VAT...) or a unit word (eggs, jars, crates...) were
+not retried: a machine cannot confirm those words. Each retry drafter was told why the row was held and which words were
+already rejected, and was allowed to hold again; a second, blind reviewer then back-translated every new draft.
+Result: Sesotho 5 of 6 now accepted, Tshivenda 7 of 27, Xitsonga 20 of 36, isiZulu 1 of 2. The rest stay held and show
+English (Tshivenda "amount" rows, "lender" for Tshivenda, flat/profit/staple/category/type/cash/returns; Xitsonga
+"Remove item", category/type, cash, profit; isiZulu "Mobile"). Held rows now carry a `retry` note with the round 4 reason.
+One integrator change: the isiZulu orchard sentence uses the records page's own "Ingadi yezihlahla", not the drafter's
+"Ingadi yezithelo". Note for a speaker: the existing isiZulu keys `recordsOrchardIn/Out/OutNote` say "Isivande sezithelo"
+(isivande is a pumpkin dish), which the page does not use for the same idea; that existing wording was not changed.
+Still machine drafts and machine review only; Xitsonga "ntirho" (labour), "mubolekisi" (lender) and the payment words
+"Cash" / "Mobile" in Sesotho are the weakest and need a speaker. The Xitsonga device-only photo warning now says
+"this phone only" instead of the ambiguous "xitirhisiwa".
+
 ## Not covered (remaining dependencies)
 
-- Charts-tab components: `CashflowChart`, `FinanceGraphs`, `ComingUpHarvests`,
-  `HarvestReconciliation`, `AreaReturnCards` (isiZulu-only inline text; st/ve/ts still English).
-  They overlap crop planning and plan-vs-actual, which are out of this scope.
+- Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
+  production-plan page names, and every held row listed in `draft-<lang>.json`.
 - Dates print with English month abbreviations (`en-ZA`), and user-entered text is never translated.
-- `/invoice` document and tool wording, global navigation and Lima chat.
+- The printed and PDF invoice (English on purpose), the buyer-type names, global navigation and Lima chat.
 - Held strings: see `status: "held"` rows in each `draft-<lang>.json` (units such as eggs, jars,
-  crates and bunches, fuel, the lender disclaimer, the gross-margin line, and Tshivenda "Export").
+  crates and bunches, fuel, the lender disclaimer and the gross-margin line; Round 4 retried the rest).

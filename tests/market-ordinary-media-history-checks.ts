@@ -1,7 +1,11 @@
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { vegetablesL3AssetSizesBeforeOrdinary, vegetablesL3MediaBeforeEarlierProof } from './vegetables-l3-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readdirSync, statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { vegetablesPestPrecisionFrames } from './vegetables-pest-precision-media-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
@@ -17,12 +21,14 @@ const expectedPaths = [
 ];
 
 export function marketFrameBeforeNativeResidual(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice(6) : path;
   const current = nativePairedResidualFrames.find((frame:any)=>frame.url===url);
   if (!current) return finalLanguageNextMediaBefore(path) ?? undefined;
   const previous = nativePairedResidualMediaBefore(url);
   assert.ok(previous, url + ': listed redraw has an exact validated predecessor');
   return {...previous, width:current.width, height:current.height};
+  });
 }
 
 
@@ -44,6 +50,7 @@ function observedFile(path: string) {
 // 6 October 2026: Market supersedes eleven real frame descriptors and fixes the
 // stale total comment. Validate the complete accepted layer before old proofs run.
 export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // Later L3 images are independently validated before this older eleven-frame claim.
   currentManifest = vegetablesL3AssetSizesBeforeOrdinary(currentManifest);
   assert.equal(sha(proofBytes), '0efa24cb294beaa3203576fec99b497b0f6aa872d89320454369edc8421cac41');
@@ -114,9 +121,13 @@ export function validateCurrentMarketOrdinaryMedia(currentManifest = readFileSyn
     assert.equal(actual.sha256, row.sha256, row.path);
   }
   return JSON.parse(proofBytes.toString());
+  });
 }
 
 export function marketAssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // A complete current caller must share the guarded predecessor used by disk reads.
+  if (currentManifest !== undefined) currentManifest = blindReviewedSourceBefore('lib/course-asset-sizes.ts', currentManifest) as string;
   validateCurrentMarketOrdinaryMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const beforeL3 = vegetablesL3AssetSizesBeforeOrdinary();
@@ -134,9 +145,11 @@ export function marketAssetSizesBeforeOrdinary(currentManifest?: string) {
   assert.ok(currentManifest === prior || currentManifest === priorBeforeVegetables,
     'historical composition accepts only the exact guarded Market baseline or its six known Vegetables rewinds');
   return currentManifest;
+  });
 }
 
 export function marketMediaBeforeEarlierProof(path: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   // A later redraw of a Market URL must still pass through this older Market
   // layer; returning its immediate predecessor would skip the eleven-frame history.
@@ -152,4 +165,5 @@ export function marketMediaBeforeEarlierProof(path: string) {
   if (frame) return {sha256:frame.old.sha256,bytes:frame.old.bytes};
   const later = marketFrameBeforeNativeResidual(url);
   return later ? {sha256:later.sha256,bytes:later.bytes} : undefined;
+  });
 }

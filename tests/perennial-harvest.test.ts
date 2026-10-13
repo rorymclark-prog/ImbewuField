@@ -10,6 +10,7 @@ import {
   formatMonthSpan,
   formatRange,
   perennialHarvestFor,
+  confirmedTreeMonths,
   placedTreeGroups,
   sourcedSeasonMonths,
   speciesIdForPlaced,
@@ -18,12 +19,38 @@ import {
   unidentifiedPlantGroups,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
-import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
+import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, projectedKgLabel, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
 import { estimatedYieldKgAdjusted, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { calendarProduceByMonth } from '@/lib/calendar-produce';
 import { printableAvailability } from '@/lib/crop-export-availability';
 import { planningTreeSeasons } from '@/lib/production-product-guidance';
 import { harvestFromDossier, loadDossiers } from '../scripts/build-perennial-harvest.mjs';
+
+test('a contextual age or hectare result survives research generation without becoming a universal plant yield', () => {
+  const reference = { title: 'Age and native-unit fixture', quote: 'At year six, this particular trial gave a measured result.', url: 'https://www.arc.agric.za/fixture', doc: 'Synthetic generator contract fixture', page: 3, note: 'Named cultivar at year six; measured kg/ha, no matched tree density.' };
+  const h = harvestFromDossier({ speciesId: 'fixture', commonName: 'Fixture', yieldKgPerTreeMature: { value: null, evidence: null }, supplementaryReferences: [reference], productionGuidance: { care: ['Check the source conditions.'], purchase: ['Confirm identified stock.'] }, householdFoodStatus: 'specialist-review' });
+  assert.equal(h.yieldKgPerTree, null);
+  assert.deepEqual(h.supplementaryReferences, [{ title: reference.title, note: reference.note, source: { quote: reference.quote, url: reference.url, doc: reference.doc, page: reference.page } }]);
+  assert.deepEqual(h.productionGuidance, { care: ['Check the source conditions.'], purchase: ['Confirm identified stock.'] });
+  assert.equal(h.householdFoodStatus, 'specialist-review');
+});
+
+test('a food-use hold retains inventory but blocks saved picking dates and entered yield from ordinary food forecasts', () => {
+  const original = { harvest: PERENNIAL_HARVEST['persea-americana'], existing: 1, proposed: 0 };
+  const group = { ...original, harvest: { ...original.harvest, householdFoodStatus: 'specialist-review' as const } };
+  const choices = { 'persea-americana': { months: [10], bearing: true, production: [{ status: 'existing' as const, plants: 1, planted: '2016-10', yields: [{ age: 1, kg: 20 }] }] } };
+  assert.deepEqual(confirmedTreeMonths(group.harvest, choices), []);
+  assert.deepEqual(buildTreeAvailability([group], [10], true, choices), [[]]);
+  assert.deepEqual(treePickingByMonth([group], [10], choices), [[]]);
+  assert.deepEqual(planningTreeSeasons([group], ['subtropical-coast']), []);
+  const projection = treeAgeProjection(group, choices['persea-americana'], 2026 * 12 + 9, 2027 * 12 + 8);
+  assert.equal(projection.plants, 1);
+  assert.equal(projection.kg, null);
+  assert.deepEqual(projection.knownKg, [0, 0]);
+  assert.match(projection.missing.join(' '), /Food use needs review/);
+  assert.equal(ageReadyForSeason(group, choices['persea-americana'], 2026 * 12 + 9), false);
+  assert.deepEqual(choices['persea-americana'].months, [10], 'the gate must not mutate the farmer’s saved observation');
+});
 
 const speciesIds = new Set(SPECIES.map((s) => s.id));
 const records = Object.values(PERENNIAL_HARVEST);
@@ -118,6 +145,113 @@ test('double-booked vegetables cannot inflate the combined orchard and vegetable
   assert.ok(projection.years.every(y => y.vegetableKg === null && y.combinedKg === null && y.partial));
 });
 
+test('the same bed used in separate future years keeps its production instead of a phantom conflict', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 10, once: '2028-10' };
+  const q = { ...p, id: 'next', once: '2029-10' };
+  const kg = estimatedYieldKgAdjusted(p, 10, [p, q]);
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.deepEqual(projection.years.map(y => y.vegetableKg), [0, 0, kg, kg, 0, 0, 0, 0, 0, 0]);
+  assert.ok(projection.years.every(y => !y.partial));
+});
+
+test('a real dated future bed conflict blocks that period without erasing all the other years', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 10, once: '2028-10' };
+  const q = { ...p, id: 'overlap', sowMonth: 11, once: '2028-11' };
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[2].vegetableKg, null);
+  assert.equal(projection.years[2].combinedKg, null);
+  assert.deepEqual(projection.years[2].vegetableMissing, ['Resolve double-booked beds']);
+  assert.ok(projection.years.filter((_, i) => i !== 2).every(y => y.vegetableKg === 0 && !y.partial));
+});
+
+test('a current one-off overlap stops blocking a recurring crop after the observed cohort finishes', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const recurring: Planting = { id: 'annual', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  const existing = { ...recurring, id: 'observed', existing: true, confirmedOnceSowing: '2026-10' };
+  const kg = estimatedYieldKgAdjusted(recurring, 10, [recurring]);
+  const projection = buildProductionProjection({ plantings: [recurring, existing], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[0].vegetableKg, null);
+  assert.ok(projection.years.slice(1).every(y => y.vegetableKg === kg && !y.partial));
+});
+
+test('dated occupation and harvest stay in their real years over December and January', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'december', bedId: 'bed', cropKey: 'carrots', sowMonth: 12, once: '2027-12' };
+  const q = { ...p, id: 'january', sowMonth: 1, once: '2028-01' };
+  const kg = estimatedYieldKgAdjusted(p, 10, [p]);
+  const single = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(single.years[0].vegetableKg, 0);
+  assert.equal(single.years[1].vegetableKg, kg);
+  const conflict = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(conflict.years[0].vegetableKg, 0);
+  assert.equal(conflict.years[1].vegetableKg, null);
+  assert.equal(conflict.years[2].vegetableKg, 0);
+});
+
+test('a crop-cycle conflict before the year boundary still blocks the crop harvested after it', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const p: Planting = { id: 'first', bedId: 'bed', cropKey: 'carrots', sowMonth: 5, once: '2027-05' };
+  const q = { ...p, id: 'next', sowMonth: 9, once: '2027-09' };
+  const projection = buildProductionProjection({ plantings: [p, q], beds, trees: [], choices: {}, now: projectionNow });
+  assert.equal(projection.years[0].vegetableKg, null, 'whole-bed crops conflict in September');
+  assert.equal(projection.years[1].vegetableKg, null, 'January picking cannot undo the same crop-cycle conflict');
+  assert.ok(projection.years.slice(2).every(y => y.vegetableKg === 0 && !y.partial));
+});
+
+test('invalid or inconsistent sowing dates cannot create crop kilograms absent from the calendar', () => {
+  const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2: 10 }];
+  const base: Planting = { id: 'invalid', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  for (const p of [
+    ...[0, 13, NaN, 1.5].map(sowMonth => ({ ...base, sowMonth })),
+    { ...base, once: '' },
+    { ...base, once: '2028-11' },
+    { ...base, confirmedOnceSowing: '2026-11', existing: true },
+  ]) {
+    const projection = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+    assert.ok(projection.years.every(y => y.vegetableKg === 0 && y.partial));
+    assert.ok(projection.years.every(y => y.vegetableMissing.includes('Carrots: check sowing date')));
+  }
+});
+
+test('a damaged growing area remains missing instead of entering a negative or nonfinite crop total', () => {
+  const p: Planting = { id: 'crop', bedId: 'bed', cropKey: 'carrots', sowMonth: 10 };
+  for (const areaM2 of [0, -1, NaN, Infinity]) {
+    const beds: PlanBed[] = [{ id: 'bed', label: 'Fixture bed', areaM2 }];
+    const projection = buildProductionProjection({ plantings: [p], beds, trees: [], choices: {}, now: projectionNow });
+    assert.ok(projection.years.every(y => y.vegetableKg === 0 && y.partial));
+    assert.ok(projection.years.every(y => y.vegetableMissing.includes('Fixture bed: check growing area')));
+  }
+});
+
+test('invalid age or kg drafts do not change a reference season when the saved projection rejects them', () => {
+  for (const yields of [[{ age: -1, kg: 2 }], [{ age: 0, kg: -1 }], [{ age: 0, kg: NaN }]]) {
+    const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields }] };
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart), false);
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart + 36), true);
+    const cleaned = cleanTreeSeasonChoices({ 'persea-americana': choice })['persea-americana'];
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart), ageReadyForSeason(youngAvocado, cleaned, projectionStart));
+    assert.equal(ageReadyForSeason(youngAvocado, choice, projectionStart + 36), ageReadyForSeason(youngAvocado, cleaned, projectionStart + 36));
+  }
+});
+
+test('contradictory yield ages are visible even before the first crop reference', () => {
+  const choice = { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [{ age: 0, kg: 0 }, { age: 0, kg: 0 }] }] };
+  const p = treeAgeProjection(youngAvocado, choice, projectionStart, projectionStart + 11);
+  assert.equal(p.kg, null);
+  assert.ok(p.missing.includes('Check duplicate yield ages'));
+});
+
+test('small positive production keeps its decimals in the shared app and printed label', () => {
+  assert.equal(projectedKgLabel([0.4, 0.4]), '0.4 kg');
+  assert.equal(projectedKgLabel([0.004, 0.08]), '0.004–0.08 kg');
+  assert.equal(projectedKgLabel([0.0004, 0.0004]), '<0.001 kg');
+  assert.equal(projectedKgLabel([0, 0]), '0 kg');
+  assert.equal(projectedKgLabel(null), 'Needs information');
+  assert.equal(projectedKgLabel([NaN, Infinity]), 'Needs information');
+});
+
 test('recorded young tree ages suppress premature seasonal references in both the app and the printed calendar', () => {
   const choices = { 'persea-americana': { months: [], bearing: false, production: [{ status: 'proposed' as const, plants: 1, planted: '2026-10', yields: [] }] } };
   const dates = Array.from({ length: 36 }, (_, i) => ({ year: Math.floor((projectionStart + i) / 12), month: (projectionStart + i) % 12 + 1 }));
@@ -163,6 +297,7 @@ test('every value carries a quote and a primary-source URL', () => {
     ...(['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits'] as const)
       .flatMap((k) => (h[k] ? [{ at: `${h.speciesId} ${k}`, c: h[k]!.source }] : [])),
     ...(h.pollination ? [{ at: `${h.speciesId} pollination`, c: h.pollination.source }] : []),
+    ...(h.supplementaryReferences ?? []).map((reference, index) => ({ at: `${h.speciesId} supplemental reference ${index}`, c: reference.source })),
   ]);
   assert.ok(citations.length > 0);
   for (const { at, c } of citations) {
@@ -175,6 +310,8 @@ test('every value carries a quote and a primary-source URL', () => {
 
 test('months and ranges are well formed', () => {
   for (const h of records) {
+    if (h.householdFoodStatus) assert.ok(['confirmed-food', 'specialist-review', 'not-food'].includes(h.householdFoodStatus), `${h.speciesId}: invalid food-use status`);
+    for (const reference of h.supplementaryReferences ?? []) assert.ok(reference.title.trim() && reference.note.trim(), `${h.speciesId}: missing reference conditions`);
     for (const w of h.windows) {
       assert.ok(w.months.length > 0, `${h.speciesId} ${w.region}: empty window`);
       for (const m of w.months) assert.ok(Number.isInteger(m) && m >= 1 && m <= 12, `${h.speciesId}: month ${m}`);
@@ -283,13 +420,15 @@ test('each banana circle contributes three planted bananas without changing the 
 });
 
 test('mapped food species without a harvest dossier remain counted and permit only confirmed local dates without invented yields', () => {
-  const apple = SPECIES.find(species => species.id === 'malus-domestica');
-  assert.ok(apple && apple.uses.includes('food') && apple.nemba === 'none');
-  assert.equal(perennialHarvestFor(apple.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
+  // Research coverage grows. Exercise an actual permitted catalogue identity without a
+  // perennial dossier rather than requiring any named food to stay unresearched forever.
+  const food = SPECIES.find(species => species.uses.includes('food') && species.nemba === 'none' && !perennialHarvestFor(species.id));
+  assert.ok(food && food.uses.includes('food') && food.nemba === 'none');
+  assert.equal(perennialHarvestFor(food.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
   const items = [
-    { defId: 'tree_other', speciesId: apple.id, status: 'existing' as const },
-    { defId: 'tree_apple', speciesId: apple.id },
-    { defId: 'tree_other', speciesId: apple.id, status: 'proposed' as const },
+    { defId: 'tree_other', speciesId: food.id, status: 'existing' as const },
+    { defId: 'tree_apple', speciesId: food.id },
+    { defId: 'tree_other', speciesId: food.id, status: 'proposed' as const },
     { defId: 'tree_other', speciesId: 'morus-nigra', status: 'proposed' as const },
     { defId: 'tree_avocado', status: 'existing' as const },
   ];
@@ -297,21 +436,85 @@ test('mapped food species without a harvest dossier remain counted and permit on
   const groups = placedTreeGroups(items);
   assert.equal(groups.length, 3, 'unknown research must not erase known catalogue food plants');
   assert.deepEqual(unidentifiedPlantGroups(items), [], 'an identified permitted food plant uses the same month-confirmation authority');
-  const group = groups.find(entry => entry.harvest.speciesId === apple.id);
+  const group = groups.find(entry => entry.harvest.speciesId === food.id);
   assert.ok(group?.referenceMissing);
-  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, apple.commonName]);
+  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, food.commonName]);
   assert.deepEqual(group.harvest.windows, []);
   for (const key of ['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits', 'pollination'] as const) assert.equal(group.harvest[key], null);
   assert.deepEqual(buildTreeAvailability(groups, [1, 6, 12], true), [[], [], []]);
-  const choices = cleanTreeSeasonChoices({ [apple.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
-  assert.deepEqual(choices[apple.id], { bearing: true, months: [6] });
+  const choices = cleanTreeSeasonChoices({ [food.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
+  assert.deepEqual(choices[food.id], { bearing: true, months: [6] });
   const locallyConfirmed = buildTreeAvailability(groups, [1, 6, 12], true, choices);
-  assert.deepEqual(locallyConfirmed[1], [{ speciesId: apple.id, name: apple.commonName, trees: 2 }]);
+  assert.deepEqual(locallyConfirmed[1], [{ speciesId: food.id, name: food.commonName, trees: 2 }]);
   assert.deepEqual(locallyConfirmed[0], []);
   assert.deepEqual(locallyConfirmed[2], []);
-  assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, apple.commonName);
+  assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, food.commonName);
   assert.equal(locallyConfirmed[1].some(entry => entry.speciesId === 'morus-nigra'), false, 'proposed-only plants have no current picking jobs even with dates supplied');
   assert.deepEqual(items, before, 'reading an inventory must not change map geometry or status');
+});
+
+test('apple references keep cultivar and Western Cape location distinct without creating warm KZN harvests or kilograms', () => {
+  const apple = perennialHarvestFor('malus-domestica');
+  assert.ok(apple, 'the named ordinary apple must have its own source profile, separate from Kei apple');
+  assert.deepEqual(apple.windows.map(window => window.months), [[12, 1], [3]]);
+  assert.match(apple.windows[0].region, /Bien Donne, Simondium, Western Cape.*Afri-Star/);
+  assert.match(apple.windows[1].region, /Elgin, Western Cape.*Granny Smith.*first pick/);
+  // The recovered KZN guide states light crop at year three and full production at
+  // year seven. These are qualified age references, not a kg curve or coast suitability.
+  assert.deepEqual(apple.yearsToFirstCrop?.value, [3, 3]);
+  assert.deepEqual(apple.yearsToFullBearing?.value, [7, 7]);
+  for (const age of [apple.yearsToFirstCrop, apple.yearsToFullBearing]) {
+    assert.match(age!.source.url, /kzndard\.gov\.za/);
+    assert.match(age!.note!, /Dry Highland Sourveld|rootstock|chilling/i);
+  }
+  for (const field of ['yieldKgPerTree', 'chillUnits', 'pollination'] as const) {
+    assert.equal(apple[field], null, `${field} cannot be extrapolated from a cultivar date or per-hectare claim`);
+  }
+  const [group] = placedTreeGroups([{ defId: 'tree_other', speciesId: apple.speciesId, status: 'existing' },
+    { defId: 'tree_other', speciesId: apple.speciesId, status: 'proposed' }]);
+  assert.equal(group.referenceMissing, undefined, 'a checked source profile replaces the unidentified-reference fallback');
+  const conditions = { frost: 'no' as const, drySeasonWater: 'reliable' as const, drainage: 'drains-well' as const, sunlight: 'full-sun' as const };
+  assert.deepEqual(planningTreeSeasons([group], ['subtropical-coast'], conditions), [],
+    'an apple profile or low-chill label does not establish a KZN picking window');
+  const western = planningTreeSeasons([group], ['western-cape'], conditions);
+  assert.equal(western.length, 1);
+  assert.match(western[0].season.label, /Granny Smith.*chilling.*pollen/);
+  assert.deepEqual(western[0].season.months, [3], 'one assumed cultivar cannot inherit the other cultivar\'s December–January dates');
+  assert.match(western[0].season.basis, /Elgin first-pick reference.*not the whole harvest duration/);
+  assert.deepEqual(buildTreeAvailability([group], [1, 3, 12], true), [[], [], []],
+    'references must not turn an unconfirmed standing apple into local picking jobs');
+  const projection = buildProductionProjection({ plantings: [], beds: [], trees: [group], choices: {}, now: projectionNow });
+  assert.ok(projection.years.every(year => year.partial && year.trees[0].kg === null),
+    'source timing cannot supply a tree age curve, output quantity or assured zero');
+});
+
+test('default Apple Tree map elements retain their exact counts without acquiring Cape picking dates or overriding chosen non-food species', () => {
+  const items = [{ defId: 'tree_apple', status: 'existing' as const },
+    { defId: 'tree_apple', status: 'proposed' as const }];
+  const before = structuredClone(items);
+  const groups = placedTreeGroups(items);
+  assert.equal(groups.length, 1, 'the ordinary Apple Tree element must resolve to its existing catalogue identity');
+  assert.equal(groups[0].harvest.speciesId, 'malus-domestica');
+  assert.deepEqual([groups[0].existing, groups[0].proposed], [1, 1]);
+  assert.deepEqual(unidentifiedPlantGroups(items), [], 'a canonical default apple must not ask the farmer to identify it again');
+  const months = [1, 3, 12];
+  const conditions = { frost: 'no' as const, drySeasonWater: 'reliable' as const, drainage: 'drains-well' as const, sunlight: 'full-sun' as const };
+  const planning = planningTreeSeasons(groups, ['subtropical-coast'], conditions);
+  assert.deepEqual(planning, [], 'identifying a mapped apple does not copy its Western Cape references into warm KZN');
+  const localFood = buildTreeAvailability(groups, months, true);
+  assert.deepEqual(localFood, [[], [], []], 'standing plants alone do not confirm food or picking dates');
+  const printed = printableAvailability({ now: projectionNow, yearMode: 'fromToday', veg: [], utilization: [],
+    trees: localFood, treeGroups: groups, planning: { months, trees: planning } });
+  assert.deepEqual(printed.forest, [[], [], []]);
+  assert.equal(printed.forestPlanning?.flat().length, 0);
+  assert.ok(printed.undated?.some(row => row.iconKey === 'tree:malus-domestica' && /1 existing; 1 proposed/.test(row.detail)),
+    'the unknown local season still needs a counted apple row on paper');
+  const ornamental = SPECIES.find(species => !species.uses.includes('food') && species.nemba === 'none')!;
+  const explicit = [{ defId: 'tree_apple', speciesId: ornamental.id, status: 'existing' as const }];
+  assert.equal(speciesIdForPlaced(explicit[0]), ornamental.id, 'a chosen botanical identity always beats the default Apple Tree symbol');
+  assert.deepEqual(placedTreeGroups(explicit), []);
+  assert.deepEqual(unidentifiedPlantGroups(explicit), [], 'a selected non-food plant must not acquire an apple food record');
+  assert.deepEqual(items, before, 'resolving an apple inventory cannot rewrite mapped status or geometry');
 });
 
 test('generic fruit elements retain their names while restricted mapped food remains inventory without gaining production dates', () => {
@@ -381,18 +584,92 @@ test('berries and moringa: harvest records only for what a primary source gave',
   // "120 days after transplanting" is not a years-to-first-crop figure.
   assert.deepEqual(PERENNIAL_HARVEST['physalis-peruviana'].windows.map((w) => w.months), [[10, 11, 12, 1]]);
   assert.equal(PERENNIAL_HARVEST['physalis-peruviana'].yearsToFirstCrop, null);
-  // Moringa: first leaves 6-12 months after planting (North West DARD). The only sourced months
-  // are that guide's pod months ("Fruits production mainly occurs in March and April."); leaf
-  // harvest has no SA calendar, so the window names pods rather than borrowing one.
+  // North West DARD dates pod development, but food pods must be young, tender and green.
+  // That stage is not dated; a botanical fruit-production interval cannot stand in for it.
+  // Its separate first-leaf age remains useful without becoming a pod-picking calendar.
   const moringa = PERENNIAL_HARVEST['moringa-oleifera'];
   assert.ok(moringa);
   assert.deepEqual(moringa.yearsToFirstCrop?.value, [0.5, 1]);
   assert.equal(moringa.product, 'leaves and pods');
-  assert.deepEqual(moringa.windows.map((w) => w.months), [[3, 4]]);
-  assert.match(moringa.windows[0].region, /pods/);
-  // Mulberry: no SA primary source gave fruiting months, so no record at all.
-  assert.equal(PERENNIAL_HARVEST['morus-nigra'], undefined);
+  assert.deepEqual(moringa.windows, []);
+  const podPhenology = moringa.supplementaryReferences?.find(reference => reference.source.quote.includes('Fruits production'));
+  assert.ok(podPhenology);
+  assert.match(podPhenology.source.quote, /March and April/);
+  assert.match(podPhenology.note, /young, tender, green/);
+  // Mulberry now has edible-product and care evidence. That must not manufacture
+  // a harvest calendar or per-plant yield when those fields remain unsourced.
+  assert.ok(PERENNIAL_HARVEST['morus-nigra']?.productionGuidance);
+  assert.deepEqual(PERENNIAL_HARVEST['morus-nigra'].windows, []);
+  assert.equal(PERENNIAL_HARVEST['morus-nigra'].yieldKgPerTree, null);
   assert.equal(speciesIdForPlaced({ defId: 'tree_moringa' }), 'moringa-oleifera');
   // Blueberry's chill figure is in hours, which the chill-units field must not carry.
   assert.equal(PERENNIAL_HARVEST['vaccinium-corymbosum'].chillUnits, null);
+});
+
+test('fruit development observations remain guidance without creating ripe-food months', () => {
+  // These primary accounts describe flowering, fruit appearance or development. A farmer
+  // must not see those months marked as food ready to pick, even on an established plant.
+  const phenologyQuotes = [
+    ['dovyalis-afra', /flowering and fruiting/],
+    ['pappea-capensis', /fruit is produced from December to July/],
+    ['syzygium-cordatum', /fruiting in November–March/],
+  ] as const;
+  for (const [id, quote] of phenologyQuotes) {
+    const harvest = PERENNIAL_HARVEST[id];
+    assert.ok(harvest);
+    assert.deepEqual(harvest.windows, [], `${id}: fruit-development dates became ripe picking dates`);
+    assert.deepEqual(sourcedSeasonMonths(harvest), []);
+    const reference = harvest.supplementaryReferences?.find(reference => quote.test(reference.source.quote));
+    assert.ok(reference, `${id}: the useful original observation was lost`);
+    assert.match(reference.note, /picking months remain unknown/);
+    const groups = placedTreeGroups([{ defId: 'tree_other', speciesId: id, status: 'existing' }]);
+    assert.equal(groups.length, 1, `${id}: mapped food product was lost`);
+    assert.deepEqual(planningTreeSeasons(groups, ['subtropical-coast']), [], `${id}: phenology leaked into a regional food reference`);
+    assert.ok(treePickingByMonth(groups, [1, 3, 7, 11, 12]).every(slot => slot.length === 0));
+  }
+  const medlar = PERENNIAL_HARVEST['vangueria-infausta'];
+  assert.deepEqual(medlar.windows.map(window => window.months), [[1, 2, 3, 4]], 'SANBI describes soft edible ripe fruit in this narrower interval');
+  assert.match(medlar.windows[0].source.url, /pza\.sanbi\.org\/vangueria-infausta/);
+  assert.match(medlar.supplementaryReferences?.[0].source.quote ?? '', /fruits from November to April/);
+  assert.match(medlar.supplementaryReferences?.[0].note ?? '', /does not date that ripening change/);
+  const groups = placedTreeGroups([{ defId: 'tree_other', speciesId: 'vangueria-infausta', status: 'existing' }]);
+  assert.deepEqual(planningTreeSeasons(groups, ['subtropical-coast'])[0].season.months, [1, 2, 3, 4], 'the wider undated ripening interval must not extend the farm reference');
+});
+
+
+test('projected food labels stay readable while small positive harvests remain visible', () => {
+  assert.equal(projectedKgLabel([66.27, 66.27]), '66.3 kg');
+  assert.equal(projectedKgLabel([0.083, 0.4]), '0.083–0.4 kg');
+});
+
+
+test('seedling flowering never becomes the first food crop age for clonal Guava stock', () => {
+  const first = PERENNIAL_HARVEST['psidium-guajava'].yearsToFirstCrop;
+  assert.ok(first);
+  assert.deepEqual(first.value, [1, 1], 'ICRAF gives clonal first-year bearing; seedling flowering within two years is not a fruit crop');
+  assert.match(first.source.quote, /clonally propagated trees.*begin to bear.*first year/i);
+  assert.doesNotMatch(first.source.quote, /seedlings.*flower/i);
+  assert.match(first.note ?? '', /clonally propagated stock only/i);
+  assert.match(first.note ?? '', /no seed-grown first fruit age/i);
+  assert.deepEqual(placedTreeGroups([{ defId: 'tree_guava', status: 'existing' }]), [], 'the sourced clonal age does not override the existing catalogue restriction');
+});
+
+test('spiny monkey orange review values retain their geography and period without becoming South African farm forecasts', () => {
+  const harvest = PERENNIAL_HARVEST['strychnos-spinosa'];
+  assert.deepEqual(harvest.yearsToFirstCrop?.value, [3, 5], 'retain the review statement with its actual citation geography');
+  assert.match(harvest.yearsToFirstCrop?.note ?? '', /Benin, West Africa/);
+  assert.match(harvest.yearsToFirstCrop?.note ?? '', /not a locally validated age/);
+  assert.deepEqual(harvest.yieldKgPerTree?.value, [40, 100], 'preserve the original per-plant weight without manufacturing an annual rate');
+  assert.match(harvest.yieldKgPerTree?.note ?? '', /without an annual period, mature age/);
+  assert.match(harvest.yieldKgPerTree?.note ?? '', /do not relabel it kg\/year/);
+  assert.deepEqual(harvest.windows, [], 'an interval whose harvest locality is unstated cannot claim a general South African season');
+  assert.ok(harvest.supplementaryReferences?.some(reference => /harvested between August and December/.test(reference.source.quote) && /does not identify a locality/.test(reference.note)));
+  assert.ok(harvest.supplementaryReferences?.some(reference => /study.*Benin/.test(reference.source.quote) && /West Africa/.test(reference.note)));
+  const groups = placedTreeGroups([{ defId: 'tree_other', speciesId: harvest.speciesId, status: 'existing' }]);
+  assert.equal(groups.length, 1);
+  assert.deepEqual(planningTreeSeasons(groups, ['subtropical-coast']), [], 'unverified review geography must not become a warm-coast calendar');
+  const projectionStart = 2027 * 12;
+  const projection = treeAgeProjection(groups[0], { months: [], bearing: false, production: [{ status: 'existing', plants: 1, planted: '2010-01', yields: [] }] }, projectionStart, projectionStart + 11);
+  assert.equal(projection.kg, null, 'even an established plant needs an entered annual yield schedule; source kg/plant is not kg/year');
+  assert.deepEqual(projection.knownKg, [0, 0], 'no source weight can silently fill the known annual subtotal');
 });

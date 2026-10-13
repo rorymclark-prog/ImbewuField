@@ -1,11 +1,16 @@
+import { blindReviewedAssetDescriptorBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { nativePairedResidualMediaBefore } from './native-paired-residual-media-history-checks.ts';
 import { validateAndRewindIntroSilentTextLayer } from './intro-silent-release-text-checks.ts';
 import { isSilentIntroLaterReplacedAsset, silentIntroMediaBefore } from './intro-silent-media-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { validateAndRewindIntroFullPaired, readCurrentIntroFullDecks } from './intro-full-ordinary-paired-checks.ts';
 import { soilWaterResidualAssetSizesBefore, soilWaterResidualValidateCurrentFrames } from './soil-water-residual-history-checks.ts';
+import { studyVegetablesTwoResidualAssetBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 const folder = 'docs/media/intro-full-ordinary-completion-2026-10-06/';
 const sha = (bytes: Uint8Array | string) => createHash('sha256').update(bytes).digest('hex');
 const proofBytes = readFileSync(folder + 'frames.json');
@@ -29,6 +34,7 @@ function fileDescriptor(path: string) {
   return descriptor;
 }
 export function verifyIntroFullFrameBytes(frame: any, bytes: Buffer) {
+  return withBlindReviewedCorrectionReadScope(() => {
   assert.equal(bytes.length, frame.new.bytes, frame.path + ': actual compressed byte count');
   assert.equal(sha(bytes), frame.new.sha256, frame.path + ': actual compressed SHA');
   assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
@@ -38,6 +44,7 @@ export function verifyIntroFullFrameBytes(frame: any, bytes: Buffer) {
   assert.equal(bytes.readUInt16LE(28) & 0x3fff, frame.new.height);
   assert.equal(frame.new.width, 1440);
   assert.ok(frame.new.height >= 5400, 'natural-height target/source panels are never cropped');
+  });
 }
 
 // 6 October 2026: the 36 later Intro cards replace older still descriptors.
@@ -46,6 +53,7 @@ export function verifyIntroFullFrameBytes(frame: any, bytes: Buffer) {
 // bounded without skipping same-size changes or source/status guards.
 let verifiedExpectedManifest: string | undefined;
 export function validateCurrentIntroFullMedia(currentManifest = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
   // As in the older Intro proof, one immutable full media pass per process is
   // sufficient for dated descriptors; every caller's manifest is still exact.
   if (verifiedExpectedManifest !== undefined) {
@@ -109,27 +117,38 @@ export function validateCurrentIntroFullMedia(currentManifest = readFileSync('li
       assert.equal(later.sha256, row.sha256, row.path + ': the complete newer 968/13-frame layers rewind to this frozen descriptor');
       continue;
     }
+    const vegetablesResidual = studyVegetablesTwoResidualAssetBefore('public' + row.path, readFileSync('public' + row.path));
+    if (vegetablesResidual) {
+      assert.equal(vegetablesResidual.bytes, row.bytes, row.path + ': the exact newer Vegetables two-card layer rewinds to this frozen descriptor');
+      assert.equal(vegetablesResidual.sha256, row.sha256, row.path + ': the exact newer Vegetables two-card layer rewinds to this frozen descriptor');
+      continue;
+    }
     const actual = fileDescriptor('public' + row.path);
     assert.equal(actual.bytes, row.bytes, row.path + ': all unlisted assets exact');
     assert.equal(actual.sha256, row.sha256, row.path + ': all unlisted assets exact');
   }
   verifiedExpectedManifest = expected;
   return proof;
+  });
 }
 export function introFullAssetSizesBeforeOrdinary(currentManifest?: string) {
+  return withBlindReviewedCorrectionReadScope(() => {
   validateCurrentIntroFullMedia();
   const actual = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   if (currentManifest === undefined || currentManifest === actual) return before;
   assert.equal(currentManifest, before, 'only the exact guarded Intro full manifest baseline may be exposed');
   return before;
+  });
 }
 export function introFullMediaBeforeEarlierProof(path: string): {bytes:number;sha256:string;encodedHeaderHex?:string} | undefined {
+  return withBlindReviewedCorrectionReadScope(() => {
   const url = path.startsWith('public/') ? path.slice(6) : path;
   // Unlisted files receive no historical descriptor. Their caller checks actual
   // bytes; validating the whole inventory per unrelated path made Soil/Water
   // preservation quadratic. Every listed rewind still validates the full layer.
-  if (!expectedIntroFullPaths.includes(url)) return nativePairedResidualMediaBefore(path) ?? undefined;
+  if (!expectedIntroFullPaths.includes(url)) return nativePairedResidualMediaBefore(path) ?? blindReviewedAssetDescriptorBefore(path);
   validateCurrentIntroFullMedia();
   const frame = introFullMediaProof.frames.find((row: any) => row.path === url);
   return frame ? frame.old as { sha256: string; bytes: number; encodedHeaderHex: string } : undefined;
+  });
 }

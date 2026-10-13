@@ -1,6 +1,12 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { mapSourceBefore, mapNativeBefore } from './reading-map-comparisons-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
@@ -43,6 +49,7 @@ for (const [file, proof] of Object.entries(comparisonsFiles) as [string, any][])
 }
 let signature = '';
 export function ensureComparisonsCurrent() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const current = Object.keys(comparisonsFiles).map(file => {
     const s = statSync(file, { bigint: true });
     return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':');
@@ -52,8 +59,11 @@ export function ensureComparisonsCurrent() {
     assert.equal(mapSourceBefore(file, readFileSync(file, 'utf8')), proof.after, file + ': entire current file');
   }
   signature = current;
+  });
 }
 export function comparisonsSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
   const proof = comparisonsFiles[file];
   if (!proof) return mapSourceBefore(file, bytes);
   ensureComparisonsCurrent();
@@ -61,15 +71,22 @@ export function comparisonsSourceBefore(file: string, bytes: string | Uint8Array
   if (text === proof.before) return bytes;
   assert.equal(Buffer.from(mapSourceBefore(file, bytes)).toString(), proof.after, file + ': supplied complete accepted bytes');
   return proof.before;
+  });
 }
 export function comparisonsNativeBefore<T>(language: 'zu' | 've' | 'ts', value: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  value = blindReviewedNativeBefore(value);
   ensureComparisonsCurrent();
   if (JSON.stringify(value) === JSON.stringify(comparisonsNative.before[language])) return structuredClone(value);
   value = mapNativeBefore(language, value);
   assert.deepEqual(value, comparisonsNative.after[language], 'complete Reading comparisons registry');
   return structuredClone(comparisonsNative.before[language]);
+  });
 }
 export function comparisonsPresentationBefore<T extends { status: string; content: any }>(value: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  value = blindReviewedPresentationBefore(value, lessonId, language);
   const rows = comparisonsPlan.candidates.filter((r: any) => r.language === language && r.lessonId === lessonId);
   if (!rows.length || value.status !== 'draft') return value;
   ensureComparisonsCurrent();
@@ -100,4 +117,5 @@ export function comparisonsPresentationBefore<T extends { status: string; conten
     else restored.content.quiz[Number(parts[1])].rationale = row.before;
   }
   return restored;
+  });
 }

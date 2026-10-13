@@ -5,13 +5,14 @@
 // megabytes to a PDF a farmer shares over WhatsApp. Each is drawn onto a small canvas and embedded as a
 // PNG data URL at print size. jsPDF then reuses it by alias wherever that crop appears again.
 //
-// Keys are 'crop:<cropKey>', 'tree:<speciesId>' and 'animal:<enterpriseId>', the same keys the PDF
+// Keys are crop, tree, chosen animal enterprise and unassigned housing, the same keys the PDF
 // asks for. A key with no art, or art that fails to load, is simply left out, and the PDF prints
 // that item's short code instead. A missing picture never stops the export.
 
 import { getCropArt } from '@/lib/crop-art';
 import { speciesPickerArtworkUrl, speciesFruitArtworkUrl } from '@/lib/species-art';
-import { animalArtUrl } from '@/lib/animal-art';
+import { enterpriseProductArtUrl, housingArtUrl } from '@/lib/animal-art';
+import { PRESERVED_FOOD_ART } from '@/lib/preserved-food-art';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export type PdfIconMap = Record<string, string>;
@@ -24,7 +25,9 @@ export function pdfIconUrl(iconKey: string): string | null {
   const id = iconKey.slice(split + 1);
   if (kind === 'crop') return getCropArt(id) ?? null;
   if (kind === 'tree') return speciesFruitArtworkUrl(id) ?? speciesPickerArtworkUrl(id);
-  if (kind === 'animal') return animalArtUrl(id);
+  if (kind === 'animal') return enterpriseProductArtUrl(id);
+  if (kind === 'preserved') return PRESERVED_FOOD_ART[id] ?? null;
+  if (kind === 'housing') return housingArtUrl(id);
   if (kind === 'element') return ELEMENTS_BY_ID[id]?.art ?? null;
   return null;
 }

@@ -155,6 +155,18 @@
     "myaquaponics.co.za and other aquaculture blogs/hobbyist sites turned up in search results but were excluded as not being SA government, research-body or peer-reviewed sources, per the hard sourcing rules.",
     "A SciELO SA market-survey paper (scielo.org.za/pdf/sajae/v53n5/01.pdf, Limpopo fish traders) gives a preferred trading weight of around 300g, but this reflects trader purchasing preference rather than a production guide's target harvest weight for a specific grow-out period, so it was not used for outputPerAnimal.",
     "productiveLifeYears, feedKgPerAnimalPerDay and waterLPerAnimalPerDay are null; see each field's notes for what was searched and why no figure could be used without an unsupported conversion or a stitched/wrong-stage number.",
-    "Editor review 2026-09-28 (round 2): product filed as 'fish' rather than 'meat'. spaceM2PerAnimal withdrawn (a Nile tilapia stocking density from FAO, divided into m² per fish). Two legal points withdrawn: the Elsenburg controlled-disease list names Bacterial Kidney Disease, IHN, IPN, VHS and Koi Herpes Virus, which are salmonid and carp diseases, not tilapia's, and its quote did not carry the reporting duty the point stated; and 'the Animals Protection Act does not cover fish' was a reading of the Act's general definition, which the source does not state. The Category 3 point was reworded to what its quote says."
+    "Editor review 2026-09-28 (round 2): product filed as 'fish' rather than 'meat'. spaceM2PerAnimal withdrawn (a Nile tilapia stocking density from FAO, divided into m² per fish). Two legal points withdrawn: the Elsenburg controlled-disease list names Bacterial Kidney Disease, IHN, IPN, VHS and Koi Herpes Virus, which are salmonid and carp diseases, not tilapia's, and its quote did not carry the reporting duty the point stated; and 'the Animals Protection Act does not cover fish' was a reading of the Act's general definition, which the source does not state. The Category 3 point was reworded to what its quote says.",
+    "11 October 2026 ARC temperature suitability verified; actual water temperature/heating, stock and harvest dates still required, not a national calendar or per-pond yield."
+  ],
+  "productionReferences": [
+    {
+      "point": "ARC makes tilapia suitability depend on water temperature: summer grow-out can be suitable anywhere in South Africa when water exceeds 20°C; growth is poor below 18°C and winter water below 13°C can kill farmed tilapia. The Highveld reference is a summer crop; tunnels can widen the range. Measure pond water and confirm stocking species and dates. Air climate or a mapped pond does not prove harvest months, fish numbers or food kg.",
+      "evidence": {
+        "quote": "they will not grow well at temperatures below 18˚C",
+        "url": "https://www.arc.agric.za/arc-api/AquacultureProductionApp/Pages/FAQs.aspx",
+        "doc": "ARC Aquaculture Production App: General FAQ, Can I grow tilapia on the Highveld?",
+        "page": null
+      }
+    }
   ]
 }

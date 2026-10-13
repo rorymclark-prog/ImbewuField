@@ -138,7 +138,9 @@
     "A specific, fetchable SA government statement naming Limpopo and Mpumalanga (in addition to KwaZulu-Natal) as areas with active FMD control/protection zones was not found: the accessible SAnews articles located for Limpopo (2024-2025) describe the LIFTING of that province's Disease Management Area restrictions rather than an active zone, and no equivalent Mpumalanga-specific article was found accessible; the legal point above is therefore evidenced only for the KZN DMA, with the general controlled-disease/permit mechanism understood to apply nationally wherever a zone is declared.",
     "Editor review 2026-09-28: legal[0] cited only the Act's general definition of 'controlled animal disease', which does not name FMD; re-cited to the SAnews statement that names FMD as a controlled disease under the Act.",
     "Editor review 2026-09-28: productionMonths [1,2,7,8,9] were derived (kidding season + an assumed 150-day weaning), not stated by the source; moved to unverifiedMonths and withdrawn. seasonalPattern quote extended to cover the kidding-rate figures its summary gives.",
-    "Round 2 2026-09-28: Re-searched for a source stating specific months in which indigenous/communal goat kids are weaned or sold. The strongest candidate, Rumosa Gwaze et al. (2010, Trop. Anim. Health Prod.), reportedly states goats are sold mainly in December and kidding peaks in August for a communal Eastern Cape system, but the paper is confirmed inaccessible: Springer (link.springer.com) returns only a JS 'Client Challenge' bot-block page, ResearchGate returns HTTP 403, and Unpaywall (api.unpaywall.org, DOI 10.1007/s11250-010-9555-9) confirms no open-access copy exists anywhere - so it cannot be quoted from a fetched page and is not used. Also fetched the UFH thesis 'Characterisation of goat production systems in selected coastal areas of the Eastern Cape' (libdspace.ufh.ac.za), which states goat sales peak in 'winter and late summer' but never defines those season names in specific calendar months anywhere in its own text, so no months figure could be built from it without guessing. Deliberately did NOT repeat the withdrawn kidding-season+assumed-150-day-weaning derivation from Webb & Mamabolo (2004) that is preserved in unverifiedMonths above. No source giving weaning/sale months (stated directly, or as breeding months + a stated weaning age from the SAME source) was found accessible. productionMonths remains empty."
+    "Round 2 2026-09-28: Re-searched for a source stating specific months in which indigenous/communal goat kids are weaned or sold. The strongest candidate, Rumosa Gwaze et al. (2010, Trop. Anim. Health Prod.), reportedly states goats are sold mainly in December and kidding peaks in August for a communal Eastern Cape system, but the paper is confirmed inaccessible: Springer (link.springer.com) returns only a JS 'Client Challenge' bot-block page, ResearchGate returns HTTP 403, and Unpaywall (api.unpaywall.org, DOI 10.1007/s11250-010-9555-9) confirms no open-access copy exists anywhere - so it cannot be quoted from a fetched page and is not used. Also fetched the UFH thesis 'Characterisation of goat production systems in selected coastal areas of the Eastern Cape' (libdspace.ufh.ac.za), which states goat sales peak in 'winter and late summer' but never defines those season names in specific calendar months anywhere in its own text, so no months figure could be built from it without guessing. Deliberately did NOT repeat the withdrawn kidding-season+assumed-150-day-weaning derivation from Webb & Mamabolo (2004) that is preserved in unverifiedMonths above. No source giving weaning/sale months (stated directly, or as breeding months + a stated weaning age from the SAME source) was found accessible. productionMonths remains empty.",
+    "11 October 2026 government manual now accessible. Breed/recording and uncontrolled-mating guidance retained; birth dates are not food harvest, buck replacement not doe lifespan.",
+    "11 October 2026 KZN winter-feed risk verified, separate from Mpumalanga reproduction study and calendar."
   ],
   "unverifiedMonths": [
     {
@@ -157,6 +159,26 @@
         "page": null
       },
       "notes": "Derived, arithmetic shown: kidding is concentrated in the source's own autumn (Feb-Apr) and spring (Aug-Sep) windows, with almost no summer kidding. Weaning is stated to be assumed at 150 days (~5 months) after birth, so kids taken off the doe (the 'product') follow roughly 5 months after kidding: Feb+5=Jul, Mar+5=Aug, Apr+5=Sep (from autumn kidding), and Aug+5=Jan, Sep+5=Feb (from spring kidding). Combined weaning/product months = Jan, Feb, Jul, Aug, Sep. This is specific to one Mpumalanga communal system studied in 1997 (297 goats, 40 farmers) - a different KZN communal report (see welfare) corroborates the general spring/autumn pattern without giving its own months."
+    }
+  ],
+  "productionReferences": [
+    {
+      "point": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+      "evidence": {
+        "quote": "Mating occurs throughout the year. Kids are born anytime.",
+        "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+        "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+        "page": 7
+      }
+    },
+    {
+      "point": "In KZN Highland Sourveld smallholder systems, winter and early-spring feed shortage can restrict goats. Autumn-kidding does feed kids through winter; spring-kidding does face late-pregnancy feed shortage, especially with late rains. Plan local winter feed and monitor weights with extension support; this is regional care context, not kg or a universal kidding calendar.",
+      "evidence": {
+        "quote": "Winter nutrition is thus a definite constraint to goat production in the sourveld areas.",
+        "url": "https://www.kzndard.gov.za/goat-production-in-kwazulu-natal",
+        "doc": "KZN DARD: Goat Production in KwaZulu-Natal, Highland Sourveld research and winter nutrition",
+        "page": null
+      }
     }
   ]
 }

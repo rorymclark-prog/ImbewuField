@@ -1,0 +1,996 @@
+[
+ {
+  "id": "I001",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I002",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I004",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I005",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I007",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I008",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I009",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I010",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I011",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I012",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I013",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I014",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I015",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I016",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I017",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I018",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I019",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I020",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I021",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I022",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I023",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I024",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I025",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I026",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I027",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I028",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I029",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I030",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I031",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I032",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I033",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I034",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I035",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I036",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I037",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I038",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I039",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I040",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I041",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I042",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I043",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I044",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I045",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I046",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I047",
+  "verdict": "ok",
+  "problem": "Crèche kept in English spelling.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I048",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I049",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I050",
+  "verdict": "repair",
+  "problem": "Garbled: 'Letsatsi le ho invoyese' does not parse; the English is the date that appears on the original paper invoice.",
+  "repaired": "Letsatsi le ngotsweng invoyeseng ya mantlha ya pampiri",
+  "severity": "wording"
+ },
+ {
+  "id": "I051",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I052",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I053",
+  "verdict": "ok",
+  "problem": "'Thursday' left in English inside a Sesotho placeholder (Labone); acceptable but mixed-language.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I054",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I055",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I056",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I057",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I059",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I060",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I061",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I062",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I063",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I065",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I066",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I067",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I068",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I069",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I070",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I071",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I072",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I073",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I075",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I076",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I077",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I078",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I079",
+  "verdict": "ok",
+  "problem": "'Market stall' rendered as 'sebaka sa mmaraka' (market place/spot); not fully a stall.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I080",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I082",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I083",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I084",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I085",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I086",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I087",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I088",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I089",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I090",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I092",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I094",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I095",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I096",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I097",
+  "verdict": "ok",
+  "problem": "'ka' alone is ambiguous (by/with/on); fine if followed by a date field.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "I098",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I099",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I100",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I101",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I102",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I103",
+  "verdict": "repair",
+  "problem": "'se seng se rekisitswe' reads as 'another/some produce sold'; English is produce ALREADY sold (choice for a sale already recorded).",
+  "repaired": "Sehlahiswa seo o seng o se rekisitse",
+  "severity": "meaning"
+ },
+ {
+  "id": "I106",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I107",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I108",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I109",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I110",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I111",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I112",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I113",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I114",
+  "verdict": "repair",
+  "problem": "Tab/heading 'Tse bolokilweng' is 15 characters, over the ~10-character tab limit at 390px.",
+  "repaired": "Bolokilwe",
+  "severity": "wording"
+ },
+ {
+  "id": "I115",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I116",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I117",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I118",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I119",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I120",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I122",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I123",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I124",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I125",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I126",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I127",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I128",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I129",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I130",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I131",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I132",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I134",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I135",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I137",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I138",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I139",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I140",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I141",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I142",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I143",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I144",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I145",
+  "verdict": "repair",
+  "problem": "'E sheba' is not a valid imperative with object concord (should end in -e); reads as 'it looks'. Intended: review it, then save.",
+  "repaired": "Invoyese ya hao e emetseng e khutlisitswe. E hlahlobe mme o e boloke ho qetella ho hokahanya.",
+  "severity": "wording"
+ },
+ {
+  "id": "I146",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I150",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I152",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I153",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I154",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I155",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I156",
+  "verdict": "repair",
+  "problem": "Refers to the Saved tab as 'Tse bolokilweng'; must match the shortened I114 tab label.",
+  "repaired": "Kgetha thekiso e nang le bongata le yuniti tse ngotsweng. Invoyese e seng e le teng e lokela ho buloa hape ho tswa ho Bolokilwe.",
+  "severity": "wording"
+ },
+ {
+  "id": "I157",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I158",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "I159",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ }
+]

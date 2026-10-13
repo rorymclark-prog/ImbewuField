@@ -16,7 +16,9 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
+Latest: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
+
+Previous: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).
 
 Previous: [Regional production picture calendars and eight climate examples — 4 October 2026](2026-10-04/regional-production-calendar-codex.md).
 
@@ -58,10 +60,15 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Study offline five-wording close-out — 13 October 2026](2026-10-13/study-offline-five-holds-codex.md).
+
 - [App-wide audit, second round: 63 open findings — 10 October 2026](2026-10-10/app-wide-audit-claude.md).
+
+- [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 - [App-wide audit close-out: all 92 findings dispositioned — 10 October 2026](2026-10-10/app-wide-closeout-claude.md).
 
+- [Blind-reviewed Study corrections and genuine audit coverage — 12 October 2026](2026-10-12/study-blind-reviewed-corrections-codex.md).
 - [Reading titles and least-intensive action — 8 October 2026](2026-10-08/study-reading-title-lightest-codex.md).
 
 - [Market residual ordinary prose and precise cost terms — 6 October 2026](2026-10-06/study-market-ordinary-residual-codex.md).
@@ -74,6 +81,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-10 | [Production plan re-audit — Codex](2026-10-10/production-reaudit-codex.md) |
 | 2026-10-07 | [Reading and Vegetables ordinary-clause follow-up — Codex](2026-10-07/study-core-followup-codex.md) |
 | 2026-10-07 | [Tshivenda Reading frost placement — Codex](2026-10-07/study-reading-frost-placement-codex.md) |
 | 2026-10-07 | [Reading comparisons and remaining prose — Codex](2026-10-07/study-reading-comparisons-codex.md) |

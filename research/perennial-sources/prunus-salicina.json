@@ -15,6 +15,32 @@
         "page": null
       },
       "notes": "African Delight® (a late cultivar, 'ripens just before Angeleno®') harvests in Week 8-10 / 4th week February. Corroborating cultivar-specific harvest weeks from the same publisher (Culdevco): Flavour Star 'Week 4 (4th week January)'; Ruby Crisp 'Week 4-5 (4th week January)'. These are mid/late-season cultivars grown mainly in Boland, Klein Karoo, Robertson, Paarl, Simondium, Bonnievale, Tulbagh and the Warm Bokkeveld per the Hortgro article. Months given here [1,2] cover only the directly-quoted cultivars; the full commercial SA plum season is known to start earlier (Nov-Dec, early cultivars) but no directly-quoted primary source for those early months was captured in this session (see gaps). Editor review: months cut to [2]. The quote on this URL gives only African Delight's Week 8–10 (February); the January weeks for other cultivars come from other pages and are not in this quote."
+    },
+    {
+      "region": "Bien Donne, Simondium, Western Cape — Ruby Crisp first pick",
+      "months": [
+        1
+      ],
+      "evidence": {
+        "quote": "Week 4-5 (4th week January)",
+        "url": "https://culdevco.co.za/plums-cultivar-info-ruby-crisp/",
+        "doc": "Culdevco / ARC, Ruby Crisp cultivar information sheet",
+        "page": null
+      },
+      "notes": "Source labels this harvest date as first pick; full picking duration is not given. The source explicitly limits data to Bien Donne and says it may not represent other areas. This does not create a January–February window for a single unspecified plum."
+    },
+    {
+      "region": "Bien Donne, Simondium, Western Cape — Flavour Star first pick",
+      "months": [
+        1
+      ],
+      "evidence": {
+        "quote": "Week 4 (4th week January)",
+        "url": "https://culdevco.co.za/plums-cultivar-info-flavour-star/",
+        "doc": "Culdevco / ARC, Flavour Star cultivar information sheet",
+        "page": null
+      },
+      "notes": "Source labels this harvest date as first pick; full picking duration is not given. The source explicitly limits data to Bien Donne and says it may not represent other areas. This does not create a January–February window for a single unspecified plum."
     }
   ],
   "yearsToFirstCrop": {
@@ -36,30 +62,19 @@
     "notes": "Not explicitly given as an age. The same source gives a yield progression by orchard age instead (see yieldKgPerTreeMature notes): 3-year-old orchards 12-20 t/ha, 4-year-old orchards 20-35 t/ha, 'mature orchards' 35-50 t/ha — 'mature' age itself is not stated numerically."
   },
   "yieldKgPerTreeMature": {
-    "value": [
-      15,
-      20
-    ],
+    "value": null,
     "evidence": {
-      "quote": "A yield of between 30 and 40 tons per hectare is attainable in adult orchards. [...] Tree spacing (m) 4.0 x 1.25 [...] Trees/ha 2000",
+      "quote": "Yields of 30 tons per hectare are achievable.",
       "url": "https://www.hortgro.co.za/wp-content/uploads/docs/2020/12/Culdevco-Plum-article.-2020.pdf",
-      "doc": "Hortgro / Culdevco, 'TOP CULDEVCO LICENSED PLUM CULTIVARS' (2020) — Ruby Crisp section and Table 1",
+      "doc": "Hortgro / Culdevco, Top Culdevco Licensed Plum Cultivars (2020), Ruby Crisp section (PDF p.2); Table 1 (PDF p.5)",
       "page": 2
     },
-    "notes": "CONVERTED, arithmetic shown: 'A yield of between 30 and 40 tons per hectare is attainable in adult orchards' (Ruby Crisp) combined with the spacing given in the same document's Table 1 for Ruby Crisp trial blocks ('Tree spacing (m) 4.0 x 1.25', 'Trees/ha 2000'): 4.0 x 1.25m = 5 m²/tree → 10000/5 = 2000 trees/ha (matches the table directly). 30000kg/2000 = 15 kg/tree; 40000kg/2000 = 20 kg/tree → [15,20] kg/tree. Note the source separately gives African Delight® yields as 'Mature orchards between 35 and 50 tons per hectare' but does not give African Delight's own spacing, so that figure was not converted to avoid assuming a spacing not stated for that cultivar."
+    "notes": "Visual column check corrected the previous [15,20] kg/tree claim: the adult-orchard 30–40 t/ha statement belongs to Flavour Star. Ruby Crisp states achievable 30 t/ha, and its separate thinning trial lists 2,000 trees/ha; 30,000 / 2,000 = 15 kg/tree is an unaged derived reference, not evidence of a mature-tree annual yield. No generic mature kg/tree is assigned. African Delight age yields are kept separately and are not divided by Ruby Crisp density."
   },
   "chillUnits": {
-    "value": [
-      200,
-      600
-    ],
-    "evidence": {
-      "quote": "African Delight®: Chilling requirement: Medium to low (400 – 200 Infruitec Chilling Units). [...] Ruby Crisp: Chilling Requirement: Medium (400-600 Infruitec Chilling Units).",
-      "url": "https://culdevco.co.za/plums-cultivar-info-african-delight/",
-      "doc": "Culdevco — African Delight® and Ruby Crisp plum cultivar information sheets",
-      "page": null
-    },
-    "notes": "Range spans the lowest (African Delight, 200 CU) to highest (Flavour Star, 'Medium (500-600 Infruitec Chilling Units)' per its own Culdevco sheet) Infruitec Chilling Unit figures found among the five ARC-bred cultivars documented in the Hortgro/Culdevco article. Not a single-cultivar figure but a range across cultivars grown in South Africa."
+    "value": null,
+    "evidence": null,
+    "notes": "Culdevco sheets give different named requirements: African Delight 200–400, Ruby Crisp 400–600, Flavour Star 500–600 Infruitec Chilling Units. The former [200,600] species range combined cultivars and its citation pointed only to African Delight. Keep the named references separately; monthly mean temperature does not establish accumulated cultivar chilling."
   },
   "pollination": {
     "value": "needs-cross-pollinator",
@@ -71,13 +86,79 @@
     },
     "notes": "Consistent across all five ARC-bred Japanese plum cultivars documented in this source: Flavour Star needs 'Laetitia and Larry Ann' plus 'Songold' as pollinators ('It is recommended to plant both pollinators'); Ruby Crisp needs 'Harry Pickstone and Fortune ... as cross pollinators ... at a ratio of 10%'; Ruby Sun needs 'Harry Pickstone ... as a cross pollinator ... at a ratio of 10% to 15%'; Ruby Star needs 'Songold, Southern Belle, or both ... as cross pollinators ... in a 10% ratio'. This strongly and consistently supports 'needs-cross-pollinator' for commercial Japanese plum cultivars grown in South Africa (as opposed to a generic species-level claim; some plum cultivars elsewhere are self-fertile, but the SA commercial cultivars documented here are not)."
   },
+  "supplementaryReferences": [
+    {
+      "title": "African Delight yield by orchard age — native hectare unit",
+      "quote": "3 Year old orchards between 12 and 20 tons per hectare",
+      "url": "https://www.hortgro.co.za/wp-content/uploads/docs/2020/12/Culdevco-Plum-article.-2020.pdf",
+      "doc": "Hortgro / Culdevco (2020), African Delight section",
+      "page": 4,
+      "note": "African Delight: age 3, 12,000–20,000 kg/ha; age 4, 20,000–35,000 kg/ha; mature orchards, 35,000–50,000 kg/ha. Full-bearing age and matched planting density are not stated; do not convert using Ruby Crisp spacing or interpolate a per-tree curve."
+    },
+    {
+      "title": "Ruby Crisp achievable yield — age unspecified",
+      "quote": "Yields of 30 tons per hectare are achievable.",
+      "url": "https://www.hortgro.co.za/wp-content/uploads/docs/2020/12/Culdevco-Plum-article.-2020.pdf",
+      "doc": "Hortgro / Culdevco (2020), Ruby Crisp section and Table 1",
+      "page": 2,
+      "note": "Ruby Crisp achievable output is 30,000 kg/ha. Table 1 on PDF p.5 lists Ruby Crisp trial spacing 4 x 1.25 m and 2,000 trees/ha; the derived equivalent is 15 kg/tree, but the achievable claim is not explicitly the trial measurement or a mature-age benchmark. Keep native kg/ha and the qualification."
+    },
+    {
+      "title": "African Delight cultivar chilling reference",
+      "quote": "400 – 200 Infruitec Chilling Units",
+      "url": "https://culdevco.co.za/plums-cultivar-info-african-delight/",
+      "doc": "Culdevco / ARC, African Delight cultivar information sheet",
+      "page": null,
+      "note": "Named requirement only: 200–400 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying."
+    },
+    {
+      "title": "Ruby Crisp cultivar chilling reference",
+      "quote": "400-600 Infruitec Chilling Units",
+      "url": "https://culdevco.co.za/plums-cultivar-info-ruby-crisp/",
+      "doc": "Culdevco / ARC, Ruby Crisp cultivar information sheet",
+      "page": null,
+      "note": "Named requirement only: 400–600 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying."
+    },
+    {
+      "title": "Flavour Star cultivar chilling reference",
+      "quote": "500-600 Infruitec Chilling Units",
+      "url": "https://culdevco.co.za/plums-cultivar-info-flavour-star/",
+      "doc": "Culdevco / ARC, Flavour Star cultivar information sheet",
+      "page": null,
+      "note": "Named requirement only: 500–600 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying."
+    },
+    {
+      "title": "African Delight named production — age unspecified",
+      "quote": "25kg/tree at 4 x 1.5 metre",
+      "url": "https://culdevco.co.za/plums-cultivar-info-african-delight/",
+      "doc": "Culdevco / ARC, African Delight cultivar information sheet",
+      "page": null,
+      "note": "Direct named production reference: 25 kg/tree at 4 × 1.5 m, Bien Donne, Simondium, Western Cape. Tree age and reporting period are not stated, so it is retained as an unaged cultivar reference, not generic annual mature output."
+    }
+  ],
   "harvestProduct": "fruit",
   "gaps": [
-    "Only mid/late-season cultivar harvest weeks (Jan-Feb) were directly quoted; early-season SA plum cultivars (e.g. Sapphire, Songold, Laetitia) reportedly harvest earlier (Nov-Dec) per unquoted search summaries, but no primary source with a verbatim quote for those months was captured in this session, so the full-season range is likely wider than [1,2] — recorded as a gap rather than guessed.",
     "'Years to full bearing' (as a specific age, distinct from an orchard-age yield table) not found.",
-    "Yield-per-tree required combining a yield range and a spacing figure that both appear in the same source but for the same cultivar (Ruby Crisp) rather than as a single explicit per-tree statement — treat [15,20] kg/tree as a derived approximation.",
     "A ScienceDirect peer-reviewed paper ('Chilling and heat requirements of Japanese plum cultivars for flowering') was found via search and looked highly relevant (reportedly covering cultivars from 'Pioneer' at 334.3 CU to 'Songold' at 987.5 CU) but could not be fetched (403 Forbidden) in this session, so its figures were not used as they could not be verified against a verbatim quote.",
     "DALRRD/nda.gov.za and ARC-Infruitec-Nietvoorbij's own (as opposed to Culdevco/Hortgro-hosted) plum production guidelines were not directly reachable.",
-    "Editor review 2026-09-28: harvest window cut from Jan–Feb to Feb, which is all the quoted African Delight sheet supports."
+    "11 October 2026 visual correction: Flavour Star adult yield had been misattributed to Ruby Crisp. Generic mature [15,20] kg/tree withdrawn; unaged Ruby Crisp 15 kg/tree equivalent retained only as a qualified supplemental reference.",
+    "11 October 2026: January first-pick references for Ruby Crisp and Flavour Star verified separately. First pick is not full-season duration. Named chill requirements remain separate; generic combined species range withdrawn."
+  ],
+  "sourceChecks": [
+    {
+      "url": "https://culdevco.co.za/plums-cultivar-info-african-delight/",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary cultivar sheet verified live; first-pick, production unit and named chilling requirement retained separately."
+    },
+    {
+      "url": "https://culdevco.co.za/plums-cultivar-info-ruby-crisp/",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary cultivar sheet verified live; first-pick, production unit and named chilling requirement retained separately."
+    },
+    {
+      "url": "https://culdevco.co.za/plums-cultivar-info-flavour-star/",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary cultivar sheet verified live; first-pick, production unit and named chilling requirement retained separately."
+    }
   ]
 }

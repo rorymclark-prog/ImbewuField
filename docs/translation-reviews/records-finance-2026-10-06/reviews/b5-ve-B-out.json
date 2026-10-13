@@ -1,0 +1,100 @@
+[
+ {
+  "id": "R039",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R049",
+  "verdict": "ok",
+  "problem": "Download loanword (not Export); differs from Delete 'Bvisani'. Speaker may prefer 'eksipoti'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R062",
+  "verdict": "ok",
+  "problem": "Sync sense approximate ('joined/connected with your phone'); acceptable, past tense kept, 'lingana' gone.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R099",
+  "verdict": "ok",
+  "problem": "Same download verb as R049; 'this month' preserved.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R126",
+  "verdict": "hold",
+  "problem": "'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R127",
+  "verdict": "hold",
+  "problem": "'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R168",
+  "verdict": "hold",
+  "problem": "'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule. Label text for the amount input.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R184",
+  "verdict": "hold",
+  "problem": "'mbalo ya masheleni' literally 'number/count of money'; mbalo primarily means number/count, so the rand-total sense (distinct from price and from quantity 'tshivhalo') cannot be confirmed. Money word unconfirmed -> hold per strict rule.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R191",
+  "verdict": "hold",
+  "problem": "'mubolekisi' (lender) looks like an isiZulu form (umbolekisi / bolekisa) and is not in the locale; cannot confirm it is Tshivenda or that it means lender. 'u itela' also reads 'to do for', not clearly 'for a lender'.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R202",
+  "verdict": "hold",
+  "problem": "Same unconfirmed 'mubolekisi' (likely Nguni word) as R191; Export/Download for records for a lender cannot be safely confirmed.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R275",
+  "verdict": "ok",
+  "problem": "'tshisaka tsha zwiḽiwa' relies on accepted R079/R352; 'zwimela' = plants. I could not independently confirm 'tshisaka' = forest and not a clan/kind word; low confidence.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R284",
+  "verdict": "ok",
+  "problem": "'Phone money' conveys mobile money payment method; slightly longer than a short tag but acceptable. Low-medium confidence.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R312",
+  "verdict": "hold",
+  "problem": "Money-out word 'mbadelo' (payment) is ambiguous between payments received and payments made, and does not clearly mean spending/costs; class concord 'o bviswa' with 'masheleni' is doubtful and 'o ni ṋewaho' (that you were given) is a clumsy rendering of 'received'. Income minus spending direction cannot be confirmed.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "I060",
+  "verdict": "ok",
+  "problem": "'Make a place for storing on your phone before you join this sale; its record already there has not been changed.' Meaning preserved, no delete verb, negation kept. 'Itani fhethu' (make room) is a calque; 'your phone' added for 'device'; speaker check advised.",
+  "repaired": "",
+  "severity": "wording"
+ }
+]

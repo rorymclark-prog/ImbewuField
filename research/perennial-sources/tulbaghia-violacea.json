@@ -1,0 +1,79 @@
+{
+  "speciesId": "tulbaghia-violacea",
+  "commonName": "Wild garlic",
+  "botanicalName": "Tulbaghia violacea",
+  "householdFoodStatus": "confirmed-food",
+  "harvestMonths": [
+    {
+      "region": "Eastern South African botanical account — edible flowers only",
+      "months": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "evidence": {
+        "quote": "summer (January to April)",
+        "url": "https://pza.sanbi.org/tulbaghia-violacea",
+        "doc": "SANBI PlantZAfrica, tulbaghia-violacea",
+        "page": null
+      },
+      "notes": "These are source flowering months for edible flowers, not a calendar for leaf availability or sowing. Local picking must be recorded separately."
+    }
+  ],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified numeric planting-to-first-food age in the checked sources. Record planting date, starting age and actual bearing."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No measured full-bearing age was established; no yield ramp is inferred."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No qualified food kg per plant with age, edible-product basis and management context. Missing output is unknown."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No cultivar-specific numeric chilling requirement verified."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No source-supported universal pollen classification established."
+  },
+  "harvestProduct": "leaves and edible flowers",
+  "supplementaryReferences": [
+    {
+      "title": "Edible part and local use",
+      "quote": "both the leaves and flowers can be used in salads and other dishes",
+      "url": "https://pza.sanbi.org/tulbaghia-violacea",
+      "doc": "SANBI PlantZAfrica, tulbaghia-violacea",
+      "page": null,
+      "note": "Leaves and flowers are documented culinary parts. Medicinal bulb use does not make every part a food."
+    }
+  ],
+  "productionGuidance": {
+    "products": "leaves and edible flowers",
+    "care": [
+      "It tolerates prolonged drought but grows better with regular water. SANBI records its eastern South African distribution."
+    ],
+    "purchase": [
+      "Ask for Tulbaghia violacea, rather than a plant identified only as wild garlic. Record local leaf and flower picking separately."
+    ]
+  },
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/tulbaghia-violacea",
+      "checkedAt": "2026-10-11",
+      "observations": "Read indexed primary SANBI page content. Direct PlantZAfrica requests in this audit returned HTTP 403; this is not a claim that every individual endpoint was live-tested."
+    }
+  ],
+  "gaps": [
+    "No numeric leaf yield, first-food age or complete leaf-picking calendar."
+  ]
+}

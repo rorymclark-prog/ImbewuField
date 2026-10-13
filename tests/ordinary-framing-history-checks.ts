@@ -1,6 +1,11 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedPairBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { followupAssetBefore, followupPairBeforeHistory, isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
 import { fairSharingAssetBefore, fairSharingPairBefore, fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore, veReadingFrostSourceBefore, frostFiles, frostAssets } from './ve-reading-frost-history-checks.ts';
@@ -65,26 +70,33 @@ export const ordinaryFramingExpected: Record<string, any> = expected;
 /** Verify all four complete live documents, including every source and unlisted target field. */
 let signature = "";
 export function ensureOrdinaryFramingText() {
+  return withBlindReviewedCorrectionReadScope(() => {
   const next = Object.keys(expected).map(file => { const s = statSync(file, { bigint: true }); return [file, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(":"); }).join("|");
   if (next === signature) return;
   for (const [file, value] of Object.entries(expected)) {
     assert.deepEqual(veReadingFrostPairBefore(file, JSON.parse(readFileSync(file, 'utf8'))), value, 'complete 13-field layer after the accepted latest VE frost projection and every unlisted source/target');
   }
   signature = next;
+  });
 }
 
 /** Return the complete frozen predecessor only after the caller supplies the complete current layer. */
 export function ordinaryFramingPairBefore<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
   if (!(file in expected)) return fairSharingPairBefore(file, actual);
   assert.deepEqual(actual, expected[file], 'caller supplies complete current layer, including unlisted source and target fields');
   return structuredClone(before[file]);
+  });
 }
 
 /** Rewind only exact proof-backed fields in a complete current document. */
 export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedPairBefore(file, actual);
   actual = followupPairBeforeHistory(file, actual);
   if (frostFiles[file] && isCurrentOrBatchPredecessor(file, actual)) actual = veReadingFrostPairBefore(file, actual);
   ensureOrdinaryFramingText();
@@ -98,16 +110,21 @@ export function ordinaryFramingPairBeforeHistory<T>(file: string, actual: T): T 
     setTargetCell(restored, row, structuredClone(row.before));
   }
   return restored;
+  });
 }
 
 /** Verify input bytes are the live complete file before returning its immutable predecessor bytes. */
 export function ordinaryFramingPairBytesBefore(file: string, bytes: Uint8Array): Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Preserve the original binary object for unlisted recordings.
+  bytes = blindReviewedSourceBefore(file, bytes) as Uint8Array;
   if (!(file in expected)) return file === 'docs/narration/intro-permaculture.ts.paired-draft.json'
     ? Buffer.from(fairSharingSourceBytesBefore(file, bytes)) : bytes;
   const text = Buffer.from(bytes).toString('utf8');
   ordinaryFramingPairBefore(file, JSON.parse(text));
   assert.equal(text, readFileSync(file, 'utf8'), 'caller bytes are the exact live paired file bytes');
   return readFileSync(folder + 'before/' + file.split('/').pop());
+  });
 }
 
 const assetProofBytes = readFileSync(folder + 'converted-assets.json');
@@ -118,6 +135,8 @@ assert.equal(new Set(ordinaryFramingAssets.map(row => row.url)).size, 10);
 
 const assetsByPath = new Map(ordinaryFramingAssets.map(row => ['public' + row.url, row]));
 export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedAssetBefore(path, bytes);
   const followup = followupAssetBefore(path, bytes);
   const url = path.startsWith('public/') ? path.slice('public'.length) : path;
   const newest = frostAssets[url]?.changed ? veReadingFrostAssetBefore(path, bytes) : null;
@@ -134,6 +153,7 @@ export function ordinaryFramingAssetBefore(path: string, bytes: Uint8Array) {
   assert.equal(newest?.bytes ?? followup?.bytes ?? bytes.length, row.bytes, `${path}: exact reviewed current bytes`);
   assert.equal(newest?.sha256 ?? followup?.sha256 ?? sha(bytes), row.sha256, `${path}: exact reviewed current SHA-256`);
   return { bytes: row.beforeBytes, sha256: row.beforeSHA256, width: row.beforeDimensions[0], height: row.beforeDimensions[1] };
+  });
 }
 
 const oldManifestBytes = readFileSync(folder + 'before/manifest.ts.txt');
@@ -149,8 +169,11 @@ const total = [...expectedManifest.matchAll(/^  '[^']+': (\d+),$/gm)].reduce((su
 expectedManifest = expectedManifest.replace(/\d+\.\d+ MB/, (total / 1024 / 1024).toFixed(1) + ' MB');
 
 export function ordinaryFramingManifestBefore(actual: string): string {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', actual)).toString();
   if (frostFiles['lib/course-asset-sizes.ts'] && actual === readFileSync('lib/course-asset-sizes.ts', 'utf8')) actual = veReadingFrostSourceBefore('lib/course-asset-sizes.ts', actual) as string;
   actual = fairSharingSourceBytesBefore('lib/course-asset-sizes.ts', actual);
   assert.equal(actual, expectedManifest, 'complete current manifest after only the ten measured card changes');
   return oldManifest;
+  });
 }

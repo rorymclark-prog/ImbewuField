@@ -1,10 +1,15 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { SESOTHO_READING_LANDSCAPE_DRAFT as st } from '../lib/course-translation-drafts-st-reading-landscape.ts';
+import { ensureStudyUiDueUnlockCurrent, studyUiDueUnlockLocaleBefore, studyUiDueUnlockSourceBefore } from './study-ui-due-unlock-history-checks.ts';
 import { readingTitleLightestFileBytesBefore } from './reading-title-lightest-next-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/study-remaining-controls-next-2026-10-08/';
@@ -16,9 +21,11 @@ assert.equal(sha(packetBytes), '374b035a328352a818dd5be85c1fb69e19fd864ffa4d203e
 const packet = JSON.parse(packetBytes.toString());
 assert.equal(packet.baseHead, '81174107268ec951ac3b1deb8dd57a3b36268d43');
 export function studyRemainingControlsPairedBefore(bytes: Uint8Array | string = readFileSync(repositoryPath(packet.protectedPaired.path))): Uint8Array | string {
+  return withBlindReviewedCorrectionReadScope(() => {
   const projected = readingTitleLightestFileBytesBefore(packet.protectedPaired.path, bytes);
   assert.equal(sha(projected), packet.protectedPaired.sha256, 'complete paired predecessor remains exact after the four-card projection');
   return projected;
+  });
 }
 const readProof = (path: string, expectedSha256: string) => {
   const bytes = readFileSync(repositoryPath(folder + path));
@@ -138,19 +145,26 @@ assert.deepEqual(slide.target.body[2].segments[4], { sourceEnglish: stLayer.held
 
 /** Validate this complete newest layer before any historical snapshot projects it back. */
 export function ensureStudyRemainingControlsCurrent() {
-  assert.equal(sha(readFileSync(repositoryPath('lib/locales/ve.ts'))), packet.locale.afterSourceSha256, 'complete live VE locale source bytes');
+  return withBlindReviewedCorrectionReadScope(() => {
+  ensureStudyUiDueUnlockCurrent();
+  assert.equal(sha(studyUiDueUnlockSourceBefore('lib/locales/ve.ts', readFileSync(repositoryPath('lib/locales/ve.ts')))), packet.locale.afterSourceSha256, 'complete VE locale source bytes after projecting only the exact newest due/unlock layer');
   assert.equal(sha(readFileSync(repositoryPath(stLayer.path))), stLayer.afterSourceSha256, 'complete live Sesotho registry source bytes');
   const currentPairedPredecessor = studyRemainingControlsPairedBefore(readFileSync(repositoryPath(packet.protectedPaired.path)));
   assert.equal(sha(currentPairedPredecessor), packet.protectedPaired.sha256, 'live paired Reading still composes to its complete exact predecessor');
+  });
 }
 
 export function assertStudyRemainingControlsLocale(actual: unknown) {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyRemainingControlsCurrent();
-  assert.deepEqual(actual, afterLocale, 'VE dictionary rejects any unlisted or altered locale value');
+  assert.deepEqual(studyUiDueUnlockLocaleBefore(actual), afterLocale, 'VE dictionary rejects any unlisted or altered locale value after the exact newest due/unlock layer');
+  });
 }
 
 /** The exact predecessor is returned only after the full new ST object and source layer validate. */
 export function studyRemainingControlsNativeBefore<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  actual = blindReviewedNativeBefore(actual);
   const module = actual as any;
   if (module?.id !== 'reading-landscape' || module?.language !== 'st') return actual;
   ensureStudyRemainingControlsCurrent();
@@ -159,15 +173,24 @@ export function studyRemainingControlsNativeBefore<T>(actual: T): T {
   // An older history helper can call again with a dated ancestor. Its own complete
   // equality must judge that object; the live current layer was already verified above.
   return actual;
+  });
 }
 
 export function assertStudyRemainingControlsNative(actual: unknown) {
+  return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyRemainingControlsCurrent();
   assert.deepEqual(actual, afterSt, 'complete current ST Reading object equals the accepted one-fragment layer, including status and unlisted fields');
+  });
 }
 
 /** Project exact source bytes only after the complete current file and native layer validate. */
 export function studyRemainingControlsSourceBefore(file: string, bytes: string | Uint8Array): string | Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  bytes = blindReviewedSourceBefore(file, bytes);
+  if (file === 'lib/locales/ve.ts') {
+    ensureStudyRemainingControlsCurrent();
+    return studyUiDueUnlockSourceBefore(file, bytes);
+  }
   if (file !== stLayer.path) return bytes;
   ensureStudyRemainingControlsCurrent();
   const supplied = Buffer.from(bytes);
@@ -178,4 +201,5 @@ export function studyRemainingControlsSourceBefore(file: string, bytes: string |
   if (supplied.equals(live)) return typeof bytes === 'string' ? prior.toString() : prior;
   // A caller may already hold a dated ancestor. Leave it for that history owner to check.
   return bytes;
+  });
 }

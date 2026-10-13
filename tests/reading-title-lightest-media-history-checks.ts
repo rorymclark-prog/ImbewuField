@@ -1,6 +1,10 @@
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
+import { blindReviewedAssetBefore, blindReviewedSourceBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, statSync } from 'node:fs';
+import { statSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { readingTitleLightestMain985PostLayerBefore } from './reading-title-lightest-main985-composition-history-checks.ts';
 
 const folder = 'docs/study-translation-reviews/reading-title-lightest-next-2026-10-08/assets/';
@@ -24,14 +28,18 @@ assert.equal(lightestManifestProof.rows.length, 4);
 
 /** Verify all current bytes and return the full exact predecessor manifest. */
 export function lightestManifestBefore(current = readFileSync('lib/course-asset-sizes.ts', 'utf8')) {
+  return withBlindReviewedCorrectionReadScope(() => {
+  current = Buffer.from(blindReviewedSourceBefore('lib/course-asset-sizes.ts', current)).toString();
   const live = readFileSync('lib/course-asset-sizes.ts', 'utf8');
   const predecessor = Buffer.from(readingTitleLightestMain985PostLayerBefore('lib/course-asset-sizes.ts', live)).toString();
   assert.equal(Buffer.from(readingTitleLightestMain985PostLayerBefore('lib/course-asset-sizes.ts', current)).toString(), predecessor,
     'caller must be the complete current manifest or exact main837 predecessor');
   return predecessor;
+  });
 }
 
 export function lightestAssetRows() {
+  return withBlindReviewedCorrectionReadScope(() => {
   return lightestRenderProof.cards.map(row => {
     const before = readFileSync(row.beforeAsset);
     const after = readFileSync(row.asset);
@@ -56,10 +64,13 @@ export function lightestAssetRows() {
       height,
     };
   });
+  });
 }
 
 /** Return the exact saved predecessor only after validating a complete newest asset. */
 export function lightestAssetBefore(path: string, supplied: Uint8Array): Uint8Array {
+  return withBlindReviewedCorrectionReadScope(() => {
+  supplied = blindReviewedAssetBefore(path, supplied);
   const row = lightestRenderProof.cards.find(item => item.asset === path || `public${item.asset}` === path);
   if (!row) return supplied;
   const current = readFileSync(row.asset);
@@ -72,4 +83,5 @@ export function lightestAssetBefore(path: string, supplied: Uint8Array): Uint8Ar
   assert.equal(sha(supplied), row.afterSha256, `${path}: historical caller must provide current exact bytes`);
   assert.equal(supplied.length, row.afterBytes, `${path}: historical caller current bytes`);
   return before;
+  });
 }

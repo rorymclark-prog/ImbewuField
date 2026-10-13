@@ -1,5 +1,7 @@
 // Source pairing is deliberately separate from the legacy slide summary parser. A translated
 // draft must be checked against the words a farmer would hear, including later paragraphs.
+import { READING_7_SILENT_IMAGE_CUE } from '../lib/course-deck-silent-cues.ts';
+
 export function englishSlideRecords(raw) {
   const heading = /^\*\*Slide\s+(\d+)\s*[—-]\s*([^*\n]+?)\s*\*\*\s*$/gm;
   const matches = [...raw.matchAll(heading)];
@@ -101,7 +103,24 @@ export function validatePairedDraft(draft, source, language = 'st') {
     };
     checkPart(target.heading, 'heading', original.heading);
     target.body.forEach((part, paragraph) => checkPart(part, `paragraph ${paragraph + 1}`, original.body[paragraph]));
-    return { n: original.n, english: original, target };
+    let supplementalImageCue;
+    const isActiveZuluReading7Target = language === 'zu' && slide.n === 7 &&
+      original.heading === 'Observe Water Before You Build' &&
+      (target.heading.status !== 'english-hold' || target.body.some((part) => part.status !== 'english-hold'));
+    if (isActiveZuluReading7Target && slide.supplementalImageCue === undefined) {
+      throw new Error(`Paired draft slide ${slide.n}: supplemental source-image cue is required`);
+    }
+    if (slide.supplementalImageCue !== undefined) {
+      if (language !== 'zu' || slide.n !== 7 || original.heading !== 'Observe Water Before You Build' ||
+          JSON.stringify(slide.supplementalImageCue) !== JSON.stringify(READING_7_SILENT_IMAGE_CUE) ||
+          original.body.some((paragraph) => paragraph.includes(READING_7_SILENT_IMAGE_CUE.text)) ||
+          target.body.some((part) => part.text === READING_7_SILENT_IMAGE_CUE.text ||
+            part.segments?.some((segment) => segment.text === READING_7_SILENT_IMAGE_CUE.text))) {
+        throw new Error(`Paired draft slide ${slide.n}: supplemental source-image cue identity drifted`);
+      }
+      supplementalImageCue = READING_7_SILENT_IMAGE_CUE;
+    }
+    return { n: original.n, english: original, target, ...(supplementalImageCue ? { supplementalImageCue } : {}) };
   });
 }
 

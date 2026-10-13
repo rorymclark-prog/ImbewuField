@@ -1,0 +1,14 @@
+[
+ {"id":"R353","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+ {"id":"R354","verdict":"ok","problem":"'Picked' correctly rendered as harvested (vuna), not 'vunyiwe' (agree).","repaired":"","severity":"minor"},
+ {"id":"R355","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+ {"id":"R356","verdict":"ok","problem":"Meaning, negation and units preserved. Minor: 'asazi' (we do not know) shifts to first-person where English says 'are unknown' (impersonal 'azaziwa' would be closer); 'package' rendered 'izikhwama' (bags). Both acceptable and consistent with existing chart wording.","repaired":"","severity":"minor"},
+ {"id":"R357","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+ {"id":"R361","verdict":"ok","problem":"Stacked 'esikaliwe esivuniwe' (weighed + harvested) is slightly clunky but means 'weighed produce picked'; same pattern as R362/R363.","repaired":"","severity":"minor"},
+ {"id":"R362","verdict":"ok","problem":"","repaired":"","severity":"minor"},
+ {"id":"R363","verdict":"ok","problem":"'esisele' = remaining; English 'kept' (harvested minus sold). Close enough and consistent with existing 'okusele'; not money or profit.","repaired":"","severity":"minor"},
+ {"id":"R364","verdict":"ok","problem":"Negation-free; 'only', 'recorded kilograms' and 'counted produce stays in its units' all preserved.","repaired":"","severity":"minor"},
+ {"id":"R365","verdict":"ok","problem":"'Also picked' becomes 'Other picked' (okunye); works as a label for extra non-kg units. Literal alternative 'Kuvuniwe futhi: {qty}'.","repaired":"","severity":"minor"},
+ {"id":"R366","verdict":"ok","problem":"'Also sold' becomes 'Other sold'; same note as R365.","repaired":"","severity":"minor"},
+ {"id":"R388","verdict":"hold","problem":"'kwisilinganiso' is Xhosa-style locative (isiZulu: 'kusilinganiso'/'esilinganisweni'); the draft means 'at a benchmark of {benchmark}', adding the word benchmark and a locative sense, not the partitive 'of {benchmark}' after a kg figure. I cannot confidently produce a natural isiZulu 'of' fragment (candidate 'kwangu-{benchmark}' unverified). Drafter says the zu build bypasses this key, so showing English is low cost.","repaired":"","severity":"wording"}
+]

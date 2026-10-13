@@ -1,8 +1,11 @@
+import { blindReviewedPresentationBefore } from './blind-reviewed-study-corrections-history-checks.ts';
+import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-corrections-history-checks.ts';
 import { finalLanguageNextNativeBefore, finalLanguageNextDeckBefore, finalLanguageNextPresentationBefore } from './final-language-next-checks.ts';
 import assert from 'node:assert/strict';
 import { fairSharingSourceBytesBefore } from './intro-fair-sharing-history-checks.ts';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+// Validate the bounded current audit corrections before this dated predecessor claim.
+import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT as readVe } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
 import { XITSONGA_READING_LANDSCAPE_DRAFT as readTs } from '../lib/course-translation-drafts-ts.ts';
@@ -15,6 +18,7 @@ import { SESOTHO_MARKET_COMMUNITY_DRAFT as marketSt } from '../lib/course-transl
 import { TSHIVENDA_MARKET_COMMUNITY_DRAFT as marketVe } from '../lib/course-translation-drafts-ve-market-community.ts';
 import { XITSONGA_MARKET_COMMUNITY_DRAFT as marketTs } from '../lib/course-translation-drafts-ts-market-community.ts';
 import { studyRemainingControlsNativeBefore } from './study-remaining-controls-next-history-checks.ts';
+import { studyVegetablesTwoResidualNativeBefore, studyVegetablesTwoResidualPairedBefore } from './study-vegetables-two-ordinary-residual-history-checks.ts';
 
 const root = '../docs/study-translation-reviews/final-native-ordinary-application-2026-10-06/';
 const baseline = JSON.parse(readFileSync(new URL(`${root}baseline-native-modules.json`, import.meta.url), 'utf8'));
@@ -140,6 +144,11 @@ function readResidualPairedFiles(): Record<string, any> {
 
 /** Validate the complete newest overlay and its full paired files before exposing the prior layer. */
 export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string, any>, pairedFiles: Record<string, any>): void {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // 8 October: project only the newest VE/TS Vegetables target leaves before the
+  // immutable residual-layer snapshots inspect every field and paired cell.
+  nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, studyVegetablesTwoResidualNativeBefore(module)]));
+  pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, studyVegetablesTwoResidualPairedBefore(path, deck)]));
   // 6 October: validate all 48 later accepted fields before the dated 13-cell claim.
   nativeModules = Object.fromEntries(Object.entries(nativeModules).map(([name, module]) => [name, finalLanguageNextNativeBefore(module)]));
   pairedFiles = Object.fromEntries(Object.entries(pairedFiles).map(([path, deck]) => [path, finalLanguageNextDeckBefore(path, deck)]));
@@ -164,13 +173,16 @@ export function validateNativeOrdinaryResidualLayer(nativeModules: Record<string
     assert.equal(slide.english.body[row.paired.bodyIndex], row.sourceEnglish, `${row.order}: paired cell source is exact and at the accepted index`);
     assert.deepEqual(slide.target.body[row.paired.bodyIndex], row.paired.appliedTarget, `${row.order}: paired cell target/status/segments match the accepted full target`);
   }
+  });
 }
 
 /** Return the immutable 28-field layer only after validating the complete newest 13-cell overlay. */
 export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   // 8 October: first validate the complete VE-control and ST observation layer.
   // Its learner fragment supersedes the full native object used by the older dated claim.
   actual = studyRemainingControlsNativeBefore(actual);
+  actual = studyVegetablesTwoResidualNativeBefore(actual);
   const current: any = actual;
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];
@@ -178,10 +190,12 @@ export function nativeOrdinaryBeforeResidualLayer<T>(actual: T): T {
   const modules = { ...runtimeByExport, [exportName]: current };
   validateNativeOrdinaryResidualLayer(modules, readResidualPairedFiles());
   return structuredClone(residualBefore[exportName]);
+  });
 }
 
 /** Validate the complete newest native overlay before a historical fixture rewinds it. */
 export function nativeOrdinaryBeforeFinalBatch<T>(actual: T): T {
+  return withBlindReviewedCorrectionReadScope(() => {
   const current: any = nativeOrdinaryBeforeResidualLayer(actual);
   const isSeparateTsL2 = current?.language === 'ts' && current?.lessons?.length > 0 && current.lessons.every((lesson: any) => lesson.id === 'vegetables-staples-l2');
   const exportName = isSeparateTsL2 ? 'XITSONGA_VEGETABLES_STAPLES_L2_DRAFT' : exportsByIdentity[`${current?.id}:${current?.language}`];
@@ -212,10 +226,14 @@ export function nativeOrdinaryBeforeFinalBatch<T>(actual: T): T {
 
   // Returning this snapshot is safe only after all fields and the complete object passed.
   return structuredClone(baselineModule);
+  });
 }
 
 /** Rewind only listed final-layer presentation fields after validating their full imported registry. */
 export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: any }>(result: T, lessonId: string, language: string): T {
+  return withBlindReviewedCorrectionReadScope(() => {
+  // Validate the complete 12 October correction before this dated learner claim.
+  result = blindReviewedPresentationBefore(result, lessonId, language);
   // The later nine source-bound leaves are validated before this dated presentation.
   result = finalLanguageNextPresentationBefore(result as any, lessonId, language);
   const moduleId = lessonId.startsWith('reading-landscape-') ? 'reading-landscape'
@@ -244,6 +262,7 @@ export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: 
     setPresentationTarget(reconstructed.content, row.field.fieldLocator, old);
   }
   return reconstructed;
+  });
 }
 
 /** 2026-10-06: Reading shares a source file with the immutable Intro968 export.
@@ -251,6 +270,7 @@ export function nativeOrdinaryPresentationBeforeFinalBatch<T extends { content: 
  * Reading body literal; the caller still checks every other byte by the old SHA.
  */
 export function tsSharedSourceBeforeNativeOrdinary(bytes: string, currentReading: any = readTs): string {
+  return withBlindReviewedCorrectionReadScope(() => {
   bytes = fairSharingSourceBytesBefore('lib/course-translation-drafts-ts.ts', bytes);
   nativeOrdinaryBeforeFinalBatch(currentReading);
   const rows = fieldProof.fields.filter((row: any) => row.registryExport === 'XITSONGA_READING_LANDSCAPE_DRAFT');
@@ -265,4 +285,5 @@ export function tsSharedSourceBeforeNativeOrdinary(bytes: string, currentReading
     'f34dd03aeba8b72b5bc684b9491e27ee4cb65da2153dbbc09b8fbe0967670816',
     'TS shared source preserves every Intro968 and unlisted byte after only the accepted Reading projection');
   return restored;
+  });
 }

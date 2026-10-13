@@ -1,0 +1,20 @@
+{
+ "counts": {
+  "ok": 12,
+  "repair": 6,
+  "hold": 0
+ },
+ "top_issues": [
+  "I158/I159: 'Amarekhodi Ami' used for My Records instead of the page's 'Okurekhodiwe Kwami' (wording); 'kokuthi' used as 'to' is unnatural.",
+  "I008/I010: 'isiqondiso'/'yesiqondiso' used for 'guide' where the page uses 'yomhlahlandlela' (wording).",
+  "I156: 'kokuthi Okulondoloziwe' is an unnatural 'from Saved' construction; the tab reference may be unclear (wording).",
+  "I002: 'kudinga' wrong concord for plural subject (minor).",
+  "I004/I154/I157: 'okurekhodiwe' as a generic agreement after noun lists is awkward but consistent with the page (minor).",
+  "I006: 'enconyiwe' (recommended) matches English but reads as advice; keep guide framing (low risk).",
+  "I010: date join 'yango-{date}' pattern should be confirmed by a fluent speaker.",
+  "No negation, income/expense, paid/unpaid, or double-count errors found; 'counted once' and 'without adding again' preserved.",
+  "I005: 'yokuqala' = 'first' rather than 'original'; reused existing string, accepted.",
+  "I001/I007: slash forms are terse but preserve meaning."
+ ],
+ "confidence_limits": "Machine review, not a fluent isiZulu speaker approval. Concord, locative prepositions (ku-/kusukela) and the date join should be confirmed by a native speaker."
+}

@@ -1,0 +1,61 @@
+{
+  "speciesId": "aloidendron-dichotomum",
+  "commonName": "Quiver tree / kokerboom",
+  "botanicalName": "Aloidendron dichotomum",
+  "harvestMonths": [],
+  "yearsToFirstCrop": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified first food harvest age for this product and South African growing system."
+  },
+  "yearsToFullBearing": {
+    "value": null,
+    "evidence": null,
+    "notes": "No verified full-production age; do not transfer a fruit-tree maturity curve to a different harvest product."
+  },
+  "yieldKgPerTreeMature": {
+    "value": null,
+    "evidence": null,
+    "notes": "No transferable annual food kg/plant benchmark with product, age and growing conditions verified."
+  },
+  "chillUnits": {
+    "value": null,
+    "evidence": null,
+    "notes": "No numeric chill requirement verified in the checked primary source."
+  },
+  "pollination": {
+    "value": null,
+    "evidence": null,
+    "notes": "No food-production pollination classification verified in the checked primary source."
+  },
+  "harvestProduct": "young flower buds",
+  "supplementaryReferences": [
+    {
+      "title": "Young flower-bud food use",
+      "quote": "The young flower buds can be eaten",
+      "url": "https://pza.sanbi.org/aloidendron-dichotomum",
+      "doc": "SANBI PlantZAfrica: Aloidendron dichotomum",
+      "page": null,
+      "note": "The edible product is the young flower bud. June–July flowering does not establish the exact pre-opening picking dates, first bud-bearing age or edible kg/plant."
+    }
+  ],
+  "productionGuidance": {
+    "products": "young flower buds",
+    "care": [
+      "Match cultivation to this arid-land tree and well-drained conditions.",
+      "Record young-bud picking separately from flowering or ornamental growth."
+    ],
+    "purchase": [
+      "Obtain correctly identified legal nursery stock and local growing advice. No food-yield cultivar or maturity curve is verified."
+    ]
+  },
+  "householdFoodStatus": "confirmed-food",
+  "sourceChecks": [
+    {
+      "url": "https://pza.sanbi.org/aloidendron-dichotomum",
+      "checkedAt": "2026-10-11",
+      "observations": "Primary article text retrieved through the search index; the direct PlantZAfrica endpoint returned 403 during this session."
+    }
+  ],
+  "gaps": []
+}

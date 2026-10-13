@@ -1,0 +1,744 @@
+[
+ {
+  "id": "R285",
+  "verdict": "hold",
+  "problem": "Key word 'mikolo' (used for 'dashed outline') is not one I can confirm; it may read as lines/outlines but also as ceremonies/events. The drafter itself flagged 'xivumbeko' and the construction as uncertain. The rest of the meaning (sold more than logged picked -> kept unknown) is preserved.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R286",
+  "verdict": "ok",
+  "problem": "'xivandla xa siku' for date field is loose but understandable; past-negative form with 'ku fikela sweswi' reads as 'has not had yet'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R287",
+  "verdict": "ok",
+  "problem": "'xihakelo' (payment/fee) stands in for 'cost'; consistent with the existing 'Tihakelo' tab word.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R288",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R289",
+  "verdict": "hold",
+  "problem": "'Tsala mikolo ya mibhede' for 'Trace your beds': 'mikolo' unverified (lines? ceremonies?) and 'tsala' = write/record, not trace/draw. This is an instruction the farmer must act on, so a wrong word is costly.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R290",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R291",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R292",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R293",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R294",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R295",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R296",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R297",
+  "verdict": "ok",
+  "problem": "Last sentence 'Ringanisa nkarhi wun'we ni ndhawu yin'we hi ku famba ka nkarhi' reads loosely as 'compare one time and one place as time goes'; passable but awkward ('nkarhi' vs 'nguva').",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R298",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R299",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R300",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R301",
+  "verdict": "ok",
+  "problem": "'Tihakelo' = payments, used for costs per existing tab word; consistent.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R302",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R304",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R305",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R306",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R307",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R308",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R309",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R312",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R314",
+  "verdict": "ok",
+  "problem": "'u tsala endzhaku ka nkarhi' = 'record after time'; conveys 'later', acceptable.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R316",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R317",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R318",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R319",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R320",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R321",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R323",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R324",
+  "verdict": "ok",
+  "problem": "'Ku famba ka mali' = movement of money; descriptive for 'cash flow', acceptable.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R325",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R326",
+  "verdict": "hold",
+  "problem": "Same 'Tsala mikolo ya mibhede' problem as R289 (trace beds unverified). The rest (due to be picked, roughly worth) is fine.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R327",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R328",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R329",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R330",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R331",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R332",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R333",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R334",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R335",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R336",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R337",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R338",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R339",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R340",
+  "verdict": "ok",
+  "problem": "'xibyariwa lowu' concord slip (xibyariwa would be 'lexi'); meaning intact, negations 'a hi ... a hi' correct.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R341",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R342",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R343",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R344",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R345",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R346",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R347",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R348",
+  "verdict": "ok",
+  "problem": "~21 characters, longer than the ~10-char tab guideline; meaning (picked & sold = harvest and selling, not money) is right.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R349",
+  "verdict": "repair",
+  "problem": "'leswi endleke' = 'what was done/happened', not 'actual (harvest)'; it can read as activities, and at ~23 characters is far over the ~10-char tab guideline.",
+  "repaired": "Pulani ni ntshovelo",
+  "severity": "wording"
+ },
+ {
+  "id": "R350",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R351",
+  "verdict": "ok",
+  "problem": "'matsavu' for vegetables is the drafter's own unverified word (batch-1 R139 was held); I believe it is leafy vegetables, so left ok.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R352",
+  "verdict": "ok",
+  "problem": "As R351 ('matsavu').",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R353",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R354",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R355",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R356",
+  "verdict": "hold",
+  "problem": "'vutika' (used for weight) is a word I cannot confirm; the first sentence 'no produce weights recorded' and the last clause 'kept weight is unknown' both depend on it. Also 'matandza' (eggs) and 'mapakete' (packages) were flagged unverified by the drafter. Unknown-vs-zero distinctions here are too important to guess.",
+  "repaired": "",
+  "severity": "meaning"
+ },
+ {
+  "id": "R357",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R358",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R359",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R360",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R361",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R362",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R363",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R364",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R365",
+  "verdict": "ok",
+  "problem": "Fragment starts with 'Ni' (and/with); acceptable as an added line after a first figure, slightly stiff for 'Also'.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R366",
+  "verdict": "ok",
+  "problem": "As R365.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R367",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R368",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R369",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R370",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R371",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R372",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R373",
+  "verdict": "ok",
+  "problem": "'timiwile' (switched off) is plausible (tima = switch off) but unverified; 'ku xavisa loku' = 'this selling' vs English 'those sales'; 'papila' for page is loose. Meaning, negation ('a ri katsi', 'nga katsiwiki') and sold/picked split are kept.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R374",
+  "verdict": "ok",
+  "problem": "As R373 (unverified 'timiwile'; 'papila').",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R375",
+  "verdict": "ok",
+  "problem": "As R373 (unverified 'timiwile'; 'papila').",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R376",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R377",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R380",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R381",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R382",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R385",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R386",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R387",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R388",
+  "verdict": "ok",
+  "problem": "'eka' for 'out of' is plausible but could read like 'to' in a range (12 kg to 40 kg); acceptable given the usage example.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R389",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R390",
+  "verdict": "ok",
+  "problem": "'ri nga ringani na' = 'does not equal' rather than 'is short of'; direction implied by the clause before it.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R391",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R392",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R393",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R395",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R396",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R397",
+  "verdict": "ok",
+  "problem": "'Ntirho' = work/job; reads as 'other work/activity' (English says 'activity'); acceptable but could be read as employment.",
+  "repaired": "",
+  "severity": "minor"
+ },
+ {
+  "id": "R398",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R400",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R401",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ },
+ {
+  "id": "R402",
+  "verdict": "ok",
+  "problem": "",
+  "repaired": "",
+  "severity": ""
+ }
+]

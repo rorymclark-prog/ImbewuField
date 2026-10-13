@@ -1,3 +1,4 @@
+import { blindReviewedAssetBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -28,11 +29,14 @@ test('the runtime silent release binds all 22 current target slots and exactly t
   }
   assert.equal(stIntroRuntimeResidualAssets.length, 10);
   for (const row of stIntroRuntimeResidualAssets) {
-    const bytes = readFileSync('public' + row.url);
+    let bytes = readFileSync('public' + row.url);
     assert.equal(COURSE_ASSET_SIZES[row.url], bytes.length);
     assert.deepEqual(stIntroRuntimeResidualAssetBefore('public' + row.url, bytes), {
       bytes: row.before.bytes, sha256: row.before.sha256, width: row.before.width, height: row.before.height,
     });
+    // The later independently checked neighbour wording supersedes slide 22.
+    // Validate its complete live correction before this dated raster claim.
+    bytes = Buffer.from(blindReviewedAssetBefore('public' + row.url, bytes));
     assert.equal(sha(bytes), row.after.sha256);
   }
 });

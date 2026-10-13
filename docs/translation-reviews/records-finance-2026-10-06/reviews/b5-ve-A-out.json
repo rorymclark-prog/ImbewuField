@@ -1,0 +1,16 @@
+[
+ {"id":"R039","back":"Money that comes in","flags":[]},
+ {"id":"R049","back":"Download","flags":["English loanword spelled phonetically; 'download' is not delete/remove but reads as a phone download rather than a file export"]},
+ {"id":"R062","back":"They have been connected/joined with your phone","flags":["'ṱumanyiswa' = joined/connected; 'synced' sense uncertain","plural/polite 'yaṋu' fine"]},
+ {"id":"R099","back":"Download CSV of this month","flags":["loanword 'Dauniloudani'","'ṅwedzi uyu' = this month"]},
+ {"id":"R126","back":"Item and number of money are needed.","flags":["'mbalo ya masheleni' literally 'count/number of money' - amount sense not certain; 'mbalo' also means number/count so could be confused with quantity"]},
+ {"id":"R127","back":"Product, quantity and number of money are needed.","flags":["'mbalo ya masheleni' literally 'number/count of money' - amount sense uncertain"]},
+ {"id":"R168","back":"Number/count of money (R)","flags":["'mbalo' primarily means number/count; not clearly 'rand amount'; could be confused with price/quantity"]},
+ {"id":"R184","back":"Write the product, quantity that exceeds 0, and the money count/amount of the sale.","flags":["'mbalo ya masheleni' amount sense uncertain","'thengiso' = selling/sale, ok"]},
+ {"id":"R191","back":"Records for doing/making for the lender","flags":["'u itela' = to do for / make for; reads oddly, 'for a lender' sense may be OK","'mubolekisi' = lender (one who lends)"]},
+ {"id":"R202","back":"Download records for doing for the lender","flags":["loanword 'Dauniloudani'; Export vs Download not distinguished","'u itela' wording awkward"]},
+ {"id":"R275","back":"Other plants of the food section/kind","flags":["'tshisaka' meaning unclear to me (possibly bush/forest or group/kind); not confident it means category","'zwiṅwe' = others; 'zwimela' = plants/crops"]},
+ {"id":"R284","back":"Phone money","flags":["unclear if this is the payment method 'mobile money' or just money of a phone"]},
+ {"id":"R312","back":"Money that was given to you/me has had removed written payments in these months. Payments not written are not included.","flags":["'o ni ṋewaho' = 'that gave you' - garbled, unclear what money this is","'bviswa' = removed/taken out; unclear if this means 'minus' or 'taken out'","second sentence clear: unrecorded payments not included"]},
+ {"id":"I060","back":"Make a place of saving on your phone before you join this sale. Its record has already been there; it has not been changed.","flags":["'hanganyisa' = join/unite; sync sense uncertain","'Itani fhethu ha u vhulunga' = make a place to keep - could mean 'make space/storage' vs 'save'; unclear"]}
+]

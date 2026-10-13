@@ -98,8 +98,12 @@ const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
     isEmpty: (raw) => {
       if (!raw) return true;
       try {
-        const parsed = JSON.parse(raw) as { plantings?: unknown };
-        return !Array.isArray(parsed?.plantings) || parsed.plantings.length === 0;
+        const parsed = JSON.parse(raw) as { plantings?: unknown; productionRecords?: unknown; preservedProducts?: unknown };
+        // An orchard or animal plan can have no beds. Its dated observations and
+        // stock still belong to the farmer and must neither vanish nor be overwritten.
+        return (!Array.isArray(parsed?.plantings) || parsed.plantings.length === 0)
+          && (!Array.isArray(parsed?.productionRecords) || parsed.productionRecords.length === 0)
+          && (!Array.isArray(parsed?.preservedProducts) || parsed.preservedProducts.length === 0);
       } catch {
         return false;
       }

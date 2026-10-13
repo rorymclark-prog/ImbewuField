@@ -1,0 +1,148 @@
+{
+  "schema": "imbewufield.study-b-a-composed-source-proof.v1",
+  "status": "prepared-unreviewed-final-B-A-source-history-proof",
+  "tips": {
+    "baseMain": "69a6a935e7d8eda805e4b7de5bed092d36c97be6",
+    "B": "8538e9a5011601e040c8dbcf02f2a4c167befed5",
+    "A": "973c91b4cff11dcc7438eed608135b298af0d194"
+  },
+  "sourceOwners": {
+    "BMediaProofSha256": "de15dd6662fa5fbd88f98f3c38a8fac00e8e9cbaf62ab80739ad758c42be4117",
+    "ACompositionProofSha256": "4b47e7cf177282f87acbd65e6e7310efc135cb6267e77fb9e6508a7b08505e38",
+    "AManifestProofSha256": "020f98dde5da03597239b56242a1526d3d767147901085877f7f56c0e0292c96"
+  },
+  "files": [
+    {
+      "path": "app/sw.js/route.ts",
+      "snapshots": {
+        "main69": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/worker-main69.txt",
+          "bytes": 128882,
+          "sha256": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615"
+        },
+        "afterB": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/worker-afterB.txt",
+          "bytes": 129699,
+          "sha256": "c3cc2e2003e2fd74f34ac2136179cdd42114961ba70419ac0d0e0442edd593ce"
+        },
+        "afterA": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/worker-afterA.txt",
+          "bytes": 129815,
+          "sha256": "4dd252fd1e8c3b77868243113499478286ea9006d775c31340dd939aa95f3196"
+        },
+        "integrated": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/worker-integrated.txt",
+          "bytes": 130632,
+          "sha256": "882353b2d758d6cb523ce9f9be67b86e4a76e345113f6d70f5448b2e183048ab"
+        }
+      }
+    },
+    {
+      "path": "lib/course-asset-sizes.ts",
+      "snapshots": {
+        "main69": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/manifest-main69.txt",
+          "bytes": 117011,
+          "sha256": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991"
+        },
+        "afterB": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/manifest-afterB.txt",
+          "bytes": 117011,
+          "sha256": "4e090846230392100ef2318160f90346d25567899d3ff37a56b751a6551df646"
+        },
+        "afterA": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/manifest-afterA.txt",
+          "bytes": 117011,
+          "sha256": "21b04b97dff9093d75c4c1bbe3d53003f61166d85bcfe922816c19135c49bf8a"
+        },
+        "integrated": {
+          "path": "docs/study-translation-reviews/study-b-a-integration-2026-10-08/snapshots/manifest-integrated.txt",
+          "bytes": 117011,
+          "sha256": "a1a855618a27fd146e38d9313463308ae538b9bf74d59c5e495d1539f6eb6558"
+        }
+      }
+    }
+  ],
+  "workerMigrations": {
+    "B": {
+      "function": "migrateVegetablesTwoOrdinaryResidualStills",
+      "activationCall": ".then(migrateVegetablesTwoOrdinaryResidualStills)"
+    },
+    "A": {
+      "function": "migrateReadingTitleLightestFourStills",
+      "activationCall": ".then(migrateReadingTitleLightestFourStills)"
+    }
+  },
+  "manifestDelta": {
+    "A": [
+      {
+        "url": "/course-decks/reading-landscape/st/slide-12.webp",
+        "beforeBytes": 472172,
+        "afterBytes": 472466,
+        "beforeSha256": "12682c3891c9ad88a47cfc67af60b7de64c123f2fc3850fe46b24a4556b3d418",
+        "afterSha256": "72baa7bf43e1ea969f5456f0f91985490cb24983ae0db10aeaeffc8497a206c1"
+      },
+      {
+        "url": "/course-decks/reading-landscape/ve/slide-12.webp",
+        "beforeBytes": 471730,
+        "afterBytes": 476936,
+        "beforeSha256": "a8c60da35333d647ff65f10e4deb52e7d1ea8d94901ee36a5ed355647a10d90a",
+        "afterSha256": "7fbf695cd27db5032f2dfc7e1d6697f5c509fe6ea3a141351c2482b9be66b29e"
+      },
+      {
+        "url": "/course-decks/reading-landscape/ts/slide-12.webp",
+        "beforeBytes": 473304,
+        "afterBytes": 473120,
+        "beforeSha256": "0081f3d65b19ece3ff731397445eadf4e41abeca1b31b42f2e77423b6c5d6dca",
+        "afterSha256": "0384ba29e168c177a600f7fd0031760557d173c67331ff06699d9dd75a31ef2c"
+      },
+      {
+        "url": "/course-decks/vegetables-staples/st/slide-16.webp",
+        "beforeBytes": 570296,
+        "afterBytes": 592226,
+        "beforeSha256": "49a3f5c356b0dc9683181231ab0322c42673269c815994a5f77538c43833fa02",
+        "afterSha256": "4a8fbc7940696996062f9b27e9ac1008ea7c879045a2654e26a6e47aa9e5b118"
+      }
+    ],
+    "B": [
+      {
+        "language": "ve",
+        "slide": 10,
+        "url": "/course-decks/vegetables-staples/ve/slide-10.webp",
+        "beforeBytes": 780116,
+        "beforeSha256": "16356e7c2c100b8e5d782edbe6af2e817c5e08523f4f2ff53a920db4e4ad4a3a",
+        "afterBytes": 779884,
+        "afterSha256": "ed0e057d587546b85953f99f76fa2f3ad0401cb4cf01f6c6c18090c5563d3788",
+        "width": 1440,
+        "height": 5400,
+        "renderer": "scripts/make-lesson-slides.mjs --paired-draft docs/narration/vegetables-staples.ve.paired-draft.json --slides 10",
+        "conversion": "WebP RGB, quality 88, method 6"
+      },
+      {
+        "language": "ts",
+        "slide": 12,
+        "url": "/course-decks/vegetables-staples/ts/slide-12.webp",
+        "beforeBytes": 466162,
+        "beforeSha256": "6809b5e6646626052be0c0e4f3f8c91f72939c78c9f92f0de34686ad9005a1af",
+        "afterBytes": 464820,
+        "afterSha256": "8df52c02a423e0d54cd5f3f3f477522ceda7ac40e9e7eef8bfe584953b72e6a4",
+        "width": 1440,
+        "height": 5400,
+        "renderer": "scripts/make-lesson-slides.mjs --paired-draft docs/narration/vegetables-staples.ts.paired-draft.json --slides 12",
+        "conversion": "WebP RGB, quality 88, method 6"
+      }
+    ],
+    "rule": "A-only and B-only projections must restore their complete branch SHA, including all non-target rows and deterministic aggregate."
+  },
+  "sharedMain837": {
+    "worker": "ed8af1ea07af33f8936a0c0a8cb8909338ae4ec4e8fa898810bf84a46b173615",
+    "manifest": "8d2c26f50a202e27cdeaaa764a1a6c22ac991f60f21f8c0e60a7ff6183d1f991",
+    "matchesMain69": true
+  },
+  "projectionOrder": [
+    "integrated full source -> exact A-only or B-only branch state by removing the other branch migration/manifest leaf set",
+    "exact A-only -> main837 -> immutable PR985 before state",
+    "exact B-only -> main837 -> immutable PR985 before state",
+    "all older owners compare complete snapshots after projection; unknown live or unlisted bytes fail the integrated full hash"
+  ]
+}

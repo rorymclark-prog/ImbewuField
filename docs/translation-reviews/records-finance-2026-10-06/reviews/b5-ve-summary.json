@@ -1,0 +1,20 @@
+{
+ "counts": {
+  "ok": 7,
+  "repair": 0,
+  "hold": 7
+ },
+ "top_issues": [
+  "R126/R127/R168/R184: 'mbalo ya masheleni' for 'amount' - mbalo means number/count; rand-total sense unconfirmed; HOLD all four",
+  "R191/R202: 'mubolekisi' (lender) looks like isiZulu (umbolekisi) not Tshivenda; not in locale; HOLD",
+  "R312: 'mbadelo' ambiguous (payments in vs out), not clearly spending/costs; concord 'o bviswa' doubtful; 'o ni ṋewaho' clumsy; HOLD",
+  "R049/R099: 'Dauniloudani' is a phonetic loanword; distinct from Delete but speaker may prefer 'eksipoti'; passes as ok-minor",
+  "R062: 'ṱumanyiswa' = joined/connected; sync sense approximate",
+  "R275: 'tshisaka' unconfirmed independently; relies on accepted R079/R352; not a tribe word as far as I can tell",
+  "R284: 'Masheleni a founu' (phone money) vs 'Mobile' payment method; medium-low",
+  "I060: 'Itani fhethu ha u vhulunga' is a calque for free storage; no delete verb, negation preserved; 'your phone' added",
+  "R039: 'Masheleni a dzhenaho' fixes earlier income/benefit problem",
+  "No item needed a full repair; where a money/unit/lender word could not be confirmed I held rather than invented a replacement"
+ ],
+ "confidence_limits": "I am a machine reviewer, not a fluent Tshivenda speaker. My Tshivenda knowledge is limited and uneven; back-translations are best-effort, and 'ok' verdicts mean no problem I could detect, not speaker approval. Holds reflect strictness on money/lender words I cannot verify. All items, especially ok ones with minor notes (R049, R062, R099, R275, R284, I060), should be confirmed by a native speaker before shipping."
+}

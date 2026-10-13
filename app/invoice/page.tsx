@@ -6,6 +6,9 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import {
+  isRecordsRegionalLang, recordsDraftNotice, recordsFill, recordsPaired, recordsQuantityLabel, recordsTemplate,
+} from '@/lib/records-regional-drafts';
 import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -37,7 +40,7 @@ import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile, SalesLog } from '@/lib/db/types';
 import { APP_HEADER_INSET } from '@/lib/app-header';
-import { RECORD_UNITS, recordQuantity, recordUnit, recordQuantityLabel, normaliseRecordUnit, validRecordQuantity } from '@/lib/farm-records';
+import { RECORD_UNITS, recordQuantity, recordUnit, normaliseRecordUnit, validRecordQuantity } from '@/lib/farm-records';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -217,13 +220,21 @@ export default function InvoicePage() {
   const { lang } = useLanguage();
   const simple = useAppLevel() === 'simple';
   const ui = (english: string, isiZulu?: string) => {
-    if (lang !== 'zu') return english;
-    const zulu = isiZulu ?? INVOICE_ZU[english] ?? english;
-    return INVOICE_PAIRED_COPY.has(english) ? `${english} — ${zulu}` : zulu;
+    if (lang !== 'zu') {
+      // Sesotho, Tshivenda and Xitsonga: an unreviewed machine draft keyed by this exact English
+      // sentence (lib/records-regional-drafts.ts), English when there is none. A sentence a farmer
+      // may act on keeps the English beside the draft. Any other language keeps English.
+      if (!isRecordsRegionalLang(lang)) return english;
+      return INVOICE_PAIRED_COPY.has(english) ? recordsPaired(lang, english) : recordsFill(lang, english);
+    }
+    // Existing isiZulu wording always wins; only an English fallback is filled from a draft. A
+    // paired sentence is paired only when there is a draft to pair (it used to print the English twice).
+    const zulu = recordsFill('zu', english, isiZulu ?? INVOICE_ZU[english] ?? english);
+    return INVOICE_PAIRED_COPY.has(english) && zulu !== english ? `${english} — ${zulu}` : zulu;
   };
   const paymentLabel = (method: PaymentMethod) => lang === 'zu'
     ? ({ cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' } as const)[method]
-    : paymentMethodLabel(method);
+    : recordsFill(lang, paymentMethodLabel(method));
   const { user, profile: signedInProfile, refreshProfile } = useAuth();
   // Sample mode has no signed-in user, so useAuth() returns no profile and the demo invoice
   // printed a bare "Your name" placeholder — which reads as an unbuilt feature rather than an
@@ -511,7 +522,7 @@ export default function InvoicePage() {
     try {
       const invalid = invoiceEntryError(candidate);
       if (invalid) throw new Error(invalid);
-      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new Error('Enter a positive quantity. Eggs and items need whole numbers.');
+      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new Error(ui('Enter a positive quantity. Eggs and items need whole numbers.'));
       if (sourceSaleId) {
         if (!linkedSale) throw new Error(ui('Load the recorded sale before saving this invoice.'));
         const mismatch = recordedSaleInvoiceError(candidate, linkedSale, sample ? 'demo' : user?.uid ?? '');
@@ -768,6 +779,12 @@ export default function InvoicePage() {
           {/* ── Editor (screen only) ───────────────────────────────────── */}
           <div className={`no-print ${workspace.invoiceEditor} space-y-4`}>
 
+            {isRecordsRegionalLang(lang) && (
+              <p role="note" lang="en" data-records-draft-notice={lang} className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>
+                {recordsDraftNotice(lang)} The invoice a buyer receives (print and PDF) stays in English.
+              </p>
+            )}
+
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
@@ -826,7 +843,7 @@ export default function InvoicePage() {
                       onChange={event => selectRecordedSale(event.target.value)} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
                       <option value="">{salesReady ? ui('Choose the exact sale') : ui('Loading your sales…')}</option>
                       {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && recordQuantity(sale) !== null && sale.amount >= 0)).map(sale => (
-                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {recordQuantityLabel(sale)} · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
+                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {recordsQuantityLabel(sale, lang)} · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
                       ))}
                     </select>
                   </label>
@@ -837,7 +854,7 @@ export default function InvoicePage() {
               {entryKind === 'paper-copy' && (
                 <label className="block">
                   <FieldLabel>{ui('Original paper invoice number or reference')}</FieldLabel>
-                  <input aria-label="Original paper invoice reference" value={paperReference} onChange={event => setPaperReference(event.target.value)} maxLength={120}
+                  <input aria-label={ui('Original paper invoice reference')} value={paperReference} onChange={event => setPaperReference(event.target.value)} maxLength={120}
                     placeholder={ui('As written on the paper invoice')} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
                 </label>
               )}
@@ -987,7 +1004,7 @@ export default function InvoicePage() {
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('VAT / tax no.')}</FieldLabel>
                   <input value={letterhead.taxNumber} onChange={(e) => patchLetterhead({ taxNumber: e.target.value })}
-                    placeholder="Optional"
+                    placeholder={ui('Optional')}
                     className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
               </div>
@@ -1102,7 +1119,10 @@ export default function InvoicePage() {
                       <Trash2 size={14} />
                     </button>
                   </div>
-                  <div className="flex items-center gap-2">
+                  {/* A long drafted word for "each" (Tshivenda "tshiṅwe na tshiṅwe") pushed the price box past the
+                      card edge at 390px, so only then does the price drop to its own line. English and isiZulu
+                      keep the single row they always had. */}
+                  <div className={`flex items-center gap-2${ui('each').length > 10 ? ' flex-wrap' : ''}`}>
                     {/* parseFloat, not parseInt: UNITS includes kg and crates, and 12.5 kg of tomatoes became 12 —
                         the farmer underpaid on the document the buyer pays from, always in the same
                         direction. Worse, a sub-unit line (0.75 kg of chillies) became 0, which
@@ -1118,7 +1138,7 @@ export default function InvoicePage() {
                       className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
-                    <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
+                    <div className={`flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2${ui('each').length > 10 ? ' basis-full' : ''}`} style={FIELD}>
                       <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
@@ -1131,12 +1151,14 @@ export default function InvoicePage() {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;
                     if (!guide || it.unit !== 'kg') return null;
+                    // The English templates are the lookup keys; {price} is the only moving part, so a
+                    // draft that lost it is refused and the English sentence shows instead.
                     const first = wholesaleBuyer
-                      ? `Shops/bulk about R${guide.wholesalePerKg}/kg`
-                      : `Direct/farm gate about R${guide.retailPerKg}/kg`;
+                      ? recordsTemplate(lang, 'Shops/bulk about R{price}/kg', null, { price: guide.wholesalePerKg })
+                      : recordsTemplate(lang, 'Direct/farm gate about R{price}/kg', null, { price: guide.retailPerKg });
                     const second = wholesaleBuyer
-                      ? `direct/farm gate about R${guide.retailPerKg}/kg`
-                      : `shops/bulk about R${guide.wholesalePerKg}/kg`;
+                      ? recordsTemplate(lang, 'direct/farm gate about R{price}/kg', null, { price: guide.retailPerKg })
+                      : recordsTemplate(lang, 'shops/bulk about R{price}/kg', null, { price: guide.wholesalePerKg });
                     return (
                       <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', color: 'var(--text-secondary)' }}>
                         {it.priceFromGuide && (
@@ -1144,8 +1166,8 @@ export default function InvoicePage() {
                             {ui('Suggested price filled in — change it if you agreed something else.')}
                           </div>
                         )}
-                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
-                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : guide.confidence === 'recommended' ? 'Recommended price (average of prices found); confirm locally.' : 'Sourced guide.'}
+                        <strong style={{ color: 'var(--text-primary)' }}>{first}</strong> · {second} — {recordsTemplate(lang, 'guide price from {date}.', null, { date: priceDateLabel(guide) })}
+                        {' '}{ui(guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : guide.confidence === 'recommended' ? 'Recommended price (average of prices found); confirm locally.' : 'Sourced guide.')}
                       </div>
                     );
                   })()}

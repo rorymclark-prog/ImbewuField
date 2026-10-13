@@ -73,7 +73,8 @@ export function numberLabel(n: number, maximumFractionDigits = 3): string {
   const sign = n < 0 ? '-' : '';
   const abs = Math.abs(n);
   const factor = 10 ** Math.max(0, Math.min(20, Math.trunc(maximumFractionDigits)));
-  const rounded = Math.round(abs * factor) / factor;
+  // Large entered values must not become Infinity merely while formatting decimals.
+  const rounded = abs <= Number.MAX_VALUE / factor ? Math.round(abs * factor) / factor : abs;
   const [whole, frac] = rounded.toString().split('.');
   const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return `${sign}${grouped}${frac ? `.${frac}` : ''}`;
