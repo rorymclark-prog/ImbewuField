@@ -75,8 +75,8 @@ function LastSiteCard({ site }: { site: LastSite }) {
   const { t } = useLanguage();
   const d = site.locationData;
   const stats = [
-    { label: t('homeStatRain'), value: `${d.rainfall.annual}mm/yr` },
-    { label: t('homeStatTemp'), value: `${d.climate.meanTemp}°C avg` },
+    { label: t('homeStatRain'), value: `${d.rainfall.annual}${t('unitRainPerYear')}` },
+    { label: t('homeStatTemp'), value: `${d.climate.meanTemp}${t('unitTempAverage')}` },
     { label: t('homeStatSoilPH'), value: String(d.soil.ph) },
     { label: t('homeStatASL'), value: `${d.elevation.elevation}m` },
   ];

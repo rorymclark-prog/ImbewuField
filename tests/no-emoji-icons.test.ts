@@ -88,7 +88,6 @@ const RATCHET: Record<string, { reason: string; budget: number }> = {
       + 'unlike the crop catalog there is no test proving that, so they are counted, not skipped.',
     budget: 7,
   },
-  'lib/evidence-catalogue.ts': { reason: 'the NGO evidence library\'s category icons', budget: 7 },
   'lib/network-demo.ts': { reason: 'two glyphs in the network showcase\'s demo data', budget: 2 },
   'lib/forward-harvests.ts': { reason: 'one glyph in a harvest projection label', budget: 1 },
   'lib/crop-plan.ts': { reason: 'one CropIcon fallback, same shape as the catalog\'s', budget: 1 },
