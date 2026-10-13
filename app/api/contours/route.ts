@@ -65,6 +65,17 @@ function pixelToLat(py: number, z: number): number {
   return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
 }
 
+// sec-01: the loop itself stops at maxCount — it never builds the full elevation-range array and
+// slices afterwards, which is what let a tiny interval burn CPU/memory proportional to
+// (max - min) / interval before the old `.slice(0, MAX_THRESHOLDS)` ever ran.
+export function buildThresholds(min: number, max: number, interval: number, maxCount: number): number[] {
+  const startEle = Math.floor(min / interval) * interval;
+  const endEle = Math.ceil(max / interval) * interval;
+  const thresholds: number[] = [];
+  for (let t = startEle; t <= endEle && thresholds.length < maxCount; t += interval) thresholds.push(t);
+  return thresholds;
+}
+
 async function fetchTileElevations(z: number, x: number, y: number, token: string): Promise<number[][] | null> {
   const n = 2 ** z;
   if (x < 0 || y < 0 || x >= n || y >= n) return null; // off the world (padding wrapped past a pole)
@@ -101,8 +112,14 @@ export async function GET(req: NextRequest) {
   if ([minLon, minLat, maxLon, maxLat].some((v) => isNaN(v)) || minLon >= maxLon || minLat >= maxLat) {
     return NextResponse.json({ error: 'Invalid bbox — need minLon,minLat,maxLon,maxLat' }, { status: 400 });
   }
-  if (!Number.isFinite(interval) || interval <= 0 || !Number.isFinite(major) || major <= 0) {
-    return NextResponse.json({ error: 'interval and major must be positive finite metres' }, { status: 400 });
+  // sec-01: a near-zero interval (e.g. 1e-9) is "positive and finite" but turns the threshold
+  // loop below into millions of iterations before anything caps it — an unauthenticated caller
+  // could run the server out of memory/CPU with one request. Clamp to a sane site-scale range.
+  if (!Number.isFinite(interval) || interval < 0.5 || interval > 100) {
+    return NextResponse.json({ error: 'interval must be a finite number of metres between 0.5 and 100' }, { status: 400 });
+  }
+  if (!Number.isFinite(major) || major <= 0) {
+    return NextResponse.json({ error: 'major must be a positive finite number of metres' }, { status: 400 });
   }
   if (maxLon - minLon > MAX_BBOX_DEG || maxLat - minLat > MAX_BBOX_DEG) {
     return NextResponse.json({ error: 'bbox too large for on-the-fly fine contours (site-scale only)' }, { status: 400 });
@@ -185,11 +202,7 @@ export async function GET(req: NextRequest) {
       if (v > max) max = v;
     }
   }
-  const startEle = Math.floor(min / interval) * interval;
-  const endEle = Math.ceil(max / interval) * interval;
-  const thresholds: number[] = [];
-  for (let t = startEle; t <= endEle; t += interval) thresholds.push(t);
-  const cappedThresholds = thresholds.slice(0, MAX_THRESHOLDS);
+  const thresholds = buildThresholds(min, max, interval, MAX_THRESHOLDS);
 
   const originTileX = tileXMin;
   const originTileY = tileYMin;
@@ -200,7 +213,7 @@ export async function GET(req: NextRequest) {
   };
 
   const features: ContourFeature[] = [];
-  for (const t of cappedThresholds) {
+  for (const t of thresholds) {
     // Snap to nearest multiple check with float-safe rounding.
     const isMajor = Math.abs(Math.round(t / major) * major - t) < 1e-6;
     const paths = isoLines(grid, t, { noQuadTree: true });
