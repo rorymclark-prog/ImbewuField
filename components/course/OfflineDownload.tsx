@@ -38,8 +38,19 @@ interface Props {
   compact?: boolean;
 }
 
+// These exact offline phrases remain uncertain in the source-bound 12 October audit.
+// Use the shared English source until wording review clears each key; no new translation is guessed.
+const OFFLINE_ENGLISH_HOLDS: Readonly<Record<string, readonly string[]>> = {
+  st: ['offlineQualityHigherNote', 'offlineGetSlidesWhileSignal'],
+  ve: ['offlineDownloadQuality', 'offlineQualityHigher'],
+  ts: ['offlineQualityHigherNote', 'offlineLowStorage'],
+};
+
 export default function OfflineDownload({ moduleIds, lang, label, compact = false }: Props) {
-  const { t } = useLanguage();
+  const { t: draftText } = useLanguage();
+  const t = (key: string) => OFFLINE_ENGLISH_HOLDS[lang]?.includes(key)
+    ? translate('en', key)
+    : draftText(key);
   // Simple / All tools (lib/app-level.ts). Farmers get Standard quality silently — the picker
   // below is a facilitator/funder tool for a projector, not a decision a farmer on metered data
   // needs to make; `quality` still defaults to 'standard' either way.
@@ -343,8 +354,8 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
       {tightOnSpace && phase !== 'done' && (
         <p className="font-sans text-xs leading-relaxed" style={{ color: '#8A4B2A' }}>
-          {/* The TS draft asserts insufficient space; the estimate only warrants the canonical may-not-fit warning. */}
-          {lang === 'ts' ? translate('en', 'offlineLowStorage') : t('offlineLowStorage')}
+          {/* The estimate warrants may-not-fit, so the stronger TS draft stays in the English hold above. */}
+          {t('offlineLowStorage')}
         </p>
       )}
     </div>

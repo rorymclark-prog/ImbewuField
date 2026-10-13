@@ -60,6 +60,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Study offline five-wording close-out — 13 October 2026](2026-10-13/study-offline-five-holds-codex.md).
+
 - [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 - [App-wide audit close-out: all 92 findings dispositioned — 10 October 2026](2026-10-10/app-wide-closeout-claude.md).
