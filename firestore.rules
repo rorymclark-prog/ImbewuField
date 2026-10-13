@@ -115,12 +115,21 @@ service cloud.firestore {
 
     // sec-07: message_threads create had no check at all on WHO the other participant is — any
     // two signed-in users, any org, could open a thread with each other. There is no connection/
-    // accepted-contact collection in this schema today, so the gate is same org, read straight off
-    // each participant's own profile (never trusts the thread doc's own fields for this).
+    // accepted-contact collection in this schema today, so the gate is same org OR both already
+    // opted into the community layer (bothOptedIntoCommunity() below) — same-org alone would have
+    // disabled community 1:1 messaging between org-less farmers, a product regression, not a fix.
+    // orgOf() reads each participant's OWN profile with `.get('org_id', null)`, never myOrg() or
+    // bare field access: a self-signup profile (updateMyProfile never sets org_id at all) has no
+    // org_id KEY, and dot access on a genuinely absent key errors the whole rule closed.
+    function orgOf(uid) {
+      return get(/databases/$(database)/documents/profiles/$(uid)).data.get('org_id', null);
+    }
     function sameOrgThread(participants) {
-      return myOrg() != null
-        && get(/databases/$(database)/documents/profiles/$(participants[0])).data.org_id == myOrg()
-        && get(/databases/$(database)/documents/profiles/$(participants[1])).data.org_id == myOrg();
+      return orgOf(participants[0]) != null && orgOf(participants[0]) == orgOf(participants[1]);
+    }
+    function bothOptedIntoCommunity(participants) {
+      return exists(/databases/$(database)/documents/community_profiles/$(participants[0]))
+        && exists(/databases/$(database)/documents/community_profiles/$(participants[1]));
     }
     // sec-07: participant_names is denormalised display text the OTHER participant renders
     // as-is — unbounded, it let one user pin an arbitrarily large string (and nothing but
@@ -245,10 +254,15 @@ service cloud.firestore {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'production') || (isMentor() && inMyOrg(resource.data));
       // sec-06: org_id is pinned to the WRITER'S OWN org (never the client's choice) — without
       // this, a farmer could stamp production rows with another org's id and pollute that org's
-      // mentor/NGO dashboards with rows that were never theirs to see.
+      // mentor/NGO dashboards with rows that were never theirs to see. `.get('org_id', null)` on
+      // BOTH sides, not myOrg()/bare field access: a self-signup profile (updateMyProfile never
+      // sets org_id at all) has no org_id KEY, and dot access on a genuinely absent key errors
+      // the whole rule closed — which would have blocked every org-less farmer from saving
+      // production at all. `.get(key, default)` is this file's existing idiom for exactly that
+      // (see funderEnabled()/surveyAnalyst() above).
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.org_id == myOrg()
+        && request.resource.data.get('org_id', null) == prof().get('org_id', null)
         && validProduceQuantity(request.resource.data)
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
@@ -269,10 +283,11 @@ service cloud.firestore {
 
     match /sales_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'sales') || (isMentor() && inMyOrg(resource.data));
-      // sec-06: org_id pinned to the writer's own org — see the note on production_logs above.
+      // sec-06: org_id pinned to the writer's own org, with the same `.get('org_id', null)` on
+      // both sides as production_logs above (never myOrg()/bare field access here).
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.org_id == myOrg()
+        && request.resource.data.get('org_id', null) == prof().get('org_id', null)
         && validProduceQuantity(request.resource.data)
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
@@ -295,10 +310,11 @@ service cloud.firestore {
 
     match /expense_logs/{id} {
       allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'expenses') || (isMentor() && inMyOrg(resource.data));
-      // sec-06: org_id pinned to the writer's own org — see the note on production_logs above.
+      // sec-06: org_id pinned to the writer's own org, with the same `.get('org_id', null)` on
+      // both sides as production_logs above (never myOrg()/bare field access here).
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
-        && request.resource.data.org_id == myOrg()
+        && request.resource.data.get('org_id', null) == prof().get('org_id', null)
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.item is string && request.resource.data.item.size() > 0;
       // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
@@ -638,12 +654,13 @@ service cloud.firestore {
     match /message_threads/{threadId} {
       allow read:   if communityOn() && signedIn() && request.auth.uid in resource.data.participants;
       // sec-07: any two signed-in users could previously open a thread with each other, with
-      // whatever sender name either of them chose. Now requires the two participants to share an
-      // org (see sameOrgThread() — there is no connections/accepted-contact collection in this
-      // schema to check instead) and caps both display names.
+      // whatever sender name either of them chose. Now requires the two participants to either
+      // share an org, or both already have opted into the community layer (community 1:1
+      // messaging between org-less farmers is a deliberate, existing feature — not loosened
+      // here), and caps both display names.
       allow create: if communityOn() && signedIn() && request.auth.uid in request.resource.data.participants
         && request.resource.data.participants.size() == 2
-        && sameOrgThread(request.resource.data.participants)
+        && (sameOrgThread(request.resource.data.participants) || bothOptedIntoCommunity(request.resource.data.participants))
         && validThreadNames(request.resource.data);
       // Membership AND participant_names are immutable after creation — only
       // last_message/last_message_at may change (set when a message is sent).
