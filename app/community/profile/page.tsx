@@ -211,10 +211,11 @@ export default function CommunityProfilePage() {
 
         <div className={workspace.twoColumns}>
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-display-name" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityDisplayNameLabel')}
-            </div>
+            </label>
             <input
+              id="community-profile-display-name"
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
@@ -225,10 +226,11 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-area" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityAreaLabel')}
-            </div>
+            </label>
             <input
+              id="community-profile-area"
               type="text"
               value={areaText}
               onChange={(e) => setAreaText(e.target.value)}
@@ -240,10 +242,11 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
+            <label htmlFor="community-profile-bio" className="block font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityBioLabel')}
-            </div>
+            </label>
             <textarea
+              id="community-profile-bio"
               value={bio}
               onChange={(e) => setBio(e.target.value.slice(0, 240))}
               placeholder={t('communityBioPlaceholder')}
@@ -254,7 +257,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div id="community-profile-crops-label" className="font-sans uppercase tracking-widest" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
               {t('communityCropsLabel')}
             </div>
             {(() => {
@@ -265,7 +268,7 @@ export default function CommunityProfilePage() {
                 || crops.some((c) => !COMMON_CROP_OPTIONS.includes(c));
               const visible = cropsExpanded ? CROP_OPTIONS : COMMON_CROP_OPTIONS;
               return (
-                <div className="flex flex-wrap gap-2">
+                <div role="group" aria-labelledby="community-profile-crops-label" className="flex flex-wrap gap-2">
                   {visible.map((c) => (
                     <Chip key={c} label={c} on={crops.includes(c)} onClick={() => toggleCrop(c)} />
                   ))}

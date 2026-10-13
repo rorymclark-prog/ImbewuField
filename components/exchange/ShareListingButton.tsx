@@ -55,8 +55,8 @@ export default function ShareListingButton({
         style={{
           fontSize: 12,
           padding: '6px 12px',
-          background: '#25D366',
-          color: '#fff',
+          background: 'var(--color-forest-800)',
+          color: 'var(--color-canvas)',
           border: 'none',
           cursor: 'pointer',
         }}

@@ -229,10 +229,10 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
 
 function Stat({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
-    <div className="rounded-xl p-3 flex-1" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>{label}</div>
+    <div className="rounded-xl p-3 flex-1" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
       <div className="font-display font-bold text-2xl mt-0.5" style={{ color }}>{value}</div>
-      <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{sub}</div>
+      <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{sub}</div>
     </div>
   );
 }
@@ -240,18 +240,18 @@ function Stat({ label, value, sub, color }: { label: string; value: string; sub:
 function Spinner() {
   return (
     <div className="flex items-center justify-center py-6">
-      <Loader2 className="animate-spin" size={20} style={{ color: '#1F4D2B' }} />
+      <Loader2 className="animate-spin" size={20} style={{ color: 'var(--color-forest-800)' }} />
     </div>
   );
 }
 
 function SkeletonRow() {
   return (
-    <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-      <div className="rounded-full flex-shrink-0" style={{ width: 26, height: 26, background: '#EDE7DB' }} />
+    <div className="flex items-center gap-2.5 px-2.5 py-2 rounded-lg" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+      <div className="rounded-full flex-shrink-0" style={{ width: 26, height: 26, background: 'var(--bg-3)' }} />
       <div className="flex-1 space-y-1">
-        <div className="rounded" style={{ height: 10, width: '60%', background: '#EDE7DB' }} />
-        <div className="rounded" style={{ height: 8, width: '40%', background: '#EDE7DB' }} />
+        <div className="rounded" style={{ height: 10, width: '60%', background: 'var(--bg-3)' }} />
+        <div className="rounded" style={{ height: 8, width: '40%', background: 'var(--bg-3)' }} />
       </div>
     </div>
   );
@@ -453,20 +453,20 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   return (
     <div className="flex flex-col w-full h-full overflow-hidden">
       {/* Stat row — 2×2 grid on mobile (fits 375px), 4-across flex row on desktop */}
-      <div className="flex-shrink-0 grid grid-cols-2 gap-2 px-3 py-3 md:flex md:gap-3 md:px-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
+      <div className="flex-shrink-0 grid grid-cols-2 gap-2 px-3 py-3 md:flex md:gap-3 md:px-4" style={{ borderBottom: '1px solid var(--border)' }}>
         {mode === 'funder' ? (
           <>
 
-            <Stat label={ui('Gardens','Izingadi')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="#1F4D2B" />
-            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('farmers supported','abalimi abasekelwayo')} color="#20190F" />
-            <Stat label={ui('Food grown','Ukudla okukhiqiziwe')} value={`${dashboardTotals.produceT} t`} sub={ui('this season','kule sizini')} color="#2F6F9E" />
+            <Stat label={ui('Gardens','Izingadi')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="var(--color-forest-800)" />
+            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('farmers supported','abalimi abasekelwayo')} color="var(--text-primary)" />
+            <Stat label={ui('Food grown','Ukudla okukhiqiziwe')} value={`${dashboardTotals.produceT} t`} sub={ui('this season','kule sizini')} color="var(--blue)" />
           </>
         ) : (
           <>
-            <Stat label={ui('Active gardens','Izingadi ezisebenzayo')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="#1F4D2B" />
-            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('enrolled this cycle','ababhaliswe kulo mjikelezo')} color="#20190F" />
-            <Stat label={ui('Produce, season','Umkhiqizo, isizini')} value={`${dashboardTotals.produceT} t`} sub={ui('logged by supervisors','oqoshwe abaphathi')} color="#2F6F9E" />
-            <Stat label={ui('Training done','Ukuqeqeshwa okuqediwe')} value={`${dashboardTotals.training}%`} sub={ui('across active gardens','kuzo zonke izingadi ezisebenzayo')} color="#9E5C08" />
+            <Stat label={ui('Active gardens','Izingadi ezisebenzayo')} value={dashboardTotals.gardens.toString()} sub={ui(isDemo ? 'in this tour register' : 'in your organisation', isDemo ? 'kule rejista yesibonelo' : 'enhlanganweni yakho')} color="var(--color-forest-800)" />
+            <Stat label={ui('Farmers','Abalimi')} value={numberLabel(dashboardTotals.farmers)} sub={ui('enrolled this cycle','ababhaliswe kulo mjikelezo')} color="var(--text-primary)" />
+            <Stat label={ui('Produce, season','Umkhiqizo, isizini')} value={`${dashboardTotals.produceT} t`} sub={ui('logged by supervisors','oqoshwe abaphathi')} color="var(--blue)" />
+            <Stat label={ui('Training done','Ukuqeqeshwa okuqediwe')} value={`${dashboardTotals.training}%`} sub={ui('across active gardens','kuzo zonke izingadi ezisebenzayo')} color="var(--gold)" />
           </>
         )}
       </div>
@@ -486,54 +486,54 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         <div
           className={`${garden ? 'hidden md:block' : 'block'} w-full md:w-[380px] md:flex-shrink-0 overflow-y-auto`}
           style={{
-            background: '#F5F0E8',
-            borderRight: '1px solid #E2D8C4',
+            background: 'var(--bg-2)',
+            borderRight: '1px solid var(--border)',
           }}
         >
           {/* ── LEVEL 1 — gardens list ── */}
           <div className="p-3">
             <div className="flex items-center justify-between mb-2 px-1">
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
+              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
                 {ui(mode === 'funder' ? 'Funded gardens' : 'Gardens', mode === 'funder' ? 'Izingadi ezixhaswayo' : 'Izingadi')}
               </div>
               {isDemo && (
-                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: '#9E5C08', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
+                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: 'var(--gold)', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
               )}
             </div>
-            {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'#506158'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
-            <label className="block text-sm mb-3" style={{color:'#36553d'}}>{ui('Area / village','Indawo / isigodi')}<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'#fff',border:'1px solid #c6cfbf'}}><option value="All areas">{ui('All areas','Zonke izindawo')}</option>{areaNames.map(a=><option key={a} value={a}>{a === 'Area not recorded' ? ui(a,'Indawo ayirekhodiwe') : a}</option>)}</select></label>
+            {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
+            <label className="block text-sm mb-3" style={{color:'var(--color-forest-700)'}}>{ui('Area / village','Indawo / isigodi')}<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'var(--input-bg)',border:'1px solid #c6cfbf'}}><option value="All areas">{ui('All areas','Zonke izindawo')}</option>{areaNames.map(a=><option key={a} value={a}>{a === 'Area not recorded' ? ui(a,'Indawo ayirekhodiwe') : a}</option>)}</select></label>
             {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?ui('Close Lima example','Vala isibonelo saseLima'):ui('Try Lima for this role','Zama isibonelo saseLima sale ndima')}</button>}
             {showSampleLima && isDemo && <SampleLimaConversation role={mode==='funder'?'funder':'ngo'}/>}
             {gardensLoading ? (
               <div className="space-y-1" aria-label={ui('Loading gardens','Kulayishwa izingadi')}>
-                <p className="text-xs" style={{color:'#755942'}}>{ui('Loading gardens…','Kulayishwa izingadi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
+                <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('Loading gardens…','Kulayishwa izingadi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
               </div>
             ) : gardensLoadError ? (
-              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)', color: 'var(--danger)' }}>
                 {ui('We could not load the gardens for this organisation. Check your account access and try again.','Asikwazanga ukulayisha izingadi zale nhlangano. Hlola ukuthi i-akhawunti yakho inemvume yokuzibona, bese uzama futhi.')}
               </div>
             ) : gardens.length === 0 ? (
-              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#755942' }}>
+              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                 {ui('No gardens have been added yet.','Azikho izingadi ezifakiwe okwamanje.')}
               </div>
             ) : (
               <div className="space-y-1">
                 {areaGardens.map((g,index) => (
-                  <Fragment key={g.id}>{(index===0 || areaGardens[index-1].town!==g.town) && <h3 className="text-sm font-semibold pt-4 pb-2" style={{color:'#36553d'}}>{g.town || ui('Area not recorded','Indawo ayirekhodiwe')} · {areaGardens.filter(x=>x.town===g.town).length} {ui('gardens','izingadi')}</h3>}<button
+                  <Fragment key={g.id}>{(index===0 || areaGardens[index-1].town!==g.town) && <h3 className="text-sm font-semibold pt-4 pb-2" style={{color:'var(--color-forest-700)'}}>{g.town || ui('Area not recorded','Indawo ayirekhodiwe')} · {areaGardens.filter(x=>x.town===g.town).length} {ui('gardens','izingadi')}</h3>}<button
                     key={g.id}
                     onClick={() => selectGarden(g)}
                     className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all"
                     style={{
-                      background: garden?.id === g.id ? 'rgba(31,77,43,0.12)' : '#F5F0E8',
-                      border: garden?.id === g.id ? '1px solid rgba(31,77,43,0.4)' : '1px solid #E2D8C4',
+                      background: garden?.id === g.id ? 'rgba(31,77,43,0.12)' : 'var(--bg-2)',
+                      border: garden?.id === g.id ? '1px solid rgba(31,77,43,0.4)' : '1px solid var(--border)',
                     }}
                   >
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: STATUS[g.status].color }} />
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{g.name}</div>
-                      <div className="text-xs font-mono" style={{ color: '#755942' }}>{g.town} · {g.farmers || '—'} {ui('farmers','abalimi')}</div>{g.kind && <div className="text-xs mt-1" style={{ color: '#36553d' }}>{g.kind} · {numberLabel(Math.round(g.areaM2 ?? 0))} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
+                      <div className="text-xs font-display font-medium truncate" style={{ color: 'var(--text-primary)' }}>{g.name}</div>
+                      <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{g.town} · {g.farmers || '—'} {ui('farmers','abalimi')}</div>{g.kind && <div className="text-xs mt-1" style={{ color: 'var(--color-forest-700)' }}>{g.kind} · {numberLabel(Math.round(g.areaM2 ?? 0))} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
                     </div>
-                    <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2F6F9E' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
+                    <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--blue)' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
                   </button></Fragment>
                 ))}
               </div>
@@ -544,10 +544,10 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {/* CENTRE — map. Fixed-height band on mobile, hidden once a garden is selected;
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
-          {!isDemo && <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-            <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}>
+          {!isDemo && <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            <span className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
                 {gardener
-                ? <><MapPin size={12} style={{ color: '#755942' }} /> {isDemo ? gardener.name : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
+                ? <><MapPin size={12} style={{ color: 'var(--text-muted)' }} /> {isDemo ? gardener.name : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : isDemo
                   ? `Showing ${gardens.length} garden examples`
                   : gardensLoadError
@@ -568,18 +568,18 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               </Marker>
             )}
           </ReactMapGL>}
-          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <div className="absolute bottom-3 left-3 z-10 flex gap-3 px-3 py-1.5 rounded-lg" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             {(Object.keys(STATUS) as Status[]).map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: STATUS[s].color }} />
-                <span className="text-xs font-mono" style={{ color: '#755942' }}>{ui(STATUS[s].label, s === 'thriving' ? 'Kuyachuma' : s === 'establishing' ? 'Kuyasungulwa' : 'Kudinga ukwesekwa')}</span>
+                <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui(STATUS[s].label, s === 'thriving' ? 'Kuyachuma' : s === 'establishing' ? 'Kuyasungulwa' : 'Kudinga ukwesekwa')}</span>
               </div>
             ))}
           </div>
           {/* "Select a garden" placeholder — shown only when no garden is selected */}
           {!garden && (
             <div className="absolute inset-0 flex items-end justify-center pb-16 pointer-events-none z-10">
-              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#755942' }}>
+              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                 {ui('Select a garden from the list to drill in','Khetha ingadi ohlwini ukuze ubone imininingwane yayo')}
               </div>
             </div>
@@ -590,45 +590,45 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {garden && (
           <div
             className="w-full md:w-[380px] md:flex-shrink-0 overflow-y-auto"
-            style={{ background: '#F5F0E8', borderLeft: '1px solid #E2D8C4' }}
+            style={{ background: 'var(--bg-2)', borderLeft: '1px solid var(--border)' }}
           >
             {gardener && totals ? (
               /* ── LEVEL 3 — gardener profile ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGardener(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}><ArrowLeft size={14} /> {garden.name}</button>
+                <button onClick={() => setGardener(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {garden.name}</button>
 
                 {/* Identity */}
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B', fontWeight: 600 }}>
+                  <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--color-forest-800)', fontWeight: 600 }}>
                     {isDemo ? <img data-photo-preview src={samplePortrait(gardener.name)} alt="Profile portrait illustration" className="w-full h-full object-cover rounded-full" /> : initials(gardener.name)}
-                    <span className="absolute -bottom-1 -right-1"><Camera size={10} style={{ color: '#1F4D2B' }} /></span>
+                    <span className="absolute -bottom-1 -right-1"><Camera size={10} style={{ color: 'var(--color-forest-800)' }} /></span>
                   </div>
                   <div className="min-w-0">
-                    <div className="font-display font-bold text-base truncate" style={{ color: '#20190F' }}>{gardener.name}</div>
+                    <div className="font-display font-bold text-base truncate" style={{ color: 'var(--text-primary)' }}>{gardener.name}</div>
                     {/* A funder is not the farmer's employer or their NGO — a South African ID
                         number is not theirs to see. NGO programme staff (who register farmers
                         for grants) keep it; funders get everything else on this card. */}
                     {mode !== 'funder' && (
-                      <div className="text-xs font-mono" style={{ color: '#755942' }}>ID {gardener.idNumber}</div>
+                      <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>ID {gardener.idNumber}</div>
                     )}
-                    <div className="text-xs font-mono" style={{ color: '#755942' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
-                    {lang === 'zu' && <p className="text-xs" style={{color:'#506158'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
+                    <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
+                    {lang === 'zu' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
                   </div>
                 </div>
                 <button onClick={() => { if (isDemo) setSampleView('aerial'); else mapRef.current?.flyTo({ center: [gardener.lon, gardener.lat], zoom: 16, duration: 1200 }); }}
-                  className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: '#2F6F9E' }}>
+                  className="w-full py-1.5 rounded-lg text-xs font-display transition-all flex items-center justify-center gap-1.5" style={{ background: 'rgba(47,111,158,0.14)', border: '1px solid rgba(47,111,158,0.4)', color: 'var(--blue)' }}>
                   <MapPin size={14} /> {ui(isDemo ? 'Open example location' : 'Find this garden on the map', isDemo ? 'Vula indawo yesibonelo' : 'Thola le ngadi kumephu')}
                 </button>
 
                 {gardenerLoading ? (
                   <Spinner />
                 ) : gardenerError ? (
-                  <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+                  <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: 'var(--bg-1)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)', color: 'var(--danger)' }}>
                     {ui(`We could not load ${gardener.name}'s production, sales and training data. Check your account access and try again.`,`Asikwazanga ukulayisha idatha ka-${gardener.name} yokukhiqiza, ukuthengisa nokuqeqeshwa. Hlola imvume ye-akhawunti yakho bese uzama futhi.`)}
                     <button
                       onClick={() => { void openGardener(gardener); }}
                       className="block mt-2 text-xs font-display font-semibold underline"
-                      style={{ color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                      style={{ color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
                     >
                       {ui('Retry','Zama futhi')}
                     </button>
@@ -637,11 +637,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <>
                     {/* Value summary */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.producedLabels}</div></div>
-                      <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldLabels}</div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{numberLabel(totals.soldR)}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{totals.producedLabels}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{totals.soldLabels}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--gold)' }}>R{numberLabel(totals.soldR)}</div></div>
                     </div>
-                    <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
+                    <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-muted)' }}>
                       {totals.weightCoverageUnknown ? 'Weight not matched to sales: unknown — counts and packages are kept in their own units.' : totals.kept === null
                         ? ui('Harvest not matched to sales: unknown — sales exceed recorded harvest','Inani lesivuno elingahambisani nokuthengisa: alaziwa — okuthengisiwe kudlula isivuno esirekhodiwe')
                         : ui(`Harvest not matched to sales: ${totals.kept} kg`,`Isivuno esingahambisani nokuthengisa: ${totals.kept} kg`)}
@@ -650,22 +650,22 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {/* Courses */}
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>{ui('Courses & training','Izifundo nokuqeqeshwa')}</div>
-                        <span className="text-xs font-mono" style={{ color: '#1F4D2B' }}>{gardener.trainingPct}%</span>
+                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{ui('Courses & training','Izifundo nokuqeqeshwa')}</div>
+                        <span className="text-xs font-mono" style={{ color: 'var(--color-forest-800)' }}>{gardener.trainingPct}%</span>
                       </div>
                       <div className="grid grid-cols-2 gap-1">
                         {gardener.courses.map((c) => (
-                          <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}>
-                            <span className="flex-shrink-0" style={{ color: c.done ? '#1F4D2B' : '#755942' }}>{c.done ? <Check size={10} /> : '○'}</span>
-                            <span className="truncate" style={{ color: c.done ? '#5C5040' : '#755942' }}>{c.name}</span>
+                          <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}>
+                            <span className="flex-shrink-0" style={{ color: c.done ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{c.done ? <Check size={10} /> : '○'}</span>
+                            <span className="truncate" style={{ color: c.done ? 'var(--text-muted)' : 'var(--text-muted)' }}>{c.name}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
-                    {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
-                    {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'#506158'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
+                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: 'var(--bg-2)', color: 'var(--color-forest-800)' }} onClick={() => setSampleView('design')}>{ui('Open example garden design →','Vula umklamo wengadi oyisibonelo →')}</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>{ui('Close example','Vala isibonelo')}</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>{ui('Explore the separate Ubhejane design workspace →','Hlola indawo ehlukile yokuklama yase-Ubhejane →')}</button></>}
+                    {!isDemo && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{ui('This register does not include the farmer’s private design.','Le rejista ayifaki umklamo wangasese womlimi.')}</p>}
+                    {lang === 'zu' && <p className="text-xs leading-relaxed" style={{color:'var(--text-muted)'}}>{ui('', 'Umbiko we-PDF ongezansi usalokhu unombhalo wesiNgisi. Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo; izindleko azifakiwe, ngakho lo mbiko awubonisi inzuzo.')}</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>{ui('Preview & download this garden record','Buka bese ulanda irekhodi lale ngadi')}</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },
@@ -677,7 +677,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Produce photos */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>{ui('Produce photos','Izithombe zomkhiqizo')}</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Produce photos','Izithombe zomkhiqizo')}</div>
                       <div className="flex gap-1.5 flex-wrap">
                         {photoCrops.map(({ crop: c, photoUrl: recordedPhoto }, i) => { const photoUrl = isDemo ? sampleProducePhoto(c.n) : recordedPhoto; return (
                           photoUrl ? (
@@ -686,29 +686,29 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img data-photo-preview src={photoUrl} alt={isDemo ? `Sample ${c.n} photo` : c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 80, height: 88, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={44} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: '#755942' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 80, height: 88, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={44} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.n}</span></div>
                           )
                         ); })}
                       </div>
-                      {isDemo && <p className="text-xs mt-2" style={{ color: '#506158' }}>{ui('AI-generated produce photos; illustrations identify the other crops.','Izithombe zomkhiqizo zenziwe nge-AI; imifanekiso ikhombisa ezinye izitshalo.')}</p>}
+                      {isDemo && <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>{ui('AI-generated produce photos; illustrations identify the other crops.','Izithombe zomkhiqizo zenziwe nge-AI; imifanekiso ikhombisa ezinye izitshalo.')}</p>}
                     </div>
 
                     {/* Books — production */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#755942' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{recordQuantityLabel(p)}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: 'var(--text-muted)' }}>{p.crop.n}</span><span className="font-mono" style={{ color: 'var(--text-muted)' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: 'var(--color-forest-800)' }}>{recordQuantityLabel(p)}</span></div>
                         ))}
                       </div>
                     </div>
 
                     {/* Books — sales */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#755942' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
+                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{recordQuantityLabel(p)} → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: 'var(--text-muted)' }}>{recordQuantityLabel(p)} → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: 'var(--blue)' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
@@ -718,36 +718,36 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ) : (
               /* ── LEVEL 2 — garden + gardeners ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#755942' }}><ArrowLeft size={14} /> {ui('all gardens','zonke izingadi')}</button>
+                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('all gardens','zonke izingadi')}</button>
                 <div>
-                  <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: '#36553d' }}>Group language: {garden.language}</p>}
+                  <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: 'var(--text-primary)' }}>{garden.name}</span></div>
+                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}
                 </div>
-                {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'#e9f1e9',color:'#214d35'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
+                {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'var(--bg-2)',color:'var(--color-forest-800)'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
-                  {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, '#20190F'], ['Weighed produce', gardenWeightLabel, '#2F6F9E'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
-                    <div key={l as string} className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#755942' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
+                  {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, 'var(--text-primary)'], ['Weighed produce', gardenWeightLabel, 'var(--blue)'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', 'var(--gold)']].map(([l, v, c]) => (
+                    <div key={l as string} className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
                   ))}
                 </div>
-                {gardenCountLabels && <p className="text-xs" style={{ color: '#506158' }}>Other recorded quantities: {gardenCountLabels}. Their weight is not recorded.</p>}
+                {gardenCountLabels && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Other recorded quantities: {gardenCountLabels}. Their weight is not recorded.</p>}
                 <div>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: '#755942' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
                   {gardenersLoading ? (
                     <div className="space-y-1" aria-label={ui('Loading gardeners','Kulayishwa abalimi')}>
-                      <p className="text-xs" style={{color:'#755942'}}>{ui('Loading gardeners…','Kulayishwa abalimi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow />
+                      <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('Loading gardeners…','Kulayishwa abalimi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow />
                     </div>
                   ) : gardeners.length === 0 ? (
-                    <p className="text-xs rounded-lg p-3" style={{background:'#FFFEFA',color:'#755942'}}>{ui('No gardeners are listed for this garden yet.','Abekho abalimi abafakwe kule ngadi okwamanje.')}</p>
+                    <p className="text-xs rounded-lg p-3" style={{background:'var(--bg-1)',color:'var(--text-muted)'}}>{ui('No gardeners are listed for this garden yet.','Abekho abalimi abafakwe kule ngadi okwamanje.')}</p>
                   ) : (
                     <div className="space-y-1">
                       {gardeners.map((gr) => {
                         const prodLabel = quantityTotals(gr.production).map(row => recordQuantityLabel(recordQuantityPayload(row.quantity, row.unit))).join(' · ') || '—';
                         return (
-                          <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img data-photo-preview src={samplePortrait(gr.name)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
-                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#755942' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
-                            <span className="text-xs font-mono flex-shrink-0 max-w-[40%] text-right break-words" style={{ color: '#1F4D2B' }}>{prodLabel}</span>
+                          <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', color: 'var(--color-forest-800)', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img data-photo-preview src={samplePortrait(gr.name)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
+                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: 'var(--text-primary)' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
+                            <span className="text-xs font-mono flex-shrink-0 max-w-[40%] text-right break-words" style={{ color: 'var(--color-forest-800)' }}>{prodLabel}</span>
                           </button>
                         );
                       })}
@@ -755,8 +755,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   )}
                 </div>
                 <div className="rounded-lg p-2.5" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: '#755942' }}>{ui('Funder report','Umbiko womxhasi')}</div>
-                  <p className="text-xs font-display leading-relaxed" style={{ color: '#5C5040' }}>{ui('Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.','Sebenzisa Imibiko ukuze ubone iphothifoliyo eyabiwe. Imvume yomlimi, ukwabelana kwenhlangano nemvume yomxhasi kunquma ukuthi yimaphi amarekhodi afakiwe; imininingwane eyimfihlo ehlonza umuntu ayifakwa.')}</p>
+                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>{ui('Funder report','Umbiko womxhasi')}</div>
+                  <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-muted)' }}>{ui('Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.','Sebenzisa Imibiko ukuze ubone iphothifoliyo eyabiwe. Imvume yomlimi, ukwabelana kwenhlangano nemvume yomxhasi kunquma ukuthi yimaphi amarekhodi afakiwe; imininingwane eyimfihlo ehlonza umuntu ayifakwa.')}</p>
                 </div>
               </div>
             )}
