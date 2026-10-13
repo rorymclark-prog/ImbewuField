@@ -487,7 +487,7 @@ test('Soil isiZulu uses localized stills instead of mismatched English Flow scen
     assert.equal(animationUrls('soil-health', slide, 'zu'), null,
       `isiZulu slide ${slide} must use the localized still while its Flow scene is visually mismatched`);
     assert.deepEqual(slideImageFor('soil-health', 'zu', slide), {
-      url: `/course-decks/soil-health/zu/slide-${String(slide).padStart(2, '0')}.jpg`,
+      url: `/course-decks/soil-health/zu/slide-${String(slide).padStart(2, '0')}.webp`,
       lang: 'zu', exact: true,
     });
   }
@@ -523,7 +523,7 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
   // gap would have quietly deleted the only coverage of per-slide fallback, right before the next
   // module arrives with a gap of its own.
   const zu5 = slideImageFor('seeds-sovereignty', 'zu', 5);
-  assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.jpg', lang: 'zu', exact: true });
+  assert.deepEqual(zu5, { url: '/course-decks/seeds-sovereignty/zu/slide-05.webp', lang: 'zu', exact: true });
 
   const deck = deckFor('seeds-sovereignty')!;
   const saved = deck.missingSlides;
@@ -531,7 +531,7 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
     deck.missingSlides = { zu: [13] };
     assert.deepEqual(
       slideImageFor('seeds-sovereignty', 'zu', 13),
-      { url: '/course-decks/seeds-sovereignty/en/slide-13.jpg', lang: 'en', exact: false },
+      { url: '/course-decks/seeds-sovereignty/en/slide-13.webp', lang: 'en', exact: false },
       'a declared gap must fall back to English for THAT slide',
     );
     // Every OTHER slide stays exact, or the note would appear where it does not belong.
@@ -623,7 +623,7 @@ test('unknown modules and slides produce no url rather than a broken one', () =>
   assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 99), null);
   // Slide 13 used to be asserted null here — the gap the PowerPoint repair left. It has been
   // rebuilt, so the honest assertion is now the opposite one.
-  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), '/course-decks/seeds-sovereignty/zu/slide-13.jpg');
+  assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 13), '/course-decks/seeds-sovereignty/zu/slide-13.webp');
 });
 
 test('slides partition by lesson exactly as the narration does', () => {
@@ -980,7 +980,7 @@ test('Sesotho silent draft starts without speech and optional English keeps its 
   try {
     const zulu = view.root.findAllByType('button').find(button => button.children.join('') === 'isiZulu')!;
     act(() => zulu.props.onClick());
-    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.jpg$/,
+    assert.match(view.root.findAllByType('img')[0].props.src, /intro-permaculture\/zu\/slide-01\.webp$/,
       'the existing English and isiZulu switch still changes the slides');
     assert.match(view.root.findByType('audio').props.src, /intro-permaculture\/zu\/slide-01\.mp3$/,
       'the existing English and isiZulu switch still changes the narration');
@@ -1356,7 +1356,7 @@ test('isiZulu deck source remains visible with English voice and withheld record
     const picture = () => view.root.findAllByType('img')[0];
     const voices = () => view.root.findByProps({ role: 'group', 'aria-label': 'Narration language' }).findAllByType('button');
     act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
-    assert.match(picture().props.src, /seeds-sovereignty\/zu\/slide-01.jpg$/);
+    assert.match(picture().props.src, /seeds-sovereignty\/zu\/slide-01.webp$/);
     assertPairText(player(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
       slide01Pair.recordedTarget, slide01Pair.sourceHeading, slide01Pair.source);
     assertPairText(imageViewer(), 'Unreviewed isiZulu draft', slide01Pair.registeredZuluTitle,
@@ -1366,7 +1366,7 @@ test('isiZulu deck source remains visible with English voice and withheld record
     for (let index = 0; index < 10; index++) {
       act(() => view.root.findAllByType('button').find(button => button.children.join('') === 'Next ›')!.props.onClick());
     }
-    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg');
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.webp');
     assert.equal(view.root.findAllByType('audio').length, 0, 'boil-versus-ferment recording cannot play');
     assert.equal(view.root.findByProps({ className: 'playControl' }).props.disabled, true);
     assert.ok(isiZuluDeckReviewHold('seeds-sovereignty', 11), 'the incorrect recorded instruction stays held');
@@ -1379,7 +1379,7 @@ test('isiZulu deck source remains visible with English voice and withheld record
     assert.match(notice, /previous isiZulu recording remains unavailable/);
     act(() => voices().find(button => button.children.join('') === 'English')!.props.onClick());
     assert.match(view.root.findByType('audio').props.src, /seeds-sovereignty\/en\/slide-11.mp3$/);
-    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.jpg',
+    assert.equal(picture().props.src, slide11Draft?.imageUrl ?? '/course-decks/seeds-sovereignty/en/slide-11.webp',
       'explicit English audio does not replace the corrected isiZulu silent card');
     for (const surface of [player(), imageViewer()]) {
       assertPairText(surface, 'Unreviewed corrected isiZulu slide draft', slide11Draft.correctedTitle,
