@@ -3,6 +3,7 @@ import { PNG } from 'pngjs';
 import { isoLines } from 'marchingsquares';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { TILE_ZOOM, TILE_SIZE, contourCacheKey } from '@/lib/contour-cache-key';
+import { buildThresholds } from '@/lib/contour-thresholds';
 
 // ── Fine-grained (5m) contour lines, generated on the fly from Mapbox's ──
 // terrain-RGB DEM (the same data already used for hillshade/3D terrain).
@@ -63,17 +64,6 @@ function pixelToLon(px: number, z: number): number {
 function pixelToLat(py: number, z: number): number {
   const n = Math.PI - (2 * Math.PI * py) / (TILE_SIZE * 2 ** z);
   return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
-}
-
-// sec-01: the loop itself stops at maxCount — it never builds the full elevation-range array and
-// slices afterwards, which is what let a tiny interval burn CPU/memory proportional to
-// (max - min) / interval before the old `.slice(0, MAX_THRESHOLDS)` ever ran.
-export function buildThresholds(min: number, max: number, interval: number, maxCount: number): number[] {
-  const startEle = Math.floor(min / interval) * interval;
-  const endEle = Math.ceil(max / interval) * interval;
-  const thresholds: number[] = [];
-  for (let t = startEle; t <= endEle && thresholds.length < maxCount; t += interval) thresholds.push(t);
-  return thresholds;
 }
 
 async function fetchTileElevations(z: number, x: number, y: number, token: string): Promise<number[][] | null> {
