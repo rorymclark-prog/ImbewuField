@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { reverseGeocode } from '@/lib/reverse-geocode';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { parseJsonBody } from '@/lib/api-json-body';
 
 export const maxDuration = 60;
 
@@ -120,7 +121,9 @@ export async function POST(req: NextRequest) {
   const metered = await meteredAi(req, auth, '/api/area-profile', client);
   if (metered.response) return metered.response;
   const { ai } = metered;
-  const { lat, lon } = await req.json();
+  const parsed = await parseJsonBody<{ lat?: unknown; lon?: unknown }>(req);
+  if (parsed.response) return parsed.response;
+  const { lat, lon } = parsed.data;
   if (typeof lat !== 'number' || typeof lon !== 'number') {
     return new Response('Invalid coordinates', { status: 400 });
   }

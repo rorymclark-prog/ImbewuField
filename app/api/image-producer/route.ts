@@ -195,7 +195,7 @@ export async function POST(req: NextRequest) {
   }
 
   const stylePreset: StylePreset =
-    body.stylePreset && body.stylePreset in STYLE_LINES ? body.stylePreset : 'field_ledger';
+    body.stylePreset && Object.hasOwn(STYLE_LINES, body.stylePreset) ? body.stylePreset : 'field_ledger';
   const elementsText = typeof body.elementsText === 'string' ? body.elementsText.slice(0, 1200) : '';
   // Capped like elementsText. The caller already assembles the brief within the same budget on line
   // boundaries; this is the server-side guard — request bodies are never trusted, and an unbounded
@@ -228,6 +228,6 @@ export async function POST(req: NextRequest) {
   // Most advanced Gemini image model — settled winner across an exhaustive
   // provider comparison (see memory: "Provider verdict") — default when the
   // caller doesn't specify.
-  const model: GeminiModel = body.model && body.model in GEMINI_MODELS ? body.model : 'pro-preview';
+  const model: GeminiModel = body.model && Object.hasOwn(GEMINI_MODELS, body.model) ? body.model : 'pro-preview';
   return callGemini(geminiKey, imageBase64, prompt, model);
 }
