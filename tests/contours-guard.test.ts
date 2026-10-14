@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test, { after, before } from 'node:test';
 import { NextRequest } from 'next/server';
 
-import { GET, buildThresholds } from '@/app/api/contours/route';
+import { GET } from '@/app/api/contours/route';
+import { buildThresholds } from '@/lib/contour-thresholds';
 import { contourCacheKey } from '@/lib/contour-cache-key';
 import { sharedLimiter } from '@/lib/api-rate-limit';
 
