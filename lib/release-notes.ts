@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 October 2026', sha: 'ee360238', changes: [
+    'Money book dates and charts show month names in Sesotho, Tshivenda, Xitsonga and isiZulu.',
+    'Sesotho, Tshivenda and Xitsonga month names are unreviewed drafts; invoices stay English.',
+  ], tour: [{ title: 'Read months in your language',
+    where: 'Money book', href: '/records',
+    detail: 'Check dates and the Charts tab; the invoice you print or share still uses English.',
+  }] },
   { when: '14 October 2026', sha: '0e2688eb', changes: [
     'Ask, Photos, Profile, Design and Places tabs now follow your language (isiZulu drafts).',
     'Error messages say what went wrong in plain words, never a bare code like 500.',
