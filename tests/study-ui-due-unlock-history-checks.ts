@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
 
 const folder = 'docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/';
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -134,10 +135,28 @@ export function studyUiDueUnlockSourceBefore(file: string, bytes: string | Uint8
   });
 }
 
+/** The four non-Study English-pending groups wave 11 spreads into the VE dictionary. */
+const WAVE_11_PENDING: Record<string, string> = { ...CHAT_PANEL_ENGLISH_PENDING, ...PHOTO_UPLOAD_ENGLISH_PENDING, ...PROFILE_SHEET_ENGLISH_PENDING, ...NETWORK_FAILURE_ENGLISH_PENDING };
+/** Remove exactly the wave 11 pending keys, each only if it still holds its exact English source value. */
+function rewindWave11Dictionary(actual: unknown): unknown {
+  if (!actual || typeof actual !== 'object') return actual;
+  const dict = actual as Record<string, unknown>;
+  const keys = Object.keys(WAVE_11_PENDING);
+  if (!keys.some(key => Object.hasOwn(dict, key))) return actual;
+  const before = { ...dict };
+  for (const key of keys) {
+    assert.equal(Object.hasOwn(currentLocale, key), false, `${key}: wave 11 key is new, absent from the due/unlock dictionary`);
+    assert.equal(dict[key], WAVE_11_PENDING[key], `${key}: wave 11 holds the exact English pending value`);
+    delete before[key];
+  }
+  return before;
+}
+
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
+  actual = rewindWave11Dictionary(actual);
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);
