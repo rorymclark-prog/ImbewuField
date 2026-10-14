@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ensureSlidesWebpCurrent, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore } from './slides-webp-history-checks.ts';
+import { ensureSlidesWebpCurrent, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore, slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 
 // A dated test may inspect a predecessor only after the complete new layer has
 // passed. The independent audit is model evidence, never fluent-speaker approval.
@@ -147,6 +147,8 @@ function ensureHistoricalReadCurrent(): void {
 }
 
 export function blindReviewedSourceBefore(file: string, supplied: string | Uint8Array): string | Uint8Array {
+  // Older owners hand over the live tree; move it behind the newer WebP layer first.
+  supplied = slidesWebpSourceBefore(file, supplied);
   const row = proof.files[file];
   if (!row) return supplied;
   ensureHistoricalReadCurrent();
@@ -184,7 +186,7 @@ export function blindReviewedNativeBefore<T>(supplied: T): T {
  * passes every source/media assertion. Other reads, including immutable dated
  * evidence, are unchanged. Current-release tests continue reading real files. */
 export const readBlindReviewedHistoryFile: typeof readFileSync = ((...args: any[]) => {
-  const value = (readFileSync as any)(...args);
+  const value = (slidesWebpHistoryReadFileSync as any)(...args);
   if (typeof args[0] === 'number') return value;
   const suppliedPath = args[0] instanceof URL ? fileURLToPath(args[0]) : String(args[0]);
   const file = resolve(root, suppliedPath).slice(root.length).replace(/^\//,'');

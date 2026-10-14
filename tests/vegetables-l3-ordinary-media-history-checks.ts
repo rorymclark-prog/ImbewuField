@@ -3,7 +3,8 @@ import { finalLanguageNextMediaBefore } from './final-language-next-media-histor
 import { validateCurrentVegetablesL1OrdinaryMedia, vegetablesL1AssetSizesBeforeOrdinary, vegetablesL1MediaBeforeEarlierProof } from './vegetables-l1-ordinary-media-history-checks.ts';
 import { vegetablesDeckBeforeL1Ordinary } from './vegetables-l1-ordinary-checks.ts';
 import assert from 'node:assert/strict';
-import { readdirSync, statSync } from 'node:fs';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryReaddirSync as readdirSync, slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
 // Validate the bounded current audit corrections before this dated predecessor claim.
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync, statSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // perf-03/perf-05 (14 Oct 2026): English and isiZulu lesson slides moved from JPEG
@@ -112,3 +113,79 @@ export function slidesWebpSourceBefore<T extends string | Uint8Array>(file: stri
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;
 }
+
+// The retired JPEG bytes are not kept in the tree. Their exact blobs stay in the
+// main commit this layer sits on (CI checks out full history), and every read is
+// held to the recorded size and digest before an older owner sees it.
+const predecessorCommit = 'eea14cdf3d81758478947fe5580f49843599b952';
+const repoPath = (path: string | URL) => {
+  const absolute = resolve(root, path instanceof URL ? fileURLToPath(path) : String(path));
+  return absolute.startsWith(root) ? absolute.slice(root.length).replace(/^\//, '') : undefined;
+};
+const retiredBytes = new Map<string, Buffer>();
+function retiredContent(row: Retired): Buffer {
+  let bytes = retiredBytes.get(row.path);
+  if (!bytes) {
+    bytes = execFileSync('git', ['cat-file', 'blob', `${predecessorCommit}:${row.path}`], { cwd: root, maxBuffer: 64 << 20 });
+    assert.equal(bytes.length, row.bytes, row.path + ': exact retired JPEG size from the predecessor commit');
+    assert.equal(sha(bytes), row.sha256, row.path + ': exact retired JPEG digest from the predecessor commit');
+    retiredBytes.set(row.path, bytes);
+  }
+  return bytes;
+}
+const absent = (path: string, syscall: string) => Object.assign(new Error(`ENOENT: no such file or directory, ${syscall} '${path}'`), { errno: -2, code: 'ENOENT', syscall, path });
+
+/** fs view of the 12 October tree for dated owners: retired JPEGs are present with
+ * their recorded bytes, and their WebP successors and the added WebPs are absent. */
+export const slidesWebpHistoryStatSync = ((path: any, options?: any) => {
+  const file = repoPath(path);
+  if (file && (successors.has(file) || added.has(file))) {
+    ensureSlidesWebpCurrent();
+    if (options?.throwIfNoEntry === false) return undefined;
+    throw absent(String(path), 'stat');
+  }
+  const row = file ? retired.get(file) : undefined;
+  if (!row) return statSync(path, options);
+  ensureSlidesWebpCurrent();
+  const live = statSync(resolve(root, row.successor.path), options)!;
+  return Object.assign(Object.create(Object.getPrototypeOf(live)), live, { size: options?.bigint ? BigInt(row.bytes) : row.bytes });
+}) as typeof statSync;
+
+export const slidesWebpHistoryExistsSync = ((path: any) => {
+  const file = repoPath(path);
+  if (file && (successors.has(file) || added.has(file))) return false;
+  if (file && retired.has(file)) { ensureSlidesWebpCurrent(); return true; }
+  return existsSync(path);
+}) as typeof existsSync;
+
+export const slidesWebpHistoryReadFileSync = ((...args: any[]) => {
+  const file = typeof args[0] === 'number' ? undefined : repoPath(args[0]);
+  if (file && (successors.has(file) || added.has(file))) throw absent(String(args[0]), 'open');
+  const row = file ? retired.get(file) : undefined;
+  if (!row) return (readFileSync as any)(...args);
+  ensureSlidesWebpCurrent();
+  const bytes = Buffer.from(retiredContent(row));
+  const encoding = typeof args[1] === 'string' ? args[1] : args[1]?.encoding;
+  return encoding ? bytes.toString(encoding) : bytes;
+}) as typeof readFileSync;
+
+export const slidesWebpHistoryReaddirSync = ((path: any, options?: any) => {
+  const entries: any[] = (readdirSync as any)(path, options);
+  const directory = repoPath(path);
+  if (directory === undefined) return entries;
+  const keyOf = (entry: any) => {
+    if (typeof entry === 'string' || Buffer.isBuffer(entry)) return join(directory, String(entry));
+    const parent = entry.parentPath ?? entry.path;
+    return join(repoPath(parent) ?? directory, entry.name);
+  };
+  if (!entries.some(entry => successors.has(keyOf(entry)) || added.has(keyOf(entry)))) return entries;
+  ensureSlidesWebpCurrent();
+  return entries.filter(entry => !added.has(keyOf(entry))).map(entry => {
+    const row = successors.get(keyOf(entry));
+    if (!row) return entry;
+    const name = row.path.split('/').pop()!;
+    if (typeof entry === 'string') return entry.replace(/[^/]+$/, name);
+    if (Buffer.isBuffer(entry)) return Buffer.from(String(entry).replace(/[^/]+$/, name));
+    return Object.assign(Object.create(Object.getPrototypeOf(entry)), entry, { name });
+  });
+}) as typeof readdirSync;

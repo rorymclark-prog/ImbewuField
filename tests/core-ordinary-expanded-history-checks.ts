@@ -6,7 +6,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { statSync } from 'node:fs';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
 // Validate the bounded current audit corrections before this dated predecessor claim.
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { readingTitleLightestNativeBeforeHistory, readingTitleLightestPairBeforeHistory,
