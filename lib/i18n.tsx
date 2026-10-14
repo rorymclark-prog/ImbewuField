@@ -7,7 +7,15 @@ import {
   removeSignedInLegacyLocalStorageKey,
 } from '@/lib/account-local-storage';
 
-import { DESIGN_STUDIO_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import {
+  DESIGN_STUDIO_ENGLISH_PENDING,
+  MENTOR_ENGLISH_PENDING,
+  CHAT_PANEL_ENGLISH_PENDING,
+  PHOTO_UPLOAD_ENGLISH_PENDING,
+  PROFILE_SHEET_ENGLISH_PENDING,
+  NETWORK_FAILURE_ENGLISH_PENDING,
+  type Dict,
+} from '@/lib/i18n-pending';
 import { Ctx } from '@/lib/i18n-context';
 import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
 
@@ -545,8 +553,8 @@ export const T_en: Dict = {
   savedReportCountSingular: 'saved report',
   savedReportCountPlural: 'saved reports',
   surveyPromptTitle: 'Want a sharper report?',
-  surveyPromptBody: "The site questionnaire takes 2 minutes and gives Lima things the map can't: how many people work here, irrigation, goals, and challenges. The report becomes far more specific.",
-  surveyFillButton: 'Fill in the questionnaire (2 min)',
+  surveyPromptBody: "The site survey takes 2 minutes and gives Lima things the map can't: how many people work here, irrigation, goals, and challenges. The report becomes far more specific.",
+  surveyFillButton: 'Fill in the site survey (2 min)',
   surveySkipButton: 'Skip for now, generate anyway',
   photoPromptTitle: 'Add site photos',
   photoPromptBody: "Satellite images are blurry and can't see soil colour, drainage, or what's actually growing. A few photos let Lima give you a plan based on what's really there.",
@@ -580,7 +588,7 @@ export const T_en: Dict = {
   resultsButton: 'Results',
   detailsButton: 'Details',
   failedToLoadData: 'Failed to load data',
-  siteQuestionnaireTitle: 'Site questionnaire',
+  siteQuestionnaireTitle: 'Site survey',
   stepOfSteps: 'Step {n} of {total}',
   stepSiteAndGoals: 'Site & Goals',
   stepWater: 'Water',
@@ -940,8 +948,12 @@ export const T_en: Dict = {
   homeRoleNGODesc: 'Programme dashboard & M&E roll-up',
   homeRoleFunderLabel: 'Funder',
   homeRoleFunderDesc: 'Read-only impact oversight',
-  homeSurveysLabel: 'Surveys',
-  homeSurveysDesc: 'Answer field surveys · NGOs build & send',
+  // lang-13 — wave 11: this home-screen entry names the NGO-built/sent forms a farmer answers
+  // (the /surveys feature). "Surveys" collided with the farmer's own "Site survey" renamed just
+  // above, so this feature is "Questionnaires" instead. English value only — other locales keep
+  // their existing translations of the old name until a reviewer revisits them.
+  homeSurveysLabel: 'Questionnaires',
+  homeSurveysDesc: 'Answer field questionnaires · NGOs build & send',
   homeLimaVisionLabel: 'Lima Vision',
   homeLimaVisionDesc: 'Photograph a bed or harvest — Lima reads it',
   homeFooter: 'ImbewuField · grown with you',
@@ -954,9 +966,9 @@ export const T_en: Dict = {
   navTaskPlanner: 'Task Planner',
   navPlantingCalendar: 'Planting Calendar',
   navManual: 'Permaculture Manual',
-  navGardenSurvey: 'Garden Survey',
+  navGardenSurvey: 'Site survey',
   openSurveyNoSiteTitle: 'Save a site first',
-  openSurveyNoSiteMessage: 'The garden survey belongs to a saved site. Tap a spot on the map and save it, then open the survey from there.',
+  openSurveyNoSiteMessage: 'The site survey belongs to a saved site. Tap a spot on the map and save it, then open the survey from there.',
   openSurveyNoSiteConfirm: 'Got it',
   navNGODashboard: 'Organisation Dashboard',
   navFacilitator: 'Design canvas',
@@ -1668,7 +1680,7 @@ export const T_en: Dict = {
   offlineLabelVisit: 'Visit',
   offlinePageHome: 'Home',
   offlinePageOffline: 'Offline & sync',
-  offlinePageFarmer: 'Garden & site survey',
+  offlinePageFarmer: 'Site survey',
   offlinePageLessons: 'Lessons',
   offlinePageRecords: 'Money book & harvests',
   offlinePageInvoices: 'Invoices',
@@ -1745,6 +1757,19 @@ export const T_en: Dict = {
 // other code lands here asynchronously the first time it is needed (see loadLocale).
 const LOADED: Record<string, Dict> = { en: T_en };
 
+// New-copy English defaults every OTHER locale falls back to until it has its own override —
+// the same explicit-gap treatment the Design Studio/Mentor blocks get, applied here through
+// loadLocale() instead of a spread in each lib/locales/<code>.ts file. lib/locales/ve.ts carries
+// a pinned content hash several unrelated tests gate on (see tests/study-remaining-controls-
+// next-history-checks.ts); editing it even to add an unrelated import broke that hash, so new
+// pending dicts land here centrally rather than via a per-locale spread that would touch it.
+const WAVE11_ENGLISH_PENDING: Dict = {
+  ...CHAT_PANEL_ENGLISH_PENDING,
+  ...PHOTO_UPLOAD_ENGLISH_PENDING,
+  ...PROFILE_SHEET_ENGLISH_PENDING,
+  ...NETWORK_FAILURE_ENGLISH_PENDING,
+};
+
 // Fetches and caches a locale's dictionary. Safe to call repeatedly — a second call while the
 // first is still in flight, or after the locale has already landed, is a no-op beyond the
 // (idempotent) dynamic import. Exported so the language-pick screen can prefetch every locale up
@@ -1752,7 +1777,7 @@ const LOADED: Record<string, Dict> = { en: T_en };
 export async function loadLocale(code: string): Promise<void> {
   if (LOADED[code]) return;
   const mod = (await import(`./locales/${code}`)) as { default: Dict };
-  LOADED[code] = mod.default;
+  LOADED[code] = { ...WAVE11_ENGLISH_PENDING, ...mod.default };
 }
 
 // A locale's full dictionary once loadLocale() has resolved it — English before that, for callers

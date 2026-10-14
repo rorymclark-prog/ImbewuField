@@ -273,7 +273,7 @@ export default function PartnersPage() {
                 Evidence without an enumerator visit
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-ink-muted">
-                Every farmer&rsquo;s record rolls up automatically. Mentors and facilitators see every farm in the programme from one screen; NGO and funder accounts see production, sales, training completion and photographic evidence for every gardener &mdash; without a field visit to collect it.
+                Every farmer&rsquo;s record rolls up automatically. Mentors see every farm in the programme from one screen; NGO and funder accounts see production, sales, training completion and photographic evidence for every gardener &mdash; without a field visit to collect it.
               </p>
             </div>
             <div className="flex flex-col gap-5">

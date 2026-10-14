@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import test from 'node:test';
 
 // swarm/w11-ask-photos-zu, lang-01 + a11y-03 + the chat part of a11y-01: components/ChatPanel.tsx
@@ -240,4 +241,66 @@ test('AtlasExplorer still shows the rate-limit API\'s own farmer-facing 429 mess
   const s = source('components/atlas/AtlasExplorer.tsx');
   assert.match(s, /serverMessage: typeof serverMessage === 'string' \? serverMessage : undefined/,
     'the 429 rate-limit body message is no longer passed through to the helper');
+});
+
+// lib/locales/ve.ts carries a content hash several unrelated history-check tests gate on
+// (tests/study-remaining-controls-next-history-checks.ts), so wiring new pending-English dicts
+// into every lib/locales/<code>.ts file — this branch's first approach — silently broke a wide
+// swath of unrelated course-content tests. New wave-11 keys are merged centrally in
+// lib/i18n.tsx's loadLocale() instead, and no lib/locales/*.ts file is touched for it.
+test('new wave-11 English-pending keys are merged centrally in loadLocale(), not spread into each locale file', () => {
+  const i18n = source('lib/i18n.tsx');
+  assert.match(i18n, /const WAVE11_ENGLISH_PENDING: Dict = \{/, 'the central wave-11 merge dict is missing');
+  assert.match(i18n, /LOADED\[code\] = \{ \.\.\.WAVE11_ENGLISH_PENDING, \.\.\.mod\.default \}/,
+    'loadLocale() no longer merges the wave-11 English defaults ahead of a locale\'s own overrides');
+
+  for (const code of ['af', 'nr', 'nso', 'ss', 'st', 'tn', 'ts', 've', 'xh']) {
+    const locale = source(`lib/locales/${code}.ts`);
+    for (const dictName of ['CHAT_PANEL_ENGLISH_PENDING', 'PHOTO_UPLOAD_ENGLISH_PENDING', 'PROFILE_SHEET_ENGLISH_PENDING', 'NETWORK_FAILURE_ENGLISH_PENDING']) {
+      assert.doesNotMatch(locale, new RegExp(dictName), `lib/locales/${code}.ts must not import or spread ${dictName} — see lib/i18n.tsx's loadLocale()`);
+    }
+  }
+});
+
+test('lib/locales/ve.ts is untouched by this track (its content hash is pinned elsewhere)', () => {
+  const sha = createHash('sha256').update(readFileSync(new URL('../lib/locales/ve.ts', import.meta.url))).digest('hex');
+  assert.equal(sha, 'e9deff4c7b627e99378bbc574111e23dd346911fcc8d4afb3ac60358c910db0e',
+    'lib/locales/ve.ts no longer matches the baseline tests/study-remaining-controls-next-history-checks.ts gates on');
+});
+
+// lang-12: owner decision — 'supervisor'/'facilitator' on screen become 'mentor'.
+test('on-screen role words say "mentor", not "supervisor" or "facilitator"', () => {
+  const ngo = source('components/NgoDashboard.tsx');
+  assert.doesNotMatch(ngo, /upervisor/, 'NgoDashboard.tsx still shows "supervisor" on screen');
+  assert.match(ngo, /'logged by mentors'/, 'the produce-logged-by stat no longer says mentors');
+  assert.match(ngo, /mentor \$\{garden\.facilitator\}/, 'the garden detail line no longer says mentor');
+
+  const partners = source('app/partners/page.tsx');
+  assert.doesNotMatch(partners, /facilitators/, 'app/partners/page.tsx still shows "facilitators" on screen');
+  assert.match(partners, /Mentors see every farm in the programme/, 'the partners copy no longer reads as a single merged role');
+});
+
+// lang-13: the farmer's own site form had six different English names; this pins them down to
+// "Site survey" (or "site survey" mid-sentence). The different NGO-built/sent questionnaire
+// feature (home screen "Surveys" tile, /surveys) is renamed to "Questionnaires" so the two no
+// longer collide.
+test('the farmer\'s own site form consistently says "Site survey" in English', () => {
+  const i18n = source('lib/i18n.tsx');
+  assert.match(i18n, /siteQuestionnaireTitle: 'Site survey'/);
+  assert.match(i18n, /navGardenSurvey: 'Site survey'/);
+  assert.match(i18n, /openSurveyNoSiteMessage: 'The site survey belongs to a saved site\./);
+  assert.match(i18n, /surveyPromptBody: "The site survey takes 2 minutes/);
+  assert.match(i18n, /surveyFillButton: 'Fill in the site survey \(2 min\)'/);
+  assert.match(i18n, /offlinePageFarmer: 'Site survey'/);
+
+  // Regression guard: the old, inconsistent names must not come back.
+  assert.doesNotMatch(i18n, /'Site questionnaire'/);
+  assert.doesNotMatch(i18n, /'Garden Survey'/);
+  assert.doesNotMatch(i18n, /'Garden & site survey'/);
+});
+
+test('the NGO-built/sent questionnaire feature is renamed away from "Surveys" so it stops colliding with "Site survey"', () => {
+  const i18n = source('lib/i18n.tsx');
+  assert.match(i18n, /homeSurveysLabel: 'Questionnaires'/);
+  assert.match(i18n, /homeSurveysDesc: 'Answer field questionnaires/);
 });
