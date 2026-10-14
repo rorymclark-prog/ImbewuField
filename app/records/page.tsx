@@ -64,6 +64,7 @@ import RecordQuantitySummary from '@/components/records/RecordQuantitySummary';
 import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quantityTotals, type RecordUnit } from '@/lib/farm-records';
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
+import { recordsDate } from '@/lib/records-months';
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -89,12 +90,12 @@ function isBookTab(value: string | null): value is BookTab {
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
-function fmtDate(raw: string | null | undefined): string {
+function fmtDate(raw: string | null | undefined, lang = 'en'): string {
   if (!raw) return '—';
   const d = new Date(raw);
   return isNaN(d.getTime())
     ? raw
-    : d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' });
+    : recordsDate(lang, d, false);
 }
 
 function isThisMonth(isoString: string | null | undefined): boolean {
@@ -470,7 +471,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
                 </p>
                 <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--color-muted)' }}>
-                  {fmtDate(item.iso)}
+                  {fmtDate(item.iso, lang)}
                 </p>
               </div>
               {item.kind !== 'invoice' && (
@@ -1025,16 +1026,16 @@ interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: stri
 function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: ProductionLog[], invoices: SavedInvoice[], period: Period, now: Date, lang = 'en'): LedgerRow[] {
   const saleRows: LedgerRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
     .filter((s) => isInFinancePeriod(s.sold_at, period, now))
-    .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} ${recordsText(lang, 'sale', 'ukudayisa')}`, qty: recordsQuantityLabel(s, lang), inAmt: s.amount ?? 0, source: s.buyer || recordsText(lang, 'Direct sale', 'Ukudayisa ngokuqondile'), outAmt: null }));
+    .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at, lang), desc: `${s.crop} ${recordsText(lang, 'sale', 'ukudayisa')}`, qty: recordsQuantityLabel(s, lang), inAmt: s.amount ?? 0, source: s.buyer || recordsText(lang, 'Direct sale', 'Ukudayisa ngokuqondile'), outAmt: null }));
   const expenseRows: LedgerRow[] = expenses
     .filter((x) => isInFinancePeriod(x.spent_at, period, now))
-    .map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category, lang) || '—', inAmt: null, source: x.supplier || recordsText(lang, 'Cost', 'Izindleko'), outAmt: x.amount ?? 0 }));
+    .map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at, lang), desc: x.item, qty: categoryLabel(x.category, lang) || '—', inAmt: null, source: x.supplier || recordsText(lang, 'Cost', 'Izindleko'), outAmt: x.amount ?? 0 }));
   const harvestRows: LedgerRow[] = production
     .filter((p) => isInFinancePeriod(p.logged_at, period, now))
-    .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
+    .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at, lang), desc: `${p.crop} ${recordsText(lang, 'harvested', 'kuvunyiwe')}`, qty: recordsQuantityLabel(p, lang), inAmt: null, source: recordsText(lang, 'Yield log', 'Irekhodi lesivuno'), outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
-    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO, lang), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `${recordsText(lang, 'Invoice', 'I-invoyisi')} · ${recordsFill(lang, paymentMethodLabel(i.paymentMethod))}` : recordsText(lang, 'Invoice', 'I-invoyisi'), outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
   // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as

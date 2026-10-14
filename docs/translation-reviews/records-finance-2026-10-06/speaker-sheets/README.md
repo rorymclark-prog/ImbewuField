@@ -11,6 +11,8 @@ Open in Google Sheets or Excel (UTF-8; Tshivenda and Xitsonga diacritics are pre
 | `speaker-review-ts-Xitsonga.csv` | 537 (42 held) — provisional standard written Xitsonga; no claim about Shangani |
 | `speaker-review-zu-isiZulu.csv` | 87 (3 held) — only strings that had no earlier reviewed isiZulu |
 
+| `speaker-review-month-names.csv` | 36 (12 months x Sesotho, Tshivenda, Xitsonga) — the month names shown in dates and charts |
+
 ## Columns
 - **priority**: `1 held` (the app shows English; a machine could not confirm a word — your replacement is the most useful
   thing here), `2 check` (shipped, but a money word or a repaired/one-review draft), `3 routine` (shipped, passed one blind machine review).

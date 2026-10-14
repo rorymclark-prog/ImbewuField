@@ -116,6 +116,9 @@ export interface FinanceSeries {
   earlierRecords: boolean;
   /** 'Mar 2026' — the first month this farmer ever recorded anything, or null. */
   firstRecordLabel: string | null;
+  /** The same month and year as numbers (month 1-12), so a screen can name the month in the farmer's language. */
+  firstRecordMonth: number | null;
+  firstRecordYear: number | null;
 }
 
 const MONTH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -373,6 +376,8 @@ export function buildFinanceSeries(
     hasRecords: months.some((m) => m.hasRecords),
     earlierRecords: recordedKeys.some((key) => !inWindow.has(key)),
     firstRecordLabel,
+    firstRecordMonth: earliest ? Number(earliest.slice(5, 7)) : null,
+    firstRecordYear: earliest ? Number(earliest.slice(0, 4)) : null,
     excludedProducedKg,
     excludedSoldKg,
     // Sorted so the card's wording does not reshuffle every time a row is logged.

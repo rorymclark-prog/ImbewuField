@@ -33,6 +33,7 @@ import { randLabel, randTick } from '@/lib/format-figures';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate, recordsLabel, isRecordsRegionalLang } from '@/lib/records-regional-drafts';
+import { recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -140,7 +141,7 @@ export default function CashflowChart({
           </p>
           <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang}
             template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined}
-            vars={{ month: series.firstRecordLabel ?? '' }}
+            vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }}
             english={series.earlierRecords
               ? `Your records start in ${series.firstRecordLabel}. Try a longer window above to reach them.`
               : 'Log a sale or a cost and this chart draws itself. Two or three months of entries is enough to see a pattern.'}
@@ -311,7 +312,7 @@ function Panels({
         {months.map((m, i) => (
           <g key={`x-${m.key}`}>
             {showLabel(i) && (
-              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.label}</text>
+              <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{recordsMonthShort(lang, m.month)}</text>
             )}
             {(m.month === 1 || i === 0) && (
               <text x={cx(i)} y={totalH - 12} textAnchor="middle" fontSize="6" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.year}</text>
@@ -332,7 +333,7 @@ function Panels({
               fill="transparent" style={{ cursor: 'pointer' }}
               onClick={() => onPick(m.key)}
             >
-              <title>{recordsLabel(lang, '{month} — in {moneyIn}, out {moneyOut}', '{month} — ingenayo {moneyIn}, ephumayo {moneyOut}', { month: m.longLabel, moneyIn: randLabel(m.moneyInZar), moneyOut: randLabel(m.moneyOutZar) })}</title>
+              <title>{recordsLabel(lang, '{month} — in {moneyIn}, out {moneyOut}', '{month} — ingenayo {moneyIn}, ephumayo {moneyOut}', { month: recordsMonthYear(lang, m.month, m.year), moneyIn: randLabel(m.moneyInZar), moneyOut: randLabel(m.moneyOutZar) })}</title>
             </rect>
           </g>
         ))}
@@ -354,15 +355,17 @@ function ClipNote({ months, lang }: { months: FinanceMonthPoint[]; lang: string 
   for (const m of months) {
     if (inScale.isClipped(m.moneyInZar)) {
       const vars = { month: m.longLabel, amount: randLabel(m.moneyInZar) };
+      const localVars = { ...vars, month: recordsMonthYear(lang, m.month, m.year) };
       cutEnglish.push(recordsTemplate('en', '{month}, {amount} in', null, vars));
       cutZulu.push(recordsTemplate('zu', '{month}, {amount} in', '{month}, {amount} ingenayo', vars));
-      cutLocal.push(recordsTemplate(lang, '{month}, {amount} in', null, vars));
+      cutLocal.push(recordsTemplate(lang, '{month}, {amount} in', null, localVars));
     }
     if (outScale.isClipped(m.moneyOutZar)) {
       const vars = { month: m.longLabel, amount: randLabel(m.moneyOutZar) };
+      const localVars = { ...vars, month: recordsMonthYear(lang, m.month, m.year) };
       cutEnglish.push(recordsTemplate('en', '{month}, {amount} out', null, vars));
       cutZulu.push(recordsTemplate('zu', '{month}, {amount} out', '{month}, {amount} ephumayo', vars));
-      cutLocal.push(recordsTemplate(lang, '{month}, {amount} out', null, vars));
+      cutLocal.push(recordsTemplate(lang, '{month}, {amount} out', null, localVars));
     }
   }
   if (cutEnglish.length === 0) return null;
@@ -384,7 +387,7 @@ function Readout({ month, lang }: { month: FinanceMonthPoint; lang: string }) {
   const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   return (
     <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: `1px solid ${HAIRLINE}` }}>
-      <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{month.longLabel}</span>
+      <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, month.month, month.year)}</span>
       {month.hasRecords ? (
         <>
           <Chip dot={IN} label={text('in', 'ingenayo')} value={randLabel(month.moneyInZar)} />

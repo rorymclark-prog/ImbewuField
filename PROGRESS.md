@@ -67,6 +67,16 @@ must provision — not buildable from code alone).
 - **Deferred:** perf-03/05 WebP slides and bug-08 sw.js timeout (proof pins; own PRs), lang-13. Record:
   `docs/audits/2026-10-10/app-wide-audit-claude.md` (58 implemented, 1 verified, 4 deferred).
 
+### 14 Oct 2026 — Month names in the money book, charts and Invoice list (unreviewed drafts)
+- **What:** dates, the chart month axis and readout, "Your records start in…", the clipped-month note, the harvest list and
+  the saved-invoice list now name the month in Sesotho, Tshivenda, Xitsonga and isiZulu (`lib/records-months.ts`).
+  isiZulu reuses the names already in the app. English output is byte-identical (pinned by `tests/records-months.test.ts`);
+  the printed invoice, PDF and CSV stay English.
+- **Review:** two independent drafts per language agreed on all 36 long names; a blind reviewer mapped each name back to its
+  month (`docs/translation-reviews/records-finance-2026-10-06/reviews/months/`). Machine drafts only; spelling variants and the
+  Xitsonga January to April block need a speaker (`speaker-sheets/speaker-review-month-names.csv`).
+- **Still not done:** navigation and Lima chat (locale files are pinned by another track).
+
 ### 12 Oct 2026 — Held finance rows retried (round 4)
 - **What:** 71 held rows were retried for Sesotho, Tshivenda, Xitsonga and isiZulu (finance-concept and unit-word rows
   excluded); 33 now have an unreviewed draft (st 5, ve 7, ts 20, zu 1), the rest still show English. Xitsonga's
