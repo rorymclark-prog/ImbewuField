@@ -258,7 +258,7 @@ const MARKET_ANIMATIONS: Record<number, DeckAnimation> = {
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'market-community': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: {
       st: [],
@@ -269,14 +269,14 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   },
   'small-livestock': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     missingSlides: { st: [], ve: [], ts: [] },
     slides: slidesFromNarration('small-livestock', LIVESTOCK_ANIMATIONS),
   },
   'food-forest': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     // Regional frames are silent source-paired review drafts. Since 3 October 2026 every heading and
     // paragraph on all 20 slides is an unreviewed machine draft beside its exact English source; terms
@@ -290,7 +290,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   },
   'vegetables-staples': {
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     // Every Sesotho frame is a source-paired draft; uncertain farming guidance stays in English.
     missingSlides: {
@@ -303,7 +303,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'soil-health': {
     // Sesotho, Tshivenda and Xitsonga frames source-pair unreviewed drafts and exact English holds.
     slideLanguages: ['en', 'zu', 'st', 'ts', 've'],
-    slideFormatsByLanguage: { st: 'webp', ts: 'webp', ve: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ts: 'webp', ve: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ts: 1440 / 5400, ve: 1440 / 5400 },
     missingSlides: {
       st: [],
@@ -316,7 +316,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // the exact English source beside any draft text or English hold; no translation is complete.
     // Regional learners must choose the available English source narration explicitly.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('reading-landscape', LANDSCAPE_ANIMATIONS),
   },
@@ -325,7 +325,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // The Xitsonga deck is a partial draft; its later source frames do not signal translated text.
     // No Tshivenda or Xitsonga narration is registered; an existing voice needs an explicit choice.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('intro-permaculture', INTRO_ANIMATIONS),
   },
@@ -334,7 +334,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // ordinary rainfall sentence is an unreviewed language candidate; learners must choose the
     // existing English source voice explicitly, and its animation poster cannot cover the pair.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
@@ -343,7 +343,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // paragraph on all 51 slides is an unreviewed machine draft beside its exact English source; terms
     // such as guild, support plant and chop-and-drop stay in English inside the translated sentences.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
@@ -352,7 +352,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // paragraph on all 24 slides is an unreviewed machine draft beside its exact English source; terms
     // such as F1 and open-pollinated stay in English inside the translated sentences.
     slideLanguages: ['en', 'zu', 'st', 've', 'ts'],
-    slideFormatsByLanguage: { st: 'webp', ve: 'webp', ts: 'webp' },
+    slideFormatsByLanguage: { en: 'webp', zu: 'webp', st: 'webp', ve: 'webp', ts: 'webp' },
     slideAspectRatioByLanguage: { st: 1440 / 5400, ve: 1440 / 5400, ts: 1440 / 5400 },
     // ALL 24 SLIDES NOW EXIST IN BOTH LANGUAGES. The history is kept because the failure was
     // invisible and the next deck can fail the same way.
