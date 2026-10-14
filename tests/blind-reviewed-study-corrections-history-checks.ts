@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ensureSlidesWebpCurrent, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore, slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
+import { ensureSlidesWebpCurrent, withSlidesWebpCheckedScope, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore, slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 
 // A dated test may inspect a predecessor only after the complete new layer has
 // passed. The independent audit is model evidence, never fluent-speaker approval.
@@ -136,7 +136,7 @@ export function withBlindReviewedCorrectionReadScope<T>(readOnly: () => T): T {
   const outer = historicalReadDepth === 0;
   if (outer) ensureBlindReviewedCorrectionsCurrent();
   historicalReadDepth++;
-  try { return readOnly(); }
+  try { return withSlidesWebpCheckedScope(readOnly); }
   finally {
     historicalReadDepth--;
     if (outer) ensureBlindReviewedCorrectionsCurrent();

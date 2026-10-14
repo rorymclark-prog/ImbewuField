@@ -86,9 +86,19 @@ export function ensureSlidesWebpCurrent(): void {
   lastSuccessfulSignature = signature;
 }
 
+// Dated owners run inside the blind-reviewed read scope, which checks this whole
+// layer when the scope opens and closes. Nested projections share that observation;
+// outside a scope every projection checks the live layer itself.
+let scopedDepth = 0;
+export function withSlidesWebpCheckedScope<T>(readOnly: () => T): T {
+  scopedDepth++;
+  try { return readOnly(); } finally { scopedDepth--; }
+}
+const ensureOutsideScope = () => { if (scopedDepth === 0) ensureSlidesWebpCurrent(); };
+
 /** Live media listing → the exact 12 October predecessor listing. */
 export function slidesWebpListingBefore(paths: string[]): string[] {
-  ensureSlidesWebpCurrent();
+  ensureOutsideScope();
   return paths.filter(path => !added.has(path)).map(path => successors.get(path)?.path ?? path).sort();
 }
 
@@ -96,7 +106,7 @@ export function slidesWebpListingBefore(paths: string[]): string[] {
 export function slidesWebpRetiredBefore(path: string): Media | undefined {
   const row = retired.get(path);
   if (!row) return undefined;
-  ensureSlidesWebpCurrent();
+  // Recorded data only; callers run inside a scope that already checked the live layer.
   return { path: row.path, bytes: row.bytes, sha256: row.sha256 };
 }
 
@@ -108,7 +118,7 @@ export function slidesWebpOwnsSource(file: string): boolean {
 export function slidesWebpSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
   const row = proof.files[file];
   if (!row) return supplied;
-  ensureSlidesWebpCurrent();
+  ensureOutsideScope();
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;
@@ -136,17 +146,18 @@ function retiredContent(row: Retired): Buffer {
 const absent = (path: string, syscall: string) => Object.assign(new Error(`ENOENT: no such file or directory, ${syscall} '${path}'`), { errno: -2, code: 'ENOENT', syscall, path });
 
 /** fs view of the 12 October tree for dated owners: retired JPEGs are present with
- * their recorded bytes, and their WebP successors and the added WebPs are absent. */
+ * their recorded bytes, and their WebP successors and the added WebPs are absent.
+ * The view only maps paths. The complete live layer is checked where a dated owner's
+ * read scope opens and closes (ensureBlindReviewedCorrectionsCurrent runs
+ * ensureSlidesWebpCurrent). Checking it per lookup made each media walk quadratic. */
 export const slidesWebpHistoryStatSync = ((path: any, options?: any) => {
   const file = repoPath(path);
   if (file && (successors.has(file) || added.has(file))) {
-    ensureSlidesWebpCurrent();
     if (options?.throwIfNoEntry === false) return undefined;
     throw absent(String(path), 'stat');
   }
   const row = file ? retired.get(file) : undefined;
   if (!row) return statSync(path, options);
-  ensureSlidesWebpCurrent();
   const live = statSync(resolve(root, row.successor.path), options)!;
   return Object.assign(Object.create(Object.getPrototypeOf(live)), live, { size: options?.bigint ? BigInt(row.bytes) : row.bytes });
 }) as typeof statSync;
@@ -154,7 +165,7 @@ export const slidesWebpHistoryStatSync = ((path: any, options?: any) => {
 export const slidesWebpHistoryExistsSync = ((path: any) => {
   const file = repoPath(path);
   if (file && (successors.has(file) || added.has(file))) return false;
-  if (file && retired.has(file)) { ensureSlidesWebpCurrent(); return true; }
+  if (file && retired.has(file)) { return true; }
   return existsSync(path);
 }) as typeof existsSync;
 
@@ -163,7 +174,6 @@ export const slidesWebpHistoryReadFileSync = ((...args: any[]) => {
   if (file && (successors.has(file) || added.has(file))) throw absent(String(args[0]), 'open');
   const row = file ? retired.get(file) : undefined;
   if (!row) return (readFileSync as any)(...args);
-  ensureSlidesWebpCurrent();
   const bytes = Buffer.from(retiredContent(row));
   const encoding = typeof args[1] === 'string' ? args[1] : args[1]?.encoding;
   return encoding ? bytes.toString(encoding) : bytes;
@@ -179,7 +189,6 @@ export const slidesWebpHistoryReaddirSync = ((path: any, options?: any) => {
     return join(repoPath(parent) ?? directory, entry.name);
   };
   if (!entries.some(entry => successors.has(keyOf(entry)) || added.has(keyOf(entry)))) return entries;
-  ensureSlidesWebpCurrent();
   return entries.filter(entry => !added.has(keyOf(entry))).map(entry => {
     const row = successors.get(keyOf(entry));
     if (!row) return entry;
