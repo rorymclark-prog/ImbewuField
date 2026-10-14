@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 1938 files, 651.9 MB total.
+// 1941 files, 653.0 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/food-forest/flow-sheet-mulching-closeup.mp4': 6248424,
@@ -964,6 +964,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/plant-guilds/en/slide-12.webp': 39412,
   '/course-decks/plant-guilds/en/slide-13.webp': 158648,
   '/course-decks/plant-guilds/en/slide-14.webp': 42590,
+  '/course-decks/plant-guilds/en/slide-15.jpg': 365630,
   '/course-decks/plant-guilds/en/slide-15.webp': 225842,
   '/course-decks/plant-guilds/en/slide-16.webp': 43642,
   '/course-decks/plant-guilds/en/slide-17.webp': 234010,
@@ -978,6 +979,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/plant-guilds/en/slide-26.webp': 39034,
   '/course-decks/plant-guilds/en/slide-27.webp': 264792,
   '/course-decks/plant-guilds/en/slide-28.webp': 41680,
+  '/course-decks/plant-guilds/en/slide-29.jpg': 362050,
   '/course-decks/plant-guilds/en/slide-29.webp': 235240,
   '/course-decks/plant-guilds/en/slide-30.webp': 38708,
   '/course-decks/plant-guilds/en/slide-31.webp': 227398,
@@ -986,6 +988,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/plant-guilds/en/slide-34.webp': 39252,
   '/course-decks/plant-guilds/en/slide-35.webp': 213398,
   '/course-decks/plant-guilds/en/slide-36.webp': 38168,
+  '/course-decks/plant-guilds/en/slide-37.jpg': 393518,
   '/course-decks/plant-guilds/en/slide-37.webp': 259300,
   '/course-decks/plant-guilds/en/slide-38.webp': 41678,
   '/course-decks/plant-guilds/en/slide-39.webp': 228842,

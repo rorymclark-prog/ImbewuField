@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ensureSlidesWebpCurrent, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore } from './slides-webp-history-checks.ts';
 
 // A dated test may inspect a predecessor only after the complete new layer has
 // passed. The independent audit is model evidence, never fluent-speaker approval.
@@ -10,6 +11,9 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const folder = 'docs/study-translation-reviews/blind-reviewed-corrections-2026-10-12/';
 const sha = (v: string | Uint8Array) => createHash('sha256').update(v).digest('hex');
 const read = (file: string) => readFileSync(resolve(root, file));
+// The 14 Oct 2026 WebP media-format layer is newer than this one: live sources it owns
+// are validated there and projected to their exact predecessor before these checks.
+const readLive = (file: string) => slidesWebpSourceBefore(file, read(file));
 const beforePath = (file: string) => folder + 'before/' + file + (file.endsWith('.ts') ? '.txt' : '');
 const proofBytes = read(folder + 'source-layer-proof.json');
 assert.equal(sha(proofBytes), 'b7a07b624a469f315a33442503177056b3c07c3c18be5d69c60caf1df47a863a', 'immutable bounded correction proof');
@@ -67,29 +71,48 @@ function mediaPaths(): string[] {
   for (const name of names) walk('public/' + name);
   return result.sort();
 }
+// A retired JPEG keeps its recorded size and digest; its live WebP successor passed the newer layer.
+function stat(file: string) {
+  return statSync(resolve(root, slidesWebpRetiredBefore(file) ? file.replace(/\.jpg$/, '.webp') : file), { bigint: true });
+}
 let lastSuccessfulSignature = '';
 export function ensureBlindReviewedCorrectionsCurrent(): void {
-  const paths = mediaPaths();
+  ensureSlidesWebpCurrent();
+  const livePaths = mediaPaths();
+  const paths = slidesWebpListingBefore(livePaths);
   assert.deepEqual(paths, inventory.map(row => row.path).sort(), 'new or removed unlisted media cannot hide behind a cached validation');
   const files = [...paths, ...Object.keys(proof.files), ...Object.keys(proof.protected), folder + 'source-layer-proof.json', folder + 'native-before-after.json', folder + 'media-before-inventory.json',
     ...Object.keys(proof.files).map(file => beforePath(file)), ...proof.assets.map((a: any) => folder + 'before/' + a.path)];
-  const signature = files.map(file => { const s = statSync(resolve(root, file), { bigint: true }); return [file,s.dev,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
+  const signature = files.map(file => { const s = stat(file); return [file,s.dev,s.ino,s.size,s.mtimeNs,s.ctimeNs].join(':'); }).join('|');
   if (signature === lastSuccessfulSignature) return;
   assert.equal(sha(read(folder + 'source-layer-proof.json')), sha(proofBytes), 'proof may not change after initialization');
   assert.equal(sha(read(folder + 'native-before-after.json')), proof.nativeSnapshotsSha256);
   assert.equal(sha(read(folder + 'media-before-inventory.json')), proof.mediaInventorySha256);
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
-    const live = read(file);
+    const live = readLive(file);
     assert.equal(sha(live), row.afterSha256, file + ': complete actual live successor, including every unlisted byte');
     assert.equal(live.length, row.afterBytes);
     assert.equal(sha(read(beforePath(file))), row.beforeSha256, file + ': predecessor cannot change after initialization');
   }
   for (const [file, row] of Object.entries(proof.protected) as [string, any][]) {
-    const live = read(file);
+    const retired = slidesWebpRetiredBefore(file);
+    if (retired) {
+      assert.equal(retired.sha256, row.sha256, file + ': retired JPEG is the exact protected predecessor');
+      assert.equal(retired.bytes, row.bytes);
+      continue;
+    }
+    const live = readLive(file);
     assert.equal(sha(live), row.sha256, file + ': canonical/source/recorded Sesotho media unchanged');
     assert.equal(live.length, row.bytes);
   }
   for (const row of inventory) {
+    const retired = slidesWebpRetiredBefore(row.path);
+    if (retired) {
+      assert.ok(!media.has(row.path), row.path + ': a JPEG this layer corrected is not retired');
+      assert.equal(retired.sha256, row.sha256, row.path + ': retired JPEG is the exact inventoried predecessor');
+      assert.equal(retired.bytes, row.bytes);
+      continue;
+    }
     const changed = media.get(row.path), live = read(row.path);
     assert.equal(sha(live), changed?.afterSha256 ?? row.sha256, row.path + ': exact declared still or preserved unlisted media');
     assert.equal(live.length, changed?.afterBytes ?? row.bytes);
@@ -165,6 +188,11 @@ export const readBlindReviewedHistoryFile: typeof readFileSync = ((...args: any[
   if (typeof args[0] === 'number') return value;
   const suppliedPath = args[0] instanceof URL ? fileURLToPath(args[0]) : String(args[0]);
   const file = resolve(root, suppliedPath).slice(root.length).replace(/^\//,'');
+  if (slidesWebpOwnsSource(file)) {
+    const before = slidesWebpSourceBefore(file, Buffer.from(value));
+    const projected = proof.files[file] ? blindReviewedSourceBefore(file, before) : before;
+    return typeof value === 'string' ? Buffer.from(projected).toString(args[1] as BufferEncoding) : projected;
+  }
   if (proof.files[file]) return blindReviewedSourceBefore(file, value);
   if (media.has(file)) {
     const result = blindReviewedAssetBefore(file, Buffer.from(value));

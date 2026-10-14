@@ -923,7 +923,7 @@ export const COURSE_MODULES: CourseModule[] = [
                     "rationale": "Support plants need resources and management too. Observe growth and competition, then adjust."
                 }
             ],
-            "infographicUrl": "/course-decks/plant-guilds/en/slide-15.webp",
+            "infographicUrl": "/course-decks/plant-guilds/en/slide-15.jpg",
             "infographicAlt": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance."
         },
         {
@@ -960,7 +960,7 @@ export const COURSE_MODULES: CourseModule[] = [
                     "rationale": "Flowers can supply resources, but their presence does not guarantee pest control."
                 }
             ],
-            "infographicUrl": "/course-decks/plant-guilds/en/slide-29.webp",
+            "infographicUrl": "/course-decks/plant-guilds/en/slide-29.jpg",
             "infographicAlt": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance."
         },
         {
@@ -997,7 +997,7 @@ export const COURSE_MODULES: CourseModule[] = [
                     "rationale": "Choose cover for the site. Keep access and the trunk area clear, and observe the young tree."
                 }
             ],
-            "infographicUrl": "/course-decks/plant-guilds/en/slide-37.webp",
+            "infographicUrl": "/course-decks/plant-guilds/en/slide-37.jpg",
             "infographicAlt": "Conceptual guild teaching illustration; confirm plant identity with reliable botanical guidance."
         }
     ]
