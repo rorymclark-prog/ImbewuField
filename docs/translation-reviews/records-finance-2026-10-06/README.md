@@ -133,6 +133,10 @@ Still machine drafts and machine review only; Xitsonga "ntirho" (labour), "mubol
 "Cash" / "Mobile" in Sesotho are the weakest and need a speaker. The Xitsonga device-only photo warning now says
 "this phone only" instead of the ambiguous "xitirhisiwa".
 
+## Speaker review sheets
+
+`speaker-sheets/` holds one CSV per language (all strings, held rows first) for a fluent speaker to mark OK / CHANGE / BAD. See its README.
+
 ## Not covered (remaining dependencies)
 
 - Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
