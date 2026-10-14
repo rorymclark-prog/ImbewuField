@@ -29,7 +29,6 @@ import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enro
 import type { CourseAssignment } from '@/lib/course-assignments';
 import { assignmentDocId } from '@/lib/course-assignments';
 import type { CourseSubmission } from '@/lib/course-gating';
-import { courseSubmissionDocId } from '@/lib/course-gating';
 import type { SavedInvoice } from '@/lib/invoices';
 import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
@@ -950,6 +949,7 @@ export async function submitCourseModule(input: {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
   const me = await getMyProfile();
+  const { courseSubmissionDocId } = await import('@/lib/course-gating');
   await setDoc(doc(f.db, 'course_submissions', courseSubmissionDocId(u, input.module)), {
     profile_id: u,
     org_id: me?.org_id ?? null,

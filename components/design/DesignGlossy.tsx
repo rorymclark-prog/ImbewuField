@@ -7,7 +7,7 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
-import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -15885,7 +15885,11 @@ export default function DesignGlossy({
                 textUnderlineOffset: 3,
               }}
             >
-              {mode === 'ai' ? 'View the saved exact master →' : '✨ AI-polish this exact map · 1 AI render →'}
+              {mode === 'ai' ? 'View the saved exact master →' : (
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                  <Sparkles size={13} style={{ flexShrink: 0 }} /> AI-polish this exact map · 1 AI render →
+                </span>
+              )}
             </button>
           )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -16168,9 +16172,9 @@ export default function DesignGlossy({
                 : exactSheet === 'implementation'
                   ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                   : producerStyle
-                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (background · ~mins)`
+                    ? `${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (background · ~mins)`
                     : analysisStyle
-                      ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
+                      ? `${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
                       : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}
             </span>
           </button>
@@ -16252,7 +16256,7 @@ export default function DesignGlossy({
             role="status"
             style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '10px 12px', borderRadius: 10, background: '#FDF4E3', border: '1px solid #E8D5A8' }}
           >
-            <span aria-hidden style={{ fontSize: 14, lineHeight: '18px' }}>⚠︎</span>
+            <AlertTriangle aria-hidden size={14} style={{ flexShrink: 0, marginTop: 2 }} />
             <div style={{ flex: 1 }}>
               <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.45, color: '#6B5320' }}>{polishNoChange}</p>
               <button
@@ -16401,10 +16405,11 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#7A4408' /* fixed PAPER sheet, so the fixed ochre-text hex, not the theme var */ }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700, color: '#7A4408' /* fixed PAPER sheet, so the fixed ochre-text hex, not the theme var */ }}>
+                {!exportMode && <ImageIcon size={14} style={{ flexShrink: 0 }} />}
                 {exportMode
                   ? `${exportSel.size} selected · ${gallerySiteName}`
-                  : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
+                  : `${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
               </span>
               {!galleryViewItem && gallery.length > 0 && (
                 <button

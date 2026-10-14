@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { AI_MODELS, meteredAi } from '@/lib/metered-ai';
+import { parseJsonBody } from '@/lib/api-json-body';
 
 export const maxDuration = 30;
 
@@ -46,7 +47,9 @@ export async function POST(req: NextRequest) {
   const metered = await meteredAi(req, auth, '/api/tree-id', client);
   if (metered.response) return metered.response;
   const { ai } = metered;
-  const { imageBase64, mediaType } = await req.json();
+  const parsed = await parseJsonBody<{ imageBase64?: string; mediaType?: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp' }>(req);
+  if (parsed.response) return parsed.response;
+  const { imageBase64, mediaType } = parsed.data;
   if (!imageBase64) return new Response('Missing imageBase64', { status: 400 });
 
   const msg = await ai.messages.create({

@@ -52,6 +52,21 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 14 Oct 2026 — Wave 11: second app-wide audit fixes (#992)
+- **Security & AI cost:** contour interval clamp, same-org garden/log/thread rules, guest request size caps, slip reader and
+  visit notes metered, profile `network` spoofing closed, no raw provider errors, `//` login redirect blocked.
+- **Offline saving:** sales/expenses delete and read failures, journal, contact/inbox/messages, account and sign-up no longer
+  lose text or hang; Lima Vision photos downscaled; local-date "today".
+- **Lighter first load:** chat panel, mapbox, rainfall chart, deck player and Rive sprout load on demand; release notes out of
+  the layout bundle; PWA polling every 15 min; four dead files deleted.
+- **Dark mode & taps:** NGO pages, Lima chat (now a dialog), inputs, header and cards themed; 44px taps; global reduced motion.
+- **Language:** Ask, Photos, Profile, Design, Places, Map sheets, evidence and error pages in t() with isiZulu drafts; plain
+  network-failure message; plain-word biome text and units; "mentor" for supervisor/facilitator on screen.
+- **Study proof:** `tests/study-ui-due-unlock-history-checks.ts` re-pinned to the wave 11 locale bytes with an exact rewind
+  to the earlier pins (Rory chose option 1). Predecessor i18n kept as `tests/fixtures/i18n-before-wave-11.tsx.txt`.
+- **Deferred:** perf-03/05 WebP slides and bug-08 sw.js timeout (proof pins; own PRs), lang-13. Record:
+  `docs/audits/2026-10-10/app-wide-audit-claude.md` (58 implemented, 1 verified, 4 deferred).
+
 ### 12 Oct 2026 — Held finance rows retried (round 4)
 - **What:** 71 held rows were retried for Sesotho, Tshivenda, Xitsonga and isiZulu (finance-concept and unit-word rows
   excluded); 33 now have an unreviewed draft (st 5, ve 7, ts 20, zu 1), the rest still show English. Xitsonga's

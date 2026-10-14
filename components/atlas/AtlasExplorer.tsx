@@ -25,6 +25,7 @@ import { Search, X, Loader2, Earth } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
 import AtlasPanel from './AtlasPanel';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -38,7 +39,7 @@ type FetchState =
   | { status: 'error'; lat: number; lon: number; placeName?: string; message?: string };
 
 export default function AtlasExplorer() {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const mapRef = useRef<MapRef>(null);
   const [state, setState] = useState<FetchState>({ status: 'idle' });
@@ -58,19 +59,24 @@ export default function AtlasExplorer() {
       if (!res.ok) {
         // A 429 from the shared rate limit carries a farmer-readable message (lib/api-rate-
         // limit.ts) — show it instead of the generic failure so a busy Atlas visitor knows to
-        // wait rather than assuming the point itself is broken.
-        const message = res.status === 429
+        // wait rather than assuming the point itself is broken. Never the bare status otherwise
+        // (lang-08 + bug-10) — see lib/network-failure.ts.
+        const serverMessage = res.status === 429
           ? (await res.json().catch(() => null))?.error
           : undefined;
-        throw new Error(typeof message === 'string' ? message : `HTTP ${res.status}`);
+        if (requestSeq.current !== seq) return;
+        setState({
+          status: 'error', lat, lon, placeName,
+          message: networkFailureMessage(t, { status: res.status, serverMessage: typeof serverMessage === 'string' ? serverMessage : undefined }),
+        });
+        return;
       }
       const data = (await res.json()) as LocationData;
       if (requestSeq.current !== seq) return;
       setState({ status: 'ready', data, placeName });
-    } catch (err) {
+    } catch {
       if (requestSeq.current !== seq) return;
-      const message = err instanceof Error && !/^HTTP \d+$/.test(err.message) ? err.message : undefined;
-      setState({ status: 'error', lat, lon, placeName, message });
+      setState({ status: 'error', lat, lon, placeName, message: networkFailureMessage(t) });
     }
   }, []);
 

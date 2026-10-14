@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Loader2, RefreshCw } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { networkFailureMessage } from '@/lib/network-failure';
+import { useLanguage } from '@/lib/i18n';
 
 interface Props { coords: { lat: number; lon: number } | null }
 
@@ -63,6 +65,7 @@ function renderMarkdown(text: string) {
 }
 
 export default function AreaPanel({ coords }: Props) {
+  const { t } = useLanguage();
   const [profile, setProfile] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -85,7 +88,7 @@ export default function AreaPanel({ coords }: Props) {
         method: 'POST', headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ lat: c.lat, lon: c.lon }), signal: ac.signal,
       });
-      if (!res.ok) throw new Error(`API error ${res.status}`);
+      if (!res.ok) { setError(networkFailureMessage(t, { status: res.status })); return; }
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -97,7 +100,7 @@ export default function AreaPanel({ coords }: Props) {
       }
       if (text.trim()) { setCached(k, text); setLastUpdated(Date.now()); }
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
+      if (err instanceof Error && err.name !== 'AbortError') setError(networkFailureMessage(t));
     } finally {
       if (abortRef.current === ac) setLoading(false);
     }
@@ -150,7 +153,7 @@ export default function AreaPanel({ coords }: Props) {
       {error && (
         <div className="text-xs font-mono px-3 py-2 rounded-lg mb-3"
           style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--orange)' }}>
-          {error} — tap Refresh to retry.
+          {error}{t('networkTapRefreshToRetry')}
         </div>
       )}
 

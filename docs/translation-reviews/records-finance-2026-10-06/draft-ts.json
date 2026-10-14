@@ -7672,5 +7672,19 @@
   "status": "accepted",
   "draft": "Ku kombisa leswaku invoyisi yi hakeriwile swi engetela nhlayo ya leswi humesiweke eka Tirhekhodo ta Mina hi swipimo swa swona leswi tsariweke.",
   "decision": "accepted: independent reviewer found no meaning error"
+ },
+ {
+  "id": "W11-01",
+  "english": "Close",
+  "drafterDraft": "",
+  "drafterStatus": "none",
+  "drafterNote": "Wave 11 added this button (dismisses the failed-delete notice on the money book). Not drafted.",
+  "reviewerVerdict": "",
+  "reviewerProblem": "",
+  "reviewerSeverity": "",
+  "reviewerRepair": "",
+  "status": "held",
+  "draft": "",
+  "decision": "held until a fluent drafter and reviewer supply it; English shows meanwhile"
  }
 ]

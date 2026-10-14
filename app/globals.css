@@ -306,6 +306,11 @@ html[data-theme="earth"] {
      --on-forest is declared per column rather than at :root, but keeps today's identical value in
      all four — this pass only retires the stale hex, not re-tune dark-mode forest contrast. */
   --on-forest: #F7F2E9;
+  /* a11y-01: text inputs hardcoded a literal #fff background against the themed
+     --text-primary colour, so typed text went pale-on-white once dark mode made
+     --text-primary light. #FFFFFF here keeps earth light pixel-identical to the
+     old hardcoded value. */
+  --input-bg: #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -375,6 +380,9 @@ html[data-theme="earth"].dark {
   --gradient-to: #D8A840;
 
   --on-forest: #F7F2E9;
+  /* One step lighter than --bg-1 so a text input reads as its own control inside
+     a --bg-1 sheet/panel, instead of disappearing into it. */
+  --input-bg: #22190E;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -441,6 +449,7 @@ html[data-theme="slate"] {
   --gradient-to: #AA5C08;
 
   --on-forest: #F7F2E9;
+  --input-bg: #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -510,6 +519,7 @@ html[data-theme="slate"].dark {
   --gradient-to: #E8A030;
 
   --on-forest: #F7F2E9;
+  --input-bg: #1A2540;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -841,6 +851,19 @@ body.is-sample-mode .pwa-update-notifier {
   .crop-availability-month { transition: none; }
   .crop-availability-month:active { transform: none; }
   .crop-availability-detail { animation: none; }
+}
+
+/* a11y-13: the rules above cover the sheets and the crop grid by name, which left every other
+   spinner, pulse, slide and smooth scroll moving for someone who asked the OS for less motion.
+   One app-wide floor; duration goes to near-zero rather than none so animationend/transitionend
+   listeners still fire and nothing waits forever on an event that never comes. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Recognisable list art without rescaling map geometry or diagram symbols. */

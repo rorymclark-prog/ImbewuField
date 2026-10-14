@@ -102,6 +102,10 @@ export default function FieldJournal() {
   const [filter, setFilter] = useState<Filter>('all');
   const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null }>({ open: false, entry: null });
   const [notice, setNotice] = useState<string | null>(null);
+  // bug-03: shown INSIDE the sheet (which overlays everything below it), because a storage-full
+  // failure used to close the sheet on the farmer, taking the typed note with it. Kept separate
+  // from `notice` so a save failure doesn't bleed into a later, unrelated trimmed-photos success.
+  const [sheetError, setSheetError] = useState<string | null>(null);
   const [beds, setBeds] = useState<BedOption[]>([]);
   const [crops, setCrops] = useState<string[]>([]);
 
@@ -153,22 +157,36 @@ export default function FieldJournal() {
     [entries],
   );
 
-  function persist(next: JournalEntry[]) {
+  function persist(next: JournalEntry[]): boolean {
     const result = saveJournal(next);
-    setEntries(result.entries);
-    if (!result.ok) setNotice(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
-    else if (result.trimmed) setNotice(ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.'));
-    else setNotice(null);
+    if (result.ok) {
+      setEntries(result.entries);
+      setSheetError(null);
+      setNotice(result.trimmed ? ui('Storage was nearly full, so photos on the oldest entries were removed. The notes are kept.', 'Isikhala sokugcina besesizogcwala, ngakho izithombe kokudala kakhulu zisusiwe. Amanothi agciniwe.') : null);
+    } else {
+      // Leave `entries` as it was — the attempted save never actually landed in storage, so
+      // adding it to the in-memory list would show it as saved until the next reload drops it.
+      setSheetError(ui('Storage is full — this entry could not be saved. Delete an old entry and try again.', 'Isikhala sokugcina sigcwele — lokhu okubhaliwe akugcinwanga. Susa okubhaliwe okudala bese uzama futhi.'));
+    }
+    return result.ok;
+  }
+
+  function openSheet(entry: JournalEntry | null) {
+    setSheetError(null);
+    setSheet({ open: true, entry });
   }
 
   function handleSave(input: JournalEntryInput) {
     const entry = sheet.entry ? editJournalEntry(sheet.entry, input) : createJournalEntry(input);
-    persist(upsertJournalEntry(entries, entry));
-    setSheet({ open: false, entry: null });
+    const ok = persist(upsertJournalEntry(entries, entry));
+    // bug-03: only close (and so only discard the sheet's own draft state) once the save actually
+    // landed in storage. On failure the sheet — and the farmer's typed note inside it — stays put.
+    if (ok) setSheet({ open: false, entry: null });
   }
 
   function handleDelete(id: string) {
     persist(removeJournalEntry(entries, id));
+    setSheetError(null);
     setSheet({ open: false, entry: null });
   }
 
@@ -202,7 +220,7 @@ export default function FieldJournal() {
         <button
           type="button"
           className={motion.newEntry}
-          onClick={() => setSheet({ open: true, entry: null })}
+          onClick={() => openSheet(null)}
           style={{
             width: '100%', minHeight: 50, borderRadius: 14, border: 'none', cursor: 'pointer',
             background: '#274D2C', color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
@@ -387,7 +405,7 @@ export default function FieldJournal() {
             <button
               type="button"
               className={motion.newEntry}
-              onClick={() => setSheet({ open: true, entry: null })}
+              onClick={() => openSheet(null)}
               style={{
                 width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
                 background: 'var(--bg-1)', border: '1.5px dashed var(--color-forest-800)', color: 'var(--color-forest-800)',
@@ -488,7 +506,7 @@ export default function FieldJournal() {
                     <button
                       type="button"
                       className={motion.editEntry}
-                      onClick={() => setSheet({ open: true, entry })}
+                      onClick={() => openSheet(entry)}
                       aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
                         flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
@@ -512,9 +530,10 @@ export default function FieldJournal() {
           entry={sheet.entry}
           beds={beds}
           crops={crops}
+          error={sheetError}
           onSave={handleSave}
           onDelete={handleDelete}
-          onClose={() => setSheet({ open: false, entry: null })}
+          onClose={() => { setSheetError(null); setSheet({ open: false, entry: null }); }}
         />
       )}
     </div>

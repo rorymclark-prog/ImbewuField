@@ -32,12 +32,14 @@ interface Props {
   onSave: (input: JournalEntryInput) => void;
   onDelete?: (id: string) => void;
   onClose: () => void;
+  /** A save that failed to persist (e.g. storage full) — shown without closing the sheet. */
+  error?: string | null;
 }
 
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose }: Props) {
+export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose, error }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
@@ -53,12 +55,30 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
   const [busy, setBusy] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  // bug-12: two-tap delete, same pattern as app/records/page.tsx's SalesLedger — first tap
+  // arms a confirm (reverting on its own after 3.5s), second tap within that window deletes.
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
+
+  useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
+
+  function requestDelete() {
+    if (!entry || !onDelete) return;
+    if (confirmTimer.current) clearTimeout(confirmTimer.current);
+    if (confirmDelete) {
+      setConfirmDelete(false);
+      onDelete(entry.id);
+      return;
+    }
+    setConfirmDelete(true);
+    confirmTimer.current = setTimeout(() => setConfirmDelete(false), 3500);
+  }
 
   async function handleFiles(files: FileList | null) {
     if (!files || files.length === 0) return;
@@ -312,20 +332,35 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           </div>
         </div>
 
+        {error && (
+          <div style={{
+            margin: '16px 20px 0', padding: '10px 13px', borderRadius: 11,
+            background: '#FEF6E7', border: '1px solid #EBD6A8',
+            font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: '#7A5B14',
+          }}>
+            {error}
+          </div>
+        )}
+
         {/* Actions */}
         <div style={{ display: 'flex', gap: 10, padding: '20px 20px 4px' }}>
           {entry && onDelete && (
             <button
               type="button"
-              onClick={() => onDelete(entry.id)}
-              style={{
+              onClick={requestDelete}
+              aria-label={confirmDelete ? ui('Confirm delete', 'Qinisekisa ukususa') : ui('Delete', 'Susa')}
+              style={confirmDelete ? {
+                minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
+                background: 'rgba(196,58,58,0.12)', border: '1.5px solid rgba(196,58,58,0.4)', color: '#B23A3A',
+                font: '700 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
+              } : {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
                 background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
                 font: '600 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
               <Trash2 size={16} />
-              {ui('Delete', 'Susa')}
+              {confirmDelete ? ui('Sure?', 'Uqinisekile?') : ui('Delete', 'Susa')}
             </button>
           )}
           <button

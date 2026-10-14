@@ -8,6 +8,7 @@ import { useFieldSync } from '@/lib/use-field-sync';
 import FieldDraft, { clearFieldDraft } from './FieldDraft';
 import { isSampleMode } from '@/lib/sample-mode';
 import { type ProductionSite, productionAreaSummary } from '@/lib/production-sites';
+import { localTodayISODate } from '@/lib/field-teams';
 import styles from './MelDashboard.module.css';
 import FieldDataStatus from './FieldDataStatus';
 import { sampleRead, sampleWrite, freshSampleAreas, completeSampleAreas, upsertSampleArea } from '@/lib/sample-operations';
@@ -15,7 +16,7 @@ import { sampleSitePhoto } from '@/lib/sample-gardens';
 import ReportComposer from './ReportComposer';
 import { readSampleProgramme } from './SampleProgramme';
 type Summary = ReturnType<typeof productionAreaSummary>;
-const blank = () => ({ code: '', name: '', observedOn: new Date().toISOString().slice(0, 10), vegetableM2: '', stapleM2: '', boundaryM2: '', evidence: '', published: false, updatedAt: '' });
+const blank = () => ({ code: '', name: '', observedOn: localTodayISODate(), vegetableM2: '', stapleM2: '', boundaryM2: '', evidence: '', published: false, updatedAt: '' });
 async function request(url: string, body?: unknown) {
   return fieldApi(url,body);
 }
@@ -59,7 +60,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
       let queued=false;
       const numeric = (v: string) => v.trim() ? Number(v) : null;
       const site = { ...form, vegetableM2: numeric(form.vegetableM2), stapleM2: numeric(form.stapleM2), boundaryM2: numeric(form.boundaryM2) };
-      if (isSampleMode()) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, new Date().toISOString().slice(0, 10))); }
+      if (isSampleMode()) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, localTodayISODate())); }
       else { if (sample) throw Error('This practice workspace has ended. Reopen production areas.'); const result=await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site, expectedUpdatedAt:form.updatedAt });queued=result.queued===true; }
       if (current !== version.current) return;
       void clearFieldDraft(`areas:${org}`).catch(()=>{});
@@ -81,7 +82,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: 16 }}>
         <label>Stable site code<input required disabled={editing || saving} pattern="[a-z0-9][a-z0-9_-]{1,63}" placeholder="e.g. ubhejane-01" value={form.code} onChange={e => field('code', e.target.value)} /></label>
         <label>Garden name<input required maxLength={160} value={form.name} onChange={e => field('name', e.target.value)} /></label>
-        <label>Observation date<input required type="date" max={new Date().toISOString().slice(0, 10)} value={form.observedOn} onChange={e => field('observedOn', e.target.value)} /></label>
+        <label>Observation date<input required type="date" max={localTodayISODate()} value={form.observedOn} onChange={e => field('observedOn', e.target.value)} /></label>
         <label>Vegetable beds in production (m²)<input required type="number" min="0" step="any" value={form.vegetableM2} onChange={e => field('vegetableM2', e.target.value)} /></label>
         <label>Staple plots in production (m²)<input required type="number" min="0" step="any" value={form.stapleM2} onChange={e => field('stapleM2', e.target.value)} /></label>
         <label>Total garden boundary (m², optional)<input type="number" min="0" step="any" value={form.boundaryM2} onChange={e => field('boundaryM2', e.target.value)} /></label>
