@@ -41,6 +41,19 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '14 October 2026', sha: '0e2688eb', changes: [
+    'Ask, Photos, Profile, Design and Places tabs now follow your language (isiZulu drafts).',
+    'Error messages say what went wrong in plain words, never a bare code like 500.',
+    'Saving offline keeps your note or message instead of losing it or hanging.',
+    'Dark mode fixed on the NGO pages, Lima chat, inputs and cards; buttons easier to tap.',
+    'Pages open faster: chat, maps and charts load only when you open them.',
+  ], tour: [{ title: 'Ask Lima in your language',
+    where: 'Ask tab', href: '/farmer',
+    detail: 'Switch to isiZulu and open Ask: the greeting, suggestions and buttons are translated.',
+  }, { title: 'Try saving offline',
+    where: 'Field journal', href: '/journal',
+    detail: 'If saving fails, the sheet stays open with your note so you can try again.',
+  }] },
   { when: '13 October 2026', sha: 'a07abc08', changes: [
     'Study keeps five uncertain offline phrases in exact English.',
   ], tour: [{ title: 'Read the offline instructions',
