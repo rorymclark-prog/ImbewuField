@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
+import BackButton from '@/components/BackButton';
 import AnimationReview from './AnimationReview';
 import clips from './clips.json';
 import styles from './review.module.css';
@@ -12,7 +13,7 @@ export const metadata = {
 export default function AnimationReviewPage() {
   return <div className={styles.page}>
     <header className={styles.header}>
-      <div className={styles.brand}><MenuButton /><Link href="/student">ImbewuField / My Studies</Link></div>
+      <div className={styles.brand}><MenuButton /><BackButton fallback="/student" /><Link href="/student">ImbewuField / My Studies</Link></div>
       <span>Animation drafts · 15 October 2026</span>
     </header>
     <main className={styles.main}>

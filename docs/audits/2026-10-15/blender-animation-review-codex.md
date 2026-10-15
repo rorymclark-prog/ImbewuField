@@ -2,7 +2,7 @@
 
 - Auditor and producer: Codex for Rory Clark.
 - Reviewed base: `eea14cdf3d81758478947fe5580f49843599b952`; branch `codex/blender-lesson-review-2026-10-15`.
-- Deployment: branch preview verification pending; no production release.
+- Deployment: a5840942 branch preview rendered; header Back fallback overlap found and corrected with the shared in-flow BackButton. Final corrected preview pending; no production release.
 - Previous records: [Study offline wording close-out](../2026-10-13/study-offline-five-holds-codex.md), [blind-reviewed Study corrections](../2026-10-12/study-blind-reviewed-corrections-codex.md). Their language and authenticated-state findings remain outside this visual-production scope.
 - Scope: six original Blender animation candidates at `/student/animation-review`, their silent media and explicit manual-watch behavior.
 - Evidence: current authored course source review; exact asset hashes and byte counts; complete media decode; saved-scene geometry checks; sampled actual export pixels. App browser and final test results are recorded below when available.
@@ -22,13 +22,14 @@ The new page is an unlinked, no-index review destination. It does not release th
 | MEDIA-BLENDER-003 | Opening six videos could spend mobile data before the viewer chooses one | Implemented; browser check pending | Poster-first players with `preload="none"` and no initial `src`; Watch names duration and exact MB. No autoplay on page load or looping. |
 | MEDIA-BLENDER-004 | A plausible topic match could silently activate incomplete or mistimed learner content | Review-only | Manifest carries exact course/slide/lesson context. No `lib/course-*` or offline cache/pack authority changes. Wind and cold-air scenes are focused companions to broader slides. |
 | MEDIA-BLENDER-005 | Preview files were initially placed under a `course-` prefix reserved by the exact learner-media audit | Corrected | Review assets now live under `public/animation-review/2026-10-15`; all five protected learner-media directories remain unchanged. No audit guard was weakened. |
+| MEDIA-BLENDER-006 | The actual deployed desktop page showed the global floating Back pill partly covering Open navigation | Corrected; final preview pending | Use the existing shared in-flow BackButton, which registers with BackControlProvider and removes its floating fallback. Scope date color to the direct header span. |
 | STUDY-READING-COMP-003 | Exhaustive linguistic approval remains unproven | Carried forward, outside this scope | No translation or fluent/local-farming approval is claimed for this page or existing lessons. |
 | STUDY-AUTHENTICATED-STATES-001 | Authenticated assignment/unlock screens lack learner proof | Carried forward, outside this scope | This review page is not evidence about those screens. |
 
 ## Verification
 
 - Typecheck: final six-asset typecheck passed.
-- Full suite: first pinned Node 24 run caught a new `course-` folder in the protected learner-media namespace. Review files were moved to `/animation-review/`; the protection tests are unchanged. Full corrected run and CI pending; the exact base has a successful Tests run. No tests were edited. The initial run exposed a missing shared MenuButton on this new route; it was added and all four menu coverage tests passed.
+- Full suite: first pinned Node 24 run caught a new `course-` folder in the protected learner-media namespace. Review files were moved to `/animation-review/`; the protection tests are unchanged. Corrected a5840942 local suite passed: 5,175 tests, 5,174 pass, zero failures, one existing TODO; both GitHub test/rules runs passed. Latest header-only correction CI is pending; the exact base has a successful Tests run. No tests were edited. The initial run exposed a missing shared MenuButton on this new route; it was added and all four menu coverage tests passed.
 - Whitespace: `git diff --check` passed.
 - Output inspected: current portrait export samples are retained in the local dated media batch; actual app preview is pending. Source or decode checks alone do not establish appearance.
 - Context: shade → Reading slide 9 / L2; overflow → Water slide 7 / L1; infiltration → Water slide 4 / L1; mulch → Soil slide 14 / L3; shelter → Introduction slide 19 / L3; cold air → Reading slide 13 / L3.
