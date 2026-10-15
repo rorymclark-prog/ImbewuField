@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '15 October 2026', sha: '43e9e7fc', changes: [
+  { when: '15 October 2026', sha: 'b864e08b', changes: [
     'Watering advice now asks you to check soil moisture and your crop’s needs.',
     'Weather water-loss estimates are labelled separately from watering amounts.',
     'The app’s core software and data connections have received security updates.',
