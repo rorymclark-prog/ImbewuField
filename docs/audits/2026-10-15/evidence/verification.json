@@ -1,0 +1,45 @@
+{
+  "auditDate": "2026-10-15",
+  "timezone": "Europe/Vienna",
+  "reviewedCommit": "c56291539ac9268f97923f7bed12f745cfb1b8b3",
+  "reviewBranch": "codex/gap-audit-20261015",
+  "liveBuild": {"url": "https://imbewufield.vercel.app/api/build-info", "sha": "c562915", "branch": "main"},
+  "inventory": {"nestedPageDefinitions": 60, "additionalRootPage": 1, "apiRouteDefinitions": 33, "testFiles": 507},
+  "typecheck": {"result": "passed", "node": "26.5.0", "dependencies": "npm ci from reviewed lockfile, scripts disabled"},
+  "exactCommitCI": {
+    "run": "https://github.com/rorymclark-prog/ImbewuField/actions/runs/38674457397",
+    "overall": "failure",
+    "typecheck": "success",
+    "testStep": "success",
+    "tests": {"total": 5178, "pass": 5177, "fail": 0, "cancelled": 0, "skipped": 0, "todo": 1},
+    "releaseNotesStep": "failure",
+    "rulesJob": "success",
+    "firestoreRules": "success",
+    "storageRules": "success",
+    "orgProvisioning": "success"
+  },
+  "deployment": {"run": "https://github.com/rorymclark-prog/ImbewuField/actions/runs/38674457607", "result": "success"},
+  "rulesDeployment": {"run": "https://github.com/rorymclark-prog/ImbewuField/actions/runs/38583512513", "result": "success", "date": "2026-10-14"},
+  "focusedTests": {
+    "files": ["tests/shape-sync-loss.test.ts", "tests/offline-startup.test.ts", "tests/field-device-store.test.ts", "tests/field-operation-receipt.test.ts"],
+    "total": 15, "pass": 14, "fail": 0, "todo": 1, "exitCode": 0,
+    "outstandingTodo": "Concurrent whole-collection shape writes lose an unseen shape; expected base,a,b; actual base,b"
+  },
+  "productionDependencyAudit": {
+    "command": "npm audit --omit=dev --json",
+    "result": "findings",
+    "packageSeverityBuckets": {"critical": 1, "high": 7, "moderate": 2, "total": 10},
+    "nextVersion": "14.2.18",
+    "firebaseVersion": "12.15.0",
+    "packages": ["@firebase/firestore", "@firebase/firestore-compat", "@grpc/grpc-js", "dompurify", "firebase", "nanoid", "next", "postcss", "protobufjs", "source-map-js"],
+    "qualification": "Package advisory counts include transitive and condition-dependent findings; production exploitability was not tested. No automatic fixes were applied."
+  },
+  "courseInventory": {"modulesWithImageAndAudioFilesInBothLanguages": 9, "modulesWithZuluReviewHold": 9, "scheduledWeeks": 25, "promisedWeeks": 36, "unscheduledWeeksInDiagnostic": 11},
+  "openPRs": {"totalAtInspection": 30, "draftAtInspection": 16, "surveyRecovery": {"number": 883, "state": "OPEN", "recordedChecks": "success"}, "surveyReviewFollowup": {"number": 885, "state": "OPEN"}},
+  "browser": {"viewport": "1280x720", "mode": "public samples; no private account records", "inspected": ["/samples", "/farmer", "/student"], "visualFinding": "Weather reference ETo is displayed as crop water loss with a watering instruction"},
+  "externalPrimarySources": ["https://www.fao.org/4/X0490E/x0490e04.htm", "https://www.fao.org/4/X0490E/x0490e0b.htm", "https://nextjs.org/support-policy", "https://nextjs.org/blog/security-update-2025-12-11"],
+  "applicationCodeChanged": false,
+  "testsChanged": false,
+  "paidRequestsMade": false,
+  "planVersionChanged": false
+}
