@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 import test from 'node:test';
 import { englishSlideRecords, validatePairedDraft } from '../scripts/paired-draft-slides.mjs';
 import { soilDeckBeforeOrdinary, soilMediaBeforeOrdinary } from './soil-reviewed-ordinary-history-checks.ts';
@@ -199,7 +200,8 @@ test('all sixty Soil frames retain their rendered proof while only the intended 
     assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
   }
   for (const row of evidence.preservedEnglishArt) {
-    const bytes = readFileSync(row.path);
+    // English source art as it stood before the WebP media-format layer.
+    const bytes = slidesWebpHistoryReadFileSync(row.path) as Buffer;
     assert.equal(bytes.length, row.bytes);
     assert.equal(sha(bytes), row.sha256, `${row.path}: source illustration remains unchanged`);
   }

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 import test from 'node:test';
 import { fairSharingZuluSilentRows } from './intro-fair-sharing-history-checks.ts';
 import { COURSE_NARRATION, fullNarrationUrl, trackTitle, trackUrl } from '../lib/course-audio.ts';
@@ -26,6 +27,8 @@ import { resolveIsiZuluSilentDeckDraft as resolveRegisteredSilentDraft } from '.
 const publicRoot = new URL('../public/', import.meta.url);
 const sha256 = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const assetSha256 = (url: string) => sha256(readFileSync(new URL(url.replace(/^\//, ''), publicRoot)));
+// A cue's source image is recorded provenance: it is read as it stood before the WebP media-format layer.
+const sourceImageSha256 = (url: string) => sha256(slidesWebpHistoryReadFileSync(new URL(url.replace(/^\//, ''), publicRoot)) as Buffer);
 
 // Read the encoded pixels' dimensions, rather than accepting a reviewer JSON's size claim.
 function webpDimensions(bytes: Buffer): { width: number; height: number } {
@@ -280,7 +283,7 @@ test('the Reading 7 image-only English cue stays a separately attributed source,
   assert.deepEqual(resolved.supplementalImageCue, cue);
   assert.ok(!resolved.sourceEnglish.includes(cue.text), 'image-only authored cue is not added to canonical narration source');
   assert.ok(!resolved.correctedTarget.includes(cue.text), 'English image cue is not represented as translated isiZulu text');
-  assert.equal(assetSha256(cue.sourceImageUrl), cue.sourceImageSha256,
+  assert.equal(sourceImageSha256(cue.sourceImageUrl), cue.sourceImageSha256,
     'the supplemental cue remains bound to the checked English source image');
   const { identitySha256, ...cueIdentity } = cue;
   assert.equal(sha256(Buffer.from(JSON.stringify(cueIdentity))), identitySha256,

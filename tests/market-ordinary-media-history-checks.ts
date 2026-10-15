@@ -3,7 +3,8 @@ import { withBlindReviewedCorrectionReadScope } from './blind-reviewed-study-cor
 import { finalLanguageNextMediaBefore } from './final-language-next-media-history-checks.ts';
 import { vegetablesL3AssetSizesBeforeOrdinary, vegetablesL3MediaBeforeEarlierProof } from './vegetables-l3-ordinary-media-history-checks.ts';
 import assert from 'node:assert/strict';
-import { readdirSync, statSync } from 'node:fs';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryReaddirSync as readdirSync, slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
 // Validate the bounded current audit corrections before this dated predecessor claim.
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { vegetablesPestPrecisionFrames } from './vegetables-pest-precision-media-history-checks.ts';

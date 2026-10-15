@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, copyFileSync, cpSy
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import { ensureBlindReviewedCorrectionsCurrent, blindReviewedSourceBefore, blindReviewedNativeBefore } from './blind-reviewed-study-corrections-history-checks.ts';
 import { COURSE_TRANSLATION_DRAFTS } from '../lib/course-translation-drafts.ts';
 import { TSHIVENDA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-drafts-ve-reading-landscape.ts';
@@ -11,6 +12,7 @@ import { XITSONGA_READING_LANDSCAPE_DRAFT } from '../lib/course-translation-draf
 import { XITSONGA_SMALL_LIVESTOCK_DRAFT } from '../lib/course-translation-drafts-ts-small-livestock.ts';
 
 const folder = 'docs/study-translation-reviews/blind-reviewed-corrections-2026-10-12/';
+const webpFolder = 'docs/study-translation-reviews/slides-webp-2026-10-14/';
 const nativeRows = JSON.parse(readFileSync(folder + 'native-before-after.json','utf8'));
 const nativeValues: Record<string, any> = { COURSE_TRANSLATION_DRAFTS, TSHIVENDA_READING_LANDSCAPE_DRAFT, XITSONGA_READING_LANDSCAPE_DRAFT, XITSONGA_SMALL_LIVESTOCK_DRAFT };
 const pair = (file: string) => JSON.parse(readFileSync(file,'utf8'));
@@ -89,9 +91,17 @@ async function isolatedGuard() {
   fixture = mkdtempSync(join(tmpdir(),'imbewu-blind-correction-guard-'));
   const proof=JSON.parse(readFileSync(folder+'source-layer-proof.json','utf8'));
   const inventory=JSON.parse(readFileSync(folder+'media-before-inventory.json','utf8'));
-  const files=new Set<string>([...inventory.map((r: any)=>r.path),...Object.keys(proof.files),...Object.keys(proof.protected),'tests/blind-reviewed-study-corrections-history-checks.ts']);
-  for (const file of files) { const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
+  // The guard now sits under the WebP media-format layer: the fixture carries that
+  // layer's live files and proof, never the retired JPEGs it no longer ships.
+  const webp=JSON.parse(readFileSync(webpFolder+'webp-layer-proof.json','utf8'));
+  const retiredJpegs=new Set<string>(webp.retired.map((r: any)=>r.path));
+  const files=new Set<string>([...inventory.map((r: any)=>r.path),...Object.keys(proof.files),...Object.keys(proof.protected),'tests/blind-reviewed-study-corrections-history-checks.ts',
+    'tests/slides-webp-history-checks.ts',...webp.retired.map((r: any)=>r.successor.path),...webp.added.map((r: any)=>r.path),...Object.keys(webp.files)]);
+  for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
+  cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});
+  // Retired JPEG bytes are read from the predecessor commit's immutable git objects.
+  writeFileSync(join(fixture,'.git'),`gitdir: ${execFileSync('git',['rev-parse','--absolute-git-dir']).toString().trim()}\n`);
   fixtureGuard=await import(pathToFileURL(join(fixture,'tests/blind-reviewed-study-corrections-history-checks.ts')).href);
   return fixtureGuard;
 }
