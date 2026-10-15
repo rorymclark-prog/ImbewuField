@@ -133,15 +133,36 @@ Still machine drafts and machine review only; Xitsonga "ntirho" (labour), "mubol
 "Cash" / "Mobile" in Sesotho are the weakest and need a speaker. The Xitsonga device-only photo warning now says
 "this phone only" instead of the ambiguous "xitirhisiwa".
 
+## Round 5 (14 October): month names
+
+The money book, its charts, the harvest list and the saved-invoice list printed English month words whatever the
+language. `lib/records-months.ts` now names the month in Sesotho, Tshivenda, Xitsonga and isiZulu: record dates
+(`05 Phu 2026`), the chart month axis, the selected-month readout, "Your records start in {month}", the clipped-month
+note and "picking runs into {month}". The day number, the year, the order and every stored date are unchanged, and
+English (or any other language) prints exactly what it printed before (`tests/records-months.test.ts` pins that).
+
+Sources: isiZulu reuses the month names the app already carries (`components/ComingUpHarvests.tsx`), with 3-letter
+truncations for the axis. Sesotho, Tshivenda and Xitsonga are **unreviewed machine drafts**: two independent drafts per
+language agreed on all 36 long names, and a blind reviewer shown the names shuffled mapped every one back to the right
+month with no low-confidence answers (`reviews/months/`). Short forms (3 to 4 letters, all different) were chosen to fit
+a 390px chart axis and are not an established convention. A machine cannot settle spelling or regional variants, so the
+sheet `speaker-sheets/speaker-review-month-names.csv` lists them: Sesotho Mmesa/Mmese, Leotshe/Lwetse,
+Pundungwane/Pudungwana, Pherekgong/Phesekgong; Tshivenda Fulwi/Fulwana (and Fulwi reading as winter); Xitsonga's
+January to April block, which some sources shift by one month. A wrong month name would mislead, so a month with no
+name in a language falls back to English for that month alone.
+
+Not changed on purpose: the printed and PDF invoice and the CSV export (English dates), the design-sharing date in
+"My designs", isiZulu sentences that already carry an English month inside a Zulu phrase ("ku-Feb 2024"), and crop names.
+
 ## Speaker review sheets
 
 `speaker-sheets/` holds one CSV per language (all strings, held rows first) for a fluent speaker to mark OK / CHANGE / BAD. See its README.
 
 ## Not covered (remaining dependencies)
 
-- Month names and chart month labels (English `en-ZA`), crop names (catalogue data), the Design Studio and
+- Crop names (catalogue data), the Design Studio and
   production-plan page names, and every held row listed in `draft-<lang>.json`.
-- Dates print with English month abbreviations (`en-ZA`), and user-entered text is never translated.
+- The printed invoice, PDF and CSV print English dates; user-entered text is never translated.
 - The printed and PDF invoice (English on purpose), the buyer-type names, global navigation and Lima chat.
 - Held strings: see `status: "held"` rows in each `draft-<lang>.json` (units such as eggs, jars,
   crates and bunches, fuel, the lender disclaimer and the gross-margin line; Round 4 retried the rest).

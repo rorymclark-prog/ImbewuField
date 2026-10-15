@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { recordsDate } from '@/lib/records-months';
 import {
   isRecordsRegionalLang, recordsDraftNotice, recordsFill, recordsPaired, recordsQuantityLabel, recordsTemplate,
 } from '@/lib/records-regional-drafts';
@@ -911,7 +912,9 @@ export default function InvoicePage() {
                           #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                         </div>
                         <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                          {new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                          {isRecordsRegionalLang(lang)
+                            ? recordsDate(lang, new Date(inv.dateISO), true)
+                            : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
                       </button>
                       <button

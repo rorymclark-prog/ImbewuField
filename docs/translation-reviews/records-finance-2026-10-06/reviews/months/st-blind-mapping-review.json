@@ -1,0 +1,15 @@
+{"items":[
+{"n":1,"name":"Phata","month":8,"confidence":"high","flag":"Lesotho spelling is Phato; SA Sesotho Phata is fine. Also a common word (phata = to pluck/lay out), so context matters. Not a season."},
+{"n":2,"name":"Tshitwe","month":12,"confidence":"high","flag":"Lesotho form is Tshitoe/Tšitoe; Tshitwe is the SA form. Spelling variants exist (Tshitwe/Tshitoe)."},
+{"n":3,"name":"Mmesa","month":4,"confidence":"medium","flag":"Some sources spell Mmese; Mmesa is also used. Spelling not fully standardised, but no other month is plausible."},
+{"n":4,"name":"Pundungwane","month":11,"confidence":"high","flag":"Rare long word; could be mis-typed (Pudungwane). Also possibly confused with Mphalane (Oct) by sound only."},
+{"n":5,"name":"Leotshe","month":9,"confidence":"medium","flag":"Lesotho form is Loetse; Leotshe is the SA form. Spelling variants (Leotshe/Loetse) exist."},
+{"n":6,"name":"Motsheanong","month":5,"confidence":"high","flag":"Derived from tsheanong; a seasonal flavour (late autumn) but it is the month name, not a season."},
+{"n":7,"name":"Mphalane","month":10,"confidence":"high","flag":"Same form used in Lesotho. No flag beyond sound similarity to Phata/Pundungwane."},
+{"n":8,"name":"Hlakola","month":2,"confidence":"high","flag":"Easily confused with Hlakubele (March) because both start Hlak-; the short forms Hlk and Hlb must stay distinct."},
+{"n":9,"name":"Pherekgong","month":1,"confidence":"high","flag":"Lesotho form is Phesekgong/Phesekong (Pherekgong is the SA form). Spelling variants (Pherekgong/Phirimane in other sources) exist; verify spelling."},
+{"n":10,"name":"Phupu","month":7,"confidence":"high","flag":"Easily confused with Phupjane (June); short forms Phu and Php are close. Lesotho uses Phupu for July as well."},
+{"n":11,"name":"Hlakubele","month":3,"confidence":"high","flag":"Confusable with Hlakola (February). Same form used in Lesotho."},
+{"n":12,"name":"Phupjane","month":6,"confidence":"medium","flag":"Lesotho form is Phupjane/Phuptjane; confusable with Phupu (July). Month assignment of Phupu vs Phupjane is the single highest swap risk."}
+],
+"summary":"All 12 names map one-to-one onto January to December (Pherekgong 1, Hlakola 2, Hlakubele 3, Mmesa 4, Motsheanong 5, Phupjane 6, Phupu 7, Phata 8, Leotshe 9, Mphalane 10, Pundungwane 11, Tshitwe 12), with no duplicates or gaps. Main risks are the near-identical pairs Hlakola/Hlakubele and Phupu/Phupjane, plus spelling variants (Mmesa/Mmese, Leotshe/Loetse, Tshitwe/Tshitoe, Phata/Phato) where Lesotho forms differ from the South African ones. No name is a season. This is a machine review from model knowledge only, not an approval by a fluent Sesotho speaker; a native speaker should confirm spellings before shipping."}

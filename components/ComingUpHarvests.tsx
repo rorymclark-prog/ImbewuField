@@ -30,7 +30,8 @@ import { planValue, type ValueChannel } from '@/lib/plan-value';
 import type { FinancePlanSource } from '@/lib/finance-plan-source';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
-import { recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
+import { isRecordsRegionalLang, recordsFill, recordsTemplate } from '@/lib/records-regional-drafts';
+import { recordsMonthLong, recordsMonthYear } from '@/lib/records-months';
 
 const rand = (n: number): string =>
   `R${numberLabel(Math.round(n))}`;
@@ -207,7 +208,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
         style={{ background: 'transparent', border: 'none', cursor: empty ? 'default' : 'pointer' }}
       >
         <span className="flex items-center gap-2 min-w-0">
-          <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : month.label}</span>
+          <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{lang === 'zu' ? `${MONTH_ZU[month.month]} ${month.year}` : isRecordsRegionalLang(lang) ? recordsMonthYear(lang, month.month, month.year) : month.label}</span>
           {!empty && (
             <span className="font-sans truncate" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
               {month.harvests.length === 1 ? month.harvests[0].name : recordsTemplate(lang, '{n} crops', '{n} izitshalo', { n: month.harvests.length })}
@@ -232,7 +233,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
                 <span aria-hidden="true">{h.icon}</span> {h.name}
                 <span style={{ color: 'var(--text-muted)' }}> · {h.bedLabel}</span>
                 {h.endMonth !== h.startMonth && (
-                  <span style={{ color: 'var(--text-muted)' }}> · {recordsTemplate(lang, 'picking runs into {month}', 'ukukha kuqhubeka kuze kube u-{month}', { month: lang === 'zu' ? MONTH_ZU[h.endMonth] : MONTH_NAME[h.endMonth] })}</span>
+                  <span style={{ color: 'var(--text-muted)' }}> · {recordsTemplate(lang, 'picking runs into {month}', 'ukukha kuqhubeka kuze kube u-{month}', { month: lang === 'zu' ? MONTH_ZU[h.endMonth] : isRecordsRegionalLang(lang) ? recordsMonthLong(lang, h.endMonth) : MONTH_NAME[h.endMonth] })}</span>
                 )}
               </span>
               <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{kgLabel(h.kg)}</span>

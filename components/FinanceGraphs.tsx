@@ -48,6 +48,7 @@ import { produceDisplayName } from '@/lib/perennial-produce';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { recordsFill, recordsTemplate, recordsLabel, recordsQuantityLabel } from '@/lib/records-regional-drafts';
+import { recordsMonthShort, recordsMonthYear } from '@/lib/records-months';
 
 const CARD: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
 
@@ -273,7 +274,7 @@ function MeasuredView({
           {lang === 'zu' ? (series.earlierRecords ? 'Akukho okuvunyiwe noma okudayisiwe kulezi zinyanga' : 'Asikho isivuno esirekhodiwe okwamanje') : recordsFill(lang, series.earlierRecords ? 'Nothing picked or sold in these months' : 'No harvest recorded yet')}
         </p>
         <IsiZuluDraftSource className="font-sans mt-1" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }} lang={lang} english={emptyEnglish} zulu={emptyZulu}
-          template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined} vars={{ month: series.firstRecordLabel ?? '' }} />
+          template={series.earlierRecords ? 'Your records start in {month}. Try a longer window above to reach them.' : undefined} vars={{ month: series.firstRecordMonth && series.firstRecordYear ? recordsMonthYear(lang, series.firstRecordMonth, series.firstRecordYear) : '' }} />
         <Link href="/records" className="inline-block mt-2.5 font-sans font-semibold"
           style={{ fontSize: 12, color: SOLD_TEXT, textDecoration: 'underline' }}>
           {tx('Log a harvest', 'Rekhoda isivuno')}
@@ -309,6 +310,9 @@ function MeasuredView({
   const clipped = months
     .filter((_, i) => kgScale.isClipped(monthTotals[i]))
     .map((m) => `${m.longLabel}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
+  const clippedLocal = months
+    .filter((_, i) => kgScale.isClipped(monthTotals[i]))
+    .map((m) => `${recordsMonthYear(lang, m.month, m.year)}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
   const keptExplanationEnglish = '“Kept” is what you picked less what you sold — food eaten at home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.';
   const keptExplanationZulu = '“Okusele” yinani olivunile kususwe oluthengisile — kungaba ukudla okudliwe ekhaya, okuphiwe abanye, okuphiwe izilwane, okugcinelwe imbewu noma okonakele. Uhlelo alukwazi ukuhlukanisa lezi zinto, ngakho aluqageli.';
   const mismatchExplanationEnglish = 'A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown — usually picking that never got written down, sometimes a sale out of an earlier month’s harvest.';
@@ -375,7 +379,7 @@ function MeasuredView({
           {months.map((m, i) => (
             <g key={`x-${m.key}`}>
               {showLabel(i) && (
-                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{m.label}</text>
+                <text x={cx(i)} y={totalH - 5} textAnchor="middle" fontSize="7" style={{ fill: FAINT, fontFamily: 'var(--font-sans)' }}>{recordsMonthShort(lang, m.month)}</text>
               )}
             </g>
           ))}
@@ -387,7 +391,7 @@ function MeasuredView({
               )}
               <rect x={cx(i) - colW / 2} y={0} width={colW} height={totalH} fill="transparent"
                 style={{ cursor: 'pointer' }} onClick={() => onPick(m.key)}>
-                <title>{recordsLabel(lang, '{month} — picked {picked}, sold {sold}', '{month} — kuvuniwe {picked}, kudayisiwe {sold}', { month: m.longLabel, picked: kgLabel(m.producedKg), sold: kgLabel(m.soldKg) })}</title>
+                <title>{recordsLabel(lang, '{month} — picked {picked}, sold {sold}', '{month} — kuvuniwe {picked}, kudayisiwe {sold}', { month: recordsMonthYear(lang, m.month, m.year), picked: kgLabel(m.producedKg), sold: kgLabel(m.soldKg) })}</title>
               </rect>
             </g>
           ))}
@@ -395,7 +399,7 @@ function MeasuredView({
       </div>
 
       <div className="px-4 py-2.5 flex flex-wrap items-baseline" style={{ gap: '2px 14px', borderTop: '1px solid var(--border)' }}>
-        <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{selected.longLabel}</span>
+        <span className="font-display font-semibold" style={{ fontSize: 12.5, color: INK }}>{recordsMonthYear(lang, selected.month, selected.year)}</span>
         {selected.hasRecords ? (
           <>
         <Chip dot={SOLD} label={tx('sold', 'kudayisiwe')} value={kgLabel(selected.soldKg)} />
@@ -430,7 +434,7 @@ function MeasuredView({
         )}
         {clipped.length > 0 && (
           <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={clippedExplanationEnglish} zulu={clippedExplanationZulu}
-            template="Too tall for this chart, and cut off at the mark so the other months stay readable: {list}." vars={{ list: clipped.join('; ') }} />
+            template="Too tall for this chart, and cut off at the mark so the other months stay readable: {list}." vars={{ list: clippedLocal.join('; ') }} />
         )}
         <IsiZuluDraftSource className="font-sans mt-2" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }} lang={lang} english={dateExplanationEnglish} zulu={dateExplanationZulu} />
       </div>

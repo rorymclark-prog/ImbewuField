@@ -11,6 +11,7 @@ import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { useLanguage, translate } from '@/lib/i18n';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, recordsDraft, samePlaceholders } from '@/lib/records-regional-drafts';
+import { recordsDate } from '@/lib/records-months';
 import {
   myProduction,
   mySales,
@@ -224,12 +225,12 @@ function Divider() {
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
-function fmtDate(raw: string | null | undefined): string {
+function fmtDate(raw: string | null | undefined, lang = 'en'): string {
   if (!raw) return '—';
   const d = new Date(raw);
   return isNaN(d.getTime())
     ? raw
-    : d.toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' });
+    : recordsDate(lang, d, true);
 }
 
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
@@ -784,7 +785,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               {item.crop}
             </p>
             <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {fmtDate(item.logged_at)}
+              {fmtDate(item.logged_at, lang)}
             </p>
           </div>
           <div
@@ -871,7 +872,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
               ) : null}
             </p>
             <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
-              {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at)}
+              {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at, lang)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
             {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && (recordQuantity(item) ?? 0) > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${recordsUi(lang, item.invoice_source_sale ? 'Recover invoice for' : 'Create invoice for', item.invoice_source_sale ? 'Buyisa i-invoyisi ka' : 'Dala i-invoyisi ka')} ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{recordsUi(lang, item.invoice_source_sale ? 'Recover invoice' : 'Create invoice', item.invoice_source_sale ? 'Buyisa i-invoyisi' : 'Dala i-invoyisi')}</Link>}
