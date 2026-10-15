@@ -60,6 +60,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Six Blender animation candidates — 15 October 2026](2026-10-15/blender-animation-review-codex.md).
+
 - [Study offline five-wording close-out — 13 October 2026](2026-10-13/study-offline-five-holds-codex.md).
 
 - [App-wide audit, second round: 63 open findings — 10 October 2026](2026-10-10/app-wide-audit-claude.md).
