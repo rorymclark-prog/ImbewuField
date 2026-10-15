@@ -1,0 +1,168 @@
+[
+  {
+    "id": "seasonal-shade",
+    "scene_sha256": "af950f2fe6284098a1263558b473c96611198bff1114025f4e7a733770ba3c2c",
+    "scene_mtime_ns": 1792017639059911366,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/seasonal-shade/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "sun_checks": [
+      {
+        "frame": 1,
+        "elevation": 83.43998694276635,
+        "north_origin": true,
+        "downward": true
+      },
+      {
+        "frame": 145,
+        "elevation": 83.43998694276635,
+        "north_origin": true,
+        "downward": true
+      },
+      {
+        "frame": 241,
+        "elevation": 36.55999610894197,
+        "north_origin": true,
+        "downward": true
+      },
+      {
+        "frame": 576,
+        "elevation": 36.55999610894197,
+        "north_origin": true,
+        "downward": true
+      }
+    ],
+    "point_shadow_ratio_winter_to_summer": 11.726153108152396,
+    "pass": true
+  },
+  {
+    "id": "planned-overflow",
+    "scene_sha256": "6c1142b389a54510e6fe3d0343b7f9d48558c37893a1416badf321c8deecc610",
+    "scene_mtime_ns": 1792017868927646157,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/planned-overflow/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "route_downhill_steps": 75,
+    "route_uphill_steps": 0,
+    "upstream_connection_below_water": true,
+    "downstream_connection_at_receiving_water": true,
+    "pass": true
+  },
+  {
+    "id": "swale-infiltration",
+    "scene_sha256": "98150dbbe8cac568f5c1d3177a17523f7a6143a2104e0f83df3ce77c29b46246",
+    "scene_mtime_ns": 1792018534724503043,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/swale-infiltration/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "water_levels": [
+      0.7,
+      0.98
+    ],
+    "animated_filled_water_volume": true,
+    "level_top_spread": 0.0,
+    "pass": true
+  },
+  {
+    "id": "mulch-and-rain",
+    "scene_sha256": "69b62a2f05015aaf3dadd5224d17bf6e6fa76b2b824565c871aa09a78ee3b0be",
+    "scene_mtime_ns": 1792019663039881991,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/mulch-and-rain/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "rain_per_side": [
+      24,
+      24
+    ],
+    "rain_mismatches": [],
+    "continuous_cover": true,
+    "both_soils_have_infiltration_cues": true,
+    "pass": true
+  },
+  {
+    "id": "windward-shelter-polished",
+    "scene_sha256": "574be7ab9fe78459547d51af2de22b30ef2b9c9b5d5ed1d867cefd7651a5d3ad",
+    "scene_mtime_ns": 1792020326226441520,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/windward-shelter-polished/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "direction_steps": 3370,
+    "wrong_direction_steps": [],
+    "bed_count": 4,
+    "all_bed_corners_leeward": true,
+    "pass": true
+  },
+  {
+    "id": "cold-air-hollow-polished",
+    "scene_sha256": "cb3d67ad92b1175208df511ca49f27068c285cf309a91027ba0f6aa041c5366c",
+    "scene_mtime_ns": 1792021167269073628,
+    "blender": "5.2.2 LTS",
+    "engine": "BLENDER_EEVEE",
+    "resolution": [
+      1536,
+      1120
+    ],
+    "percentage": 100,
+    "fps": 24,
+    "frame_start": 1,
+    "frame_end": 576,
+    "render_output": "/Users/roryclark/Documents/ChatGPT/Media Assets/drafts/blender-lessons-2026-10-15/cold-air-hollow-polished/frames/frame-",
+    "external_images": [],
+    "camera_animated": false,
+    "terrain_check": "Vertical raycasts against the saved terrain mesh; 0.0001 scene-unit tolerance",
+    "direction_steps": 4536,
+    "wrong_direction_steps": [],
+    "lingering_markers": 5,
+    "pass": true
+  }
+]
