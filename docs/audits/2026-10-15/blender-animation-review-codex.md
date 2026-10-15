@@ -21,13 +21,14 @@ The new page is an unlinked, no-index review destination. It does not release th
 | MEDIA-BLENDER-002 | A richer animation could lose the process in ornament or imply measured farm outcomes | Candidate mechanisms checked separately | Fixed cameras, four explanatory beats in portrait companions, retained source claims and independent saved-scene checks. Air and water motion are authored cues, not simulation or a site design. |
 | MEDIA-BLENDER-003 | Opening six videos could spend mobile data before the viewer chooses one | Implemented; browser check pending | Poster-first players with `preload="none"` and no initial `src`; Watch names duration and exact MB. No autoplay on page load or looping. |
 | MEDIA-BLENDER-004 | A plausible topic match could silently activate incomplete or mistimed learner content | Review-only | Manifest carries exact course/slide/lesson context. No `lib/course-*` or offline cache/pack authority changes. Wind and cold-air scenes are focused companions to broader slides. |
+| MEDIA-BLENDER-005 | Preview files were initially placed under a `course-` prefix reserved by the exact learner-media audit | Corrected | Review assets now live under `public/animation-review/2026-10-15`; all five protected learner-media directories remain unchanged. No audit guard was weakened. |
 | STUDY-READING-COMP-003 | Exhaustive linguistic approval remains unproven | Carried forward, outside this scope | No translation or fluent/local-farming approval is claimed for this page or existing lessons. |
 | STUDY-AUTHENTICATED-STATES-001 | Authenticated assignment/unlock screens lack learner proof | Carried forward, outside this scope | This review page is not evidence about those screens. |
 
 ## Verification
 
 - Typecheck: final six-asset typecheck passed.
-- Full suite: pinned Node 24 run and branch CI pending; the exact base has a successful Tests run. No tests were edited. The initial run exposed a missing shared MenuButton on this new route; it was added and all four menu coverage tests passed.
+- Full suite: first pinned Node 24 run caught a new `course-` folder in the protected learner-media namespace. Review files were moved to `/animation-review/`; the protection tests are unchanged. Full corrected run and CI pending; the exact base has a successful Tests run. No tests were edited. The initial run exposed a missing shared MenuButton on this new route; it was added and all four menu coverage tests passed.
 - Whitespace: `git diff --check` passed.
 - Output inspected: current portrait export samples are retained in the local dated media batch; actual app preview is pending. Source or decode checks alone do not establish appearance.
 - Context: shade → Reading slide 9 / L2; overflow → Water slide 7 / L1; infiltration → Water slide 4 / L1; mulch → Soil slide 14 / L3; shelter → Introduction slide 19 / L3; cold air → Reading slide 13 / L3.
