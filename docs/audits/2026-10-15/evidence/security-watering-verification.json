@@ -12,6 +12,8 @@
     "react-dom": "19.3.1",
     "react-konva": "19.3.2",
     "firebase": "12.19.0",
+    "firebase-admin": "14.5.0 (production dependency)",
+    "nodeRequirement": "24.x",
     "react-isOverride": "19.3.1",
     "grpcOverride": "1.14.6"
   },
@@ -36,6 +38,15 @@
     "notVerified": ["production release", "private signed-in account", "real Firebase storage", "Mapbox basemap", "physical phones", "offline restart", "two-device recovery", "newly generated PDFs", "paid AI outputs", "all languages and themes"]
   },
   "planVersionChanged": false,
+  "firstHeadCi": {
+    "sha": "1fe0def1761784cecea49eb41bdaae90d6383a7e",
+    "typecheck": "passed",
+    "firestoreStorageProvisioning": "passed",
+    "fullSuite": "running at checkpoint",
+    "hostedVercelBuild": "passed; build-info matched 1fe0def",
+    "githubPreviewBuild": "failed: Node 20 skipped optional Firestore SDK requiring Node 22+; approved Node 24 correction applied in follow-up, new-head CI required",
+    "hostedUnsignedWateringCheck": "blocked by existing location-data authentication requirement (401); no auth weakening"
+  },
   "lessonBodiesChanged": false,
   "existingTestsWeakened": false
 }

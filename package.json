@@ -2,6 +2,9 @@
   "name": "permamap-sa",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "node dev-server.mjs",
     "build": "next build --webpack",
@@ -39,6 +42,7 @@
     "@turf/length": "^7.3.5",
     "clsx": "^2.1.1",
     "firebase": "12.19.0",
+    "firebase-admin": "14.5.0",
     "heic2any": "^0.0.4",
     "jspdf": "^4.2.1",
     "konva": "^10.3.0",
@@ -71,7 +75,6 @@
     "@types/react-test-renderer": "19.3.0",
     "autoprefixer": "^10.4.20",
     "fake-indexeddb": "^6.2.5",
-    "firebase-admin": "^14.0.0",
     "postcss": "^8.4.49",
     "react-test-renderer": "19.3.1",
     "tailwindcss": "^3.4.17",

@@ -2,7 +2,7 @@
 
 - Auditor: Codex; no delegated reviewers or new linguistic approval.
 - Reviewed revision: `43e9e7fcb4d0dd3ca5b83dbf3344545245c2be04` plus the implementation on `codex/security-watering-20261015`, based on main `c56291539ac9268f97923f7bed12f745cfb1b8b3`.
-- Deployment inspected: local Next.js development server with fictional Firebase emulator configuration and the public sample farm. This is not a production-release claim. The PR and its exact checks are recorded in issue #35.
+- Deployment inspected: local Next.js development server with fictional Firebase emulator configuration and the public sample farm; also the first-head [hosted preview](https://imbewufield-git-codex-security-211348-rorymclark-9763s-projects.vercel.app), whose build-info matched `1fe0def`. This is not a production-release claim. [Draft PR #1013](https://github.com/rorymclark-prog/ImbewuField/pull/1013) and its exact checks are recorded in issue #35.
 - Previous audit: [app-wide gaps and release readiness](app-wide-gap-review-codex.md); carries forward `IF-GAP-001`, `IF-GAP-004` and the release-evidence limits.
 - Scope: supported framework/runtime dependencies, their required compatibility changes, weather wording and its rendered regression tests.
 - Evidence: dependency audit, typecheck, focused behavioral tests, full-suite execution, local desktop/mobile browser inspection and [sanitized verification checkpoint](evidence/security-watering-verification.json).
@@ -26,6 +26,7 @@ The preceding audit established that the production lockfile had ten flagged pac
 - The existing manual tracing exclusions moved from the old experimental property to the supported root configuration. This preserves exclusion of the large `public/` directory from manual server functions.
 - Development and production explicitly use webpack, retaining the app's existing Mapbox alias. The agent-rules generator is disabled so starting Next does not overwrite the shared project instructions.
 - React 19 type changes replace the removed global JSX namespace and allow nullable SVG refs. Recharts' `react-is` version matches React; React Konva and the test renderer match the runtime generation.
+- Firebase Admin 14.5.0 is now classified as a production dependency because the server API imports it. The application declares Node 24, matching `.nvmrc` and Tests. The clear production audit includes this server SDK, rather than excluding it as a development tool.
 - The new test renders the real weather component with a forecast fixture. It fails if the primary guidance becomes a numeric watering prescription again, if the optional reference loses its disclaimer, or if invalid data prints a quantity. Existing tests were not weakened.
 - The refresh banner includes a farmer-facing note and a direct watering-card tour stop. Its checkpoint is stamped to the actual implementation commit before publication.
 
@@ -42,6 +43,18 @@ The preceding audit established that the production lockfile had ten flagged pac
 - A production build was not run in the sandbox, per `AGENTS.md`; preview CI supplies build coverage with Google Fonts access. Next's existing middleware convention emits a deprecation warning but remains supported.
 - Not verified: production preview/release until CI completes, physical Android/iPhone behavior, offline update/restart on a real device, private account recovery, newly generated exports, all languages/themes or real paid rendering.
 
+### Build continuation
+
+The first pushed head, `1fe0def1761784cecea49eb41bdaae90d6383a7e`, passed CI typecheck and all Firestore/Storage/provisioning checks in [the push run](https://github.com/rorymclark-prog/ImbewuField/actions/runs/38704279535). Its full suite remains in progress at this checkpoint.
+
+Vercel's hosted build succeeded and the public preview `/api/build-info` returned `1fe0def` on branch `codex/security-watering-20261015`. However, [the separate GitHub preview build](https://github.com/rorymclark-prog/ImbewuField/actions/runs/38704279336) failed: its Node 20 install skipped the newly refreshed optional Firestore SDK, whose engine requires Node 22+, causing missing Firestore types. This is a real deployment compatibility issue to resolve, not a reason to ignore TypeScript errors or suppress checking. The existing Firebase Admin 14.0 already required Node 22; the deployment jobs had fallen behind the repository's Node 24 runtime.
+
+The app's production and preview build jobs now use Node 24. Those two workflow files belong to Claude under `AGENTS.md`; Rory explicitly approved the prepared two-line ownership exception in this chat before it was applied. No other workflow was changed. The earlier Vercel success is kept separate from verification of this corrected GitHub build.
+
+The hosted preview's unsigned sample location request returned **401 Authentication required**. This is kept separate from the runtime migration: its hard-auth configuration blocks `location-data`, which is not in the existing guest allowlist. Consequently the watering card was verified in actual local browser pixels but could not be verified on that unsigned hosted preview. Do not weaken authentication to obtain a screenshot. No private sign-in or paid call was performed.
+
+The hosted preview's manual contents page was visually checked successfully. Its screenshot is linked below; this is evidence of the built public manual, not of authenticated farming flows.
+
 This changes the weather card's picture. It changes no plan-sheet geometry, species, lesson/quiz/narration content or `PLAN_VERSION`.
 
 ## Browser evidence
@@ -51,6 +64,7 @@ This changes the weather card's picture. It changes no plan-sheet geometry, spec
 - [Phone-width expanded reference](evidence/watering-mobile-expanded.jpg): the disclaimer wraps without clipping.
 - [Sample design review smoke check](evidence/security-design-smoke.jpg): the saved public sample drawing renders after the React/runtime upgrade. This is not a new plan-sheet or paid-image quality approval.
 - [Rainfall chart smoke check](evidence/security-rainfall-smoke.jpg): the real Recharts rainfall bars and month labels render after the React upgrade; no new rainfall figures are introduced by this patch.
+- [Hosted preview manual contents](evidence/security-preview-manual.jpg): first-head Vercel build `1fe0def` serves the migrated public manual route.
 
 ## Sources
 
