@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
+import { slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 import { createHash } from 'node:crypto';
 import { resolveIsiZuluSilentDeckDraft } from '../lib/course-deck-silent-drafts-registry.ts';
 import { slideImageFor } from '../lib/course-deck.ts';
@@ -26,7 +27,8 @@ test('longest comparison uses a distinct silent card and cannot play its older l
   assert.ok(trackUrl('reading-landscape', 'zu', 13), 'unaffected own voice remains available');
   assert.equal(slideImageFor('reading-landscape', 'zu', 14)?.url, row.imageUrl);
   assert.equal(sha(readFileSync('public' + candidate.sourceBinding.audioUrl)), candidate.sourceBinding.audioSha256);
-  assert.equal(sha(readFileSync('public' + candidate.sourceBinding.imageUrl)), candidate.sourceBinding.imageSha256);
+  // The recorded source card predates the WebP media-format layer.
+  assert.equal(sha(slidesWebpHistoryReadFileSync('public' + candidate.sourceBinding.imageUrl) as Buffer), candidate.sourceBinding.imageSha256);
   assert.equal(sha(readFileSync('public' + row.imageUrl)), row.imageSha256);
   const pack = offlinePack('reading-landscape', 'zu', 'standard', 'full');
   assert.ok(pack.entries.some(e => e.url === row.imageUrl));
