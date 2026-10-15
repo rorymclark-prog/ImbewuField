@@ -60,6 +60,10 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Security and watering continuation — 15 October 2026](2026-10-15/security-watering-codex.md).
+
+- [App-wide gaps and release readiness — 15 October 2026](2026-10-15/app-wide-gap-review-codex.md).
+
 - [Study offline five-wording close-out — 13 October 2026](2026-10-13/study-offline-five-holds-codex.md).
 
 - [App-wide audit, second round: 63 open findings — 10 October 2026](2026-10-10/app-wide-audit-claude.md).

@@ -46,7 +46,7 @@ function Dimension({ feature, horizontal, label, colour = '#715634', side = 'lef
 }
 
 /** A standalone SVG teaching diagram. Every visual attribute is in the SVG so an exported clone keeps its meaning. */
-export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?: DesignWorkedDiagramView; svgRef?: RefObject<SVGSVGElement> }) {
+export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?: DesignWorkedDiagramView; svgRef?: RefObject<SVGSVGElement | null> }) {
   const [enlarged, setEnlarged] = useState(false);
   const isA = view === 'A';
   const isB = view === 'B';

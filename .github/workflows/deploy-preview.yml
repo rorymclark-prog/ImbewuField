@@ -56,7 +56,7 @@ jobs:
       - uses: actions/setup-node@v4
         if: env.HAS == 'true'
         with:
-          node-version: '20'
+          node-version: '24'
       - name: Install Vercel CLI
         if: env.HAS == 'true'
         run: npm install -g vercel@latest

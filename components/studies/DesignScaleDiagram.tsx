@@ -1,7 +1,7 @@
 import type { RefObject } from 'react';
 import { scaleNumber as n, type ScaleArrangement } from '@/lib/design-scale';
 
-export default function DesignScaleDiagram({ model, svgRef, scenario }: { model: ScaleArrangement; svgRef?: RefObject<SVGSVGElement>; scenario: string }) {
+export default function DesignScaleDiagram({ model, svgRef, scenario }: { model: ScaleArrangement; svgRef?: RefObject<SVGSVGElement | null>; scenario: string }) {
   const [a, b] = model.beds;
   const unit = Math.min(300 / model.frameWidthM, 300 / a.lengthM);
   const left = (500 - model.frameWidthM * unit) / 2;

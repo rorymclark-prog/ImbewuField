@@ -102,7 +102,8 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
         />
       )}
 
-      {/* Current conditions + today's irrigation hint */}
+      {/* ETo describes reference conditions, not this crop's irrigation requirement (FAO 56).
+          The old instruction turned it straight into a watering amount without crop or soil data. */}
       <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <div className="flex items-center gap-2.5 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
           {getElementArt2(currentDesc.key) ? (
@@ -127,14 +128,23 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
           </div>
         </div>
 
-        {today.et0Mm !== null && (
-          <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
-            <Droplets size={14} style={{ color: 'var(--blue)', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-              Crops will lose about <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{today.et0Mm.toFixed(1)}mm</span> of water today — water roughly that much if there's no rain
-            </span>
+        <div role="note" aria-label="Watering guidance" className="px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
+          <div className="flex items-start gap-2">
+            <Droplets size={14} style={{ color: 'var(--blue)', flexShrink: 0, marginTop: 2 }} />
+            <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', margin: 0 }}>
+              Check soil moisture before watering. Your crop, its growth stage and recent rain affect how much water it needs.
+            </p>
           </div>
-        )}
+          {today && typeof today.et0Mm === 'number' && Number.isFinite(today.et0Mm) && today.et0Mm >= 0 && (
+            <details className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+              <summary style={{ minHeight: 44, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>Weather water-loss estimate</summary>
+              <p style={{ margin: '0 0 4px' }}>
+                Reference ETo: <strong style={{ color: 'var(--text-primary)' }}>{today.et0Mm.toFixed(1)} mm today.</strong>{' '}
+                This is a weather estimate, not a watering amount.
+              </p>
+            </details>
+          )}
+        </div>
 
         {/* Forecast strip — full 7 days, or first 4 in compact mode */}
         <div className="flex overflow-x-auto" style={{ scrollbarWidth: 'none' }}>

@@ -27,8 +27,8 @@ function load(params: { lang: string; slug: string }) {
   return { lang: params.lang, slug: params.slug, markdown, translated: own !== null };
 }
 
-export function generateMetadata({ params }: { params: { lang: string; slug: string } }): Metadata {
-  const chapter = load(params);
+export async function generateMetadata({ params }: { params: Promise<{ lang: string; slug: string }> }): Promise<Metadata> {
+  const chapter = load(await params);
   if (!chapter) return {};
   return { title: `${chapterTitle(chapter.markdown)} · ${manualUi(chapter.lang).title}` };
 }
@@ -39,8 +39,8 @@ const navLink = {
   color: 'var(--text-primary)', fontSize: 15, fontWeight: 600, maxWidth: '100%',
 } as const;
 
-export default function ManualChapterPage({ params }: { params: { lang: string; slug: string } }) {
-  const chapter = load(params);
+export default async function ManualChapterPage({ params }: { params: Promise<{ lang: string; slug: string }> }) {
+  const chapter = load(await params);
   if (!chapter) notFound();
   const { lang, slug, markdown, translated } = chapter;
   const ui = manualUi(lang);
