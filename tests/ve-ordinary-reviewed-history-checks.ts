@@ -3,7 +3,8 @@ import { ordinaryFramingPairBefore, ordinaryFramingPairBeforeHistory, ordinaryFr
 import { veReadingFrostPairBefore, veReadingFrostAssetBefore, frostAssets } from './ve-reading-frost-history-checks.ts';
 import { isCurrentOrBatchPredecessor } from './core-reading-vegetables-followup-history-checks.ts';
 import assert from 'node:assert/strict';
-import { statSync } from 'node:fs';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
 // Validate the bounded current audit corrections before this dated predecessor claim.
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { createHash } from 'node:crypto';

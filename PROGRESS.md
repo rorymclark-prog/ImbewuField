@@ -52,6 +52,17 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 14 Oct 2026 — Wave 12: WebP lesson slides and Studies thumbnails (#999, perf-03/perf-05)
+- **Lighter Study:** 500 English and isiZulu lesson slides are now WebP (~300 KB instead of ~1 MB each, same size and
+  words); `public/course-decks` 391 MB → 322 MB. The two Studies overview cards use ~20 KB WebP thumbnails instead of
+  ~850 KB slides.
+- **Kept on purpose:** plant-guilds `en/slide-15/29/37.jpg` stay because three lessons use them as lesson pictures, and
+  `lib/course-modules.ts` (pinned by 200+ Study proofs) stays byte-identical. Their WebP twins ship for the deck.
+- **Study proof:** new dated media-format layer `docs/study-translation-reviews/slides-webp-2026-10-14/` +
+  `tests/slides-webp-history-checks.ts` (every retired JPEG's size/digest → its WebP successor, before snapshots of the four
+  changed sources). The 12 October layer validates it first, then sees its exact predecessor, so older proofs are unchanged.
+- **Still deferred:** bug-08 sw.js timeout, lang-13.
+
 ### 14 Oct 2026 — Wave 11: second app-wide audit fixes (#992)
 - **Security & AI cost:** contour interval clamp, same-org garden/log/thread rules, guest request size caps, slip reader and
   visit notes metered, profile `network` spoofing closed, no raw provider errors, `//` login redirect blocked.

@@ -5,6 +5,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 import { COURSE_ASSET_SIZES } from '../lib/course-asset-sizes.ts';
 import { SESOTHO_SOIL_HEALTH_DRAFT } from '../lib/course-translation-drafts-st-soil-health.ts';
@@ -282,13 +283,13 @@ test('the 18 approved frames and every protected media inventory match the durab
   for (const row of media.soilAndWaterDeckAssets.filter((item: Data) => !item.changed)) {
     assert.equal(row.sha256Before, row.sha256After, row.path);
     // Later36 bytes are verified in full before this exact dated unlisted descriptor.
-    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(readFileSync(row.path)), row.sha256After, row.path);
+    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(slidesWebpHistoryReadFileSync(row.path) as Buffer), row.sha256After, row.path);
   }
   for (const rows of [media.unlistedCourseAudio, media.unlistedCourseAnimations, media.introSesothoStills] as Data[][]) {
     for (const row of rows) {
       assert.equal(row.sha256Before, row.sha256After, row.path);
       // Later36 bytes are verified in full before this exact dated unlisted descriptor.
-    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(readFileSync(row.path)), row.sha256After, row.path);
+    assert.equal(finalLanguageNextMediaBefore(row.path)?.sha256 ?? digest(slidesWebpHistoryReadFileSync(row.path) as Buffer), row.sha256After, row.path);
     }
   }
   assert.equal(media.unlistedCourseAudio.length, 523);

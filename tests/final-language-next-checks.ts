@@ -4,7 +4,8 @@ import { mapNativeBefore, mapPresentationBefore } from './reading-map-comparison
 import assert from 'node:assert/strict';
 import { followupNativeBefore, followupPresentationBefore, followupSourceBefore } from './core-reading-vegetables-followup-history-checks.ts';
 import { createHash } from 'node:crypto';
-import { statSync } from 'node:fs';
+// Dated owners see the tree before the WebP media-format layer (retired JPEGs present).
+import { slidesWebpHistoryStatSync as statSync } from './slides-webp-history-checks.ts';
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { precisionSourceBytesBefore } from './study-precision-history-checks.ts';
 import { comparisonsNativeBefore, comparisonsPresentationBefore } from './reading-comparisons-history-checks.ts';
