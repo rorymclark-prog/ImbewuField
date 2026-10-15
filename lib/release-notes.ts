@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '15 October 2026', sha: '43e9e7fc', changes: [
+    'Watering advice now asks you to check soil moisture and your crop’s needs.',
+    'Weather water-loss estimates are labelled separately from watering amounts.',
+    'The app’s core software and data connections have received security updates.',
+  ], tour: [{ title: 'Check watering advice',
+    where: 'Map → Overview', href: '/farmer',
+    detail: 'The weather estimate is optional; check soil moisture before deciding to water.',
+  }] },
   { when: '14 October 2026', sha: '0e2688eb', changes: [
     'Ask, Photos, Profile, Design and Places tabs now follow your language (isiZulu drafts).',
     'Error messages say what went wrong in plain words, never a bare code like 500.',

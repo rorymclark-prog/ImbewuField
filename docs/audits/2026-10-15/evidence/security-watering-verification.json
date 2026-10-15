@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-15",
+  "auditor": "Codex",
+  "branch": "codex/security-watering-20261015",
+  "baseMain": "c56291539ac9268f97923f7bed12f745cfb1b8b3",
+  "previousAuditCommit": "43e9e7fcb4d0dd3ca5b83dbf3344545245c2be04",
+  "findings": ["IF-GAP-001", "IF-GAP-004"],
+  "runtime": "Node 24.19.0",
+  "versions": {
+    "next": "16.4.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-konva": "19.3.2",
+    "firebase": "12.19.0",
+    "react-isOverride": "19.3.1",
+    "grpcOverride": "1.14.6"
+  },
+  "productionAudit": {
+    "command": "npm audit --omit=dev --json",
+    "vulnerabilities": { "info": 0, "low": 0, "moderate": 0, "high": 0, "critical": 0, "total": 0 }
+  },
+  "fullAudit": {
+    "command": "npm audit --json",
+    "vulnerabilities": { "info": 0, "low": 0, "moderate": 2, "high": 5, "critical": 0, "total": 7 },
+    "remainingPackages": ["braces", "chokidar", "fast-glob", "micromatch", "postcss-nested", "postcss-selector-parser", "tailwindcss"],
+    "disposition": "Development/build chain; requires a separately verified Tailwind migration. No force fix used."
+  },
+  "typecheck": "passed",
+  "focusedTests": { "tests": 141, "pass": 141, "fail": 0, "todo": 0, "durationMs": 145477 },
+  "fullTests": { "command": "npm test -- --test-concurrency=4", "status": "running at checkpoint; exact branch CI result required before merge" },
+  "whitespace": "passed",
+  "browser": {
+    "environment": "localhost Next.js webpack; fictional Firebase emulator config; public sample farm; no Mapbox token",
+    "viewports": ["1280x720", "390x844"],
+    "verified": ["watering primary advice", "collapsed and expanded ETo reference", "sample design review drawing", "sample production calendar and graph disclosure", "Recharts rainfall bars", "manual contents", "manual introduction chapter", "manual printable book route and title"],
+    "notVerified": ["production release", "private signed-in account", "real Firebase storage", "Mapbox basemap", "physical phones", "offline restart", "two-device recovery", "newly generated PDFs", "paid AI outputs", "all languages and themes"]
+  },
+  "planVersionChanged": false,
+  "lessonBodiesChanged": false,
+  "existingTestsWeakened": false
+}

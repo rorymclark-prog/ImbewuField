@@ -26,9 +26,10 @@ export function generateStaticParams() {
   return MANUAL_LANGS.map((lang) => ({ lang }));
 }
 
-export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
-  if (!isManualLang(params.lang)) return {};
-  return { title: `${manualUi(params.lang).title} · Book` };
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isManualLang(lang)) return {};
+  return { title: `${manualUi(lang).title} · Book` };
 }
 
 const COVERS = path.join(process.cwd(), 'public', 'manual', 'covers');
@@ -82,9 +83,9 @@ function TitleSheet({ image, eyebrow, title, subtitle, full }: { image: string |
   );
 }
 
-export default function ManualBookPage({ params }: { params: { lang: string } }) {
-  if (!isManualLang(params.lang)) notFound();
-  const lang: ManualLang = params.lang;
+export default async function ManualBookPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!isManualLang(lang)) notFound();
   const ui = manualUi(lang);
   const figures = manualFigures();
   const chapters = MANUAL_CHAPTERS.map((slug, index) => {

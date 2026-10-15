@@ -15,15 +15,16 @@ export function generateStaticParams() {
   return MANUAL_LANGS.map((lang) => ({ lang }));
 }
 
-export function generateMetadata({ params }: { params: { lang: string } }): Metadata {
-  if (!isManualLang(params.lang)) return {};
-  const ui = manualUi(params.lang);
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isManualLang(lang)) return {};
+  const ui = manualUi(lang);
   return { title: `${ui.title} · ImbewuField`, description: ui.subtitle };
 }
 
-export default function ManualContentsPage({ params }: { params: { lang: string } }) {
-  if (!isManualLang(params.lang)) notFound();
-  const lang = params.lang;
+export default async function ManualContentsPage({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang } = await params;
+  if (!isManualLang(lang)) notFound();
   const ui = manualUi(lang);
   const chapters = chapterIndex(lang);
 

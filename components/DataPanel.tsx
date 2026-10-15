@@ -1,7 +1,7 @@
 'use client';
 
 import { numberLabel } from '@/lib/format-figures';
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef, useMemo, type ReactElement } from 'react';
 import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
@@ -165,7 +165,7 @@ const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water:
   },
 };
 
-const TAB_ICONS: Record<string, JSX.Element> = {
+const TAB_ICONS: Record<string, ReactElement> = {
   Overview: <MapPin size={16} />,
   Ask: <MessageCircle size={16} />,
   People: <Users size={16} />,
