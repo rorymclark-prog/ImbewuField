@@ -198,8 +198,13 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/DataPanel.tsx': {
     reason: 'the site analysis panel — dense climate and soil figures read at a laptop. '
       + 'a11y-12 (2026-10-10) raised its three sub-11px attribution/legend captions to a '
-      + 'clamp(12px, …) floor, down from 32.',
-    budget: 29,
+      + 'clamp(12px, …) floor, down from 32. Wave 13 (code-09, swarm/w13-farmer-dark) raised '
+      + 'every other sub-12px fontSize/font-shorthand declaration in the file to 12px, down to '
+      + '29. The remaining 5 are the climate-calendar month strip (12 single-letter labels at '
+      + '7.5px in a tight flex row) and the wind-compass rose\'s four N/E/S/W labels (tests/'
+      + 'wind-compass-rose.test.ts owns that SVG\'s layout) — both need a layout change, not a '
+      + 'number, to raise further.',
+    budget: 5,
   },
 
   'components/ReportView.tsx': {

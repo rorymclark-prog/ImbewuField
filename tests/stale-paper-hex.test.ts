@@ -120,3 +120,46 @@ test('app/global-error.tsx is left untouched — it renders outside the normal l
   assert.match(src, /#F7F2E9/, 'app/global-error.tsx does not load app/globals.css, so it keeps the literal hex');
   assert.doesNotMatch(src, /globals\.css/, 'confirms this file never imports the stylesheet --on-forest lives in');
 });
+
+// code-03 (wave 13, swarm/w13-farmer-dark): page roots, sticky headers and dividers used literal
+// paper/hairline/ink hex instead of theme tokens, so in dark mode these pages kept a cream header
+// bar or light page body under a dark tab bar. This track owns app/atlas/page.tsx,
+// app/updates/page.tsx and app/journal/page.tsx (vision/invoice/account belong to other tracks —
+// not covered here).
+const CODE_03_STALE_HEXES = [/#E4DCC6/i, /#E2D8C4/i, /#FFFEFA/i, /#20190F/i, /#5C5040/i, /#755942/i, /#1F4D2B/i];
+const CODE_03_OWNED_PATHS = [
+  'app/updates/page.tsx',
+  'app/atlas/page.tsx',
+  'app/journal/page.tsx',
+];
+
+for (const relativePath of CODE_03_OWNED_PATHS) {
+  test(`${relativePath} does not paint its page root/header/dividers with literal paper/ink hex (code-03)`, () => {
+    const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');
+    for (const hex of CODE_03_STALE_HEXES) {
+      assert.doesNotMatch(src, hex,
+        `${relativePath} should use a theme token (var(--bg-0)/var(--border)/var(--text-primary)/var(--color-forest-800) etc) instead of ${hex} so it follows dark mode`);
+    }
+  });
+}
+
+// code-07 (wave 13, swarm/w13-farmer-dark): Tailwind palette classes like `text-stone-600` are
+// fixed colours that do not move with the theme, so they go unreadable in dark mode on a themed
+// surface. This track owns components/HarvestReconciliation.tsx, components/IsiZuluDraftSource.tsx
+// and components/DataPanel.tsx — converted to `text-[var(--text-muted)]`. app/records/page.tsx,
+// app/calendar/page.tsx and components/Map.tsx/app/farmer/page.tsx belong to other tracks (full
+// guard for those lives in tests/theme-leftovers.test.ts, not owned by this track).
+const CODE_07_OWNED_PATHS = [
+  'components/HarvestReconciliation.tsx',
+  'components/IsiZuluDraftSource.tsx',
+  'components/DataPanel.tsx',
+];
+const CODE_07_PALETTE_CLASS = /\b(?:text|bg|border)-(?:stone|gray|neutral|zinc|slate|red|white)-?\d*/;
+
+for (const relativePath of CODE_07_OWNED_PATHS) {
+  test(`${relativePath} does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)`, () => {
+    const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');
+    assert.doesNotMatch(src, CODE_07_PALETTE_CLASS,
+      `${relativePath} should use a theme token (e.g. text-[var(--text-muted)]) instead of a fixed Tailwind palette colour`);
+  });
+}

@@ -42,7 +42,7 @@ export default function IsiZuluDraftSource({
   return (
     <div className={className} style={style}>
       <p lang={lang} style={{ margin: 0 }}>{local}</p>
-      <p className="mt-1 text-xs leading-snug text-stone-600" style={{ marginBottom: 0 }}>
+      <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]" style={{ marginBottom: 0 }}>
         {lang === 'zu' && <span>Unreviewed isiZulu draft. </span>}
         <span lang="en">English source: {english}</span>
       </p>
