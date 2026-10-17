@@ -6,6 +6,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import TabBar from '@/components/TabBar';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
 import ReportComposer from '@/components/ReportComposer';
 import { sampleReportVisuals } from '@/lib/report-visuals';
@@ -36,7 +37,7 @@ export default function SampleGardensPage() {
   const visible=SAMPLE_GARDENS.filter(g=>filter==='All'||g.kind===filter);
   useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
-  return <main className={styles.page} style={{ paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
+  return <main className={styles.page} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingBottom: 0 }}><div style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     {/* ux-11: a plain span, not a second h1 — the one just below is this page's real heading. */}
     <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{ui('Gardens','Izingadi')}</span><SettingsButton/></header>
     <h1>{SAMPLE_GARDENS.length} {ui('gardens','izingadi')}</h1><p>{ui('Choose a garden to explore its layout, people and report.','Khetha ingadi ukuze uhlole ukuhleleka kwayo, abantu nombiko.')}</p>
@@ -68,5 +69,8 @@ export default function SampleGardensPage() {
         </div>
       </article>
     )}</div>
-  </div></main>;
+  </div></div>
+  {/* nav-03: without this, /samples/gardens was one of the secondary pages that lost the farmer's way home. */}
+  <div className="no-print"><TabBar/></div>
+  </main>;
 }

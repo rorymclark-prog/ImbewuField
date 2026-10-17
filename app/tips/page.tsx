@@ -5,15 +5,25 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import TabBar from '@/components/TabBar';
 import { useLanguage, translate } from '@/lib/i18n';
+import { useAppLevel } from '@/lib/app-level';
 import { TIPS_GUIDES } from '@/lib/tips-guides';
 import styles from '@/components/ProductTour.module.css';
 
+// ux-19: lib/tips-guides.ts is owned by another file's data (not this track), so filtering
+// happens here on what each guide already is — not by adding a level/role field to it. Mentor
+// dictation and invoice-field tips are staff/office tools, not something a Simple-mode farmer
+// opened Tips looking for; records and the practice-view tips stay relevant to everyone.
+const SIMPLE_RELEVANT_PREFIXES = ['/records', '/samples'];
+
 export default function TipsPage() {
   const { t, lang } = useLanguage();
+  const simple = useAppLevel() === 'simple';
   const [search, setSearch] = useState('');
-  const shown = TIPS_GUIDES.filter(g => `${g.en.title} ${g.en.text} ${g.zu.title} ${g.zu.text}`.toLowerCase().includes(search.toLowerCase()));
-  return <main className={styles.page}><div className={styles.wrap}>
+  const guides = simple ? TIPS_GUIDES.filter(g => SIMPLE_RELEVANT_PREFIXES.some(p => g.href.startsWith(p))) : TIPS_GUIDES;
+  const shown = guides.filter(g => `${g.en.title} ${g.en.text} ${g.zu.title} ${g.zu.text}`.toLowerCase().includes(search.toLowerCase()));
+  return <main className={styles.page}><div className={styles.scroll}><div className={styles.wrap}>
     {/* ux-11: a plain span, not an h1 — the hero below carries this page's one real heading. */}
     <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{t('tipsTitle')}</span><SettingsButton/></header>
     {lang === 'zu' && <p role="note" style={{ margin: '16px 0 0', fontSize: 12 }}><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu draft. Each guide keeps its exact English source below.</span></p>}
@@ -28,6 +38,11 @@ export default function TipsPage() {
         <Link href={g.href} lang={lang === 'zu' ? 'zu' : 'en'} style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>{copy.action} →</Link>
       </article>;
     })}{!shown.length&&<p>{lang === 'zu' ? t('tipsNoMatchZuDraft') : t('tipsNoMatch')} <Link href="/feedback">{lang === 'zu' ? t('tipsAskForHelpZuDraft') : t('tipsAskForHelp')}</Link>.</p>}</div>
-    <section style={{marginTop:24,padding:24,borderRadius:18,border:'1px solid var(--border)'}}><h2 style={{fontSize:22,fontWeight:700}}>{lang === 'zu' ? t('tipsVideoGuidesTitleZuDraft') : t('tipsVideoGuidesTitle')}</h2><p style={{margin:'12px 0',lineHeight:1.65}}>{lang === 'zu' ? t('tipsVideoGuidesBodyZuDraft') : t('tipsVideoGuidesBody')}</p><a href="https://www.youtube.com/results?search_query=permaculture+vegetable+garden+South+Africa" target="_blank" rel="noreferrer" style={{display:'inline-flex',alignItems:'center',minHeight:44,textDecoration:'underline'}}>{lang === 'zu' ? t('tipsYoutubeLinkZuDraft') : t('tipsYoutubeLink')}</a><p style={{fontSize:13,marginTop:8}}>{lang === 'zu' ? t('tipsYoutubeNoteZuDraft') : t('tipsYoutubeNote')}</p></section>
-  </div></main>;
+    {/* ux-19: the "Video guides" section was a placeholder ending in "will be added here when
+        published" with only a generic YouTube search link — removed until there is at least
+        one real video. */}
+  </div></div>
+  {/* nav-03: without this, /tips was one of the secondary pages that lost the farmer's way home. */}
+  <div className="no-print"><TabBar/></div>
+  </main>;
 }

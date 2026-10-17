@@ -343,7 +343,7 @@ export default function AccountPage() {
               <button onClick={() => photoInputRef.current?.click()} disabled={photoUploading} aria-busy={photoUploading}
                 aria-label={copy('Change photo', 'Shintsha isithombe')}
                 className="absolute bottom-0 right-0 flex items-center justify-center rounded-full"
-                style={{ width: 22, height: 22, background: '#C07A1E', border: '2px solid #FBF6EC', cursor: photoUploading ? 'wait' : 'pointer' }}>
+                style={{ width: 22, height: 22, background: '#C07A1E', border: '2px solid var(--bg-1)', cursor: photoUploading ? 'wait' : 'pointer' }}>
                 <Camera size={11} style={{ color: '#fff' }} />
               </button>
               <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
@@ -353,7 +353,7 @@ export default function AccountPage() {
                 {displayName ?? 'ImbewuField user'}
               </div>
               {photoError && (
-                <div className="text-xs font-sans mt-1" style={{ color: '#A8443A' }}>{photoError}</div>
+                <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}>{photoError}</div>
               )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
@@ -381,7 +381,7 @@ export default function AccountPage() {
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
               <label className="block">
@@ -390,7 +390,7 @@ export default function AccountPage() {
                   placeholder="+27 ..."
                   type="tel"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
               {/* The trading name the buyer knows — it HEADS every invoice, and the person's
@@ -402,7 +402,7 @@ export default function AccountPage() {
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
                 </div>
@@ -415,7 +415,7 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
-                    style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid #D8CBB2' }}>
+                    style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid var(--border)' }}>
                     {profile?.farm_logo
                       /* eslint-disable-next-line @next/next/no-img-element -- farmer-supplied data URL */
                       ? <img src={profile.farm_logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
@@ -425,18 +425,18 @@ export default function AccountPage() {
                     <div className="flex gap-1.5 flex-wrap">
                       <button type="button" onClick={() => logoInputRef.current?.click()} disabled={logoUploading}
                         className="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
-                        style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--color-forest-800)', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
+                        style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
                         {logoUploading ? copy('Adding…', 'Iyengezwa…') : profile?.farm_logo ? copy('Replace', 'Faka olunye') : copy('Add a logo', 'Faka uphawu')}
                       </button>
                       {profile?.farm_logo && !logoUploading && (
                         <button type="button" onClick={handleRemoveLogo}
                           className="px-3 py-1.5 rounded-lg text-xs font-sans"
-                          style={{ background: 'transparent', border: '1px solid #D8CBB2', color: 'var(--text-muted)', cursor: 'pointer' }}>
+                          style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-muted)', cursor: 'pointer' }}>
                           {copy('Remove', 'Susa')}
                         </button>
                       )}
                     </div>
-                    <div className="text-xs font-sans" style={{ color: logoError ? '#A8443A' : '#755942' }}>
+                    <div className="text-xs font-sans" style={{ color: logoError ? 'var(--danger)' : 'var(--text-muted)' }}>
                       {logoError ?? copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
                     </div>
                   </div>
@@ -448,13 +448,13 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 appearance-none"
-                  style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }}>
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
                   {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
                 </select>
               </label>
 
               {profileError && (
-                <div className="text-xs font-sans rounded-lg px-3 py-2" style={{ color: '#A8443A', background: '#F6E7E1', border: '1px solid #E4C9BC' }}>
+                <div className="text-xs font-sans rounded-lg px-3 py-2" style={{ color: 'var(--danger)', background: 'var(--danger-soft)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}>
                   {profileError}
                 </div>
               )}
@@ -537,7 +537,7 @@ export default function AccountPage() {
                         value={pwForm[field]}
                         onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
                         className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 pr-10"
-                        style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
+                        style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                       {field === 'current' && (
                         <button type="button" onClick={() => setShowPw((s) => !s)}
                           aria-label={showPw ? copy('Hide passwords', 'Fihla amaphasiwedi') : copy('Show passwords', 'Bonisa amaphasiwedi')}
@@ -581,7 +581,7 @@ export default function AccountPage() {
           {/* Sign out — always plain and reachable in both modes. */}
           <button onClick={handleSignOut} disabled={signingOut}
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
-            style={{ background: signingOut ? '#FFFEFA' : 'rgba(212,110,66,0.06)', border: '1px solid rgba(212,110,66,0.25)', color: signingOut ? '#755942' : '#B83A18', cursor: signingOut ? 'wait' : 'pointer' }}>
+            style={{ background: signingOut ? 'var(--bg-2)' : 'var(--danger-soft)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)', color: signingOut ? 'var(--text-muted)' : 'var(--danger)', cursor: signingOut ? 'wait' : 'pointer' }}>
             <LogOut size={15} />
             {signingOut ? copy('Signing out...', 'Kuyaphuma...') : copy('Sign out', 'Phuma')}
           </button>

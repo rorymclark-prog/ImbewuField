@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import BackButton from '@/components/BackButton';
 import MenuButton from '@/components/MenuButton';
+import TabBar from '@/components/TabBar';
 import { Users, HandCoins, Sprout, GraduationCap, BookOpen } from 'lucide-react';
 import { enterSampleMode } from '@/lib/sample-mode';
 import { startRolePreview } from '@/lib/use-role-navigation';
@@ -69,7 +70,7 @@ export default function SamplesPage() {
   }, [loading, user?.uid, role]);
   const choicesReady = !loading && accessReady && verifiedUid === (user?.uid ?? null);
   const availableRoles = sampleChoicesForAccount(accountRole, !!user, choicesReady);
-  return <main className={styles.root} style={{ height: '100dvh', minHeight: 0, overflowY: 'auto', paddingBottom: 'calc(var(--bottom-nav-height, 0px) + max(24px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
+  return <main className={styles.root} style={{ height: '100dvh', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}><div style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(var(--bottom-nav-height, 0px) + max(24px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     {/* nav-08: labelled "Account" while the heading below says "Choose a view" — three different
         words for one choice. Relabelled by where it actually goes. */}
     <header className={styles.row}><MenuButton /><BackButton fallback="/account" /><Link href="/account">{ui('Back to account', 'Buyela ku-akhawunti')}</Link></header>
@@ -84,5 +85,8 @@ export default function SamplesPage() {
     <div className={styles.card}><h2>{ui('Complete production example', 'Isibonelo sohlelo oluphelele lokukhiqiza')}</h2><p>{ui('A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.', 'Ipulazi lesibonelo endaweni efudumele e-KZN elinemifino, izitshalo eziyisisekelo, izithelo, amantongomane, amajikijolo, amaqanda, ubisi, uju nezinhlanzi. Buka ikhalenda lanyanga zonke, izihlahla ezisencane nohlelo oluphrintekayo. Kuboniswa ngesiNgisi.')}</p><Link className={styles.primary} href="/samples/production">{ui('Open the complete example →', 'Vula isibonelo esiphelele →')}</Link></div>
     <button type="button" onClick={() => { if (enterSampleMode()) window.location.reload(); }}>{ui('Reset tour records', 'Setha kabusha amarekhodi ohambo')}</button>
     <p>{ui('Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.', 'Izinguquko zihlala kulesi seshini sohambo. Ukusetha kabusha noma ukulayisha kabusha kuqala kabusha. Akudingeki ungene ngemvume futhi ukushintsha izindawo akuguquli izimvume ze-akhawunti yakho yangempela.')}</p>
-  </div></main>;
+  </div></div>
+  {/* nav-03: without this, /samples was one of the secondary pages that lost the farmer's way home. */}
+  <div className="no-print"><TabBar/></div>
+  </main>;
 }

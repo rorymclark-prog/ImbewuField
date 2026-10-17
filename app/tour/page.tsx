@@ -7,6 +7,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import { productTourError, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
@@ -43,7 +44,7 @@ export default function TourPage() {
   }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
-  return <main className={styles.page}><div className={styles.wrap}>
+  return <main className={styles.page}><div className={styles.scroll}><div className={styles.wrap}>
     {/* ux-11: this page used to be a floating Back/Tour pill on bare paper with no title bar,
         unlike /journal, /calendar, /prices etc.'s MenuButton · BackButton · BrandLogo · title
         bar. BrandLogo + a short title bring it in line without replacing this page's own
@@ -82,5 +83,8 @@ export default function TourPage() {
       </article>;
     })}</div>
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>
-  </div></main>;
+  </div></div>
+  {/* nav-03: without this, /tour was one of the secondary pages that lost the farmer's way home. */}
+  <div className="no-print"><TabBar/></div>
+  </main>;
 }
