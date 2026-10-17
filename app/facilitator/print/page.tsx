@@ -198,17 +198,21 @@ interface PlanSvgProps {
   gridLines: GridLine[];
   /** Omit for the full-design page (everything full-colour). Set to a LayerId to fade every other layer to grey context. */
   highlightLayer?: LayerId;
+  /** Printed width of the drawing in mm (3:2 aspect). The first sheet shares its row with the
+   *  220px Legend + BOQ column, so it must leave room for it inside the 269mm of sheet width
+   *  that remains after padding: 240mm + 8mm gap + 220px (≈58mm) overflowed the sheet. */
+  widthMm?: number;
 }
 
 const CONTEXT_GREY = '#B4ADA0';
 const CONTEXT_OPACITY = 0.25;
 
-function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer }: PlanSvgProps) {
+function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer, widthMm = 240 }: PlanSvgProps) {
   const scaleBarPx = scaleBarM * scale;
   const isContext = (layer: LayerId) => highlightLayer !== undefined && layer !== highlightLayer;
 
   return (
-    <svg width="240mm" height="160mm" viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
+    <svg width={`${widthMm}mm`} height={`${(widthMm * 2) / 3}mm`} viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
       {/* grid */}
       {gridLines.map((g, i) => (
         <line key={`grid-${i}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} stroke="#E2D8C4" strokeWidth={0.2} />
@@ -822,6 +826,7 @@ export default function FacilitatorPrintPage() {
                 itemPts={c.itemPts} linePts={c.linePts} sectorPts={c.sectorPts}
                 toDraw={c.toDraw} scale={c.scale} pxPerM={c.pxPerM}
                 drawW={c.drawW} drawH={c.drawH} scaleBarM={c.scaleBarM} gridLines={c.gridLines}
+                widthMm={200}
               />
             </div>
 

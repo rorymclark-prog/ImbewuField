@@ -23,7 +23,8 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
-import { isSampleMode, exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+import { exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+import { useSampleRole } from '@/lib/use-role-navigation';
 
 // ux-04/sdesk-02/staff-07/nav-05/desk-11: the shared header for the three states below
 // (genuine loading, sample/tour, and "sign in to continue") — one rendered header instead of
@@ -71,6 +72,10 @@ export default function AccountPage() {
   // Settings button already opens the same panel in both modes) into a "More account settings"
   // disclosure so they stay reachable without switching to All tools.
   const simple = useAppLevel() === 'simple';
+  // Hydration-safe: useSampleRole reads sessionStorage through useSyncExternalStore with a
+  // server snapshot of '', so the first client render matches the server markup. Calling
+  // isSampleMode() during render made every sample-mode frame of /account log React #418.
+  const samplePreview = !!useSampleRole();
   const [moreOpen, setMoreOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -206,7 +211,6 @@ export default function AccountPage() {
   // no heading, no message, no way back, no sign-in. A genuinely slow auth check now gets a
   // sentence under the icon and, past 4s, the same sign-in fallback rather than spinning forever.
   if (loading || !user) {
-    const samplePreview = isSampleMode();
     if (!samplePreview && loading && !authSlow) {
       return (
         <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
