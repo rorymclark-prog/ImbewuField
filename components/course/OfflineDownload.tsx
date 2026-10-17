@@ -70,6 +70,13 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   const [failed, setFailed] = useState<string[]>([]);
   const [notPersisted, setNotPersisted] = useState(false);
   const [tightOnSpace, setTightOnSpace] = useState(false);
+  // Assumed supported until checked in an effect — offlineSupported() reads `window`, which is
+  // absent during SSR but present on the client's very first render, so calling it directly in
+  // the render body (as this component used to) made that render disagree with the server HTML
+  // (nav-19). The sibling PathwayOfflineDownload/GuideOfflineDownload already use this same
+  // assume-true-then-correct pattern.
+  const [supported, setSupported] = useState(true);
+  useEffect(() => { setSupported(offlineSupported()); }, []);
   // STANDARD BY DEFAULT, ALWAYS. The person this course is built for is on metered KZN data; the
   // higher-quality set exists for facilitators, funders and anyone training off a laptop on wifi.
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
@@ -164,7 +171,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (packs.length === 0) return null;
 
-  if (!offlineSupported()) {
+  if (!supported) {
     return compact ? null : (
       <p className="font-sans text-xs" style={{ color: '#755942' }}>
         {t('offlineDownloadUnsupported')}

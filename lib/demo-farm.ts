@@ -111,6 +111,14 @@ const BED_DEFS: BedDef[] = [
   { id: 'demo-hugel-1', xM: 12, yM: 13, wM: 2, hM: 3, type: 'hugel' },
 ];
 
+/** demo-bed-1 and demo-bed-2's geometry only, stable across renders — see sampleScalePair in
+    lib/design-scale.ts. A client component can read this directly instead of asking a server
+    component to call buildDemoFacilitatorState() (which stamps a fresh savedAt: Date.now() on
+    every call) and thread the result down as a prop (nav-19). */
+export const SCALE_PRACTICE_SOURCE_BEDS = BED_DEFS
+  .filter((b) => b.id === 'demo-bed-1' || b.id === 'demo-bed-2')
+  .map((b) => ({ id: b.id, xM: b.xM, yM: b.yM, wM: b.wM, hM: b.hM, rotation: 0 }));
+
 export function buildDemoFacilitatorState(): FacilitatorDesignState {
   const items: FacItem[] = [
     ...BED_DEFS.map((b) => ({

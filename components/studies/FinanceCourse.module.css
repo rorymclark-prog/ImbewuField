@@ -23,8 +23,20 @@
 .card a { display: inline-block; min-height: 44px; }
 .reading { background: color-mix(in srgb, var(--color-forest-800) 10%, var(--bg-1)); border-color: color-mix(in srgb, var(--color-forest-800) 25%, transparent); }
 .actions { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 18px; }
-.actions a, .actions button { min-height: 44px; display: inline-flex; align-items: center; padding: 10px 14px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 10px; background: var(--bg-1); font: inherit; }
+/* One button style per role (ux-12): .primary = filled, the default a/button below = outlined
+   "secondary", .tertiary = a plain underlined link. gap + white-space:nowrap on .actionLabel
+   keep a trailing arrow icon glued to its label instead of wrapping onto its own line. */
+.actions a, .actions button { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 10px; background: var(--bg-1); font: inherit; text-decoration: none; }
 .actions .primary { background: var(--color-forest-800); color: var(--on-forest); text-decoration: none; font-weight: 600; }
+.actions .tertiary { border-color: transparent; background: transparent; padding: 10px 4px; text-decoration: underline; text-underline-offset: 3px; }
+.actionLabel { white-space: nowrap; }
+/* The long "teaching preview" / offline-pack caveats collapsed to one two-line note with a
+   <details> for the rest (ux-12), instead of 80-120 words blocking the page before any lesson
+   content. */
+.noticeMore { margin: 8px 0 0; }
+.noticeMore summary { min-height: 32px; padding: 4px 0; cursor: pointer; font-size: 14px; font-weight: 600; list-style: none; }
+.noticeMore summary::-webkit-details-marker { display: none; }
+.noticeMore p { margin: 6px 0 0; font-size: 14px; }
 .checklist { padding-top: 12px; color: var(--text-secondary); }
 .checklist p { font-size: 14px; }
 .section summary { min-height: 44px; padding: 8px 0; cursor: pointer; font-weight: 600; font-size: 18px; }

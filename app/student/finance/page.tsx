@@ -1,3 +1,4 @@
+import { ArrowRight } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { FINANCE_UNITS, FINANCE_LESSONS } from '@/lib/course-finance';
@@ -22,13 +23,12 @@ export default function FarmFinancePage() {
           <h1>Understand the money.<br />Plan the next season.</h1>
           <p>From your first farm record to a checked business plan. Read, work through examples and practise with a notebook, calculator and the app.</p>
           <p><strong>8 units · 24 lessons</strong> · Take this course on its own, or alongside permaculture.</p>
-          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/f1-1">Start with farm and household money →</OfflinePageLink><a href="#syllabus">See every lesson</a></div>
+          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/f1-1"><span className={styles.actionLabel}>Start with farm and household money</span><ArrowRight size={15} aria-hidden /></OfflinePageLink><a className={styles.tertiary} href="#syllabus">See every lesson</a></div>
         </div>
         <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" />
       </section>
-      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p><FinanceZuCourseNotice /></aside>
+      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> English lesson drafts and worked practice are available — content review, learner trials, narration, translation and final assessment remain in preparation.</p><FinanceZuCourseNotice /></aside>
       <FinanceReadingChecklist lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
-      <PathwayOfflineDownload pathwayId="finance" />
       <section className={styles.section}>
         <h2>Learn by doing</h2>
         <p>Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.</p>
@@ -61,9 +61,10 @@ export default function FarmFinancePage() {
           </div>
           <p>Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.</p>
           <p>Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification.</p>
-          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided">Open the practical project →</OfflinePageLink></div>
+          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided"><span className={styles.actionLabel}>Open the practical project</span><ArrowRight size={15} aria-hidden /></OfflinePageLink></div>
         </section>
       </FullToolsOnly>
+      <PathwayOfflineDownload pathwayId="finance" />
     </main>
   </div>;
 }

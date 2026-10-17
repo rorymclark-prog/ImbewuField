@@ -14,13 +14,13 @@ export default function TeachTheTeachersPage() {
   return <div className={styles.page}>
     <header className={styles.header}>
       <MenuButton /><BackButton fallback="/student" />
-      <Link href="/student">My Studies</Link><span>Facilitator refresher</span>
+      <Link href="/student">My Studies</Link><span>Mentor refresher</span>
     </header>
     <main className={styles.main}>
       <section className={styles.hero}>
         <p className={styles.eyebrow}>ACT · Agroecology and permaculture</p>
         <h1>Teach the Teachers</h1>
-        <p className={styles.lead}>A two-day refresher for people who will facilitate the existing core course. Practise teaching with the app, a real object and a paper fallback.</p>
+        <p className={styles.lead}>A two-day refresher for mentors who will teach the existing core course. Practise teaching with the app, a real object and a paper fallback.</p>
         <div className={styles.heroLinks}><a href="#day-1">Day 1</a><a href="#day-2">Day 2</a><a href="#course-map">Core modules</a><a href="#prepare">Prepare</a><a href="#observe">Observation guide</a></div>
       </section>
 
