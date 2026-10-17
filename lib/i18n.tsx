@@ -139,6 +139,21 @@ export const T_en: Dict = {
   siteSummaryFrostProtection: 'Protect against frost in winter.',
   siteSummaryPlanPrompt: 'Want a full planting plan?',
   siteSummaryZuluDraftNotice: 'Unreviewed isiZulu draft. Read the English source before making farming decisions.',
+  // zu-04: the ONE shared <LanguageDraftNote> (components/LanguageDraftNote.tsx) used on
+  // /farmer, /records, /login, /prices and in DataPanel, replacing each page's own ad-hoc
+  // notice. Renders only for isiZulu; the English dict carries these three keys only as the
+  // fallback translate('en', key) reads when showing the collapsed English detail.
+  languageDraftNoticeText: 'This isiZulu wording is an unreviewed machine draft.',
+  languageDraftNoticeEnglishToggle: 'English',
+  languageDraftNoticeEnglishText: 'The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.',
+  languageDraftNoticeDismiss: 'Dismiss',
+  // zu-05: the site report's BRU zone line (components/DataPanel.tsx) mixed an English
+  // attribution sentence and "approx." into isiZulu headings. lib/bru.ts's BRU_ATTRIBUTION
+  // constant stays English (it's also used in English-locale UI); these keys let DataPanel
+  // substitute a translated sentence when lang === 'zu' instead of the raw English string.
+  bruZoneAttribution: 'Zone data: KZN DARD Bioresource Units',
+  bruZoneApprox: 'approx.',
+  bruZoneNameCaveat: 'zone name is a best-effort climate match, not verified',
   mapEditPlaceTitle: 'Edit name or colour',
   mapEditShapeTitle: 'Edit shape',
   mapDeletePlaceTitle: 'Delete this place',

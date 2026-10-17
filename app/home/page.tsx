@@ -32,7 +32,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -40,7 +40,7 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask, type BoardTranslate } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
 import { useAppLevel } from '@/lib/app-level';
@@ -63,9 +63,21 @@ const LANG_TO_LOCALE: Record<string, string> = {
 };
 const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
-function getDayDate(lang: string) {
+// zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
+// fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
+// 16'). isiZulu builds its own day-first string from lib/locales/zu.ts's weekday/month tables
+// instead of Intl; every other language keeps using Intl, with 'en-ZA' as the fallback for an
+// unlisted locale code rather than the browser default.
+const ZU_WEEKDAY_KEYS = ['homeWeekdaySun', 'homeWeekdayMon', 'homeWeekdayTue', 'homeWeekdayWed', 'homeWeekdayThu', 'homeWeekdayFri', 'homeWeekdaySat'];
+const ZU_MONTH_KEYS = ['homeMonthJan', 'homeMonthFeb', 'homeMonthMar', 'homeMonthApr', 'homeMonthMay', 'homeMonthJun', 'homeMonthJul', 'homeMonthAug', 'homeMonthSep', 'homeMonthOct', 'homeMonthNov', 'homeMonthDec'];
+
+function getDayDate(lang: string, now: Date = new Date()) {
+  if (lang === 'zu') {
+    const day = translate('zu', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
-  const now = new Date();
   const day = now.toLocaleDateString(locale, { weekday: 'long' });
   const date = now.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
   return `${day} · ${date}`;
@@ -320,9 +332,17 @@ function HomeLandingInner() {
 
   useEffect(() => {
     setLastSite(getLastSite());
+    // zu-03: wire the task board's templates to the live language instead of the English-only
+    // default — 'Prep bed for…', 'Sow…', 'Harvest…', 'Bed {n}' and 'Due this month' now read
+    // through t(), same {placeholder} substitution lib/task-board.ts's own default uses.
+    const boardTranslate: BoardTranslate = (key, vars) => {
+      let s = t(key);
+      if (vars) for (const [name, value] of Object.entries(vars)) s = s.replace(`{${name}}`, value);
+      return s;
+    };
     const refresh = () => {
       setPlaces(loadPlaces());
-      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds()));
+      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds(), boardTranslate, lang));
     };
     refresh();
     // setMainSiteId() fires this same event, so the picker + weather block
@@ -330,7 +350,8 @@ function HomeLandingInner() {
     // and canvas saves likewise refresh tasks while Home remains mounted.
     TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.addEventListener(event, refresh));
     return () => TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const mainSite = resolveMainSite(places ?? []);
   // The analysed point and the designated site answer different questions, but when they are

@@ -13,6 +13,7 @@ import { loadPlaces, resolveMainSite } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import type { LocationData } from './types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { produceLabel } from './produce-label';
 
 // zu-03 (wave 13 audit): the task board was entirely hard-coded English — verbs, the default
 // "Bed {n}" label and "Due this month" — regardless of the farmer's chosen language. lib/i18n.tsx
@@ -197,8 +198,13 @@ const BOARD_VERB_KEY: Record<CropTask['action'], string> = {
   'weed-mid': 'taskVerbWeedMid',
 };
 
-function boardTaskTitle(action: CropTask['action'], cropName: string, translateFn: BoardTranslate): string {
-  return translateFn(BOARD_VERB_KEY[action], { crop: cropName });
+// zu-03/zu-11: the crop name itself used to be passed straight through as plain English
+// (t.cropName, from lib/crop-plan.ts). It now reads through the shared produceLabel() helper
+// (lib/produce-label.ts) keyed by t.cropKey, which also has an isiZulu common name for the
+// crops this draft covers — so 'Prep bed for {crop}' can read 'Lungisa umbhede we{crop}' with
+// an isiZulu crop name too, not just an isiZulu verb around an English one.
+function boardTaskTitle(action: CropTask['action'], cropKey: string, translateFn: BoardTranslate, lang: string): string {
+  return translateFn(BOARD_VERB_KEY[action], { crop: produceLabel(cropKey, lang) });
 }
 
 // The default bed label crop-plan.ts assigns is exactly "Bed {n}" (bedById.get(bedId)?.label);
@@ -223,6 +229,7 @@ export function buildCropBoardTasks(
   currentMonth: number,
   completedIds: Set<string>,
   translateFn: BoardTranslate = defaultBoardTranslate,
+  lang: string = 'en',
 ): BoardTask[] {
   if (!Number.isSafeInteger(currentMonth) || currentMonth < 1 || currentMonth > 12) return [];
   const bedIds = new Set(beds.map((bed) => bed.id));
@@ -248,7 +255,7 @@ export function buildCropBoardTasks(
     out.push({
       id: t.id,
       kind: 'crop',
-      title: boardTaskTitle(t.action, t.cropName, translateFn),
+      title: boardTaskTitle(t.action, t.cropKey, translateFn, lang),
       subtitle: `${boardBedLabel(t.bedLabel, translateFn)} · ${dueLabel(monthsAway, translateFn)}`,
       icon: t.icon,
       cropKey: t.cropKey,
@@ -273,11 +280,11 @@ export function buildCropBoardTasks(
  * longer exists), and returns BoardTasks ready to render. Returns [] under
  * SSR/no-window, same as loadCropPlan.
  */
-export function loadCropBoardTasks(completedIds: Set<string>, translateFn: BoardTranslate = defaultBoardTranslate): BoardTask[] {
+export function loadCropBoardTasks(completedIds: Set<string>, translateFn: BoardTranslate = defaultBoardTranslate, lang: string = 'en'): BoardTask[] {
   if (typeof window === 'undefined' || !window.localStorage) return [];
   const { beds, plantings } = loadCropBoardSource();
   const currentMonth = new Date().getMonth() + 1;
-  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds, translateFn);
+  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds, translateFn, lang);
 }
 
 /** Shared bed/planting resolution behind loadCropBoardTasks and

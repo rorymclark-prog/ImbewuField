@@ -17,6 +17,7 @@ import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 
 // Simple / All tools (lib/app-level.ts): a short list to fall back to when a farmer has no saved
 // crop plan yet to draw "their own crops" from — common South African smallholder staples that
@@ -50,7 +51,7 @@ export default function PricesPage() {
     setOwnCropKeys(new Set(loadCropPlan().plantings.map((p) => p.cropKey)));
   }, []);
 
-  const crops = useMemo(() => pricedCropList(overrides), [overrides]);
+  const crops = useMemo(() => pricedCropList(overrides, lang), [overrides, lang]);
   const simpleCrops = useMemo(() => {
     const own = crops.filter((crop) => ownCropKeys.has(crop.key));
     return own.length > 0 ? own : crops.filter((crop) => SIMPLE_COMMON_CROP_KEYS.includes(crop.key));
@@ -77,11 +78,7 @@ export default function PricesPage() {
       </header>
 
       <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
-        {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 mb-3 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
-            {t('pricesZuluDraftNotice')}
-          </p>
-        )}
+        <div className="mb-3"><LanguageDraftNote lang={lang} scope="prices" /></div>
         <style jsx global>{`
           .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
           .imf-price-crop img, .imf-price-crop > span:first-child { transition: transform 220ms cubic-bezier(.16,1,.3,1); }
