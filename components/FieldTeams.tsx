@@ -35,7 +35,6 @@ const FIELD_PROGRAMMES_ZU: Record<FieldProgramme, string> = {
   'act-sef-food-security': 'Uhlelo lokuvikeleka kokudla',
 };
 
-
 // Maps FIELD_FOCUS's closed set of keys (lib/field-teams.ts) onto the MENTOR_ENGLISH_PENDING keys
 // that now carry this component's isiZulu drafts for them (lib/locales/zu.ts), replacing the local
 // FIELD_FOCUS_ZU literal this file used to keep next to FIELD_PROGRAMMES_ZU above.
