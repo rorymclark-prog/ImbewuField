@@ -518,6 +518,11 @@ export default function ExchangeBoard() {
           <li><strong style={{ fontWeight: 600 }}>{tx('Locations are approximate.', 'Izindawo zilinganiselwe.')}</strong> {zu ? <ExchangeSourceCopy en="Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead." zu="Indawo yesikhangiso isondezwa cishe kwikhilomitha elilodwa — ibonisa indawo eseduze, hhayi umuzi ngqo." /> : 'Every listing carries a point rounded to about a kilometre — a neighbourhood, never a homestead.'}</li>
         </ul>
       </div>
+      {/* ux-01/desk-01/staff-03: this board is mounted inside app/exchange/page.tsx's own scroll
+          container (not owned by this track), so it cannot set that page's bottom padding —
+          a trailing spacer sized to the Lima launcher's published clearance keeps the "What this
+          preview does not do" box above from sitting under the FAB on whatever page embeds it. */}
+      <div aria-hidden style={{ height: 'var(--lima-fab-clearance, 0px)' }} />
     </div>
   );
 }

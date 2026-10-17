@@ -233,7 +233,7 @@ export default function VisionPage() {
             rather than forcing a two-up grid split across steps that depend on each other; the
             shared readingWidth token (960px) still gives it real desktop width instead of a
             stretched phone column. */}
-        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 88 }}>
+        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 'var(--lima-fab-clearance, 88px)' }}>
 
           {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old text-xs chip is gone. */}
