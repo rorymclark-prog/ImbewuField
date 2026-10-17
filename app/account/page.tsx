@@ -23,6 +23,23 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
+import { isSampleMode, exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+
+// ux-04/sdesk-02/staff-07/nav-05/desk-11: the shared header for the three states below
+// (genuine loading, sample/tour, and "sign in to continue") — one rendered header instead of
+// three drifting copies, since every captured frame for /account across phone and desktop,
+// light and dark, used to show only a faint sprout on an empty page with no way to tell
+// loading, broken and "this is the practice version" apart.
+function AccountShellHeader({ copy }: { copy: (en: string, zu: string) => string }) {
+  return (
+    <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
+      <MenuButton /><BackButton fallback="/home" />
+      <BrandLogo />
+      <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+      <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{copy('Account', 'I-akhawunti')}</h1>
+    </header>
+  );
+}
 
 const ROLE_LABELS: Record<UserRole, string> = {
   farmer: 'Farmer', mentor: 'Mentor',
@@ -85,6 +102,15 @@ export default function AccountPage() {
   useEffect(() => {
     if (!loading && !user && isBackendConfigured()) router.replace('/login');
   }, [user, loading, router]);
+
+  // ux-04/sdesk-02/staff-07/nav-05/desk-11: cap the loading spinner so a slow or never-resolving
+  // auth check still lands somewhere, instead of spinning on the bare sprout forever.
+  const [authSlow, setAuthSlow] = useState(false);
+  useEffect(() => {
+    if (!loading) { setAuthSlow(false); return; }
+    const id = setTimeout(() => setAuthSlow(true), 4000);
+    return () => clearTimeout(id);
+  }, [loading]);
 
   useEffect(() => {
     if (profile?.org_id) getOrganizationName(profile.org_id).then(setOrgName).catch(() => setOrgName(null));
@@ -174,11 +200,102 @@ export default function AccountPage() {
     if (err) { setPwError(err); } else { setPwSuccess(true); setPwForm({ current: '', next: '', confirm: '' }); setTimeout(() => { setPwSuccess(false); setChangingPw(false); }, 2000); }
   }
 
+  // ux-04/sdesk-02/staff-07/nav-05/desk-11: `loading || !user` never resolved to a real page in
+  // sample/tour mode (there is no Firebase user there) or when the backend is not configured at
+  // all — every captured frame was a blank page with a faint 40%-opacity sprout and nothing else:
+  // no heading, no message, no way back, no sign-in. A genuinely slow auth check now gets a
+  // sentence under the icon and, past 4s, the same sign-in fallback rather than spinning forever.
   if (loading || !user) {
+    const samplePreview = isSampleMode();
+    if (!samplePreview && loading && !authSlow) {
+      return (
+        <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+          <AccountShellHeader copy={copy} />
+          <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6 text-center">
+            <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
+            <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{copy('Loading your account…', 'Kulayishwa i-akhawunti yakho…')}</p>
+          </div>
+          <TabBar />
+        </div>
+      );
+    }
+    if (samplePreview) {
+      const sandbox = getSandboxProfile();
+      const sandboxRoleLabel = sandbox.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[sandbox.role] : ROLE_LABELS[sandbox.role]) : null;
+      const sandboxLangLabel = APP_LANGS.find((l) => l.code === sandbox.language)?.label ?? sandbox.language;
+      return (
+        <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+          <AccountShellHeader copy={copy} />
+          <div className="flex-1 overflow-y-auto">
+            <div className={`${workspace.workspace} ${workspace.formWidth} px-4 py-6 sm:px-6`}>
+              <section className="min-w-0 space-y-5" aria-label={copy('Tour account', 'I-akhawunti yohambo')}>
+                <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                  <div className="flex items-center justify-center rounded-full font-display font-bold flex-shrink-0"
+                    style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--on-forest)' }}>
+                    <Sprout size={28} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: 'var(--text-primary)' }}>{sandbox.full_name ?? copy('Tour account', 'I-akhawunti yohambo')}</div>
+                    {sandboxRoleLabel && (
+                      <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
+                        style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                        <Sprout size={11} />{sandboxRoleLabel}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="rounded-2xl px-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                  <Row icon={Sprout} label={copy('Farm / organisation', 'Ipulazi / inhlangano')} value={sandbox.farm_name ?? null} />
+                  <Row icon={Globe} label={copy('Language', 'Ulimi')} value={sandboxLangLabel} />
+                </div>
+                <button onClick={() => setSettingsOpen(true)}
+                  className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+                  style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
+                  <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
+                  <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
+                </button>
+                <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
+                  <p className="text-sm font-sans" style={{ color: 'var(--text-secondary)' }}>
+                    {copy('You are using the practice version. Nothing here is saved to a real account — sign in to keep your own records.', 'Usebenzisa inguqulo yokuzilolonga. Akukho okulondolozwa ku-akhawunti yangempela lapha — ngena ngemvume ukuze ulondoloze amarekhodi akho.')}
+                  </p>
+                  <div className="flex gap-2 flex-wrap">
+                    <button onClick={() => router.push('/login')}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display font-semibold"
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+                      {copy('Sign in', 'Ngena ngemvume')}
+                    </button>
+                    <button onClick={() => { exitSampleMode(); router.push('/home'); }}
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display"
+                      style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+                      {copy('Exit tour', 'Phuma ohambo')}
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+          <TabBar />
+          <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+        </div>
+      );
+    }
+    // Not sample mode, no user: either the backend was never configured (no redirect ever
+    // fires) or the real auth check genuinely timed out. Either way, a bare "sign in" prompt
+    // beats an endless spinner — the redirect effect above still fires the moment a real
+    // backend resolves loading=false/!user, so this is a safety net, not the normal path.
     return (
       <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-        <div className="flex-1 flex items-center justify-center">
+        <AccountShellHeader copy={copy} />
+        <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
           <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
+          <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
+            {authSlow ? copy('Still loading… you can sign in instead.', 'Kusalayishwa… ungangena ngemvume esikhundleni.') : copy('Sign in to manage your account.', 'Ngena ngemvume ukuze uphathe i-akhawunti yakho.')}
+          </p>
+          <button onClick={() => router.push('/login')}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-display font-semibold"
+            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+            {copy('Sign in', 'Ngena ngemvume')}
+          </button>
         </div>
         <TabBar />
       </div>
@@ -194,7 +311,7 @@ export default function AccountPage() {
       <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{copy('Account', 'I-akhawunti')}</h1>
         <div className="flex-1" />
         <LessonLink id="account:overview" label={copy('Learn', 'Funda')} />
