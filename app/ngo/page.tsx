@@ -172,7 +172,7 @@ export default function NgoPage() {
             <Icon size={13} />
             {label}
             {badge != null && badge > 0 && (
-              <span className="flex items-center justify-center rounded-full font-mono"
+              <span className="flex items-center justify-center rounded-full font-display tabular-nums"
                 // Was fontSize 9, under the 12px micro-label floor and genuinely hard to read on a
                 // laptop. Raised with the pill grown to match, since a 12px digit does not fit a
                 // 16px circle.
