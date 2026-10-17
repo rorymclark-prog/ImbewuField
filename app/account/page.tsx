@@ -380,7 +380,7 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Full name', 'Amagama aphelele')}</div>
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
@@ -389,7 +389,7 @@ export default function AccountPage() {
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
@@ -401,7 +401,7 @@ export default function AccountPage() {
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
@@ -447,7 +447,7 @@ export default function AccountPage() {
               <label className="block">
                 <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 appearance-none"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
                   {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
                 </select>
@@ -536,7 +536,7 @@ export default function AccountPage() {
                         placeholder={field === 'current' ? copy('Current password', 'Iphasiwedi yamanje') : field === 'next' ? copy('New password', 'Iphasiwedi entsha') : copy('Confirm new password', 'Qinisekisa iphasiwedi entsha')}
                         value={pwForm[field]}
                         onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
-                        className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 pr-10"
+                        className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 pr-10"
                         style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                       {field === 'current' && (
                         <button type="button" onClick={() => setShowPw((s) => !s)}

@@ -1218,6 +1218,8 @@ const dict: Dict = {
   navWhatsNew: 'Yini entsha',
   navTour: 'Buka uhambo lokufundisa',
   navTipsHelp: 'Amacebo nosizo',
+  // zu-07: matches MenuButton.tsx's own hardcoded 'Uhambo' for the same control.
+  tourPill: 'Uhambo',
   navTourControls: 'Izilawuli zohambo lokufundisa',
   navTourWorkspace: 'Indawo yokusebenza yohambo',
   navTourWorkspaceNote: 'Izinguquko zihlala kule ndawo yokusebenza yohambo.',

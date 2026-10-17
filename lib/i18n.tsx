@@ -1202,6 +1202,9 @@ export const T_en: Dict = {
   tipsVideoGuidesBody: 'For now, follow the interactive tour and the steps above. App video walkthroughs will be added here when published.',
   tipsYoutubeLink: 'Find gardening how-to videos on YouTube ↗',
   tipsYoutubeNote: 'External search results cover gardening, rather than using ImbewuField.',
+  // zu-07: shared between SampleModeBanner and AccountButton so the pill says the same word in
+  // both places — matches MenuButton's own hardcoded isiZulu text ('Uhambo') for the same control.
+  tourPill: 'Tour',
   navTourControls: 'Tour controls',
   navTourWorkspace: 'Tour workspace',
   navTourWorkspaceNote: 'Changes stay in this tour workspace.',

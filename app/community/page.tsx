@@ -337,8 +337,12 @@ function BoardTab({
                 <div style={{ flex: 1 }} />
                 <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{timeAgo(p.created_at, lang)}</span>
               </div>
+              {/* copy-15: a board photo carries the post's own content — alt="" read nothing to a
+                  screen-reader user. Kept English-only (not routed through copyCommunity/zuCopy)
+                  since this is assistive-tech-only text, not a visible label this file's own
+                  isiZulu review process has vetted. */}
               {p.photo_url && (
-                <img data-photo-preview src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
+                <img data-photo-preview src={p.photo_url} alt={`Photo posted by ${p.owner_name}`} style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
               )}
               <p className="font-sans" style={{ fontSize: 14, color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: 6 }}>{p.description}</p>
               <div className="flex items-center gap-1.5" style={{ marginBottom: 10 }}>
@@ -488,7 +492,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
       <div>
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
-            <img data-photo-preview src={photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
+            <img data-photo-preview src={photoUrl} alt="Selected photo preview" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
             <button onClick={() => setPhotoUrl(null)} aria-label={copyCommunity('Remove photo', lang)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={12} color="#fff" />
             </button>
