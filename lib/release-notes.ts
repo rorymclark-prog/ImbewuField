@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '17 October 2026', sha: 'b833c785', changes: [
+  { when: '17 October 2026', sha: '44a7dc08', changes: [
     'Dark mode now covers staff dashboards, Study, Money book, Exchange, Network and maps.',
     'On a laptop the pages share one header with your role\'s tabs and use the full width.',
     'The Lima button and the Tour pill no longer sit on top of buttons or text.',
