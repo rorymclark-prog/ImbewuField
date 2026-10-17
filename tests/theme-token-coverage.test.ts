@@ -129,3 +129,116 @@ test('the two families really do look alike in earth light — which is why this
   assert.equal(resolved(blocks, earth, '--color-card'), resolved(blocks, earth, '--bg-1'));
   assert.notEqual(resolved(blocks, earthDark, '--color-card'), resolved(blocks, earthDark, '--bg-1'));
 });
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// swarm/w13-staff-dark — consumer-side scan.
+//
+// The tests above prove the TOKENS resolve per theme. They cannot see whether a component
+// actually reaches for one. sdesk-01 / staff-01 / dark-01 were a regression of exactly that:
+// components/MelDashboard.module.css (and the other staff-dashboard CSS modules sharing its
+// shape) painted .root/.card/.notice/.compact/.cyclePanel/.attention and the form controls with
+// literal light hex ('#eff4ef' page, 'white' cards, '#e5eff8' notices, ...), so every staff
+// dashboard — /mentor, /ngo, /funder, /assessments, /reports, /samples — rendered as a full light
+// sheet between a dark header and a dark bottom nav. Fixed by routing those declarations through
+// var(--bg-0/1/2), var(--border), var(--text-primary/secondary/muted), var(--emerald) and
+// var(--badge-bg); tinted fills (notices, the "due" tag, the "attention" panel) use
+// color-mix(in srgb, var(--token) X%, var(--bg-0)) since no themed "soft" variant of
+// --blue/--gold exists yet and these all already resolve per theme.
+//
+// This scan covers the files this track owns and fixed. It is a flat text scan like
+// tests/staff-theme-tokens.test.ts / tests/ngo-dashboard-theme.test.ts — it cannot see contrast
+// or rendering, only that a banned literal hasn't crept back in.
+
+const read = (rel: string) => readFileSync(fileURLToPath(new URL(`../${rel}`, import.meta.url)), 'utf8');
+
+/** Strip `var(--token, #fallback)` fallbacks before scanning — they're deliberate (see
+ *  components/Illustration.tsx for the existing convention), not a literal override. */
+function stripVarFallbacks(src: string): string {
+  return src.replace(/var\(\s*--[\w-]+\s*,\s*#[0-9A-Fa-f]{3,8}\s*\)/g, 'var(--fallback-stripped)');
+}
+
+function findHexHits(src: string): { hex: string; line: number; text: string }[] {
+  const hits: { hex: string; line: number; text: string }[] = [];
+  const stripped = stripVarFallbacks(src);
+  stripped.split('\n').forEach((text, i) => {
+    const matches = text.match(/#[0-9A-Fa-f]{3,8}\b/g) ?? [];
+    for (const hex of matches) hits.push({ hex: hex.toUpperCase(), line: i + 1, text: text.trim() });
+  });
+  return hits;
+}
+
+/** Each owned file, and the literal hex it is still deliberately allowed to carry: solid
+ *  permanently-dark brand bands (the forest `.hero`/`.head` panels and their fixed white/light
+ *  type, same precedent as tests/staff-theme-tokens.test.ts's ALLOWED_HEX), the `.ink` print-style
+ *  variant and `@media print` blocks (paper is paper on purpose), and decorative near-transparent
+ *  shadow tints. None of these are the "half dark" bug: they are already dark (or already paper)
+ *  in every theme, not a surface that stayed light. */
+const OWNED_FILE_ALLOWED_HEX: Record<string, string[]> = {
+  'components/MelDashboard.module.css': [
+    '#214D35', '#245739', '#FFF', '#18342706',
+  ],
+  'components/FieldWork.module.css': [
+    '#214D35', '#FFF', '#F0F6ED', '#D6E8BE', '#183427',
+  ],
+  'components/ProgrammeProgress.module.css': [],
+  'components/ProgrammeReport.module.css': [
+    '#173E2C', '#FFF', '#E7F1E9', '#183427', '#254F36', '#405747', '#364C3D', '#334D3C',
+    '#1738270A',
+  ],
+  'components/DashboardTabs.module.css': [],
+  'components/SampleExperience.module.css': [
+    '#245739',
+  ],
+};
+
+for (const [relativePath, allowed] of Object.entries(OWNED_FILE_ALLOWED_HEX)) {
+  const allowedSet = new Set(allowed.map((h) => h.toUpperCase()));
+  test(`${relativePath} carries no un-themed hex colour outside its deliberate brand/print exceptions`, () => {
+    const src = read(relativePath);
+    const hits = findHexHits(src).filter((h) => !allowedSet.has(h.hex));
+    assert.deepEqual(
+      hits, [],
+      hits.length
+        ? `Found hard-coded hex colour(s) in ${relativePath} that bypass the theme system:\n`
+          + hits.map((h) => `  line ${h.line}: ${h.hex}  —  ${h.text}`).join('\n')
+          + '\nRoute these through var(--bg-0/1/2), var(--border), var(--text-primary/secondary/'
+          + 'muted), var(--emerald) or var(--badge-bg) instead, or add a justified entry to '
+          + 'OWNED_FILE_ALLOWED_HEX in this test.'
+        : undefined,
+    );
+  });
+}
+
+const CONSUMER_FILES_FOR_ROOT_ONLY = [
+  'components/MelDashboard.module.css',
+  'components/MelDashboard.tsx',
+  'components/DashboardTabs.module.css',
+  'components/DashboardTabs.tsx',
+  'components/FieldWork.module.css',
+  'components/ProgrammeProgress.module.css',
+  'components/ProgrammeReport.module.css',
+  'components/FieldTeams.tsx',
+  'components/ProgrammeEvidence.tsx',
+  'components/SampleProgramme.tsx',
+  'components/funder/CohortDashboard.tsx',
+  'components/SampleExperience.module.css',
+];
+
+test('none of this track\'s owned files paint a surface, border or text with a :root-only constant', () => {
+  const offenders: string[] = [];
+  for (const relativePath of CONSUMER_FILES_FOR_ROOT_ONLY) {
+    const src = read(relativePath);
+    const pattern = new RegExp(`var\\(\\s*(${ROOT_ONLY_BY_DESIGN.map((t) => t.replace('-', '\\-')).join('|')})\\s*[,)]`, 'g');
+    let m: RegExpExecArray | null;
+    while ((m = pattern.exec(src))) {
+      offenders.push(`${relativePath}: var(${m[1]})`);
+    }
+  }
+  assert.deepEqual(
+    offenders, [],
+    offenders.length
+      ? `Found a :root-only token used for a surface/text/border — it will not follow the theme:\n`
+        + offenders.map((o) => `  ${o}`).join('\n')
+      : undefined,
+  );
+});

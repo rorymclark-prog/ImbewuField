@@ -66,20 +66,22 @@ import FarmerPanel from '@/components/network/FarmerPanel';
 import { CohortTimeline, CohortTrainingChart } from './CohortCharts';
 import type { GardenStatus } from '@/lib/db/types';
 
-/* Programme surfaces match the assessment cards; chart meanings retain their colours. */
-const INK = '#183427';
-const INK_SOFT = '#44574B';
-const INK_MUTED = '#506158';
-const LINE = '#D7E3D9';
-const PAPER = '#FFFFFF';
-const FIELD = '#EFF4EF';
-const FOREST = '#1F4D2B';
-const ATTENTION = '#C0531E';
+/* Programme surfaces match the assessment cards; chart meanings retain their colours.
+   Theme-aware (var(--token, fallback)) so this dashboard follows dark mode instead of
+   staying a light sheet between a dark header and dark bottom nav. */
+const INK = 'var(--text-primary, #183427)';
+const INK_SOFT = 'var(--text-secondary, #44574B)';
+const INK_MUTED = 'var(--text-muted, #506158)';
+const LINE = 'var(--border, #D7E3D9)';
+const PAPER = 'var(--bg-1, #FFFFFF)';
+const FIELD = 'var(--bg-0, #EFF4EF)';
+const FOREST = 'var(--emerald, #1F4D2B)';
+const ATTENTION = 'var(--orange, #C0531E)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: '#1F4D2B',
-  establishing: '#9E5C08',
-  support: '#C0531E',
+  thriving: 'var(--emerald, #1F4D2B)',
+  establishing: 'var(--gold, #9E5C08)',
+  support: 'var(--orange, #C0531E)',
 };
 
 /** Micro-label floor. Nothing in this file goes under it. */
@@ -265,10 +267,10 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       {portfolio.error && (
           <div
             className="flex items-center gap-2 px-3 md:px-5 py-2.5"
-            style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
+            style={{ background: 'color-mix(in srgb, var(--gold) 8%, var(--bg-0))', borderBottom: `1px solid ${LINE}` }}
           >
-            <AlertTriangle size={14} style={{ color: '#9E5C08', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 12.5, color: '#7A4A06', lineHeight: 1.45 }}>
+            <AlertTriangle size={14} style={{ color: 'var(--gold)', flexShrink: 0 }} />
+            <span className="font-sans" style={{ fontSize: 12.5, color: 'var(--gold-dim)', lineHeight: 1.45 }}>
               {portfolio.error}
             </span>
             <button
@@ -276,8 +278,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               onClick={portfolio.reload}
               className="font-sans font-semibold"
               style={{
-                fontSize: MICRO, color: '#7A4A06', background: 'transparent',
-                border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
+                fontSize: MICRO, color: 'var(--gold-dim)', background: 'transparent',
+                border: '1px solid color-mix(in srgb, var(--gold) 35%, var(--border))', borderRadius: 7,
                 padding: '3px 10px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
               }}
             >
@@ -297,8 +299,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           <div
             className="px-3 md:px-5 py-2 font-sans"
             style={{
-              fontSize: MICRO, color: '#7A4A06', lineHeight: 1.5,
-              background: 'rgba(158,92,8,0.10)', borderBottom: '1px solid rgba(158,92,8,0.25)',
+              fontSize: MICRO, color: 'var(--gold-dim)', lineHeight: 1.5,
+              background: 'color-mix(in srgb, var(--gold) 10%, var(--bg-0))', borderBottom: '1px solid color-mix(in srgb, var(--gold) 25%, var(--border))',
             }}
           >
             {ui(DEMO_NETWORK_NOTICE,'Iphothifoliyo yesibonelo')}
@@ -581,7 +583,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div
               className="md:hidden absolute left-1/2 -translate-x-1/2 top-2"
-              style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }}
+              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong, #D5C9AE)' }}
             />
             <span
               className="font-sans font-bold uppercase"
