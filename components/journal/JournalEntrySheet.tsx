@@ -129,7 +129,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         onSubmit={submit}
         className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
         style={{
-          background: '#FBF8F1', borderRadius: '22px 22px 0 0',
+          background: 'var(--bg-1)', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh',
           // Deep enough to clear BOTH the tab bar and components/SampleModeBanner.tsx,
           // which is fixed at bottom 60px with z-index 9999 and wraps to two lines on a
@@ -140,9 +140,9 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         }}
       >
         {/* Grab handle + header */}
-        <div style={{ position: 'sticky', top: 0, background: '#FBF8F1', zIndex: 2, borderBottom: '1px solid #EFE7D6' }}>
+        <div style={{ position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 2, borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 8 }}>
-            <div style={{ width: 38, height: 4, borderRadius: 2, background: '#DED3BC' }} />
+            <div style={{ width: 38, height: 4, borderRadius: 2, background: 'var(--border-strong)' }} />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px 14px' }}>
             <div style={{ flex: 1 }}>
@@ -183,9 +183,9 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       style={{
                         display: 'flex', alignItems: 'center', gap: 6,
                         minHeight: 40, padding: '9px 12px', borderRadius: 11, cursor: 'pointer',
-                        background: on ? c.tint : '#FFFEFA',
-                        border: `1.5px solid ${on ? c.ink : '#E2D8C4'}`,
-                        color: on ? c.ink : '#5C5040',
+                        background: on ? c.tint : 'var(--bg-1)',
+                        border: `1.5px solid ${on ? c.ink : 'var(--border)'}`,
+                        color: on ? c.ink : 'var(--text-secondary)',
                         font: `${on ? 700 : 500} 13px/1 var(--font-sans), sans-serif`,
                       }}
                     >
@@ -283,7 +283,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             <Label>{ui('Photos', 'Izithombe')} {photos.length > 0 ? `· ${photos.length}/${MAX_PHOTOS_PER_ENTRY}` : ''}</Label>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
               {photos.map((src, i) => (
-                <div key={`${i}-${src.slice(-12)}`} style={{ position: 'relative', width: 68, height: 68, borderRadius: 10, overflow: 'hidden', background: '#E0D6C2' }}>
+                <div key={`${i}-${src.slice(-12)}`} style={{ position: 'relative', width: 68, height: 68, borderRadius: 10, overflow: 'hidden', background: 'var(--bg-2)' }}>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
@@ -307,7 +307,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                   disabled={busy}
                   style={{
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
-                    background: 'var(--bg-1)', border: '1.5px dashed #CFC4AC', color: 'var(--color-forest-700)',
+                    background: 'var(--bg-1)', border: '1.5px dashed var(--border)', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
                     font: '600 10px/1 var(--font-sans), sans-serif',
                   }}
@@ -318,7 +318,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               )}
             </div>
             {photoError && (
-              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: '#B91C1C' }}>{photoError}</div>
+              <div style={{ marginTop: 6, font: '500 12px/1.4 var(--font-sans), sans-serif', color: 'var(--orange)' }}>{photoError}</div>
             )}
             <input
               ref={fileRef}
@@ -335,8 +335,8 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         {error && (
           <div style={{
             margin: '16px 20px 0', padding: '10px 13px', borderRadius: 11,
-            background: '#FEF6E7', border: '1px solid #EBD6A8',
-            font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: '#7A5B14',
+            background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
+            font: '500 12.5px/1.45 var(--font-sans), sans-serif', color: 'var(--gold-dim)',
           }}>
             {error}
           </div>
@@ -351,11 +351,11 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               aria-label={confirmDelete ? ui('Confirm delete', 'Qinisekisa ukususa') : ui('Delete', 'Susa')}
               style={confirmDelete ? {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: 'rgba(196,58,58,0.12)', border: '1.5px solid rgba(196,58,58,0.4)', color: '#B23A3A',
+                background: 'color-mix(in srgb, var(--orange) 12%, transparent)', border: '1.5px solid color-mix(in srgb, var(--orange) 40%, transparent)', color: 'var(--orange)',
                 font: '700 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               } : {
                 minHeight: 48, padding: '0 16px', borderRadius: 12, cursor: 'pointer',
-                background: 'var(--bg-1)', border: '1.5px solid #E7C9C6', color: 'var(--orange)',
+                background: 'var(--bg-1)', border: '1.5px solid color-mix(in srgb, var(--orange) 30%, transparent)', color: 'var(--orange)',
                 font: '600 14px/1 var(--font-sans), sans-serif', display: 'flex', alignItems: 'center', gap: 7,
               }}
             >
@@ -369,8 +369,8 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             style={{
               flex: 1, minHeight: 48, borderRadius: 12, border: 'none',
               cursor: canSave && !busy ? 'pointer' : 'not-allowed',
-              background: canSave && !busy ? '#274D2C' : 'rgba(39,77,44,0.25)',
-              color: '#fff', font: '700 15px/1 var(--font-sans), sans-serif',
+              background: canSave && !busy ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--color-forest-800) 25%, transparent)',
+              color: 'var(--on-forest)', font: '700 15px/1 var(--font-sans), sans-serif',
             }}
           >
             {entry ? ui('Save changes', 'Gcina izinguquko') : ui('Save entry', 'Gcina okubhaliwe')}

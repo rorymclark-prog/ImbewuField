@@ -116,11 +116,10 @@ test('app/global-error.tsx is left untouched — it renders outside the normal l
 // app/updates/page.tsx and app/journal/page.tsx (vision/invoice/account belong to other tracks —
 // not covered here).
 const CODE_03_STALE_HEXES = [/#E4DCC6/i, /#E2D8C4/i, /#FFFEFA/i, /#20190F/i, /#5C5040/i, /#755942/i, /#1F4D2B/i];
-// app/atlas/page.tsx and app/journal/page.tsx join this list in a later commit on this branch,
-// once their own literal hexes are converted (task 3) — listing them here before that lands
-// would make this test fail against the still-unconverted file.
 const CODE_03_OWNED_PATHS = [
   'app/updates/page.tsx',
+  'app/atlas/page.tsx',
+  'app/journal/page.tsx',
 ];
 
 for (const relativePath of CODE_03_OWNED_PATHS) {

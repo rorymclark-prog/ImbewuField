@@ -1785,23 +1785,23 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 soil: t('surveyGoalSoil'), education: t('surveyGoalEducation'),
               };
               return (
-                <div style={{ background: '#FBF8F1', border: '1px solid #E6DDC9', borderRadius: 13, padding: '13px 14px' }}>
+                <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '13px 14px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                    <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                       {t('surveySectionLabel')}
                     </span>
-                    <span style={{ font: '600 11px/1 system-ui, sans-serif', color: done === SURVEY_TOTAL_FIELDS ? '#3C6B3F' : '#B07A1E' }}>
+                    <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', color: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)' }}>
                       {t('surveyKeyChecks').replace('{n}', String(done)).replace('{total}', String(SURVEY_TOTAL_FIELDS))}
                     </span>
                   </div>
-                  <div style={{ height: 6, background: '#DCD2BD', borderRadius: 3, overflow: 'hidden', marginBottom: 10 }}>
-                    <div style={{ width: `${pct}%`, height: '100%', background: done === SURVEY_TOTAL_FIELDS ? '#3C6B3F' : '#B07A1E', borderRadius: 3, transition: 'width 0.4s ease' }} />
+                  <div style={{ height: 6, background: 'var(--bg-2)', borderRadius: 3, overflow: 'hidden', marginBottom: 10 }}>
+                    <div style={{ width: `${pct}%`, height: '100%', background: done === SURVEY_TOTAL_FIELDS ? 'var(--emerald)' : 'var(--gold-dim)', borderRadius: 3, transition: 'width 0.4s ease' }} />
                   </div>
                   <p style={{ fontSize: 13, lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: 12 }}>{t('surveyCardHint')}</p>
                   {(sv?.goals?.length ?? 0) > 0 && (
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 10 }}>
                       {(sv?.goals ?? []).map((g: string) => (
-                        <span key={g} style={{ font: '500 11px/1 system-ui', padding: '4px 9px', borderRadius: 99, background: 'rgba(31,77,43,0.1)', color: 'var(--color-forest-800)' }}>
+                        <span key={g} style={{ font: '500 12px/1 var(--font-sans), sans-serif', padding: '4px 9px', borderRadius: 99, background: 'var(--badge-bg)', color: 'var(--color-forest-800)' }}>
                           {GOAL_LABELS[g] ?? g}
                         </span>
                       ))}
@@ -1809,7 +1809,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   )}
                   <button
                     onClick={() => setSurveySheetOpen(true)}
-                    style={{ width: '100%', font: '600 12.5px/1 system-ui, sans-serif', color: 'var(--color-forest-700)', background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
+                    style={{ width: '100%', font: '600 12.5px/1 var(--font-sans), sans-serif', color: 'var(--color-forest-700)', background: 'var(--badge-bg)', border: '1px solid var(--border)', borderRadius: 9, padding: '9px 0', cursor: 'pointer' }}
                   >
                     {done === SURVEY_TOTAL_FIELDS ? t('surveyUpdateButton') : t('surveyOpenButton')}
                   </button>
@@ -1820,15 +1820,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {/* Report completeness bar */}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
-                <span style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
                   {t('reportCompletenessLabel')}
                 </span>
-                <span style={{ font: '700 11px/1 system-ui, sans-serif', color: completeness >= 60 ? '#3C6B3F' : '#B07A1E' }}>
+                <span style={{ font: '700 12px/1 var(--font-sans), sans-serif', color: completeness >= 60 ? 'var(--emerald)' : 'var(--gold-dim)' }}>
                   {completeness}%
                 </span>
               </div>
-              <div style={{ height: 8, background: '#DCD2BD', borderRadius: 5, overflow: 'hidden' }}>
-                <div style={{ width: `${completeness}%`, height: '100%', background: completeness >= 60 ? '#3C6B3F' : '#B07A1E', borderRadius: 5, transition: 'width 0.4s ease' }} />
+              <div style={{ height: 8, background: 'var(--bg-2)', borderRadius: 5, overflow: 'hidden' }}>
+                <div style={{ width: `${completeness}%`, height: '100%', background: completeness >= 60 ? 'var(--emerald)' : 'var(--gold-dim)', borderRadius: 5, transition: 'width 0.4s ease' }} />
               </div>
             </div>
 
