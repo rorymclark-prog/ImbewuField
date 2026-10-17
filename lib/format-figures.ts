@@ -114,3 +114,35 @@ export function numberLabel(n: number, maximumFractionDigits = 3): string {
   const grouped = whole.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   return `${sign}${grouped}${frac ? `.${frac}` : ''}`;
 }
+
+/**
+ * '15 Aug 2026' — the staff dashboards' shared date format (mentor, assessments, ngo). Raw
+ * 'YYYY-MM-DD' strings were leaking straight onto the screen (e.g. 'Due 2026-08-01'); this is
+ * the one place that turns such a string into something a staff member reads at a glance.
+ *
+ * `toLocaleDateString` is used deliberately rather than a hand-rolled month table — lib/
+ * course-assignments.ts's `monthAbbrev` already takes that approach for the exact same reason,
+ * and invoice-document.ts formats dates the same way for the exact same locale pair. Day/month
+ * order (not en-ZA's month/day) is what a South African reader expects.
+ */
+export function formatStaffDate(iso: string | null | undefined, lang: string): string {
+  if (!iso) return '';
+  const date = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return iso;
+  return date.toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+/** '15 Aug – 5 Sep 2026' — a staff date range, dropping the year from the first date when both
+ *  fall in the same year so it isn't printed twice. Falls back to the single date when only one
+ *  side of the range is known. */
+export function formatStaffDateRange(fromIso: string | null | undefined, toIso: string | null | undefined, lang: string): string {
+  if (!fromIso || !toIso) return formatStaffDate(fromIso ?? toIso, lang);
+  const fromDate = new Date(`${fromIso}T00:00:00`);
+  const toDate = new Date(`${toIso}T00:00:00`);
+  if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) return `${fromIso} – ${toIso}`;
+  const locale = lang === 'zu' ? 'zu-ZA' : 'en-GB';
+  const sameYear = fromDate.getFullYear() === toDate.getFullYear();
+  const fromLabel = fromDate.toLocaleDateString(locale, sameYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
+  const toLabel = toDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
+  return `${fromLabel} – ${toLabel}`;
+}

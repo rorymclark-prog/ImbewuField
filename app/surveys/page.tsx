@@ -400,7 +400,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
           {sampleNote && (
             <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: 'var(--gold-dim)', border: '1px solid rgba(192,122,30,0.2)' }}>
-              {localUi('tour mode — connect Firebase to save surveys live.', 'Imodi yokubonisa — xhuma i-Firebase ukuze ulondoloze izinhlolovo.', lang)}
+              {localUi('Sample data — your surveys are not saved yet.', 'Idatha yesibonelo — izinhlolovo zakho azikagcini okwamanje.', lang)}
             </p>
           )}
 
@@ -903,7 +903,7 @@ export default function SurveysPage() {
 
         {!isLive && (
           <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-            {localUi('demonstration records — connect Firebase to go live', 'Amarekhodi okuboniswayo — xhuma i-Firebase ukuze usebenzise uhlelo olubukhoma', lang)}
+            {localUi('Sample data', 'Idatha yesibonelo', lang)}
           </p>
         )}
       </main>
