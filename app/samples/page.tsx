@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import BackButton from '@/components/BackButton';
-import MenuButton from '@/components/MenuButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { Users, HandCoins, Sprout, GraduationCap, BookOpen } from 'lucide-react';
 import { enterSampleMode } from '@/lib/sample-mode';
@@ -70,10 +69,7 @@ export default function SamplesPage() {
   }, [loading, user?.uid, role]);
   const choicesReady = !loading && accessReady && verifiedUid === (user?.uid ?? null);
   const availableRoles = sampleChoicesForAccount(accountRole, !!user, choicesReady);
-  return <main className={styles.root} style={{ height: '100dvh', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}><div style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(var(--bottom-nav-height, 0px) + max(24px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
-    {/* nav-08: labelled "Account" while the heading below says "Choose a view" — three different
-        words for one choice. Relabelled by where it actually goes. */}
-    <header className={styles.row}><MenuButton /><BackButton fallback="/account" /><Link href="/account">{ui('Back to account', 'Buyela ku-akhawunti')}</Link></header>
+  return <main className={styles.root} style={{ height: '100dvh', minHeight: 0, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}><AppHeader backFallback="/account" title={ui('Choose a view', 'Khetha indawo yokusebenza')} /><div style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(var(--bottom-nav-height, 0px) + max(24px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 16, padding:20 }}><span style={lang === 'st' || lang === 've' ? { display: 'block' } : undefined}>{lang === 'st' ? <>IMBEWUFIELD · <PairedDraft lang={lang} pair={SESOTHO_SAMPLE_CHOOSER_DRAFT.eyebrow} inline /></> : lang === 've' ? <>IMBEWUFIELD · <PairedDraft lang={lang} pair={TSHIVENDA_SAMPLE_CHOOSER_DRAFT.eyebrow} inline /></> : `IMBEWUFIELD · ${ui('EXPLORE', 'HLOLA')}`}</span><h1>{lang === 'st' ? <PairedDraft lang={lang} pair={SESOTHO_SAMPLE_CHOOSER_DRAFT.heading} /> : lang === 've' ? <PairedDraft lang={lang} pair={TSHIVENDA_SAMPLE_CHOOSER_DRAFT.heading} /> : ui('Choose a view', 'Khetha indawo yokusebenza')}</h1><p style={lang === 'st' || lang === 've' ? { display: 'block' } : undefined}>{lang === 'st' ? <PairedDraft lang={lang} pair={SESOTHO_SAMPLE_CHOOSER_DRAFT.intro} /> : lang === 've' ? <PairedDraft lang={lang} pair={TSHIVENDA_SAMPLE_CHOOSER_DRAFT.intro} /> : ui('Explore each workspace. Use Tour in the menu to return here.', 'Hlola indawo ngayinye yokusebenza. Sebenzisa uHambo kumenyu ukuze ubuyele lapha.')}</p>{lang === 'st' && <p role="note" style={{ display: 'block', marginBottom: 0, fontWeight: 700 }}>Sesotho machine draft · awaiting fluent review</p>}{lang === 've' && <p role="note" style={{ display: 'block', marginBottom: 0, fontWeight: 700 }}>Tshivenda machine draft · awaiting fluent review</p>}</div>
     {error && <p role="alert">{error}</p>}
     <section aria-label={lang === 'st' ? `${draftText(SESOTHO_SAMPLE_CHOOSER_DRAFT.sectionLabel)} (${SESOTHO_SAMPLE_CHOOSER_DRAFT.sectionLabel.sourceEnglish})` : lang === 've' ? `${draftText(TSHIVENDA_SAMPLE_CHOOSER_DRAFT.sectionLabel)} (${TSHIVENDA_SAMPLE_CHOOSER_DRAFT.sectionLabel.sourceEnglish})` : ui('All views', 'Zonke izindawo')} style={{marginBottom:24}}>{/* nav-08: demoted from <h2> to <span> — the hero's h1 above is already this page's one true heading, but the regional-language draft wiring (tests/sample-chooser-translation-draft-*.test.ts) still needs this field rendered and paired. */}<span style={{display:'block',fontSize:13,fontWeight:700,color:'var(--text-secondary)',marginBottom:8}}>{lang === 'st' ? <PairedDraft lang={lang} pair={SESOTHO_SAMPLE_CHOOSER_DRAFT.sectionHeading} /> : lang === 've' ? <PairedDraft lang={lang} pair={TSHIVENDA_SAMPLE_CHOOSER_DRAFT.sectionHeading} /> : ui('Choose your workspace', 'Khetha indawo yakho yokusebenza')}</span><p>{!choicesReady ? ui('Checking available views…', 'Kubhekwa izindawo ezitholakalayo…') : user && !accountRole ? ui('Your account role could not be confirmed. Refresh your access in Account, then return here.', 'Indima ye-akhawunti yakho ayiqinisekisiwe. Vuselela ukufinyelela kwakho ku-I-akhawunti, bese ubuya lapha.') : accountRole && !['ngo','admin'].includes(accountRole) ? ui(`Your ${accountRole} account opens its matching practice view. Other roles are shown below so the full set is visible.`, `I-akhawunti yakho ye-${accountRole} ivula indawo ehambisana nayo yokuzilolonga. Ezinye izindima ziboniswe ngezansi ukuze ubone zonke.`) : ui('Choose any of the five workspaces.', 'Khetha noma iyiphi yezindawo ezinhlanu zokusebenza.')}</p>
@@ -87,6 +83,6 @@ export default function SamplesPage() {
     <p>{ui('Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.', 'Izinguquko zihlala kulesi seshini sohambo. Ukusetha kabusha noma ukulayisha kabusha kuqala kabusha. Akudingeki ungene ngemvume futhi ukushintsha izindawo akuguquli izimvume ze-akhawunti yakho yangempela.')}</p>
   </div></div>
   {/* nav-03: without this, /samples was one of the secondary pages that lost the farmer's way home. */}
-  <div className="no-print"><TabBar/></div>
+  <div className="no-print"><TabBar hideAtDesktop/></div>
   </main>;
 }

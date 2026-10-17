@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import {
-  ChevronLeft, Loader2, MapPin, Plus, MessageCircle, User, Camera, X,
+  Loader2, MapPin, Plus, MessageCircle, User, Camera, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
@@ -30,11 +30,9 @@ const NearbyMap = dynamic(() => import('@/components/community/NearbyMap'), {
     </div>
   ),
 });
-import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 type Tab = 'nearby' | 'board' | 'messages';
 
@@ -166,21 +164,23 @@ export default function CommunityHubPage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/home" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
-        <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
-          <User size={16} strokeWidth={1.8} />
-          <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
-            {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
-          </span>
-        </Link>
-      </header>
+      <AppHeader
+        title={copyCommunity('Community', lang)}
+        right={
+          <>
+            <LessonLink id="community:overview" label={copyCommunity('Learn', lang)} />
+            <Link href="/community/profile" style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
+              <User size={16} strokeWidth={1.8} />
+              <span className="font-sans font-semibold" style={{ fontSize: 13 }}>
+                {copyCommunity(myProfile ? 'My profile' : 'Set up profile', lang)}
+              </span>
+            </Link>
+          </>
+        }
+      />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — this page had no h1 before
+          either (the tabs below carried no accessible page name), so give it one now. */}
+      <h1 className="sr-only">{copyCommunity('Community', lang)}</h1>
 
       <div className="flex-shrink-0 flex" role="tablist" aria-label={copyCommunity('Community', lang)} style={{ borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
         {TABS.map((tb) => (
@@ -244,7 +244,7 @@ export default function CommunityHubPage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

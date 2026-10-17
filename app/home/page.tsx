@@ -301,6 +301,11 @@ function HomeLandingInner() {
   const { navigationRole, sample: roleSample } = useRoleNavigation();
   const showTourInvitation = useTourInvitation();
   useEffect(() => { if (!roleSample && navigationRole === 'funder') router.replace('/funder'); }, [navigationRole, roleSample, router]);
+  // staff-09: a mentor/ngo/funder viewer (own account, or a sample-mode preview — funder's own
+  // redirect above only fires outside sample mode) gets a role-appropriate Home instead of the
+  // farmer's hero, bed tasks and dashboards switcher, none of which answers anything for them.
+  const staffRole: 'mentor' | 'ngo' | 'funder' | null =
+    navigationRole === 'mentor' || navigationRole === 'ngo' || navigationRole === 'funder' ? navigationRole : null;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
@@ -473,6 +478,11 @@ function HomeLandingInner() {
           gap: 16px;
           min-width: 0;
         }
+        /* desk-08: the task list shows once, in whichever of these two slots the current
+           breakpoint uses — inline after the quick actions on phone, inside the right column
+           of the priority grid at 900px+ so that column is never left mostly empty. */
+        .home-task-board-desktop { display: none; }
+        .home-task-board-mobile { display: block; }
         @media (min-width: 900px) {
           .home-priority-grid.has-main-site {
             display: grid;
@@ -480,6 +490,8 @@ function HomeLandingInner() {
             gap: 24px;
             align-items: start;
           }
+          .home-task-board-desktop { display: block; }
+          .home-task-board-mobile { display: none; }
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
@@ -501,16 +513,25 @@ function HomeLandingInner() {
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
             columns; on a phone they keep this exact reading order. */}
-        <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
+        <section className={`home-priority-grid${mainSite && !staffRole ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
-            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} />
-            {!simple && <FarmPlanCard places={places} mainSite={mainSite} />}
+            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} staffRole={staffRole} />
+            {!simple && !staffRole && <FarmPlanCard places={places} mainSite={mainSite} />}
           </div>
 
-          {(mainSite || (lastSite && !lastSiteMatchesMain)) && (
+          {/* desk-08: the right column used to carry only the weather card (or nothing), leaving
+              a large empty band beside it at lg+ — the upcoming task list now fills it there,
+              without changing where a phone sees that same list (home-task-board-desktop/-mobile
+              below swap which copy is visible per breakpoint). */}
+          {!staffRole && (mainSite || (lastSite && !lastSiteMatchesMain) || boardTasks.length > 0) && (
             <div className="home-priority-secondary">
               {places && mainSite && (
                 <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} simple={simple} />
+              )}
+              {boardTasks.length > 0 && (
+                <div className="home-task-board-desktop">
+                  <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />
+                </div>
               )}
               {lastSite && !lastSiteMatchesMain && <LastSiteCard site={lastSite} />}
             </div>
@@ -518,7 +539,7 @@ function HomeLandingInner() {
         </section>
 
         {/* ── Quick actions ── */}
-        <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+        {!staffRole && <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
           {quickActions.map((q) => (
             <Link
               key={q.href}
@@ -539,12 +560,12 @@ function HomeLandingInner() {
               </div>
             </Link>
           ))}
-        </div>
+        </div>}
 
         {/* ── Take a tour farm — NGO/onboarding "show me how it works" entry point.
             Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —
             it never reads or writes any real farmer's saved data. ── */}
-        {showTourInvitation && <button
+        {!staffRole && showTourInvitation && <button
           type="button"
           className="home-tour-card"
           onClick={() => router.push('/tour')}
@@ -587,10 +608,20 @@ function HomeLandingInner() {
           </p>
         </button>}
 
-        {boardTasks.length > 0 && <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />}
+        {/* desk-08: this is the phone copy of the task list — home-task-board-desktop above
+            takes over at the 900px breakpoint where the grid gains a second column, so the
+            list is never shown twice. */}
+        {!staffRole && boardTasks.length > 0 && (
+          <div className="home-task-board-mobile">
+            <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />
+          </div>
+        )}
 
-        {/* ── Dashboards disclosure ── */}
-        <section>
+        {/* ── Dashboards disclosure ── staff-09: a mentor/ngo/funder viewer already finds every
+            workspace in the drawer's RoleSwitcher (components/RoleSwitcher.tsx, inMenu) — this
+            inline switcher is for a farmer/student exploring the other roles, and reads as an
+            internal control to someone who IS staff, so it is left out for them. */}
+        {!staffRole && <section>
           <button
             onClick={() => setRolesOpen((o) => !o)}
             className="w-full flex items-center justify-between"
@@ -657,7 +688,7 @@ function HomeLandingInner() {
               </Link>
             </div>
           )}
-        </section>
+        </section>}
 
         <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
           {t('homeFooter')}

@@ -5,17 +5,15 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Loader2, Send, Flag, MoreHorizontal } from 'lucide-react';
+import { Loader2, Send, Flag, MoreHorizontal } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/db/community-queries';
 import type { MessageThread, ThreadMessage } from '@/lib/db/types';
-import BrandLogo from '@/components/BrandLogo';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 function timeAgo(ts: unknown, lang: string): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
@@ -132,36 +130,35 @@ export default function MessageThreadPage() {
       {/* The person you are talking to IS this page's subject, but in the header they are a link
           back to the profile, not a heading. Name the page for screen readers separately. */}
       <h1 className="sr-only">{otherName}</h1>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:messages" label={lang === 'zu' ? 'Funda' : 'Learn'} />
-        <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)', textDecoration: 'none' }}>
-          {otherName}
-        </Link>
-        {simple ? (
-          <button
-            onClick={() => setMoreOpen((s) => !s)}
-            aria-label={t('communityMoreLabel')}
-            aria-expanded={moreOpen}
-            style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
-          >
-            <MoreHorizontal size={18} />
-          </button>
-        ) : (
-          <button
-            onClick={() => setReportOpen((s) => !s)}
-            aria-label={t('communityReportButton')}
-            style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
-          >
-            <Flag size={16} />
-          </button>
-        )}
-      </header>
+      <AppHeader
+        title={t('communityTabMessages')}
+        right={
+          <>
+            <LessonLink id="community:messages" label={lang === 'zu' ? 'Funda' : 'Learn'} />
+            <Link href={`/community/u/${otherUid}`} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)', textDecoration: 'none' }}>
+              {otherName}
+            </Link>
+            {simple ? (
+              <button
+                onClick={() => setMoreOpen((s) => !s)}
+                aria-label={t('communityMoreLabel')}
+                aria-expanded={moreOpen}
+                style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+              >
+                <MoreHorizontal size={18} />
+              </button>
+            ) : (
+              <button
+                onClick={() => setReportOpen((s) => !s)}
+                aria-label={t('communityReportButton')}
+                style={{ marginLeft: 8, background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', display: 'flex' }}
+              >
+                <Flag size={16} />
+              </button>
+            )}
+          </>
+        }
+      />
 
       {/* Simple keeps the report/block flow out of the header but never out of reach — tapping
           More reveals it, the same safety-critical action All tools shows directly. */}
