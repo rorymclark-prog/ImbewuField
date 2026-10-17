@@ -291,28 +291,34 @@ export default function FieldJournal() {
         </div>
       )}
 
+      {/* desk-18: this filter used to live at the top of the timeline column, where it did
+          nothing for the desktop layout's left rail (previously just stats + the add-note
+          button, with a huge empty band below). Moved into the sidebar so it earns the
+          column, and a desktop reader filters from beside the list rather than above it. */}
+      {!simple && usedCategories.length > 1 && (
+        <div>
+          <Heading>{ui('Categories', 'Izigaba')}</Heading>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+            <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
+            {usedCategories.map((c) => (
+              <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
+                {getElementArt2(`journal_${c.key}`) ? (
+                  <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+                ) : (
+                  <c.icon size={12} aria-hidden />
+                )}{' '}
+                {isZulu ? journalCategoryLabel(c.key) : c.label}
+              </Chip>
+            ))}
+          </div>
+        </div>
+      )}
+
       </aside>
       <div className={workspace.journalTimeline}>
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
-      {/* Category filter — an All tools refinement, not one of the entries or the single
-          add-note action Simple leads with. */}
-      {!simple && usedCategories.length > 1 && (
-        <div style={{ display: 'flex', gap: 7, overflowX: 'auto', paddingBottom: 10, marginBottom: 4 }}>
-          <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
-          {usedCategories.map((c) => (
-            <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
-              {getElementArt2(`journal_${c.key}`) ? (
-                <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
-              ) : (
-                <c.icon size={12} aria-hidden />
-              )}{' '}
-              {isZulu ? journalCategoryLabel(c.key) : c.label}
-            </Chip>
-          ))}
-        </div>
-      )}
 
       {/* Timeline */}
       {ready && entries.length === 0 && (

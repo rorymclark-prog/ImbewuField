@@ -245,11 +245,13 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
 // completion score (lib/completion-score.ts) for the farmer's MAIN site, plus the single next
 // action, deep-linked. The step table is lib/home-next-step.ts, shared with the Simple layout,
 // which puts the same next step inside the site card instead of under it.
-function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
+function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPlace[] | null; mainSite: SavedPlace | null; staffRole?: 'mentor' | 'ngo' | 'funder' | null }) {
   const { t, lang } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
 
+  // staff-09: a mentor/ngo/funder viewer has no farm plan of their own to show here.
+  if (staffRole) return null;
   // Hide entirely for a brand-new user — no saved places means nothing to show yet,
   // and the hero card's welcome variant already owns that moment. `progress` stays
   // null until useSiteProgress's post-mount effect runs (hydration-safe), so this
@@ -415,7 +417,11 @@ function HomeLandingInner() {
               title to land on. Heading sizes are reset by Tailwind preflight and globals.css styles
               headings for family and tracking only, so the tag change is not a look change. */}
           <h1 className="font-display font-bold m-0" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
-            {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}
+            {/* nav-17: this used to fall back to the brand wordmark 'ImbewuField' — the site's
+                name, not a description of this page — whenever there was no first name to
+                greet. t('tabHome') is the same label the bottom tab for this very page already
+                uses, so the h1 names the page it is the h1 of. */}
+            {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
           </h1>
         </div>
 
@@ -516,7 +522,7 @@ function HomeLandingInner() {
         <section className={`home-priority-grid${mainSite && !staffRole ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
             <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} staffRole={staffRole} />
-            {!simple && !staffRole && <FarmPlanCard places={places} mainSite={mainSite} />}
+            {!simple && <FarmPlanCard places={places} mainSite={mainSite} staffRole={staffRole} />}
           </div>
 
           {/* desk-08: the right column used to carry only the weather card (or nothing), leaving
