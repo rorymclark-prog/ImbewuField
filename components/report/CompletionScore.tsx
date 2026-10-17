@@ -10,6 +10,7 @@
 // a pre-computed score (from lib/completion-score.ts) or the raw inputs and
 // let this component compute it.
 
+import { Check } from 'lucide-react';
 import { computeCompletionScore, type CompletionScoreInputs, type CompletionScoreResult } from '@/lib/completion-score';
 import { useLanguage } from '@/lib/i18n';
 
@@ -40,10 +41,11 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           width: 22, height: 22, borderRadius: 9999, background: GREEN, color: GOLD,
-          fontSize: 13, fontWeight: 800, flexShrink: 0, border: `1px solid ${GOLD}`,
+          flexShrink: 0, border: `1px solid ${GOLD}`,
         }}
       >
-        ✓
+        {/* code-11: a literal '✓' text glyph — Lucide only. */}
+        <Check size={13} strokeWidth={3} />
       </span>
     );
   }

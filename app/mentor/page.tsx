@@ -45,6 +45,7 @@ import {
 } from '@/lib/course-assignments';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
+import { formatStaffDate } from '@/lib/format-figures';
 
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
@@ -136,7 +137,7 @@ function ProgressBar({ value, max, lang }: { value: number; max: number; lang: s
       >
         <div style={{ width: `${pct}%`, height: '100%', background: col, borderRadius: 999, transition: 'width 0.4s' }} />
       </div>
-      <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{value}/{max}</span>
+      <span className="text-xs font-display tabular-nums flex-shrink-0" style={{ color: 'var(--text-muted)' }}>{value}/{max}</span>
     </div>
   );
 }
@@ -236,10 +237,11 @@ function TraineeCard({
           ) : (
             <div className="flex items-center gap-2 pt-3 flex-wrap">
               <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                {/* copy-14: toLocaleDateString with no locale argument reads the device's
-                    browser locale, which prints the en-US '10/16/2026' on a phone set to that
-                    rather than 'en-ZA'. */}
-                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {new Date(enrollment.enrolled_at).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA')}
+                {/* copy-17: was a lowercase fragment ('Cohort A · enrolled 16/10/2026') — now a
+                    sentence, enrolment date first, matching the fix's 'Enrolled 16 Oct 2026 ·
+                    Cohort A' order, and the shared staff date format (formatStaffDate) instead
+                    of toLocaleDateString's en-ZA numeric date. */}
+                {tr(lang, 'Enrolled', 'Wabhaliswa ngo-')} {formatStaffDate(toDateKey(new Date(enrollment.enrolled_at)), lang)}{enrollment.cohort ? ` · ${enrollment.cohort}` : ''}
               </span>
               <div className="flex-1" />
               <button
@@ -254,7 +256,7 @@ function TraineeCard({
           )}
 
           <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: 'var(--text-muted)' }}>
-            {enrollment ? tr(lang, 'Modules — tick is theirs, due date is yours', 'Amamojula — umfundi uyazimaka, wena ubeka usuku lokuqeda') : tr(lang, 'Module sign-off', 'Ukuqinisekisa imojula')}
+            {enrollment ? tr(lang, 'Modules (student ticks, you set the due date)', 'Amamojula (umfundi uyazimaka, wena ubeka usuku lokuqeda)') : tr(lang, 'Module sign-off', 'Ukuqinisekisa imojula')}
           </div>
 
           {simple ? (
@@ -318,7 +320,7 @@ function TraineeCard({
                   <span className="flex-1 text-xs font-display truncate" style={{ color: done ? 'var(--text-muted)' : 'var(--text-primary)', textDecoration: done ? 'line-through' : 'none' }}>
                     {mod.title}
                   </span>
-                  <span className="text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0"
+                  <span className="text-xs font-display tabular-nums px-1.5 py-0.5 rounded flex-shrink-0"
                     style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_COLORS[mod.category] }}>
                     {mod.durationMins}m
                   </span>
@@ -646,7 +648,7 @@ export default function MentorPage() {
             <Icon size={13} />
             {label}
             {badge != null && badge > 0 && (
-              <span className="flex items-center justify-center rounded-full font-mono"
+              <span className="flex items-center justify-center rounded-full font-display tabular-nums"
                 // Same fix already applied to this exact badge on /ngo: fontSize 9 was under the
                 // 12px micro-label floor; the pill grows to 19px to fit a 12px digit.
                 style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
@@ -662,13 +664,18 @@ export default function MentorPage() {
       {/* code-14: this main had no max-width at all, so cards ran edge to edge at 1280px —
           workspace.workspace caps it at 90rem like the rest of the app's framed pages, and
           md:/lg: let the stat row breathe instead of just stretching three narrow cards wide. */}
-      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
+      {/* ux-01: a fixed 80px left the Lima launcher (56px, fixed bottom-left, 130px up) sitting on
+          top of the last card/button on this page once scrolled to the end — --lima-fab-clearance
+          (published by components/ChatWidget.tsx) is the shared clearance every such page uses. */}
+      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 
-        <div><h1 className="t-h1 font-display" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
+        {/* copy-17: the h1 used to read 'Participant learning' while the nav, tab and home tile
+            all call this destination 'Mentor' — reusing that name here instead. */}
+        <div><h1 className="t-h1 font-display" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Mentor', 'Umeluleki')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
         {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'rgba(176,58,46,0.08)',color:'var(--orange)'}}><p>{tr(lang, 'Learning records could not be loaded. Progress is unavailable until the connection succeeds.', 'Amarekhodi okufunda awakwazanga ukulayishwa. Inqubekelaphambili ayitholakali kuze kuxhumeke inethiwekhi.')}</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'var(--color-surface)'}}>{tr(lang, 'Retry learning records', 'Phinda ulayishe amarekhodi okufunda')}</button></div>}
         {!loadError&&!fetching&&<>
         {/* Cohort at a glance — Simple collapses the three cards into one line. */}
@@ -687,7 +694,7 @@ export default function MentorPage() {
             ].map(({ label, value, color }) => (
               <div key={label} className="rounded-2xl p-3 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                 <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
-                <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
+                <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-muted)' }}>{label}</div>
               </div>
             ))}
           </div>
@@ -699,7 +706,7 @@ export default function MentorPage() {
           <details className="rounded-2xl px-4 py-3.5" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <summary className="flex items-center gap-2 mb-2.5 cursor-pointer" style={{minHeight:44}}>
               <GraduationCap size={14} style={{ color: 'var(--color-forest-800)' }} />
-              <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+              <span className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
                 {tr(lang, 'View curriculum', 'Buka ikharikhulamu')} · {TOTAL_MODULES} {tr(lang, 'modules', 'amamojula')}
               </span>
             </summary>
@@ -771,7 +778,7 @@ export default function MentorPage() {
         )}
 
         {!isLive && !sample && (
-          <p className="text-center text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
             {tr(lang, 'Tour records · Sign in to open your own learners', 'Amarekhodi okuvakasha · Ngena ngemvume ukuze ubone abafundi bakho')}
           </p>
         )}
