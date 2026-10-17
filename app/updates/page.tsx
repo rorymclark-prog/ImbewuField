@@ -44,7 +44,7 @@ export default function UpdatesPage() {
   const dayGroups = groupNotesByDay(RELEASE_NOTES);
   const recentDays = simple ? RECENT_DAYS_SIMPLE : RECENT_DAYS_ALL;
   const hasOlder = dayGroups.length > recentDays;
-  const visibleDays = showAll ? dayGroups : dayGroups.slice(0, recentDays);
+  const visibleDays = showAll && !simple ? dayGroups : dayGroups.slice(0, recentDays);
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -92,7 +92,7 @@ export default function UpdatesPage() {
             </section>
           ))}
 
-          {hasOlder && (
+          {!simple && hasOlder && (
             <button
               type="button"
               onClick={() => setShowAll((v) => !v)}

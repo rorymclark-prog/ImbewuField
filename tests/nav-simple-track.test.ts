@@ -141,8 +141,12 @@ test('the raw glyphs are gone from these three files, replaced by Lucide icons',
 /* ── Task 6: /updates caps to recent entries and drops the SHA ──────────────────────────── */
 
 test('/updates shows only the recent entries, with an All-tools-only disclosure, and never prints a SHA', () => {
-  assert.match(UPDATES_PAGE, /const RECENT_COUNT = 10;/);
-  assert.match(UPDATES_PAGE, /RELEASE_NOTES\.slice\(0, RECENT_COUNT\)/);
+  // Wave 13 (ux-09 / nav-09) groups the notes by day so a day prints one heading; Simple still
+  // stops at the recent days and only All tools can open the rest.
+  assert.match(UPDATES_PAGE, /const RECENT_DAYS_SIMPLE = 3;/);
+  assert.match(UPDATES_PAGE, /const RECENT_DAYS_ALL = 5;/);
+  assert.match(UPDATES_PAGE, /const recentDays = simple \? RECENT_DAYS_SIMPLE : RECENT_DAYS_ALL;/);
+  assert.match(UPDATES_PAGE, /showAll && !simple \? dayGroups : dayGroups\.slice\(0, recentDays\)/);
   assert.match(UPDATES_PAGE, /!simple && hasOlder/,
     'the "Show older updates" disclosure must be gated to All tools');
   assert.doesNotMatch(UPDATES_PAGE, /entry\.sha\s*&&/,

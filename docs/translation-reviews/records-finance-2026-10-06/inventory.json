@@ -7112,5 +7112,96 @@
    "app/invoice/page.tsx"
   ],
   "context": ""
+ },
+ {
+  "id": "W11-01",
+  "english": "Close",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "components/MyRecords.tsx"
+  ],
+  "context": "Wave 11: dismisses the failed-delete notice on the money book"
+ },
+ {
+  "id": "W13-01",
+  "english": "Try My Records",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/records/page.tsx"
+  ],
+  "context": "Wave 13 (nav-15): the sample-data button; \"Try the money book\" (R045) was renamed with the feature"
+ },
+ {
+  "id": "W13-02",
+  "english": "Date · client",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "Wave 13 (desk-12): desktop ledger column heading on the saved-invoices list"
+ },
+ {
+  "id": "W13-03",
+  "english": "Amount",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "Wave 13 (desk-12): desktop ledger column heading on the saved-invoices list"
+ },
+ {
+  "id": "W13-04",
+  "english": "Status",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "Wave 13 (desk-12): desktop ledger column heading on the saved-invoices list"
+ },
+ {
+  "id": "W13-05",
+  "english": "Record payment",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "Wave 13 (desk-12): button on an unpaid saved invoice"
+ },
+ {
+  "id": "W13-06",
+  "english": "Show more",
+  "needs": [
+   "st",
+   "ts",
+   "ve"
+  ],
+  "where": [
+   "app/invoice/page.tsx"
+  ],
+  "context": "Wave 13 (desk-12): reveals the rest of the saved-invoices list, ten at a time"
  }
 ]

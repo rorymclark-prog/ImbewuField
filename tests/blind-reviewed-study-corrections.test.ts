@@ -96,7 +96,9 @@ async function isolatedGuard() {
   const webp=JSON.parse(readFileSync(webpFolder+'webp-layer-proof.json','utf8'));
   const retiredJpegs=new Set<string>(webp.retired.map((r: any)=>r.path));
   const files=new Set<string>([...inventory.map((r: any)=>r.path),...Object.keys(proof.files),...Object.keys(proof.protected),'tests/blind-reviewed-study-corrections-history-checks.ts',
-    'tests/slides-webp-history-checks.ts',...webp.retired.map((r: any)=>r.successor.path),...webp.added.map((r: any)=>r.path),...Object.keys(webp.files)]);
+    'tests/slides-webp-history-checks.ts',...webp.retired.map((r: any)=>r.successor.path),...webp.added.map((r: any)=>r.path),...Object.keys(webp.files),
+    // The wave 13 theme layer sits on the WebP layer and is imported by it, so the fixture carries it and its predecessor fixture too.
+    'tests/wave-13-theme-history-checks.ts','tests/fixtures/student-page-before-wave-13.tsx.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

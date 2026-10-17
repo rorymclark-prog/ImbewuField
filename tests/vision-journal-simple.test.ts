@@ -85,7 +85,10 @@ test('JournalEntrySheet: what (title/notes), photo and save stay in both modes; 
     const before = SHEET.slice(Math.max(0, idx - 80), idx);
     assert.doesNotMatch(before, /!simple/, `the ${field} field must not be hidden behind !simple`);
   }
-  assert.match(SHEET, /type="submit"[\s\S]{0,400}\{entry \? ui\('Save changes'/, 'the Save button must be unconditional');
+  const submitAt = SHEET.indexOf('type="submit"');
+  const saveLabelAt = SHEET.indexOf("{entry ? ui('Save changes'");
+  assert.ok(submitAt > 0 && saveLabelAt > submitAt, 'the Save button must exist and carry its label');
+  assert.doesNotMatch(SHEET.slice(submitAt, saveLabelAt), /simple/, 'the Save button must be unconditional');
 
   assert.match(SHEET, /\{!simple && \(\s*<div>\s*<Label>\{ui\('What kind of note\?'/, 'the category picker must collapse behind !simple');
   assert.match(SHEET, /\{!simple && \(\s*<div>\s*<Label>\{ui\('Date'/, 'the Date field must collapse behind !simple');
