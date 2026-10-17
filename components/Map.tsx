@@ -37,7 +37,10 @@ import {
   ESRI_TILE_URL,
 } from '@/lib/basemap-imagery';
 import { buildDesignOverlay, type DesignOverlay } from '@/lib/design-overlay';
-import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer } from 'lucide-react';
+import { MapPin, Trash2, Loader2, ChevronUp, ChevronDown, ChevronRight, Layers, AlertTriangle, LocateFixed, PenLine, Droplets, Bookmark, Check, X, Search, CornerDownLeft, Mountain, Box, Hand, Home, Sprout, PenTool, Plus, Minus, HelpCircle, Undo2, Pipette, Share2, Move, Square, Grid, Printer, MapPinOff } from 'lucide-react';
+import mapboxgl from 'mapbox-gl';
+import Link from 'next/link';
+import EmptyState from '@/components/EmptyState';
 import { saveSharedSite, loadSharedSite } from '@/lib/site-share';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR, CONTOUR_LABEL, CONTOUR_LABEL_HALO } from '@/lib/contour-cartography';
 import SpeakButton from './SpeakButton';
@@ -358,6 +361,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const simple = useAppLevel() === 'simple';
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
+  // ux-14/desk-10/nav-14: on a phone or locked-down machine without WebGL the map area used to
+  // be a blank beige (or black, in dark mode) slab with no message, icon or next step — "Map is
+  // not supported by this browser" only ever reached the console. Checked once on mount (the
+  // capability does not change mid-session) plus a live catch on the Map constructor itself,
+  // since mapboxgl.supported() misses some GPU/driver failures that only surface at init.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
   const [connected,setConnected]=useState(true),[canvasOnly,setCanvasOnly]=useState(false);
   const offlineCanvas=!connected||canvasOnly;
@@ -2123,6 +2136,31 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setElTankCustomOpen(false);
     setElTreeCustomOpen(false);
   };
+
+  // ux-14/desk-10/nav-14: no message, icon or action where the map used to just be blank. The
+  // site report and crop plan are unaffected by a missing map, so point there instead of a dead
+  // end — this farmer's data is not lost, only the map canvas is unavailable on this device.
+  if (!mapSupported) {
+    return (
+      <div className="relative w-full h-full flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+        <EmptyState
+          icon={MapPinOff}
+          title={t('mapUnsupportedTitle')}
+          message={t('mapUnsupportedMessage')}
+          actions={
+            <>
+              <Link href="/reports" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display font-semibold" style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                {t('mapUnsupportedOpenReports')}
+              </Link>
+              <Link href="/design/lite" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display" style={{ minHeight: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
+                {t('mapUnsupportedOpenLiteDesign')}
+              </Link>
+            </>
+          }
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative w-full h-full">

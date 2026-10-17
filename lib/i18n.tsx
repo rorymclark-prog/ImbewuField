@@ -160,6 +160,12 @@ export const T_en: Dict = {
   mapGuideClose: 'Got it',
   mapOfflineCanvas: 'Offline canvas',
   mapOfflineCanvasStatus: 'Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.',
+  // ux-14/desk-10/nav-14: shown instead of a blank map area when the device cannot run the map
+  // at all (no WebGL) — pending isiZulu/regional review, English shows everywhere until then.
+  mapUnsupportedTitle: "The map can't open on this phone",
+  mapUnsupportedMessage: 'Try another browser, or keep working from your saved reports and site plan below.',
+  mapUnsupportedOpenReports: 'Open site reports',
+  mapUnsupportedOpenLiteDesign: 'Open simple design',
   mapLayerHDTitle: 'Switch to Esri high-res imagery — often sharper than the default when zoomed in',
   mapLayerReliefTitle: 'Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible',
   guideButtonTitle: 'How the map tools work',
