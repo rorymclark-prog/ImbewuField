@@ -1053,6 +1053,13 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
 }
 
+function filterLedgerRows(rows: LedgerRow[], only: 'picked' | 'in' | 'out' | undefined): LedgerRow[] {
+  if (only === 'picked') return rows.filter((r) => r.kind === 'harvest');
+  if (only === 'in') return rows.filter((r) => r.kind === 'sale' || r.kind === 'invoice');
+  if (only === 'out') return rows.filter((r) => r.kind === 'expense');
+  return rows;
+}
+
 /** The export keeps isiZulu's existing wording; the unreviewed regional drafts never go into a file. */
 const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : 'en');
 
@@ -1071,23 +1078,31 @@ function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
   URL.revokeObjectURL(url);
 }
 
-function FinancialSheet({ sales, production, expenses, invoices, name, loading, period, setPeriod, onAddEntry, onEditSale, onEditExpense, onSeeSample, onLogHarvest }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean; period: Period; setPeriod: (p: Period) => void; onAddEntry: () => void; onEditSale: (s: SalesLog) => void; onEditExpense: (x: ExpenseLog) => void; onSeeSample?: () => void; onLogHarvest: () => void }) {
+function FinancialSheet({ sales, production, expenses, invoices, name, loading, period, setPeriod, onAddEntry, onEditSale, onEditExpense, onSeeSample, onLogHarvest, only }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean; period: Period; setPeriod: (p: Period) => void; onAddEntry: () => void; onEditSale: (s: SalesLog) => void; onEditExpense: (x: ExpenseLog) => void; onSeeSample?: () => void; onLogHarvest: () => void;
+  /**
+   * Which book tab this sheet is standing in — the ledger listing narrows to that tab's rows
+   * (Picked: harvests, Sold: sales + paid invoices, Spent: costs), same filter-not-second-ledger
+   * rule SalesLedger's `only` follows. The stat row above stays the whole-period summary either
+   * way, so switching tabs never makes income or margin look like it moved.
+   */
+  only?: 'picked' | 'in' | 'out' }) {
   const { lang } = useLanguage();
   const now = useMemo(() => new Date(), []);
 
-  const rows: LedgerRow[] = useMemo(
+  const allRows: LedgerRow[] = useMemo(
     () => buildLedgerRows(sales, expenses, production, invoices, period, now, lang),
     [sales, expenses, production, invoices, period, now, lang],
   );
+  const rows: LedgerRow[] = useMemo(() => filterLedgerRows(allRows, only), [allRows, only]);
 
-  const income = rows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
-  const expenseTotal = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
+  const income = allRows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
+  const expenseTotal = allRows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
   const net = income - expenseTotal;
   const includePerennials = useIncludePerennials();
   const periodKg = scopeKg(production.filter((p) => isInFinancePeriod(p.logged_at, period, now)), includePerennials);
   const yieldLabel = <RecordQuantitySummary compact totals={periodKg.quantities} />;
 
-  function exportCsv() { exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, period, now, csvLang(lang)), period, csvLang(lang)); }
+  function exportCsv() { exportLedgerCsv(filterLedgerRows(buildLedgerRows(sales, expenses, production, invoices, period, now, csvLang(lang)), only), period, csvLang(lang)); }
 
   const stats = [
     { label: recordsText(lang, 'Income', 'Imali engenayo'), value: fmtZAR(income), color: 'var(--record-positive)' },
@@ -1727,7 +1742,12 @@ export default function RecordsPage() {
                 crop, kilograms, optional photo, save — only its front door moved. */}
             {(tab === 'picked' || tab === 'sold') && (
               <div
-                className="rounded-2xl"
+                // desk-12: Sold's own list-with-thumbnails view is the "phone layout on a
+                // laptop" the audit flagged — on lg+ that tab now gets the FinancialSheet
+                // ledger below instead. Picked has no desktop ledger substitute yet (its
+                // harvest-entry form has no FinancialSheet equivalent), so it still shows
+                // here at every width.
+                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}`}
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
               >
                 <MyRecords section={tab} onChanged={loadData} />
@@ -1735,7 +1755,7 @@ export default function RecordsPage() {
             )}
 
             {tab === 'sold' && (
-              <>
+              <div className="lg:hidden space-y-4">
                 {/* Money in only. Same rows, same builder as Spent below — one ledger, filtered,
                     so a paid invoice still cannot be counted twice. */}
                 <SalesLedger
@@ -1762,11 +1782,11 @@ export default function RecordsPage() {
                   lockKind="in"
                   addLabel={recordsText(lang, 'Add a sale by hand', 'Faka ukudayisa ngesandla')}
                 />
-              </>
+              </div>
             )}
 
             {tab === 'spent' && (
-              <>
+              <div className="lg:hidden space-y-4">
                 <SalesLedger
                   sales={sales}
                   expenses={expenses}
@@ -1789,68 +1809,83 @@ export default function RecordsPage() {
                   lockKind="out"
                   addLabel={recordsText(lang, 'Log a cost', 'Rekhoda izindleko')}
                 />
-              </>
+              </div>
+            )}
+
+            {/* desk-12: the desktop ledger used to be nested inside the Charts guard only, so
+                Sold and Spent fell back to the phone list-and-form layout at 1280px. It now
+                renders for all three money tabs, filtered to match (Sold/Spent narrow the
+                ledger rows; Charts, with no `only`, keeps the full combined ledger plus the
+                charts and metrics widgets that belong to it alone). */}
+            {(tab === 'sold' || tab === 'spent' || tab === 'charts') && (
+              <div className="hidden lg:block space-y-6">
+                {tab === 'charts' && (
+                  /* "a cashflow graph right at the top" — above the ledger, because the
+                     ledger answers "what happened" and this answers "which way is it
+                     going", and only one of those is worth the first screenful. */
+                  <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} wide />
+                )}
+                <FinancialSheet
+                  sales={sales}
+                  production={production}
+                  expenses={expenses}
+                  invoices={invoices}
+                  name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
+                  loading={dataLoading}
+                  period={period}
+                  setPeriod={setPeriod}
+                  only={tab === 'sold' ? 'in' : tab === 'spent' ? 'out' : undefined}
+                  onAddEntry={() => { setEditing(null); setDesktopEntryOpen(true); }}
+                  onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
+                  onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
+                  onSeeSample={sampling ? undefined : handleSeeSample}
+                  onLogHarvest={() => setTab('picked')}
+                />
+                {tab === 'charts' && (
+                  <>
+                    {/* Measured kilograms, then the plan's benchmark beside them. Sits
+                        after the ledger and before the per-crop numbers: it is the
+                        picture those numbers are the detail of. */}
+                    <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
+                    <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
+                    <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                    <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
+                    <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                  </>
+                )}
+                {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
+                    only while open so every dismissal starts the next entry fresh. */}
+                {desktopEntryOpen && (
+                  <div
+                    className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
+                    style={{ background: 'rgba(32,25,15,0.45)' }}
+                    role="dialog" aria-modal="true" aria-label={recordsText(lang, 'Record an entry', 'Rekhoda okufakiwe')}
+                    onClick={() => { if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); } }}
+                    onKeyDown={e => {
+                      if (e.key !== 'Escape' || (e.target as Element).closest('dialog')) return;
+                      e.stopPropagation();
+                      if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); }
+                    }}
+                  >
+                    <div className="w-full max-w-md" style={{ boxShadow: '0 16px 48px rgba(32,25,15,0.25)', borderRadius: 16 }} onClick={(e) => e.stopPropagation()}>
+                      <LogSaleForm
+                        alwaysOpen
+                        onSavingChange={setDesktopEntrySaving}
+                        onSaved={loadData}
+                        editing={editing}
+                        onCancelEdit={() => setEditing(null)}
+                        onDone={() => setDesktopEntryOpen(false)}
+                        online={online}
+                        lockKind={tab === 'sold' ? 'in' : tab === 'spent' ? 'out' : undefined}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
 
             {tab === 'charts' && (
               <>
-                {/* Wide / laptop: the financial-sheet ledger workspace (frame 15) */}
-                <div className="hidden lg:block space-y-6">
-                  {/* "a cashflow graph right at the top" — above the ledger, because the
-                      ledger answers "what happened" and this answers "which way is it
-                      going", and only one of those is worth the first screenful. */}
-                  <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} wide />
-                  <FinancialSheet
-                    sales={sales}
-                    production={production}
-                    expenses={expenses}
-                    invoices={invoices}
-                    name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
-                    loading={dataLoading}
-                    period={period}
-                    setPeriod={setPeriod}
-                    onAddEntry={() => { setEditing(null); setDesktopEntryOpen(true); }}
-                    onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
-                    onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
-                    onSeeSample={sampling ? undefined : handleSeeSample}
-                    onLogHarvest={() => setTab('picked')}
-                  />
-                  {/* Measured kilograms, then the plan's benchmark beside them. Sits
-                      after the ledger and before the per-crop numbers: it is the
-                      picture those numbers are the detail of. */}
-                  <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
-                  <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
-                  <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
-                  <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
-                  <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
-                  {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
-                      only while open so every dismissal starts the next entry fresh. */}
-                  {desktopEntryOpen && (
-                    <div
-                      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
-                      style={{ background: 'rgba(32,25,15,0.45)' }}
-                      role="dialog" aria-modal="true" aria-label={recordsText(lang, 'Record an entry', 'Rekhoda okufakiwe')}
-                      onClick={() => { if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); } }}
-                      onKeyDown={e => {
-                        if (e.key !== 'Escape' || (e.target as Element).closest('dialog')) return;
-                        e.stopPropagation();
-                        if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); }
-                      }}
-                    >
-                      <div className="w-full max-w-md" style={{ boxShadow: '0 16px 48px rgba(32,25,15,0.25)', borderRadius: 16 }} onClick={(e) => e.stopPropagation()}>
-                        <LogSaleForm
-                          alwaysOpen
-                          onSavingChange={setDesktopEntrySaving}
-                          onSaved={loadData}
-                          editing={editing}
-                          onCancelEdit={() => setEditing(null)}
-                          onDone={() => setDesktopEntryOpen(false)}
-                          online={online}
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
                 {/* Phone / tablet: the simple money view */}
                 <div className="lg:hidden space-y-4">
                   <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} />

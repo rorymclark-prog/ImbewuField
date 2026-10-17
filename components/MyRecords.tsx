@@ -1,6 +1,6 @@
 'use client';
 
-import { numberLabel } from '@/lib/format-figures';
+import { randCentsLabel } from '@/lib/format-figures';
 import { sampleProducePhoto } from '@/lib/sample-media';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 
@@ -975,7 +975,7 @@ function CreditPackCard({
   const [previewOpen, setPreviewOpen] = useState(false);
   const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
   const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
-  const money = (value: number) => `R ${numberLabel(value, 0)}`;
+  const money = (value: number) => randCentsLabel(value);
 
   async function handleExport() {
     setError('');
