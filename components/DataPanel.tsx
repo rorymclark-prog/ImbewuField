@@ -18,6 +18,7 @@ import ChatPanel from './ChatPanel';
 import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
 import WeatherWidget from './WeatherWidget';
+import LanguageDraftNote from './LanguageDraftNote';
 import CompletionScore from './report/CompletionScore';
 import SavedReportsList from './report/SavedReportsList';
 import NextStepCoach from './NextStepCoach';
@@ -1141,24 +1142,21 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             </div>
 
             {/* Lima contextual read card */}
-            <div className="flex gap-3 items-start" style={{ background: 'var(--bg-1)', borderRadius: 14, border: '1px solid #E7DDC9', padding: '12px 13px' }}>
+            <div className="flex gap-3 items-start" style={{ background: 'var(--bg-1)', borderRadius: 14, border: '1px solid var(--border)', padding: '12px 13px' }}>
               <div className="flex items-center justify-center flex-shrink-0" style={{ width: 30, height: 30, borderRadius: 9, background: 'var(--color-forest-800)' }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
                 </svg>
               </div>
-              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: '#4A3F2E', margin: 0, flex: 1, minWidth: 0 }}>
+              <p style={{ fontSize: 12.5, lineHeight: 1.5, color: 'var(--text-primary)', margin: 0, flex: 1, minWidth: 0 }}>
                 <span className="font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>Lima · </span>
-                {lang === 'zu' ? (
-                  <>
-                    <span>{limaRead}</span>
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>
-                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">English source: {limaReadParts.english}</span>
-                  </>
-                ) : limaRead}
+                <span lang={lang === 'zu' ? 'zu' : undefined}>{limaRead}</span>
               </p>
-              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="#5C5040" />
+              <SpeakButton text={limaRead} englishText={limaReadParts.english} size={15} color="var(--text-secondary)" />
             </div>
+            {/* zu-04: the card's own draft note moved out of the running paragraph into the one
+                shared, collapsed-English note below it. */}
+            <LanguageDraftNote lang={lang} zulu={limaReadParts.zulu} english={limaReadParts.english} />
 
             {/* 12-month planting calendar strip */}
             {data.rainfall.monthly?.length === 12 && (
@@ -1202,12 +1200,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     className="w-full flex items-center justify-between gap-2 font-sans font-medium"
                     style={{ minHeight: 44, padding: '11px 14px', background: 'var(--bg-1)', border: 'none', cursor: 'pointer', fontSize: 13, color: 'var(--text-secondary)' }}
                   >
-                    {lang === 'zu' ? (
-                      <span className="flex flex-col items-start text-left">
-                        <span lang="zu">{t('seeMoreDetailZuDraft')}</span>
-                        <small className="text-xs font-normal"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — Unreviewed isiZulu draft. English: {translate('en', 'seeMoreDetail')}</small>
-                      </span>
-                    ) : t('seeMoreDetail')}
+                    <span lang={lang === 'zu' ? 'zu' : undefined}>{lang === 'zu' ? t('seeMoreDetailZuDraft') : t('seeMoreDetail')}</span>
                     <ChevronDown size={16} style={{ transform: detailOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
                   </button>
                   {detailOpen && (
@@ -1218,6 +1211,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
               );
             })()}
+            {/* zu-04: the accordion's own draft note moved OUT of the button (it was a 3-line
+                clickable control) into the one shared, collapsed-English note. */}
+            <LanguageDraftNote
+              lang={lang}
+              zulu={translate('zu', 'seeMoreDetailZuDraft')}
+              english={translate('en', 'seeMoreDetail')}
+            />
 
             {/* Primary CTA */}
             <button

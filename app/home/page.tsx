@@ -31,6 +31,7 @@ import TabBar from '@/components/TabBar';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -492,11 +493,13 @@ function HomeLandingInner() {
       {/* ── Main content ── */}
       <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
 
-        {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.
-          </p>
-        )}
+        {/* zu-04: one shared draft-note component, isiZulu-first with English collapsed —
+            replaces the old English-first bilingual paragraph. */}
+        <LanguageDraftNote
+          lang={lang}
+          zulu="Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe."
+          english="These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings."
+        />
 
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
