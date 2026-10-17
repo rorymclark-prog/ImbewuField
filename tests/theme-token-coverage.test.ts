@@ -255,6 +255,13 @@ test('none of this track\'s owned files paint a surface, border or text with a :
 // var(--on-forest)/var(--color-forest-800) for the forest-brand text/border cases. The Design
 // Studio CANVAS itself (satellite imagery, floating tool palettes drawn over the map) is
 // explicitly out of scope — only the plain-page chrome this track touched is checked here.
+//
+// dark-11 / code-17: the /samples/production example and its ChatPanel/Screenshot consumers used
+// the :root-only --bg/--surface/--surface-2/--text/--text-2/--text-3 family (same trap as the
+// wave-13 staff-dark bug above) plus literal pastel calendar-cell colours that stayed pale in
+// dark mode. Fixed by routing to --bg-0/1/2 and --text-primary/secondary/muted, and by rebuilding
+// the harvest/stored/reference calendar-cell colours as color-mix(in srgb, var(--emerald|--gold)
+// X%, var(--bg-1)) so the hue-coding adapts with the theme instead of staying a fixed pale tint.
 
 const W14_BANNED_LITERAL_HEX: Record<string, RegExp[]> = {
   'app/design/page.tsx': [/#FFFEFA\b/i, /#0B120B\b/i, /#E2D8C4\b/i, /#C9BFAD\b/i],
@@ -263,6 +270,10 @@ const W14_BANNED_LITERAL_HEX: Record<string, RegExp[]> = {
     /#FDF4E3\b/i, /#E8D5A8\b/i,
   ],
   'app/partners/page.tsx': [/#E2D8C4\b/i],
+  'app/samples/production/ProductionExample.module.css': [
+    /#56834e\b/i, /#c99d35\b/i, /#a47627\b/i, /#dce9d5\b/i, /#f2e4bb\b/i, /#fcf7ea\b/i,
+    /#a3bb98\b/i, /#d5bd7e\b/i, /#b58f4a\b/i, /#70511a\b/i, /#815e23\b/i,
+  ],
 };
 
 for (const [relativePath, patterns] of Object.entries(W14_BANNED_LITERAL_HEX)) {
@@ -284,6 +295,8 @@ const W14_CONSUMER_FILES_FOR_ROOT_ONLY = [
   'app/design/page.tsx',
   'app/design/lite/page.tsx',
   'app/partners/page.tsx',
+  'components/partners/Screenshot.tsx',
+  'components/ChatPanel.tsx',
 ];
 
 test("none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant", () => {
@@ -301,6 +314,26 @@ test("none of w14 dark-leftovers' owned page files paint a surface, border or te
     offenders.length
       ? `Found a :root-only token used for a surface/text/border — it will not follow the theme:\n`
         + offenders.map((o) => `  ${o}`).join('\n')
+      : undefined,
+  );
+});
+
+// app/samples/production/ProductionExample.module.css deliberately keeps var(--brand,#1f4d2b)
+// and var(--ochre) as FILLS (same precedent as every other forest/ochre fill in the app), so it
+// is checked against a narrower list — the bg/surface/text family code-17 actually named — rather
+// than the full ROOT_ONLY_BY_DESIGN scan above, which would also flag those intentional fills.
+const W14_BG_SURFACE_TEXT_ONLY = ['--color-card', '--color-paper', '--surface-2', '--text-2', '--text-3', '--surface', '--text', '--bg'];
+
+test("app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)", () => {
+  const src = read('app/samples/production/ProductionExample.module.css');
+  const offenders: string[] = [];
+  const pattern = new RegExp(`var\\(\\s*(${W14_BG_SURFACE_TEXT_ONLY.map((t) => t.replace('-', '\\-')).join('|')})\\s*[,)]`, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec(src))) offenders.push(`var(${m[1]})`);
+  assert.deepEqual(
+    offenders, [],
+    offenders.length
+      ? `Found a :root-only bg/surface/text token — it will not follow the theme:\n${offenders.map((o) => `  ${o}`).join('\n')}`
       : undefined,
   );
 });
