@@ -427,7 +427,10 @@ export const T_en: Dict = {
   tabAI: 'Insights',
   tabPlaces: 'Places',
   tabFarm: 'Farm',
-  siteReportOverline: 'Site report',
+  // copy-05: the destination was named five ways across the app ('Site report' in the nav,
+  // 'Saved sites & reports' as the page h1, 'Your Sites'/'Saved Reports' as list headers,
+  // 'Site Analysis Report' on the toolbar). Settled on 'Site reports' everywhere, sentence case.
+  siteReportOverline: 'Site reports',
   // Plain-English names for the farmer-facing biome report (lib/biome.ts's BIOME_I18N_KEYS,
   // shown by components/DataPanel.tsx). BIOMES in lib/biome.ts keeps the same English text as the
   // source other callers (app/api/* prompts) still read; these keys exist so DataPanel can
@@ -682,7 +685,7 @@ export const T_en: Dict = {
   earthworksBeforeRainsLabel: '→ Earthworks before first rains:',
   earthworksWinterDate: 'Apr–May',
   earthworksSummerDate: 'Aug–Sep',
-  savedReportsHeader: 'Saved Reports',
+  savedReportsHeader: 'Saved reports',
   noSavedReportsMessage: 'No saved reports yet. Open',
   noSavedReportsGenerateLink: 'Generate Full Report',
   noSavedReportsSaveTip: ', then tap',
@@ -691,7 +694,7 @@ export const T_en: Dict = {
   reportOpenButton: 'Open',
   // English only — missing-key fallback serves English until a first-language reviewer
   // supplies these. Do not add these keys under any other language block.
-  savedSitesHeader: 'Your Sites',
+  savedSitesHeader: 'Your sites',
   savedSitesBackLink: 'All sites',
   unsavedSiteGroupLabel: 'Not saved as a site',
   savedReportCountSingular: 'saved report',
@@ -1901,8 +1904,8 @@ export const T_en: Dict = {
 
   // Saved sites and reports route controls. Report content is localized by its own language flow.
   reportsViewerLoadError: 'The report viewer could not load. Reconnect and try opening the saved report again.',
-  reportsTitle: 'Saved sites & reports',
-  reportsIntro: 'Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.',
+  reportsTitle: 'Site reports',
+  reportsIntro: 'Choose a site to prepare and generate its site report, or reopen a report you have already saved.',
   reportsFunderNotice: 'Your funder workspace contains the programme reports shared with you.',
   reportsOpenFunderView: 'Open funder view',
   reportsLoading: 'Loading your saved sites…',
