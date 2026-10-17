@@ -817,14 +817,20 @@ export default function StudentPage() {
       <AppHeader title={t('studentMyStudies')} backFallback="/home" right={<LessonLink id="student:overview" label={t('homeQuickStudy')} />} />
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
+        {/* zu-04: isiZulu sentence first, one line, 12px muted; the English source sits behind a
+            collapsed "English" detail rather than printed inline, and this renders once under the
+            header rather than inside a card or button. components/LanguageDraftNote.tsx (the
+            isizulu track's shared component) did not exist on main at merge time, so this matches
+            its described wording/shape locally rather than importing it — adopt the shared
+            component here once it lands. */}
         {lang === 'zu' && (
-          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
-            {t('studentZuluCourseLanguageNote')}
+          <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+            <span lang="zu">Uhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu.</span>
             {' '}
-            <span className="block mt-1">
-              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
-            </span>
+            <details className="inline">
+              <summary className="inline cursor-pointer" style={{ textDecoration: 'underline' }}>English</summary>
+              <span lang="en"> Unreviewed machine draft, not yet checked by a fluent isiZulu speaker. {t('studentZuluCourseLanguageNote')}</span>
+            </details>
           </p>
         )}
         {lang === 'st' && (
