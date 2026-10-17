@@ -70,8 +70,10 @@ import ReactMapGL, {
   type MapRef,
   type ViewStateChangeEvent,
 } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { X, Maximize2, Info } from 'lucide-react';
+import { X, Maximize2, Info, MapPinOff } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { useLanguage } from '@/lib/i18n';
 import {
   attentionFlags,
@@ -99,12 +101,16 @@ const STATUS: Record<GardenStatus, { color: string }> = {
  * than Mapbox point clustering, which could only ever show a count. */
 const SITE_ZOOM = 7.6;
 
-const INK = '#20190F';
-const INK_SOFT = '#5C5040';
-const INK_MUTED = '#755942';
-const LINE = '#E2D8C4';
-const PAPER = '#FFFEFA';
-const PANEL = '#F4EFE4';
+// dark-03/staff-12: these five were literal hexes — a hard-coded paper slab and ink that stayed
+// bright-paper-on-dark no matter the theme/mode, because a named const assigned a hex literal
+// still IS a hex literal everywhere it is used. Pointing them at the existing theme tokens makes
+// every call site below follow the theme automatically, with no call site edited.
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
+const PANEL = 'var(--bg-1)';
 const ATTENTION = '#C0531E';
 
 /** Space-grouped thousands (SA convention), locale-independent so SSR and the
@@ -149,6 +155,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         pinExplanation: 'Izimpawu zibonisa isimo nosayizi wesiza kuphela. Isivuno, imali engenayo nenqubekelaphambili kuboniswa kuphaneli; uma ingekho idatha, kuyashiwo.',
         farmer: 'Umlimi', closeFarmer: 'Vala iphaneli yomlimi',
         sourceLanguageNotice: 'Ezinye izincazelo zemininingwane yomlimi ngezansi zingase zisaboniswe ngesiNgisi. Amagama nobufakazi obufakiwe kuboniswa njengoba kuqoshwe.',
+        // sdesk-08/desk-10/nav-14: new copy, pending first-language review — English stands in
+        // for isiZulu here too rather than an unreviewed machine sentence (see this object's own
+        // sourceLanguageNotice for the same convention).
+        mapUnsupportedTitle: 'The map cannot open on this device',
+        mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
       }
     : {
         thriving: 'Thriving', establishing: 'Establishing', support: 'Needs support',
@@ -161,8 +172,19 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         pinExplanation: 'Pins show status and plot size only — both recorded for every site. Harvest, income and progress are in the panel, where “no data” can be said in words.',
         farmer: 'Farmer', closeFarmer: 'Close farmer panel',
         sourceLanguageNotice: 'Some farmer-detail descriptions may remain in English. Submitted names and evidence are shown as recorded.',
+        mapUnsupportedTitle: 'The map cannot open on this device',
+        mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
       };
   const mapRef = useRef<MapRef>(null);
+  // sdesk-08/desk-10/nav-14: no WebGL used to leave this area a flat beige (light) or solid
+  // black (dark) slab, with the zoom/legend controls still drawn as if a map were there. Checked
+  // once — the capability does not change mid-session — same pattern as components/Map.tsx and
+  // AtlasExplorer.tsx.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [zoom, setZoom] = useState(6.2);
   const [hoverId, setHoverId] = useState<string | null>(null);
   /* Collapsed by default on a phone, where the expanded card would cover most
@@ -270,6 +292,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         role="region"
         aria-label={isiZulu ? 'Imephu yamasayithi abalimi' : 'Farmer sites map'}
       >
+        {mapSupported ? (
+        <>
         <ReactMapGL
           ref={mapRef}
           mapboxAccessToken={TOKEN}
@@ -345,7 +369,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         marginTop: 4,
                         fontSize: 11,
                         color: INK,
-                        background: 'rgba(255,254,250,0.92)',
+                        background: 'color-mix(in srgb, var(--bg-1) 92%, transparent)',
                         border: `1px solid ${LINE}`,
                         borderRadius: 999,
                         padding: '1.5px 7px',
@@ -417,7 +441,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                           marginTop: 4,
                           fontSize: 11.5,
                           color: INK,
-                          background: 'rgba(255,254,250,0.95)',
+                          background: 'color-mix(in srgb, var(--bg-1) 95%, transparent)',
                           border: `1px solid ${LINE}`,
                           borderRadius: 999,
                           padding: '2px 8px',
@@ -442,14 +466,14 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
              * corner and the two collide at 375px. */
             className="absolute top-14 sm:top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-3.5 py-2 max-w-[calc(100%-24px)]"
             style={{
-              background: 'rgba(255,254,250,0.94)',
+              background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)',
               border: `1px solid ${LINE}`,
               borderRadius: 999,
               boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
               whiteSpace: 'nowrap',
             }}
           >
-            <Info size={14} style={{ color: '#1F4D2B', flexShrink: 0 }} />
+            <Info size={14} style={{ color: 'var(--color-forest-800)', flexShrink: 0 }} />
             <span className="font-display" style={{ fontSize: 12.5, color: INK }}>
               {copy.districtHint}
             </span>
@@ -484,10 +508,14 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         <div
           className="absolute z-10"
           style={{
-            /* Clears the global ChatWidget FAB, which sits bottom-left. */
-            bottom: 78,
-            left: 12,
-            background: 'rgba(255,254,250,0.96)',
+            /* staff-03/dark-03: used to be anchored low on the left, clear of the global
+             * ChatWidget FAB's resting band only while collapsed — opening it grew the panel
+             * upward (bottom-anchored) straight into that band. Top-right, below the
+             * NavigationControl's zoom buttons, grows downward instead, so it can never land
+             * on the FAB at any expansion height, on any route that mounts it there. */
+            top: 100,
+            right: 12,
+            background: 'color-mix(in srgb, var(--bg-1) 96%, transparent)',
             border: `1px solid ${LINE}`,
             borderRadius: 12,
             boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
@@ -504,8 +532,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 10,
-              letterSpacing: '0.12em',
+              fontSize: 11,
+              letterSpacing: '0.1em',
               color: INK_MUTED,
             }}
           >
@@ -515,7 +543,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
 
           {legendOpen && (
             <div id="network-map-legend" className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '8px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '8px 0 5px' }}>
                 {copy.colourStatus}
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
@@ -536,7 +564,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 </div>
               ))}
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.sizeArea}
               </div>
               <div className="flex items-center gap-2">
@@ -551,7 +579,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 </span>
               </div>
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.ringAttention}
               </div>
               <div className="flex items-center gap-2">
@@ -560,7 +588,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                     width: 13,
                     height: 13,
                     borderRadius: '50%',
-                    background: '#1F4D2B',
+                    background: 'var(--color-forest-800)',
                     border: `3px solid ${ATTENTION}`,
                     flexShrink: 0,
                   }}
@@ -572,13 +600,25 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
 
               <p
                 className="font-sans"
-                style={{ fontSize: 10, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
+                style={{ fontSize: 11, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
               >
                 {copy.pinExplanation}
               </p>
             </div>
           )}
         </div>
+        </>
+        ) : (
+          // sdesk-08/desk-10/nav-14: the farmer list this map sits beside still works without
+          // a rendered globe, so point there rather than drawing zoom/legend controls over
+          // nothing.
+          <EmptyState
+            className="h-full"
+            icon={MapPinOff}
+            title={copy.mapUnsupportedTitle}
+            message={copy.mapUnsupportedMessage}
+          />
+        )}
       </div>
 
       {/* ── Detail panel: bottom sheet (mobile) / right column (md+) ── */}
@@ -595,11 +635,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div
               className="md:hidden absolute left-1/2 -translate-x-1/2 top-2"
-              style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }}
+              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong)' }}
             />
             <span
               className="font-sans font-bold uppercase"
-              style={{ fontSize: 10.5, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
+              style={{ fontSize: 11, letterSpacing: '0.1em', color: INK_MUTED, marginTop: 6 }}
             >
               {copy.farmer}
             </span>

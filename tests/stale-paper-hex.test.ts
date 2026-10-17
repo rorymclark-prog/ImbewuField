@@ -65,6 +65,17 @@ for (const relativePath of RELATIVE_PATHS) {
   });
 }
 
+// code-05 (2026-10-16 visual/UX audit): CLAUDE.md retired '#FBF6EC' too — it was the stale Card
+// value before DESIGN.md's "Option 1b contrast" decision chose #FFFEFA (now var(--bg-1)) — and
+// app/account/page.tsx still had it hard-copied as a border colour, which stayed a bright-paper
+// ring around the avatar's camera button regardless of theme/mode. Scoped to the one file this
+// track fixed, not the whole RELATIVE_PATHS list above (those were never audited for this hex).
+test("app/account/page.tsx does not reintroduce the stale card hex '#FBF6EC'", () => {
+  const src = readFileSync(fileURLToPath(new URL('../app/account/page.tsx', import.meta.url)), 'utf8');
+  assert.doesNotMatch(src, /#FBF6EC/i,
+    "use var(--bg-1) (today's Card value) instead of the retired literal hex.");
+});
+
 test('every converted file actually uses the new --on-forest token, not just a bare removal', () => {
   for (const relativePath of RELATIVE_PATHS) {
     const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');

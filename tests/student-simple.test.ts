@@ -180,7 +180,11 @@ test('/student/design and /student/finance hide their sources/further-reading li
 test('tips page routes its hero, section headings and controls through the translation pattern', () => {
   assert.match(TIPS_SOURCE, /useLanguage/);
   assert.match(TIPS_SOURCE, /t\('tipsTitle'\)/);
-  assert.match(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/);
   assert.match(TIPS_SOURCE, /t\('navTour'\)/);
   assert.doesNotMatch(TIPS_SOURCE, /<h1>Tips &amp; help<\/h1>/, 'the hero title must no longer be a hard-coded literal');
+  // ux-19 (2026-10-16 visual/UX audit): the "Video guides" section this used to pin was a
+  // placeholder ending in "will be added here when published" with only a generic YouTube
+  // search link — removed until there is at least one real video, so t('tipsVideoGuidesTitle')
+  // is deliberately no longer rendered.
+  assert.doesNotMatch(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/, 'the video-guides placeholder was removed on purpose — this assertion is inverted, not deleted');
 });

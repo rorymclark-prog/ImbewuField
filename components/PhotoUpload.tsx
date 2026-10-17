@@ -192,7 +192,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
       {lang === 'zu' && (
         <p role="note" className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('photoZuluDraftNotice')}</p>
       )}
-      <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>
+      <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>
         {t('photoAnalysisHeading')}
       </div>
 
@@ -212,9 +212,9 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             disabled={loading || !locationData}
             className="px-3 py-1.5 rounded-lg text-xs font-display font-medium flex-shrink-0 transition-all whitespace-nowrap"
             style={{
-              background: loading ? 'rgba(226,216,196,0.6)' : 'rgba(35,94,134,0.15)',
-              border: `1px solid ${loading ? '#E2D8C4' : 'rgba(35,94,134,0.4)'}`,
-              color: loading ? '#755942' : '#235E86',
+              background: loading ? 'color-mix(in srgb, var(--border) 60%, transparent)' : 'var(--info-soft)',
+              border: `1px solid ${loading ? 'var(--border)' : 'color-mix(in srgb, var(--info) 40%, transparent)'}`,
+              color: loading ? 'var(--text-muted)' : 'var(--info)',
             }}
           >
             {loading
@@ -235,7 +235,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             <div className="text-xs font-display font-medium" style={{ color: 'var(--text-primary)' }}>
               {analysis ? t('photoAnalysingImagery') : t('photoSendingToLima')}
             </div>
-            <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('photoReadsDesc')}
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
         style={{
           background: 'var(--bg-1)',
-          border: `1px dashed ${previews.length ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
+          border: `1px dashed ${previews.length ? 'rgba(31,77,43,0.4)' : 'var(--border)'}`,
         }}
       >
         <input
@@ -274,7 +274,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               <Camera size={32} style={{ color: 'var(--color-forest-800)' }} />
             </div>
             <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('photoDropOrTap')}</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('photoUpToFive')}</p>
+            <p className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('photoUpToFive')}</p>
           </div>
         )}
       </div>
@@ -287,9 +287,9 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             disabled={loading || !locationData}
             className="flex-1 py-2 rounded-xl text-xs font-display font-semibold transition-all"
             style={{
-              background: loading ? 'rgba(226,216,196,0.6)' : '#1F4D2B',
-              border: loading ? '1px solid #E2D8C4' : 'none',
-              color: loading ? '#755942' : 'var(--on-forest)',
+              background: loading ? 'color-mix(in srgb, var(--border) 60%, transparent)' : 'var(--color-forest-800)',
+              border: loading ? '1px solid var(--border)' : 'none',
+              color: loading ? 'var(--text-muted)' : 'var(--on-forest)',
             }}
           >
             {loading
@@ -305,7 +305,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               setAnalysis('');
               onAnalysisComplete('');
             }}
-            className="px-3 py-2 rounded-xl text-xs font-mono transition-all"
+            className="px-3 py-2 rounded-xl text-xs font-sans transition-all"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}
           >
             {t('photoClearButton')}
@@ -313,7 +313,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
         </div>
       )}
 
-      {error && <p className="text-xs font-mono" style={{ color: 'var(--orange)' }}>{error}</p>}
+      {error && <p className="text-xs font-sans" style={{ color: 'var(--orange)' }}>{error}</p>}
 
       {/* Analysis output — streams in progressively */}
       {analysis && (
@@ -322,11 +322,11 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
           style={{ background: 'rgba(31,77,43,0.04)', border: '1px solid rgba(31,77,43,0.15)' }}
         >
           {renderAnalysis(analysis)}
-          {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: '#1F4D2B' }} />}
+          {loading && <span className="inline-block w-1.5 h-3.5 rounded-sm animate-pulse ml-0.5" style={{ background: 'var(--color-forest-800)' }} />}
           {!loading && (
             <div className="mt-3 pt-3 flex items-center gap-2" style={{ borderTop: '1px solid rgba(31,77,43,0.15)' }}>
               <span style={{ color: 'var(--color-forest-800)', fontSize: 13, fontWeight: 700 }}>+</span>
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+              <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                 {t('photoAddedToReportPrefix')} <span style={{ color: 'var(--gold)' }}>{t('generateFullReport')}</span> {t('photoAddedToReportSuffix')}
               </span>
             </div>

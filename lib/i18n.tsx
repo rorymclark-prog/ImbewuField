@@ -169,6 +169,12 @@ export const T_en: Dict = {
   mapGuideClose: 'Got it',
   mapOfflineCanvas: 'Offline canvas',
   mapOfflineCanvasStatus: 'Offline canvas · saved drawings and pins. Satellite imagery and terrain need a connection.',
+  // ux-14/desk-10/nav-14: shown instead of a blank map area when the device cannot run the map
+  // at all (no WebGL) — pending isiZulu/regional review, English shows everywhere until then.
+  mapUnsupportedTitle: "The map can't open on this phone",
+  mapUnsupportedMessage: 'Try another browser, or keep working from your saved reports and site plan below.',
+  mapUnsupportedOpenReports: 'Open site reports',
+  mapUnsupportedOpenLiteDesign: 'Open simple design',
   mapLayerHDTitle: 'Switch to Esri high-res imagery — often sharper than the default when zoomed in',
   mapLayerReliefTitle: 'Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible',
   guideButtonTitle: 'How the map tools work',
@@ -1218,6 +1224,9 @@ export const T_en: Dict = {
   tipsVideoGuidesBody: 'For now, follow the interactive tour and the steps above. App video walkthroughs will be added here when published.',
   tipsYoutubeLink: 'Find gardening how-to videos on YouTube ↗',
   tipsYoutubeNote: 'External search results cover gardening, rather than using ImbewuField.',
+  // zu-07: shared between SampleModeBanner and AccountButton so the pill says the same word in
+  // both places — matches MenuButton's own hardcoded isiZulu text ('Uhambo') for the same control.
+  tourPill: 'Tour',
   navTourControls: 'Tour controls',
   navTourGardensReports: '18 gardens and completed reports',
   navExitTour: 'Exit tour',
@@ -1784,7 +1793,9 @@ export const T_en: Dict = {
   loginSubtitleCreate: 'Create a new account.',
   loginSubtitleReset: 'Reset your password.',
   loginContinueToMap: 'Sign in to continue to your map',
-  loginBackendUnavailableNotice: "Sign-in isn't available right now. The app runs in tour mode.",
+  // ux-03/nav-04: was 'Backend not connected yet — auth is unavailable. The app runs in tour
+  // mode.' — developer vocabulary on a farmer's first-contact screen.
+  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this phone.',
   loginSignIn: 'Sign in',
   loginCreateAccount: 'Create account',
   loginResetEmailSent: 'Reset email sent to',
@@ -1839,6 +1850,9 @@ export const T_en: Dict = {
   offlineTitle: 'Saved on this phone',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
+  // nav-06: the status line used to be just the bold word "Connected"/"Offline…" with no icon
+  // and no full sentence — pending isiZulu/regional review, same as this file's other new keys.
+  offlineConnectedSentence: 'You are online — pages saved for offline use are listed below.',
   offlineEntriesWaiting: '{count} entries waiting to send',
   offlineBeforeLeavingSignal: 'Before you leave signal',
   offlinePrepareDescription: 'Prepare the pages and authorised records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.',

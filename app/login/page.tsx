@@ -92,10 +92,11 @@ export default function LoginPage() {
 
 function LoginPageInner() {
   const { t, lang } = useLanguage();
-  const authLabel = (key: string, keepEnglish = false) => {
-    const translated = t(key);
-    return lang === 'zu' && keepEnglish ? `${translated} · ${translate('en', key)}` : translated;
-  };
+  // zu-09: this form used to mix conventions — some labels bilingual ('Ngena · Sign in'), others
+  // isiZulu-only ('Ikheli le-imeyili' with no English), which also wrapped the sign-in/create
+  // toggle to two lines. Picked isiZulu-only for every label, with the one draft note already
+  // shown above (loginZuluDraftNotice) as the single place English is kept.
+  const authLabel = (key: string) => t(key);
   const router = useRouter();
   const searchParams = useSearchParams();
   // Deep-link target to return to after sign-in (e.g. /farmer?panel=Water). Only
@@ -249,7 +250,7 @@ function LoginPageInner() {
                 style={mode === m
                   ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 }
                   : { color: 'var(--color-muted-strong)', fontSize: 13, border: '1px solid transparent' }}>
-                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}
+                {authLabel(m === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}
               </button>
             ))}
           </div>
@@ -263,8 +264,8 @@ function LoginPageInner() {
                 <Check size={20} style={{ color: 'var(--color-forest-800)' }} />
               </div>
             </div>
-            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent', true)} <strong>{email}</strong>.</p>
-            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox', true)}</p>
+            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>{authLabel('loginResetEmailSent')} <strong>{email}</strong>.</p>
+            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>{authLabel('loginResetCheckInbox')}</p>
             <button type="button" onClick={() => switchMode('signin')}
               className="font-sans text-sm font-semibold"
               style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
@@ -300,7 +301,7 @@ function LoginPageInner() {
             {mode !== 'reset' && (
               <>
                 <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="password">
-                  {authLabel('loginPassword', true)}
+                  {authLabel('loginPassword')}
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
@@ -342,7 +343,7 @@ function LoginPageInner() {
                 <span className="flex items-center justify-center gap-1.5"><Mail size={15} />{t('loginSendResetEmail')}</span>
               ) : (
                 <span className="flex items-center justify-center gap-1.5">
-                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount', true)}<ArrowRight size={15} />
+                  {authLabel(mode === 'signin' ? 'loginSignIn' : 'loginCreateAccount')}<ArrowRight size={15} />
                 </span>
               )}
             </button>
@@ -352,7 +353,7 @@ function LoginPageInner() {
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
                 style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
-                {authLabel('loginForgotPassword', true)}
+                {authLabel('loginForgotPassword')}
               </button>
             )}
 
@@ -386,7 +387,7 @@ function LoginPageInner() {
                 opacity: googleLoading || embedded ? 0.55 : 1,
               }}>
               <GoogleIcon />
-              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle', true)}
+              {googleLoading ? t('loginConnecting') : authLabel('loginContinueWithGoogle')}
             </button>
 
             {/* In-app browsers can't run Google's OAuth screen — steer to a real one */}
@@ -412,7 +413,7 @@ function LoginPageInner() {
 
         {/* Trust footer */}
         <div className="text-center mt-3">
-          <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
+          <p className="font-sans" style={{ fontSize: 12, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
             {t('loginTrustFooter')}
           </p>
         </div>

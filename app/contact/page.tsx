@@ -4,8 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -178,17 +177,16 @@ export default function ContactPage() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
       >
+        {/* nav-07: BackButton already falls back to /home — this lone chevron Link duplicated
+            it, giving the header two back controls side by side. */}
         <MenuButton /><BackButton fallback="/home" />
-        <Link
-          href="/home"
-          style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}
-        >
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
         <BrandLogo />
+        {/* ux-11: the title used to sit after the flex spacer, at the far right edge next to
+            BrandLogo at the opposite end of a near-empty bar. Moved next to the logo, matching
+            every other page's MenuButton · BackButton · BrandLogo · title order. */}
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
         <div style={{ flex: 1 }} />
         <LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
       </header>
 
       {/* Content */}
@@ -246,7 +244,7 @@ export default function ContactPage() {
                   <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     {ui('Replies from your team', 'Izimpendulo eziphuma kwithimba lakho')}
                   </span>
-                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
+                  <span className="font-sans rounded-full" style={{ fontSize: 12, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                     {replies.length}
                   </span>
                 </div>
@@ -268,7 +266,7 @@ export default function ContactPage() {
                             <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                               {r.replied_by_name ?? 'Your mentor'}
                             </span>
-                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                            <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                               {timeAgo(r.replied_at)}
                             </span>
                           </div>
@@ -287,7 +285,7 @@ export default function ContactPage() {
                           <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                             {r.reply_body}
                           </p>
-                          <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
+                          <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
                             {ui('Via', 'Nge-')} {r.recipient_label}
                           </div>
                         </div>
@@ -302,7 +300,7 @@ export default function ContactPage() {
             <div style={{ marginBottom: 24 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 10, color: 'var(--gold-dim)', letterSpacing: '0.12em', marginBottom: 4 }}
+                style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.1em', marginBottom: 4 }}
               >
                 {ui('Get in touch', 'Xhumana nathi')}
               </div>
@@ -369,7 +367,7 @@ export default function ContactPage() {
 
               {/* Recipient selector */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
                   {ui('Send to', 'Thumela ku')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -405,7 +403,7 @@ export default function ContactPage() {
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
                           {label}
                         </div>
-                        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
                       </div>
                       <div style={{
                         width: 16, height: 16, borderRadius: 8, border: `2px solid ${recipient === value ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,
@@ -480,7 +478,9 @@ export default function ContactPage() {
 
               {!isLive && (
                 <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: 'var(--text-muted)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                  {ui('Backend not connected — messages will be logged locally only. Connect Firebase to enable delivery.', 'Isistimu engemuva ayixhunyiwe — imilayezo izogcinwa kuphela ngokwasendaweni. Xhuma i-Firebase ukuze kusebenze ukulethwa.')}
+                  {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
+                      farmer-facing screen — rewritten in plain words below. */}
+                  {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
                 </p>
               )}
 
