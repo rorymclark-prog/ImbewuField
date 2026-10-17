@@ -9,7 +9,7 @@
 .root h3 { font-size:17px; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
 .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:16px; margin:18px 0; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
 .card { background:var(--bg-1); padding:20px; border:1px solid var(--border); border-radius:16px; min-width:0; }
 .stat { font-size:30px; font-weight:700; display:block; margin:8px 0; }
 .muted { color:var(--mel-muted); font-size:13px; }
@@ -34,8 +34,19 @@
 .bar span { display:block; height:100%; background:var(--emerald); }
 .compact { padding:12px 20px; background:var(--bg-1); border-bottom:1px solid var(--border); font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
 .statsGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0; }
-.about { font-size:14px; }
-.about summary { min-height:44px; display:flex; align-items:center; gap:6px; }
+/* ux-22: a bordered row with a chevron, not a bare bold label — the same disclosure affordance
+   every other <details> on these dashboards gives (see .root summary below). */
+.about { font-size:14px; border:1px solid var(--border); border-radius:12px; padding:0 14px; margin:14px 0; background:var(--bg-1); }
+.about summary { min-height:44px; display:flex; align-items:center; gap:6px; list-style:none; }
+.about summary::-webkit-details-marker { display:none; }
+.about summary::after { content:''; flex-shrink:0; width:8px; height:8px; margin-left:auto; border-right:2px solid var(--text-muted); border-bottom:2px solid var(--text-muted); transform:rotate(45deg); transition:transform .15s; }
+.about[open] summary::after { transform:rotate(-135deg); }
+.about p { margin-top:0; padding-bottom:14px; }
+/* MelMetrics' per-question result bars — sdesk-14: this used to be a plain stacked <div>, so
+   each question's bar ran the full 1280px frame on desktop. Reusing .grid puts 2-3 questions
+   side by side at lg+ (see minmax above) and the bar itself stays capped so it reads as a bar,
+   not a stretched rule. */
+.metric .bar { max-width:420px; }
 @media(max-width:650px) {
   .root { padding:12px; padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
   .hero { padding:0; margin-bottom:10px; border-radius:0; background:transparent; color:var(--mel-ink); }
