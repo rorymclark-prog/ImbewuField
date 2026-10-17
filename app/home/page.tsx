@@ -88,7 +88,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
+            <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
             <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{d.biome.name}</div>
           </div>
           <div className="flex items-center gap-1 text-xs font-display" style={{ color: 'var(--color-forest-800)' }}>
@@ -99,7 +99,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
               <div className="font-display font-semibold text-sm" style={{ color: 'var(--color-ink)' }}>{s.value}</div>
-              <div className="font-mono mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 12 }}>{s.label}</div>
+              <div className="mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 12 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -145,7 +145,7 @@ function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedP
     <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
+          <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
           <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{site.name}</div>
         </div>
         {showPicker && (

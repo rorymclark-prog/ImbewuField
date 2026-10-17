@@ -404,7 +404,7 @@ export default function NetworkPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={tr('Farmer, site or district…', 'Umlimi, indawo noma isifunda…')}
                 aria-label={tr('Search the portfolio', 'Sesha ohlelweni')}
-                className="flex-1 font-sans bg-transparent outline-none"
+                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded"
                 style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
               />
               {query && (

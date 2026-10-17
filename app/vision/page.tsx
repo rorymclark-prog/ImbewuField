@@ -289,7 +289,7 @@ export default function VisionPage() {
               className="w-full rounded-2xl transition-all"
               style={{
                 background: 'var(--bg-1)',
-                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
+                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : 'var(--border)'}`,
                 cursor: 'pointer',
                 padding: 0,
                 overflow: 'hidden',

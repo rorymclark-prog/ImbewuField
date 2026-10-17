@@ -37,7 +37,7 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+    <div className="text-xs mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );

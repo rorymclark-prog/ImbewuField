@@ -133,7 +133,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <Link
           href={`/design?lat=${locationData.lat.toFixed(5)}&lon=${locationData.lon.toFixed(5)}${placeName ? `&name=${encodeURIComponent(placeName)}` : ''}`}
           className="block rounded-2xl p-4 transition-all"
-          style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: '#FBF6EC', textDecoration: 'none' }}
+          style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', border: '1px solid rgba(31,77,43,0.5)', color: 'var(--on-forest)', textDecoration: 'none' }}
         >
           <span className="flex items-center gap-2 font-display font-semibold" style={{ fontSize: 15 }}>
             <PencilRuler size={18} /> {t('siteDesignOpenStudio')}
@@ -141,7 +141,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
           <p className="font-display leading-relaxed mt-1.5" style={{ fontSize: 12.5, color: '#F7C97E' }}>
             {t('siteDesignStudioDesc')}
           </p>
-          <span className="inline-flex items-center gap-1 font-sans mt-2" style={{ fontSize: 12, color: '#FBF6EC', opacity: 0.85 }}>
+          <span className="inline-flex items-center gap-1 font-sans mt-2" style={{ fontSize: 12, color: 'var(--on-forest)', opacity: 0.85 }}>
             {t('siteDesignStartDesigning')}
           </span>
         </Link>
@@ -153,7 +153,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         </p>
       )}
 
-      <div className="text-xs font-mono uppercase tracking-wider pt-2" style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
+      <div className="text-xs uppercase tracking-wider pt-2" style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
         {t('siteDesignSketchHeader')}
       </div>
       <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-muted)' }}>
@@ -166,7 +166,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => { e.preventDefault(); processFile(e.dataTransfer.files[0]); }}
         className="rounded-xl p-4 text-center cursor-pointer transition-all"
-        style={{ background: 'var(--bg-2)', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : '#E2D8C4'}` }}
+        style={{ background: 'var(--bg-2)', border: `1px dashed ${preview ? 'rgba(158,92,8,0.5)' : 'var(--border)'}` }}
       >
         <input ref={inputRef} type="file" accept="image/*" className="hidden"
           onChange={(e) => processFile(e.target.files?.[0])} />
@@ -180,7 +180,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
           <div>
             <PenLine size={22} className="mx-auto mb-1.5" style={{ color: 'var(--color-forest-800)' }} />
             <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteDesignDropSketch')}</p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('siteDesignSketchHint')}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{t('siteDesignSketchHint')}</p>
           </div>
         )}
       </div>
@@ -189,7 +189,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       {imageData && (
         <div className="flex gap-2">
           <select value={language} onChange={(e) => setLanguage(e.target.value)}
-            className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none cursor-pointer"
+            className="flex-1 text-xs font-display rounded-lg px-2 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] cursor-pointer"
             style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
             {LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
@@ -213,12 +213,12 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       )}
 
       {photoAnalysis && (
-        <div className="text-xs font-mono px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--text-secondary)' }}>
+        <div className="text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1.5" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--text-secondary)' }}>
           <Check size={13} /> {t('siteDesignPhotoAnalysisNote')}
         </div>
       )}
 
-      {error && <p className="text-xs font-mono" style={{ color: '#C0531E' }}>{error}</p>}
+      {error && <p className="text-xs" style={{ color: '#C0531E' }}>{error}</p>}
 
       {/* Design output */}
       {design && (
