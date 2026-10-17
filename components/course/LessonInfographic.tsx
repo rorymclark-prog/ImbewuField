@@ -19,7 +19,7 @@ import { useLanguage } from '@/lib/i18n-context';
 
 const GREEN = '#1F4D2B';
 const MUTED = '#755942';
-const HAIRLINE = '#E2D8C4';
+const HAIRLINE = 'var(--border)';
 
 interface LessonInfographicProps {
   url: string;
@@ -54,7 +54,7 @@ export default function LessonInfographic({ url, alt, sizeHint }: LessonInfograp
         <ImageIcon size={15} style={{ flexShrink: 0 }} />
         {t('courseDiagramShow')}
         {sizeHint && (
-          <span className="font-mono text-xs font-normal" style={{ color: MUTED }}>
+          <span className="text-xs font-normal" style={{ color: MUTED }}>
             ({sizeHint})
           </span>
         )}
