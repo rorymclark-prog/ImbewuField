@@ -131,3 +131,24 @@ for (const relativePath of CODE_03_OWNED_PATHS) {
     }
   });
 }
+
+// code-07 (wave 13, swarm/w13-farmer-dark): Tailwind palette classes like `text-stone-600` are
+// fixed colours that do not move with the theme, so they go unreadable in dark mode on a themed
+// surface. This track owns components/HarvestReconciliation.tsx, components/IsiZuluDraftSource.tsx
+// and components/DataPanel.tsx — converted to `text-[var(--text-muted)]`. app/records/page.tsx,
+// app/calendar/page.tsx and components/Map.tsx/app/farmer/page.tsx belong to other tracks (full
+// guard for those lives in tests/theme-leftovers.test.ts, not owned by this track).
+const CODE_07_OWNED_PATHS = [
+  'components/HarvestReconciliation.tsx',
+  'components/IsiZuluDraftSource.tsx',
+  'components/DataPanel.tsx',
+];
+const CODE_07_PALETTE_CLASS = /\b(?:text|bg|border)-(?:stone|gray|neutral|zinc|slate|red|white)-?\d*/;
+
+for (const relativePath of CODE_07_OWNED_PATHS) {
+  test(`${relativePath} does not reintroduce a fixed Tailwind palette class on a themed surface (code-07)`, () => {
+    const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');
+    assert.doesNotMatch(src, CODE_07_PALETTE_CLASS,
+      `${relativePath} should use a theme token (e.g. text-[var(--text-muted)]) instead of a fixed Tailwind palette colour`);
+  });
+}

@@ -1145,8 +1145,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {lang === 'zu' ? (
                   <>
                     <span>{limaRead}</span>
-                    <span className="block mt-1 text-xs text-stone-600">{t('siteSummaryZuluDraftNotice')}</span>
-                    <span className="block mt-1 text-xs text-stone-600" lang="en">English source: {limaReadParts.english}</span>
+                    <span className="block mt-1 text-xs text-[var(--text-muted)]">{t('siteSummaryZuluDraftNotice')}</span>
+                    <span className="block mt-1 text-xs text-[var(--text-muted)]" lang="en">English source: {limaReadParts.english}</span>
                   </>
                 ) : limaRead}
               </p>
@@ -1395,7 +1395,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       {improvements.slice(0, 3).map((imp, i) => (
                         <div key={i} className="flex gap-2 text-xs font-display leading-snug" style={{ color: '#3A2E22' }}>
                           <span className="flex-shrink-0 font-bold" style={{ color: 'var(--gold)' }}>{i + 1}.</span>
-                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-stone-600 opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
+                          <span>{lang === 'zu' ? <><span lang="zu">{interpolate(t(`${imp.key}ZuDraft`), imp.values)}</span><span lang="en" className="block text-xs text-[var(--text-muted)] opacity-80">English source: {interpolate(translate('en', imp.key), imp.values)}</span></> : interpolate(imp.source, imp.values)}</span>
                         </div>
                       ))}
                     </div>

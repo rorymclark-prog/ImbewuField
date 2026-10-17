@@ -112,7 +112,7 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
         <p className="text-xs font-sans mt-1 flex items-start gap-1.5" style={{ color: 'var(--gold)' }}>
           <AlertTriangle size={12} style={{ flexShrink: 0, marginTop: 2 }} />
           <span>{lang === 'zu'
-            ? <>“{row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele. <small className="block text-xs text-stone-600">Unreviewed isiZulu draft. English source: “{row.label}” could be several crops — log a fuller name to count it against the right one.</small></>
+            ? <>“{row.label}” kungaba izitshalo eziningana — rekhoda igama eligcwele ukuze kubalwe ngaphansi kwesitshalo esifanele. <small className="block text-xs text-[var(--text-muted)]">Unreviewed isiZulu draft. English source: “{row.label}” could be several crops — log a fuller name to count it against the right one.</small></>
             : <IsiZuluDraftSource lang={lang} template="“{label}” could be several crops — log a fuller name to count it against the right one." vars={{ label: row.label }} zulu="" english={`“${row.label}” could be several crops — log a fuller name to count it against the right one.`} />}</span>
         </p>
       )}

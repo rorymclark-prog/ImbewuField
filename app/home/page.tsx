@@ -137,7 +137,7 @@ function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedP
             </select>
           </div>
         )}
-        <WeatherWidget lat={site.lat} lon={site.lon} compact />
+        <WeatherWidget lat={site.lat} lon={site.lon} compact context="home" />
       </div>
     );
   }
@@ -162,7 +162,7 @@ function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedP
           </select>
         )}
       </div>
-      <WeatherWidget lat={site.lat} lon={site.lon} compact />
+      <WeatherWidget lat={site.lat} lon={site.lon} compact context="home" />
     </div>
   );
 }
