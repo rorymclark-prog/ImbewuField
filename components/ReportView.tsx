@@ -878,7 +878,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         className={`${styles.toolbar} no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3`}
         style={{ background: 'var(--report-panel)', borderBottom: '1px solid var(--report-border)' }}
       >
-        <button onClick={onClose} className="min-h-11 text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
+        <button onClick={onClose} className="min-h-11 text-xs font-sans px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
           {tr('Back', 'Emuva')}
         </button>
@@ -887,7 +887,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--report-ink)' }}>
             {siteName} · {tr('Site report', 'Umbiko wendawo')}
           </div>
-          <div className="text-xs font-mono truncate" style={{ color: 'var(--report-muted)' }}>
+          <div className="text-xs font-sans truncate" style={{ color: 'var(--report-muted)' }}>
             {ecology.label} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
           </div>
         </div>
@@ -1024,7 +1024,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Saved reports — reopen a past report without regenerating */}
           {savedList.length > 0 && (
             <div className="mb-4">
-              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Saved reports')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Saved reports')}</div>
               <div className="flex flex-col gap-1.5">
                 {savedList.map((r) => (
                   <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
@@ -1048,7 +1048,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
           <fieldset disabled={loading}>
           {/* Language */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
@@ -1071,7 +1071,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
 
           {/* Tone */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
           <div className="flex gap-1.5 mb-4">
             {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, optionLabel]) => (
               <button key={val} aria-pressed={tone === val} onClick={() => setTone(val)}
@@ -1085,7 +1085,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
 
           {/* Length */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{tr('Advice depth', 'Ukujula kwezeluleko')}</div>
+          <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{tr('Advice depth', 'Ukujula kwezeluleko')}</div>
           <div className="flex flex-col gap-1.5 mb-4">
             {([
               ['one-pager', 'Brief advice', 'Generate brief advice. Choose At a glance for a 1-page summary PDF.'] as const,
@@ -1113,22 +1113,22 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
 
           <div className="flex items-center justify-between mb-2">
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
+            <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
             <div className="flex gap-1">
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
-                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-green)', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
                 title={tr('Select the sections most useful to a small-scale farmer', 'Khetha izigaba eziwusizo kakhulu kumlimi omncane')}>
                 {tr('Farmer', 'Umlimi')}
               </button>
               <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
-                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}
                 title={tr('Select all sections', 'Khetha zonke izigaba')}>
                 {tr('All', 'Zonke')}
               </button>
               <button onClick={() => setSelected(new Set())}
-                className="min-h-11 text-xs font-mono px-1.5 py-0.5 rounded transition-all"
+                className="min-h-11 text-xs font-sans px-1.5 py-0.5 rounded transition-all"
                 style={{ color: 'var(--report-danger)', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
                 title={tr('Deselect all sections', 'Susa ukukhetha kuzo zonke izigaba')}>
                 {tr('None', 'Azikho')}
@@ -1136,7 +1136,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </div>
           </div>
           {length === 'one-pager' && (
-            <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
+            <div className="text-xs font-sans px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
               {tr('Brief advice = Executive Summary only. Choose At a glance or Field guide for a fixed-page summary PDF.', 'Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.')}
             </div>
           )}
@@ -1167,17 +1167,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {photoAnalysis && (
             <div className="mt-4 p-2.5 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
               <div className="text-xs font-display font-medium mb-0.5" style={{ color: 'var(--report-green)' }}>{label('Photos included')}</div>
-              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
+              <div className="text-xs font-sans" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
             </div>
           )}
 
           {/* Satellite capture status */}
           <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : 'var(--report-border)'}` }}>
-            <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
-              {mapCapture ? tr('✓ Aerial snapshot captured', '✓ Isithombe sasemoyeni sigciniwe') : tr('No aerial snapshot', 'Asikho isithombe sasemoyeni')}
+            <div className="text-xs font-display font-medium mb-0.5 flex items-center gap-1" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
+              {/* code-11: a literal '✓' text glyph — Lucide only. */}
+              {mapCapture && <Check size={12} aria-hidden />}
+              {mapCapture ? tr('Aerial snapshot captured', 'Isithombe sasemoyeni sigciniwe') : tr('No aerial snapshot', 'Asikho isithombe sasemoyeni')}
             </div>
             {!mapCapture && (
-              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+              <div className="text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                 {tr('Close report → zoom into your site on the map → tap Capture → reopen', 'Vala umbiko → sondeza indawo ebalazweni → thepha Capture → uvule umbiko futhi')}
               </div>
             )}
@@ -1189,7 +1191,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             if (!tocItems.length) return null;
             return (
               <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
                   {tr('In this report', 'Kulo mbiko')}
                 </div>
                 <div className="space-y-0.5">
@@ -1276,12 +1278,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
               {/* Coords */}
               {simple ? (
-                <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                   {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E
                 </div>
               ) : (
                 <>
-                  <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                  <div className="mt-3 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                     {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · {tr('Köppen climate class', 'Uhlobo lwesimo sezulu i-Köppen')} {d.climate.koppen} ({koppenDescLabel(d.climate.koppen, d.climate.koppenDesc)}) ·
                     {' '}{rainfallPatternLabel(d.rainfall.pattern)} {tr('rainfall', 'imvula')} · {seasonRangeLabel(d.rainfall.wetSeason)} {tr('wet', 'manzi')} / {seasonRangeLabel(d.rainfall.drySeason)} {tr('dry', 'omile')} ·
                     {' '}{d.climate.meanTemp}°C {tr('mean', 'isilinganiso')} ({d.climate.minTemp}–{d.climate.maxTemp}°C)
@@ -1291,7 +1293,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
                     // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
                     // here reads as a second, conflicting rainfall claim for a non-expert reader.
-                    <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
+                    <div className="mt-1 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                       {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
                       {' '}{tr(
                         `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
@@ -1308,17 +1310,22 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
                   {label('Site Satellite View')}
                 </div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`data:image/jpeg;base64,${mapCapture}`}
-                  alt={tr('Captured satellite view of the site', 'Isithombe sesathelayithi esithathwe sendawo')}
-                  className="w-full rounded-lg"
-                  style={{ border: '1px solid var(--report-border)' }}
-                />
-                <div className="text-xs font-mono mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
+                {/* code-20: no width/height (the capture's pixel size isn't known at this call
+                    site), so an aspect-ratio on the wrapper holds the layout's height before the
+                    image decodes instead of the card collapsing then jumping. */}
+                <div style={{ aspectRatio: '4 / 3', overflow: 'hidden', borderRadius: 8 }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`data:image/jpeg;base64,${mapCapture}`}
+                    alt={tr('Captured satellite view of the site', 'Isithombe sesathelayithi esithathwe sendawo')}
+                    className="w-full h-full rounded-lg"
+                    style={{ border: '1px solid var(--report-border)', objectFit: 'cover' }}
+                  />
+                </div>
+                <div className="text-xs font-sans mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
                   {tr('Maxar satellite imagery', 'Imifanekiso yesathelayithi yakwa-Maxar')} · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
                 </div>
               </div>
@@ -1727,7 +1734,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             margin-top: 32pt !important;
             padding-top: 8pt !important;
             border-top: 1px solid #cccccc !important;
-            font-family: var(--font-mono), monospace !important;
+            font-family: var(--font-sans), sans-serif !important;
             font-size: 8pt !important;
             color: #888888 !important;
             text-align: center !important;

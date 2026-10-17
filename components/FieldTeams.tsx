@@ -35,15 +35,6 @@ const FIELD_PROGRAMMES_ZU: Record<FieldProgramme, string> = {
   'act-sef-food-security': 'Uhlelo lokuvikeleka kokudla',
 };
 
-// ux-22: the hero eyebrow showed lib/field-teams.ts's FIELD_PROGRAMMES label verbatim —
-// 'ACT · SEF food security', two unexplained acronyms with nothing on screen to say what they
-// stand for. The exported field report keeps that original label (see programmeLabel below,
-// which reads straight from FIELD_PROGRAMMES on purpose); only this on-screen eyebrow is
-// spelled out in plain words.
-const FIELD_PROGRAMMES_EYEBROW_EN: Record<FieldProgramme, string> = {
-  general: 'General garden support',
-  'act-sef-food-security': 'Food-security programme',
-};
 
 // Maps FIELD_FOCUS's closed set of keys (lib/field-teams.ts) onto the MENTOR_ENGLISH_PENDING keys
 // that now carry this component's isiZulu drafts for them (lib/locales/zu.ts), replacing the local
@@ -183,9 +174,12 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   // Kept English — this feeds the exported field report (see `sections` below), which stays
   // English throughout regardless of `lang`, same as the rest of that report's own text.
   const programmeLabel=programmeKeys.length?programmeKeys.map(p=>FIELD_PROGRAMMES[p]).join(' / '):'Garden mentoring';
-  // The on-screen counterpart, isiZulu-aware like the hero text it sits beside, and spelled out
-  // rather than FIELD_PROGRAMMES' acronym-heavy label (ux-22).
-  const programmeLabelUi=programmeKeys.length?programmeKeys.map(p=>ui(FIELD_PROGRAMMES_EYEBROW_EN[p],FIELD_PROGRAMMES_ZU[p])).join(' / '):ui('Garden mentoring','Ukwelulekwa kwengadi');
+  // The on-screen counterpart, isiZulu-aware like the hero text it sits beside.
+  // ux-22's English-side fix (spelling out FIELD_PROGRAMMES' acronym-heavy label here) is
+  // NOT done: tests/field-programmes-i18n.test.ts (not owned by this track) pins this exact
+  // line reading FIELD_PROGRAMMES[p] directly, so changing it would break a test outside this
+  // track's files. The isiZulu label above has already dropped the acronym.
+  const programmeLabelUi=programmeKeys.length?programmeKeys.map(p=>ui(FIELD_PROGRAMMES[p],FIELD_PROGRAMMES_ZU[p])).join(' / '):ui('Garden mentoring','Ukwelulekwa kwengadi');
   // staff-13: this used to splice raw 'YYYY-MM-DD' strings into the summary text ('Record scope
   // · 2026-08-15 to 2026-09-05'). formatStaffDate reads each date the way a staff member would
   // say it; the fallback phrases ('First/Latest recorded visit') are unchanged.
