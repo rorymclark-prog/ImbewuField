@@ -199,7 +199,7 @@ const STAGE_LABEL: Record<SiteStage, string> = {
   saved: 'Site saved',
   traced: 'Boundary traced',
   designed: 'Design done',
-  planned: 'Crop plan done',
+  planned: 'Production plan done',
 };
 
 export function stageLabel(stage: SiteStage): string {
