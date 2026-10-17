@@ -42,12 +42,17 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '17 October 2026', sha: '5acf084c', changes: [
-    'Account opens cleanly in tour mode on every phone and laptop, with no flicker.',
-    'The facilitator print sheet fits its page again: the plan and legend sit side by side.',
-    'On the Network map the zoom hint wraps on a phone instead of running off the edge.',
-  ], tour: [{ title: 'Print a facilitator plan',
-    where: 'Facilitator → Print', href: '/facilitator/print',
-    detail: 'The first sheet shows the plan beside its legend; the per-layer sheets follow.',
+    'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',
+    'Farmer pages share one header and leave room for the Lima button; Home fills a laptop.',
+    'isiZulu: today\'s date, crop names in records and prices, and one language note per page.',
+    'Study and Account open without a flicker; shorter notices; Teach the Teachers in isiZulu.',
+    'Staff dashboards: readable dates, plain words, and tables that fit the screen.',
+  ], tour: [{ title: 'Open the Study area',
+    where: 'Menu → Study', href: '/student',
+    detail: 'One header, the language note under it, and the course cards in your language.',
+  }, { title: 'See your records in isiZulu',
+    where: 'Menu → My Records', href: '/records',
+    detail: 'Crop names and the language note now read in isiZulu when that is your language.',
   }] },
   { when: '17 October 2026', sha: '44a7dc08', changes: [
     'Dark mode now covers staff dashboards, Study, Money book, Exchange, Network and maps.',

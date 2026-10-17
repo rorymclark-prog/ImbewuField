@@ -52,6 +52,29 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 17 Oct 2026 — Wave 14: finish what wave 13 started (swarm PRs #1022, #1024–#1027, folded on one branch)
+- **Re-capture first:** the merged wave 13 build (main `5acf084c`) was rendered again on 600 frames; 120 "implemented"
+  rows checked against pixels, three regressions fixed before the swarm started (/account hydration, /facilitator/print
+  desktop overflow, /network isiZulu hint) — `docs/audits/2026-10-17/wave-14-recapture-claude.md`.
+- **Dark leftovers:** Design Studio picker + lite, /partners, /samples/production calendar and its ChatPanel/Screenshot
+  consumers, invoice preview frame, print-preview surround all follow the theme; disabled fills, focus rings on 18
+  `outline-none` inputs, raw sync error no longer shown to the farmer; `tests/theme-token-coverage.test.ts` +205 lines.
+- **Desktop frame:** shared `AppHeader` on 14 farmer pages and /student (Home and /example keep bespoke headers by
+  design), `TabBar hideAtDesktop`, Home's task list fills the desktop right column, staff roles get a staff Home hero,
+  journal filter chips in the desktop sidebar, Lima FAB clearance on example/vision/ExchangeBoard/mentor/student.
+- **Staff copy:** readable dates and sentence-case pills (`formatStaffDate`), plain words on surveys/mentor/ngo,
+  ochre-as-text fixed, Lucide ticks, 50+ `font-mono` removals, MEL result bars in a responsive grid, `/facilitator` →
+  `/mentor`, CohortCharts footnotes behind a details toggle.
+- **isiZulu:** day-first date on Home from new weekday/month tables, one shared `LanguageDraftNote` (farmer, records,
+  login, prices, student), site-report biome/BRU wording and demo feature names, `lib/produce-label.ts` crop names in
+  records/prices/lender card, task board titles in the chosen language. Three new `tests/zu-*` files.
+- **Study:** React #418 root-caused twice (OfflineDownload render-time `window`, SVG `<title>` with two children),
+  disclaimers collapsed to one line + More, Teach the Teachers card via `DesignDraftCopy`, img boxes, Lucide tick,
+  arrows glued with U+00A0; `tests/wave-14-study-history-checks.ts` + `*-before-wave-14.*` fixtures layer on wave 13.
+- **Swarm sessions hit the account's session limit mid-track**; the pushed work was folded as-is and the unreached tasks
+  are listed per track in `docs/audits/2026-10-17/wave-14-integration-claude.md` (166 IDs: 133 implemented, 21 partial,
+  11 blocked or Rory's decision, 1 needs verification). Still deferred: bug-08 sw.js timeout, lang-13.
+
 ### 17 Oct 2026 — Wave 13: visual and UX audit fixes (swarm PRs #1014–#1020, folded on one branch)
 - **Dark theme on screen, not just in source:** staff dashboards (MelDashboard, ngo/funder/mentor/assessments/reports), the
   Study area, Records, Exchange, Network, maps, /updates, journal sheets, the home hero and DataPanel chips follow the
