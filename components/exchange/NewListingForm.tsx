@@ -55,7 +55,7 @@ const labelStyle: React.CSSProperties = {
 
 const fieldStyle: React.CSSProperties = {
   fontSize: 14,
-  background: '#fff',
+  background: 'var(--input-bg)',
   border: `1px solid ${EX.inputBorder}`,
   color: EX.ink,
   outline: 'none',
@@ -218,7 +218,7 @@ export default function NewListingForm({
         <p className="font-sans" style={{ fontSize: 13, color: EX.muted, lineHeight: 1.55, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en="It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later." zu="Sigcinwe kule foni kuphela — akekho omunye ongakwazi ukusibona uze usithumele wena. Yabelana ngaso manje noma usithole ebhodini kamuva." /> : 'It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.'}
         </p>
-        <div className="rounded-xl" style={{ background: 'rgba(226,216,196,0.4)', padding: 12 }}>
+        <div className="rounded-xl" style={{ background: 'var(--bg-2)', padding: 12 }}>
           <div className="font-display font-semibold" style={{ fontSize: 14, color: EX.ink, marginBottom: 4 }}>
             {listing.title}
           </div>
@@ -266,8 +266,8 @@ export default function NewListingForm({
               borderRadius: 10,
               fontSize: 13,
               cursor: 'pointer',
-              background: kind === k ? KIND_COLOR[k] : 'rgba(226,216,196,0.5)',
-              color: kind === k ? '#fff' : EX.muted,
+              background: kind === k ? KIND_COLOR[k] : EX.chip,
+              color: kind === k ? 'var(--on-forest)' : EX.muted,
               border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
             }}
           >
@@ -292,8 +292,8 @@ export default function NewListingForm({
               borderRadius: 100,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: category === c ? EX.green : 'rgba(226,216,196,0.5)',
-              color: category === c ? '#fff' : EX.muted,
+              background: category === c ? EX.green : EX.chip,
+              color: category === c ? 'var(--on-forest)' : EX.muted,
               border: `1px solid ${category === c ? EX.green : EX.border}`,
             }}
           >
@@ -396,9 +396,9 @@ export default function NewListingForm({
               borderRadius: 100,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: priceMode === m ? EX.amber : 'rgba(226,216,196,0.5)',
-              color: priceMode === m ? '#fff' : EX.muted,
-              border: `1px solid ${priceMode === m ? EX.amber : EX.border}`,
+              background: priceMode === m ? 'var(--color-ochre-dark)' : EX.chip,
+              color: priceMode === m ? 'var(--on-forest)' : EX.muted,
+              border: `1px solid ${priceMode === m ? 'var(--color-ochre-dark)' : EX.border}`,
             }}
           >
             {tx(PRICE_MODE_LABEL[m], ZU_PRICE_MODE_LABEL[m])}
@@ -593,7 +593,7 @@ export default function NewListingForm({
 
       <div
         className="flex items-start gap-2 rounded-xl"
-        style={{ background: 'rgba(226,216,196,0.4)', padding: '10px 12px' }}
+        style={{ background: 'var(--bg-2)', padding: '10px 12px' }}
       >
         <Info size={13} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
         <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.5 }}>

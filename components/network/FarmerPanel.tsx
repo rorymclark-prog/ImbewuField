@@ -206,7 +206,7 @@ function SectionLabel({ icon, children, lang }: { icon: React.ReactNode; childre
   return (
     <div
       className="flex items-center gap-1.5 font-sans font-bold uppercase"
-      style={{ color: GOLD, letterSpacing: '0.12em', fontSize: 10.5 }}
+      style={{ color: GOLD, letterSpacing: '0.06em', fontSize: 12 }}
     >
       {icon}
       {panelText(children, lang)}
@@ -285,12 +285,12 @@ function StatBlock({ row, lang = 'en' }: { row: PanelRow; lang?: string }) {
       className="rounded-xl px-2.5 py-2"
       style={{ background: SUNK, border: `1px solid ${BORDER}`, minWidth: 0 }}
     >
-      <div className="font-sans" style={{ color: MUTED, fontSize: 10, marginBottom: 3 }}>
+      <div className="font-sans" style={{ color: MUTED, fontSize: 12, marginBottom: 3 }}>
         {row.label}
       </div>
       <ReadoutValue readout={row.readout} selector={row.selector} tone={tone} lang={lang} />
       {row.readout.state !== 'value' && row.readout.note && (
-        <div className="font-sans" style={{ color: FAINT, fontSize: 9.5, marginTop: 3, lineHeight: 1.3 }}>
+        <div className="font-sans" style={{ color: FAINT, fontSize: 12, marginTop: 3, lineHeight: 1.3 }}>
           {panelText(row.readout.note, lang)}
         </div>
       )}
@@ -348,11 +348,11 @@ function MonthStrip({ series }: { series: LedgerSeries }) {
       {showKg && (
         <>
           <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
-            <span className="font-sans" style={{ fontSize: 10, color: MUTED }}>
+            <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>
               Harvested per month
             </span>
             {/* ← LedgerSeries.maxKg (from ProductionLog.kg bucketed by logged_at) */}
-            <span className="font-sans" style={{ fontSize: 9.5, color: FAINT }}>
+            <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>
               peak {formatKg(series.maxKg)}
             </span>
           </div>
@@ -380,10 +380,10 @@ function MonthStrip({ series }: { series: LedgerSeries }) {
       {showMoney && (
         <>
           <div className="flex items-baseline justify-between" style={{ marginTop: 10, marginBottom: 4 }}>
-            <span className="font-sans" style={{ fontSize: 10, color: MUTED }}>
+            <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>
               Money in / out per month
             </span>
-            <span className="font-sans inline-flex items-center gap-2" style={{ fontSize: 9.5, color: FAINT }}>
+            <span className="font-sans inline-flex items-center gap-2" style={{ fontSize: 12, color: FAINT }}>
               <span style={{ color: FOREST }}>■ in</span>
               <span style={{ color: RUST }}>■ out</span>
             </span>
@@ -421,13 +421,13 @@ function MonthStrip({ series }: { series: LedgerSeries }) {
           <span
             key={m.key}
             className="flex-1 text-center font-sans"
-            style={{ fontSize: 9, color: m.month === 1 ? MUTED : FAINT, fontWeight: m.month === 1 ? 700 : 500 }}
+            style={{ fontSize: 12, color: m.month === 1 ? MUTED : FAINT, fontWeight: m.month === 1 ? 700 : 500 }}
           >
             {m.label.slice(0, 1)}
           </span>
         ))}
       </div>
-      <div className="font-sans" style={{ fontSize: 9.5, color: FAINT, marginTop: 6, lineHeight: 1.35 }}>
+      <div className="font-sans" style={{ fontSize: 12, color: FAINT, marginTop: 6, lineHeight: 1.35 }}>
         {series.months.length} months to {series.months[series.months.length - 1]?.label}{' '}
         {series.months[series.months.length - 1]?.year}. Bars are dated ledger entries only — a
         gap is a month with no entry, not a month of no work.
@@ -442,7 +442,7 @@ function FlagChip({ flag }: { flag: NetworkAttentionFlag }) {
     <span
       className="inline-flex items-center gap-1 font-sans font-semibold"
       style={{
-        fontSize: 11, padding: '3px 9px', borderRadius: 999,
+        fontSize: 12, padding: '3px 9px', borderRadius: 999,
         background: urgent ? 'rgba(192,83,30,0.12)' : 'rgba(158,92,8,0.10)',
         border: `1px solid ${urgent ? 'rgba(192,83,30,0.35)' : 'rgba(158,92,8,0.28)'}`,
         color: urgent ? RUST : OCHRE,
@@ -488,7 +488,7 @@ export function FarmerPanel({
             style={{ background: 'rgba(176,122,30,0.10)', border: '1px solid rgba(176,122,30,0.30)' }}
           >
             <Info size={13} style={{ color: GOLD, flexShrink: 0, marginTop: 2 }} />
-            <span className="font-sans" style={{ fontSize: 10.5, color: OCHRE, lineHeight: 1.4 }}>
+            <span className="font-sans" style={{ fontSize: 12, color: OCHRE, lineHeight: 1.4 }}>
               {demoNotice ?? SAMPLE_DATA_NOTICE}
             </span>
           </div>
@@ -523,7 +523,7 @@ export function FarmerPanel({
             <span
               className="inline-flex items-center gap-1 font-sans font-semibold"
               style={{
-                marginTop: 3, fontSize: 10, padding: '2px 8px', borderRadius: 999,
+                marginTop: 3, fontSize: 12, padding: '2px 8px', borderRadius: 999,
                 background: `${statusColor}1A`, border: `1px solid ${statusColor}55`, color: statusColor,
               }}
             >
@@ -572,13 +572,13 @@ export function FarmerPanel({
           <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 9 }}>
             {/* ← NetworkFarmerMetrics.lastActivityAt / .daysSinceActivity */}
             <div className="flex items-center justify-between gap-2">
-              <span className="font-sans" style={{ fontSize: 10.5, color: MUTED }}>Last entry in any book</span>
+              <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>Last entry in any book</span>
               {m.daysSinceActivity === null ? (
                 <span
                   className="font-sans"
                   data-selector="NetworkFarmerMetrics.daysSinceActivity"
                   data-state="not_recorded"
-                  style={{ fontSize: 11, color: FAINT, fontStyle: 'italic', fontWeight: 600 }}
+                  style={{ fontSize: 12, color: FAINT, fontStyle: 'italic', fontWeight: 600 }}
                 >
                   No dated entries yet
                 </span>
@@ -586,7 +586,7 @@ export function FarmerPanel({
                 <span
                   className="font-sans font-semibold"
                   data-selector="NetworkFarmerMetrics.daysSinceActivity"
-                  style={{ fontSize: 11.5, color: m.daysSinceActivity > 90 ? RUST : BODY }}
+                  style={{ fontSize: 12, color: m.daysSinceActivity > 90 ? RUST : BODY }}
                 >
                   {formatDaysAgo(m.daysSinceActivity)}
                 </span>
@@ -632,7 +632,7 @@ export function FarmerPanel({
                 <div
                   key={`${row.key}-caveat`}
                   className="font-sans"
-                  style={{ fontSize: 9.5, color: FAINT, marginTop: 8, lineHeight: 1.35 }}
+                  style={{ fontSize: 12, color: FAINT, marginTop: 8, lineHeight: 1.35 }}
                 >
                   {row.caveat}
                 </div>
@@ -649,7 +649,7 @@ export function FarmerPanel({
               {m.soldPct !== null && m.producedKg !== null && m.producedKg > 0 && (
                 <div style={{ marginTop: 10 }}>
                   <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
-                    <span className="font-sans" style={{ fontSize: 10, color: MUTED }}>
+                    <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>
                       Sold, as a share of the {formatKg(m.producedKg)} harvested
                     </span>
                     <span
@@ -669,7 +669,7 @@ export function FarmerPanel({
                 Show them as context, never as a performance percentage. */}
             <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 10 }}>
               <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 4 }}>
-                <span className="font-sans" style={{ fontSize: 10, color: MUTED }}>
+                <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>
                   Crop-plan context
                 </span>
                 {m.plannedKg !== null && (
@@ -683,7 +683,7 @@ export function FarmerPanel({
                 )}
               </div>
               {m.coverage.plan && m.plannedKg !== null ? (
-                <div className="font-sans" data-selector="NetworkFarmerMetrics.harvestedVsPlannedPct" data-state="not_comparable" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.4 }}>
+                <div className="font-sans" data-selector="NetworkFarmerMetrics.harvestedVsPlannedPct" data-state="not_comparable" style={{ fontSize: 12, color: FAINT, lineHeight: 1.4 }}>
                   Benchmark for one complete crop-plan cycle. It is not compared with calendar harvest logs because the saved plan has no sowing year or completed-cycle marker.
                 </div>
               ) : (
@@ -693,7 +693,7 @@ export function FarmerPanel({
                   data-state={
                     m.coverage.plan ? 'not_recorded' : m.coverage.siteProgress ? 'not_recorded' : 'not_visible'
                   }
-                  style={{ fontSize: 11, color: FAINT, fontStyle: 'italic', lineHeight: 1.4 }}
+                  style={{ fontSize: 12, color: FAINT, fontStyle: 'italic', lineHeight: 1.4 }}
                 >
                   {m.coverage.plan
                     ? 'A plan is visible, but it has no verified crop-cycle kilogram benchmark. Missing evidence is not a 0 kg target.'
@@ -717,7 +717,7 @@ export function FarmerPanel({
             ) : (
               <div className="flex items-start gap-2">
                 <Minus size={12} style={{ color: FAINT, flexShrink: 0, marginTop: 2 }} />
-                <span className="font-sans" style={{ fontSize: 11, color: MUTED, lineHeight: 1.45 }}>
+                <span className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.45 }}>
                   {series.reason}
                   {!sources && ' No chart is drawn rather than an invented one.'}
                 </span>
@@ -731,7 +731,7 @@ export function FarmerPanel({
           <SectionLabel icon={<ClipboardList size={12} />} lang={lang}>Surveys</SectionLabel>
           <Card accent={survey.state === 'complete' ? FOREST : GOLD}>
             <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 6 }}>
-              <span className="font-sans font-semibold" style={{ fontSize: 11.5, color: BODY }}>
+              <span className="font-sans font-semibold" style={{ fontSize: 12, color: BODY }}>
                 Site survey
               </span>
               {/* ← NetworkFarmerMetrics.surveyFilled / .surveyTotal */}
@@ -753,7 +753,7 @@ export function FarmerPanel({
               <SurveyDots filled={survey.filled} total={survey.total} />
             )}
 
-            <div className="font-sans" style={{ fontSize: 10.5, color: MUTED, marginTop: 8, lineHeight: 1.45 }}>
+            <div className="font-sans" style={{ fontSize: 12, color: MUTED, marginTop: 8, lineHeight: 1.45 }}>
               {survey.note}
             </div>
 
@@ -766,7 +766,7 @@ export function FarmerPanel({
                 }}
               >
                 <AlertTriangle size={11} style={{ color: GOLD, flexShrink: 0 }} />
-                <span className="font-sans" style={{ fontSize: 10.5, color: OCHRE, lineHeight: 1.35 }}>
+                <span className="font-sans" style={{ fontSize: 12, color: OCHRE, lineHeight: 1.35 }}>
                   Treat the {survey.missing} blank {survey.missing === 1 ? 'answer' : 'answers'} as
                   unknown. Do not read them as a low score.
                 </span>
@@ -775,7 +775,7 @@ export function FarmerPanel({
 
             <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 9 }}>
               <div className="flex items-center justify-between gap-2">
-                <span className="font-sans" style={{ fontSize: 10.5, color: MUTED }}>
+                <span className="font-sans" style={{ fontSize: 12, color: MUTED }}>
                   Programme survey rounds
                 </span>
                 {/* ← NetworkFarmerMetrics.surveysAnswered (SurveyResponse rows) */}
@@ -798,7 +798,7 @@ export function FarmerPanel({
             {progress.visible && progress.pct !== null ? (
               <>
                 <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 5 }}>
-                  <span className="font-sans" style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.35 }}>
+                  <span className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.35 }}>
                     {/* the proportion AND what it is a proportion OF */}
                     {progress.headline}
                   </span>
@@ -812,7 +812,7 @@ export function FarmerPanel({
                 </div>
                 <ProportionBar pct={progress.pct} color={BLUE} />
                 {progress.stageText && (
-                  <div className="font-sans" style={{ fontSize: 10.5, color: BODY, marginTop: 7 }}>
+                  <div className="font-sans" style={{ fontSize: 12, color: BODY, marginTop: 7 }}>
                     Furthest stage reached:{' '}
                     <strong data-selector="NetworkFarmerMetrics.stage" style={{ color: INK }}>
                       {progress.stageText}
@@ -838,13 +838,13 @@ export function FarmerPanel({
                         </span>
                         <span
                           className="font-sans flex-1 truncate"
-                          style={{ fontSize: 11, color: step.done ? BODY : MUTED }}
+                          style={{ fontSize: 12, color: step.done ? BODY : MUTED }}
                         >
                           {step.label}
                         </span>
                         <span
                           className="font-sans font-semibold"
-                          style={{ fontSize: 10, color: step.done ? FOREST : FAINT }}
+                          style={{ fontSize: 12, color: step.done ? FOREST : FAINT }}
                         >
                           {step.pct === 0 ? 'not started' : formatPct(step.pct)}
                         </span>
@@ -853,7 +853,7 @@ export function FarmerPanel({
                   </div>
                 )}
 
-                <div className="font-sans" style={{ fontSize: 9.5, color: FAINT, marginTop: 9, lineHeight: 1.35 }}>
+                <div className="font-sans" style={{ fontSize: 12, color: FAINT, marginTop: 9, lineHeight: 1.35 }}>
                   {progress.note}
                 </div>
               </>
@@ -864,7 +864,7 @@ export function FarmerPanel({
                   className="font-sans"
                   data-selector="NetworkFarmerMetrics.progressPct"
                   data-state="not_visible"
-                  style={{ fontSize: 11, color: MUTED, lineHeight: 1.45 }}
+                  style={{ fontSize: 12, color: MUTED, lineHeight: 1.45 }}
                 >
                   {progress.note}
                 </span>
@@ -874,7 +874,7 @@ export function FarmerPanel({
             {/* ← NetworkFarmerMetrics.modulesDone / .modulesTotal / .trainingPct */}
             <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 10 }}>
               <div className="flex items-center justify-between gap-2" style={{ marginBottom: 5 }}>
-                <span className="font-sans inline-flex items-center gap-1.5" style={{ fontSize: 10.5, color: MUTED }}>
+                <span className="font-sans inline-flex items-center gap-1.5" style={{ fontSize: 12, color: MUTED }}>
                   <GraduationCap size={12} /> Course modules completed
                 </span>
                 <ReadoutValue
@@ -888,7 +888,7 @@ export function FarmerPanel({
               {progress.trainingPct !== null ? (
                 <ProportionBar pct={progress.trainingPct} color={GOLD} />
               ) : (
-                <div className="font-sans" style={{ fontSize: 10, color: FAINT, fontStyle: 'italic' }}>
+                <div className="font-sans" style={{ fontSize: 12, color: FAINT, fontStyle: 'italic' }}>
                   Training records are not readable for this farmer, so no proportion is shown.
                 </div>
               )}
@@ -902,10 +902,10 @@ export function FarmerPanel({
           style={{ background: 'rgba(32,25,15,0.04)', border: `1px solid ${BORDER}` }}
         >
           <ShieldAlert size={12} style={{ color: MUTED, flexShrink: 0, marginTop: 2 }} />
-          <span className="font-sans" style={{ fontSize: 9.5, color: MUTED, lineHeight: 1.45 }}>
-            {zu ? 'Zonke izibalo lapha zithathwe ku-' : 'Every figure here is derived by '}<code style={{ fontSize: 9 }}>lib/network.ts</code>{zu ? ' kumarekhodi asevele elayishiwe. ' : ' from already-loaded records; '}
+          <span className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.45 }}>
+            {zu ? 'Zonke izibalo lapha zithathwe ku-' : 'Every figure here is derived by '}<code style={{ fontSize: 12 }}>lib/network.ts</code>{zu ? ' kumarekhodi asevele elayishiwe. ' : ' from already-loaded records; '}
             {zu ? 'Hambisa isikhombi kunani ukuze ubone umthombo walo, noma ufunde isibaluli se-' : 'hover any value for its source, or read its '}
-            <code style={{ fontSize: 9 }}>data-selector</code>{zu ? '. ' : ' attribute. '}
+            <code style={{ fontSize: 12 }}>data-selector</code>{zu ? '. ' : ' attribute. '}
             <strong style={{ color: BODY }}>{zu ? 'Akubonakali' : 'Not visible'}</strong>{zu ? ' kusho ukuthi le akhawunti ayikwazanga ukufunda lelo rekhodi — akusho uziro.' : ' means this account could not read that record — it never means zero.'}
             {zu
               ? ` ${farmer.consent === 'demo' ? 'Amarekhodi okuvakasha awanalo ulwazi oluyimfihlo lomlimi.' : 'Ukubonisa amarekhodi omlimi wangempela kwenye i-akhawunti kudinga ukuhlolwa kwemvume kuseva kanye nemvume yomlimi erekhodiwe.'} Ezinye izincazelo ezinde zisaboniswa ngesiNgisi. Izimpendulo namanothi abhaliwe kusala ngolimi lwazo lokuqala.`
@@ -948,7 +948,7 @@ export function FarmerPanel({
           style={{ top: 6, width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }}
         />
         <div className="min-w-0" style={{ marginTop: 4 }}>
-          <span className="font-sans font-bold uppercase" style={{ fontSize: 10, letterSpacing: '0.12em', color: MUTED }}>
+          <span className="font-sans font-bold uppercase" style={{ fontSize: 12, letterSpacing: '0.06em', color: MUTED }}>
             {zu ? 'Irekhodi lomlimi' : 'Farmer record'}
           </span>
         </div>
@@ -980,7 +980,7 @@ function Fact({ icon, label, value, sub, selector }: {
     <div className="min-w-0">
       <dt
         className="flex items-center gap-1 font-sans"
-        style={{ color: MUTED, fontSize: 9.5, marginBottom: 2 }}
+        style={{ color: MUTED, fontSize: 12, marginBottom: 2 }}
       >
         {icon}
         {label}
@@ -996,7 +996,7 @@ function Fact({ icon, label, value, sub, selector }: {
         {value}
       </dd>
       {sub && (
-        <div className="font-sans truncate" title={sub} style={{ color: FAINT, fontSize: 9.5 }}>
+        <div className="font-sans truncate" title={sub} style={{ color: FAINT, fontSize: 12 }}>
           {sub}
         </div>
       )}

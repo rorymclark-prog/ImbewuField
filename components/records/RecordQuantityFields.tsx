@@ -19,7 +19,7 @@ export default function RecordQuantityFields({ idPrefix, quantity, unit, onQuant
   const { lang } = useLanguage();
   const quantityId = `${idPrefix}-${instanceId}-quantity`;
   const unitId = `${idPrefix}-${instanceId}-unit`;
-  const controlStyle = { minHeight: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
+  const controlStyle = { minHeight: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
   return <div className="grid grid-cols-2 gap-2" data-record-quantity-fields>
     <div>
       <label htmlFor={quantityId} className="block text-xs font-sans font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsFill(lang, label)}</label>

@@ -191,6 +191,7 @@ const DOCUMENT_COPY = {
     buyerPlaceholder: 'Buyer name', item: 'Item', amount: 'Amount', noItems: 'No items yet',
     howToPay: 'How to pay', paid: 'Paid', account: 'Account', branchCode: 'Branch code',
     total: 'Invoice total', totalDue: 'Total due', footer: 'Generated with ImbewuField', page: 'page', continued: 'continued',
+    notesLabel: 'Notes',
   },
   zu: {
     sellerPlaceholder: 'Igama lebhizinisi lakho', invoice: 'I-invoyisi', issued: 'Ikhishwe', due: 'Kufanele ikhokhwe',
@@ -198,6 +199,7 @@ const DOCUMENT_COPY = {
     buyerPlaceholder: 'Igama lomthengi', item: 'Umkhiqizo', amount: 'Inani', noItems: 'Akukho mikhiqizo okwamanje',
     howToPay: 'Indlela yokukhokha', paid: 'Ikhokhiwe', account: 'I-akhawunti', branchCode: 'Ikhodi yegatsha',
     total: 'Isamba se-invoyisi', totalDue: 'Isamba esisafuneka', footer: 'Kwenziwe nge-ImbewuField', page: 'ikhasi', continued: 'iyaqhubeka',
+    notesLabel: 'Amanothi',
   },
 } as const;
 
@@ -272,7 +274,11 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     totalHeading: input.status === 'paid' ? copy.total : copy.totalDue,
     totalLabel: formatInvoiceZar(total),
     bankingLines,
-    notes: input.notes?.trim() ? input.notes.trim() : null,
+    // ux-16: the component that renders this (components/invoice/InvoiceDocument.tsx, not owned
+    // by this track) prints `notes` verbatim with no heading of its own, which is how a note
+    // ended up as an unlabeled orphan line under the bank details. Labelling it here, in the data,
+    // reaches the fix without touching that file.
+    notes: input.notes?.trim() ? `${copy.notesLabel}: ${input.notes.trim()}` : null,
     paidStamp,
     // Only a real image payload counts. A stray non-image string would otherwise
     // render as a broken-image icon on a document a buyer keeps.
