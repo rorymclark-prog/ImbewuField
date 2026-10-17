@@ -103,6 +103,11 @@ export const T_en: Dict = {
   // track's file): the tab still shows homeQuickMyRecords until TabBar.tsx's key is swapped.
   tabRecords: 'Records',
   tabAccount: 'Account',
+  // Bottom-nav-only short forms (ux-08/zu-08/staff-10): the tile and page title keep
+  // homeQuickMyRecords ("My Records") etc. — these three exist only so a tab label never wraps.
+  tabRecords: 'Records',
+  tabDashboard: 'Dashboard',
+  tabStudies: 'Studies',
   toolbarMinButton: 'Find your land',
   toolbarHeader: 'Find your land',
   toolbarHideButton: 'Hide',
@@ -426,7 +431,10 @@ export const T_en: Dict = {
   tabAI: 'Insights',
   tabPlaces: 'Places',
   tabFarm: 'Farm',
-  siteReportOverline: 'Site report',
+  // copy-05: the destination was named five ways across the app ('Site report' in the nav,
+  // 'Saved sites & reports' as the page h1, 'Your Sites'/'Saved Reports' as list headers,
+  // 'Site Analysis Report' on the toolbar). Settled on 'Site reports' everywhere, sentence case.
+  siteReportOverline: 'Site reports',
   // Plain-English names for the farmer-facing biome report (lib/biome.ts's BIOME_I18N_KEYS,
   // shown by components/DataPanel.tsx). BIOMES in lib/biome.ts keeps the same English text as the
   // source other callers (app/api/* prompts) still read; these keys exist so DataPanel can
@@ -1907,8 +1915,8 @@ export const T_en: Dict = {
 
   // Saved sites and reports route controls. Report content is localized by its own language flow.
   reportsViewerLoadError: 'The report viewer could not load. Reconnect and try opening the saved report again.',
-  reportsTitle: 'Saved sites & reports',
-  reportsIntro: 'Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.',
+  reportsTitle: 'Site reports',
+  reportsIntro: 'Choose a site to prepare and generate its site report, or reopen a report you have already saved.',
   reportsFunderNotice: 'Your funder workspace contains the programme reports shared with you.',
   reportsOpenFunderView: 'Open funder view',
   reportsLoading: 'Loading your saved sites…',

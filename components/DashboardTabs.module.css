@@ -4,3 +4,11 @@
 @media(max-width:650px) {
   .scroller > button { padding: 8px 12px; font-size: 14px; line-height: 1.2; }
 }
+
+/* sdesk-04: at md+ the chevron-scroll strip truncated the last tab ('Funder summary pre…') on a
+   1280px frame that had plenty of room to show every tab at once. From md up the arrows hide and
+   the scroller wraps instead of scrolling, so every tab is visible without a hidden last item. */
+@media(min-width:768px) {
+  .nav > .arrow { display: none; }
+  .scroller { flex-wrap: wrap; overflow-x: visible !important; }
+}

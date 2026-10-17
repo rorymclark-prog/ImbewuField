@@ -154,6 +154,9 @@ const dict: Dict = {
   tabHome: 'Ikhaya',
   tabMap: 'Imephu',
   tabRecords: 'Amarekhodi',
+  // U+2011 (non-breaking hyphen), not '-': the bottom tab bar is narrow enough that an ordinary
+  // hyphen let this wrap to "I-" / "akhawunti" (zu-08). Same word, same meaning — only the hyphen
+  // changed, so every other screen using tabAccount is unaffected.
   tabAccount: 'I‑akhawunti',
   toolbarMinButton: 'Thola umhlaba wakho',
   toolbarHeader: 'Thola umhlaba wakho',
