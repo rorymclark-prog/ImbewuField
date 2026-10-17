@@ -37,8 +37,10 @@ test('invoice page no longer fills Share/Print with the failing WhatsApp-green o
 test('invoice header Share/Print use the themed forest fill and the CLAUDE.md ochre-fill value', () => {
   const shareCount = (invoiceSrc.match(/background:\s*valid\s*\?\s*'var\(--color-forest-800\)'/g) ?? []).length;
   const printCount = (invoiceSrc.match(/background:\s*valid\s*\?\s*'#9A6018'/g) ?? []).length;
-  // header pair + the bottom-of-form duplicate pair = 2 each.
-  assert.equal(shareCount, 2, 'expected the Share button fill in both the header and the bottom duplicate');
+  // header pair + the bottom-of-form duplicate pair = 2 each, plus (code-05, w14 dark-leftovers)
+  // the "Save invoice" button below the form, which used to fill with a literal '#1F4D2B' and now
+  // shares the same themed forest-fill token — a third, equally correct match for Share's pattern.
+  assert.equal(shareCount, 3, 'expected the Share button fill in the header, the bottom duplicate, and the Save invoice button');
   assert.equal(printCount, 2, 'expected the Print button fill in both the header and the bottom duplicate');
 });
 

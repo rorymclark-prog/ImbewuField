@@ -370,3 +370,49 @@ test('app/samples/production/page.tsx\'s hero h1 has a space between its two sta
   const src = read('app/samples/production/page.tsx');
   assert.match(src, /<h1>A whole farm\.<br \/>\{' '\}A year of food\.<\/h1>/, 'the <br /> alone leaves no space in the flattened text content — add a literal space alongside it');
 });
+
+// dark-12: components/invoice/InvoiceDocument.tsx is a deliberately un-themed printed artefact
+// (its own header comment explains why — dark-mode text fell to 2.89–3.48:1 on the sheet) and
+// must stay that way; app/invoice/page.tsx frames it instead, so a bare white rectangle in dark
+// mode reads as a deliberate paper preview rather than a broken card.
+test('components/invoice/InvoiceDocument.tsx keeps its printed sheet un-themed on purpose (dark-12 — do not theme this file)', () => {
+  const src = read('components/invoice/InvoiceDocument.tsx');
+  assert.match(src, /background: '#FFFEFA', border: '1px solid #E2D8C4'/, 'the sheet itself must stay literal — see the file\'s own header comment');
+});
+
+test('app/invoice/page.tsx frames the un-themed invoice preview with a themed well instead of theming the sheet (dark-12)', () => {
+  const src = read('app/invoice/page.tsx');
+  assert.match(src, /invoice-preview[^`]*`\}\s*style=\{\{\s*background: 'var\(--bg-2\)'/, 'the preview wrapper should sit on a themed var(--bg-2) well');
+  assert.match(src, /boxShadow: 'var\(--shadow-panel\)'/, 'the preview wrapper should carry a visible shadow so it reads as a deliberate frame');
+});
+
+// code-05: disabled invoice controls and the Save/Share/Print fills used fixed light hex
+// (#DDD5C5/#755942/#5C5040, a stale rgba(226,216,196,…) disabled fill) that stayed light-on-light
+// in dark mode, plus a hardcoded forest/ochre-notice pairing instead of the theme tokens already
+// used right beside them.
+test('app/invoice/page.tsx does not reintroduce the code-05 disabled/fill literals', () => {
+  const src = read('app/invoice/page.tsx');
+  for (const hex of [/#DDD5C5\b/i, /#755942\b/i, /#5C5040\b/i, /#EAF2EB\b/i, /#244E33\b/i, /rgba\(226,216,196/i]) {
+    assert.doesNotMatch(src, hex, `app/invoice/page.tsx should use a theme token instead of ${hex}`);
+  }
+  // #9A6018 (CLAUDE.md's ochre-fill-under-white-text value) and #1F4D2B as var(--color-forest-800)'s
+  // light-mode value are deliberate fixed fills elsewhere in this file and are not banned here.
+});
+
+// code-15: 18 outline-none utility classes had no focus-visible replacement, so the global
+// :where(...):focus-visible ring (zero specificity) lost to the plain outline-none class and
+// keyboard users got no focus indicator on any invoice field.
+test('app/invoice/page.tsx pairs every outline-none with a focus-visible ring (code-15)', () => {
+  const src = read('app/invoice/page.tsx');
+  const bare = src.match(/outline-none(?! focus-visible:ring)/g) ?? [];
+  assert.deepEqual(bare, [], 'every outline-none in this file must be paired with focus-visible:ring-2 focus-visible:ring-[var(--gold)]');
+  const paired = (src.match(/outline-none focus-visible:ring-2 focus-visible:ring-\[var\(--gold\)\]/g) ?? []).length;
+  assert.equal(paired, 18, 'expected all 18 outline-none fields to carry the focus-visible ring');
+});
+
+// copy-16: a failed sales-sync used to splice the raw JS/network error message straight into
+// what the farmer sees ("Failed to fetch Reconnect and try again.").
+test('app/invoice/page.tsx no longer shows a raw error.message to the farmer (copy-16)', () => {
+  const src = read('app/invoice/page.tsx');
+  assert.doesNotMatch(src, /\$\{error\.message\}/, 'a caught error\'s raw message should be console.error\'d, not interpolated into user-facing text');
+});
