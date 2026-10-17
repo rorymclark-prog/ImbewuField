@@ -1,10 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useLanguage, translate } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -23,9 +20,7 @@ export default function TipsPage() {
   const [search, setSearch] = useState('');
   const guides = simple ? TIPS_GUIDES.filter(g => SIMPLE_RELEVANT_PREFIXES.some(p => g.href.startsWith(p))) : TIPS_GUIDES;
   const shown = guides.filter(g => `${g.en.title} ${g.en.text} ${g.zu.title} ${g.zu.text}`.toLowerCase().includes(search.toLowerCase()));
-  return <main className={styles.page}><div className={styles.scroll}><div className={styles.wrap}>
-    {/* ux-11: a plain span, not an h1 — the hero below carries this page's one real heading. */}
-    <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{t('tipsTitle')}</span><SettingsButton/></header>
+  return <main className={styles.page}><AppHeader title={t('tipsTitle')} /><div className={styles.scroll}><div className={styles.wrap}>
     {lang === 'zu' && <p role="note" style={{ margin: '16px 0 0', fontSize: 12 }}><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu draft. Each guide keeps its exact English source below.</span></p>}
     <section className={styles.hero}><div><span className={styles.eyebrow}>{lang === 'zu' ? t('tipsEyebrowZuDraft') : t('tipsEyebrow')}</span><h1>{lang === 'zu' ? t('tipsTitleZuDraft') : t('tipsTitle')}</h1><p>{lang === 'zu' ? t('tipsIntroZuDraft') : t('tipsIntro')}</p><div className={styles.controls}><Link className={styles.primary} href="/tour">{t('navTour')}</Link><Link href="/samples">{lang === 'zu' ? t('tipsChoosePracticeViewZuDraft') : t('tipsChoosePracticeView')}</Link><Link href="/samples/gardens">{lang === 'zu' ? t('tipsBrowseGardensReportsZuDraft') : t('tipsBrowseGardensReports')}</Link></div></div><figure><img src="/demo/harvest.webp" alt="Illustrated garden harvest"/></figure></section>
     <label style={{ display: 'block', margin: '24px 0' }}>{lang === 'zu' ? t('tipsFindLabelZuDraft') : t('tipsFindLabel')}<input type="search" value={search} onChange={e=>setSearch(e.target.value)} placeholder={lang === 'zu' ? t('tipsSearchPlaceholderZuDraft') : t('tipsSearchPlaceholder')} style={{ display:'block', width:'100%', minHeight:48, marginTop:8, padding:12, borderRadius:12, background:'var(--bg-1)', border:'1px solid var(--border)', color:'var(--text-primary)' }}/></label>
@@ -43,6 +38,6 @@ export default function TipsPage() {
         one real video. */}
   </div></div>
   {/* nav-03: without this, /tips was one of the secondary pages that lost the farmer's way home. */}
-  <div className="no-print"><TabBar/></div>
+  <div className="no-print"><TabBar hideAtDesktop/></div>
   </main>;
 }

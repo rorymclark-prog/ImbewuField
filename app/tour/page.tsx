@@ -3,10 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
@@ -44,14 +41,7 @@ export default function TourPage() {
   }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
-  return <main className={styles.page}><div className={styles.scroll}><div className={styles.wrap}>
-    {/* ux-11: this page used to be a floating Back/Tour pill on bare paper with no title bar,
-        unlike /journal, /calendar, /prices etc.'s MenuButton · BackButton · BrandLogo · title
-        bar. BrandLogo + a short title bring it in line without replacing this page's own
-        header styling. */}
-    {/* A plain span, not a second <h1> — the hero below already carries this page's one real
-        heading ("See what ImbewuField can do."). */}
-    <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{ui('Tour', 'Uhambo')}</span><SettingsButton/></header>
+  return <main className={styles.page}><AppHeader title={ui('Tour', 'Uhambo')} /><div className={styles.scroll}><div className={styles.wrap}>
     <section className={styles.hero}>
       <div><span className={styles.eyebrow}>{ui('FARMERS · MENTORS · ORGANISATIONS · FUNDERS', 'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI')}</span>
         <h1>{ui('See what ImbewuField can do.', 'Bona okungenziwa yi-ImbewuField.')}</h1>
@@ -85,6 +75,6 @@ export default function TourPage() {
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>
   </div></div>
   {/* nav-03: without this, /tour was one of the secondary pages that lost the farmer's way home. */}
-  <div className="no-print"><TabBar/></div>
+  <div className="no-print"><TabBar hideAtDesktop/></div>
   </main>;
 }
