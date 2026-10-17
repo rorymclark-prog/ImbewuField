@@ -175,6 +175,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
         color: 'var(--text-primary)',
+        colorScheme: 'light dark',
         ...props.style,
       }}
     />
@@ -577,7 +578,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         )}
         <label className="block text-sm">{recordsUi(lang, 'Growing area for this sale (optional)', 'Indawo yokulima yalokhu kuthengisa (akuphoqelekile)')}
-          <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
+          <select className="dark-input w-full rounded-lg border px-3 py-2 mt-1" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }} value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
             <option value="">{recordsUi(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsUi(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsUi(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option><option value="other">{recordsUi(lang, 'Orchard / other', 'Ingadi yezihlahla zezithelo / okunye')}</option>
           </select>
         </label>
@@ -647,9 +648,9 @@ function OrchardSwitch({ on, onChange, t }: {
       style={{
         fontSize: 12,
         fontWeight: on ? 600 : 400,
-        border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
-        background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
-        color: on ? '#1F4D2B' : '#755942',
+        border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,
+        background: on ? 'color-mix(in srgb, var(--color-forest-800) 10%, transparent)' : 'transparent',
+        color: on ? 'var(--color-forest-800)' : 'var(--text-secondary)',
         cursor: 'pointer',
       }}
     >
@@ -1027,12 +1028,12 @@ function CreditPackCard({
         <>
         <div className="grid grid-cols-3 gap-2 my-3">
           {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key="picked" compact totals={quantityTotals(production)} />]].map(([label, value], index) => (
-            <div key={index} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
+            <div key={index} className="rounded-xl p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }}>
               <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
             <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
@@ -1048,7 +1049,7 @@ function CreditPackCard({
           style={{
             background: loading ? 'rgba(46,107,58,0.06)' : 'rgba(46,107,58,0.14)',
             border: '1px solid rgba(46,107,58,0.32)',
-            color: loading ? '#755942' : '#2E6B3A',
+            color: loading ? 'var(--text-muted)' : 'var(--color-forest-700)',
             cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >

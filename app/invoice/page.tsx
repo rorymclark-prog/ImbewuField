@@ -180,7 +180,7 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
 ];
 
 const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
-const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
+const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -795,7 +795,7 @@ export default function InvoicePage() {
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (

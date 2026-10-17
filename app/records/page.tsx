@@ -814,7 +814,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
         <fieldset disabled={form.loading} className="contents">
         <label className="block text-sm">{recordsText(lang, 'Growing area for this entry (optional)', 'Indawo yokulima yalokhu okufakiwe (uma uthanda)')}
-          <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
+          <select className="dark-input w-full rounded-lg border px-3 py-2 mt-1" style={{ background: 'var(--bg-1)', borderColor: 'var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }} value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
             <option value="">{recordsText(lang, 'Unassigned', 'Ayikabelwanga')}</option><option value="vegetables">{recordsText(lang, 'Vegetable beds', 'Imibhede yemifino')}</option><option value="staples">{recordsText(lang, 'Staple plots', 'Amasimu ezitshalo eziyisisekelo')}</option>{!isIn && <option value="shared">{recordsText(lang, 'Shared by beds and staple plots', 'Kwabiwe phakathi kwemibhede namasimu ezitshalo eziyisisekelo')}</option>}<option value="other">{recordsText(lang, 'Orchard / other', 'Ingadi yezithelo / okunye')}</option>
           </select>
           <span className="block text-xs mt-1">{recordsInstruction(lang, 'Choose only when this sale or cost belongs to that growing area.', 'Khetha kuphela uma lokhu kudayisa noma lezi zindleko kuvela kuleyo ndawo yokulima.')}</span>
