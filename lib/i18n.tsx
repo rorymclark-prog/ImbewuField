@@ -1826,6 +1826,9 @@ export const T_en: Dict = {
   offlineTitle: 'Offline & sync',
   offlineConnected: 'Connected',
   offlineUsingSavedCopies: 'Offline — using this device’s saved copies',
+  // nav-06: the status line used to be just the bold word "Connected"/"Offline…" with no icon
+  // and no full sentence — pending isiZulu/regional review, same as this file's other new keys.
+  offlineConnectedSentence: 'You are online — pages saved for offline use are listed below.',
   offlineEntriesWaiting: '{count} entries waiting to send',
   offlineBeforeLeavingSignal: 'Before you leave signal',
   offlinePrepareDescription: 'Prepare the pages and authorised records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.',

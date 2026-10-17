@@ -1,6 +1,7 @@
 'use client';
 import { useEffect,useState } from 'react';
 import Link from 'next/link';
+import { Wifi,WifiOff } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { useAuth } from '@/lib/auth';
@@ -111,7 +112,15 @@ export default function OfflinePage(){
   return <main style={{height:'100%',overflowY:'auto',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'max(90px, var(--lima-fab-clearance, 0px))'}}>
     <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:18,lineHeight:'20px',margin:0,minWidth:0,flex:1,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{t('offlineTitle')}</h1></header>
     {lang==='zu'&&<p role="note" style={{...card,marginTop:12,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
-    <div role="status"><strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}</div>
+    {/* nav-06: was just the bold word "Connected" with no icon and no sentence, which read like
+        a leftover label rather than a status. */}
+    <div role="status" style={{...card,marginTop:12,display:'flex',alignItems:'flex-start',gap:10}}>
+      {online?<Wifi size={18} style={{color:'var(--color-forest-800)',flexShrink:0,marginTop:2}}/>:<WifiOff size={18} style={{color:'var(--text-muted)',flexShrink:0,marginTop:2}}/>}
+      <div>
+        <strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}
+        {online&&<p style={{margin:'4px 0 0',fontSize:13,color:'var(--text-secondary)'}}>{t('offlineConnectedSentence')}</p>}
+      </div>
+    </div>
     <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p>{source('offlinePrepareDescription')}<button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?actionLabel('offlineWorking'):actionLabel('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{actionLabel('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>{source('offlineLessonDownloads')}{source('offlineOpenToolsOnce')}
       {!simple && <details><summary style={{minHeight:44,cursor:'pointer'}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}</summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}{source(pages[path]?.ready?'offlineStartupFilesSaved':'offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p>{source('offlineReadinessLimit')}</details>}
     </section>
