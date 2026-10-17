@@ -1,6 +1,6 @@
 .page { height: 100dvh; overflow-y: auto; background: var(--bg-0); color: var(--text-primary); }
 .header { padding: 16px max(20px, calc((100% - 1120px) / 2)); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: var(--bg-1); border-bottom: 1px solid var(--border); }
-.main { max-width: 1120px; margin: auto; padding: 28px 20px 100px; }
+.main { max-width: 1120px; margin: auto; padding: 28px 20px var(--lima-fab-clearance, 100px); }
 .page h1, .page h2, .page h3, .page h4 { font-family: var(--font-display), Georgia, serif; color: var(--color-forest-800); }
 .page h1 { font-size: clamp(32px, 4vw, 52px); line-height: 1.12; margin: 12px 0 18px; }
 .page h2 { font-size: 28px; line-height: 1.2; margin: 0 0 14px; }
