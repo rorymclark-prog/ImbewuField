@@ -113,8 +113,10 @@ export default function NgoPage() {
               gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
           {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
               (see the matching comment on app/funder/page.tsx). */}
+          {/* ux-07: ochre as text is 2.54:1 on paper — var(--gold) is a fill colour; the
+              themed text equivalent is var(--gold-dim) (#7A4408 in earth light). */}
           {(!isLive || sample) && view === 'gardens' && (
-            <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
+            <span className="text-xs px-2 py-0.5 rounded-full font-sans hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold-dim)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
           )}
           {!simple && (
             <Link

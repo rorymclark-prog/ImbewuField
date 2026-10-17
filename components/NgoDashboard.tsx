@@ -14,7 +14,7 @@ import { samplePortrait, sampleProducePhoto } from '@/lib/sample-media';
 import reportStyles from './MelDashboard.module.css';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileText, ArrowLeft } from 'lucide-react';
+import { Loader2, MapPin, User, Camera, BookOpen, Check, Circle, Map as MapIcon, FileText, ArrowLeft, Sprout } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
@@ -22,7 +22,6 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
-import { cropByKey } from '@/lib/crop-catalog';
 import { recordWeightKg, recordQuantityLabel, recordQuantityPayload, quantityTotals, decimalQuantitySum, type RecordQuantityRow } from '@/lib/farm-records';
 import { useLanguage } from '@/lib/i18n';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
@@ -45,19 +44,24 @@ interface Garden { id: string; name: string; town: string; lat: number; lon: num
 // real art from lib/crop-art.ts — this list is synthetic seeded demo data, not
 // read from the catalog, so the mapping is by closest match (e.g. "Spinach"
 // here means the same thing the catalog calls "Swiss chard (spinach)").
+// code-11: this used to carry an `e:` emoji per crop as a fallback icon. All 10 keys below have
+// real art in lib/crop-art.ts, so the fallback never actually rendered for these — dropped along
+// with the field. cropForName() (real gardener data) matches this same type and falls back to
+// the Sprout icon below for the rarer catalogue crop with no illustration.
 const CROPS = [
-  { n: 'Spinach', e: '🥬', c: '#3F7A3C', k: 'swiss-chard' }, { n: 'Tomatoes', e: '🍅', c: '#B83C2E', k: 'tomatoes' }, { n: 'Cabbage', e: '🥬', c: '#6BA84F', k: 'cabbage' },
-  { n: 'Carrots', e: '🥕', c: '#C97A2C', k: 'carrots' }, { n: 'Onions', e: '🧅', c: '#C2A05A', k: 'onions' }, { n: 'Maize', e: '🌽', c: '#D9B23A', k: 'maize' },
-  { n: 'Beans', e: '🫘', c: '#7A5230', k: 'dry-beans' }, { n: 'Pumpkin', e: '🎃', c: '#CC7A28', k: 'pumpkin' }, { n: 'Sweet potato', e: '🍠', c: '#A85E3C', k: 'sweet-potato' }, { n: 'Green pepper', e: '🫑', c: '#3F8B3C', k: 'peppers' },
+  { n: 'Spinach', c: '#3F7A3C', k: 'swiss-chard' }, { n: 'Tomatoes', c: '#B83C2E', k: 'tomatoes' }, { n: 'Cabbage', c: '#6BA84F', k: 'cabbage' },
+  { n: 'Carrots', c: '#C97A2C', k: 'carrots' }, { n: 'Onions', c: '#C2A05A', k: 'onions' }, { n: 'Maize', c: '#D9B23A', k: 'maize' },
+  { n: 'Beans', c: '#7A5230', k: 'dry-beans' }, { n: 'Pumpkin', c: '#CC7A28', k: 'pumpkin' }, { n: 'Sweet potato', c: '#A85E3C', k: 'sweet-potato' }, { n: 'Green pepper', c: '#3F8B3C', k: 'peppers' },
 ];
 
-/** Renders a demo crop's real art when lib/crop-art.ts has it, its emoji otherwise. */
+/** Renders a crop's real art when lib/crop-art.ts has it, a plain Lucide sprout otherwise
+ *  (code-11 — no emoji as icons). */
 function CropIcon({ crop, size }: { crop: typeof CROPS[number]; size: number }) {
   const art = getCropArt(crop.k);
   return art ? (
     <img className="produce-art" src={art} alt="" aria-hidden style={{ width: size, height: size, objectFit: 'contain' }} />
   ) : (
-    <span style={{ fontSize: Math.max(32, size), flexShrink: 0 }}>{crop.e}</span>
+    <Sprout aria-hidden size={Math.max(20, Math.round(size * 0.6))} style={{ flexShrink: 0, color: crop.c }} />
   );
 }
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
@@ -127,11 +131,9 @@ const ngoAliasIndex = buildCropAliasIndex();
 
 function cropForName(name: string): typeof CROPS[number] {
   const identity = cropIdentityOf(name, ngoAliasIndex);
-  const catalogued = identity.key ? cropByKey(identity.key) : null;
   const demo = identity.key ? CROPS.find((c) => c.k === identity.key) : undefined;
   return {
     n: identity.label,
-    e: catalogued?.icon ?? '\u{1F33F}',
     c: demo?.c ?? NEUTRAL_PRODUCE_TINT,
     k: identity.key ?? '',
   };
@@ -230,9 +232,9 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
 function Stat({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
     <div className="rounded-xl p-3 flex-1" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
+      <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
       <div className="font-display font-bold text-2xl mt-0.5" style={{ color }}>{value}</div>
-      <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{sub}</div>
+      <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-muted)' }}>{sub}</div>
     </div>
   );
 }
@@ -493,11 +495,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           {/* ── LEVEL 1 — gardens list ── */}
           <div className="p-3">
             <div className="flex items-center justify-between mb-2 px-1">
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+              <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
                 {ui(mode === 'funder' ? 'Funded gardens' : 'Gardens', mode === 'funder' ? 'Izingadi ezixhaswayo' : 'Izingadi')}
               </div>
               {isDemo && (
-                <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: 'var(--gold)', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
+                <span className="text-xs font-sans px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: 'var(--gold)', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
               )}
             </div>
             {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
@@ -531,9 +533,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: STATUS[g.status].color }} />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-display font-medium truncate" style={{ color: 'var(--text-primary)' }}>{g.name}</div>
-                      <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{g.town} · {g.farmers || '—'} {ui('farmers','abalimi')}</div>{g.kind && <div className="text-xs mt-1" style={{ color: 'var(--color-forest-700)' }}>{g.kind} · {numberLabel(Math.round(g.areaM2 ?? 0))} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
+                      <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{g.town} · {g.farmers || '—'} {ui('farmers','abalimi')}</div>{g.kind && <div className="text-xs mt-1" style={{ color: 'var(--color-forest-700)' }}>{g.kind} · {numberLabel(Math.round(g.areaM2 ?? 0))} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
                     </div>
-                    <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--blue)' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
+                    <span className="text-xs font-display tabular-nums flex-shrink-0" style={{ color: 'var(--blue)' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
                   </button></Fragment>
                 ))}
               </div>
@@ -545,7 +547,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
           {!isDemo && <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-            <span className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
+            <span className="text-xs font-sans flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
                 {gardener
                 ? <><MapPin size={12} style={{ color: 'var(--text-muted)' }} /> {isDemo ? gardener.name : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : isDemo
@@ -572,14 +574,14 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             {(Object.keys(STATUS) as Status[]).map((s) => (
               <div key={s} className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: STATUS[s].color }} />
-                <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui(STATUS[s].label, s === 'thriving' ? 'Kuyachuma' : s === 'establishing' ? 'Kuyasungulwa' : 'Kudinga ukwesekwa')}</span>
+                <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui(STATUS[s].label, s === 'thriving' ? 'Kuyachuma' : s === 'establishing' ? 'Kuyasungulwa' : 'Kudinga ukwesekwa')}</span>
               </div>
             ))}
           </div>
           {/* "Select a garden" placeholder — shown only when no garden is selected */}
           {!garden && (
             <div className="absolute inset-0 flex items-end justify-center pb-16 pointer-events-none z-10">
-              <div className="px-4 py-2 rounded-xl text-xs font-mono" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
+              <div className="px-4 py-2 rounded-xl text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
                 {ui('Select a garden from the list to drill in','Khetha ingadi ohlwini ukuze ubone imininingwane yayo')}
               </div>
             </div>
@@ -595,7 +597,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             {gardener && totals ? (
               /* ── LEVEL 3 — gardener profile ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGardener(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {garden.name}</button>
+                <button onClick={() => setGardener(null)} className="text-xs font-sans flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {garden.name}</button>
 
                 {/* Identity */}
                 <div className="flex items-center gap-3">
@@ -609,9 +611,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                         number is not theirs to see. NGO programme staff (who register farmers
                         for grants) keep it; funders get everything else on this card. */}
                     {mode !== 'funder' && (
-                      <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>ID {gardener.idNumber}</div>
+                      <div className="text-xs font-display tabular-nums" style={{ color: 'var(--text-muted)' }}>ID {gardener.idNumber}</div>
                     )}
-                    <div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
+                    <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
                     {lang === 'zu' && <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('', 'Usayizi wesiza oqoshiwe awuqinisekisi indawo ekhiqizayo esebenzayo.')}</p>}
                   </div>
                 </div>
@@ -637,9 +639,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <>
                     {/* Value summary */}
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{totals.producedLabels}</div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{totals.soldLabels}</div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--gold)' }}>R{numberLabel(totals.soldR)}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui('Produced','Kukhiqiziwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{totals.producedLabels}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui('Sold','Kuthengisiwe')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{totals.soldLabels}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{ui('Sales received','Imali etholakele ngokuthengisa')}</div><div className="text-base font-display font-semibold" style={{ color: 'var(--gold)' }}>R{numberLabel(totals.soldR)}</div></div>
                     </div>
                     <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-muted)' }}>
                       {totals.weightCoverageUnknown ? 'Weight not matched to sales: unknown — counts and packages are kept in their own units.' : totals.kept === null
@@ -650,13 +652,13 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {/* Courses */}
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{ui('Courses & training','Izifundo nokuqeqeshwa')}</div>
-                        <span className="text-xs font-mono" style={{ color: 'var(--color-forest-800)' }}>{gardener.trainingPct}%</span>
+                        <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{ui('Courses & training','Izifundo nokuqeqeshwa')}</div>
+                        <span className="text-xs font-sans" style={{ color: 'var(--color-forest-800)' }}>{gardener.trainingPct}%</span>
                       </div>
                       <div className="grid grid-cols-2 gap-1">
                         {gardener.courses.map((c) => (
                           <div key={c.name} className="flex items-center gap-1.5 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}>
-                            <span className="flex-shrink-0" style={{ color: c.done ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{c.done ? <Check size={10} /> : '○'}</span>
+                            <span className="flex-shrink-0 flex items-center" style={{ color: c.done ? 'var(--color-forest-800)' : 'var(--text-muted)' }}>{c.done ? <Check size={10} /> : <Circle size={10} />}</span>
                             <span className="truncate" style={{ color: c.done ? 'var(--text-muted)' : 'var(--text-muted)' }}>{c.name}</span>
                           </div>
                         ))}
@@ -677,7 +679,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Produce photos */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Produce photos','Izithombe zomkhiqizo')}</div>
+                      <div className="text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Produce photos','Izithombe zomkhiqizo')}</div>
                       <div className="flex gap-1.5 flex-wrap">
                         {photoCrops.map(({ crop: c, photoUrl: recordedPhoto }, i) => { const photoUrl = isDemo ? sampleProducePhoto(c.n) : recordedPhoto; return (
                           photoUrl ? (
@@ -686,7 +688,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img data-photo-preview src={photoUrl} alt={isDemo ? `Sample ${c.n} photo` : c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 80, height: 88, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={44} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 80, height: 88, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={44} /><span className="font-sans text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{c.n}</span></div>
                           )
                         ); })}
                       </div>
@@ -695,20 +697,20 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                     {/* Books — production */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
+                      <div className="text-xs font-sans uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — production','Izincwadi — ukukhiqiza')}</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: 'var(--text-muted)' }}>{p.crop.n}</span><span className="font-mono" style={{ color: 'var(--text-muted)' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: 'var(--color-forest-800)' }}>{recordQuantityLabel(p)}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: 'var(--text-muted)' }}>{p.crop.n}</span><span className="font-display tabular-nums" style={{ color: 'var(--text-muted)' }}>{p.date}</span><span className="font-display tabular-nums font-semibold" style={{ color: 'var(--color-forest-800)' }}>{recordQuantityLabel(p)}</span></div>
                         ))}
                       </div>
                     </div>
 
                     {/* Books — sales */}
                     <div>
-                      <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
+                      <div className="text-xs font-sans uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: 'var(--text-muted)' }}><BookOpen size={13} /> {ui('Books — sales','Izincwadi — ukuthengisa')}</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: 'var(--text-muted)' }}>{recordQuantityLabel(p)} → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: 'var(--blue)' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: 'var(--bg-2)' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: 'var(--text-muted)' }}>{recordQuantityLabel(p)} → {p.buyer}</span><span className="font-display tabular-nums font-semibold" style={{ color: 'var(--blue)' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
@@ -718,21 +720,21 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ) : (
               /* ── LEVEL 2 — garden + gardeners ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('All gardens','Zonke izingadi')}</button>
+                <button onClick={() => setGarden(null)} className="text-xs font-sans flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('All gardens','Zonke izingadi')}</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: 'var(--text-primary)' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · ${ui('mentor','umeluleki')} ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}
+                  <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · ${ui('mentor','umeluleki')} ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}
                 </div>
                 {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'var(--bg-2)',color:'var(--color-forest-800)'}}>{ui('Open completed garden report (PDF) →','Vula umbiko ophelele wengadi (PDF) →')}</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
                   {[[ui('Farmers','Abalimi'), garden.farmers || gardeners.length, 'var(--text-primary)'], ['Weighed produce', gardenWeightLabel, 'var(--blue)'], [ui('Training','Ukuqeqeshwa'), garden.training ? `${garden.training}%` : '—', 'var(--gold)']].map(([l, v, c]) => (
-                    <div key={l as string} className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
+                    <div key={l as string} className="p-2 rounded-lg" style={{ background: 'var(--bg-3)', border: '1px solid var(--border)' }}><div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>
                   ))}
                 </div>
                 {gardenCountLabels && <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Other recorded quantities: {gardenCountLabels}. Their weight is not recorded.</p>}
                 <div>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
+                  <div className="text-xs font-sans uppercase tracking-wider mb-1.5" style={{ color: 'var(--text-muted)' }}>{ui('Gardeners — tap for full record','Abalimi — thepha ukuze ubone irekhodi eligcwele')}</div>
                   {gardenersLoading ? (
                     <div className="space-y-1" aria-label={ui('Loading gardeners','Kulayishwa abalimi')}>
                       <p className="text-xs" style={{color:'var(--text-muted)'}}>{ui('Loading gardeners…','Kulayishwa abalimi…')}</p><SkeletonRow /><SkeletonRow /><SkeletonRow />
@@ -746,8 +748,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                         return (
                           <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
                             <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', color: 'var(--color-forest-800)', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img data-photo-preview src={samplePortrait(gr.name)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
-                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: 'var(--text-primary)' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
-                            <span className="text-xs font-mono flex-shrink-0 max-w-[40%] text-right break-words" style={{ color: 'var(--color-forest-800)' }}>{prodLabel}</span>
+                            <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: 'var(--text-primary)' }}>{gr.name}</div><div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
+                            <span className="text-xs font-display tabular-nums flex-shrink-0 max-w-[40%] text-right break-words" style={{ color: 'var(--color-forest-800)' }}>{prodLabel}</span>
                           </button>
                         );
                       })}
@@ -755,7 +757,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   )}
                 </div>
                 <div className="rounded-lg p-2.5" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-                  <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>{ui('Funder report','Umbiko womxhasi')}</div>
+                  <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>{ui('Funder report','Umbiko womxhasi')}</div>
                   <p className="text-xs font-display leading-relaxed" style={{ color: 'var(--text-muted)' }}>{ui('Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.','Sebenzisa Imibiko ukuze ubone iphothifoliyo eyabiwe. Imvume yomlimi, ukwabelana kwenhlangano nemvume yomxhasi kunquma ukuthi yimaphi amarekhodi afakiwe; imininingwane eyimfihlo ehlonza umuntu ayifakwa.')}</p>
                 </div>
               </div>

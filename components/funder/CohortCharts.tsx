@@ -391,12 +391,16 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           {/* Named for the population it is actually made of. A kept figure worked out across four
               farms, sitting unlabelled beside a picked figure covering six, invites the reader to
               subtract two numbers that were never about the same people. */}
+          {/* ux-07: this value used to read in KEPT (#C4A46A), the same tan used for the bar
+              fill — about 2.1:1 on a white card, the hardest number on the screen to read next
+              to figures of identical weight in INK/SOLD. KEPT stays the bar's fill colour; the
+              figure's own text goes back to INK like the other totals beside it. */}
           <Figure
             label={paired || series.comparableFarmers === 0
               ? 'Harvest not matched to sales'
               : `Unmatched, on ${series.comparableFarmers} farms`}
             value={series.totalKeptKg === null ? 'Not comparable' : kgTotalLabel(series.totalKeptKg)}
-            tone={series.totalKeptKg === null ? FAINT : KEPT}
+            tone={series.totalKeptKg === null ? FAINT : INK}
           />
           <Figure
             label="Farmer income"

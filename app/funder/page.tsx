@@ -116,7 +116,7 @@ export default function FunderPage() {
               a configured backend with no signed-in caller is still sample data. Two badges saying
               it at once, from two different tests, is how they end up disagreeing. */}
           {(!isLive || sample) && view === 'gardens' && (
-            <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
+            <span className="text-xs px-2 py-0.5 rounded-full font-sans hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: 'var(--blue)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
           )}
           <Link
             href="/network"
