@@ -154,6 +154,10 @@ const dict: Dict = {
   tabHome: 'Ikhaya',
   tabMap: 'Imephu',
   tabRecords: 'Amarekhodi',
+  // Bottom-nav short forms, same words the app already uses (homeDashboards → 'Amashibhodi',
+  // studentLessonsLabel → 'Izifundo') so the staff and student tabs are not left in English.
+  tabDashboard: 'Ishibhodi',
+  tabStudies: 'Izifundo',
   // U+2011 (non-breaking hyphen), not '-': the bottom tab bar is narrow enough that an ordinary
   // hyphen let this wrap to "I-" / "akhawunti" (zu-08). Same word, same meaning — only the hyphen
   // changed, so every other screen using tabAccount is unaffected.

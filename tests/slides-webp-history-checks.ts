@@ -4,6 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ensureWave13ThemeCurrent, wave13ThemeSourceBefore } from './wave-13-theme-history-checks.ts';
 
 // perf-03/perf-05 (14 Oct 2026): English and isiZulu lesson slides moved from JPEG
 // to WebP and two Studies thumbnails were added. This is a media-format layer only:
@@ -63,6 +64,9 @@ export function ensureSlidesWebpCurrent(): void {
   }).join('|');
   if (signature === lastSuccessfulSignature) return;
   assert.equal(sha(read(folder + 'webp-layer-proof.json')), sha(proofBytes), 'proof may not change after initialization');
+  // The newer wave 13 theme layer sits on this one: its owned sources are checked and
+  // projected to their exact WebP-layer successor before this layer's byte-exact pins run.
+  ensureWave13ThemeCurrent();
   for (const row of retired.values()) {
     assert.equal(existsSync(resolve(root, row.path)), false, row.path + ': retired JPEG no longer ships');
     const live = read(row.successor.path);
@@ -76,7 +80,7 @@ export function ensureSlidesWebpCurrent(): void {
     assert.equal(sha(live), row.sha256, row.path + ': exact added WebP digest');
   }
   for (const [file, row] of Object.entries(proof.files) as [string, any][]) {
-    const live = read(file);
+    const live = wave13ThemeSourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live successor, including every unlisted byte');
   }
@@ -119,6 +123,7 @@ export function slidesWebpSourceBefore<T extends string | Uint8Array>(file: stri
   const row = proof.files[file];
   if (!row) return supplied;
   ensureOutsideScope();
+  supplied = wave13ThemeSourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

@@ -60,6 +60,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 13 visual and UX close-out: all 160 findings dispositioned — 17 October 2026](2026-10-16/wave-13-integration-claude.md).
+
 - [Rendered visual and UX audit: 160 findings across every route, theme and viewport — 16 October 2026](2026-10-16/visual-ux-audit-claude.md).
 
 - [Study offline five-wording close-out — 13 October 2026](2026-10-13/study-offline-five-holds-codex.md).

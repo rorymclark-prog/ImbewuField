@@ -718,7 +718,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             ) : (
               /* ── LEVEL 2 — garden + gardeners ── */
               <div className="p-4 space-y-3">
-                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('all gardens','zonke izingadi')}</button>
+                <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: 'var(--text-muted)' }}><ArrowLeft size={14} /> {ui('All gardens','Zonke izingadi')}</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: 'var(--text-primary)' }}>{garden.name}</span></div>
                   <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{garden.town}{garden.facilitator ? ` · ${ui('mentor','umeluleki')} ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: 'var(--color-forest-700)' }}>{garden.kind} · {numberLabel(Math.round(garden.areaM2 ?? 0))} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: 'var(--color-forest-700)' }}>Group language: {garden.language}</p>}

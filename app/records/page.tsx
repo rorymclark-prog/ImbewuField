@@ -1127,7 +1127,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               title={recordsText(lang, 'Open a fully-worked demo farm. Your own books are not touched.', 'Vula ipulazi lesibonelo elinerekhodi eligcwele. Amarekhodi akho awathintwa.')}
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
               style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: 'var(--record-negative)', fontSize: 14, cursor: 'pointer' }}>
-              <Sparkles size={15} />{recordsText(lang, 'Try the money book', 'Zama incwadi yemali')}
+              <Sparkles size={15} />{recordsText(lang, 'Try My Records', 'Zama Amarekhodi Ami')}
             </button>
           )}
           <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
