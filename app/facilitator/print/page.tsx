@@ -716,7 +716,10 @@ export default function FacilitatorPrintPage() {
           .sheetScaler { zoom: 1 !important; }
         }
         @media screen {
-          body { background: #EDE7DB; }
+          /* dark-14: this was a literal cream hex, so the surround behind the sheet stayed a
+             bright page even in dark mode — a 5000px cream band under the A4 preview reads as a
+             failed render, not a deliberate print-preview surface. */
+          body { background: var(--bg-0); }
         }
       `}</style>
 
@@ -797,6 +800,13 @@ export default function FacilitatorPrintPage() {
           )}
         </div>
       </div>
+
+      {/* dark-14: the sheet below stays deliberate print-white in every theme — see SHEET_STYLE
+          and the surrounding body background fix above — but needs a caption so a bright A4 page
+          on a now-themed surround reads as a chosen print preview, not a failed render. */}
+      <p className="no-print" style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 0' }}>
+        Print preview
+      </p>
 
       {fullOn && (
         <SheetScaler>

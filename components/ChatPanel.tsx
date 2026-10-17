@@ -242,14 +242,14 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
 .lima-shimmer {
   display: inline-block;
   font-weight: 600;
-  background: linear-gradient(90deg, var(--text-3) 25%, var(--brand-light) 50%, var(--text-3) 75%);
+  background: linear-gradient(90deg, var(--text-muted) 25%, var(--brand-light) 50%, var(--text-muted) 75%);
   background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
   animation: limaShimmer 1.6s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lima-shimmer { animation: none; color: var(--text-3); -webkit-text-fill-color: var(--text-3); }
+  .lima-shimmer { animation: none; color: var(--text-muted); -webkit-text-fill-color: var(--text-muted); }
 }`,
         }}
       />
