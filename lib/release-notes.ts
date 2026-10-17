@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '17 October 2026', sha: '5acf084c', changes: [
+    'Account opens cleanly in tour mode on every phone and laptop, with no flicker.',
+    'The facilitator print sheet fits its page again: the plan and legend sit side by side.',
+    'On the Network map the zoom hint wraps on a phone instead of running off the edge.',
+  ], tour: [{ title: 'Print a facilitator plan',
+    where: 'Facilitator → Print', href: '/facilitator/print',
+    detail: 'The first sheet shows the plan beside its legend; the per-layer sheets follow.',
+  }] },
   { when: '17 October 2026', sha: '44a7dc08', changes: [
     'Dark mode now covers staff dashboards, Study, Money book, Exchange, Network and maps.',
     'On a laptop the pages share one header with your role\'s tabs and use the full width.',
