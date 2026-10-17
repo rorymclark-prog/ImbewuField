@@ -198,7 +198,7 @@ export default function AtlasExplorer() {
                 onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
                 placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : 'Search anywhere on Earth…'}
                 aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : 'Search anywhere on Earth…'}
-                className="flex-1 font-sans bg-transparent outline-none"
+                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                 style={{ minWidth: 0, fontSize: 13.5, color: 'var(--text-primary)', border: 'none' }}
               />
               {query && (

@@ -391,7 +391,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         }}
       >
         <span
-          className="font-mono"
+          className="font-sans"
           style={{
             fontSize: 12,
             fontWeight: 600,

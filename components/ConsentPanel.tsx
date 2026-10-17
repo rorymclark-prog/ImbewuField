@@ -73,7 +73,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
     <div className="rounded-2xl px-4 py-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="flex items-center gap-2">
         <ShieldCheck size={16} style={{ color: 'var(--text-secondary)' }} />
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+        <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
           <span>{CONSENT_PANEL_HEADING.label}</span>
           {isZulu && <span className="block">{CONSENT_PANEL_HEADING.labelZuDraft} <span className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>(isiZulu machine draft)</span></span>}
         </div>

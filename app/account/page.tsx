@@ -52,7 +52,7 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
     <div className="flex items-center gap-3 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
       <Icon size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
       <div className="flex-1 min-w-0">
-        <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
+        <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
         <div className="text-sm font-display mt-0.5" style={{ color: 'var(--text-primary)' }}>{value}</div>
       </div>
     </div>
@@ -374,10 +374,10 @@ export default function AccountPage() {
           {/* Edit form */}
           {editing ? (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-              <div className="text-xs font-mono uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Edit profile', 'Hlela iphrofayela')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Edit profile', 'Hlela iphrofayela')}</div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Full name', 'Amagama aphelele')}</div>
+                <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Full name', 'Amagama aphelele')}</div>
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
                   className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
@@ -385,7 +385,7 @@ export default function AccountPage() {
               </label>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Phone', 'Ucingo')}</div>
+                <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Phone', 'Ucingo')}</div>
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
@@ -398,7 +398,7 @@ export default function AccountPage() {
                   then leads with the personal name, which is what a farmer trading under
                   their own name wants. Nothing is ever substituted for an unset value. */}
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
+                <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
                   className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
@@ -412,7 +412,7 @@ export default function AccountPage() {
                   waiting for Save — the picture is already visible by then, so a logo that
                   vanished on Cancel would read as a failed upload. */}
               <div className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
+                <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business logo', 'Uphawu lwebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(shown on invoices)', '(luvela kuma-invoice)')}</span></div>
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
                     style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid var(--border)' }}>
@@ -445,7 +445,7 @@ export default function AccountPage() {
               </div>
 
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
+                <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
@@ -520,7 +520,7 @@ export default function AccountPage() {
             </button>
           ) : (
             <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-              <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
+              <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
 
               {pwSuccess ? (
                 <div className="flex items-center gap-2 py-2 text-sm font-display" style={{ color: 'var(--color-forest-800)' }}>
@@ -586,7 +586,7 @@ export default function AccountPage() {
             {signingOut ? copy('Signing out...', 'Kuyaphuma...') : copy('Sign out', 'Phuma')}
           </button>
 
-          <p className="text-center text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
             {copy('ImbewuField · growing with you', 'ImbewuField · ikhula nawe')}
           </p>
           </section>

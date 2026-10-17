@@ -878,7 +878,7 @@ function HomeInner() {
                 className="rounded-full"
                 style={{ width: 40, height: 4, background: 'var(--border)', opacity: 0.7 }}
               />
-              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
+              <span className="text-xs font-sans" style={{ color: 'var(--text-muted)', opacity: 0.6, letterSpacing: '0.05em' }}>
                 {t('tapToClose')}
               </span>
             </button>

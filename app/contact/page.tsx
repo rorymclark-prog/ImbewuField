@@ -244,7 +244,7 @@ export default function ContactPage() {
                   <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     {ui('Replies from your team', 'Izimpendulo eziphuma kwithimba lakho')}
                   </span>
-                  <span className="font-mono rounded-full" style={{ fontSize: 12, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
+                  <span className="font-sans rounded-full" style={{ fontSize: 12, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                     {replies.length}
                   </span>
                 </div>

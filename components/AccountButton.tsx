@@ -42,7 +42,7 @@ export default function AccountButton() {
         </span>
         <button
           onClick={signOutUser}
-          className="font-mono transition-opacity hover:opacity-80"
+          className="font-sans transition-opacity hover:opacity-80"
           style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
           aria-label={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
           title={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}

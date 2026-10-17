@@ -532,8 +532,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 10,
-              letterSpacing: '0.12em',
+              fontSize: 11,
+              letterSpacing: '0.1em',
               color: INK_MUTED,
             }}
           >
@@ -543,7 +543,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
 
           {legendOpen && (
             <div id="network-map-legend" className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '8px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '8px 0 5px' }}>
                 {copy.colourStatus}
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
@@ -564,7 +564,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 </div>
               ))}
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.sizeArea}
               </div>
               <div className="flex items-center gap-2">
@@ -579,7 +579,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 </span>
               </div>
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 {copy.ringAttention}
               </div>
               <div className="flex items-center gap-2">
@@ -600,7 +600,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
 
               <p
                 className="font-sans"
-                style={{ fontSize: 10, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
+                style={{ fontSize: 11, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
               >
                 {copy.pinExplanation}
               </p>
@@ -639,7 +639,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             />
             <span
               className="font-sans font-bold uppercase"
-              style={{ fontSize: 10.5, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
+              style={{ fontSize: 11, letterSpacing: '0.1em', color: INK_MUTED, marginTop: 6 }}
             >
               {copy.farmer}
             </span>

@@ -2437,7 +2437,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <div style={{
                 background: 'rgba(20,20,20,0.78)', color: 'white',
-                fontSize: 9.5, fontFamily: 'var(--font-mono)', fontWeight: 600,
+                fontSize: 9.5, fontFamily: 'var(--font-sans)', fontWeight: 600,
                 padding: '1px 5px', borderRadius: 4, whiteSpace: 'nowrap', maxWidth: 72,
                 overflow: 'hidden', textOverflow: 'ellipsis',
               }}>{p.name}</div>
@@ -3009,7 +3009,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             onFocus={() => { if (!searchQuery.trim() && recents.length) setShowRecents(true); }}
             onBlur={() => setTimeout(() => { setSuggestions([]); setShowRecents(false); }, 150)}
             placeholder={t('searchPlaceholder')}
-            className="map-search-input flex-1 font-sans outline-none min-w-0"
+            className="map-search-input flex-1 font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] min-w-0"
             style={{ background: 'transparent', border: 'none', color: '#e8f0e6', fontSize: 15 }}
           />
           <button
@@ -3044,7 +3044,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         {showRecents && suggestions.length === 0 && recents.length > 0 && (
           <div className="absolute left-0 right-0 rounded-lg overflow-hidden z-50"
             style={{ top: 'calc(100% + 4px)', background: 'rgba(6,16,10,0.97)', border: '1px solid rgba(58,104,48,0.6)', boxShadow: '0 8px 28px rgba(0,0,0,0.55)' }}>
-            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-mono)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
+            <div style={{ padding: '8px 12px', fontSize: 12, color: 'rgba(232,240,230,0.55)', fontFamily: 'var(--font-sans)', textTransform: 'uppercase', letterSpacing: '0.06em', borderBottom: '1px solid rgba(58,104,48,0.25)' }}>{t('recentSearchesHeader')}</div>
             {recents.map((r, i) => (
               <button key={i}
                 onMouseDown={(e) => { e.preventDefault(); selectSuggestion(r); }}
@@ -3058,8 +3058,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           </div>
         )}
         </div>
-        {searchError && <p className="text-xs font-mono" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
-        {searchResult && <p className="text-xs font-mono truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
+        {searchError && <p className="text-xs font-sans" style={{ color: 'var(--orange)', marginTop: -4 }}>{searchError}</p>}
+        {searchResult && <p className="text-xs font-sans truncate" style={{ color: 'var(--teal)', marginTop: -4 }}>↳ {searchResult}</p>}
 
         {/* Layers expander — keeps the rarely-changed map-view toggles tucked away
             so the toolbar isn't a wall of tiny buttons on a phone. */}
@@ -3142,7 +3142,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
         {/* Heads-up: 3D tilts the map and can stop you zooming in close enough to draw */}
         {!simple && layersOpen && show3dWarning && (
-          <div className="rounded-lg font-mono"
+          <div className="rounded-lg font-sans"
             style={{ background: 'rgba(212,168,83,0.14)', border: '1px solid rgba(212,168,83,0.45)',
               color: 'var(--gold)', fontSize: TOUCH_FS - 2, padding: '8px 12px', lineHeight: 1.45 }}>
             <AlertTriangle size={13} className="inline mr-1" /> {t('threeDWarning')}
@@ -4084,7 +4084,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={placeName} onChange={(e) => setPlaceName(e.target.value)} autoFocus
                 placeholder={t('savePlaceNamePlaceholder')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
                 style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('savePlaceLabelHeader')}</div>
               <div className="grid grid-cols-4 gap-2 mb-3">
@@ -4148,7 +4148,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={shapeName} onChange={(e) => setShapeName(e.target.value)} autoFocus
                 placeholder={t(shapeNaming.type === 'water' ? 'shapeNamingPlaceholderWater' : 'shapeNamingPlaceholderLand')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
                 style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('shapeNamingCategoryHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -4213,7 +4213,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={wpName} onChange={(e) => setWpName(e.target.value)} autoFocus
                 placeholder={t('waterPointNamingPlaceholder')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
                 style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{t('waterPointNamingTypeHeader')}</div>
               <div className="flex flex-wrap gap-2 mb-4">
@@ -4272,7 +4272,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               <input value={elName} onChange={(e) => setElName(e.target.value)} autoFocus
                 placeholder={t('elementEditingNamePlaceholder').replace('{label}', getElementMeta(elementEditing.type).label)}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-3"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-3"
                 style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
 
               {elementEditing.type === 'jojo_tank' && (
@@ -4295,7 +4295,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                     <input type="number" min={0} step={100} value={elLitres ?? ''}
                       onChange={(e) => setElLitres(Math.max(0, parseInt(e.target.value, 10) || 0))}
                       placeholder={t('elementEditingLitresPlaceholder')} autoFocus
-                      className="w-full font-sans rounded-xl px-3 py-2 outline-none"
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                       style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                 </div>
@@ -4320,7 +4320,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {elTreeCustomOpen && (
                     <input type="text" value={elSpecies} onChange={(e) => setElSpecies(e.target.value)}
                       placeholder={t('elementEditingSpeciesPlaceholder')} autoFocus
-                      className="w-full font-sans rounded-xl px-3 py-2 outline-none mb-1.5"
+                      className="w-full font-sans rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-1.5"
                       style={{ fontSize: 14, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
                   )}
                   <div className="flex items-center justify-between px-0.5">
@@ -4350,7 +4350,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
               <input value={elNote} onChange={(e) => setElNote(e.target.value)}
                 placeholder={t('elementEditingNotePlaceholder')}
-                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none mb-4"
+                className="w-full font-sans rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] mb-4"
                 style={{ fontSize: 15, background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)' }} />
               <div className="flex gap-2">
                 <button onClick={() => requestDeleteElement(elementEditing.id)}
