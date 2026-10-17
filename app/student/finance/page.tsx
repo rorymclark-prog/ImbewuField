@@ -24,7 +24,7 @@ export default function FarmFinancePage() {
           <p><strong>8 units · 24 lessons</strong> · Take this course on its own, or alongside permaculture.</p>
           <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/f1-1">Start with farm and household money →</OfflinePageLink><a href="#syllabus">See every lesson</a></div>
         </div>
-        <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" />
+        <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" width={1672} height={941} />
       </section>
       <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> Content review, learner trials and final assessment remain in preparation.</p><details><summary>More</summary><p>English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></details><FinanceZuCourseNotice /></aside>
       <FinanceReadingChecklist lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
