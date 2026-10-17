@@ -109,3 +109,26 @@ test('app/global-error.tsx is left untouched — it renders outside the normal l
   assert.match(src, /#F7F2E9/, 'app/global-error.tsx does not load app/globals.css, so it keeps the literal hex');
   assert.doesNotMatch(src, /globals\.css/, 'confirms this file never imports the stylesheet --on-forest lives in');
 });
+
+// code-03 (wave 13, swarm/w13-farmer-dark): page roots, sticky headers and dividers used literal
+// paper/hairline/ink hex instead of theme tokens, so in dark mode these pages kept a cream header
+// bar or light page body under a dark tab bar. This track owns app/atlas/page.tsx,
+// app/updates/page.tsx and app/journal/page.tsx (vision/invoice/account belong to other tracks —
+// not covered here).
+const CODE_03_STALE_HEXES = [/#E4DCC6/i, /#E2D8C4/i, /#FFFEFA/i, /#20190F/i, /#5C5040/i, /#755942/i, /#1F4D2B/i];
+// app/atlas/page.tsx and app/journal/page.tsx join this list in a later commit on this branch,
+// once their own literal hexes are converted (task 3) — listing them here before that lands
+// would make this test fail against the still-unconverted file.
+const CODE_03_OWNED_PATHS = [
+  'app/updates/page.tsx',
+];
+
+for (const relativePath of CODE_03_OWNED_PATHS) {
+  test(`${relativePath} does not paint its page root/header/dividers with literal paper/ink hex (code-03)`, () => {
+    const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');
+    for (const hex of CODE_03_STALE_HEXES) {
+      assert.doesNotMatch(src, hex,
+        `${relativePath} should use a theme token (var(--bg-0)/var(--border)/var(--text-primary)/var(--color-forest-800) etc) instead of ${hex} so it follows dark mode`);
+    }
+  });
+}

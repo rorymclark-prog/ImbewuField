@@ -268,8 +268,8 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
         minHeight: 92,
         padding: '16px 18px',
         textDecoration: 'none',
-        background: 'linear-gradient(135deg, rgba(192,122,30,0.14), rgba(255,254,250,0.96) 62%)',
-        border: '1px solid rgba(192,122,30,0.3)',
+        background: 'linear-gradient(135deg, color-mix(in srgb, var(--gold) 14%, var(--bg-1)), var(--bg-1) 62%)',
+        border: '1px solid color-mix(in srgb, var(--gold) 30%, transparent)',
         borderRadius: 20,
         boxShadow: '0 8px 22px -20px rgba(83,52,18,0.7)',
       }}
