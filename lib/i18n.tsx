@@ -97,6 +97,11 @@ export const T_en: Dict = {
   language: 'Language',
   tabHome: 'Home',
   tabMap: 'Map',
+  // ux-08 / zu-08 (wave 13 audit): a short bottom-tab label, so "Records" fits one line at the
+  // tab's 12px against Home/Map/Account's. homeQuickMyRecords keeps its own longer text for the
+  // home tile and page header (copy-04) — not yet read by components/TabBar.tsx (not this
+  // track's file): the tab still shows homeQuickMyRecords until TabBar.tsx's key is swapped.
+  tabRecords: 'Records',
   tabAccount: 'Account',
   toolbarMinButton: 'Find your land',
   toolbarHeader: 'Find your land',
