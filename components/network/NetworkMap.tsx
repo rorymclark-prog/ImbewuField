@@ -70,8 +70,10 @@ import ReactMapGL, {
   type MapRef,
   type ViewStateChangeEvent,
 } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { X, Maximize2, Info } from 'lucide-react';
+import { X, Maximize2, Info, MapPinOff } from 'lucide-react';
+import EmptyState from '@/components/EmptyState';
 import { useLanguage } from '@/lib/i18n';
 import {
   attentionFlags,
@@ -149,6 +151,11 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         pinExplanation: 'Izimpawu zibonisa isimo nosayizi wesiza kuphela. Isivuno, imali engenayo nenqubekelaphambili kuboniswa kuphaneli; uma ingekho idatha, kuyashiwo.',
         farmer: 'Umlimi', closeFarmer: 'Vala iphaneli yomlimi',
         sourceLanguageNotice: 'Ezinye izincazelo zemininingwane yomlimi ngezansi zingase zisaboniswe ngesiNgisi. Amagama nobufakazi obufakiwe kuboniswa njengoba kuqoshwe.',
+        // sdesk-08/desk-10/nav-14: new copy, pending first-language review — English stands in
+        // for isiZulu here too rather than an unreviewed machine sentence (see this object's own
+        // sourceLanguageNotice for the same convention).
+        mapUnsupportedTitle: 'The map cannot open on this device',
+        mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
       }
     : {
         thriving: 'Thriving', establishing: 'Establishing', support: 'Needs support',
@@ -161,8 +168,19 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         pinExplanation: 'Pins show status and plot size only — both recorded for every site. Harvest, income and progress are in the panel, where “no data” can be said in words.',
         farmer: 'Farmer', closeFarmer: 'Close farmer panel',
         sourceLanguageNotice: 'Some farmer-detail descriptions may remain in English. Submitted names and evidence are shown as recorded.',
+        mapUnsupportedTitle: 'The map cannot open on this device',
+        mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
       };
   const mapRef = useRef<MapRef>(null);
+  // sdesk-08/desk-10/nav-14: no WebGL used to leave this area a flat beige (light) or solid
+  // black (dark) slab, with the zoom/legend controls still drawn as if a map were there. Checked
+  // once — the capability does not change mid-session — same pattern as components/Map.tsx and
+  // AtlasExplorer.tsx.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [zoom, setZoom] = useState(6.2);
   const [hoverId, setHoverId] = useState<string | null>(null);
   /* Collapsed by default on a phone, where the expanded card would cover most
@@ -270,6 +288,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         role="region"
         aria-label={isiZulu ? 'Imephu yamasayithi abalimi' : 'Farmer sites map'}
       >
+        {mapSupported ? (
+        <>
         <ReactMapGL
           ref={mapRef}
           mapboxAccessToken={TOKEN}
@@ -484,9 +504,13 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         <div
           className="absolute z-10"
           style={{
-            /* Clears the global ChatWidget FAB, which sits bottom-left. */
-            bottom: 78,
-            left: 12,
+            /* staff-03/dark-03: used to be anchored low on the left, clear of the global
+             * ChatWidget FAB's resting band only while collapsed — opening it grew the panel
+             * upward (bottom-anchored) straight into that band. Top-right, below the
+             * NavigationControl's zoom buttons, grows downward instead, so it can never land
+             * on the FAB at any expansion height, on any route that mounts it there. */
+            top: 100,
+            right: 12,
             background: 'rgba(255,254,250,0.96)',
             border: `1px solid ${LINE}`,
             borderRadius: 12,
@@ -579,6 +603,18 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             </div>
           )}
         </div>
+        </>
+        ) : (
+          // sdesk-08/desk-10/nav-14: the farmer list this map sits beside still works without
+          // a rendered globe, so point there rather than drawing zoom/legend controls over
+          // nothing.
+          <EmptyState
+            className="h-full"
+            icon={MapPinOff}
+            title={copy.mapUnsupportedTitle}
+            message={copy.mapUnsupportedMessage}
+          />
+        )}
       </div>
 
       {/* ── Detail panel: bottom sheet (mobile) / right column (md+) ── */}

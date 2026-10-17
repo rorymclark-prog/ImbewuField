@@ -18,14 +18,16 @@
  * screens and a right-hand column on md+.
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactMapGL, { Marker, type MapRef, type MapLayerMouseEvent } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Search, X, Loader2, Earth } from 'lucide-react';
+import { Search, X, Loader2, Earth, MapPinOff } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
+import EmptyState from '@/components/EmptyState';
 import AtlasPanel from './AtlasPanel';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -42,6 +44,13 @@ export default function AtlasExplorer() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const mapRef = useRef<MapRef>(null);
+  // sdesk-08/desk-10/nav-14: no WebGL used to leave this area empty under the search box, with
+  // no message, icon or next step — same fix as components/Map.tsx.
+  const [mapSupported, setMapSupported] = useState(true);
+  useEffect(() => {
+    try { if (!mapboxgl.supported()) setMapSupported(false); }
+    catch { setMapSupported(false); }
+  }, []);
   const [state, setState] = useState<FetchState>({ status: 'idle' });
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
@@ -132,32 +141,46 @@ export default function AtlasExplorer() {
 
       {/* ── Map ── */}
       <div className="flex-1 relative min-w-0">
-        <ReactMapGL
-          ref={mapRef}
-          mapboxAccessToken={TOKEN}
-          initialViewState={{ latitude: 8, longitude: 22, zoom: 1.4 }}
-          mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
-          projection={{ name: 'globe' }}
-          style={{ width: '100%', height: '100%' }}
-          onClick={onMapClick}
-          cursor="crosshair"
-        >
-          {sel && (
-            <Marker latitude={sel.lat} longitude={sel.lon} anchor="center">
-              <div style={{ position: 'relative', width: 18, height: 18 }}>
-                <div className="animate-ping-slow" style={{
-                  position: 'absolute', inset: 0, borderRadius: '50%',
-                  background: 'rgba(31,77,43,0.35)',
-                }} />
-                <div style={{
-                  position: 'absolute', inset: 3, borderRadius: '50%',
-                  background: 'var(--color-forest-800)', border: '2px solid var(--on-forest)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
-                }} />
-              </div>
-            </Marker>
-          )}
-        </ReactMapGL>
+        {mapSupported ? (
+          <ReactMapGL
+            ref={mapRef}
+            mapboxAccessToken={TOKEN}
+            initialViewState={{ latitude: 8, longitude: 22, zoom: 1.4 }}
+            mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
+            projection={{ name: 'globe' }}
+            style={{ width: '100%', height: '100%' }}
+            onClick={onMapClick}
+            cursor="crosshair"
+          >
+            {sel && (
+              <Marker latitude={sel.lat} longitude={sel.lon} anchor="center">
+                <div style={{ position: 'relative', width: 18, height: 18 }}>
+                  <div className="animate-ping-slow" style={{
+                    position: 'absolute', inset: 0, borderRadius: '50%',
+                    background: 'rgba(31,77,43,0.35)',
+                  }} />
+                  <div style={{
+                    position: 'absolute', inset: 3, borderRadius: '50%',
+                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest)',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
+                  }} />
+                </div>
+              </Marker>
+            )}
+          </ReactMapGL>
+        ) : (
+          // sdesk-08/desk-10/nav-14: the globe cannot render, but the search box above still
+          // calls selectPoint() with real coordinates — the climate/rain/soil lookup needs no
+          // WebGL, so search keeps working even though there is nothing to tap.
+          <EmptyState
+            className="h-full"
+            icon={MapPinOff}
+            title={isZulu ? 'Imephu ayikwazi kuvuleka kule divayisi' : 'The map cannot open on this device'}
+            message={isZulu
+              ? 'Sebenzisa isibhokisi sokusesha ngenhla ukuze uthole isimo sezulu, imvula nomhlabathi yendawo.'
+              : 'Use the search box above to look up climate, rain and soil for a place by name.'}
+          />
+        )}
 
         {/* Search overlay */}
         <div className="absolute top-3 left-3 right-3 md:right-auto md:w-[340px] z-10">
@@ -213,7 +236,7 @@ export default function AtlasExplorer() {
         </div>
 
         {/* First-run hint */}
-        {state.status === 'idle' && (
+        {mapSupported && state.status === 'idle' && (
           <div
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-4 py-2.5"
             style={{
