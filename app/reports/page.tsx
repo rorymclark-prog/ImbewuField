@@ -70,7 +70,19 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
         padding to clear it on phone. */}
     <main className={styles.root} style={{ flex: 1, paddingBottom: 32 }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
-    {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
+    {!allowed ? (
+      // staff-15: this used to read as one sentence with a plain inline Link at the end —
+      // now a proper card with a button-styled action to the funder workspace.
+      <div className={styles.card} style={{ textAlign: 'center' }}>
+        <p>{t('reportsFunderNotice')}</p>
+        <Link
+          href="/funder"
+          style={{ display: 'inline-flex', minHeight: 44, alignItems: 'center', justifyContent: 'center', gap: 8, fontWeight: 600, padding: '10px 20px', borderRadius: 12, background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none', marginTop: 8 }}
+        >
+          {t('reportsOpenFunderView')}
+        </Link>
+      </div>
+    ) : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
       {lang === 'zu' && hasEnglishSavedReport && <p className={styles.notice} role="note">Eminye imibiko egciniwe inombhalo ophelele wesiNgisi. Izilawuli zalapha zisesiZulu.</p>}
       <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
