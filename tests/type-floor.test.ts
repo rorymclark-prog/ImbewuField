@@ -73,6 +73,11 @@ const STAFF_ROUTES = [
   'app/funder/page.tsx',
   'app/ngo/page.tsx',
   'app/partners/page.tsx',
+  // Added with the wave-13 visual-ux audit (code-02): /network is the funder/NGO portfolio map,
+  // the same laptop-first audience as /funder and /ngo, and was not swept by this file at all —
+  // which is how FarmerPanel.tsx's EXPERT_SURFACES ratchet quietly let a 12px caption regress to
+  // 9px with nothing here to catch it.
+  'app/network/page.tsx',
 ];
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
@@ -223,6 +228,14 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + '(no auth check, not linked from TabBar or NavDrawer)',
     budget: 0,
   },
+  'app/network/page.tsx': {
+    reason: 'the funder/NGO portfolio map shell — a coordinator or funder at a laptop. code-02 '
+      + '(wave 13) raised the regressed 9.5-10.5px captions to 12px; the remaining declarations '
+      + 'are 11-11.5px secondary text (error banners, chip labels, roster meta), within the '
+      + '11px floor CLAUDE.md sets for non-farmer screens generally, just not this file\'s own '
+      + 'zero-tolerance 12px floor yet.',
+    budget: 9,
+  },
   'components/NgoDashboard.tsx': {
     reason: 'the NGO/funder gardens-and-gardeners dashboard (PR #371). Its two sub-floor lines '
       + '(the produce-photo crop-name label, the 26px avatar initials) were fixed outright rather '
@@ -234,8 +247,15 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/network/FarmerPanel.tsx': {
     reason: 'a funder/NGO\'s drill-down into one farmer\'s record, reached from the cohort '
       + 'dashboard — dense metrics read at a laptop by staff, not the farmer\'s own screen. '
-      + 'Pre-existing debt, not fixed here: out of this change\'s scope.',
-    budget: 39,
+      + 'code-02 (wave 13): raised the 9–11px captions a11y-12 had already marked implemented '
+      + 'back to 12px, now that /network is in STAFF_ROUTES to catch a future regression.',
+    budget: 0,
+  },
+  'components/network/NetworkMap.tsx': {
+    reason: 'the funder/NGO portfolio map canvas, legend and chip controls — laptop-first staff '
+      + 'tool. Owned by a different swarm track (map fallback / chrome-and-states) this wave, so '
+      + 'its sub-floor captions are classified here, not fixed.',
+    budget: 12,
   },
   'components/partners/Screenshot.tsx': {
     reason: 'a captioned screenshot tile on the public /partners showcase',
