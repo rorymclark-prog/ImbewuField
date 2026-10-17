@@ -93,7 +93,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         value={adding ? '__add__' : selected}
         onChange={(event) => choose(event.target.value)}
         className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+        style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
       >
         <option value="">{recordsFill(lang, 'Choose produce / product')}</option>
         <optgroup label={label('Crop list', 'Uhlu lwezitshalo')}>
@@ -144,7 +144,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             }}
             placeholder={recordsFill(lang, 'Type the product name')}
             className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+            style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
           />
           <button
             type="button"
@@ -152,8 +152,8 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             disabled={!newName.trim()}
             className="rounded-lg px-3 py-2 text-xs font-display font-semibold"
             style={{
-              background: newName.trim() ? '#1F4D2B' : '#E2D8C4',
-              border: 'none', color: newName.trim() ? '#fff' : '#755942',
+              background: newName.trim() ? 'var(--color-forest-800)' : 'var(--bg-2)',
+              border: 'none', color: newName.trim() ? 'var(--on-forest)' : 'var(--text-muted)',
               cursor: newName.trim() ? 'pointer' : 'not-allowed',
             }}
           >

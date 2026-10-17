@@ -68,6 +68,41 @@ export function kgTotalLabel(kg: number): string {
  * this app (`formatInvoiceZar`), and unifying the decimal mark across measurements and currency is
  * a product decision, not a formatting one.
  */
+/**
+ * 'R1 240,00' — whole-and-cents rand, space-grouped thousands, comma decimal mark: the same
+ * convention `formatInvoiceZar` (lib/invoice-document.ts) already uses for invoice totals, so a
+ * card quoting a rand figure with cents reads the same way wherever it sits on the page. Negative
+ * reads '-R120,00'.
+ *
+ * ux-17: the records lender card used to format its Income/Costs tiles with a bare
+ * `R ${numberLabel(value, 0)}` — space after 'R', no cents — while the figures above it on the
+ * same screen read 'R8 172,00' through `formatInvoiceZar`. One screen, one convention.
+ */
+export function randCentsLabel(amount: number): string {
+  if (!Number.isFinite(amount)) return 'R0,00';
+  const sign = amount < 0 ? '-' : '';
+  const cents = Math.round(Math.abs(amount) * 100);
+  const whole = Math.floor(cents / 100).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const frac = (cents % 100).toString().padStart(2, '0');
+  return `${sign}R${whole},${frac}`;
+}
+
+/**
+ * '1 203,6 kg' — space-grouped thousands with a comma decimal, one decimal place, matching the
+ * money figures' convention above instead of `quantity.toLocaleString('en-ZA')`: that call renders
+ * differently across ICU builds and between server and client (the hydration-mismatch class
+ * {@link numberLabel} documents), which is how a harvest total ended up reading '1,203.6 kg' —
+ * US thousands commas with a period decimal — beside rand figures formatted the South African way.
+ */
+export function kgPreciseLabel(kg: number): string {
+  if (!Number.isFinite(kg)) return '0,0 kg';
+  const sign = kg < 0 ? '-' : '';
+  const tenths = Math.round(Math.abs(kg) * 10);
+  const whole = Math.floor(tenths / 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  const frac = (tenths % 10).toString();
+  return `${sign}${whole},${frac} kg`;
+}
+
 export function numberLabel(n: number, maximumFractionDigits = 3): string {
   if (!Number.isFinite(n)) return '—';
   const sign = n < 0 ? '-' : '';

@@ -127,7 +127,7 @@ const pageHooks = registerHooks({
       if (specifier === '@/components/ProductTourProvider') return { url: providerModule, shortCircuit: true };
       if (specifier === 'next/link') return { url: linkModule, shortCircuit: true };
       if (specifier.endsWith('.module.css')) return { url: cssModule, shortCircuit: true };
-      if (['@/components/MenuButton', '@/components/BackButton', '@/components/SettingsButton'].includes(specifier)) return { url: emptyComponent, shortCircuit: true };
+      if (['@/components/MenuButton', '@/components/BackButton', '@/components/SettingsButton', '@/components/BrandLogo', '@/components/TabBar'].includes(specifier)) return { url: emptyComponent, shortCircuit: true };
     }
     return nextResolve(specifier, context);
   },

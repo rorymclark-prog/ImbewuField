@@ -52,6 +52,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 17 Oct 2026 — Wave 13: visual and UX audit fixes (swarm PRs #1014–#1020, folded on one branch)
+- **Dark theme on screen, not just in source:** staff dashboards (MelDashboard, ngo/funder/mentor/assessments/reports), the
+  Study area, Records, Exchange, Network, maps, /updates, journal sheets, the home hero and DataPanel chips follow the
+  theme; page canvas uses `--bg-0`; native inputs get `color-scheme`.
+- **Desktop frame:** shared `AppHeader` + role tab sets, dashboard shell, desktop layouts for /vision, /example, /records
+  tabs, /assessments; Lima launcher clearance variable; Account resolves in sample mode; map fallback without WebGL;
+  tour pill no longer covers CTAs; TabBar on secondary pages; /pitch phone fallback; print sheet scales to phone.
+- **Words:** one name per feature (Field journal, Production plan, My Records, Site reports, Tips and help, Organisation
+  staff), sentence case, plain-language login/contact/offline/feedback, no vendor names, 36 page titles
+  (`tests/page-titles.test.ts`), shorter tab labels (zu U+2011), South African rand/kg formats.
+- **Study proof layer:** `tests/wave-13-theme-history-checks.ts` + `tests/fixtures/*-before-wave-13.*` record the
+  dictionary rewordings/removals and project `lib/i18n.tsx`, `lib/locales/zu.ts`, `app/student/page.tsx` back to their
+  pre-wave-13 bytes for every older dated owner; `rewindWave13PendingDictionary` covers the `lib/i18n-pending.ts` rename.
+- **Close-out:** `docs/audits/2026-10-16/wave-13-integration-claude.md` dispositions all 160 IDs (96 implemented, 24 partial, 33 open, 7 blocked).
+  Rory decides nav-13 (print legend emoji) and the 'facilitator' Study wording. Still deferred: bug-08 sw.js timeout, lang-13.
+
 ### 14 Oct 2026 — Wave 12: WebP lesson slides and Studies thumbnails (#999, perf-03/perf-05)
 - **Lighter Study:** 500 English and isiZulu lesson slides are now WebP (~300 KB instead of ~1 MB each, same size and
   words); `public/course-decks` 391 MB → 322 MB. The two Studies overview cards use ~20 KB WebP thumbnails instead of

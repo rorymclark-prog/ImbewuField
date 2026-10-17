@@ -298,7 +298,7 @@ export default function ExchangeBoard() {
               borderRadius: 10,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: kind === value ? EX.ink : 'rgba(255,254,250,0.7)',
+              background: kind === value ? EX.ink : EX.chip,
               color: kind === value ? 'var(--on-forest)' : EX.muted,
               border: `1px solid ${kind === value ? EX.ink : EX.border}`,
             }}
@@ -472,11 +472,11 @@ export default function ExchangeBoard() {
           {rows.some((row) => !isLocalListing(row.listing)) && (
             <div
               className="flex items-start gap-2 rounded-lg"
-              style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
+              style={{ background: 'var(--bg-2)', padding: '8px 10px' }}
             >
-              <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
-              <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
-                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umsizi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your facilitator or group — or use Share to hand a listing on yourself.'}
+              <Info size={12} strokeWidth={1.9} style={{ color: EX.muted, marginTop: 1.5, flexShrink: 0 }} />
+              <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, lineHeight: 1.45 }}>
+                {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
               </span>
             </div>
           )}
@@ -499,7 +499,7 @@ export default function ExchangeBoard() {
       {/* Scope. Stated once, plainly, rather than implied by absence. */}
       <div
         className="rounded-2xl"
-        style={{ background: 'rgba(255,254,250,0.6)', border: `1px dashed ${EX.inputBorder}`, padding: 16 }}
+        style={{ background: EX.chip, border: `1px dashed ${EX.inputBorder}`, padding: 16 }}
       >
         <div className="flex items-center gap-2" style={{ marginBottom: 8 }}>
           <Info size={14} strokeWidth={1.9} style={{ color: EX.faint }} />
@@ -569,7 +569,7 @@ function Chip({
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.4 : 1,
-        background: on ? EX.green : 'rgba(255,254,250,0.75)',
+        background: on ? EX.green : EX.chip,
         color: on ? 'var(--on-forest)' : EX.muted,
         border: `1px solid ${on ? EX.green : EX.border}`,
         whiteSpace: 'nowrap',

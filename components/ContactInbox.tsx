@@ -161,8 +161,10 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <MessageCircle size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Isistimu ayikaxhunyaniswa' : 'Backend not connected'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Xhuma i-Firebase ukuze wamukele imilayezo' : 'Connect Firebase to receive messages'}</p>
+        {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") shown to a mentor or
+            NGO coordinator — rewritten in plain words below. */}
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukaxhunywa' : 'Not connected yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela lapha uma lokhu kuxhunyiwe' : 'Messages will appear here once this is connected'}</p>
       </div>
     );
   }
@@ -285,7 +287,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                 <div className="font-sans text-xs pt-2 pb-3" style={{ color: 'var(--text-muted)' }}>
                   {lang === 'zu' ? 'Ithunyelwe ku: ' : 'Sent to: '}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
                   {msg.status === 'replied' && (
-                    <span className="ml-2 px-1.5 py-0.5 rounded font-mono" style={{ fontSize: 10, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
+                    <span className="ml-2 px-1.5 py-0.5 rounded font-sans" style={{ fontSize: 11, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
                       {lang === 'zu' ? 'kuphenduliwe' : 'replied'}
                     </span>
                   )}
@@ -307,7 +309,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     onChange={(e) => setReplyText((t) => ({ ...t, [msg.id]: e.target.value }))}
                     placeholder={lang === 'zu' ? 'Bhala impendulo oya kuyithumela kulo mfundi…' : 'Write a reply to this learner…'}
                     rows={3}
-                    className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none"
+                    className="w-full font-sans text-sm rounded-xl px-3 py-2.5 resize-none outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                     style={{ background: 'var(--input-bg)', border: '1px solid #D8CBB2', color: 'var(--text-primary)', lineHeight: 1.5 }}
                   />
                   <button

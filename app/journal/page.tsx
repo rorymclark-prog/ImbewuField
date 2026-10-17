@@ -26,8 +26,8 @@ export default function JournalPage() {
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{isZulu ? 'Ijenali Yasensimini' : 'Field Journal'}</h1>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{isZulu ? 'Ijenali Yasensimu' : 'Field journal'}</h1>
         <div className="flex-1" />
         <LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />
         <SettingsButton />

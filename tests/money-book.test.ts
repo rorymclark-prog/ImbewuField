@@ -149,17 +149,24 @@ test('the menu and the tab bar each offer one money door, and it is the book', (
   const moneyRows = [...navDrawer.matchAll(/href: '(\/records|\/finances)'/g)].map((m) => m[1]);
   assert.deepEqual(moneyRows, ['/records'], 'the menu must offer exactly one money row');
 
-  // These are the farmer's tabs; funders and NGOs now have their own workspaces.
-  const farmerTabs = tabBar.match(/const TABS = \[([\s\S]*?)\];/)?.[1] ?? '';
+  // These are the farmer's tabs; funders and NGOs now have their own workspaces. w13: renamed
+  // from TABS to FARMER_TABS when role-aware staff tab sets (mentor/ngo/funder/student) were
+  // added alongside it.
+  const farmerTabs = tabBar.match(/const FARMER_TABS = \[([\s\S]*?)\];/)?.[1] ?? '';
   const tabs = [...farmerTabs.matchAll(/href: '([^']+)'/g)].map((m) => m[1]);
   assert.deepEqual(
     tabs,
     ['/home', '/farmer', '/records', '/account'],
     'the four bottom tabs — the money one is the book now',
   );
-  // Its label has to be the SAME word as the tile and the header. Two names for one door is what
-  // sent her looking for her sales under "Finance" and her kilograms under "My Records".
-  assert.match(tabBar, /key: 'homeQuickMyRecords'/, 'the money tab must reuse the already-translated door name');
+  // Its label has to be the SAME door as the tile and the header, even though the bar's own copy
+  // is shorter. w13 (ux-08/zu-08): the bar is too narrow for "My Records" — it wrapped to two
+  // lines in English and worse in isiZulu — so the tab alone got a dedicated short key
+  // ('Records'), while the tile and header keep homeQuickMyRecords ("My Records"). That is a
+  // narrower word for the same door, not the second, DIFFERENT door ("Finance") this guard exists
+  // to catch — a farmer scanning "Records" on the bar still lands on the same book "My Records"
+  // names on the tile.
+  assert.match(tabBar, /key: 'tabRecords'/, 'the money tab must reuse the dedicated short door name, not drift to something unrelated');
 });
 
 test('the tab label keys keep English source and use only visibly marked isiZulu drafts', () => {

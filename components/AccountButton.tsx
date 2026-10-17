@@ -8,7 +8,7 @@ import { useLanguage } from '@/lib/i18n';
 
 export default function AccountButton() {
   const { user, signOutUser } = useAuth();
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
   const signOutCopy = 'Signing out ends access to this account on this device. Sign in again to continue.';
   const signOutZulu = 'Ukuphuma ngemvume kuvala ukufinyelela kule akhawunti kule divayisi. Ngena futhi ukuze uqhubeke.';
@@ -19,7 +19,9 @@ export default function AccountButton() {
   if (user) {
     // Sample farm shows a neutral label — never the real signed-in user's name/email (the one
     // spot the demo would otherwise leak their identity; the rest reads "Sample Farmer").
-    const label = isSampleMode() ? 'Tour' : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
+    // zu-07: was the literal English 'Tour' regardless of language — shares the same key
+    // SampleModeBanner uses, which matches MenuButton.tsx's own hardcoded isiZulu text.
+    const label = isSampleMode() ? t('tourPill') : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
     return (
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
@@ -40,7 +42,7 @@ export default function AccountButton() {
         </span>
         <button
           onClick={signOutUser}
-          className="font-mono transition-opacity hover:opacity-80"
+          className="font-sans transition-opacity hover:opacity-80"
           style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
           aria-label={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}
           title={isZulu ? `${signOutZulu} (${signOutCopy})` : signOutCopy}

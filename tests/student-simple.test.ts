@@ -117,7 +117,10 @@ test('the companion link labels are real i18n keys, placed next to their related
 });
 
 test('ochre is never painted as readable text: the due-soon tone and the category text-colour variant', () => {
-  assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: '#7A4408'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
+  // swarm/w13-student (code-01/dark-02) routed this literal through var(--gold-dim) — the same
+  // text-safe ochre value (#7A4408), now theme-token-based so it keeps 4.5:1 contrast in dark mode
+  // too instead of staying the fixed earth-light hex.
+  assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: 'var\(--gold-dim\)'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
   assert.match(COURSE_MODULES_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design: "#7A4408"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre');
   // Every site that paints the category colour as text (not a fill/border/icon) must use the
   // text-safe variant, not the raw CATEGORY_COLORS/`color` fill value.
@@ -180,7 +183,11 @@ test('/student/design and /student/finance hide their sources/further-reading li
 test('tips page routes its hero, section headings and controls through the translation pattern', () => {
   assert.match(TIPS_SOURCE, /useLanguage/);
   assert.match(TIPS_SOURCE, /t\('tipsTitle'\)/);
-  assert.match(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/);
   assert.match(TIPS_SOURCE, /t\('navTour'\)/);
   assert.doesNotMatch(TIPS_SOURCE, /<h1>Tips &amp; help<\/h1>/, 'the hero title must no longer be a hard-coded literal');
+  // ux-19 (2026-10-16 visual/UX audit): the "Video guides" section this used to pin was a
+  // placeholder ending in "will be added here when published" with only a generic YouTube
+  // search link — removed until there is at least one real video, so t('tipsVideoGuidesTitle')
+  // is deliberately no longer rendered.
+  assert.doesNotMatch(TIPS_SOURCE, /t\('tipsVideoGuidesTitle'\)/, 'the video-guides placeholder was removed on purpose — this assertion is inverted, not deleted');
 });

@@ -73,19 +73,22 @@ const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
 function NetworkMapLoading() {
   const { lang } = useLanguage();
   return (
-    <div className="flex-1 flex items-center justify-center" style={{ background: '#E4DCC6' }}>
-      <span className="font-display" style={{ fontSize: 14, color: '#5C5040' }}>
+    <div className="flex-1 flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
+      <span className="font-display" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
         {lang === 'zu' ? 'Kulayishwa imephu yohlelo…' : 'Loading the portfolio map…'}
       </span>
     </div>
   );
 }
 
-const INK = '#20190F';
-const INK_SOFT = '#5C5040';
-const INK_MUTED = '#755942';
-const LINE = '#E2D8C4';
-const PAPER = '#FFFEFA';
+// code-02 / dark-03: these used to be literal paper-and-ink hex, which painted the page as
+// light-mode-forever — the dark frame showed a light page with dark text. Theme tokens instead,
+// so the network portfolio follows the theme like every other screen.
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
 const ATTENTION = '#C0531E';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
@@ -179,7 +182,7 @@ export default function NetworkPage() {
   // between renders as auth rehydrates.
   if (!authLoading && user && isLive && !canAccessRolePage(role, NETWORK_ALLOWED_ROLES)) {
     return (
-      <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: PAPER, border: `1px solid ${LINE}` }}>
           <p className="text-sm font-display font-semibold mb-1" style={{ color: INK }}>{tr('This is the portfolio view', 'Leli yikhasi lohlelo lwabalimi')}</p>
           <p className="text-xs font-sans leading-relaxed" style={{ color: INK_MUTED }}>
@@ -191,7 +194,7 @@ export default function NetworkPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
@@ -202,7 +205,10 @@ export default function NetworkPage() {
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: INK_SOFT }}>
-          {tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
+          {/* staff-05 / ux-20: 'Network · funder portfolio' truncated to 'Network · fund…' on a
+              phone header — the short form on phone, the full form once there is room for it. */}
+          <span className="sm:hidden">{tr('Network', 'Inethiwekhi')}</span>
+          <span className="hidden sm:inline">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</span>
         </h1>
         <div className="flex-1" />
 
@@ -240,7 +246,7 @@ export default function NetworkPage() {
             // programme results as a mock-up.
             className="font-sans font-semibold"
             style={{
-              fontSize: 10.5,
+              fontSize: 12,
               color: '#9E5C08',
               background: 'rgba(158,92,8,0.10)',
               border: '1px solid rgba(158,92,8,0.30)',
@@ -307,7 +313,11 @@ export default function NetworkPage() {
         className="flex-shrink-0"
         style={{ background: PAPER, borderBottom: `1px solid ${LINE}` }}
       >
-        <div className="flex items-stretch gap-0 overflow-x-auto px-3 md:px-4">
+        {/* staff-05 / ux-20: this used to be a single overflow-x row with no scroll hint, which
+            cut 'Needs attention' off at a phone's right edge. It now wraps onto a second row
+            below sm, rather than clipping silently; md+ keeps the original single-row strip,
+            which already has the width for it. */}
+        <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-y-1.5 sm:overflow-x-auto px-3 md:px-4">
           {stats.map((s) => (
             <div
               key={s.label}
@@ -322,8 +332,8 @@ export default function NetworkPage() {
               <span
                 className="font-sans"
                 style={{
-                  fontSize: 9.5,
-                  letterSpacing: '0.1em',
+                  fontSize: 12,
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   color: INK_MUTED,
                   whiteSpace: 'nowrap',
@@ -368,7 +378,7 @@ export default function NetworkPage() {
         {totals.reportingCount < totals.farmerCount && (
           <p
             className="font-sans px-3 md:px-4"
-            style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}
+            style={{ fontSize: 12, color: INK_MUTED, paddingBottom: 6 }}
           >
             {tr(
               `Totals cover ${totals.reportingCount} of ${totals.farmerCount} sites — the rest are not readable by this account.`,
@@ -376,7 +386,10 @@ export default function NetworkPage() {
             )}
           </p>
         )}
-        <p className="font-sans px-3 md:px-4" style={{ fontSize: 10.5, color: INK_MUTED, paddingBottom: 6 }}>
+        {/* ux-20 asks for this to move into the map's legend popover at >=12px; that popover
+            lives in components/network/NetworkMap.tsx, owned by another track this wave, so it
+            stays here for now — raised to the 12px floor rather than left at 10.5px. */}
+        <p className="font-sans px-3 md:px-4" style={{ fontSize: 12, color: INK_MUTED, paddingBottom: 6 }}>
           {tr('A dash (—) means no readable value. It never means zero.', 'Udeshi (—) usho ukuthi alikho inani elifundekayo. Akusho uziro.')}
         </p>
       </div>
@@ -388,7 +401,7 @@ export default function NetworkPage() {
           className={`${
             listOpen ? 'flex absolute inset-0 z-30' : 'hidden'
           } lg:flex lg:static lg:z-auto lg:w-[304px] lg:flex-shrink-0 flex-col overflow-hidden`}
-          style={{ background: '#F4EFE4', borderRight: `1px solid ${LINE}` }}
+          style={{ background: 'var(--bg-2)', borderRight: `1px solid ${LINE}` }}
         >
           {/* Search + filters */}
           <div className="flex-shrink-0 px-3 pt-3 pb-2" style={{ borderBottom: `1px solid ${LINE}` }}>
@@ -451,7 +464,7 @@ export default function NetworkPage() {
             </div>
 
             <div className="flex items-center gap-1.5" style={{ marginTop: 8 }}>
-              <span className="font-sans" style={{ fontSize: 10, color: INK_MUTED, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              <span className="font-sans" style={{ fontSize: 12, color: INK_MUTED, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                 {tr('Sort', 'Hlela ngokulandelana')}
               </span>
               {SORTS.map((key) => (
@@ -550,7 +563,7 @@ export default function NetworkPage() {
             <p
               className="font-sans"
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 color: INK_MUTED,
                 lineHeight: 1.5,
                 margin: '10px 8px 4px',

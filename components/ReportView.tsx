@@ -327,6 +327,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     if (language !== 'zu') return message;
     const known: Record<string, string> = {
       'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
+      // copy-16: reuses the same two already-translated halves above/below rather than coining
+      // new phrasing — 'Could not build the PDF.' and the 'Check your connection…' sentence
+      // already used verbatim elsewhere (e.g. app/community/page.tsx).
+      'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
     return known[message] ?? message;
@@ -839,9 +843,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
     } catch (err) {
-      // Never fail silently again — that was the whole bug.
+      // Never fail silently again — that was the whole bug. copy-16: the raw JavaScript message
+      // ('Failed to fetch', 'NetworkError when attempting to fetch resource...') used to be
+      // appended straight onto the farmer-facing sentence. It still goes to the console for
+      // whoever debugs this; the farmer only sees the translated sentence.
+      if (err instanceof Error) console.error('PDF export failed:', err.message);
       setPdfState('error');
-      setError(displayError(err instanceof Error ? `${tr('Could not build the PDF', 'Umbiko we-PDF awukwazanga ukwakhiwa')}: ${err.message}` : 'Could not build the PDF.'));
+      setError(displayError('Could not build the PDF. Check your connection and try again.'));
       setTimeout(() => setPdfState('idle'), 4000);
     }
   }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
@@ -1044,7 +1052,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
-            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
+            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
             {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}

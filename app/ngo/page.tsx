@@ -11,16 +11,13 @@ import { canAccessRolePage } from '@/lib/role-access';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
 import Link from 'next/link';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
+import { useProductTour } from '@/components/ProductTourProvider';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 
@@ -77,6 +74,10 @@ export default function NgoPage() {
   const [view, setView] = useState<NgoView>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
   const simple = useAppLevel() === 'simple';
+  // staff-10: when a product tour is already running, MenuButton floats its own 'Tour N/total'
+  // pill, so this static text link duplicated that entry point. Hide it only while a tour is
+  // actually active; it is still the way to start one the rest of the time.
+  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -104,35 +105,31 @@ export default function NgoPage() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
-        style={APP_HEADER_STYLE}>
-        <MenuButton />
-        <BackButton />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <h1 className="text-xs font-display m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--text-muted)' }}>{tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}</h1>
-        {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
-            gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
-        {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
-            (see the matching comment on app/funder/page.tsx). */}
-        {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
-        )}
-        <div className="flex-1" />
-        {!simple && (
-          <Link
-            href="/network"
-            className="text-xs font-display hidden sm:block"
-            style={{ color: 'var(--color-forest-800)', textDecoration: 'none', marginRight: 4 }}
-          >
-            {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
-          </Link>
-        )}
-        <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>
-        <SettingsButton />
-        <RoleSwitcher current="ngo" />
-      </header>
+      <AppHeader
+        title={tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}
+        backFallback="/"
+        right={<>
+          {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
+              gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
+          {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
+              (see the matching comment on app/funder/page.tsx). */}
+          {(!isLive || sample) && view === 'gardens' && (
+            <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>{tr(lang, 'demonstration records', 'amarekhodi esibonelo')}</span>
+          )}
+          {!simple && (
+            <Link
+              href="/network"
+              className="text-xs font-display hidden sm:block"
+              style={{ color: 'var(--color-forest-800)', textDecoration: 'none', marginRight: 4 }}
+            >
+              {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
+            </Link>
+          )}
+          <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
+          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
+          <RoleSwitcher current="ngo" />
+        </>}
+      />
 
       <DashboardTabs>
         {(simple ? [
@@ -194,6 +191,11 @@ export default function NgoPage() {
       {view === 'training' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /><MelDashboard /></div>}
       {view === 'cohort' && (
         <div className="flex-1 flex flex-col overflow-hidden">
+          {/* code-13: the only heading on this page used to be the 13px header chip in AppHeader
+              (a <span>, not a heading) — a real, properly-sized h1 on the default tab. */}
+          <h1 className="t-h1 font-display px-4 pt-3" style={{ color: 'var(--text-primary)' }}>
+            {tr(lang, 'Organisation dashboard', 'Ibhodi lenhlangano')}
+          </h1>
           <MelDashboard compact />
           <CohortDashboard mode="ngo" />
         </div>
@@ -214,7 +216,7 @@ export default function NgoPage() {
       {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><MelDashboard /></div>}
       {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

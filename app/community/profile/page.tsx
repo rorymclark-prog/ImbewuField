@@ -238,7 +238,7 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
           </div>
 
           <div>
@@ -291,13 +291,13 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
               {t('communityPhotosLabel')} <span style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('communityPhotosHint')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {photos.map((url, i) => (
                 <div key={i} style={{ position: 'relative', width: 72, height: 72, borderRadius: 10, overflow: 'hidden' }}>
-                  <img src={url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={url} alt={`Profile photo ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
                     onClick={() => setPhotos((p) => p.filter((_, idx) => idx !== i))}
                     style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}

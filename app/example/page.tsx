@@ -18,6 +18,7 @@ import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
 
 import Illustration from '@/components/Illustration';
+import workspace from '@/components/layout/Workspace.module.css';
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
@@ -73,7 +74,9 @@ function ExampleInner() {
           left: 0,
           right: 0,
           zIndex: 50,
-          background: '#C07A1E',
+          // nav-15: white text on the raw ochre fill (#C07A1E) is 2.54:1, below the 4.5:1 rule —
+          // CLAUDE.md's own answer for white type under an ochre fill is #9A6018.
+          background: '#9A6018',
           display: 'flex',
           alignItems: 'center',
           gap: 12,
@@ -114,23 +117,28 @@ function ExampleInner() {
         </button>
       </div>
 
-      {/* Curated read-only report, scrollable, centered column */}
+      {/* Curated read-only report, scrollable. desk-13: this used to be a single ~410px column
+          centred in a 1280px frame with 430px gutters either side — the shared formWidth token
+          plus Workspace's twoColumns grid (one column on phone, two at md+) gives the completeness
+          ring a real desktop neighbour instead of a stretched phone layout. */}
       <div
+        className={`${workspace.workspace} ${workspace.formWidth}`}
         style={{
-          maxWidth: 440,
-          margin: '0 auto',
-          padding: '84px 16px 40px',
+          // dark-07: 40px left the 'Main challenges' heading sitting right behind the global
+          // floating Lima button on phone; 96px clears it with room to spare.
+          padding: '84px 16px 96px',
           display: 'flex',
           flexDirection: 'column',
           gap: 16,
         }}
       >
         <Illustration name="example-hero" className="w-full h-40" />
-        
-        <CompletionScore inputs={DEMO_COMPLETION} />
 
-        {/* Your land / Harvesting areas — mirrors DataPanel Overview cards */}
-        <div className="space-y-2">
+        <div className={workspace.twoColumns}>
+          <CompletionScore inputs={DEMO_COMPLETION} />
+
+          {/* Your land / Harvesting areas — mirrors DataPanel Overview cards */}
+          <div className="space-y-2">
           <div className="rounded-2xl overflow-hidden" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.22)' }}>
             <div className="flex items-center gap-3 px-3.5 py-2.5">
               <div className="flex items-center justify-center flex-shrink-0 rounded-xl" style={{ width: 32, height: 32, background: '#1F4D2B' }}>
@@ -205,6 +213,7 @@ function ExampleInner() {
               </div>
             )}
           </div>
+          </div>
         </div>
 
         {/* Stats ledger — mirrors DataPanel Overview */}
@@ -239,34 +248,39 @@ function ExampleInner() {
           </div>
         </div>
 
-        {/* Key species */}
-        <Card>
-          <Label>{t('cardKeySpecies')}</Label>
-          <div className="flex flex-wrap gap-1.5">
-            {data.biome.keySpecies.slice(0, 6).map((s) => (
-              <span
-                key={s}
-                className="px-2 py-0.5 rounded-full text-xs font-display"
-                style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B' }}
-              >
-                {s}
-              </span>
-            ))}
-          </div>
-        </Card>
+        <div className={workspace.twoColumns}>
+          {/* Key species */}
+          <Card>
+            <Label>{t('cardKeySpecies')}</Label>
+            <div className="flex flex-wrap gap-1.5">
+              {data.biome.keySpecies.slice(0, 6).map((s) => (
+                <span
+                  key={s}
+                  className="px-2 py-0.5 rounded-full text-xs font-display"
+                  // dark-07: these were a fixed forest-green text/fill in every theme, which read
+                  // as near-invisible dark blobs on the near-black dark-mode card. Tokens (same
+                  // ones DataPanel.tsx's own species chips use) follow each theme's own swing.
+                  style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </Card>
 
-        {/* Main challenges */}
-        <Card>
-          <Label>{t('cardMainChallenges')}</Label>
-          <div className="space-y-1.5">
-            {data.biome.challenges.slice(0, 4).map((c, i) => (
-              <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
-                <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#9A6018' }}><AlertTriangle size={12} /></span>
-                {c}
-              </div>
-            ))}
-          </div>
-        </Card>
+          {/* Main challenges */}
+          <Card>
+            <Label>{t('cardMainChallenges')}</Label>
+            <div className="space-y-1.5">
+              {data.biome.challenges.slice(0, 4).map((c, i) => (
+                <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                  <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: '#9A6018' }}><AlertTriangle size={12} /></span>
+                  {c}
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   );

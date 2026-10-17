@@ -33,6 +33,8 @@ import DashboardTabs from '@/components/DashboardTabs';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import AppHeader from '@/components/layout/AppHeader';
+import workspace from '@/components/layout/Workspace.module.css';
 import {
   DEFAULT_TRACK, STATUS_LABEL, effectiveStatus, enrollmentDocId, summariseCohort,
   type CourseEnrollment, type EnrollmentStatus,
@@ -234,7 +236,10 @@ function TraineeCard({
           ) : (
             <div className="flex items-center gap-2 pt-3 flex-wrap">
               <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {lang === 'zu' ? new Date(enrollment.enrolled_at).toLocaleDateString('zu-ZA') : new Date(enrollment.enrolled_at).toLocaleDateString()}
+                {/* copy-14: toLocaleDateString with no locale argument reads the device's
+                    browser locale, which prints the en-US '10/16/2026' on a phone set to that
+                    rather than 'en-ZA'. */}
+                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {new Date(enrollment.enrolled_at).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA')}
               </span>
               <div className="flex-1" />
               <button
@@ -281,7 +286,7 @@ function TraineeCard({
                     value={pickerModule}
                     onChange={(e) => setPickerModule(e.target.value)}
                     aria-label={tr(lang, 'Choose a module to assign', 'Khetha imojula ozoyabela')}
-                    className="flex-1 text-xs font-sans rounded-lg px-2 outline-none"
+                    className="flex-1 text-xs font-sans rounded-lg px-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                     style={{ minHeight: 44, minWidth: 0, background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                   >
                     <option value="">{tr(lang, 'Choose a module…', 'Khetha imojula…')}</option>
@@ -343,7 +348,7 @@ function TraineeCard({
                       type="date"
                       value={assignment.due_at ?? ''}
                       onChange={(e) => onAssign(trainee.id, mod.id, e.target.value || null)}
-                      className="text-xs font-sans rounded-lg px-2 py-1 outline-none"
+                      className="text-xs font-sans rounded-lg px-2 py-1 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                       style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                     />
                     {state && state !== 'done' && dueText && (
@@ -605,17 +610,14 @@ export default function MentorPage() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-        <MenuButton />
-          <BackButton />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'Mentor', 'Umeluleki')}</span>
-        <div className="flex-1" />
-        <LessonLink id="mentor:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <RoleSwitcher current="mentor" />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={tr(lang, 'Mentor', 'Umeluleki')}
+        backFallback="/"
+        right={<>
+          <LessonLink id="mentor:overview" label={tr(lang, 'Learn', 'Funda')} />
+          <RoleSwitcher current="mentor" />
+        </>}
+      />
 
       {/* Tab strip */}
       <DashboardTabs>
@@ -645,7 +647,9 @@ export default function MentorPage() {
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-mono"
-                style={{ minWidth: 16, height: 16, fontSize: 9, padding: '0 4px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                // Same fix already applied to this exact badge on /ngo: fontSize 9 was under the
+                // 12px micro-label floor; the pill grows to 19px to fit a 12px digit.
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
                 {badge}
               </span>
             )}
@@ -655,13 +659,16 @@ export default function MentorPage() {
 
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
 
-      <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      {/* code-14: this main had no max-width at all, so cards ran edge to edge at 1280px —
+          workspace.workspace caps it at 90rem like the rest of the app's framed pages, and
+          md:/lg: let the stat row breathe instead of just stretching three narrow cards wide. */}
+      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 
-        <div><h1 className="text-2xl font-display font-semibold" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
+        <div><h1 className="t-h1 font-display" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
         {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'rgba(176,58,46,0.08)',color:'var(--orange)'}}><p>{tr(lang, 'Learning records could not be loaded. Progress is unavailable until the connection succeeds.', 'Amarekhodi okufunda awakwazanga ukulayishwa. Inqubekelaphambili ayitholakali kuze kuxhumeke inethiwekhi.')}</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'var(--color-surface)'}}>{tr(lang, 'Retry learning records', 'Phinda ulayishe amarekhodi okufunda')}</button></div>}
         {!loadError&&!fetching&&<>
         {/* Cohort at a glance — Simple collapses the three cards into one line. */}
@@ -722,7 +729,7 @@ export default function MentorPage() {
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
             <input value={search} onChange={(e) => setSearch(e.target.value)}
               aria-label={tr(lang, 'Search participants', 'Sesha abahlanganyeli')} placeholder={tr(lang, 'Search participants...', 'Sesha abahlanganyeli...')}
-              className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
+              className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
           </div>
         )}
@@ -770,7 +777,7 @@ export default function MentorPage() {
         )}
         </>)}
       </main>
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

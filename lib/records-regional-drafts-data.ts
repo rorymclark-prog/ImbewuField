@@ -428,7 +428,6 @@ export const RECORDS_DRAFTS: Record<string, RecordsDraftRow> = {
   "Transport": {"st":"Dipalangwang","ve":"Vhuendi","ts":"Ku fambisa"},
   "Try again": {"st":"Leka hape","ve":"Lingedzani hafhu","ts":"Ringeta nakambe"},
   "Try the Ubhejane money book": {"st":"Leka buka ya tjhelete ya Ubhejane","ve":"Lingedzani bugu ya masheleni ya Ubhejane","ts":"Ringeta buku ya mali ya Ubhejane"},
-  "Try the money book": {"st":"Leka buka ya tjhelete","ve":"Lingedzani bugu ya masheleni","ts":"Ringeta buku ya mali"},
   "Turnover": {"st":"Tjhelete ya dithekiso","ve":"Masheleni a thengiso","ts":"Mali ya ku xavisa"},
   "Two crops are booked into the same ground": {"st":"Dijalo tse pedi di abetswe sebaka se le seng","ve":"Zwiliṅwa zwivhili zwo pulaniwa kha fhethu huthihi","ts":"Swibyariwa swimbirhi swi vekiwe eka ndhawu yin'we"},
   "Type the product name": {"zu":"Thayipha igama lomkhiqizo","st":"Ngola lebitso la sehlahiswa","ve":"Ṅwalani dzina ḽa tshibveledzwa","ts":"Tsala vito ra xilo"},

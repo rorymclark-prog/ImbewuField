@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
+import { MENTOR_ENGLISH_PENDING, CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
 
 const folder = 'docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/';
 const root = fileURLToPath(new URL('../', import.meta.url));
@@ -90,6 +90,120 @@ function assertOnlyWave11Additions(before: string, live: string) {
   }
 }
 
+/** Wave 13 (copy, chrome and desktop tracks) rewords and deletes named non-Study lines. */
+const WAVE_13_ENGLISH_REWORDED = new Set([
+  "  completionStepCropPlan: 'Crop plan done',",
+  "  drawFinishButton: 'Finish',",
+  "  savedPlacesHeader: 'Saved Places',",
+  "  siteReportOverline: 'Site report',",
+  "  profileRoleNgo: 'NGO Staff',",
+  "  bulkDensityOk: 'OK',",
+  "  savedReportsHeader: 'Saved Reports',",
+  "  noSavedReportsGenerateLink: 'Generate Full Report',",
+  "  savedSitesHeader: 'Your Sites',",
+  "  stepRoofCatchment: 'Roof Catchment',",
+  "  stepWhatExists: 'What Exists',",
+  "  evidenceSheetDismiss: 'Dismiss',",
+  "  surveySectionLabel: 'Site survey',",
+  "  homeQuickJournal: 'Journal',",
+  "  homeRoleNGODesc: 'Programme dashboard & M&E roll-up',",
+  "  homeRoleFunderDesc: 'Read-only impact oversight',",
+  "  homeSurveysDesc: 'Answer field surveys · NGOs build & send',",
+  "  navSectionFarmTools: 'Farm Tools',",
+  "  navFieldJournal: 'Field Journal',",
+  "  navTaskPlanner: 'Task Planner',",
+  "  navManual: 'Permaculture Manual',",
+  "  navGardenSurvey: 'Garden Survey',",
+  "  navNGODashboard: 'Organisation Dashboard',",
+  "  navMyAccount: 'My Account',",
+  "  navDesignStudio: 'Design Studio',",
+  "  navOfflineSync: 'Offline and sync',",
+  "  tipsTitle: 'Tips & help',",
+  "  studentProgressFirebase: 'Progress will save to Firebase once the backend is connected',",
+  "  myRecordsSubtitle: 'What you grow · what you sell · designs from your supervisor',",
+  "  addOpensStudioChip: 'Opens Studio',",
+  "  loginBackendUnavailableNotice: 'Backend not connected yet — auth is unavailable. The app runs in tour mode.',",
+  "  offlineTitle: 'Offline & sync',",
+  "  offlineSyncNow: 'Sync now',",
+  "  offlineQueueEmpty: 'No entries in this fieldwork queue. The money book uses its own sync system.',",
+  "  offlineSyncComplete: 'Sync attempt finished. Any entries still listed below remain on this device.',",
+  "  offlinePageOffline: 'Offline & sync',",
+  "  offlinePageRecords: 'Money book & harvests',",
+  "  reportsTitle: 'Saved sites & reports',",
+  "  reportsIntro: 'Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.',",
+]);
+const WAVE_13_ENGLISH_REMOVED = new Set([
+  "  tabFinance: 'Finance',",
+  "  homeQuickFinance: 'Finance',",
+  "  homeQuickFinanceDesc: 'Income & costs',",
+  "  navFacilitator: 'Design canvas',",
+  "  navPracticeViews: 'Practice views',",
+  "  navBrowseGardens: 'Browse gardens',",
+  "  navTourWorkspace: 'Tour workspace',",
+  "  navTourWorkspaceNote: 'Changes stay in this tour workspace.',",
+  "  navChooseView: 'Choose view',",
+]);
+const WAVE_13_ZULU_REWORDED = new Set([
+  "  tabAccount: 'I-akhawunti',",
+  "  drawFinishButton: 'Qeda',",
+  "  bulkDensityOk: 'Kulungile',",
+  "  surveySectionLabel: 'Uphando lwendawo',",
+  "  homeQuickContactDesc: 'Imeluleki · INhlangano',",
+  "  homeQuickJournal: 'Ijenali',",
+  "  homeDashboardsSummary: 'Umlimi · Imeluleki · INhlangano · Umxhasi · Umfundi',",
+  "  homeRoleNGOLabel: 'INhlangano',",
+  "  studentProgressFirebase: 'Inqubekela phambili izolondolozwa ku-Firebase uma iseva isixhunyiwe',",
+  "  myRecordsSubtitle: 'Lokho okulima · lokho okudayisayo · imidwebo evela kumphathi wakho',",
+  "  loginBackendUnavailableNotice: 'Uhlelo olungemuva alukaxhunywa — ukungena akutholakali. Uhlelo lokusebenza lusebenza njengohambo lokuluhlola.',",
+  "  offlinePageJournal: 'Iphaphebhuku lasensimini',",
+  "  offlinePageDesign: 'Isitudiyo sokuklama',",
+  "  completionStepCropPlan: 'Uhlelo lwezitshalo lwenziwe',",
+]);
+const WAVE_13_ZULU_REMOVED = new Set([
+  "  tabFinance: 'Ezezimali',",
+  "  homeQuickFinance: 'Ezezimali',",
+  "  homeQuickFinanceDesc: 'Imali engenayo nezindleko',",
+  "  navFacilitator: 'Idizayini',",
+  "  navPracticeViews: 'Izibonelo zokuzijwayeza',",
+  "  navBrowseGardens: 'Bheka izingadi',",
+  "  navTourWorkspace: 'Indawo yokusebenza yohambo',",
+  "  navTourWorkspaceNote: 'Izinguquko zihlala kule ndawo yokusebenza yohambo.',",
+  "  navChooseView: 'Khetha ukubuka',",
+]);
+/** Every predecessor line survives in order except the named rewordings (key kept, value changed)
+ * and the named removals (dead keys deleted); added lines may not re-declare any predecessor key. */
+function assertOnlyWave13Changes(before: string, live: string, reworded: Set<string>, removed: Set<string>, label: string) {
+  const liveLines = live.split('\n');
+  const keyOf = (line: string) => /^ {2}([A-Za-z_$][\w$]*): /.exec(line)?.[1];
+  const rewordedKeys = new Set([...reworded].map(keyOf));
+  const beforeKeys = new Set(before.split('\n').map(keyOf).filter(Boolean));
+  const added: string[] = [];
+  let at = 0, rewordedSeen = 0, removedSeen = 0;
+  for (const line of before.split('\n')) {
+    if (reworded.has(line)) { rewordedSeen++; continue; }
+    if (removed.has(line)) { removedSeen++; continue; }
+    const from = at;
+    while (at < liveLines.length && liveLines[at] !== line) at++;
+    assert.ok(at < liveLines.length, `${label}: predecessor line lost or reordered by wave 13: ${line.slice(0, 80)}`);
+    added.push(...liveLines.slice(from, at));
+    at++;
+  }
+  added.push(...liveLines.slice(at));
+  assert.equal(rewordedSeen, reworded.size, `${label}: each named wave 13 rewording is accounted for once`);
+  assert.equal(removedSeen, removed.size, `${label}: each named wave 13 removal is accounted for once`);
+  const liveKeys = new Set<string>();
+  for (const line of liveLines) {
+    const key = keyOf(line);
+    if (!key) continue;
+    assert.ok(!liveKeys.has(key), `${label}: wave 13 declares ${key} twice`);
+    liveKeys.add(key);
+  }
+  for (const line of added) {
+    const key = keyOf(line);
+    if (key && !rewordedKeys.has(key)) assert.ok(!beforeKeys.has(key), `${label}: wave 13 re-declares predecessor key ${key}`);
+  }
+}
+
 export function ensureStudyUiDueUnlockCurrent() {
   return withBlindReviewedCorrectionReadScope(() => {
   // Wave 11 (lang-01) spreads four new English-pending groups (Ask chat, photo upload, profile
@@ -105,19 +219,29 @@ export function ensureStudyUiDueUnlockCurrent() {
   // Wave 11 adds non-Study keys across the app dictionary in many places, so the exact
   // predecessor is kept as a fixture: it must hash to the earlier whole-file pin, and every one
   // of its lines must survive in order in the live file except the five named non-Study edits.
+  // Wave 13 (copy, chrome and desktop tracks) rewords nav/home labels to sentence case, renames
+  // supervisor→mentor and the money book→My Records, deletes dead keys and adds new chrome keys,
+  // none in Studies. Check the complete new file, then bind every older pin to the exact
+  // pre-wave-13 fixture so the wave 11 and earlier proofs still hold byte for byte.
   const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveEnglish), 'c113a108d9c1cd9728cb39c172fc1cbf7aa35fa9de393e23779e96d84d0a845d', 'complete app dictionary after the wave 11 additions');
+  assert.equal(sha(liveEnglish), '9d96cbcd3986b7955c1a326491a8c3bf5cbb9fe63d5185b2d4e05307f205a27b', 'complete app dictionary after the wave 13 edits');
+  const englishBefore13 = readFileSync(path('tests/fixtures/i18n-before-wave-13.tsx.txt'), 'utf8');
+  assert.equal(sha(englishBefore13), 'c113a108d9c1cd9728cb39c172fc1cbf7aa35fa9de393e23779e96d84d0a845d', 'complete app dictionary after the wave 11 additions remains exact');
+  assertOnlyWave13Changes(englishBefore13, liveEnglish, WAVE_13_ENGLISH_REWORDED, WAVE_13_ENGLISH_REMOVED, 'app dictionary');
   const english = readFileSync(path('tests/fixtures/i18n-before-wave-11.tsx.txt'), 'utf8');
   assert.equal(sha(english), 'd37673fb5c1a65ea78b4981b9ef24ade6f174365c7c999f20c3f03bc8326f3c7', 'complete app dictionary after the reviewed report-footnote layer remains exact');
-  assertOnlyWave11Additions(english, liveEnglish);
+  assertOnlyWave11Additions(english, englishBefore13);
   const predecessor = english
     .replace('MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, type Dict', 'MENTOR_ENGLISH_PENDING, type Dict')
     .replace('  ...REPORT_FOOTNOTE_ENGLISH_PENDING,\n', '');
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   const liveZulu = readFileSync(path('lib/locales/zu.ts'), 'utf8');
-  assert.equal(sha(liveZulu), 'ff57af75e2a8583e76b193bc1a92855d0c259acdd75d39d859cba49f5dee95ce', 'complete isiZulu locale source after the wave 11 Ask drafts');
-  assert.equal(sha(rewindWave11Locale(liveZulu)), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
+  assert.equal(sha(liveZulu), '6d2d7aabb38ed86ff6fc114357bc9b767e9bccf7fc4ba3b54858c83c49c00046', 'complete isiZulu locale source after the wave 13 edits');
+  const zuluBefore13 = readFileSync(path('tests/fixtures/zu-before-wave-13.ts.txt'), 'utf8');
+  assert.equal(sha(zuluBefore13), 'ff57af75e2a8583e76b193bc1a92855d0c259acdd75d39d859cba49f5dee95ce', 'complete isiZulu locale source after the wave 11 Ask drafts remains exact');
+  assertOnlyWave13Changes(zuluBefore13, liveZulu, WAVE_13_ZULU_REWORDED, WAVE_13_ZULU_REMOVED, 'isiZulu locale');
+  assert.equal(sha(rewindWave11Locale(zuluBefore13)), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
   });
 }
 
@@ -152,11 +276,31 @@ function rewindWave11Dictionary(actual: unknown): unknown {
   return before;
 }
 
+/** Wave 13 (copy-12, 16 Oct 2026) reworded the organisation role label inside the English-pending
+ * groups. Every locale that still spreads those groups untranslated now carries the reworded
+ * value, so dated owners see the exact pre-wave-13 label again. Wave 11's own group
+ * (profileRoleNgo) is removed by rewindWave11Dictionary first; this handles the rest. */
+const WAVE_13_PENDING_REWORDED: Record<string, { before: string; after: string }> = {
+  mentorRoleNgo: { before: 'NGO Staff', after: 'Organisation staff' },
+};
+function rewindWave13PendingDictionary(actual: unknown): unknown {
+  if (!actual || typeof actual !== 'object') return actual;
+  const dict = actual as Record<string, unknown>;
+  const keys = Object.keys(WAVE_13_PENDING_REWORDED).filter(key => Object.hasOwn(dict, key) && dict[key] === WAVE_13_PENDING_REWORDED[key].after);
+  if (!keys.length) return actual;
+  const before = { ...dict };
+  for (const key of keys) {
+    assert.equal((MENTOR_ENGLISH_PENDING as Record<string, string>)[key], WAVE_13_PENDING_REWORDED[key].after, `${key}: live English pending source holds the exact wave 13 wording`);
+    before[key] = WAVE_13_PENDING_REWORDED[key].before;
+  }
+  return before;
+}
+
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
-  actual = rewindWave11Dictionary(actual);
+  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);

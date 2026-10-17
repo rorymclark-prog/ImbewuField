@@ -59,7 +59,7 @@ export default function PricesPage() {
   const selected = crops.find((crop) => crop.key === selectedKey) ?? null;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--color-canvas)' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* Header — the in-header BackButton keeps the global floating back pill away; see
           components/BackButton.tsx and tests/back-control.test.ts. */}
       <header

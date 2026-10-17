@@ -316,3 +316,39 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
   assert.doesNotMatch(dataPanelSource, /is low — layer compost 5 cm deep/, 'soil advice regressed to a hard-coded template literal');
   assert.doesNotMatch(dataPanelSource, /suggests compaction — deep-rooted cover crops/, 'soil advice regressed to a hard-coded template literal');
 });
+
+// copy-07 (wave 13 audit): nav*/tab*/home* English values were Title Case ("Farm Tools", "Task
+// Planner"...) against the rest of the UI's sentence-case convention. Most were fixed in that
+// wave; this guards against new ones creeping back in. A handful of pre-existing keys are left
+// out deliberately rather than fixed, because their exact string is pinned by another, unowned
+// test or by a reviewed-translation pairing — see the wave-13 PR body for the list.
+const TITLE_CASE_NAV_TAB_HOME_ALLOWLIST = new Set([
+  'navPlantingCalendar', // tests/nav-menu-links.test.ts asserts the literal 'Planting Calendar'
+  'homeQuickMyRecords', // "My Records" is the deliberately-chosen name (copy-04)
+  'homeRoleNGOLabel', 'navNGOLabel', // "NGO" is an initialism, not a Title Case violation
+  'homeQuickContactDesc', // 'Mentor · Organisation' — a role list, each word a proper role name
+  'homeLimaVisionLabel', // 'Lima Vision' — Lima is the product's AI assistant, a proper noun
+]);
+
+test('new nav*/tab*/home* English keys stay sentence case, not Title Case', () => {
+  const en = localeBlocks().find((b) => b.locale === 'en')!.block;
+  const re = /^  (nav|tab|home)[A-Za-z0-9_]*: '([^']*)',$/gm;
+  const offenders: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(en))) {
+    const [full, , value] = m;
+    const key = full.slice(2, full.indexOf(':'));
+    if (TITLE_CASE_NAV_TAB_HOME_ALLOWLIST.has(key)) continue;
+    // A short label with two or more capitalised words (and no sentence punctuation) reads as
+    // Title Case; proper nouns (Lima, ImbewuField, NGO, isiZulu names) stay capitalised, so this
+    // only flags when capitalised words make up most of a short phrase.
+    const words = value.split(/\s+/).filter((w) => /^[A-Za-z]/.test(w));
+    if (words.length < 2 || words.length > 4 || /[.!?]/.test(value)) continue;
+    const capRatio = words.filter((w) => {
+      const bare = w.replace(/[^A-Za-z]/g, '');
+      return bare.length > 0 && bare[0] === bare[0].toUpperCase() && bare[0] !== bare[0].toLowerCase();
+    }).length;
+    if (capRatio >= 2 && capRatio === words.length) offenders.push(`${key}: '${value}'`);
+  }
+  assert.deepEqual(offenders, [], 'new nav/tab/home keys must use sentence case (one capital letter, proper nouns aside) — see CLAUDE.md');
+});

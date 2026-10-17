@@ -72,9 +72,9 @@ function SkillChip({
         borderRadius: 999,
         fontSize: 13.5,
         cursor: 'pointer',
-        background: on ? '#1F4D2B' : 'rgba(226,216,196,0.5)',
-        color: on ? '#fff' : '#5C5040',
-        border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
+        background: on ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--border) 50%, transparent)',
+        color: on ? 'var(--on-forest)' : 'var(--text-muted)',
+        border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border)'}`,
       }}
     >
       {label}
@@ -164,16 +164,19 @@ function InitialsAvatar({ name, size = 80 }: { name: string | null; size?: numbe
         width: size,
         height: size,
         borderRadius: '50%',
-        background: '#1F4D2B',
+        background: 'var(--color-forest-800)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
       }}
     >
+      {/* code-18: Leaf is a fill colour, not type — DESIGN.md puts it at ~1.2:1 on paper and
+          around 3:1 on this role fill, both well under the AA floor. var(--on-forest) is the
+          token already used for white text on a forest fill elsewhere in this file. */}
       <span
         className="font-display font-semibold"
-        style={{ fontSize: size * 0.35, color: '#A8D88A', lineHeight: 1 }}
+        style={{ fontSize: size * 0.35, color: 'var(--on-forest)', lineHeight: 1 }}
       >
         {initials}
       </span>
@@ -506,7 +509,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
                 className="font-sans"
                 style={{
                   fontSize: 12,
-                  color: bioRemaining < 20 ? '#B83A18' : '#755942',
+                  color: bioRemaining < 20 ? 'var(--danger)' : 'var(--text-muted)',
                 }}
               >
                 {t('profileBioCharsLeft').replace('{n}', String(bioRemaining))}

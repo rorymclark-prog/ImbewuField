@@ -26,7 +26,11 @@
      authority, rather than with an earth-light override — so the Vision 2 token-collision test's
      declaration count (one authority, zero override) still holds. */
   --color-harvest: #7A4408;
-  --color-canvas: #F7F5EF;
+  /* ux-02: was #F7F5EF, a cool near-white distinct from --bg-0 (#E4DCC6) in every theme column —
+     /home, /records, /prices and /exchange rendered a visibly different, brighter page than
+     /journal, /calendar, /farmer and most other screens on the same tab bar. Aliased to var(--bg-0)
+     so a page painted with --color-canvas matches the rest of the app and still follows the theme. */
+  --color-canvas: var(--bg-0);
   --color-sage-100: #EEF3EA;
   --color-forest: #1F4D2B;
   --color-forest-light: #2D6B3C;
@@ -119,7 +123,7 @@
 }
 
 body {
-  background-color: var(--color-paper);
+  background-color: var(--bg-0);
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -332,7 +336,7 @@ html[data-theme="earth"].dark {
   --color-muted: #9C8160;
   --color-surface: #181208;
   --color-harvest: #D8A840;
-  --color-canvas: #0D0A06;
+  --color-canvas: var(--bg-0);
   --color-sage-100: #2A3D2C;
   --color-water: #58A0DC;
   --color-sun: #F2C94C;
@@ -404,7 +408,7 @@ html[data-theme="slate"] {
   --color-muted: #5F6E80;
   --color-surface: #F8FAFC;
   --color-harvest: #AA5C08;
-  --color-canvas: #FFFFFF;
+  --color-canvas: var(--bg-0);
   --color-sage-100: #E8F3EC;
   --color-water: #1555AA;
   --color-sun: #F2C94C;
@@ -471,7 +475,7 @@ html[data-theme="slate"].dark {
   --color-muted: #8090AC;
   --color-surface: #0C1526;
   --color-harvest: #E8A030;
-  --color-canvas: #060A12;
+  --color-canvas: var(--bg-0);
   --color-sage-100: #173B31;
   --color-water: #4890DC;
   --color-sun: #F2C94C;

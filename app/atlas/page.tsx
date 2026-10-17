@@ -17,14 +17,14 @@ const AtlasExplorer = dynamic(() => import('@/components/atlas/AtlasExplorer'), 
   ssr: false,
   loading: () => (
     <div className="flex-1 flex items-center justify-center">
-      <span className="font-display" style={{ fontSize: 14, color: '#5C5040' }}>Loading the world…</span>
+      <span className="font-display" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Loading the world…</span>
     </div>
   ),
 });
 
 export default function AtlasPage() {
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
         style={APP_HEADER_STYLE}
@@ -32,8 +32,8 @@ export default function AtlasPage() {
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: '#5C5040' }}>Atlas · global garden explorer</h1>
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>Atlas · global garden explorer</h1>
         <div className="flex-1" />
         <SettingsButton />
       </header>

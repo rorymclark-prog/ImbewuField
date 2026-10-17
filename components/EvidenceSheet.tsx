@@ -148,12 +148,12 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         aria-label={groupLabel}
         className="w-full max-w-md font-sans overflow-y-auto"
         style={{
-          background: '#FBF8F1', color: 'var(--text-primary)', borderRadius: '22px 22px 0 0',
+          background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh', paddingBottom: 'calc(20px + env(safe-area-inset-bottom))',
         }}
       >
         {/* Header */}
-        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #EFE7D6' }}>
+        <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 36, height: 36, borderRadius: 9,
@@ -163,9 +163,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
-              <div style={{ font: '400 13px/1.4 system-ui, sans-serif', color: '#665A47', marginTop: 1 }}>{groupDesc}</div>
+              <div style={{ font: '400 13px/1.4 var(--font-sans), sans-serif', color: 'var(--text-secondary)', marginTop: 1 }}>{groupDesc}</div>
             </div>
-            <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#665A47', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
+            <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
               <X size={20} />
             </button>
           </div>
@@ -181,21 +181,21 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
           <p>{t('evidenceSheetLabUploadInstructions')}</p>
           <p>{t('evidenceSheetLabReadNote')}</p>
-          <label style={{display:'block',fontWeight:600}}>{t('evidenceSheetLabResultsLabel')}<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder={t('evidenceSheetLabResultsPlaceholder')} style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'var(--input-bg)',color:'var(--text-primary)'}}/></label>
+          <label style={{display:'block',fontWeight:600}}>{t('evidenceSheetLabResultsLabel')}<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder={t('evidenceSheetLabResultsPlaceholder')} style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid var(--border)',borderRadius:8,fontSize:14,marginTop:6,background:'var(--input-bg)',color:'var(--text-primary)'}}/></label>
           <button disabled={uploading||!resultNote.trim()} onClick={()=>{
             if(getEvidenceItems(siteId,itemKey).length>=4){setFileError(t('evidenceSheetLabMaxEntries'));return;}
             if(!addEvidenceItem(siteId,itemKey,{type:'note',name:t('evidenceSheetReportedResultsName'),note:resultNote.trim()})){setFileError(t('evidenceSheetResultsSaveFailed'));return;}
             setResultNote('');setEvidenceItems(getEvidenceItems(siteId,itemKey));onChanged();
-          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid #285c3e',borderRadius:8,background:'#eaf1e6',color:'#234b32'}}>{t('evidenceSheetSaveTestResults')}</button>
+          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid var(--color-forest-700)',borderRadius:8,background:'var(--badge-bg)',color:'var(--color-forest-800)'}}>{t('evidenceSheetSaveTestResults')}</button>
         </div>}
-        {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'#9d2a20'}}>{fileError}</p>}
+        {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'var(--orange)'}}>{fileError}</p>}
         {group.key === 'land_legal' && (
           <div style={{
-            margin: '14px 20px 0', background: '#FFF6E5', border: '1.5px solid #EFC378',
+            margin: '14px 20px 0', background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', border: '1.5px solid color-mix(in srgb, var(--gold) 30%, transparent)',
             borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 10, alignItems: 'flex-start',
           }}>
-            <AlertTriangle size={18} color="#8A5A0A" style={{ flexShrink: 0, marginTop: 1 }} />
-            <div style={{ font: '500 12.5px/1.5 system-ui, sans-serif', color: '#6B4A0E' }}>
+            <AlertTriangle size={18} color="var(--gold-dim)" style={{ flexShrink: 0, marginTop: 1 }} />
+            <div style={{ font: '500 12.5px/1.5 var(--font-sans), sans-serif', color: 'var(--gold-dim)' }}>
               <strong>{t('evidenceSheetLandLegalWarningTitle')}</strong> {t('evidenceSheetLandLegalWarningBody')}
             </div>
           </div>
@@ -207,24 +207,24 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
             style={{
-              flex: 1, background: '#274D2C', color: '#fff', border: 'none', borderRadius: 11,
-              padding: '12px 10px', font: '600 13px/1 system-ui, sans-serif',
+              flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', borderRadius: 11,
+              padding: '12px 10px', font: '600 13px/1 var(--font-sans), sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
           >
-            <Camera size={20} color="#CDEBB6" />
+            <Camera size={20} color="var(--on-forest)" />
             {t('evidenceSheetTakePhoto')}
           </button>
           <button
             onClick={() => { if (fileInputRef.current) { fileInputRef.current.accept = '.pdf,.jpg,.jpeg,.png,image/*'; fileInputRef.current.click(); } }}
             disabled={uploading}
             style={{
-              flex: 1, background: '#FBF8F1', color: 'var(--color-forest-700)', border: '1.5px solid #CFC4AC', borderRadius: 11,
-              padding: '12px 10px', font: '600 13px/1 system-ui, sans-serif',
+              flex: 1, background: 'var(--bg-1)', color: 'var(--color-forest-700)', border: '1.5px solid var(--border)', borderRadius: 11,
+              padding: '12px 10px', font: '600 13px/1 var(--font-sans), sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
           >
-            <Upload size={20} color="#3C6B3F" />
+            <Upload size={20} color="var(--color-forest-700)" />
             {t('evidenceSheetUploadFile')}
           </button>
         </div>
@@ -242,18 +242,18 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Storage-full error banner */}
         {storageFull && (
           <div style={{
-            margin: '12px 20px 0', background: '#FEF2F2', border: '1px solid #FECACA',
+            margin: '12px 20px 0', background: 'color-mix(in srgb, var(--orange) 12%, var(--bg-1))', border: '1px solid color-mix(in srgb, var(--orange) 30%, transparent)',
             borderRadius: 10, padding: '10px 13px',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
           }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: 6, font: '500 13px/1.4 system-ui, sans-serif', color: '#B91C1C' }}>
+            <span style={{ display: 'flex', alignItems: 'center', gap: 6, font: '500 13px/1.4 var(--font-sans), sans-serif', color: 'var(--orange)' }}>
               <AlertTriangle size={14} style={{ flexShrink: 0 }} />
               {t('evidenceSheetStorageFull')}
             </span>
             <button
               onClick={() => setStorageFull(false)}
               aria-label={t('evidenceSheetDismiss')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#B91C1C', flexShrink: 0, padding: 2 }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--orange)', flexShrink: 0, padding: 2 }}
             >
               <X size={14} />
             </button>
@@ -263,12 +263,12 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Photo grid */}
         {photoItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               {t('evidenceSheetPhotosCount').replace('{n}', String(photoItems.length))}
             </div>
             <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
               {photoItems.map((ev) => (
-                <div key={ev.id} style={{ position: 'relative', width: 70, height: 70, borderRadius: 9, overflow: 'hidden', background: '#E0D6C2' }}>
+                <div key={ev.id} style={{ position: 'relative', width: 70, height: 70, borderRadius: 9, overflow: 'hidden', background: 'var(--bg-2)' }}>
                   {ev.dataUrl && (
                     <img data-photo-preview src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   )}
@@ -298,7 +298,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Doc list */}
         {docItems.length > 0 && (
           <div style={{ padding: '15px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               {t('evidenceSheetOnFileCount').replace('{n}', String(docItems.length))}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
@@ -308,17 +308,17 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 11, padding: '10px 13px',
                 }}>
                   <div style={{
-                    width: 38, height: 44, borderRadius: 6, background: '#F0F4F8', border: '1px solid #DCE5EC',
+                    width: 38, height: 44, borderRadius: 6, background: 'var(--bg-2)', border: '1px solid var(--border)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
                   }}>
-                    <FileText size={16} color="#C0392B" />
+                    <FileText size={16} color="var(--orange)" />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
+                    <div style={{ font: '600 13px/1 var(--font-sans), sans-serif', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
                     {ev.note&&<p style={{fontSize:13,lineHeight:1.5,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{ev.note}</p>}
                     {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>{t('evidenceSheetDownloadOriginalPdf')}</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>{t('evidenceSheetFilenameOnly')}</p>}
                     {ev.sizeBytes && (
-                      <div style={{ font: '400 11px/1 system-ui, sans-serif', color: 'var(--text-muted)', marginTop: 3 }}>
+                      <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 3 }}>
                         {(ev.sizeBytes / 1024 / 1024).toFixed(1)} MB
                       </div>
                     )}
@@ -335,7 +335,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {/* Quick numbers */}
         {quickFields.length > 0 && (
           <div style={{ padding: '16px 20px 0' }}>
-            <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
+            <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 9 }}>
               {t('evidenceSheetQuickNumbersOptional')}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -343,7 +343,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                 <div key={f.key}>
                   {editingField === f.key ? (
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-1)', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
-                      <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
+                      <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
                       <input
                         autoFocus
                         type="text"
@@ -352,9 +352,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                         onChange={(e) => setEditValue(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') saveField(f.key); if (e.key === 'Escape') setEditingField(null); }}
                         placeholder={f.unit}
-                        style={{ width: 100, font: '600 13px/1 system-ui, sans-serif', color: 'var(--text-primary)', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
+                        style={{ width: 100, font: '600 13px/1 var(--font-sans), sans-serif', color: 'var(--text-primary)', border: 'none', outline: 'none', background: 'transparent', textAlign: 'right' }}
                       />
-                      <button onClick={() => saveField(f.key)} style={{ font: '600 12px system-ui', color: group.color, background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>{t('evidenceSheetSave')}</button>
+                      <button onClick={() => saveField(f.key)} style={{ font: '600 12px var(--font-sans), sans-serif', color: group.color, background: 'none', border: 'none', cursor: 'pointer', padding: '2px 6px' }}>{t('evidenceSheetSave')}</button>
                     </div>
                   ) : (
                     <button
@@ -365,8 +365,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                         width: '100%', cursor: 'pointer', textAlign: 'left',
                       }}
                     >
-                      <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
-                      <span style={{ font: quickNums[f.key] ? '600 13px/1 system-ui, sans-serif' : '400 13px/1 system-ui, sans-serif', color: quickNums[f.key] ? '#2D2519' : '#B89C6A' }}>
+                      <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
+                      <span style={{ font: quickNums[f.key] ? '600 13px/1 var(--font-sans), sans-serif' : '400 13px/1 var(--font-sans), sans-serif', color: quickNums[f.key] ? 'var(--text-primary)' : 'var(--text-muted)' }}>
                         {quickNums[f.key] ? `${quickNums[f.key]} ${f.unit}` : t('evidenceSheetTapToAdd')}
                       </span>
                     </button>
@@ -379,16 +379,16 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
 
         {/* Lima tip */}
         {limaTip && (
-          <div style={{ margin: '16px 16px 0', background: '#274D2C', borderRadius: 13, padding: '14px 15px', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
-            <div style={{ width: 30, height: 30, borderRadius: '50%', background: '#3C6B3F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          <div style={{ margin: '16px 16px 0', background: 'var(--color-forest-800)', borderRadius: 13, padding: '14px 15px', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
+            <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--color-forest-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {/* Lima sprout glyph */}
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#CDEBB6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
               </svg>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: '#EAF2E2', fontStyle: 'italic' }}>{limaTip}</div>
-              <div style={{ font: '400 10.5px/1 system-ui, sans-serif', color: '#9DBE9D', marginTop: 5 }}>
+              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'var(--on-forest)', fontStyle: 'italic' }}>{limaTip}</div>
+              <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'color-mix(in srgb, var(--on-forest) 70%, transparent)', marginTop: 5 }}>
                 {isLab ? t('evidenceSheetLimaLabNote') : t('evidenceSheetLimaDefaultNote')}
               </div>
             </div>

@@ -336,7 +336,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={t('chatInputPlaceholder')}
-            className="flex-1 rounded-xl px-3 outline-none min-w-0 font-display"
+            className="flex-1 rounded-xl px-3 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] min-w-0 font-display"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 16, minHeight: 46, borderRadius: 12 }}
           />
           <button type="submit" disabled={isDisabled}

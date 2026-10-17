@@ -69,14 +69,14 @@ export function buildDemoProfile(): Profile {
 export function buildDemoLetterhead(): SellerLetterhead {
   return {
     address: 'Ubhejane Crèche\nMkuze, KwaZulu-Natal',
-    email: 'accounts@ubhejane.example.invalid',
+    email: 'accounts@ubhejane.org.za',
     taxNumber: '',
     bankName: 'Imbewu Community Bank',
     bankAccountName: 'Ubhejane Crèche garden',
     bankAccountNumber: '1234 5678 90',
     bankBranchCode: '123456',
     paymentTermsDays: 14,
-    notes: 'crates returned with the next order.',
+    notes: 'Please return crates with your next order.',
   };
 }
 
@@ -530,7 +530,7 @@ export function buildDemoFinance(): DemoFinance {
       name: 'Mkuze co-op',
       address: 'Co-op depot, Mkuze',
       phone: '072 000 0102',
-      email: 'accounts@ubhejane.example.invalid',
+      email: 'accounts@ubhejane.org.za',
     },
     { name: 'Local spaza shop', phone: '072 000 0103' },
   ];

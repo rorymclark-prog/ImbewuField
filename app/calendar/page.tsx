@@ -488,6 +488,10 @@ export default function CalendarPage() {
           </p>
         )}
         {/* ---- Month strip ---- */}
+        {/* staff-18: the strip already scrolls the active chip to centre on mount (see the
+            activeChipRef effect above), but there was no visual hint that it scrolls at all —
+            edge fades on both sides signal more months sit off-screen, and scroll-snap gives the
+            drag a settled stop on a chip instead of landing mid-month. */}
         <div
           style={{
             background: 'var(--bg-1)',
@@ -495,6 +499,9 @@ export default function CalendarPage() {
             overflowX: 'auto',
             WebkitOverflowScrolling: 'touch',
             scrollbarWidth: 'none',
+            scrollSnapType: 'x proximity',
+            maskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
+            WebkitMaskImage: 'linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent)',
           }}
         >
           <div
@@ -529,6 +536,7 @@ export default function CalendarPage() {
                     transition: 'all 0.15s ease',
                     flexShrink: 0,
                     letterSpacing: '0.04em',
+                    scrollSnapAlign: 'center',
                   }}
                   aria-pressed={active}
                   aria-current={idx === currentMonth ? 'date' : undefined}
@@ -821,7 +829,10 @@ export default function CalendarPage() {
                       color: 'var(--text-secondary)',
                     }}
                   >
-                    {localUi('In catalog sowing window', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
+                    {/* copy-10: was 'In catalog sowing window' — internal data-model wording
+                        ('catalog') a farmer has no reason to know. isiZulu meaning is unchanged
+                        (still "in the sowing time"), only the English jargon moved. */}
+                    {localUi('Good month to sow', 'Esikhathini sokuhlwanyela esisohlwini', lang)}
                   </span>
                 </div>
                 <span
@@ -867,12 +878,18 @@ export default function CalendarPage() {
                 This grid tracks {crops.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
               </div>
             ) : (
-            /* Scrollable table */
+            /* Scrollable table. staff-18: this is a crop × month matrix (data two-dimensional in
+               a way a 3-rows-of-4-months card grid can't show), so it stays a horizontally
+               scrolling table rather than being rebuilt as month cards — the fade on the right
+               edge is the fix that carries over: it signals "Dec" is still off-screen instead of
+               leaving the table looking clipped at whichever month happens to land at the edge. */
             <div
               style={{
                 overflowX: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 scrollbarWidth: 'none',
+                maskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, black calc(100% - 24px), transparent)',
               }}
             >
               <table

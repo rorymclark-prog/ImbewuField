@@ -41,6 +41,20 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '17 October 2026', sha: '44a7dc08', changes: [
+    'Dark mode now covers staff dashboards, Study, Money book, Exchange, Network and maps.',
+    'On a laptop the pages share one header with your role\'s tabs and use the full width.',
+    'The Lima button and the Tour pill no longer sit on top of buttons or text.',
+    'Account opens in tour mode, and maps show a plain message on phones that cannot draw them.',
+    'One name everywhere: Field journal, Production plan, My Records, Site reports.',
+    'Shorter tab labels, page titles in the browser tab, South African number formats.',
+  ], tour: [{ title: 'Try dark mode on your dashboard',
+    where: 'Account → Appearance', href: '/account',
+    detail: 'In the dark earth theme, Records, Exchange and Network cards, chips and inputs follow it.',
+  }, { title: 'Check the names and tabs',
+    where: 'Home', href: '/home',
+    detail: 'Tiles, menu and page headers share one name per feature; My Records fits on one line.',
+  }] },
   { when: '14 October 2026', sha: '5ce317a', changes: [
     'Money book dates and charts show month names in Sesotho, Tshivenda, Xitsonga and isiZulu.',
     'Sesotho, Tshivenda and Xitsonga month names are unreviewed drafts; invoices stay English.',

@@ -30,7 +30,7 @@ export default function ManualContentsPage({ params }: { params: { lang: string 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }}>
       <ManualHeader fallback="/manual" label={ui.title} />
-      <main lang={lang} style={{ maxWidth: 760, margin: '0 auto', padding: '24px 16px 64px' }}>
+      <main lang={lang} style={{ maxWidth: 760, margin: '0 auto', padding: '24px 16px 0', paddingBottom: 'max(64px, var(--lima-fab-clearance, 0px))' }}>
         <h1 className="font-display" style={{ fontSize: 'clamp(28px, 2.4vw + 18px, 40px)', lineHeight: 1.15, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 8px' }}>
           {ui.title}
         </h1>

@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, DollarSign, User, Users, BarChart3 } from 'lucide-react';
+import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen } from 'lucide-react';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
 import styles from './TabBar.module.css';
@@ -13,29 +13,60 @@ import styles from './TabBar.module.css';
 // audit found she could not reconcile ("she cannot answer how much did I make this season").
 // /finances redirects here, so an installed PWA with the old tab still lands in the right place.
 //
-// 'homeQuickMyRecords', not 'tabFinance': the label has to match the tile and the header, and
-// this key is already translated in all ten locales — renaming the door would have meant either
-// coining farming copy in ten languages or shipping an English tab under a translated tile.
-const TABS = [
-  { href: '/home',     key: 'tabHome',           Icon: Home },
-  { href: '/farmer',   key: 'tabMap',            Icon: Map },
-  { href: '/records',  key: 'homeQuickMyRecords', Icon: DollarSign },
-  { href: '/account',  key: 'tabAccount',        Icon: User },
+// 'tabRecords' ("Records"), not 'homeQuickMyRecords' ("My Records"): the tile and page title keep
+// the longer label, but the bar is too narrow for it — "My Records" wraps to two lines in English
+// and worse in isiZulu (zu-08/ux-08) — so the bar gets its own short key.
+const FARMER_TABS = [
+  { href: '/home',     key: 'tabHome',    Icon: Home },
+  { href: '/farmer',   key: 'tabMap',     Icon: Map },
+  { href: '/records',  key: 'tabRecords', Icon: DollarSign },
+  { href: '/account',  key: 'tabAccount', Icon: User },
 ];
 
-export default function TabBar() {
+// staff-10/sdesk-05: mentor, ngo and funder used to inherit the farmer's own tab set (a mentor's
+// dashboard wasn't even a tab) or, for funder, no bar at all. One shape for all three staff
+// roles now — Home, the role's own dashboard, Network, Account — with single-word labels so
+// nothing wraps. Student gets its own four: Home, Studies, Records, Account.
+const STAFF_TABS = {
+  mentor: [
+    { href: '/home',   key: 'tabHome',      Icon: Home },
+    { href: '/mentor', key: 'tabDashboard', Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork',  Icon: Users },
+    { href: '/account', key: 'tabAccount',  Icon: User },
+  ],
+  ngo: [
+    { href: '/home', key: 'tabHome',       Icon: Home },
+    { href: '/ngo',  key: 'tabDashboard',  Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork', Icon: Users },
+    { href: '/account', key: 'tabAccount', Icon: User },
+  ],
+  funder: [
+    { href: '/home',    key: 'tabHome',      Icon: Home },
+    { href: '/funder',  key: 'tabDashboard', Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork',   Icon: Users },
+    { href: '/account', key: 'tabAccount',   Icon: User },
+  ],
+  student: [
+    { href: '/home',    key: 'tabHome',     Icon: Home },
+    { href: '/student', key: 'tabStudies',  Icon: BookOpen },
+    { href: '/records', key: 'tabRecords',  Icon: DollarSign },
+    { href: '/account', key: 'tabAccount',  Icon: User },
+  ],
+} as const;
+
+/** Shared with components/layout/AppHeader.tsx, which shows the same four destinations as
+ *  16px text links at lg+ instead of this bar (desk-07) rather than keeping its own copy. */
+export function tabsForRole(navigationRole: string | null) {
+  return navigationRole && navigationRole in STAFF_TABS
+    ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
+    : FARMER_TABS;
+}
+
+export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: boolean }) {
   const pathname = usePathname();
   const { t } = useLanguage();
   const { navigationRole } = useRoleNavigation();
-  const tabs = navigationRole === 'funder' ? [
-    { href: '/funder', key: 'homeRoleFunderLabel', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork', Icon: Users },
-    { href: '/account', key: 'tabAccount', Icon: User },
-  ] : navigationRole === 'ngo' ? [
-    { href: '/ngo', key: 'navNGODashboard', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork', Icon: Users },
-    { href: '/account', key: 'tabAccount', Icon: User },
-  ] : TABS;
+  const tabs = tabsForRole(navigationRole);
   const barRef = useRef<HTMLDivElement>(null);
 
   // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
@@ -101,7 +132,11 @@ export default function TabBar() {
   return (
     <div
       ref={barRef}
-      className="flex"
+      // desk-07: at 1280px this bar was still the primary navigation — the phone bottom tab bar
+      // stretched edge to edge with its labels spread thin. AppHeader shows the same four
+      // destinations as proper desktop nav links at lg+ on the pages that use it, so this bar can
+      // step aside there instead of doubling as a second, wrong-shaped nav.
+      className={hideAtDesktop ? 'flex lg:hidden' : 'flex'}
       style={{
         // var(--bg-1), not the '#FFFEFA' this used to carry: that hex matches earth LIGHT
         // exactly but never changes, so this bar — present on almost every screen — stayed a
@@ -146,7 +181,12 @@ export default function TabBar() {
               <span
                 className="font-sans"
                 style={{
+                  // Still 12px (tests/type-floor.test.ts's FARMER_SURFACES floor, zero budget) —
+                  // nowrap plus the shorter tabRecords/tabDashboard/tabStudies keys and the
+                  // isiZulu non-breaking hyphen are what stop the label wrapping (ux-08/zu-08),
+                  // not a smaller size.
                   fontSize: 12,
+                  whiteSpace: 'nowrap',
                   fontWeight: active ? 700 : 600,
                   color: active ? '#1F4D2B' : 'var(--text-muted)',
                   letterSpacing: '0.01em',

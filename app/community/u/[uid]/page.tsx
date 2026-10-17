@@ -156,7 +156,7 @@ export default function PublicCommunityProfilePage() {
             {(!simple || moreOpen) && profile.photos?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
                 {profile.photos.map((url, i) => (
-                  <img key={i} src={url} alt="" style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
+                  <img key={i} src={url} alt={`Photo of ${profile.display_name}, ${i + 1} of ${profile.photos.length}`} style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
                 ))}
               </div>
             )}

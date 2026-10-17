@@ -25,7 +25,7 @@ import {
 import {
   loadLetterhead, saveLetterhead, dueDateISO, EMPTY_LETTERHEAD, type SellerLetterhead,
 } from '@/lib/invoice-seller';
-import { buildInvoiceDocument } from '@/lib/invoice-document';
+import { buildInvoiceDocument, formatInvoiceZar } from '@/lib/invoice-document';
 import { buildInvoicePdf } from '@/lib/invoice-pdf';
 import InvoiceDocumentView from '@/components/invoice/InvoiceDocument';
 import LessonLink from '@/components/design/LessonLink';
@@ -180,7 +180,7 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
 ];
 
 const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
-const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' };
+const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -290,10 +290,21 @@ export default function InvoicePage() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
   const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
+  // staff-11 / sdesk-13 / desk-02: the saved list used to render all of it, with every paid
+  // invoice carrying its own row of five payment-method chips — a 70-invoice sample account
+  // became a page several thousand pixels tall. Ten rows, "Show more", and a single "Edit"
+  // tap before showing the payment-method choices instead of always showing all five.
+  const SAVED_PAGE_SIZE = 10;
+  const [savedVisibleCount, setSavedVisibleCount] = useState(SAVED_PAGE_SIZE);
+  const [editingPaymentFor, setEditingPaymentFor] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
-    if (isSampleMode()) { setSampleProfile(getSandboxProfile()); setShowSaved(true); }
+    // desk-02: this used to also setShowSaved(true), which opened sample mode with the full
+    // Saved list expanded above the editor — a 1280px visitor scrolled ~5000px of saved-invoice
+    // rows before reaching Bill to, Line items and Save invoice. The editor + preview are now
+    // the first thing on screen in sample mode too, same as a real account.
+    if (isSampleMode()) { setSampleProfile(getSandboxProfile()); }
     const nextNumber = loadNextInvoiceNumber();
     setSeq(nextNumber);
     setCurrentNo(nextNumber);
@@ -795,7 +806,7 @@ export default function InvoicePage() {
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
                 className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
-                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : '#FFFEFA', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
+                style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
               {currentId && (
@@ -904,63 +915,107 @@ export default function InvoicePage() {
                   <div className="px-3 py-3 text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
                     {ui('No saved invoices yet — save your first invoice here.')}
                   </div>
-                ) : saved.map((inv) => (
-                  <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
-                        <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
-                          #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
-                        </div>
-                        <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                          {isRecordsRegionalLang(lang)
-                            ? recordsDate(lang, new Date(inv.dateISO), true)
-                            : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                        </div>
-                      </button>
-                      <button
-                        onClick={() => openSaved(inv)}
-                        disabled={syncingInvoiceId === inv.id}
-                        aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
-                        className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
-                        style={inv.status === 'paid'
-                          ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
-                          : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
-                        {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
-                      </button>
-                      {/* Two taps to destroy accounting history. The first tap used to be enough. */}
-                      {!inv.sourceSaleId && (confirmDelete === inv.id ? (
-                        <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
-                          className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
-                          style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
-                          {ui('Delete?', 'Susa?')}
-                        </button>
-                      ) : (
-                        <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
-                          style={{
-                            background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
-                          }}>
-                          <X size={15} />
-                        </button>
-                      ))}
+                ) : (
+                  <>
+                    {/* sdesk-13: a column heading row on md+ only — the rows below stay the same
+                        markup at every width (a redesign into a true <table> risked more than
+                        this track's scope), but the header at least names what each column is
+                        once the row is wide enough to read as one. */}
+                    <div
+                      className="hidden md:grid px-3 py-1.5 text-xs font-sans font-semibold uppercase"
+                      style={{ gridTemplateColumns: '1fr 7rem 9rem 2.75rem', gap: 8, letterSpacing: '0.06em', color: 'var(--text-muted)', borderBottom: '1px solid var(--border)' }}
+                    >
+                      <span>{ui('Date · client')}</span>
+                      <span>{ui('Amount')}</span>
+                      <span>{ui('Status')}</span>
+                      <span />
                     </div>
-                    {inv.status === 'paid' && !simple && (
-                      <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
-                        {PAYMENT_METHODS.map((m) => (
-                          <button key={m} onClick={() => void changeInvoiceStatus(inv, 'paid', m)}
-                            disabled={syncingInvoiceId === inv.id}
-                            className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
-                            style={inv.paymentMethod === m
-                              ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
-                              : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
-                            {paymentLabel(m)}
+                    {saved.slice(0, savedVisibleCount).map((inv) => (
+                      <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid var(--border)' }}>
+                        <div className="flex items-center gap-2">
+                          <button onClick={() => openSaved(inv)} className="flex-1 min-w-0 text-left" style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0 }}>
+                            <div className="font-display text-sm" style={{ color: 'var(--text-primary)' }}>
+                              #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
+                            </div>
+                            <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
+                              {isRecordsRegionalLang(lang)
+                                ? recordsDate(lang, new Date(inv.dateISO), true)
+                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            </div>
                           </button>
-                        ))}
+                          <span className="hidden md:inline-block text-sm font-display tabular-nums" style={{ color: 'var(--text-primary)', minWidth: '7rem' }}>
+                            {formatInvoiceZar(inv.total)}
+                          </span>
+                          <button
+                            onClick={() => openSaved(inv)}
+                            disabled={syncingInvoiceId === inv.id}
+                            aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
+                            className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                            style={inv.status === 'paid'
+                              ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
+                              : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
+                            {inv.status === 'paid' ? ui('Paid') : ui('Unpaid')}
+                          </button>
+                          {/* Two taps to destroy accounting history. The first tap used to be enough. */}
+                          {!inv.sourceSaleId && (confirmDelete === inv.id ? (
+                            <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
+                              className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                              style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
+                              {ui('Delete?', 'Susa?')}
+                            </button>
+                          ) : (
+                            <button onClick={() => setConfirmDelete(inv.id)} aria-label={ui('Delete invoice')}
+                              style={{
+                                background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', opacity: 0.5,
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                width: 44, height: 44, minWidth: 44, minHeight: 44, flexShrink: 0,
+                              }}>
+                              <X size={15} />
+                            </button>
+                          ))}
+                        </div>
+                        {/* staff-11 / sdesk-13: a paid invoice used to always show all five payment-
+                            method chips. It now shows the chosen method with one "Edit" tap — the
+                            chips themselves (the popover sdesk-13 asked for, simplified to an inline
+                            reveal rather than a floating panel) only appear while editing this row. */}
+                        {inv.status === 'paid' && !simple && (
+                          editingPaymentFor === inv.id ? (
+                            <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
+                              {PAYMENT_METHODS.map((m) => (
+                                <button key={m} onClick={() => { void changeInvoiceStatus(inv, 'paid', m); setEditingPaymentFor(null); }}
+                                  disabled={syncingInvoiceId === inv.id}
+                                  className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
+                                  style={inv.paymentMethod === m
+                                    ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                                    : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
+                                  {paymentLabel(m)}
+                                </button>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 mt-2 pl-0.5">
+                              <span className="text-xs font-sans capitalize" style={{ color: 'var(--text-secondary)' }}>
+                                {inv.paymentMethod ? paymentLabel(inv.paymentMethod) : ui('Record payment', 'Rekhoda inkokhelo')}
+                              </span>
+                              <button onClick={() => setEditingPaymentFor(inv.id)}
+                                className="text-xs font-sans font-semibold"
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-forest-700)', padding: 0, textDecoration: 'underline' }}>
+                                {ui('Edit', 'Hlela')}
+                              </button>
+                            </div>
+                          )
+                        )}
                       </div>
+                    ))}
+                    {saved.length > savedVisibleCount && (
+                      <button onClick={() => setSavedVisibleCount((n) => n + SAVED_PAGE_SIZE)}
+                        className="w-full text-center text-xs font-sans font-semibold py-2.5"
+                        style={{ background: 'var(--bg-1)', border: 'none', borderTop: '1px solid var(--border)', color: 'var(--color-forest-700)', cursor: 'pointer' }}>
+                        {ui('Show more', 'Khombisa okungaphezulu')} ({saved.length - savedVisibleCount})
+                      </button>
                     )}
-                  </div>
-                ))}
+                  </>
+                )}
               </div>
             )}
 
