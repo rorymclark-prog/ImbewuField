@@ -24,6 +24,7 @@ const dict: Dict = {
   language: 'Ririmi',
   tabHome: 'Kaya',
   tabMap: 'Mepe',
+  tabFinance: 'Timali',
   tabAccount: 'Akhawunti',
   // Unreviewed Study interface drafts; English source stays in the shared dictionary.
   studentWatchAndListen: "Vona u tlhela u yingisela",
@@ -650,6 +651,8 @@ const dict: Dict = {
   homeSurveyNew: 'Kambela ndhawu yintshwa',
   homeSurveyDesc: 'Veka pini kutani Lima u ta hlaya maxelo, misava na mati ya kona.',
   homeOpenMap: 'Pfula mepe',
+  homeQuickFinance: 'Timali',
+  homeQuickFinanceDesc: 'Muholo & tihakelo',
   homeQuickStudy: 'Dyondza',
   homeQuickStudyDesc: 'Khoso ya permaculture',
   homeQuickContact: 'Vulavurisana',
