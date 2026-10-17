@@ -25,7 +25,8 @@ export default function TeachTheTeachersPage() {
       </section>
 
       <aside className={styles.notice}>
-        <strong>Proposed English timetable for ACT planning.</strong> Confirm the hours, group size, trainers, venue and programme policy with ACT before delivery. This is a facilitation rehearsal, not a new farming qualification or proof of competence. The app’s isiZulu, Sesotho and Tshivenda text may include marked machine drafts. Check each lesson’s text, slides and narration separately before teaching; use the exact English source and local language support when a translation is unclear.
+        <p><strong>Proposed English timetable for ACT planning.</strong> This is a facilitation rehearsal, not a qualification or proof of competence.</p>
+        <details><summary>More</summary><p>Confirm the hours, group size, trainers, venue and programme policy with ACT before delivery. The app’s isiZulu, Sesotho and Tshivenda text may include marked machine drafts. Check each lesson’s text, slides and narration separately before teaching; use the exact English source and local language support when a translation is unclear.</p></details>
       </aside>
 
       <section id="prepare" className={styles.panel}>
@@ -45,7 +46,7 @@ export default function TeachTheTeachersPage() {
         <h2>Use the ten core modules as your lesson bank</h2>
         <p>The two days refresh the teaching method and practise selected lessons. They do not cover or assess all ten modules in full. Choose a published, available lesson that fits the local group and check its source and media before use.</p>
         <ol className={styles.moduleList}>{COURSE_MODULES.map(module => <li key={module.id}>{module.title}</li>)}</ol>
-        <Link href="/student">Open My Studies →</Link>
+        <Link href="/student">Open My Studies →</Link>
       </section>
 
       {ACT_FACILITATOR_DAYS.map(day => <section id={`day-${day.number}`} key={day.number} className={styles.day}>
@@ -59,7 +60,7 @@ export default function TeachTheTeachersPage() {
               {session.app && <div className={styles.appTask}>
                 <p className={styles.eyebrow}>Try in ImbewuField</p>
                 <p>{session.app.task}</p>
-                <Link href={session.app.href}>{session.app.label} →</Link>
+                <Link href={session.app.href}>{session.app.label} →</Link>
               </div>}
               <p><strong>Without the app:</strong> {session.paper}</p>
               <p><strong>What to observe:</strong> {session.evidence}</p>
