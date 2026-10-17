@@ -236,7 +236,10 @@ function TraineeCard({
           ) : (
             <div className="flex items-center gap-2 pt-3 flex-wrap">
               <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {lang === 'zu' ? new Date(enrollment.enrolled_at).toLocaleDateString('zu-ZA') : new Date(enrollment.enrolled_at).toLocaleDateString()}
+                {/* copy-14: toLocaleDateString with no locale argument reads the device's
+                    browser locale, which prints the en-US '10/16/2026' on a phone set to that
+                    rather than 'en-ZA'. */}
+                {enrollment.cohort ? `${enrollment.cohort} · ` : ''}{tr(lang, 'enrolled', 'wabhaliswa')} {new Date(enrollment.enrolled_at).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-ZA')}
               </span>
               <div className="flex-1" />
               <button

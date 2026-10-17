@@ -74,7 +74,9 @@ function ExampleInner() {
           left: 0,
           right: 0,
           zIndex: 50,
-          background: '#C07A1E',
+          // nav-15: white text on the raw ochre fill (#C07A1E) is 2.54:1, below the 4.5:1 rule —
+          // CLAUDE.md's own answer for white type under an ochre fill is #9A6018.
+          background: '#9A6018',
           display: 'flex',
           alignItems: 'center',
           gap: 12,

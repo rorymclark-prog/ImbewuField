@@ -327,6 +327,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     if (language !== 'zu') return message;
     const known: Record<string, string> = {
       'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
+      // copy-16: reuses the same two already-translated halves above/below rather than coining
+      // new phrasing — 'Could not build the PDF.' and the 'Check your connection…' sentence
+      // already used verbatim elsewhere (e.g. app/community/page.tsx).
+      'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
     return known[message] ?? message;
@@ -839,9 +843,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
     } catch (err) {
-      // Never fail silently again — that was the whole bug.
+      // Never fail silently again — that was the whole bug. copy-16: the raw JavaScript message
+      // ('Failed to fetch', 'NetworkError when attempting to fetch resource...') used to be
+      // appended straight onto the farmer-facing sentence. It still goes to the console for
+      // whoever debugs this; the farmer only sees the translated sentence.
+      if (err instanceof Error) console.error('PDF export failed:', err.message);
       setPdfState('error');
-      setError(displayError(err instanceof Error ? `${tr('Could not build the PDF', 'Umbiko we-PDF awukwazanga ukwakhiwa')}: ${err.message}` : 'Could not build the PDF.'));
+      setError(displayError('Could not build the PDF. Check your connection and try again.'));
       setTimeout(() => setPdfState('idle'), 4000);
     }
   }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
