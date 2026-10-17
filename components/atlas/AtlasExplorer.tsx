@@ -240,12 +240,15 @@ export default function AtlasExplorer() {
           <div
             className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-4 py-2.5"
             style={{
-              background: 'rgba(255,254,250,0.94)', border: '1px solid var(--border)',
+              // dark-03/staff-12: a hardcoded near-white fill stayed a bright card in dark mode,
+              // under this span's own var(--text-muted) — pale-on-dark's own pale colour — which
+              // made the English caption underneath effectively invisible (pale beige on white).
+              background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)', border: '1px solid var(--border)',
               borderRadius: 14, boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
               maxWidth: 'calc(100% - 24px)', textAlign: 'center',
             }}
           >
-            <Earth size={15} style={{ color: '#1F4D2B' }} />
+            <Earth size={15} style={{ color: 'var(--color-forest-800)' }} />
             <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
               {isZulu ? (
                 <>
@@ -289,7 +292,7 @@ export default function AtlasExplorer() {
           <div className="flex-1 overflow-y-auto px-3.5 pb-5 pt-1" style={{ minHeight: 0 }}>
             {state.status === 'loading' && (
               <div className="flex flex-col items-center justify-center gap-3 py-14">
-                <Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} />
+                <Loader2 size={22} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
                 <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>
                   {isZulu
                     ? 'Kufundwa isimo sezulu, imvula nomhlabathi kule ndawo… / Reading climate, rain and soil for this point…'

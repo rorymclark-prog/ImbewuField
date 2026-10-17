@@ -101,12 +101,16 @@ const STATUS: Record<GardenStatus, { color: string }> = {
  * than Mapbox point clustering, which could only ever show a count. */
 const SITE_ZOOM = 7.6;
 
-const INK = '#20190F';
-const INK_SOFT = '#5C5040';
-const INK_MUTED = '#755942';
-const LINE = '#E2D8C4';
-const PAPER = '#FFFEFA';
-const PANEL = '#F4EFE4';
+// dark-03/staff-12: these five were literal hexes — a hard-coded paper slab and ink that stayed
+// bright-paper-on-dark no matter the theme/mode, because a named const assigned a hex literal
+// still IS a hex literal everywhere it is used. Pointing them at the existing theme tokens makes
+// every call site below follow the theme automatically, with no call site edited.
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
+const PANEL = 'var(--bg-1)';
 const ATTENTION = '#C0531E';
 
 /** Space-grouped thousands (SA convention), locale-independent so SSR and the
@@ -365,7 +369,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         marginTop: 4,
                         fontSize: 11,
                         color: INK,
-                        background: 'rgba(255,254,250,0.92)',
+                        background: 'color-mix(in srgb, var(--bg-1) 92%, transparent)',
                         border: `1px solid ${LINE}`,
                         borderRadius: 999,
                         padding: '1.5px 7px',
@@ -437,7 +441,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                           marginTop: 4,
                           fontSize: 11.5,
                           color: INK,
-                          background: 'rgba(255,254,250,0.95)',
+                          background: 'color-mix(in srgb, var(--bg-1) 95%, transparent)',
                           border: `1px solid ${LINE}`,
                           borderRadius: 999,
                           padding: '2px 8px',
@@ -462,14 +466,14 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
              * corner and the two collide at 375px. */
             className="absolute top-14 sm:top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-3.5 py-2 max-w-[calc(100%-24px)]"
             style={{
-              background: 'rgba(255,254,250,0.94)',
+              background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)',
               border: `1px solid ${LINE}`,
               borderRadius: 999,
               boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
               whiteSpace: 'nowrap',
             }}
           >
-            <Info size={14} style={{ color: '#1F4D2B', flexShrink: 0 }} />
+            <Info size={14} style={{ color: 'var(--color-forest-800)', flexShrink: 0 }} />
             <span className="font-display" style={{ fontSize: 12.5, color: INK }}>
               {copy.districtHint}
             </span>
@@ -511,7 +515,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
              * on the FAB at any expansion height, on any route that mounts it there. */
             top: 100,
             right: 12,
-            background: 'rgba(255,254,250,0.96)',
+            background: 'color-mix(in srgb, var(--bg-1) 96%, transparent)',
             border: `1px solid ${LINE}`,
             borderRadius: 12,
             boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
@@ -584,7 +588,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                     width: 13,
                     height: 13,
                     borderRadius: '50%',
-                    background: '#1F4D2B',
+                    background: 'var(--color-forest-800)',
                     border: `3px solid ${ATTENTION}`,
                     flexShrink: 0,
                   }}
@@ -631,7 +635,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div
               className="md:hidden absolute left-1/2 -translate-x-1/2 top-2"
-              style={{ width: 40, height: 4, borderRadius: 2, background: '#D5C9AE' }}
+              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong)' }}
             />
             <span
               className="font-sans font-bold uppercase"

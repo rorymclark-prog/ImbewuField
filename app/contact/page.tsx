@@ -4,8 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
-import Link from 'next/link';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -178,13 +177,9 @@ export default function ContactPage() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
       >
+        {/* nav-07: BackButton already falls back to /home — this lone chevron Link duplicated
+            it, giving the header two back controls side by side. */}
         <MenuButton /><BackButton fallback="/home" />
-        <Link
-          href="/home"
-          style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}
-        >
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
         <BrandLogo />
         <div style={{ flex: 1 }} />
         <LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />
