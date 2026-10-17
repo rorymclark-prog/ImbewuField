@@ -54,13 +54,19 @@ const STAFF_TABS = {
   ],
 } as const;
 
-export default function TabBar() {
+/** Shared with components/layout/AppHeader.tsx, which shows the same four destinations as
+ *  16px text links at lg+ instead of this bar (desk-07) rather than keeping its own copy. */
+export function tabsForRole(navigationRole: string | null) {
+  return navigationRole && navigationRole in STAFF_TABS
+    ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
+    : FARMER_TABS;
+}
+
+export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: boolean }) {
   const pathname = usePathname();
   const { t } = useLanguage();
   const { navigationRole } = useRoleNavigation();
-  const tabs = navigationRole && navigationRole in STAFF_TABS
-    ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
-    : FARMER_TABS;
+  const tabs = tabsForRole(navigationRole);
   const barRef = useRef<HTMLDivElement>(null);
 
   // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
@@ -126,7 +132,11 @@ export default function TabBar() {
   return (
     <div
       ref={barRef}
-      className="flex"
+      // desk-07: at 1280px this bar was still the primary navigation — the phone bottom tab bar
+      // stretched edge to edge with its labels spread thin. AppHeader shows the same four
+      // destinations as proper desktop nav links at lg+ on the pages that use it, so this bar can
+      // step aside there instead of doubling as a second, wrong-shaped nav.
+      className={hideAtDesktop ? 'flex lg:hidden' : 'flex'}
       style={{
         // var(--bg-1), not the '#FFFEFA' this used to carry: that hex matches earth LIGHT
         // exactly but never changes, so this bar — present on almost every screen — stayed a

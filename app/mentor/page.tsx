@@ -33,6 +33,7 @@ import DashboardTabs from '@/components/DashboardTabs';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import AppHeader from '@/components/layout/AppHeader';
 import {
   DEFAULT_TRACK, STATUS_LABEL, effectiveStatus, enrollmentDocId, summariseCohort,
   type CourseEnrollment, type EnrollmentStatus,
@@ -605,17 +606,14 @@ export default function MentorPage() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-        <MenuButton />
-          <BackButton />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{tr(lang, 'Mentor', 'Umeluleki')}</span>
-        <div className="flex-1" />
-        <LessonLink id="mentor:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <RoleSwitcher current="mentor" />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={tr(lang, 'Mentor', 'Umeluleki')}
+        backFallback="/"
+        right={<>
+          <LessonLink id="mentor:overview" label={tr(lang, 'Learn', 'Funda')} />
+          <RoleSwitcher current="mentor" />
+        </>}
+      />
 
       {/* Tab strip */}
       <DashboardTabs>
@@ -770,7 +768,7 @@ export default function MentorPage() {
         )}
         </>)}
       </main>
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

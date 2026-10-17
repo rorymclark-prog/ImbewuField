@@ -5,12 +5,9 @@ import { useRouter } from 'next/navigation';
 import {
   ClipboardList, Plus, Check, Send, ChevronDown, ChevronUp, Loader2, X,
 } from 'lucide-react';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
 import { useAuth } from '@/lib/auth';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -24,7 +21,6 @@ import {
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 function localUi(en: string, zu: string, lang: string) {
   return lang === 'zu' ? zu : en;
@@ -799,20 +795,10 @@ export default function SurveysPage() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      {/* Header */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={APP_HEADER_STYLE}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Surveys', 'Izinhlolovo', lang)}</span>
-        <div className="flex-1" />
-        <LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={localUi('Surveys', 'Izinhlolovo', lang)}
+        right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
+      />
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
@@ -916,7 +902,7 @@ export default function SurveysPage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }
