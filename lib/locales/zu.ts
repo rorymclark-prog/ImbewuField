@@ -193,6 +193,12 @@ const dict: Dict = {
   languageDraftNoticeText: 'Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.',
   languageDraftNoticeEnglishToggle: 'English',
   languageDraftNoticeDismiss: 'Vala',
+  // zu-11 / ux-18 isiZulu crop names: NOT here. lib/task-board.ts (which calls
+  // lib/produce-label.ts's produceLabel()) is exercised directly by `node --test` under a loader
+  // with no JSX/TSX transform, and lib/i18n.tsx has JSX at its bottom (LanguageProvider), so
+  // anything produceLabel calls must never import lib/i18n.tsx or lib/locales/* even transitively.
+  // The isiZulu crop-name map lives as a small self-contained Record in lib/produce-label.ts
+  // itself instead — see that file's header comment.
   bruZoneAttribution: 'Idatha yendawo: Amayunithi e-Bioresource ka-KZN DARD',
   bruZoneApprox: 'cishe',
   bruZoneNameCaveat: 'igama lesizinda lingukufanisa ngesimo sezulu okuseduze, akukaqinisekiswa',

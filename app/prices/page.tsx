@@ -51,7 +51,7 @@ export default function PricesPage() {
     setOwnCropKeys(new Set(loadCropPlan().plantings.map((p) => p.cropKey)));
   }, []);
 
-  const crops = useMemo(() => pricedCropList(overrides), [overrides]);
+  const crops = useMemo(() => pricedCropList(overrides, lang), [overrides, lang]);
   const simpleCrops = useMemo(() => {
     const own = crops.filter((crop) => ownCropKeys.has(crop.key));
     return own.length > 0 ? own : crops.filter((crop) => SIMPLE_COMMON_CROP_KEYS.includes(crop.key));

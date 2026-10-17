@@ -40,7 +40,7 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask, type BoardTranslate } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
 import { useAppLevel } from '@/lib/app-level';
@@ -332,9 +332,17 @@ function HomeLandingInner() {
 
   useEffect(() => {
     setLastSite(getLastSite());
+    // zu-03: wire the task board's templates to the live language instead of the English-only
+    // default — 'Prep bed for…', 'Sow…', 'Harvest…', 'Bed {n}' and 'Due this month' now read
+    // through t(), same {placeholder} substitution lib/task-board.ts's own default uses.
+    const boardTranslate: BoardTranslate = (key, vars) => {
+      let s = t(key);
+      if (vars) for (const [name, value] of Object.entries(vars)) s = s.replace(`{${name}}`, value);
+      return s;
+    };
     const refresh = () => {
       setPlaces(loadPlaces());
-      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds()));
+      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds(), boardTranslate, lang));
     };
     refresh();
     // setMainSiteId() fires this same event, so the picker + weather block
@@ -342,7 +350,8 @@ function HomeLandingInner() {
     // and canvas saves likewise refresh tasks while Home remains mounted.
     TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.addEventListener(event, refresh));
     return () => TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const mainSite = resolveMainSite(places ?? []);
   // The analysed point and the designated site answer different questions, but when they are

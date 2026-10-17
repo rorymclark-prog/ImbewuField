@@ -71,7 +71,10 @@ test('January no longer invites a maize harvest or a sweet-potato planting', () 
   const maize = PAGE_CROPS.find((crop) => crop.name === 'Maize')!;
   assert.ok(!maize.harvestMonths.includes(0), 'maize must not be harvestable in January');
 
-  const sweetPotato = PAGE_CROPS.find((crop) => crop.name === 'Sweet Potato')!;
+  // ux-18 (wave 14): the page's own CROP_BASE literal moved from Title Case ('Sweet Potato') to
+  // sentence case ('Sweet potato'), matching the catalog name every other screen already used —
+  // the casing mismatch itself was one of the audit's findings.
+  const sweetPotato = PAGE_CROPS.find((crop) => crop.name === 'Sweet potato')!;
   assert.equal(
     sowMarksForPattern(sweetPotato.key, 'summer')[0], '',
     'sweet potato must not be offered for planting in January',
