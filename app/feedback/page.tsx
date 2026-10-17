@@ -4,6 +4,7 @@ import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
+import BrandLogo from '@/components/BrandLogo';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -29,7 +30,8 @@ export default function FeedbackPage(){
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}><div className={styles.wrap}>
-    <header className={styles.header}><MenuButton/><BackButton fallback="/account"/><SettingsButton/></header>
+    {/* ux-11: a plain span, not a second h1 — the one below it is this page's real heading. */}
+    <header className={styles.header}><MenuButton/><BackButton fallback="/account"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{label('Feedback','Impendulo')}</span><SettingsButton/></header>
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     <p>{paired('Tell the developer what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.','Tshela umthuthukisi okwenzekile noma okungasiza. Ungafaki amagama ayimfihlo, izinombolo zomazisi, izimpendulo eziyimfihlo zezinhlolovo noma imininingwane yomuntu siqu yabanye abantu.')}</p>

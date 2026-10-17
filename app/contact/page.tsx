@@ -181,9 +181,12 @@ export default function ContactPage() {
             it, giving the header two back controls side by side. */}
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
+        {/* ux-11: the title used to sit after the flex spacer, at the far right edge next to
+            BrandLogo at the opposite end of a near-empty bar. Moved next to the logo, matching
+            every other page's MenuButton · BackButton · BrandLogo · title order. */}
+        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
         <div style={{ flex: 1 }} />
         <LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
       </header>
 
       {/* Content */}

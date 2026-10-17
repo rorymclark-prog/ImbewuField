@@ -5,6 +5,7 @@ import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
+import BrandLogo from '@/components/BrandLogo';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
 import ReportComposer from '@/components/ReportComposer';
 import { sampleReportVisuals } from '@/lib/report-visuals';
@@ -36,7 +37,8 @@ export default function SampleGardensPage() {
   useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
   return <main className={styles.page} style={{ paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
-    <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><SettingsButton/></header>
+    {/* ux-11: a plain span, not a second h1 — the one just below is this page's real heading. */}
+    <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{ui('Gardens','Izingadi')}</span><SettingsButton/></header>
     <h1>{SAMPLE_GARDENS.length} {ui('gardens','izingadi')}</h1><p>{ui('Choose a garden to explore its layout, people and report.','Khetha ingadi ukuze uhlole ukuhleleka kwayo, abantu nombiko.')}</p>
     {garden&&<section ref={detail} className={styles.card} aria-label={ui('Selected garden','Ingadi ekhethiwe')}>
       <div className={styles.actions}><button onClick={()=>setSelected(null)}>← {ui('All gardens','Zonke izingadi')}</button><label>{ui('Change garden','Shintsha ingadi')}<select value={garden.id} onChange={e=>setSelected(e.target.value)}>{SAMPLE_GARDENS.map(g=><option key={g.id} value={g.id}>{g.name}</option>)}</select></label></div>
@@ -52,8 +54,19 @@ export default function SampleGardensPage() {
       <p><Link href="/samples/farm">{ui('Open the separate editable Ubhejane farm example','Vula isibonelo sepulazi lase-Ubhejane ongasihlela')}</Link></p>
     </section>}
     <label>{ui('Garden type','Uhlobo lwengadi')}<select value={filter} onChange={e=>setFilter(e.target.value)}>{kinds.map(k=><option key={k} value={k}>{k === 'All' ? ui('All','Zonke') : kindLabel(k)}</option>)}</select></label>
-    <p>{visible.length} {ui('gardens shown','izingadi ezibonisiwe')}</p><div className={styles.grid}>{visible.map(g=><article key={g.id} className={styles.card}><button onClick={()=>setSelected(g.id)} style={{display:'block',textAlign:'left',borderRadius:18,margin:0}} aria-label={ui(`Open ${g.name}`,`Vula ${g.name}`)}>
-      <img src={sampleSitePhoto(g.id)} alt="" loading="lazy" style={{width:'100%',aspectRatio:'3/2',objectFit:'cover',borderRadius:12}}/><h2 style={{marginTop:12}}>{g.name}</h2><p>{g.kind ? kindLabel(g.kind) : ''} · {g.town}</p><span>{ui('Open garden →','Vula ingadi →')}</span>
-    </button><p><a href={sampleGardenReportUrl(g.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF) →','Vula umbiko ogcwalisiwe (PDF) →')}</a></p></article>)}</div>
+    <p>{visible.length} {ui('gardens shown','izingadi ezibonisiwe')}</p><div className={styles.grid}>{visible.map(g=>
+      // ux-21/nav-11: an unstyled native <button> (its own default border/background/padding)
+      // read as a second bordered card nested inside this article's own .card border, with the
+      // report link hanging outside it. One card, one set of padding, both links in one row.
+      <article key={g.id} className={styles.card} style={{padding:16}}>
+        <button onClick={()=>setSelected(g.id)} style={{display:'block',width:'100%',textAlign:'left',border:'none',background:'none',padding:0,margin:0,cursor:'pointer',color:'inherit',font:'inherit'}} aria-label={ui(`Open ${g.name}`,`Vula ${g.name}`)}>
+          <img src={sampleSitePhoto(g.id)} alt="" loading="lazy" style={{width:'100%',aspectRatio:'3/2',objectFit:'cover',borderRadius:12}}/><h2 style={{marginTop:12}}>{g.name}</h2><p style={{margin:'4px 0'}}>{g.kind ? kindLabel(g.kind) : ''} · {g.town}</p>
+        </button>
+        <div style={{display:'flex',gap:12,flexWrap:'wrap',alignItems:'center',marginTop:4}}>
+          <button onClick={()=>setSelected(g.id)} style={{border:'none',background:'none',padding:0,cursor:'pointer',color:'inherit',font:'inherit',textDecoration:'underline',textUnderlineOffset:4}}>{ui('Open garden →','Vula ingadi →')}</button>
+          <a href={sampleGardenReportUrl(g.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF) →','Vula umbiko ogcwalisiwe (PDF) →')}</a>
+        </div>
+      </article>
+    )}</div>
   </div></main>;
 }
