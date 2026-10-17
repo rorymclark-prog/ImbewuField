@@ -286,7 +286,7 @@ function TraineeCard({
                     value={pickerModule}
                     onChange={(e) => setPickerModule(e.target.value)}
                     aria-label={tr(lang, 'Choose a module to assign', 'Khetha imojula ozoyabela')}
-                    className="flex-1 text-xs font-sans rounded-lg px-2 outline-none"
+                    className="flex-1 text-xs font-sans rounded-lg px-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                     style={{ minHeight: 44, minWidth: 0, background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                   >
                     <option value="">{tr(lang, 'Choose a module…', 'Khetha imojula…')}</option>
@@ -348,7 +348,7 @@ function TraineeCard({
                       type="date"
                       value={assignment.due_at ?? ''}
                       onChange={(e) => onAssign(trainee.id, mod.id, e.target.value || null)}
-                      className="text-xs font-sans rounded-lg px-2 py-1 outline-none"
+                      className="text-xs font-sans rounded-lg px-2 py-1 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                       style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                     />
                     {state && state !== 'done' && dueText && (
@@ -647,7 +647,9 @@ export default function MentorPage() {
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-mono"
-                style={{ minWidth: 16, height: 16, fontSize: 9, padding: '0 4px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                // Same fix already applied to this exact badge on /ngo: fontSize 9 was under the
+                // 12px micro-label floor; the pill grows to 19px to fit a 12px digit.
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
                 {badge}
               </span>
             )}
@@ -727,7 +729,7 @@ export default function MentorPage() {
             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
             <input value={search} onChange={(e) => setSearch(e.target.value)}
               aria-label={tr(lang, 'Search participants', 'Sesha abahlanganyeli')} placeholder={tr(lang, 'Search participants...', 'Sesha abahlanganyeli...')}
-              className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
+              className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-1)]"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
           </div>
         )}

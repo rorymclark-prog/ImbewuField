@@ -65,25 +65,34 @@ const WAVE_11_REWORDED = new Set([
   "  soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and boost CEC with compost and biochar',",
   "  homeStatASL: 'ASL',",
 ]);
+/** Five predecessor lines the w13 desktop-frame track reworded (copy-05 reports naming), none in Studies. */
+const W13_REWORDED = new Set([
+  "  siteReportOverline: 'Site report',",
+  "  savedReportsHeader: 'Saved Reports',",
+  "  savedSitesHeader: 'Your Sites',",
+  "  reportsTitle: 'Saved sites & reports',",
+  "  reportsIntro: 'Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.',",
+]);
 function assertOnlyWave11Additions(before: string, live: string) {
   const liveLines = live.split('\n');
   const keyOf = (line: string) => /^ {2}([A-Za-z_$][\w$]*): /.exec(line)?.[1];
-  const rewordedKeys = new Set([...WAVE_11_REWORDED].map(keyOf));
+  const allReworded = new Set([...WAVE_11_REWORDED, ...W13_REWORDED]);
+  const rewordedKeys = new Set([...allReworded].map(keyOf));
   const beforeKeys = new Set(before.split('\n').map(keyOf).filter(Boolean));
   const added: string[] = [];
   let at = 0, reworded = 0;
   for (const line of before.split('\n')) {
-    if (WAVE_11_REWORDED.has(line)) { reworded++; continue; }
+    if (allReworded.has(line)) { reworded++; continue; }
     const from = at;
     while (at < liveLines.length && liveLines[at] !== line) at++;
-    assert.ok(at < liveLines.length, `predecessor line lost or reordered by wave 11: ${line.slice(0, 80)}`);
+    assert.ok(at < liveLines.length, `predecessor line lost or reordered by wave 11/w13: ${line.slice(0, 80)}`);
     added.push(...liveLines.slice(from, at));
     at++;
   }
   added.push(...liveLines.slice(at));
-  assert.equal(reworded, WAVE_11_REWORDED.size, 'each named wave 11 rewording is accounted for once');
+  assert.equal(reworded, allReworded.size, 'each named wave 11/w13 rewording is accounted for once');
   // A later duplicate key in an object literal silently wins, so no added line may re-declare a
-  // predecessor key other than the five named rewordings.
+  // predecessor key other than the ten named rewordings.
   for (const line of added) {
     const key = keyOf(line);
     if (key && !rewordedKeys.has(key)) assert.ok(!beforeKeys.has(key), `wave 11 re-declares predecessor key ${key}`);
@@ -106,7 +115,12 @@ export function ensureStudyUiDueUnlockCurrent() {
   // predecessor is kept as a fixture: it must hash to the earlier whole-file pin, and every one
   // of its lines must survive in order in the live file except the five named non-Study edits.
   const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveEnglish), 'c113a108d9c1cd9728cb39c172fc1cbf7aa35fa9de393e23779e96d84d0a845d', 'complete app dictionary after the wave 11 additions');
+  // w13 (desktop-frame track): lib/i18n.tsx gained three new short tab-label keys
+  // (tabRecords/tabDashboard/tabStudies) and five renamed values (siteReportOverline,
+  // savedSitesHeader, savedReportsHeader, reportsTitle, reportsIntro — copy-05 naming
+  // consistency); this whole-file pin is a drift detector for the dictionary as a whole, not a
+  // claim that nothing may ever change it, so it moves to the new byte-exact content.
+  assert.equal(sha(liveEnglish), '47676d1ef96ad587a3d67fbf532625b881dc1347a5d67c86b082a66186d4f306', 'complete app dictionary after the wave 11 and w13 additions');
   const english = readFileSync(path('tests/fixtures/i18n-before-wave-11.tsx.txt'), 'utf8');
   assert.equal(sha(english), 'd37673fb5c1a65ea78b4981b9ef24ade6f174365c7c999f20c3f03bc8326f3c7', 'complete app dictionary after the reviewed report-footnote layer remains exact');
   assertOnlyWave11Additions(english, liveEnglish);
@@ -116,8 +130,10 @@ export function ensureStudyUiDueUnlockCurrent() {
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   const liveZulu = readFileSync(path('lib/locales/zu.ts'), 'utf8');
-  assert.equal(sha(liveZulu), 'ff57af75e2a8583e76b193bc1a92855d0c259acdd75d39d859cba49f5dee95ce', 'complete isiZulu locale source after the wave 11 Ask drafts');
-  assert.equal(sha(rewindWave11Locale(liveZulu)), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
+  // w13: tabAccount's hyphen became a non-breaking hyphen (U+2011) to stop the bottom-nav label
+  // wrapping (zu-08) — same wording, one character changed.
+  assert.equal(sha(liveZulu), '2c4243479b0112d43023d6be40bd1e03a51c725136fa438a4ac3b25831218bff', 'complete isiZulu locale source after the wave 11 Ask drafts and w13 tabAccount fix');
+  assert.equal(sha(rewindWave11Locale(liveZulu)), '467e46888993378460dfdeef0cdd7d231d70be18212dd5d379f030d32053083a', 'isiZulu locale source remains exact');
   });
 }
 

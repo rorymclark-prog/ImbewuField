@@ -86,10 +86,16 @@ test('the Take a tour row and the tour tip button use a real fill under white ty
 /* ── Task 3: TabBar /network label ───────────────────────────────────────────────────────── */
 
 test('the NGO and funder tab bars label /network with navNetwork, not the menu-section heading key', () => {
-  const tabsBlock = TAB_BAR.slice(TAB_BAR.indexOf('const tabs ='), TAB_BAR.indexOf(';', TAB_BAR.indexOf('TABS;')) + 1);
+  // w13: TabBar's per-role tab arrays moved into a STAFF_TABS map (mentor/ngo/funder/student)
+  // behind an exported tabsForRole() that components/layout/AppHeader.tsx also reuses — the old
+  // `const tabs = navigationRole === 'funder' ? [...] : ... : TABS;` ternary chain this test used
+  // to slice out is gone, but the requirement it guards (/network must use navNetwork, not the
+  // "Organisation" section heading) still holds.
+  const tabsBlock = TAB_BAR.slice(TAB_BAR.indexOf('const STAFF_TABS'), TAB_BAR.indexOf('} as const'));
+  assert.ok(tabsBlock.length > 0, 'could not find the STAFF_TABS block in TabBar.tsx');
   assert.doesNotMatch(tabsBlock, /'navSectionOrganisation'/,
     '/network must not reuse the "Organisation" section heading as a tab label');
-  assert.match(tabsBlock, /href: '\/network', key: 'navNetwork'/g);
+  assert.match(tabsBlock, /href: '\/network',\s*key: 'navNetwork'/g);
 });
 
 /* ── Task 4: no data-vendor badges ───────────────────────────────────────────────────────── */

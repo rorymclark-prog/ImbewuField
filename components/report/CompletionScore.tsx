@@ -54,7 +54,7 @@ function StepIcon({ done, pct }: { done: boolean; pct: number }) {
         style={{
           display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
           width: 22, height: 22, borderRadius: 9999, background: 'transparent', color: GOLD,
-          fontSize: 10, fontWeight: 800, flexShrink: 0, border: `1.5px dashed ${GOLD}`,
+          fontSize: 11, fontWeight: 800, flexShrink: 0, border: `1.5px dashed ${GOLD}`,
         }}
       >
         {Math.round(pct)}

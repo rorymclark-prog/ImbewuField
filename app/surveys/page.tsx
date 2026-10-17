@@ -169,7 +169,7 @@ function QuestionBuilder({
           onChange={(e) => onChange({ ...q, text: e.target.value })}
           placeholder={localUi('Question text...', 'Umbhalo wombuzo...', lang)}
           aria-label={localUi('Question text', 'Umbhalo wombuzo', lang)}
-          className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          className="flex-1 font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
         <button
@@ -188,7 +188,7 @@ function QuestionBuilder({
           onChange={(e) => onChange({ ...q, text_zu: e.target.value })}
           placeholder="Umbhalo wesiZulu (uyazikhethela)"
           aria-label="Umbhalo wesiZulu wombuzo (uyazikhethela)"
-          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+          className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       )}
@@ -225,7 +225,7 @@ function QuestionBuilder({
                 value={opt}
                 onChange={(e) => setOption(i, e.target.value)}
                 placeholder={`Option ${i + 1}`}
-                className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
               {lang === 'zu' && (
@@ -234,7 +234,7 @@ function QuestionBuilder({
                   onChange={(e) => setOptionZu(i, e.target.value)}
                   placeholder={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
                   aria-label={`Impendulo ${i + 1} ngesiZulu (uyazikhethela)`}
-                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none"
+                  className="flex-1 font-sans text-xs rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}
@@ -352,7 +352,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               onChange={(e) => setTitle(e.target.value)}
               placeholder={localUi('Survey title...', 'Isihloko senhlolovo...', lang)}
               aria-label={localUi('Survey title', 'Isihloko senhlolovo', lang)}
-              className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+              className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
             {lang === 'zu' && (
@@ -361,7 +361,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
                 onChange={(e) => setTitleZu(e.target.value)}
                 placeholder="Isihloko ngesiZulu (uyazikhethela)"
                 aria-label="Isihloko senhlolovo ngesiZulu (uyazikhethela)"
-                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none"
+                className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             )}
@@ -370,7 +370,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
               onChange={(e) => setOrgName(e.target.value)}
               placeholder={localUi('Organisation name...', 'Igama lenhlangano...', lang)}
               aria-label={localUi('Organisation name', 'Igama lenhlangano', lang)}
-              className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+              className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
             />
           </div>
@@ -472,7 +472,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
           onChange={(e) => setTitleZu(e.target.value)}
           placeholder="Isihloko senhlolovo ngesiZulu"
           aria-label={`Isihloko ngesiZulu: ${survey.title}`}
-          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none"
+          className="w-full font-display font-semibold text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
           style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
         />
       </div>
@@ -485,7 +485,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
             onChange={(e) => setQuestionsZu((current) => current.map((q, index) => index === questionIndex ? { ...q, text_zu: e.target.value } : q))}
             placeholder="Umbuzo ngesiZulu"
             aria-label={`Umbuzo ngesiZulu: ${question.text}`}
-            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+            className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
             style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
           />
           {question.options.map((option, optionIndex) => (
@@ -498,7 +498,7 @@ function SurveyLabelEditor({ survey, onSaved }: { survey: Survey; onSaved: () =>
                   : q))}
                 placeholder="Impendulo ngesiZulu"
                 aria-label={`Impendulo ngesiZulu: ${option}`}
-                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none"
+                className="w-full font-sans text-sm rounded-xl px-3 py-2 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
               />
             </div>
@@ -714,7 +714,7 @@ function FarmerSurveyCard({
                   placeholder={localUi('Your answer...', 'Impendulo yakho...', lang)}
                   aria-label={localUi('Your answer', 'Impendulo yakho', lang)}
                   rows={3}
-                  className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none"
+                  className="w-full font-sans text-sm rounded-xl px-3 py-2.5 outline-none resize-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={{ background: 'var(--color-surface)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)' }}
                 />
               )}

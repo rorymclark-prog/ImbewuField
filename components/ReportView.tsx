@@ -1052,7 +1052,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
-            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
+            className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
             {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
