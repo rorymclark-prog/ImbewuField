@@ -766,7 +766,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
@@ -775,7 +775,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Print', 'Phrinta')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Printer size={16} /><span className="hidden sm:inline">{ui('Print', 'Phrinta')}</span>
         </button>
@@ -785,8 +785,21 @@ export default function InvoicePage() {
       <div className="invoice-scroll flex-1 overflow-y-auto">
         <div className={`invoice-column ${workspace.workspace} ${workspace.invoice} px-4 py-5 sm:px-6 sm:py-6`}>
 
-          <div className={`invoice-preview ${workspace.invoicePreview}`}>
-            <InvoiceDocumentView doc={doc} />
+          {/* dark-12: the printed-document sheet stays white (deliberately — it is a preview of
+              a document that prints on white paper), but in dark mode an unframed white rectangle
+              reads as an unthemed card rather than a document. The "Preview" caption and the
+              inset well around it are the frame; components/invoice/InvoiceDocument.tsx itself
+              (owned by another track) is unchanged. */}
+          <div
+            className="invoice-preview-frame rounded-2xl"
+            style={{ background: 'var(--bg-2)', padding: 12 }}
+          >
+            <p className="no-print text-xs font-sans font-semibold uppercase mb-2" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
+              {ui('Preview of the printed invoice', 'Ukubuka kusengaphambili kwe-invoyisi eyoshicilelwa')}
+            </p>
+            <div className={`invoice-preview ${workspace.invoicePreview}`} style={{ boxShadow: 'var(--shadow-panel)', borderRadius: 12 }}>
+              <InvoiceDocumentView doc={doc} />
+            </div>
           </div>
 
           {/* ── Editor (screen only) ───────────────────────────────────── */}
@@ -986,7 +999,7 @@ export default function InvoicePage() {
                                   disabled={syncingInvoiceId === inv.id}
                                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                                   style={inv.paymentMethod === m
-                                    ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                                    ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                                     : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                                   {paymentLabel(m)}
                                 </button>
@@ -1254,7 +1267,7 @@ export default function InvoicePage() {
                       onClick={() => { setTermsDays(choice.days); patchLetterhead({ paymentTermsDays: choice.days }); }}
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
-                        ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                        ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                         : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
@@ -1309,20 +1322,20 @@ export default function InvoicePage() {
 
             <button onClick={() => void persist()} disabled={!valid}
               className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-              style={{ background: valid ? '#1F4D2B' : '#DDD5C5', color: valid ? '#fff' : '#5C5040', border: 'none' }}>
+              style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
-            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: '#EAF2EB', color: '#244E33' }}>{saveMessage}</p>}
+            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'rgba(46,107,58,0.12)', color: 'var(--color-forest-700)' }}>{saveMessage}</p>}
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>
@@ -1367,10 +1380,11 @@ export default function InvoicePage() {
 
           /* Every ancestor between <body> and the document has to give up its screen layout,
              or the sheet inherits the app's background and its phone-width column. */
-          .invoice-page, .invoice-scroll, .invoice-column, .invoice-preview {
+          .invoice-page, .invoice-scroll, .invoice-column, .invoice-preview-frame, .invoice-preview {
             display: block !important;
             position: static !important;
             background: #fff !important;
+            box-shadow: none !important;
             max-width: none !important;
             width: auto !important;
             height: auto !important;
