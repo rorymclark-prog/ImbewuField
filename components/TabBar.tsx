@@ -181,10 +181,11 @@ export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: bool
               <span
                 className="font-sans"
                 style={{
-                  // 11px, not 12px, with nowrap: the 12px label let 'My Records' and the isiZulu
-                  // 'I-akhawunti' wrap to a second line and sit lower than the other three tabs
-                  // (ux-08/zu-08). 11px is the repo's floor for any text, so this stays above it.
-                  fontSize: 11,
+                  // Still 12px (tests/type-floor.test.ts's FARMER_SURFACES floor, zero budget) —
+                  // nowrap plus the shorter tabRecords/tabDashboard/tabStudies keys and the
+                  // isiZulu non-breaking hyphen are what stop the label wrapping (ux-08/zu-08),
+                  // not a smaller size.
+                  fontSize: 12,
                   whiteSpace: 'nowrap',
                   fontWeight: active ? 700 : 600,
                   color: active ? '#1F4D2B' : 'var(--text-muted)',

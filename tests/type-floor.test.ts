@@ -117,6 +117,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/report/SidewaysScroller.tsx': 'the words that tell a farmer a wide report picture slides sideways on a phone',
   'components/ProgrammeReports.tsx': 'organisation and funder reporting',
   'components/DashboardTabs.tsx': 'touch and keyboard navigation across staff sections',
+  'components/layout/AppHeader.tsx': 'the shared header title and desktop nav links on /reports and other farmer-reachable routes; no sub-12px type (title is 12px, desktop nav links are 16px)',
   'components/SampleProgramme.tsx': 'NGO and funder sample analysis and access controls',
   'components/AreaReturnCards.tsx': 'farmers compare the recorded return from their growing space',
   'components/ProductionAreas.tsx': 'staff record and read checked production areas',
