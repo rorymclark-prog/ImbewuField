@@ -49,7 +49,7 @@ export default function FinanceF1Timeline({ practice }: { practice: F1Practice }
     </div>
     <div className={styles.controls}>
       <button type="button" onClick={() => moveTo(index - 1)} disabled={index === 0}>← Previous card</button>
-      <button type="button" onClick={() => moveTo(index + 1)} disabled={index === positions.length - 1}>Next card →</button>
+      <button type="button" onClick={() => moveTo(index + 1)} disabled={index === positions.length - 1}>Next card →</button>
     </div>
     <p className={styles.caution}>These records do not show full profit. Use your own source documents for a real farm.</p>
   </section>;

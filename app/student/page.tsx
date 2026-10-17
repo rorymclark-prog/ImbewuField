@@ -22,6 +22,7 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
+import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
 // perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
 // deck is actually opened — load its chunk then, not with the rest of Studies.
 const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
@@ -1459,9 +1460,9 @@ export default function StudentPage() {
 
         <div className={styles.coursePreviews}>
           <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
-            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
-              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
-              <em>Open the two-day course →</em></span>
+            <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
+              <span><DesignDraftCopy en="Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview." zu="Izinsuku ezimbili zokuzilolonga ekufundiseni ngezifundo ezisemqoka ze-agroecology, imisebenzi yohlelo lokusebenza nesu lephepha uma kungekho i-inthanethi. Okokufundisa kuboniswa ngesiNgisi." /></span>
+              <em><DesignDraftCopy en="Open the two-day course" zu="Vula ikhosi yezinsuku ezimbili" /></em></span>
           </Link>
         </div>
 
@@ -1476,7 +1477,7 @@ export default function StudentPage() {
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
             <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
             {/* Simple: the card itself is the "read the guide" link — the identical "Read the
-                guide · English →" line does not need to repeat once per card (14 times). */}
+                guide · English →" line does not need to repeat once per card (14 times). */}
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>

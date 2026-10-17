@@ -75,6 +75,13 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
   const [quality, setQuality] = useState<PackQuality>('standard');
   const [contentChoice, setContentChoice] = useState({ selectionKey, variant: defaultVariant });
+  // offlineSupported() reads `window`/`caches`, which do not exist during server render: checking
+  // it inline here (as the early-return guard below used to) renders a <p> fallback on the server
+  // and the full <div> once the client re-evaluates it, a hydration mismatch (React error #418).
+  // Assume supported until an effect proves otherwise, so the first client render matches the
+  // server, then swap to the fallback after mount if the device genuinely lacks it (nav-19).
+  const [unsupported, setUnsupported] = useState(false);
+  useEffect(() => { if (!offlineSupported()) setUnsupported(true); }, []);
   // A language/module change must not briefly offer the previous selection's audio or files.
   const variant = contentChoice.selectionKey === selectionKey ? contentChoice.variant : defaultVariant;
   const packs = useMemo(() => moduleIds.map(id => offlinePack(id, lang, quality, variant))
@@ -164,7 +171,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (packs.length === 0) return null;
 
-  if (!offlineSupported()) {
+  if (unsupported) {
     return compact ? null : (
       <p className="font-sans text-xs" style={{ color: '#755942' }}>
         {t('offlineDownloadUnsupported')}
