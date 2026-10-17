@@ -1,10 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isSampleMode, enterSampleMode } from '@/lib/sample-mode';
@@ -47,8 +44,11 @@ export default function SampleFarmPage() {
     await deliverFile(pdf.output('blob'),'ImbewuField-Tour-Farm-Evidence.pdf',"Ubhejane farm evidence · Tour edition");setMessage(ui('Report ready. Use your device’s save or share controls.','Umbiko usulungile. Sebenzisa izinkinobho zokulondoloza noma zokwabelana zedivayisi yakho.'));
   }catch(e){setMessage((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page} style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', paddingBottom: 0 }}><div style={{ flex: 1, overflowY: 'auto', paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + var(--bottom-nav-height, 0px) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
-    {/* ux-11: a plain span, not a second h1 — the one just below is this page's real heading. */}
-    <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{ui('Farm evidence','Ubufakazi bepulazi')}</span><SettingsButton/><Link href="/tour">{ui('15-minute tour','Uhambo lwemizuzu engu-15')}</Link></header>
+    <AppHeader
+      backFallback="/samples"
+      title={ui('Farm evidence','Ubufakazi bepulazi')}
+      right={<Link href="/tour">{ui('15-minute tour','Uhambo lwemizuzu engu-15')}</Link>}
+    />
     <h1>{ui('One farm, from plan to evidence','Ipulazi elilodwa, kusukela ohlelweni kuye ebufakazini')}</h1><p>{ui('Explore the design, visit records and evidence. Your edits stay available until you reload or reset this workspace.','Hlola umklamo, amarekhodi okuvakasha nobufakazi. Izinguquko zakho zizohlala zikhona uze ulayishe kabusha noma usethe kabusha le ndawo yokuzilolonga.')}</p>
     {!sample?<button className={styles.primary} onClick={()=>{if(!enterSampleMode())setMessage(ui('Please allow session storage to open this tour.','Vumela ukugcinwa kolwazi lweseshini ukuze uvule lolu hambo.'));}}>{ui('Open farm workspace','Vula indawo yokusebenza yepulazi')}</button>:pack&&<>
       {lang === 'zu' && <p role="note" className={styles.notice}>Amarekhodi esampula, imibhalo yobufakazi, imiphumela yokuhlolwa komhlabathi namazwibela ezithombe kugcinwe ngesiNgisi ukuze kugcinwe imithombo namaqiniso. Cela usizo lokuzihumusha ngaphambi kokusebenzisa imininingwane yokulima.</p>}
@@ -64,6 +64,6 @@ export default function SampleFarmPage() {
     </>}{message&&<p role="status" className={styles.notice}>{message}</p>}
   </div></div>
   {/* nav-03: without this, /samples/farm was one of the secondary pages that lost the farmer's way home. */}
-  <div className="no-print"><TabBar/></div>
+  <div className="no-print"><TabBar hideAtDesktop/></div>
   </main>;
 }

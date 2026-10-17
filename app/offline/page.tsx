@@ -2,8 +2,7 @@
 import { useEffect,useState } from 'react';
 import Link from 'next/link';
 import { Wifi,WifiOff } from 'lucide-react';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useAuth } from '@/lib/auth';
 import { fieldApi,currentFieldClient } from '@/lib/field-api';
@@ -110,8 +109,11 @@ export default function OfflinePage(){
   const writes=rows.filter(row=>row.scope===activeScope&&row.kind==='write'),cached=rows.filter(row=>row.scope===activeScope&&row.kind==='cache');
   const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:18,background:'var(--bg-1)'};
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8};
-  return <main style={{height:'100%',display:'flex',flexDirection:'column',overflow:'hidden',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{flex:1,overflowY:'auto'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'calc(max(90px, var(--lima-fab-clearance, 0px)) + var(--bottom-nav-height, 0px))'}}>
-    <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:18,lineHeight:'20px',margin:0,minWidth:0,flex:1,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{t('offlineTitle')}</h1></header>
+  return <div className="flex flex-col overflow-hidden" style={{height:'100dvh',background:'var(--bg-0)'}}>
+    <AppHeader title={t('offlineTitle')} />
+  <main style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',color:'var(--text-primary)'}}><div style={{flex:1,overflowY:'auto'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'calc(max(90px, var(--lima-fab-clearance, 0px)) + var(--bottom-nav-height, 0px))'}}>
+    {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own real h1. */}
+    <h1 style={{fontSize:18,lineHeight:'20px',margin:0}}>{t('offlineTitle')}</h1>
     {lang==='zu'&&<p role="note" style={{...card,marginTop:12,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     {/* nav-06: was just the bold word "Connected" with no icon and no sentence, which read like
         a leftover label rather than a status. */}
@@ -131,7 +133,8 @@ export default function OfflinePage(){
     <section style={card}><h2>{t('offlineAvailableTitle')}</h2><p>{t('offlineCachedCount').replace('{count}',String(cached.length))}</p>{source('offlineCachedCount')}<p>{t('offlineAvailableDescription')}</p>{source('offlineAvailableDescription')}<p>{t('offlineDeviceSafety')}</p>{source('offlineDeviceSafety')}</section>
     {message&&<><p role="status" style={card}>{message}</p>{messageKey&&source(messageKey)}</>}{error&&<div role="alert" style={{...card,whiteSpace:'pre-wrap'}}>{error}{englishError&&source(OFFLINE_ERROR_KEYS[englishError])}</div>}
   </div></div>
+  </main>
   {/* nav-03: without this, /offline was one of the secondary pages that lost the farmer's way home. */}
-  <div className="no-print"><TabBar/></div>
-  </main>;
+  <div className="no-print"><TabBar hideAtDesktop/></div>
+  </div>;
 }

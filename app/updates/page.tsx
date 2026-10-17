@@ -7,12 +7,9 @@
 // RELEASE_NOTES, so this page is always exactly as current as the build serving it.
 
 import { useState } from 'react';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import MenuButton from '@/components/MenuButton';
+import AppHeader from '@/components/layout/AppHeader';
 import { RELEASE_NOTES } from '@/lib/release-notes';
 import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 
 // A farmer does not need 150+ dated entries or the git short SHA that used to sit beside each
@@ -48,22 +45,15 @@ export default function UpdatesPage() {
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header
-        className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4"
-        style={APP_HEADER_STYLE}
-      >
-        <MenuButton />
-        <BackButton />
-        <BrandLogo icon="✦" />
-        <div className="w-px h-5" style={{ background: 'var(--border)', opacity: 0.5 }} />
-        <h1 className="text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>
-          What&rsquo;s new
-        </h1>
-        <div className="flex-1" />
-      </header>
+      <AppHeader title={'What’s new'} backFallback="/home" />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 overflow-y-auto" style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
         <div className="mx-auto max-w-2xl px-4 py-6">
+          {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
+              real <h1> now that the old header's h1 is gone. */}
+          <h1 className="text-sm font-display font-semibold m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
+            What&rsquo;s new
+          </h1>
           <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>
             Every change that reached the app, newest first — the same notes the refresh
             banner shows, kept here so they don&rsquo;t disappear when the next update lands.
