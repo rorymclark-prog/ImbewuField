@@ -153,7 +153,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
               className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-sans leading-snug transition-all"
               style={{ background: bg, border, color: textColor, cursor: revealed ? 'default' : 'pointer' }}
             >
-              <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
+              <span className="text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
               {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
@@ -1178,7 +1178,7 @@ export default function StudentPage() {
                           <span className="flex min-w-0 flex-col break-words">
                             {dueText ?? t('studentAssigned')}
                             {englishDueSource && (
-                              <small lang="en" className="mt-1 text-[10px] font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                              <small lang="en" className="mt-1 text-[12px] font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
                                 English source: {englishDueSource}
                               </small>
                             )}
@@ -1198,7 +1198,7 @@ export default function StudentPage() {
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: 'var(--text-muted)' }} />
-                        <span className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{formatDuration(mod.durationMins, t)}</span>
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
@@ -1487,7 +1487,7 @@ export default function StudentPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
             {t('studentProgressFirebase')}
           </p>
         )}
