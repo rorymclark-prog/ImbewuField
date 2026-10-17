@@ -189,6 +189,13 @@ const OWNED_FILE_ALLOWED_HEX: Record<string, string[]> = {
   'components/SampleExperience.module.css': [
     '#245739',
   ],
+  // dark-05/dark-10 (second commit of this track).
+  'app/design/lite/page.tsx': [
+    '#1F4D2B', '#2D6B3C', '#FFFFFF', // the "primary" link's forest-gradient fill + its fixed white text
+  ],
+  'app/partners/page.tsx': [
+    '#EAF3E2', '#9FD4AE', '#D9E8DC', // fixed light type/icon stroke painted on the permanently-dark bg-forest "Get the app" band
+  ],
 };
 
 for (const [relativePath, allowed] of Object.entries(OWNED_FILE_ALLOWED_HEX)) {
@@ -222,6 +229,8 @@ const CONSUMER_FILES_FOR_ROOT_ONLY = [
   'components/SampleProgramme.tsx',
   'components/funder/CohortDashboard.tsx',
   'components/SampleExperience.module.css',
+  'app/design/lite/page.tsx',
+  'app/partners/page.tsx',
 ];
 
 test('none of this track\'s owned files paint a surface, border or text with a :root-only constant', () => {
@@ -241,4 +250,78 @@ test('none of this track\'s owned files paint a surface, border or text with a :
         + offenders.map((o) => `  ${o}`).join('\n')
       : undefined,
   );
+});
+
+// dark-05 — app/design/page.tsx is a 4000+ line file whose PAPER/GREEN/OCHRE/DARK constants are
+// mostly the design CANVAS, which stays satellite/paper on purpose (not in scope here). Only two
+// spots in it were the actual bug: the "pick a saved place" chooser (EmptyState()) and the
+// previous/next step nav buttons (the `navBtn` helper inside the wizard's step bar) are plain
+// pages/chrome, not the canvas, and were rendering with the same literal #FFFEFA/#E2D8C4/white
+// pattern as the rest of this track. A whole-file hex scan would be too noisy (and too fragile
+// against a file another track also touches) for the canvas's deliberate literals, so this pins
+// just those two functions by source snippet instead.
+test('app/design/page.tsx EmptyState() (the saved-place picker) follows the theme', () => {
+  const src = read('app/design/page.tsx');
+  const start = src.indexOf('function EmptyState()');
+  assert.ok(start >= 0, 'EmptyState() should still exist in app/design/page.tsx');
+  const end = src.indexOf('\nfunction DesignStudioInner()', start);
+  assert.ok(end > start, 'could not find the end of EmptyState()');
+  const body = src.slice(start, end);
+  assert.doesNotMatch(body, /background:\s*PAPER/, 'the picker container should not paint itself with the literal PAPER constant');
+  assert.match(body, /var\(--bg-1,/, 'the picker container and its rows should use var(--bg-1, ...)');
+  assert.match(body, /var\(--border,/, 'the saved-place rows should use var(--border, ...) for their hairline');
+  assert.doesNotMatch(body, /#FFFFFF'/, 'the saved-place row background should not stay the literal #FFFFFF');
+});
+
+test('app/design/page.tsx navBtn (the wizard step prev/next buttons) follows the theme', () => {
+  const src = read('app/design/page.tsx');
+  const start = src.indexOf('const navBtn = (disabled: boolean)');
+  assert.ok(start >= 0, 'navBtn should still exist in app/design/page.tsx');
+  const end = src.indexOf('});', start) + 3;
+  const body = src.slice(start, end);
+  // The hex after each comma is the documented var(--token, #fallback) convention (see
+  // components/Illustration.tsx) — this pins that the LIVE value is the var(), not the fallback.
+  assert.match(body, /border:\s*'1px solid var\(--border,/, 'navBtn border should resolve through var(--border, ...)');
+  assert.match(body, /background:\s*'var\(--bg-1,/, 'navBtn background should resolve through var(--bg-1, ...)');
+  assert.match(body, /var\(--text-muted,/, 'navBtn disabled-state text should resolve through var(--text-muted, ...)');
+});
+
+// dark-11 — app/samples/production/ProductionExample.module.css had 47 uses of the :root-only
+// --bg/--surface/--surface-2/--text/--text-2/--text-3 family (code-17), plus a literal-hex page
+// wrapper (dark-11). Routed through --bg-0/1/2 and --text-primary/secondary/muted; var(--brand)
+// and var(--on-forest) are deliberately kept (the calendar header band and the "primary" CTA stay
+// a permanently-dark forest fill, same precedent as the hero bands elsewhere in this track) and
+// var(--ochre) is deliberately kept on the focus ring (a FILL, not text — CLAUDE.md).
+//
+// NOT fixed here, and flagged rather than silently left: .harvestMark/.storedMark/.referenceMark,
+// .selectedMonth and the .freshKey/.storedKey/.referenceKey legend swatches are still literal
+// hex. They are a 3-way categorical legend (fresh/stored/reference) whose colours must stay
+// paired with each other, and none of the existing theme tokens can reproduce their current
+// earth-light values via color-mix (the target hues fall outside the range any mix of an existing
+// token and --bg-0 can reach — e.g. .harvestMark's #dce9d5 has a higher green channel than either
+// --emerald or --bg-0 alone). Reproducing them exactly needs new tokens declared per theme column
+// in app/globals.css, which this track does not own (not in the "Files you own" list for
+// swarm/w13-staff-dark) — left as a note in the PR rather than edited.
+test('app/samples/production/ProductionExample.module.css page/card/calendar surfaces follow the theme', () => {
+  const src = read('app/samples/production/ProductionExample.module.css');
+  const rootOnlyButBrand = ROOT_ONLY_BY_DESIGN.filter((t) => t !== '--brand' && t !== '--ochre');
+  const pattern = new RegExp(`var\\(\\s*(${rootOnlyButBrand.map((t) => t.replace('-', '\\-')).join('|')})\\s*[,)]`, 'g');
+  const offenders: string[] = [];
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec(src))) offenders.push(`var(${m[1]})`);
+  assert.deepEqual(
+    offenders, [],
+    offenders.length
+      ? `Found a :root-only token used for a surface/text/border: ${offenders.join(', ')}`
+      : undefined,
+  );
+  assert.match(src, /\.page\s*\{[^}]*overflow-x:\s*hidden/, 'the page wrapper must clip horizontal overflow so a wide calendar scrolls inside .calendarScroll, not the whole page (nav-12)');
+});
+
+test('the scan actually fires — a known-banned root-only token is caught', () => {
+  const offenders: string[] = [];
+  const pattern = new RegExp(`var\\(\\s*(${ROOT_ONLY_BY_DESIGN.map((t) => t.replace('-', '\\-')).join('|')})\\s*[,)]`, 'g');
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec('.x { color: var(--text-2); }'))) offenders.push(m[1]);
+  assert.deepEqual(offenders, ['--text-2']);
 });

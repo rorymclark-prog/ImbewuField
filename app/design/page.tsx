@@ -513,12 +513,12 @@ function EmptyState() {
         justifyContent: 'center',
         gap: 16,
         padding: 24,
-        background: PAPER,
-        color: DARK,
+        background: 'var(--bg-1, #FFFEFA)',
+        color: 'var(--text-primary, #0B120B)',
         textAlign: 'center',
       }}
     >
-      <Compass size={40} color={GREEN} />
+      <Compass size={40} color="var(--color-forest-800, #1F4D2B)" />
       {places.length > 0 ? (
         <>
           <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
@@ -536,9 +536,9 @@ function EmptyState() {
                   padding: '12px 14px',
                   minHeight: 48,
                   borderRadius: 14,
-                  background: '#FFFFFF',
-                  border: '1px solid #E2D8C4',
-                  color: DARK,
+                  background: 'var(--bg-1, #FFFFFF)',
+                  border: '1px solid var(--border, #E2D8C4)',
+                  color: 'var(--text-primary, #0B120B)',
                   textDecoration: 'none',
                   textAlign: 'left',
                 }}
@@ -549,14 +549,14 @@ function EmptyState() {
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: '#755942' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 11.5, color: 'var(--text-muted, #755942)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800, #1F4D2B)', fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
-          <p style={{ fontSize: 12.5, color: '#755942', maxWidth: 340 }}>
+          <p style={{ fontSize: 12.5, color: 'var(--text-muted, #755942)', maxWidth: 340 }}>
             {isZulu ? 'Icebiso: indawo enomngcele odwetshiwe iba nesithombe sesathelayithi esilingana kahle.' : 'Tip: sites with a traced boundary get a perfectly-fitted satellite view.'}
           </p>
         </>
@@ -3358,8 +3358,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             const idx = STEP_ORDER.indexOf(canvasState.step);
             const navBtn = (disabled: boolean): React.CSSProperties => ({
               width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA',
-              color: disabled ? '#C9BFAD' : GREEN, cursor: disabled ? 'default' : 'pointer',
+              borderRadius: 8, border: '1px solid var(--border, #E2D8C4)', background: 'var(--bg-1, #FFFEFA)',
+              color: disabled ? 'var(--text-muted, #C9BFAD)' : GREEN, cursor: disabled ? 'default' : 'pointer',
               opacity: disabled ? 0.5 : 1, flexShrink: 0, padding: 0,
             });
             return (
