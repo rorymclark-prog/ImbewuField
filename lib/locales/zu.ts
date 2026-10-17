@@ -1500,7 +1500,7 @@ const dict: Dict = {
   loginSubtitleCreate: 'Dala i-akhawunti entsha.',
   loginSubtitleReset: 'Setha kabusha iphasiwedi yakho.',
   loginContinueToMap: 'Ngena ukuze uqhubeke uye kumephu yakho',
-  loginBackendUnavailableNotice: 'Uhlelo olungemuva alukaxhunywa — ukungena akutholakali. Uhlelo lokusebenza lusebenza njengohambo lokuluhlola.',
+  loginBackendUnavailableNotice: 'Ukungena akutholakali okwamanje. Uhlelo lokusebenza lusebenza njengohambo lokuluhlola.',
   loginSignIn: 'Ngena',
   loginCreateAccount: 'Dala i-akhawunti',
   loginResetEmailSent: 'I-imeyili yokusetha kabusha ithunyelwe ku-',
