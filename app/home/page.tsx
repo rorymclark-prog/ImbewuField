@@ -32,7 +32,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -63,9 +63,21 @@ const LANG_TO_LOCALE: Record<string, string> = {
 };
 const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
-function getDayDate(lang: string) {
+// zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
+// fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
+// 16'). isiZulu builds its own day-first string from lib/locales/zu.ts's weekday/month tables
+// instead of Intl; every other language keeps using Intl, with 'en-ZA' as the fallback for an
+// unlisted locale code rather than the browser default.
+const ZU_WEEKDAY_KEYS = ['homeWeekdaySun', 'homeWeekdayMon', 'homeWeekdayTue', 'homeWeekdayWed', 'homeWeekdayThu', 'homeWeekdayFri', 'homeWeekdaySat'];
+const ZU_MONTH_KEYS = ['homeMonthJan', 'homeMonthFeb', 'homeMonthMar', 'homeMonthApr', 'homeMonthMay', 'homeMonthJun', 'homeMonthJul', 'homeMonthAug', 'homeMonthSep', 'homeMonthOct', 'homeMonthNov', 'homeMonthDec'];
+
+function getDayDate(lang: string, now: Date = new Date()) {
+  if (lang === 'zu') {
+    const day = translate('zu', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
-  const now = new Date();
   const day = now.toLocaleDateString(locale, { weekday: 'long' });
   const date = now.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
   return `${day} · ${date}`;

@@ -184,7 +184,12 @@ test('the tab label keys keep English source and use only visibly marked isiZulu
       assert.ok(!block.includes(`${key}ZuDraft:`), `${key} gained an isiZulu draft in ${locale}`);
     }
   }
-  assert.match(records, /Unreviewed isiZulu tab-label drafts/);
+  // zu-04 (wave 14): the isiZulu tab-label draft notice moved out of this ad-hoc line and into
+  // the one shared <LanguageDraftNote>, rendered once under the header (see
+  // components/LanguageDraftNote.tsx and app/records/page.tsx). The regional (Sesotho/Tshivenda/
+  // Xitsonga) tab-label notice below is untouched — it covers languages the shared component
+  // doesn't.
+  assert.match(records, /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
   assert.match(records, /Picked · Sold · Spent · Charts/);
   assert.match(records, /simple \? 'Picked · Sold · Spent\.' : 'Picked · Sold · Spent · Charts\.'/);
   // The door name itself was NOT renamed, precisely so this list stays short: it is already
