@@ -21,6 +21,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import AppHeader from '@/components/layout/AppHeader';
 // perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
 // deck is actually opened — load its chunk then, not with the rest of Studies.
@@ -817,20 +818,13 @@ export default function StudentPage() {
       <AppHeader title={t('studentMyStudies')} backFallback="/home" right={<LessonLink id="student:overview" label={t('homeQuickStudy')} />} />
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
-        {/* zu-04: isiZulu sentence first, one line, 12px muted; the English source sits behind a
-            collapsed "English" detail rather than printed inline, and this renders once under the
-            header rather than inside a card or button. components/LanguageDraftNote.tsx (the
-            isizulu track's shared component) did not exist on main at merge time, so this matches
-            its described wording/shape locally rather than importing it — adopt the shared
-            component here once it lands. */}
+        {/* zu-04: the one shared language-draft note (components/LanguageDraftNote.tsx), once under
+            the header, never inside a card or button; the course-specific line below it says which
+            lessons carry isiZulu drafts. */}
+        <LanguageDraftNote lang={lang} scope="student" />
         {lang === 'zu' && (
           <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
-            <span lang="zu">Uhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu.</span>
-            {' '}
-            <details className="inline">
-              <summary className="inline cursor-pointer" style={{ textDecoration: 'underline' }}>English</summary>
-              <span lang="en"> Unreviewed machine draft, not yet checked by a fluent isiZulu speaker. {t('studentZuluCourseLanguageNote')}</span>
-            </details>
+            {t('studentZuluCourseLanguageNote')}
           </p>
         )}
         {lang === 'st' && (

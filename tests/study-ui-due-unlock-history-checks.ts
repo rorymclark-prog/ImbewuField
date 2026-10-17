@@ -170,9 +170,27 @@ const WAVE_13_ZULU_REMOVED = new Set([
   "  navTourWorkspaceNote: 'Izinguquko zihlala kule ndawo yokusebenza yohambo.',",
   "  navChooseView: 'Khetha ukubuka',",
 ]);
+/** Wave 14 (study track, 17 Oct 2026) respaced the four Study preview/guide action labels: the
+ * space before the arrow became a non-breaking space so the arrow never wraps onto a line of its
+ * own (key kept, value changed). The isiZulu and
+ * study tracks also ADD keys (shared language-draft note, BRU zone wording, Home date names,
+ * site-report biome drafts) and the checker already proves additions re-declare nothing. */
+const WAVE_14_ENGLISH_REWORDED = new Set([
+  "  studentDesignPreviewAction: 'Explore the design teaching preview \u00b7 English \u2192',",
+  "  studentFinancePreviewAction: 'Explore the finance teaching preview \u00b7 English \u2192',",
+  "  studentAppGuideAction: 'Read the guide \u00b7 English \u2192',",
+  "  studentSampleTourAction: 'Explore mapping, planning and records in the sample tour \u2192',",
+]);
+const WAVE_14_ZULU_REWORDED = new Set([
+  "  studentDesignPreviewAction: 'Hlola isifundo sokuklama \u00b7 ngesiNgisi \u2192',",
+  "  studentFinancePreviewAction: 'Hlola okokufundisa ngezezimali \u00b7 ngesiNgisi \u2192',",
+  "  studentAppGuideAction: 'Funda umhlahlandlela \u00b7 ngesiNgisi \u2192',",
+  "  studentSampleTourAction: 'Hlola imephu, ukuhlela namarekhodi ohambweni lwesibonelo \u2192',",
+]);
+const WAVE_14_REMOVED = new Set<string>();
 /** Every predecessor line survives in order except the named rewordings (key kept, value changed)
  * and the named removals (dead keys deleted); added lines may not re-declare any predecessor key. */
-function assertOnlyWave13Changes(before: string, live: string, reworded: Set<string>, removed: Set<string>, label: string) {
+function assertOnlyWaveChanges(before: string, live: string, reworded: Set<string>, removed: Set<string>, label: string, wave: string) {
   const liveLines = live.split('\n');
   const keyOf = (line: string) => /^ {2}([A-Za-z_$][\w$]*): /.exec(line)?.[1];
   const rewordedKeys = new Set([...reworded].map(keyOf));
@@ -184,23 +202,23 @@ function assertOnlyWave13Changes(before: string, live: string, reworded: Set<str
     if (removed.has(line)) { removedSeen++; continue; }
     const from = at;
     while (at < liveLines.length && liveLines[at] !== line) at++;
-    assert.ok(at < liveLines.length, `${label}: predecessor line lost or reordered by wave 13: ${line.slice(0, 80)}`);
+    assert.ok(at < liveLines.length, `${label}: predecessor line lost or reordered by ${wave}: ${line.slice(0, 80)}`);
     added.push(...liveLines.slice(from, at));
     at++;
   }
   added.push(...liveLines.slice(at));
-  assert.equal(rewordedSeen, reworded.size, `${label}: each named wave 13 rewording is accounted for once`);
-  assert.equal(removedSeen, removed.size, `${label}: each named wave 13 removal is accounted for once`);
+  assert.equal(rewordedSeen, reworded.size, `${label}: each named ${wave} rewording is accounted for once`);
+  assert.equal(removedSeen, removed.size, `${label}: each named ${wave} removal is accounted for once`);
   const liveKeys = new Set<string>();
   for (const line of liveLines) {
     const key = keyOf(line);
     if (!key) continue;
-    assert.ok(!liveKeys.has(key), `${label}: wave 13 declares ${key} twice`);
+    assert.ok(!liveKeys.has(key), `${label}: ${wave} declares ${key} twice`);
     liveKeys.add(key);
   }
   for (const line of added) {
     const key = keyOf(line);
-    if (key && !rewordedKeys.has(key)) assert.ok(!beforeKeys.has(key), `${label}: wave 13 re-declares predecessor key ${key}`);
+    if (key && !rewordedKeys.has(key)) assert.ok(!beforeKeys.has(key), `${label}: ${wave} re-declares predecessor key ${key}`);
   }
 }
 
@@ -223,11 +241,17 @@ export function ensureStudyUiDueUnlockCurrent() {
   // supervisor→mentor and the money book→My Records, deletes dead keys and adds new chrome keys,
   // none in Studies. Check the complete new file, then bind every older pin to the exact
   // pre-wave-13 fixture so the wave 11 and earlier proofs still hold byte for byte.
+  // Wave 14 (isiZulu and study tracks) adds the shared language-draft note, BRU zone wording and
+  // the Home date names, and keeps four Study action arrows from wrapping alone. Check the complete new file,
+  // then bind the wave 13 proof to the exact pre-wave-14 fixture so it still holds byte for byte.
   const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
-  assert.equal(sha(liveEnglish), '9d96cbcd3986b7955c1a326491a8c3bf5cbb9fe63d5185b2d4e05307f205a27b', 'complete app dictionary after the wave 13 edits');
+  assert.equal(sha(liveEnglish), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits');
+  const englishBefore14 = readFileSync(path('tests/fixtures/i18n-before-wave-14.tsx.txt'), 'utf8');
+  assert.equal(sha(englishBefore14), '9d96cbcd3986b7955c1a326491a8c3bf5cbb9fe63d5185b2d4e05307f205a27b', 'complete app dictionary after the wave 13 edits remains exact');
+  assertOnlyWaveChanges(englishBefore14, liveEnglish, WAVE_14_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 14');
   const englishBefore13 = readFileSync(path('tests/fixtures/i18n-before-wave-13.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore13), 'c113a108d9c1cd9728cb39c172fc1cbf7aa35fa9de393e23779e96d84d0a845d', 'complete app dictionary after the wave 11 additions remains exact');
-  assertOnlyWave13Changes(englishBefore13, liveEnglish, WAVE_13_ENGLISH_REWORDED, WAVE_13_ENGLISH_REMOVED, 'app dictionary');
+  assertOnlyWaveChanges(englishBefore13, englishBefore14, WAVE_13_ENGLISH_REWORDED, WAVE_13_ENGLISH_REMOVED, 'app dictionary', 'wave 13');
   const english = readFileSync(path('tests/fixtures/i18n-before-wave-11.tsx.txt'), 'utf8');
   assert.equal(sha(english), 'd37673fb5c1a65ea78b4981b9ef24ade6f174365c7c999f20c3f03bc8326f3c7', 'complete app dictionary after the reviewed report-footnote layer remains exact');
   assertOnlyWave11Additions(english, englishBefore13);
@@ -237,10 +261,13 @@ export function ensureStudyUiDueUnlockCurrent() {
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
   const liveZulu = readFileSync(path('lib/locales/zu.ts'), 'utf8');
-  assert.equal(sha(liveZulu), '6d2d7aabb38ed86ff6fc114357bc9b767e9bccf7fc4ba3b54858c83c49c00046', 'complete isiZulu locale source after the wave 13 edits');
+  assert.equal(sha(liveZulu), '85491dec24d841716c326c009a1f772a8f44e18ebe259bb940b49652691a2bcf', 'complete isiZulu locale source after the wave 14 edits');
+  const zuluBefore14 = readFileSync(path('tests/fixtures/zu-before-wave-14.ts.txt'), 'utf8');
+  assert.equal(sha(zuluBefore14), '6d2d7aabb38ed86ff6fc114357bc9b767e9bccf7fc4ba3b54858c83c49c00046', 'complete isiZulu locale source after the wave 13 edits remains exact');
+  assertOnlyWaveChanges(zuluBefore14, liveZulu, WAVE_14_ZULU_REWORDED, WAVE_14_REMOVED, 'isiZulu locale', 'wave 14');
   const zuluBefore13 = readFileSync(path('tests/fixtures/zu-before-wave-13.ts.txt'), 'utf8');
   assert.equal(sha(zuluBefore13), 'ff57af75e2a8583e76b193bc1a92855d0c259acdd75d39d859cba49f5dee95ce', 'complete isiZulu locale source after the wave 11 Ask drafts remains exact');
-  assertOnlyWave13Changes(zuluBefore13, liveZulu, WAVE_13_ZULU_REWORDED, WAVE_13_ZULU_REMOVED, 'isiZulu locale');
+  assertOnlyWaveChanges(zuluBefore13, zuluBefore14, WAVE_13_ZULU_REWORDED, WAVE_13_ZULU_REMOVED, 'isiZulu locale', 'wave 13');
   assert.equal(sha(rewindWave11Locale(zuluBefore13)), '2462f4298e9e854c041328ec3c030e85efaffd08c9c1f3ab104a71dc8e5ba6dc', 'isiZulu locale source remains exact');
   });
 }
