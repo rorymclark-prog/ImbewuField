@@ -14,6 +14,9 @@ export const EX = {
   /** Hairline between surfaces, and form-control borders. */
   border: 'var(--color-border)',
   inputBorder: 'var(--color-border)',
+  /** Unselected chip / segment-control pill — a translucent surface, not a literal paper
+   *  hex, so it reads as a dark pill in dark mode instead of staying lit-paper bright. */
+  chip: 'color-mix(in srgb, var(--color-surface) 80%, transparent)',
   /** Primary text. */
   ink: 'var(--color-ink)',
   /** Secondary text. */
