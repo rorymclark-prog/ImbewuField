@@ -244,7 +244,7 @@ export default function ContactPage() {
                   <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                     {ui('Replies from your team', 'Izimpendulo eziphuma kwithimba lakho')}
                   </span>
-                  <span className="font-mono rounded-full" style={{ fontSize: 10, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
+                  <span className="font-mono rounded-full" style={{ fontSize: 12, padding: '1px 6px', background: 'var(--color-forest-800)', color: 'var(--color-canvas)' }}>
                     {replies.length}
                   </span>
                 </div>
@@ -266,7 +266,7 @@ export default function ContactPage() {
                             <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>
                               {r.replied_by_name ?? 'Your mentor'}
                             </span>
-                            <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                            <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                               {timeAgo(r.replied_at)}
                             </span>
                           </div>
@@ -285,7 +285,7 @@ export default function ContactPage() {
                           <p className="font-sans leading-relaxed whitespace-pre-wrap" style={{ fontSize: 14, color: 'var(--text-primary)' }}>
                             {r.reply_body}
                           </p>
-                          <div className="font-sans" style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
+                          <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 10, textTransform: 'capitalize' }}>
                             {ui('Via', 'Nge-')} {r.recipient_label}
                           </div>
                         </div>
@@ -300,7 +300,7 @@ export default function ContactPage() {
             <div style={{ marginBottom: 24 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 10, color: 'var(--gold-dim)', letterSpacing: '0.12em', marginBottom: 4 }}
+                style={{ fontSize: 12, color: 'var(--gold-dim)', letterSpacing: '0.1em', marginBottom: 4 }}
               >
                 {ui('Get in touch', 'Xhumana nathi')}
               </div>
@@ -367,7 +367,7 @@ export default function ContactPage() {
 
               {/* Recipient selector */}
               <div>
-                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+                <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
                   {ui('Send to', 'Thumela ku')}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -403,7 +403,7 @@ export default function ContactPage() {
                         <div className="font-display font-semibold" style={{ fontSize: 13.5, color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-primary)' }}>
                           {label}
                         </div>
-                        <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
+                        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>{sub}</div>
                       </div>
                       <div style={{
                         width: 16, height: 16, borderRadius: 8, border: `2px solid ${recipient === value ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,

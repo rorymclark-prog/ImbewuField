@@ -75,7 +75,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
         <ShieldCheck size={16} style={{ color: 'var(--text-secondary)' }} />
         <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
           <span>{CONSENT_PANEL_HEADING.label}</span>
-          {isZulu && <span className="block">{CONSENT_PANEL_HEADING.labelZuDraft} <span className="font-sans text-[10px]" style={{ color: 'var(--text-muted)' }}>(isiZulu machine draft)</span></span>}
+          {isZulu && <span className="block">{CONSENT_PANEL_HEADING.labelZuDraft} <span className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>(isiZulu machine draft)</span></span>}
         </div>
       </div>
       <p className="text-sm font-display mt-3 leading-snug" style={{ color: 'var(--text-secondary)' }}>
@@ -91,7 +91,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
         <div className="mt-3 rounded-lg px-3 py-3 text-sm font-display flex items-center justify-between gap-3" style={{ background: '#F6E7E1', color: '#8A3B1C' }}>
           <span>
             <span className="block">Couldn't load your sharing settings. Check your connection and try again.</span>
-            {isZulu && <span className="block mt-1">Izilungiselelo zokwabelana azikwazi ukulayishwa. Hlola uxhumano lwakho bese uzama futhi. <span className="font-sans text-[10px]">(isiZulu machine draft)</span></span>}
+            {isZulu && <span className="block mt-1">Izilungiselelo zokwabelana azikwazi ukulayishwa. Hlola uxhumano lwakho bese uzama futhi. <span className="font-sans text-xs">(isiZulu machine draft)</span></span>}
           </span>
           <button
             type="button"
@@ -123,10 +123,10 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
                   />
                   <span className="flex-1 min-w-0">
                     <span className="block text-sm font-display" style={{ color: 'var(--text-primary)' }}>{label}</span>
-                    {isZulu && <span className="block text-sm font-display mt-0.5" style={{ color: 'var(--text-primary)' }}>{labelZuDraft} <span className="text-[10px] font-sans" style={{ color: 'var(--text-muted)' }}>(isiZulu machine draft)</span></span>}
+                    {isZulu && <span className="block text-sm font-display mt-0.5" style={{ color: 'var(--text-primary)' }}>{labelZuDraft} <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>(isiZulu machine draft)</span></span>}
                     <span id={`consent-detail-${id}`} className="block text-xs font-display mt-0.5" style={{ color: 'var(--text-muted)' }}>
                       <span className="block">{detail}</span>
-                      {isZulu && <span className="block mt-1">{detailZuDraft} <span className="font-sans text-[10px]">(isiZulu machine draft)</span></span>}
+                      {isZulu && <span className="block mt-1">{detailZuDraft} <span className="font-sans text-xs">(isiZulu machine draft)</span></span>}
                     </span>
                   </span>
                   {busy === id && <Loader2 size={14} className="animate-spin mt-0.5" style={{ color: 'var(--text-muted)' }} />}
@@ -145,7 +145,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
           <div className="flex flex-col items-start gap-2 mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
             <span className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>
               <span className="block">{on === 0 ? 'You are not sharing anything.' : `You are sharing ${on} of ${CONSENT_SCOPES.length} things.`}</span>
-              {isZulu && <span className="block mt-0.5">{on === 0 ? 'Awabelani ngalutho.' : `Wabelana ngezinto ezingu-${on} kwezingu-${CONSENT_SCOPES.length}.`} <span className="font-sans text-[10px]">(isiZulu machine draft)</span></span>}
+              {isZulu && <span className="block mt-0.5">{on === 0 ? 'Awabelani ngalutho.' : `Wabelana ngezinto ezingu-${on} kwezingu-${CONSENT_SCOPES.length}.`} <span className="font-sans text-xs">(isiZulu machine draft)</span></span>}
             </span>
             <button
               type="button"
@@ -155,7 +155,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
               style={{ background: '#F6E7E1', color: '#8A3B1C', border: '1px solid #E4C9BC' }}
             >
               {busy === 'all' && <Loader2 size={12} className="animate-spin" />}
-              <span><span className="block">Stop sharing everything</span>{isZulu && <span className="block">Yeka ukwabelana ngakho konke <span className="font-sans text-[10px]">(isiZulu machine draft)</span></span>}</span>
+              <span><span className="block">Stop sharing everything</span>{isZulu && <span className="block">Yeka ukwabelana ngakho konke <span className="font-sans text-xs">(isiZulu machine draft)</span></span>}</span>
             </button>
           </div>
         </>

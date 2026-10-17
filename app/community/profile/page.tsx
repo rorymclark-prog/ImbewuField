@@ -238,7 +238,7 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
           </div>
 
           <div>
@@ -291,7 +291,7 @@ export default function CommunityProfilePage() {
           </div>
 
           <div>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: 'var(--text-muted)', letterSpacing: '0.12em', marginBottom: 8 }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.1em', marginBottom: 8 }}>
               {t('communityPhotosLabel')} <span style={{ textTransform: 'none', letterSpacing: 0 }}>· {t('communityPhotosHint')}</span>
             </div>
             <div className="flex flex-wrap gap-2">
