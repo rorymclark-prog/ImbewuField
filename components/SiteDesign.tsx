@@ -171,7 +171,11 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
         <input ref={inputRef} type="file" accept="image/*" className="hidden"
           onChange={(e) => processFile(e.target.files?.[0])} />
         {preview ? (
-          <img src={preview} alt="sketch" className="max-h-40 mx-auto rounded-lg" style={{ border: '1px solid var(--border)' }} />
+          // code-20: a fixed height (not max-h, which only caps a size the browser cannot know
+          // before decode) reserves this box before the sketch loads, so the upload zone does
+          // not resize under the farmer's cursor once it has. object-fit: contain, not cover —
+          // unlike a cropped photo preview, a sketch's shape is the content being reviewed.
+          <img src={preview} alt="sketch" className="mx-auto rounded-lg" style={{ height: 160, objectFit: 'contain', border: '1px solid var(--border)' }} />
         ) : (
           <div>
             <PenLine size={22} className="mx-auto mb-1.5" style={{ color: 'var(--color-forest-800)' }} />

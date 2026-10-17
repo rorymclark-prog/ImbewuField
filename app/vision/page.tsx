@@ -301,7 +301,10 @@ export default function VisionPage() {
                   src={preview}
                   alt={t('Selected photo', 'Isithombe esikhethiwe')}
                   className="w-full object-cover"
-                  style={{ maxHeight: 260, display: 'block' }}
+                  // code-20: a fixed height (not maxHeight, which only caps a size the browser
+                  // cannot know before decode) reserves this box before the photo loads, so the
+                  // capture button and result card below it do not jump once it has.
+                  style={{ height: 260, display: 'block' }}
                 />
               ) : (
                 <div className="flex flex-col items-center gap-3 py-12 px-6">
