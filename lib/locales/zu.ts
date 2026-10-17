@@ -1511,7 +1511,9 @@ const dict: Dict = {
   loginSubtitleCreate: 'Dala i-akhawunti entsha.',
   loginSubtitleReset: 'Setha kabusha iphasiwedi yakho.',
   loginContinueToMap: 'Ngena ukuze uqhubeke uye kumephu yakho',
-  loginBackendUnavailableNotice: 'Uhlelo olungemuva alukaxhunywa — ukungena akutholakali. Uhlelo lokusebenza lusebenza njengohambo lokuluhlola.',
+  // ux-03/nav-04: wording simplified to match the plain-language English rewrite — the same
+  // "backend"/"tour mode" developer jargon this key's English half dropped.
+  loginBackendUnavailableNotice: 'Ukungena akutholakali kuleli hlelo lokuzilolonga. Konke okuzamayo lapha kugcinwa kule foni.',
   loginSignIn: 'Ngena',
   loginCreateAccount: 'Dala i-akhawunti',
   loginResetEmailSent: 'I-imeyili yokusetha kabusha ithunyelwe ku-',

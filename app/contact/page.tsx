@@ -478,7 +478,9 @@ export default function ContactPage() {
 
               {!isLive && (
                 <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: 'var(--text-muted)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                  {ui('Backend not connected — messages will be logged locally only. Connect Firebase to enable delivery.', 'Isistimu engemuva ayixhunyiwe — imilayezo izogcinwa kuphela ngokwasendaweni. Xhuma i-Firebase ukuze kusebenze ukulethwa.')}
+                  {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
+                      farmer-facing screen — rewritten in plain words below. */}
+                  {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
                 </p>
               )}
 

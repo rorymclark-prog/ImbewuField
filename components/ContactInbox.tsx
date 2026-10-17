@@ -161,8 +161,10 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <MessageCircle size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} strokeWidth={1.5} />
-        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Isistimu ayikaxhunyaniswa' : 'Backend not connected'}</p>
-        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Xhuma i-Firebase ukuze wamukele imilayezo' : 'Connect Firebase to receive messages'}</p>
+        {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") shown to a mentor or
+            NGO coordinator — rewritten in plain words below. */}
+        <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Akukaxhunywa' : 'Not connected yet'}</p>
+        <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>{lang === 'zu' ? 'Imilayezo izovela lapha uma lokhu kuxhunyiwe' : 'Messages will appear here once this is connected'}</p>
       </div>
     );
   }
