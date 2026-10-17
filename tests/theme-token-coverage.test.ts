@@ -416,3 +416,16 @@ test('app/invoice/page.tsx no longer shows a raw error.message to the farmer (co
   const src = read('app/invoice/page.tsx');
   assert.doesNotMatch(src, /\$\{error\.message\}/, 'a caught error\'s raw message should be console.error\'d, not interpolated into user-facing text');
 });
+
+// dark-14: the print-preview surround stayed a literal paper hex (#EDE7DB), so the empty band
+// around the deliberately-white A4 sheet never followed the theme and read as a failed render.
+// nav-13's scale-to-fit (SheetScaler) and the sample-mode toolbar padding were already fixed on
+// main before this track started — not re-done here, just verified by the tests above.
+test('app/facilitator/print/page.tsx themes its print-preview surround and captions the sheet (dark-14)', () => {
+  const src = read('app/facilitator/print/page.tsx');
+  // Scoped to the @media screen surround fix — the printed sheet's own content (bill-of-
+  // quantities table border etc.) is deliberately literal, same as every other colour on that
+  // sheet, and keeps its own #EDE7DB/#C7BCA6/#755942 on purpose.
+  assert.match(src, /@media screen \{[^}]*body \{ background: var\(--bg-0\); \}/, 'the print-preview surround should follow the theme, not the literal paper hex');
+  assert.match(src, /className="no-print"[^>]*>\s*Print preview/, 'the sheet should carry a "Print preview" caption so it reads as deliberate, not broken');
+});
