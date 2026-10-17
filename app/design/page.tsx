@@ -522,6 +522,12 @@ function EmptyState() {
       }}
     >
       <Compass size={40} color={GREEN} />
+      {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
+          h1 matching the nav label ("Design studio"), small so it doesn't compete with the
+          instructional copy below. */}
+      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: GREEN, margin: 0 }}>
+        {isZulu ? 'Isitudiyo Sokuklama' : 'Design studio'}
+      </h1>
       {places.length > 0 ? (
         <>
           <p style={{ fontSize: 16, maxWidth: 340, lineHeight: 1.5, fontWeight: 600 }}>
@@ -3061,7 +3067,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <ArrowLeft size={20} />
         </Link>
         <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2, minWidth: 0, flexShrink: 1 }}>
-          <span style={{ fontWeight: 700, fontSize: 15 }}>{tr('Design Studio', 'Isitudiyo Sokuklama')}</span>
+          <h1 style={{ fontWeight: 700, fontSize: 15, margin: 0, lineHeight: 'inherit' }}>{tr('Design Studio', 'Isitudiyo Sokuklama')}</h1>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
         <span style={{ flexShrink: 0, display: isPhone ? 'none' : undefined }}>

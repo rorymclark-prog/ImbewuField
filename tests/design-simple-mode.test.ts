@@ -200,9 +200,15 @@ test('ochre as TEXT is the dim variant, never the raw fill colour', () => {
   // BasePhotoImport.tsx and StepGuide.tsx no longer keep a local GOLD_DIM = '#7A4408' constant —
   // the Design Studio dark-mode theme-token fix (tests/design-studio-theme-tokens.test.ts) routed
   // their text/icon uses straight through the theme-aware var(--gold-dim) instead, which is the
-  // same dim variant this test protects, now adapting per theme rather than staying fixed. The
-  // other three files are untouched by that fix and keep the original literal-constant pattern.
-  const THEMED_GOLD_DIM = new Set(['components/design/BasePhotoImport.tsx', 'components/design/StepGuide.tsx']);
+  // same dim variant this test protects, now adapting per theme rather than staying fixed.
+  // app/design/page.tsx (w14 dark-leftovers, dark-05/nav-01) made its own PAPER constant
+  // theme-aware too, so its GOLD_DIM constant correctly moved the same way — but it keeps the
+  // constant indirection (`color: GOLD_DIM`) rather than inlining the var() string at each site,
+  // so it gets its own pattern below instead of the inline-literal one. TankCalculator.tsx and
+  // SectorSummary.tsx sit on a PAPER card that stays fixed in every theme, so they correctly
+  // keep the original literal-constant pattern.
+  const THEMED_GOLD_DIM_INLINE = new Set(['components/design/BasePhotoImport.tsx', 'components/design/StepGuide.tsx']);
+  const THEMED_GOLD_DIM_CONST = new Set(['app/design/page.tsx']);
   for (const [name, source] of [
     ['app/design/page.tsx', PAGE],
     ['components/design/BasePhotoImport.tsx', PHOTO_IMPORT],
@@ -210,8 +216,11 @@ test('ochre as TEXT is the dim variant, never the raw fill colour', () => {
     ['components/design/StepGuide.tsx', STEP_GUIDE],
     ['components/design/SectorSummary.tsx', SECTOR_SUMMARY],
   ] as const) {
-    if (THEMED_GOLD_DIM.has(name)) {
+    if (THEMED_GOLD_DIM_INLINE.has(name)) {
       assert.match(source, /color:\s*['"]var\(--gold-dim\)['"]/, `${name} must route ochre-as-text through var(--gold-dim)`);
+    } else if (THEMED_GOLD_DIM_CONST.has(name)) {
+      assert.match(source, /const GOLD_DIM = 'var\(--gold-dim\)';/, `${name} must declare a theme-aware GOLD_DIM constant`);
+      assert.match(source, /color:\s*GOLD_DIM\b/, `${name} must use the GOLD_DIM constant as a text/icon colour`);
     } else {
       assert.match(source, /const GOLD_DIM = '#7A4408'/, `${name} must declare the GOLD_DIM text-colour constant`);
     }

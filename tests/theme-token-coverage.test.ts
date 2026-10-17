@@ -429,3 +429,21 @@ test('app/facilitator/print/page.tsx themes its print-preview surround and capti
   assert.match(src, /@media screen \{[^}]*body \{ background: var\(--bg-0\); \}/, 'the print-preview surround should follow the theme, not the literal paper hex');
   assert.match(src, /className="no-print"[^>]*>\s*Print preview/, 'the sheet should carry a "Print preview" caption so it reads as deliberate, not broken');
 });
+
+// desk-16: components/SampleExperience.module.css's .page h1 used clamp(28px,4vw,42px) while
+// every other page uses DESIGN.md §0's Page H1 row (24/26/30, 600), so headings jumped in size
+// between /feedback, /tips, /tour and their neighbours at desktop width.
+test('components/SampleExperience.module.css\'s h1 matches the DESIGN.md §0 Page H1 scale (desk-16)', () => {
+  const src = read('components/SampleExperience.module.css');
+  assert.match(src, /\.page h1 \{ font:600 clamp\(24px,2\.4vw,30px\)\/1\.2 var\(--font-display\),serif; margin:16px 0; \}/, '.page h1 should use the shared 24/26/30 Page H1 scale, not a one-off larger clamp');
+});
+
+// nav-17: /design had no h1 at all (neither the empty-site picker nor the loaded studio view).
+// /samples/production's h1 join-without-space is covered by the nav-12 test above; /partners
+// already had a single h1 (its "long sentence truncates" sub-complaint did not reproduce in the
+// current markup — no truncate/ellipsis/overflow-hidden class on it — so nothing to fix there).
+test('app/design/page.tsx has exactly one h1 in each of its two render states (nav-17)', () => {
+  const src = read('app/design/page.tsx');
+  const matches = src.match(/<h1\b/g) ?? [];
+  assert.equal(matches.length, 2, 'expected exactly two <h1> sites — EmptyState (no site) and the loaded studio header — never both in the same render');
+});
