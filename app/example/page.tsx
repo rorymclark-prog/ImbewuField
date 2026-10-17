@@ -255,7 +255,10 @@ function ExampleInner() {
                 <span
                   key={s}
                   className="px-2 py-0.5 rounded-full text-xs font-display"
-                  style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B' }}
+                  // dark-07: these were a fixed forest-green text/fill in every theme, which read
+                  // as near-invisible dark blobs on the near-black dark-mode card. Tokens (same
+                  // ones DataPanel.tsx's own species chips use) follow each theme's own swing.
+                  style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}
                 >
                   {s}
                 </span>
