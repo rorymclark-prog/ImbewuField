@@ -171,7 +171,16 @@ export default function FunderPage() {
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
-        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
+        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? (
+          // code-13: the only heading on this page used to be the 13px header chip in AppHeader
+          // (a <span>, not a heading) — a real, properly-sized h1 on the default tab.
+          <div className="flex-1 flex flex-col overflow-hidden min-w-0">
+            <h1 className="t-h1 font-display px-4 pt-3" style={{ color: 'var(--text-primary)' }}>
+              {tr(lang, 'Funder dashboard', 'Ibhodi labaxhasi')}
+            </h1>
+            <CohortDashboard mode="funder" />
+          </div>
+        ) : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
       </div>
       <TabBar hideAtDesktop />
     </div>

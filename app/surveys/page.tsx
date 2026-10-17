@@ -801,7 +801,8 @@ export default function SurveysPage() {
         right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
       />
 
-      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      {/* code-14: no max-width at all, so content ran edge to edge at 1280px. */}
+      <main className={`flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
 
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
@@ -814,7 +815,7 @@ export default function SurveysPage() {
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
           <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
-          <h1 className="font-display font-bold text-lg leading-tight" style={{ color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
+          <h1 className="t-h1 font-display" style={{ color: 'var(--text-primary)' }}>
             {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
         </div>

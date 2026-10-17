@@ -34,6 +34,7 @@ import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import AppHeader from '@/components/layout/AppHeader';
+import workspace from '@/components/layout/Workspace.module.css';
 import {
   DEFAULT_TRACK, STATUS_LABEL, effectiveStatus, enrollmentDocId, summariseCohort,
   type CourseEnrollment, type EnrollmentStatus,
@@ -653,13 +654,16 @@ export default function MentorPage() {
 
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
 
-      <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      {/* code-14: this main had no max-width at all, so cards ran edge to edge at 1280px —
+          workspace.workspace caps it at 90rem like the rest of the app's framed pages, and
+          md:/lg: let the stat row breathe instead of just stretching three narrow cards wide. */}
+      <main className={`workspace-main flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 
-        <div><h1 className="text-2xl font-display font-semibold" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
+        <div><h1 className="t-h1 font-display" style={{color:'var(--color-forest-800)'}}>{tr(lang, 'Participant learning', 'Ukufunda kwabahlanganyeli')}</h1><p className="text-sm mt-2" style={{color:'var(--text-secondary)'}}>{tr(lang, 'Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.', 'Yabela imojula elandelayo ewusizo bese ulandelela engadini. Inqubekelaphambili yesifundo, ukuba khona ekuqeqeshweni namakhono abonwe esebenza kubhalwa ngokwehlukana.')}</p></div>
         {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'rgba(176,58,46,0.08)',color:'var(--orange)'}}><p>{tr(lang, 'Learning records could not be loaded. Progress is unavailable until the connection succeeds.', 'Amarekhodi okufunda awakwazanga ukulayishwa. Inqubekelaphambili ayitholakali kuze kuxhumeke inethiwekhi.')}</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'var(--color-surface)'}}>{tr(lang, 'Retry learning records', 'Phinda ulayishe amarekhodi okufunda')}</button></div>}
         {!loadError&&!fetching&&<>
         {/* Cohort at a glance — Simple collapses the three cards into one line. */}
