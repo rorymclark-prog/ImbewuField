@@ -99,6 +99,11 @@ export const T_en: Dict = {
   tabMap: 'Map',
   tabFinance: 'Finance',
   tabAccount: 'Account',
+  // Bottom-nav-only short forms (ux-08/zu-08/staff-10): the tile and page title keep
+  // homeQuickMyRecords ("My Records") etc. — these three exist only so a tab label never wraps.
+  tabRecords: 'Records',
+  tabDashboard: 'Dashboard',
+  tabStudies: 'Studies',
   toolbarMinButton: 'Find your land',
   toolbarHeader: 'Find your land',
   toolbarHideButton: 'Hide',

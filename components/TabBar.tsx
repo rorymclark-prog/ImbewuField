@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, DollarSign, User, Users, BarChart3 } from 'lucide-react';
+import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen } from 'lucide-react';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
 import styles from './TabBar.module.css';
@@ -13,29 +13,54 @@ import styles from './TabBar.module.css';
 // audit found she could not reconcile ("she cannot answer how much did I make this season").
 // /finances redirects here, so an installed PWA with the old tab still lands in the right place.
 //
-// 'homeQuickMyRecords', not 'tabFinance': the label has to match the tile and the header, and
-// this key is already translated in all ten locales — renaming the door would have meant either
-// coining farming copy in ten languages or shipping an English tab under a translated tile.
-const TABS = [
-  { href: '/home',     key: 'tabHome',           Icon: Home },
-  { href: '/farmer',   key: 'tabMap',            Icon: Map },
-  { href: '/records',  key: 'homeQuickMyRecords', Icon: DollarSign },
-  { href: '/account',  key: 'tabAccount',        Icon: User },
+// 'tabRecords' ("Records"), not 'homeQuickMyRecords' ("My Records"): the tile and page title keep
+// the longer label, but the bar is too narrow for it — "My Records" wraps to two lines in English
+// and worse in isiZulu (zu-08/ux-08) — so the bar gets its own short key.
+const FARMER_TABS = [
+  { href: '/home',     key: 'tabHome',    Icon: Home },
+  { href: '/farmer',   key: 'tabMap',     Icon: Map },
+  { href: '/records',  key: 'tabRecords', Icon: DollarSign },
+  { href: '/account',  key: 'tabAccount', Icon: User },
 ];
+
+// staff-10/sdesk-05: mentor, ngo and funder used to inherit the farmer's own tab set (a mentor's
+// dashboard wasn't even a tab) or, for funder, no bar at all. One shape for all three staff
+// roles now — Home, the role's own dashboard, Network, Account — with single-word labels so
+// nothing wraps. Student gets its own four: Home, Studies, Records, Account.
+const STAFF_TABS = {
+  mentor: [
+    { href: '/home',   key: 'tabHome',      Icon: Home },
+    { href: '/mentor', key: 'tabDashboard', Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork',  Icon: Users },
+    { href: '/account', key: 'tabAccount',  Icon: User },
+  ],
+  ngo: [
+    { href: '/home', key: 'tabHome',       Icon: Home },
+    { href: '/ngo',  key: 'tabDashboard',  Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork', Icon: Users },
+    { href: '/account', key: 'tabAccount', Icon: User },
+  ],
+  funder: [
+    { href: '/home',    key: 'tabHome',      Icon: Home },
+    { href: '/funder',  key: 'tabDashboard', Icon: BarChart3 },
+    { href: '/network', key: 'navNetwork',   Icon: Users },
+    { href: '/account', key: 'tabAccount',   Icon: User },
+  ],
+  student: [
+    { href: '/home',    key: 'tabHome',     Icon: Home },
+    { href: '/student', key: 'tabStudies',  Icon: BookOpen },
+    { href: '/records', key: 'tabRecords',  Icon: DollarSign },
+    { href: '/account', key: 'tabAccount',  Icon: User },
+  ],
+} as const;
 
 export default function TabBar() {
   const pathname = usePathname();
   const { t } = useLanguage();
   const { navigationRole } = useRoleNavigation();
-  const tabs = navigationRole === 'funder' ? [
-    { href: '/funder', key: 'homeRoleFunderLabel', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork', Icon: Users },
-    { href: '/account', key: 'tabAccount', Icon: User },
-  ] : navigationRole === 'ngo' ? [
-    { href: '/ngo', key: 'navNGODashboard', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork', Icon: Users },
-    { href: '/account', key: 'tabAccount', Icon: User },
-  ] : TABS;
+  const tabs = navigationRole && navigationRole in STAFF_TABS
+    ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
+    : FARMER_TABS;
   const barRef = useRef<HTMLDivElement>(null);
 
   // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
@@ -146,7 +171,11 @@ export default function TabBar() {
               <span
                 className="font-sans"
                 style={{
-                  fontSize: 12,
+                  // 11px, not 12px, with nowrap: the 12px label let 'My Records' and the isiZulu
+                  // 'I-akhawunti' wrap to a second line and sit lower than the other three tabs
+                  // (ux-08/zu-08). 11px is the repo's floor for any text, so this stays above it.
+                  fontSize: 11,
+                  whiteSpace: 'nowrap',
                   fontWeight: active ? 700 : 600,
                   color: active ? '#1F4D2B' : 'var(--text-muted)',
                   letterSpacing: '0.01em',

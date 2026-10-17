@@ -7,8 +7,11 @@ import { useRouter } from 'next/navigation';
 import { FileText, MapPin, Plus, ArrowRight } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
+import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
+import TabBar from '@/components/TabBar';
 import SiteCropPlanPreview from '@/components/report/SiteCropPlanPreview';
+import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -59,8 +62,20 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
   const hasEnglishSavedReport = reports.some(report => report.lang === 'en');
   if (opened) return <ReportView locationData={opened.location} siteData={opened.siteData} waterData={opened.waterData} savedPlaces={places} savedReport={opened} activePlaceId={places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(opened.location))?.id} onClose={() => setOpened(null)} />;
-  return <main className={styles.root} style={{ height: '100dvh' }}><div className={styles.wrap}>
-    <header className={styles.row}><MenuButton /><BackButton fallback="/home" /><SettingsButton /></header>
+  // sdesk-04: /reports used to be three floating Menu/Back/Settings pills over the hero, with no
+  // brand header, no title and no bottom nav — the one staff route that didn't share the
+  // mentor/ngo/funder/assessments chrome. Same header shell + TabBar as those routes now.
+  return <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
+      <MenuButton />
+      <BackButton fallback="/home" />
+      <BrandLogo />
+      <div className="w-px h-5" style={{ background: 'var(--border)' }} />
+      <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{t('reportsTitle')}</span>
+      <div className="flex-1" />
+      <SettingsButton />
+    </header>
+    <main className={styles.root} style={{ flex: 1 }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
     {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
@@ -79,5 +94,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       </article>; })}</div></>}
       {view==='reports'&&<><h2>{t('reportsSavedReports')}</h2><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
     </>}
-  </div></main>;
+  </div></main>
+    <TabBar />
+  </div>;
 }

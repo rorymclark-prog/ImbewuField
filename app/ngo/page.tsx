@@ -18,6 +18,7 @@ import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import { useProductTour } from '@/components/ProductTourProvider';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
@@ -77,6 +78,10 @@ export default function NgoPage() {
   const [view, setView] = useState<NgoView>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
   const simple = useAppLevel() === 'simple';
+  // staff-10: when a product tour is already running, MenuButton floats its own 'Tour N/total'
+  // pill, so this static text link duplicated that entry point. Hide it only while a tour is
+  // actually active; it is still the way to start one the rest of the time.
+  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -129,7 +134,7 @@ export default function NgoPage() {
           </Link>
         )}
         <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>
+        {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
         <SettingsButton />
         <RoleSwitcher current="ngo" />
       </header>

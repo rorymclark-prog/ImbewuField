@@ -11,8 +11,10 @@ import Link from 'next/link';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import { useProductTour } from '@/components/ProductTourProvider';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -76,6 +78,8 @@ export default function FunderPage() {
   useEffect(() => { setSample(isSampleMode()); }, []);
   const [view, setView] = useState<FunderView>('cohort');
   const simple = useAppLevel() === 'simple';
+  // staff-10: see the matching comment on app/ngo/page.tsx.
+  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -130,7 +134,7 @@ export default function FunderPage() {
           {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
         </Link>
         <LessonLink id="funder:overview" label={tr(lang, 'Learn', 'Funda')} />
-        <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>
+        {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
         <SettingsButton />
         <RoleSwitcher current="funder" />
       </header>
@@ -177,6 +181,7 @@ export default function FunderPage() {
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
         <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
       </div>
+      <TabBar />
     </div>
   );
 }
