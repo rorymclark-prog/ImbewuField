@@ -44,6 +44,7 @@ import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib
 import CropSelect from '@/components/CropSelect';
 import CropIcon from '@/components/CropIcon';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
+import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
@@ -72,6 +73,14 @@ function recordsUi(lang: string, english: string, isiZulu: string, paired = fals
   // Sesotho, Tshivenda and Xitsonga read the source-keyed drafts (lib/records-regional-drafts.ts).
   if (lang !== 'zu') return paired ? recordsPaired(lang, english) : recordsFill(lang, english);
   return paired ? `${english} — ${isiZulu}` : isiZulu;
+}
+
+// zu-11: the lender card's longer sentences used to lead with the English paragraph and only
+// then the isiZulu one (recordsUi's `paired` order above), on a card specifically meant to be
+// shown to a lender who may read isiZulu first. Same pairing, isiZulu first.
+function recordsUiZuFirst(lang: string, english: string, isiZulu: string): string {
+  if (lang !== 'zu') return recordsPaired(lang, english);
+  return `${isiZulu} — ${english}`;
 }
 
 /** Keep the English control label visible until this transactional copy has fluent review. */
@@ -648,9 +657,13 @@ function OrchardSwitch({ on, onChange, t }: {
       style={{
         fontSize: 12,
         fontWeight: on ? 600 : 400,
-        border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border-strong)'}`,
-        background: on ? 'color-mix(in srgb, var(--color-forest-800) 10%, transparent)' : 'transparent',
-        color: on ? 'var(--color-forest-800)' : 'var(--text-secondary)',
+        // zu-11: var(--color-forest-800) flips to a pale, near-highlighter green in the dark
+        // theme column (#82C844), and a 10% color-mix of that same pale green behind pale-green
+        // text left the "on" chip ("Isivande sezithelo sifakiwe") almost unreadable there.
+        // --emerald on --bg-1 both move with the theme instead.
+        border: `1px solid ${on ? 'var(--emerald)' : 'var(--border-strong)'}`,
+        background: on ? 'var(--bg-1)' : 'transparent',
+        color: on ? 'var(--emerald)' : 'var(--text-secondary)',
         cursor: 'pointer',
       }}
     >
@@ -698,6 +711,21 @@ function ExampleBadge({ label }: { label: string }) {
 }
 
 const harvestArtAliases = buildCropAliasIndex();
+
+// zu-11 / ux-18: item.crop is free text — what a farmer typed, or lib/demo-farm.ts's
+// deliberately lowercase demo rows (DEMO_CROP_LABEL: 'carrots', 'swiss chard', 'green beans' —
+// lowercase on purpose there, to prove the alias index matches real farmer typing; see that
+// file's comment). Resolve it back to a catalog key with the same alias index
+// HarvestCropPicture already uses for icon lookup, then render through the shared
+// produceLabel() helper, so Records spells a crop the same way Home, /calendar and /prices do.
+// A perennial match from produceDisplayName (lib/perennial-produce.ts, Codex's own catalogue)
+// takes priority, since it already returns that catalogue's own display label.
+function harvestCropLabel(crop: string, lang: string): string {
+  const perennial = produceDisplayName(crop);
+  if (perennial !== crop) return perennial;
+  const { key } = cropIdentityOf(crop, harvestArtAliases);
+  return key ? produceLabel(key, lang) : crop;
+}
 
 function HarvestCropPicture({ name }: { name: string }) {
   const { lang } = useLanguage();
@@ -783,7 +811,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               className="text-sm font-display font-medium leading-tight truncate"
               style={{ color: 'var(--text-primary)' }}
             >
-              {item.crop}
+              {harvestCropLabel(item.crop, lang)}
             </p>
             <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {fmtDate(item.logged_at, lang)}
@@ -865,7 +893,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
               className="text-sm font-display font-medium leading-tight truncate"
               style={{ color: 'var(--text-primary)' }}
             >
-              {item.crop}
+              {harvestCropLabel(item.crop, lang)}
               {item.buyer ? (
                 <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
                   {' '}→ {item.buyer}
@@ -1015,7 +1043,7 @@ function CreditPackCard({
             {recordsUi(lang, 'Records for a lender', 'Amarekhodi okubolekwa imali')}
           </p>
           <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
-            {recordsUi(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.', true)}
+            {recordsUiZuFirst(lang, 'A summary of your logged harvests, sales and costs — income consistency, cash flow and a track record, built only from what you have entered. Material for a conversation with a lender, not a credit score or a loan approval.', 'Isifinyezo sezivuno, ukuthengisa nezindleko ozirekhodile — ukungaguquguquki kwemali engenayo, ukuhamba kwemali nomlando, okwakhiwe ngolwazi olufakile kuphela. Lokhu kungasiza engxoxweni nombolekisi; akusona isikolo sesikweletu noma ukuvunyelwa kwemalimboleko.')}
           </p>
         </div>
       </div>
@@ -1047,15 +1075,19 @@ function CreditPackCard({
           disabled={loading}
           className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
           style={{
-            background: loading ? 'rgba(46,107,58,0.06)' : 'rgba(46,107,58,0.14)',
-            border: '1px solid rgba(46,107,58,0.32)',
-            color: loading ? 'var(--text-muted)' : 'var(--color-forest-700)',
+            // zu-11: a fixed rgba(46,107,58,…) tint stayed dark-green in every theme while
+            // var(--color-forest-700) (the text colour) flipped to a pale green in the dark
+            // column — pale text on a background that never got paler with it. --emerald on
+            // --bg-1 both move with the theme, so this button stays legible in dark mode too.
+            background: 'var(--bg-1)',
+            border: '1px solid var(--emerald)',
+            color: loading ? 'var(--text-muted)' : 'var(--emerald)',
             cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? (
             <>
-              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-forest-700)' }} />
+              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--emerald)' }} />
               {recordsUi(lang, 'Building document…', 'Kwakhiwa idokhumenti…')}
             </>
           ) : (
@@ -1323,13 +1355,13 @@ export default function MyRecords({
         const excludedKg = left.reduce((s, p) => s + (p.kg ?? 0), 0);
         // Named by the catalogue, so one fruit is one name however the picker and the sale form
         // each spelt it.
-        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
+        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => harvestCropLabel(p.crop, lang)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
         const pickedQuantities = quantityTotals(counted);
         const byCrop: Record<string, number> = {};
         // Same grouping rule, so two spellings of one fruit cannot split its kilograms and cost it
         // the top-crop line it earned.
-        counted.filter((p) => recordWeightKg(p) !== null).forEach((p) => { const n = produceDisplayName(p.crop); byCrop[n] = (byCrop[n] ?? 0) + (recordWeightKg(p) ?? 0); });
+        counted.filter((p) => recordWeightKg(p) !== null).forEach((p) => { const n = harvestCropLabel(p.crop, lang); byCrop[n] = (byCrop[n] ?? 0) + (recordWeightKg(p) ?? 0); });
         const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
         const recent = counted.filter((p) => recordWeightKg(p) !== null).slice(0, 12);
         const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);
@@ -1415,7 +1447,7 @@ export default function MyRecords({
         // Through the catalogue, exactly as the harvest note above does. These two notes sit on the
         // same screen: with one spelling raw and one canonical, one avocado tree read as "Avocado"
         // in the note above and "Avocados" in this one.
-        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
+        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => harvestCropLabel(p.crop, lang)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
         const soldQuantities = quantityTotals(sales.filter((p) => recordWeightKg(p) === null || inScope(p.crop)));
         const recent = sales.slice(0, 12);

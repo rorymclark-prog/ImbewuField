@@ -114,7 +114,13 @@ test('farmer-facing English source stays present while only isiZulu gains marked
       );
     }
   }
-  assert.match(farmerPageSource, /t\('designStudioZuluDraftBadge'\)/, 'the Design Studio draft is not visibly marked');
+  // zu-04 (wave 14): the draft marker used to live as a second line inside the "Design Studio"
+  // nav pill itself (`t('designStudioZuluDraftBadge')` right there in app/farmer/page.tsx),
+  // which grew the pill to two lines. It now lives once, under the header, in the shared
+  // <LanguageDraftNote> DataPanel renders — so the pill stays a single-line label and the draft
+  // is marked by the page-level note instead of inside the pill.
+  assert.doesNotMatch(farmerPageSource, /designStudioZuluDraftBadge['")][\s\S]{0,40}English: Design Studio/, 'the Design Studio draft marker must not grow the nav pill to two lines any more');
+  assert.match(dataPanelSource, /<LanguageDraftNote lang=\{lang\} scope="farmer" \/>/, 'the Design Studio draft is not visibly marked');
   assert.match(dataPanelSource, /translate\('en', imp\.key\)/, 'soil advice must retain the English source even if a draft is added');
   const zu = blocks.find((b) => b.locale === 'zu')!.block;
   for (const key of ENGLISH_SOURCE_KEYS.filter((key) => key.startsWith('soilImprovement'))) {
@@ -159,7 +165,13 @@ test('the remaining 29 English UI sources have marked isiZulu drafts and keep th
     'Tips now drafts the instructions as well as the page labels, so the notice must describe both');
   assert.match(tipsSource, /English source: \{g\.en\.text\}/,
     'record and money guides must keep their exact English instructions beside the isiZulu draft');
-  assert.match(recordsSource, /Unreviewed isiZulu tab-label drafts/);
+  // zu-04 (wave 14): the tab-label draft notice used to sit between the tabs and the form,
+  // English-first ('Uhlaka olungakabuyekezwa — Unreviewed isiZulu tab-label drafts...'). It now
+  // lives once, under the header, in the shared <LanguageDraftNote>; the separate regional
+  // (Sesotho/Tshivenda/Xitsonga) tab-label notice stays, since it covers languages this shared
+  // component doesn't.
+  assert.match(recordsSource, /<LanguageDraftNote lang=\{lang\} scope="records" \/>/);
+  assert.doesNotMatch(recordsSource, /Unreviewed isiZulu tab-label drafts/);
 });
 
 const SESOTHO_STUDY_DRAFT_KEYS = [
