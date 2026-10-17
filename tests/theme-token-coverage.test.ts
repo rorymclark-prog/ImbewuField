@@ -242,3 +242,65 @@ test('none of this track\'s owned files paint a surface, border or text with a :
       : undefined,
   );
 });
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// swarm/w14-dark-leftovers — this track's consumer-side scan.
+//
+// dark-05 / nav-01 / dark-10: the Design Studio picker (app/design/page.tsx's EmptyState), the
+// "design is safe" rescue page (app/design/lite/page.tsx) and the /partners landing page
+// rendered fully light in dark mode because they painted page chrome with literal hex (or the
+// :root-only bg-paper/bg-card/text-ink Tailwind constants) instead of theme tokens. Fixed by
+// routing the PAPER/DARK constants and the hairline/muted-ink literals through
+// var(--bg-0/1), var(--border), var(--text-primary/secondary/muted) and
+// var(--on-forest)/var(--color-forest-800) for the forest-brand text/border cases. The Design
+// Studio CANVAS itself (satellite imagery, floating tool palettes drawn over the map) is
+// explicitly out of scope — only the plain-page chrome this track touched is checked here.
+
+const W14_BANNED_LITERAL_HEX: Record<string, RegExp[]> = {
+  'app/design/page.tsx': [/#FFFEFA\b/i, /#0B120B\b/i, /#E2D8C4\b/i, /#C9BFAD\b/i],
+  'app/design/lite/page.tsx': [
+    /#E4DCC6\b/i, /#FBF6EC\b/i, /#E2D8C4\b/i, /#20190F\b/i, /#5C5040\b/i, /#755942\b/i,
+    /#FDF4E3\b/i, /#E8D5A8\b/i,
+  ],
+  'app/partners/page.tsx': [/#E2D8C4\b/i],
+};
+
+for (const [relativePath, patterns] of Object.entries(W14_BANNED_LITERAL_HEX)) {
+  test(`${relativePath} does not reintroduce the literal hex this track replaced with theme tokens (w14 dark-leftovers)`, () => {
+    const src = read(relativePath);
+    for (const pattern of patterns) {
+      assert.doesNotMatch(src, pattern, `${relativePath} should use a theme token instead of ${pattern}`);
+    }
+  });
+}
+
+test('app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)', () => {
+  const src = read('app/partners/page.tsx');
+  assert.doesNotMatch(src, /\bbg-paper\b/, 'bg-paper is a :root-only Tailwind constant (tailwind.config.ts) — use bg-[var(--bg-0)] instead');
+  assert.doesNotMatch(src, /\btext-ink\b(?!-)/, 'text-ink is a :root-only Tailwind constant outside the fixed forest band — use text-[var(--text-primary)] instead');
+});
+
+const W14_CONSUMER_FILES_FOR_ROOT_ONLY = [
+  'app/design/page.tsx',
+  'app/design/lite/page.tsx',
+  'app/partners/page.tsx',
+];
+
+test("none of w14 dark-leftovers' owned page files paint a surface, border or text with a :root-only constant", () => {
+  const offenders: string[] = [];
+  for (const relativePath of W14_CONSUMER_FILES_FOR_ROOT_ONLY) {
+    const src = read(relativePath);
+    const pattern = new RegExp(`var\\(\\s*(${ROOT_ONLY_BY_DESIGN.map((t) => t.replace('-', '\\-')).join('|')})\\s*[,)]`, 'g');
+    let m: RegExpExecArray | null;
+    while ((m = pattern.exec(src))) {
+      offenders.push(`${relativePath}: var(${m[1]})`);
+    }
+  }
+  assert.deepEqual(
+    offenders, [],
+    offenders.length
+      ? `Found a :root-only token used for a surface/text/border — it will not follow the theme:\n`
+        + offenders.map((o) => `  ${o}`).join('\n')
+      : undefined,
+  );
+});
