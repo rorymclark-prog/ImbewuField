@@ -35,7 +35,7 @@ export default function SampleGardensPage() {
   const visible=SAMPLE_GARDENS.filter(g=>filter==='All'||g.kind===filter);
   useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
-  return <main className={styles.page}><div className={styles.wrap}>
+  return <main className={styles.page} style={{ paddingBottom: 'calc(max(180px, var(--lima-fab-clearance, 180px)) + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><SettingsButton/></header>
     <h1>{SAMPLE_GARDENS.length} {ui('gardens','izingadi')}</h1><p>{ui('Choose a garden to explore its layout, people and report.','Khetha ingadi ukuze uhlole ukuhleleka kwayo, abantu nombiko.')}</p>
     {garden&&<section ref={detail} className={styles.card} aria-label={ui('Selected garden','Ingadi ekhethiwe')}>

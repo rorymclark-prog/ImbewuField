@@ -143,6 +143,30 @@ export default function ChatWidget() {
     try { localStorage.setItem('imbewu_lima_fab_pos', JSON.stringify({ x: d.lx, y: d.ly })); } catch { /* ignore */ }
   }
 
+  // ux-01/desk-01/staff-03: publish how much bottom clearance the launcher needs so pages
+  // without a Lima bar or tab bar (/tour, /tips, /offline, /manual, /samples, …) can pad
+  // their own scroll container and never have the last button or line of text land under
+  // the FAB. Zeroed while the launcher is hidden, dragged to a custom spot, or covered by a
+  // sheet/overlay — nothing to clear then. A page that never reads the variable is unaffected.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isLimaFabHiddenRoute(pathname) || open || drawing || overlay || fabPos) {
+      root.style.setProperty('--lima-fab-clearance', '0px');
+      return;
+    }
+    const GAP_MOBILE = 16;
+    const GAP_DESKTOP = 24;
+    const update = () => {
+      const desktop = window.matchMedia('(min-width: 1024px)').matches;
+      const offset = desktop ? 100 : pathname.startsWith('/farmer') ? 188 : pathname.startsWith('/invoice') ? 176 : 130;
+      const gap = desktop ? GAP_DESKTOP : GAP_MOBILE;
+      root.style.setProperty('--lima-fab-clearance', `${offset + FAB_SIZE + gap}px`);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [pathname, open, drawing, overlay, fabPos]);
+
   // Skip on auth pages, home (which has LimaBar), the Design Studio (its
   // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), the
   // public partners showcase (no farmer context to chat about, and it collides with that page's
@@ -320,5 +344,23 @@ export default function ChatWidget() {
         </>
       )}
     </>
+  );
+}
+
+// ux-01/desk-01/staff-03: mirrors the route exclusion above (pages where the launcher never
+// renders) so the --lima-fab-clearance effect can zero it for them without restructuring that
+// block — its exact text is pinned by tests/chat-widget-fab-overlap.test.ts. Declared after the
+// component (function declarations hoist) so this duplicate never shifts where that test's own
+// string search lands. Keep both lists in sync if a route is added or removed from either.
+function isLimaFabHiddenRoute(pathname: string): boolean {
+  return (
+    pathname === '/student' || pathname.startsWith('/student/guides/') ||
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/home') || pathname.startsWith('/design') ||
+    pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
+    pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   );
 }

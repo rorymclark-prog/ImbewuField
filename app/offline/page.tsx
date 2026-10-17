@@ -108,7 +108,7 @@ export default function OfflinePage(){
   const writes=rows.filter(row=>row.scope===activeScope&&row.kind==='write'),cached=rows.filter(row=>row.scope===activeScope&&row.kind==='cache');
   const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:18,background:'var(--bg-1)'};
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8};
-  return <main style={{height:'100%',overflowY:'auto',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 90px'}}>
+  return <main style={{height:'100%',overflowY:'auto',background:'var(--bg-0)',color:'var(--text-primary)'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'max(90px, var(--lima-fab-clearance, 0px))'}}>
     <header style={{display:'flex',alignItems:'center',gap:12}}><MenuButton/><BackButton/><h1 style={{fontSize:18,lineHeight:'20px',margin:0,minWidth:0,flex:1,display:'-webkit-box',WebkitLineClamp:2,WebkitBoxOrient:'vertical',overflow:'hidden'}}>{t('offlineTitle')}</h1></header>
     {lang==='zu'&&<p role="note" style={{...card,marginTop:12,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     <div role="status"><strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}</div>
