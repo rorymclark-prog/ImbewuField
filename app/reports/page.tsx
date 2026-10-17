@@ -63,7 +63,12 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
   // mentor/ngo/funder/assessments chrome. Same header shell + TabBar as those routes now.
   return <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
     <AppHeader title={t('reportsTitle')} />
-    <main className={styles.root} style={{ flex: 1 }}><div className={styles.wrap}>
+    {/* staff-04/sdesk-06: styles.root (components/MelDashboard.module.css, shared with the
+        staff-dark track — not edited here) carries a 180px padding-bottom sized for a bar this
+        page didn't use to have, which left a long blank tail below short content. TabBar now
+        supplies its own clearance (and hides entirely at lg+), so this page only needs enough
+        padding to clear it on phone. */}
+    <main className={styles.root} style={{ flex: 1, paddingBottom: 32 }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
     {!allowed ? <p>{t('reportsFunderNotice')} <Link href="/funder">{t('reportsOpenFunderView')}</Link></p> : !ready ? <p role="status" aria-live="polite">{t('reportsLoading')}</p> : <>
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}

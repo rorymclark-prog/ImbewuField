@@ -8,6 +8,7 @@ import {
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import workspace from '@/components/layout/Workspace.module.css';
 import { useAuth } from '@/lib/auth';
 import { useAppLevel } from '@/lib/app-level';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -839,7 +840,11 @@ export default function SurveysPage() {
                 <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)', letterSpacing: '0.08em' }}>
                   {localUi('Existing surveys', 'Izinhlolovo ezikhona', lang)}
                 </div>
-                <div className="space-y-3">
+                {/* sdesk-06: at 1280 a single-column stack of surveys left most of the frame
+                    blank below a short list. Workspace's auto-fit card grid (one column on
+                    phone, several at md+) fills that width instead, with align-items:start so
+                    each card's own accordion can open without stretching its row-mates. */}
+                <div className={workspace.cards}>
                   {surveys.map((s) => (
                     <StaffSurveyCard key={s.id} survey={s} isLive={isLive} canEditLabels={s.created_by === user?.uid} onSaved={load} />
                   ))}
@@ -865,7 +870,7 @@ export default function SurveysPage() {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className={workspace.cards}>
                 {surveys.map((s) => (
                   <FarmerSurveyCard
                     key={s.id}

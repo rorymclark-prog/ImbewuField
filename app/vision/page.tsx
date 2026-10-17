@@ -3,16 +3,12 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { Camera, Loader2, Leaf, Scale, ChevronRight } from 'lucide-react';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 import { resizeForStorage } from '@/lib/site-evidence';
 
 // A 12 MP phone photo (the common case on the cheap Android phones this app targets) is several
@@ -188,23 +184,20 @@ export default function VisionPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
 
       {/* ── Header ── */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>Lima Vision</h1>
-        <div className="flex-1" />
-        <LessonLink id="vision:overview" label={t('Learn', 'Funda')} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title="Lima Vision"
+        right={<LessonLink id="vision:overview" label={t('Learn', 'Funda')} />}
+      />
 
       {/* ── Scrollable body ── */}
       <main className="flex-1 overflow-y-auto">
         <div className="max-w-md mx-auto px-4 py-5 space-y-5" style={{ paddingBottom: 88 }}>
+
+          {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
+              real <h1> now that the old text-xs chip is gone. */}
+          <h1 className="font-display" style={{ fontSize: 20, fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
+            Lima Vision
+          </h1>
 
           {/* Mode toggle */}
           <div
@@ -459,7 +452,7 @@ export default function VisionPage() {
         </div>
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }
