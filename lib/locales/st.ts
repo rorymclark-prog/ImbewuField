@@ -25,7 +25,6 @@ const dict: Dict = {
   language: 'Puo',
   tabHome: 'Lehae',
   tabMap: "Mmapa",
-  tabFinance: 'Ditjhelete',
   tabAccount: 'Akhaonto',
   // Farmer recovery copy is an unreviewed machine draft; the screen keeps the English source visible.
   mapHeldTitle: 'Mmapa o eme nakwana',
@@ -719,8 +718,6 @@ const dict: Dict = {
   homeSurveyNew: 'Hlahloba sebaka se setjha',
   homeSurveyDesc: 'Beha pin mme Lima e tla bala maemo a lehodimo, mobu le metsi.',
   homeOpenMap: 'Bula mmapa',
-  homeQuickFinance: 'Ditjhelete',
-  homeQuickFinanceDesc: 'Lekeno le ditshenyehelo',
   homeQuickStudy: 'Ithuta',
   homeQuickStudyDesc: 'Khoase ya permaculture',
   homeQuickContact: 'Ikopanya',
