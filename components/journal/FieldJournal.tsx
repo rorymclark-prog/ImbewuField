@@ -306,7 +306,7 @@ export default function FieldJournal() {
               {getElementArt2(`journal_${c.key}`) ? (
                 <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
               ) : (
-                c.icon
+                <c.icon size={12} aria-hidden />
               )}{' '}
               {isZulu ? journalCategoryLabel(c.key) : c.label}
             </Chip>
@@ -380,7 +380,7 @@ export default function FieldJournal() {
                         {getElementArt2(`journal_${cat.key}`) ? (
                           <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                         ) : (
-                          cat.icon
+                          <cat.icon size={11} aria-hidden />
                         )}{' '}
                         {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                       </span>
@@ -464,7 +464,7 @@ export default function FieldJournal() {
                           {getElementArt2(`journal_${entry.category}`) ? (
                             <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
-                            cat.icon
+                            <cat.icon size={11} aria-hidden />
                           )}{' '}
                           {isZulu ? journalCategoryLabel(cat.key) : cat.label}
                         </span>

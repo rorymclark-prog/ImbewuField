@@ -1240,7 +1240,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <span
                     key={s}
                     className="px-2 py-0.5 rounded-full text-xs font-display"
-                    style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)', color: 'var(--color-forest-800)' }}
+                    style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}
                   >
                     {s}
                   </span>

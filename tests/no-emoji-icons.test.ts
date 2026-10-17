@@ -82,12 +82,6 @@ const RATCHET: Record<string, { reason: string; budget: number }> = {
     budget: 11,
   },
   'lib/water-points.ts': { reason: 'water-feature markers on the Design Studio map', budget: 7 },
-  'lib/field-journal.ts': {
-    reason: 'the seven journal kinds. Every one of them resolves to drawn art via '
-      + 'lib/element-art-2.ts at all three render sites, so none currently reaches a screen — but '
-      + 'unlike the crop catalog there is no test proving that, so they are counted, not skipped.',
-    budget: 7,
-  },
   'lib/network-demo.ts': { reason: 'two glyphs in the network showcase\'s demo data', budget: 2 },
   'lib/forward-harvests.ts': { reason: 'one glyph in a harvest projection label', budget: 1 },
   'lib/crop-plan.ts': { reason: 'one CropIcon fallback, same shape as the catalog\'s', budget: 1 },

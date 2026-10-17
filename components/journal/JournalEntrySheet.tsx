@@ -192,7 +192,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       {getElementArt2(`journal_${c.key}`) ? (
                         <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
                       ) : (
-                        <span style={{ fontSize: 15 }}>{c.icon}</span>
+                        <c.icon size={15} aria-hidden />
                       )}
                       {isZulu ? journalCategoryLabel(c.key) : c.label}
                     </button>
