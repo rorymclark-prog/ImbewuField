@@ -285,6 +285,18 @@ for (const [relativePath, patterns] of Object.entries(W14_BANNED_LITERAL_HEX)) {
   });
 }
 
+// GOLD_DIM may only read var(--gold-dim) in app/design/page.tsx because PAPER was made
+// theme-aware (var(--bg-1)) in the same commit — unlike components/design/SectorSummary.tsx /
+// TankCalculator.tsx (tests/design-studio-ochre-text.test.ts), which keep a FIXED PAPER card and
+// so must keep GOLD_DIM fixed at #7A4408 too (dark mode's --gold-dim is ~2.6:1 on a card that
+// never goes dark). If either constant in app/design/page.tsx reverts without the other, text
+// goes near-invisible in one theme. This pins the pairing, not just one half of it.
+test('app/design/page.tsx keeps PAPER and GOLD_DIM paired as theme-aware tokens (ux-07/dark-05 — do not revert only one)', () => {
+  const src = read('app/design/page.tsx');
+  assert.match(src, /const PAPER = 'var\(--bg-1\)';/, 'PAPER must stay var(--bg-1) — GOLD_DIM below assumes the surface it sits on now follows the theme');
+  assert.match(src, /const GOLD_DIM = 'var\(--gold-dim\)';/, 'GOLD_DIM must stay var(--gold-dim) now that PAPER follows the theme');
+});
+
 test('app/partners/page.tsx no longer paints its root/sections with the bg-paper/text-ink :root-only Tailwind constants (code-08)', () => {
   const src = read('app/partners/page.tsx');
   assert.doesNotMatch(src, /\bbg-paper\b/, 'bg-paper is a :root-only Tailwind constant (tailwind.config.ts) — use bg-[var(--bg-0)] instead');
@@ -324,6 +336,13 @@ test("none of w14 dark-leftovers' owned page files paint a surface, border or te
 // than the full ROOT_ONLY_BY_DESIGN scan above, which would also flag those intentional fills.
 const W14_BG_SURFACE_TEXT_ONLY = ['--color-card', '--color-paper', '--surface-2', '--text-2', '--text-3', '--surface', '--text', '--bg'];
 
+// ux-07: ochre used as TEXT (the /samples/production "...Field" wordmark) measures 2.54:1 on
+// paper — CLAUDE.md's "ochre is a FILL" rule. var(--gold-dim) is the themed dim variant.
+test('app/samples/production/ProductionExample.module.css no longer paints .brandField text with raw var(--ochre) (ux-07)', () => {
+  const src = read('app/samples/production/ProductionExample.module.css');
+  assert.match(src, /\.brandField \{ color:var\(--gold-dim\); \}/, '.brandField should read var(--gold-dim), not var(--ochre), for its text colour');
+});
+
 test("app/samples/production/ProductionExample.module.css does not paint a surface, border or text with the :root-only bg/surface/text family (code-17)", () => {
   const src = read('app/samples/production/ProductionExample.module.css');
   const offenders: string[] = [];
@@ -336,4 +355,18 @@ test("app/samples/production/ProductionExample.module.css does not paint a surfa
       ? `Found a :root-only bg/surface/text token — it will not follow the theme:\n${offenders.map((o) => `  ${o}`).join('\n')}`
       : undefined,
   );
+});
+
+// nav-12: .page scrolled the whole document sideways instead of letting only .calendarScroll
+// (min-width:870px table) scroll internally; the h1's two phrases were joined with a <br> but no
+// space, so flattened text (screen readers, this audit's own scraper) read "...farm.A year...".
+test('app/samples/production/ProductionExample.module.css constrains horizontal overflow to .calendarScroll, not the whole .page (nav-12)', () => {
+  const src = read('app/samples/production/ProductionExample.module.css');
+  assert.match(src, /\.page \{[^}]*overflow-x:hidden/, '.page should clip horizontal overflow so only .calendarScroll scrolls sideways');
+  assert.match(src, /\.calendarScroll \{[^}]*max-width:100%/, '.calendarScroll should be capped at 100% of its container');
+});
+
+test('app/samples/production/page.tsx\'s hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)', () => {
+  const src = read('app/samples/production/page.tsx');
+  assert.match(src, /<h1>A whole farm\.<br \/>\{' '\}A year of food\.<\/h1>/, 'the <br /> alone leaves no space in the flattened text content — add a literal space alongside it');
 });
