@@ -149,7 +149,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                 {entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
               </div>
-              <div style={{ font: '400 11.5px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
+              <div style={{ font: '400 12px/1.4 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 1 }}>
                 {ui('Date, weather, action and result — those four make a note useful later.', 'Usuku, isimo sezulu, okwenzile nomphumela — lokhu kusiza ukuthi inothi libe wusizo kamuva.')}
               </div>
             </div>
@@ -309,7 +309,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                     width: 68, height: 68, borderRadius: 10, cursor: 'pointer',
                     background: 'var(--bg-1)', border: '1.5px dashed var(--border)', color: 'var(--color-forest-700)',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
-                    font: '600 10px/1 var(--font-sans), sans-serif',
+                    font: '600 12px/1 var(--font-sans), sans-serif',
                   }}
                 >
                   {busy ? <Loader2 size={18} className="animate-spin" /> : <Camera size={18} />}
@@ -396,7 +396,7 @@ const inputStyle: React.CSSProperties = {
 function Label({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
-      font: '700 10.5px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
+      font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
       textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
     }}>
       {children}

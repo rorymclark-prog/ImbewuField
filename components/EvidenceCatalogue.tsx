@@ -44,21 +44,21 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
           aria-label={t('evidenceCatalogueTitle')}
           className="w-full max-w-2xl font-sans overflow-y-auto"
           style={{
-            background: '#FBF8F1', borderRadius: '22px 22px 0 0',
+            background: 'var(--bg-1)', borderRadius: '22px 22px 0 0',
             maxHeight: '92dvh', paddingBottom: 'calc(24px + env(safe-area-inset-bottom))',
           }}
         >
           {/* Header */}
-          <div style={{ padding: '20px 22px 0', position: 'sticky', top: 0, background: '#FBF8F1', zIndex: 2, borderBottom: '1px solid #EFE7D6', paddingBottom: 14 }}>
+          <div style={{ padding: '20px 22px 0', position: 'sticky', top: 0, background: 'var(--bg-1)', zIndex: 2, borderBottom: '1px solid var(--border)', paddingBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
               <div>
-                <div style={{ font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 7 }}>
+                <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 7 }}>
                   {t('evidenceCatalogueTitle')}
                 </div>
                 <div style={{ font: '600 22px/1.1 Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
                   {t('evidenceCatalogueHeading')}
                 </div>
-                <div style={{ font: '400 13.5px/1.5 Newsreader, Georgia, serif', color: '#4A4030', marginTop: 6, maxWidth: 460 }}>
+                <div style={{ font: '400 13.5px/1.5 Newsreader, Georgia, serif', color: 'var(--text-secondary)', marginTop: 6, maxWidth: 460 }}>
                   {t('evidenceCatalogueIntro')}
                 </div>
               </div>
@@ -80,10 +80,10 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                       <GroupIcon size={18} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <span style={{ font: '600 15px/1 system-ui, sans-serif', color: 'var(--text-primary)' }}>{group.label}</span>
+                      <span style={{ font: '600 15px/1 var(--font-sans), sans-serif', color: 'var(--text-primary)' }}>{group.label}</span>
                     </div>
                     {count > 0 && (
-                      <span style={{ font: '600 11px/1 system-ui, sans-serif', color: group.color, background: group.bg, padding: '4px 9px', borderRadius: 20 }}>
+                      <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', color: group.color, background: group.bg, padding: '4px 9px', borderRadius: 20 }}>
                         {count} {count === 1 ? t('reportItemSingular') : t('reportItemPlural')}
                       </span>
                     )}
@@ -92,15 +92,15 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                     {group.items.map((item) => {
                       const itemKey = `${group.key}_${item.key}`;
                       const isInvasive = item.invasive;
-                      const chipColor = isInvasive ? '#B05A3C' : group.color;
-                      const chipBg = isInvasive ? '#F4E2DA' : group.bg;
-                      const chipBorder = isInvasive ? '#E6C9BC' : group.bg;
+                      const chipColor = isInvasive ? 'var(--orange)' : group.color;
+                      const chipBg = isInvasive ? 'color-mix(in srgb, var(--orange) 14%, var(--bg-1))' : group.bg;
+                      const chipBorder = isInvasive ? 'color-mix(in srgb, var(--orange) 30%, transparent)' : group.bg;
                       return (
                         <button
                           key={item.key}
                           onClick={() => setActiveSheet({ group, item })}
                           style={{
-                            font: '500 12.5px/1 system-ui, sans-serif',
+                            font: '500 12.5px/1 var(--font-sans), sans-serif',
                             color: chipColor, background: chipBg,
                             border: `1px solid ${chipBorder}`,
                             borderRadius: 8, padding: '7px 11px',
@@ -117,27 +117,27 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
             })}
 
             {/* Drone / aerial — mentor only */}
-            <div style={{ display: 'flex', gap: 14, background: '#274D2C', borderRadius: 14, padding: '18px 20px', alignItems: 'center' }}>
-              <div style={{ width: 42, height: 42, borderRadius: 10, background: '#3C6B3F', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CDEBB6" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ display: 'flex', gap: 14, background: 'var(--color-forest-800)', borderRadius: 14, padding: '18px 20px', alignItems: 'center' }}>
+              <div style={{ width: 42, height: 42, borderRadius: 10, background: 'var(--color-forest-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest)" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 9h6v6H9z" /><path d="M9 9 4.5 4.5M15 9l4.5-4.5M9 15l-4.5 4.5M15 15l4.5 4.5" />
                   <circle cx="4.5" cy="4.5" r="1.6" /><circle cx="19.5" cy="4.5" r="1.6" />
                   <circle cx="4.5" cy="19.5" r="1.6" /><circle cx="19.5" cy="19.5" r="1.6" />
                 </svg>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ font: '600 14.5px/1.2 system-ui, sans-serif', color: '#EAF2E2' }}>{t('evidenceCatalogueDroneTitle')}</div>
-                <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: '#B9D2B0', marginTop: 3, fontStyle: 'italic' }}>
+                <div style={{ font: '600 14.5px/1.2 var(--font-sans), sans-serif', color: 'var(--on-forest)' }}>{t('evidenceCatalogueDroneTitle')}</div>
+                <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'color-mix(in srgb, var(--on-forest) 75%, transparent)', marginTop: 3, fontStyle: 'italic' }}>
                   {t('evidenceCatalogueDroneBody')}
                 </div>
               </div>
-              <span style={{ font: '600 10.5px/1 system-ui, sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#274D2C', background: '#CDEBB6', padding: '6px 12px', borderRadius: 20, whiteSpace: 'nowrap', flexShrink: 0 }}>
+              <span style={{ font: '600 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-forest-800)', background: 'var(--on-forest)', padding: '6px 12px', borderRadius: 20, whiteSpace: 'nowrap', flexShrink: 0 }}>
                 {t('evidenceCatalogueMentorOnly')}
               </span>
             </div>
 
             {/* Indigenous edibles reference */}
-            <div style={{ background: '#F7F4EC', border: '1px solid #E6DDC9', borderRadius: 14, padding: '18px 20px' }}>
+            <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
               <div style={{ font: '400 14px/1.5 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 14 }}>
                 {t('evidenceCatalogueEdiblesHeading')}
               </div>
@@ -146,17 +146,17 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                   <div key={sp.name} style={{
                     display: 'flex', alignItems: 'baseline', gap: 10,
                     paddingBottom: i < INDIGENOUS_EDIBLES.length - 1 ? 10 : 0,
-                    borderBottom: i < INDIGENOUS_EDIBLES.length - 1 ? '1px solid #EFE7D6' : 'none',
+                    borderBottom: i < INDIGENOUS_EDIBLES.length - 1 ? '1px solid var(--border)' : 'none',
                   }}>
                     <span style={{ font: '600 14.5px/1 Newsreader, Georgia, serif', color: 'var(--text-primary)', flexShrink: 0, width: 110 }}>
                       {sp.name}
-                      {sp.protected && <span style={{ font: '400 10px/1 system-ui, sans-serif', color: 'var(--color-forest-700)', marginLeft: 4 }}>·{t('evidenceCatalogueEdiblesProtected')}</span>}
+                      {sp.protected && <span style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'var(--color-forest-700)', marginLeft: 4 }}>·{t('evidenceCatalogueEdiblesProtected')}</span>}
                     </span>
-                    <span style={{ font: '400 12px/1 system-ui, sans-serif', color: 'var(--text-muted)' }}>{sp.desc}</span>
+                    <span style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'var(--text-muted)' }}>{sp.desc}</span>
                   </div>
                 ))}
               </div>
-              <div style={{ font: '400 13px/1.5 Newsreader, Georgia, serif', color: '#6B5D44', marginTop: 14, borderTop: '1px solid #EFE7D6', paddingTop: 12 }}>
+              <div style={{ font: '400 13px/1.5 Newsreader, Georgia, serif', color: 'var(--text-secondary)', marginTop: 14, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
                 {t('evidenceCatalogueEdiblesFooter')}
               </div>
             </div>
