@@ -62,7 +62,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                   {t('evidenceCatalogueIntro')}
                 </div>
               </div>
-              <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-muted)', flexShrink: 0 }}>
+              <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', flexShrink: 0, minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
                 <X size={22} />
               </button>
             </div>

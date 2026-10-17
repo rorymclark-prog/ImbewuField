@@ -392,7 +392,7 @@ function HomeLandingInner() {
   return (
     <div
       className="h-[100dvh] flex flex-col font-sans overflow-hidden"
-      style={{ background: 'var(--color-canvas)', color: 'var(--color-ink)' }}
+      style={{ background: 'var(--bg-0)', color: 'var(--color-ink)' }}
     >
       {/* ── Header ── */}
       <header
