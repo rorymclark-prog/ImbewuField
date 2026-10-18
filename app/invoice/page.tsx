@@ -800,7 +800,9 @@ export default function InvoicePage() {
               frame disappears at print time and only the white sheet is left. */}
           <div className={`invoice-preview ${workspace.invoicePreview}`} style={{ background: 'var(--bg-2)', borderRadius: 18, padding: 10, boxShadow: 'var(--shadow-panel)' }}>
             <p className="no-print text-xs font-sans text-center mb-2" style={{ color: 'var(--text-muted)' }}>
-              {ui('Preview of the printed invoice')}
+              {/* 'Preview' is a reviewed sentence in every regional packet; a new caption would
+                  have shipped untranslated in Sesotho, Tshivenda and Xitsonga. */}
+              {ui('Preview')}
             </p>
             <InvoiceDocumentView doc={doc} />
           </div>
