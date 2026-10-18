@@ -396,7 +396,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       onChange={(e) => setQuery(e.target.value)}
                       placeholder={ui('Farmer, site, district or cohort…','Umlimi, indawo, isifunda noma iqembu…')}
                       aria-label={ui('Search the cohort','Sesha iqembu')}
-                      className="flex-1 font-sans bg-transparent outline-none"
+                      className="flex-1 font-sans bg-transparent outline-none rounded focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                       style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
                     />
                     {query && (

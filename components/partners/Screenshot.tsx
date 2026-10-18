@@ -32,7 +32,7 @@ export default function Screenshot({ src, alt, label, caption, featured = false 
       <div
         className={`w-full flex items-center justify-center overflow-hidden rounded-2xl ${heightClass}`}
         style={{
-          background: failed ? 'var(--surface-2)' : 'var(--color-sage-100)',
+          background: failed ? 'var(--bg-2)' : 'var(--color-sage-100)',
           border: `1px solid ${failed ? 'var(--border-strong)' : 'var(--color-border)'}`,
           borderStyle: failed ? 'dashed' : 'solid',
           boxShadow: failed ? 'none' : 'var(--shadow-card)',
@@ -40,8 +40,8 @@ export default function Screenshot({ src, alt, label, caption, featured = false 
       >
         {failed ? (
           <div className="flex flex-col items-center gap-2 px-6 text-center">
-            <ImageOff size={22} strokeWidth={1.5} style={{ color: 'var(--text-3)' }} />
-            <span className="text-xs font-sans" style={{ color: 'var(--text-3)' }}>
+            <ImageOff size={22} strokeWidth={1.5} style={{ color: 'var(--text-muted)' }} />
+            <span className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
               Screenshot coming soon
             </span>
           </div>
@@ -58,11 +58,11 @@ export default function Screenshot({ src, alt, label, caption, featured = false 
         )}
       </div>
       <figcaption className="text-center">
-        <span className="block text-sm font-display font-semibold" style={{ color: 'var(--text)' }}>
+        <span className="block text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>
           {label}
         </span>
         {caption && (
-          <span className="block mt-1 text-[13px] font-sans leading-snug" style={{ color: 'var(--text-3)' }}>
+          <span className="block mt-1 text-[13px] font-sans leading-snug" style={{ color: 'var(--text-muted)' }}>
             {caption}
           </span>
         )}

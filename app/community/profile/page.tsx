@@ -5,7 +5,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Camera, Loader2, Check, Trash2, X } from 'lucide-react';
+import { Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -16,11 +16,9 @@ import { resizeFileForUpload } from '@/lib/site-evidence';
 import {
   getMyCommunityProfile, upsertCommunityProfile, deleteCommunityProfile, jitterToNeighbourhood,
 } from '@/lib/db/community-queries';
-import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 const CROP_OPTIONS = [
   'maize', 'beans', 'tomato', 'spinach', 'cabbage', 'potato', 'pumpkin',
@@ -192,18 +190,16 @@ export default function CommunityProfilePage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:profile" label="Learn" />
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{t('communityEditProfileTitle')}</h1>
-      </header>
+      <AppHeader
+        backFallback="/community"
+        title={t('communityEditProfileTitle')}
+        right={<LessonLink id="community:profile" label="Learn" />}
+      />
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
+        {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
+            real, visible <h1> now that the old header's h1 is gone. */}
+        <h1 className="font-display font-bold m-0" style={{ fontSize: 20, color: 'var(--text-primary)', marginBottom: 12 }}>{t('communityEditProfileTitle')}</h1>
         <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
           {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: 'var(--text-muted)' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
           {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
@@ -350,7 +346,7 @@ export default function CommunityProfilePage() {
         </div>
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

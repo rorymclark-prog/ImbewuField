@@ -19,5 +19,7 @@ test("the Key species chips use theme tokens, not a fixed forest-green hex", () 
 });
 
 test("the last card clears the global floating Lima button instead of sitting flush against it", () => {
-  assert.match(PAGE, /padding: '84px 16px 96px'/, 'bottom padding dropped back below enough room for the floating Lima button');
+  // w14 (desk-19): the fixed 96px floor became the shared clearance token every page uses, with
+  // 96px kept as its minimum — the floor may not drop below that again.
+  assert.match(PAGE, /padding: '84px 16px calc\(max\(96px, var\(--lima-fab-clearance, 96px\)\)\)'/, 'bottom padding dropped back below enough room for the floating Lima button');
 });

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ensureWave14StudyCurrent, wave14StudySourceBefore } from './wave-14-study-history-checks.ts';
 
 // Wave 13 (17 Oct 2026, code-01 / dark-02 / desk-09): the Studies page moved its hardcoded
 // ink, forest, ochre and water hexes onto the theme tokens (hex and alpha-hex literals became
@@ -54,10 +55,13 @@ export function ensureWave13ThemeCurrent(): void {
     return s ? [file, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':') : file + ':absent';
   }).join('|');
   if (signature === lastSuccessfulSignature) return;
+  // The newer wave 14 study layer sits on this one: its owned sources are checked and
+  // projected to their exact wave 13 successor before this layer's byte-exact pins run.
+  ensureWave14StudyCurrent();
   for (const [file, row] of Object.entries(files)) {
     const before = read(row.beforePath);
     assert.equal(sha(before), row.beforeSha256, file + ': wave 13 predecessor fixture may not change');
-    const live = read(file);
+    const live = wave14StudySourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live wave 13 successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live wave 13 successor, including every unlisted byte');
     assertOnlyColourAndWhitespaceChanges(before, live, row.moved, file);
@@ -74,6 +78,7 @@ export function wave13ThemeSourceBefore<T extends string | Uint8Array>(file: str
   const row = files[file];
   if (!row) return supplied;
   ensureWave13ThemeCurrent();
+  supplied = wave14StudySourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

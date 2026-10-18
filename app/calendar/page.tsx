@@ -10,6 +10,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
+import { produceLabel } from '@/lib/produce-label';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
@@ -77,16 +78,20 @@ const CROP_BASE: { name: string; catalogKey: string; harvestMonths: number[] }[]
   { name: 'Maize', catalogKey: CATALOG_KEY_FOR_CROP.Maize, harvestMonths: [1, 2, 3] },
   { name: 'Beans', catalogKey: CATALOG_KEY_FOR_CROP.Beans, harvestMonths: [11, 0, 1, 2] },
   { name: 'Carrots', catalogKey: CATALOG_KEY_FOR_CROP.Carrots, harvestMonths: [5, 6, 7, 8] },
-  { name: 'Sweet Potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
+  { name: 'Sweet potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
   { name: 'Garlic', catalogKey: CATALOG_KEY_FOR_CROP.Garlic, harvestMonths: [8, 9, 10] },
   { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
 ];
 
-/** Builds CROPS for whichever RainPattern the farmer's saved plan actually
- * uses, rather than always assuming 'summer'. */
-function cropsForPattern(pattern: RainPattern): CropRow[] {
+/** Builds CROPS for whichever RainPattern the farmer's saved plan actually uses, rather than
+ * always assuming 'summer'. ux-18: `name` now comes from the shared produceLabel() helper
+ * (lib/produce-label.ts) instead of CROP_BASE's own hardcoded string, so this grid spells a
+ * crop the same way MyRecords, Home and /prices do, in whichever language is active — this was
+ * the 'Sweet Potato' on /calendar vs 'Sweet potato' everywhere else the audit flagged. */
+function cropsForPattern(pattern: RainPattern, lang: string): CropRow[] {
   return CROP_BASE.map((crop) => ({
     ...crop,
+    name: produceLabel(crop.catalogKey, lang),
     marks: sowMarksForPattern(crop.catalogKey, pattern),
   }));
 }
@@ -428,7 +433,7 @@ export default function CalendarPage() {
 
   // Rebuilt only when the plan's rain pattern changes — everything below reads
   // from these, never from a page-wide 'summer' assumption.
-  const crops = useMemo(() => cropsForPattern(rainPattern), [rainPattern]);
+  const crops = useMemo(() => cropsForPattern(rainPattern, lang), [rainPattern, lang]);
   const monthlyData = useMemo(() => monthlyDataForCrops(crops), [crops]);
 
   const hasPlan = plannedCropKeys.size > 0;

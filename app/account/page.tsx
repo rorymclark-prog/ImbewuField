@@ -12,18 +12,16 @@ import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import ThemePanel from '@/components/ThemePanel';
 import ConsentPanel from '@/components/ConsentPanel';
 import AiAllowance from '@/components/AiAllowance';
-import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, ChevronDown, ChevronUp, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
+import { Sprout, Mail, Phone, Globe, LogOut, ChevronRight, ChevronDown, ChevronUp, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
-import { isSampleMode, exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+import { exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+import { useSampleRole } from '@/lib/use-role-navigation';
 
 // ux-04/sdesk-02/staff-07/nav-05/desk-11: the shared header for the three states below
 // (genuine loading, sample/tour, and "sign in to continue") — one rendered header instead of
@@ -31,14 +29,7 @@ import { isSampleMode, exitSampleMode, getSandboxProfile } from '@/lib/sample-mo
 // light and dark, used to show only a faint sprout on an empty page with no way to tell
 // loading, broken and "this is the practice version" apart.
 function AccountShellHeader({ copy }: { copy: (en: string, zu: string) => string }) {
-  return (
-    <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-      <MenuButton /><BackButton fallback="/home" />
-      <BrandLogo />
-      <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-      <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{copy('Account', 'I-akhawunti')}</h1>
-    </header>
-  );
+  return <AppHeader title={copy('Account', 'I-akhawunti')} />;
 }
 
 const ROLE_LABELS: Record<UserRole, string> = {
@@ -71,6 +62,10 @@ export default function AccountPage() {
   // Settings button already opens the same panel in both modes) into a "More account settings"
   // disclosure so they stay reachable without switching to All tools.
   const simple = useAppLevel() === 'simple';
+  // Hydration-safe: useSampleRole reads sessionStorage through useSyncExternalStore with a
+  // server snapshot of '', so the first client render matches the server markup. Calling
+  // isSampleMode() during render made every sample-mode frame of /account log React #418.
+  const samplePreview = !!useSampleRole();
   const [moreOpen, setMoreOpen] = useState(false);
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -206,7 +201,6 @@ export default function AccountPage() {
   // no heading, no message, no way back, no sign-in. A genuinely slow auth check now gets a
   // sentence under the icon and, past 4s, the same sign-in fallback rather than spinning forever.
   if (loading || !user) {
-    const samplePreview = isSampleMode();
     if (!samplePreview && loading && !authSlow) {
       return (
         <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -215,7 +209,7 @@ export default function AccountPage() {
             <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
             <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{copy('Loading your account…', 'Kulayishwa i-akhawunti yakho…')}</p>
           </div>
-          <TabBar />
+          <TabBar hideAtDesktop />
         </div>
       );
     }
@@ -274,7 +268,7 @@ export default function AccountPage() {
               </section>
             </div>
           </div>
-          <TabBar />
+          <TabBar hideAtDesktop />
           <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
         </div>
       );
@@ -297,7 +291,7 @@ export default function AccountPage() {
             {copy('Sign in', 'Ngena ngemvume')}
           </button>
         </div>
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
     );
   }
@@ -308,20 +302,15 @@ export default function AccountPage() {
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{copy('Account', 'I-akhawunti')}</h1>
-        <div className="flex-1" />
-        <LessonLink id="account:overview" label={copy('Learn', 'Funda')} />
-        <button onClick={() => setSettingsOpen(true)} aria-label={copy('Settings', 'Izilungiselelo')}
-          className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
-          style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer' }}>
-          <Settings size={13} strokeWidth={1.7} />
-          <span className="hidden sm:inline">{copy('Settings', 'Izilungiselelo')}</span>
-        </button>
-      </header>
+      <AppHeader
+        title={copy('Account', 'I-akhawunti')}
+        right={<LessonLink id="account:overview" label={copy('Learn', 'Funda')} />}
+      />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
+          real, visible <h1> now that the old header's h1 is gone. */}
+      <h1 className="font-display font-bold px-4 sm:px-6 pt-5 m-0" style={{ fontSize: 20, color: 'var(--text-primary)' }}>
+        {copy('Account', 'I-akhawunti')}
+      </h1>
 
       <div className="flex-1 overflow-y-auto">
         <div className={`${workspace.workspace} ${workspace.formWidth} ${workspace.twoColumns} px-4 py-6 sm:px-6`}>
@@ -593,7 +582,7 @@ export default function AccountPage() {
         </div>
       </div>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );

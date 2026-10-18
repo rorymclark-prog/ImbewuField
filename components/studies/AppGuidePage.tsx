@@ -133,7 +133,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
       </section>
       <nav className={styles.related} aria-label="More app guides">
         <h2>Keep learning the app</h2>
-        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <OfflinePageLink key={item.id} href={item.href}>{item.cardTitle} →</OfflinePageLink>)}
+        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <OfflinePageLink key={item.id} href={item.href}>{item.cardTitle} →</OfflinePageLink>)}
       </nav>
     </main>
     <div className="no-print"><TabBar /></div>

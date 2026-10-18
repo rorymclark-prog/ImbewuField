@@ -5,18 +5,16 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ChevronLeft, Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/community-queries';
 import type { CommunityProfile } from '@/lib/db/types';
-import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 
 export default function PublicCommunityProfilePage() {
   const { user, loading } = useAuth();
@@ -92,15 +90,11 @@ export default function PublicCommunityProfilePage() {
 
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--text-secondary)', textDecoration: 'none' }}>
-          <ChevronLeft size={18} strokeWidth={1.7} />
-        </Link>
-        <BrandLogo />
-        <div style={{ flex: 1 }} />
-        <LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />
-      </header>
+      <AppHeader
+        backFallback="/community"
+        title={lang === 'zu' ? 'Iphrofayela' : 'Profile'}
+        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />}
+      />
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
@@ -219,7 +213,7 @@ export default function PublicCommunityProfilePage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

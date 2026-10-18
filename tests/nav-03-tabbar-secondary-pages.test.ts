@@ -14,6 +14,10 @@ import test from 'node:test';
 // (flex column shell + a flex:1 overflow-y:auto scroll area + TabBar as the final sibling)
 // rather than just dropping <TabBar/> at the end of an already-scrolling single container,
 // which would have made it scroll away with the content instead of staying docked.
+//
+// w14: these pages render components/layout/AppHeader, which shows the same tabs at desktop
+// width, so TabBar mounts with hideAtDesktop (AppHeader's own contract) — still the final flex
+// sibling, still inside the no-print wrapper.
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
@@ -28,9 +32,10 @@ for (const [label, rel] of [
   test(`${label} mounts TabBar as a flex-column sibling, not inside the scrolling area`, () => {
     const src = source(rel);
     assert.match(src, /import TabBar from '@\/components\/TabBar';/, `${label} must import TabBar`);
-    assert.match(src, /<TabBar\s*\/>/, `${label} must render TabBar`);
+    assert.match(src, /<TabBar hideAtDesktop\s*\/>/, `${label} must render TabBar (hidden at desktop, where AppHeader carries the tabs)`);
     // TabBar sits in a no-print wrapper so printing these pages does not print the nav bar too.
-    assert.match(src, /<div className="no-print"><TabBar\/><\/div>/, `${label}'s TabBar must be wrapped so it can be hidden on print`);
+    assert.match(src, /<div className="no-print"><TabBar hideAtDesktop\/><\/div>/, `${label}'s TabBar must be wrapped so it can be hidden on print`);
+    assert.match(src, /import AppHeader from '@\/components\/layout\/AppHeader';/, `${label} must render the shared AppHeader that justifies hiding TabBar at desktop`);
   });
 }
 

@@ -139,6 +139,21 @@ export const T_en: Dict = {
   siteSummaryFrostProtection: 'Protect against frost in winter.',
   siteSummaryPlanPrompt: 'Want a full planting plan?',
   siteSummaryZuluDraftNotice: 'Unreviewed isiZulu draft. Read the English source before making farming decisions.',
+  // zu-04: the ONE shared <LanguageDraftNote> (components/LanguageDraftNote.tsx) used on
+  // /farmer, /records, /login, /prices and in DataPanel, replacing each page's own ad-hoc
+  // notice. Renders only for isiZulu; the English dict carries these three keys only as the
+  // fallback translate('en', key) reads when showing the collapsed English detail.
+  languageDraftNoticeText: 'This isiZulu wording is an unreviewed machine draft.',
+  languageDraftNoticeEnglishToggle: 'English',
+  languageDraftNoticeEnglishText: 'The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.',
+  languageDraftNoticeDismiss: 'Dismiss',
+  // zu-05: the site report's BRU zone line (components/DataPanel.tsx) mixed an English
+  // attribution sentence and "approx." into isiZulu headings. lib/bru.ts's BRU_ATTRIBUTION
+  // constant stays English (it's also used in English-locale UI); these keys let DataPanel
+  // substitute a translated sentence when lang === 'zu' instead of the raw English string.
+  bruZoneAttribution: 'Zone data: KZN DARD Bioresource Units',
+  bruZoneApprox: 'approx.',
+  bruZoneNameCaveat: 'zone name is a best-effort climate match, not verified',
   mapEditPlaceTitle: 'Edit name or colour',
   mapEditShapeTitle: 'Edit shape',
   mapDeletePlaceTitle: 'Delete this place',
@@ -1371,18 +1386,18 @@ export const T_en: Dict = {
   studentDesignPreviewSimpleLabel: 'Design course',
   studentDesignPreviewCardTitle: 'Bring the decisions together.',
   studentDesignPreviewCardBody: 'Build a design folder with a facilitator or learning partner. This preview does not award course credit.',
-  studentDesignPreviewAction: 'Explore the design teaching preview · English →',
+  studentDesignPreviewAction: 'Explore the design teaching preview · English →',
   studentFinanceEnglishPreview: 'Separate course · English teaching preview',
   studentFinancePreviewTitle: 'Farm Finance',
   studentFinancePreviewIntro: 'Eight units, from keeping farm records to planning a business. Explore 24 lesson drafts with worked practice and printable workbooks. Review and final assessment are still in preparation.',
   studentFinancePreviewSimpleLabel: 'Farm Finance course',
   studentFinancePreviewCardTitle: 'Understand the money. Plan the next season.',
   studentFinancePreviewCardBody: 'Study independently or with a facilitator. Your reading checklist is separate from permaculture course progress.',
-  studentFinancePreviewAction: 'Explore the finance teaching preview · English →',
+  studentFinancePreviewAction: 'Explore the finance teaching preview · English →',
   studentAppGuidesHeading: 'Practical app guides',
   studentAppGuidesTitle: 'Using ImbewuField',
-  studentAppGuideAction: 'Read the guide · English →',
-  studentSampleTourAction: 'Explore mapping, planning and records in the sample tour →',
+  studentAppGuideAction: 'Read the guide · English →',
+  studentSampleTourAction: 'Explore mapping, planning and records in the sample tour →',
   communityTagline: 'Farmer to farmer',
   communityTabNearby: 'Nearby',
   communityTabBoard: 'Board',

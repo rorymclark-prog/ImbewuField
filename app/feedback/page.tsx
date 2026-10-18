@@ -1,10 +1,7 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
-import SettingsButton from '@/components/SettingsButton';
-import BrandLogo from '@/components/BrandLogo';
+import AppHeader from '@/components/layout/AppHeader';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -30,8 +27,7 @@ export default function FeedbackPage(){
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   return <main className={styles.page}><div className={styles.wrap}>
-    {/* ux-11: a plain span, not a second h1 — the one below it is this page's real heading. */}
-    <header className={styles.header}><MenuButton/><BackButton fallback="/account"/><BrandLogo/><span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)', flex: 1 }}>{label('Feedback','Impendulo')}</span><SettingsButton/></header>
+    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} />
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to

@@ -6,12 +6,8 @@
 // same way app/farmer does for components/Map (mapbox-gl needs window).
 
 import dynamic from 'next/dynamic';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
-import MenuButton from '@/components/MenuButton';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 const AtlasExplorer = dynamic(() => import('@/components/atlas/AtlasExplorer'), {
   ssr: false,
@@ -25,22 +21,15 @@ const AtlasExplorer = dynamic(() => import('@/components/atlas/AtlasExplorer'), 
 export default function AtlasPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header
-        className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={APP_HEADER_STYLE}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>Atlas · global garden explorer</h1>
-        <div className="flex-1" />
-        <SettingsButton />
-      </header>
+      <AppHeader title="Atlas · global garden explorer" />
+      {/* nav-17: AppHeader's title is a <span>, not a heading — keep a real (if visually
+          hidden) h1 now that the old header's own h1 is gone; the map fills the screen and
+          has no room for a visible heading above it. */}
+      <h1 className="sr-only">Atlas · global garden explorer</h1>
 
       <AtlasExplorer />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

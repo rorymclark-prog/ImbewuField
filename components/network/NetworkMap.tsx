@@ -464,13 +464,15 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           <div
             /* Second row on a phone — the "Fit all" button owns the top-left
              * corner and the two collide at 375px. */
-            className="absolute top-14 sm:top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-3.5 py-2 max-w-[calc(100%-24px)]"
+            /* The isiZulu hint is ~70 characters: nowrap at 390px pushed it past the map's
+             * right edge and gave the whole page a horizontal scroll. Let it wrap on a phone
+             * and keep the single line from the sm breakpoint. */
+            className="absolute top-14 sm:top-3 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-3.5 py-2 max-w-[calc(100%-24px)] sm:whitespace-nowrap"
             style={{
               background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)',
               border: `1px solid ${LINE}`,
               borderRadius: 999,
               boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
-              whiteSpace: 'nowrap',
             }}
           >
             <Info size={14} style={{ color: 'var(--color-forest-800)', flexShrink: 0 }} />

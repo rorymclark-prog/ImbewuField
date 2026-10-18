@@ -198,17 +198,21 @@ interface PlanSvgProps {
   gridLines: GridLine[];
   /** Omit for the full-design page (everything full-colour). Set to a LayerId to fade every other layer to grey context. */
   highlightLayer?: LayerId;
+  /** Printed width of the drawing in mm (3:2 aspect). The first sheet shares its row with the
+   *  220px Legend + BOQ column, so it must leave room for it inside the 269mm of sheet width
+   *  that remains after padding: 240mm + 8mm gap + 220px (≈58mm) overflowed the sheet. */
+  widthMm?: number;
 }
 
 const CONTEXT_GREY = '#B4ADA0';
 const CONTEXT_OPACITY = 0.25;
 
-function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer }: PlanSvgProps) {
+function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, drawH, scaleBarM, gridLines, highlightLayer, widthMm = 240 }: PlanSvgProps) {
   const scaleBarPx = scaleBarM * scale;
   const isContext = (layer: LayerId) => highlightLayer !== undefined && layer !== highlightLayer;
 
   return (
-    <svg width="240mm" height="160mm" viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
+    <svg width={`${widthMm}mm`} height={`${(widthMm * 2) / 3}mm`} viewBox={`0 0 ${drawW} ${drawH}`} style={{ border: '1px solid #C7BCA6', background: '#FBF9F4' }}>
       {/* grid */}
       {gridLines.map((g, i) => (
         <line key={`grid-${i}`} x1={g.x1} y1={g.y1} x2={g.x2} y2={g.y2} stroke="#E2D8C4" strokeWidth={0.2} />
@@ -712,7 +716,10 @@ export default function FacilitatorPrintPage() {
           .sheetScaler { zoom: 1 !important; }
         }
         @media screen {
-          body { background: #EDE7DB; }
+          /* dark-14: this was a literal cream hex, so the surround behind the sheet stayed a
+             bright page even in dark mode — a 5000px cream band under the A4 preview reads as a
+             failed render, not a deliberate print-preview surface. */
+          body { background: var(--bg-0); }
         }
       `}</style>
 
@@ -794,6 +801,13 @@ export default function FacilitatorPrintPage() {
         </div>
       </div>
 
+      {/* dark-14: the sheet below stays deliberate print-white in every theme — see SHEET_STYLE
+          and the surrounding body background fix above — but needs a caption so a bright A4 page
+          on a now-themed surround reads as a chosen print preview, not a failed render. */}
+      <p className="no-print" style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 0' }}>
+        Print preview
+      </p>
+
       {fullOn && (
         <SheetScaler>
         <div className="sheet" style={SHEET_STYLE}>
@@ -822,6 +836,7 @@ export default function FacilitatorPrintPage() {
                 itemPts={c.itemPts} linePts={c.linePts} sectorPts={c.sectorPts}
                 toDraw={c.toDraw} scale={c.scale} pxPerM={c.pxPerM}
                 drawW={c.drawW} drawH={c.drawH} scaleBarM={c.scaleBarM} gridLines={c.gridLines}
+                widthMm={200}
               />
             </div>
 

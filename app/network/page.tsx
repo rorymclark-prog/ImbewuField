@@ -48,11 +48,8 @@ import { useLanguage } from '@/lib/i18n';
 import FieldDataStatus from '@/components/FieldDataStatus';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
 import type { UserRole } from '@/lib/db/types';
-import BackButton from '@/components/BackButton';
-import BrandLogo from '@/components/BrandLogo';
-import SettingsButton from '@/components/SettingsButton';
+import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
-import MenuButton from '@/components/MenuButton';
 import {
   attentionFlags,
   filterNetwork,
@@ -63,7 +60,6 @@ import {
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
 import type { GardenStatus } from '@/lib/db/types';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -196,70 +192,63 @@ export default function NetworkPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* ── Header ── */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
-        style={{ ...APP_HEADER_INSET, background: PAPER, borderBottom: `1px solid ${LINE}` }}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: LINE }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: INK_SOFT }}>
-          {/* staff-05 / ux-20: 'Network · funder portfolio' truncated to 'Network · fund…' on a
-              phone header — the short form on phone, the full form once there is room for it. */}
-          <span className="sm:hidden">{tr('Network', 'Inethiwekhi')}</span>
-          <span className="hidden sm:inline">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</span>
-        </h1>
-        <div className="flex-1" />
+      <AppHeader
+        title={tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
+        right={
+          <>
+            {/* The org picker only appears for a caller entitled to more than one org — a
+                single-org NGO has nothing to choose and should not be asked to. */}
+            {!portfolio.isDemo && portfolio.orgs.length > 1 && (
+              <select
+                aria-label={tr('Organisation', 'Inhlangano')}
+                value={portfolio.orgId ?? ''}
+                onChange={(e) => portfolio.setOrgId(e.target.value)}
+                className="font-sans"
+                style={{
+                  fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
+                  borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
+                }}
+              >
+                {portfolio.orgs.map((o) => (
+                  <option key={o.id} value={o.id}>{o.name}</option>
+                ))}
+              </select>
+            )}
 
-        {/* The org picker only appears for a caller entitled to more than one org — a
-            single-org NGO has nothing to choose and should not be asked to. */}
-        {!portfolio.isDemo && portfolio.orgs.length > 1 && (
-          <select
-            aria-label={tr('Organisation', 'Inhlangano')}
-            value={portfolio.orgId ?? ''}
-            onChange={(e) => portfolio.setOrgId(e.target.value)}
-            className="font-sans"
-            style={{
-              fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
-              borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
-            }}
-          >
-            {portfolio.orgs.map((o) => (
-              <option key={o.id} value={o.id}>{o.name}</option>
-            ))}
-          </select>
-        )}
-
-        {portfolio.isDemo && (
-          <span
-            // NEVER hide this on small screens. The privacy review caught it at
-            // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
-            // no sample label anywhere on the first paint, so a funder's phone
-            // screenshot would carry fabricated figures as if they were programme
-            // results. A disclaimer that disappears at the size people actually
-            // photograph is worse than none.
-            //
-            // It is now conditional on isDemo, and ONLY on isDemo — the label must
-            // track what the rows actually are. Leaving it on real data would be
-            // the same failure in the other direction: a funder discounting real
-            // programme results as a mock-up.
-            className="font-sans font-semibold"
-            style={{
-              fontSize: 12,
-              color: '#9E5C08',
-              background: 'rgba(158,92,8,0.10)',
-              border: '1px solid rgba(158,92,8,0.30)',
-              borderRadius: 999,
-              padding: '3px 9px',
-              marginRight: 4,
-            }}
-          >
-            {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
-          </span>
-        )}
-        <SettingsButton />
-      </header>
+            {portfolio.isDemo && (
+              <span
+                // NEVER hide this on small screens. The privacy review caught it at
+                // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
+                // no sample label anywhere on the first paint, so a funder's phone
+                // screenshot would carry fabricated figures as if they were programme
+                // results. A disclaimer that disappears at the size people actually
+                // photograph is worse than none.
+                //
+                // It is now conditional on isDemo, and ONLY on isDemo — the label must
+                // track what the rows actually are. Leaving it on real data would be
+                // the same failure in the other direction: a funder discounting real
+                // programme results as a mock-up.
+                className="font-sans font-semibold"
+                style={{
+                  fontSize: 12,
+                  color: '#9E5C08',
+                  background: 'rgba(158,92,8,0.10)',
+                  border: '1px solid rgba(158,92,8,0.30)',
+                  borderRadius: 999,
+                  padding: '3px 9px',
+                  marginRight: 4,
+                }}
+              >
+                {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
+              </span>
+            )}
+          </>
+        }
+      />
+      {/* nav-17: AppHeader's title is a <span>; keep a real h1 for the page since the old
+          header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
+          stays visually quiet (matches the previous text-xs treatment). */}
+      <h1 className="sr-only">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</h1>
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean
@@ -415,7 +404,7 @@ export default function NetworkPage() {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={tr('Farmer, site or district…', 'Umlimi, indawo noma isifunda…')}
                 aria-label={tr('Search the portfolio', 'Sesha ohlelweni')}
-                className="flex-1 font-sans bg-transparent outline-none"
+                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded"
                 style={{ fontSize: 13, color: INK, border: 'none', minWidth: 0 }}
               />
               {query && (
@@ -594,7 +583,7 @@ export default function NetworkPage() {
         <NetworkMap rows={rows} selectedId={selectedId} onSelect={select} />
       </div>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

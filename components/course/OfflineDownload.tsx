@@ -75,6 +75,13 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
   // Defaulting the other way would spend a farmer's airtime to serve a projector.
   const [quality, setQuality] = useState<PackQuality>('standard');
   const [contentChoice, setContentChoice] = useState({ selectionKey, variant: defaultVariant });
+  // offlineSupported() reads `window`/`caches`, which do not exist during server render: checking
+  // it inline here (as the early-return guard below used to) renders a <p> fallback on the server
+  // and the full <div> once the client re-evaluates it, a hydration mismatch (React error #418).
+  // Assume supported until an effect proves otherwise, so the first client render matches the
+  // server, then swap to the fallback after mount if the device genuinely lacks it (nav-19).
+  const [unsupported, setUnsupported] = useState(false);
+  useEffect(() => { if (!offlineSupported()) setUnsupported(true); }, []);
   // A language/module change must not briefly offer the previous selection's audio or files.
   const variant = contentChoice.selectionKey === selectionKey ? contentChoice.variant : defaultVariant;
   const packs = useMemo(() => moduleIds.map(id => offlinePack(id, lang, quality, variant))
@@ -164,7 +171,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
 
   if (packs.length === 0) return null;
 
-  if (!offlineSupported()) {
+  if (unsupported) {
     return compact ? null : (
       <p className="font-sans text-xs" style={{ color: '#755942' }}>
         {t('offlineDownloadUnsupported')}
@@ -213,7 +220,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={remove}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid var(--border)', background: 'transparent' }}>
               <Trash2 size={12} />{t('offlineRemovePack')}
             </button>
           </>
@@ -228,7 +235,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
             </span>
             <button onClick={cancel}
               className="px-2.5 py-1.5 rounded-xl text-xs font-sans"
-              style={{ color: '#755942', border: '1px solid #E2D8C4', background: 'transparent' }}>
+              style={{ color: '#755942', border: '1px solid var(--border)', background: 'transparent' }}>
               {t('offlineStopDownload')}
             </button>
           </>
@@ -266,7 +273,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                 className="text-left px-2.5 py-1.5 rounded-xl"
                 style={{
                   background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
-                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : '#E2D8C4'}`,
+                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : 'var(--border)'}`,
                   cursor: 'pointer',
                 }}
               >
@@ -307,16 +314,16 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
                 className="text-left px-2.5 py-1.5 rounded-xl"
                 style={{
                   background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
-                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : '#E2D8C4'}`,
+                  border: `1px solid ${on ? 'rgba(31,77,43,0.30)' : 'var(--border)'}`,
                   cursor: 'pointer',
                 }}
               >
                 <span className="font-sans text-xs font-semibold block" style={{ color: on ? '#1F4D2B' : '#5C5040' }}>
                   {opt.name} · {formatPackSize(opt.size)}
                 </span>
-                <span className="font-sans block" style={{ fontSize: 10.5, color: '#755942' }}>{opt.note}</span>
+                <span className="font-sans block" style={{ fontSize: 12, color: '#755942' }}>{opt.note}</span>
                 {lang === 'ts' && opt.key === 'standard' && (
-                  <small lang="en" className="font-sans block mt-1" style={{ fontSize: 10, color: '#5C5040' }}>
+                  <small lang="en" className="font-sans block mt-1" style={{ fontSize: 12, color: '#5C5040' }}>
                     English source: {translate('en', 'offlineQualityStandard')}
                   </small>
                 )}
@@ -331,7 +338,7 @@ export default function OfflineDownload({ moduleIds, lang, label, compact = fals
           <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(32,25,15,0.08)' }}>
             <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: '#1F4D2B' }} />
           </div>
-          <p className="font-mono text-xs mt-1" style={{ color: '#755942' }}>
+          <p className="text-xs mt-1" style={{ color: '#755942' }}>
             {t('offlineFilesProgress').replace('{done}', String(doneFiles)).replace('{total}', String(totalFiles))}
           </p>
         </div>

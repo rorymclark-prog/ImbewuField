@@ -233,7 +233,7 @@ export default function VisionPage() {
             rather than forcing a two-up grid split across steps that depend on each other; the
             shared readingWidth token (960px) still gives it real desktop width instead of a
             stretched phone column. */}
-        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 88 }}>
+        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 'var(--lima-fab-clearance, 88px)' }}>
 
           {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old text-xs chip is gone. */}
@@ -289,7 +289,7 @@ export default function VisionPage() {
               className="w-full rounded-2xl transition-all"
               style={{
                 background: 'var(--bg-1)',
-                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : '#E2D8C4'}`,
+                border: `1.5px dashed ${preview ? 'rgba(31,77,43,0.4)' : 'var(--border)'}`,
                 cursor: 'pointer',
                 padding: 0,
                 overflow: 'hidden',
@@ -301,7 +301,10 @@ export default function VisionPage() {
                   src={preview}
                   alt={t('Selected photo', 'Isithombe esikhethiwe')}
                   className="w-full object-cover"
-                  style={{ maxHeight: 260, display: 'block' }}
+                  // code-20: a fixed height (not maxHeight, which only caps a size the browser
+                  // cannot know before decode) reserves this box before the photo loads, so the
+                  // capture button and result card below it do not jump once it has.
+                  style={{ height: 260, display: 'block' }}
                 />
               ) : (
                 <div className="flex flex-col items-center gap-3 py-12 px-6">

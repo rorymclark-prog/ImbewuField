@@ -28,6 +28,7 @@ import {
 } from '@/lib/sample-mode';
 import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -1634,6 +1635,8 @@ export default function RecordsPage() {
           <SignInPrompt />
         ) : (
           <>
+            <LanguageDraftNote lang={lang} scope="records" />
+
             {/* THE ANSWER, ABOVE THE TABS.
                 "She cannot answer how much did I make this season" was the finding, and a number
                 that only appears on one page of the book does not answer it — she would have to
@@ -1690,7 +1693,6 @@ export default function RecordsPage() {
                 );
               })}
             </div>
-            {lang === 'zu' && <p role="note" className="mt-1 text-xs text-stone-600"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — <span lang="en">Unreviewed isiZulu tab-label drafts. English: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</span></p>}
             {isRecordsRegionalLang(lang) && <p role="note" lang="en" data-records-draft-notice={lang} className="mt-1 text-xs" style={{ color: 'var(--color-muted-strong)' }}>{recordsDraftNotice(lang)} English tabs: {simple ? 'Picked · Sold · Spent.' : 'Picked · Sold · Spent · Charts.'}</p>}
 
             {/* bug-02: a failed read keeps showing the last-loaded rows instead of an empty
