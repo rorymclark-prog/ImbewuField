@@ -187,6 +187,21 @@ const dict: Dict = {
   siteSummaryFrostProtection: 'Vikela izitshalo esithwathweni ebusika.',
   siteSummaryPlanPrompt: 'Ufuna uhlelo oluphelele lokutshala?',
   siteSummaryZuluDraftNotice: 'Uhlaka lwesiZulu olungakabuyekezwa. Funda umthombo wesiNgisi ngaphambi kokwenza izinqumo zokulima.',
+  // zu-04: the ONE shared <LanguageDraftNote> component's wording — same sentence on every page
+  // that uses it (components/LanguageDraftNote.tsx). Unreviewed machine draft, like the other
+  // *ZuluDraftNotice keys in this file.
+  languageDraftNoticeText: 'Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.',
+  languageDraftNoticeEnglishToggle: 'English',
+  languageDraftNoticeDismiss: 'Vala',
+  // zu-11 / ux-18 isiZulu crop names: NOT here. lib/task-board.ts (which calls
+  // lib/produce-label.ts's produceLabel()) is exercised directly by `node --test` under a loader
+  // with no JSX/TSX transform, and lib/i18n.tsx has JSX at its bottom (LanguageProvider), so
+  // anything produceLabel calls must never import lib/i18n.tsx or lib/locales/* even transitively.
+  // The isiZulu crop-name map lives as a small self-contained Record in lib/produce-label.ts
+  // itself instead — see that file's header comment.
+  bruZoneAttribution: 'Idatha yendawo: Amayunithi e-Bioresource ka-KZN DARD',
+  bruZoneApprox: 'cishe',
+  bruZoneNameCaveat: 'igama lesizinda lingukufanisa ngesimo sezulu okuseduze, akukaqinisekiswa',
   mapEditPlaceTitle: 'Hlela igama noma umbala',
   mapEditShapeTitle: 'Hlela isimo',
   mapDeletePlaceTitle: 'Susa le ndawo',
@@ -308,6 +323,30 @@ const dict: Dict = {
   waterBalanceMonthOct: 'uMfumfu',
   waterBalanceMonthNov: 'uLwezi',
   waterBalanceMonthDec: 'uZibandlela',
+  // zu-01: the Home header date (app/home/page.tsx getDayDate). zu-ZA has no Intl data in most
+  // browsers, so toLocaleDateString silently fell back to the runtime default and rendered English,
+  // month-first. These are the everyday isiZulu-ised month names South African readers use in a
+  // short date line (not the formal waterBalanceMonth* names above, which read naturally only inside
+  // a full sentence) — day-first order, matching the English twin's '16 October'.
+  homeWeekdaySun: 'iSonto',
+  homeWeekdayMon: 'uMsombuluko',
+  homeWeekdayTue: 'uLwesibili',
+  homeWeekdayWed: 'uLwesithathu',
+  homeWeekdayThu: 'uLwesine',
+  homeWeekdayFri: 'uLwesihlanu',
+  homeWeekdaySat: 'uMgqibelo',
+  homeMonthJan: 'Januwari',
+  homeMonthFeb: 'Februwari',
+  homeMonthMar: 'Mashi',
+  homeMonthApr: 'Ephreli',
+  homeMonthMay: 'Meyi',
+  homeMonthJun: 'Juni',
+  homeMonthJul: 'Julayi',
+  homeMonthAug: 'Agasti',
+  homeMonthSep: 'Septemba',
+  homeMonthOct: 'Okthoba',
+  homeMonthNov: 'Novemba',
+  homeMonthDec: 'Disemba',
   elevationReadoutLabel: 'ukuphakama',
   elevationReadoutUnit: 'ngaphezu kolwandle',
   zoomInTitle: 'Sondeza',
@@ -477,6 +516,40 @@ const dict: Dict = {
   savedToPlaces: 'Kulondolozwe ezindaweni',
   cardKeySpecies: 'Izinhlobo ezibalulekile',
   cardMainChallenges: 'Izinselelo eziyinhloko',
+  // zu-05: the site report's biome name, key-species chips and main-challenges list
+  // (components/DataPanel.tsx biomeText/biomeList, keyed via lib/biome.ts's BIOME_I18N_KEYS —
+  // read-only here, not edited). Unreviewed machine drafts, flagged by the page-level
+  // LanguageDraftNote rather than a separate badge per chip. Latin binomials are kept; common
+  // names are localised where a usable isiZulu name exists, loanwords otherwise. Savanna is the
+  // demo site's own biome (lib/demo-farm.ts's Ubhejane Creche, Mkuze KZN) so gets full coverage
+  // first; the other biomes rarely occur for a KZN-area farmer but are translated too.
+  biomeNameSavanna: 'Isavanna',
+  biomeSpeciesSavanna: 'uMganu (Sclerocarya birrea) | iMopane (Colophospermum mopane) | Umkhiwane wasendle (Ficus sycomorus) | Umbondwe (Combretum imberbe) | Umsimbithi (Vachellia xanthophloea) | Umlahlankosi (Ziziphus mucronata)',
+  biomeChallengesSavanna: 'Izivunguvungu zinamandla kodwa kunzima ukuzibikezela | Utshani luncintisana nezihlahla ezisencane ngamanzi nokukhanya kwelanga | Isithwathwa singalimaza izitshalo endaweni ephakeme | Izimfukufuku zingalimaza izigodo nezitshalo ezisencane',
+  biomeNameGrassland: 'Amadlelo',
+  biomeSpeciesGrassland: 'Umlahlankosi (Ziziphus mucronata) | Umhlwathi (Olea europaea subsp. africana) | Isithelo seHighveld Protea (Protea caffra) | Utshani olubomvu (Themeda triandra) | Ibhulbhini (Bulbine spp.) | Isicakathi (Tulbaghia violacea)',
+  biomeChallengesGrassland: 'Isithwathwa esinamandla, sehla cishe ku–10°C | Isiqhwa esinamatshe | Inhlabathi yobumba iwa kalula emagqumeni | Indawo ephansi emanzi (ivlei) ingaba nzima ukwomisa',
+  biomeNameForest: 'Ihlathi laseAfromontane',
+  biomeSpeciesForest: 'Umcheya (Afrocarpus falcatus) | Umphuphuma (Ilex mitis) | Umkhakhayi (Kiggelaria africana) | Unukani (Ocotea bullata) | Umcheya waseOuteniqua (Afrocarpus falcatus)',
+  biomeChallengesForest: 'Ukukhanya kwelanga okuncane okufinyelela emhlabathini ngenxa yesipha sezihlahla esiqinile | Ihlathi livikelwe ngomthetho — alivunyelwe ukugawulwa | Izitshalo ezivinjelwe ezihlaselayo zingasakazeka lapha | Izinkume nezinwabu zingalimaza izitshalo',
+  biomeNameIocb: 'Umkhawulo Wogu LwaseIndian Ocean',
+  biomeSpeciesIocb: 'Isihlahla sogwayi saseNatal (Strelitzia nicolai) | Umhlwathi (Harpephyllum caffrum) | Umkhuhlu (Trichilia emetica) | Umzundumbila (Trema orientalis) | Umsimbithi (Vachellia xanthophloea) | Umkhiwane wasendle (Ficus sycomorus) | Isihlahla segolide (Brachylaena discolor)',
+  biomeChallengesIocb: 'Izivunguvungu zesiphepho zingabangela umonakalo | Umswakama omningi ukhuthaza izifo zefungasi | Amagquma ayincopho abangela ukuguguleka komhlabathi | Ingozi yokuwa komhlabathi emagqumeni abumba',
+  biomeNameFynbos: 'IFynbos',
+  biomeSpeciesFynbos: 'Ikhinga (Protea cynaroides) | Uluhlaza lweConebush (Leucadendron spp.) | iBhuchu (Agathosma betulina) | Umhlanga waseKapa (Restio spp.) | IRooibos (Aspalathus linearis) | IHoneybush (Cyclopia spp.)',
+  biomeChallengesFynbos: 'Idinga umlilo ngezikhathi ezithile ukuhlala impilo, cishe iminyaka eyi-10–15 | Izitshalo ezihlaselayo ezivinjelwe zingathatha indawo | Azikho izitshalo zokudla zeFynbos — letha inhlabathi kunoma iyiphi ingadi yokudla | Ihlobo elishisa kakhulu futhi elomile',
+  biomeNameSucculentKaroo: 'IKaroo Enezitshalo Ezigcina Amanzi',
+  biomeSpeciesSucculentKaroo: 'Isitshalo seqhwa (Mesembryanthemum spp.) | Inhlaba ebabayo (Aloe ferox) | Isihlahla segabheni (Aloidendron dichotomum) | IVygie (Lampranthus spp.)',
+  biomeChallengesSucculentKaroo: 'Amahlobo ashisa kakhulu futhi omile | Inhlabathi ine-alkaline (ine-lime eningi) | Izitshalo zokudla ezincane zifanele leli simo sezulu | Ilanga elinamandla nomoya onamandla',
+  biomeNameNamaKaroo: 'INama-Karoo',
+  biomeSpeciesNamaKaroo: 'Isihlahla seKaroo (Pentzia spp.) | Idriedoring (Rhigozum trichotomum) | Iganna (Salsola spp.) | Inhlaba ebabayo (Aloe ferox) | Umhlwathi (Olea europaea subsp. africana)',
+  biomeChallengesNamaKaroo: 'Ungqimba lomhlabathi oluqinile olungaphansi komhlaba | Ukuhwamuka okuphezulu kakhulu — kungaba kathathu kunemvula | Inhlabathi enosawoti endaweni ephansi | Izinhlobo ezimbalwa zezihlahla zifanele leli simo sezulu',
+  biomeNameDesert: 'Ugwadule',
+  biomeSpeciesDesert: 'Umkamelo (Vachellia erioloba) | Isihlahla segabheni (Aloidendron dichotomum) | Isihlahla soMelusi (Boscia albitrunca) | Ikhabe laseNara (Acanthosicyos horridus)',
+  biomeChallengesDesert: 'Ukushisa okweqisayo, ngaphezu kuka-45°C | Izikhukhula ezisheshayo azivamile kodwa zingaba yingozi | Usawoti ungakha enhlabathini uma amanzi ehwamuka | Umoya ungaphephetha inhlabathi engaphezulu',
+  biomeNameAlbanyThicket: 'Ihlathi laseAlbany',
+  biomeSpeciesAlbanyThicket: 'Umhlwathi wendle (Portulacaria afra) | Umgwenya wendle (Harpephyllum caffrum) | Umdoni (Syzygium cordatum) | Inoors (Euphorbia coerulescens)',
+  biomeChallengesAlbanyThicket: 'Kulimazeka kakhulu ngukudla kakhulu kwezimbuzi | Izitshalo eziminyene nezinameva | Ikhakhayi elivinjelwe elihlaselayo lidinga ukulawulwa | Amanzi alinganiselwe ngesikhathi esomile',
   limaContextPrefix: 'Lima · ',
   statSolar: 'Ilanga',
   statSolarSub: 'm²/usuku okumaphakathi',
@@ -1365,17 +1438,17 @@ const dict: Dict = {
   studentDesignPreviewIntro: 'Hlola izifundo ezisalungiswa ezingu-18: qonda umndeni, hlaziya indawo, qhathanisa izinhlelo zendawo, hlela umsebenzi bese ulungisa usebenzisa ubufakazi. Zilolonge ngohlelo lwesibonelo oluqanjiwe; ukuklama indawo yangempela kusadinga izilinganiso eziqinisekisiwe nobufakazi bendawo.',
   studentDesignPreviewCardTitle: 'Hlanganisa izinqumo.',
   studentDesignPreviewCardBody: 'Yakha ifolda yokuklama nomgqugquzeli noma ozofunda naye. Lokhu kubuka kuqala akunikezi amaphuzu ekhosini.',
-  studentDesignPreviewAction: 'Hlola isifundo sokuklama · ngesiNgisi →',
+  studentDesignPreviewAction: 'Hlola isifundo sokuklama · ngesiNgisi →',
   studentFinanceEnglishPreview: 'Ikhosi ehlukile · okokufundisa kuboniswa ngesiNgisi',
   studentFinancePreviewTitle: 'Ezezimali Zepulazi',
   studentFinancePreviewIntro: 'Amayunithi ayisishiyagalombili, kusukela ekugcineni amarekhodi epulazi kuya ekuhleleni ibhizinisi. Hlola izifundo ezisalungiswa ezingu-24 ezinokuzilolonga okuqondisiwe nezincwadi zokusebenza ezingaphrintwa. Ukubuyekezwa nokuhlolwa kokugcina kusalungiselelwa.',
   studentFinancePreviewCardTitle: 'Qonda imali. Hlela isizini ezayo.',
   studentFinancePreviewCardBody: 'Funda uwedwa noma nomgqugquzeli. Uhlu lokuzihlola ngokufunda aluhlangene nenqubekela phambili yekhosi ye-permaculture.',
-  studentFinancePreviewAction: 'Hlola okokufundisa ngezezimali · ngesiNgisi →',
+  studentFinancePreviewAction: 'Hlola okokufundisa ngezezimali · ngesiNgisi →',
   studentAppGuidesHeading: 'Imihlahlandlela esebenzayo yohlelo',
   studentAppGuidesTitle: 'Ukusebenzisa i-ImbewuField',
-  studentAppGuideAction: 'Funda umhlahlandlela · ngesiNgisi →',
-  studentSampleTourAction: 'Hlola imephu, ukuhlela namarekhodi ohambweni lwesibonelo →',
+  studentAppGuideAction: 'Funda umhlahlandlela · ngesiNgisi →',
+  studentSampleTourAction: 'Hlola imephu, ukuhlela namarekhodi ohambweni lwesibonelo →',
   studentGuidesDescription: 'Dweba imephu yendawo yakho, landela isivuno, gcina izindleko namarisidi, noma wenze i-invoyisi. Zilolonge epulazini lesibonelo ngaphambi kokusebenzisa amarekhodi akho.',
   courseNarrationLanguage: 'Ulimi lokulandisa',
   courseDeckNoNarration: 'Akukho kulandisa',

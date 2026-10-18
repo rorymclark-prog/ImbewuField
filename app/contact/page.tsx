@@ -13,11 +13,9 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { getMyProfile, withWriteTimeout } from '@/lib/db/queries';
 import { addDoc, collection, getDocs, query, where, orderBy, serverTimestamp } from 'firebase/firestore';
 import TabBar from '@/components/TabBar';
-import BrandLogo from '@/components/BrandLogo';
 import type { Profile } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import AppHeader from '@/components/layout/AppHeader';
 import motion from './ContactMotion.module.css';
 
 interface ContactReply {
@@ -173,21 +171,10 @@ export default function ContactPage() {
       style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}
     >
       {/* Header */}
-      <header
-        className="flex-shrink-0 flex items-center gap-3 px-4"
-        style={{ height: 56, borderBottom: '1px solid var(--border)', background: 'var(--bg-1)' }}
-      >
-        {/* nav-07: BackButton already falls back to /home — this lone chevron Link duplicated
-            it, giving the header two back controls side by side. */}
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        {/* ux-11: the title used to sit after the flex spacer, at the far right edge next to
-            BrandLogo at the opposite end of a near-empty bar. Moved next to the logo, matching
-            every other page's MenuButton · BackButton · BrandLogo · title order. */}
-        <h1 className="font-display font-semibold m-0" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{ui('Contact', 'Xhumana')}</h1>
-        <div style={{ flex: 1 }} />
-        <LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />
-      </header>
+      <AppHeader
+        title={ui('Contact', 'Xhumana')}
+        right={<LessonLink id="contact:overview" label={ui('Learn', 'Funda')} />}
+      />
 
       {/* Content */}
       <main
@@ -304,9 +291,10 @@ export default function ContactPage() {
               >
                 {ui('Get in touch', 'Xhumana nathi')}
               </div>
-              <div className="font-display font-bold" style={{ fontSize: 22, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+              {/* nav-17: AppHeader's title is a <span> — this is the page's real, visible h1. */}
+              <h1 className="font-display font-bold m-0" style={{ fontSize: 22, letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
                 {ui('Contact', 'Xhumana')}
-              </div>
+              </h1>
               <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 4, lineHeight: 1.5 }}>
                 {ui('Reach your mentor, organisation, or ImbewuField support.', 'Fikelela kumeluleki wakho, inhlangano yakho, noma usizo lwe-ImbewuField.')}
               </p>
@@ -508,7 +496,7 @@ export default function ContactPage() {
         )}
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

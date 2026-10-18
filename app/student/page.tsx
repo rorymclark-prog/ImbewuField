@@ -5,7 +5,7 @@ import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
+import { Check, CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -15,13 +15,14 @@ import {
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
-import BrandLogo from '@/components/BrandLogo';
 import LimaBar from '@/components/LimaBar';
-import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
+import DesignDraftCopy from '@/components/studies/DesignDraftCopy';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
+import AppHeader from '@/components/layout/AppHeader';
 // perf-04: the deck player (slides, animation and narration wiring) only renders once a lesson's
 // deck is actually opened — load its chunk then, not with the rest of Studies.
 const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
@@ -36,8 +37,6 @@ const DeckPlayer = dynamic(() => import('@/components/course/DeckPlayer'), {
   ),
 });
 import OfflineDownload from '@/components/course/OfflineDownload';
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
 import { hasDeck, deckFor, deckSlideCount, resolveDeckLang } from '@/lib/course-deck';
 import { isModuleComplete_Content, moduleReadinessDetail, readinessLabel } from '@/lib/course-readiness';
 import { T_en, translate, useLanguage } from '@/lib/i18n';
@@ -57,7 +56,6 @@ import {
   assignmentFor, submittedModuleIds,
   type GatingContext, type CourseSubmission, type ModuleAssignment,
 } from '@/lib/course-gating';
-import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel, isStaffRole } from '@/lib/app-level';
 
 const CATEGORY_LABEL_KEYS: Record<ModuleCategory, string> = {
@@ -156,7 +154,7 @@ function QuizQuestion({ q, options, correct, rationale, englishSource }: {
               className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-sans leading-snug transition-all"
               style={{ background: bg, border, color: textColor, cursor: revealed ? 'default' : 'pointer' }}
             >
-              <span className="font-mono text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
+              <span className="text-xs mr-2" style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}.</span>
               {opt}
               {englishSource && englishSource.options[i] !== opt && <span lang="en" className="block ml-5 mt-1 text-xs" style={{ opacity: 0.8 }}>{englishSource.options[i]}</span>}
               {revealed && isCorrect && (
@@ -761,10 +759,7 @@ export default function StudentPage() {
   if (isLive && (loading || !user) && !isSampleMode()) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-          <MenuButton /><BackButton fallback="/home" />
-          <BrandLogo />
-        </header>
+        <AppHeader title={t('studentMyStudies')} backFallback="/home" />
         <main className="flex-1 flex items-center justify-center">
           <div className="flex flex-col items-center gap-3 font-sans text-sm" role="status" aria-live="polite" style={{ color: 'var(--text-secondary)' }}>
             <Loader2 size={28} className="animate-spin" aria-hidden="true" style={{ color: 'var(--color-forest-800)' }} />
@@ -778,14 +773,7 @@ export default function StudentPage() {
   if (!loading && user && isLive && role && !STUDENT_ALLOWED_ROLES.has(role)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-        <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-          <MenuButton /><BackButton fallback="/home" />
-          <BrandLogo />
-          <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-          <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{t('studentPortal')}</span>
-          <div className="flex-1" />
-          <SettingsButton />
-        </header>
+        <AppHeader title={t('studentPortal')} backFallback="/home" />
         <main className="flex-1 flex items-center justify-center px-4">
           <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="mx-auto mb-3 flex items-center justify-center rounded-full" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.08)' }}>
@@ -805,7 +793,7 @@ export default function StudentPage() {
             </button>
           </div>
         </main>
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
     );
   }
@@ -827,25 +815,16 @@ export default function StudentPage() {
 
   return (
     <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={APP_HEADER_STYLE}>
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <span className="text-sm font-display truncate min-w-0" style={{ color: 'var(--color-forest-800)' }}>{t('studentMyStudies')}</span>
-        <div className="flex-1" />
-        <LessonLink id="student:overview" label={t('homeQuickStudy')} />
-        <SettingsButton />
-      </header>
+      <AppHeader title={t('studentMyStudies')} backFallback="/home" right={<LessonLink id="student:overview" label={t('homeQuickStudy')} />} />
 
       <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
+        {/* zu-04: the one shared language-draft note (components/LanguageDraftNote.tsx), once under
+            the header, never inside a card or button; the course-specific line below it says which
+            lessons carry isiZulu drafts. */}
+        <LanguageDraftNote lang={lang} scope="student" />
         {lang === 'zu' && (
-          <p className="rounded-xl px-3 py-2 font-sans text-xs leading-relaxed" role="note"
-            style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.22)', color: 'var(--text-secondary)' }}>
+          <p className="font-sans" role="note" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
             {t('studentZuluCourseLanguageNote')}
-            {' '}
-            <span className="block mt-1">
-              Ulimi lwesixhumi sohlelo sesiZulu luwuhlaka lomshini olungakabuyekezwa umuntu okhuluma kahle isiZulu. The isiZulu interface is a machine draft and has not been reviewed by a fluent isiZulu speaker.
-            </span>
           </p>
         )}
         {lang === 'st' && (
@@ -1126,7 +1105,7 @@ export default function StudentPage() {
                   {/* Number / check */}
                   <div className={styles.moduleArt}>
                     {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
-                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? `✓ ${t('studentComplete')}` : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
+                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? <span className="inline-flex items-center justify-center gap-1"><Check size={12} aria-hidden />{t('studentComplete')}</span> : t('studentModule').replace('{number}', String(MODULE_NUMBER.get(mod.id) ?? idx + 1))}</span>
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -1193,7 +1172,7 @@ export default function StudentPage() {
                           <span className="flex min-w-0 flex-col break-words">
                             {dueText ?? t('studentAssigned')}
                             {englishDueSource && (
-                              <small lang="en" className="mt-1 text-[10px] font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
+                              <small lang="en" className="mt-1 text-[12px] font-normal leading-snug" style={{ color: 'var(--text-secondary)' }}>
                                 English source: {englishDueSource}
                               </small>
                             )}
@@ -1213,7 +1192,7 @@ export default function StudentPage() {
                     <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: 'var(--text-muted)' }} />
-                        <span className="font-mono text-xs" style={{ color: 'var(--text-muted)' }}>{formatDuration(mod.durationMins, t)}</span>
+                        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{formatDuration(mod.durationMins, t)}</span>
                       </div>
                       {hasNarration(mod.id) && (
                         <div className="flex items-center gap-1">
@@ -1459,9 +1438,9 @@ export default function StudentPage() {
 
         <div className={styles.coursePreviews}>
           <Link href="/student/teach-the-teachers" className={styles.coursePreviewLink}>
-            <span><strong className="font-display">Teach the Teachers · ACT refresher</strong>
-              <span>Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview.</span>
-              <em>Open the two-day course →</em></span>
+            <span><strong className="font-display"><DesignDraftCopy en="Teach the Teachers · ACT refresher" zu="Fundisa Othisha · Ukuvuselelwa kwe-ACT" /></strong>
+              <span><DesignDraftCopy en="Two days of facilitation practice with the core agroecology lessons, app exercises and a paper fallback. English teaching preview." zu="Izinsuku ezimbili zokuzilolonga ekufundiseni ngezifundo ezisemqoka ze-agroecology, imisebenzi yohlelo lokusebenza nesu lephepha uma kungekho i-inthanethi. Okokufundisa kuboniswa ngesiNgisi." /></span>
+              <em><DesignDraftCopy en="Open the two-day course" zu="Vula ikhosi yezinsuku ezimbili" /></em></span>
           </Link>
         </div>
 
@@ -1474,9 +1453,9 @@ export default function StudentPage() {
             <p>{t('studentGuidesDescription')}</p>
           </div>
           {APP_GUIDES.map(guide => <OfflinePageLink key={guide.id} href={guide.href} className={styles.guideCard}>
-            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" />
+            <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" width={160} height={107} />
             {/* Simple: the card itself is the "read the guide" link — the identical "Read the
-                guide · English →" line does not need to repeat once per card (14 times). */}
+                guide · English →" line does not need to repeat once per card (14 times). */}
             <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
@@ -1502,13 +1481,13 @@ export default function StudentPage() {
         )}
 
         {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+          <p className="text-center text-xs" style={{ color: 'var(--text-muted)' }}>
             {t('studentProgressFirebase')}
           </p>
         )}
       </main>
       <LimaBar />
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

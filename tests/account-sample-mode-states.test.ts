@@ -14,7 +14,11 @@ test('the loading/no-user branch no longer returns a bare sprout with nothing el
   const guardAt = page.indexOf('if (loading || !user) {');
   assert.ok(guardAt > 0, 'the guard moved; this test needs rewriting rather than deleting');
   const guardBlock = page.slice(guardAt, guardAt + 6000);
-  assert.match(guardBlock, /isSampleMode\(\)/, 'sample mode must be checked before giving up on a real page');
+  assert.match(guardBlock, /samplePreview/, 'sample mode must be checked before giving up on a real page');
+  // The check has to be hydration-safe: isSampleMode() reads sessionStorage, so calling it during
+  // render gave every sample-mode frame of /account a React #418 mismatch (wave 14, w14-01).
+  assert.match(page, /const samplePreview = !!useSampleRole\(\)/, 'the sample check must come from useSampleRole (useSyncExternalStore), not a render-time sessionStorage read');
+  assert.doesNotMatch(guardBlock, /isSampleMode\(\)/, 'isSampleMode() must not run during render');
   assert.match(guardBlock, /getSandboxProfile\(\)/, 'a sample-mode visitor must see the sandbox profile, not a spinner');
   assert.match(guardBlock, /AccountShellHeader/, 'every branch must still render the real header — MenuButton, BackButton, title — not a bare icon');
 });
@@ -25,7 +29,10 @@ test('a sample-mode visitor gets a real account view with sign-in and exit actio
   const sampleBranch = page.slice(sampleBranchAt, sampleBranchAt + 5500);
   assert.match(sampleBranch, /exitSampleMode\(\)/, 'must offer a way to leave the tour, not just sign in');
   assert.match(sampleBranch, /router\.push\('\/login'\)/, 'must offer a real sign-in path so progress is not lost to the practice version');
-  assert.match(sampleBranch, /<TabBar \/>/, 'the sample-mode account view must keep the tab bar — the farmer should not lose the way around');
+  // desk-07: TabBar now takes hideAtDesktop on pages that adopted AppHeader (its own lg+ nav
+  // replaces the phone bar there) — the attribute is optional in this match so the test still
+  // pins what it actually cares about: the tab bar is rendered, not dropped, in this branch.
+  assert.match(sampleBranch, /<TabBar(?: hideAtDesktop)? \/>/, 'the sample-mode account view must keep the tab bar — the farmer should not lose the way around');
 });
 
 test('a genuinely slow auth check gets a sentence and a timeout fallback, not an endless spinner', () => {

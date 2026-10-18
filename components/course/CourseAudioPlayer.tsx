@@ -28,7 +28,7 @@ import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
 const MUTED = '#755942';
-const HAIRLINE = '#E2D8C4';
+const HAIRLINE = 'var(--border)';
 
 /** Human names for the languages we can record in. Shown only in the mismatch notice and the
  *  language switch, so an unlisted code degrades to the raw code rather than breaking. */
@@ -339,7 +339,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                       <span className="flex-1 rounded-full overflow-hidden" style={{ height: 3, background: 'rgba(32,25,15,0.10)' }}>
                         <span className="block" style={{ width: `${progressPct}%`, height: '100%', background: OCHRE, borderRadius: 999 }} />
                       </span>
-                      <span className="font-mono text-xs flex-shrink-0" style={{ color: MUTED }}>
+                      <span className="text-xs flex-shrink-0" style={{ color: MUTED }}>
                         {formatClock(elapsed)} / {formatClock(duration)}
                       </span>
                     </span>

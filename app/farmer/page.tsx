@@ -590,14 +590,12 @@ function HomeInner() {
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--color-forest-800)' }}
           >
             <Palette size={15} aria-hidden />
-            <span className={lang === 'zu' ? 'flex flex-col leading-tight' : undefined}>
-              <span>{t('designStudioLabel')}</span>
-              {lang === 'zu' && (
-                <small lang="en" style={{ fontSize: 12, fontWeight: 500, opacity: 0.78 }}>
-                  {t('designStudioZuluDraftBadge')} · English: Design Studio
-                </small>
-              )}
-            </span>
+            {/* zu-04: this pill used to grow a second English line here whenever lang === 'zu'
+                ('Isitudiyo Sokuklama' / 'Uhlaka olungakabuyekezwa · English: Design Studio'),
+                turning a one-line nav pill into two. The draft disclosure now lives once, under
+                the header, in the shared <LanguageDraftNote /> (see DataPanel.tsx) — this pill is
+                just its label, in either language. */}
+            <span>{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div

@@ -37,7 +37,7 @@ function Card({ children }: { children: React.ReactNode }) {
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-mono mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+    <div className="text-xs mb-1.5 uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
       {children}
     </div>
   );
@@ -125,8 +125,9 @@ function ExampleInner() {
         className={`${workspace.workspace} ${workspace.formWidth}`}
         style={{
           // dark-07: 40px left the 'Main challenges' heading sitting right behind the global
-          // floating Lima button on phone; 96px clears it with room to spare.
-          padding: '84px 16px 96px',
+          // floating Lima button on phone; var(--lima-fab-clearance) clears it on every page
+          // the launcher can land on, not just the fixed offset that happened to fit here.
+          padding: '84px 16px calc(max(96px, var(--lima-fab-clearance, 96px)))',
           display: 'flex',
           flexDirection: 'column',
           gap: 16,

@@ -2,7 +2,7 @@
 
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
-import { ArrowRight, MapPin, Eye, ChevronRight } from 'lucide-react';
+import { ArrowRight, MapPin, Eye, ChevronRight, Users, BarChart3, Building2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useSiteProgress } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
@@ -20,7 +20,32 @@ export interface HomeHeroCardProps {
   /** Simple puts the next step inside this card and heads it with the site; All tools keeps the
    *  original Lima-suggests card, with the next step as a separate card below (lib/app-level.ts). */
   level?: AppLevel;
+  /** staff-09: when the viewer is a mentor/ngo/funder (own account or sample preview), Home's
+   *  hero becomes a plain link to that role's own dashboard instead of the farmer's land/site
+   *  prompt — this card never had anything a non-farmer role could act on. */
+  staffRole?: 'mentor' | 'ngo' | 'funder' | null;
 }
+
+const STAFF_HERO_COPY: Record<'mentor' | 'ngo' | 'funder', { Icon: typeof Users; en: { title: string; desc: string; cta: string }; zu: { title: string; desc: string; cta: string }; href: string }> = {
+  mentor: {
+    Icon: Users,
+    href: '/mentor',
+    en: { title: 'Your mentor dashboard', desc: 'Review your assigned farmers, garden visits and training records.', cta: 'Open mentor dashboard' },
+    zu: { title: 'Ideshibhodi yakho yomeluleki', desc: 'Buyekeza abalimi ababelwe wena, ukuvakashelwa kwezingadi namarekhodi okuqeqeshwa.', cta: 'Vula ideshibhodi yomeluleki' },
+  },
+  ngo: {
+    Icon: BarChart3,
+    href: '/ngo',
+    en: { title: 'Your organisation dashboard', desc: 'Review gardens, assessments and reports across your programme.', cta: 'Open organisation dashboard' },
+    zu: { title: 'Ideshibhodi yenhlangano yakho', desc: 'Buyekeza izingadi, ukuhlola nemibiko kulo lonke uhlelo lwakho.', cta: 'Vula ideshibhodi yenhlangano' },
+  },
+  funder: {
+    Icon: Building2,
+    href: '/funder',
+    en: { title: 'Your funder dashboard', desc: 'Review the programme summaries shared with you.', cta: 'Open funder dashboard' },
+    zu: { title: 'Ideshibhodi yakho yomxhasi', desc: 'Buyekeza izifinyezo zohlelo esabelwane nawe.', cta: 'Vula ideshibhodi yomxhasi' },
+  },
+};
 
 // Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
 // across all three variants so the card never visually jumps when the variant swaps.
@@ -144,7 +169,7 @@ function HeroEntranceStyle() {
   );
 }
 
-export default function HomeHeroCard({ places, mainSite, firstName, level = 'full' }: HomeHeroCardProps) {
+export default function HomeHeroCard({ places, mainSite, firstName, level = 'full', staffRole = null }: HomeHeroCardProps) {
   const { t, lang } = useLanguage();
 
   // Hooks run unconditionally, before any early return, so the null-until-mounted
@@ -153,6 +178,38 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
   const coords = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
   const completedSteps = progress?.score.steps.filter((step) => step.done).length ?? 0;
+
+  // ── STAFF — staff-09: a mentor/ngo/funder viewer gets their own dashboard as the hero,
+  // never the farmer's land/site prompt (there is nothing for them to act on there). ──
+  if (staffRole) {
+    const copy = STAFF_HERO_COPY[staffRole];
+    const text = lang === 'zu' ? copy.zu : copy.en;
+    const Icon = copy.Icon;
+    return (
+      <Link href={copy.href} className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
+        <HeroEntranceStyle />
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <Overline>{firstName ? t('homeGreeting').replace('{name}', firstName) : text.title}</Overline>
+            <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
+              {text.title}
+            </h2>
+          </div>
+          <div className="flex items-center justify-center flex-shrink-0 rounded-full" style={{ width: 48, height: 48, background: 'rgba(234,243,226,0.14)' }}>
+            <Icon size={22} style={{ color: 'var(--on-forest)' }} strokeWidth={1.6} />
+          </div>
+        </div>
+
+        <p className="font-sans" style={{ fontSize: 14, color: 'rgba(234,243,226,0.78)', lineHeight: 1.5, marginBottom: 18 }}>
+          {text.desc}
+        </p>
+
+        <span className="inline-flex items-center font-sans font-semibold transition-all active:scale-[0.97]" style={PILL_STYLE}>
+          <span className="flex items-center gap-1.5">{text.cta}<ArrowRight size={14} /></span>
+        </span>
+      </Link>
+    );
+  }
 
   // ── DEFAULT — pre-hydration paint (places === null). This is today's exact
   // analyse-CTA markup: the whole card is one Link, so returning users never see

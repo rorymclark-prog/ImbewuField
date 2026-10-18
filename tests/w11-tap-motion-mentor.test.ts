@@ -10,7 +10,7 @@ test('report and map action buttons keep a 44px minimum height', () => {
   const report = source('components/ReportView.tsx');
   const small = report.split('\n').filter(l => /className="[^"]*\bpy-(?:0\.5|1|1\.5)\b/.test(l) && !/min-h-11/.test(l));
   // The only remaining small-padding line is the ochre notice <div>, which is not a control.
-  assert.deepEqual(small.map(l => l.trim().slice(0, 40)), ['<div className="text-xs font-mono px-2 p']);
+  assert.deepEqual(small.map(l => l.trim().slice(0, 40)), ['<div className="text-xs font-sans px-2 p']);
   const map = source('components/Map.tsx');
   for (const handler of ['onClick={cancelDraw}', 'onClick={() => requestDelete(editingFeatureId)}', 'onClick={finishEditing}']) {
     const at = map.indexOf(handler);

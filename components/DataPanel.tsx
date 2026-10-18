@@ -23,6 +23,7 @@ import SavedReportsList from './report/SavedReportsList';
 import NextStepCoach from './NextStepCoach';
 import SpeakButton from './SpeakButton';
 import SiteManageMenu from './SiteManageMenu';
+import LanguageDraftNote from './LanguageDraftNote';
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { COMPASS16_BEARING } from '@/lib/local-wind';
 import { loadCanvasState } from '@/lib/design-canvas';
@@ -194,6 +195,23 @@ function biomeList(code: string, field: 'species' | 'challenges', fallback: stri
   const key = BIOME_I18N_KEYS[code]?.[field];
   if (!key) return fallback;
   return t(key).split(' | ');
+}
+
+// zu-05: the site report's land/water feature list (below) renders f.name straight through — a
+// farmer's own saved shape names, typed in whatever language she already used, which an
+// automatic translation would get wrong. The one exception is the "See a sample farm" demo data
+// (lib/demo-geometry-fixture.ts, lib/demo-farm.ts), whose feature names are hardcoded English and
+// so read as English dropped into an isiZulu report. Translating only those known demo strings —
+// never a real farmer's own text — via a lookup kept local to this component.
+const DEMO_FEATURE_NAME_ZU: Record<string, string> = {
+  'Ubhejane plot': 'Isiza sase-Ubhejane',
+  'Main house roof': 'Uphahla lwendlu enkulu',
+  'Tarred driveway': 'Indlela yemoto enetiyela',
+  'JoJo tank (2500 L)': 'Ithangi le-JoJo (2500 L)',
+  'Municipal tap': 'Umpompi kamasipala',
+};
+function demoFeatureLabel(name: string, lang: string): string {
+  return lang === 'zu' ? (DEMO_FEATURE_NAME_ZU[name] ?? name) : name;
 }
 
 // 'kL' (kilolitres) is a unit only an expert would know; litres is what a farmer buys a tank in,
@@ -888,7 +906,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {/* Rainfall deliberately omitted here — the headline "Annual rainfall" stat below is the
                     single measured figure; showing BRU's zone-average mm/yr too reads as a second,
                     competing rainfall number for the same site. */}
-                BRU {data.bru.brucode} · approx. {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
+                BRU {data.bru.brucode} · {lang === 'zu' ? t('bruZoneApprox') : 'approx.'} {data.bru.nearestBrg} · {data.bru.tmean}{t('unitTempAverage')}
               </div>
             )}
             {!simple && (
@@ -898,7 +916,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
             {!simple && data.bru && (
               <div className="font-mono mt-0.5" style={{ fontSize: 'clamp(12px, 0.85vw, 13px)', color: 'var(--text-muted)' }}>
-                {data.bru.attribution} — zone name is a best-effort climate match, not verified
+                {lang === 'zu' ? t('bruZoneAttribution') : data.bru.attribution} — {lang === 'zu' ? t('bruZoneNameCaveat') : 'zone name is a best-effort climate match, not verified'}
               </div>
             )}
           </div>
@@ -914,6 +932,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           </div>
         </div>
       </div>
+      )}
+
+      {!headerCollapsed && (
+        <div className="flex-shrink-0 px-5 pt-2">
+          <LanguageDraftNote lang={lang} scope="farmer" />
+        </div>
       )}
 
       {/* ── Tabs (wrap so all are always visible) ──── */}
@@ -1031,7 +1055,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         {siteMetrics.land.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--color-forest-800)', opacity: 0.6 }} />
-                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{demoFeatureLabel(f.name, lang)}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
                             <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{f.areaHa < 1 ? `${numberLabel(Math.round(f.areaHa * 10000))} m²` : `${f.areaHa} ha`}</span>
                           </div>
@@ -1064,7 +1088,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                         {siteMetrics.water.features.map((f, i) => f.name ? (
                           <div key={i} className="flex items-center gap-2 font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                             <span className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--blue)', opacity: 0.6 }} />
-                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{f.name}</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{demoFeatureLabel(f.name, lang)}</span>
                             {f.category && <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>}
                             <span className="ml-auto" style={{ color: 'var(--text-muted)' }}>{litresLabel(f.estVolumeKL, t)}</span>
                           </div>
@@ -1202,12 +1226,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     className="w-full flex items-center justify-between gap-2 font-sans font-medium"
                     style={{ minHeight: 44, padding: '11px 14px', background: 'var(--bg-1)', border: 'none', cursor: 'pointer', fontSize: 13, color: 'var(--text-secondary)' }}
                   >
-                    {lang === 'zu' ? (
-                      <span className="flex flex-col items-start text-left">
-                        <span lang="zu">{t('seeMoreDetailZuDraft')}</span>
-                        <small className="text-xs font-normal"><span lang="zu">{translate('zu', 'designStudioZuluDraftBadge')}</span> — Unreviewed isiZulu draft. English: {translate('en', 'seeMoreDetail')}</small>
-                      </span>
-                    ) : t('seeMoreDetail')}
+                    {/* zu-04: the draft disclosure used to live inside this button as a second,
+                        smaller line (three lines total once the chevron wrapped), making the
+                        disclosure control itself read as the thing needing review. The one page-
+                        level <LanguageDraftNote> above now carries that notice; this button is
+                        just its plain isiZulu label, same as the English twin. */}
+                    {lang === 'zu' ? <span lang="zu">{t('seeMoreDetailZuDraft')}</span> : t('seeMoreDetail')}
                     <ChevronDown size={16} style={{ transform: detailOpen ? 'rotate(180deg)' : 'none', transition: 'transform 150ms' }} />
                   </button>
                   {detailOpen && (

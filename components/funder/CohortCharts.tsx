@@ -391,12 +391,16 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           {/* Named for the population it is actually made of. A kept figure worked out across four
               farms, sitting unlabelled beside a picked figure covering six, invites the reader to
               subtract two numbers that were never about the same people. */}
+          {/* ux-07: this value used to read in KEPT (#C4A46A), the same tan used for the bar
+              fill — about 2.1:1 on a white card, the hardest number on the screen to read next
+              to figures of identical weight in INK/SOLD. KEPT stays the bar's fill colour; the
+              figure's own text goes back to INK like the other totals beside it. */}
           <Figure
             label={paired || series.comparableFarmers === 0
               ? 'Harvest not matched to sales'
               : `Unmatched, on ${series.comparableFarmers} farms`}
             value={series.totalKeptKg === null ? 'Not comparable' : kgTotalLabel(series.totalKeptKg)}
-            tone={series.totalKeptKg === null ? FAINT : KEPT}
+            tone={series.totalKeptKg === null ? FAINT : INK}
           />
           <Figure
             label="Farmer income"
@@ -537,41 +541,49 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             )}
           </div>
 
-          <Footnote>
-            Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry. It is not measured household consumption.
-            These four figures cover the {months.length} months drawn here. A cohort total
-            elsewhere on this page counts every record since each farm joined, so it can be a
-            little larger — the two are different periods, not two answers.
-          </Footnote>
-          {cutInFull.length > 0 && (
+          {/* staff-16: up to five Footnote paragraphs could stack here at once — a wall of
+              text on phone under every chart. Folded into one disclosure; the chart and its
+              Key legend above stay visible without opening it. */}
+          <details style={{ marginTop: 9 }}>
+            <summary className="font-sans" style={{ fontSize: MICRO, color: FAINT, cursor: 'pointer', minHeight: 32 }}>
+              How this is counted
+            </summary>
             <Footnote>
-              Drawn short so the rest of the year stays readable: {cutInFull.join(' · ')}.
+              Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry. It is not measured household consumption.
+              These four figures cover the {months.length} months drawn here. A cohort total
+              elsewhere on this page counts every record since each farm joined, so it can be a
+              little larger — the two are different periods, not two answers.
             </Footnote>
-          )}
-          {!paired && (series.productionFarmers > 0 || series.salesFarmers > 0) && (
-            <Footnote>{populationSentence(series)}</Footnote>
-          )}
-          {!paired && series.totalKeptKg !== null && (
-            <Footnote>
-              Kept is worked out only across the {series.comparableFarmers}{' '}
-              {series.comparableFarmers === 1 ? 'farm' : 'farms'} sharing both books, so it is not
-              the picked figure above minus the sold one.
-            </Footnote>
-          )}
-          {paired && anyOverSold && (
-            <Footnote>
-              A dashed outline is a month whose sales run past the harvest logged in that same
-              month. Usually that is produce picked earlier and sold later; occasionally it is a
-              harvest nobody wrote down.
-            </Footnote>
-          )}
-          {!paired && anyUnbacked && (
-            <Footnote>
-              A dashed sold bar is weight with no harvest record behind it here — either that
-              farmer has not shared their harvest book, or the produce was picked in an earlier
-              month. The bar still reaches the full figure it sold; nothing is drawn short of it.
-            </Footnote>
-          )}
+            {cutInFull.length > 0 && (
+              <Footnote>
+                Drawn short so the rest of the year stays readable: {cutInFull.join(' · ')}.
+              </Footnote>
+            )}
+            {!paired && (series.productionFarmers > 0 || series.salesFarmers > 0) && (
+              <Footnote>{populationSentence(series)}</Footnote>
+            )}
+            {!paired && series.totalKeptKg !== null && (
+              <Footnote>
+                Kept is worked out only across the {series.comparableFarmers}{' '}
+                {series.comparableFarmers === 1 ? 'farm' : 'farms'} sharing both books, so it is not
+                the picked figure above minus the sold one.
+              </Footnote>
+            )}
+            {paired && anyOverSold && (
+              <Footnote>
+                A dashed outline is a month whose sales run past the harvest logged in that same
+                month. Usually that is produce picked earlier and sold later; occasionally it is a
+                harvest nobody wrote down.
+              </Footnote>
+            )}
+            {!paired && anyUnbacked && (
+              <Footnote>
+                A dashed sold bar is weight with no harvest record behind it here — either that
+                farmer has not shared their harvest book, or the produce was picked in an earlier
+                month. The bar still reaches the full figure it sold; nothing is drawn short of it.
+              </Footnote>
+            )}
+          </details>
         </div>
       </ChartCard>
     </div>
@@ -742,10 +754,15 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
             </div>
 
             <div className="px-4 pb-4">
-              <Footnote>
-                A module counts once the farmer has completed it in the app. Farmers who have not
-                shared a training record are not drawn at zero — they are not drawn at all.
-              </Footnote>
+              <details>
+                <summary className="font-sans" style={{ fontSize: MICRO, color: FAINT, cursor: 'pointer', minHeight: 32 }}>
+                  How this is counted
+                </summary>
+                <Footnote>
+                  A module counts once the farmer has completed it in the app. Farmers who have not
+                  shared a training record are not drawn at zero — they are not drawn at all.
+                </Footnote>
+              </details>
             </div>
           </>
         )}

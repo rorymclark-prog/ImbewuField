@@ -10,6 +10,7 @@ import { translate, useLanguage } from '@/lib/i18n';
 import { safeLoginRedirect } from '@/lib/safe-redirect';
 
 import Illustration from '@/components/Illustration';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 
 type Mode = 'signin' | 'create' | 'reset';
 
@@ -205,11 +206,7 @@ function LoginPageInner() {
       <div className="w-full max-w-sm p-6 my-auto" style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: 'var(--shadow-panel)' }}>
         <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
-        {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.45, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
-            {t('loginZuluDraftNotice')}
-          </p>
-        )}
+        <div className="mb-4"><LanguageDraftNote lang={lang} scope="login" /></div>
 
         {/* Logo */}
         <div className="text-center mb-5">

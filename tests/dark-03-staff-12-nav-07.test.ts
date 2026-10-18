@@ -38,7 +38,11 @@ test('AtlasExplorer\'s first-run hint pill follows the theme instead of staying 
 });
 
 test('nav-07: /contact has exactly one back control', () => {
-  assert.match(contact, /<MenuButton \/><BackButton fallback="\/home" \/>/);
+  // w14 (desk-02): the hand-built MenuButton · BackButton pair became the shared AppHeader, whose
+  // BackButton (fallback /home by default) is now the page's only back control.
+  assert.match(contact, /import AppHeader from '@\/components\/layout\/AppHeader';/);
+  assert.equal((contact.match(/<AppHeader\b/g) ?? []).length, 1, 'exactly one AppHeader, so exactly one BackButton');
+  assert.doesNotMatch(contact, /<BackButton|<MenuButton/, 'no hand-built back control may sit beside AppHeader\'s');
   assert.doesNotMatch(contact, /<ChevronLeft/, 'the duplicate chevron Link to \/home must be gone');
   assert.doesNotMatch(contact, /^import Link from 'next\/link';$/m, 'an unused import left behind is its own small regression');
 });

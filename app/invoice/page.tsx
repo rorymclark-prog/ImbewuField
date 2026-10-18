@@ -544,7 +544,13 @@ export default function InvoicePage() {
         // Link first. Until this device has the invoice, cashLedgerSales retains the tagged
         // original sale. A failed device write therefore cannot double or erase its cash.
         try { await syncInvoiceSales(candidate); }
-        catch (error) { throw new Error(error instanceof Error ? `${error.message} ${ui('Reconnect and try again.')}` : ui('Connect to the internet to link this existing sale safely.')); }
+        catch (error) {
+          // copy-16: this used to splice the raw JS/network error message ("Failed to fetch",
+          // "NetworkError when attempting to fetch resource"…) straight into what the farmer
+          // sees. Log it for debugging; show only the translated sentence.
+          console.error(error);
+          throw new Error(ui('Connect to the internet to link this existing sale safely.'));
+        }
       }
       if (!sameAccount()) throw new Error(ui('Your account changed. Open the invoice again in the correct workspace.'));
       const list = saveInvoice(candidate);
@@ -757,7 +763,7 @@ export default function InvoicePage() {
         <MenuButton />
         <BackButton fallback="/records?tab=sold" />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
+        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
@@ -766,7 +772,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
         </button>
@@ -775,7 +781,7 @@ export default function InvoicePage() {
           disabled={!valid}
           aria-label={ui('Print', 'Phrinta')}
           className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
+          style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
         >
           <Printer size={16} /><span className="hidden sm:inline">{ui('Print', 'Phrinta')}</span>
         </button>
@@ -785,7 +791,19 @@ export default function InvoicePage() {
       <div className="invoice-scroll flex-1 overflow-y-auto">
         <div className={`invoice-column ${workspace.workspace} ${workspace.invoice} px-4 py-5 sm:px-6 sm:py-6`}>
 
-          <div className={`invoice-preview ${workspace.invoicePreview}`}>
+          {/* dark-12: the invoice sheet below is a deliberately un-themed printed artefact (see
+              components/invoice/InvoiceDocument.tsx's own header comment) — it stays white in
+              every theme on purpose. In dark mode a bare white rectangle reads as broken rather
+              than intentional, so it gets a themed "well" (padding, var(--bg-2) backing,
+              var(--shadow-panel)) and a caption to read as a deliberate paper preview. The print
+              stylesheet below resets .invoice-preview's own padding/background to 0/#fff, so this
+              frame disappears at print time and only the white sheet is left. */}
+          <div className={`invoice-preview ${workspace.invoicePreview}`} style={{ background: 'var(--bg-2)', borderRadius: 18, padding: 10, boxShadow: 'var(--shadow-panel)' }}>
+            <p className="no-print text-xs font-sans text-center mb-2" style={{ color: 'var(--text-muted)' }}>
+              {/* 'Preview' is a reviewed sentence in every regional packet; a new caption would
+                  have shipped untranslated in Sesotho, Tshivenda and Xitsonga. */}
+              {ui('Preview')}
+            </p>
             <InvoiceDocumentView doc={doc} />
           </div>
 
@@ -986,7 +1004,7 @@ export default function InvoicePage() {
                                   disabled={syncingInvoiceId === inv.id}
                                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                                   style={inv.paymentMethod === m
-                                    ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                                    ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                                     : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                                   {paymentLabel(m)}
                                 </button>
@@ -1037,7 +1055,7 @@ export default function InvoicePage() {
                 <input value={businessNameDraft} onChange={(e) => setBusinessNameDraft(e.target.value)}
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
@@ -1051,36 +1069,36 @@ export default function InvoicePage() {
                 <FieldLabel>{ui('Your address')}</FieldLabel>
                 <textarea rows={2} value={letterhead.address} onChange={(e) => patchLetterhead({ address: e.target.value })}
                   placeholder={'Plot 14, Nquthu\nKwaZulu-Natal, 3135'}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
               <div className="flex gap-2">
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('Email')}</FieldLabel>
                   <input type="email" value={letterhead.email} onChange={(e) => patchLetterhead({ email: e.target.value })}
                     placeholder="you@example.co.za"
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('VAT / tax no.')}</FieldLabel>
                   <input value={letterhead.taxNumber} onChange={(e) => patchLetterhead({ taxNumber: e.target.value })}
                     placeholder={ui('Optional')}
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
               </div>
               <div className="pt-1">
                 <FieldLabel>{ui('Where buyers pay you')}</FieldLabel>
                 <div className="space-y-2">
                   <input value={letterhead.bankAccountName} onChange={(e) => patchLetterhead({ bankAccountName: e.target.value })}
-                    placeholder={ui('Account name')} className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                    placeholder={ui('Account name')} className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   <div className="flex gap-2">
                     <input value={letterhead.bankName} onChange={(e) => patchLetterhead({ bankName: e.target.value })}
-                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                     <input value={letterhead.bankBranchCode} onChange={(e) => patchLetterhead({ bankBranchCode: e.target.value })}
-                      placeholder={ui('Branch code')} className="w-28 text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Branch code')} className="w-28 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </div>
                   <input value={letterhead.bankAccountNumber} onChange={(e) => patchLetterhead({ bankAccountNumber: e.target.value })}
                     placeholder={ui('Account number')} inputMode="numeric"
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
                 </div>
               </div>
             </Disclosure>
@@ -1101,7 +1119,7 @@ export default function InvoicePage() {
                       selectBuyer(event.target.value);
                     }
                   }}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={FIELD}
                 >
                   <option value="">{ui('Choose a customer')}</option>
@@ -1121,7 +1139,7 @@ export default function InvoicePage() {
                     value={billTo}
                     onChange={(event) => setBillTo(event.target.value)}
                     placeholder={ui('Customer name')}
-                    className="w-full mt-2 text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                    className="w-full mt-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                     style={FIELD}
                   />
                 )}
@@ -1138,20 +1156,20 @@ export default function InvoicePage() {
                   <FieldLabel>{ui('Address')}</FieldLabel>
                   <textarea rows={2} value={buyerDetails.address ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, address: e.target.value }))}
                     placeholder={'Shop 3, Main Road\nNquthu'}
-                    className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
                 </label>
                 <div className="flex gap-2">
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Phone')}</FieldLabel>
                     <input type="tel" value={buyerDetails.phone ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, phone: e.target.value }))}
                       placeholder="072 345 6789"
-                      className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Email')}</FieldLabel>
                     <input type="email" value={buyerDetails.email ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, email: e.target.value }))}
                       placeholder={ui('Optional')}
-                      className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                 </div>
               </Disclosure>
@@ -1189,19 +1207,19 @@ export default function InvoicePage() {
                         and WhatsApped invoice with no stored record. */}
                     <input type="number" min={0} step="0.01" inputMode="decimal" value={it.qty || ''} onChange={(e) => updateItem(it.id, { qty: Math.max(0, parseFloat(e.target.value) || 0) })}
                       placeholder={ui('Qty')} aria-label={ui('Quantity')}
-                      className="w-16 text-sm font-display outline-none rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
+                      className="w-16 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
                     <select value={it.unit} aria-label={ui('Unit')} onChange={(e) => updateItem(it.id, {
                       unit: e.target.value,
                       ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0, priceFromGuide: false } : {}),
                     })}
-                      className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none" style={FIELD}>
+                      className="text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
                     <div className={`flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2${ui('each').length > 10 ? ' basis-full' : ''}`} style={FIELD}>
                       <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
-                        className="w-full text-sm font-display outline-none tabular-nums"
+                        className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] tabular-nums"
                         style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }} />
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
@@ -1254,7 +1272,7 @@ export default function InvoicePage() {
                       onClick={() => { setTermsDays(choice.days); patchLetterhead({ paymentTermsDays: choice.days }); }}
                       className="px-2.5 py-1.5 rounded-full text-xs font-sans font-semibold"
                       style={termsDays === choice.days
-                        ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
+                        ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)', cursor: 'pointer' }
                         : { background: 'var(--bg-1)', color: 'var(--text-secondary)', border: '1px solid var(--border)', cursor: 'pointer' }}>
                       {ui(choice.label)}
                     </button>
@@ -1266,7 +1284,7 @@ export default function InvoicePage() {
                 <FieldLabel>{ui("Buyer's reference")}</FieldLabel>
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder={ui('Their order number — optional')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
               </label>
               {/* Growing area stays reachable — a farmer may still want this sale on their
                   R/m² records — but Simple keeps it closed until asked for, the same as the
@@ -1303,26 +1321,26 @@ export default function InvoicePage() {
                 <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)}
                   onBlur={() => patchLetterhead({ notes })}
                   placeholder={ui('Delivery Thursday. Crates returned with next order.')}
-                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
             </div>
 
             <button onClick={() => void persist()} disabled={!valid}
               className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-              style={{ background: valid ? '#1F4D2B' : '#DDD5C5', color: valid ? '#fff' : '#5C5040', border: 'none' }}>
+              style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
-            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: '#EAF2EB', color: '#244E33' }}>{saveMessage}</p>}
+            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))', color: 'var(--emerald)' }}>{saveMessage}</p>}
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? 'var(--color-forest-800)' : 'rgba(226,216,196,0.6)', color: valid ? 'var(--on-forest)' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
-                style={{ background: valid ? '#9A6018' : 'rgba(226,216,196,0.6)', color: valid ? '#fff' : '#755942', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
+                style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
             </div>

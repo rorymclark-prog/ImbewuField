@@ -32,7 +32,7 @@ import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
-import { useLanguage } from '@/lib/i18n';
+import { useLanguage, translate } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -40,7 +40,7 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
-import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
+import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask, type BoardTranslate } from '@/lib/task-board';
 import { useSiteProgress, type Coords } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
 import { useAppLevel } from '@/lib/app-level';
@@ -63,9 +63,21 @@ const LANG_TO_LOCALE: Record<string, string> = {
 };
 const localUi = (lang: string, english: string, zulu: string) => lang === 'zu' ? zulu : english;
 
-function getDayDate(lang: string) {
+// zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
+// fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
+// 16'). isiZulu builds its own day-first string from lib/locales/zu.ts's weekday/month tables
+// instead of Intl; every other language keeps using Intl, with 'en-ZA' as the fallback for an
+// unlisted locale code rather than the browser default.
+const ZU_WEEKDAY_KEYS = ['homeWeekdaySun', 'homeWeekdayMon', 'homeWeekdayTue', 'homeWeekdayWed', 'homeWeekdayThu', 'homeWeekdayFri', 'homeWeekdaySat'];
+const ZU_MONTH_KEYS = ['homeMonthJan', 'homeMonthFeb', 'homeMonthMar', 'homeMonthApr', 'homeMonthMay', 'homeMonthJun', 'homeMonthJul', 'homeMonthAug', 'homeMonthSep', 'homeMonthOct', 'homeMonthNov', 'homeMonthDec'];
+
+function getDayDate(lang: string, now: Date = new Date()) {
+  if (lang === 'zu') {
+    const day = translate('zu', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
-  const now = new Date();
   const day = now.toLocaleDateString(locale, { weekday: 'long' });
   const date = now.toLocaleDateString(locale, { day: 'numeric', month: 'long' });
   return `${day} · ${date}`;
@@ -88,7 +100,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
+            <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
             <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{d.biome.name}</div>
           </div>
           <div className="flex items-center gap-1 text-xs font-display" style={{ color: 'var(--color-forest-800)' }}>
@@ -99,7 +111,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
               <div className="font-display font-semibold text-sm" style={{ color: 'var(--color-ink)' }}>{s.value}</div>
-              <div className="font-mono mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 12 }}>{s.label}</div>
+              <div className="mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 12 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -145,7 +157,7 @@ function MainSiteWeatherCard({ site, places, onSetMain, simple }: { site: SavedP
     <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
+          <div className="text-xs uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
           <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{site.name}</div>
         </div>
         {showPicker && (
@@ -245,11 +257,13 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
 // completion score (lib/completion-score.ts) for the farmer's MAIN site, plus the single next
 // action, deep-linked. The step table is lib/home-next-step.ts, shared with the Simple layout,
 // which puts the same next step inside the site card instead of under it.
-function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
+function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPlace[] | null; mainSite: SavedPlace | null; staffRole?: 'mentor' | 'ngo' | 'funder' | null }) {
   const { t, lang } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
 
+  // staff-09: a mentor/ngo/funder viewer has no farm plan of their own to show here.
+  if (staffRole) return null;
   // Hide entirely for a brand-new user — no saved places means nothing to show yet,
   // and the hero card's welcome variant already owns that moment. `progress` stays
   // null until useSiteProgress's post-mount effect runs (hydration-safe), so this
@@ -301,6 +315,11 @@ function HomeLandingInner() {
   const { navigationRole, sample: roleSample } = useRoleNavigation();
   const showTourInvitation = useTourInvitation();
   useEffect(() => { if (!roleSample && navigationRole === 'funder') router.replace('/funder'); }, [navigationRole, roleSample, router]);
+  // staff-09: a mentor/ngo/funder viewer (own account, or a sample-mode preview — funder's own
+  // redirect above only fires outside sample mode) gets a role-appropriate Home instead of the
+  // farmer's hero, bed tasks and dashboards switcher, none of which answers anything for them.
+  const staffRole: 'mentor' | 'ngo' | 'funder' | null =
+    navigationRole === 'mentor' || navigationRole === 'ngo' || navigationRole === 'funder' ? navigationRole : null;
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
@@ -320,9 +339,17 @@ function HomeLandingInner() {
 
   useEffect(() => {
     setLastSite(getLastSite());
+    // zu-03: wire the task board's templates to the live language instead of the English-only
+    // default — 'Prep bed for…', 'Sow…', 'Harvest…', 'Bed {n}' and 'Due this month' now read
+    // through t(), same {placeholder} substitution lib/task-board.ts's own default uses.
+    const boardTranslate: BoardTranslate = (key, vars) => {
+      let s = t(key);
+      if (vars) for (const [name, value] of Object.entries(vars)) s = s.replace(`{${name}}`, value);
+      return s;
+    };
     const refresh = () => {
       setPlaces(loadPlaces());
-      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds()));
+      setBoardTasks(loadCropBoardTasks(loadCompletedTaskIds(), boardTranslate, lang));
     };
     refresh();
     // setMainSiteId() fires this same event, so the picker + weather block
@@ -330,7 +357,8 @@ function HomeLandingInner() {
     // and canvas saves likewise refresh tasks while Home remains mounted.
     TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.addEventListener(event, refresh));
     return () => TASK_BOARD_CHANGED_EVENTS.forEach((event) => window.removeEventListener(event, refresh));
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   const mainSite = resolveMainSite(places ?? []);
   // The analysed point and the designated site answer different questions, but when they are
@@ -410,7 +438,11 @@ function HomeLandingInner() {
               title to land on. Heading sizes are reset by Tailwind preflight and globals.css styles
               headings for family and tracking only, so the tag change is not a look change. */}
           <h1 className="font-display font-bold m-0" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
-            {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}
+            {/* nav-17: this used to fall back to the brand wordmark 'ImbewuField' — the site's
+                name, not a description of this page — whenever there was no first name to
+                greet. t('tabHome') is the same label the bottom tab for this very page already
+                uses, so the h1 names the page it is the h1 of. */}
+            {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
           </h1>
         </div>
 
@@ -473,6 +505,11 @@ function HomeLandingInner() {
           gap: 16px;
           min-width: 0;
         }
+        /* desk-08: the task list shows once, in whichever of these two slots the current
+           breakpoint uses — inline after the quick actions on phone, inside the right column
+           of the priority grid at 900px+ so that column is never left mostly empty. */
+        .home-task-board-desktop { display: none; }
+        .home-task-board-mobile { display: block; }
         @media (min-width: 900px) {
           .home-priority-grid.has-main-site {
             display: grid;
@@ -480,6 +517,8 @@ function HomeLandingInner() {
             gap: 24px;
             align-items: start;
           }
+          .home-task-board-desktop { display: block; }
+          .home-task-board-mobile { display: none; }
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
@@ -501,16 +540,25 @@ function HomeLandingInner() {
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
             columns; on a phone they keep this exact reading order. */}
-        <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
+        <section className={`home-priority-grid${mainSite && !staffRole ? ' has-main-site' : ''}`}>
           <div className="home-priority-primary">
-            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} />
-            {!simple && <FarmPlanCard places={places} mainSite={mainSite} />}
+            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} level={level} staffRole={staffRole} />
+            {!simple && <FarmPlanCard places={places} mainSite={mainSite} staffRole={staffRole} />}
           </div>
 
-          {(mainSite || (lastSite && !lastSiteMatchesMain)) && (
+          {/* desk-08: the right column used to carry only the weather card (or nothing), leaving
+              a large empty band beside it at lg+ — the upcoming task list now fills it there,
+              without changing where a phone sees that same list (home-task-board-desktop/-mobile
+              below swap which copy is visible per breakpoint). */}
+          {!staffRole && (mainSite || (lastSite && !lastSiteMatchesMain) || boardTasks.length > 0) && (
             <div className="home-priority-secondary">
               {places && mainSite && (
                 <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} simple={simple} />
+              )}
+              {boardTasks.length > 0 && (
+                <div className="home-task-board-desktop">
+                  <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />
+                </div>
               )}
               {lastSite && !lastSiteMatchesMain && <LastSiteCard site={lastSite} />}
             </div>
@@ -518,7 +566,7 @@ function HomeLandingInner() {
         </section>
 
         {/* ── Quick actions ── */}
-        <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+        {!staffRole && <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
           {quickActions.map((q) => (
             <Link
               key={q.href}
@@ -539,12 +587,12 @@ function HomeLandingInner() {
               </div>
             </Link>
           ))}
-        </div>
+        </div>}
 
         {/* ── Take a tour farm — NGO/onboarding "show me how it works" entry point.
             Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —
             it never reads or writes any real farmer's saved data. ── */}
-        {showTourInvitation && <button
+        {!staffRole && showTourInvitation && <button
           type="button"
           className="home-tour-card"
           onClick={() => router.push('/tour')}
@@ -587,10 +635,20 @@ function HomeLandingInner() {
           </p>
         </button>}
 
-        {boardTasks.length > 0 && <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />}
+        {/* desk-08: this is the phone copy of the task list — home-task-board-desktop above
+            takes over at the 900px breakpoint where the grid gains a second column, so the
+            list is never shown twice. */}
+        {!staffRole && boardTasks.length > 0 && (
+          <div className="home-task-board-mobile">
+            <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />
+          </div>
+        )}
 
-        {/* ── Dashboards disclosure ── */}
-        <section>
+        {/* ── Dashboards disclosure ── staff-09: a mentor/ngo/funder viewer already finds every
+            workspace in the drawer's RoleSwitcher (components/RoleSwitcher.tsx, inMenu) — this
+            inline switcher is for a farmer/student exploring the other roles, and reads as an
+            internal control to someone who IS staff, so it is left out for them. */}
+        {!staffRole && <section>
           <button
             onClick={() => setRolesOpen((o) => !o)}
             className="w-full flex items-center justify-between"
@@ -657,7 +715,7 @@ function HomeLandingInner() {
               </Link>
             </div>
           )}
-        </section>
+        </section>}
 
         <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
           {t('homeFooter')}
