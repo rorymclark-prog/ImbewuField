@@ -1,0 +1,1192 @@
+{
+  "sourceSha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
+  "visuals": {
+    "title": "Original site",
+    "subtitle": "",
+    "basis": "Original source",
+    "metrics": [],
+    "charts": [
+      {
+        "id": "site-plan",
+        "title": "Title site-plan",
+        "note": "Note site-plan. Source: Source site-plan",
+        "unit": "SITE PLAN",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "site-plan",
+          "title": "Title site-plan",
+          "note": "Note site-plan.",
+          "source": "Source site-plan",
+          "alt": "Alt site-plan",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "land-use",
+        "title": "Title land-use",
+        "note": "Note land-use. Source: Source land-use",
+        "unit": "m²",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "land-use",
+          "title": "Title land-use",
+          "note": "Note land-use.",
+          "source": "Source land-use",
+          "alt": "Alt land-use",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "status",
+        "title": "Title status",
+        "note": "Note status. Source: Source status",
+        "unit": "BUILT / PLANNED",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "status",
+          "title": "Title status",
+          "note": "Note status.",
+          "source": "Source status",
+          "alt": "Alt status",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "rainfall",
+        "title": "Title climate",
+        "note": "Note climate. Source: Source climate",
+        "unit": "JAN – DEC",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "climate",
+          "title": "Title climate",
+          "note": "Note climate.",
+          "source": "Source climate",
+          "alt": "Alt climate",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "water-budget",
+        "title": "Title water-budget",
+        "note": "Note water-budget. Source: Source water-budget",
+        "unit": "LITRES",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget.",
+          "source": "Source water-budget",
+          "alt": "Alt water-budget",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "sectors",
+        "title": "Title sectors",
+        "note": "Note sectors. Source: Source sectors",
+        "unit": "SUN · WIND · SLOPE",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "sectors",
+          "title": "Title sectors",
+          "note": "Note sectors.",
+          "source": "Source sectors",
+          "alt": "Alt sectors",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "soil",
+        "title": "Title soil",
+        "note": "Note soil. Source: Source soil",
+        "unit": "SOIL",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "soil",
+          "title": "Title soil",
+          "note": "Note soil.",
+          "source": "Source soil",
+          "alt": "Alt soil",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      },
+      {
+        "id": "timeline",
+        "title": "Title timeline",
+        "note": "Note timeline. Source: Source timeline",
+        "unit": "WEEKS",
+        "kind": "figure",
+        "rows": [],
+        "figure": {
+          "id": "timeline",
+          "title": "Title timeline",
+          "note": "Note timeline.",
+          "source": "Source timeline",
+          "alt": "Alt timeline",
+          "svg": "<svg/>",
+          "width": 640,
+          "height": 300
+        }
+      }
+    ],
+    "slideHint": "Slide to see more"
+  },
+  "cases": [
+    {
+      "heading": "Water Harvesting",
+      "body": "Dig a swale on the contour.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-roof-to-tank",
+          "title": "Follow the water through the site",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. It does not confirm a tank is installed, a pipe is correctly sized or water is safe to use.",
+          "art": {
+            "src": "/report-art/roof-to-tank.jpg",
+            "alt": "Rain runs off a roof into a gutter, through a first-flush pipe into a tank, and the overflow is led to a mulched basin around a fruit tree.",
+            "width": 1427,
+            "height": 764
+          }
+        },
+        {
+          "id": "art-swale-section",
+          "title": "How a swale holds water on a slope",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. A swale must be set out level on the contour and sized for the slope; on steep or unstable ground get advice before digging.",
+          "art": {
+            "src": "/report-art/swale-section.jpg",
+            "alt": "Cut through a slope: runoff drops into a level ditch, soaks in and spreads under a fruit tree planted on the mound below it.",
+            "width": 1425,
+            "height": 730
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Irrigation Plan",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-drip-bed",
+          "title": "Water at the roots, not on the leaves",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Pipe sizes, tank height and watering times still have to be worked out for the real beds.",
+          "art": {
+            "src": "/report-art/drip-bed.jpg",
+            "alt": "A raised tank feeds drip lines laid under mulch along rows of cabbage and spinach.",
+            "width": 1426,
+            "height": 784
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Soil Strategy",
+      "body": "Dig a trench bed.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-soil-layers",
+          "title": "Look below the surface",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Use the site evidence checklist to add soil observations and laboratory results. This illustration does not describe measured conditions at this site.",
+          "art": {
+            "src": "/report-art/soil-layers.jpg",
+            "alt": "Cut through garden soil: mulch on top, dark living topsoil with roots and earthworms, paler subsoil with stones below, and compost being added by hand.",
+            "width": 1425,
+            "height": 739
+          }
+        },
+        {
+          "id": "art-trench-bed",
+          "title": "Inside a trench bed",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Depth and fill depend on what the household has to hand.",
+          "art": {
+            "src": "/report-art/trench-bed.jpg",
+            "alt": "Cut through a trench bed: branches and bones at the bottom, then dry grass, green material, manure and topsoil, with cabbages growing in mulch on top.",
+            "width": 1358,
+            "height": 786
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Year 1 Priorities",
+      "body": "Start compost.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-compost-bays",
+          "title": "Compost in three stages",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Any container or heap works; the point is the three stages.",
+          "art": {
+            "src": "/report-art/compost-bays.jpg",
+            "alt": "Three compost bays side by side: fresh material, a heap half broken down, and finished dark compost ready for the beds.",
+            "width": 1426,
+            "height": 702
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Crop Rotation",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-crop-rotation",
+          "title": "Move each crop family on, every season",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. The report's own calendar says what is planted where; this shows only the principle.",
+          "art": {
+            "src": "/report-art/crop-rotation.jpg",
+            "alt": "Four beds seen from above — leaf crops, fruiting crops, legumes and root crops — with arrows showing each group moving to the next bed.",
+            "width": 1336,
+            "height": 786
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Plant Guilds",
+      "body": "Mango and Wild Plum.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-guild-layers",
+          "title": "A guild, layer by layer",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Species and spacing must be chosen for this site; this is not its planting plan.",
+          "art": {
+            "src": "/report-art/guild-layers.jpg",
+            "alt": "A fruit tree with a climber, a berry shrub, a clumping plant, ground cover and root crops sharing one mulched bed, roots drawn below ground.",
+            "width": 1338,
+            "height": 787
+          }
+        },
+        {
+          "id": "trees",
+          "title": "Trees mentioned in this section",
+          "note": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.",
+          "trees": [
+            {
+              "name": "Mango Tree",
+              "image": "/element-art/tree_mango.png"
+            },
+            {
+              "name": "Wild Plum",
+              "image": "/element-art/tree_wild_plum.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Wind & Windbreaks",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-windbreak-section",
+          "title": "How a windbreak lifts the wind",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Which side to plant follows the wind directions recorded for the site, not this drawing.",
+          "art": {
+            "src": "/report-art/windbreak-section.jpg",
+            "alt": "Wind meets a belt of tall trees, smaller trees and shrubs, rises over it and comes down well beyond the vegetable beds sheltered behind.",
+            "width": 1426,
+            "height": 558
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Sun & Solar",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-sun-house",
+          "title": "Low winter sun in, high summer sun out",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. The real sun angles for this latitude are in the sun and wind figure.",
+          "art": {
+            "src": "/report-art/sun-house.jpg",
+            "alt": "A house with a wide eave: the high summer sun is stopped by the roof overhang while the low winter sun reaches in under it.",
+            "width": 1426,
+            "height": 643
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Zone Design",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-zones",
+          "title": "Zones: what you visit most sits closest",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. The zones mapped for this site are in its own site plan.",
+          "art": {
+            "src": "/report-art/zones.jpg",
+            "alt": "A homestead seen from above: herb and vegetable beds at the door, then chickens and fruit trees, then field crops, grazing and a belt of trees at the edge.",
+            "width": 1426,
+            "height": 739
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Animals & Livestock",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-chicken-tractor",
+          "title": "Let the chickens prepare the next bed",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Stock numbers, housing and by-laws still need checking locally.",
+          "art": {
+            "src": "/report-art/chicken-tractor.jpg",
+            "alt": "A movable wire chicken run on wheels stands on one bed while the bed beside it, already cleared and manured, is ready for planting.",
+            "width": 1424,
+            "height": 786
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Fire & Hazards",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-firebreak",
+          "title": "Keep a bare or green ring between grass and home",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Break widths and burning rules come from the local fire protection association.",
+          "art": {
+            "src": "/report-art/firebreak.jpg",
+            "alt": "A house and water tank on a green lawn, ringed by a bare cleared strip and a gravel road that separate them from dry grassland.",
+            "width": 1426,
+            "height": 658
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Year-Round Food Production",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-food-all-year",
+          "title": "Something to harvest in every season",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. The crops and months for this site are in its planting calendar.",
+          "art": {
+            "src": "/report-art/food-all-year.jpg",
+            "alt": "Four beds side by side: maize, beans, pumpkin and sweet potato under a high summer sun; cabbage, carrots, onions, peas and young seedlings under a low winter sun.",
+            "width": 1428,
+            "height": 585
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Economic Opportunities",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-market-table",
+          "title": "From the garden to a table at the gate",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. Prices and demand have to be checked in the local market.",
+          "art": {
+            "src": "/report-art/market-table.jpg",
+            "alt": "A shaded roadside table with crates of spinach, cabbage, tomatoes and pumpkins, seedling trays, eggs and a scale.",
+            "width": 1340,
+            "height": 788
+          }
+        }
+      ]
+    },
+    {
+      "heading": "5-Year Vision",
+      "body": "",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "art-five-year-change",
+          "title": "Bare plot to food garden, in stages",
+          "note": "Concept illustration, the same in every report. It is not a picture of this site. How fast the real site changes depends on water, labour and money.",
+          "art": {
+            "src": "/report-art/five-year-change.jpg",
+            "alt": "The same sloping plot three times: bare ground with a house and tank, then young contour beds and saplings, then a full garden with fruit trees.",
+            "width": 1427,
+            "height": 617
+          }
+        }
+      ]
+    },
+    {
+      "heading": "Natural Vegetation & Biome",
+      "body": "Mango and Wild Plum.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        },
+        {
+          "id": "layers",
+          "title": "A living landscape, layer by layer",
+          "note": "Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.",
+          "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"820\" height=\"370\" viewBox=\"0 0 820 370\"><rect width=\"820\" height=\"370\" rx=\"18\" fill=\"#f2f6ef\"/><path d=\"M0 283 Q170 255 480 280V370H0Z\" fill=\"#d9b57b\"/><path d=\"M0 285 Q250 256 480 278\" stroke=\"#7a6639\" stroke-width=\"12\" fill=\"none\"/><path d=\"M258 279V114M258 201L218 158M258 167L301 123\" stroke=\"#876143\" stroke-width=\"14\" stroke-linecap=\"round\"/><g fill=\"#3c6843\"><ellipse cx=\"248\" cy=\"106\" rx=\"89\" ry=\"51\"/><circle cx=\"187\" cy=\"121\" r=\"43\"/><circle cx=\"321\" cy=\"112\" r=\"43\"/><circle cx=\"244\" cy=\"62\" r=\"39\"/></g><g fill=\"#698553\"><ellipse cx=\"143\" cy=\"232\" rx=\"51\" ry=\"32\"/><ellipse cx=\"375\" cy=\"233\" rx=\"51\" ry=\"36\"/></g><g fill=\"#95a65c\"><ellipse cx=\"89\" cy=\"269\" rx=\"35\" ry=\"13\"/><ellipse cx=\"329\" cy=\"270\" rx=\"32\" ry=\"13\"/><ellipse cx=\"423\" cy=\"266\" rx=\"30\" ry=\"15\"/></g><path d=\"M258 283q-21 46-79 61M258 283q28 36 78 48M258 283v65\" stroke=\"#997546\" stroke-width=\"4\" fill=\"none\"/><g stroke=\"#66815f\" stroke-width=\"1.5\" stroke-dasharray=\"4 5\"><path d=\"M350 90H489M421 223H489M459 270H489M341 325H489\"/></g><text x=\"510\" y=\"83\" font-family=\"Arial,sans-serif\" font-size=\"22\" fill=\"#244b34\">Tree canopy</text><text x=\"510\" y=\"108\" font-family=\"Arial,sans-serif\" font-size=\"15\" fill=\"#244b34\">Upper growing layer</text><text x=\"510\" y=\"218\" font-family=\"Arial,sans-serif\" font-size=\"22\" fill=\"#244b34\">Shrubs &amp; understory</text><text x=\"510\" y=\"243\" font-family=\"Arial,sans-serif\" font-size=\"15\" fill=\"#244b34\">Space below the canopy</text><text x=\"510\" y=\"279\" font-family=\"Arial,sans-serif\" font-size=\"19\" fill=\"#244b34\">Ground cover &amp; leaf litter</text><text x=\"510\" y=\"331\" font-family=\"Arial,sans-serif\" font-size=\"20\" fill=\"#244b34\">Roots &amp; living soil</text></svg>"
+        },
+        {
+          "id": "trees",
+          "title": "Trees mentioned in this section",
+          "note": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.",
+          "trees": [
+            {
+              "name": "Mango Tree",
+              "image": "/element-art/tree_mango.png"
+            },
+            {
+              "name": "Wild Plum",
+              "image": "/element-art/tree_wild_plum.png"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Unknown recorded heading",
+      "body": "Original recorded body.",
+      "expected": [
+        {
+          "id": "figure-water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "chart": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget. Source: Source water-budget",
+            "unit": "LITRES",
+            "kind": "figure",
+            "rows": [],
+            "figure": {
+              "id": "water-budget",
+              "title": "Title water-budget",
+              "note": "Note water-budget.",
+              "source": "Source water-budget",
+              "alt": "Alt water-budget",
+              "svg": "<svg/>",
+              "width": 640,
+              "height": 300
+            }
+          },
+          "slideHint": "Slide to see more"
+        }
+      ]
+    }
+  ],
+  "report": "## 1. Water Harvesting\nDig a swale on the contour.\n\n## 2. Irrigation Plan\n\n\n## 3. Soil Strategy\nDig a trench bed.\n\n## 4. Year 1 Priorities\nStart compost.\n\n## 5. Crop Rotation\n\n\n## 6. Plant Guilds\nMango and Wild Plum.\n\n## 7. Wind & Windbreaks\n\n\n## 8. Sun & Solar\n\n\n## 9. Zone Design\n\n\n## 10. Animals & Livestock\n\n\n## 11. Fire & Hazards\n\n\n## 12. Year-Round Food Production\n\n\n## 13. Economic Opportunities\n\n\n## 14. 5-Year Vision\n\n\n## 15. Natural Vegetation & Biome\nMango and Wild Plum.\n\n## 16. Unknown recorded heading\nOriginal recorded body.",
+  "expectedReport": {
+    "1. Water Harvesting": [
+      {
+        "id": "figure-water-budget",
+        "title": "Title water-budget",
+        "note": "Note water-budget. Source: Source water-budget",
+        "chart": {
+          "id": "water-budget",
+          "title": "Title water-budget",
+          "note": "Note water-budget. Source: Source water-budget",
+          "unit": "LITRES",
+          "kind": "figure",
+          "rows": [],
+          "figure": {
+            "id": "water-budget",
+            "title": "Title water-budget",
+            "note": "Note water-budget.",
+            "source": "Source water-budget",
+            "alt": "Alt water-budget",
+            "svg": "<svg/>",
+            "width": 640,
+            "height": 300
+          }
+        },
+        "slideHint": "Slide to see more"
+      },
+      {
+        "id": "art-roof-to-tank",
+        "title": "Follow the water through the site",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. It does not confirm a tank is installed, a pipe is correctly sized or water is safe to use.",
+        "art": {
+          "src": "/report-art/roof-to-tank.jpg",
+          "alt": "Rain runs off a roof into a gutter, through a first-flush pipe into a tank, and the overflow is led to a mulched basin around a fruit tree.",
+          "width": 1427,
+          "height": 764
+        }
+      },
+      {
+        "id": "art-swale-section",
+        "title": "How a swale holds water on a slope",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. A swale must be set out level on the contour and sized for the slope; on steep or unstable ground get advice before digging.",
+        "art": {
+          "src": "/report-art/swale-section.jpg",
+          "alt": "Cut through a slope: runoff drops into a level ditch, soaks in and spreads under a fruit tree planted on the mound below it.",
+          "width": 1425,
+          "height": 730
+        }
+      }
+    ],
+    "2. Irrigation Plan": [
+      {
+        "id": "art-drip-bed",
+        "title": "Water at the roots, not on the leaves",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Pipe sizes, tank height and watering times still have to be worked out for the real beds.",
+        "art": {
+          "src": "/report-art/drip-bed.jpg",
+          "alt": "A raised tank feeds drip lines laid under mulch along rows of cabbage and spinach.",
+          "width": 1426,
+          "height": 784
+        }
+      }
+    ],
+    "3. Soil Strategy": [
+      {
+        "id": "figure-soil",
+        "title": "Title soil",
+        "note": "Note soil. Source: Source soil",
+        "chart": {
+          "id": "soil",
+          "title": "Title soil",
+          "note": "Note soil. Source: Source soil",
+          "unit": "SOIL",
+          "kind": "figure",
+          "rows": [],
+          "figure": {
+            "id": "soil",
+            "title": "Title soil",
+            "note": "Note soil.",
+            "source": "Source soil",
+            "alt": "Alt soil",
+            "svg": "<svg/>",
+            "width": 640,
+            "height": 300
+          }
+        },
+        "slideHint": "Slide to see more"
+      },
+      {
+        "id": "art-soil-layers",
+        "title": "Look below the surface",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Use the site evidence checklist to add soil observations and laboratory results. This illustration does not describe measured conditions at this site.",
+        "art": {
+          "src": "/report-art/soil-layers.jpg",
+          "alt": "Cut through garden soil: mulch on top, dark living topsoil with roots and earthworms, paler subsoil with stones below, and compost being added by hand.",
+          "width": 1425,
+          "height": 739
+        }
+      },
+      {
+        "id": "art-trench-bed",
+        "title": "Inside a trench bed",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Depth and fill depend on what the household has to hand.",
+        "art": {
+          "src": "/report-art/trench-bed.jpg",
+          "alt": "Cut through a trench bed: branches and bones at the bottom, then dry grass, green material, manure and topsoil, with cabbages growing in mulch on top.",
+          "width": 1358,
+          "height": 786
+        }
+      }
+    ],
+    "4. Year 1 Priorities": [
+      {
+        "id": "figure-timeline",
+        "title": "Title timeline",
+        "note": "Note timeline. Source: Source timeline",
+        "chart": {
+          "id": "timeline",
+          "title": "Title timeline",
+          "note": "Note timeline. Source: Source timeline",
+          "unit": "WEEKS",
+          "kind": "figure",
+          "rows": [],
+          "figure": {
+            "id": "timeline",
+            "title": "Title timeline",
+            "note": "Note timeline.",
+            "source": "Source timeline",
+            "alt": "Alt timeline",
+            "svg": "<svg/>",
+            "width": 640,
+            "height": 300
+          }
+        },
+        "slideHint": "Slide to see more"
+      },
+      {
+        "id": "art-compost-bays",
+        "title": "Compost in three stages",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Any container or heap works; the point is the three stages.",
+        "art": {
+          "src": "/report-art/compost-bays.jpg",
+          "alt": "Three compost bays side by side: fresh material, a heap half broken down, and finished dark compost ready for the beds.",
+          "width": 1426,
+          "height": 702
+        }
+      }
+    ],
+    "5. Crop Rotation": [
+      {
+        "id": "art-crop-rotation",
+        "title": "Move each crop family on, every season",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. The report's own calendar says what is planted where; this shows only the principle.",
+        "art": {
+          "src": "/report-art/crop-rotation.jpg",
+          "alt": "Four beds seen from above — leaf crops, fruiting crops, legumes and root crops — with arrows showing each group moving to the next bed.",
+          "width": 1336,
+          "height": 786
+        }
+      }
+    ],
+    "6. Plant Guilds": [
+      {
+        "id": "art-guild-layers",
+        "title": "A guild, layer by layer",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Species and spacing must be chosen for this site; this is not its planting plan.",
+        "art": {
+          "src": "/report-art/guild-layers.jpg",
+          "alt": "A fruit tree with a climber, a berry shrub, a clumping plant, ground cover and root crops sharing one mulched bed, roots drawn below ground.",
+          "width": 1338,
+          "height": 787
+        }
+      },
+      {
+        "id": "trees",
+        "title": "Trees mentioned in this section",
+        "note": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.",
+        "trees": [
+          {
+            "name": "Mango Tree",
+            "image": "/element-art/tree_mango.png"
+          },
+          {
+            "name": "Wild Plum",
+            "image": "/element-art/tree_wild_plum.png"
+          }
+        ]
+      }
+    ],
+    "7. Wind & Windbreaks": [
+      {
+        "id": "art-windbreak-section",
+        "title": "How a windbreak lifts the wind",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Which side to plant follows the wind directions recorded for the site, not this drawing.",
+        "art": {
+          "src": "/report-art/windbreak-section.jpg",
+          "alt": "Wind meets a belt of tall trees, smaller trees and shrubs, rises over it and comes down well beyond the vegetable beds sheltered behind.",
+          "width": 1426,
+          "height": 558
+        }
+      }
+    ],
+    "8. Sun & Solar": [
+      {
+        "id": "figure-sectors",
+        "title": "Title sectors",
+        "note": "Note sectors. Source: Source sectors",
+        "chart": {
+          "id": "sectors",
+          "title": "Title sectors",
+          "note": "Note sectors. Source: Source sectors",
+          "unit": "SUN · WIND · SLOPE",
+          "kind": "figure",
+          "rows": [],
+          "figure": {
+            "id": "sectors",
+            "title": "Title sectors",
+            "note": "Note sectors.",
+            "source": "Source sectors",
+            "alt": "Alt sectors",
+            "svg": "<svg/>",
+            "width": 640,
+            "height": 300
+          }
+        },
+        "slideHint": "Slide to see more"
+      },
+      {
+        "id": "art-sun-house",
+        "title": "Low winter sun in, high summer sun out",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. The real sun angles for this latitude are in the sun and wind figure.",
+        "art": {
+          "src": "/report-art/sun-house.jpg",
+          "alt": "A house with a wide eave: the high summer sun is stopped by the roof overhang while the low winter sun reaches in under it.",
+          "width": 1426,
+          "height": 643
+        }
+      }
+    ],
+    "9. Zone Design": [
+      {
+        "id": "art-zones",
+        "title": "Zones: what you visit most sits closest",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. The zones mapped for this site are in its own site plan.",
+        "art": {
+          "src": "/report-art/zones.jpg",
+          "alt": "A homestead seen from above: herb and vegetable beds at the door, then chickens and fruit trees, then field crops, grazing and a belt of trees at the edge.",
+          "width": 1426,
+          "height": 739
+        }
+      }
+    ],
+    "10. Animals & Livestock": [
+      {
+        "id": "art-chicken-tractor",
+        "title": "Let the chickens prepare the next bed",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Stock numbers, housing and by-laws still need checking locally.",
+        "art": {
+          "src": "/report-art/chicken-tractor.jpg",
+          "alt": "A movable wire chicken run on wheels stands on one bed while the bed beside it, already cleared and manured, is ready for planting.",
+          "width": 1424,
+          "height": 786
+        }
+      }
+    ],
+    "11. Fire & Hazards": [
+      {
+        "id": "art-firebreak",
+        "title": "Keep a bare or green ring between grass and home",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Break widths and burning rules come from the local fire protection association.",
+        "art": {
+          "src": "/report-art/firebreak.jpg",
+          "alt": "A house and water tank on a green lawn, ringed by a bare cleared strip and a gravel road that separate them from dry grassland.",
+          "width": 1426,
+          "height": 658
+        }
+      }
+    ],
+    "12. Year-Round Food Production": [
+      {
+        "id": "art-food-all-year",
+        "title": "Something to harvest in every season",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. The crops and months for this site are in its planting calendar.",
+        "art": {
+          "src": "/report-art/food-all-year.jpg",
+          "alt": "Four beds side by side: maize, beans, pumpkin and sweet potato under a high summer sun; cabbage, carrots, onions, peas and young seedlings under a low winter sun.",
+          "width": 1428,
+          "height": 585
+        }
+      }
+    ],
+    "13. Economic Opportunities": [
+      {
+        "id": "art-market-table",
+        "title": "From the garden to a table at the gate",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. Prices and demand have to be checked in the local market.",
+        "art": {
+          "src": "/report-art/market-table.jpg",
+          "alt": "A shaded roadside table with crates of spinach, cabbage, tomatoes and pumpkins, seedling trays, eggs and a scale.",
+          "width": 1340,
+          "height": 788
+        }
+      }
+    ],
+    "14. 5-Year Vision": [
+      {
+        "id": "art-five-year-change",
+        "title": "Bare plot to food garden, in stages",
+        "note": "Concept illustration, the same in every report. It is not a picture of this site. How fast the real site changes depends on water, labour and money.",
+        "art": {
+          "src": "/report-art/five-year-change.jpg",
+          "alt": "The same sloping plot three times: bare ground with a house and tank, then young contour beds and saplings, then a full garden with fruit trees.",
+          "width": 1427,
+          "height": 617
+        }
+      }
+    ],
+    "15. Natural Vegetation & Biome": [
+      {
+        "id": "layers",
+        "title": "A living landscape, layer by layer",
+        "note": "Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.",
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"820\" height=\"370\" viewBox=\"0 0 820 370\"><rect width=\"820\" height=\"370\" rx=\"18\" fill=\"#f2f6ef\"/><path d=\"M0 283 Q170 255 480 280V370H0Z\" fill=\"#d9b57b\"/><path d=\"M0 285 Q250 256 480 278\" stroke=\"#7a6639\" stroke-width=\"12\" fill=\"none\"/><path d=\"M258 279V114M258 201L218 158M258 167L301 123\" stroke=\"#876143\" stroke-width=\"14\" stroke-linecap=\"round\"/><g fill=\"#3c6843\"><ellipse cx=\"248\" cy=\"106\" rx=\"89\" ry=\"51\"/><circle cx=\"187\" cy=\"121\" r=\"43\"/><circle cx=\"321\" cy=\"112\" r=\"43\"/><circle cx=\"244\" cy=\"62\" r=\"39\"/></g><g fill=\"#698553\"><ellipse cx=\"143\" cy=\"232\" rx=\"51\" ry=\"32\"/><ellipse cx=\"375\" cy=\"233\" rx=\"51\" ry=\"36\"/></g><g fill=\"#95a65c\"><ellipse cx=\"89\" cy=\"269\" rx=\"35\" ry=\"13\"/><ellipse cx=\"329\" cy=\"270\" rx=\"32\" ry=\"13\"/><ellipse cx=\"423\" cy=\"266\" rx=\"30\" ry=\"15\"/></g><path d=\"M258 283q-21 46-79 61M258 283q28 36 78 48M258 283v65\" stroke=\"#997546\" stroke-width=\"4\" fill=\"none\"/><g stroke=\"#66815f\" stroke-width=\"1.5\" stroke-dasharray=\"4 5\"><path d=\"M350 90H489M421 223H489M459 270H489M341 325H489\"/></g><text x=\"510\" y=\"83\" font-family=\"Arial,sans-serif\" font-size=\"22\" fill=\"#244b34\">Tree canopy</text><text x=\"510\" y=\"108\" font-family=\"Arial,sans-serif\" font-size=\"15\" fill=\"#244b34\">Upper growing layer</text><text x=\"510\" y=\"218\" font-family=\"Arial,sans-serif\" font-size=\"22\" fill=\"#244b34\">Shrubs &amp; understory</text><text x=\"510\" y=\"243\" font-family=\"Arial,sans-serif\" font-size=\"15\" fill=\"#244b34\">Space below the canopy</text><text x=\"510\" y=\"279\" font-family=\"Arial,sans-serif\" font-size=\"19\" fill=\"#244b34\">Ground cover &amp; leaf litter</text><text x=\"510\" y=\"331\" font-family=\"Arial,sans-serif\" font-size=\"20\" fill=\"#244b34\">Roots &amp; living soil</text></svg>"
+      },
+      {
+        "id": "trees",
+        "title": "Trees mentioned in this section",
+        "note": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.",
+        "trees": [
+          {
+            "name": "Mango Tree",
+            "image": "/element-art/tree_mango.png"
+          },
+          {
+            "name": "Wild Plum",
+            "image": "/element-art/tree_wild_plum.png"
+          }
+        ]
+      }
+    ],
+    "16. Unknown recorded heading": []
+  }
+}

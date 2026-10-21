@@ -1,7 +1,9 @@
 import { ELEMENT_CATALOG } from './design-elements';
 import { REPORT_ZU } from './report-localisation';
-import type { ReportChart, ReportVisuals } from './report-visuals';
+import { reportVisualText, type ReportChart, type ReportVisuals } from './report-visuals';
 import { stripLeadingNumber } from './report-structure';
+
+export type ReportGraphicOptions = { headingAliases?: Readonly<Record<string, string>>; bodyLanguage?: string };
 
 export type ChapterGraphic = { id:string; title:string; note:string; slideHint?:string; svg?:string; chart?:ReportChart; trees?:{name:string;image:string}[]; art?:{src:string;alt:string;width:number;height:number} };
 
@@ -37,9 +39,55 @@ export const reportArtSrc=(id:string)=>`/report-art/${id}.jpg`;
 /** Pixel size of each picture file, so the page keeps its place while a picture loads. Margins are trimmed, so the shapes differ. */
 export const REPORT_ART_SIZE:Record<string,[number,number]>={'chicken-tractor':[1424,786],'compost-bays':[1426,702],'crop-rotation':[1336,786],'drip-bed':[1426,784],'firebreak':[1426,658],'five-year-change':[1427,617],'food-all-year':[1428,585],'guild-layers':[1338,787],'market-table':[1340,788],'roof-to-tank':[1427,764],'soil-layers':[1425,739],'sun-house':[1426,643],'swale-section':[1425,730],'trench-bed':[1358,786],'windbreak-section':[1426,558],'zones':[1426,739]};
 const xml=(s:string)=>s.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]!));
-const svg=(body:string)=>`<svg xmlns="http://www.w3.org/2000/svg" width="820" height="370" viewBox="0 0 820 370"><rect width="820" height="370" rx="18" fill="#f2f6ef"/>${body}</svg>`;
+const svg=(body:string,height=370)=>`<svg xmlns="http://www.w3.org/2000/svg" width="820" height="${height}" viewBox="0 0 820 ${height}"><rect width="820" height="${height}" rx="18" fill="#f2f6ef"/>${body}</svg>`;
 const label=(x:number,y:number,text:string,size=18)=>`<text x="${x}" y="${y}" font-family="Arial,sans-serif" font-size="${size}" fill="#244b34">${xml(text)}</text>`;
-const layers=svg(`<path d="M0 283 Q170 255 480 280V370H0Z" fill="#d9b57b"/><path d="M0 285 Q250 256 480 278" stroke="#7a6639" stroke-width="12" fill="none"/><path d="M258 279V114M258 201L218 158M258 167L301 123" stroke="#876143" stroke-width="14" stroke-linecap="round"/><g fill="#3c6843"><ellipse cx="248" cy="106" rx="89" ry="51"/><circle cx="187" cy="121" r="43"/><circle cx="321" cy="112" r="43"/><circle cx="244" cy="62" r="39"/></g><g fill="#698553"><ellipse cx="143" cy="232" rx="51" ry="32"/><ellipse cx="375" cy="233" rx="51" ry="36"/></g><g fill="#95a65c"><ellipse cx="89" cy="269" rx="35" ry="13"/><ellipse cx="329" cy="270" rx="32" ry="13"/><ellipse cx="423" cy="266" rx="30" ry="15"/></g><path d="M258 283q-21 46-79 61M258 283q28 36 78 48M258 283v65" stroke="#997546" stroke-width="4" fill="none"/><g stroke="#66815f" stroke-width="1.5" stroke-dasharray="4 5"><path d="M350 90H489M421 223H489M459 270H489M341 325H489"/></g>${label(510,83,'Tree canopy',22)}${label(510,108,'Upper growing layer',15)}${label(510,218,'Shrubs & understory',22)}${label(510,243,'Space below the canopy',15)}${label(510,279,'Ground cover & leaf litter',19)}${label(510,331,'Roots & living soil',20)}`);
+const LAYER_DRAWING=`<path d="M0 283 Q170 255 480 280V370H0Z" fill="#d9b57b"/><path d="M0 285 Q250 256 480 278" stroke="#7a6639" stroke-width="12" fill="none"/><path d="M258 279V114M258 201L218 158M258 167L301 123" stroke="#876143" stroke-width="14" stroke-linecap="round"/><g fill="#3c6843"><ellipse cx="248" cy="106" rx="89" ry="51"/><circle cx="187" cy="121" r="43"/><circle cx="321" cy="112" r="43"/><circle cx="244" cy="62" r="39"/></g><g fill="#698553"><ellipse cx="143" cy="232" rx="51" ry="32"/><ellipse cx="375" cy="233" rx="51" ry="36"/></g><g fill="#95a65c"><ellipse cx="89" cy="269" rx="35" ry="13"/><ellipse cx="329" cy="270" rx="32" ry="13"/><ellipse cx="423" cy="266" rx="30" ry="15"/></g><path d="M258 283q-21 46-79 61M258 283q28 36 78 48M258 283v65" stroke="#997546" stroke-width="4" fill="none"/>`;
+const layers=svg(`${LAYER_DRAWING}<g stroke="#66815f" stroke-width="1.5" stroke-dasharray="4 5"><path d="M350 90H489M421 223H489M459 270H489M341 325H489"/></g>${label(510,83,'Tree canopy',22)}${label(510,108,'Upper growing layer',15)}${label(510,218,'Shrubs & understory',22)}${label(510,243,'Space below the canopy',15)}${label(510,279,'Ground cover & leaf litter',19)}${label(510,331,'Roots & living soil',20)}`);
+
+const nativeGraphicLanguage=(language:string)=>['zu','st','ts','ve'].includes(language);
+const normaliseGraphicWords=(value:string)=>value.normalize('NFC').trim().replace(/\s+/g,' ').toLocaleLowerCase();
+const escaped=(value:string)=>value.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+
+/** Native labels need their own room; the conceptual tree and its roots stay exactly the same. */
+function layerDiagram(language:string):string {
+  if(!nativeGraphicLanguage(language))return layers;
+  const groups=[
+    {x:350,y:90,title:'Tree canopy',size:22,detail:'Upper growing layer'},
+    {x:421,y:223,title:'Shrubs & understory',size:22,detail:'Space below the canopy'},
+    {x:459,y:270,title:'Ground cover & leaf litter',size:19},
+    {x:341,y:325,title:'Roots & living soil',size:20},
+  ];
+  const wrap=(value:string,size:number)=>{const lines:string[]=[];let line='';for(const word of value.split(/\s+/)){const next=line?`${line} ${word}`:word;if(line&&next.length*size*.58>294){lines.push(line);line=word;}else line=next;}if(line)lines.push(line);return lines;};
+  let y=40,paint='';
+  for(const group of groups){
+    const anchor=y-7;
+    for(const line of wrap(reportVisualText(group.title,language),group.size)){paint+=label(510,y,line,group.size);y+=Math.ceil(group.size*1.3);}
+    if(group.detail)for(const line of wrap(reportVisualText(group.detail,language),15)){paint+=label(510,y,line,15);y+=20;}
+    paint+=`<path d="M${group.x} ${group.y}H480L489 ${anchor}" stroke="#66815f" stroke-width="1.5" stroke-dasharray="4 5" fill="none"/>`;
+    y+=24;
+  }
+  return svg(LAYER_DRAWING+paint,Math.max(370,y-10));
+}
+
+function conceptNote(source:string,language:string):string {
+  if(!nativeGraphicLanguage(language)||!source.startsWith(NOT_THIS_SITE))return source;
+  const tail=source.slice(NOT_THIS_SITE.length).trim();
+  return `${reportVisualText(NOT_THIS_SITE,language)} ${reportVisualText(tail,language)}`;
+}
+
+const TECHNIQUE_SOURCES:Readonly<Record<string,readonly string[]>>={
+  'swale-section':['Swale'],'trench-bed':['Trench bed'],'compost-bays':['Compost'],
+};
+function mentionsTechnique(art:typeof REPORT_ART[number],body:string,language:string):boolean {
+  if(!art.body||art.body.test(body))return true;
+  if(!nativeGraphicLanguage(language))return false;
+  const text=normaliseGraphicWords(body);
+  // A generic mention of water, a ditch or manure must not turn into a recommendation to dig.
+  return (TECHNIQUE_SOURCES[art.id]??[]).some(source=>{
+    const phrase=normaliseGraphicWords(reportVisualText(source,language));
+    return new RegExp(`(?<![\\p{L}\\p{N}])${escaped(phrase)}(?![\\p{L}\\p{N}])`,'iu').test(text);
+  });
+}
 
 /** Only illustrate trees actually named in this section; no inferred species or new recommendations. */
 export function reportTreeIllustrations(text:string) {
@@ -64,28 +112,30 @@ const FIGURE_CHAPTERS:Array<[string,RegExp[]]>=[
   ['soil',[/soil strategy|soil plan|soil management/i,/water, soil and|amanzi, umhlabathi/i]],
   ['timeline',[/year 1 priorities/i,/next actions/i,/implementation|phasing|5-year vision/i]],
 ];
-const englishTitle=(heading:string)=>{const plain=stripLeadingNumber(heading);return Object.entries(REPORT_ZU).find(([,value])=>value===plain)?.[0]??plain;};
+const englishTitle=(heading:string,aliases:Readonly<Record<string,string>>={})=>{const plain=stripLeadingNumber(heading.trim());const key=normaliseGraphicWords(plain);return (Object.hasOwn(aliases,key)?aliases[key]:undefined)??Object.entries(REPORT_ZU).find(([,value])=>value===plain)?.[0]??plain;};
 /** heading → the figure charts that belong under it, for the headings this report really has. */
-export function placeReportFigures(headings:string[],visuals:ReportVisuals):Record<string,ReportChart[]> {
+export function placeReportFigures(headings:string[],visuals:ReportVisuals,options:ReportGraphicOptions={}):Record<string,ReportChart[]> {
   const placed:Record<string,ReportChart[]>={};
   for(const [id,rules] of FIGURE_CHAPTERS){
     const chart=visuals.charts.find(c=>c.kind==='figure'&&c.id===id);
     if(!chart)continue;
     for(const rule of rules){
-      const heading=headings.find(h=>rule.test(englishTitle(h)));
+      const heading=headings.find(h=>rule.test(englishTitle(h,options.headingAliases)));
       if(heading){(placed[heading]??=[]).push(chart);break;}
     }
   }
   return placed;
 }
-export function chapterGraphics(heading:string, body:string, visuals:ReportVisuals, figures:ReportChart[]=[]):ChapterGraphic[] {
-  const title=englishTitle(heading);
+export function chapterGraphics(heading:string, body:string, visuals:ReportVisuals, figures:ReportChart[]=[],options:ReportGraphicOptions={}):ChapterGraphic[] {
+  const title=englishTitle(heading,options.headingAliases);
+  const language=visuals.language??'en';
+  const t=(source:string)=>reportVisualText(source,language);
   // This site's own data first; the general "how it works" picture after it.
   const result:ChapterGraphic[]=figures.map(chart=>({id:`figure-${chart.id}`,title:chart.title,note:chart.note,chart,...(visuals.slideHint?{slideHint:visuals.slideHint}:{})}));
-  if(/vegetation|biome/i.test(title))result.push({id:'layers',title:'A living landscape, layer by layer',note:'Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.',svg:layers});
+  if(/vegetation|biome/i.test(title))result.push({id:'layers',title:t('A living landscape, layer by layer'),note:t('Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.'),svg:layerDiagram(language)});
   // At most two concept pictures a chapter: they explain an idea, they are not the content.
-  for(const art of REPORT_ART.filter(a=>REPORT_ART_READY.has(a.id)&&a.when.test(title)&&(!a.body||a.body.test(body))).slice(0,2)){
-    const graphic:ChapterGraphic={id:`art-${art.id}`,title:art.title,note:art.note,art:{src:reportArtSrc(art.id),alt:art.alt,width:REPORT_ART_SIZE[art.id]?.[0]??1600,height:REPORT_ART_SIZE[art.id]?.[1]??800}};
+  for(const art of REPORT_ART.filter(a=>REPORT_ART_READY.has(a.id)&&a.when.test(title)&&mentionsTechnique(a,body,options.bodyLanguage??language)).slice(0,2)){
+    const graphic:ChapterGraphic={id:`art-${art.id}`,title:t(art.title),note:conceptNote(art.note,language),art:{src:reportArtSrc(art.id),alt:t(art.alt),width:REPORT_ART_SIZE[art.id]?.[0]??1600,height:REPORT_ART_SIZE[art.id]?.[1]??800}};
     let at=art.after?result.findIndex(g=>g.id===`figure-${art.after}`):-1;
     if(at<0){result.push(graphic);continue;}
     while(result[at+1]?.id.startsWith('art-'))at+=1;
@@ -93,17 +143,17 @@ export function chapterGraphics(heading:string, body:string, visuals:ReportVisua
   }
   if(/tree|fruit|vegetation|biome|guild|agroecosystem|full design inventory/i.test(title)) {
     const trees=reportTreeIllustrations(body);
-    if(trees.length)result.push({id:'trees',title:'Trees mentioned in this section',note:'Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.',trees});
+    if(trees.length)result.push({id:'trees',title:t('Trees mentioned in this section'),note:t('Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.'),trees});
   }
   // The overview owns the plain site charts; the crop-plan section owns its calendar. Repeating
   // them under matching chapter headings added pages without new information. A drawn figure is
   // different: it moves to its chapter (placeReportFigures) and leaves the overview.
   return result;
 }
-export function reportChapterGraphics(report:string,visuals:ReportVisuals) {
+export function reportChapterGraphics(report:string,visuals:ReportVisuals,options:ReportGraphicOptions={}) {
   const sections=report.split(/^## /m).slice(1).map(section=>{const [heading,...body]=section.split('\n');return {heading,body:body.join('\n')};});
-  const placed=placeReportFigures(sections.map(s=>s.heading),visuals);
-  return Object.fromEntries(sections.map(({heading,body})=>[heading,chapterGraphics(heading,body,visuals,placed[heading])]));
+  const placed=placeReportFigures(sections.map(s=>s.heading),visuals,options);
+  return Object.fromEntries(sections.map(({heading,body})=>[heading,chapterGraphics(heading,body,visuals,placed[heading],options)]));
 }
 /** Ids of the figure charts that found a chapter, so the overview can leave them out. */
 export const placedFigureIds=(chapters:Record<string,ChapterGraphic[]>)=>new Set(Object.values(chapters).flat().filter(g=>g.chart?.kind==='figure').map(g=>g.chart!.id));

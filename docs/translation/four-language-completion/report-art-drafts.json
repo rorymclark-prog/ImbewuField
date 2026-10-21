@@ -1,0 +1,433 @@
+{
+  "status": "Unreviewed AI drafts. No fluent-speaker review or linguistic approval is claimed.",
+  "sourceSha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
+  "entries": [
+    {
+      "english": "Follow the water through the site",
+      "zu": "Landela amanzi endaweni yonke",
+      "st": "Latela metsi ho pholletsa le sebaka",
+      "ts": "Landzela mati endhawini hinkwayo",
+      "ve": "Tevhelani maḓi kha fhethu hoṱhe"
+    },
+    {
+      "english": "Rain runs off a roof into a gutter, through a first-flush pipe into a tank, and the overflow is led to a mulched basin around a fruit tree.",
+      "zu": "Imvula igeleza ophahleni iye emseleni wophahla, idlule epayipini lokususa amanzi okuqala iye ethangini, bese amanzi achichimayo eholwa aye emgodini ombozwe ngesembozo sezitshalo ozungeze isihlahla sezithelo.",
+      "st": "Pula e theoha marulelong e kena forong ya marulelo, e feta peiping e tlosang metsi a pele e kena tankeng, mme metsi a fetang a lebiswa sekoting se kwahetsweng ka dimela ho pota sefate sa ditholwana.",
+      "ts": "Mpfula yi khuluka elwangwini yi ya eka nsele wa lwangu, yi hundza eka phayiphi yo susa mati yo sungula yi ya ethangini, kutani mati lama talaka ma yisiwa enkoweni lowu funengetiweke hi swimilana ku rhendzela murhi wa mihandzu.",
+      "ve": "Mvula i elela i tshi bva kha ṱhanga ya ya kha mugero wa ṱhanga, ya fhira kha bommbo ḽa u bvisa maḓi a u thoma ya ya kha thannga, maḓi a fhiraho a livhiswa tshidzivhani tsho tibedzwaho nga zwimela u mona na muri wa mitshelo."
+    },
+    {
+      "english": "It does not confirm a tank is installed, a pipe is correctly sized or water is safe to use.",
+      "zu": "Akuqinisekisi ukuthi ithangi lifakiwe, ipayipi lilinganiswe kahle noma amanzi aphephile ukusetshenziswa.",
+      "st": "Ha se netefatso ya hore tanka e kentswe, peipi e na le boholo bo nepahetseng kapa metsi a bolokehile ho sebediswa.",
+      "ts": "A xi tiyisisi leswaku thangi yi nghenisiwile, phayiphi yi ni mpimo lowu faneleke kumbe mati ma hlayisekile ku tirhisiwa.",
+      "ve": "A tshi khwaṱhisedzi uri thannga yo dzheniswa, bommbo ḽi na saizi yo teaho kana maḓi o tsireledzea u shumiswa."
+    },
+    {
+      "english": "How a swale holds water on a slope",
+      "zu": "Indlela umsele wokubamba amanzi ogcina ngayo amanzi endaweni eyehlelayo",
+      "st": "Kamoo foro e tshwarang metsi e bolokang metsi moepeng",
+      "ts": "Ndlela leyi nsele wo khoma mati wu hlayisaka mati endhawini leyi rheleraka",
+      "ve": "Nḓila ine mugero wa u fara maḓi wa a vhulunga kha mutsheṱo"
+    },
+    {
+      "english": "Cut through a slope: runoff drops into a level ditch, soaks in and spreads under a fruit tree planted on the mound below it.",
+      "zu": "Ukusikwa kwendawo eyehlelayo: amanzi agelezayo angena emgodini oqondene nelevela, angene emhlabathini asabalale ngaphansi kwesihlahla sezithelo esitshalwe endundumeni engezansi.",
+      "st": "Ho bontshwa kahare ho moepa: metsi a phallang a kena forong e bataletseng, a monyela mme a namela tlasa sefate sa ditholwana se lenngweng tutudung e ka tlase.",
+      "ts": "Ku kombiwa endzeni ka ndhawu leyi rheleraka: mati lama khulukaka ma nghena enkoveni lowu ringaneke, ma nghena ehansi ma hangalaka ehansi ka murhi wa mihandzu lowu byariweke exirhendzevutaneni xa misava lexi nga ehansi.",
+      "ve": "Hu sumbedzwa ngomu ha mutsheṱo: maḓi a elelaho a dzhena mugeroni wo linganaho, a nwele mavuni a phaḓalala fhasi ha muri wa mitshelo wo ṱavhiwaho tshikwarani tshi re fhasi."
+    },
+    {
+      "english": "A swale must be set out level on the contour and sized for the slope; on steep or unstable ground get advice before digging.",
+      "zu": "Umsele kumele umakwe ngokulingana ku-contour futhi usayizi uhambisane nokwehla; endaweni eyehle kakhulu noma engazinzile thola iseluleko ngaphambi kokumba.",
+      "st": "Foro e tlameha ho tshwauwa e bataletse ho latela contour mme boholo ba yona bo dumellane le moepa; mobung o moepa haholo kapa o sa tsitsang batla keletso pele o tjheka.",
+      "ts": "Nsele wu fanele ku funghiwa wu ringana hi contour ni ku va ni mpimo lowu fambisanaka ni ku rhelela; eka misava leyi rheleraka swinene kumbe leyi nga tiyanga kuma switsundzuxo u nga si cela.",
+      "ve": "Mugero u tea u swaiwa wo lingana kha contour, saizi ya hone i tshimbidzane na mutsheṱo; kha mavu o sendamaho vhukuma kana a sa khwaṱhi ṱoḓani nyeletshedzo phanḓa ha u bwa."
+    },
+    {
+      "english": "Water at the roots, not on the leaves",
+      "zu": "Amanzi ezimpandeni, hhayi emaqabungeni",
+      "st": "Metsi metsong, eseng mahlakung",
+      "ts": "Mati etimitswini, ku nga ri ematlukeni",
+      "ve": "Maḓi kha midzi, hu si kha maṱari"
+    },
+    {
+      "english": "A raised tank feeds drip lines laid under mulch along rows of cabbage and spinach.",
+      "zu": "Ithangi eliphakanyisiwe liphakela amapayipi okuconsa abekwe ngaphansi kwesembozo sezitshalo emigqeni ye-cabbage ne-spinach.",
+      "st": "Tanka e phahamisitsweng e fepela dipeipi tse rothang tse behilweng tlasa sekwahelo sa dimela meleng ya cabbage le spinach.",
+      "ts": "Thangi leyi tlakusiweke yi phamela tiphayiphi to thonisa leti vekiweke ehansi ka xifunengeto xa swimilana emilayeni ya cabbage ni spinach.",
+      "ve": "Thannga yo imiswaho i ṋea bommbo dza u rothodza maḓi dzo vhewaho fhasi ha tshitibedza tsha zwimela kha mitaladzi ya cabbage na spinach."
+    },
+    {
+      "english": "Pipe sizes, tank height and watering times still have to be worked out for the real beds.",
+      "zu": "Osayizi bamapayipi, ukuphakama kwethangi nezikhathi zokunisela kusamele kubalelwe imibhede yangempela.",
+      "st": "Boholo ba dipeipi, bophahamo ba tanka le dinako tsa ho nosetsa di sa ntse di lokela ho balellwa dibethe tsa nnete.",
+      "ts": "Mimpimo ya tiphayiphi, ku tlakuka ka thangi ni minkarhi yo cheleta swa ha fanele ku hlayiwa hi mibedo ya xiviri.",
+      "ve": "Saizi dza bommbo, vhunṱha ha thannga na zwifhinga zwa u sheledza zwi kha ḓi tea u vhalelwa mibethe ya vhukuma."
+    },
+    {
+      "english": "Look below the surface",
+      "zu": "Bheka ngaphansi komhlabathi",
+      "st": "Sheba ka tlasa mobu",
+      "ts": "Languta ehansi ka misava",
+      "ve": "Sedzani fhasi ha mavu"
+    },
+    {
+      "english": "Cut through garden soil: mulch on top, dark living topsoil with roots and earthworms, paler subsoil with stones below, and compost being added by hand.",
+      "zu": "Ukusikwa komhlabathi wengadi: isembozo sezitshalo phezulu, umhlabathi ongaphezulu omnyama ophilayo onezimpande nezikelemu, umhlabathi ongezansi okhanyayo onamatshe, nomquba ofakwa ngesandla.",
+      "st": "Ho bontshwa kahare ho mobu wa serapa: sekwahelo sa dimela hodimo, mobu o ka hodimo o lefifi o phelang o nang le metso le diboko, mobu o ka tlase o kganyang o nang le majwe, le mosuela o kenngwang ka letsoho.",
+      "ts": "Ku kombiwa endzeni ka misava ya ntanga: xifunengeto xa swimilana ehenhla, misava ya le henhla ya ntima leyi hanyaka leyi nga ni timitsu ni swivungu, misava ya le hansi yo vonakala leyi nga ni maribye, ni manyoro lama cheriwaka hi voko.",
+      "ve": "Hu sumbedzwa ngomu ha mavu a ngade: tshitibedza tsha zwimela nṱha, mavu a nṱha matswu a tshilaho a re na midzi na zwivhungu, mavu a fhasi a re na muvhala wo tsukaho na matombo, na manyoro a tshi dzheniswa nga tshanḓa."
+    },
+    {
+      "english": "Use the site evidence checklist to add soil observations and laboratory results. This illustration does not describe measured conditions at this site.",
+      "zu": "Sebenzisa uhlu lobufakazi bendawo ukufaka okubonile ngomhlabathi nemiphumela yelabhorethri. Lo mfanekiso awuchazi izimo ezilinganisiwe kule ndawo.",
+      "st": "Sebedisa lenane la bopaki ba sebaka ho kenya seo o se boneng ka mobu le diphetho tsa laboratori. Setshwantsho sena ha se hlalose maemo a lekantsweng sebakeng sena.",
+      "ts": "Tirhisa nxaxamelo wa vumbhoni bya ndhawu ku engetela leswi u swi voneke hi misava ni mimbuyelo ya laboratori. Xifaniso lexi a xi hlamuseli swiyimo leswi pimiweke eka ndhawu leyi.",
+      "ve": "Shumisani mutevhe wa vhuṱanzi ha fhethu u dzhenisa zwe na vhona nga mavu na mvelelo dza ḽaborathori. Tshifanyiso itshi a tshi ṱalusi vhuimo ho elwaho kha fhethu afha."
+    },
+    {
+      "english": "Inside a trench bed",
+      "zu": "Ngaphakathi kombhede womsele",
+      "st": "Kahare ho bethe ya foro",
+      "ts": "Endzeni ka mbedo wa nkova",
+      "ve": "Ngomu ha mbethe wa mugero"
+    },
+    {
+      "english": "Cut through a trench bed: branches and bones at the bottom, then dry grass, green material, manure and topsoil, with cabbages growing in mulch on top.",
+      "zu": "Ukusikwa kombhede womsele: amagatsha namathambo phansi, kulandele utshani obomile, izinto eziluhlaza, umquba nomhlabathi ongaphezulu, kube ne-cabbages ezikhula esembozweni sezitshalo phezulu.",
+      "st": "Ho bontshwa kahare ho bethe ya foro: makala le masapo tlase, ho latele jwang bo ommeng, dintho tse tala, moitedi le mobu o ka hodimo, ka cabbages tse holang sekwahelong sa dimela hodimo.",
+      "ts": "Ku kombiwa endzeni ka mbedo wa nkova: marhavi ni marhambu ehansi, ku landzela byanyi byo oma, swilo swa rihlaza, manyoro ni misava ya le henhla, ku ri ni cabbages leti kulaka eka xifunengeto xa swimilana ehenhla.",
+      "ve": "Hu sumbedzwa ngomu ha mbethe wa mugero: matavhi na marambo fhasi, ha tevhela hatsi ho omaho, zwithu zwidala, manyoro na mavu a nṱha, hu na cabbages dzi aluwaho kha tshitibedza tsha zwimela nṱha."
+    },
+    {
+      "english": "Depth and fill depend on what the household has to hand.",
+      "zu": "Ukujula nokugcwalisa kuncike kulokho umndeni onakho.",
+      "st": "Botebo le tse tlatswang di itshetlehile ka seo lelapa le nang le sona.",
+      "ts": "Ku enta ni swo tata swi titshege hi leswi ndyangu wu nga na swona.",
+      "ve": "Vhudzivha na zwi ḓadzwaho zwi bva kha zwine muṱa wa vha nazwo."
+    },
+    {
+      "english": "Compost in three stages",
+      "zu": "Umquba ngezigaba ezintathu",
+      "st": "Mosuela ka mekgahlelo e meraro",
+      "ts": "Manyoro hi swiyenge swinharhu",
+      "ve": "Manyoro nga zwipiḓa zwiraru"
+    },
+    {
+      "english": "Three compost bays side by side: fresh material, a heap half broken down, and finished dark compost ready for the beds.",
+      "zu": "Izindawo ezintathu zomquba zilandelana: izinto ezintsha, inqwaba esibole ingxenye, nomquba omnyama osuqediwe olungele imibhede.",
+      "st": "Dibaka tse tharo tsa mosuela di bapile: dintho tse ntjha, qubu e bodileng halofo, le mosuela o lefifi o seng o loketse dibethe.",
+      "ts": "Tindhawu tinharhu ta manyoro ti ri etlhelo ka yin'wana: swilo leswintshwa, nhulu leyi boleke hafu, ni manyoro ya ntima lama heleleke lama lunghekeleke mibedo.",
+      "ve": "Fhethu huraru ha manyoro ho vhewa tsini na hone: zwithu zwiswa, tshiṱhopho tsho sinaho hafu, na manyoro matswu o fhelelaho o lugelaho mibethe."
+    },
+    {
+      "english": "Any container or heap works; the point is the three stages.",
+      "zu": "Noma yisiphi isitsha noma inqwaba kuyasebenza; okubalulekile izigaba ezintathu.",
+      "st": "Setshelo sefe kapa sefe kapa qubu e a sebetsa; taba ke mekgahlelo e meraro.",
+      "ts": "Xibya xin'wana ni xin'wana kumbe nhulu ya tirha; mhaka i swiyenge swinharhu.",
+      "ve": "Tshibogisi tshiṅwe na tshiṅwe kana tshiṱhopho zwi a shuma; tsha ndeme ndi zwipiḓa zwiraru."
+    },
+    {
+      "english": "Move each crop family on, every season",
+      "zu": "Hambisa iqembu ngalinye lezitshalo ngesizini ngayinye",
+      "st": "Suthisa lelapa ka leng la dijalo sehleng ka seng",
+      "ts": "Fambisa ndyangu wun'wana ni wun'wana wa swibyariwa hi nguva yin'wana ni yin'wana",
+      "ve": "Tshimbidzani muṱa muṅwe na muṅwe wa zwiliṅwa kha khalanwaha iṅwe na iṅwe"
+    },
+    {
+      "english": "Four beds seen from above — leaf crops, fruiting crops, legumes and root crops — with arrows showing each group moving to the next bed.",
+      "zu": "Imibhede emine ibonwa phezulu — izitshalo zamaqabunga, ezithelo, ezinemidumba nezezimpande — nemicibisholo ekhombisa iqembu ngalinye lithuthela embhedeni olandelayo.",
+      "st": "Dibethe tse nne di bonwa hodimo — dijalo tsa mahlaku, tsa ditholwana, tsa dinawa le tsa metso — ka metsu e bontshang sehlopha ka seng se fallela betheng e latelang.",
+      "ts": "Mibedo ya mune yi voniwa ehenhla — swibyariwa swa matluka, swa mihandzu, swa tinyawa ni swa timitsu — ku ri ni miseve leyi kombaka ntlawa wun'wana ni wun'wana wu ya eka mbedo lowu landzelaka.",
+      "ve": "Mibethe miṋa i vhonwa nṱha — zwiliṅwa zwa maṱari, zwa mitshelo, zwa ṋawa na zwa midzi — hu na misevhe i sumbedzaho tshigwada tshiṅwe na tshiṅwe tshi tshi ya kha mbethe u tevhelaho."
+    },
+    {
+      "english": "The report's own calendar says what is planted where; this shows only the principle.",
+      "zu": "Ikhalenda yombiko uqobo ichaza okutshalwe kuphi; lokhu kukhombisa umqondo kuphela.",
+      "st": "Khalendara ya tlaleho ka boyona e bolela se lenngweng le moo se leng teng; sena se bontsha molao feela.",
+      "ts": "Khalendara ya xiviko hi yoxe yi vula leswi byariweke ni laha swi nga kona; lexi xi komba ntsena nawu wa kona.",
+      "ve": "Khaḽenda ya muvhigo nga wayo i bula zwine zwa ṱavhiwa na hune zwa ṱavhiwa hone; itshi tshi sumbedza muhumbulo fhedzi."
+    },
+    {
+      "english": "A guild, layer by layer",
+      "zu": "Iqembu lezitshalo ezisizanayo, ungqimba ngongqimba",
+      "st": "Sehlopha sa dimela tse thusanang, lera ka lera",
+      "ts": "Ntlawa wa swimilana leswi pfunanaka, hi maleyara",
+      "ve": "Tshigwada tsha zwimela zwi thusanaho, nga zwipiḓa"
+    },
+    {
+      "english": "A fruit tree with a climber, a berry shrub, a clumping plant, ground cover and root crops sharing one mulched bed, roots drawn below ground.",
+      "zu": "Isihlahla sezithelo nesitshalo esikhuphukayo, isihlahlana samajikijolo, isitshalo esikhula ngesixha, izitshalo ezimboza umhlabathi nezezimpande zabelana ngombhede ombozwe ngesembozo sezitshalo, izimpande zidwetshwe ngaphansi komhlabathi.",
+      "st": "Sefate sa ditholwana se nang le semela se hloang, sehlahlana sa monokotshwai, semela se melang ka sehlopha, sekwahelo sa mobu le dijalo tsa metso di arolelana bethe e kwahetsweng ka dimela, metso e takilwe ka tlase.",
+      "ts": "Murhi wa mihandzu wu ri ni ximilana lexi khandziyaka, xihlahla xa tiberry, ximilana lexi kulaka hi ntlawa, swifunengeto swa misava ni swibyariwa swa timitsu swi avelana mbedo lowu funengetiweke hi swimilana, timitsu ti dirowiwe ehansi.",
+      "ve": "Muri wa mitshelo u na tshimela tshi gonya, tshithukhwana tsha mitshelo miṱuku, tshimela tshi aluwaho nga tshigwada, zwitibedza zwa mavu na zwiliṅwa zwa midzi zwi ṱanganelaho mbethe wo tibedzwaho nga zwimela, midzi yo oliwa fhasi ha mavu."
+    },
+    {
+      "english": "Species and spacing must be chosen for this site; this is not its planting plan.",
+      "zu": "Izinhlobo zezitshalo nezikhala kufanele kukhethelwe le ndawo; lokhu akulona uhlelo lwayo lokutshala.",
+      "st": "Mefuta ya dimela le dikgeo di tlameha ho kgethelwa sebaka sena; sena ha se polane ya sona ya ho lema.",
+      "ts": "Tinxaka ta swimilana ni ku hambana swi fanele ku hlawuleriwa ndhawu leyi; lowu a hi pulani ya yona yo byala.",
+      "ve": "Tshaka dza zwimela na zwikhala zwi tea u khethelwa fhethu afha; iyi a si pulane ya hone ya u ṱavha."
+    },
+    {
+      "english": "How a windbreak lifts the wind",
+      "zu": "Indlela isivikelo somoya esiphakamisa ngayo umoya",
+      "st": "Kamoo sethibela moya se phahamisang moya",
+      "ts": "Ndlela leyi xisirhelelo xa moya xi tlakusaka moya ha yona",
+      "ve": "Nḓila ine tshithivheli tsha muya tsha u imisa ngayo"
+    },
+    {
+      "english": "Wind meets a belt of tall trees, smaller trees and shrubs, rises over it and comes down well beyond the vegetable beds sheltered behind.",
+      "zu": "Umoya uhlangana nomugqa wezihlahla ezinde, ezincane nezihlahlana, ukhuphuke udlule phezulu bese wehla kude ngale kwemibhede yemifino evikelekile engemuva.",
+      "st": "Moya o kopana le lebanta la difate tse telele, tse nyenyane le dihlahlana, o phahama o fete hodima lona ebe o theoha hole ka mora dibethe tsa meroho tse sireleditsweng.",
+      "ts": "Moya wu hlangana ni layini ya mirhi leyo leha, mirhi leyitsongo ni swihlahla, wu tlakuka wu hundza ehenhla kutani wu rhelela ekule endzhaku ka mibedo ya matsavu leyi sirhelelekeke.",
+      "ve": "Muya u ṱangana na mutevhe wa miri milapfu, miṱuku na zwitukhwana, wa gonya wa fhira nṱha wa tsitsa kule nga murahu ha mibethe ya miroho yo tsireledzeaho."
+    },
+    {
+      "english": "Which side to plant follows the wind directions recorded for the site, not this drawing.",
+      "zu": "Uhlangothi lokutshala lulandela imimoya eqoshiwe yendawo, hhayi lo mdwebo.",
+      "st": "Lehlakore la ho lema le latela ditsela tsa moya tse ngotsweng sebakeng sena, eseng setshwantsho sena.",
+      "ts": "Tlhelo ro byala ri landzela matlhelo ya moya lama rhekhodiweke eka ndhawu, ku nga ri xifaniso lexi.",
+      "ve": "Sia ḽa u ṱavha ḽi tevhela masia a muya o rekhodiwaho kha fhethu afha, hu si tshifanyiso itshi."
+    },
+    {
+      "english": "Low winter sun in, high summer sun out",
+      "zu": "Ilanga eliphansi lasebusika malingenise, eliphezulu lasehlobo maliphume",
+      "st": "Letsatsi le tlase la mariha le kene, le hodimo la lehlabula le sale kantle",
+      "ts": "Dyambu ra xixika ra le hansi ri nghene, ra ximumu ra le henhla ri sale ehandle",
+      "ve": "Ḓuvha ḽa vhuria ḽa fhasi ḽi dzhene, ḽa tshilimo ḽa nṱha ḽi sale nnḓa"
+    },
+    {
+      "english": "A house with a wide eave: the high summer sun is stopped by the roof overhang while the low winter sun reaches in under it.",
+      "zu": "Indlu enophahla olweluleke ngaphandle: ilanga eliphezulu lasehlobo livinjwa wuphahla, kanti eliphansi lasebusika lingena ngaphansi kwalo.",
+      "st": "Ntlo e nang le marulelo a atolositsweng ka ntle: letsatsi le hodimo la lehlabula le thijwa ke marulelo, ha letsatsi le tlase la mariha le kena ka tlasa ona.",
+      "ts": "Yindlu leyi nga ni lwangu leri yaka ehandle: dyambu ra ximumu ra le henhla ri siviwa hi lwangu, kasi dyambu ra xixika ra le hansi ri nghena ehansi ka rona.",
+      "ve": "Nnḓu i na ṱhanga yo aṱamaho nnḓa: ḓuvha ḽa tshilimo ḽa nṱha ḽi thivhiwa nga ṱhanga, ngeno ḓuvha ḽa vhuria ḽa fhasi ḽi tshi dzhena nga fhasi hayo."
+    },
+    {
+      "english": "The real sun angles for this latitude are in the sun and wind figure.",
+      "zu": "Ama-engeli elanga angempela ale latitude asesithombeni selanga nomoya.",
+      "st": "Diengele tsa nnete tsa letsatsi ho latitude ena di setshwantshong sa letsatsi le moya.",
+      "ts": "Tiangle ta xiviri ta dyambu ta latitude leyi ti le ka xifaniso xa dyambu ni moya.",
+      "ve": "Dziangele dza vhukuma dza ḓuvha kha latitude iyi dzi kha tshifanyiso tsha ḓuvha na muya."
+    },
+    {
+      "english": "Zones: what you visit most sits closest",
+      "zu": "Izindawo: okuvakashela kakhulu makube seduze",
+      "st": "Dizone: seo o se etelang haholo se be haufi",
+      "ts": "Tizoni: leswi u swi endzelaka ngopfu swi va ekusuhi",
+      "ve": "Zouni: zwine na zwi dalela kanzhi zwi vhe tsini"
+    },
+    {
+      "english": "A homestead seen from above: herb and vegetable beds at the door, then chickens and fruit trees, then field crops, grazing and a belt of trees at the edge.",
+      "zu": "Umuzi obonwa phezulu: imibhede yamakhambi nemifino emnyango, kulandele izinkukhu nezihlahla zezithelo, kulandele izitshalo zasensimini, amadlelo nomugqa wezihlahla emaphethelweni.",
+      "st": "Lelapa le bonwa hodimo: dibethe tsa ditlama le meroho pela monyako, ho latele dikgoho le difate tsa ditholwana, ho latele dijalo tsa masimo, makgulo le lebanta la difate moeding.",
+      "ts": "Muzi wu voniwa ehenhla: mibedo ya mitsembyana ni matsavu enyangweni, ku landzela tihuku ni mirhi ya mihandzu, ku landzela swibyariwa swa le masin'wini, madyelo ni layini ya mirhi emakumu.",
+      "ve": "Muḓi u vhonwa nṱha: mibethe ya zwimela zwi shumiswaho na miroho munangoni, ha tevhela khuhu na miri ya mitshelo, ha tevhela zwiliṅwa zwa masimuni, mafulo na mutevhe wa miri mukanoni."
+    },
+    {
+      "english": "The zones mapped for this site are in its own site plan.",
+      "zu": "Izindawo ezibalazwe zaleli pulazi zikupulani yalo yendawo.",
+      "st": "Dizone tse takilweng mmapeng wa sebaka sena di polaneng ya sona ya sebaka.",
+      "ts": "Tizoni leti mepiweke ta ndhawu leyi ti le ka pulani ya yona.",
+      "ve": "Zouni dzo olelwaho kha mapa wa fhethu afha dzi kha pulane ya hone."
+    },
+    {
+      "english": "Let the chickens prepare the next bed",
+      "zu": "Izinkukhu mazilungise umbhede olandelayo",
+      "st": "Dumella dikgoho ho lokisa bethe e latelang",
+      "ts": "Pfumelela tihuku ku lunghisa mbedo lowu landzelaka",
+      "ve": "Tendelani khuhu dzi lugise mbethe u tevhelaho"
+    },
+    {
+      "english": "A movable wire chicken run on wheels stands on one bed while the bed beside it, already cleared and manured, is ready for planting.",
+      "zu": "Ihhoko lezinkukhu elinyakazayo elinamasondo limi embhedeni owodwa, kanti umbhede oseceleni osususwe izitshalo futhi wafakwa umquba usulungele ukutshalwa.",
+      "st": "Lesaka la dikgoho la terata le tsamaiswang ka mabili le eme betheng e nngwe, ha bethe e pela lona, e seng e hlekilwe le ho tshelwa moitedi, e loketse ho lengwa.",
+      "ts": "Xihoko xa tihuku xa waya lexi fambisiwaka hi mavhilwa xi yime eka mbedo wun'we, kasi mbedo lowu nga ekusuhi, lowu se wu basisiweke wu cheleriwa manyoro, wu lunghekele ku byariwa.",
+      "ve": "Tshitumba tsha khuhu tsha luṱale tshi tshimbidzwaho nga malinga tsho ima kha mbethe muthihi, ngeno mbethe u re tsini, wo no kunakiswaho na u shelwa manyoro, wo lugela u ṱavhiwa."
+    },
+    {
+      "english": "Stock numbers, housing and by-laws still need checking locally.",
+      "zu": "Izibalo zemfuyo, izindawo zokuhlala nemithetho kamasipala kusadinga ukuhlolwa endaweni.",
+      "st": "Dipalo tsa diphoofolo, matlo le melao ya masepala di sa ntse di lokela ho hlahlojwa sebakeng sa heno.",
+      "ts": "Tinhlayo ta swifuwo, tindlu ni milawu ya masipala swa ha fanele ku kamberiwa laha ndhawini.",
+      "ve": "Tshivhalo tsha zwifuwo, vhudzulo na milayo ya masipala zwi kha ḓi tea u ṱolwa henefho."
+    },
+    {
+      "english": "Keep a bare or green ring between grass and home",
+      "zu": "Gcina isiyingi esingenatshani noma esiluhlaza phakathi kotshani nomuzi",
+      "st": "Boloka lesale le se nang jwang kapa le letala pakeng tsa jwang le lehae",
+      "ts": "Hlayisa xirhendzevutana lexi nga riki na byanyi kumbe xa rihlaza phakathi ka byanyi ni kaya",
+      "ve": "Vhulungani tshitendeledzi tshi si na hatsi kana tshidala vhukati ha hatsi na muḓi"
+    },
+    {
+      "english": "A house and water tank on a green lawn, ringed by a bare cleared strip and a gravel road that separate them from dry grassland.",
+      "zu": "Indlu nethangi lamanzi otshanini obuluhlaza, kuzungezwe umucu osusiwe izitshalo nomgwaqo wamatshe okuhlukanisa notshani obomile.",
+      "st": "Ntlo le tanka ya metsi lebaleng le letala, di potapotilwe ke mola o hlekilweng le tsela ya lehlohlojane e di arolang le jwang bo ommeng.",
+      "ts": "Yindlu ni thangi ya mati eka byanyi bya rihlaza, swi rhendzeriwe hi ntambhu ya misava leyi basisiweke ni ndlela ya maribyana leswi swi hambanisaka ni byanyi byo oma.",
+      "ve": "Nnḓu na thannga ya maḓi kha hatsi hudala, zwo moniwa nga mutalo wo kunakiswaho na nḓila ya matombo zwi zwi fhandekanyaho na hatsi ho omaho."
+    },
+    {
+      "english": "Break widths and burning rules come from the local fire protection association.",
+      "zu": "Ububanzi bezindawo zokuvimba umlilo nemithetho yokushisa kuvela enhlanganweni yendawo yokuvikela umlilo.",
+      "st": "Bophara ba dithibela mollo le melao ya ho tjhesa di tswa mokgatlong wa lehae wa tshireletso ya mollo.",
+      "ts": "Vuanami bya tindhawu to sivela ndzilo ni milawu yo hisa swi huma eka nhlangano wa ndhawu wo sirhelela eka ndzilo.",
+      "ve": "Vhuphara ha zwithivheli zwa mulilo na milayo ya u fhisa zwi bva kha dzangano ḽa tsireledzo ya mulilo ḽa henefho."
+    },
+    {
+      "english": "Something to harvest in every season",
+      "zu": "Okuthile ongakuvuna ngesizini ngayinye",
+      "st": "Ho hong ho ka kotulwang sehleng ka seng",
+      "ts": "Xilo xo tshovela hi nguva yin'wana ni yin'wana",
+      "ve": "Tshiṅwe tshithu tsha u kaṋa kha khalanwaha iṅwe na iṅwe"
+    },
+    {
+      "english": "Four beds side by side: maize, beans, pumpkin and sweet potato under a high summer sun; cabbage, carrots, onions, peas and young seedlings under a low winter sun.",
+      "zu": "Imibhede emine ilandelana: maize, beans, pumpkin ne-sweet potato ngaphansi kwelanga eliphezulu lasehlobo; cabbage, carrots, onions, peas nezithombo ezintsha ngaphansi kwelanga eliphansi lasebusika.",
+      "st": "Dibethe tse nne di bapile: maize, beans, pumpkin le sweet potato tlasa letsatsi le hodimo la lehlabula; cabbage, carrots, onions, peas le dithopo tse nyenyane tlasa letsatsi le tlase la mariha.",
+      "ts": "Mibedo ya mune yi ri etlhelo ka yin'wana: maize, beans, pumpkin ni sweet potato ehansi ka dyambu ra ximumu ra le henhla; cabbage, carrots, onions, peas ni swithombana leswintshwa ehansi ka dyambu ra xixika ra le hansi.",
+      "ve": "Mibethe miṋa yo vhewa tsini: maize, beans, pumpkin na sweet potato fhasi ha ḓuvha ḽa tshilimo ḽa nṱha; cabbage, carrots, onions, peas na zwimela zwiṱuku fhasi ha ḓuvha ḽa vhuria ḽa fhasi."
+    },
+    {
+      "english": "The crops and months for this site are in its planting calendar.",
+      "zu": "Izitshalo nezinyanga zaleli pulazi zisekhalendeni lalo lokutshala.",
+      "st": "Dijalo le dikgwedi tsa sebaka sena di khalendareng ya sona ya ho lema.",
+      "ts": "Swibyariwa ni tin'weti ta ndhawu leyi swi le khalendareni ya yona yo byala.",
+      "ve": "Zwiliṅwa na miṅwedzi ya fhethu afha zwi kha khaḽenda ya hone ya u ṱavha."
+    },
+    {
+      "english": "From the garden to a table at the gate",
+      "zu": "Kusuka engadini kuya etafuleni esangweni",
+      "st": "Ho tloha serapeng ho ya tafoleng hekeng",
+      "ts": "Ku suka entangeni ku ya etafuleni enyangweni",
+      "ve": "U bva ngadeni u ya kha ṱafula getheni"
+    },
+    {
+      "english": "A shaded roadside table with crates of spinach, cabbage, tomatoes and pumpkins, seedling trays, eggs and a scale.",
+      "zu": "Itafula elinomthunzi eceleni komgwaqo elinamakhreyithi e-spinach, cabbage, tomatoes nama-pumpkins, amathileyi ezithombo, amaqanda nesikali.",
+      "st": "Tafole e moriting pela tsela e nang le mabokose a spinach, cabbage, tomatoes le pumpkins, diterei tsa sethopo, mahe le sekala.",
+      "ts": "Tafula leyi nga endzhutini etlhelo ka ndlela yi ni mabokisi ya spinach, cabbage, tomatoes ni pumpkins, tithireyi ta swithombana, matandza ni xikalo.",
+      "ve": "Ṱafula i re murunzini thungo ha nḓila i na mabogisi a spinach, cabbage, tomatoes na pumpkins, ṱhireyi dza zwimela zwiṱuku, makumba na tshikalo."
+    },
+    {
+      "english": "Prices and demand have to be checked in the local market.",
+      "zu": "Amanani nesidingo kufanele kuhlolwe emakethe yendawo.",
+      "st": "Ditheko le tlhoko di tlameha ho hlahlojwa mmarakeng wa lehae.",
+      "ts": "Minxavo ni xilaveko swi fanele ku kamberiwa emakete ya ndhawu.",
+      "ve": "Mitengo na ṱhoḓea zwi tea u ṱolwa maketeni wa henefho."
+    },
+    {
+      "english": "Bare plot to food garden, in stages",
+      "zu": "Kusuka esizeni esingenalutho kuye engadini yokudla, ngezigaba",
+      "st": "Ho tloha tshimong e feela ho ya serapeng sa dijo, ka mekgahlelo",
+      "ts": "Ku suka ensin'wini leyi nga riki na swimilana ku ya entangeni wa swakudya, hi swiyenge",
+      "ve": "U bva kha tsimu i si na zwimela u ya kha ngade ya zwiḽiwa, nga zwipiḓa"
+    },
+    {
+      "english": "The same sloping plot three times: bare ground with a house and tank, then young contour beds and saplings, then a full garden with fruit trees.",
+      "zu": "Indawo efanayo eyehlelayo ibonakala kathathu: umhlaba ongenazitshalo onendlu nethangi, kulandele imibhede emisha elandela ama-contour nezihlahla ezincane, kulandele ingadi egcwele enezihlahla zezithelo.",
+      "st": "Sebaka se le seng se moepa se bontshwa hararo: mobu o feela o nang le ntlo le tanka, ho latele dibethe tse ntjha tsa contour le difate tse nyenyane, ho latele serapa se tletseng se nang le difate tsa ditholwana.",
+      "ts": "Ndhawu yin'we leyi rheleraka yi kombiwa kanharhu: misava leyi nga riki na swimilana yi ni yindlu ni thangi, ku landzela mibedo leyintshwa ya contour ni mirhi leyitsongo, ku landzela ntanga lowu taleke wa mirhi ya mihandzu.",
+      "ve": "Fhethu huthihi ho sendamaho hu sumbedzwa luraru: mavu a si na zwimela a na nnḓu na thannga, ha tevhela mibethe miswa ya contour na miri miṱuku, ha tevhela ngade yo ḓalaho i na miri ya mitshelo."
+    },
+    {
+      "english": "How fast the real site changes depends on water, labour and money.",
+      "zu": "Ukushintsha kwendawo yangempela kushesha noma kubambezeleke ngokwamanzi, abasebenzi nemali.",
+      "st": "Lebelo la phetoho ya sebaka sa nnete le itshetlehile ka metsi, basebetsi le tjhelete.",
+      "ts": "Ku hatlisa ka ku cinca ka ndhawu ya xiviri ku titshege hi mati, vatirhi ni mali.",
+      "ve": "U shanduka ha fhethu ha vhukuma nga u ṱavhanya zwi bva kha maḓi, vhashumi na tshelede."
+    },
+    {
+      "english": "A living landscape, layer by layer",
+      "zu": "Indawo ephilayo, ungqimba ngongqimba",
+      "st": "Tikoloho e phelang, lera ka lera",
+      "ts": "Ndhawu leyi hanyaka, hi maleyara",
+      "ve": "Fhethu hu tshilaho, nga zwipiḓa"
+    },
+    {
+      "english": "Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile.",
+      "zu": "Umfanekiso womqondo. Izinhlobo zezitshalo, izikhala nezingqimba ezikhona kumele kuhlolwe kule ndawo; lokhu akusona isithombe sezitshalo ezilinganisiwe zaleli pulazi.",
+      "st": "Setshwantsho sa mohopolo. Mefuta ya dimela, dikgeo le malera a teng di tlameha ho hlahlojwa sebakeng sena; sena ha se setshwantsho sa dimela tse lekantsweng tsa sona.",
+      "ts": "Xifaniso xa mianakanyo. Tinxaka ta swimilana, ku hambana ni maleyara lama nga kona swi fanele ku kamberiwa eka ndhawu leyi; lexi a hi xifaniso xa swimilana swa yona leswi pimiweke.",
+      "ve": "Tshifanyiso tsha muhumbulo. Tshaka dza zwimela, zwikhala na zwipiḓa zwi re hone zwi tea u ṱolwa kha fhethu afha; itshi a si tshifanyiso tsha zwimela zwa hone zwo elwaho."
+    },
+    {
+      "english": "Trees mentioned in this section",
+      "zu": "Izihlahla ezishiwo kulesi sigaba",
+      "st": "Difate tse boletsweng karolong ena",
+      "ts": "Mirhi leyi boxiweke eka xiyenge lexi",
+      "ve": "Miri yo bulwaho kha tshipiḓa itshi"
+    },
+    {
+      "english": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.",
+      "zu": "Imifanekiso yekhathalogi, hhayi izithombe zendawo noma ubufakazi bokuhlonza. Funda iseluleko bese uqinisekisa ukufaneleka kwendawo ngaphambi kokukhetha izitshalo.",
+      "st": "Ditshwantsho tsa khathaloko, ha se dinepe tsa sebaka kapa bopaki ba boitsebiso. Bala keletso mme o netefatse ho tshwaneleha ha lehae pele o kgetha dimela.",
+      "ts": "Swifaniso swa khathalogu, a hi swifaniso swa ndhawu kumbe vumbhoni byo hlawula muxaka. Hlaya switsundzuxo u tiyisisa ku faneleka ka ndhawu u nga si hlawula swimilana.",
+      "ve": "Zwifanyiso zwa khathaḽogu, a si zwinepe zwa fhethu kana vhuṱanzi ha u ṱalusa tshimela. Vhalani nyeletshedzo ni khwaṱhisedze u tea ha henefho phanḓa ha u khetha zwimela."
+    },
+    {
+      "english": "Concept illustration, the same in every report. It is not a picture of this site.",
+      "zu": "Umfanekiso womqondo, ofanayo kuyo yonke imibiko. Akusona isithombe sale ndawo.",
+      "st": "Setshwantsho sa mohopolo, se tshwanang ditlalehong tsohle. Ha se setshwantsho sa sebaka sena.",
+      "ts": "Xifaniso xa mianakanyo, lexi fanaka eka swiviko hinkwato. A hi xifaniso xa ndhawu leyi.",
+      "ve": "Tshifanyiso tsha muhumbulo, tshi fanaho kha mivhigo yoṱhe. A si tshifanyiso tsha fhethu afha."
+    },
+    {
+      "english": "Tree canopy",
+      "zu": "Isiqongo sesihlahla",
+      "st": "Moqhaka wa sefate",
+      "ts": "Matluka ya le henhla ka murhi",
+      "ve": "Ṱhodzi ya muri"
+    },
+    {
+      "english": "Upper growing layer",
+      "zu": "Ungqimba lokukhula oluphezulu",
+      "st": "Lera le hodimo la ho hola",
+      "ts": "Leyara ya le henhla yo kula",
+      "ve": "Tshipiḓa tsha nṱha tsha u aluwa"
+    },
+    {
+      "english": "Shrubs & understory",
+      "zu": "Izihlahlana nezitshalo ezingaphansi",
+      "st": "Dihlahla le dimela tse ka tlase",
+      "ts": "Swihlahla ni swimilana swa le hansi",
+      "ve": "Zwitukhwana na zwimela zwa fhasi"
+    },
+    {
+      "english": "Space below the canopy",
+      "zu": "Isikhala ngaphansi kwesiqongo",
+      "st": "Sebaka tlasa moqhaka wa sefate",
+      "ts": "Ndhawu ehansi ka matluka ya murhi",
+      "ve": "Tshikhala fhasi ha ṱhodzi ya muri"
+    },
+    {
+      "english": "Ground cover & leaf litter",
+      "zu": "Izitshalo ezimboza umhlabathi namahlamvu awileyo",
+      "st": "Sekwahelo sa mobu le mahlaku a weleng",
+      "ts": "Swifunengeto swa misava ni matluka lama weleke",
+      "ve": "Zwitibedza zwa mavu na maṱari o waho"
+    },
+    {
+      "english": "Roots & living soil",
+      "zu": "Izimpande nomhlabathi ophilayo",
+      "st": "Metso le mobu o phelang",
+      "ts": "Timitsu ni misava leyi hanyaka",
+      "ve": "Midzi na mavu a tshilaho"
+    },
+    {
+      "english": "Trench bed",
+      "zu": "Umbhede womsele",
+      "st": "Bethe ya foro",
+      "ts": "Mbedo wa nkova",
+      "ve": "Mbethe wa mugero"
+    },
+    {
+      "english": "Compost",
+      "zu": "Umquba wezitshalo obolisiwe",
+      "st": "Mosuela",
+      "ts": "Manyoro ya swilo leswi boleke",
+      "ve": "Manyoro a zwimela zwo sinaho"
+    }
+  ]
+}

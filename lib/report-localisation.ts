@@ -36,6 +36,39 @@ export function reportUiText(english: string, language: string, lookup: (key: st
   return value === key ? english : value;
 }
 
+/** Exact known source headings, normalised only for case/spacing; unknown prose is not guessed. */
+export function reportHeadingAliases(sources:readonly string[],language:string,lookup:(key:string)=>string):Record<string,string> {
+  return Object.fromEntries(sources.map(source=>[reportUiText(source,language,lookup).normalize('NFC').trim().replace(/\s+/g,' ').toLocaleLowerCase(),source]));
+}
+
+/** Server-side dictionaries are pure data; never import the client language provider into a route. */
+export async function reportHeadingLookup(language:string):Promise<((key:string)=>string)|undefined> {
+  const dict=language==='zu'?(await import('./locales/zu')).default
+    :language==='st'?(await import('./locales/st')).default
+    :language==='ts'?(await import('./locales/ts')).default
+    :language==='ve'?(await import('./locales/ve')).default:null;
+  return dict ? key=>dict[key]??key : undefined;
+}
+
+/** Prompt titles predate the selector's shorter topic labels; keep English output unchanged. */
+export const REPORT_PROMPT_HEADINGS:Readonly<Record<string,string>>={
+  'Water Harvesting':'Water Harvesting Design',
+  'Soil Strategy':'Soil Building Plan',
+  'Planting Calendar':'Seasonal Planting Guidance',
+  'Crop Rotation':'Crop Rotation Plan',
+  'Irrigation Plan':'Irrigation Plan — How Much Water You Need',
+  'Year-Round Food Production':'All-Year-Round Food Production',
+  'Fire & Hazards':'Fire Risk & Other Hazards',
+  'Seasonal Calendar':'Seasonal Action Calendar',
+};
+
+/** Only selected top-level source headings change; numeric facts and narrative templates stay exact. */
+export function reportHeadingPrompt(prompt:string,sources:readonly string[],language:string,lookup?:((key:string)=>string)):string {
+  if(!lookup||language==='en')return prompt;
+  const selected=new Map(sources.map(source=>[Object.hasOwn(REPORT_PROMPT_HEADINGS,source)?REPORT_PROMPT_HEADINGS[source]:source,source]));
+  return prompt.replace(/^## (.+)$/gm,(line,title:string)=>selected.has(title)?`## ${reportUiText(selected.get(title)!,language,lookup)}`:line);
+}
+
 /** The same date and time, with the app's existing native month names. */
 export function reportUiDate(language: string, iso: string, withTime = true): string {
   const date = new Date(iso);

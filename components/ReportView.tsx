@@ -38,7 +38,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
-import { reportUiText, reportUiDate } from '@/lib/report-localisation';
+import { reportUiText, reportUiDate, reportHeadingAliases } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -305,6 +305,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // so its locale chunk may never have been fetched — load it so translate() below has real text
   // to find rather than always falling back to English.
   useEffect(() => { loadLocale(language); }, [language]);
+  const [headingLocale,setHeadingLocale]=useState('en');
+  useEffect(()=>{let live=true;void loadLocale(contentLanguage).then(()=>{if(live)setHeadingLocale(contentLanguage);}).catch(()=>{});return()=>{live=false;};},[contentLanguage]);
+  const graphicOptions=useMemo(()=>({bodyLanguage:contentLanguage,headingAliases:reportHeadingAliases(ALL_SECTIONS,contentLanguage,key=>translate(contentLanguage,key))}),[contentLanguage,headingLocale]);
   // Climate-footnote values (lib/koppen-global.ts, lib/nasa-power.ts) come from a small fixed set
   // of English strings, not from tr()/REPORT_ZU's proper-noun-sized dictionary — translate() falls
   // back to the key itself when neither this language nor English has it, so comparing against
@@ -346,12 +349,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [figureInputs, setFigureInputs] = useState<ReportFigureInputs>({});
   const figures = useMemo(() => siteReportFigures(facts, d, contentLanguage, figureInputs), [facts, d, contentLanguage, figureInputs]);
   const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' }, figures, contentLanguage);
-  const chapterVisuals = reportChapterGraphics(report,visuals);
+  const chapterVisuals = reportChapterGraphics(report,visuals,graphicOptions);
   const placedFigures = placedFigureIds(chapterVisuals);
   // Newly drawn screen information follows the app language; a saved report and its full PDF keep their content language.
   const screenFigures = useMemo(() => uiLanguage === contentLanguage ? figures : siteReportFigures(facts, d, uiLanguage, figureInputs), [facts, d, uiLanguage, contentLanguage, figureInputs, figures]);
   const nativeVisuals = uiLanguage === contentLanguage ? visuals : withReportFigures({ ...siteReportVisuals(facts, d, uiLanguage), title: siteName, subtitle: '' }, screenFigures, uiLanguage);
-  const screenChapterVisuals = uiLanguage === contentLanguage ? chapterVisuals : reportChapterGraphics(report, nativeVisuals);
+  const screenChapterVisuals = uiLanguage === contentLanguage ? chapterVisuals : reportChapterGraphics(report, nativeVisuals,graphicOptions);
   const placedScreenFigures = placedFigureIds(screenChapterVisuals);
   const overviewVisuals = { ...nativeVisuals, charts: nativeVisuals.charts.filter(c => c.kind !== 'calendar' && !placedScreenFigures.has(c.id)) };
   // With chapter pictures switched off for the PDF, a placed figure has no chapter to sit under, so it stays up front.
