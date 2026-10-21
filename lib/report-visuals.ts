@@ -1,3 +1,6 @@
+import { ELEMENTS_BY_ID } from './design-elements';
+import { plantTakesCode } from './plant-codes';
+import { ROUTE_LABELS } from './design-studio-report';
 import { recordsMonthShort } from './records-months.ts';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
@@ -41,7 +44,7 @@ export function siteReportVisuals(facts: ReportSiteFacts | null, location: Locat
   if (valid(location.rainfall.annual)) metrics.push({ label: t('Annual rainfall', 'Imvula yonyaka'), value: `${n(location.rainfall.annual)} mm`, note: t('Climate estimate', 'Isilinganiso sesimo sezulu') });
   if (facts?.water) metrics.push({ label: t('Storage in the plan', 'Amanzi ohlelweni'), value: facts.water.tanksOfUnknownCapacity && !facts.water.statedStorageLitres ? t('Not stated', 'Akubhaliwe') : `${n(facts.water.statedStorageLitres)} L`, note: facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity', 'amathangi awunawo umthamo obhaliwe')}` : t('Stated capacity; check installation', 'Umthamo obhaliwe; hlola ukufakwa') });
   if (location.rainfall.monthly.length === 12 && location.rainfall.monthly.every(valid)) charts.push({ id: 'rainfall', title: t('Rain through the year', 'Imvula phakathi nonyaka'), note: `${location.rainfall.rainfallSource ?? t('Climate estimate', 'Isilinganiso sesimo sezulu')} · ${t('Monthly rainfall, not a weather forecast.', 'Imvula yenyanga, akusona isibikezelo sezulu.')}`, unit: 'mm', kind: 'months', rows: location.rainfall.monthly.map((value, i) => ({ label: recordsMonthShort(language, i + 1), value })) });
-  if (facts?.water?.tanks.length) charts.push({ id: 'water', title: t('Water storage', 'Ukugcina amanzi'), note: `${t('Capacity is not water currently available.', 'Umthamo awusho amanzi akhona manje.')} ${facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity.', 'amathangi awunawo umthamo obhaliwe.')}` : ''}`, kind: 'bars', unit: 'L', rows: facts.water.tanks.filter(r => r.statedLitres !== null).map(r => ({ label: `${r.name} ×${r.count}`, value: r.statedLitres! * r.count, detail: reportVisualText(r.status, language) })) });
+  if (facts?.water?.tanks.length) charts.push({ id: 'water', title: t('Water storage', 'Ukugcina amanzi'), note: `${t('Capacity is not water currently available.', 'Umthamo awusho amanzi akhona manje.')} ${facts.water.tanksOfUnknownCapacity ? `${facts.water.tanksOfUnknownCapacity} ${t('tanks have no stated capacity.', 'amathangi awunawo umthamo obhaliwe.')}` : ''}`, kind: 'bars', unit: 'L', rows: facts.water.tanks.filter(r => r.statedLitres !== null).map(r => ({ label: `${reportElementDisplayName(r.name,r.defId,language)} ×${r.count}`, value: r.statedLitres! * r.count, detail: reportVisualText(r.status, language) })) });
   const cropRows = facts?.crop?.crops ?? [];
   // Chunk rather than truncate: the last crop deserves the same visibility as the first.
   for (let i = 0; i < cropRows.length; i += 7) charts.push({ id: `calendar-${i}`, title: t('Your sowing calendar', 'Ikhalenda lokuhlwanyela'), note: t('● Saved sowing month · ○ First season only. Sowing dates are not harvest dates. Month labels follow the saved plan.', '● Inyanga yokuhlwanyela · ○ Isizini yokuqala kuphela. Izinsuku zokuhlwanyela akuzona ezokuvuna. Amagama ezinyanga alandela uhlelo olugciniwe.'), unit: '', kind: 'calendar', rows: cropRows.slice(i, i + 7).map(c => ({ label: c.name, value: 0, detail: c.bedLabels.join(', '), months: c.sowMonths.map(m => REPORT_MONTHS.indexOf(m)).filter(m => m >= 0), once: c.firstSeasonOnlyMonths.map(m => REPORT_MONTHS.indexOf(m)).filter(m => m >= 0) })) });
@@ -3008,8 +3011,32 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "st": "Mosuela",
     "ts": "Manyoro ya swilo leswi boleke",
     "ve": "Manyoro a zwimela zwo sinaho"
+  },
+  {
+    "english": "Windbreak row",
+    "zu": "Umugqa wokuvikela umoya",
+    "st": "Mola wa ho thibela moya",
+    "ts": "Layini yo sivela moya",
+    "ve": "Muduba wa u thivhela muya"
   }
 ];
+
+/** Only an exact default name on its recorded catalogue ID may change presentation language.
+ * Older reports have no ID; guessing from their names would rename the farmer's own words.
+ * Plant identities remain canonical even where a draft dictionary happens to contain the name. */
+export function reportElementDisplayName(name:string,defId:string|undefined,language:string):string {
+  const def=defId&&Object.hasOwn(ELEMENTS_BY_ID,defId)?ELEMENTS_BY_ID[defId]:undefined;
+  if(!def||name!==def.name||def.category==='growing'||def.botanical||plantTakesCode(def.id))return name;
+  return reportVisualText(def.name,language);
+}
+
+/** The header has always shortened the route's parenthetical explanation. Keep that exact English
+ * behaviour, and translate only the summary producer's own label on its recorded route kind. */
+export function reportRouteShortName(label:string,kind:string|undefined,language:string):string {
+  const short=label.replace(/ \(.*\)$/, '');
+  const source=kind&&Object.hasOwn(ROUTE_LABELS,kind)?ROUTE_LABELS[kind as keyof typeof ROUTE_LABELS]:undefined;
+  return source===label?reportVisualText(short,language):short;
+}
 
 const visualCopy = new Map(REPORT_VISUAL_COPY.map(row => [row.english, row]));
 export function reportVisualText(english: string, language: string, values: Record<string, string | number> = {}, legacyZulu?: string): string {
