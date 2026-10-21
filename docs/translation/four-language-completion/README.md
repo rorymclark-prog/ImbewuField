@@ -427,6 +427,60 @@ front/back matter for Sesotho/Xitsonga/Tshivenda, full-report and crop-plan PDFs
 chrome, wider workflows and learning/media still need work. This changes the picture.
 `PLAN_VERSION` stays unchanged. The overall four-language goal remains active.
 
+## Cover, contents and honest section-state batch
+
+`codex/four-language-report-matter` is stacked on concept illustrations (#1037). It adds 37
+source pairs to `REPORT_DOCUMENT_COPY` in the existing localisation module. The review packet is
+`report-document-drafts.json`. These are **unreviewed AI drafts**, not fluent-speaker approval.
+The native cover builder keeps the original document reference, source coordinates and supplied
+source flags. It translates document-control fields, issue depth/counts, revision, provenance,
+certification status and the existing honesty statement. New native covers also state explicitly
+that their translation has not had fluent-speaker review. Only sources actually supplied can be
+named; missing map/survey/crop-plan data is never claimed. Native issue dates use existing month
+wording; English and other offered languages keep their earlier date path.
+
+The API uses the new cover for Sesotho, Xitsonga and Tshivenda. Its earlier abbreviated isiZulu
+cover/glance/closing blocks are retained. Contents headings, standalone-figure labels, figure-list
+headings and the uncaptained-figure message now follow all four languages. Original alternative
+text, image URLs, source headings and fenced/inline images remain exact. Front-matter recognition
+uses the same native labels, preserving body numbers. Native contents pages are recognised during
+legacy export too, so exporting does not add a second English contents block. The optional
+language-aware legacy builder is available; full-PDF callers still need their later language/font
+pass. A saved document's existing architecture is returned byte-for-byte.
+
+Truncated, failed and listed-invasive-rejected section states also have native wording in all
+four targets. The API still retries at most once, drops the unsafe draft and records an honest
+placeholder. Provider output is mocked in checks; no paid call or species change was made.
+
+Browser inspection found an existing reader defect: a latitude such as `28.6280°` was interpreted
+as list item `28.` and lost the leading decimal value in its paragraph. The reader now requires
+whitespace after a numbered-list dot. Coordinates and decimal areas stay intact, ordinary numbered
+actions keep their markers, and a no-space `1.Text` remains text. The check runs the actual reader
+function and deliberately restores the old rule to confirm it detects this failure. The rendered
+native covers were inspected again after the repair.
+
+Typecheck, 164 focused Node 24 checks, notes gate and whitespace checks pass. The original English
+cover/provenance, assembled-document and legacy-export fixtures stay exact. Checks cover every
+combination of supplied map/survey/crop-plan data, anonymous/named sites, source placeholders and
+figures, reference identity, front-matter numbering, image captions, fenced/inline images, source
+audits and idempotence. The historical provenance test searched literal English table-label bytes;
+it now recognises the translated label while still requiring the actual supplied-source producer.
+The new runtime checks exercise all source combinations in every target. No assertion was deleted.
+
+Evidence in `evidence/report-document/` contains 32 inspected screenshots/contact sheets and 16
+actual-viewer cases: successful, truncated, rejected and failed mocked API output in each target.
+Native cover/contents/status wording, the three new document-control tables and fixed decimal
+coordinates were inspected at phone/desktop sizes. No document horizontal overflow was measured;
+saved report bytes stay unchanged. Temporary saved-report storage was restored and the real paid
+route remained blocked. The model-body placeholder is intentionally English and is not evidence
+of generated-body translation. No PDF was produced in this batch.
+
+The stable climate checkout's full registered Node 24 run and branch CI are still pending. This
+batch does not finish report translation: the source measurement table and non-isiZulu closing
+sections (costs, monitoring, risks and assurance), full-report/crop-plan PDFs and wider workflows,
+learning and media still remain. The overall goal stays active. This changes the picture;
+`PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: 'de65fbe6', changes: [
+    'New reports have draft cover and document-control labels in your language.',
+    'Contents, figure captions and incomplete-report notices use four draft languages.',
+  ], tour: [{ title: 'Read a new report', where: 'Menu → Site reports', href: '/reports',
+    detail: 'New reports use translated cover and contents labels. Previously saved report text keeps its original wording.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Choose a language in Settings. Native covers keep the document reference, coordinates and supplied sources.',
+  }] },
   { when: '21 October 2026', sha: '09b280ef', changes: [
     'Concept pictures have draft captions and descriptions in four languages.',
     'Translated report headings keep their matching drawings and concept pictures.',

@@ -1,3 +1,5 @@
+import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from './report-localisation';
+
 /**
  * report-cover.ts — the cover page and document-control block.
  *
@@ -50,24 +52,25 @@ export interface ReportCoverInput {
 }
 
 /** "a", "a and b", "a, b and c" — the list as it would be read aloud. */
-function readAsList(items: string[]): string {
+function readAsList(items: string[], language = 'en'): string {
   if (items.length <= 1) return items[0] ?? '';
-  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+  return `${items.slice(0, -1).join(', ')} ${reportDocumentText('and',language)} ${items[items.length - 1]}`;
 }
 
 /** The provenance line, naming only what was actually supplied. */
-export function preparedFromLabel(sources: ReportCoverInput['sources']): string {
+export function preparedFromLabel(sources: ReportCoverInput['sources'], language = 'en'): string {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   const named = [
-    sources.map ? 'map' : null,
-    sources.survey ? 'survey' : null,
-    sources.cropPlan ? 'crop plan' : null,
+    sources.map ? t('map') : null,
+    sources.survey ? t('survey') : null,
+    sources.cropPlan ? t('crop plan') : null,
   ].filter((s): s is string => s !== null);
 
   // Nothing of the farmer's own reached this report — it was built from the site's location and
   // the public environmental data alone. Saying so is the honest version, and it is also the more
   // useful one: a reader who sees this knows what to go and collect.
-  if (named.length === 0) return 'ImbewuField, from this site\'s location and public environmental data';
-  return `ImbewuField, from the farmer's own ${readAsList(named)}`;
+  if (named.length === 0) return t("ImbewuField, from this site's location and public environmental data");
+  return t("ImbewuField, from the farmer's own {sources}",{sources:readAsList(named,language)});
 }
 
 /** A stable, human-checkable reference: IF-SR-<yyyymmdd>-<initials of the site>. */
@@ -92,9 +95,10 @@ export function documentReference(input: Pick<ReportCoverInput, 'farmName' | 'is
  * `# ` is used once in the whole document, here. Everything the generator writes starts at `## `,
  * so the heading hierarchy has exactly one root.
  */
-export function buildCoverMarkdown(input: ReportCoverInput): string {
+export function buildCoverMarkdown(input: ReportCoverInput, language = 'en'): string {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   const out: string[] = [];
-  const title = input.farmName ? `Permaculture Site Report — ${input.farmName}` : 'Permaculture Site Report';
+  const title = input.farmName ? t('Permaculture Site Report — {name}',{name:input.farmName}) : t('Permaculture Site Report');
 
   out.push(`# ${title}`);
   out.push('');
@@ -102,24 +106,25 @@ export function buildCoverMarkdown(input: ReportCoverInput): string {
   if (place) { out.push(place); out.push(''); }
   out.push(`${Math.abs(input.lat).toFixed(4)}° ${input.lat < 0 ? 'S' : 'N'}, ${Math.abs(input.lon).toFixed(4)}° ${input.lon < 0 ? 'W' : 'E'}`);
   out.push('');
-  out.push(`Issued ${input.dateLabel}`);
+  out.push(t('Issued {date}',{date:input.dateLabel}));
   out.push('');
 
-  out.push('## Document control');
+  out.push(`## ${t('Document control')}`);
   out.push('');
   // Named columns rather than a blank header row: an empty `| | |` head renders as an empty
   // thead in the in-app reader and gives the PDF exporter nothing to size its columns against.
-  out.push('| Field | Detail |');
+  out.push(`| ${t('Field')} | ${t('Detail')} |`);
   out.push('|-------|--------|');
-  out.push(`| Reference | ${documentReference(input)} |`);
-  out.push(`| Site | ${input.farmName ?? 'Not named by the farmer'} |`);
-  out.push(`| Issued | ${input.dateLabel} |`);
-  out.push(`| Revision | 1 — first issue |`);
-  out.push(`| Basis of issue | ${input.lengthLabel} report, ${input.sectionCount} section${input.sectionCount === 1 ? '' : 's'} requested |`);
-  out.push(`| Prepared by | ${preparedFromLabel(input.sources)} |`);
-  out.push('| Status | For the farmer\'s use and discussion. Not a professional engineering, agronomic or financial certification. |');
+  out.push(`| ${t('Reference')} | ${documentReference(input)} |`);
+  out.push(`| ${t('Site')} | ${input.farmName ?? t('Not named by the farmer')} |`);
+  out.push(`| ${t('Issued')} | ${input.dateLabel} |`);
+  out.push(`| ${t('Revision')} | ${t('1 — first issue')} |`);
+  out.push(`| ${t('Basis of issue')} | ${t(input.sectionCount===1?'{length} report, {count} section requested':'{length} report, {count} sections requested',{length:t(input.lengthLabel),count:input.sectionCount})} |`);
+  out.push(`| ${t('Prepared by')} | ${preparedFromLabel(input.sources,language)} |`);
+  out.push(`| ${t('Status')} | ${t("For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification.")} |`);
   out.push('');
-  out.push('This report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.');
+  out.push(t("This report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap."));
+  if(REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number])){out.push('');out.push(t('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.'));}
   out.push('');
 
   return out.join('\n');

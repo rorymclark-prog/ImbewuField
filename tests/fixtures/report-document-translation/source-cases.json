@@ -1,0 +1,246 @@
+{
+  "sourceSha": "de65fbe6819eb46584318c478a6538c8fc11408e",
+  "covers": [
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": false,
+          "survey": false,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from this site's location and public environmental data |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from this site's location and public environmental data"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": true,
+          "survey": false,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own map |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own map"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": false,
+          "survey": true,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own survey |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own survey"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": true,
+          "survey": true,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own map and survey |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own map and survey"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": false,
+          "survey": false,
+          "cropPlan": true
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own crop plan |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own crop plan"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": true,
+          "survey": false,
+          "cropPlan": true
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own map and crop plan |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own map and crop plan"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": false,
+          "survey": true,
+          "cropPlan": true
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own survey and crop plan |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own survey and crop plan"
+    },
+    {
+      "input": {
+        "farmName": "Recorded farm | Nḓila",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 14,
+        "lengthLabel": "Comprehensive",
+        "sources": {
+          "map": true,
+          "survey": true,
+          "cropPlan": true
+        }
+      },
+      "expected": "# Permaculture Site Report — Recorded farm | Nḓila\n\nRecorded biome · Recorded district\n\n27.7262° S, 31.9630° E\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-RFN |\n| Site | Recorded farm | Nḓila |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Comprehensive report, 14 sections requested |\n| Prepared by | ImbewuField, from the farmer's own map, survey and crop plan |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from the farmer's own map, survey and crop plan"
+    },
+    {
+      "input": {
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": 27,
+        "lon": -31,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 1,
+        "lengthLabel": "Standard",
+        "sources": {
+          "map": false,
+          "survey": false,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report\n\nRecorded biome · Recorded district\n\n27.0000° N, 31.0000° W\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-SITE |\n| Site | Not named by the farmer |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Standard report, 1 section requested |\n| Prepared by | ImbewuField, from this site's location and public environmental data |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from this site's location and public environmental data"
+    },
+    {
+      "input": {
+        "farmName": "",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": 27,
+        "lon": -31,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 1,
+        "lengthLabel": "Standard",
+        "sources": {
+          "map": false,
+          "survey": false,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report\n\nRecorded biome · Recorded district\n\n27.0000° N, 31.0000° W\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-SITE |\n| Site |  |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Standard report, 1 section requested |\n| Prepared by | ImbewuField, from this site's location and public environmental data |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from this site's location and public environmental data"
+    },
+    {
+      "input": {
+        "farmName": "Farmer \"Original\" & site",
+        "bioregion": "Recorded biome",
+        "adminLabel": "Recorded district",
+        "lat": 27,
+        "lon": -31,
+        "dateLabel": "21 October 2026",
+        "isoDate": "2026-10-21",
+        "sectionCount": 1,
+        "lengthLabel": "Standard",
+        "sources": {
+          "map": false,
+          "survey": false,
+          "cropPlan": false
+        }
+      },
+      "expected": "# Permaculture Site Report — Farmer \"Original\" & site\n\nRecorded biome · Recorded district\n\n27.0000° N, 31.0000° W\n\nIssued 21 October 2026\n\n## Document control\n\n| Field | Detail |\n|-------|--------|\n| Reference | IF-SR-20261021-FOS |\n| Site | Farmer \"Original\" & site |\n| Issued | 21 October 2026 |\n| Revision | 1 — first issue |\n| Basis of issue | Standard report, 1 section requested |\n| Prepared by | ImbewuField, from this site's location and public environmental data |\n| Status | For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification. |\n\nThis report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.\n",
+      "prepared": "ImbewuField, from this site's location and public environmental data"
+    }
+  ],
+  "assembly": {
+    "input": {
+      "cover": "# Original title\n\n## Document control\n\nRecord",
+      "glance": "## Site at a Glance\n\nOriginal source 25 m².",
+      "body": [
+        "## 7. Original chapter\n\n![Original image](/original.png)\n\n![](/empty.png)\n\nInline ![Inline](/inline.png).\n\n```\n![In code](/code.png)\n```",
+        "## Second original chapter\n\nSaved body."
+      ],
+      "backMatter": [
+        "## Original closing section\n\nDo not rewrite."
+      ]
+    },
+    "expected": {
+      "markdown": "# Original title\n\n## Document control\n\nRecord\n\n## Contents\n\n**1. Original chapter**  \n**2. Second original chapter**  \n**3. Original closing section**\n\n## Figures\n\nFigure 1 — Original image  \nFigure 2 — Figure not captioned\n\n## Site at a Glance\n\nOriginal source 25 m².\n\n## 1. Original chapter\n\n![Original image](/original.png)\n\n_Figure 1 — Original image_\n\n![](/empty.png)\n\n_Figure 2 — Figure not captioned_\n\nInline ![Inline](/inline.png).\n\n```\n![In code](/code.png)\n```\n\n## 2. Second original chapter\n\nSaved body.\n\n## 3. Original closing section\n\nDo not rewrite.\n",
+      "sectionCount": 3,
+      "figureCount": 2
+    }
+  },
+  "legacy": {
+    "input": "# Original title\n\nOriginal introduction.\n\n## Original chapter\n\n![Original image](/original.png)",
+    "expected": "# Original title\n\nOriginal introduction.\n\n## Contents\n\n**1. Original chapter**  \n\n\n## Figures\n\nFigure 1 — Original image  \n\n\n## 1. Original chapter\n\n![Original image](/original.png)\n\n_Figure 1 — Original image_"
+  }
+}
