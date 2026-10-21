@@ -786,11 +786,67 @@ labels. This also improves English citations. Plain paragraphs and saved report 
 Final measured scenes have no document, native-paragraph or citation overflow. Temporary saved
 report/language storage was restored and real paid generation remained blocked.
 
-The separate complete 543-file Node 24 run at `1340afff` remains live, latest output `ok 5288`,
-and excludes this and the two preceding batches. Current full CI is pending; no merges. No PDF was
+The separate complete 543-file Node 24 run at `1340afff` subsequently finished: 5,418 passed,
+one failed, and one pre-existing TODO. The failure was eleven isiZulu pictographic control labels
+in the unchanged no-emoji audit; batch 18 below repairs that issue. That older run excludes this
+and the two preceding batches. Current full CI is pending; no merges. No PDF was
 created or modified in this batch. Remaining purchasing research, exports, wider workflows,
 lessons/media and fluent review remain under the active goal. This changes the picture;
 `PLAN_VERSION` remains unchanged.
+
+## Drawing controls and the full-suite icon failure — draft batch 18
+
+`codex/four-language-control-icons` is stacked on the buying-profile branch (#1044).
+`control-icon-drafts.json` records 50 exact sources, four native values and all original
+values/source lines at `59a115b1`. These are unreviewed AI drafts. The controls previously
+inherited English in Sesotho, Xitsonga and Tshivenda; several isiZulu values combined a glyph,
+native wording and an English suffix. The packet preserves the original wording for review.
+
+Palette actions now use fixed Lucide icons with native accessible names/tooltips. Canvas Cancel,
+Point, Finish and preview confirmations render their icons separately from the translated words.
+Operation callbacks, availability checks, confirmation gates and saved/draft geometry do not
+change. English wording changes only by removing the old glyphs. A line hint carries its native
+wording and a separate English source. The unused legacy Main label also loses its glyph; no
+active Home badge is claimed.
+
+Sector headings, field sentences, compass words and the advance action follow all four targets.
+The draft notice sits outside the card; the English source remains visible beside each native
+sentence. The wind sentence retains the coordinate climate-grid mean and on-site confirmation
+qualification. Model-owned provenance and seasonal text can still be English. This is not a
+complete Design Studio translation claim.
+
+A lexical check against the Department of Arts and Culture’s 2013
+[Multilingual Mathematics Dictionary](https://ulspace.ul.ac.za/server/api/core/bitstreams/a1a05d26-ee2d-49d5-9be8-4a33ebd145e8/content)
+identified an opposite-meaning Tshivenda verb: `fhambanyisa` means differentiate (printed p.43),
+while `fananyisa` means match (p.80). The two Snap labels and six previous buying-profile clauses
+now use the matching verb. The product packet records each exact before/after and reason. The
+geometric point labels also follow the dictionary’s point entry (p.105). These checks do not
+constitute fluent-speaker approval of the sentences.
+
+Typecheck, 203 tests across 32 registered files, release-note checks and whitespace checks pass.
+The original no-emoji test stays unchanged and now passes. Historical Study guards reverse only
+the complete exact declared UI layer, retaining the original hashes. Deliberately altered controls
+and learning fields still fail those guards. Actual caller JSX tests check each icon, accessible
+name, callback, confirmation gate, one-pass placeholder, geometry preservation, separate English
+source, source qualifiers and draft status.
+
+The visual check found a real phone problem: the absolutely centred action group shrank to about
+half the canvas width, forcing long labels into narrow columns and shrinking an SVG. Its width now
+uses the available bounded content width; icons cannot shrink. Another check found keyboard focus
+could leave part of an isiZulu tool behind the scroll boundary. The strip now reveals its focused
+action fully. Neither adjustment changes the farmer’s measurements.
+
+Evidence and limitations are in `evidence/control-icons/`. The browser rendered 106 isolated
+actual-caller states at 390 × 844 and 1440 × 1000 with the app’s real fonts. All four phone action
+and sector cards and representative desktop cards were visually inspected. Measurements cover
+all states; no document overflow or clipped text/buttons remained. Keyboard checks cover the eight
+palette actions in all four targets. The fixtures use actual source JSX, model code and the actual
+focus handler, with isolated UI state and mocked preview summaries. They do not establish that the
+full map editor, personal saved records or paid generation have been exercised.
+
+This changes the picture. `PLAN_VERSION` is unchanged. The whole-app goal remains active:
+purchasing research, other workflows, exports, Study/media and fluent review remain unfinished.
+No PDF was created or modified in this batch.
 
 ## Remaining work
 

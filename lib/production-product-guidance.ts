@@ -193,7 +193,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Khetha uhlobo oluhambisana nesimo sezulu sendawo encane; gwema isithwathwa esinzima nomhlabathi ongakhiphi amanzi kahle.",
     "st": "Nyalanya mofuta le boemo ba lehodimo ba sebaka se senyane; qoba serame se matla se bakang leqhwa le mobu o sa ntsheng metsi hantle.",
     "ts": "Hlawula muxaka lowu fambisanaka ni maxelo ya ndhawu yoleyo; papalata gwitsi lerikulu ni misava leyi nga humesiki mati kahle.",
-    "ve": "Fhambanyisani lushaka lwa tshimela u ya nga kilima ya fhethu honoho; iledzani ṅwando muhulwane na mavu a sa bvumisaho maḓi zwavhuḓi."
+    "ve": "Fananyisani lushaka lwa tshimela u ya nga kilima ya fhethu honoho; iledzani ṅwando muhulwane na mavu a sa bvumisaho maḓi zwavhuḓi."
   },
   {
     "english": "Collect fallen nuts frequently, dehusk promptly and dry with clean ventilation. Keep poultry and manure away from harvesting nuts.",
@@ -256,7 +256,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Hlanganisa ihlobo elifudumele nobusika obupholile obungenasithwathwa ukuze kuqhakaze; vikela emoyeni futhi unisele izitshalo ezisencane.",
     "st": "Nyalanya lehlabula le futhumetseng le mariha a phodileng a se nang leqhwa bakeng sa ho thunya; sireletsa moyeng mme o nosetse dimela tse nyane.",
     "ts": "Fananisa ximumu xo kufumela ni xixika xo titimela lexi nga riki na gwitsi leswaku ku ta huma swiluva; sirhelela eka moya naswona u cheleta swimilana leswitsongo.",
-    "ve": "Fhambanyisani tshilimo tshi dudelaho na vhuriha vhu rotholelaho vhu si na ṅwando uri hu vhe na maluvha; tsireledzani kha muya ni sheledze zwimela zwiṱuku."
+    "ve": "Fananyisani tshilimo tshi dudelaho na vhuriha vhu rotholelaho vhu si na ṅwando uri hu vhe na maluvha; tsireledzani kha muya ni sheledze zwimela zwiṱuku."
   },
   {
     "english": "KZN candidates: earlier Fay Zee Siu (mid-November–mid-December), middle Mauritius (mid-November–early-January), later Wai Chee (end-January–end-February), using SALGA/ARC cultivar references. Confirm local dates, nursery stock and flowering conditions.",
@@ -284,7 +284,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Khetha uhlobo lwesivini oluhambisana nesifunda sokukhiqiza, amanzi nohlelo lokusekela. Isikhathi sikazwelonke sokuhlinzeka sihlanganisa izifunda eziningana.",
     "st": "Nyalanya mofuta wa serapa sa morara le sebaka sa tlhahiso, metsi le tsamaiso ya tshehetso. Nako ya phepelo ya naha e kopanya dibaka tse mmalwa.",
     "ts": "Fananisa muxaka wa nsimu ya madiriva ni ndhawu ya vuhumelerisi, mati ni sisiteme yo seketela. Nguva ya mphakelo wa tiko yi hlanganisa tindhawu to tala.",
-    "ve": "Fhambanyisani lushaka lwa tsimu ya nḓirivhe na dzingu ḽa u bveledza, maḓi na maitele a u tikedza. Tshifhinga tsha mphakelo wa lushaka tshi ṱanganya madzingu manzhi."
+    "ve": "Fananyisani lushaka lwa tsimu ya nḓirivhe na dzingu ḽa u bveledza, maḓi na maitele a u tikedza. Tshifhinga tsha mphakelo wa lushaka tshi ṱanganya madzingu manzhi."
   },
   {
     "english": "DAFF industry reference: earlier Prime Seedless, Sugraone and Flame Seedless; later Dauphine and Crimson Seedless. SATI identifies Orange River choices including Prime, Thompson Seedless and Sugraone. Confirm local dates and stock; the industry sequence is not a KZN farm calendar.",
@@ -298,7 +298,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Sebenzisa amahlumela anokwebeka ahlanzekile, ukhethe uhlobo nohlelo lokukhiqiza olufanele indawo. Ukunisela okuthembekile nokulawula izifo kubalulekile.",
     "st": "Sebedisa mahlomela a hahabang a hlwekileng mme o nyalanye mofuta le tsamaiso ya tlhahiso le sebaka. Ho nosetsa ho tshepahalang le taolo ya mafu di bohlokwa.",
     "ts": "Tirhisa swihluke leswi navaka leswi baseke naswona u fananisa muxaka ni sisiteme ya vuhumelerisi ni ndhawu. Ku cheleta loku tiyisekaka ni ku lawula mavabyi i swa nkoka.",
-    "ve": "Shumisani matavhi a navhaho o kunaho ni fhambanyise lushaka na maitele a u bveledza na fhethu. U sheledza hu fulufhedzeaho na u langa malwadze ndi zwa ndeme."
+    "ve": "Shumisani matavhi a navhaho o kunaho ni fananyise lushaka na maitele a u bveledza na fhethu. U sheledza hu fulufhedzeaho na u langa malwadze ndi zwa ndeme."
   },
   {
     "english": "KZN guide names Chandler and Selecta. Current local availability and performance need checking; tunnel and outdoor seasons must remain separate.",
@@ -424,7 +424,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Hlanganisa izidingo zokubanda nezinhlobo zempova ezihambisanayo. Olunye uhlobo kufanele luqhakaze ngesikhathi esihambisanayo, lungamane luvuthwe ngesikhathi esihlukile.",
     "st": "Nyalanya ditlhoko tsa ho bata le balekane ba peo. Mofuta wa bobedi o lokela ho thunya ka nako e dumellanang, eseng feela ho butswa ka nako e fapaneng.",
     "ts": "Fananisa ku titimela ni mixaka leyi fambisanaka eka mpova. Muxaka wa vumbirhi wu fanele ku huma swiluva hi nkarhi lowu fambisanaka, ku nga ri ntsena ku vupfa hi nkarhi wo hambana.",
-    "ve": "Fhambanyisani u rothola na tshaka dzi tshimbidzanaho kha luvhanda. Lushaka lwa vhuvhili lu tea u vha na maluvha nga tshifhinga tshi tshimbidzanaho, hu si u sokou vhibva nga tshifhinga tsho fhambanaho."
+    "ve": "Fananyisani u rothola na tshaka dzi tshimbidzanaho kha luvhanda. Lushaka lwa vhuvhili lu tea u vha na maluvha nga tshifhinga tshi tshimbidzanaho, hu si u sokou vhibva nga tshifhinga tsho fhambanaho."
   },
   {
     "english": "Candidate: African Delight (200–400 Infruitec units). Pollinators listed by ARC/Culdevco: Pioneer or African Rose. Late-February first-pick data is from the Western Cape reference site, not a promise for warm KZN.",
@@ -466,7 +466,7 @@ export const PRODUCT_GUIDE_COPY: readonly {english:string;zu:string;st:string;ts
     "zu": "Hambisana nendawo yakhona yemithi/ihlathi elinamatshe; izinsuku zokuqhakaza akuzona izinsuku zokuvuna.",
     "st": "Nyalanya le tikoloho ya lehae ya meru e nang le majwe; matsatsi a ho thunya ha se matsatsi a kotulo.",
     "ts": "Fananisa ni ndhawu ya mirhi/khwati ya maribye ya ndhawu; masiku ya swiluva a hi masiku ya ntshovelo.",
-    "ve": "Fhambanyisani na vhudzulo ha henefho ha mavhiḓa/ḓaka ḽi re na matombo; maḓuvha a maluvha a si maḓuvha a khaṋo."
+    "ve": "Fananyisani na vhudzulo ha henefho ha mavhiḓa/ḓaka ḽi re na matombo; maḓuvha a maluvha a si maḓuvha a khaṋo."
   },
   {
     "english": "Request correctly identified local fruiting material; no named cultivar is sourced.",

@@ -1,0 +1,374 @@
+[
+  {
+    "lang": "zu",
+    "rows": [
+      {
+        "name": "Khetha",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 24,
+        "buttonRight": 64,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Buyisela emuva",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 74,
+        "buttonRight": 114,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Phinda isenzo",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 124,
+        "buttonRight": 164,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Yenza ikhophi",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 162.5,
+        "buttonRight": 202.5,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 11.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Lungisa umugqa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 93,
+        "buttonRight": 133,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 131,
+        "svgWidth": 20
+      },
+      {
+        "name": "Qondanisa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 143,
+        "buttonRight": 183,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 131,
+        "svgWidth": 20
+      },
+      {
+        "name": "Hlanza",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 162.5,
+        "buttonRight": 202.5,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 161.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Susa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 162.5,
+        "buttonRight": 202.5,
+        "stripLeft": 24,
+        "stripRight": 202.34375,
+        "scrollLeft": 211.5,
+        "svgWidth": 20
+      }
+    ]
+  },
+  {
+    "lang": "st",
+    "rows": [
+      {
+        "name": "Kgetha",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 24,
+        "buttonRight": 64,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Busetsa morao",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 74,
+        "buttonRight": 114,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Etsa hape",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 124,
+        "buttonRight": 164,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Etsa khopi",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 174,
+        "buttonRight": 214,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Lokisa mola",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 224,
+        "buttonRight": 264,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Nyalanya",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 130.5,
+        "buttonRight": 170.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Hlwekisa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 180.5,
+        "buttonRight": 220.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Phumula",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 230.5,
+        "buttonRight": 270.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      }
+    ]
+  },
+  {
+    "lang": "ts",
+    "rows": [
+      {
+        "name": "Hlawula",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 24,
+        "buttonRight": 64,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Tlherisela endzhaku",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 74,
+        "buttonRight": 114,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Endla nakambe",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 124,
+        "buttonRight": 164,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Endla khopi",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 174,
+        "buttonRight": 214,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Lulamisa layini",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 224,
+        "buttonRight": 264,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Fananisa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 130.5,
+        "buttonRight": 170.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Basisa",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 180.5,
+        "buttonRight": 220.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Sula",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 230.5,
+        "buttonRight": 270.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      }
+    ]
+  },
+  {
+    "lang": "ve",
+    "rows": [
+      {
+        "name": "Nangani",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 24,
+        "buttonRight": 64,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Humiselani murahu",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 74,
+        "buttonRight": 114,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Itani hafhu",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 124,
+        "buttonRight": 164,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Itani khophi",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 174,
+        "buttonRight": 214,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Lugisani mutalo",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 224,
+        "buttonRight": 264,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 0,
+        "svgWidth": 20
+      },
+      {
+        "name": "Fananyisani",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 130.5,
+        "buttonRight": 170.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Kunakisani",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 180.5,
+        "buttonRight": 220.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      },
+      {
+        "name": "Thuthani",
+        "focused": true,
+        "reachable": true,
+        "buttonLeft": 230.5,
+        "buttonRight": 270.5,
+        "stripLeft": 24,
+        "stripRight": 270.4375,
+        "scrollLeft": 143.5,
+        "svgWidth": 20
+      }
+    ]
+  }
+]

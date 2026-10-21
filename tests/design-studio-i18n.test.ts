@@ -39,7 +39,14 @@ test('isiZulu Design Palette action drafts keep their exact English source and t
   for (const key of pairedKeys) {
     const source = DESIGN_STUDIO_ENGLISH_PENDING[key];
     const draft = zuLocale[key];
-    assert.ok(draft.endsWith(source), `${key} keeps its complete English source beside the draft`);
+    if(key === 'designPaletteTapCorners') {
+      // The source now renders as a separate English hint, so action strings stay glyph-free
+      // and the primary label has one language. The source must remain visible in the caller.
+      const palette=readFileSync(new URL('../components/design/DesignPalette.tsx',import.meta.url),'utf8');
+      assert.match(palette,/translate\('en','designPaletteTapCorners'\)/);
+      assert.match(palette,/<div lang="en"[^>]*>\{armedHintSource\}<\/div>/);
+      assert.notEqual(draft,source);
+    } else assert.ok(draft.endsWith(source), `${key} keeps its complete English source beside the draft`);
     const sourceTokens = source.match(/\{[^}]+\}/g) ?? [];
     for (const token of sourceTokens) {
       assert.ok(draft.includes(token), `${key} retains ${token} for its dynamic value`);
