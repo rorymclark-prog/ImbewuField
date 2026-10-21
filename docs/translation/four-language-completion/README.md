@@ -325,6 +325,55 @@ was made. Full registered CI is pending; no full-suite pass is claimed.
 This changes the picture. `PLAN_VERSION` stays unchanged. No species, calibrated learning body,
 saved geometry, farming calculation or number has changed.
 
+## Climate, water, sector, soil and work-timeline drawings batch
+
+`codex/four-language-report-climate` is stacked on site-plan drawings (#1035). It adds 150 source
+variants in the same pure `REPORT_VISUAL_COPY` table. The remaining five deterministic figure
+builders now use native draft titles, readings, legends, provenance, caveats and alternatives.
+Month axes, wet/dry ranges, shortfall runs and regional-wind seasons use the existing month-name
+authority without translating stored month identities. Regional-wind titles and fire notes, all
+source phase-title variants, source week/month ranges, climate service labels and model soil
+classifications are covered. These remain **unreviewed AI drafts**, not fluent-speaker approval.
+
+All earlier paired English/isiZulu clauses remain exact. The parameterised post/shadow sentence
+retains its source figures and prior isiZulu wording. The eight original English objects/SVGs stay
+exact against the earlier immutable fixture. Compass direction codes and latitude suffixes remain
+canonical, with a native compass key explaining N/E/S/W. Uploaded laboratory texture wording,
+farmer-saved names and unrecognised source text remain as recorded. Existing species names,
+including Vetiver inside an authored phase title, stay exact. No phase, catchment, soil, solar,
+wind, storage or rainfall calculation changes.
+
+Native headers and keys wrap. Soil headings, empty-reading cards, texture keys and pH descriptions
+get room around unchanged measurement scales. Water-storage labels wrap without changing the bar
+proportions. Timeline titles and ranges have separate columns and row heights; the phase numbers,
+hold points, open-ended final stage and order remain. Native sector captions use the same measured
+line layout for headroom and placement. The first browser pass caught the cold-temperature value
+touching its month label and a long Xitsonga NW wind caption crossing the top edge. Those layouts
+were corrected and checked again; the regression checks can detect both failures.
+
+Typecheck, 214 focused checks on Node 24, notes gate and whitespace check pass. Source audits also
+read the actual upstream phase/soil factories and named-wind titles, so a new authored variant
+cannot silently remain English. Checks retain geometry/data, exact English output, source pairs,
+month order, wet/dry marks, roof-runoff/storage arithmetic, installation uncertainty, soil model vs
+laboratory provenance, missing-data honesty, phase order and bar widths. No earlier assertion was
+removed or weakened.
+
+The browser measured 60 SVG cases across the four targets, including missing water use, unknown
+and installed tanks, laboratory/model/unmeasured soil, missing readings, flat/observed wind,
+equatorial sun, temperature absence and sequential phases. After the layout corrections, no text
+lay outside a viewBox and no text boxes overlapped above 0.5 pixels; all images decoded. The 44
+inspected screenshots and structured evidence are in `evidence/report-climate/`: 28 from production
+components/renderers and real CSS, plus 16 from the actual Complete report viewer. Native titles,
+SVG alternatives and the enlarged soil dialog were checked. Saved report/design bytes, original
+English report body/scope and next-report language remain unchanged. QA records were removed and
+prior design keys restored. No paid call or PDF creation was made.
+
+All eight deterministic site-report figure builders now resolve their authored display copy
+through the four-language authority. This is not whole-report or whole-app completion: concept
+art, source-data presentation beyond these figures, full-report/crop-plan PDF paths and broader
+workflows/learning/media remain. Full registered CI is pending; no full-suite pass is claimed.
+This changes the picture. `PLAN_VERSION` stays unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
