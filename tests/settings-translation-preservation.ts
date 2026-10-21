@@ -1,9 +1,10 @@
+import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const packet = JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/settings-drafts.json', import.meta.url), 'utf8')) as {
-  entries: Array<Record<string, string>>;
-  supplementalEntries: Array<Record<string, string>>;
+  entries: Array<{ key: string } & Record<string, string>>;
+  supplementalEntries: Array<{ key: string } & Record<string, string>>;
 };
 
 /** Keep the historical learning-content hashes while permitting this declared Settings batch. */
@@ -29,4 +30,8 @@ export function englishBeforeSettingsTranslations(source: string): string {
     source = source.replace(line, '');
   }
   return source;
+}
+
+export function beforeSettingsDictionary(actual: unknown, locale: 'zu' | 'st' | 'ts' | 've'): unknown {
+  return beforeUiDictionary(actual, locale, packet);
 }

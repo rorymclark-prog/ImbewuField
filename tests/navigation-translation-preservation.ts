@@ -1,3 +1,4 @@
+import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -27,4 +28,8 @@ export function beforeNavigationTranslations(source: string, locale: 'st' | 'ts'
     assert.doesNotMatch(before, new RegExp(`^  ${key}:`, 'm'), `${locale}: an app-control addition must not override an existing translation`);
   }
   return before;
+}
+
+export function beforeNavigationDictionary(actual: unknown, locale: 'st' | 'ts' | 've'): unknown {
+  return beforeUiDictionary(actual, locale, packet);
 }
