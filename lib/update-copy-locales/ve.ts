@@ -81,6 +81,7 @@ const copy:UpdateCopy={
   "Update notices and recent changes now have four draft translations.": "Nḓivhadzo dza khwiniso na tshanduko dza zwenezwino zwino dzi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa.",
   "Read recent updates": "Vhalani khwiniso dza zwenezwino",
   "Menu → What's new": "Menyu → Zwiswa",
-  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Nḓivhadzo ya khwiniso na ḓivhazwakale ya zwenezwino zwi shumisa luambo lwaṋu. Rekhodo dza kale dzi kha ḓi vha na maṅwalwa a u thoma a English musi ṱhalutshedzelo dzadzo dzi tshi kha ḓi fhedziswa."
+  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Nḓivhadzo ya khwiniso na ḓivhazwakale ya zwenezwino zwi shumisa luambo lwaṋu. Rekhodo dza kale dzi kha ḓi vha na maṅwalwa a u thoma a English musi ṱhalutshedzelo dzadzo dzi tshi kha ḓi fhedziswa.",
+  "Account controls and messages now have four draft translations.": "Zwilangi na milaedza zwa akhaunthu zwino zwi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa."
 };
 export default copy;

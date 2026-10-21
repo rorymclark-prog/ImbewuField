@@ -81,6 +81,7 @@ const copy:UpdateCopy={
   "Update notices and recent changes now have four draft translations.": "Izaziso zezibuyekezo nezinguquko zakamuva manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
   "Read recent updates": "Funda izibuyekezo zakamuva",
   "Menu → What's new": "Imenyu → Yini entsha",
-  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Isaziso sesibuyekezo nomlando wakamuva kusebenzisa ulimi lwakho. Okubhalwe ngaphambili kusenombhalo wokuqala wesiNgisi ngenkathi ukuhumusha kwazo kuqedelwa."
+  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Isaziso sesibuyekezo nomlando wakamuva kusebenzisa ulimi lwakho. Okubhalwe ngaphambili kusenombhalo wokuqala wesiNgisi ngenkathi ukuhumusha kwazo kuqedelwa.",
+  "Account controls and messages now have four draft translations.": "Izinkinobho nemilayezo ye-akhawunti manje kunokuhumusha okusaluhlaka ngezilimi ezine."
 };
 export default copy;

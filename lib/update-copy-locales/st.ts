@@ -81,6 +81,7 @@ const copy:UpdateCopy={
   "Update notices and recent changes now have four draft translations.": "Ditsebiso tsa ntlafatso le diphetoho tsa moraorao jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Read recent updates": "Bala dintlafatso tsa moraorao",
   "Menu → What's new": "Menyu → Tse ntjha",
-  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Tsebiso ya ntlafatso le nalane ya moraorao di sebedisa puo ya hao. Dintlha tsa kgale di ntse di na le mongolo wa pele wa Senyesemane ha diphetolelo tsa tsona di ntse di phethwa."
+  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Tsebiso ya ntlafatso le nalane ya moraorao di sebedisa puo ya hao. Dintlha tsa kgale di ntse di na le mongolo wa pele wa Senyesemane ha diphetolelo tsa tsona di ntse di phethwa.",
+  "Account controls and messages now have four draft translations.": "Ditaolo le melaetsa ya akhaonto jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
 };
 export default copy;

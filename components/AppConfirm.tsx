@@ -1,5 +1,6 @@
 'use client';
 
+import { useLanguage } from '@/lib/i18n';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 /**
@@ -21,8 +22,8 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
  *   const appConfirm = useAppConfirm();
  *   if (!(await appConfirm({ message: '…', confirmLabel: 'Yes, delete', destructive: true }))) return;
  *
- * Labels are REQUIRED from the call site (no baked-in strings): translated
- * surfaces pass t(...) labels, so this component needs no i18n keys of its own.
+ * Callers own the question and explicit action labels. An omitted decline uses the shared
+ * Cancel translation so a translated question cannot gain an English default.
  */
 
 export interface AppConfirmOptions {
@@ -32,7 +33,7 @@ export interface AppConfirmOptions {
   message: string;
   /** The proceed button. Say what happens: "Yes, delete", "Update Ubhejane". */
   confirmLabel: string;
-  /** The decline button. Defaults to "Cancel" — pass a translated/meaningful label wherever that isn't right. */
+  /** The decline button. Defaults to the app-language "Cancel" — pass a translated/meaningful label wherever that isn't right. */
   cancelLabel?: string;
   /** Paints the confirm button the destructive red. Leave off for neutral choices. */
   destructive?: boolean;
@@ -59,6 +60,7 @@ interface Pending {
 }
 
 export default function AppConfirmProvider({ children }: { children: React.ReactNode }) {
+  const {t}=useLanguage();
   const [pending, setPending] = useState<Pending | null>(null);
   const cancelRef = useRef<HTMLButtonElement | null>(null);
 
@@ -138,7 +140,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
                   background: '#FFFFFF', border: '1px solid var(--border)', color: 'var(--text-secondary)',
                 }}
               >
-                {pending.opts.cancelLabel ?? 'Cancel'}
+                {pending.opts.cancelLabel ?? t('cancelBtn')}
               </button>
               <button
                 onClick={() => settle(true)}

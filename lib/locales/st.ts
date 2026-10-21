@@ -1554,6 +1554,15 @@ const dict: Dict = {
   updatesTranslationsUnavailable: "Ditlhaloso tse fetoletsweng ha di a kgona ho kenngwa. Mongolo wa pele wa Senyesemane o ntse o fumaneha.",
   updatesTranslationDraft: "Moralo wa phetolelo",
   // End update notices.
+  // Account controls: unreviewed drafts; account-drafts.json.
+  profileChangePhoto: "Fetola setshwantsho",
+  mentorEditProfileButton: "Fetola profaele",
+  savedPlacesRemove: "Tlosa",
+  designPhotoSaving: "Ho a bolokwa...",
+  tipsChoosePracticeView: "Kgetha leqephe la boikwetliso",
+  profileRoleAdmin: "Motsamaisi",
+  cancelBtn: "Hlakola",
+  // End account controls.
 };
 
 export default dict;

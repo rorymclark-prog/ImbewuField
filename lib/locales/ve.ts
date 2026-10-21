@@ -1549,6 +1549,15 @@ const dict: Dict = {
   updatesTranslationsUnavailable: "Ṱhalutshedzo dzo ṱalutshedzelwaho a dzo ngo kona u laisiwa. Maṅwalwa a u thoma a English a kha ḓi wanala.",
   updatesTranslationDraft: "Mvetomveto ya ṱhalutshedzelo",
   // End update notices.
+  // Account controls: unreviewed drafts; account-drafts.json.
+  profileChangePhoto: "Shandukisani tshifanyiso",
+  mentorEditProfileButton: "Lugisani phurofaiḽi",
+  savedPlacesRemove: "Bvisani",
+  designPhotoSaving: "Zwi khou vhulungwa...",
+  tipsChoosePracticeView: "Nangani siaṱari ḽa nḓowenḓowe",
+  profileRoleAdmin: "Mulanguli",
+  cancelBtn: "Litshani",
+  // End account controls.
 };
 
 export default dict;

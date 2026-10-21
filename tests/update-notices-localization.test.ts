@@ -10,7 +10,7 @@ import { updateDateLabel } from '../lib/update-copy-date.ts';
 import { recordsMonthLong } from '../lib/records-months.ts';
 import { RELEASE_NOTES,visibleNotes,visibleUpdateTour } from '../lib/release-notes.ts';
 import { UPDATE_GUIDE_KEY,OPEN_UPDATE_GUIDE_EVENT } from '../lib/update-tour.ts';
-import { beforeUpdateNoticeTranslations,beforeUpdateNoticeDictionary } from './ui-dictionary-preservation.ts';
+import { beforeUpdateNoticeTranslations,beforeUpdateNoticeDictionary,beforeAccountTranslations } from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/update-notice-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -18,7 +18,8 @@ const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
 const tokens=(s:string)=>(s.match(/\{[^{}]+\}|\d+(?:[.,]\d+)?/g)??[]).sort();
 
 test('update drafts preserve source history, existing control wording, quantities and original locale bytes',async()=>{
- assert.deepEqual(RELEASE_NOTES.slice(1),packet.historyBefore,'the complete archived source, order, dates, links and tours survive');
+ // New releases prepend entries; the full original archived suffix must stay exact.
+ assert.deepEqual(RELEASE_NOTES.slice(-packet.historyBefore.length),packet.historyBefore,'the complete archived source, order, dates, links and tours survive');
  assert.equal(hash(read('lib/i18n.tsx')),packet.sourceSha256['lib/i18n.tsx']);
  for(const lang of langs){
   const t=controlT(lang),copy=await loadUpdateCopy(lang);
@@ -26,7 +27,7 @@ test('update drafts preserve source history, existing control wording, quantitie
   for(const row of packet.sourceControls)if(!packet.entries.some((r:any)=>r.key===row.key&&typeof r[lang]==='string'))assert.equal(controlLocales[lang][row.key]??null,row[lang]);
   for(const row of packet.bodyEntries){assert.equal(updateDescription(copy,row.english),row[lang]);assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));}
   for(const source of [...visibleNotes(),...updateTourSources(visibleUpdateTour())])assert.notEqual(updateDescription(copy,source),source,'the currently announced build has native descriptions');
-  const source=read(`lib/locales/${lang}.ts`);assert.equal(hash(beforeUpdateNoticeTranslations(source,lang)),packet.sourceSha256[`lib/locales/${lang}.ts`]);
+  const source=beforeAccountTranslations(read(`lib/locales/${lang}.ts`),lang);assert.equal(hash(beforeUpdateNoticeTranslations(source,lang)),packet.sourceSha256[`lib/locales/${lang}.ts`]);
   const broken=source.replace(JSON.stringify(t('updatesIntro')),JSON.stringify('Changed unlisted text'));assert.equal(beforeUpdateNoticeTranslations(broken,lang),broken);
   const partial={...controlLocales[lang]};delete partial.updatesIntro;assert.equal(beforeUpdateNoticeDictionary(partial,lang),partial);
   const lesson={...controlLocales[lang],studentContinue:'changed learning'};assert.equal((beforeUpdateNoticeDictionary(lesson,lang)as any).studentContinue,'changed learning');

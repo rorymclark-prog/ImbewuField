@@ -1076,9 +1076,67 @@ lexical dictionaries support narrow word choices, not approval of complete sente
 lesson source, species identity, farming figure, geometry, PDF, audio or media asset changes.
 This changes the picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
 
+## Batch 24 — account, sharing permissions and shared cancellation
+
+The [account source packet](account-drafts.json) records 98 body/label sources, seven shared
+control gaps and the new release description: **328 newly populated native values**. The body
+table has 392 values, of which 89 retain earlier isiZulu wording; common labels and roles reuse
+existing exact-source dictionary keys. All original English and isiZulu account copy pairs remain
+source-bound. Profile/language controls, access explanations, loading/slow-auth/sample doors,
+passwords, known errors, AI allowance messages and the default shared Cancel now follow all four
+languages. Language names use their existing native/self names. Personal names, emails, role IDs,
+destinations and saved form values remain data.
+
+Known errors retain their original source in state and repaint after language changes. The exact
+existing login auth-message map is now shared with account recovery; the ambiguous field map and
+login behaviour remain. Unknown external errors stay verbatim with unknown-language markup.
+The known diagnostic wrapper translates while its original code is preserved. Placeholder values
+are inserted once, so farmer text containing braces or dollar signs is never reinterpreted.
+Allowance amounts, cap/model-fallback rules and progress arithmetic remain; reset display reuses
+the month authority without moving the original local calendar day. Source English remains beside
+native allowance messages. No auth, profile-query, budget, role-preview or sample-storage service
+changed; the recorded hashes were compared during verification rather than frozen as future
+business-rule assertions.
+
+The embedded sharing panel had its own English/isiZulu-only branch. It now has native drafts,
+exact English source, native accessible names and explicit unreviewed status for every target.
+All original scope IDs, order, English clauses and isiZulu draft clauses remain. Nothing starts
+shared. A failed read still shows an error instead of false unchecked controls; retry, failed-write
+re-read, busy disabling and stop-all outcomes retain the existing service operations. The outer
+isiZulu-only disclosure is replaced by the panel's own four-language source/review disclosure.
+The Xitsonga weight clause uses `ntiko`, supported by the [DBE terminology list](https://www.education.gov.za/Portals/0/Documents/MTbBE/mttbe%20terminology/Authenticated%20Terminology%20from%20Grade%204_Xitsonga%202024.pdf?ver=2025-11-19-153412-297), avoiding the instrument sense of scales. This supports the noun, not approval of the complete sentence. A phone render exposed a narrow failure-message column beside the source-paired Retry button;
+stacking that button below the message keeps the paragraph readable.
+
+Typecheck and whitespace checks are clean. **763 tests pass across 92 selected registered files**,
+including actual component/hooks for form trim/null/omission semantics, password checks and close
+delay, photo/logo payloads, sign-out, all role preview identities/destinations, Simple disclosures,
+sharing failures and withdrawals, allowance arithmetic and dialog focus/Escape/answers. Exact old
+locale hashes remain, with bounded projection of only the declared account layer and negative
+partial/alteration checks. The old Simple Role test now inspects its real JSX condition regardless
+of language attributes and includes a failing always-visible variant. The history guard preserves
+the complete archived suffix while allowing legitimate new releases to prepend; no prior release
+object or assertion is deleted.
+
+[Browser evidence](evidence/account/verification.json) covers **144 phone/desktop states** in all
+four languages: eight real guest-page states and 136 isolated component states, with 5,225
+scrolled/hit-tested reading lines, plus 16 field captures. Representative account, password,
+allowance, sharing and error screenshots were inspected. No tested reading position was clipped
+or occluded, and no document overflow or unresolved source placeholder was found. Guest contexts
+use synthetic onboarding/consent preconditions; signed-in and permission fixtures use actual
+components/hooks and source CSS with isolated services and stub header/navigation. They do not
+claim real Firebase, payment, consent-flow or signed-in end-to-end coverage.
+
+The predecessor 551-file run at `2a86dd29` completed with 5,479 passes, zero failures and one
+pre-existing TODO. The fresh 552-file full run at `11de9538` remains active and does not prove this
+head; full current-head/CI verification is still required. These are unreviewed AI drafts with no
+fluent-speaker or legal approval. Shared confirmation callers still own their question and explicit
+labels. Wider workflows, community profile, older update history, exports and Study/media remain
+under the whole-app goal. This changes the picture; `PLAN_VERSION` is unchanged. No production
+merge has occurred.
+
 ## Remaining work
 
-1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, account, dialogs, accessibility
+1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility
    text, confirmations and failure states. Replace English/isiZulu-only branches with the shared
    language context. Verify phone layouts and language changes without stale text.
 2. Complete the farmer workflows: map, survey, evidence, designs, crop planning, tasks, records,

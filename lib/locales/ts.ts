@@ -1545,6 +1545,15 @@ const dict: Dict = {
   updatesTranslationsUnavailable: "Tinhlamuselo leti hundzuluxiweke a ti kotanga ku layichiwa. Tsalwa ro sungula ra Xinghezi ra ha kumeka.",
   updatesTranslationDraft: "Vuhundzuluxi bya mpfapfarhuto",
   // End update notices.
+  // Account controls: unreviewed drafts; account-drafts.json.
+  profileChangePhoto: "Cinca xifaniso",
+  mentorEditProfileButton: "Hlela phurofayili",
+  savedPlacesRemove: "Susa",
+  designPhotoSaving: "Swa hlayisiwa...",
+  tipsChoosePracticeView: "Hlawula tluka ro titoloveta",
+  profileRoleAdmin: "Mulawuri",
+  cancelBtn: "Tshika",
+  // End account controls.
 };
 
 export default dict;

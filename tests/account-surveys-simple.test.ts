@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -40,8 +41,21 @@ test('account: Simple shows name, photo, farm/organisation and language plainly'
 });
 
 test('account: the Role row and AccountAccess move behind the "More account settings" disclosure', () => {
-  assert.match(ACCOUNT, /\{\(!simple \|\| moreOpen\) && <Row icon=\{User\} label=\{copy\('Role', 'Isikhundla'\)\} value=\{roleLabel\} \/>\}/,
-    'the Role row (role/admin detail) must be gated on !simple || moreOpen');
+  // A language attribute on the value must not look like a lost Simple guard. Inspect
+  // the actual Role expression rather than pinning one serialized list of JSX attributes.
+  const roleGate = (source: string) => {
+    const tree=ts.createSourceFile('account.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+    let gate:string|undefined;
+    function visit(node:ts.Node) {
+      if(ts.isJsxSelfClosingElement(node)&&node.tagName.getText(tree)==='Row'&&node.attributes.properties.some(p=>ts.isJsxAttribute(p)&&p.name.getText(tree)==='label'&&p.initializer?.getText(tree).includes("copy('Role',"))) {
+        if(ts.isBinaryExpression(node.parent)&&node.parent.operatorToken.kind===ts.SyntaxKind.AmpersandAmpersandToken)gate=node.parent.left.getText(tree);
+      }
+      ts.forEachChild(node,visit);
+    }
+    visit(tree);return gate;
+  };
+  assert.equal(roleGate(ACCOUNT),'(!simple || moreOpen)','Role must stay behind the disclosure');
+  assert.notEqual(roleGate(ACCOUNT.replace('(!simple || moreOpen) && <Row icon={User}','true && <Row icon={User}')),'(!simple || moreOpen)','the check must expose an always-visible Role row');
   assert.match(ACCOUNT, /\{\(!simple \|\| moreOpen\) && <AccountAccess \/>\}/,
     'AccountAccess (role dashboards, sample-mode preview, refresh access) must be gated the same way');
   assert.match(ACCOUNT, /const \[moreOpen, setMoreOpen\] = useState\(false\);/,

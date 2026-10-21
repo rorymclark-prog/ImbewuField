@@ -1,0 +1,61 @@
+{
+  "sourceSha": "11de95386e157080500f368be9adbe4cabf0f6fe",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sourceBodyRows": 98,
+  "bodyTableNativeValues": 392,
+  "retainedIsiZuluBodyValues": 89,
+  "newBodyValues": 303,
+  "sharedControlRows": 7,
+  "sharedNativeValues": 21,
+  "newReleaseValues": 4,
+  "newNativeValues": 328,
+  "selectedFiles": 92,
+  "selectedTests": 763,
+  "selectedFailures": 0,
+  "registeredFiles": 553,
+  "actualGuestBrowserStates": 8,
+  "isolatedComponentBrowserStates": 136,
+  "scrolledReadingLines": 5225,
+  "additionalFieldCaptureStates": 16,
+  "serviceSourcesUnchangedAtVerification": {
+    "lib/auth.tsx": true,
+    "lib/db/queries.ts": true,
+    "lib/ai-budget.ts": true,
+    "lib/api-client-auth.ts": true,
+    "lib/use-role-navigation.ts": true,
+    "lib/sample-mode.ts": true,
+    "lib/i18n.tsx": true,
+    "lib/consent.ts": true
+  },
+  "humanApproval": false,
+  "productionMerged": false,
+  "planVersionChanged": false,
+  "limits": [
+    "Guest contexts use synthetic onboarding/consent preconditions and service workers blocked. No real consent flow or authenticated Firebase account is claimed.",
+    "Signed-in/edit/password/admin/allowance/error/sample/dialog fixtures render actual component/hooks with isolated services and stub header/navigation. Their source module CSS is used with local fixture class names.",
+    "Static browser fixtures verify presentation; actual event handlers and language switches are verified separately in React component tests.",
+    "Known exact auth messages share the existing login mapping; unknown external text and diagnostic codes remain as supplied. The Xitsonga borrowed dashboard term follows existing app usage.",
+    "No fluent-speaker approval. Full current-head test/CI still required; preceding frozen11de9538 run remains active.",
+    "The redundant isiZulu-only outer consent disclosure is replaced by the sharing panel own explicit four-language draft status and exact English clauses. No fluent or legal approval is claimed. Existing source words and scope identities remain."
+  ],
+  "totalBrowserStates": 144,
+  "sharingPanel": {
+    "sourceClausesPreserved": true,
+    "sources": 22,
+    "scopeIds": [
+      "sales",
+      "expenses",
+      "production",
+      "training",
+      "surveys",
+      "location"
+    ],
+    "operations": "Exact original load/toggle/re-read/revoke behaviours. Typed toggles, busy disabling, off defaults, failures and language changes tested against actual component handlers.",
+    "phoneLayout": "Source-paired retry moved beneath the failure message on phones after visual review exposed a narrow text column."
+  }
+}

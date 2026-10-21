@@ -1,0 +1,22 @@
+// Exact auth-source identities are shared by login and account recovery.
+export const AUTH_ERROR_KEYS: Record<string, string> = {
+  'That doesn\'t look like a valid email address.': 'loginErrorInvalidEmail',
+  'This account has been disabled.': 'loginErrorAccountDisabled',
+  'No account found with that email.': 'loginErrorAccountNotFound',
+  'Incorrect password — try again.': 'loginErrorWrongPassword',
+  'Email or password is incorrect.': 'loginErrorInvalidCredentials',
+  'An account with that email already exists.': 'loginErrorEmailInUse',
+  'Choose a stronger password (at least 6 characters).': 'loginErrorWeakPassword',
+  'Too many attempts — wait a moment and try again.': 'loginErrorTooManyAttempts',
+  'Network error — check your connection.': 'loginErrorNetwork',
+  'Sign-in was cancelled.': 'loginErrorCancelled',
+  'An account already exists with this email using a different sign-in method.': 'loginErrorDifferentProvider',
+  'Email and password sign-in is disabled for this app. The app administrator needs to enable it.': 'loginErrorEmailDisabled',
+  'Google sign-in is disabled for this app. The app administrator needs to enable it.': 'loginErrorGoogleDisabled',
+  'Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.': 'loginErrorPopupBlocked',
+  'This web address isn\'t authorised for Google sign-in yet. Use email + password for now.': 'loginErrorDomainNotAuthorised',
+  'This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.': 'loginErrorStorageBlocked',
+  'Firebase is not configured yet — running in sample mode.': 'loginErrorBackendSampleMode',
+  'Firebase is not configured yet.': 'loginErrorBackendUnavailable',
+  'Google sign-in won\'t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.': 'loginErrorGoogleEmbedded',
+};
