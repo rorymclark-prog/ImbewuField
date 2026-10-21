@@ -43,7 +43,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '21 October 2026', sha: '5b6da923', changes: [
     'Saved crop-plan notes now follow your report language.',
-    'Plant buying profiles have four draft translations; remaining English research notes are marked.',
+    'Plant buying profiles have four draft translations; English research notes are marked.',
   ], tour: [{ title: 'Read the saved crop plan', where: 'Menu → Site reports', href: '/reports',
     detail: 'In a new report, check the saved crop plan and plant buying advice. Crop names and measured figures stay as recorded. The purchasing section tells you that some research notes still use English.',
   }] },
