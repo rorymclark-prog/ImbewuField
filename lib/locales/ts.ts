@@ -739,14 +739,14 @@ const dict: Dict = {
   popiaBody: 'Hi hlayisa vuxokoxoko bya purasi ra wena hi vuhlayiseki naswona hi byi tirhisa ntsena ku ku pfuna. U nga cinca swilulamiso leswi nkarhi wihi na wihi eka app.',
   popiaStoreLabel: 'Hlayisa datha ya mina ya purasi na ya timali',
   popiaStoreDesc: 'Yi hlayisiwa hi vuhlayiseki eka cloud leswaku yi nga lahleki. Swa laveka ku tirhisa app.',
-  popiaShareLabel: 'Avelana mimbuyelo leyi nga kombiki mavito na NGO ya mina',
+  popiaShareLabel: "Avelana mimbuyelo leyi nga kombiki leswaku i ya mani na NGO ya mina",
   popiaShareDesc: 'Swi pfuna minongonoko ku landzelela vuyelo. U nga swi tima nkarhi wihi na wihi.',
   popiaAgreeButton: 'Ndza pfumela, yana emahlweni',
   popiaStorageRequired: 'Ku hlayisa eka cloud swa laveka ku tirhisa ImbewuField.',
   popiaGoalTitle: 'I yini leswi u swi lavaka ngopfu eka misava ya wena?',
   popiaGoalBody: 'Lima u tirhisa leswi ku lulamisela wena switsundzuxo swa yena.',
   popiaGoalFeedLabel: 'Wundla ndyangu wa mina',
-  popiaGoalFeedDesc: 'Matsavu lama nga heriki lembe hinkwaro',
+  popiaGoalFeedDesc: "Ku kumeka ka matsavu hi ku landzelelana lembe hinkwaro",
   popiaGoalIncomeLabel: 'Kuma muholo',
   popiaGoalIncomeDesc: 'Lima u tshikelela swibyariwa swa makete leswi u nga swi xavisaka',
   popiaGoalSoilLabel: 'Pfuxeta misava ya mina',
@@ -1413,6 +1413,11 @@ const dict: Dict = {
   designSectorFrost: "GWITSI",
   designSectorSeasonWind: "Moya wa {season} · {direction}",
   // End native design controls.
+  // Consent controls: unreviewed drafts; consent-drafts.json.
+  popiaConsentDraftNotice: "Vuhundzuluxi bya mpfumelelo a byi si kamberiwa. Hlaya tsalwa ra Xinghezi u nga si hlawula kumbe ku pfumela.",
+  popiaEnglishSourceLabel: "Tsalwa ro sungula ra Xinghezi:",
+  popiaGoalPickOne: "Hlawula xin’we leswaku u ya mahlweni",
+  // End consent controls.
 };
 
 export default dict;

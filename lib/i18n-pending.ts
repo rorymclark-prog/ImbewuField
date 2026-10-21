@@ -998,6 +998,9 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  popiaConsentDraftNotice: "Unreviewed consent translation. Read the English source before choosing or agreeing.",
+  popiaEnglishSourceLabel: "English source:",
+
   homeTaskMarkNotDone: "Mark not done",
   homeTaskMarkDone: "Mark done",
   homeTaskAddCalendar: "Add to calendar",

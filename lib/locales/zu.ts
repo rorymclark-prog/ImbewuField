@@ -1561,7 +1561,7 @@ const dict: Dict = {
   popiaBody: 'Sigcina ulwazi lwepulazi lakho luphephile futhi silusebenzisa kuphela ukukusiza. Ungashintsha lezi zilungiselelo noma nini kusicelo.',
   popiaStoreLabel: 'Gcina idatha yami yepulazi nezimali',
   popiaStoreDesc: 'Kulondolozwe ngokuphepha efu ukuze kungalahleki. Kudingeka ukuze usebenzise isicelo.',
-  popiaShareLabel: 'Yabelana nge-NGO yami ngemiphumela engamaziwi',
+  popiaShareLabel: "Yabelana ngemiphumela engadaluli ukuthi ingeyabani ne-NGO yami",
   popiaShareDesc: 'Isize izinhlelo ukuze zilandelele umthelela. Ungayivala noma nini.',
   popiaAgreeButton: 'Ngiyavuma, qhubeka',
   popiaStorageRequired: 'Ukugcinwa kwefu kudingeka ukuze usebenzise i-ImbewuField.',
@@ -2467,6 +2467,10 @@ const dict: Dict = {
   designPaletteSnapTitle: "Buka kuqala ukuvalwa kwezikhala ezincane kakhulu phakathi kwendawo ekhethiwe nenye eseduze",
   designPaletteCleanupTitle: "Buka kuqala ukuqondiswa kwezinto ezikhethiwe nokushiywa kwezikhala ezilinganayo phakathi kwazo",
   // End native design controls.
+  // Consent controls: unreviewed drafts; consent-drafts.json.
+  popiaConsentDraftNotice: "UHLAKA LWESIZULU — Umbhalo wesiZulu wemvume awukabuyekezwa. Funda umbhalo wesiNgisi oseduze ngaphambi kokukhetha noma ukuvuma.",
+  popiaEnglishSourceLabel: "Umbhalo wokuqala wesiNgisi:",
+  // End consent controls.
 };
 
 export default dict;

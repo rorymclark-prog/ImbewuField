@@ -770,7 +770,7 @@ const dict: Dict = {
   popiaBody: 'Ri vhulunga mafhungo a bulasi yaṋu o tsireledzea nahone ri a shumisa u ni thusa fhedzi. Ni nga shandukisa magagulo aya tshifhinga tshiṅwe na tshiṅwe kha app.',
   popiaStoreLabel: 'Vhulungani data ya bulasi yanga na ya masheleni',
   popiaStoreDesc: 'Zwi vhulungwa zwo tsireledzea kha klaudu uri zwi si xelele. Zwi a ṱoḓea uri ni shumise app.',
-  popiaShareLabel: 'Kovhelanani mvelelo dzi sa sumbedzi dzina na NGO yanga',
+  popiaShareLabel: "Kovhelanani mvelelo dzi sa sumbedzi uri ndi dza nnyi na NGO yanga",
   popiaShareDesc: 'Zwi thusa mbekanyamushumo u tevhela mvelelo. Ni nga zwi dzima tshifhinga tshiṅwe na tshiṅwe.',
   popiaAgreeButton: 'Ndi a tenda, bvelani phanḓa',
   popiaStorageRequired: 'U vhulunga kha klaudu zwi a ṱoḓea uri ni shumise ImbewuField.',
@@ -1422,6 +1422,11 @@ const dict: Dict = {
   designSectorFrost: "ṄWANDO",
   designSectorSeasonWind: "Muya wa {season} · {direction}",
   // End native design controls.
+  // Consent controls: unreviewed drafts; consent-drafts.json.
+  popiaConsentDraftNotice: "Ṱhalutshedzo ya thendelo a i athu ṱolwa. Vhalani maṅwalwa a English musi ni sa athu nanga kana u tenda.",
+  popiaEnglishSourceLabel: "Maṅwalwa a u thoma a English:",
+  popiaGoalPickOne: "Nangani tshithihi uri ni bvele phanḓa",
+  // End consent controls.
 };
 
 export default dict;

@@ -807,7 +807,7 @@ const dict: Dict = {
   popiaBody: 'Re boloka tlhahisoleseding ya polasi ya hao e bolokehile le ho e sebedisa ho wena feela. O ka fetola maemo ana nako efe kapa efe ka app.',
   popiaStoreLabel: 'Boloka data ya ka ya polasi le ditjhelete',
   popiaStoreDesc: 'E bolokwa ka tshireletso lerung e le hore e se ke ya lahleha. E a hlokahala ho sebedisa app.',
-  popiaShareLabel: 'Arolelana le NGO ya ka ka diphetho tse sa tsejweng',
+  popiaShareLabel: "Arolelana diphetho tse sa senoleng hore ke tsa mang le NGO ya ka",
   popiaShareDesc: 'E thusa mananeo ho latela tshusumetso. O ka e tima nako efe kapa efe.',
   popiaAgreeButton: 'Ke dumela, tswela pele',
   popiaStorageRequired: 'Polokelo ya leru e hlokwa ho sebedisa ImbewuField.',
@@ -1429,6 +1429,11 @@ const dict: Dict = {
   designSectorFrost: "LEQHWA",
   designSectorSeasonWind: "Moya wa {season} · {direction}",
   // End native design controls.
+  // Consent controls: unreviewed drafts; consent-drafts.json.
+  popiaConsentDraftNotice: "Phetolelo ya tumello ha e eso hlahlojwe. Bala mongolo wa Senyesemane pele o kgetha kapa o dumela.",
+  popiaEnglishSourceLabel: "Mongolo wa pele wa Senyesemane:",
+  popiaGoalPickOne: "Kgetha e le nngwe hore o tswele pele",
+  // End consent controls.
 };
 
 export default dict;

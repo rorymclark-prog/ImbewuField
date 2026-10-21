@@ -948,6 +948,37 @@ The native purchasing-gap notice remains: supplementary/region/season, product a
 wording still contains English. Wider workflows, exports, Study/media and fluent review remain
 open under the whole-app goal. This changes the picture; `PLAN_VERSION` stays unchanged.
 
+## First-run consent and goals — draft batch 21
+
+`codex/four-language-consent` is stacked on production/yield notes (#1047). The real two-step
+consent flow now has native review status and source labels in all four targets, and fills
+three missing goal-selection prompts in Sesotho, Xitsonga and Tshivenda. `consent-drafts.json`
+records 16 new/corrected native values, their exact previous wording and the pre-edit source
+hashes. The sharing label now describes results that do not disclose whose they are; the
+the Xitsonga family-food goal retains a steady spread through the year without promising food
+never ends. These are **unreviewed AI drafts**, without fluent-speaker or compliance approval.
+
+All 18 original English consent/goal clauses remain exact, as does the existing isiZulu notice.
+Each target keeps separately language-tagged English source text. Switches, actions and dialogs
+have native accessible names; goal buttons expose their selected state. Storage remains
+required and starts on; sharing remains optional and starts off. The three goal IDs, selection
+gates, account-scoped storage keys, record schema, timestamp and legacy-key cleanup are unchanged.
+No policy, data-handling behavior or English farming/learning source was rewritten.
+
+Evidence in `evidence/consent/` covers the actual modal at phone and desktop sizes in all four
+languages: 32 states, 1,381 readable text lines without clipping, occlusion or document overflow.
+The modal intentionally scrolls on phones. Disposable browser contexts exercise required-storage
+and no-goal gates and save only synthetic local records; no real account or external consent is
+used. Real React-hook tests also cover all three goals and changing language while keeping choices.
+Exact source hashes and negative altered/partial-layer checks keep historical Study protection.
+Typecheck is clean; 433 tests pass across 51 registered files, and whitespace checks are clean.
+
+The original test excluding Xitsonga from source pairing pinned the old language list; it now
+requires source backing for every target draft. Its consent-default/gate assertions remain.
+The pending-source CSV was regenerated through the unchanged script after adding two UI source
+keys; human translation cells remain blank. Wider workflows, research, exports, Study/media and
+fluent review still remain under this goal. This changes the picture; `PLAN_VERSION` is unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

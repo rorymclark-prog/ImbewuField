@@ -1,0 +1,722 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 41,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Idatha yakho, ukukhetha kwakho",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 46,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Idatha yakho, ukukhetha kwakho",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 49,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Yini oyifunayo kakhulu emhlabeni wakho?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 46,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Yini oyifunayo kakhulu emhlabeni wakho?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": false,
+    "goal": "feed",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 38,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Idatha yakho, ukukhetha kwakho",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 43,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Idatha yakho, ukukhetha kwakho",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 45,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Yini oyifunayo kakhulu emhlabeni wakho?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 42,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Yini oyifunayo kakhulu emhlabeni wakho?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": true,
+    "goal": "soil",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 40,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data ya hao, kgetho ya hao",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 44,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data ya hao, kgetho ya hao",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 42,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "O batla eng haholo naheng ya hao?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 39,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "O batla eng haholo naheng ya hao?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": false,
+    "goal": "feed",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 36,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data ya hao, kgetho ya hao",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 40,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data ya hao, kgetho ya hao",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 44,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "O batla eng haholo naheng ya hao?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 41,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "O batla eng haholo naheng ya hao?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": true,
+    "goal": "soil",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 43,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Datha ya wena, ku hlawula ka wena",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 48,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Datha ya wena, ku hlawula ka wena",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 49,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "I yini leswi u swi lavaka ngopfu eka misava ya wena?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 46,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "I yini leswi u swi lavaka ngopfu eka misava ya wena?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": false,
+    "goal": "feed",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 39,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Datha ya wena, ku hlawula ka wena",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 43,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Datha ya wena, ku hlawula ka wena",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 45,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "I yini leswi u swi lavaka ngopfu eka misava ya wena?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 42,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "I yini leswi u swi lavaka ngopfu eka misava ya wena?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": true,
+    "goal": "soil",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 42,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data yaṋu, khetho yaṋu",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 47,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data yaṋu, khetho yaṋu",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 47,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Ni ṱoḓa mini vhukuma kha mavu aṋu?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 44,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Ni ṱoḓa mini vhukuma kha mavu aṋu?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": false,
+    "goal": "feed",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "stages": [
+      {
+        "stage": "storage",
+        "checkedLines": 40,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data yaṋu, khetho yaṋu",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "storage-required",
+        "checkedLines": 45,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Data yaṋu, khetho yaṋu",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "goal",
+        "checkedLines": 44,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Ni ṱoḓa mini vhukuma kha mavu aṋu?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      },
+      {
+        "stage": "selected",
+        "checkedLines": 41,
+        "failed": [],
+        "clipped": false,
+        "documentOverflow": false,
+        "nativeName": "Ni ṱoḓa mini vhukuma kha mavu aṋu?",
+        "sourceLanguages": [
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en",
+          "en"
+        ]
+      }
+    ],
+    "recordSchema": [
+      "at",
+      "consent",
+      "goal",
+      "shareNgo"
+    ],
+    "shareNgo": true,
+    "goal": "soil",
+    "initiallyNoConsent": true,
+    "recordKey": "imbewu_popia"
+  }
+]
