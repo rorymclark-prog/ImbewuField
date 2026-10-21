@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { coverageOf, translationGaps } from '../lib/lang-coverage.ts';
 import { englishDictionary, visibleLiteralCandidates } from './translation-inventory.ts';
-import { beforeNavigationTranslations } from './navigation-translation-preservation.ts';
+import { beforeNavigationDictionary, beforeNavigationTranslations } from './navigation-translation-preservation.ts';
 import zu from '../lib/locales/zu.ts';
 import st from '../lib/locales/st.ts';
 import ts from '../lib/locales/ts.ts';
@@ -69,4 +69,16 @@ test('historical study protection permits the declared new app controls and stil
   assert.throws(() => beforeNavigationTranslations(source.replace('const dict: Dict = {', 'const dict: Dict = {\n  loginSignIn: "Override",'), 've'));
   const withChangedLesson = source.replace('studentKeyPoints:', 'studentKeyPointsChanged:');
   assert.notEqual(beforeNavigationTranslations(withChangedLesson, 've'), before, 'a learning-content edit must still reach and fail the original snapshot check');
+});
+
+test('historical dictionary views reverse only an exact app UI layer and keep changed callers exposed', async () => {
+  const { assertStudyRemainingControlsLocale } = await import('./study-remaining-controls-next-history-checks.ts');
+  const before = beforeNavigationDictionary(ve, 've') as Record<string, string>;
+  assert.ok(!Object.hasOwn(before, 'completionScoreAria'));
+  assert.equal(before.homeQuickJournalDesc, 'Notes & photos', 'restore a pending English value instead of deleting its key');
+  assertStudyRemainingControlsLocale(ve);
+  const changedAppControl = { ...ve, loginSignIn: ve.loginSignIn + ' Changed.' };
+  assert.equal(beforeNavigationDictionary(changedAppControl, 've'), changedAppControl, 'a changed caller must not be projected as the accepted layer');
+  assert.throws(() => assertStudyRemainingControlsLocale(changedAppControl), /unlisted or altered locale value/);
+  assert.throws(() => assertStudyRemainingControlsLocale({ ...ve, studentContinue: ve.studentContinue + ' Changed.' }), /unlisted or altered locale value/);
 });
