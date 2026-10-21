@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
+import LanguageDraftNote from './LanguageDraftNote';
 import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
@@ -261,6 +262,7 @@ export default function ThemePanel({ open, onClose }: Props) {
                 <span lang="en">/ Unreviewed Xitsonga draft.</span>
               </p>
             )}
+            {lang !== 'ts' && <LanguageDraftNote lang={lang} scope="settings" />}
             {lang !== 'ts' && isPartialLang(lang) && (
               <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
                 {translate(lang, 'langPartialActiveNote').replace('{lang}', APP_LANGS.find((l) => l.code === lang)?.native ?? lang)}
