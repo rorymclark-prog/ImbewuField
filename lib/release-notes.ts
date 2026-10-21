@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: 'e3f18d92', changes: [
+    'Full production and yield notes now have four draft translations.',
+    'Source calculations and limits stay with each reference.',
+  ], tour: [{ title: 'Read production references', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, open the plant buying section. Read the full production notes beside their original figures and source limits. Remaining English research is still marked as unfinished.',
+  }] },
   { when: '21 October 2026', sha: '6446f1cb', changes: [
     'First-crop references have full draft explanations in four languages.',
     'The original ages, trial conditions and missing-timing cautions stay with each reference.',

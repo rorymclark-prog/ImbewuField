@@ -237,7 +237,7 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "english": "Monthly rainfall, not a weather forecast.",
     "zu": "Imvula yenyanga, akusona isibikezelo sezulu.",
     "st": "Pula ya kgwedi, ha se bolepi ba boemo ba lehodimo.",
-    "ts": "Mpfula ya n’hweti, a hi vuprofeta bya maxelo.",
+    "ts": "Mpfula ya n’hweti, a hi mvhumbo wa maxelo.",
     "ve": "Mvula ya ṅwedzi, a si mbonelaphanḓa ya mutsho."
   },
   {
@@ -1602,7 +1602,7 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "english": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",
     "zu": "Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.",
     "st": "Dipalohare tsa kgwedi ka nako e telele bakeng sa sebaka sena, ha se ponelopele. Selemo sefe kapa sefe se ka ba le pula e ngata haholo kapa sa oma haholo ho feta sena.",
-    "ts": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi vuprofeta bya maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi.",
+    "ts": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi mvhumbo wa maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi.",
     "ve": "Ndinganyelo dza ṅwedzi dza tshifhinga tshilapfu dza fhethu afha, a si mbonelaphanḓa. Ṅwaha muṅwe na muṅwe u nga vha na mvula nnzhi kana wa oma vhukuma u fhira izwi."
   },
   {
