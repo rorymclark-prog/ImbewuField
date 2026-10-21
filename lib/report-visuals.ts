@@ -628,6 +628,909 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "st": "Setshwantsho sa khathaloko: {name}",
     "ts": "Xifaniso xa khathaloko: {name}",
     "ve": "Tshifanyiso tsha khathaḽogu: {name}"
+  },
+  {
+    "english": "House",
+    "zu": "Indlu",
+    "st": "Ntlo",
+    "ts": "Yindlu",
+    "ve": "Nnḓu"
+  },
+  {
+    "english": "Patio",
+    "zu": "Isitubhi",
+    "st": "Lebala le katilweng",
+    "ts": "Xivava lexi andlariweke",
+    "ve": "Muṱa wo adzwaho"
+  },
+  {
+    "english": "Driveway",
+    "zu": "Indlela yemoto",
+    "st": "Tsela ya koloi",
+    "ts": "Ndlela ya movha",
+    "ve": "Nḓila ya moḓoro"
+  },
+  {
+    "english": "Lawn",
+    "zu": "Utshani",
+    "st": "Jwang ba lebaleng",
+    "ts": "Byanyi bya le rivaleni",
+    "ve": "Hatsi ha muṱani"
+  },
+  {
+    "english": "Veg garden",
+    "zu": "Ingadi yemifino",
+    "st": "Serapa sa meroho",
+    "ts": "Ntanga wa matsavu",
+    "ve": "Ngade ya miroho"
+  },
+  {
+    "english": "Orchard",
+    "zu": "Insimu yezithelo",
+    "st": "Serapa sa difate tsa ditholwana",
+    "ts": "Ntanga wa mirhi ya mihandzu",
+    "ve": "Ngade ya miri ya mitshelo"
+  },
+  {
+    "english": "Cleared ground",
+    "zu": "Indawo evulekile",
+    "st": "Mobu o hlekilweng",
+    "ts": "Misava leyi basisiweke",
+    "ve": "Mavu o kunakiswaho"
+  },
+  {
+    "english": "Swale",
+    "zu": "Umsele wokubamba amanzi",
+    "st": "Foro e tshwarang metsi",
+    "ts": "Nsele wo khoma mati",
+    "ve": "Mugero wa u fara maḓi"
+  },
+  {
+    "english": "Fence",
+    "zu": "Uthango",
+    "st": "Terata",
+    "ts": "Rihlampfu",
+    "ve": "Luhura"
+  },
+  {
+    "english": "Path",
+    "zu": "Indlela",
+    "st": "Tsela",
+    "ts": "Ndlela",
+    "ve": "Nḓila"
+  },
+  {
+    "english": "Bed path",
+    "zu": "Indlela yemibhede",
+    "st": "Tsela pakeng tsa dibethe",
+    "ts": "Ndlela ya mibedo",
+    "ve": "Nḓila ya mibethe"
+  },
+  {
+    "english": "Water pipe",
+    "zu": "Ipayipi lamanzi",
+    "st": "Peipi ya metsi",
+    "ts": "Phayiphi ya mati",
+    "ve": "Bommbo ḽa maḓi"
+  },
+  {
+    "english": "Drip line",
+    "zu": "Ipayipi lokuconsa",
+    "st": "Peipi e rothelang",
+    "ts": "Phayiphi yo thonisa",
+    "ve": "Bommbo ḽa u rothodza"
+  },
+  {
+    "english": "Windbreak",
+    "zu": "Isivikelo somoya",
+    "st": "Sethibela moya",
+    "ts": "Xisirhelelo xa moya",
+    "ve": "Tshithivheli tsha muya"
+  },
+  {
+    "english": "Greywater line",
+    "zu": "Amanzi asetshenzisiwe",
+    "st": "Peipi ya metsi a sebedisitsweng",
+    "ts": "Phayiphi ya mati lama tirhisiweke",
+    "ve": "Bommbo ḽa maḓi o shumiswaho"
+  },
+  {
+    "english": "North",
+    "zu": "INyakatho",
+    "st": "Leboya",
+    "ts": "N'walungu",
+    "ve": "Devhula"
+  },
+  {
+    "english": "Site boundary",
+    "zu": "Umngcele wendawo",
+    "st": "Moedi wa sebaka",
+    "ts": "Ndzelekano wa ndhawu",
+    "ve": "Mukanoni wa fhethu"
+  },
+  {
+    "english": "Buildings",
+    "zu": "Izakhiwo",
+    "st": "Meaho",
+    "ts": "Miako",
+    "ve": "Zwifhaṱo"
+  },
+  {
+    "english": "vegetable bed, numbered",
+    "zu": "umbhede wemifino, unenombolo",
+    "st": "bethe ya meroho, e nang le nomoro",
+    "ts": "mbedo wa matsavu, lowu nga ni nomboro",
+    "ve": "mbethe wa miroho, u na nomboro"
+  },
+  {
+    "english": "vegetable beds, numbered",
+    "zu": "imibhede yemifino, inezinombolo",
+    "st": "dibethe tsa meroho, tse nang le dinomoro",
+    "ts": "mibedo ya matsavu, leyi nga ni tinomboro",
+    "ve": "mibethe ya miroho, i na nomboro"
+  },
+  {
+    "english": "1 staple plot (P1)",
+    "zu": "isiza esiyisisekelo esi-1 (P1)",
+    "st": "tshimo e 1 ya dijalo tsa motheo (P1)",
+    "ts": "nsimu ya swibyariwa swa nkoka ya 1 (P1)",
+    "ve": "tsimu ya zwiliṅwa zwa ndeme ya 1 (P1)"
+  },
+  {
+    "english": "tree or planting, to scale",
+    "zu": "isihlahla noma isitshalo, ngesikali",
+    "st": "sefate kapa semela, ka sekala",
+    "ts": "murhi kumbe xibyariwa, hi xikalo",
+    "ve": "muri kana tshimela, nga tshikalo"
+  },
+  {
+    "english": "trees and plantings, to scale",
+    "zu": "izihlahla nezitshalo, ngesikali",
+    "st": "difate le dimela, ka sekala",
+    "ts": "mirhi ni swibyariwa, hi xikalo",
+    "ve": "miri na zwimela, nga tshikalo"
+  },
+  {
+    "english": "water tank or water point",
+    "zu": "ithangi noma indawo yamanzi",
+    "st": "tanka kapa sebaka sa metsi",
+    "ts": "thangi kumbe ndhawu ya mati",
+    "ve": "thannga kana fhethu ha maḓi"
+  },
+  {
+    "english": "water tanks and points",
+    "zu": "amathangi nezindawo zamanzi",
+    "st": "ditanka le dibaka tsa metsi",
+    "ts": "tithangi ni tindhawu ta mati",
+    "ve": "thannga na fhethu ha maḓi"
+  },
+  {
+    "english": "Paving and driveway",
+    "zu": "Indawo egandayiwe",
+    "st": "Sebaka se katilweng le tsela ya koloi",
+    "ts": "Ndhawu leyi andlariweke ni ndlela ya movha",
+    "ve": "Fhethu ho adzwaho na nḓila ya moḓoro"
+  },
+  {
+    "english": "Terrace bank",
+    "zu": "Udonga lwethala",
+    "st": "Leralla la terase",
+    "ts": "Ribuwa ra theraso",
+    "ve": "Luvhondo lwa therasi"
+  },
+  {
+    "english": "structure",
+    "zu": "isakhiwo esincane",
+    "st": "moaho",
+    "ts": "muako",
+    "ve": "tshifhaṱo"
+  },
+  {
+    "english": "structures",
+    "zu": "izakhiwo ezincane",
+    "st": "meaho",
+    "ts": "miako",
+    "ve": "zwifhaṱo"
+  },
+  {
+    "english": "soil or earthworks item",
+    "zu": "into yomhlabathi",
+    "st": "ntho ya mobu kapa mosebetsi wa mobu",
+    "ts": "nchumu wa misava kumbe wa ku tirha misava",
+    "ve": "tshithu tsha mavu kana mushumo wa mavu"
+  },
+  {
+    "english": "soil and earthworks items",
+    "zu": "izinto zomhlabathi",
+    "st": "dintho tsa mobu le mesebetsi ya mobu",
+    "ts": "swilo swa misava ni mintirho ya misava",
+    "ve": "zwithu zwa mavu na mishumo ya mavu"
+  },
+  {
+    "english": "animal shelter",
+    "zu": "indawo yezilwane",
+    "st": "setshabelo sa diphoofolo",
+    "ts": "vutumbelo bya swifuwo",
+    "ve": "vhudzulo ha zwifuwo"
+  },
+  {
+    "english": "animal shelters",
+    "zu": "izindawo zezilwane",
+    "st": "ditshabelo tsa diphoofolo",
+    "ts": "vutumbelo bya swifuwo",
+    "ve": "vhudzulo ha zwifuwo"
+  },
+  {
+    "english": "gate or access item",
+    "zu": "isango noma indlela",
+    "st": "heke kapa ntho ya ho kena",
+    "ts": "nyangwa kumbe nchumu wo nghena",
+    "ve": "gethe kana tshithu tsha u dzhena"
+  },
+  {
+    "english": "gates and access items",
+    "zu": "amasango nezindlela",
+    "st": "diheke le dintho tsa ho kena",
+    "ts": "tinyangwa ni swilo swo nghena",
+    "ve": "magethe na zwithu zwa u dzhena"
+  },
+  {
+    "english": "Solid = already there.  Dashed outline = planned, not built yet.",
+    "zu": "Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.",
+    "st": "E tletseng = e se e le teng.  Mola o kgaohileng = e rerilwe, ha e eso ahuwe.",
+    "ts": "Leswi tatiweke = swi se swi kona.  Layini leyi tsemekeke = swi kunguhatiwile, a swi si akiwa.",
+    "ve": "Zwo ḓadzwaho = zwi hone.  Mutalo wo ṱhukhukanywaho = zwo pulaniwa, a zwi athu fhaṱiwa."
+  },
+  {
+    "english": "Dashed outlines: everything on this plan is planned, not built yet.",
+    "zu": "Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa.",
+    "st": "Mela e kgaohileng: tsohle tse polaneng ena di rerilwe, ha di eso ahuwe.",
+    "ts": "Milayini leyi tsemekeke: swilo hinkwato eka pulani leyi swi kunguhatiwile, a swi si akiwa.",
+    "ve": "Mitalo yo ṱhukhukanywaho: zwoṱhe kha pulane iyi zwo pulaniwa, a zwi athu fhaṱiwa."
+  },
+  {
+    "english": "Plant codes",
+    "zu": "Amakhodi ezitshalo",
+    "st": "Dikhoutu tsa dimela",
+    "ts": "Tikhodi ta swimilana",
+    "ve": "Khoudu dza zwimela"
+  },
+  {
+    "english": "Bed names",
+    "zu": "Amagama emibhede",
+    "st": "Mabitso a dibethe",
+    "ts": "Mavito ya mibedo",
+    "ve": "Madzina a mibethe"
+  },
+  {
+    "english": "vegetable bed",
+    "zu": "umbhede wemifino",
+    "st": "bethe ya meroho",
+    "ts": "mbedo wa matsavu",
+    "ve": "mbethe wa miroho"
+  },
+  {
+    "english": "vegetable beds",
+    "zu": "imibhede yemifino",
+    "st": "dibethe tsa meroho",
+    "ts": "mibedo ya matsavu",
+    "ve": "mibethe ya miroho"
+  },
+  {
+    "english": "staple plot",
+    "zu": "isiza esiyisisekelo",
+    "st": "tshimo ya dijalo tsa motheo",
+    "ts": "nsimu ya swibyariwa swa nkoka",
+    "ve": "tsimu ya zwiliṅwa zwa ndeme"
+  },
+  {
+    "english": "staple plots",
+    "zu": "iziza eziyisisekelo",
+    "st": "masimo a dijalo tsa motheo",
+    "ts": "masimu ya swibyariwa swa nkoka",
+    "ve": "tsimu dza zwiliṅwa zwa ndeme"
+  },
+  {
+    "english": "tree or planting",
+    "zu": "isihlahla",
+    "st": "sefate kapa semela",
+    "ts": "murhi kumbe xibyariwa",
+    "ve": "muri kana tshimela"
+  },
+  {
+    "english": "trees and plantings",
+    "zu": "izihlahla nezitshalo",
+    "st": "difate le dimela",
+    "ts": "mirhi ni swibyariwa",
+    "ve": "miri na zwimela"
+  },
+  {
+    "english": "water item",
+    "zu": "into yamanzi",
+    "st": "ntho ya metsi",
+    "ts": "nchumu wa mati",
+    "ve": "tshithu tsha maḓi"
+  },
+  {
+    "english": "water items",
+    "zu": "izinto zamanzi",
+    "st": "dintho tsa metsi",
+    "ts": "swilo swa mati",
+    "ve": "zwithu zwa maḓi"
+  },
+  {
+    "english": "Site plan",
+    "zu": "Ipulani lendawo",
+    "st": "Polane ya sebaka",
+    "ts": "Pulani ya ndhawu",
+    "ve": "Pulane ya fhethu"
+  },
+  {
+    "english": "Drawn to scale from the saved design.",
+    "zu": "Kudwetshwe ngesikali kusuka kumklamo ogciniwe.",
+    "st": "E takilwe ka sekala ho tswa moralong o bolokilweng.",
+    "ts": "Yi dirowiwe hi xikalo ku suka eka dizayini leyi hlayisiweke.",
+    "ve": "Yo oliwa nga tshikalo u bva kha dizaini yo vhulungwaho."
+  },
+  {
+    "english": "North is up. ",
+    "zu": "INyakatho iphezulu. ",
+    "st": "Leboya le hodimo. ",
+    "ts": "N'walungu yi le henhla. ",
+    "ve": "Devhula hu nṱha. "
+  },
+  {
+    "english": "Bed numbers match the bed list. ",
+    "zu": "Izinombolo zemibhede ziyafana nezasohlwini lwemibhede. ",
+    "st": "Dinomoro tsa dibethe di tshwana le tsa lenaneng. ",
+    "ts": "Tinomboro ta mibedo ti fambisana ni nxaxamelo wa mibedo. ",
+    "ve": "Nomboro dza mibethe dzi fana na mutevhe wa mibethe. "
+  },
+  {
+    "english": "The boundary runs beyond this drawing, which closes in on the designed area. ",
+    "zu": "Umngcele udlulela ngale kwalo mdwebo, osondele endaweni eklanyiwe. ",
+    "st": "Moedi o fetela ka ntle ho setshwantsho sena, se bontshang sebaka se ralilweng haufi. ",
+    "ts": "Ndzelekano wu hundza xifaniso lexi, lexi tshinelelaka ndhawu leyi dizayiniweke. ",
+    "ve": "Mukanoni u fhira tshifanyiso itshi, tshi sendela tsini na fhethu ho dizainiwaho. "
+  },
+  {
+    "english": "Very small items are drawn larger so they can be seen. ",
+    "zu": "Izinto ezincane kakhulu zidwetshwe zaba zinkulu ukuze zibonakale. ",
+    "st": "Dintho tse nyenyane haholo di takilwe di le kgolo hore di bonahale. ",
+    "ts": "Swilo leswitsongo swinene swi dirowiwe swi ri swikulu leswaku swi vonaka. ",
+    "ve": "Zwithu zwiṱuku vhukuma zwo oliwa zwi zwihulwane uri zwi vhonale. "
+  },
+  {
+    "english": "It is not a land survey.",
+    "zu": "Akusikho ukuhlolwa komhlaba.",
+    "st": "Sena ha se tekanyo ya semmuso ya mobu.",
+    "ts": "Leyi a hi mpimo wa ximfumo wa misava.",
+    "ve": "Iyi a si pimo ya mavu ya tshiofisi."
+  },
+  {
+    "english": "Saved design",
+    "zu": "Umklamo ogciniwe",
+    "st": "Moralo o bolokilweng",
+    "ts": "Dizayini leyi hlayisiweke",
+    "ve": "Dizaini yo vhulungwaho"
+  },
+  {
+    "english": "; boundary and buildings as traced on the map",
+    "zu": "; umngcele nezakhiwo njengoba kudwetshwe kumephu",
+    "st": "; moedi le meaho jwalokaha di takilwe mmapeng",
+    "ts": "; ndzelekano ni miako hi laha swi landzelerisiweke emepeni",
+    "ve": "; mukanoni na zwifhaṱo sa zwo olelwa kha mapa"
+  },
+  {
+    "english": "Site plan drawn from the saved design",
+    "zu": "Ipulani lendawo elidwetshwe kumklamo ogciniwe",
+    "st": "Polane ya sebaka e takilweng ho tswa moralong o bolokilweng",
+    "ts": "Pulani ya ndhawu leyi dirowiweke ku suka eka dizayini leyi hlayisiweke",
+    "ve": "Pulane ya fhethu yo oliwaho u bva kha dizaini yo vhulungwaho"
+  },
+  {
+    "english": "Scale bar",
+    "zu": "Isikali",
+    "st": "Mola wa sekala",
+    "ts": "Layini ya xikalo",
+    "ve": "Mutalo wa tshikalo"
+  },
+  {
+    "english": "Staple crop plots",
+    "zu": "Iziza zezitshalo eziyisisekelo",
+    "st": "Masimo a dijalo tsa motheo",
+    "ts": "Masimu ya swibyariwa swa nkoka",
+    "ve": "Tsimu dza zwiliṅwa zwa ndeme"
+  },
+  {
+    "english": "Roof",
+    "zu": "Uphahla",
+    "st": "Marulelo",
+    "ts": "Lwangu",
+    "ve": "Ṱhanga"
+  },
+  {
+    "english": "Everything else: paths, trees, yard, open ground",
+    "zu": "Konke okunye: izindlela, izihlahla, igceke, umhlaba ovulekile",
+    "st": "Tse ding tsohle: ditsela, difate, lebala, mobu o bulehileng",
+    "ts": "Swilo leswin'wana: tindlela, mirhi, rivala, misava leyi pfulekeke",
+    "ve": "Zwiṅwe zwoṱhe: nḓila, miri, muṱa, mavu o vuleaho"
+  },
+  {
+    "english": "The whole site",
+    "zu": "Indawo yonke",
+    "st": "Sebaka sohle",
+    "ts": "Ndhawu hinkwayo",
+    "ve": "Fhethu hoṱhe"
+  },
+  {
+    "english": "How the ground is used",
+    "zu": "Ukuthi umhlaba usetshenziswa kanjani",
+    "st": "Kamoo mobu o sebediswang kateng",
+    "ts": "Ndlela leyi misava yi tirhisiwaka ha yona",
+    "ve": "Nḓila ine mavu a shumiswa ngayo"
+  },
+  {
+    "english": "Areas as drawn on the saved design and traced on the map, whether built yet or not. Trees, paths and tanks are not counted as areas.",
+    "zu": "Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo.",
+    "st": "Dibaka jwalokaha di takilwe moralong o bolokilweng le mmapeng, ho sa tsotellehe hore di se di ahuwe kapa tjhe. Difate, ditsela le ditanka ha di balwe e le dibaka.",
+    "ts": "Tindhawu hi laha ti dirowiweke eka dizayini leyi hlayisiweke ni ku landzelerisiwa emepeni, hambi ti se ti akiwile kumbe a ti si akiwa. Mirhi, tindlela ni tithangi a swi hlayiwi tani hi tindhawu.",
+    "ve": "Fhethu sa ho oliwa kha dizaini yo vhulungwaho na u olelwa kha mapa, naho ho no fhaṱiwa kana hu sa athu. Miri, nḓila na thannga a zwi vhaliwi sa vhupo."
+  },
+  {
+    "english": "Boundary",
+    "zu": "Umngcele",
+    "st": "Moedi",
+    "ts": "Ndzelekano",
+    "ve": "Mukanoni"
+  },
+  {
+    "english": "traced on the map",
+    "zu": "udwetshwe kumephu",
+    "st": "o takilweng mmapeng",
+    "ts": "lowu landzelerisiweke emepeni",
+    "ve": "wo olelwaho kha mapa"
+  },
+  {
+    "english": "Beds and plots: saved design.",
+    "zu": "Imibhede neziza: umklamo ogciniwe.",
+    "st": "Dibethe le masimo: moralo o bolokilweng.",
+    "ts": "Mibedo ni masimu: dizayini leyi hlayisiweke.",
+    "ve": "Mibethe na tsimu: dizaini yo vhulungwaho."
+  },
+  {
+    "english": "Land use",
+    "zu": "Ukusetshenziswa komhlaba",
+    "st": "Tshebediso ya mobu",
+    "ts": "Matirhiselo ya misava",
+    "ve": "U shumisa mavu"
+  },
+  {
+    "english": "Trees and plants",
+    "zu": "Izihlahla nezitshalo",
+    "st": "Difate le dimela",
+    "ts": "Mirhi ni swimilana",
+    "ve": "Miri na zwimela"
+  },
+  {
+    "english": "Structures",
+    "zu": "Izakhiwo",
+    "st": "Meaho",
+    "ts": "Miako",
+    "ve": "Zwifhaṱo"
+  },
+  {
+    "english": "Earthworks",
+    "zu": "Imisebenzi yomhlaba",
+    "st": "Mosebetsi wa mobu",
+    "ts": "Mintirho ya misava",
+    "ve": "Mishumo ya mavu"
+  },
+  {
+    "english": "Animals",
+    "zu": "Izilwane",
+    "st": "Diphoofolo",
+    "ts": "Swifuwo",
+    "ve": "Zwifuwo"
+  },
+  {
+    "english": "Access",
+    "zu": "Ukufinyelela",
+    "st": "Ho kena",
+    "ts": "Ku nghena",
+    "ve": "U dzhena"
+  },
+  {
+    "english": "Paths, swales and pipes",
+    "zu": "Izindlela, imisele namapayipi",
+    "st": "Ditsela, diforo tse tshwarang metsi le dipeipi",
+    "ts": "Tindlela, misele yo khoma mati ni tiphayiphi",
+    "ve": "Nḓila, migero ya u fara maḓi na bommbo"
+  },
+  {
+    "english": "already there",
+    "zu": "sekukhona",
+    "st": "di se di le teng",
+    "ts": "swi se swi kona",
+    "ve": "zwi hone"
+  },
+  {
+    "english": "still to build or plant",
+    "zu": "kusazokwakhiwa noma kutshalwe",
+    "st": "di sa ntse di tla ahuwa kapa ho lengwa",
+    "ts": "swa ha fanele ku akiwa kumbe ku byariwa",
+    "ve": "zwi kha ḓi tea u fhaṱiwa kana u ṱavhiwa"
+  },
+  {
+    "english": "Already there",
+    "zu": "Sekukhona",
+    "st": "Di se di le teng",
+    "ts": "Swi se swi kona",
+    "ve": "Zwi hone"
+  },
+  {
+    "english": "Planned, not built or planted yet",
+    "zu": "Kuhleliwe, akukakhiwa noma kutshalwe",
+    "st": "Di rerilwe, ha di eso ahuwe kapa ho lengwa",
+    "ts": "Swi kunguhatiwile, a swi si akiwa kumbe ku byariwa",
+    "ve": "Zwo pulaniwa, a zwi athu fhaṱiwa kana u ṱavhiwa"
+  },
+  {
+    "english": "Numbers: there now / total",
+    "zu": "Izinombolo: okukhona manje / isamba",
+    "st": "Dinomoro: tse teng jwale / kaofela",
+    "ts": "Tinomboro: leswi nga kona sweswi / ntsengo",
+    "ve": "Nomboro: zwi re hone zwino / ṱhanganyelo"
+  },
+  {
+    "english": "Built, and still to build",
+    "zu": "Okwakhiwe, nokusazokwakhiwa",
+    "st": "Tse ahilweng le tse sa ntseng di tla ahuwa",
+    "ts": "Leswi akiweke ni leswi swa ha faneleke ku akiwa",
+    "ve": "Zwo fhaṱiwaho na zwi sa athu fhaṱiwa"
+  },
+  {
+    "english": "One mark for each thing on the saved design, as it was marked there. Change an item to \"existing\" in the Design Studio once it is in the ground.",
+    "zu": "Uphawu olulodwa lwento ngayinye esemklamweni ogciniwe, njengoba yaphawulwa khona. Shintsha into ibe \"ekhona\" ku-Design Studio uma isisemhlabathini.",
+    "st": "Letshwao le le leng bakeng sa ntho ka nngwe moralong o bolokilweng, jwalokaha e tshwailwe teng. Fetola ntho hore e be \"e seng e le teng\" ho Design Studio hang ha e se e le mobung.",
+    "ts": "Mfungho wun'we wa xilo xin'wana ni xin'wana eka dizayini leyi hlayisiweke, hi laha xi funghiweke kona. Cinca xilo xi va \"lexi se xi nga kona\" eka Design Studio loko se xi ri ehansi.",
+    "ve": "Luswayo luthihi lwa tshithu tshiṅwe na tshiṅwe kha dizaini yo vhulungwaho, sa tsho swaiwa hone. Shandulani tshithu tshi vhe \"tshi re hone\" kha Design Studio musi tshi no vha mavuni."
+  },
+  {
+    "english": "Built and planned",
+    "zu": "Okwakhiwe nokuhleliwe",
+    "st": "Tse ahilweng le tse rerilweng",
+    "ts": "Leswi akiweke ni leswi kunguhatiweke",
+    "ve": "Zwo fhaṱiwaho na zwo pulaniwaho"
+  },
+  {
+    "english": "The design has changed since this report was written. This picture shows the design as it is today.",
+    "zu": "Umklamo ushintshile selokhu kwabhalwa lo mbiko. Lesi sithombe sikhombisa umklamo njengoba unjalo namuhla.",
+    "st": "Moralo o fetohile ho tloha ha tlaleho ena e ngolwa. Setshwantsho sena se bontsha moralo kamoo o leng kateng kajeno.",
+    "ts": "Dizayini yi cincile ku sukela loko xiviko lexi xi tsariwile. Xifaniso lexi xi komba dizayini hi laha yi nga xiswona namuntlha.",
+    "ve": "Dizaini yo shanduka u bva tshee muvhigo uyu wa ṅwalwa. Tshifanyiso itshi tshi sumbedza dizaini sa zwine ya vha zwone ṋamusi."
+  },
+  {
+    "english": "{count} staple plots (P1–P{count})",
+    "zu": "iziza eziyisisekelo ezi-{count} (P1–P{count})",
+    "st": "masimo a {count} a dijalo tsa motheo (P1–P{count})",
+    "ts": "masimu ya {count} ya swibyariwa swa nkoka (P1–P{count})",
+    "ve": "tsimu dza {count} dza zwiliṅwa zwa ndeme (P1–P{count})"
+  },
+  {
+    "english": "JoJo Tank 1000L",
+    "zu": "Ithangi le-JoJo 1000L",
+    "st": "Tanka ya JoJo 1000L",
+    "ts": "Thangi ya JoJo 1000L",
+    "ve": "Thannga ya JoJo 1000L"
+  },
+  {
+    "english": "JoJo Tank 2500L",
+    "zu": "Ithangi le-JoJo 2500L",
+    "st": "Tanka ya JoJo 2500L",
+    "ts": "Thangi ya JoJo 2500L",
+    "ve": "Thannga ya JoJo 2500L"
+  },
+  {
+    "english": "JoJo Tank 5000L",
+    "zu": "Ithangi le-JoJo 5000L",
+    "st": "Tanka ya JoJo 5000L",
+    "ts": "Thangi ya JoJo 5000L",
+    "ve": "Thannga ya JoJo 5000L"
+  },
+  {
+    "english": "JoJo Tank 10000L",
+    "zu": "Ithangi le-JoJo 10000L",
+    "st": "Tanka ya JoJo 10000L",
+    "ts": "Thangi ya JoJo 10000L",
+    "ve": "Thannga ya JoJo 10000L"
+  },
+  {
+    "english": "Rain Barrel",
+    "zu": "Umgqomo wamanzi emvula",
+    "st": "Moqomo wa metsi a pula",
+    "ts": "Barele ya mati ya mpfula",
+    "ve": "Dziramu ḽa maḓi a mvula"
+  },
+  {
+    "english": "Small Pond",
+    "zu": "Ichibi elincane",
+    "st": "Letangwana le lenyane",
+    "ts": "Xidzivana",
+    "ve": "Tivha ḽiṱuku"
+  },
+  {
+    "english": "Farm Dam",
+    "zu": "Idamu lepulazi",
+    "st": "Letamo la polasi",
+    "ts": "Damu ra purasi",
+    "ve": "Damu ḽa bulasi"
+  },
+  {
+    "english": "Borehole",
+    "zu": "Umthombo ombiwe",
+    "st": "Sediba se tjhekilweng",
+    "ts": "Xihlovo lexi ceriweke",
+    "ve": "Tshisima tsho bwiwaho"
+  },
+  {
+    "english": "Tap Point",
+    "zu": "Indawo kampompi",
+    "st": "Sebaka sa pompo",
+    "ts": "Ndhawu ya pompi",
+    "ve": "Fhethu ha bommbi"
+  },
+  {
+    "english": "Water Trough",
+    "zu": "Umkhombe wamanzi",
+    "st": "Sejelwana sa metsi",
+    "ts": "Xidjelwana xa mati",
+    "ve": "Tshidyiwelo tsha maḓi"
+  },
+  {
+    "english": "First-Flush Filter",
+    "zu": "Isisefo samanzi okuqala emvula",
+    "st": "Sefe ya metsi a pula a pele",
+    "ts": "Xisefo xa mati yo sungula ya mpfula",
+    "ve": "Tshisefo tsha maḓi a u thoma a mvula"
+  },
+  {
+    "english": "Pump & Filter",
+    "zu": "Iphampu nesisefo",
+    "st": "Pompo le sefe",
+    "ts": "Pompi ni xisefo",
+    "ve": "Bommbi na tshisefo"
+  },
+  {
+    "english": "Greywater Basin",
+    "zu": "Umcengezi wamanzi asetshenzisiwe",
+    "st": "Sekoti sa metsi a sebedisitsweng",
+    "ts": "Xibya xa mati lama tirhisiweke",
+    "ve": "Tshidzivha tsha maḓi o shumiswaho"
+  },
+  {
+    "english": "Greywater Outlet",
+    "zu": "Indawo yokuphuma kwamanzi asetshenzisiwe",
+    "st": "Moo metsi a sebedisitsweng a tswang",
+    "ts": "Ndhawu yo humesa mati lama tirhisiweke",
+    "ve": "Fhethu ha u bvisa maḓi o shumiswaho"
+  },
+  {
+    "english": "Greywater Diverter & Filter",
+    "zu": "Isiphambukisi nesisefo samanzi asetshenzisiwe",
+    "st": "Se kgelosang metsi a sebedisitsweng le sefe",
+    "ts": "Xihambukisi ni xisefo xa mati lama tirhisiweke",
+    "ve": "Tshifhambudzi na tshisefo tsha maḓi o shumiswaho"
+  },
+  {
+    "english": "Infiltration Basin",
+    "zu": "Umgodi wokungenisa amanzi emhlabathini",
+    "st": "Sekoti se kenyang metsi mobung",
+    "ts": "Nkova wo nghenisa mati emisaveni",
+    "ve": "Tshidzivha tsha u nweledza maḓi mavuni"
+  },
+  {
+    "english": "Half-moon",
+    "zu": "Umgodi oyisigamu senyanga",
+    "st": "Sekoti sa sebopeho sa halofo ya kgwedi",
+    "ts": "Nkova wa xivumbeko xa hafu ya n'weti",
+    "ve": "Tshidzivha tsha tshivhumbeo tsha hafu ya ṅwedzi"
+  },
+  {
+    "english": "Berm / Contour Bank",
+    "zu": "Indunduma / udonga olulandela ukuphakama okufanayo",
+    "st": "Tutudu / leralla le latelang bophahamo bo lekanang",
+    "ts": "Xirhendzevutana xa misava / ribuwa leri landzelaka ku tlakuka loku ringanaka",
+    "ve": "Tshikwara tsha mavu / luvhondo lu tevhelaho vhunṱha vhu eḓanaho"
+  },
+  {
+    "english": "Terrace / Retaining Bank",
+    "zu": "Ithala / udonga olubamba umhlabathi",
+    "st": "Terase / leralla le tshwarang mobu",
+    "ts": "Theraso / ribuwa ro khoma misava",
+    "ve": "Therasi / luvhondo lwa u fara mavu"
+  },
+  {
+    "english": "Shed",
+    "zu": "Ishede",
+    "st": "Shedi",
+    "ts": "Xidladla",
+    "ve": "Tshitumba"
+  },
+  {
+    "english": "Polytunnel",
+    "zu": "Umhubhe wepulasitiki",
+    "st": "Tonela ya polasetiki",
+    "ts": "Thanele ya pulasitiki",
+    "ve": "Thanele ya puḽasiṱiki"
+  },
+  {
+    "english": "Shade Tunnel",
+    "zu": "Umhubhe womthunzi",
+    "st": "Tonela ya moriti",
+    "ts": "Thanele ya ndzhuti",
+    "ve": "Thanele ya murunzi"
+  },
+  {
+    "english": "Chicken Coop",
+    "zu": "Ihhoko lezinkukhu",
+    "st": "Lesaka la dikgoho",
+    "ts": "Xihoko xa tihuku",
+    "ve": "Tshitumba tsha khuhu"
+  },
+  {
+    "english": "Chicken Tractor",
+    "zu": "Ihhoko lezinkukhu elihambayo",
+    "st": "Lesaka la dikgoho le tsamaiswang",
+    "ts": "Xihoko xa tihuku lexi fambisiwaka",
+    "ve": "Tshitumba tsha khuhu tshi tshimbidzwaho"
+  },
+  {
+    "english": "Kraal",
+    "zu": "Isibaya",
+    "st": "Lesaka",
+    "ts": "Xivala",
+    "ve": "Danga"
+  },
+  {
+    "english": "Compost Bay (3-bin)",
+    "zu": "Indawo yomquba (izigqoko ezi-3)",
+    "st": "Sebaka sa mosuela (dikamore tse 3)",
+    "ts": "Ndhawu ya manyoro (swibya swa 3)",
+    "ve": "Fhethu ha manyoro (mabogisi a 3)"
+  },
+  {
+    "english": "Worm Farm",
+    "zu": "Indawo yokufuya izikelemu",
+    "st": "Sebaka sa ho rua diboko",
+    "ts": "Ndhawu yo fuwa swivungu",
+    "ve": "Fhethu ha u fuwa zwivhungu"
+  },
+  {
+    "english": "Nursery Table",
+    "zu": "Itafula lenkulisa yezitshalo",
+    "st": "Tafole ya sethopo",
+    "ts": "Tafula ya ndhawu ya swithombana",
+    "ve": "Ṱafula ya zwiraba zwa zwimela"
+  },
+  {
+    "english": "Playground",
+    "zu": "Indawo yokudlala",
+    "st": "Lebala la dipapadi",
+    "ts": "Rivala ro tlangela",
+    "ve": "Fhethu ha u tambela"
+  },
+  {
+    "english": "Market Stall",
+    "zu": "Itafula lasemakethe",
+    "st": "Tafole ya mmaraka",
+    "ts": "Tafula ya makete",
+    "ve": "Ṱafula ya makete"
+  },
+  {
+    "english": "Other water thing",
+    "zu": "Enye into yamanzi",
+    "st": "Ntho e nngwe ya metsi",
+    "ts": "Nchumu wun'wana wa mati",
+    "ve": "Tshiṅwe tshithu tsha maḓi"
+  },
+  {
+    "english": "Other structure",
+    "zu": "Esinye isakhiwo",
+    "st": "Moaho o mong",
+    "ts": "Muako wun'wana",
+    "ve": "Tshiṅwe tshifhaṱo"
+  },
+  {
+    "english": "Beehive",
+    "zu": "Isidleke sezinyosi",
+    "st": "Ntlo ya dinotshi",
+    "ts": "Yindlu ya tinyoxi",
+    "ve": "Lukoro lwa ṋotshi"
+  },
+  {
+    "english": "Goat Pen",
+    "zu": "Isibaya sezimbuzi",
+    "st": "Lesaka la dipodi",
+    "ts": "Xivala xa timbuti",
+    "ve": "Danga ḽa mbudzi"
+  },
+  {
+    "english": "Pig Pen",
+    "zu": "Isibaya sezingulube",
+    "st": "Lesaka la dikolobe",
+    "ts": "Xivala xa tinguluve",
+    "ve": "Danga ḽa nguluvhe"
+  },
+  {
+    "english": "Duck Pond",
+    "zu": "Ichibi lamadada",
+    "st": "Letangwana la matata",
+    "ts": "Xidziva xa masekwa",
+    "ve": "Tivha ḽa masekwa"
+  },
+  {
+    "english": "Rabbit Hutch",
+    "zu": "Ihhoko lonogwaja",
+    "st": "Lesaka la mebutlanyana",
+    "ts": "Xihoko xa mimpfundla",
+    "ve": "Tshitumba tsha mivhuḓa"
+  },
+  {
+    "english": "Livestock Trough",
+    "zu": "Umkhombe wamanzi emfuyo",
+    "st": "Sejelwana sa metsi a diphoofolo",
+    "ts": "Xidjelwana xa mati ya swifuwo",
+    "ve": "Tshidyiwelo tsha maḓi a zwifuwo"
+  },
+  {
+    "english": "Biodigester",
+    "zu": "Isitsha sokubolisa esikhiqiza igesi",
+    "st": "Tanka e hlahisang gase ka ho bodisa",
+    "ts": "Thangi yo virisa thyaka ku humesa gasi",
+    "ve": "Thannga ya u vhivhisa tshika u bvisa gese"
+  },
+  {
+    "english": "Shade Sail",
+    "zu": "Indwangu yomthunzi",
+    "st": "Lesela la moriti",
+    "ts": "Lapi ra ndzhuti",
+    "ve": "Labi ḽa murunzi"
+  },
+  {
+    "english": "Gate",
+    "zu": "Isango",
+    "st": "Heke",
+    "ts": "Nyangwa",
+    "ve": "Gethe"
+  },
+  {
+    "english": "Bench",
+    "zu": "Ibhentshi",
+    "st": "Benche",
+    "ts": "Bence",
+    "ve": "Bannga"
+  },
+  {
+    "english": "Sign",
+    "zu": "Ibhodi lophawu",
+    "st": "Letshwao",
+    "ts": "Bodo ya mfungho",
+    "ve": "Bodo ya luswayo"
+  },
+  {
+    "english": "Ground Solar Panel",
+    "zu": "Iphaneli yelanga esemhlabathini",
+    "st": "Phanele ya letsatsi e fatshe",
+    "ts": "Phanele ya dyambu ya le hansi",
+    "ve": "Phanele ya ḓuvha ya fhasi"
+  },
+  {
+    "english": "Washing Line",
+    "zu": "Intambo yokweneka izingubo",
+    "st": "Thapo ya ho aneha diaparo",
+    "ts": "Ntambhu yo aneka swiambalo",
+    "ve": "Muḓali wa u anea zwiambaro"
   }
 ];
 

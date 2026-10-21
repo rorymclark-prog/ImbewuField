@@ -283,6 +283,48 @@ These remain **unreviewed AI drafts**, not fluent-speaker approval.
 This changes the picture. `PLAN_VERSION` stays unchanged. The pure document/chart source table
 does not change the main UI dictionary inventory count.
 
+## Site plan, land use and built/planned drawings batch
+
+`codex/four-language-report-figures` is stacked on visuals (#1034). It adds 129 source variants
+in the existing `REPORT_VISUAL_COPY` authority: 84 drawing variants (including a counted plot
+range) and all 45 default non-plant equipment labels used by the site plan. These are **unreviewed
+AI drafts** in isiZulu, Sesotho, Xitsonga and Tshivenda. The three drawings now have native titles,
+legends, notes, sources and alternative descriptions. All 89 existing literal English/isiZulu call
+pairs in these functions remain exact. The dynamic plot range retains its prior English/isiZulu
+wording and identifiers through a source template.
+
+Native legend cells and planned-work warnings wrap. Land-use labels reserve a separate column for
+measured values. Progress rows expand for longer labels while keeping the same circles and counts.
+Small equipment symbols retain their existing shortened label behaviour; a wrapped key also carries
+every full default equipment name. Farmer-entered names that happen to equal a source label stay as
+recorded. Plant names and codes are preserved, and the site plan's ground projection stays exact.
+English outputs for all eight prior figures remain exact against fixtures captured at `25c83e2d`.
+
+The actual viewer was checked at phone and desktop sizes in all four targets, including native
+image alternatives and the enlarged site-plan dialog. The three drawings are in **Complete report**;
+At a glance intentionally uses simpler charts. Switching the app language leaves the saved report
+body, original English content scope, design bytes and next-report English setting unchanged.
+The browser profile's QA records were removed and its prior design keys restored after the check.
+
+Typecheck, 176 focused checks, notes gate and whitespace check pass. The source audit rejects a
+synthetic unregistered caution. Geometry, area proportions, counts, all equipment drafts, original
+source pairs, exact English SVGs, missing-data guards and actual viewer wiring are checked. The
+browser measured 24 SVG cases with no text outside the viewBoxes, including equipment-heavy plans
+and multi-plot ranges. Equipment-plan text boxes had no overlaps above 0.5 pixels. All images
+decoded. The 36 selected screenshots in `evidence/report-figures/` were inspected: 20 from the
+actual viewer and 16 from the production chart component/renderer with real CSS. The actual
+viewer plan screenshots show the lower legend after scrolling its document panel; the isolated
+component evidence shows the entire drawing, including the traced-map inputs.
+
+This does not complete the report work. Climate, sector, water-budget, soil and timeline figures
+still need their full native wording/layout pass; a few shared words now resolve through the
+extended authority. Concept art, full-report and crop-plan PDF paths also remain. Stored source
+attribution strings and saved labels are deliberately unchanged. No paid request or PDF creation
+was made. Full registered CI is pending; no full-suite pass is claimed.
+
+This changes the picture. `PLAN_VERSION` stays unchanged. No species, calibrated learning body,
+saved geometry, farming calculation or number has changed.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
