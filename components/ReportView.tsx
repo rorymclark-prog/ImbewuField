@@ -291,8 +291,11 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
         </div>
       );
     } else {
+      // Long source URLs extended beyond the native buying notes on a phone. Wrap their display,
+      // while preserving every citation character for copying and the saved report's original bytes.
+      const citation=/\[[^\]]+\]\(https?:\/\/\S+\)/.test(line);
       elements.push(
-        <p key={i} className="font-sans text-sm leading-relaxed my-1.5" style={{ color: 'var(--report-ink)' }}>
+        <p key={i} data-report-citation={citation || undefined} className="font-sans text-sm leading-relaxed my-1.5" style={{ color: 'var(--report-ink)', overflowWrap: citation ? 'anywhere' : undefined }}>
           {stripInlineMarkdown(line)}
         </p>
       );

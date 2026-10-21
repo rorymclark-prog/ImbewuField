@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '5b6da923', changes: [
+    'Saved crop-plan notes now follow your report language.',
+    'Plant buying profiles have four draft translations; remaining English research notes are marked.',
+  ], tour: [{ title: 'Read the saved crop plan', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, check the saved crop plan and plant buying advice. Crop names and measured figures stay as recorded. The purchasing section tells you that some research notes still use English.',
+  }] },
   { when: '21 October 2026', sha: '84278474', changes: [
     'New reports use full cost tables and price cautions in four draft languages.',
     'Summaries use the same equipment names; prices and measured quantities stay the same.',

@@ -36,8 +36,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportClosingNotes, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
-import { reportSummaryPages } from '@/lib/report-summary';
+import { zuluReportClosingNotes, savedCropPlanMarkdown, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import {
   normaliseSiteAnalysisImages,
   siteImagesPromptBlock,
@@ -252,7 +251,7 @@ export async function POST(req: NextRequest) {
       : `\n\n📏 LENGTH — STANDARD: A focused, practical report. Cover each section usefully but stay concise — keep tables small and explanations tight.`;
 
   const d = locationData;
-  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions);
+  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions,langCode);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
   // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
   // precise SANBI vegetation unit (d.vegetation). They disagree near boundaries, and one exported
@@ -847,8 +846,8 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     glance: header,
     body: batchResults,
     backMatter: [
-      zuluClosing?.crop ?? `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
-      ...(!zuluClosing && purchasingGuidance ? [purchasingGuidance] : []),
+      savedCropPlanMarkdown(facts,d,langCode),
+      ...(purchasingGuidance ? [purchasingGuidance] : []),
       billOfQuantitiesMarkdown(boq,langCode),
       monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
       riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),

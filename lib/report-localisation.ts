@@ -1651,6 +1651,13 @@ export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;t
     "st": "Ditheko tsohle ke dikhakanyo tsa ho rera tse thehilweng dithekong tsa mabenkele tsa Afrika Borwa tsa mafelong a 2025/mathwasong a 2026, ho kenyeletsa VAT, mme di tla fapana ho ya ka sebaka, mofani le ho fihlelleha ha sebaka — fumana dikhotheishene tsa lehae pele o itlama ka tekanyetso.",
     "ts": "Minxavo hinkwaya i mimpimanyeto yo pulana leyi sekeriweke eka minxavo ya mavhengele ya Afrika-Dzonga ya ekuheleni ka 2025/eku sunguleni ka 2026, ku katsa VAT, naswona yi ta hambana hi ndhawu, muxavisi ni ku ngheneka ka ndhawu — kuma minxavo ya laha kusuhi u nga si tiboha eka mpimanyeto.",
     "ve": "Mitengo yoṱhe ndi ndinganyelo dza u pulana dzo ḓitikaho nga mitengo ya mavhengeleni ya Afurika Tshipembe ya mafheloni a 2025/mathomoni a 2026, hu katelwa VAT, nahone i ḓo fhambana nga dzingu, murengisi na u swikelea ha fhethu — wanani khotheisheni dza henefho musi ni sa athu ḓivhofha kha mugaganyagwama."
+  },
+  {
+    "english": "Saved crop plan",
+    "zu": "Uhlelo lwezitshalo olugciniwe",
+    "st": "Moralo wa dijalo o bolokilweng",
+    "ts": "Pulani ya swibyariwa leyi hlayisiweke",
+    "ve": "Pulane ya zwiliṅwa yo vhulungwaho"
   }
 ];
 export const REPORT_DOCUMENT_LANGUAGES=['zu','st','ts','ve'] as const;
@@ -1745,10 +1752,14 @@ export function reportUiMonth(language: string, englishMonthYear: string): strin
   return index < 0 ? englishMonthYear : [recordsMonthShort(language, index + 1), ...rest].join(' ');
 }
 
+/** The saved crop page has one wording and data source in every report language. */
+export function savedCropPlanMarkdown(facts: ReportSiteFacts | null,d: LocationData,language='en'):string {
+  return `## ${reportDocumentText('Saved crop plan',language)}\n\n${reportSummaryPages(facts,d,5,language)[1].lines.join('\n\n')}`;
+}
+
 /** Earlier native crop and assessment/risk notes; all targets now share the full cost tables. */
 export function zuluReportClosingNotes(facts: ReportSiteFacts | null, d: LocationData) {
-  const summary = reportSummaryPages(facts, d, 5, 'zu');
-  const crop = `## Uhlelo lwezitshalo olugciniwe\n\n${summary[1].lines.join('\n\n')}`;
+  const crop = savedCropPlanMarkdown(facts,d,'zu');
   // This earlier native-only assessment note adds context beyond the shared source table.
   const riskNote = 'Lolu uhlu lokuqaphela ngokwezibalo zendawo; alulona ukuhlolwa kobunjiniyela noma isilinganiso esiqinisekisiwe sethuba lengozi.';
   const monitoringNote = 'Ku-NGO Assessments, sebenzisa ukuhlola kwasekuqaleni, ngaphambi nangemva kwesifundo, phakathi nephrojekthi nasekupheleni. Impendulo nge-app ingeyokuzithandela. Bhala ushintsho oluvunyelwene ngalo, umuntu ozolwenza nosuku lokulwenza.';
