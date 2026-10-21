@@ -236,14 +236,16 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
           </div>
         );
       }
-    } else if (line.match(/^\d+\./)) {
+    } else if (line.match(/^\d+\.\s/)) {
+      // A decimal coordinate starts with digits and a dot too. Only a Markdown list separator
+      // may split the line; taking 28.6280 apart changes the farmer's recorded location.
       elements.push(
         <div key={i} className="flex gap-3 my-1.5">
           <span className="font-display font-semibold text-sm flex-shrink-0 w-5 text-right" style={{ color: 'var(--report-gold)' }}>
             {line.match(/^\d+/)?.[0]}.
           </span>
           <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>
-            {stripInlineMarkdown(line.replace(/^\d+\.\s*/, ''))}
+            {stripInlineMarkdown(line.replace(/^\d+\.\s+/, ''))}
           </p>
         </div>
       );

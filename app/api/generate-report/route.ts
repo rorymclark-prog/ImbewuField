@@ -36,7 +36,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportMatter, reportHeadingLookup, reportHeadingPrompt } from '@/lib/report-localisation';
+import { zuluReportMatter, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import { reportSummaryPages } from '@/lib/report-summary';
 import {
   normaliseSiteAnalysisImages,
@@ -735,13 +735,13 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
         if (listedPlantMentions(text).length > 0) continue;
         const cutShort = msg.stop_reason === 'max_tokens';
         batchResults[idx] = text + (cutShort
-          ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
+          ? `\n\n_[${reportDocumentText('This section may be incomplete: the model reached its output limit.',langCode)}]_\n`
           : '');
         return;
       }
-      batchResults[idx] = '\n\n_[This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.]_\n';
+      batchResults[idx] = `\n\n_[${reportDocumentText('This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.',langCode)}]_\n`;
     } catch {
-      batchResults[idx] = '\n\n_[A section could not be generated — please regenerate the report.]_\n';
+      batchResults[idx] = `\n\n_[${reportDocumentText('A section could not be generated — please regenerate the report.',langCode)}]_\n`;
     }
   };
 
@@ -776,7 +776,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // reason — the crop-plan PDF has carried it since the agronomic review, and the site report, the
   // document most likely to be handed to a funder or an extension officer, carried none of it.
   const now = new Date();
-  const dateLabel = now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+  const dateLabel = headingLookup?reportUiDate(langCode,now.toISOString(),false):now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
 
   const header = buildReportHeaderMarkdown({
     facts,
@@ -828,7 +828,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       survey: Boolean(surveyData),
       cropPlan: Boolean(facts?.crop),
     },
-  });
+  },langCode);
 
   const boq = buildBillOfQuantities(facts);
   const risks = buildRiskRegister({

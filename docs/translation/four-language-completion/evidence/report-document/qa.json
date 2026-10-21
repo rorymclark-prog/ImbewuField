@@ -1,0 +1,188 @@
+{
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. Mocked provider output is intentionally English.",
+  "sourceSha": "de65fbe6819eb46584318c478a6538c8fc11408e",
+  "cases": [
+    {
+      "lang": "zu",
+      "mode": "pass",
+      "contentLanguage": "zu",
+      "nativeContents": true,
+      "nativeDocumentControl": null,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "mode": "limit",
+      "contentLanguage": "zu",
+      "nativeContents": true,
+      "nativeDocumentControl": null,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "mode": "unsafe",
+      "contentLanguage": "zu",
+      "nativeContents": true,
+      "nativeDocumentControl": null,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "mode": "failure",
+      "contentLanguage": "zu",
+      "nativeContents": true,
+      "nativeDocumentControl": null,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "mode": "pass",
+      "contentLanguage": "st",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "mode": "limit",
+      "contentLanguage": "st",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "mode": "unsafe",
+      "contentLanguage": "st",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "mode": "failure",
+      "contentLanguage": "st",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "mode": "pass",
+      "contentLanguage": "ts",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "mode": "limit",
+      "contentLanguage": "ts",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "mode": "unsafe",
+      "contentLanguage": "ts",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "mode": "failure",
+      "contentLanguage": "ts",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "mode": "pass",
+      "contentLanguage": "ve",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "mode": "limit",
+      "contentLanguage": "ve",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "mode": "unsafe",
+      "contentLanguage": "ve",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "mode": "failure",
+      "contentLanguage": "ve",
+      "nativeContents": true,
+      "nativeDocumentControl": true,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    }
+  ],
+  "inspection": "Native covers and contents plus all three honest section warnings inspected on phone in all four targets; desktop covers and the three new native document-control tables inspected. The latitude/list collision was seen, corrected and re-rendered; normal numbered actions retain their markers.",
+  "sourcePreservation": "Original English cover/assembly/legacy fixtures stay exact. No names, source coordinates, numbers, references, map measurements or species identities were rewritten.",
+  "cleanup": "Temporary saved-report keys restored; real paid route blocked throughout browser checks. No provider call was made.",
+  "knownRemaining": "The existing isiZulu abbreviated cover is retained by the generator. Sesotho/Xitsonga/Tshivenda measurement and closing tables remain English. Full-report and crop-plan PDFs remain for later work.",
+  "screenshots": [
+    "desktop-cover-contact.png",
+    "st-desktop-control.png",
+    "st-desktop-cover.png",
+    "st-phone-contact.png",
+    "st-phone-contents.png",
+    "st-phone-cover.png",
+    "st-phone-failure.png",
+    "st-phone-limit.png",
+    "st-phone-unsafe.png",
+    "ts-desktop-control.png",
+    "ts-desktop-cover.png",
+    "ts-phone-contact.png",
+    "ts-phone-contents.png",
+    "ts-phone-cover.png",
+    "ts-phone-failure.png",
+    "ts-phone-limit.png",
+    "ts-phone-unsafe.png",
+    "ve-desktop-control.png",
+    "ve-desktop-cover.png",
+    "ve-phone-contact.png",
+    "ve-phone-contents.png",
+    "ve-phone-cover.png",
+    "ve-phone-failure.png",
+    "ve-phone-limit.png",
+    "ve-phone-unsafe.png",
+    "zu-desktop-cover.png",
+    "zu-phone-contact.png",
+    "zu-phone-contents.png",
+    "zu-phone-cover.png",
+    "zu-phone-failure.png",
+    "zu-phone-limit.png",
+    "zu-phone-unsafe.png"
+  ]
+}
