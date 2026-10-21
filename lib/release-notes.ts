@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '25c83e2d', changes: [
+    'Site-plan legends, land-use labels and built/planned drawings follow four draft languages.',
+    'Long diagram labels wrap; saved names, species codes and measured shapes stay the same.',
+  ], tour: [{ title: 'Read the site drawings', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and choose Complete report. Check the site plan, land-use drawing and built/planned key in your app language.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Select a language in Settings. Saved report text keeps its original language, and drawings keep saved names and measurements.',
+  }] },
   { when: '21 October 2026', sha: '4c383743', changes: [
     'Report metrics, tank statuses and chart calendars follow four draft languages.',
     'Calendar descriptions keep saved months, bed names and first-season markers.',

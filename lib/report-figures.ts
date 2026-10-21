@@ -35,6 +35,7 @@ import { deriveSectorModel, labelToBearing, sectorSiteFromLocation } from './sec
 import { isValidEarthLatitude } from './solar';
 import { aspectLabel } from './biome';
 import type { PhasePlan } from './phasing';
+import { reportVisualText } from './report-visuals';
 
 /** `note` says how to read the drawing and what it cannot tell you; `source` says where every mark came from. */
 export type ReportFigure = { id: string; title: string; note: string; source: string; svg: string; width: number; height: number; alt: string };
@@ -46,7 +47,8 @@ const GREEN = '#245738', BLUE = '#24738a', AMBER = '#af6b24', VIOLET = '#766395'
 const FONT = 'Arial, sans-serif';
 
 type Translate = (en: string, zu: string) => string;
-const translator = (language: string): Translate => (en, zu) => language === 'zu' ? zu : en;
+const translator = (language: string): Translate => (en, zu) => reportVisualText(en, language, {}, zu);
+const nativeDraft = (language: string) => ['zu', 'st', 'ts', 've'].includes(language);
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** Space-grouped thousands and a decimal point, built by hand: en-ZA's own formatter groups with
@@ -174,7 +176,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
       paint: isBed ? 'bed' : CATEGORY_PAINT[def.category] ?? 'structure', round: def.shape === 'circle', cx: item.x * wMetres, cy: item.y * hMetres, w, h,
       rot: def.shape === 'circle' ? 0 : finite(item.rot) ? item.rot : 0, planned: statusOf(item) === 'proposed',
       inside: isBed ? (numbered ? numbered[1] : `${bedNumber}`) : codes.get(item.defId) ?? '',
-      label: isBed || codes.has(item.defId) ? '' : clip(custom || def.name, 24),
+      label: isBed || codes.has(item.defId) ? '' : clip(custom || reportVisualText(def.name, language), 24),
     });
   }
   const areas: PlanArea[] = canvas.zones
@@ -401,7 +403,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
   if (present.has('boundary')) key.push({ draw: (x, y) => p.line(x, y, x + 24, y, { stroke: INK, width: 2, dash: '11 4 2 4' }), text: t('Site boundary', 'Umngcele wendawo') });
   if (present.has('building')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: SLATE }), text: t('Buildings', 'Izakhiwo') });
   if (counts.bed) key.push({ draw: swatch('bed', false, '1'), text: some(counts.bed.all, t('vegetable bed, numbered', 'umbhede wemifino, unenombolo'), t('vegetable beds, numbered', 'imibhede yemifino, inezinombolo')) });
-  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : t(`${plotNumber} staple plots (P1–P${plotNumber})`, `iziza eziyisisekelo ezi-${plotNumber} (P1–P${plotNumber})`) });
+  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : reportVisualText('{count} staple plots (P1–P{count})', language, { count: plotNumber }) });
   if (counts.planting) key.push({ draw: swatch('planting', true), text: some(counts.planting.all, t('tree or planting, to scale', 'isihlahla noma isitshalo, ngesikali'), t('trees and plantings, to scale', 'izihlahla nezitshalo, ngesikali')) });
   if (counts.water) key.push({ draw: swatch('water', true), text: some(counts.water.all, t('water tank or water point', 'ithangi noma indawo yamanzi'), t('water tanks and points', 'amathangi nezindawo zamanzi')) });
   if (present.has('hard')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: GROUND_FILL.driveway, stroke: '#b9c0bb', width: 1 }), text: t('Paving and driveway', 'Indawo egandayiwe') });
@@ -414,16 +416,45 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
 
   let y = panelH + 24;
   const columnW = (W - 12) / 2, keyChars = Math.floor((columnW - 40) / (13.5 * 0.56));
-  key.forEach((row, i) => { const x = 8 + (i % 2) * columnW, rowY = y + Math.floor(i / 2) * 25; row.draw(x, rowY); p.text(x + 32, rowY + 5, clip(row.text, keyChars), { size: 13.5 }); });
-  y += Math.ceil(key.length / 2) * 25;
+  if (nativeDraft(language)) {
+    // A clipped native legend can hide the distinction between a water point and a tank.
+    // Give both cells the taller cell's height; the plan above keeps its original projection.
+    for (let i = 0; i < key.length; i += 2) {
+      let rowHeight = 25;
+      key.slice(i, i + 2).forEach((row, column) => {
+        const x = 8 + column * columnW, lines = wrapText(row.text, 13.5, columnW - 40);
+        row.draw(x, y);
+        lines.forEach((line, at) => p.text(x + 32, y + 5 + at * 18, line, { size: 13.5 }));
+        rowHeight = Math.max(rowHeight, lines.length * 18 + 7);
+      });
+      y += rowHeight;
+    }
+  } else {
+    key.forEach((row, i) => { const x = 8 + (i % 2) * columnW, rowY = y + Math.floor(i / 2) * 25; row.draw(x, rowY); p.text(x + 32, rowY + 5, clip(row.text, keyChars), { size: 13.5 }); });
+    y += Math.ceil(key.length / 2) * 25;
+  }
   if (anyPlanned) {
     p.rect(9, y - 7, 10, 14, { fill: SLATE }); p.rect(22, y - 7, 10, 14, { fill: '#ffffff', stroke: SLATE, width: 1.5, dash: '4 2.5' });
-    p.text(40, y + 5, anyExisting ? t('Solid = already there.  Dashed outline = planned, not built yet.', 'Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.') : t('Dashed outlines: everything on this plan is planned, not built yet.', 'Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa.'), { size: 13.5, weight: 700, fill: INK });
-    y += 25;
+    const statusKey = anyExisting ? t('Solid = already there.  Dashed outline = planned, not built yet.', 'Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.') : t('Dashed outlines: everything on this plan is planned, not built yet.', 'Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa.');
+    const statusLines = nativeDraft(language) ? wrapText(statusKey, 13.5, W - 48) : [statusKey];
+    statusLines.forEach((line, at) => p.text(40, y + 5 + at * 18, line, { size: 13.5, weight: 700, fill: INK }));
+    y += Math.max(25, statusLines.length * 18 + 7);
   }
   const plantNames = new Map<string, { code: string; name: string; count: number }>();
   for (const item of canvas.items) { const code = codes.get(item.defId), def = ELEMENTS_BY_ID[item.defId]; if (!code || !def || isBedDef(item.defId)) continue; const row = plantNames.get(item.defId) ?? { code, name: def.name, count: 0 }; row.count += 1; plantNames.set(item.defId, row); }
   const footnote = (value: string) => { for (const lineText of wrapText(value, 13, W - 20)) { p.text(8, y + 6, lineText, { size: 13, fill: MUTED }); y += 17; } y += 3; };
+  if (nativeDraft(language)) {
+    // A small symbol may have no room for its default name. Keep the full translated catalogue
+    // label in the key instead of silently dropping it; farmer-saved names stay as recorded.
+    const names = new Map<string, number>();
+    for (const item of canvas.items) {
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def || isBedDef(item.defId) || codes.has(item.defId) || item.label?.trim()) continue;
+      const name = reportVisualText(def.name, language);
+      names.set(name, (names.get(name) ?? 0) + 1);
+    }
+    if (names.size) footnote([...names].map(([name, count]) => `${name} ×${count}`).join('  ·  '));
+  }
   if (plantNames.size) footnote(`${t('Plant codes', 'Amakhodi ezitshalo')}: ${[...plantNames.values()].sort((a, b) => a.code.localeCompare(b.code)).map(row => `${row.code} ${row.name}${row.count > 1 ? ` ×${row.count}` : ''}`).join('  ·  ')}`);
   if (bedNames.length) footnote(`${t('Bed names', 'Amagama emibhede')}: ${bedNames.slice(0, 16).join('  ·  ')}${bedNames.length > 16 ? ' …' : ''}`);
 
@@ -1013,10 +1044,11 @@ export function landUseFigure(facts: ReportSiteFacts | null | undefined, languag
   let y = 96;
   for (const part of rows) {
     p.rect(x0, y - 11, 18, 13, { ...part.look, radius: 2 });
-    p.text(x0 + 28, y, part.name, { size: 13 });
+    const labelLines = nativeDraft(language) ? wrapText(part.name, 13, x1 - x0 - 210) : [part.name];
+    labelLines.forEach((line, at) => p.text(x0 + 28, y + at * 18, line, { size: 13 }));
     const share = (part.value / total) * 100;
     p.text(x1, y, `${figureNumber(part.value)} m²  ·  ${share < 1 ? '<1' : figureNumber(share)} %`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
-    y += 23;
+    y += Math.max(23, labelLines.length * 18 + 5);
   }
   return {
     id: 'land-use', width: W, height: Math.ceil(y), svg: p.done(y),
@@ -1047,16 +1079,19 @@ export function statusFigure(canvas: DesignCanvasState | null | undefined, langu
   if (!rows.length) return null;
   const p = pen();
   const built = rows.reduce((sum, row) => sum + row.built, 0), planned = rows.reduce((sum, row) => sum + row.planned, 0);
-  p.text(14, 25, `${figureNumber(built)} ${t('already there', 'sekukhona')}  ·  ${figureNumber(planned)} ${t('still to build or plant', 'kusazokwakhiwa noma kutshalwe')}`, { size: 17, weight: 700, fill: INK });
+  const headline = `${figureNumber(built)} ${t('already there', 'sekukhona')}  ·  ${figureNumber(planned)} ${t('still to build or plant', 'kusazokwakhiwa noma kutshalwe')}`;
+  const headlineLines = nativeDraft(language) ? wrapText(headline, 17, W - 28) : [headline];
+  headlineLines.forEach((line, at) => p.text(14, 25 + at * 22, line, { size: 17, weight: 700, fill: INK }));
   const dotsX = 196, pitch = 17, perRow = Math.floor((W - 14 - 96 - dotsX) / pitch);
-  let y = 56;
+  let y = 56 + (headlineLines.length - 1) * 22;
   for (const row of rows) {
-    p.text(14, y + 4, names[row.key], { size: 13 });
+    const labelLines = nativeDraft(language) ? wrapText(names[row.key], 13, dotsX - 30) : [names[row.key]];
+    labelLines.forEach((line, at) => p.text(14, y + 4 + at * 18, line, { size: 13 }));
     const count = row.built + row.planned, shown = Math.min(count, perRow - 2);
     for (let i = 0; i < shown; i++) { const x = dotsX + i * pitch; if (i < row.built) p.circle(x, y, 6, { fill: GREEN }); else p.circle(x, y, 5.2, { fill: '#ffffff', stroke: GREEN, width: 1.8, dash: '3 2' }); }
     if (count > shown) p.text(dotsX + shown * pitch, y + 4, `+${count - shown}`, { size: 12, fill: MUTED });
     p.text(W - 14, y + 4, `${row.built} / ${count}`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
-    y += 25;
+    y += Math.max(25, labelLines.length * 18 + 7);
   }
   y = keyRow(p, 14, y + 8, [
     { label: t('Already there', 'Sekukhona'), draw: (x, yy) => p.circle(x + 10, yy, 6, { fill: GREEN }) },
