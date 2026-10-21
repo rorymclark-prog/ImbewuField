@@ -5,9 +5,9 @@
   "scope": "UI dictionary only; identical English includes intentionally source-paired text and names. Not a count of untranslated screens or lessons.",
   "languages": {
     "zu": {
-      "translated": 2015,
-      "total": 2596,
-      "ratio": 0.7761941448382126,
+      "translated": 2043,
+      "total": 2624,
+      "ratio": 0.7785823170731707,
       "complete": false,
       "gaps": [
         {
@@ -2401,9 +2401,9 @@
       ]
     },
     "st": {
-      "translated": 1011,
-      "total": 2596,
-      "ratio": 0.3894453004622496,
+      "translated": 1127,
+      "total": 2624,
+      "ratio": 0.4294969512195122,
       "complete": false,
       "gaps": [
         {
@@ -5227,58 +5227,6 @@
           "reason": "missing"
         },
         {
-          "key": "siteDesignOpenStudio",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStudioDesc",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStartDesigning",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSelectLocation",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHeader",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignUploadIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignDropSketch",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHint",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneSimple",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneDetailed",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerating",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerateButton",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
           "key": "reportsOfflineZuluDraftNotice",
           "reason": "missing"
         },
@@ -5351,18 +5299,6 @@
           "reason": "missing"
         },
         {
-          "key": "mapPrintWindowTabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowInstructions",
-          "reason": "missing"
-        },
-        {
           "key": "siteSummaryRainEssential",
           "reason": "missing"
         },
@@ -5427,75 +5363,7 @@
           "reason": "missing"
         },
         {
-          "key": "mapGuideButton",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideIntro",
-          "reason": "missing"
-        },
-        {
           "key": "mapGuideZuluDraftNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideClose",
           "reason": "missing"
         },
         {
@@ -5565,86 +5433,6 @@
         {
           "key": "siteElementEditTitle",
           "reason": "missing"
-        },
-        {
-          "key": "limaWhoIs",
-          "reason": "english"
-        },
-        {
-          "key": "limaAskButton",
-          "reason": "english"
-        },
-        {
-          "key": "limaPhotoButton",
-          "reason": "english"
-        },
-        {
-          "key": "chatGreeting",
-          "reason": "english"
-        },
-        {
-          "key": "chatIntro",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoaded",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoad",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPlant",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionBestCrop",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionContract",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPest",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionWater",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoAttached",
-          "reason": "english"
-        },
-        {
-          "key": "chatRemovePhoto",
-          "reason": "english"
-        },
-        {
-          "key": "chatTakePhotoTitle",
-          "reason": "english"
-        },
-        {
-          "key": "chatInputPlaceholder",
-          "reason": "english"
-        },
-        {
-          "key": "chatThinking",
-          "reason": "english"
-        },
-        {
-          "key": "chatDefaultPhotoQuestion",
-          "reason": "english"
-        },
-        {
-          "key": "chatErrorMessage",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoOpenError",
-          "reason": "english"
         },
         {
           "key": "chatZuluDraftNotice",
@@ -6464,10 +6252,6 @@
         },
         {
           "key": "reportPrintBrandName",
-          "reason": "english"
-        },
-        {
-          "key": "reportBiomeLabel",
           "reason": "english"
         },
         {
@@ -7316,18 +7100,6 @@
         },
         {
           "key": "popiaGoalPickOne",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeHeroTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeHeroSub",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeFindLand",
           "reason": "missing"
         },
         {
@@ -8551,114 +8323,6 @@
           "reason": "missing"
         },
         {
-          "key": "reportsViewerLoadError",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsFunderNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenFunderView",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsLoading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSampleWorkspaceNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsChooseSitesOrReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSites",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSiteHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSitesDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSiteFallback",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOneSavedReportLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsManySavedReportsLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadyForFirstReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenWorkspaceForSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenGenerateReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpening",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsEarlierReportsDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsUnlinkedSiteHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsRemovedPinNote",
-          "reason": "missing"
-        },
-        {
           "key": "priceAllCrops",
           "reason": "missing"
         },
@@ -8729,29 +8393,13 @@
         {
           "key": "cropPlanPlotCount",
           "reason": "missing"
-        },
-        {
-          "key": "limaClosePhotoDialog",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabAriaLabel",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFieldGuideSubtitle",
-          "reason": "missing"
         }
       ]
     },
     "ts": {
-      "translated": 992,
-      "total": 2596,
-      "ratio": 0.38212634822804314,
+      "translated": 1109,
+      "total": 2624,
+      "ratio": 0.4226371951219512,
       "complete": false,
       "gaps": [
         {
@@ -11575,58 +11223,6 @@
           "reason": "missing"
         },
         {
-          "key": "siteDesignOpenStudio",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStudioDesc",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStartDesigning",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSelectLocation",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHeader",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignUploadIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignDropSketch",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHint",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneSimple",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneDetailed",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerating",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerateButton",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
           "key": "mapHeldTitle",
           "reason": "missing"
         },
@@ -11727,18 +11323,6 @@
           "reason": "missing"
         },
         {
-          "key": "mapPrintWindowTabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowInstructions",
-          "reason": "missing"
-        },
-        {
           "key": "siteSummaryRainEssential",
           "reason": "missing"
         },
@@ -11803,75 +11387,7 @@
           "reason": "missing"
         },
         {
-          "key": "mapGuideButton",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideIntro",
-          "reason": "missing"
-        },
-        {
           "key": "mapGuideZuluDraftNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideClose",
           "reason": "missing"
         },
         {
@@ -11941,86 +11457,6 @@
         {
           "key": "siteElementEditTitle",
           "reason": "missing"
-        },
-        {
-          "key": "limaWhoIs",
-          "reason": "english"
-        },
-        {
-          "key": "limaAskButton",
-          "reason": "english"
-        },
-        {
-          "key": "limaPhotoButton",
-          "reason": "english"
-        },
-        {
-          "key": "chatGreeting",
-          "reason": "english"
-        },
-        {
-          "key": "chatIntro",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoaded",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoad",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPlant",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionBestCrop",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionContract",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPest",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionWater",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoAttached",
-          "reason": "english"
-        },
-        {
-          "key": "chatRemovePhoto",
-          "reason": "english"
-        },
-        {
-          "key": "chatTakePhotoTitle",
-          "reason": "english"
-        },
-        {
-          "key": "chatInputPlaceholder",
-          "reason": "english"
-        },
-        {
-          "key": "chatThinking",
-          "reason": "english"
-        },
-        {
-          "key": "chatDefaultPhotoQuestion",
-          "reason": "english"
-        },
-        {
-          "key": "chatErrorMessage",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoOpenError",
-          "reason": "english"
         },
         {
           "key": "chatZuluDraftNotice",
@@ -12840,10 +12276,6 @@
         },
         {
           "key": "reportPrintBrandName",
-          "reason": "english"
-        },
-        {
-          "key": "reportBiomeLabel",
           "reason": "english"
         },
         {
@@ -13739,22 +13171,6 @@
           "reason": "missing"
         },
         {
-          "key": "welcomeHeroTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeHeroSub",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeFindLand",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeShowExample",
-          "reason": "missing"
-        },
-        {
           "key": "startNewSite",
           "reason": "missing"
         },
@@ -14975,114 +14391,6 @@
           "reason": "missing"
         },
         {
-          "key": "reportsViewerLoadError",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsFunderNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenFunderView",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsLoading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSampleWorkspaceNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsChooseSitesOrReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSites",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSiteHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSitesDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSiteFallback",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOneSavedReportLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsManySavedReportsLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadyForFirstReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenWorkspaceForSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenGenerateReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpening",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsEarlierReportsDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsUnlinkedSiteHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsRemovedPinNote",
-          "reason": "missing"
-        },
-        {
           "key": "priceAllCrops",
           "reason": "missing"
         },
@@ -15153,29 +14461,13 @@
         {
           "key": "cropPlanPlotCount",
           "reason": "missing"
-        },
-        {
-          "key": "limaClosePhotoDialog",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabAriaLabel",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFieldGuideSubtitle",
-          "reason": "missing"
         }
       ]
     },
     "ve": {
-      "translated": 1001,
-      "total": 2596,
-      "ratio": 0.3855932203389831,
+      "translated": 1118,
+      "total": 2624,
+      "ratio": 0.4260670731707317,
       "complete": false,
       "gaps": [
         {
@@ -18003,58 +17295,6 @@
           "reason": "missing"
         },
         {
-          "key": "siteDesignOpenStudio",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStudioDesc",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignStartDesigning",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSelectLocation",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHeader",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignUploadIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignDropSketch",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignSketchHint",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneSimple",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignToneDetailed",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerating",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignGenerateButton",
-          "reason": "missing"
-        },
-        {
-          "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
           "key": "reportsOfflineZuluDraftNotice",
           "reason": "missing"
         },
@@ -18127,18 +17367,6 @@
           "reason": "missing"
         },
         {
-          "key": "mapPrintWindowTabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapPrintWindowInstructions",
-          "reason": "missing"
-        },
-        {
           "key": "siteSummaryRainEssential",
           "reason": "missing"
         },
@@ -18207,75 +17435,7 @@
           "reason": "missing"
         },
         {
-          "key": "mapGuideButton",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideIntro",
-          "reason": "missing"
-        },
-        {
           "key": "mapGuideZuluDraftNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideSearchDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideBoundaryDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideHarvestDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideWaterPointDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuidePlaceDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideLayersDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "mapGuideClose",
           "reason": "missing"
         },
         {
@@ -18345,86 +17505,6 @@
         {
           "key": "siteElementEditTitle",
           "reason": "missing"
-        },
-        {
-          "key": "limaWhoIs",
-          "reason": "english"
-        },
-        {
-          "key": "limaAskButton",
-          "reason": "english"
-        },
-        {
-          "key": "limaPhotoButton",
-          "reason": "english"
-        },
-        {
-          "key": "chatGreeting",
-          "reason": "english"
-        },
-        {
-          "key": "chatIntro",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoaded",
-          "reason": "english"
-        },
-        {
-          "key": "chatSampleDataLoad",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPlant",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionBestCrop",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionContract",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionPest",
-          "reason": "english"
-        },
-        {
-          "key": "chatSuggestionWater",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoAttached",
-          "reason": "english"
-        },
-        {
-          "key": "chatRemovePhoto",
-          "reason": "english"
-        },
-        {
-          "key": "chatTakePhotoTitle",
-          "reason": "english"
-        },
-        {
-          "key": "chatInputPlaceholder",
-          "reason": "english"
-        },
-        {
-          "key": "chatThinking",
-          "reason": "english"
-        },
-        {
-          "key": "chatDefaultPhotoQuestion",
-          "reason": "english"
-        },
-        {
-          "key": "chatErrorMessage",
-          "reason": "english"
-        },
-        {
-          "key": "chatPhotoOpenError",
-          "reason": "english"
         },
         {
           "key": "chatZuluDraftNotice",
@@ -19244,10 +18324,6 @@
         },
         {
           "key": "reportPrintBrandName",
-          "reason": "english"
-        },
-        {
-          "key": "reportBiomeLabel",
           "reason": "english"
         },
         {
@@ -20124,22 +19200,6 @@
         },
         {
           "key": "popiaGoalPickOne",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeHeroTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeHeroSub",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeFindLand",
-          "reason": "missing"
-        },
-        {
-          "key": "welcomeShowExample",
           "reason": "missing"
         },
         {
@@ -21363,114 +20423,6 @@
           "reason": "missing"
         },
         {
-          "key": "reportsViewerLoadError",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsIntro",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsFunderNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenFunderView",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsLoading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSampleWorkspaceNotice",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsChooseSitesOrReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSites",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSelectNewSiteHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSitesDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSitesHelp",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsSavedSiteFallback",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOneSavedReportLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsManySavedReportsLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadyForFirstReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenWorkspaceForSite",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpenGenerateReport",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsReadLatest",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsOpening",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsEarlierReportsDescription",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsNoSavedReports",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsUnlinkedSiteHeading",
-          "reason": "missing"
-        },
-        {
-          "key": "reportsRemovedPinNote",
-          "reason": "missing"
-        },
-        {
           "key": "priceAllCrops",
           "reason": "missing"
         },
@@ -21541,27 +20493,11 @@
         {
           "key": "cropPlanPlotCount",
           "reason": "missing"
-        },
-        {
-          "key": "limaClosePhotoDialog",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabAriaLabel",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFabTitle",
-          "reason": "missing"
-        },
-        {
-          "key": "limaFieldGuideSubtitle",
-          "reason": "missing"
         }
       ]
     }
   },
-  "visibleLiteralCandidates": 2178,
-  "batchBaseRef": "39df6174",
-  "batch": "Settings"
+  "visibleLiteralCandidates": 2169,
+  "batchBaseRef": "bf338855",
+  "batch": "Home, report controls, map help and Lima controls"
 }

@@ -66,9 +66,42 @@ The tests and browser checks do not claim linguistic approval.
 These remain **unreviewed AI drafts**, not fluent-speaker-approved translations. The whole-app
 goal remains open; this batch does not complete Home, other workflows, lessons or exports.
 
+## Home and report-controls batch
+
+`codex/four-language-home-reports` is stacked on Settings (#1029), after navigation (#1028).
+`core-entry-drafts.json` records 371 newly applied locale entries and the exact English source
+for each. It also records earlier native wording that was kept, and the three direct-English
+Biome labels replaced in place. No course source, species name, measurement or saved geometry
+was changed. These remain **unreviewed AI drafts**.
+
+Home's staff cards, task-completion accessibility labels, calendar action, prices shortcut,
+tour explanation and sprout help now use the shared language context. The percentage text keeps
+its original values. Dates use native weekday wording and the existing month-name authority;
+the existing isiZulu date wording stays intact. Home has one shared draft notice, outside the
+welcome card, with a switch to English. The browser check exposed the remaining English example
+link in Xitsonga and Tshivenda; both now have source-paired drafts, and the render test rejects
+English fallback for that link.
+
+Sesotho, Xitsonga and Tshivenda also gain existing dictionary controls for Reports, report
+headings, map help, site design and Lima. This does **not** establish that the report generator,
+print window or AI replies are fully translated. `ReportView` still has English/isiZulu-only
+branches and ordinary English label maps; those need a subsequent pass. Saved reports retain
+their original content and language. The saved-English notice now follows all four targets.
+
+Typecheck, the source-preservation tests and the focused UI tests pass. Actual Home and the
+empty Reports list were checked in all four targets at 390 × 844 and 1440 × 1000. Each showed
+its selected document language and one draft notice, with no horizontal overflow. Screenshots
+and measured results are in `evidence/core-entry/`. The existing floating Lima button overlaps
+part of the empty-sites help paragraph on phone; this batch does not resolve that pre-existing
+layout issue. Report generation, saved-report opening and paid AI were not exercised.
+
+The Settings full suite exposed a native-loader issue in isolated child processes. Its feature
+name import now uses a relative `.ts` path; both failing isolated mutation checks pass after the
+repair. Their corruption checks and the original historical source hashes are retained.
+
 ## Remaining work
 
-1. Finish shared app chrome: Settings, onboarding, updates, account, common dialogs, accessibility
+1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
    text, confirmations and failure states. Replace English/isiZulu-only branches with the shared
    language context. Verify phone layouts and language changes without stale text.
 2. Complete the farmer workflows: map, survey, evidence, designs, crop planning, tasks, records,
