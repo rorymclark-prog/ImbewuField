@@ -238,6 +238,51 @@ pixels. Phone/desktop DOM checks show no horizontal overflow. Evidence and sampl
 This changes the picture. `PLAN_VERSION` stays unchanged. The pure summary source table does not
 change the main UI dictionary inventory count.
 
+## Metrics, chart text and overview batch
+
+`codex/four-language-report-visuals` is stacked on summaries (#1033). Its 71 source variants in
+`REPORT_VISUAL_COPY` extend the existing pure chart module. They cover metrics, plain chart titles,
+notes, cost groups, tank statuses, calendar words, first-season alternative descriptions, empty
+states, figure chrome, sample-chart labels and chapter graphics controls. **The 221 literal pairs
+inside figure builders, concept-picture captions/annotations and full-report PDF paths still need
+work. This does not complete report translation.**
+
+All 33 existing literal English/isiZulu pairs in the chart module and overview component remain
+exact at their actual call sites. Four site fixtures and eighteen fictional gardens retain exact
+prior English data objects and SVGs. Plotted quantities, proportions, units, months, one-off
+sowing markers, saved labels, source attribution and species identities stay exact. Fictional
+garden captions keep the illustrative/unspecified-period and non-livelihood-measure qualifications.
+No measured area, actual production or annual yield is inferred.
+
+Language travels with ephemeral chart metadata. SVG calendars, visible labels and their shared
+alternative descriptions use the existing month authority; alternatives include saved bed labels
+and first-season qualifiers. Native empty-state sentences and longer bar labels wrap without
+changing bar widths or stored data. Figure chrome preserves the actual figure object and its
+source text; the still-untranslated drawing text is not labelled complete here.
+
+Newly drawn screen information follows the app language. The full-PDF data continues to use the
+saved content language, through the same original factories. Summary screens use native metrics;
+returning to the saved complete report leaves its body/language untouched. A native `lang` scope
+covers the overview and chapter controls. The raw diagram text remains a known language gap until
+the next figure pass; these intermediate branches are drafts.
+
+Typecheck, 185 focused checks, notes gate and whitespace check pass. Source-pair, placeholder,
+figure/unit, English-SVG, record-immutability, original-viewer-error, historical-Study and geometry
+checks remain. A synthetic unregistered source fails the audit. Actual component rendering and
+viewer language switches prove that native text is wired; unchanged saved bytes and the separate
+English next-generation picker are verified.
+
+The real browser checked all four targets at phone/desktop sizes. Thirty-two inspected screenshots
+are committed in `evidence/report-visuals/`: sixteen from the actual viewer and sixteen from the
+production chart components/renderer with real CSS. Forty SVG cases, including empty and long-label
+states, had no text beyond their viewBoxes; all image sources decoded. The viewer's native water
+chart and enlarged-image dialog were opened and inspected in every target. No paid request or PDF
+creation was made in this batch. Full registered CI is still pending; no full-suite pass is claimed.
+These remain **unreviewed AI drafts**, not fluent-speaker approval.
+
+This changes the picture. `PLAN_VERSION` stays unchanged. The pure document/chart source table
+does not change the main UI dictionary inventory count.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

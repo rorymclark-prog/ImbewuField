@@ -348,7 +348,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const visuals = withReportFigures({ ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' }, figures, contentLanguage);
   const chapterVisuals = reportChapterGraphics(report,visuals);
   const placedFigures = placedFigureIds(chapterVisuals);
-  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar' && !placedFigures.has(c.id)) };
+  // Newly drawn screen information follows the app language; a saved report and its full PDF keep their content language.
+  const screenFigures = useMemo(() => uiLanguage === contentLanguage ? figures : siteReportFigures(facts, d, uiLanguage, figureInputs), [facts, d, uiLanguage, contentLanguage, figureInputs, figures]);
+  const nativeVisuals = uiLanguage === contentLanguage ? visuals : withReportFigures({ ...siteReportVisuals(facts, d, uiLanguage), title: siteName, subtitle: '' }, screenFigures, uiLanguage);
+  const screenChapterVisuals = uiLanguage === contentLanguage ? chapterVisuals : reportChapterGraphics(report, nativeVisuals);
+  const placedScreenFigures = placedFigureIds(screenChapterVisuals);
+  const overviewVisuals = { ...nativeVisuals, charts: nativeVisuals.charts.filter(c => c.kind !== 'calendar' && !placedScreenFigures.has(c.id)) };
   // With chapter pictures switched off for the PDF, a placed figure has no chapter to sit under, so it stays up front.
   const pdfPlaced = includeImages ? placedFigures : new Set<string>();
   const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
@@ -356,12 +361,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage);
   const chapters = report.split('\n').flatMap((line, i) => line.startsWith('## ') ? [{ id: `report-chapter-${i}`, title: stripInlineMarkdown(line.slice(3)) }] : []);
   // Short editions keep the same saved facts. Their simpler charts do not need a new report.
-  const briefVisuals = { ...siteReportVisuals(facts, d, language), title: siteName, subtitle: '',
+  const briefVisuals = { ...siteReportVisuals(facts, d, uiLanguage), title: siteName, subtitle: '',
     overviewTitle: tr('The essentials, in pictures', 'Okubalulekile, ngezithombe'),
     overviewNote: tr('Your mapped space, planned storage and seasonal rainfall.', 'Indawo ebalazwe, ukugcinwa kwamanzi okuhleliwe nemvula yesizini.') };
   const screenVisuals = reading === 'full' ? overviewVisuals : reading === 'one'
     ? { ...briefVisuals, charts: briefVisuals.charts.filter(c => ['area', 'water', 'rainfall'].includes(c.id)) }
-    : { ...visuals, charts: visuals.charts.filter(c => ['site-plan', 'rainfall', 'water-budget', 'soil'].includes(c.id)) };
+    : { ...nativeVisuals, charts: nativeVisuals.charts.filter(c => ['site-plan', 'rainfall', 'water-budget', 'soil'].includes(c.id)) };
 
   useEffect(() => {
     if (activeSaved) { setFacts(activeSaved.facts ?? null); return; }
@@ -1305,7 +1310,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} stamp={new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · ${tr('Current site evidence; it may postdate saved report text.', 'Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.')}` : captureCover ? tr('Captured site satellite view', 'Isithombe sesathelayithi esithathwe sendawo') : useCoverMap && coverMap ? `${tr('Saved design', 'Umklamo ogciniwe')}: ${coverMap.label}` : undefined} />}
+            {presentation !== 'print' && <ReportVisualOverview onOpenImage={openReportImage} viewLabel={tr('View full size', 'Buka ngosayizi ogcwele')} visuals={screenVisuals} language={uiLanguage} stamp={reportUiDate(uiLanguage, reportDate, false)} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · ${tr('Current site evidence; it may postdate saved report text.', 'Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.')}` : captureCover ? tr('Captured site satellite view', 'Isithombe sesathelayithi esithathwe sendawo') : useCoverMap && coverMap ? `${tr('Saved design', 'Umklamo ogciniwe')}: ${coverMap.label}` : undefined} />}
 
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
@@ -1429,7 +1434,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Generated report */}
             {(report || reading !== 'full') && (
               <div lang={reading === 'full' ? contentLanguage : uiLanguage} className={`${styles.body} report-body`}>
-                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}, openReportImage, tr('View full size', 'Buka ngosayizi ogcwele')) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
+                {reading === 'full' ? renderReport(report, presentation !== 'print' ? screenChapterVisuals : {}, openReportImage, tr('View full size', 'Buka ngosayizi ogcwele')) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">
