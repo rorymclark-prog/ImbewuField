@@ -36,7 +36,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportMatter } from '@/lib/report-localisation';
+import { zuluReportMatter, reportHeadingLookup, reportHeadingPrompt } from '@/lib/report-localisation';
 import { reportSummaryPages } from '@/lib/report-summary';
 import {
   normaliseSiteAnalysisImages,
@@ -226,6 +226,7 @@ export async function POST(req: NextRequest) {
 
   const langCode = language ?? 'en';
   const langName = LANGUAGES[langCode] ?? 'English';
+  const headingLookup = await reportHeadingLookup(langCode);
   const isSimple = tone === 'simple';
   const reportLength = length ?? 'standard';
 
@@ -331,7 +332,7 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
   const siteAreaForCalcM2 = boundaryFact?.areaM2 ?? siteData?.areaM2 ?? null;
   const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
 
-  const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
+  const buildPrompt = (sections: string[], withTitle: boolean) => reportHeadingPrompt(`You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
 
 SCREENED PLANTING CANDIDATES for this biome and known frost risk (a shortlist, not proof of suitability): ${screenedPlantingCandidates}
 ${REPORT_PLANTING_SAFETY_RULE}
@@ -397,7 +398,7 @@ ${withTitle ? `The document title, its subheading and a "Site at a Glance" table
 
 Generate ONLY the sections listed here, in this order: ${sections.join(', ')}
 
-Use this markdown structure for each section. ${langCode === 'en' ? 'Copy the headings exactly.' : `Translate ALL headings, subheadings, table headings, bullets and explanations into ${langName}. The English template headings below identify topics only; do not copy them into a monolingual report. Keep scientific names and source identifiers unchanged.`}
+Use this markdown structure for each section. ${langCode === 'en' ? 'Copy the headings exactly.' : headingLookup ? `Copy each ## section heading below exactly. English names in the requested-topic list are topic identifiers. Translate all subheadings, table headings, bullets and explanations into ${langName}. Keep scientific names and source identifiers unchanged.` : `Translate ALL headings, subheadings, table headings, bullets and explanations into ${langName}. The English template headings below identify topics only; do not copy them into a monolingual report. Keep scientific names and source identifiers unchanged.`}
 
 ${sections.includes('Executive Summary') ? `## Executive Summary
 [3–5 sentences. Most critical site characteristics, biggest opportunity, biggest constraint, and the single most important first action. Be specific — name the slope and rainfall with their source. Mention soil pH only if laboratory or SoilGrids data was supplied, with its source; never use a placeholder.${facts ? ` A "Site at a Glance" table of this farm's measured figures has ALREADY been printed above this section, so do not repeat it as a table — instead write about ${[facts.farmName ?? 'this site', facts.design ? `its ${facts.design.growingAreaM2} m² of drawn growing area` : null, facts.water && facts.water.statedStorageLitres > 0 ? `its ${facts.water.statedStorageLitres.toLocaleString()} L of planned tank storage` : null].filter(Boolean).join(', ')} by name and by number.` : ''}]
@@ -633,7 +634,7 @@ The 5 highest-impact actions for this specific site, in order of importance:
 
 ` : ''}
 
-Be direct. Use actual numbers from the data above. Every recommendation must be justified by something specific about this site.`;
+Be direct. Use actual numbers from the data above. Every recommendation must be justified by something specific about this site.`, sections, langCode, headingLookup);
 
   // Generating all sections in ONE streaming call is too slow to finish inside
   // the function's maxDuration window (~26 words/s → a 20-section comprehensive

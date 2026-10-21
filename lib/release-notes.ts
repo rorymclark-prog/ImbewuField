@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '09b280ef', changes: [
+    'Concept pictures have draft captions and descriptions in four languages.',
+    'Translated report headings keep their matching drawings and concept pictures.',
+  ], tour: [{ title: 'Read the illustrated chapters', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and choose Complete report. Check the picture captions and enlarge the vegetation-layer drawing.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Choose a language in Settings. Saved report text keeps its original language; picture captions follow your app language.',
+  }] },
   { when: '21 October 2026', sha: '792493f3', changes: [
     'Rain, roof water, sun, wind, soil and work-timeline drawings use four draft languages.',
     'Diagram months and stage names follow your language while measurements stay the same.',

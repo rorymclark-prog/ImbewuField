@@ -374,6 +374,59 @@ art, source-data presentation beyond these figures, full-report/crop-plan PDF pa
 workflows/learning/media remain. Full registered CI is pending; no full-suite pass is claimed.
 This changes the picture. `PLAN_VERSION` stays unchanged.
 
+## Concept illustrations and native chapter matching batch
+
+`codex/four-language-report-art` is stacked on report climate diagrams (#1036). It adds 61
+source variants to the existing `REPORT_VISUAL_COPY` authority, covering all 16 concept pictures'
+titles, alternative descriptions and caveats, vegetation-layer words, catalogue-picture wording
+and two native technique cues. `report-art-drafts.json` records the new source pairs. These remain
+**unreviewed AI drafts**, with no fluent-speaker or agronomic review claimed. Source crop/species
+names remain exact, including crop names within alternative text. No new species or farming
+figure has been introduced.
+
+The 16 JPEGs remain byte-identical and text-free. The conceptual vegetation tree/soil/roots keep
+the same geometry; native labels wrap in a separate column with adjusted leaders and sufficient
+height. English chapter objects, picture order and the vegetation SVG remain exact against the
+pre-edit fixtures. Concept caveats still lead with the existing warning that these are common
+illustrations, not evidence of conditions at this site. Catalogue tree names remain original.
+
+Translated section headings now resolve through the existing report-picker label authority.
+The real generator sends those same labels as its selected H2 headings in each independent batch;
+the older, longer English template titles retain their original English wording. Only selected
+H2 titles are replaced. Subheadings, source facts, numerical templates, section identifiers and
+the canonical API allow-list stay intact. Native Swale/Trench bed/Compost phrases can satisfy the
+existing technique gate in a native saved body; generic water/ditch/manure words cannot. The
+saved body's language controls that match, independently of the app language. Known native
+headings retain single figure placement and the existing two-picture limit. Unknown headings
+and unknown tree names are not inferred. Arbitrary older generated paraphrases of headings
+remain outside the exact alias map; no saved report is rewritten.
+
+Typecheck, 120 focused checks on Node 24, notes gate and whitespace check pass. The new checks
+exercise all target aliases, Unicode phrase boundaries, original English objects and actual
+English prompt hashes, unchanged image hashes/dimensions, caveats, exact crop names, tree identity,
+source-audit failure cases and language independence. A mocked execution of the real POST route
+captures every independent batch in English and all four targets, proving translated H2 labels
+reach the outgoing request while source rainfall remains. No provider call is made, and unknown
+translated topic identifiers still receive a 400 before any model request. No prior test was
+removed or weakened.
+
+Browser evidence in `evidence/report-art/` includes inspected contact sheets for all 18 graphic
+cards in each language, phone cards and 24 screenshots from the actual Complete report viewer.
+The four native vegetation SVGs have no text outside their viewBox or text-box overlap greater
+than 0.5 pixels. All card images decoded. Eight real-viewer cases cover native and saved-English
+reports under each target UI: all 16 concept alternatives and 17 illustration titles match,
+vegetation enlargement works, and no document horizontal overflow was measured. Content-language
+and next-report language stay native or English as originally saved. Saved report text and design
+bytes remain intact. Temporary QA report/design storage was restored, and the paid route was
+blocked. The 52 retained screenshots include full-resolution examples and contact sheets; they
+are visual-layout evidence, not evidence of fluent-language approval.
+
+A full registered Node 24 run from the stable climate checkout is still in progress; CI for the
+climate predecessor is also pending. No full-suite pass is claimed for this batch. Code-authored
+front/back matter for Sesotho/Xitsonga/Tshivenda, full-report and crop-plan PDFs, remaining shared
+chrome, wider workflows and learning/media still need work. This changes the picture.
+`PLAN_VERSION` stays unchanged. The overall four-language goal remains active.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
