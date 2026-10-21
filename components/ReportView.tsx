@@ -202,24 +202,31 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
         headers.length === 3 && ['Measure','Value','Where it comes from'].every((source,index) =>
           headers[index].trim() === reportDocumentText(source,language)));
       const measurementWidths = [95,126,130];
+      // A six-column native checklist hid its final actions off the phone. Exact source headers
+      // identify these tables so phone rows can keep every field visible with its own label.
+      const nativeChecklistTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
+        [ ['Indicator','What it answers','Baseline','How to measure','How often','Recorded in'],
+          ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
+        ].some(labels => headers.length === labels.length && labels.every((source,index) =>
+          headers[index].trim() === reportDocumentText(source,language))));
       const rows = body.map(splitRow);
       elements.push(
         <div key={`table-${i}`} className="overflow-x-auto my-4">
-          <table className="w-full text-xs font-display border-collapse">
-            <thead>
-              <tr style={{ borderBottom: '1px solid var(--report-border)' }}>
+          <table data-native-checklist={nativeChecklistTable || undefined} role={nativeChecklistTable ? 'table' : undefined} className="w-full text-xs font-display border-collapse">
+            <thead role={nativeChecklistTable ? 'rowgroup' : undefined}>
+              <tr role={nativeChecklistTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)' }}>
                 {headers.map((h, j) => (
-                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)', overflowWrap: nativeMeasurementTable && j !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[j] : undefined }}>
+                  <th key={j} scope={nativeChecklistTable ? 'col' : undefined} role={nativeChecklistTable ? 'columnheader' : undefined} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)', overflowWrap: nativeMeasurementTable && j !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[j] : undefined }}>
                     {h.trim()}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody role={nativeChecklistTable ? 'rowgroup' : undefined}>
               {rows.map((row, ri) => (
-                <tr key={ri} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
+                <tr key={ri} role={nativeChecklistTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
+                    <td key={ci} role={nativeChecklistTable ? 'cell' : undefined} data-label={nativeChecklistTable ? stripInlineMarkdown(headers[ci] ?? '') : undefined} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
                       {stripInlineMarkdown(cell)}
                     </td>
                   ))}

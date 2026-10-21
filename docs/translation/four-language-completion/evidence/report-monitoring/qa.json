@@ -1,0 +1,867 @@
+{
+  "sourceSha": "013cec5286cfb6c7251e48a5907bb8548c80a25d",
+  "status": "Unreviewed AI drafts, no fluent-speaker approval. Mocked provider/auth/meter/fetch only; synthetic near-threshold test cases are not farming recommendations.",
+  "screenshots": [
+    "zu-final-rows-contact.png",
+    "zu-final-api-contact.png",
+    "zu-final-details-contact.png",
+    "zu-monitoring-saved-design-phone.png",
+    "zu-risk-all-possible-phone.png",
+    "zu-risk-none-phone.png",
+    "zu-monitoring-saved-design-first-row.png",
+    "zu-risk-all-possible-first-row.png",
+    "api-zu-monitoring-phone-top.png",
+    "api-zu-monitoring-phone-last.png",
+    "api-zu-risk-phone-top.png",
+    "api-zu-risk-phone-last.png",
+    "zu-recorded-names.png",
+    "zu-missing-trees.png",
+    "zu-missing-storage.png",
+    "zu-risk-final-desktop.png",
+    "st-final-rows-contact.png",
+    "st-final-api-contact.png",
+    "st-final-details-contact.png",
+    "st-monitoring-saved-design-phone.png",
+    "st-risk-all-possible-phone.png",
+    "st-risk-none-phone.png",
+    "st-monitoring-saved-design-first-row.png",
+    "st-risk-all-possible-first-row.png",
+    "api-st-monitoring-phone-top.png",
+    "api-st-monitoring-phone-last.png",
+    "api-st-risk-phone-top.png",
+    "api-st-risk-phone-last.png",
+    "st-recorded-names.png",
+    "st-missing-trees.png",
+    "st-missing-storage.png",
+    "st-risk-final-desktop.png",
+    "ts-final-rows-contact.png",
+    "ts-final-api-contact.png",
+    "ts-final-details-contact.png",
+    "ts-monitoring-saved-design-phone.png",
+    "ts-risk-all-possible-phone.png",
+    "ts-risk-none-phone.png",
+    "ts-monitoring-saved-design-first-row.png",
+    "ts-risk-all-possible-first-row.png",
+    "api-ts-monitoring-phone-top.png",
+    "api-ts-monitoring-phone-last.png",
+    "api-ts-risk-phone-top.png",
+    "api-ts-risk-phone-last.png",
+    "ts-recorded-names.png",
+    "ts-missing-trees.png",
+    "ts-missing-storage.png",
+    "ts-risk-final-desktop.png",
+    "ve-final-rows-contact.png",
+    "ve-final-api-contact.png",
+    "ve-final-details-contact.png",
+    "ve-monitoring-saved-design-phone.png",
+    "ve-risk-all-possible-phone.png",
+    "ve-risk-none-phone.png",
+    "ve-monitoring-saved-design-first-row.png",
+    "ve-risk-all-possible-first-row.png",
+    "api-ve-monitoring-phone-top.png",
+    "api-ve-monitoring-phone-last.png",
+    "api-ve-risk-phone-top.png",
+    "api-ve-risk-phone-last.png",
+    "ve-recorded-names.png",
+    "ve-missing-trees.png",
+    "ve-missing-storage.png",
+    "ve-risk-final-desktop.png",
+    "final-desktop-contact.png",
+    "final-empty-contact.png",
+    "first-zu-monitoring-saved-design.png",
+    "first-ts-risk-all-possible.png"
+  ],
+  "beforePhoneWidths": [
+    {
+      "lang": "zu",
+      "name": "monitoring-saved-design",
+      "width": 703.8359375,
+      "viewport": 351,
+      "scrollRange": 353,
+      "first": 126.0703125
+    },
+    {
+      "lang": "zu",
+      "name": "risk-all-possible",
+      "width": 642.203125,
+      "viewport": 351,
+      "scrollRange": 291,
+      "first": 41.125
+    },
+    {
+      "lang": "st",
+      "name": "monitoring-saved-design",
+      "width": 596.3203125,
+      "viewport": 351,
+      "scrollRange": 245,
+      "first": 103.4375
+    },
+    {
+      "lang": "st",
+      "name": "risk-all-possible",
+      "width": 540.4375,
+      "viewport": 351,
+      "scrollRange": 189,
+      "first": 41.125
+    },
+    {
+      "lang": "ts",
+      "name": "monitoring-saved-design",
+      "width": 625.9453125,
+      "viewport": 351,
+      "scrollRange": 275,
+      "first": 100.65625
+    },
+    {
+      "lang": "ts",
+      "name": "risk-all-possible",
+      "width": 539.5546875,
+      "viewport": 351,
+      "scrollRange": 189,
+      "first": 41.125
+    },
+    {
+      "lang": "ve",
+      "name": "monitoring-saved-design",
+      "width": 589.8671875,
+      "viewport": 351,
+      "scrollRange": 239,
+      "first": 104.65625
+    },
+    {
+      "lang": "ve",
+      "name": "risk-all-possible",
+      "width": 605.28125,
+      "viewport": 351,
+      "scrollRange": 254,
+      "first": 41.125
+    }
+  ],
+  "browser": {
+    "statics": [
+      {
+        "lang": "zu",
+        "name": "monitoring-saved-design",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "monitoring-no-facts",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 5,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "monitoring-source-word-names",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "risk-all-possible",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 7,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "risk-none",
+        "hasTable": 0,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "risk-one-unknown-tank",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 2,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "monitoring-saved-design",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "monitoring-no-facts",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 5,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "monitoring-source-word-names",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "risk-all-possible",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 7,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "risk-none",
+        "hasTable": 0,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "risk-one-unknown-tank",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 2,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "monitoring-saved-design",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "monitoring-no-facts",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 5,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "monitoring-source-word-names",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "risk-all-possible",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 7,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "risk-none",
+        "hasTable": 0,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "risk-one-unknown-tank",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 2,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "monitoring-saved-design",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "monitoring-no-facts",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 5,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "monitoring-source-word-names",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 6,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "risk-all-possible",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 7,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "risk-none",
+        "hasTable": 0,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "risk-one-unknown-tank",
+        "hasTable": 1,
+        "width": 354,
+        "scrollRange": 0,
+        "rows": 2,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "documentOverflow": false
+      }
+    ],
+    "actual": [
+      {
+        "lang": "zu",
+        "name": "saved-design",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "zu",
+        "name": "no-facts",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "zu",
+        "name": "unknown-water",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "st",
+        "name": "saved-design",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "st",
+        "name": "no-facts",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "st",
+        "name": "unknown-water",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ts",
+        "name": "saved-design",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ts",
+        "name": "no-facts",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ts",
+        "name": "unknown-water",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ve",
+        "name": "saved-design",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ve",
+        "name": "no-facts",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 4,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ve",
+        "name": "unknown-water",
+        "tables": [
+          {
+            "kind": "monitoring",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 6,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          },
+          {
+            "kind": "risk",
+            "width": 351,
+            "scrollRange": 0,
+            "rows": 5,
+            "stacked": true,
+            "labelsVisible": true,
+            "clipped": [],
+            "lastFieldVisible": true
+          }
+        ],
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      }
+    ]
+  },
+  "details": [
+    {
+      "lang": "zu",
+      "name": "recorded-names",
+      "text": "Ukuphila kwezihlahla nezitshalo zeminyaka eminingiIngabe izitshalo zeminyaka eminingi ezatshalwa zisaphila ngemva konyaka?Kubekwe ezi-5 epulanini (High {count} / Ground cover / Original name x2, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1)Qala uqinisekise ukuthi zingaki ezatshalwa ngokoqobo nokuthi nini. Bala eziphilayo uziqhathanise nalelo qoqo elatshalwa, hhayi izinto ezihlongozwe ebalazweni; bhala ezifakwe esikhundleni ngokwehlukana.Njalo ezinyangeni eziyisithupha, nangemva kwanoma yisiphi isomiso noma umliloIdayari yasensimini"
+    },
+    {
+      "lang": "zu",
+      "name": "missing-trees",
+      "text": "Ukuphila kwezihlahla nezitshalo zeminyaka eminingiIngabe izitshalo zeminyaka eminingi ezatshalwa zisaphila ngemva konyaka?Azikho izihlahla ezibekiwe epulanini okwamanjeQala uqinisekise ukuthi zingaki ezatshalwa ngokoqobo nokuthi nini. Bala eziphilayo uziqhathanise nalelo qoqo elatshalwa, hhayi izinto ezihlongozwe ebalazweni; bhala ezifakwe esikhundleni ngokwehlukana.Njalo ezinyangeni eziyisithupha, nangemva kwanoma yisiphi isomiso noma umliloIdayari yasensimini"
+    },
+    {
+      "lang": "zu",
+      "name": "missing-storage",
+      "text": "Amanzi agciniweIngabe amanzi agciniwe anela kuzo zonke izinyanga ezomile?Awukho umthamo wethangi obhaliwe epulanini okwamanjeFunda izinga lamanzi ethangini ngosuku olufanayo nyanga zonke bese ubhala usuku nezingaNyanga zonkeIdayari yasensimini"
+    },
+    {
+      "lang": "st",
+      "name": "recorded-names",
+      "text": "Ho phela ha difate le dimela tsa dilemo tse ngataNa dimela tsa dilemo tse ngata tse jetsweng di sa phela selemo hamorao?Ho behilwe tse 5 moralong (High {count} / Ground cover / Original name x2, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1)Qala ka ho netefatsa hore ho jetswe tse kae ka nnete le neng. Bala tse phelang o di bapise le sehlopha seo se jetsweng, eseng dintho tse sisintsweng mmapeng; ngola tse kenang sebakeng sa tse shweleng ka thoko.Dikgweding tse ding le tse ding tse tsheletseng, le ka mora komello kapa mollo ofe kapa ofeBukana ya tshimo"
+    },
+    {
+      "lang": "st",
+      "name": "missing-trees",
+      "text": "Ho phela ha difate le dimela tsa dilemo tse ngataNa dimela tsa dilemo tse ngata tse jetsweng di sa phela selemo hamorao?Ha ho difate tse behilweng moralong hajwaleQala ka ho netefatsa hore ho jetswe tse kae ka nnete le neng. Bala tse phelang o di bapise le sehlopha seo se jetsweng, eseng dintho tse sisintsweng mmapeng; ngola tse kenang sebakeng sa tse shweleng ka thoko.Dikgweding tse ding le tse ding tse tsheletseng, le ka mora komello kapa mollo ofe kapa ofeBukana ya tshimo"
+    },
+    {
+      "lang": "st",
+      "name": "missing-storage",
+      "text": "Metsi a bolokilwengNa metsi a bolokilweng a lekana dikgweding tse ommeng?Ha ho bokgoni ba tanka bo boletsweng moralong hajwaleBala boemo ba metsi ka tankeng ka letsatsi le tshwanang kgwedi le kgwedi, mme o ngole letsatsi le boemoKgwedi le kgwediBukana ya tshimo"
+    },
+    {
+      "lang": "ts",
+      "name": "recorded-names",
+      "text": "Ku hanya ka mirhi ni swimilana swa nkarhi wo lehaXana swimilana swa nkarhi wo leha leswi byariweke swa ha hanya endzhaku ka lembe?Ku vekiwile 5 eka pulani (High {count} / Ground cover / Original name x2, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1)Rhanga u tiyisisa leswaku ku byariwe swingani hakunene ni leswaku rini. Hlayela swimilana leswi hanyaka eka ntlawa wolowo lowu byariweke, ku nga ri swilo leswi ringanyetiweke emepeni; rhekhoda leswi pfalaka leswin'wana hi ku hambana.Endzhaku ka tin'hweti tin'wana ni tin'wana ta tsevu, ni le ndzhaku ka dyandza kumbe ndzilo wun'wana ni wun'wanaDayari ya nsimu"
+    },
+    {
+      "lang": "ts",
+      "name": "missing-trees",
+      "text": "Ku hanya ka mirhi ni swimilana swa nkarhi wo lehaXana swimilana swa nkarhi wo leha leswi byariweke swa ha hanya endzhaku ka lembe?A ku si va na mirhi leyi vekiweke eka pulaniRhanga u tiyisisa leswaku ku byariwe swingani hakunene ni leswaku rini. Hlayela swimilana leswi hanyaka eka ntlawa wolowo lowu byariweke, ku nga ri swilo leswi ringanyetiweke emepeni; rhekhoda leswi pfalaka leswin'wana hi ku hambana.Endzhaku ka tin'hweti tin'wana ni tin'wana ta tsevu, ni le ndzhaku ka dyandza kumbe ndzilo wun'wana ni wun'wanaDayari ya nsimu"
+    },
+    {
+      "lang": "ts",
+      "name": "missing-storage",
+      "text": "Mati lama hlayisiwekeXana mati lama hlayisiweke ma ringana tin'hweti hinkwato leti omeke?A ku si va na vundzeni bya thangi leri vuriweke eka pulaniHlaya mpimo wa mati ethangini hi siku leri fanaka n'hweti yin'wana ni yin'wana kutani u tsala siku ni mpimoN'hweti yin'wana ni yin'wanaDayari ya nsimu"
+    },
+    {
+      "lang": "ve",
+      "name": "recorded-names",
+      "text": "U tshila ha miri na zwimela zwa miṅwaha minzhiNaa zwimela zwa miṅwaha minzhi zwo ṱavhiwaho zwi kha ḓi tshila nga murahu ha ṅwaha?Ho vhewa zwa 5 kha pulane (High {count} / Ground cover / Original name x2, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1, High {count} / Ground cover / Original name x1)Thomani nga u khwaṱhisedza uri ho ṱavhiwa zwingana zwa vhukuma na uri lini. Vhalani zwimela zwi tshilaho ni zwi vhambedze na tshigwada tshenetsho tsho ṱavhiwaho, hu si zwo dzinginywaho kha mapa; ṅwalani zwo valaho zwiṅwe nga u fhambana.Nga murahu ha miṅwedzi miṅwe na miṅwe ya rathi, na nga murahu ha gomelelo kana mulilo muṅwe na muṅweDayari ya tsimu"
+    },
+    {
+      "lang": "ve",
+      "name": "missing-trees",
+      "text": "U tshila ha miri na zwimela zwa miṅwaha minzhiNaa zwimela zwa miṅwaha minzhi zwo ṱavhiwaho zwi kha ḓi tshila nga murahu ha ṅwaha?A hu athu vhewa miri kha pulaneThomani nga u khwaṱhisedza uri ho ṱavhiwa zwingana zwa vhukuma na uri lini. Vhalani zwimela zwi tshilaho ni zwi vhambedze na tshigwada tshenetsho tsho ṱavhiwaho, hu si zwo dzinginywaho kha mapa; ṅwalani zwo valaho zwiṅwe nga u fhambana.Nga murahu ha miṅwedzi miṅwe na miṅwe ya rathi, na nga murahu ha gomelelo kana mulilo muṅwe na muṅweDayari ya tsimu"
+    },
+    {
+      "lang": "ve",
+      "name": "missing-storage",
+      "text": "Maḓi o vhulungwahoNaa maḓi o vhulungwaho a a lingana kha miṅwedzi yo omayo?A hu athu bulwa vhungala ha thannga kha pulaneVhalani vhuimo ha maḓi kha thannga nga ḓuvha ḽithihi ṅwedzi muṅwe na muṅwe ni ṅwale ḓuvha na vhuimoṄwedzi muṅwe na muṅweDayari ya tsimu"
+    }
+  ],
+  "sourceFixtures": {
+    "monitoringCases": 11,
+    "riskCases": 25
+  },
+  "checks": {
+    "typecheck": "pass",
+    "focusedRegisteredFiles": 39,
+    "tests": 384,
+    "pass": 384,
+    "fail": 0,
+    "newChecksAfterEmptyFixtureCorrection": {
+      "pass": 9,
+      "fail": 0
+    },
+    "riskBoundaryInputCombinations": 768,
+    "nativeComparisonsPerCombination": 4,
+    "notes": "pass",
+    "whitespace": "pass",
+    "fullSuite": "Current CI pending; full climate predecessor09b280ef passed5380/0fail/1existingTODO only."
+  },
+  "limitations": [
+    "Existing farming/financial rules and thresholds were translated, not revalidated or changed.",
+    "Earlier native-only isiZulu assessment and risk caveat notes remain; prior crop/cost/assurance notes remain exact.",
+    "Card layout applies to exact native monitoring/risk header schemas only, on screens up to640px. Table semantics and header cells remain.",
+    "Saved report bytes were not rewritten. Real paid generation was blocked in browser and mocked in API.",
+    "No PDF output. Costs, purchasing, assurance, full/crop PDFs, wider app workflows, lessons/media and fluent review remain."
+  ]
+}

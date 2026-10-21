@@ -36,7 +36,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportBackMatter, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
+import { zuluReportClosingNotes, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import { reportSummaryPages } from '@/lib/report-summary';
 import {
   normaliseSiteAnalysisImages,
@@ -838,21 +838,21 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     minTempC: d.climate.minTemp,
     soilSource: d.soil.soilSource,
     unpricedBoqLines: boq.unpricedCount,
-  });
+  },langCode);
 
-  const zuluClosing = langCode === 'zu' ? zuluReportBackMatter(facts, d, boq, risks) : null;
+  const zuluClosing = langCode === 'zu' ? zuluReportClosingNotes(facts, d, boq) : null;
   const assembled = assembleReportDocument({
     language: langCode,
     cover,
     glance: header,
     body: batchResults,
-    backMatter: zuluClosing ?? [
-      `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
-      ...(purchasingGuidance ? [purchasingGuidance] : []),
-      billOfQuantitiesMarkdown(boq),
-      monitoringMarkdown(buildMonitoringPlan(facts)),
-      riskRegisterMarkdown(risks),
-      assuranceMarkdown(),
+    backMatter: [
+      zuluClosing?.crop ?? `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
+      ...(!zuluClosing && purchasingGuidance ? [purchasingGuidance] : []),
+      zuluClosing?.costs ?? billOfQuantitiesMarkdown(boq),
+      monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
+      riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
+      zuluClosing?.assurance ?? assuranceMarkdown(),
     ],
   });
 
