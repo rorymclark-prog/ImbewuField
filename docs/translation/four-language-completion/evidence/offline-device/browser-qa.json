@@ -1,0 +1,742 @@
+[
+  {
+    "lang": "zu",
+    "actual": [
+      {
+        "size": "phone",
+        "state": "online",
+        "checkedLines": 218,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "first-start-error",
+        "checkedLines": 232,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 58,
+            "y": 1,
+            "width": 98.9765625,
+            "height": 49
+          }
+        ],
+        "checkedLines": 231,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "online",
+        "checkedLines": 154,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "first-start-error",
+        "checkedLines": 160,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 80,
+            "y": 3.5,
+            "width": 133.2734375,
+            "height": 44
+          }
+        ],
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      }
+    ],
+    "fixtures": [
+      {
+        "size": "phone",
+        "mode": "queued",
+        "checkedLines": 230,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "confirm",
+        "checkedLines": 241,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "simple",
+        "checkedLines": 147,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "offline",
+        "checkedLines": 229,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "complete",
+        "checkedLines": 236,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "lease",
+        "checkedLines": 248,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "queued",
+        "checkedLines": 156,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "confirm",
+        "checkedLines": 163,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "simple",
+        "checkedLines": 88,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "offline",
+        "checkedLines": 155,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "complete",
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "lease",
+        "checkedLines": 166,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      }
+    ]
+  },
+  {
+    "lang": "st",
+    "actual": [
+      {
+        "size": "phone",
+        "state": "online",
+        "checkedLines": 229,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "first-start-error",
+        "checkedLines": 243,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 58,
+            "y": 1,
+            "width": 85.6484375,
+            "height": 49
+          }
+        ],
+        "checkedLines": 243,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "online",
+        "checkedLines": 154,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "first-start-error",
+        "checkedLines": 160,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 80,
+            "y": 3.5,
+            "width": 124.0078125,
+            "height": 44
+          }
+        ],
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      }
+    ],
+    "fixtures": [
+      {
+        "size": "phone",
+        "mode": "queued",
+        "checkedLines": 237,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "confirm",
+        "checkedLines": 250,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "simple",
+        "checkedLines": 153,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "offline",
+        "checkedLines": 237,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "complete",
+        "checkedLines": 243,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "lease",
+        "checkedLines": 257,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "queued",
+        "checkedLines": 157,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "confirm",
+        "checkedLines": 164,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "simple",
+        "checkedLines": 89,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "offline",
+        "checkedLines": 156,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "complete",
+        "checkedLines": 160,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "lease",
+        "checkedLines": 167,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      }
+    ]
+  },
+  {
+    "lang": "ts",
+    "actual": [
+      {
+        "size": "phone",
+        "state": "online",
+        "checkedLines": 234,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "first-start-error",
+        "checkedLines": 250,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 58,
+            "y": 1,
+            "width": 96.3671875,
+            "height": 49
+          }
+        ],
+        "checkedLines": 250,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "online",
+        "checkedLines": 155,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "first-start-error",
+        "checkedLines": 163,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 80,
+            "y": 3.5,
+            "width": 144.765625,
+            "height": 44
+          }
+        ],
+        "checkedLines": 162,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      }
+    ],
+    "fixtures": [
+      {
+        "size": "phone",
+        "mode": "queued",
+        "checkedLines": 244,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "confirm",
+        "checkedLines": 257,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "simple",
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "offline",
+        "checkedLines": 244,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "complete",
+        "checkedLines": 250,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "lease",
+        "checkedLines": 264,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "queued",
+        "checkedLines": 160,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "confirm",
+        "checkedLines": 167,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "simple",
+        "checkedLines": 92,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "offline",
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "complete",
+        "checkedLines": 163,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "lease",
+        "checkedLines": 170,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      }
+    ]
+  },
+  {
+    "lang": "ve",
+    "actual": [
+      {
+        "size": "phone",
+        "state": "online",
+        "checkedLines": 233,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "first-start-error",
+        "checkedLines": 249,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 58,
+            "y": 1,
+            "width": 81.90625,
+            "height": 49
+          }
+        ],
+        "checkedLines": 249,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "online",
+        "checkedLines": 155,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 28,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "first-start-error",
+        "checkedLines": 163,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "state": "offline",
+        "badgeRects": [
+          {
+            "x": 80,
+            "y": 3.5,
+            "width": 130.578125,
+            "height": 44
+          }
+        ],
+        "checkedLines": 162,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      }
+    ],
+    "fixtures": [
+      {
+        "size": "phone",
+        "mode": "queued",
+        "checkedLines": 243,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "confirm",
+        "checkedLines": 256,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "simple",
+        "checkedLines": 157,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "offline",
+        "checkedLines": 243,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "complete",
+        "checkedLines": 249,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "phone",
+        "mode": "lease",
+        "checkedLines": 263,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "queued",
+        "checkedLines": 159,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "confirm",
+        "checkedLines": 166,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "simple",
+        "checkedLines": 91,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 15,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "offline",
+        "checkedLines": 158,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 30,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "complete",
+        "checkedLines": 162,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 31,
+        "rawPlaceholders": false
+      },
+      {
+        "size": "desktop",
+        "mode": "lease",
+        "checkedLines": 169,
+        "failed": [],
+        "documentOverflow": false,
+        "sourceCount": 32,
+        "rawPlaceholders": false
+      }
+    ]
+  }
+]

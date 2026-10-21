@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(actual,locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(actual,locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -84,4 +84,15 @@ export function beforeConsentDictionary(actual:unknown,locale:string):unknown {
 }
 export function beforeConsentTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,consentPacket(),'\n  // Consent controls: unreviewed drafts; consent-drafts.json.\n','  // End consent controls.\n');
+}
+
+let offlineDevice: ControlIconPacket | undefined;
+function offlineDevicePacket():ControlIconPacket {
+  return offlineDevice ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/offline-device-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeOfflineDeviceDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,offlineDevicePacket());
+}
+export function beforeOfflineDeviceTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,offlineDevicePacket(),'\n  // Offline device controls: unreviewed drafts; offline-device-drafts.json.\n','  // End offline device controls.\n');
 }

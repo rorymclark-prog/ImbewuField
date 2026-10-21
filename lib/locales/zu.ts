@@ -1639,7 +1639,7 @@ const dict: Dict = {
 
   // Offline preparation and queued fieldwork.
   offlineZuluDraftNotice: 'Unreviewed isiZulu draft. Check the English beside save, sync and remove actions. / IsiZulu sisaluhlaka olungakabuyekezwa. Hlola isiNgisi esiseduze uma ugcina, uvumelanisa noma ususa.',
-  offlineTitle: 'Akukho uxhumano nokuvumelanisa',
+  offlineTitle: "Okugcinwe kule foni",
   offlineConnected: 'Kuxhunyiwe',
   offlineUsingSavedCopies: 'Awukho ku-inthanethi — usebenzisa amakhophi agcinwe kule divayisi',
   offlineEntriesWaiting: 'Kusalindile ukuthumela okufakiwe okungu-{count}',
@@ -1694,7 +1694,7 @@ const dict: Dict = {
   offlineLabelAssessmentResponse: 'Impendulo yokuhlola',
   offlineLabelVisit: 'Ukuvakasha',
   offlinePageHome: 'Ikhaya',
-  offlinePageOffline: 'Ukungaxhunyiwe nokuvumelanisa',
+  offlinePageOffline: "Okugcinwe kule foni",
   offlinePageFarmer: 'Ingadi nokuhlolwa kwendawo',
   offlinePageLessons: 'Izifundo',
   offlinePageRecords: 'Incwadi yemali nokuvuna',
@@ -2471,6 +2471,21 @@ const dict: Dict = {
   popiaConsentDraftNotice: "UHLAKA LWESIZULU — Umbhalo wesiZulu wemvume awukabuyekezwa. Funda umbhalo wesiNgisi oseduze ngaphambi kokukhetha noma ukuvuma.",
   popiaEnglishSourceLabel: "Umbhalo wokuqala wesiNgisi:",
   // End consent controls.
+  // Offline device controls: unreviewed drafts; offline-device-drafts.json.
+  offlineConnectedSentence: "Uxhumeke ku-inthanethi — amakhasi agcinelwe ukusetshenziswa ngaphandle koxhumano abhalwe ngezansi.",
+  offlineDraftNotice: "Lolu hlelo lokuhumusha alukabuyekezwa. Hlola umbhalo wesiNgisi oseduze kwezenzo zokugcina, ukuthumela nokususa.",
+  offlineSourceLabel: "Umbhalo wokuqala wesiNgisi",
+  offlineBadgeOffline: "Akukho uxhumano",
+  offlineBadgeWaiting: "Kulinde {count}",
+  offlineErrorTimeoutSaved: "Isikhathi sokuxhumana siphelile. Irekhodi lakho eligciniwe lisekhona kule divayisi.",
+  offlineErrorDeviceBrowser: "Lesi siphequluli asikwazi ukugcina umsebenzi wasensimini kule divayisi. Sebenzisa iwindi elijwayelekile lesiphequluli.",
+  offlineErrorCloseOtherTab: "Vala enye ithebhu ye-ImbewuField bese uzama ukugcina futhi.",
+  offlineErrorDeviceSave: "Idivayisi ayikwazanga ukugcina leli rekhodi. Gcina ifomu livuliwe.",
+  offlineErrorStorageUnavailable: "Indawo yokugcina kule divayisi ayitholakali.",
+  offlineErrorRequest: "Lesi sicelo asikwazanga ukuqedwa.",
+  offlineErrorServerUnconfirmed: "Iseva ayikuqinisekisanga lokhu kugcinwa.",
+  offlineErrorWaitingConnection: "Kulindwe uxhumano.",
+  // End offline device controls.
 };
 
 export default dict;
