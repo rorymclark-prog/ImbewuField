@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '3f7d1615', changes: [
+    'Report preparation: evidence states and help now follow all four draft languages.',
+    'Saved measurements and earlier report text keep their original values.',
+  ], tour: [{ title: 'Review site evidence', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and expand Improve this report. The checklist follows the app language; records present do not mean verified information.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Select a language in Settings. The existing saved report keeps its own text and language.',
+  }] },
   { when: '21 October 2026', sha: '7c95310b', changes: [
     'Report controls follow your app language; saved report text keeps its language.',
     'Four draft languages: reading choices, map reviews and report version details.',
