@@ -1,4 +1,4 @@
-import { AI_FEATURES } from '@/lib/ai-features';
+import { AI_FEATURES } from './ai-features.ts';
 
 // The Design Studio's not-yet-translated copy, split out of lib/i18n.tsx (see that file's
 // header) into its own module so every per-locale file in lib/locales/ can import just this,
