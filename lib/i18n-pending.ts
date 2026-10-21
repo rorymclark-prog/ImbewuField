@@ -998,6 +998,19 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  offlineDraftNotice: "Unreviewed translation. Check the English source beside save, send and remove actions.",
+  offlineSourceLabel: "English source",
+  offlineBadgeOffline: "Offline",
+  offlineBadgeWaiting: "{count} waiting",
+  offlineErrorTimeoutSaved: "Connection timed out. Your saved entry remains on this device.",
+  offlineErrorDeviceBrowser: "This browser cannot save fieldwork on this device. Use a normal browser window.",
+  offlineErrorCloseOtherTab: "Close another ImbewuField tab and try saving again.",
+  offlineErrorDeviceSave: "The device could not save this entry. Keep the form open.",
+  offlineErrorStorageUnavailable: "Device storage is unavailable.",
+  offlineErrorRequest: "This request could not be completed.",
+  offlineErrorServerUnconfirmed: "The server did not confirm this save.",
+  offlineErrorWaitingConnection: "Waiting for a connection.",
+
   popiaConsentDraftNotice: "Unreviewed consent translation. Read the English source before choosing or agreeing.",
   popiaEnglishSourceLabel: "English source:",
 

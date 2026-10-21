@@ -954,8 +954,8 @@ open under the whole-app goal. This changes the picture; `PLAN_VERSION` stays un
 consent flow now has native review status and source labels in all four targets, and fills
 three missing goal-selection prompts in Sesotho, Xitsonga and Tshivenda. `consent-drafts.json`
 records 16 new/corrected native values, their exact previous wording and the pre-edit source
-hashes. The sharing label now describes results that do not disclose whose they are; the
-the Xitsonga family-food goal retains a steady spread through the year without promising food
+hashes. The sharing label now describes results that do not disclose whose they are. The
+Xitsonga family-food goal retains a steady spread through the year without promising food
 never ends. These are **unreviewed AI drafts**, without fluent-speaker or compliance approval.
 
 All 18 original English consent/goal clauses remain exact, as does the existing isiZulu notice.
@@ -978,6 +978,48 @@ requires source backing for every target draft. Its consent-default/gate asserti
 The pending-source CSV was regenerated through the unchanged script after adding two UI source
 keys; human translation cells remain blank. Wider workflows, research, exports, Study/media and
 fluent review still remain under this goal. This changes the picture; `PLAN_VERSION` is unchanged.
+
+## Offline page and sync badge — draft batch 22
+
+`codex/four-language-offline-status` is stacked on consent (#1048). The 72 device-page entries
+now have Sesotho, Xitsonga and Tshivenda drafts, and the missing isiZulu connection sentence
+is filled. `offline-device-drafts.json` records 84 source pairs / 267 native values including
+review/source labels, the short offline/waiting badge and eight additional exact device/service
+errors in all four targets. Existing isiZulu page wording stays exact except two titles aligned
+to the current Saved on this phone source instead of the retired Offline & sync name; their
+prior wording is recorded. English stays exact.
+These remain **unreviewed AI drafts**, without fluent-speaker approval.
+
+The actual page now keeps source/review disclosures in every target, tags English separately,
+uses native accessible action names and fills English-source placeholders with the actual counts
+and page names. Progress, failed-page identities and error sources stay language-independent in
+React state, so a later language switch updates an already-visible message. Unknown server and
+user text stays verbatim with unknown-language markup. No queue payload, operation ID, cached
+record, authorisation rule, account scope, lease, server acknowledgement, download byte or
+local-only removal rule changes. Recorded service and worker hashes verify those files are
+unchanged in this batch.
+
+The real page and badge were verified at phone/desktop sizes: 24 guest-page states with explicit
+onboarding/consent fixture preconditions and blocked service workers for the first-start error.
+Another 48 queue-state fixtures use the actual component/hooks with isolated services and stub
+header/navigation; these do not claim a real signed-in workspace. Their 13,900 text lines were
+checked for readability by scrolling, with no clipped/occluded tested reading position, document
+overflow or raw placeholder. Representative screenshots were visually inspected. A live provider
+check also updates the same existing error through all four languages without reloading.
+
+Typecheck is clean; 551 tests pass across 63 selected registered files, with separate manifest
+validation. Actual handlers cover all queue states, source disclosures, downloads, Simple/All
+tools, keep/remove/lease gates, account switches, preparation gaps/completion, authorised visit
+pagination/photos and post-send language changes. Exact locale/source hashes and negative
+partial/altered-layer checks retain the original Study protection. Old English-literal and JSX-
+distance tests now guard their actual target-size/visibility rules. The unchanged CSV generator
+adds 12 English source rows with blank human handoff cells.
+
+The older frozen 547-file run has finished: 5,445 passed, three failed and one pre-existing TODO.
+Its three failures were already repaired in predecessor heads and pass in the current focused
+run. A fresh complete run is required at the finished head; the older result is not current-head
+proof. Study pack/media, other service messages, wider workflows, exports and fluent review
+remain under the whole-app goal. This changes the picture; `PLAN_VERSION` is unchanged.
 
 ## Remaining work
 

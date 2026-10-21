@@ -1,4 +1,4 @@
-import { beforeUiDictionary, beforeControlIconTranslations, beforeConsentTranslations } from './ui-dictionary-preservation.ts';
+import { beforeUiDictionary, beforeControlIconTranslations, beforeConsentTranslations, beforeOfflineDeviceTranslations } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -20,7 +20,7 @@ const readPacket = (name: string): UiTranslationPacket => JSON.parse(readFileSyn
  * the historical hashes still check every pre-existing byte, including every learning field.
  */
 export function beforeDeclaredUiTranslations(source: string, locale: UiLocale, packet: UiTranslationPacket, opening: string, closing: string): string {
-  source = beforeControlIconTranslations(beforeConsentTranslations(source,locale),locale);
+  source = beforeControlIconTranslations(beforeConsentTranslations(beforeOfflineDeviceTranslations(source,locale),locale),locale);
   const entries = [...packet.entries, ...(packet.supplementalEntries ?? [])].filter((entry) => entry[locale] !== undefined);
   const added = Object.fromEntries(entries.filter((entry) => !entry.beforeLines?.[locale]).map((entry) => [entry.key, entry[locale]]));
   Object.assign(added, packet.notices?.[locale] ?? {});
