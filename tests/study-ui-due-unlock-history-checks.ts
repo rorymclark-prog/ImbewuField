@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { beforeNavigationTranslations } from './navigation-translation-preservation.ts';
 import { MENTOR_ENGLISH_PENDING, CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
 
 const folder = 'docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/';
@@ -228,7 +229,7 @@ export function ensureStudyUiDueUnlockCurrent() {
   // sheet, network failure) into every locale and adds unreviewed isiZulu drafts for them, all
   // outside Studies. Check each complete new file, then rewind exactly those additions so the
   // earlier whole-file pins below still bind byte for byte.
-  const liveSource = readFileSync(path('lib/locales/ve.ts'));
+  const liveSource = beforeNavigationTranslations(readFileSync(path('lib/locales/ve.ts'), 'utf8'), 've');
   assert.equal(sha(liveSource), 'bb0983d867888c06e799cf8f82d4ef97332f0a47184e5f1ce8b8725ffd67be04', 'complete live VE source bytes after the wave 11 pending spreads');
   assert.equal(sha(rewindWave11Locale(liveSource.toString())), '0062c005b859e3723ce3ca24923cd8880d7f078c09f2b8c67f3df91a92790a69', 'complete live VE source bytes for the newest accepted layer');
   // Main #990 adds report-footnote keys to the shared app dictionary, outside
