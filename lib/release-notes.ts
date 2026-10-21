@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '59a115b1', changes: [
+    'Drawing buttons keep clear icons when you change language.',
+    'Drawing actions and sector headings have four draft translations, with English source wording beside the sector advice.',
+  ], tour: [{ title: 'Check drawing actions', where: 'Menu → Site design', href: '/design',
+    detail: 'Check Select, Undo, Snap and Delete, then draw a line. The icons stay the same while action names follow your language. Sector notes keep their source qualifications.',
+  }] },
   { when: '21 October 2026', sha: '5b6da923', changes: [
     'Saved crop-plan notes now follow your report language.',
     'Plant buying profiles have four draft translations; remaining English research notes are marked.',
