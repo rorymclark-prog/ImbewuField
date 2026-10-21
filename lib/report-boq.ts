@@ -72,6 +72,8 @@ export interface BoqLine {
   /** Section of the bill: what kind of work this is. */
   group: 'Water' | 'Earthworks & routes' | 'Growing area' | 'Structures & planting';
   description: string;
+  /** Only code-authored descriptions are translated; a farmer may use the same words as a label. */
+  descriptionSource?: { kind: 'beds' | 'plots'; count: number } | { kind: 'listed-plant' };
   /** The measured quantity, already formatted with its unit ("42.5 m", "3 no.", "18 m²"). */
   quantity: string;
   /** Rate as printed ("R250/m"), or null when unpriced. */
@@ -237,8 +239,9 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     entry: PriceEntry,
     zar: number,
     source: string,
+    descriptionSource?: BoqLine['descriptionSource'],
   ): void => {
-    lines.push({ group, description, quantity, rate: rateText(entry), zar, source });
+    lines.push({ group, description, quantity, rate: rateText(entry), zar, source, ...(descriptionSource ? { descriptionSource } : {}) });
   };
 
   const unpriced = (
@@ -247,8 +250,9 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     quantity: string,
     reason: UnpricedReason,
     source: string,
+    descriptionSource?: BoqLine['descriptionSource'],
   ): void => {
-    lines.push({ group, description, quantity, rate: null, zar: null, unpriced: reason, source });
+    lines.push({ group, description, quantity, rate: null, zar: null, unpriced: reason, source, ...(descriptionSource ? { descriptionSource } : {}) });
   };
 
   // ── Water: tanks ──
@@ -300,6 +304,7 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
       entry,
       Math.round(design.bedAreaM2 * entry.zar),
       'Measured off the farmer\'s plan',
+      { kind: 'beds', count: design.bedCount },
     );
   }
   if (design && design.plotAreaM2 > 0) {
@@ -319,6 +324,7 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
       areaQty(design.plotAreaM2),
       'no-rate',
       'Measured off the farmer\'s plan',
+      { kind: 'plots', count: design.plotCount },
     );
   }
 
@@ -328,7 +334,7 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     const source = 'Placed in the Design Studio';
     const defId = group.defId;
     if (defId === 'tree_guava' || listedPlantMentions(group.name).length > 0) {
-      unpriced('Structures & planting', 'Listed plant on saved plan', countQty(group.count), 'listed-plant', source);
+      unpriced('Structures & planting', 'Listed plant on saved plan', countQty(group.count), 'listed-plant', source, { kind: 'listed-plant' });
       continue;
     }
     // Tanks are billed above from FactWater, which is the only place their capacity is known.

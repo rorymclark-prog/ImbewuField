@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: 'a91d590d', changes: [
+    'Report summary text and handouts now follow all four draft app languages.',
+    'Summary PDFs preserve Tshivenda letters and show the draft-translation notice.',
+  ], tour: [{ title: 'Read a summary', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and choose At a glance or Field guide. The summary text uses your app language; the saved complete report keeps its own text.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Select a language in Settings. Summary exports keep the same measurements, prices and recorded names.',
+  }] },
   { when: '21 October 2026', sha: '3f7d1615', changes: [
     'Report preparation: evidence states and help now follow all four draft languages.',
     'Saved measurements and earlier report text keep their original values.',

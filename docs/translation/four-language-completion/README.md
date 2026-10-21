@@ -189,6 +189,55 @@ was performed. These remain **unreviewed AI drafts**, not linguistic approval.
 This changes the picture. `PLAN_VERSION` stays unchanged. The source table is outside the main
 UI dictionary, so the dictionary inventory count does not increase for this batch.
 
+## Summary text and PDF batch
+
+`codex/four-language-report-summaries` is stacked on preparation (#1032). It translates the
+one/five-page summary text and prepared sample-report prose. Report charts, figures and the
+full-report exporter remain outstanding; native summary text does not establish their completion.
+
+`REPORT_SUMMARY_COPY` in `lib/report-summary.ts` holds 63 English source variants and four drafts.
+All 51 existing static English/isiZulu pairs remain exact. The new three regional versions include
+unknown/zero, capacity/current-water, proposed/completed-work, illustrative/verified-evidence and
+budget/actual-spending distinctions. The prior English one/five-page summaries and full sample
+remain exact against four pre-change fixtures. Month words now use the existing calendar authority
+in all four targets; the saved month identities do not change. Species identities and recorded
+farmer labels remain verbatim.
+
+The BOQ now tags only descriptions authored by its own factories: established beds, staple plots
+and the existing listed-plant warning. Summaries translate those tags without guessing from a
+saved label. A saved name identical to an authored English phrase stays exact. Prices, rates,
+quantities, unpriced reasons and totals retain their existing authority. Count abbreviation `no.`
+and SI units remain the original BOQ conventions.
+
+Summary views and their exports follow the app language, independently of the next report's
+language picker. Switching app language repaints a summary without changing that picker or saved
+report bytes. Returning to Complete report restores the original saved body and its content
+language. The existing error-repaint, request-language and source-preservation checks remain.
+
+The old Latin-1 PDF sanitizer deleted Tshivenda letters. Summary PDFs now lazily load embedded,
+unmodified Noto Sans Regular/Bold binaries with the SIL OFL license, pinned source commit and
+SHA-256 hashes in `lib/report-fonts/`. There is no runtime font request. The summary sanitizer
+keeps letters, figures and units while removing decorative emoji and control characters. The
+full-report and crop exporters still use their older font paths and need separate work.
+
+The page count stays exactly one or five. Native omitted-detail text wraps in its reserved footer
+area. Every target-language page carries the draft-translation notice and the source's verify-
+measurements/costs safeguard. Tests verify actual glyph coverage for all draft letters in both
+font faces, exact font provenance, Unicode text maps and the actual renderer's native text calls.
+A deliberately overlong summary must show its native omitted-detail notice.
+
+Typecheck, 141 focused checks, notes gate and whitespace check pass. The full registered suite/CI
+still need to finish before merging. Source, figures, units, record immutability, source-pair and
+synthetic-unregistered-control checks accompany actual viewer language switches and mocked AI
+requests. Browser exports were real local downloads: eight PDFs, one/five pages in each target,
+with the next generation language still English and original saved bytes unchanged. No paid
+request was made. All 24 rendered pages were inspected; browser downloads rendered to identical
+pixels. Phone/desktop DOM checks show no horizontal overflow. Evidence and sample PDFs are in
+`evidence/report-summaries/`. These are **unreviewed AI drafts**, not fluent-speaker approval.
+
+This changes the picture. `PLAN_VERSION` stays unchanged. The pure summary source table does not
+change the main UI dictionary inventory count.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

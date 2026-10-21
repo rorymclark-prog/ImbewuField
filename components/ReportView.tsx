@@ -353,7 +353,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const pdfPlaced = includeImages ? placedFigures : new Set<string>();
   const pdfVisuals = { ...visuals, charts: visuals.charts.filter(c => !(facts?.crop?.snapshot && c.kind === 'calendar') && !pdfPlaced.has(c.id)) };
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
-  const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
+  const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage);
   const chapters = report.split('\n').flatMap((line, i) => line.startsWith('## ') ? [{ id: `report-chapter-${i}`, title: stripInlineMarkdown(line.slice(3)) }] : []);
   // Short editions keep the same saved facts. Their simpler charts do not need a new report.
   const briefVisuals = { ...siteReportVisuals(facts, d, language), title: siteName, subtitle: '',
@@ -789,7 +789,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setPdfState('working');
     try {
       if (reading !== 'full') {
-        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), language);
+        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), uiLanguage);
         await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`));
         setPdfState('done');
         setTimeout(() => setPdfState('idle'), 2500);
@@ -1428,7 +1428,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {/* Generated report */}
             {(report || reading !== 'full') && (
-              <div lang={reading === 'full' ? contentLanguage : language} className={`${styles.body} report-body`}>
+              <div lang={reading === 'full' ? contentLanguage : uiLanguage} className={`${styles.body} report-body`}>
                 {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}, openReportImage, tr('View full size', 'Buka ngosayizi ogcwele')) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
