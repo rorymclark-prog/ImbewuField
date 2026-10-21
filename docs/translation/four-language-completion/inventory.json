@@ -5,9 +5,9 @@
   "scope": "UI dictionary only; identical English includes intentionally source-paired text and names. Not a count of untranslated screens or lessons.",
   "languages": {
     "zu": {
-      "translated": 2043,
-      "total": 2624,
-      "ratio": 0.7785823170731707,
+      "translated": 2241,
+      "total": 2822,
+      "ratio": 0.7941176470588235,
       "complete": false,
       "gaps": [
         {
@@ -2401,9 +2401,9 @@
       ]
     },
     "st": {
-      "translated": 1127,
-      "total": 2624,
-      "ratio": 0.4294969512195122,
+      "translated": 1329,
+      "total": 2822,
+      "ratio": 0.4709425939050319,
       "complete": false,
       "gaps": [
         {
@@ -7243,10 +7243,6 @@
           "reason": "missing"
         },
         {
-          "key": "saveBtn",
-          "reason": "missing"
-        },
-        {
           "key": "cancelBtn",
           "reason": "missing"
         },
@@ -7424,14 +7420,6 @@
         },
         {
           "key": "surveyGuideChallenges",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerYes",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerNo",
           "reason": "missing"
         },
         {
@@ -7664,10 +7652,6 @@
         },
         {
           "key": "surveyIllustrativeOnly",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyNotRecorded",
           "reason": "missing"
         },
         {
@@ -8397,9 +8381,9 @@
       ]
     },
     "ts": {
-      "translated": 1109,
-      "total": 2624,
-      "ratio": 0.4226371951219512,
+      "translated": 1312,
+      "total": 2822,
+      "ratio": 0.4649184975194897,
       "complete": false,
       "gaps": [
         {
@@ -11251,10 +11235,6 @@
           "reason": "missing"
         },
         {
-          "key": "reportsOfflineClose",
-          "reason": "missing"
-        },
-        {
           "key": "assessmentState_draft",
           "reason": "missing"
         },
@@ -13311,10 +13291,6 @@
           "reason": "missing"
         },
         {
-          "key": "saveBtn",
-          "reason": "missing"
-        },
-        {
           "key": "cancelBtn",
           "reason": "missing"
         },
@@ -13492,14 +13468,6 @@
         },
         {
           "key": "surveyGuideChallenges",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerYes",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerNo",
           "reason": "missing"
         },
         {
@@ -13732,10 +13700,6 @@
         },
         {
           "key": "surveyIllustrativeOnly",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyNotRecorded",
           "reason": "missing"
         },
         {
@@ -14465,9 +14429,9 @@
       ]
     },
     "ve": {
-      "translated": 1118,
-      "total": 2624,
-      "ratio": 0.4260670731707317,
+      "translated": 1320,
+      "total": 2822,
+      "ratio": 0.4677533664068037,
       "complete": false,
       "gaps": [
         {
@@ -19343,10 +19307,6 @@
           "reason": "missing"
         },
         {
-          "key": "saveBtn",
-          "reason": "missing"
-        },
-        {
           "key": "cancelBtn",
           "reason": "missing"
         },
@@ -19524,14 +19484,6 @@
         },
         {
           "key": "surveyGuideChallenges",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerYes",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyAnswerNo",
           "reason": "missing"
         },
         {
@@ -19764,10 +19716,6 @@
         },
         {
           "key": "surveyIllustrativeOnly",
-          "reason": "missing"
-        },
-        {
-          "key": "surveyNotRecorded",
           "reason": "missing"
         },
         {
@@ -20497,7 +20445,7 @@
       ]
     }
   },
-  "visibleLiteralCandidates": 2169,
-  "batchBaseRef": "bf338855",
-  "batch": "Home, report controls, map help and Lima controls"
+  "visibleLiteralCandidates": 2154,
+  "batchBaseRef": "e0802e0c",
+  "batch": "Report viewer controls"
 }

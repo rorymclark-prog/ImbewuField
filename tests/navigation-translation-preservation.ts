@@ -53,3 +53,9 @@ export function beforeCoreEntryTranslations(source: string, locale: UiLocale): s
     '\n  // Core entry screens: unreviewed drafts; source pairs in core-entry-drafts.json.\n',
     '  // End core entry translation drafts.\n');
 }
+
+export function beforeReportViewerTranslations(source: string, locale: UiLocale): string {
+  return beforeDeclaredUiTranslations(source, locale, readPacket('report-viewer-drafts'),
+    '\n  // Report viewer controls: unreviewed drafts; source pairs in report-viewer-drafts.json.\n',
+    '  // End report viewer translation drafts.\n');
+}

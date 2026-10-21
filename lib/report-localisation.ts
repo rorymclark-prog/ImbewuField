@@ -1,3 +1,5 @@
+import { REPORT_UI_KEYS } from './i18n-pending.ts';
+import { recordsDate, recordsMonthShort } from './records-months.ts';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
@@ -24,6 +26,30 @@ export const REPORT_ZU: Record<string, string> = {
   'Fire & Hazards': 'Umlilo nezingozi', 'Economic Opportunities': 'Amathuba okuthola imali', 'Plant Guilds': 'Amaqoqo ezitshalo ezisizanayo',
   'Zone Design': 'Ukuhlelwa kwezindawo', 'Seasonal Calendar': 'Ikhalenda lezinkathi', '5-Year Vision': 'Umbono weminyaka emihlanu', 'Year 1 Priorities': 'Okubalulekile onyakeni wokuqala',
 };
+/** Controls follow the app language; a saved report keeps its original content language. */
+export function reportUiText(english: string, language: string, lookup: (key: string) => string, legacyZulu: string | undefined = REPORT_ZU[english]): string {
+  // Preserve the existing source-paired isiZulu wording rather than replacing it with a synonym.
+  if (language === 'zu' && legacyZulu !== undefined) return legacyZulu;
+  const key = REPORT_UI_KEYS[english];
+  if (!key) return english;
+  const value = lookup(key);
+  return value === key ? english : value;
+}
+
+/** The same date and time, with the app's existing native month names. */
+export function reportUiDate(language: string, iso: string, withTime = true): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return recordsDate(language, date, true) + (withTime ? ` · ${date.toLocaleTimeString('en-ZA', { hour12: false })}` : '');
+}
+
+/** Calendar labels are presentation only; stored sowing months and dates stay exact. */
+export function reportUiMonth(language: string, englishMonthYear: string): string {
+  const [month, ...rest] = englishMonthYear.split(' ');
+  const index = Array.from({ length: 12 }, (_, at) => recordsMonthShort('en', at + 1)).indexOf(month.slice(0, 3));
+  return index < 0 ? englishMonthYear : [recordsMonthShort(language, index + 1), ...rest].join(' ');
+}
+
 const cell = (value: string) => value.replace(/[|\r\n]/g, ' ');
 const riskZu: Record<string, [string, string]> = {
   'Dry-season crop failure from insufficient stored water': ['Izitshalo zingahluleka ngesikhathi esomile ngenxa yokushoda kwamanzi', 'Qinisekisa amanzi atholakalayo ngaphambi kokwandisa indawo etshaliwe. Bala isidingo sokunisela nezinsuku amanzi angahlala ngazo.'],

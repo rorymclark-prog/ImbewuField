@@ -8,6 +8,7 @@ import {
 } from '@/lib/account-local-storage';
 
 import { DESIGN_STUDIO_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { REPORT_VIEWER_ENGLISH_PENDING } from '@/lib/i18n-pending';
 import { CORE_ENTRY_ENGLISH_PENDING } from '@/lib/i18n-pending';
 import { SETTINGS_ENGLISH_PENDING } from '@/lib/i18n-pending';
 import { Ctx } from '@/lib/i18n-context';
@@ -44,6 +45,7 @@ export const T_en: Dict = {
   ...LEARNER_UI_ENGLISH,
   ...SETTINGS_ENGLISH_PENDING,
   ...CORE_ENTRY_ENGLISH_PENDING,
+  ...REPORT_VIEWER_ENGLISH_PENDING,
   completionScoreAria: 'Site setup completeness',
   completionScoreTitle: 'Site completeness',
   completionScoreProgressAria: '{percent}% complete, {done} of {total} stages done',

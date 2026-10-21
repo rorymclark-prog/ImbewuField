@@ -1,4 +1,6 @@
 'use client';
+import { useLanguage } from '@/lib/i18n';
+import { reportUiText, reportUiDate } from '@/lib/report-localisation';
 import { useEffect, useRef, useState } from 'react';
 import type { StoredSheetMeta } from '@/lib/sheet-store';
 import { REPORT_MAP_TYPES, groupReportMaps, loadSiteMapReview, saveSiteMapReview, emptyMapReview, type SiteMapReview, type MapReview } from '@/lib/report-map-selection';
@@ -11,14 +13,15 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
   const [review, setReview] = useState<SiteMapReview>(emptyMapReview);
   const [error, setError] = useState('');
   const [readyScope, setReadyScope] = useState('');
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const { lang: uiLanguage, t: appT } = useLanguage();
+  const tr = (en: string, zu?: string) => reportUiText(en, uiLanguage, appT, zu);
   useEffect(() => {
     const refresh = () => { setReview(loadSiteMapReview(siteId)); setReadyScope(scope); };
     refresh(); window.addEventListener('focus', refresh);
     return () => window.removeEventListener('focus', refresh);
   }, [siteId, scope]);
   const groups = groupReportMaps(maps);
-  const types = [...REPORT_MAP_TYPES.map(t => ({ ...t, label: language === 'zu' ? t.zu : t.label })),
+  const types = [...REPORT_MAP_TYPES.map(t => ({ ...t, label: tr(t.label, t.zu) })),
     ...[...groups.keys()].filter(k => k.startsWith('other:')).map(key => ({ key, label: groups.get(key)![0].label.split('·')[0], zu: '', step: 'glossy' }))];
   const covered = REPORT_MAP_TYPES.filter(t => groups.has(t.key)).length;
   const required = REPORT_MAP_TYPES.filter(t => !review.notNeeded.includes(t.key));
@@ -29,14 +32,14 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
   }).length;
   const missingIds = selectedIds.filter(id => !maps.some(m => m.id === id));
   function persist(next: SiteMapReview) {
-    if (!saveSiteMapReview(siteId, next)) { setError(tr('Could not save your map review. Please try again.', 'Ukubuyekezwa kwemephu akugcinwanga. Zama futhi.')); return false; }
+    if (!saveSiteMapReview(siteId, next)) { setError('Could not save your map review. Please try again.'); return false; }
     setError(''); setReview(next); return true;
   }
   const disabled = busy || readyScope !== scope;
-  return <details className={styles.stocktake}>
+  return <details lang={uiLanguage} className={styles.stocktake}>
     <summary><strong>{tr('Map checklist & report selection', 'Uhlu lwamamephu nokukhetha umbiko')}</strong><span>{covered}/9 {tr('map types saved', 'izinhlobo zamamephu ezigciniwe')} · {reviewed}/{required.length} {tr('reviewed', 'kubuyekeziwe')} · {selectedIds.length} {tr('included', 'kufakiwe')}</span></summary>
     <p>{tr('Choose one version per map type. Saving a map records it here; mark it reviewed when you are happy with it. All other versions stay in your saved maps. Changing attachments does not rewrite saved advice.', 'Khetha inguqulo eyodwa yohlobo ngalunye lwemephu. Maka ukuthi ibuyekeziwe uma wenelisekile ngayo. Ezinye izinguqulo zihlala zigciniwe. Ukushintsha amamephu akushintshi iseluleko esigciniwe.')}</p>
-    {error && <p role="alert">{error}</p>}
+    {error && <p role="alert">{tr(error)}</p>}
     {!!missingIds.length && <p role="status">{tr('Some selected maps are unavailable in this browser. They have not been replaced.', 'Amanye amamephu akhethiwe awatholakali kulesi siphequluli. Awakafakwa amanye esikhundleni sawo.')} <button disabled={disabled} onClick={() => onSelect(selectedIds.filter(id => !missingIds.includes(id)))}>{tr('Remove unavailable selections', 'Susa ukukhetha okungatholakali')}</button></p>}
     <div className={styles.list}>{types.map(type => {
       const versions = groups.get(type.key) ?? [];
@@ -49,7 +52,7 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
         <div><strong>{type.label}</strong><small>{versions.length ? `${versions.length} ${tr('saved versions', 'izinguqulo ezigciniwe')}` : tr('No saved map in this browser', 'Ayikho imephu egciniwe kulesi siphequluli')}</small></div>
         <div>{picked && <select aria-label={`${type.label}: ${tr('version', 'inguqulo')}`} value={picked.id} disabled={disabled} onChange={e => {
           if (persist({ ...review, preferred: { ...review.preferred, [type.key]: e.target.value } }) && included) onSelect(replaceSelection(e.target.value));
-        }}>{versions.map(m => <option key={m.id} value={m.id}>{new Date(m.at).toLocaleString('en-ZA')} · {m.label}</option>)}</select>}
+        }}>{versions.map(m => <option key={m.id} value={m.id}>{reportUiDate(uiLanguage, m.at)} · {m.label}</option>)}</select>}
         <select aria-label={`${type.label}: ${tr('review status', 'isimo sokubuyekeza')}`} value={status} disabled={disabled} onChange={e => {
           const nextStatus = e.target.value;
           const next = { ...review, notNeeded: nextStatus === 'not-needed' ? [...new Set([...review.notNeeded, type.key])] : review.notNeeded.filter(k => k !== type.key), reviews: { ...review.reviews } };
@@ -88,6 +91,7 @@ async function makePreview(image: string): Promise<string> {
   } finally { img.src = ''; }
 }
 export function ReportMapPreview({ map, scope, loadImage, onOpen }: { map: StoredSheetMeta; scope: string; loadImage: (id: string) => Promise<string | null>; onOpen: () => void }) {
+  const { lang, t } = useLanguage();
   const ref = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -110,7 +114,7 @@ export function ReportMapPreview({ map, scope, loadImage, onOpen }: { map: Store
     return () => { cancelled = true; };
   }, [map.id, scope, visible, loadImage]);
   return <button ref={ref} className={styles.preview} onClick={onOpen}>
-    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>Open map</span>}
+    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>{reportUiText('Open map', lang, t)}</span>}
     <span>{map.label}</span>
   </button>;
 }
