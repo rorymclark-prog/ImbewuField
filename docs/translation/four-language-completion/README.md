@@ -145,6 +145,50 @@ This changes the picture. `PLAN_VERSION` stays unchanged. The complete suite and
 to finish before merging. ReportPreparation/readiness, authored summary and visual content,
 exports and other workflows remain under the whole-app goal; this batch does not complete it.
 
+## Report preparation batch
+
+`codex/four-language-report-content` is stacked on the report viewer (#1031). This batch
+completes the current-site checklist wording in the four targets. Authored summaries and
+PDF/export bodies remain outstanding work.
+
+The 62 English source variants and their four drafts live together in
+`REPORT_PREPARATION_COPY` in `lib/report-readiness.ts`. This extends the existing preparation
+authority and stays pure, so server or document callers need no client dictionary or React
+context. The previously present isiZulu headings, actions, save label and input labels are
+retained. The old isiZulu-only note that said all status/details remain English was removed;
+the parent viewer already displays the shared four-language draft notice.
+
+All seven checklist areas now translate their titles, statuses, detail, actions and limitations.
+The name/save form, storage error, snapshot caveat, changed-evidence message and accessible
+section name follow the app language independently of the next report's generation language.
+The original distinctions remain: a filename is not an attached original; an attachment still
+needs key results; entered results still need source review; a fence is not a property outline;
+saved records are not verified information or a completed design. Saved source labels, names,
+figures, units, readiness decisions and geometry stay unchanged. Date words reuse the existing
+month authority. Only authored presentation text is translated.
+
+The fixture `tests/fixtures/report-preparation-translation/source-cases.json` was generated
+straight from the original module at `3f7d1615` before refactoring. Nine cases cover missing and
+loading maps, one/nine saved maps, fence-only and measured boundaries, photographs, filenames,
+attached documents, entered results, survey counts and planting-plan presence. Original
+English output remains exact. Native checks compare IDs, readiness decisions, all figures,
+units and source labels, and confirm no input mutation. An unregistered synthetic control
+must fail the source audit. The real panel is mounted with real progress/evidence/place stores;
+app-language switches retain the typed name and repaint a deliberately failed save. Successful
+retry keeps the typed name verbatim. Dialog bodies are outside this batch and stubbed in that
+component test.
+
+Typecheck, 58 focused tests, the notes gate and whitespace check pass. The full registered
+suite is running; no full-suite pass is claimed yet. The real browser was checked in all four
+targets at 390 × 844 and 1440 × 1000 with an English saved report. All seven areas rendered,
+a forced local save failure used the selected language, and both report bytes and the typed
+name remained intact. No horizontal overflow was measured. Twenty viewport screenshots were
+inspected; evidence is in `evidence/report-preparation/`. No paid generation or PDF creation
+was performed. These remain **unreviewed AI drafts**, not linguistic approval.
+
+This changes the picture. `PLAN_VERSION` stays unchanged. The source table is outside the main
+UI dictionary, so the dictionary inventory count does not increase for this batch.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

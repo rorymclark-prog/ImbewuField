@@ -1,0 +1,1193 @@
+{
+  "sourceCommit": "3f7d1615399ef5dd6b78bbf9095a9a51b69a6f77",
+  "scope": "Original English outputs before report preparation translation, generated directly from that commit. No species or measurements changed.",
+  "cases": [
+    {
+      "name": "empty current site",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {},
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design not recorded",
+          "hasRecord": false,
+          "action": "Open Design Map",
+          "detail": "No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "checking map records",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {
+        "maps": null
+      },
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Checking saved design maps…",
+          "hasRecord": false,
+          "action": "Open Design Map",
+          "detail": "Checking this browser for saved sheets."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "outline without dimensions",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 3,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {},
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary outline saved",
+          "hasRecord": true,
+          "action": "View boundary and measurements",
+          "detail": "The outline is saved; dimensions are not available in this view."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design not recorded",
+          "hasRecord": false,
+          "action": "Open Design Map",
+          "detail": "No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "fence alone never proves property outline",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "kind": "fence",
+                "label": "Original fence {date}",
+                "count": 1,
+                "totalLengthM": 12.5
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          }
+        },
+        "maps": {
+          "count": 0
+        }
+      },
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Fence measurements available",
+          "hasRecord": true,
+          "action": "View boundary and measurements",
+          "detail": "A fence line does not establish the complete property outline. Fence lines: 12.5 m. These may include internal fences."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design records saved",
+          "hasRecord": true,
+          "action": "View saved design",
+          "detail": "Your saved layout is available in the Design Map. No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "recorded editable design without sheets",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 1,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {},
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design records saved",
+          "hasRecord": true,
+          "action": "View saved design",
+          "detail": "Your saved layout is available in the Design Map. No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "one saved sheet and invalid date",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {},
+      "records": {
+        "maps": {
+          "count": 1,
+          "latestAt": "unknown date"
+        }
+      },
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "1 saved design map available",
+          "hasRecord": true,
+          "action": "View saved design maps",
+          "detail": "Your saved sheets are available in this report. Open them to review or include them in the full PDF."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "measured boundary and nine sheets",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 10,
+        "surveyFilledFields": 9,
+        "surveyTotalFields": 10,
+        "zoneCount": 3,
+        "elementCount": 12,
+        "hasCropPlan": true
+      },
+      "evidence": {},
+      "records": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          }
+        },
+        "maps": {
+          "count": 9,
+          "latestAt": "2026-09-07T10:00:00Z"
+        }
+      },
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "Site photos needed",
+          "hasRecord": false,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Test results not recorded",
+          "hasRecord": false,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "9 of 10 key checks recorded",
+          "hasRecord": true,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary outline saved",
+          "hasRecord": true,
+          "action": "View boundary and measurements",
+          "detail": "The outline is saved; dimensions are not available in this view."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "9 saved design maps available",
+          "hasRecord": true,
+          "action": "View saved design maps",
+          "detail": "Your saved sheets are available in this report; latest saved 07 Sept 2026. Open them to review or include them in the full PDF."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Plantings recorded · review coverage",
+          "hasRecord": true,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "one photograph, filename-only soil and attached water document",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 0,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {
+        "site_photos_site_photos": [
+          {
+            "id": "photo",
+            "type": "photo",
+            "dataUrl": "data:image/jpeg;base64,x",
+            "takenAt": 1
+          }
+        ],
+        "soil_lab_result": [
+          {
+            "id": "filename",
+            "type": "pdf",
+            "name": "Original soil {count}.pdf",
+            "takenAt": 1
+          }
+        ],
+        "water_lab_result": [
+          {
+            "id": "file",
+            "type": "pdf",
+            "name": "Original water.pdf",
+            "documentId": "doc-1",
+            "takenAt": 1
+          }
+        ]
+      },
+      "records": {},
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "1 site photograph saved",
+          "hasRecord": true,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Filename only · original needed",
+          "hasRecord": false,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Document added · enter key results",
+          "hasRecord": true,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "0 of 10 key checks recorded",
+          "hasRecord": false,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design not recorded",
+          "hasRecord": false,
+          "action": "Open Design Map",
+          "detail": "No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    },
+    {
+      "name": "two photographs and entered lab results",
+      "inputs": {
+        "hasSite": true,
+        "boundaryPointCount": 0,
+        "surveyFilledFields": 2,
+        "surveyTotalFields": 10,
+        "zoneCount": 0,
+        "elementCount": 0,
+        "hasCropPlan": false
+      },
+      "evidence": {
+        "site_photos_site_photos": [
+          {
+            "id": "photo1",
+            "type": "photo",
+            "dataUrl": "data:image/jpeg;base64,x",
+            "takenAt": 1
+          },
+          {
+            "id": "photo2",
+            "type": "photo",
+            "dataUrl": "data:image/jpeg;base64,x",
+            "takenAt": 2
+          }
+        ],
+        "soil_lab_result": [
+          {
+            "id": "note",
+            "type": "note",
+            "note": "Original field note {area}",
+            "takenAt": 1
+          }
+        ],
+        "water_lab_result": [
+          {
+            "id": "photo",
+            "type": "photo",
+            "dataUrl": "data:image/jpeg;base64,x",
+            "takenAt": 1
+          }
+        ]
+      },
+      "records": {},
+      "english": [
+        {
+          "id": "photos",
+          "title": "Site photographs",
+          "status": "2 site photographs saved",
+          "hasRecord": true,
+          "action": "Add site photos",
+          "detail": "Show the whole site, growing areas, slopes, access and water sources. Include views that explain the conditions on the ground."
+        },
+        {
+          "id": "soil",
+          "title": "Soil sample & test results",
+          "status": "Results entered · review source",
+          "hasRecord": true,
+          "action": "Add soil test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "water",
+          "title": "Water sample & test results",
+          "status": "Document added · enter key results",
+          "hasRecord": true,
+          "action": "Add water test results",
+          "detail": "Add the sampling date, location / sample ID, laboratory and results with units. Retain the original PDF or photograph and enter the values the report should use."
+        },
+        {
+          "id": "survey",
+          "title": "Site & household survey",
+          "status": "2 of 10 key checks recorded",
+          "hasRecord": true,
+          "action": "Complete or review survey",
+          "detail": "Record your goals, people, current production, water access, soil observations and challenges. Review the full survey before generating."
+        },
+        {
+          "id": "boundary",
+          "title": "Boundary & measurements",
+          "status": "Boundary not recorded",
+          "hasRecord": false,
+          "action": "Add boundary",
+          "detail": "Trace the property outline in the Design Map to calculate its area and perimeter."
+        },
+        {
+          "id": "design",
+          "title": "Site design",
+          "status": "Design not recorded",
+          "hasRecord": false,
+          "action": "Open Design Map",
+          "detail": "No saved map sheets found in this browser for this site. If you saved them on another device, open that device’s report."
+        },
+        {
+          "id": "crops",
+          "title": "Planting plan",
+          "status": "Planting plan not recorded",
+          "hasRecord": false,
+          "action": "Complete planting plan",
+          "detail": "Choose crops for the site’s beds and record planting dates. Check any areas that still have no plan."
+        }
+      ]
+    }
+  ]
+}
