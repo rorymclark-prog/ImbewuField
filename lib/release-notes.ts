@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: 'af151ab4', changes: [
+    'New report measurement tables have draft labels and source explanations in four languages.',
+    'New isiZulu reports include the full cover and measurement table.',
+  ], tour: [{ title: 'Read the site measurements', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, read the Site at a Glance table. Recorded measurements keep their values; source explanations and missing-data messages use the report language.',
+  }, { title: 'Check the original records', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Recorded names and laboratory wording remain as supplied. Known model soil classes and map-provenance labels have draft translations.',
+  }] },
   { when: '21 October 2026', sha: 'de65fbe6', changes: [
     'New reports have draft cover and document-control labels in your language.',
     'Contents, figure captions and incomplete-report notices use four draft languages.',

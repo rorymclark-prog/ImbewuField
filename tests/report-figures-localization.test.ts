@@ -1,3 +1,4 @@
+import { reportRecordedSourceLabel } from '../lib/report-localisation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -124,7 +125,11 @@ test('original evidence attribution and the changed-design warning reach the sel
     const figures=siteReportFigures(fixture.facts,fixture.location,language,{canvas:fixture.canvas,mapLayers:fixture.refs,designToday:changed});
     const caution=reportVisualText('The design has changed since this report was written. This picture shows the design as it is today.',language);
     for(const figure of figures.filter(f=>['site-plan','status'].includes(f.id)))assert.ok(figure.note.startsWith(caution));
-    assert.ok(landUseFigure(fixture.facts,language)!.source.includes(fixture.facts.boundary!.source));
+    // Known collector provenance is now translated. Keep its meaning and still preserve arbitrary
+    // recorded source annotations, rather than pinning an English metadata sentence.
+    assert.ok(landUseFigure(fixture.facts,language)!.source.includes(reportRecordedSourceLabel(fixture.facts.boundary!.source,language)));
+    const customFacts={...fixture.facts,boundary:{...fixture.facts.boundary!,source:'Recorded field notebook annotation'}};
+    assert.ok(landUseFigure(customFacts,language)!.source.includes(customFacts.boundary.source));
     const visuals=withReportFigures(siteReportVisuals(fixture.facts,fixture.location,language),figures,language);
     for(const figure of figures.filter(f=>selected.has(f.id))){
       const chart=visuals.charts.find(chart=>chart.figure?.id===figure.id)!;

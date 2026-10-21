@@ -36,7 +36,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportMatter, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
+import { zuluReportBackMatter, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import { reportSummaryPages } from '@/lib/report-summary';
 import {
   normaliseSiteAnalysisImages,
@@ -803,7 +803,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     siteAreaM2: siteData?.areaM2,
     sitePerimeterM: siteData?.perimeterM,
     hasMapWaterPolygons: Boolean(waterData),
-  });
+  },langCode);
 
   // ── The consulting-document furniture ────────────────────────────────────────
   //
@@ -840,13 +840,13 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     unpricedBoqLines: boq.unpricedCount,
   });
 
-  const zuluMatter = langCode === 'zu' ? zuluReportMatter(facts, d, boq, risks, now.toISOString().slice(0, 10)) : null;
+  const zuluClosing = langCode === 'zu' ? zuluReportBackMatter(facts, d, boq, risks) : null;
   const assembled = assembleReportDocument({
     language: langCode,
-    cover: zuluMatter?.cover ?? cover,
-    glance: zuluMatter?.glance ?? header,
+    cover,
+    glance: header,
     body: batchResults,
-    backMatter: zuluMatter?.backMatter ?? [
+    backMatter: zuluClosing ?? [
       `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
       ...(purchasingGuidance ? [purchasingGuidance] : []),
       billOfQuantitiesMarkdown(boq),

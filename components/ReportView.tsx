@@ -38,7 +38,7 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
-import { reportUiText, reportUiDate, reportHeadingAliases } from '@/lib/report-localisation';
+import { reportUiText, reportUiDate, reportHeadingAliases, reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -195,6 +195,13 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
         return cells;
       };
       const headers = splitRow(header);
+      // Long native field/source words hid the source column on a phone. Only those columns may
+      // break within a word; the measurement value must never split a decimal or a stored name.
+      // Minimum widths also stop the auto table layout turning field labels into two-letter lines.
+      const nativeMeasurementTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
+        headers.length === 3 && ['Measure','Value','Where it comes from'].every((source,index) =>
+          headers[index].trim() === reportDocumentText(source,language)));
+      const measurementWidths = [95,126,130];
       const rows = body.map(splitRow);
       elements.push(
         <div key={`table-${i}`} className="overflow-x-auto my-4">
@@ -202,7 +209,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
             <thead>
               <tr style={{ borderBottom: '1px solid var(--report-border)' }}>
                 {headers.map((h, j) => (
-                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)' }}>
+                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)', overflowWrap: nativeMeasurementTable && j !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[j] : undefined }}>
                     {h.trim()}
                   </th>
                 ))}
@@ -212,7 +219,7 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
               {rows.map((row, ri) => (
                 <tr key={ri} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)' }}>
+                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
                       {stripInlineMarkdown(cell)}
                     </td>
                   ))}

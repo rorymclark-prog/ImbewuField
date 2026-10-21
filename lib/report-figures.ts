@@ -36,7 +36,8 @@ import { isValidEarthLatitude } from './solar';
 import { aspectLabel } from './biome';
 import type { PhasePlan } from './phasing';
 import { reportVisualText } from './report-visuals';
-import { recordsMonthShort } from './records-months';
+import { reportRecordedSourceLabel } from './report-localisation';
+import { recordsMonthShort, recordsMonthRangeIndices, recordsSeasonLabel } from './records-months';
 
 /** `note` says how to read the drawing and what it cannot tell you; `source` says where every mark came from. */
 export type ReportFigure = { id: string; title: string; note: string; source: string; svg: string; width: number; height: number; alt: string };
@@ -489,17 +490,7 @@ function axis(max: number, target = 4) {
   return { top, ticks };
 }
 
-/** "Oct–Mar" → [9,10,11,0,1,2]. Anything it cannot read gives [] and that season is not drawn. */
-function seasonMonths(label: string | undefined): number[] {
-  const m = /^\s*([A-Za-z]{3})[a-z]*\s*[–—-]\s*([A-Za-z]{3})[a-z]*\s*$/.exec(label ?? '');
-  if (!m) return [];
-  const at = (s: string) => MONTHS.findIndex(x => x.toLowerCase() === s.toLowerCase());
-  const from = at(m[1]), to = at(m[2]);
-  if (from < 0 || to < 0) return [];
-  const out: number[] = [];
-  for (let i = from; out.length < 12; i = (i + 1) % 12) { out.push(i); if (i === to) break; }
-  return out;
-}
+const seasonMonths=recordsMonthRangeIndices;
 
 /** Flagged months as readable runs, joining a run that wraps the year end: "Nov–Feb, Jun". */
 function monthRuns(flags: boolean[], language = 'en'): string {
@@ -575,8 +566,7 @@ function figureHeader(p: Pen, headline: string, detail: string, language: string
 function figureSeason(value: string | undefined, language: string): string {
   if (!value || !nativeDraft(language)) return value ?? '';
   if (value.endsWith(', episodic')) return reportVisualText('{range}, episodic', language, { range: figureSeason(value.slice(0, -10), language) });
-  const months = seasonMonths(value);
-  return months.length ? `${recordsMonthShort(language, months[0] + 1)}–${recordsMonthShort(language, months[months.length - 1] + 1)}` : value;
+  return recordsSeasonLabel(language,value);
 }
 
 function figurePhaseRange(value: string, language: string): string {
@@ -759,7 +749,7 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
     id: 'water-budget', width: W, height: Math.ceil(y + 4), svg: p.done(y + 4),
     title: t('Roof water: what comes in and what goes out', 'Amanzi ophahla: okungenayo nokuphumayo'),
     note: t('Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.', 'Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa.'),
-    source: `${t('Roof', 'Uphahla')}: ${facts?.roof?.source ?? t('traced area', 'indawo edwetshiwe')}. ${t('Rain', 'Imvula')}: ${rainSourceLabel(rain.rainfallSource, t)}.${needL ? ` ${t('Daily use: as recorded in the Design Studio.', 'Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.')}` : ''}`,
+    source: `${t('Roof', 'Uphahla')}: ${reportRecordedSourceLabel(facts?.roof?.source ?? t('traced area', 'indawo edwetshiwe'),language)}. ${t('Rain', 'Imvula')}: ${rainSourceLabel(rain.rainfallSource, t)}.${needL ? ` ${t('Daily use: as recorded in the Design Studio.', 'Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.')}` : ''}`,
     alt: `${t('Roof catch by month', 'Okubanjwa uphahla ngenyanga')}: ${figureNumber(annualCatch)} L ${t('a year', 'ngonyaka')}${short.some(Boolean) ? `; ${t('short in', 'kuyashoda ngo')} ${monthRuns(short, language)}` : ''}${stored > 0 ? `; ${t('storage on the plan', 'isitoreji esikupulani')} ${figureNumber(stored)} L` : ''}${needed > 0 ? `; ${t('storage needed', 'isitoreji esidingekayo')} ${figureNumber(needed)} L` : ''}.`,
   };
 }
@@ -1155,7 +1145,7 @@ export function landUseFigure(facts: ReportSiteFacts | null | undefined, languag
     id: 'land-use', width: W, height: Math.ceil(y), svg: p.done(y),
     title: t('How the ground is used', 'Ukuthi umhlaba usetshenziswa kanjani'),
     note: t('Areas as drawn on the saved design and traced on the map, whether built yet or not. Trees, paths and tanks are not counted as areas.', 'Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo.'),
-    source: `${t('Boundary', 'Umngcele')}: ${facts?.boundary?.source ?? t('traced on the map', 'udwetshwe kumephu')}. ${t('Beds and plots: saved design.', 'Imibhede neziza: umklamo ogciniwe.')}`,
+    source: `${t('Boundary', 'Umngcele')}: ${reportRecordedSourceLabel(facts?.boundary?.source ?? t('traced on the map', 'udwetshwe kumephu'),language)}. ${t('Beds and plots: saved design.', 'Imibhede neziza: umklamo ogciniwe.')}`,
     alt: `${t('Land use', 'Ukusetshenziswa komhlaba')}: ${rows.map(part => `${part.name} ${figureNumber(part.value)} m²`).join('; ')}.`,
   };
 }

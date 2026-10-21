@@ -481,6 +481,61 @@ sections (costs, monitoring, risks and assurance), full-report/crop-plan PDFs an
 learning and media still remain. The overall goal stays active. This changes the picture;
 `PLAN_VERSION` remains unchanged.
 
+## Report measurement tables and isiZulu cover parity — draft batch 12
+
+Based on `af151ab440b84a9ff1d2c7aa930ed1493b4acd90` (draft #1038), the packet
+`report-header-drafts.json` records 79 additional authored measurement-table labels, values,
+source explanations and templates in all four languages, plus two shared season words.
+English source output stays exact for 18 pre-change fixtures and all eight report diagrams.
+The packet and fixtures carry their original source SHA; these are unreviewed AI drafts.
+
+All four targets now receive the same complete native report cover and measurement table from
+the API. The dead abbreviated isiZulu cover/glance producer was removed; its existing closing
+sections remain unchanged. This replaces the earlier batch's intentional isiZulu exception.
+The shared month-range parser now owns table and diagram seasons. All 144 start/end pairs retain
+the same month identities, including year wrapping. Existing diagram soil-class wording is
+reused for recognised model classes; recorded laboratory and unknown wording remain exact.
+
+Recognised collector provenance (map tracing, farmer tracing and Design Studio tracing, including
+its recorded point count) is translated in the table and land-use/water-budget captions. Unknown
+source annotations and custom names remain verbatim. Counts retain their original digits. Water
+category labels translate only exact existing category identities; custom categories stay raw.
+No saved geometry, numbers, arithmetic, species identities or source model claims change.
+
+The first phone renders exposed sideways table overflow. Word wrapping alone made field columns
+too narrow to read, so native measurement tables now give the three columns minimum widths and
+allow word breaks only in field/source columns. Long slash compounds have readable spacing.
+The value column keeps original names and decimal values intact. English and other tables retain
+their earlier layout. The final tables and actual-viewer contexts were inspected again.
+
+Typecheck, 235 focused Node 24 tests, release-note checks and whitespace checks pass. Tests cover
+all source fixtures, deliberately broken source audits, every month range, raw-name collisions,
+missing/recorded water, proposed storage, scale/roof/wind source values, native table layout and
+mocked actual API output in every target, including isiZulu parity. Two older assertions were
+rewritten upward: the earlier packet still checks all its original rows without pinning the
+size of a growing shared table; figure provenance now checks faithful translation of recognised
+collector text and exact preservation of custom annotations. No assertion was deleted.
+
+`evidence/report-header/` retains 66 inspected screenshots/contact sheets and QA records: 72
+actual-viewer phone table cases, 28 full-table static phone cases using the actual reader and app
+CSS, eight season SVG cases, and eight mocked actual API reports. All row counts and stored report
+bytes are preserved; no clipped cells, document overflow or table overflow over one pixel was
+measured. Land-use and water-budget source captions were inspected in every target. One-pixel
+fractional table rounding remains recorded honestly. Temporary report storage was restored and
+real paid generation was blocked. Mock model-body English is not translation evidence. No PDF
+was produced.
+
+The stable climate predecessor's complete registered Node 24 run finished: 538 files, 5,380 passes,
+zero failures and one existing shape-sync TODO, with exit status zero. This result is for
+`09b280efe5a7be82674af79dce70f238b7b07b1b`; it excludes the later art, document and header
+batches. Current branch CI must still run the full suite. Earlier #1034 CI has both jobs green;
+#1036–#1038 still had tests running at this checkpoint. All translation PRs remain drafts.
+
+This batch does not finish translation. Catalogue equipment, route and tank display names still
+need identity-aware handling; custom names and species must remain exact. Non-isiZulu closing
+sections, full-report/crop-plan exports and wider workflows, learning and media remain. The goal
+stays active. This changes the picture; `PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
