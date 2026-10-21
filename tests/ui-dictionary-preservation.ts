@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(actual,locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(actual,locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -45,9 +45,8 @@ function controlIconPacket(): ControlIconPacket {
 }
 const iconOpening='\n  // Native design controls: unreviewed drafts; control-icon-drafts.json.\n';
 const iconClosing='  // End native design controls.\n';
-export function beforeControlIconDictionary(actual:unknown,locale:string):unknown {
+function beforeExactUiDictionary(actual:unknown,locale:string,packet:ControlIconPacket):unknown {
   if(!actual||typeof actual!=='object'||Array.isArray(actual))return actual;
-  const packet=controlIconPacket();
   const entries=packet.entries.filter(row=>typeof row[locale]==='string');
   if(!entries.length)return actual;
   const dict=actual as Record<string,unknown>;
@@ -56,17 +55,33 @@ export function beforeControlIconDictionary(actual:unknown,locale:string):unknow
   for(const row of entries){const value=packet.beforeValues![locale][row.key];if(value===null)delete before[row.key];else before[row.key]=value;}
   return before;
 }
-export function beforeControlIconTranslations(source:string,locale:string):string {
-  const packet=controlIconPacket();
+function beforeExactUiSource(source:string,locale:string,packet:ControlIconPacket,opening:string,closing:string):string {
   const entries=packet.entries.filter(row=>typeof row[locale]==='string');
   if(!entries.length)return source;
   const lines=packet.beforeLines[locale];
   const added=entries.filter(row=>!lines[row.key].length);
-  const block=iconOpening+added.map(row=>`  ${row.key}: ${JSON.stringify(row[locale])},\n`).join('')+iconClosing;
+  const block=opening+added.map(row=>`  ${row.key}: ${JSON.stringify(row[locale])},\n`).join('')+closing;
   const inline=entries.filter(row=>lines[row.key].length);
   if(added.length&&!source.includes(block))return source;
   if(!inline.every(row=>source.split(`  ${row.key}: ${JSON.stringify(row[locale])},\n`).length===2))return source;
   let before=added.length?source.replace(block,'\n'):source;
   for(const row of inline){assert.equal(lines[row.key].length,1,'each replaced control has exactly one recorded source line');before=before.replace(`  ${row.key}: ${JSON.stringify(row[locale])},\n`,lines[row.key][0].text);}
   return before;
+}
+export function beforeControlIconDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,controlIconPacket());
+}
+export function beforeControlIconTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,controlIconPacket(),iconOpening,iconClosing);
+}
+
+let consent: ControlIconPacket | undefined;
+function consentPacket():ControlIconPacket {
+  return consent ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/consent-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeConsentDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,consentPacket());
+}
+export function beforeConsentTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,consentPacket(),'\n  // Consent controls: unreviewed drafts; consent-drafts.json.\n','  // End consent controls.\n');
 }

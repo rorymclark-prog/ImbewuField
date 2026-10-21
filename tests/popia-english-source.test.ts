@@ -4,12 +4,15 @@ import { readFileSync } from 'node:fs';
 
 const source = readFileSync(new URL('../components/PopiaConsent.tsx', import.meta.url), 'utf8');
 
-test('first-run consent pairs supported draft languages with English and leaves Xitsonga out', () => {
-  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'st', 've'\]\)/);
+// Xitsonga now has source-bound corrections and a missing-goal prompt in this unreviewed flow.
+// The former exclusion assertion pinned the old language list; every target needs source backing.
+test('first-run consent pairs every target draft with English source and separates the source language', () => {
+  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'st', 'ts', 've'\]\)/);
   assert.match(source, /translate\('en', key\)/);
-  assert.match(source, /English source:/);
-  assert.match(source, /Translation status: unreviewed/);
-  assert.doesNotMatch(source, /ENGLISH_SOURCE_LANGS[^\n]*\bts\b/);
+  assert.match(source, /<small lang="en"/);
+  assert.match(source, /t\('popiaEnglishSourceLabel'\)/);
+  assert.match(source, /t\('popiaConsentDraftNotice'\)/);
+  assert.match(source, /const copyString = \(key: string\) => t\(key\)/, 'switch names use the native label while tagged source text stays in the reading flow');
 });
 
 test('consent storage stays required, sharing stays opt-in, and a goal is required to finish', () => {
