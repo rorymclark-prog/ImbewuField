@@ -848,6 +848,52 @@ This changes the picture. `PLAN_VERSION` is unchanged. The whole-app goal remain
 purchasing research, other workflows, exports, Study/media and fluent review remain unfinished.
 No PDF was created or modified in this batch.
 
+## First-crop reference explanations — draft batch 19
+
+`codex/four-language-product-research` is stacked on drawing controls (#1045).
+`first-crop-drafts.json` captures the 19 original first-crop note sources at `6446f1cb` and
+binds them to four unreviewed AI drafts. Five further source rows cover the complete reference
+sentence, fallback qualification, explicit unsourced/immediate-food caution and month/year labels.
+The verified harvest-data file retains its exact pre-edit SHA-256.
+
+The report’s plant-buying section now translates the complete first-crop explanation, including
+its trial, region, propagation, earliest-age versus typical-age, starting-clock uncertainty and
+no-guarantee qualifications. It does not replace a qualified paragraph with a short translated
+heading. Named source locations and cultivars remain identifiable; all numeric tokens stay exact.
+The English guides and markdown remain byte-for-byte equal to the existing 34-case source fixture.
+Saved site facts, citations, species identities and season decisions are unchanged.
+
+`firstCropAgeLabel` still owns the original month/year choice and rounding. An optional formatting
+callback supplies only presentation words; its default preserves the old English API. There is
+no second age calculation. Missing timing remains explicitly unsourced and says not to rely on
+new plantings for immediate food. A deliberately unregistered source note fails the audit.
+
+The previous product-profile preservation test now allows this narrowly declared first-crop line
+while retaining deep equality for every other field. Its original source fixtures stay intact.
+Typecheck, 369 tests across 41 registered files, release-note and whitespace checks pass.
+Independent checks bind all 19 notes, source-data hash, figures, placeholders, named identities,
+unit conversion boundaries and missing-note handling. The real mocked API test continues checking
+every guidance line reaches all four report languages. No paid AI is used.
+
+`evidence/first-crop/` records 80 static source/missing-timing scenes at phone and desktop sizes
+(160 measured states), plus four actual saved-report viewer flows from mocked API output.
+The existing placement adapter emitted 17 first-crop records per report: 68 native paragraphs
+and 608 phone lines, with zero occluded lines, clipped paragraphs or document overflow. Granadilla
+and guava were not emitted by that placement fixture; their original source-group records are
+covered in the direct/static checks. This batch does not change placement eligibility.
+The viewer’s selected body language and saved bytes stayed exact; temporary browser storage was
+restored. Source/trial, missing-timing and actual-reader examples were visually inspected in all
+four languages. These checks do not constitute fluent-speaker approval.
+
+The long full run at `6446f1cb` is still in progress. It caught two release-note lines over the
+existing 90-character phone limit, from the two preceding batches. Follow-up commits on #1044 and
+#1045 shorten those lines without changing the test. No full-suite success is claimed for this branch; current CI must finish before
+merge. This changes the picture; `PLAN_VERSION` stays unchanged. No PDF was created or modified.
+
+Established-production/yield explanations, supplementary and regional research, livestock notes,
+other workflows, exports and Study/media remain open. The native purchasing-gap notice remains.
+The whole-app goal stays active and incomplete.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

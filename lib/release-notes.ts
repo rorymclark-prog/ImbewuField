@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '6446f1cb', changes: [
+    'First-crop references have full draft explanations in four languages.',
+    'The original ages, trial conditions and missing-timing cautions stay with each reference.',
+  ], tour: [{ title: 'Read first-crop references', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, open the plant buying section. The first-crop age and its full source explanation use the report language. Other English research notes are still marked as unfinished.',
+  }] },
   { when: '21 October 2026', sha: '59a115b1', changes: [
     'Drawing buttons keep clear icons when you change language.',
     'Drawing actions and sector headings have four draft translations and English source text.',
