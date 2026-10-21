@@ -894,6 +894,60 @@ Established-production/yield explanations, supplementary and regional research, 
 other workflows, exports and Study/media remain open. The native purchasing-gap notice remains.
 The whole-app goal stays active and incomplete.
 
+## Established-production and yield references — draft batch 20
+
+`codex/four-language-product-yields` is stacked on first-crop explanations (#1046).
+`product-yield-drafts.json` binds 15 full-bearing/yield source notes and four reference/fallback
+sentences to unreviewed drafts in isiZulu, Sesotho, Xitsonga and Tshivenda. The notes were captured
+before implementation at `231e7bd3`; later parent changes were test-only. The verified harvest-data
+file retains its original SHA-256. No source ages, yields, spacings, species identities, seasons
+or household-food eligibility rules change.
+
+The buying section translates each complete research qualification with its original typed
+range. It retains the distinction between orchard-average calculations and measured individual
+trees, trial conditions versus a local forecast, seasonal collection versus annual production,
+whole fruit versus edible pulp/kernel mass, lifespan versus age-specific yield, and cultivar-group
+specificity. It does not calculate an intermediate age curve, multiply by the planted inventory
+or relabel a source weight as kg/year. Missing notes retain explicit source-check/annual-forecast
+cautions; absent ranges create no line. `formatRange` remains the original number formatter.
+
+Formula notation, source spacing quotations and named locations/cultivar groups remain exact,
+including the original operators, values and dimensions. These are intentional source quotations
+and identities. The per-plant display heading itself has native unit wording. The English model
+and markdown remain exact against the existing 34-case fixture. Native models permit only the
+previous declared fields and these two additional source-bound lines; every other field is still
+deep-compared. The earlier preservation claim is expanded with this explicit reason, not removed.
+
+Typecheck, 391 tests across 44 registered files, release-note and whitespace checks pass.
+Independent checks bind every source path, source-data hash, draft value, ordered numeric token,
+placeholder, formula and named identity. A deliberately unregistered production note fails the
+audit. Default/unknown languages, missing notes and ranges, one-pass interpolation, original
+English output, sources, seasons and saved records remain covered. The actual mocked generation
+route must include every selected native guidance line; real paid AI is never called.
+
+A terminology check also corrects four earlier forecast cautions, recorded with exact before/after
+values in `forecast-word-corrections.json`. Xitsonga uses the forecast root supported by
+[Statistics South Africa’s crop-forecast entry](https://www.statssa.gov.za/wp-content/uploads/2015/11/Multilingual_Statistical_-terminology_2013.pdf)
+and [the Presidency’s Xitsonga usage](https://thepresidency.gov.za/tso/node/5334), instead of prophecy
+wording. The Tshivenda dated-forecast caution reuses the existing report forecast noun. These
+lexical checks do not validate sentence fluency or count as human approval. Source English and
+figures stay unchanged; older screenshots are historical evidence.
+
+Browser evidence in `evidence/product-yields/` covers 152 static reader states and four actual
+saved-report flows: 48 native production paragraphs, 414 phone lines, no occlusion/clipping or
+document overflow, exact body language and saved bytes. Formula, caution, missing-note and
+actual-reader examples were visually inspected in all four languages. Two actual Xitsonga
+rainfall/climate cards were also checked at phone/desktop sizes; their captions remain complete,
+while phone art retains its intended internal horizontal scroll. Final viewer runs use disposable
+contexts with explicit onboarding/consent fixture preconditions; those flows are not claimed as
+verified here. No paid AI or PDF generation is used.
+
+The full 547-file run at older `6446f1cb` remains live, with its known failures repaired in
+predecessor heads. No current full-suite success is claimed; CI must finish before merge.
+The native purchasing-gap notice remains: supplementary/region/season, product and livestock
+wording still contains English. Wider workflows, exports, Study/media and fluent review remain
+open under the whole-app goal. This changes the picture; `PLAN_VERSION` stays unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

@@ -1,0 +1,67 @@
+{
+  "sourceSha": "e3f18d92b3a214a0dce5c2f04da25e02d4893c30",
+  "status": "Unreviewed draft corrections, not fluent-speaker approval.",
+  "reason": "Use the Xitsonga forecast root, not prophecy/prophets, in quantitative planning cautions. Use the existing report forecast noun consistently in the Tshivenda dated-forecast caution.",
+  "lexicalSources": [
+    {
+      "source": "Statistics South Africa, Multilingual Statistical Terminology (2013), Crop forecast entry, printed p.5. Indexed primary PDF text gives Mvhumbontshovelo.",
+      "url": "https://www.statssa.gov.za/wp-content/uploads/2015/11/Multilingual_Statistical_-terminology_2013.pdf"
+    },
+    {
+      "source": "The Presidency, Xitsonga Cabinet statement, 9 September 2020, paragraph 4.1: mvhumbo used for a budget forecast.",
+      "url": "https://thepresidency.gov.za/tso/node/5334"
+    }
+  ],
+  "notes": [
+    "The sources support the Xitsonga forecast root. Full sentences and inflections remain unreviewed. Tshivenda mbonelaphanḓa reuses the existing reportVisualText term, not a claim of validation by these lexical sources.",
+    "Only the recorded native terms change. Source English, numeric values, source citations and domain behavior remain exact. Earlier screenshot packets are historical; current corrections have fresh render evidence."
+  ],
+  "entries": [
+    {
+      "domain": "product",
+      "file": "lib/production-product-guidance.ts",
+      "english": "Water-loving: a dry site needs a dependable moisture source. Flowering for bees is not a honey-harvest forecast.",
+      "before": {
+        "ts": "Xi tsakela mati: ndhawu yo oma yi lava xihlovo xa ndzhongho lexi tiyisekaka. Ku huma swiluva leswi tirhisiwaka hi tinyoxi a hi vuprofeta bya ntshovelo wa vulombe."
+      },
+      "after": {
+        "ts": "Xi tsakela mati: ndhawu yo oma yi lava xihlovo xa ndzhongho lexi tiyisekaka. Ku huma swiluva leswi tirhisiwaka hi tinyoxi a hi mvhumbo wa ntshovelo wa vulombe."
+      }
+    },
+    {
+      "domain": "first-crop",
+      "file": "lib/production-product-guidance.ts",
+      "english": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window.",
+      "before": {
+        "ts": "KZN DARD yi vula hi ku kongoma mpimo wa nkarhi wa ku suka eku byaleni ku ya eku kotuleni ni ku suka eka kotulo ku ya eka kotulo. Tin’hweti ti hundzuriwile ti va malembe (13/12 ku ya eka 20/12). Lexi a hi vuprofeta bya masiku kumbe nguva ya kotulo ya lembe eka tin’hweti hinkwato.",
+        "ve": "KZN DARD i bula nga ho livhaho tshifhinga u bva kha u ṱavha u ya kha khaṋo na u bva kha khaṋo u ya kha iṅwe. Miṅwedzi yo shandulwa ya vha miṅwaha (13/12 u ya kha 20/12). Itshi a si tshivhumbelwa tshi re na datumu kana tshifhinga tsha khaṋo ya ṅwaha kha miṅwedzi yoṱhe."
+      },
+      "after": {
+        "ts": "KZN DARD yi vula hi ku kongoma mpimo wa nkarhi wa ku suka eku byaleni ku ya eku kotuleni ni ku suka eka kotulo ku ya eka kotulo. Tin’hweti ti hundzuriwile ti va malembe (13/12 ku ya eka 20/12). Lexi a hi mvhumbo wa masiku kumbe nguva ya kotulo ya lembe eka tin’hweti hinkwato.",
+        "ve": "KZN DARD i bula nga ho livhaho tshifhinga u bva kha u ṱavha u ya kha khaṋo na u bva kha khaṋo u ya kha iṅwe. Miṅwedzi yo shandulwa ya vha miṅwaha (13/12 u ya kha 20/12). Itshi a si mbonelaphanḓa i re na datumu kana tshifhinga tsha khaṋo ya ṅwaha kha miṅwedzi yoṱhe."
+      }
+    },
+    {
+      "domain": "visual",
+      "file": "lib/report-visuals.ts",
+      "english": "Monthly rainfall, not a weather forecast.",
+      "before": {
+        "ts": "Mpfula ya n’hweti, a hi vuprofeta bya maxelo."
+      },
+      "after": {
+        "ts": "Mpfula ya n’hweti, a hi mvhumbo wa maxelo."
+      }
+    },
+    {
+      "domain": "visual",
+      "file": "lib/report-visuals.ts",
+      "english": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",
+      "before": {
+        "ts": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi vuprofeta bya maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi."
+      },
+      "after": {
+        "ts": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi mvhumbo wa maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi."
+      }
+    }
+  ]
+}

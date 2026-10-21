@@ -1,0 +1,1332 @@
+{
+  "statics": [
+    {
+      "lang": "zu",
+      "size": "phone",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-12–13. Ukukhiqiza okugcwele cishe ngeminyaka engu-12–13 encwadini ejwayelekile yase-KZN. Uhlobo olukhethiwe, indlela yokwandisa, ukuminyana nokuphathwa kuthinta ukukhiqiza kwangempela; ubudala bokuvuthwa abuzakheli ngokuzenzakalela igrafu yama-kg ngesihlahla ngonyaka.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 79–131 kg/isitshalo. Isilinganiso sensimu yezihlahla zezithelo sibalwe kusetshenziswa ukukhiqiza okungenzeka okungu-50 t/ha okusencwadini yase-KZN nezikhala eziphakathi nendawo zamabanga okutshala: e-KZN Midlands epholile, 5.75 x 2.75 m, cishe 79 kg/tree; ezindaweni ezishisayo, 7.5 x 3.5 m, cishe 131 kg/tree. Ukubala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. La manani abalwe, awazona izivuno zesihlahla ngasinye ezilinganisiwe. Umehluko ukhombisa izikhala zokutshala, hhayi izinhlobo noma igrafu yokukhiqiza ngokobudala. Qinisekisa isivuno sendawo sensimu nezikhala zangempela ngaphambi kokusebenzisa lesi sikhombo.",
+          "lines": 14,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7–9. I-USDA FAS ichaza ukuvuthwa kokukhiqiza kokudayisa ngeminyaka engu-7–9 kuyilapho izivuno zingaqhubeka zikhula eminye iminyaka engu-15–20. Lokhu akubeki ubudala obusimeme besivuno esiphezulu kunazo zonke.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Ukukhiqiza okugcwele ngonyaka wesi-7 kule ncwadi ejwayelekile yase-KZN. Akukho nani lokukhiqiza ngesihlahla elishiwo kulobu budala, futhi isiphunzi, uhlobo nokuphathwa kungashintsha ukuthela. Izabelomali ezine zase-Langkloof ziyizinto ezicatshangelwe zokuhlela zesifunda ezihlukene, azisona isiqinisekiso esilinganisiwe salobu budala obujwayelekile.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-1.5. Incwadi yase-KZN ithi ukuthela ngokugcwele kungakapheli izinyanga ezingu-18. Lesi isikhombo sesikhathi esingumkhawulo ongaphezulu, akusona isithembiso samakhilogremu okudla ngonyaka.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–8. Kulesi sivivinyo sase-Natal Midlands esiniselwayo nesinakekelwa kakhulu, i-Hass yafinyelela cishe ku-20 t/ha ineminyaka engu-6 kanti izinsimu zasondela esivunweni esimaphakathi esiphezulu esingaqhubeka ngokusimama lapho zineminyaka engu-8. Lesi isikhombo sokuthela esiphathelene nalesi sivivinyo kuphela; asikho isilinganiso esingasakhuli sikazwelonke noma igrafu yobudala nesivuno egcwaliswa ngokuzenzakalela phakathi kweminyaka.",
+          "lines": 11,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 100–112.5 kg/isitshalo. Ukubala kwesivivinyo esifanayo ngobuningi bokuqala obungu-200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eneminyaka engu-6; isilinganiso esingaqhubeka ngokusimama 22,500 kg/ha / 200 = 112.5 kg/tree. Eminyakeni engu-3, 10,000 kg/ha / 200 = 50 kg/tree njengesilinganiso esilinganayo. La manani ayizikhombo ezilinganiswa nesilinganiso esimaphakathi sezimo ezishiwo zensimu ye-Hass/Duke 7, awazona izivuno zesihlahla ngasinye ezilinganisiwe noma ukukhiqiza okuzenzakalelayo kobunye ubuningi, uhlobo, isimo sezulu noma ukuphathwa. Akucatshangelwa amanani obudala obuphakathi.",
+          "lines": 14,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Incwadi yesifunda efanayo ichaza ukuthi impilo yensimu yezihlahla zezithelo zokudayisa icishe ibe iminyaka engu-12–15; ayinikezi izivuno zesihlahla ngasinye ngokobudala.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 23–43 kg/isitshalo. KUGUQULIWE, ukubala kubonisiwe: kusetshenziswe ibanga lesivuno elithi “Average” (15-18 t/ha) nezikhala ezishiwo emthonjeni ofanayo (“Generally planted 6m x 4m or 5 m x 3 m”). Ku-6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 no-18000kg/416.7=43.2 kg/tree. Ku-5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 no-18000/666.7=27.0 kg/tree. Ibanga elihlanganisa zombili izikhala, elisondezwe: [23, 43] kg/tree. Lo mehluko ukhombisa izikhala ezimbili ezihlukene ezitholakala emthonjeni, hhayi ukuhluka kwezinhlobo.",
+          "lines": 12,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-5–8. Isikhombo samazwe ngamazwe se-ICRAF; izimo zokukhula nezikhala zokutshala kuthinta ukuthela ngokugcwele. Lokhu akusona isibikezelo sendawo yaseNingizimu Afrika.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 50–70 kg/isitshalo. Isikhombo samazwe ngamazwe sezinhlobo se-ICRAF sibika ukukhiqiza okuphezulu okungu-50–70 kg/plant cishe ngeminyaka engu-7 ngaphansi kokuphathwa okuhle; eminyakeni engu-5 sibika u-30–40 kg/plant. Lokhu akuzona izibikezelo zamapulazi eziqondene neNingizimu Afrika. Qondanisa ubudala besitshalo, uhlobo, indawo nokunakekelwa ngaphambi kokusebenzisa lesi sikhombo.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6. Uhlelo lwe-Post-Harvest Innovation lunikeza iminyaka eyisithupha kuze kube nesivuno esigcwele. Alunikezi inani lokukhiqiza ngesihlahla ngonyaka kulobo budala.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 200–1500 kg/isitshalo. I-ICRAF ibika u-200–1,500 kg wezithelo eziphelele eziqoqwe esihlahleni esisodwa sasendle ngesizini eyodwa (0.2–1.5 tonnes x 1,000). Leli banga lokuqoqwa kwesizini alibeki isilinganiso esimaphakathi sensimu yezihlahla zezithelo, isisindo senyama yesithelo edliwayo noma sezinhlamvu, noma isibikezelo sokukhiqiza ngokobudala.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 40–100 kg/isitshalo. Ukubuyekezwa kubika u-40–100 kg ngesihlahla esimile ngaphandle kwesikhathi sonyaka, ubudala bokuvuthwa, uhlobo oluqondanisiwe noma izimo zensimu zaseNingizimu Afrika. Gcina isisindo sokuqala ngesitshalo njengomongo kuphela: ungasibizi ngokuthi kg/year, usihlukanisele izinyanga noma usithathe njengesibikezelo sepulazi.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–7. Iseluleko sase-KZN sichaza izinhlobo ze-Vaccinium futhi sibala izinhlobo ze-rabbiteye ezithi Tifblue, Beckyblue ne-Climax. Lesi sikhombo asibhekiseli ngokukhethekile kwi-southern highbush blueberries.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–8. Hlola uhlobo olukhethiwe, izitshalo zokuqala nezimo zokukhula.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 100–112.5 kg/isitshalo. Lo mphumela womthombo awusona isibikezelo sonyaka esiqinisekisiwe endaweni.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Sithanda amanzi: indawo eyomile idinga umthombo womswakama othembekile. Ukuqhakaza okusetshenziswa yizinyosi akusona isibikezelo sokuvuna uju.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Isikhombo sesivuno sokuqala: izinyanga ezingu-13–20. I-KZN DARD isho ngokucacile ibanga lesikhathi kusukela ekutshaleni kuya ekuvuneni nokusukela ekuvuneni kuya ekuvuneni okulandelayo. Izinyanga ziguqulwe zaba iminyaka (13/12 kuya ku-20/12). Lokhu akusona isibikezelo esinedethi noma isikhathi sokuvuna sonyaka sezinyanga zonke. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+          "lines": 9,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-12–13. Ukukhiqiza okugcwele cishe ngeminyaka engu-12–13 encwadini ejwayelekile yase-KZN. Uhlobo olukhethiwe, indlela yokwandisa, ukuminyana nokuphathwa kuthinta ukukhiqiza kwangempela; ubudala bokuvuthwa abuzakheli ngokuzenzakalela igrafu yama-kg ngesihlahla ngonyaka.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 79–131 kg/isitshalo. Isilinganiso sensimu yezihlahla zezithelo sibalwe kusetshenziswa ukukhiqiza okungenzeka okungu-50 t/ha okusencwadini yase-KZN nezikhala eziphakathi nendawo zamabanga okutshala: e-KZN Midlands epholile, 5.75 x 2.75 m, cishe 79 kg/tree; ezindaweni ezishisayo, 7.5 x 3.5 m, cishe 131 kg/tree. Ukubala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. La manani abalwe, awazona izivuno zesihlahla ngasinye ezilinganisiwe. Umehluko ukhombisa izikhala zokutshala, hhayi izinhlobo noma igrafu yokukhiqiza ngokobudala. Qinisekisa isivuno sendawo sensimu nezikhala zangempela ngaphambi kokusebenzisa lesi sikhombo.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7–9. I-USDA FAS ichaza ukuvuthwa kokukhiqiza kokudayisa ngeminyaka engu-7–9 kuyilapho izivuno zingaqhubeka zikhula eminye iminyaka engu-15–20. Lokhu akubeki ubudala obusimeme besivuno esiphezulu kunazo zonke.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Ukukhiqiza okugcwele ngonyaka wesi-7 kule ncwadi ejwayelekile yase-KZN. Akukho nani lokukhiqiza ngesihlahla elishiwo kulobu budala, futhi isiphunzi, uhlobo nokuphathwa kungashintsha ukuthela. Izabelomali ezine zase-Langkloof ziyizinto ezicatshangelwe zokuhlela zesifunda ezihlukene, azisona isiqinisekiso esilinganisiwe salobu budala obujwayelekile.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-1.5. Incwadi yase-KZN ithi ukuthela ngokugcwele kungakapheli izinyanga ezingu-18. Lesi isikhombo sesikhathi esingumkhawulo ongaphezulu, akusona isithembiso samakhilogremu okudla ngonyaka.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–8. Kulesi sivivinyo sase-Natal Midlands esiniselwayo nesinakekelwa kakhulu, i-Hass yafinyelela cishe ku-20 t/ha ineminyaka engu-6 kanti izinsimu zasondela esivunweni esimaphakathi esiphezulu esingaqhubeka ngokusimama lapho zineminyaka engu-8. Lesi isikhombo sokuthela esiphathelene nalesi sivivinyo kuphela; asikho isilinganiso esingasakhuli sikazwelonke noma igrafu yobudala nesivuno egcwaliswa ngokuzenzakalela phakathi kweminyaka.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 100–112.5 kg/isitshalo. Ukubala kwesivivinyo esifanayo ngobuningi bokuqala obungu-200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eneminyaka engu-6; isilinganiso esingaqhubeka ngokusimama 22,500 kg/ha / 200 = 112.5 kg/tree. Eminyakeni engu-3, 10,000 kg/ha / 200 = 50 kg/tree njengesilinganiso esilinganayo. La manani ayizikhombo ezilinganiswa nesilinganiso esimaphakathi sezimo ezishiwo zensimu ye-Hass/Duke 7, awazona izivuno zesihlahla ngasinye ezilinganisiwe noma ukukhiqiza okuzenzakalelayo kobunye ubuningi, uhlobo, isimo sezulu noma ukuphathwa. Akucatshangelwa amanani obudala obuphakathi.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Incwadi yesifunda efanayo ichaza ukuthi impilo yensimu yezihlahla zezithelo zokudayisa icishe ibe iminyaka engu-12–15; ayinikezi izivuno zesihlahla ngasinye ngokobudala.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 23–43 kg/isitshalo. KUGUQULIWE, ukubala kubonisiwe: kusetshenziswe ibanga lesivuno elithi “Average” (15-18 t/ha) nezikhala ezishiwo emthonjeni ofanayo (“Generally planted 6m x 4m or 5 m x 3 m”). Ku-6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 no-18000kg/416.7=43.2 kg/tree. Ku-5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 no-18000/666.7=27.0 kg/tree. Ibanga elihlanganisa zombili izikhala, elisondezwe: [23, 43] kg/tree. Lo mehluko ukhombisa izikhala ezimbili ezihlukene ezitholakala emthonjeni, hhayi ukuhluka kwezinhlobo.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-5–8. Isikhombo samazwe ngamazwe se-ICRAF; izimo zokukhula nezikhala zokutshala kuthinta ukuthela ngokugcwele. Lokhu akusona isibikezelo sendawo yaseNingizimu Afrika.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 50–70 kg/isitshalo. Isikhombo samazwe ngamazwe sezinhlobo se-ICRAF sibika ukukhiqiza okuphezulu okungu-50–70 kg/plant cishe ngeminyaka engu-7 ngaphansi kokuphathwa okuhle; eminyakeni engu-5 sibika u-30–40 kg/plant. Lokhu akuzona izibikezelo zamapulazi eziqondene neNingizimu Afrika. Qondanisa ubudala besitshalo, uhlobo, indawo nokunakekelwa ngaphambi kokusebenzisa lesi sikhombo.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6. Uhlelo lwe-Post-Harvest Innovation lunikeza iminyaka eyisithupha kuze kube nesivuno esigcwele. Alunikezi inani lokukhiqiza ngesihlahla ngonyaka kulobo budala.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 200–1500 kg/isitshalo. I-ICRAF ibika u-200–1,500 kg wezithelo eziphelele eziqoqwe esihlahleni esisodwa sasendle ngesizini eyodwa (0.2–1.5 tonnes x 1,000). Leli banga lokuqoqwa kwesizini alibeki isilinganiso esimaphakathi sensimu yezihlahla zezithelo, isisindo senyama yesithelo edliwayo noma sezinhlamvu, noma isibikezelo sokukhiqiza ngokobudala.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 40–100 kg/isitshalo. Ukubuyekezwa kubika u-40–100 kg ngesihlahla esimile ngaphandle kwesikhathi sonyaka, ubudala bokuvuthwa, uhlobo oluqondanisiwe noma izimo zensimu zaseNingizimu Afrika. Gcina isisindo sokuqala ngesitshalo njengomongo kuphela: ungasibizi ngokuthi kg/year, usihlukanisele izinyanga noma usithathe njengesibikezelo sepulazi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–7. Iseluleko sase-KZN sichaza izinhlobo ze-Vaccinium futhi sibala izinhlobo ze-rabbiteye ezithi Tifblue, Beckyblue ne-Climax. Lesi sikhombo asibhekiseli ngokukhethekile kwi-southern highbush blueberries.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–8. Hlola uhlobo olukhethiwe, izitshalo zokuqala nezimo zokukhula.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Isikhombo sokukhiqiza: 100–112.5 kg/isitshalo. Lo mphumela womthombo awusona isibikezelo sonyaka esiqinisekisiwe endaweni.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Sithanda amanzi: indawo eyomile idinga umthombo womswakama othembekile. Ukuqhakaza okusetshenziswa yizinyosi akusona isibikezelo sokuvuna uju.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Isikhombo sesivuno sokuqala: izinyanga ezingu-13–20. I-KZN DARD isho ngokucacile ibanga lesikhathi kusukela ekutshaleni kuya ekuvuneni nokusukela ekuvuneni kuya ekuvuneni okulandelayo. Izinyanga ziguqulwe zaba iminyaka (13/12 kuya ku-20/12). Lokhu akusona isibikezelo esinedethi noma isikhathi sokuvuna sonyaka sezinyanga zonke. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+          "lines": 4,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 12–13. Tlhahiso e felletseng hoo e ka bang dilemong tse 12–13 tataisong e akaretsang ya KZN. Mofuta o kgethilweng, ho atisa, bongata ba dimela sebakeng le taolo di ama tlhahiso ya nnete; dilemo tsa ho hola ka botlalo ha di iketsetse mothalo wa kg ka sefate ka selemo.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 79–131 kg/semela. Ho badilwe tekano ya karolelano ya serapa sa ditholwana ho sebediswa tlhahiso e ka bang 50 t/ha tataisong ya KZN le bohareng ba dibaka pakeng tsa dimela: KZN Midlands e phodileng, 5.75 x 2.75 m, hoo e ka bang 79 kg/tree; dibakeng tse tjhesang, 7.5 x 3.5 m, hoo e ka bang 131 kg/tree. Palo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Dipalo tsena di balilwe, ha se chai ya sefate ka seng e lekantsweng. Phapang e bontsha sebaka pakeng tsa dimela, e seng mefuta kapa mothalo wa tlhahiso ho ya ka dilemo. Netefatsa chai ya serapa sa sebakeng seo le sebaka sa nnete pakeng tsa dimela pele o sebedisa tshupiso ena.",
+          "lines": 13,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7–9. USDA FAS e hlalosa ho hola bakeng sa tlhahiso ya kgwebo dilemong tse 7–9 ha chai e ka tswela pele ho eketseha ka dilemo tse ding tse 15–20. Sena ha se netefatse dilemo tse tsitsitseng tsa chai e phahameng ka ho fetisisa.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tlhahiso e felletseng selemong sa 7 tataisong ena e akaretsang ya KZN. Ha ho tlhahiso ka sefate e boletsweng dilemong tseo, mme kutu ya motso, mofuta le taolo di ka fetola ho beha. Ditekanyetso tsa ditjhelete tse nne tsa Langkloof ke dikakanyo tse arohaneng tsa moralo wa sebaka, e seng tiiso e lekantsweng ya dilemo tsena tse akaretsang.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 1.5. Tataiso ya KZN e bolela ho beha ka botlalo pele dikgwedi tse 18 di fela. Sena ke tshupiso ya moedi o ka hodimo wa nako, ha se tshepiso ya dikilogerama tsa dijo ka selemo.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–8. Tekong ena ya Natal Midlands e nosetswang le ho laolwa ka matla, Hass e fihletse hoo e ka bang 20 t/ha dilemong tse 6 mme dirapa tsa atamela karolelano e phahameng ya chai e ka bolokwang dilemong tse 8. Sena ke tshupiso ya ho beha e amanang le teko ena feela; ha ho boemo bo sa nyoloheng ba naha kapa mothalo wa dilemo le chai o tlatswang ka boona dipakeng tsa dilemo.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 100–112.5 kg/semela. Palo ya teko yona eo bongateng ba pele ba 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree dilemong tse 6; karolelano e ka bolokwang 22,500 kg/ha / 200 = 112.5 kg/tree. Dilemong tse 3, 10,000 kg/ha / 200 = 50 kg/tree e le tekano. Tsena ke dipalo tsa tshupiso tse lekanang le karolelano bakeng sa maemo a bitsitsweng a serapa sa Hass/Duke 7, ha se chai ya sefate ka seng e lekantsweng kapa tlhahiso e nkelwang pele bakeng sa bongata bo fapaneng, mofuta, maemo a lehodimo kapa taolo. Ha ho hakanywe dilemo tse pakeng.",
+          "lines": 12,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tataiso yona eo ya sebaka e hlalosa bophelo ba serapa sa ditholwana sa kgwebo ba hoo e ka bang dilemo tse 12–15; ha e fane ka chai ya sefate ka seng ho ya ka dilemo.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average” (15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3 m”). Ho 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa dibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng tse fumanweng mohloding, e seng phapang ya mefuta.",
+          "lines": 13,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 5–8. Tshupiso ya matjhaba ya ICRAF; maemo a kgolo le sebaka pakeng tsa dimela di ama ho beha ka botlalo. Sena ha se ponelopele ya sebaka sa Afrika Borwa.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 50–70 kg/semela. Tshupiso ya matjhaba ya mefuta ya ICRAF e tlaleha tlhahiso e phahameng ka ho fetisisa ya 50–70 kg/plant hoo e ka bang dilemong tse 7 tlasa taolo e ntle; dilemong tse 5 e tlaleha 30–40 kg/plant. Tsena ha se diponelopele tsa mapolasi tse tobileng Afrika Borwa. Nyalanya dilemo tsa semela, mofuta, sebaka le tlhokomelo pele o sebedisa tshupiso ena.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6. Lenaneo la Post-Harvest Innovation le fana ka dilemo tse tsheletseng ho fihla kotulong e felletseng. Ha le fane ka tlhahiso ya selemo ka sefate dilemong tseo.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 200–1500 kg/semela. ICRAF e tlaleha 200–1,500 kg ya ditholwana tse felletseng tse bokeletsweng sefateng se le seng sa naheng nakong e le nngwe (0.2–1.5 tonnes x 1,000). Moedi ona wa pokello ya nako ha o netefatse karolelano ya serapa sa ditholwana, boima ba nama e jewang ya tholwana kapa dithollo, kapa ponelopele ya tlhahiso ho ya ka dilemo.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 40–100 kg/semela. Tlhahlobo e tlaleha 40–100 kg ka sefate se emeng ntle le nako ya selemo, dilemo tsa ho hola ka botlalo, mofuta o nyalanang kapa maemo a tshimo a Afrika Borwa. Boloka boima ba pele ka semela e le moelelo feela: o se ke wa bo bitsa kg/year, wa bo arola ka dikgwedi kapa wa bo nka e le ponelopele ya polasi.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–7. Keletso ya KZN e hlalosa mefuta ya Vaccinium mme e thathamisa mefuta ya rabbiteye ya Tifblue, Beckyblue le Climax. Tshupiso ena ha e tobe southern highbush blueberries.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–8. Hlahloba mofuta o kgethilweng, dimela tsa ho qala le maemo a kgolo.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 100–112.5 kg/semela. Sephetho sena sa mohlodi ha se ponelopele ya selemo e netefaditsweng sebakeng seo.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Se rata metsi: sebaka se ommeng se hloka mohlodi wa mongobo o tshepahalang. Ho thunya bakeng sa dinotshi ha se ponelopele ya kotulo ya mahe a dinotshi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Tshupiso ya kotulo ya pele: dikgwedi tse 13–20. KZN DARD e bolela ka ho hlaka nako ho tloha ho jaleng ho ya kotulong le ho tloha kotulong ho ya kotulong. Dikgwedi di fetotswe ho ba dilemo (13/12 ho ya ho 20/12). Sena ha se ponelopele e nang le letsatsi kapa nako ya kotulo ya selemo dikgweding tsohle. Nako ya nnete e itshetlehile ka mofuta le tlhokomelo ya sebaka.",
+          "lines": 8,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 12–13. Tlhahiso e felletseng hoo e ka bang dilemong tse 12–13 tataisong e akaretsang ya KZN. Mofuta o kgethilweng, ho atisa, bongata ba dimela sebakeng le taolo di ama tlhahiso ya nnete; dilemo tsa ho hola ka botlalo ha di iketsetse mothalo wa kg ka sefate ka selemo.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 79–131 kg/semela. Ho badilwe tekano ya karolelano ya serapa sa ditholwana ho sebediswa tlhahiso e ka bang 50 t/ha tataisong ya KZN le bohareng ba dibaka pakeng tsa dimela: KZN Midlands e phodileng, 5.75 x 2.75 m, hoo e ka bang 79 kg/tree; dibakeng tse tjhesang, 7.5 x 3.5 m, hoo e ka bang 131 kg/tree. Palo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Dipalo tsena di balilwe, ha se chai ya sefate ka seng e lekantsweng. Phapang e bontsha sebaka pakeng tsa dimela, e seng mefuta kapa mothalo wa tlhahiso ho ya ka dilemo. Netefatsa chai ya serapa sa sebakeng seo le sebaka sa nnete pakeng tsa dimela pele o sebedisa tshupiso ena.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7–9. USDA FAS e hlalosa ho hola bakeng sa tlhahiso ya kgwebo dilemong tse 7–9 ha chai e ka tswela pele ho eketseha ka dilemo tse ding tse 15–20. Sena ha se netefatse dilemo tse tsitsitseng tsa chai e phahameng ka ho fetisisa.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tlhahiso e felletseng selemong sa 7 tataisong ena e akaretsang ya KZN. Ha ho tlhahiso ka sefate e boletsweng dilemong tseo, mme kutu ya motso, mofuta le taolo di ka fetola ho beha. Ditekanyetso tsa ditjhelete tse nne tsa Langkloof ke dikakanyo tse arohaneng tsa moralo wa sebaka, e seng tiiso e lekantsweng ya dilemo tsena tse akaretsang.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 1.5. Tataiso ya KZN e bolela ho beha ka botlalo pele dikgwedi tse 18 di fela. Sena ke tshupiso ya moedi o ka hodimo wa nako, ha se tshepiso ya dikilogerama tsa dijo ka selemo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–8. Tekong ena ya Natal Midlands e nosetswang le ho laolwa ka matla, Hass e fihletse hoo e ka bang 20 t/ha dilemong tse 6 mme dirapa tsa atamela karolelano e phahameng ya chai e ka bolokwang dilemong tse 8. Sena ke tshupiso ya ho beha e amanang le teko ena feela; ha ho boemo bo sa nyoloheng ba naha kapa mothalo wa dilemo le chai o tlatswang ka boona dipakeng tsa dilemo.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 100–112.5 kg/semela. Palo ya teko yona eo bongateng ba pele ba 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree dilemong tse 6; karolelano e ka bolokwang 22,500 kg/ha / 200 = 112.5 kg/tree. Dilemong tse 3, 10,000 kg/ha / 200 = 50 kg/tree e le tekano. Tsena ke dipalo tsa tshupiso tse lekanang le karolelano bakeng sa maemo a bitsitsweng a serapa sa Hass/Duke 7, ha se chai ya sefate ka seng e lekantsweng kapa tlhahiso e nkelwang pele bakeng sa bongata bo fapaneng, mofuta, maemo a lehodimo kapa taolo. Ha ho hakanywe dilemo tse pakeng.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tataiso yona eo ya sebaka e hlalosa bophelo ba serapa sa ditholwana sa kgwebo ba hoo e ka bang dilemo tse 12–15; ha e fane ka chai ya sefate ka seng ho ya ka dilemo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average” (15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3 m”). Ho 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa dibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng tse fumanweng mohloding, e seng phapang ya mefuta.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 5–8. Tshupiso ya matjhaba ya ICRAF; maemo a kgolo le sebaka pakeng tsa dimela di ama ho beha ka botlalo. Sena ha se ponelopele ya sebaka sa Afrika Borwa.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 50–70 kg/semela. Tshupiso ya matjhaba ya mefuta ya ICRAF e tlaleha tlhahiso e phahameng ka ho fetisisa ya 50–70 kg/plant hoo e ka bang dilemong tse 7 tlasa taolo e ntle; dilemong tse 5 e tlaleha 30–40 kg/plant. Tsena ha se diponelopele tsa mapolasi tse tobileng Afrika Borwa. Nyalanya dilemo tsa semela, mofuta, sebaka le tlhokomelo pele o sebedisa tshupiso ena.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6. Lenaneo la Post-Harvest Innovation le fana ka dilemo tse tsheletseng ho fihla kotulong e felletseng. Ha le fane ka tlhahiso ya selemo ka sefate dilemong tseo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 200–1500 kg/semela. ICRAF e tlaleha 200–1,500 kg ya ditholwana tse felletseng tse bokeletsweng sefateng se le seng sa naheng nakong e le nngwe (0.2–1.5 tonnes x 1,000). Moedi ona wa pokello ya nako ha o netefatse karolelano ya serapa sa ditholwana, boima ba nama e jewang ya tholwana kapa dithollo, kapa ponelopele ya tlhahiso ho ya ka dilemo.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 40–100 kg/semela. Tlhahlobo e tlaleha 40–100 kg ka sefate se emeng ntle le nako ya selemo, dilemo tsa ho hola ka botlalo, mofuta o nyalanang kapa maemo a tshimo a Afrika Borwa. Boloka boima ba pele ka semela e le moelelo feela: o se ke wa bo bitsa kg/year, wa bo arola ka dikgwedi kapa wa bo nka e le ponelopele ya polasi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–7. Keletso ya KZN e hlalosa mefuta ya Vaccinium mme e thathamisa mefuta ya rabbiteye ya Tifblue, Beckyblue le Climax. Tshupiso ena ha e tobe southern highbush blueberries.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–8. Hlahloba mofuta o kgethilweng, dimela tsa ho qala le maemo a kgolo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Tshupiso ya tlhahiso: 100–112.5 kg/semela. Sephetho sena sa mohlodi ha se ponelopele ya selemo e netefaditsweng sebakeng seo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Se rata metsi: sebaka se ommeng se hloka mohlodi wa mongobo o tshepahalang. Ho thunya bakeng sa dinotshi ha se ponelopele ya kotulo ya mahe a dinotshi.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Tshupiso ya kotulo ya pele: dikgwedi tse 13–20. KZN DARD e bolela ka ho hlaka nako ho tloha ho jaleng ho ya kotulong le ho tloha kotulong ho ya kotulong. Dikgwedi di fetotswe ho ba dilemo (13/12 ho ya ho 20/12). Sena ha se ponelopele e nang le letsatsi kapa nako ya kotulo ya selemo dikgweding tsohle. Nako ya nnete e itshetlehile ka mofuta le tlhokomelo ya sebaka.",
+          "lines": 4,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 12–13. Vuhumelerisi byo helela kwalomu ka lembe ra 12–13 eka nkongomiso wo angarhela wa KZN. Muxaka, ku andzisa, ku tala ka swimilana endhawini ni mafambiselo swi khumba vuhumelerisi bya xiviri; vukhale bya ku kula hi ku helela a byi endli girafu ya kg hi murhi hi lembe hi byoxe.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 79–131 kg/ximilana. Ku hlayiwe mpimo lowu ringanaka ni avhareji ya ntanga wa mihandzu hi ku tirhisa vuhumelerisi bya 50 t/ha byi nga ha vaka kona eka nkongomiso wa KZN ni swipimelo swa le xikarhini swa mpfhuka wo byala: KZN Midlands leyi titimelaka, 5.75 x 2.75 m, kwalomu ka 79 kg/tree; tindhawu to hisa, 7.5 x 3.5 m, kwalomu ka 131 kg/tree. Nhlayo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Mimpimo leyi yi hlayeriwile, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana. Ku hambana ku komba mpfhuka wo byala, ku nga ri mixaka kumbe girafu ya vuhumelerisi hi vukhale. Tiyisisa mbuyelo wa ntanga wa laha kaya ni mpfhuka wa xiviri wo byala u nga si tirhisa nkombiso lowu.",
+          "lines": 15,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7–9. USDA FAS yi hlamusela ku kula ka vuhumelerisi bya bindzu eka lembe ra 7–9 kasi mimbuyelo yi nga ya mahlweni yi engeteleka ku ringana ni man’wana ya 15–20 wa malembe. Lexi a xi veki vukhale byo tshamiseka bya mbuyelo wa le henhla swinene.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Vuhumelerisi byo helela eka lembe ra 7 eka nkongomiso lowu wo angarhela wa KZN. A ku vuriwanga vuhumelerisi bya murhi wun’we eka vukhale byebyo, naswona nsinya wa timitsu, muxaka ni mafambiselo swi nga cinca ku tswala. Mpimanyeto wa mune wa mali wa Langkloof i leswi tekiweke swi ri masungulo yo pulana ya xifundzha leswi hambaneke, a hi xitiyisiso lexi pimiweke xa vukhale byebyo byo angarhela.",
+          "lines": 10,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 1.5. Nkongomiso wa KZN wu vula ku tswala hi ku helela ku nga si hela tin’hweti ta 18. Lexi i xikombiso xa mpimo wa le henhla wa nkarhi, a hi xitshembiso xa tikhilogiramu ta swakudya hi lembe.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–8. Eka ndzingo lowu cheletiwaka ni ku fambisiwa hi vukheta wa Natal Midlands, Hass yi fikile eka kwalomu ka 20 t/ha eka vukhale bya 6 kasi mintanga yi tshinelele avhareji ya mbuyelo wa le henhla lowu nga tshamaka wu hlayisekile eka vukhale bya 8. Lexi i xikombiso xa ku tswala xa ndzingo wolowo ntsena; a ku na mpimo wa tiko lowu yimaka kumbe girafu ya vukhale ni mbuyelo leyi tatisiwaka hi yoxe eka nkarhi wa le xikarhini.",
+          "lines": 10,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 100–112.5 kg/ximilana. Nhlayo ya ndzingo wolowo eka ku tala ko sungula ka 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eka vukhale bya 6; avhareji leyi nga hlayisekaka 22,500 kg/ha / 200 = 112.5 kg/tree. Eka vukhale bya 3, 10,000 kg/ha / 200 = 50 kg/tree tani hi mpimo lowu ringanaka. Leyi i mimpimo ya swikombiso leswi ringanaka ni avhareji eka swiyimo leswi boxiweke swa ntanga wa Hass/Duke 7, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana kumbe vuhumelerisi byo teka byi ri kona eka ku tala kun’wana, muxaka, maxelo kumbe mafambiselo. Vukhale bya le xikarhini a byi kumbeteriwi.",
+          "lines": 13,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Nkongomiso wolowo wa xifundzha wu hlamusela nkarhi wa ku hanya wa ntanga wa mihandzu wa bindzu wa kwalomu ka 12–15 wa malembe; a wu nyiki mimbuyelo ya murhi wun’wana ni wun’wana hi vukhale.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 23–43 kg/ximilana. SWI HUNDZURIWILE, nhlayo yi kombisiwile: ku tekiwe mpimo wa mbuyelo wa “Average” (15-18 t/ha) ni mpfhuka lowu boxiweke eka xihlovo xolexo (“Generally planted 6m x 4m or 5 m x 3 m”). Eka 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Eka 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mpimo lowu hlanganisiweke eka mipfhuka leyi mimbirhi, wu rhendzelekiwile: [23, 43] kg/tree. Ku hambana loku ku komba mipfhuka leyi mimbirhi leyi hambaneke leyi humaka eka xihlovo, ku nga ri ku hambana ka mixaka.",
+          "lines": 14,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 5–8. Xikombiso xa matiko xa ICRAF; swiyimo swo kula ni mpfhuka wo byala swi khumba ku tswala hi ku helela. Lexi a hi mvhumbo wa ndhawu ya Afrika Dzonga.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 50–70 kg/ximilana. Xikombiso xa matiko xa mixaka xa ICRAF xi vika vuhumelerisi bya le henhla swinene bya 50–70 kg/plant eka kwalomu ka 7 wa malembe ehansi ka mafambiselo lamanene; eka vukhale bya 5 xi vika 30–40 kg/plant. Leyi a hi mivhumbo ya mapurasi leyi kongomaka eka Afrika Dzonga. Fananisa vukhale bya ximilana, muxaka, ndhawu ni nhlayiso u nga si tirhisa xikombiso lexi.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6. Phurogireme ya Post-Harvest Innovation yi nyika malembe ya tsevu ku ya eka kotulo yo helela. A yi nyiki vuhumelerisi bya murhi wun’we hi lembe eka vukhale byebyo.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 200–1500 kg/ximilana. ICRAF yi vika 200–1,500 kg ya mihandzu leyi heleleke leyi hlengeletiweke eka murhi wun’we wa nhova eka nguva yin’we (0.2–1.5 tonnes x 1,000). Mpimo lowu wa ku hlengeleta ka nguva a wu veki avhareji ya ntanga wa mihandzu, ntiko wa nyama leyi dyiwaka ya muhandzu kumbe timbilu ta yona, kumbe mvhumbo wa vuhumelerisi hi vukhale.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 40–100 kg/ximilana. Nkambisiso wu vika 40–100 kg hi murhi lowu yimeke wu nga ri na nkarhi wa lembe, vukhale bya ku kula hi ku helela, muxaka lowu fambisanaka kumbe swiyimo swa masimu swa Afrika Dzonga. Hlayisa ntiko wo sungula hi ximilana ku va mongo ntsena: u nga wu thyi kg/year, u wu ava eka tin’hweti kumbe u wu teka wu ri mvhumbo wa purasi.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–7. Xitsundzuxo xa KZN xi hlamusela mixaka ya Vaccinium naswona xi xaxameta mixaka ya rabbiteye ya Tifblue, Beckyblue ni Climax. Xikombiso lexi a xi kongomanga eka southern highbush blueberries.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–8. Kambela muxaka, swibyariwa swo sungula ni swiyimo swo kula.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 100–112.5 kg/ximilana. Mbuyelo lowu wa xihlovo a hi mvhumbo wa lembe na lembe lowu tiyisisiweke endhawini.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Xi tsakela mati: ndhawu yo oma yi lava xihlovo xa ndzhongho lexi tiyisekaka. Ku huma swiluva leswi tirhisiwaka hi tinyoxi a hi mvhumbo wa ntshovelo wa vulombe.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Xikombiso xa kotulo yo sungula: tin’hweti ta 13–20. KZN DARD yi vula hi ku kongoma mpimo wa nkarhi wa ku suka eku byaleni ku ya eku kotuleni ni ku suka eka kotulo ku ya eka kotulo. Tin’hweti ti hundzuriwile ti va malembe (13/12 ku ya eka 20/12). Lexi a hi mvhumbo wa masiku kumbe nguva ya kotulo ya lembe eka tin’hweti hinkwato. Nkarhi wa xiviri wu titshege hi muxaka ni nhlayiso wa ndhawu.",
+          "lines": 8,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 12–13. Vuhumelerisi byo helela kwalomu ka lembe ra 12–13 eka nkongomiso wo angarhela wa KZN. Muxaka, ku andzisa, ku tala ka swimilana endhawini ni mafambiselo swi khumba vuhumelerisi bya xiviri; vukhale bya ku kula hi ku helela a byi endli girafu ya kg hi murhi hi lembe hi byoxe.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 79–131 kg/ximilana. Ku hlayiwe mpimo lowu ringanaka ni avhareji ya ntanga wa mihandzu hi ku tirhisa vuhumelerisi bya 50 t/ha byi nga ha vaka kona eka nkongomiso wa KZN ni swipimelo swa le xikarhini swa mpfhuka wo byala: KZN Midlands leyi titimelaka, 5.75 x 2.75 m, kwalomu ka 79 kg/tree; tindhawu to hisa, 7.5 x 3.5 m, kwalomu ka 131 kg/tree. Nhlayo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Mimpimo leyi yi hlayeriwile, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana. Ku hambana ku komba mpfhuka wo byala, ku nga ri mixaka kumbe girafu ya vuhumelerisi hi vukhale. Tiyisisa mbuyelo wa ntanga wa laha kaya ni mpfhuka wa xiviri wo byala u nga si tirhisa nkombiso lowu.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7–9. USDA FAS yi hlamusela ku kula ka vuhumelerisi bya bindzu eka lembe ra 7–9 kasi mimbuyelo yi nga ya mahlweni yi engeteleka ku ringana ni man’wana ya 15–20 wa malembe. Lexi a xi veki vukhale byo tshamiseka bya mbuyelo wa le henhla swinene.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Vuhumelerisi byo helela eka lembe ra 7 eka nkongomiso lowu wo angarhela wa KZN. A ku vuriwanga vuhumelerisi bya murhi wun’we eka vukhale byebyo, naswona nsinya wa timitsu, muxaka ni mafambiselo swi nga cinca ku tswala. Mpimanyeto wa mune wa mali wa Langkloof i leswi tekiweke swi ri masungulo yo pulana ya xifundzha leswi hambaneke, a hi xitiyisiso lexi pimiweke xa vukhale byebyo byo angarhela.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 1.5. Nkongomiso wa KZN wu vula ku tswala hi ku helela ku nga si hela tin’hweti ta 18. Lexi i xikombiso xa mpimo wa le henhla wa nkarhi, a hi xitshembiso xa tikhilogiramu ta swakudya hi lembe.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–8. Eka ndzingo lowu cheletiwaka ni ku fambisiwa hi vukheta wa Natal Midlands, Hass yi fikile eka kwalomu ka 20 t/ha eka vukhale bya 6 kasi mintanga yi tshinelele avhareji ya mbuyelo wa le henhla lowu nga tshamaka wu hlayisekile eka vukhale bya 8. Lexi i xikombiso xa ku tswala xa ndzingo wolowo ntsena; a ku na mpimo wa tiko lowu yimaka kumbe girafu ya vukhale ni mbuyelo leyi tatisiwaka hi yoxe eka nkarhi wa le xikarhini.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 100–112.5 kg/ximilana. Nhlayo ya ndzingo wolowo eka ku tala ko sungula ka 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eka vukhale bya 6; avhareji leyi nga hlayisekaka 22,500 kg/ha / 200 = 112.5 kg/tree. Eka vukhale bya 3, 10,000 kg/ha / 200 = 50 kg/tree tani hi mpimo lowu ringanaka. Leyi i mimpimo ya swikombiso leswi ringanaka ni avhareji eka swiyimo leswi boxiweke swa ntanga wa Hass/Duke 7, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana kumbe vuhumelerisi byo teka byi ri kona eka ku tala kun’wana, muxaka, maxelo kumbe mafambiselo. Vukhale bya le xikarhini a byi kumbeteriwi.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Nkongomiso wolowo wa xifundzha wu hlamusela nkarhi wa ku hanya wa ntanga wa mihandzu wa bindzu wa kwalomu ka 12–15 wa malembe; a wu nyiki mimbuyelo ya murhi wun’wana ni wun’wana hi vukhale.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 23–43 kg/ximilana. SWI HUNDZURIWILE, nhlayo yi kombisiwile: ku tekiwe mpimo wa mbuyelo wa “Average” (15-18 t/ha) ni mpfhuka lowu boxiweke eka xihlovo xolexo (“Generally planted 6m x 4m or 5 m x 3 m”). Eka 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Eka 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mpimo lowu hlanganisiweke eka mipfhuka leyi mimbirhi, wu rhendzelekiwile: [23, 43] kg/tree. Ku hambana loku ku komba mipfhuka leyi mimbirhi leyi hambaneke leyi humaka eka xihlovo, ku nga ri ku hambana ka mixaka.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 5–8. Xikombiso xa matiko xa ICRAF; swiyimo swo kula ni mpfhuka wo byala swi khumba ku tswala hi ku helela. Lexi a hi mvhumbo wa ndhawu ya Afrika Dzonga.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 50–70 kg/ximilana. Xikombiso xa matiko xa mixaka xa ICRAF xi vika vuhumelerisi bya le henhla swinene bya 50–70 kg/plant eka kwalomu ka 7 wa malembe ehansi ka mafambiselo lamanene; eka vukhale bya 5 xi vika 30–40 kg/plant. Leyi a hi mivhumbo ya mapurasi leyi kongomaka eka Afrika Dzonga. Fananisa vukhale bya ximilana, muxaka, ndhawu ni nhlayiso u nga si tirhisa xikombiso lexi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6. Phurogireme ya Post-Harvest Innovation yi nyika malembe ya tsevu ku ya eka kotulo yo helela. A yi nyiki vuhumelerisi bya murhi wun’we hi lembe eka vukhale byebyo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 200–1500 kg/ximilana. ICRAF yi vika 200–1,500 kg ya mihandzu leyi heleleke leyi hlengeletiweke eka murhi wun’we wa nhova eka nguva yin’we (0.2–1.5 tonnes x 1,000). Mpimo lowu wa ku hlengeleta ka nguva a wu veki avhareji ya ntanga wa mihandzu, ntiko wa nyama leyi dyiwaka ya muhandzu kumbe timbilu ta yona, kumbe mvhumbo wa vuhumelerisi hi vukhale.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 40–100 kg/ximilana. Nkambisiso wu vika 40–100 kg hi murhi lowu yimeke wu nga ri na nkarhi wa lembe, vukhale bya ku kula hi ku helela, muxaka lowu fambisanaka kumbe swiyimo swa masimu swa Afrika Dzonga. Hlayisa ntiko wo sungula hi ximilana ku va mongo ntsena: u nga wu thyi kg/year, u wu ava eka tin’hweti kumbe u wu teka wu ri mvhumbo wa purasi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–7. Xitsundzuxo xa KZN xi hlamusela mixaka ya Vaccinium naswona xi xaxameta mixaka ya rabbiteye ya Tifblue, Beckyblue ni Climax. Xikombiso lexi a xi kongomanga eka southern highbush blueberries.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–8. Kambela muxaka, swibyariwa swo sungula ni swiyimo swo kula.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Xikombiso xa vuhumelerisi: 100–112.5 kg/ximilana. Mbuyelo lowu wa xihlovo a hi mvhumbo wa lembe na lembe lowu tiyisisiweke endhawini.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Xi tsakela mati: ndhawu yo oma yi lava xihlovo xa ndzhongho lexi tiyisekaka. Ku huma swiluva leswi tirhisiwaka hi tinyoxi a hi mvhumbo wa ntshovelo wa vulombe.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Xikombiso xa kotulo yo sungula: tin’hweti ta 13–20. KZN DARD yi vula hi ku kongoma mpimo wa nkarhi wa ku suka eku byaleni ku ya eku kotuleni ni ku suka eka kotulo ku ya eka kotulo. Tin’hweti ti hundzuriwile ti va malembe (13/12 ku ya eka 20/12). Lexi a hi mvhumbo wa masiku kumbe nguva ya kotulo ya lembe eka tin’hweti hinkwato. Nkarhi wa xiviri wu titshege hi muxaka ni nhlayiso wa ndhawu.",
+          "lines": 4,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 12–13. U bveledza ho fhelelaho hu ṱoḓaho u vha kha miṅwaha ya 12–13 kha nyendedzi nga u angaredza ya KZN. Lushaka, u andisa, tshivhalo tsha zwimela fhethu na ndangulo zwi kwama zwibveledzwa zwa vhukuma; miṅwaha ya u hula a i ḓi iteli girafu ya kg nga muri nga ṅwaha.",
+          "lines": 7,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 79–131 kg/tshimela. Ho vhalwa ndinganyelo i linganaho na ya tsimu ya mitshelo nga u shumisa u bveledza hu nga vha 50 t/ha kha nyendedzi ya KZN na vhukati ha zwikhala zwa u ṱavha: KZN Midlands hu rotholelaho, 5.75 x 2.75 m, hu ṱoḓaho u vha 79 kg/tree; fhethu hu fhisaho, 7.5 x 3.5 m, hu ṱoḓaho u vha 131 kg/tree. U vhala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Tshivhalo itshi tsho bva kha u vhala, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe. Phambano i sumbedza zwikhala, hu si tshaka kana girafu ya u bveledza u ya nga miṅwaha. Khwaṱhisedzani khaṋo ya tsimu ya henefho na zwikhala zwa vhukuma musi ni sa athu shumisa tshiko itshi.",
+          "lines": 14,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7–9. USDA FAS i ṱalutshedza u hula ha zwa vhubindudzi kha miṅwaha ya 7–9 ngeno khaṋo i tshi nga bvela phanḓa na u engedzea kha miṅwaha miṅwe ya 15–20. Izwi a zwi khwaṱhisedzi miṅwaha yo dzikaho ya khaṋo khulwanesa.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. U bveledza ho fhelelaho kha ṅwaha wa 7 kha nyendedzi iyi nga u angaredza ya KZN. A hu na zwibveledzwa nga muri zwo bulwaho kha miṅwaha yeneyo, nahone mudzi wa mutheo, lushaka na ndangulo zwi nga shandula u aṋwa. Mikovhelo ya masheleni miṋa ya Langkloof ndi mihumbulo yo fhambanaho ya u pulana ya dzingu, a si khwaṱhisedzo yo kaliwaho ya miṅwaha iyi nga u angaredza.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 1.5. Nyendedzi ya KZN i amba u aṋwa nga vhuḓalo hu sa athu fhela miṅwedzi ya 18. Itshi ndi tshiko tsha mukano wa nṱha wa tshifhinga, a si fulufhedziso ya khilogireme dza zwiḽiwa nga ṅwaha.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–8. Kha ndingo iyi yo sheledzwaho na u langulwa nga vhuronwane ya Natal Midlands, Hass yo swika kha hu ṱoḓaho u vha 20 t/ha kha miṅwaha ya 6 nahone tsimu dzo sendela kha ndinganyelo khulwanesa ya khaṋo i nga dzulaho yo khwaṱha nga miṅwaha ya 8. Itshi ndi tshiko tsha u aṋwa tsha ndingo iyi fhedzi; a hu na mukano wo dzikaho wa lushaka kana girafu ya miṅwaha na khaṋo ine ya ḓi ḓadza vhukati ha miṅwaha.",
+          "lines": 10,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 100–112.5 kg/tshimela. U vhala ha ndingo yeneyo kha tshivhalo tsha u thoma tsha 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree kha miṅwaha ya 6; ndinganyelo i nga dzulaho yo khwaṱha 22,500 kg/ha / 200 = 112.5 kg/tree. Kha miṅwaha ya 3, 10,000 kg/ha / 200 = 50 kg/tree sa tshivhalo tshi linganaho. Izwi ndi zwivhalo zwa tshiko zwi linganaho na ndinganyelo kha nyimele dzo bulwaho dza tsimu ya Hass/Duke 7, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe kana u bveledza hu dzhiiwaho sa ho no vha hone kha tshivhalo, lushaka, kilima kana ndangulo zwo fhambanaho. Miṅwaha ya vhukati a i humbulelwi.",
+          "lines": 12,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. Nyendedzi yeneyo ya dzingu i ṱalutshedza tshifhinga tsha u tshila ha tsimu ya mitshelo ya vhubindudzi tshi ṱoḓaho u vha miṅwaha ya 12–15; a i ṋei khaṋo ya muri muṅwe na muṅwe u ya nga miṅwaha.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 23–43 kg/tshimela. ZWO SHANDULWA, u vhala ho sumbedzwa: ho dzhiiwa tshigwada tsha khaṋo tsha “Average” (15-18 t/ha) na zwikhala zwo bulwaho nga tshiko tshenetsho (“Generally planted 6m x 4m or 5 m x 3 m”). Kha 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Kha 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mukano wo ṱanganyiswaho kha zwikhala izwi zwivhili, wo moniseledzwaho: [23, 43] kg/tree. Phambano iyi i sumbedza zwikhala zwivhili zwo fhambanaho zwi bvaho tshikoni, hu si phambano ya tshaka.",
+          "lines": 13,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 5–8. Tshiko tsha mashango tsha ICRAF; nyimele dza u aluwa na zwikhala zwi kwama u aṋwa nga vhuḓalo. Itshi a si mbonelaphanḓa ya fhethu ha Afrika Tshipembe.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 50–70 kg/tshimela. Tshiko tsha mashango tsha tshaka tsha ICRAF tshi vhiga u bveledza huhulwanesa ha 50–70 kg/plant kha hu ṱoḓaho u vha miṅwaha ya 7 kha ndangulo yavhuḓi; kha miṅwaha ya 5 tshi vhiga 30–40 kg/plant. Izwi a si mbonelaphanḓa dza bulasi zwo livhiswaho kha Afrika Tshipembe. Fananyisani miṅwaha ya tshimela, lushaka, fhethu na ṱhogomelo musi ni sa athu shumisa tshiko itshi.",
+          "lines": 9,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6. Mbekanyamushumo ya Post-Harvest Innovation i ṋea miṅwaha ya rathi u ya kha khaṋo yo fhelelaho. A i ṋei zwibveledzwa zwa ṅwaha nga muri kha miṅwaha yeneyo.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 200–1500 kg/tshimela. ICRAF i vhiga 200–1,500 kg dza mitshelo yo fhelelaho yo kuvhanganywaho kha muri muthihi wa ḓaka kha tshifhinga tshithihi (0.2–1.5 tonnes x 1,000). Mukano uyu wa u kuvhanganya wa tshifhinga a u khwaṱhisedzi ndinganyelo ya tsimu ya mitshelo, tshileme tsha ṋama ya mutshelo i ḽiwaho kana mbilwana dza mbeu, kana mbonelaphanḓa ya u bveledza u ya nga miṅwaha.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 40–100 kg/tshimela. Tsedzuluso i vhiga 40–100 kg nga muri wo imaho hu si na tshifhinga tsha ṅwaha, miṅwaha ya u hula, lushaka lu tshimbidzanaho kana nyimele dza tsimu dza Afrika Tshipembe. Vhulungani tshileme tsha u thoma nga tshimela sa vhubvo fhedzi: ni songo tshi ira kg/year, u tshi kovhela miṅwedzi kana u tshi dzhia sa mbonelaphanḓa ya bulasi.",
+          "lines": 8,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–7. Nyeletshedzo ya KZN i ṱalutshedza tshaka dza Vaccinium nahone i bula tshaka dza rabbiteye Tifblue, Beckyblue na Climax. Tshiko itshi a tsho ngo livhiswa kha southern highbush blueberries.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–8. Ṱolani lushaka, zwimela zwa u thoma ngazwo na nyimele dza u aluwa.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 100–112.5 kg/tshimela. Mvelelo iyi ya tshiko a si mbonelaphanḓa ya ṅwaha yo khwaṱhisedzwaho henefho.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Tshi funa maḓi: fhethu ho omaho hu ṱoḓa tshiko tsha muṋo tshi fulufhedzeaho. U vha na maluvha a ṋotshi a si mvumbo ya u kaṋa mutoli.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Tshiko tsha khaṋo ya u thoma: miṅwedzi ya 13–20. KZN DARD i bula nga ho livhaho tshifhinga u bva kha u ṱavha u ya kha khaṋo na u bva kha khaṋo u ya kha iṅwe. Miṅwedzi yo shandulwa ya vha miṅwaha (13/12 u ya kha 20/12). Itshi a si mbonelaphanḓa i re na datumu kana tshifhinga tsha khaṋo ya ṅwaha kha miṅwedzi yoṱhe. Tshifhinga tsha vhukuma tshi ya nga lushaka na ṱhogomelo ya fhethu.",
+          "lines": 8,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "metrics": [
+        {
+          "id": "carya-illinoinensis-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 12–13. U bveledza ho fhelelaho hu ṱoḓaho u vha kha miṅwaha ya 12–13 kha nyendedzi nga u angaredza ya KZN. Lushaka, u andisa, tshivhalo tsha zwimela fhethu na ndangulo zwi kwama zwibveledzwa zwa vhukuma; miṅwaha ya u hula a i ḓi iteli girafu ya kg nga muri nga ṅwaha.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "citrus-limon-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 79–131 kg/tshimela. Ho vhalwa ndinganyelo i linganaho na ya tsimu ya mitshelo nga u shumisa u bveledza hu nga vha 50 t/ha kha nyendedzi ya KZN na vhukati ha zwikhala zwa u ṱavha: KZN Midlands hu rotholelaho, 5.75 x 2.75 m, hu ṱoḓaho u vha 79 kg/tree; fhethu hu fhisaho, 7.5 x 3.5 m, hu ṱoḓaho u vha 131 kg/tree. U vhala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Tshivhalo itshi tsho bva kha u vhala, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe. Phambano i sumbedza zwikhala, hu si tshaka kana girafu ya u bveledza u ya nga miṅwaha. Khwaṱhisedzani khaṋo ya tsimu ya henefho na zwikhala zwa vhukuma musi ni sa athu shumisa tshiko itshi.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "macadamia-integrifolia-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7–9. USDA FAS i ṱalutshedza u hula ha zwa vhubindudzi kha miṅwaha ya 7–9 ngeno khaṋo i tshi nga bvela phanḓa na u engedzea kha miṅwaha miṅwe ya 15–20. Izwi a zwi khwaṱhisedzi miṅwaha yo dzikaho ya khaṋo khulwanesa.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "malus-domestica-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. U bveledza ho fhelelaho kha ṅwaha wa 7 kha nyendedzi iyi nga u angaredza ya KZN. A hu na zwibveledzwa nga muri zwo bulwaho kha miṅwaha yeneyo, nahone mudzi wa mutheo, lushaka na ndangulo zwi nga shandula u aṋwa. Mikovhelo ya masheleni miṋa ya Langkloof ndi mihumbulo yo fhambanaho ya u pulana ya dzingu, a si khwaṱhisedzo yo kaliwaho ya miṅwaha iyi nga u angaredza.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "passiflora-edulis-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 1.5. Nyendedzi ya KZN i amba u aṋwa nga vhuḓalo hu sa athu fhela miṅwedzi ya 18. Itshi ndi tshiko tsha mukano wa nṱha wa tshifhinga, a si fulufhedziso ya khilogireme dza zwiḽiwa nga ṅwaha.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–8. Kha ndingo iyi yo sheledzwaho na u langulwa nga vhuronwane ya Natal Midlands, Hass yo swika kha hu ṱoḓaho u vha 20 t/ha kha miṅwaha ya 6 nahone tsimu dzo sendela kha ndinganyelo khulwanesa ya khaṋo i nga dzulaho yo khwaṱha nga miṅwaha ya 8. Itshi ndi tshiko tsha u aṋwa tsha ndingo iyi fhedzi; a hu na mukano wo dzikaho wa lushaka kana girafu ya miṅwaha na khaṋo ine ya ḓi ḓadza vhukati ha miṅwaha.",
+          "lines": 5,
+          "clipped": false
+        },
+        {
+          "id": "persea-americana-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 100–112.5 kg/tshimela. U vhala ha ndingo yeneyo kha tshivhalo tsha u thoma tsha 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree kha miṅwaha ya 6; ndinganyelo i nga dzulaho yo khwaṱha 22,500 kg/ha / 200 = 112.5 kg/tree. Kha miṅwaha ya 3, 10,000 kg/ha / 200 = 50 kg/tree sa tshivhalo tshi linganaho. Izwi ndi zwivhalo zwa tshiko zwi linganaho na ndinganyelo kha nyimele dzo bulwaho dza tsimu ya Hass/Duke 7, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe kana u bveledza hu dzhiiwaho sa ho no vha hone kha tshivhalo, lushaka, kilima kana ndangulo zwo fhambanaho. Miṅwaha ya vhukati a i humbulelwi.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. Nyendedzi yeneyo ya dzingu i ṱalutshedza tshifhinga tsha u tshila ha tsimu ya mitshelo ya vhubindudzi tshi ṱoḓaho u vha miṅwaha ya 12–15; a i ṋei khaṋo ya muri muṅwe na muṅwe u ya nga miṅwaha.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "prunus-persica-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 23–43 kg/tshimela. ZWO SHANDULWA, u vhala ho sumbedzwa: ho dzhiiwa tshigwada tsha khaṋo tsha “Average” (15-18 t/ha) na zwikhala zwo bulwaho nga tshiko tshenetsho (“Generally planted 6m x 4m or 5 m x 3 m”). Kha 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Kha 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mukano wo ṱanganyiswaho kha zwikhala izwi zwivhili, wo moniseledzwaho: [23, 43] kg/tree. Phambano iyi i sumbedza zwikhala zwivhili zwo fhambanaho zwi bvaho tshikoni, hu si phambano ya tshaka.",
+          "lines": 6,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 5–8. Tshiko tsha mashango tsha ICRAF; nyimele dza u aluwa na zwikhala zwi kwama u aṋwa nga vhuḓalo. Itshi a si mbonelaphanḓa ya fhethu ha Afrika Tshipembe.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "psidium-guajava-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 50–70 kg/tshimela. Tshiko tsha mashango tsha tshaka tsha ICRAF tshi vhiga u bveledza huhulwanesa ha 50–70 kg/plant kha hu ṱoḓaho u vha miṅwaha ya 7 kha ndangulo yavhuḓi; kha miṅwaha ya 5 tshi vhiga 30–40 kg/plant. Izwi a si mbonelaphanḓa dza bulasi zwo livhiswaho kha Afrika Tshipembe. Fananyisani miṅwaha ya tshimela, lushaka, fhethu na ṱhogomelo musi ni sa athu shumisa tshiko itshi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "punica-granatum-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6. Mbekanyamushumo ya Post-Harvest Innovation i ṋea miṅwaha ya rathi u ya kha khaṋo yo fhelelaho. A i ṋei zwibveledzwa zwa ṅwaha nga muri kha miṅwaha yeneyo.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "sclerocarya-birrea-subsp-caffra-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 200–1500 kg/tshimela. ICRAF i vhiga 200–1,500 kg dza mitshelo yo fhelelaho yo kuvhanganywaho kha muri muthihi wa ḓaka kha tshifhinga tshithihi (0.2–1.5 tonnes x 1,000). Mukano uyu wa u kuvhanganya wa tshifhinga a u khwaṱhisedzi ndinganyelo ya tsimu ya mitshelo, tshileme tsha ṋama ya mutshelo i ḽiwaho kana mbilwana dza mbeu, kana mbonelaphanḓa ya u bveledza u ya nga miṅwaha.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "strychnos-spinosa-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 40–100 kg/tshimela. Tsedzuluso i vhiga 40–100 kg nga muri wo imaho hu si na tshifhinga tsha ṅwaha, miṅwaha ya u hula, lushaka lu tshimbidzanaho kana nyimele dza tsimu dza Afrika Tshipembe. Vhulungani tshileme tsha u thoma nga tshimela sa vhubvo fhedzi: ni songo tshi ira kg/year, u tshi kovhela miṅwedzi kana u tshi dzhia sa mbonelaphanḓa ya bulasi.",
+          "lines": 4,
+          "clipped": false
+        },
+        {
+          "id": "vaccinium-corymbosum-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–7. Nyeletshedzo ya KZN i ṱalutshedza tshaka dza Vaccinium nahone i bula tshaka dza rabbiteye Tifblue, Beckyblue na Climax. Tshiko itshi a tsho ngo livhiswa kha southern highbush blueberries.",
+          "lines": 3,
+          "clipped": false
+        },
+        {
+          "id": "missing-yearsToFullBearing",
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–8. Ṱolani lushaka, zwimela zwa u thoma ngazwo na nyimele dza u aluwa.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "missing-yieldKgPerTree",
+          "text": "Tshiko tsha u bveledza: 100–112.5 kg/tshimela. Mvelelo iyi ya tshiko a si mbonelaphanḓa ya ṅwaha yo khwaṱhisedzwaho henefho.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-product",
+          "text": "Tshi funa maḓi: fhethu ho omaho hu ṱoḓa tshiko tsha muṋo tshi fulufhedzeaho. U vha na maluvha a ṋotshi a si mvumbo ya u kaṋa mutoli.",
+          "lines": 2,
+          "clipped": false
+        },
+        {
+          "id": "forecast-first-crop",
+          "text": "Tshiko tsha khaṋo ya u thoma: miṅwedzi ya 13–20. KZN DARD i bula nga ho livhaho tshifhinga u bva kha u ṱavha u ya kha khaṋo na u bva kha khaṋo u ya kha iṅwe. Miṅwedzi yo shandulwa ya vha miṅwaha (13/12 u ya kha 20/12). Itshi a si mbonelaphanḓa i re na datumu kana tshifhinga tsha khaṋo ya ṅwaha kha miṅwedzi yoṱhe. Tshifhinga tsha vhukuma tshi ya nga lushaka na ṱhogomelo ya fhethu.",
+          "lines": 4,
+          "clipped": false
+        }
+      ],
+      "overflow": false
+    }
+  ],
+  "actual": [
+    {
+      "lang": "zu",
+      "paragraphs": [
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Ukukhiqiza okugcwele ngonyaka wesi-7 kule ncwadi ejwayelekile yase-KZN. Akukho nani lokukhiqiza ngesihlahla elishiwo kulobu budala, futhi isiphunzi, uhlobo nokuphathwa kungashintsha ukuthela. Izabelomali ezine zase-Langkloof ziyizinto ezicatshangelwe zokuhlela zesifunda ezihlukene, azisona isiqinisekiso esilinganisiwe salobu budala obujwayelekile.",
+          "clipped": false,
+          "checkedLines": 9,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–8. Kulesi sivivinyo sase-Natal Midlands esiniselwayo nesinakekelwa kakhulu, i-Hass yafinyelela cishe ku-20 t/ha ineminyaka engu-6 kanti izinsimu zasondela esivunweni esimaphakathi esiphezulu esingaqhubeka ngokusimama lapho zineminyaka engu-8. Lesi isikhombo sokuthela esiphathelene nalesi sivivinyo kuphela; asikho isilinganiso esingasakhuli sikazwelonke noma igrafu yobudala nesivuno egcwaliswa ngokuzenzakalela phakathi kweminyaka.",
+          "clipped": false,
+          "checkedLines": 11,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza: 100–112.5 kg/isitshalo. Ukubala kwesivivinyo esifanayo ngobuningi bokuqala obungu-200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eneminyaka engu-6; isilinganiso esingaqhubeka ngokusimama 22,500 kg/ha / 200 = 112.5 kg/tree. Eminyakeni engu-3, 10,000 kg/ha / 200 = 50 kg/tree njengesilinganiso esilinganayo. La manani ayizikhombo ezilinganiswa nesilinganiso esimaphakathi sezimo ezishiwo zensimu ye-Hass/Duke 7, awazona izivuno zesihlahla ngasinye ezilinganisiwe noma ukukhiqiza okuzenzakalelayo kobunye ubuningi, uhlobo, isimo sezulu noma ukuphathwa. Akucatshangelwa amanani obudala obuphakathi.",
+          "clipped": false,
+          "checkedLines": 14,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6–7. Iseluleko sase-KZN sichaza izinhlobo ze-Vaccinium futhi sibala izinhlobo ze-rabbiteye ezithi Tifblue, Beckyblue ne-Climax. Lesi sikhombo asibhekiseli ngokukhethekile kwi-southern highbush blueberries.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza: 79–131 kg/isitshalo. Isilinganiso sensimu yezihlahla zezithelo sibalwe kusetshenziswa ukukhiqiza okungenzeka okungu-50 t/ha okusencwadini yase-KZN nezikhala eziphakathi nendawo zamabanga okutshala: e-KZN Midlands epholile, 5.75 x 2.75 m, cishe 79 kg/tree; ezindaweni ezishisayo, 7.5 x 3.5 m, cishe 131 kg/tree. Ukubala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. La manani abalwe, awazona izivuno zesihlahla ngasinye ezilinganisiwe. Umehluko ukhombisa izikhala zokutshala, hhayi izinhlobo noma igrafu yokukhiqiza ngokobudala. Qinisekisa isivuno sendawo sensimu nezikhala zangempela ngaphambi kokusebenzisa lesi sikhombo.",
+          "clipped": false,
+          "checkedLines": 14,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7. Incwadi yesifunda efanayo ichaza ukuthi impilo yensimu yezihlahla zezithelo zokudayisa icishe ibe iminyaka engu-12–15; ayinikezi izivuno zesihlahla ngasinye ngokobudala.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza: 23–43 kg/isitshalo. KUGUQULIWE, ukubala kubonisiwe: kusetshenziswe ibanga lesivuno elithi “Average” (15-18 t/ha) nezikhala ezishiwo emthonjeni ofanayo (“Generally planted 6m x 4m or 5 m x 3 m”). Ku-6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 no-18000kg/416.7=43.2 kg/tree. Ku-5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 no-18000/666.7=27.0 kg/tree. Ibanga elihlanganisa zombili izikhala, elisondezwe: [23, 43] kg/tree. Lo mehluko ukhombisa izikhala ezimbili ezihlukene ezitholakala emthonjeni, hhayi ukuhluka kwezinhlobo.",
+          "clipped": false,
+          "checkedLines": 12,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-7–9. I-USDA FAS ichaza ukuvuthwa kokukhiqiza kokudayisa ngeminyaka engu-7–9 kuyilapho izivuno zingaqhubeka zikhula eminye iminyaka engu-15–20. Lokhu akubeki ubudala obusimeme besivuno esiphezulu kunazo zonke.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza: 200–1500 kg/isitshalo. I-ICRAF ibika u-200–1,500 kg wezithelo eziphelele eziqoqwe esihlahleni esisodwa sasendle ngesizini eyodwa (0.2–1.5 tonnes x 1,000). Leli banga lokuqoqwa kwesizini alibeki isilinganiso esimaphakathi sensimu yezihlahla zezithelo, isisindo senyama yesithelo edliwayo noma sezinhlamvu, noma isibikezelo sokukhiqiza ngokobudala.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-12–13. Ukukhiqiza okugcwele cishe ngeminyaka engu-12–13 encwadini ejwayelekile yase-KZN. Uhlobo olukhethiwe, indlela yokwandisa, ukuminyana nokuphathwa kuthinta ukukhiqiza kwangempela; ubudala bokuvuthwa abuzakheli ngokuzenzakalela igrafu yama-kg ngesihlahla ngonyaka.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-6. Uhlelo lwe-Post-Harvest Innovation lunikeza iminyaka eyisithupha kuze kube nesivuno esigcwele. Alunikezi inani lokukhiqiza ngesihlahla ngonyaka kulobo budala.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Isikhombo sokukhiqiza: 40–100 kg/isitshalo. Ukubuyekezwa kubika u-40–100 kg ngesihlahla esimile ngaphandle kwesikhathi sonyaka, ubudala bokuvuthwa, uhlobo oluqondanisiwe noma izimo zensimu zaseNingizimu Afrika. Gcina isisindo sokuqala ngesitshalo njengomongo kuphela: ungasibizi ngokuthi kg/year, usihlukanisele izinyanga noma usithathe njengesibikezelo sepulazi.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        }
+      ],
+      "contentLanguage": "zu",
+      "overflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "paragraphs": [
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tlhahiso e felletseng selemong sa 7 tataisong ena e akaretsang ya KZN. Ha ho tlhahiso ka sefate e boletsweng dilemong tseo, mme kutu ya motso, mofuta le taolo di ka fetola ho beha. Ditekanyetso tsa ditjhelete tse nne tsa Langkloof ke dikakanyo tse arohaneng tsa moralo wa sebaka, e seng tiiso e lekantsweng ya dilemo tsena tse akaretsang.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–8. Tekong ena ya Natal Midlands e nosetswang le ho laolwa ka matla, Hass e fihletse hoo e ka bang 20 t/ha dilemong tse 6 mme dirapa tsa atamela karolelano e phahameng ya chai e ka bolokwang dilemong tse 8. Sena ke tshupiso ya ho beha e amanang le teko ena feela; ha ho boemo bo sa nyoloheng ba naha kapa mothalo wa dilemo le chai o tlatswang ka boona dipakeng tsa dilemo.",
+          "clipped": false,
+          "checkedLines": 9,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso: 100–112.5 kg/semela. Palo ya teko yona eo bongateng ba pele ba 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree dilemong tse 6; karolelano e ka bolokwang 22,500 kg/ha / 200 = 112.5 kg/tree. Dilemong tse 3, 10,000 kg/ha / 200 = 50 kg/tree e le tekano. Tsena ke dipalo tsa tshupiso tse lekanang le karolelano bakeng sa maemo a bitsitsweng a serapa sa Hass/Duke 7, ha se chai ya sefate ka seng e lekantsweng kapa tlhahiso e nkelwang pele bakeng sa bongata bo fapaneng, mofuta, maemo a lehodimo kapa taolo. Ha ho hakanywe dilemo tse pakeng.",
+          "clipped": false,
+          "checkedLines": 12,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6–7. Keletso ya KZN e hlalosa mefuta ya Vaccinium mme e thathamisa mefuta ya rabbiteye ya Tifblue, Beckyblue le Climax. Tshupiso ena ha e tobe southern highbush blueberries.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso: 79–131 kg/semela. Ho badilwe tekano ya karolelano ya serapa sa ditholwana ho sebediswa tlhahiso e ka bang 50 t/ha tataisong ya KZN le bohareng ba dibaka pakeng tsa dimela: KZN Midlands e phodileng, 5.75 x 2.75 m, hoo e ka bang 79 kg/tree; dibakeng tse tjhesang, 7.5 x 3.5 m, hoo e ka bang 131 kg/tree. Palo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Dipalo tsena di balilwe, ha se chai ya sefate ka seng e lekantsweng. Phapang e bontsha sebaka pakeng tsa dimela, e seng mefuta kapa mothalo wa tlhahiso ho ya ka dilemo. Netefatsa chai ya serapa sa sebakeng seo le sebaka sa nnete pakeng tsa dimela pele o sebedisa tshupiso ena.",
+          "clipped": false,
+          "checkedLines": 13,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tataiso yona eo ya sebaka e hlalosa bophelo ba serapa sa ditholwana sa kgwebo ba hoo e ka bang dilemo tse 12–15; ha e fane ka chai ya sefate ka seng ho ya ka dilemo.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average” (15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3 m”). Ho 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa dibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng tse fumanweng mohloding, e seng phapang ya mefuta.",
+          "clipped": false,
+          "checkedLines": 13,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7–9. USDA FAS e hlalosa ho hola bakeng sa tlhahiso ya kgwebo dilemong tse 7–9 ha chai e ka tswela pele ho eketseha ka dilemo tse ding tse 15–20. Sena ha se netefatse dilemo tse tsitsitseng tsa chai e phahameng ka ho fetisisa.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso: 200–1500 kg/semela. ICRAF e tlaleha 200–1,500 kg ya ditholwana tse felletseng tse bokeletsweng sefateng se le seng sa naheng nakong e le nngwe (0.2–1.5 tonnes x 1,000). Moedi ona wa pokello ya nako ha o netefatse karolelano ya serapa sa ditholwana, boima ba nama e jewang ya tholwana kapa dithollo, kapa ponelopele ya tlhahiso ho ya ka dilemo.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 12–13. Tlhahiso e felletseng hoo e ka bang dilemong tse 12–13 tataisong e akaretsang ya KZN. Mofuta o kgethilweng, ho atisa, bongata ba dimela sebakeng le taolo di ama tlhahiso ya nnete; dilemo tsa ho hola ka botlalo ha di iketsetse mothalo wa kg ka sefate ka selemo.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 6. Lenaneo la Post-Harvest Innovation le fana ka dilemo tse tsheletseng ho fihla kotulong e felletseng. Ha le fane ka tlhahiso ya selemo ka sefate dilemong tseo.",
+          "clipped": false,
+          "checkedLines": 4,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshupiso ya tlhahiso: 40–100 kg/semela. Tlhahlobo e tlaleha 40–100 kg ka sefate se emeng ntle le nako ya selemo, dilemo tsa ho hola ka botlalo, mofuta o nyalanang kapa maemo a tshimo a Afrika Borwa. Boloka boima ba pele ka semela e le moelelo feela: o se ke wa bo bitsa kg/year, wa bo arola ka dikgwedi kapa wa bo nka e le ponelopele ya polasi.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        }
+      ],
+      "contentLanguage": "st",
+      "overflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "paragraphs": [
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Vuhumelerisi byo helela eka lembe ra 7 eka nkongomiso lowu wo angarhela wa KZN. A ku vuriwanga vuhumelerisi bya murhi wun’we eka vukhale byebyo, naswona nsinya wa timitsu, muxaka ni mafambiselo swi nga cinca ku tswala. Mpimanyeto wa mune wa mali wa Langkloof i leswi tekiweke swi ri masungulo yo pulana ya xifundzha leswi hambaneke, a hi xitiyisiso lexi pimiweke xa vukhale byebyo byo angarhela.",
+          "clipped": false,
+          "checkedLines": 10,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–8. Eka ndzingo lowu cheletiwaka ni ku fambisiwa hi vukheta wa Natal Midlands, Hass yi fikile eka kwalomu ka 20 t/ha eka vukhale bya 6 kasi mintanga yi tshinelele avhareji ya mbuyelo wa le henhla lowu nga tshamaka wu hlayisekile eka vukhale bya 8. Lexi i xikombiso xa ku tswala xa ndzingo wolowo ntsena; a ku na mpimo wa tiko lowu yimaka kumbe girafu ya vukhale ni mbuyelo leyi tatisiwaka hi yoxe eka nkarhi wa le xikarhini.",
+          "clipped": false,
+          "checkedLines": 10,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi: 100–112.5 kg/ximilana. Nhlayo ya ndzingo wolowo eka ku tala ko sungula ka 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree eka vukhale bya 6; avhareji leyi nga hlayisekaka 22,500 kg/ha / 200 = 112.5 kg/tree. Eka vukhale bya 3, 10,000 kg/ha / 200 = 50 kg/tree tani hi mpimo lowu ringanaka. Leyi i mimpimo ya swikombiso leswi ringanaka ni avhareji eka swiyimo leswi boxiweke swa ntanga wa Hass/Duke 7, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana kumbe vuhumelerisi byo teka byi ri kona eka ku tala kun’wana, muxaka, maxelo kumbe mafambiselo. Vukhale bya le xikarhini a byi kumbeteriwi.",
+          "clipped": false,
+          "checkedLines": 13,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6–7. Xitsundzuxo xa KZN xi hlamusela mixaka ya Vaccinium naswona xi xaxameta mixaka ya rabbiteye ya Tifblue, Beckyblue ni Climax. Xikombiso lexi a xi kongomanga eka southern highbush blueberries.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi: 79–131 kg/ximilana. Ku hlayiwe mpimo lowu ringanaka ni avhareji ya ntanga wa mihandzu hi ku tirhisa vuhumelerisi bya 50 t/ha byi nga ha vaka kona eka nkongomiso wa KZN ni swipimelo swa le xikarhini swa mpfhuka wo byala: KZN Midlands leyi titimelaka, 5.75 x 2.75 m, kwalomu ka 79 kg/tree; tindhawu to hisa, 7.5 x 3.5 m, kwalomu ka 131 kg/tree. Nhlayo: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Mimpimo leyi yi hlayeriwile, a hi mimbuyelo leyi pimiweke ya murhi wun’wana ni wun’wana. Ku hambana ku komba mpfhuka wo byala, ku nga ri mixaka kumbe girafu ya vuhumelerisi hi vukhale. Tiyisisa mbuyelo wa ntanga wa laha kaya ni mpfhuka wa xiviri wo byala u nga si tirhisa nkombiso lowu.",
+          "clipped": false,
+          "checkedLines": 15,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7. Nkongomiso wolowo wa xifundzha wu hlamusela nkarhi wa ku hanya wa ntanga wa mihandzu wa bindzu wa kwalomu ka 12–15 wa malembe; a wu nyiki mimbuyelo ya murhi wun’wana ni wun’wana hi vukhale.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi: 23–43 kg/ximilana. SWI HUNDZURIWILE, nhlayo yi kombisiwile: ku tekiwe mpimo wa mbuyelo wa “Average” (15-18 t/ha) ni mpfhuka lowu boxiweke eka xihlovo xolexo (“Generally planted 6m x 4m or 5 m x 3 m”). Eka 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Eka 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mpimo lowu hlanganisiweke eka mipfhuka leyi mimbirhi, wu rhendzelekiwile: [23, 43] kg/tree. Ku hambana loku ku komba mipfhuka leyi mimbirhi leyi hambaneke leyi humaka eka xihlovo, ku nga ri ku hambana ka mixaka.",
+          "clipped": false,
+          "checkedLines": 14,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 7–9. USDA FAS yi hlamusela ku kula ka vuhumelerisi bya bindzu eka lembe ra 7–9 kasi mimbuyelo yi nga ya mahlweni yi engeteleka ku ringana ni man’wana ya 15–20 wa malembe. Lexi a xi veki vukhale byo tshamiseka bya mbuyelo wa le henhla swinene.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi: 200–1500 kg/ximilana. ICRAF yi vika 200–1,500 kg ya mihandzu leyi heleleke leyi hlengeletiweke eka murhi wun’we wa nhova eka nguva yin’we (0.2–1.5 tonnes x 1,000). Mpimo lowu wa ku hlengeleta ka nguva a wu veki avhareji ya ntanga wa mihandzu, ntiko wa nyama leyi dyiwaka ya muhandzu kumbe timbilu ta yona, kumbe mvhumbo wa vuhumelerisi hi vukhale.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 12–13. Vuhumelerisi byo helela kwalomu ka lembe ra 12–13 eka nkongomiso wo angarhela wa KZN. Muxaka, ku andzisa, ku tala ka swimilana endhawini ni mafambiselo swi khumba vuhumelerisi bya xiviri; vukhale bya ku kula hi ku helela a byi endli girafu ya kg hi murhi hi lembe hi byoxe.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi bya leswi se swi kurile: malembe ya 6. Phurogireme ya Post-Harvest Innovation yi nyika malembe ya tsevu ku ya eka kotulo yo helela. A yi nyiki vuhumelerisi bya murhi wun’we hi lembe eka vukhale byebyo.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Xikombiso xa vuhumelerisi: 40–100 kg/ximilana. Nkambisiso wu vika 40–100 kg hi murhi lowu yimeke wu nga ri na nkarhi wa lembe, vukhale bya ku kula hi ku helela, muxaka lowu fambisanaka kumbe swiyimo swa masimu swa Afrika Dzonga. Hlayisa ntiko wo sungula hi ximilana ku va mongo ntsena: u nga wu thyi kg/year, u wu ava eka tin’hweti kumbe u wu teka wu ri mvhumbo wa purasi.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        }
+      ],
+      "contentLanguage": "ts",
+      "overflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "paragraphs": [
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. U bveledza ho fhelelaho kha ṅwaha wa 7 kha nyendedzi iyi nga u angaredza ya KZN. A hu na zwibveledzwa nga muri zwo bulwaho kha miṅwaha yeneyo, nahone mudzi wa mutheo, lushaka na ndangulo zwi nga shandula u aṋwa. Mikovhelo ya masheleni miṋa ya Langkloof ndi mihumbulo yo fhambanaho ya u pulana ya dzingu, a si khwaṱhisedzo yo kaliwaho ya miṅwaha iyi nga u angaredza.",
+          "clipped": false,
+          "checkedLines": 9,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–8. Kha ndingo iyi yo sheledzwaho na u langulwa nga vhuronwane ya Natal Midlands, Hass yo swika kha hu ṱoḓaho u vha 20 t/ha kha miṅwaha ya 6 nahone tsimu dzo sendela kha ndinganyelo khulwanesa ya khaṋo i nga dzulaho yo khwaṱha nga miṅwaha ya 8. Itshi ndi tshiko tsha u aṋwa tsha ndingo iyi fhedzi; a hu na mukano wo dzikaho wa lushaka kana girafu ya miṅwaha na khaṋo ine ya ḓi ḓadza vhukati ha miṅwaha.",
+          "clipped": false,
+          "checkedLines": 10,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza: 100–112.5 kg/tshimela. U vhala ha ndingo yeneyo kha tshivhalo tsha u thoma tsha 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree kha miṅwaha ya 6; ndinganyelo i nga dzulaho yo khwaṱha 22,500 kg/ha / 200 = 112.5 kg/tree. Kha miṅwaha ya 3, 10,000 kg/ha / 200 = 50 kg/tree sa tshivhalo tshi linganaho. Izwi ndi zwivhalo zwa tshiko zwi linganaho na ndinganyelo kha nyimele dzo bulwaho dza tsimu ya Hass/Duke 7, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe kana u bveledza hu dzhiiwaho sa ho no vha hone kha tshivhalo, lushaka, kilima kana ndangulo zwo fhambanaho. Miṅwaha ya vhukati a i humbulelwi.",
+          "clipped": false,
+          "checkedLines": 12,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6–7. Nyeletshedzo ya KZN i ṱalutshedza tshaka dza Vaccinium nahone i bula tshaka dza rabbiteye Tifblue, Beckyblue na Climax. Tshiko itshi a tsho ngo livhiswa kha southern highbush blueberries.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza: 79–131 kg/tshimela. Ho vhalwa ndinganyelo i linganaho na ya tsimu ya mitshelo nga u shumisa u bveledza hu nga vha 50 t/ha kha nyendedzi ya KZN na vhukati ha zwikhala zwa u ṱavha: KZN Midlands hu rotholelaho, 5.75 x 2.75 m, hu ṱoḓaho u vha 79 kg/tree; fhethu hu fhisaho, 7.5 x 3.5 m, hu ṱoḓaho u vha 131 kg/tree. U vhala: 50,000 kg/ha x m²/tree / 10,000 m²/ha. Tshivhalo itshi tsho bva kha u vhala, a si khaṋo yo kaliwaho ya muri muṅwe na muṅwe. Phambano i sumbedza zwikhala, hu si tshaka kana girafu ya u bveledza u ya nga miṅwaha. Khwaṱhisedzani khaṋo ya tsimu ya henefho na zwikhala zwa vhukuma musi ni sa athu shumisa tshiko itshi.",
+          "clipped": false,
+          "checkedLines": 14,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7. Nyendedzi yeneyo ya dzingu i ṱalutshedza tshifhinga tsha u tshila ha tsimu ya mitshelo ya vhubindudzi tshi ṱoḓaho u vha miṅwaha ya 12–15; a i ṋei khaṋo ya muri muṅwe na muṅwe u ya nga miṅwaha.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza: 23–43 kg/tshimela. ZWO SHANDULWA, u vhala ho sumbedzwa: ho dzhiiwa tshigwada tsha khaṋo tsha “Average” (15-18 t/ha) na zwikhala zwo bulwaho nga tshiko tshenetsho (“Generally planted 6m x 4m or 5 m x 3 m”). Kha 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 na 18000kg/416.7=43.2 kg/tree. Kha 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 na 18000/666.7=27.0 kg/tree. Mukano wo ṱanganyiswaho kha zwikhala izwi zwivhili, wo moniseledzwaho: [23, 43] kg/tree. Phambano iyi i sumbedza zwikhala zwivhili zwo fhambanaho zwi bvaho tshikoni, hu si phambano ya tshaka.",
+          "clipped": false,
+          "checkedLines": 13,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 7–9. USDA FAS i ṱalutshedza u hula ha zwa vhubindudzi kha miṅwaha ya 7–9 ngeno khaṋo i tshi nga bvela phanḓa na u engedzea kha miṅwaha miṅwe ya 15–20. Izwi a zwi khwaṱhisedzi miṅwaha yo dzikaho ya khaṋo khulwanesa.",
+          "clipped": false,
+          "checkedLines": 6,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza: 200–1500 kg/tshimela. ICRAF i vhiga 200–1,500 kg dza mitshelo yo fhelelaho yo kuvhanganywaho kha muri muthihi wa ḓaka kha tshifhinga tshithihi (0.2–1.5 tonnes x 1,000). Mukano uyu wa u kuvhanganya wa tshifhinga a u khwaṱhisedzi ndinganyelo ya tsimu ya mitshelo, tshileme tsha ṋama ya mutshelo i ḽiwaho kana mbilwana dza mbeu, kana mbonelaphanḓa ya u bveledza u ya nga miṅwaha.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 12–13. U bveledza ho fhelelaho hu ṱoḓaho u vha kha miṅwaha ya 12–13 kha nyendedzi nga u angaredza ya KZN. Lushaka, u andisa, tshivhalo tsha zwimela fhethu na ndangulo zwi kwama zwibveledzwa zwa vhukuma; miṅwaha ya u hula a i ḓi iteli girafu ya kg nga muri nga ṅwaha.",
+          "clipped": false,
+          "checkedLines": 7,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza ho no khwaṱhaho: miṅwaha ya 6. Mbekanyamushumo ya Post-Harvest Innovation i ṋea miṅwaha ya rathi u ya kha khaṋo yo fhelelaho. A i ṋei zwibveledzwa zwa ṅwaha nga muri kha miṅwaha yeneyo.",
+          "clipped": false,
+          "checkedLines": 5,
+          "occludedLines": []
+        },
+        {
+          "text": "Tshiko tsha u bveledza: 40–100 kg/tshimela. Tsedzuluso i vhiga 40–100 kg nga muri wo imaho hu si na tshifhinga tsha ṅwaha, miṅwaha ya u hula, lushaka lu tshimbidzanaho kana nyimele dza tsimu dza Afrika Tshipembe. Vhulungani tshileme tsha u thoma nga tshimela sa vhubvo fhedzi: ni songo tshi ira kg/year, u tshi kovhela miṅwedzi kana u tshi dzhia sa mbonelaphanḓa ya bulasi.",
+          "clipped": false,
+          "checkedLines": 8,
+          "occludedLines": []
+        }
+      ],
+      "contentLanguage": "ve",
+      "overflow": false,
+      "savedBytesUnchanged": true
+    }
+  ],
+  "forecasts": [
+    {
+      "size": "phone",
+      "captions": [
+        {
+          "id": "rainfall",
+          "text": "nasa-power · Mpfula ya n’hweti, a hi mvhumbo wa maxelo.",
+          "clipped": false,
+          "lines": 2
+        },
+        {
+          "id": "climate",
+          "text": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi mvhumbo wa maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi. Xihlovo: NASA POWER (giridi ya maxelo ya 50 km)",
+          "clipped": false,
+          "lines": 5
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "size": "desktop",
+      "captions": [
+        {
+          "id": "rainfall",
+          "text": "nasa-power · Mpfula ya n’hweti, a hi mvhumbo wa maxelo.",
+          "clipped": false,
+          "lines": 1
+        },
+        {
+          "id": "climate",
+          "text": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi mvhumbo wa maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi. Xihlovo: NASA POWER (giridi ya maxelo ya 50 km)",
+          "clipped": false,
+          "lines": 2
+        }
+      ],
+      "overflow": false
+    }
+  ]
+}
