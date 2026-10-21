@@ -918,7 +918,7 @@ and markdown remain exact against the existing 34-case fixture. Native models pe
 previous declared fields and these two additional source-bound lines; every other field is still
 deep-compared. The earlier preservation claim is expanded with this explicit reason, not removed.
 
-Typecheck, 389 tests across 43 registered files, release-note and whitespace checks pass.
+Typecheck, 391 tests across 44 registered files, release-note and whitespace checks pass.
 Independent checks bind every source path, source-data hash, draft value, ordered numeric token,
 placeholder, formula and named identity. A deliberately unregistered production note fails the
 audit. Default/unknown languages, missing notes and ranges, one-pass interpolation, original
@@ -942,7 +942,7 @@ while phone art retains its intended internal horizontal scroll. Final viewer ru
 contexts with explicit onboarding/consent fixture preconditions; those flows are not claimed as
 verified here. No paid AI or PDF generation is used.
 
-The full 547-file run at older `6446f1cb` remains live, with the two known failures repaired in
+The full 547-file run at older `6446f1cb` remains live, with its known failures repaired in
 predecessor heads. No current full-suite success is claimed; CI must finish before merge.
 The native purchasing-gap notice remains: supplementary/region/season, product and livestock
 wording still contains English. Wider workflows, exports, Study/media and fluent review remain

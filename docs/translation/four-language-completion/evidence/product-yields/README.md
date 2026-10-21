@@ -39,11 +39,11 @@ show the corrected Xitsonga caption in context. All these examples were visually
 The lexical sources and exact earlier native before/after values are in
 `forecast-word-corrections.json`; they do not approve the full translated sentences.
 
-Final validation: clean typecheck; 389 tests passed across 43 registered files, including
+Final validation: clean typecheck; 391 tests passed across 44 registered files, including
 production, source/geometry, historical learning, prior Simple guard and current lexical checks.
 Release-note and whitespace checks are clean.
 
 No PDF was created or changed. The full 547-file run at the older `6446f1cb` remains live;
-its two known failures (update-note length and the old Simple helper-name regex) were repaired
-in predecessor heads. That run is not current-head proof. No complete-suite success or
+its known failures (update-note length, the old Simple helper-name regex and a stale translator
+handoff CSV) were repaired in predecessor heads. That run is not current-head proof. No complete-suite success or
 production merge is claimed. This changes the picture; `PLAN_VERSION` is unchanged.
