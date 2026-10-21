@@ -1572,8 +1572,8 @@ export function reportUiMonth(language: string, englishMonthYear: string): strin
 }
 
 const cell = (value: string) => value.replace(/[|\r\n]/g, ' ');
-/** Earlier native crop, cost and assurance notes, retained until their shared builders are translated.
- * Monitoring and risk now use the same full source-preserving tables in all four languages. */
+/** Earlier native crop and cost notes, retained until their shared builders are translated.
+ * Monitoring, risk and assurance now use shared source-preserving builders in all four languages. */
 export function zuluReportClosingNotes(facts: ReportSiteFacts | null, d: LocationData, boq: BillOfQuantities) {
   const summary = reportSummaryPages(facts, d, 5, 'zu');
   const crop = `## Uhlelo lwezitshalo olugciniwe\n\n${summary[1].lines.join('\n\n')}`;
@@ -1581,12 +1581,5 @@ export function zuluReportClosingNotes(facts: ReportSiteFacts | null, d: Locatio
   // This earlier native-only assessment note adds context beyond the shared source table.
   const riskNote = 'Lolu uhlu lokuqaphela ngokwezibalo zendawo; alulona ukuhlolwa kobunjiniyela noma isilinganiso esiqinisekisiwe sethuba lengozi.';
   const monitoringNote = 'Ku-NGO Assessments, sebenzisa ukuhlola kwasekuqaleni, ngaphambi nangemva kwesifundo, phakathi nephrojekthi nasekupheleni. Impendulo nge-app ingeyokuzithandela. Bhala ushintsho oluvunyelwene ngalo, umuntu ozolwenza nosuku lokulwenza.';
-  const assurance = ['## Indlela yokusebenzisa lo mbiko', '',
-    'Lo mbiko awukahlolwa uchwepheshe wezolimo. Uyisiqalo sokuhlela, hhayi umyalelo wokwakha noma wokuthenga.',
-    'Sebenzisa ulwazi lwakho lwendawo. Imodeli ayazi konke okwenzeka enhlabathini, emanzini noma emndenini wakho.',
-    'Bheka umthombo wesilinganiso somhlabathi. Idatha ye-SoilGrids iyimodeli yendawo ebanzi; izibalo ezijwayelekile azizona izilinganiso zaleli pulazi. Ukuhlolwa komhlabathi kusiza izinqumo zokufaka izinto emhlabathini.',
-    'Bonisa umbiko kumeluleki wezolimo wendawo. Qinisekisa izilinganiso, izindleko nezimo zangempela ngaphambi kokusebenza.',
-    'Bhala okutshalwe ngokoqobo, okuvuniwe nokuguqukile. Sebenzisa amarekhodi ukwenza uhlelo lwesizini elandelayo lube ngcono.',
-  ].join('\n\n');
-  return {crop, costs, monitoringNote, riskNote, assurance};
+  return {crop, costs, monitoringNote, riskNote};
 }

@@ -627,6 +627,58 @@ predecessor `09b280ef`. This does not finish the four-language goal: cost/purcha
 sections, exports and wider workflows, lessons and media remain. This changes the picture;
 `PLAN_VERSION` remains unchanged.
 
+## Shared assurance and soil cautions — draft batch 15
+
+Based on `1340afff206706a36fdeec5fa4b6e104ff16a808` (draft #1041), sixteen source-bound
+entries in `report-assurance-drafts.json` cover the full shared planning statement, footer, soil
+cautions/titles and upload invitation in all four languages. `lib/plan-assurance.ts` owns their
+wording and source selection; original English constants remain exact. Unknown/free text is not
+translated by inference. All new wording is an unreviewed AI draft, without fluent approval.
+
+The actual report API now uses all five shared assurance paragraphs in every target, replacing
+isiZulu's earlier abbreviated producer. A source mismatch was also observed: the generic soil
+paragraph said the soil came from a global model even for an uploaded lab result. When report
+provenance is supplied, that paragraph now selects the already-existing lab, app-default or
+unknown-source caution. SoilGrids keeps the original full model paragraph. The other four
+paragraphs remain source-exact selections. Callers without context keep the original generic
+English output. No source readings, quantities, species, saved geometry or report bytes change.
+
+Atlas soil provenance now uses those same native titles and cautions for lab/model/default/missing
+sources, with explicit language metadata. Its page displays the existing shared draft notice in
+all four targets. English source-card HTML is byte-exact. The broader Atlas headings, chart month
+labels, search, loading/error and other field text remain to be translated; this batch does not
+claim a complete Atlas pass. Shared native footer/invitation text is available for later callers;
+full/crop PDF export paths are not yet converted and no PDF was generated.
+
+Typecheck, 418 tests across 43 registered files, notes and whitespace checks pass. Tests bind every
+source constant/title to the review packet, preserve the entire generic English output, verify
+five ordered native paragraphs, exact source selection, unknown/prototype keys, unchanged other
+paragraphs, actual source-card rendering and all visible native text, real caller wiring and
+mocked actual API output in English plus all four targets for every soil-source class. The older
+isiZulu-closing assertion was rewritten upward: its shortened assurance is superseded by the
+complete shared statement, so every original source paragraph must now appear in native form.
+Existing crop/cost and native assessment/risk-note preservation checks remain.
+
+`evidence/report-assurance/` retains 60 screenshots/contact sheets and QA for sixteen actual-viewer
+mocked API reports and sixteen actual Atlas source cases. Report text includes all five selected
+paragraphs and saved bytes remain exact. Every Atlas case has the expected native title, body,
+language metadata and visible draft status. Phone/desktop examples were inspected in all targets.
+Four native-to-English switches update the same source caution with no new location-data request.
+Mapbox/geocoder/location/provider/auth/metering are mocked; this does not verify the map or live
+environmental data. An access-token development toast appears in some context captures.
+
+The initial Atlas width checks passed, but visual inspection caught the floating Lima button over
+the edge of a bottom-aligned card. Final reading-position captures scroll the caution into clear
+view; hit-testing the start, middle and end of every text line finds no occlusion in all sixteen
+cases. This verifies a readable scroll position, not a change to the global floating control.
+Initial overlap contacts are retained to make that limitation explicit. Temporary report/language
+and draft-dismissal storage was restored; real paid generation remained blocked.
+
+The complete 543-file Node 24 run at monitoring predecessor `1340afff` is still live in a separate
+stable checkout and excludes this batch. Current full CI is pending; no merges. Costs/purchasing,
+exports, wider workflows, lessons/media and fluent review remain. The goal stays active. This
+changes the picture; `PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

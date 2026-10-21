@@ -852,7 +852,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       zuluClosing?.costs ?? billOfQuantitiesMarkdown(boq),
       monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
       riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
-      zuluClosing?.assurance ?? assuranceMarkdown(),
+      assuranceMarkdown(langCode,{soilSource:d.soil.soilSource}),
     ],
   });
 
