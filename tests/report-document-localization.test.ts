@@ -28,7 +28,10 @@ test('English covers, references, provenance, assembly and legacy architecture r
 
 test('document drafts preserve source numbers and placeholders and newly authored words cannot silently fall back to English',()=>{
  const packet=JSON.parse(read('docs/translation/four-language-completion/report-document-drafts.json')) as {status:string;sourceSha:string;entries:typeof REPORT_DOCUMENT_COPY};
- assert.match(packet.status,/Unreviewed AI drafts/);assert.equal(packet.sourceSha,fixture.sourceSha);assert.deepEqual(packet.entries,REPORT_DOCUMENT_COPY);
+ assert.match(packet.status,/Unreviewed AI drafts/);assert.equal(packet.sourceSha,fixture.sourceSha);
+ // This dated packet binds its own entries. New declared batches may extend the shared authority;
+ // comparing the entire growing table to this older packet would pin a count rather than wording.
+ for(const row of packet.entries)assert.deepEqual(sources.get(row.english),row);
  assert.equal(sources.size,REPORT_DOCUMENT_COPY.length);
  for(const row of REPORT_DOCUMENT_COPY)for(const lang of code){assert.ok(row[lang].trim());assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));assert.deepEqual(digits(row[lang]),digits(row.english));}
  const audit=(source:string)=>{const tree=typescript.createSourceFile('doc.ts',source,typescript.ScriptTarget.Latest,true);function literal(n:typescript.Node){if(typescript.isStringLiteral(n))assert.ok(sources.has(n.text),`missing document source: ${n.text}`);else if(typescript.isConditionalExpression(n)){literal(n.whenTrue);literal(n.whenFalse);}}function visit(n:typescript.Node){if(typescript.isCallExpression(n)&&typescript.isIdentifier(n.expression)&&['t','reportDocumentText'].includes(n.expression.text)&&n.arguments[0])literal(n.arguments[0]);typescript.forEachChild(n,visit);}visit(tree);};
@@ -82,7 +85,7 @@ test('the real generator emits native covers and honest native incomplete, rejec
  try{const {POST}=await import('../app/api/generate-report/route.ts');for(const lang of code)for(const mode of ['pass','limit','unsafe','failure']){
   control.mode=mode;control.requests.length=0;const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({locationData:DEMO_LOCATION,sections:['Executive Summary'],language:lang})})as any);assert.equal(response.status,200);const text=await response.text();
   assert.ok(text.includes('## '+reportDocumentText('Contents',lang))||mode==='failure'||mode==='unsafe');
-  if(lang!=='zu'){assert.ok(text.includes(reportDocumentText('Document control',lang)));assert.ok(text.includes(reportDocumentText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.',lang)));}
+  assert.ok(text.includes(reportDocumentText('Document control',lang)));assert.ok(text.includes(reportDocumentText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.',lang)));
   const source=mode==='limit'?'This section may be incomplete: the model reached its output limit.':mode==='unsafe'?'This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.':mode==='failure'?'A section could not be generated — please regenerate the report.':null;
   if(source){assert.ok(text.includes(reportDocumentText(source,lang)));assert.ok(!text.includes(source));}if(mode==='unsafe')assert.ok(!text.includes('Guava'),'a rejected draft must never leak its listed plant into the saved report');assert.equal(control.requests.length,mode==='unsafe'?2:1);
  }}finally{globalThis.fetch=originalFetch;hooks.deregister();delete(globalThis as any)[key];}
