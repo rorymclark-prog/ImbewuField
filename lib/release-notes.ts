@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '84278474', changes: [
+    'New reports use full cost tables and price cautions in four draft languages.',
+    'Summaries use the same equipment names; prices and measured quantities stay the same.',
+  ], tour: [{ title: 'Check the cost table', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Read the item, quantity, rate, amount and measurement source in a new report. Unpriced work still has an explicit reason and existing items remain excluded.',
+  }, { title: 'Read the five-page summary', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Compare the cost lines in the summary with the full report. Standard equipment follows your language; custom names and plant identities remain as recorded.',
+  }] },
   { when: '21 October 2026', sha: '1340afff', changes: [
     'New reports have the full planning cautions in four draft languages.',
     'Soil cautions follow the recorded source, including your uploaded lab test.',

@@ -1,3 +1,4 @@
+import { reportElementDisplayName, reportRouteDisplayName } from './report-visuals';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
@@ -12,7 +13,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   const unknown = t('Not recorded', 'Akubhaliwe');
   const area = (value?: number) => value === undefined ? unknown : `${numberLabel(value, 1)} m²`;
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
-  const boq = buildBillOfQuantities(facts);
+  const boq = buildBillOfQuantities(facts,language);
   const soilKnown = location.soil.soilSource === 'lab' || location.soil.soilSource === 'soilgrids';
   const title = facts?.farmName ?? t('Site summary', 'Isifinyezo sendawo');
   const factsLines = [
@@ -38,7 +39,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   return [
     { title, lines: factsLines },
     { title: t('Crop plan', 'Uhlelo lwezitshalo'), lines: [...cropNotes, ...cropLines] },
-    { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${tank.name} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${r.label}: ${numberLabel(r.totalLengthM)} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
+    { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${reportElementDisplayName(tank.name,tank.defId,language)} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${reportRouteDisplayName(r.label,r.kind,language)}: ${numberLabel(r.totalLengthM)} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
     { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${summaryBoqDescription(l, language)} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
     { title: t('Next actions and checks', 'Izinyathelo ezilandelayo nokuhlola'), lines: [
       t('Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.', 'Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.'),
@@ -95,7 +96,7 @@ export function sampleFullSiteReport(facts: ReportSiteFacts | null, location: Lo
   const status = (value: 'existing' | 'proposed' | 'mixed') => zu
     ? value === 'existing' ? 'okukhona' : value === 'proposed' ? 'okuhleliwe' : 'isimo esixubile'
     : reportSummaryText(value, language);
-  const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${status(item.status)}`) ?? [];
+  const inventory = facts?.design?.elements.map(item => `- ${reportElementDisplayName(item.name,item.defId,language)} × ${item.count} · ${status(item.status)}`) ?? [];
   const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${numberLabel(bed.areaM2)} m² · ${t(bed.kind, bed.kind === 'bed' ? 'umbhede' : 'isiza')}`) ?? [];
   return [
     `## ${t('report basis', 'Isisekelo sombiko')}\n\n${t('This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.', 'Lesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.')}`,
@@ -566,7 +567,7 @@ function summaryMonth(month: string, language: string): string {
   return index < 0 ? month : recordsMonthShort(language, index + 1);
 }
 
-function summaryBoqDescription(line: BoqLine, language: string): string {
+export function summaryBoqDescription(line: BoqLine, language: string): string {
   const source = line.descriptionSource;
   if (!source) return line.description;
   if (source.kind === 'listed-plant') return reportSummaryText('Listed plant on saved plan', language);

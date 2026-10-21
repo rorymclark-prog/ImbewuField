@@ -187,3 +187,14 @@
     color: var(--report-muted);
   }
 }
+
+/* Empty cost-group cells carry no values; keep their heading separate from priced row cards. */
+@media (max-width: 640px) {
+  .body :global(table[data-native-costs]) tr[data-section-row] {
+    padding: 10px 0; margin: 20px 0 8px; border: 0; border-bottom: 2px solid var(--report-border);
+    border-radius: 0;
+  }
+  .body :global(table[data-native-costs]) tr[data-section-row] th {
+    display: block; padding: 0; font-size: 15px; overflow-wrap: anywhere;
+  }
+}
