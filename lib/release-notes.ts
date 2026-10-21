@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '792493f3', changes: [
+    'Rain, roof water, sun, wind, soil and work-timeline drawings use four draft languages.',
+    'Diagram months and stage names follow your language while measurements stay the same.',
+  ], tour: [{ title: 'Read the report diagrams', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and choose Complete report. Check the rainfall, water, soil, sun and work-timeline drawings in your app language.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Choose a language in Settings. Stored report text keeps its original language; diagram labels keep the same source values.',
+  }] },
   { when: '21 October 2026', sha: '25c83e2d', changes: [
     'Site-plan legends, land-use labels and built/planned drawings follow four draft languages.',
     'Long diagram labels wrap; saved names, species codes and measured shapes stay the same.',

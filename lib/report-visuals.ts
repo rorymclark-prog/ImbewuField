@@ -1531,6 +1531,1056 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "st": "Thapo ya ho aneha diaparo",
     "ts": "Ntambhu yo aneka swiambalo",
     "ve": "Muḓali wa u anea zwiambaro"
+  },
+  {
+    "english": "of rain in an average year",
+    "zu": "yemvula ngonyaka ojwayelekile",
+    "st": "ya pula ka selemo se tlwaelehileng",
+    "ts": "ya mpfula hi lembe ra ntolovelo",
+    "ve": "ya mvula nga ṅwaha wo ḓoweleaho"
+  },
+  {
+    "english": "Wettest month",
+    "zu": "Inyanga enemvula kakhulu",
+    "st": "Kgwedi e nang le pula e ngata ka ho fetisisa",
+    "ts": "N'weti lowu nga ni mpfula yo tala swinene",
+    "ve": "Ṅwedzi u re na mvula nnzhi vhukuma"
+  },
+  {
+    "english": "Driest month",
+    "zu": "Inyanga eyome kakhulu",
+    "st": "Kgwedi e ommeng ka ho fetisisa",
+    "ts": "N'weti lowu omeke swinene",
+    "ve": "Ṅwedzi wo oma vhukuma"
+  },
+  {
+    "english": "Wet season",
+    "zu": "Isikhathi semvula",
+    "st": "Sehla sa pula",
+    "ts": "Nguva ya timpfula",
+    "ve": "Khalanwaha ya mvula"
+  },
+  {
+    "english": "Dry season",
+    "zu": "Isikhathi sesomiso",
+    "st": "Sehla sa komello",
+    "ts": "Nguva yo oma",
+    "ve": "Khalanwaha ya gomelelo"
+  },
+  {
+    "english": "Average temperature each month (°C)",
+    "zu": "Izinga lokushisa elijwayelekile ngenyanga (°C)",
+    "st": "Mocheso o tlwaelehileng kgwedi le kgwedi (°C)",
+    "ts": "Mahiselo ya ntolovelo n'weti wun'wana ni wun'wana (°C)",
+    "ve": "Tshikalo tsha mufhiso tsho ḓoweleaho ṅwedzi muṅwe na muṅwe (°C)"
+  },
+  {
+    "english": "Warmest month",
+    "zu": "Inyanga efudumele kakhulu",
+    "st": "Kgwedi e futhumetseng ka ho fetisisa",
+    "ts": "N'weti lowu hisaka swinene",
+    "ve": "Ṅwedzi u fhisaho vhukuma"
+  },
+  {
+    "english": "coolest",
+    "zu": "ebanda kakhulu",
+    "st": "e batang ka ho fetisisa",
+    "ts": "lowu titimelaka swinene",
+    "ve": "u rotholesaho vhukuma"
+  },
+  {
+    "english": "Rain and warmth through the year",
+    "zu": "Imvula nokufudumala phakathi nonyaka",
+    "st": "Pula le mofuthu ho pholletsa le selemo",
+    "ts": "Mpfula ni ku kufumela lembe hinkwaro",
+    "ve": "Mvula na mufhiso kha ṅwaha woṱhe"
+  },
+  {
+    "english": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",
+    "zu": "Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.",
+    "st": "Dipalohare tsa kgwedi ka nako e telele bakeng sa sebaka sena, ha se ponelopele. Selemo sefe kapa sefe se ka ba le pula e ngata haholo kapa sa oma haholo ho feta sena.",
+    "ts": "Swiringaniso swa n'weti swa nkarhi wo leha swa ndhawu leyi, a hi vuprofeta bya maxelo. Lembe rin'wana ni rin'wana ri nga va ni mpfula yo tala kumbe ra oma swinene ku feta leswi.",
+    "ve": "Ndinganyelo dza ṅwedzi dza tshifhinga tshilapfu dza fhethu afha, a si mbonelaphanḓa. Ṅwaha muṅwe na muṅwe u nga vha na mvula nnzhi kana wa oma vhukuma u fhira izwi."
+  },
+  {
+    "english": "Rain by month",
+    "zu": "Imvula ngenyanga",
+    "st": "Pula ka kgwedi",
+    "ts": "Mpfula hi n'weti",
+    "ve": "Mvula nga ṅwedzi"
+  },
+  {
+    "english": "a year",
+    "zu": "ngonyaka",
+    "st": "ka selemo",
+    "ts": "hi lembe",
+    "ve": "nga ṅwaha"
+  },
+  {
+    "english": "wettest",
+    "zu": "enemvula kakhulu",
+    "st": "e nang le pula e ngata ka ho fetisisa",
+    "ts": "lowu nga ni mpfula yo tala swinene",
+    "ve": "u re na mvula nnzhi vhukuma"
+  },
+  {
+    "english": "driest",
+    "zu": "eyome kakhulu",
+    "st": "e ommeng ka ho fetisisa",
+    "ts": "lowu omeke swinene",
+    "ve": "wo oma vhukuma"
+  },
+  {
+    "english": "This roof can catch",
+    "zu": "Lolu phahla lungabamba",
+    "st": "Marulelo ana a ka tshwara",
+    "ts": "Lwangu leri ri nga khoma",
+    "ve": "Ṱhanga iyi i nga fara"
+  },
+  {
+    "english": "in an average year",
+    "zu": "ngonyaka ojwayelekile",
+    "st": "ka selemo se tlwaelehileng",
+    "ts": "hi lembe ra ntolovelo",
+    "ve": "nga ṅwaha wo ḓoweleaho"
+  },
+  {
+    "english": "of traced roof",
+    "zu": "yophahla oludwetshiwe",
+    "st": "ya marulelo a takilweng mmapeng",
+    "ts": "ya lwangu leri landzelerisiweke emepeni",
+    "ve": "ya ṱhanga yo olelwaho kha mapa"
+  },
+  {
+    "english": "of rain",
+    "zu": "yemvula",
+    "st": "ya pula",
+    "ts": "ya mpfula",
+    "ve": "ya mvula"
+  },
+  {
+    "english": "the rest is lost to splash and the first dirty flush",
+    "zu": "okunye kulahleka ngokuchaphazela nangamanzi okuqala angcolile",
+    "st": "a mang a lahleha ha a qaphalaka le ha metsi a pele a ditshila a tloswa",
+    "ts": "laman'wana ma lahleka hi ku hangalaka ni mati yo sungula lama thyakeke",
+    "ve": "maṅwe a xela nga u phaphaḓela na maḓi a u thoma o tshikafhalaho"
+  },
+  {
+    "english": "litres",
+    "zu": "amalitha",
+    "st": "dilitara",
+    "ts": "tilitara",
+    "ve": "ḽithara"
+  },
+  {
+    "english": "Rain the roof catches that month",
+    "zu": "Imvula ebanjwa uphahla ngaleyo nyanga",
+    "st": "Pula eo marulelo a e tshwarang kgweding eo",
+    "ts": "Mpfula leyi lwangu ri yi khomaka hi n'weti wolowo",
+    "ve": "Mvula ine ṱhanga ya i fara nga ṅwedzi wonoyo"
+  },
+  {
+    "english": "Water used that month",
+    "zu": "Amanzi asetshenziswa ngaleyo nyanga",
+    "st": "Metsi a sebediswang kgweding eo",
+    "ts": "Mati lama tirhisiwaka hi n'weti wolowo",
+    "ve": "Maḓi a shumiswaho nga ṅwedzi wonoyo"
+  },
+  {
+    "english": "a day",
+    "zu": "ngosuku",
+    "st": "ka letsatsi",
+    "ts": "hi siku",
+    "ve": "nga ḓuvha"
+  },
+  {
+    "english": "Short: must come from the tank or another source",
+    "zu": "Ukushoda: kumele kuvele ethangini noma komunye umthombo",
+    "st": "Kgaello: metsi a tlameha ho tswa tankeng kapa mohloding o mong",
+    "ts": "Kuna ku kayivela: mati ma fanele ku huma ethangini kumbe eka xihlovo xin'wana",
+    "ve": "Ṱhahelelo: maḓi a tea u bva kha thannga kana tshiṅwe tshiko"
+  },
+  {
+    "english": "Tank storage",
+    "zu": "Isitoreji samathangi",
+    "st": "Polokelo ya ditanka",
+    "ts": "Vuhlayiselo bya tithangi",
+    "ve": "Vhugalelo ha thannga"
+  },
+  {
+    "english": "On the plan",
+    "zu": "Kupulani",
+    "st": "Polaneng",
+    "ts": "Eka pulani",
+    "ve": "Kha pulane"
+  },
+  {
+    "english": "already installed",
+    "zu": "sekufakiwe",
+    "st": "e se e kentswe",
+    "ts": "se swi nghenisiwile",
+    "ve": "yo no dzheniswa"
+  },
+  {
+    "english": "planned, not installed yet",
+    "zu": "kuhleliwe, akukafakwa",
+    "st": "e rerilwe, ha e eso kenngwe",
+    "ts": "swi kunguhatiwile, a swi si nghenisiwa",
+    "ve": "yo pulaniwa, a i athu dzheniswa"
+  },
+  {
+    "english": "tank of unknown size, not counted",
+    "zu": "ithangi elingaziwa usayizi, alibalwanga",
+    "st": "tanka ya boholo bo sa tsejweng, ha e a balwa",
+    "ts": "thangi ya mpimo lowu nga tivekiki, a yi hlayiwanga",
+    "ve": "thannga ya saizi i sa ḓivhei, a yo ngo vhalwa"
+  },
+  {
+    "english": "Needed to carry this use through the dry months (Tank Calculator)",
+    "zu": "Okudingekayo ukuze kudlule izinyanga ezomile (Isibali Sethangi)",
+    "st": "E hlokahalang ho tshehetsa tshebediso ena dikgweding tse ommeng (Sebadi sa Tanka)",
+    "ts": "Leswi lavekaka ku fikelela matirhiselo lawa etin'wetini to oma (Xikhalikhuleyita xa Thangi)",
+    "ve": "Zwine zwa ṱoḓea u swikelela u shumisa uhu kha miṅwedzi yo oma (Tshikhalikhuḽeitha tsha Thannga)"
+  },
+  {
+    "english": "Daily water use has not been recorded for this site, so this figure cannot show which months run short. Add it in the Design Studio, Water step.",
+    "zu": "Ukusetshenziswa kwamanzi kwansuku zonke akukaqoshwa kule ndawo, ngakho lo mdwebo awukwazi ukukhombisa izinyanga ezishodayo. Kufake ku-Design Studio, isinyathelo Samanzi.",
+    "st": "Tshebediso ya metsi ka letsatsi ha e eso ngolwe bakeng sa sebaka sena, kahoo setshwantsho sena se ke ke sa bontsha dikgwedi tse nang le kgaello. E kenye ho Design Studio, mohatong wa Metsi.",
+    "ts": "Matirhiselo ya mati ya siku na siku a ma si rhekhodiwa eka ndhawu leyi, kutani xifaniso lexi a xi koti ku komba tin'weti leti kayivelaka. Ma engetele eka Design Studio, eka goza ra Mati.",
+    "ve": "U shumiswa ha maḓi nga ḓuvha a hu athu rekhodiwa kha fhethu afha, ngauralo tshifanyiso itshi a tshi koni u sumbedza miṅwedzi i re na ṱhahelelo. Zwi dzheniseni kha Design Studio, kha ḽiga ḽa Maḓi."
+  },
+  {
+    "english": "The roof catches less than is used in",
+    "zu": "Uphahla lubamba okuncane kunalokho okusetshenziswayo ngo",
+    "st": "Marulelo a tshwara metsi a ka tlase ho a sebediswang ka",
+    "ts": "Lwangu ri khoma mati matsongo ku ya hi lama tirhisiwaka hi",
+    "ve": "Ṱhanga i fara maḓi maṱuku u fhira a shumiswaho nga"
+  },
+  {
+    "english": "Over the longest dry run the gap adds up to",
+    "zu": "Esikhathini eside esomile igebe lifinyelela ku",
+    "st": "Nakong e telele ka ho fetisisa ya komello kgaello e fihla ho",
+    "ts": "Eka nkarhi wo leha swinene wo oma ku kayivela ku hlanganela eka",
+    "ve": "Kha tshifhinga tshilapfu vhukuma tsho oma ṱhahelelo i ṱangana ya vha"
+  },
+  {
+    "english": "Over the whole year this roof catches less than the site uses. A bigger tank helps, but more roof or another water source is needed to close the gap.",
+    "zu": "Ngonyaka wonke lolu phahla lubamba okuncane kunalokho okusetshenziswa indawo. Ithangi elikhulu liyasiza, kodwa kudingeka uphahla olwengeziwe noma omunye umthombo wamanzi.",
+    "st": "Selemo sohle marulelo ana a tshwara metsi a ka tlase ho a sebediswang sebakeng sena. Tanka e kgolo e a thusa, empa ho hlokahala marulelo a mang kapa mohlodi o mong wa metsi ho tlatsa kgaello.",
+    "ts": "Lembe hinkwaro lwangu leri ri khoma mati matsongo ku ya hi lama ndhawu yi ma tirhisaka. Thangi leyikulu ya pfuna, kambe ku laveka lwangu lerikulu kumbe xihlovo xin'wana xa mati ku siva ku kayivela.",
+    "ve": "Kha ṅwaha woṱhe ṱhanga iyi i fara maḓi maṱuku u fhira ane fhethu ha a shumisa. Thannga khulwane i a thusa, fhedzi hu ṱoḓea ṱhanga nnzhi kana tshiṅwe tshiko tsha maḓi u vala ṱhahelelo."
+  },
+  {
+    "english": "In an average year the roof catches more than is used in every month.",
+    "zu": "Ngonyaka ojwayelekile uphahla lubamba okungaphezu kwalokho okusetshenziswayo nyanga zonke.",
+    "st": "Ka selemo se tlwaelehileng marulelo a tshwara metsi a fetang a sebediswang kgwedi le kgwedi.",
+    "ts": "Hi lembe ra ntolovelo lwangu ri khoma mati yo tala ku feta lama tirhisiwaka eka n'weti wun'wana ni wun'wana.",
+    "ve": "Nga ṅwaha wo ḓoweleaho ṱhanga i fara maḓi manzhi u fhira a shumiswaho nga ṅwedzi muṅwe na muṅwe."
+  },
+  {
+    "english": "Roof water: what comes in and what goes out",
+    "zu": "Amanzi ophahla: okungenayo nokuphumayo",
+    "st": "Metsi a marulelo: a kenang le a tswang",
+    "ts": "Mati ya lwangu: lama nghenaka ni lama humaka",
+    "ve": "Maḓi a ṱhanga: a dzhenaho na a bvaho"
+  },
+  {
+    "english": "Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.",
+    "zu": "Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa.",
+    "st": "Dipalo tsa selemo se tlwaelehileng, ha se tshepiso ya pula. Ho balwa feela marulelo a takilweng mmapeng le ditanka tse takilweng polaneng; ha ho bolelwe hore metsi a bolokehile ho ka nowa.",
+    "ts": "I tinhlayo ta lembe ra ntolovelo, a hi xitshembiso xa mpfula. Ku hlayiwa ntsena lwangu leri landzelerisiweke emepeni ni tithangi leti dirowiweke eka pulani; a swi vuli leswaku mati ma hlayisekile ku ma nwa.",
+    "ve": "Ndi mbalo dza ṅwaha wo ḓoweleaho, a si fulufhedziso ḽa mvula. Hu vhaliwa fhedzi ṱhanga yo olelwaho na thannga dzo oliwaho kha pulane; a zwi ambi tshithu nga ha uri maḓi o tsireledzea u a nwa."
+  },
+  {
+    "english": "traced area",
+    "zu": "indawo edwetshiwe",
+    "st": "sebaka se takilweng mmapeng",
+    "ts": "ndhawu leyi landzelerisiweke emepeni",
+    "ve": "vhupo ho olelwaho kha mapa"
+  },
+  {
+    "english": "Rain",
+    "zu": "Imvula",
+    "st": "Pula",
+    "ts": "Mpfula",
+    "ve": "Mvula"
+  },
+  {
+    "english": "Daily use: as recorded in the Design Studio.",
+    "zu": "Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.",
+    "st": "Tshebediso ya letsatsi: jwalokaha e ngotswe ho Design Studio.",
+    "ts": "Matirhiselo ya siku: hi laha ma rhekhodiweke eka Design Studio.",
+    "ve": "U shumiswa nga ḓuvha: sa zwo rekhodiwa kha Design Studio."
+  },
+  {
+    "english": "Roof catch by month",
+    "zu": "Okubanjwa uphahla ngenyanga",
+    "st": "Metsi a tshwarwang ke marulelo ka kgwedi",
+    "ts": "Mati lama lwangu ri ma khomaka hi n'weti",
+    "ve": "Maḓi a farwaho nga ṱhanga nga ṅwedzi"
+  },
+  {
+    "english": "short in",
+    "zu": "kuyashoda ngo",
+    "st": "kgaello ka",
+    "ts": "ku kayivela hi",
+    "ve": "ṱhahelelo nga"
+  },
+  {
+    "english": "storage on the plan",
+    "zu": "isitoreji esikupulani",
+    "st": "polokelo e polaneng",
+    "ts": "vuhlayiselo eka pulani",
+    "ve": "vhugalelo kha pulane"
+  },
+  {
+    "english": "storage needed",
+    "zu": "isitoreji esidingekayo",
+    "st": "polokelo e hlokahalang",
+    "ts": "vuhlayiselo leswi lavekaka",
+    "ve": "vhugalelo vhune ha ṱoḓea"
+  },
+  {
+    "english": "to the south",
+    "zu": "eningizimu",
+    "st": "ka borwa",
+    "ts": "edzongeni",
+    "ve": "tshipembe"
+  },
+  {
+    "english": "to the north",
+    "zu": "enyakatho",
+    "st": "ka leboya",
+    "ts": "en'walungwini",
+    "ve": "devhula"
+  },
+  {
+    "english": "overhead",
+    "zu": "phezulu ngqo",
+    "st": "hodimo ka ho otloloha",
+    "ts": "ehenhla hi ku kongoma",
+    "ve": "nṱha nga ho livhaho"
+  },
+  {
+    "english": "The midday sun stands almost overhead",
+    "zu": "Ilanga lasemini licishe libe phezulu ngqo",
+    "st": "Letsatsi la motshehare le batla le le hodimo ka ho otloloha",
+    "ts": "Dyambu ra nhlikanhi ri lava ku va ehenhla hi ku kongoma",
+    "ve": "Ḓuvha ḽa masiari ḽi ṱoḓou vha nṱha nga ho livhaho"
+  },
+  {
+    "english": "The midday sun stands",
+    "zu": "Ilanga lasemini lima",
+    "st": "Letsatsi la motshehare le eme",
+    "ts": "Dyambu ra nhlikanhi ri le",
+    "ve": "Ḓuvha ḽa masiari ḽi ima"
+  },
+  {
+    "english": "Winter",
+    "zu": "Ubusika",
+    "st": "Mariha",
+    "ts": "Xixika",
+    "ve": "Vhuria"
+  },
+  {
+    "english": "above the horizon",
+    "zu": "ngaphezu komkhathizwe",
+    "st": "ka hodima mola wa mahodimo",
+    "ts": "ehenhla ka laha tilo ni misava swi hlanganaka",
+    "ve": "nṱha ha vhukavhange"
+  },
+  {
+    "english": "Summer",
+    "zu": "Ihlobo",
+    "st": "Lehlabula",
+    "ts": "Ximumu",
+    "ve": "Tshilimo"
+  },
+  {
+    "english": "rises",
+    "zu": "liphuma",
+    "st": "le tjhaba",
+    "ts": "ri huma",
+    "ve": "ḽi ṱavha"
+  },
+  {
+    "english": "sets",
+    "zu": "lishona",
+    "st": "le dikela",
+    "ts": "ri pela",
+    "ve": "ḽi kovhela"
+  },
+  {
+    "english": "above the horizon at midday",
+    "zu": "ngaphezu komkhathizwe emini",
+    "st": "ka hodima mola wa mahodimo motshehare",
+    "ts": "ehenhla ka laha tilo ni misava swi hlanganaka hi nhlikanhi",
+    "ve": "nṱha ha vhukavhange nga masiari"
+  },
+  {
+    "english": "Summer sun",
+    "zu": "Ilanga lasehlobo",
+    "st": "Letsatsi la lehlabula",
+    "ts": "Dyambu ra ximumu",
+    "ve": "Ḓuvha ḽa tshilimo"
+  },
+  {
+    "english": "Winter sun",
+    "zu": "Ilanga lasebusika",
+    "st": "Letsatsi la mariha",
+    "ts": "Dyambu ra xixika",
+    "ve": "Ḓuvha ḽa vhuria"
+  },
+  {
+    "english": "from the",
+    "zu": "uvela e",
+    "st": "o tswa",
+    "ts": "wu huma",
+    "ve": "u bva"
+  },
+  {
+    "english": "fire follows this wind",
+    "zu": "umlilo ulandela lo moya",
+    "st": "mollo o latela moya ona",
+    "ts": "ndzilo wu landzela moya lowu",
+    "ve": "mulilo u tevhela muya uyu"
+  },
+  {
+    "english": "regional pattern",
+    "zu": "iphethini yesifunda",
+    "st": "mokgwa wa sebaka se seholo",
+    "ts": "maendlelo ya xifundzha",
+    "ve": "maitele a dzingu"
+  },
+  {
+    "english": "Fire risk",
+    "zu": "Ingozi yomlilo",
+    "st": "Kotsi ya mollo",
+    "ts": "Khombo ra ndzilo",
+    "ve": "Khombo ḽa mulilo"
+  },
+  {
+    "english": "Fire is most likely to arrive from the",
+    "zu": "Umlilo kungenzeka ufike uvela e",
+    "st": "Mollo o ka nna wa fihla haholo ho tswa",
+    "ts": "Ndzilo wu nga ha fika ngopfu wu huma",
+    "ve": "Mulilo u nga kha ḓi swika u bva"
+  },
+  {
+    "english": "Wind recorded on this site: usually from the",
+    "zu": "Umoya oqoshwe kule ndawo: uvame ukuvela e",
+    "st": "Moya o ngotsweng sebakeng sena: hangata o tswa",
+    "ts": "Moya lowu rhekhodiweke eka ndhawu leyi: hakanyingi wu huma",
+    "ve": "Muya wo rekhodiwaho kha fhethu afha: kanzhi u bva"
+  },
+  {
+    "english": "strongest from the",
+    "zu": "onamandla kakhulu uvela e",
+    "st": "o matla ka ho fetisisa o tswa",
+    "ts": "lowu nga ni ntamu swinene wu huma",
+    "ve": "u re na maanḓa vhukuma u bva"
+  },
+  {
+    "english": "Wind you recorded here: from the",
+    "zu": "Umoya owuqophe lapha: uvela e",
+    "st": "Moya oo o o ngotseng mona: o tswa",
+    "ts": "Moya lowu u wu rhekhodeke laha: wu huma",
+    "ve": "Muya we na u rekhoda afha: u bva"
+  },
+  {
+    "english": "strongest",
+    "zu": "onamandla",
+    "st": "o matla ka ho fetisisa",
+    "ts": "lowu nga ni ntamu swinene",
+    "ve": "u re na maanḓa vhukuma"
+  },
+  {
+    "english": "The ground falls toward the",
+    "zu": "Umhlaba wehlela e",
+    "st": "Mobu o theohela ka",
+    "ts": "Misava yi rhelela yi ya",
+    "ve": "Mavu a tsitsa a tshi ya"
+  },
+  {
+    "english": "slope",
+    "zu": "umthambeka",
+    "st": "moepa",
+    "ts": "ku rhelela",
+    "ve": "mutsheṱo"
+  },
+  {
+    "english": "Downhill, toward the",
+    "zu": "Ukwehla, ngase",
+    "st": "Ho theoha, ho ya ka",
+    "ts": "Ku rhelela, ku ya",
+    "ve": "U tsitsa, u ya"
+  },
+  {
+    "english": "check with a level",
+    "zu": "hlola ngelevela",
+    "st": "hlahloba ka sesebediswa sa ho lekanya ho lekana",
+    "ts": "kamba hi xipimelo xa ku ringana",
+    "ve": "ṱolani nga tshipimo tsha vhunṱha"
+  },
+  {
+    "english": "The ground reads as nearly flat, so no downhill direction is drawn.",
+    "zu": "Umhlaba ubonakala ucishe ube yisicaba, ngakho akukho ndlela yokwehla edwetshiwe.",
+    "st": "Mobu o bonahala o batla o bataletse, kahoo ha ho tsela ya ho theoha e takilweng.",
+    "ts": "Misava yi vonaka yi lava ku va xiphepherhele, kutani a ku dirowiwi tlhelo ro rhelela.",
+    "ve": "Mavu a vhonala a tshi ṱoḓou vha a phaphathi, ngauralo a hu na sia ḽa u tsitsa ḽo oliwaho."
+  },
+  {
+    "english": "Nearly flat: no downhill direction drawn — check with a level",
+    "zu": "Cishe yisicaba: akukho ndlela yokwehla — hlola ngelevela",
+    "st": "O batla o bataletse: ha ho tsela ya ho theoha e takilweng — hlahloba ka sesebediswa sa ho lekanya ho lekana",
+    "ts": "Yi lava ku va xiphepherhele: a ku dirowiwanga tlhelo ro rhelela — kamba hi xipimelo xa ku ringana",
+    "ve": "A ṱoḓou vha a phaphathi: a hu na sia ḽa u tsitsa ḽo oliwaho — ṱolani nga tshipimo tsha vhunṱha"
+  },
+  {
+    "english": "Wind of the region — not measured on this site",
+    "zu": "Umoya wesifunda — awulinganiswanga kule ndawo",
+    "st": "Moya wa sebaka se seholo — ha o a lekanngwa sebakeng sena",
+    "ts": "Moya wa xifundzha — a wu pimiwanga eka ndhawu leyi",
+    "ve": "Muya wa dzingu — a wo ngo elwa kha fhethu afha"
+  },
+  {
+    "english": "Where fire is most likely to come from (regional)",
+    "zu": "Lapho umlilo ungavela khona (isifunda)",
+    "st": "Moo mollo o ka tswang teng haholo (sebaka se seholo)",
+    "ts": "Laha ndzilo wu nga humaka kona ngopfu (xifundzha)",
+    "ve": "Hune mulilo wa nga bva hone (dzingu)"
+  },
+  {
+    "english": "Sun, wind and slope",
+    "zu": "Ilanga, umoya nomthambeka",
+    "st": "Letsatsi, moya le moepa",
+    "ts": "Dyambu, moya ni ku rhelela",
+    "ve": "Ḓuvha, muya na mutsheṱo"
+  },
+  {
+    "english": "North is up; the house mark is this site. Sun paths are calculated from the latitude. Hatched marks are regional patterns, not measurements: check them against what you and your neighbours see.",
+    "zu": "INyakatho iphezulu; uphawu lwendlu yile ndawo. Izindlela zelanga zibalwa ngokwe-latitude. Izimpawu ezinemidwa ziyiphethini yesifunda, aziyona imilinganiso: ziqinisekise ngalokho wena nomakhelwane enikubonayo.",
+    "st": "Leboya le hodimo; letshwao la ntlo ke sebaka sena. Ditsela tsa letsatsi di balwa ho tswa ho latitude. Matshwao a nang le mela e tshekaletseng ke mekgwa ya sebaka se seholo, ha se ditekanyo: a bapise le seo wena le baahelani ba hao le se bonang.",
+    "ts": "N'walungu yi le henhla; mfungho wa yindlu i ndhawu leyi. Tindlela ta dyambu ti hlayiwa ku suka eka latitude. Mimfungho ya milayini yo hingakanya i maendlelo ya xifundzha, a hi mimpimo: yi kambisise hi leswi wena ni vaakelani va wena mi swi vonaka.",
+    "ve": "Devhula hu nṱha; luswayo lwa nnḓu ndi fhethu afha. Nḓila dza ḓuvha dzi vhalwa u bva kha latitude. Maswayo a mitalo yo sendamaho ndi maitele a dzingu, a si miṅwelo: a ṱoleni nga zwine inwi na vhahura vhaṋu na zwi vhona."
+  },
+  {
+    "english": "Sun: calculated for latitude",
+    "zu": "Ilanga: kubalwe nge-latitude",
+    "st": "Letsatsi: le baletswe latitude",
+    "ts": "Dyambu: ri hlayiwile hi latitude",
+    "ve": "Ḓuvha: ḽo vhalelwa latitude"
+  },
+  {
+    "english": "Wind and fire: regional pattern",
+    "zu": "Umoya nomlilo: iphethini yesifunda",
+    "st": "Moya le mollo: mokgwa wa sebaka se seholo",
+    "ts": "Moya ni ndzilo: maendlelo ya xifundzha",
+    "ve": "Muya na mulilo: maitele a dzingu"
+  },
+  {
+    "english": "Slope: elevation model.",
+    "zu": "Umthambeka: imodeli yokuphakama.",
+    "st": "Moepa: mohlala wa bophahamo.",
+    "ts": "Ku rhelela: modele wa ku tlakuka.",
+    "ve": "Mutsheṱo: modele wa vhunṱha."
+  },
+  {
+    "english": "Observed wind: recorded in the Design Studio.",
+    "zu": "Umoya obonwe: uqoshwe ku-Design Studio.",
+    "st": "Moya o bonweng: o ngotswe ho Design Studio.",
+    "ts": "Moya lowu voniweke: wu rhekhodiwile eka Design Studio.",
+    "ve": "Muya wo vhonwaho: wo rekhodiwa kha Design Studio."
+  },
+  {
+    "english": "Sector diagram",
+    "zu": "Umdwebo wamasekta",
+    "st": "Setshwantsho sa diseketara",
+    "ts": "Xifaniso xa tisekitara",
+    "ve": "Tshifanyiso tsha sekithara"
+  },
+  {
+    "english": "not measured",
+    "zu": "akulinganiswanga",
+    "st": "ha e a lekanngwa",
+    "ts": "a swi pimiwanga",
+    "ve": "a zwo ngo elwa"
+  },
+  {
+    "english": "The soil here has not been measured yet",
+    "zu": "Umhlabathi walapha awukalinganiswa",
+    "st": "Mobu wa mona ha o eso lekanngwe",
+    "ts": "Misava ya laha a yi si pimiwa",
+    "ve": "Mavu a afha a a athu elwa"
+  },
+  {
+    "english": "A soil test fills in these three readings.",
+    "zu": "Ukuhlolwa komhlabathi kugcwalisa lezi zilinganiso ezintathu.",
+    "st": "Teko ya mobu e tlatsa ditekanyo tsena tse tharo.",
+    "ts": "Ku kamberiwa ka misava ku tata mimpimo leyi yinharhu.",
+    "ve": "U ṱola mavu zwi ḓadza miṅwelo iyi miraru."
+  },
+  {
+    "english": "How sour or sweet (pH)",
+    "zu": "Ubumuncu noma ubumnandi (pH)",
+    "st": "Ho ba bodila kapa monate (pH)",
+    "ts": "Ku dzunga kumbe ku tsokombela (pH)",
+    "ve": "U vha vhavhi kana u ṋandifha (pH)"
+  },
+  {
+    "english": "Sand, silt and clay",
+    "zu": "Isihlabathi, udaka nobumba",
+    "st": "Lehlabathe, seretse se sesesane le letsopa",
+    "ts": "Sava, sava leritsongo swinene ni vumba",
+    "ve": "Muṱavha, mavu masekene na vumba"
+  },
+  {
+    "english": "Organic carbon",
+    "zu": "Ikhabhoni yemvelo",
+    "st": "Khabone ya tlhaho",
+    "ts": "Khaboni ya ntumbuluko",
+    "ve": "Khaboni ya mvelo"
+  },
+  {
+    "english": "Soil at a glance",
+    "zu": "Umhlabathi ngamafuphi",
+    "st": "Mobu ka ho habanya",
+    "ts": "Misava hi ku languta ntsena",
+    "ve": "Mavu nga u tou lavhelesa"
+  },
+  {
+    "english": "No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test on a sample from the top 30 cm.",
+    "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi kusampula yamasentimitha angu-30 aphezulu.",
+    "st": "Ha ho tekanyo ya mobu e ngotsweng sebakeng sena, kahoo ha ho letho le bontshwang. Hlophisa teko ya mobu ka sampole e tswang karolong e ka hodimo ya 30 cm.",
+    "ts": "A ku na mpimo wa misava lowu rhekhodiweke eka ndhawu leyi, kutani a ku kombiwi nchumu. Hlela ku kamberiwa ka misava hi sampulu ya le henhla ka 30 cm.",
+    "ve": "A hu na muṅwelo wa mavu wo rekhodiwaho kha fhethu afha, ngauralo a hu na tshithu tsho oliwaho. Dzudzanyani u ṱoliwa ha mavu nga sampulu ya kha 30 cm ya nṱha."
+  },
+  {
+    "english": "No soil measurement recorded",
+    "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe",
+    "st": "Ha ho tekanyo ya mobu e ngotsweng",
+    "ts": "A ku na mpimo wa misava lowu rhekhodiweke",
+    "ve": "A hu na muṅwelo wa mavu wo rekhodiwaho"
+  },
+  {
+    "english": "Soil not measured.",
+    "zu": "Umhlabathi awulinganiswanga.",
+    "st": "Mobu ha o a lekanngwa.",
+    "ts": "Misava a yi pimiwanga.",
+    "ve": "Mavu a o ngo elwa."
+  },
+  {
+    "english": "How sour or sweet the soil is (pH)",
+    "zu": "Ukuthi umhlabathi umuncu noma umnandi kangakanani (pH)",
+    "st": "Hore mobu o bodila kapa o monate hakae (pH)",
+    "ts": "Ndlela leyi misava yi dzungaka kumbe yi tsokombelaka ha yona (pH)",
+    "ve": "Nḓila ine mavu a vha vhavhi kana a ṋandifha ngayo (pH)"
+  },
+  {
+    "english": "← more acid (sour)",
+    "zu": "← umuncu kakhulu",
+    "st": "← o bodila haholo",
+    "ts": "← ku dzunga swinene",
+    "ve": "← vhavhi vhukuma"
+  },
+  {
+    "english": "more alkaline →",
+    "zu": "une-alkali kakhulu →",
+    "st": "o nang le alkali haholo →",
+    "ts": "ku va ni alkali yo tala →",
+    "ve": "a re na alkali nnzhi →"
+  },
+  {
+    "english": "most vegetables: 6 to 7",
+    "zu": "imifino eminingi: 6 kuya ku-7",
+    "st": "meroho e mengata: 6 ho ya ho 7",
+    "ts": "matsavu yo tala: 6 ku fika eka 7",
+    "ve": "miroho minzhi: 6 u swika kha 7"
+  },
+  {
+    "english": "Sand",
+    "zu": "Isihlabathi",
+    "st": "Lehlabathe",
+    "ts": "Sava",
+    "ve": "Muṱavha"
+  },
+  {
+    "english": "Silt",
+    "zu": "Udaka olucolekile",
+    "st": "Seretse se sesesane",
+    "ts": "Sava leritsongo swinene",
+    "ve": "Mavu masekene"
+  },
+  {
+    "english": "Clay",
+    "zu": "Ubumba",
+    "st": "Letsopa",
+    "ts": "Vumba",
+    "ve": "Vumba"
+  },
+  {
+    "english": "What the soil is made of",
+    "zu": "Ukuthi umhlabathi wenziwe ngani",
+    "st": "Seo mobu o entsweng ka sona",
+    "ts": "Leswi misava yi endliweke hi swona",
+    "ve": "Zwine mavu a itwa ngazwo"
+  },
+  {
+    "english": "Organic carbon: how much rotted plant matter the soil holds",
+    "zu": "Ikhabhoni yemvelo: ukuthi umhlabathi uphethe izinto zezitshalo ezibolile ezingakanani",
+    "st": "Khabone ya tlhaho: bongata ba dintho tsa dimela tse bodileng tseo mobu o di tshwereng",
+    "ts": "Khaboni ya ntumbuluko: mpimo wa swilo swa swimilana leswi boleke leswi misava yi swi khomaka",
+    "ve": "Khaboni ya mvelo: vhunzhi ha zwimela zwo sinaho zwine mavu a zwi fara"
+  },
+  {
+    "english": "Filled dot: measured by a laboratory on a sample from this site.",
+    "zu": "Ichashazi eligcwele: kulinganiswe yilabhorethri kusampula yale ndawo.",
+    "st": "Letheba le tletseng: le lekantswe laboratoring ka sampole ya sebaka sena.",
+    "ts": "Thonsi leri tatiweke: ri pimiwile hi laboratori eka sampulu ya ndhawu leyi.",
+    "ve": "Tshithoma tsho ḓadzwaho: tsho elwa nga ḽaborathori kha sampulu ya fhethu afha."
+  },
+  {
+    "english": "Hollow dot and dashed outlines: estimated for this location by the SoilGrids world soil model, not measured here. A soil test on your own sample will replace them.",
+    "zu": "Ichashazi elingenalutho nemidwa enqamukayo: kulinganiselwe le ndawo yimodeli yomhlabathi yomhlaba i-SoilGrids, akulinganiswanga lapha. Ukuhlolwa komhlabathi wakho kuzokuvala lokhu.",
+    "st": "Letheba le sa tlatswang le mela e kgaohileng: di hakantswe bakeng sa sebaka sena ke mohlala wa mobu wa lefatshe wa SoilGrids, ha di a lekanngwa mona. Teko ya mobu ka sampole ya hao e tla nka sebaka sa tsona.",
+    "ts": "Thonsi leri nga tatiwangiki ni milayini leyi tsemekeke: swi ringanyetiwile eka ndhawu leyi hi modele wa misava wa misava hinkwaro wa SoilGrids, a swi pimiwanga laha. Ku kamberiwa ka sampulu ya misava ya wena ku ta swi siva.",
+    "ve": "Tshithoma tshi si na tshithu na mitalo yo ṱhukhukanywaho: zwo anganyelwa fhethu afha nga modele wa mavu wa ḽifhasi wa SoilGrids, a zwo ngo elwa afha. U ṱoliwa ha sampulu ya mavu aṋu hu ḓo zwi dzhiela vhudzulo."
+  },
+  {
+    "english": "No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test: the result fills in all three scales.",
+    "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi: umphumela uzogcwalisa zonke izikali ezintathu.",
+    "st": "Ha ho tekanyo ya mobu e ngotsweng bakeng sa sebaka sena, kahoo ha ho letho le bontshwang. Hlophisa teko ya mobu: sephetho se tlatsa dikala tsohle tse tharo.",
+    "ts": "A ku na mpimo wa misava lowu rhekhodiweke eka ndhawu leyi, kutani a ku kombiwi nchumu. Hlela ku kamberiwa ka misava: mbuyelo wu tata swikalo leswinharhu.",
+    "ve": "A hu na muṅwelo wa mavu wo rekhodiwaho kha fhethu afha, ngauralo a hu na tshithu tsho oliwaho. Dzudzanyani u ṱoliwa ha mavu: mvelelo i ḓadza zwikalo zwiraru zwoṱhe."
+  },
+  {
+    "english": "Top 30 cm of soil. No \"good\" or \"bad\" bands are drawn for organic carbon because the right level depends on the soil type and climate.",
+    "zu": "Amasentimitha angu-30 aphezulu omhlabathi. Ayikho imigqa ethi \"kuhle\" noma \"kubi\" yekhabhoni yemvelo ngoba izinga elifanele lincike ohlotsheni lomhlabathi nesimo sezulu.",
+    "st": "Karolo e ka hodimo ya 30 cm ya mobu. Ha ho mela e reng \"ntle\" kapa \"mpe\" bakeng sa khabone ya tlhaho hobane tekanyo e loketseng e itshetlehile ka mofuta wa mobu le boemo ba lehodimo.",
+    "ts": "Misava ya le henhla ka 30 cm. A ku dirowiwi mabhande ya \"kahle\" kumbe \"biha\" ya khaboni ya ntumbuluko hikuva mpimo lowu faneleke wu titshege hi muxaka wa misava ni maxelo.",
+    "ve": "30 cm ya nṱha ha mavu. A hu na mitalo ya \"zwavhuḓi\" kana \"zwi si zwavhuḓi\" yo oliwaho ya khaboni ya mvelo ngauri tshikalo tsho teaho tshi bva kha lushaka lwa mavu na kilima."
+  },
+  {
+    "english": "Your uploaded laboratory soil test",
+    "zu": "Ukuhlolwa kwakho komhlabathi kwelabhorethri okulayishiwe",
+    "st": "Teko ya hao ya mobu ya laboratori e kentsweng",
+    "ts": "Ku kamberiwa ka misava ya wena hi laboratori loku u ku ngheniseke",
+    "ve": "Mvelelo dza u ṱoliwa ha mavu nga ḽaborathori dze na dzi dzhenisa"
+  },
+  {
+    "english": "SoilGrids world soil model (ISRIC), 250 m grid: an estimate, not a measurement",
+    "zu": "Imodeli yomhlabathi yomhlaba i-SoilGrids (ISRIC), igridi engu-250 m: isilinganiso, akusona isilinganiso sangempela",
+    "st": "Mohlala wa mobu wa lefatshe wa SoilGrids (ISRIC), keriti ya 250 m: ke kakanyo, ha se tekanyo",
+    "ts": "Modele wa misava wa misava hinkwaro wa SoilGrids (ISRIC), giridi ya 250 m: i ndzinganyeto, a hi mpimo",
+    "ve": "Modele wa mavu wa ḽifhasi wa SoilGrids (ISRIC), giridi ya 250 m: ndi ndinganyelo, a si muṅwelo"
+  },
+  {
+    "english": "Soil",
+    "zu": "Umhlabathi",
+    "st": "Mobu",
+    "ts": "Misava",
+    "ve": "Mavu"
+  },
+  {
+    "english": "organic carbon",
+    "zu": "ikhabhoni yemvelo",
+    "st": "khabone ya tlhaho",
+    "ts": "khaboni ya ntumbuluko",
+    "ve": "khaboni ya mvelo"
+  },
+  {
+    "english": "laboratory result",
+    "zu": "umphumela welabhorethri",
+    "st": "sephetho sa laboratori",
+    "ts": "mbuyelo wa laboratori",
+    "ve": "mvelelo ya ḽaborathori"
+  },
+  {
+    "english": "SoilGrids estimate",
+    "zu": "isilinganiso se-SoilGrids",
+    "st": "kakanyo ya SoilGrids",
+    "ts": "ndzinganyeto wa SoilGrids",
+    "ve": "ndinganyelo ya SoilGrids"
+  },
+  {
+    "english": "stages of work. The last one starts around week",
+    "zu": "izigaba zomsebenzi. Esokugcina siqala cishe ngeviki",
+    "st": "mekgahlelo ya mosebetsi. Wa ho qetela o qala hoo e ka bang bekeng ya",
+    "ts": "swiyenge swa mintirho. Xo hetelela xi sungula kwalomu ka vhiki ra",
+    "ve": "zwipiḓa zwa mushumo. Tsha u fhedza tshi thoma tsini na vhege ya"
+  },
+  {
+    "english": "Stages overlap: the next one can start before the one before it is finished.",
+    "zu": "Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.",
+    "st": "Mekgahlelo e a kopana: o latelang o ka qala pele o fetileng o fela.",
+    "ts": "Swiyenge swa hlangana: lexi landzelaka xi nga sungula lexi xi rhangeleke xi nga si hela.",
+    "ve": "Zwipiḓa zwi a ṱanganelana: tshi tevhelaho tshi nga thoma tshi tshi rangelaho tshi sa athu fhela."
+  },
+  {
+    "english": "Each stage starts when the one before it is finished.",
+    "zu": "Isigaba ngasinye siqala lapho esandulelayo sesiphelile.",
+    "st": "Mokgahlelo ka mong o qala ha o fetileng o fedile.",
+    "ts": "Xiyenge xin'wana ni xin'wana xi sungula loko lexi xi rhangeleke xi herile.",
+    "ve": "Tshipiḓa tshiṅwe na tshiṅwe tshi thoma musi tshi tshi rangelaho tsho fhela."
+  },
+  {
+    "english": "weeks from the day work starts",
+    "zu": "amaviki kusukela ngosuku umsebenzi oqala ngalo",
+    "st": "dibeke ho tloha letsatsing leo mosebetsi o qalang ka lona",
+    "ts": "mavhiki ku sukela esikwini leri mintirho yi sungulaka ha rona",
+    "ve": "vhege u bva ḓuvha ḽine mushumo wa thoma ngaḽo"
+  },
+  {
+    "english": "Planned work, not started",
+    "zu": "Umsebenzi ohleliwe, awukaqali",
+    "st": "Mosebetsi o rerilweng, ha o eso qale",
+    "ts": "Mintirho leyi kunguhatiweke, a yi si sungula",
+    "ve": "Mushumo wo pulaniwaho, a u athu thoma"
+  },
+  {
+    "english": "Hold point: stop and check before the next phase",
+    "zu": "Iphuzu lokuma: yima uhlole ngaphambi kwesigaba esilandelayo",
+    "st": "Ntlha ya ho ema: ema o hlahlobe pele ho mokgahlelo o latelang",
+    "ts": "Ndhawu yo yima: yima u kamba xiyenge lexi landzelaka xi nga si sungula",
+    "ve": "Fhethu ha u ima: imani ni ṱole phanḓa ha tshipiḓa tshi tevhelaho"
+  },
+  {
+    "english": "Carries on",
+    "zu": "Kuyaqhubeka",
+    "st": "O tswela pele",
+    "ts": "Ya ya mahlweni",
+    "ve": "U bvela phanḓa"
+  },
+  {
+    "english": "Order of work",
+    "zu": "Ukulandelana komsebenzi",
+    "st": "Tatelano ya mosebetsi",
+    "ts": "Nandzelelano wa mintirho",
+    "ve": "U tevhekana ha mushumo"
+  },
+  {
+    "english": "The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.",
+    "zu": "Ukulandelana nobude obulinganiselwe besigaba ngasinye, kubalwe kulokho okusemklamweni ogciniwe. Amaviki ayisiqondiso sokuhlela, akusona isithembiso: isimo sezulu, imali nabasebenzi kuzowashintsha. Ukulandelana akufanele kushintshe.",
+    "st": "Tatelano le bolelele bo hakantsweng ba mokgahlelo ka mong, di balwa ho tswa ho se leng moralong o bolokilweng. Dibeke ke tataiso ya ho rera, ha se tshepiso: boemo ba lehodimo, tjhelete le basebetsi di tla di fetola. Tatelano ha e a lokela ho fetoha.",
+    "ts": "Nandzelelano ni vulehi bya nkarhi lowu ringanyetiweke bya xiyenge xin'wana ni xin'wana, swi hlayiwa ku suka eka leswi nga eka dizayini leyi hlayisiweke. Mavhiki i nkongomiso wo kunguhata, a hi xitshembiso: maxelo, mali ni vatirhi swi ta ma cinca. Nandzelelano a wu fanelanga ku cinca.",
+    "ve": "U tevhekana na vhulapfu ho anganyelwaho ha tshipiḓa tshiṅwe na tshiṅwe, zwi vhalwa u bva kha zwi re kha dizaini yo vhulungwaho. Vhege ndi nyendedzi ya u pulana, a si fulufhedziso: mutsho, tshelede na vhashumi zwi ḓo dzi shandula. U tevhekana a hu tei u shanduka."
+  },
+  {
+    "english": "Build phases derived from the saved design",
+    "zu": "Izigaba zokwakha ezithathwe kumklamo ogciniwe",
+    "st": "Mekgahlelo ya kaho e tswang moralong o bolokilweng",
+    "ts": "Swiyenge swo aka leswi humaka eka dizayini leyi hlayisiweke",
+    "ve": "Zwipiḓa zwa u fhaṱa zwo bviswaho kha dizaini yo vhulungwaho"
+  },
+  {
+    "english": "NASA POWER (50 km climate grid)",
+    "zu": "NASA POWER (igridi yesimo sezulu engu-50 km)",
+    "st": "NASA POWER (keriti ya boemo ba lehodimo ya 50 km)",
+    "ts": "NASA POWER (giridi ya maxelo ya 50 km)",
+    "ve": "NASA POWER (giridi ya kilima ya 50 km)"
+  },
+  {
+    "english": "ERA5-Land via Open-Meteo (9 km grid)",
+    "zu": "ERA5-Land nge-Open-Meteo (igridi engu-9 km)",
+    "st": "ERA5-Land ka Open-Meteo (keriti ya 9 km)",
+    "ts": "ERA5-Land hi Open-Meteo (giridi ya 9 km)",
+    "ve": "ERA5-Land nga Open-Meteo (giridi ya 9 km)"
+  },
+  {
+    "english": "climate data service",
+    "zu": "isevisi yedatha yesimo sezulu",
+    "st": "tshebeletso ya dintlha tsa boemo ba lehodimo",
+    "ts": "vukorhokeri bya datha ya maxelo",
+    "ve": "tshumelo ya data ya kilima"
+  },
+  {
+    "english": "a 1 m post throws a {length} m shadow",
+    "zu": "isigxobo esingu-1 m senza isithunzi esingu-{length} m",
+    "st": "palo ya 1 m e etsa moriti wa {length} m",
+    "ts": "mhandzi ya 1 m yi endla ndzhuti wa {length} m",
+    "ve": "phuluphu ya 1 m i ita murunzi wa {length} m"
+  },
+  {
+    "english": "Summer cooling wind",
+    "zu": "Umoya opholisa ehlobo",
+    "st": "Moya o phodisang wa lehlabula",
+    "ts": "Moya wo horisa wa ximumu",
+    "ve": "Muya wa u rothodza wa tshilimo"
+  },
+  {
+    "english": "Cold front — driving rain",
+    "zu": "Ingaphambili elibandayo — imvula ephephethwayo",
+    "st": "Moya o batang o fihlang — pula e kgannwang ke moya",
+    "ts": "Moya wo titimela lowu fikaka — mpfula leyi biwaka hi moya",
+    "ve": "Muya u rotholelaho u swikaho — mvula i sukumedzwaho nga muya"
+  },
+  {
+    "english": "Berg wind",
+    "zu": "Umoya oshisayo owomileyo ovela ezintabeni (berg)",
+    "st": "Moya o tjhesang o ommeng o tswang dithabeng (berg)",
+    "ts": "Moya wo hisa wo oma lowu humaka etintshaveni (berg)",
+    "ve": "Muya u fhisaho wo oma u bvaho thavhani (berg)"
+  },
+  {
+    "english": "{range}, episodic",
+    "zu": "{range}, ngezikhathi ezithile",
+    "st": "{range}, nako le nako",
+    "ts": "{range}, hi minkarhi yo karhi",
+    "ve": "{range}, nga zwiṅwe zwifhinga"
+  },
+  {
+    "english": "Winter grassfire / ember risk follows the dry, hot berg wind, not the cooling summer wind.",
+    "zu": "Ingozi yomlilo wotshani / yamalahle avuthayo ebusika ilandela umoya oshisayo owomileyo ovela ezintabeni, hhayi umoya opholisa ehlobo.",
+    "st": "Kotsi ya mollo wa jwang / mashala a tukang mariha e latela moya o ommeng o tjhesang o tswang dithabeng, eseng moya o phodisang wa lehlabula.",
+    "ts": "Khombo ra ndzilo wa byanyi / makala lama pfurhaka hi xixika ri landzela moya wo oma wo hisa wa le tintshaveni, ku nga ri moya wo horisa wa ximumu.",
+    "ve": "Khombo ḽa mulilo wa hatsi / maxale a fhisaho nga vhuria ḽi tevhela muya wo oma u fhisaho wa thavhani, hu si muya wa u rothodza wa tshilimo."
+  },
+  {
+    "english": "Compass: N = north; E = east; S = south; W = west.",
+    "zu": "Ikhampasi: N = inyakatho; E = impumalanga; S = iningizimu; W = intshonalanga.",
+    "st": "Khampase: N = leboya; E = botjhabela; S = borwa; W = bophirima.",
+    "ts": "Khampasi: N = n'walungu; E = vuxa; S = dzonga; W = vupeladyambu.",
+    "ve": "Khampasi: N = devhula; E = vhubvaḓuvha; S = tshipembe; W = vhukovhela."
+  },
+  {
+    "english": "Verify, Set Out & Make Safe",
+    "zu": "Qinisekisa, maka indawo bese uyiphephisa",
+    "st": "Netefatsa, tshwaya sebaka mme o se boloke se bolokehile",
+    "ts": "Tiyisisa, fungha ndhawu u yi endla yi hlayiseka",
+    "ve": "Khwaṱhisedzani, swayani fhethu ni hu tsireledze"
+  },
+  {
+    "english": "Safe Access & Water Spine",
+    "zu": "Ukufinyelela okuphephile nolayini omkhulu wamanzi",
+    "st": "Tsela e bolokehileng le peipi e kgolo ya metsi",
+    "ts": "Ku nghena loku hlayisekeke ni layini leyikulu ya mati",
+    "ve": "U dzhena ho tsireledzeaho na bommbo ḽihulwane ḽa maḓi"
+  },
+  {
+    "english": "Safe Access",
+    "zu": "Ukufinyelela okuphephile",
+    "st": "Tsela e bolokehileng",
+    "ts": "Ku nghena loku hlayisekeke",
+    "ve": "U dzhena ho tsireledzeaho"
+  },
+  {
+    "english": "Water Spine",
+    "zu": "Ulayini omkhulu wamanzi",
+    "st": "Peipi e kgolo ya metsi",
+    "ts": "Layini leyikulu ya mati",
+    "ve": "Bommbo ḽihulwane ḽa maḓi"
+  },
+  {
+    "english": "Vetiver Bank & Soil Building",
+    "zu": "Udonga lwe-Vetiver nokwakha umhlabathi",
+    "st": "Leralla la Vetiver le ho ntlafatsa mobu",
+    "ts": "Ribuwa ra Vetiver ni ku aka misava",
+    "ve": "Luvhondo lwa Vetiver na u fhaṱa mavu"
+  },
+  {
+    "english": "Earthworks & Soil Building",
+    "zu": "Imisebenzi yomhlaba nokwakha umhlabathi",
+    "st": "Mosebetsi wa mobu le ho ntlafatsa mobu",
+    "ts": "Mintirho ya misava ni ku aka misava",
+    "ve": "Mishumo ya mavu na u fhaṱa mavu"
+  },
+  {
+    "english": "Beds, Drip & Working Infrastructure",
+    "zu": "Imibhede, ukuconsa nezakhiwo zokusebenza",
+    "st": "Dibethe, nosetso e rothelang le meaho ya mosebetsi",
+    "ts": "Mibedo, ku cheleta hi mathonsi ni miako yo tirhela",
+    "ve": "Mibethe, u sheledza nga marotha na zwifhaṱo zwa mushumo"
+  },
+  {
+    "english": "Perennials & Guilds",
+    "zu": "Izitshalo eziphila iminyaka namaqembu ezitshalo asekelanayo",
+    "st": "Dimela tse phelang dilemo le dihlopha tsa dimela tse thusanang",
+    "ts": "Swimilana leswi hanyaka malembenyana ni mintlawa ya swimilana leswi pfunanaka",
+    "ve": "Zwimela zwa miṅwaha minzhi na zwigwada zwa zwimela zwi thusanaho"
+  },
+  {
+    "english": "Small Livestock & Commissioning",
+    "zu": "Imfuyo encane nokuqalisa ukusebenza",
+    "st": "Diphoofolo tse nyenyane le ho qala tshebetso",
+    "ts": "Swifuwo leswitsongo ni ku sungula ku tirha",
+    "ve": "Zwifuwo zwiṱuku na u thoma u shumisa"
+  },
+  {
+    "english": "Commissioning & Handover",
+    "zu": "Ukuqalisa ukusebenza nokunikezela",
+    "st": "Ho qala tshebetso le ho nehelana",
+    "ts": "Ku sungula ku tirha ni ku nyiketa",
+    "ve": "U thoma u shumisa na u ṋekedza"
+  },
+  {
+    "english": "Week {start}–{end}",
+    "zu": "Iviki {start}–{end}",
+    "st": "Beke {start}–{end}",
+    "ts": "Vhiki {start}–{end}",
+    "ve": "Vhege {start}–{end}"
+  },
+  {
+    "english": "Weeks {start}–{end}",
+    "zu": "Amaviki {start}–{end}",
+    "st": "Dibeke {start}–{end}",
+    "ts": "Mavhiki {start}–{end}",
+    "ve": "Vhege {start}–{end}"
+  },
+  {
+    "english": "Month {month}+",
+    "zu": "Inyanga {month}+",
+    "st": "Kgwedi {month}+",
+    "ts": "N'weti {month}+",
+    "ve": "Ṅwedzi {month}+"
+  },
+  {
+    "english": "Loam",
+    "zu": "Umhlabathi oxubile",
+    "st": "Mobu o tswakantsweng",
+    "ts": "Misava leyi pfanganisiweke",
+    "ve": "Mavu o ṱanganelanaho"
+  },
+  {
+    "english": "Clay loam",
+    "zu": "Umhlabathi oxubile onobumba",
+    "st": "Mobu o tswakantsweng o nang le letsopa",
+    "ts": "Misava leyi pfanganisiweke leyi nga ni vumba",
+    "ve": "Mavu o ṱanganelanaho a re na vumba"
+  },
+  {
+    "english": "Sandy clay",
+    "zu": "Ubumba obunesihlabathi",
+    "st": "Letsopa le nang le lehlabathe",
+    "ts": "Vumba leri nga ni sava",
+    "ve": "Vumba ḽi re na muṱavha"
+  },
+  {
+    "english": "Sandy loam",
+    "zu": "Umhlabathi oxubile onesihlabathi",
+    "st": "Mobu o tswakantsweng o nang le lehlabathe",
+    "ts": "Misava leyi pfanganisiweke leyi nga ni sava",
+    "ve": "Mavu o ṱanganelanaho a re na muṱavha"
+  },
+  {
+    "english": "Silt loam",
+    "zu": "Umhlabathi oxubile onodaka olucolekile",
+    "st": "Mobu o tswakantsweng o nang le seretse se sesesane",
+    "ts": "Misava leyi pfanganisiweke leyi nga ni sava leritsongo swinene",
+    "ve": "Mavu o ṱanganelanaho a re na mavu masekene"
+  },
+  {
+    "english": "Silty clay loam",
+    "zu": "Umhlabathi oxubile onodaka olucolekile nobumba",
+    "st": "Mobu o tswakantsweng o nang le seretse se sesesane le letsopa",
+    "ts": "Misava leyi pfanganisiweke leyi nga ni sava leritsongo swinene ni vumba",
+    "ve": "Mavu o ṱanganelanaho a re na mavu masekene na vumba"
+  },
+  {
+    "english": "Sandy clay loam",
+    "zu": "Umhlabathi oxubile onesihlabathi nobumba",
+    "st": "Mobu o tswakantsweng o nang le lehlabathe le letsopa",
+    "ts": "Misava leyi pfanganisiweke leyi nga ni sava ni vumba",
+    "ve": "Mavu o ṱanganelanaho a re na muṱavha na vumba"
   }
 ];
 
