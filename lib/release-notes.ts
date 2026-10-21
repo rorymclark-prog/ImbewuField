@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: 'ac308edb', changes: [
+    'New reports use draft equipment and route labels in four languages.',
+    'Your custom names, plant names and recorded quantities keep their original meaning.',
+  ], tour: [{ title: 'Read equipment and routes', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, standard equipment and route names use the report language when their original catalogue identity was recorded. Your custom names and older records keep their original wording.',
+  }] },
   { when: '21 October 2026', sha: 'af151ab4', changes: [
     'New report measurement tables have draft labels and source explanations in four languages.',
     'New isiZulu reports include the full cover and measurement table.',

@@ -536,6 +536,46 @@ need identity-aware handling; custom names and species must remain exact. Non-is
 sections, full-report/crop-plan exports and wider workflows, learning and media remain. The goal
 stays active. This changes the picture; `PLAN_VERSION` remains unchanged.
 
+## Report catalogue identities — draft batch 13
+
+Based on `ac308edb2c7b2e4c5bda9c41ebdf611804bead35` (draft #1039), standard equipment
+and compact route labels now reuse the existing four-language figure drafts in report tables.
+The water-storage bar chart shares the same equipment display helper. A name translates only
+when the recorded catalogue ID and default name both match exactly. All growing/plant-code and
+botanical identities remain canonical, regardless of dictionary entries. Custom names, unknown
+IDs and older records without IDs remain raw. Route labels reuse the summary producer's exported
+`ROUTE_LABELS`; its earlier parenthetical-shortening behaviour remains exact.
+
+Tank facts previously dropped an ID already available in the design summary. Collection and API
+normalisation now carry that optional identity for display only. Stated capacities, unknown sizes,
+counts, names and proposed/existing status still come from their original producers; translation
+never recomputes a capacity or joins rows by their names. No saved geometry or species changes.
+The one additional authored source, `Windbreak row`, is in `report-labels-drafts.json`; all other
+wording reuses existing drafts. No fluent-speaker approval is claimed.
+
+Typecheck, 375 tests across 38 registered files, release-note checks and whitespace checks pass.
+Three pre-change fixtures preserve exact English output for catalogue, legacy and custom cases.
+Checks visit every catalogue definition and route kind in all four targets, reject missing/wrong/
+prototype IDs, preserve every plant identity, and exercise tank collection, API normalisation,
+source capacities and status separation. Actual mocked API calls reach the native table labels.
+The first new tank check selected the first of two same-name status rows; it was rewritten to
+match name plus state and require both rows, so accidental existing/proposed folding is detected.
+No existing assertion was removed or weakened.
+
+`evidence/report-labels/` retains 30 inspected screenshots/contact sheets and QA: 12 actual-viewer
+mocked API reports and 12 complete static reader/chart scenes, with catalogue, legacy and custom
+cases in every target. Phone tables had no clipped cells, horizontal table overflow or document
+overflow; all expected names reached the actual reader and saved report bytes stayed unchanged.
+All chart images decoded; the 12 source SVGs had no out-of-bounds or overlapping text above 0.5px.
+Initial element captures clipped tall later scenes, so final evidence captures each complete scene
+as a whole page. Native defaults, raw legacy/custom labels, capacities and unknown-size notices
+were visually inspected again. Desktop catalogue cases were inspected too. Temporary saved-report
+storage was restored and real paid generation was blocked. No PDF was produced.
+
+Full current-suite CI remains pending; the earlier 5,380-pass full run applies only to climate
+predecessor `09b280ef`. The goal stays active: closing sections, full-report/crop-plan PDFs and wider
+workflows, learning and media still need work. This changes the picture; `PLAN_VERSION` stays exact.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

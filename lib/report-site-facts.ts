@@ -1,6 +1,6 @@
 import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
 import { recordsSeasonLabel } from './records-months';
-import { reportVisualText } from './report-visuals';
+import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
@@ -76,6 +76,9 @@ export interface FactBed {
 
 export interface FactTank {
   name: string;
+  /** Optional original catalogue identity for display translation only. A legacy or custom name
+   * must never be matched to a product or capacity by its words. */
+  defId?: string;
   count: number;
   /** Litres stated by the catalog name. NULL means the size is genuinely unknown — never guessed. */
   statedLitres: number | null;
@@ -384,7 +387,8 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
       const count = num(item.count, { min: 1, max: 10000 });
       if (!name || count === null) return null;
       const stated = num(item.statedLitres, { min: 1, max: 1e7 });
-      return { name, count: Math.round(count), statedLitres: stated, status: status(item.status) };
+      const defId = text(item.defId, 40);
+      return { name, count: Math.round(count), statedLitres: stated, status: status(item.status), ...(defId ? { defId } : {}) };
     });
     const point = (item: unknown): FactWaterPoint | null => {
       if (!isRec(item)) return null;
@@ -853,10 +857,10 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   }
   const structures = d?.elements.filter((g) => g.category === 'structure' || g.category === 'animal' || g.category === 'access') ?? [];
   if (structures.length) {
-    row('Structures placed', structures.map((g) => `${g.name} x${g.count}`).join(', '), t('Placed by the farmer in the Design Studio'));
+    row('Structures placed', structures.map((g) => `${reportElementDisplayName(g.name,g.defId,language)} x${g.count}`).join(', '), t('Placed by the farmer in the Design Studio'));
   }
   if (d?.routes.length) {
-    row('Earthworks and routes', d.routes.map((r) => `${r.label.replace(/ \(.*\)$/, '')} ${metres(r.totalLengthM)}`).join(' · '), t('Measured off the traced lines'));
+    row('Earthworks and routes', d.routes.map((r) => `${reportRouteShortName(r.label,r.kind,language)} ${metres(r.totalLengthM)}`).join(' · '), t('Measured off the traced lines'));
   }
   if (d?.zones.length) {
     row('Permaculture zones drawn', d.zones.map((z) => t('Zone {zone} {area}',{zone:z.zone,area:m2(z.areaM2)})).join(' · '), t('Rings drawn by the farmer'));
@@ -866,7 +870,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   if (water?.tanks.length) {
     const stated = water.statedStorageLitres > 0 ? litres(water.statedStorageLitres) : t('capacity not stated');
     const proposedOnly = water.tanks.every((t) => t.status === 'proposed');
-    const value=`${stated} — ${water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}`;
+    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}`).join(', ')}`;
     row('Water storage on the plan', proposedOnly?t('{value} (drawn as proposed)',{value}):value, t('Design Studio'));
   }
   if (water?.mapPoints.length) {

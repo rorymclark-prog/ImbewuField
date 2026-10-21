@@ -238,6 +238,8 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
           const def = ELEMENTS_BY_ID[groupItem.defId];
           tanks.push({
             name: groupItem.name,
+            // Retain the producer's ID so translated display never guesses from a saved name.
+            defId: groupItem.defId,
             count: groupItem.count,
             statedLitres: def ? statedTankCapacityLitres(def) : null,
             status: groupItem.status,

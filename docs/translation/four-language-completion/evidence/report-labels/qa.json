@@ -1,0 +1,333 @@
+{
+  "sourceSha": "ac308edb2c7b2e4c5bda9c41ebdf611804bead35",
+  "status": "Unreviewed AI draft translations; no fluent-speaker approval. Synthetic catalogue cases use existing source identities and capacities; no farming recommendation or live AI call.",
+  "screenshots": [
+    "zu-final-labels-contact.png",
+    "full-zu-catalogue-phone.png",
+    "full-zu-legacy-labels-phone.png",
+    "full-zu-custom-labels-phone.png",
+    "full-zu-catalogue-desktop.png",
+    "api-zu-catalogue-phone.png",
+    "api-zu-catalogue-desktop.png",
+    "st-final-labels-contact.png",
+    "full-st-catalogue-phone.png",
+    "full-st-legacy-labels-phone.png",
+    "full-st-custom-labels-phone.png",
+    "full-st-catalogue-desktop.png",
+    "api-st-catalogue-phone.png",
+    "api-st-catalogue-desktop.png",
+    "ts-final-labels-contact.png",
+    "full-ts-catalogue-phone.png",
+    "full-ts-legacy-labels-phone.png",
+    "full-ts-custom-labels-phone.png",
+    "full-ts-catalogue-desktop.png",
+    "api-ts-catalogue-phone.png",
+    "api-ts-catalogue-desktop.png",
+    "ve-final-labels-contact.png",
+    "full-ve-catalogue-phone.png",
+    "full-ve-legacy-labels-phone.png",
+    "full-ve-custom-labels-phone.png",
+    "full-ve-catalogue-desktop.png",
+    "api-ve-catalogue-phone.png",
+    "api-ve-catalogue-desktop.png",
+    "api-labels-contact.png",
+    "desktop-labels-contact.png"
+  ],
+  "actualViewer": [
+    {
+      "lang": "zu",
+      "name": "catalogue",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351.609375,
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "name": "legacy-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351.609375,
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "name": "custom-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351.609375,
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "name": "catalogue",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "name": "legacy-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "name": "custom-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "name": "catalogue",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "name": "legacy-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "name": "custom-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "name": "catalogue",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "name": "legacy-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "name": "custom-labels",
+      "allExpectedNames": true,
+      "missing": [],
+      "width": 351,
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    }
+  ],
+  "staticFinal": [
+    {
+      "lang": "zu",
+      "name": "catalogue",
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "zu",
+      "name": "legacy-labels",
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "zu",
+      "name": "custom-labels",
+      "scrollRange": 1,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "st",
+      "name": "catalogue",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "st",
+      "name": "legacy-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "st",
+      "name": "custom-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ts",
+      "name": "catalogue",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ts",
+      "name": "legacy-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ts",
+      "name": "custom-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ve",
+      "name": "catalogue",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ve",
+      "name": "legacy-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    },
+    {
+      "lang": "ve",
+      "name": "custom-labels",
+      "scrollRange": 0,
+      "clipped": [],
+      "documentOverflow": false,
+      "imagesDecoded": true,
+      "svg": {
+        "outside": [],
+        "overlaps": []
+      }
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "registeredFocusedFiles": 38,
+    "tests": 375,
+    "pass": 375,
+    "fail": 0,
+    "notes": "pass",
+    "whitespace": "pass",
+    "fullCurrentSuite": "pending CI; full climate predecessor passed5380/0fail/1existingTODO only"
+  },
+  "limits": [
+    "Static captures use actual reader/card components and served app CSS outside the fixed viewer pane. Each selected scene is captured as a whole page to avoid element-screenshot clipping.",
+    "Actual API bodies are mocked English placeholders; this is not generated-body translation evidence.",
+    "Old/custom names intentionally remain raw. Plants always retain canonical names.",
+    "Unknown tank capacity stays absent; no chart bar is fabricated for it.",
+    "No PDF export and no fluent review. Non-isiZulu closing sections, full/crop exports and broader app work remain."
+  ]
+}
