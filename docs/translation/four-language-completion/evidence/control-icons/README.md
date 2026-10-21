@@ -43,3 +43,9 @@ helper-name regexes are replaced by execution of the real caller JSX in English 
 targets. Tidy/Snap/Cleanup must be absent in Simple and present in All tools; intentionally
 feeding the All-tools row to the Simple audit must throw. Existing Layers and multi-select
 guards stay intact. No product code or pixels change in this follow-up.
+
+The same ongoing full run also caught the translator-handoff CSV retaining 19 old English
+pictographs. The unchanged `scripts/pending-translations.mjs` regenerates all 1,050 pending
+source rows; the diff changes only those glyphs. Translation cells stay blank for human review.
+The unchanged CSV verification and actual palette/Simple checks pass. No product code or pixels
+change in this follow-up.
