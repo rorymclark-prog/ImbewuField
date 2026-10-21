@@ -3,9 +3,10 @@ import fs from 'node:fs';
 import { registerHooks } from 'node:module';
 import test from 'node:test';
 import ts from 'typescript';
-import { PRODUCT_PROFILES, PRODUCT_GUIDE_COPY, productGuideText, buildProductGuidance, productPurchasingMarkdown, productContextFromItems, assumedProductSeason } from '../lib/production-product-guidance.ts';
+import { PRODUCT_PROFILES, PRODUCT_GUIDE_COPY, PRODUCT_FIRST_CROP_COPY, productGuideText, buildProductGuidance, productPurchasingMarkdown, productContextFromItems, assumedProductSeason } from '../lib/production-product-guidance.ts';
 import { savedCropPlanMarkdown, reportDocumentText, zuluReportClosingNotes } from '../lib/report-localisation.ts';
 import { reportSummaryPages } from '../lib/report-summary.ts';
+import { firstCropAgeLabel } from '../lib/perennial-harvest.ts';
 import { recordsMonthLong } from '../lib/records-months.ts';
 import { growingZonesForClimate } from '../lib/growing-zones.ts';
 import { normaliseReportSiteFacts } from '../lib/report-site-facts.ts';
@@ -66,7 +67,7 @@ test('every original English guide, purchasing document and season decision stay
   }
 });
 
-test('native profiles preserve all research details, safety holds, item order, seasons, sources, numbers and inventory while changing only declared presentation fields',()=>{
+test('native profiles and declared first-crop wording preserve safety holds, item order, seasons, sources, numbers and inventory',()=>{
   for(const c of fx.cases)for(const lang of languages){
     const context=fx.contexts[c.context],before=JSON.stringify(context),guide=buildProductGuidance(context,c.zones,c.conditions,lang);
     const expected=structuredClone(c.guide);
@@ -76,6 +77,19 @@ test('native profiles preserve all research details, safety holds, item order, s
       for(const text of profile?.care??[])changes.set(text,productGuideText(text,lang));
       for(const text of profile?.purchase??[])changes.set('Buying advice: '+text,productGuideText('Buying advice: {advice}',lang,{advice:productGuideText(text,lang)}));
       item.lines=item.lines.map((line:string,i:number)=>i===0?productGuideText('{existing} existing; {proposed} proposed. Products: {products}.',lang,{existing:g.existing,proposed:g.proposed,products:productGuideText(profile?.products??h.product,lang).replace(/\.$/,'')}):changes.get(line)??line);
+    }
+    // First-crop wording is now a separately source-bound draft layer. Translate only its declared
+    // line here; the independent first-crop checks bind every note, unit and source qualification.
+    for(const[itemIndex,item]of expected.foodForest.entries()){
+      const h=context.trees[itemIndex].harvest,at=item.lines.findIndex((line:string)=>line.startsWith('First crop reference:')||line.startsWith('Time to first crop:'));
+      assert.ok(at>=0);
+      const text=h.yearsToFirstCrop
+        ? productGuideText('First crop reference: {age}. {note} Actual timing depends on variety and site care.',lang,{
+          age:firstCropAgeLabel(h.yearsToFirstCrop.value,(age,unit)=>productGuideText(`{age} ${unit}`,lang,{age})),
+          note:productGuideText(h.yearsToFirstCrop.note??'Check the source conditions and starting stock.',lang),
+        })
+        : productGuideText('Time to first crop: not sourced; do not rely on newly planted stock for immediate food.',lang);
+      item.lines[at]=text;
     }
     assert.deepEqual(guide,expected,`${lang}/${c.name}: an undeclared research or husbandry field changed`);
     assert.deepEqual(figures(JSON.stringify(guide)),figures(JSON.stringify(c.guide)));
@@ -113,7 +127,7 @@ test('the saved crop page uses the selected native summary with exact crop names
 });
 
 test('all newly authored purchasing templates are registered and a deliberately unregistered template fails the audit',()=>{
-  function audit(text:string){const tree=ts.createSourceFile('guide.ts',text,ts.ScriptTarget.Latest,true);function visit(node:ts.Node){if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='t'&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0]))assert.ok(index.has(node.arguments[0].text),`unregistered presentation: ${node.arguments[0].text}`);ts.forEachChild(node,visit);}visit(tree);}
+  function audit(text:string){const tree=ts.createSourceFile('guide.ts',text,ts.ScriptTarget.Latest,true);function visit(node:ts.Node){if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='t'&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0]))assert.ok(new Map([...PRODUCT_GUIDE_COPY,...PRODUCT_FIRST_CROP_COPY].map(r=>[r.english,r])).has(node.arguments[0].text),`unregistered presentation: ${node.arguments[0].text}`);ts.forEachChild(node,visit);}visit(tree);}
   audit(read('lib/production-product-guidance.ts'));assert.throws(()=>audit("t('New unchecked buying advice')"),/unregistered presentation/);
 });
 

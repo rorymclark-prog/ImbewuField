@@ -41,15 +41,21 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '6446f1cb', changes: [
+    'First-crop references have full draft explanations in four languages.',
+    'The original ages, trial conditions and missing-timing cautions stay with each reference.',
+  ], tour: [{ title: 'Read first-crop references', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, open the plant buying section. The first-crop age and its full source explanation use the report language. Other English research notes are still marked as unfinished.',
+  }] },
   { when: '21 October 2026', sha: '59a115b1', changes: [
     'Drawing buttons keep clear icons when you change language.',
-    'Drawing actions and sector headings have four draft translations, with English source wording beside the sector advice.',
+    'Drawing actions and sector headings have four draft translations and English source text.',
   ], tour: [{ title: 'Check drawing actions', where: 'Menu → Site design', href: '/design',
     detail: 'Check Select, Undo, Snap and Delete, then draw a line. The icons stay the same while action names follow your language. Sector notes keep their source qualifications.',
   }] },
   { when: '21 October 2026', sha: '5b6da923', changes: [
     'Saved crop-plan notes now follow your report language.',
-    'Plant buying profiles have four draft translations; remaining English research notes are marked.',
+    'Plant buying profiles have four draft translations; English research notes are marked.',
   ], tour: [{ title: 'Read the saved crop plan', where: 'Menu → Site reports', href: '/reports',
     detail: 'In a new report, check the saved crop plan and plant buying advice. Crop names and measured figures stay as recorded. The purchasing section tells you that some research notes still use English.',
   }] },
