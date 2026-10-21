@@ -736,6 +736,62 @@ checkout and excludes this batch and #1042. Current full CI is pending. No merge
 text, other exports, wider workflows, lessons/media and fluent review remain; the goal stays
 active. This changes the picture; `PLAN_VERSION` remains unchanged.
 
+## Plant buying profiles and saved crop notes — draft batch 17
+
+Source: `5b6da923`, stacked on draft #1043. New report crop-plan notes now use the selected
+isiZulu, Sesotho, Xitsonga or Tshivenda summary, instead of English in the three regional targets.
+The original isiZulu crop heading/page remains exact. One helper owns that page for all callers.
+Purchasing guidance now also appears in isiZulu, where it was previously omitted.
+
+`product-profile-drafts.json` binds 82 unique care, purchase and product-description clauses from
+`PRODUCT_PROFILES` to four unreviewed drafts. Six purchasing templates cover the heading, original
+research-date/introduction, inventory/product line, buying prefix, citation prefix and open gap
+notice. The original profile objects and research facts remain unchanged. Month tokens resolve
+through `recordsMonthLong`; they do not calculate a season. Tests bind each token's month and
+occurrence count to the source words, retain every numeric figure/range and check named cultivars.
+
+This does not complete purchasing translation. Harvest-age/yield research, regional season notes,
+livestock detail and other data-owned clauses still need their own source-bound pass. The new
+native notice explicitly says those research notes remain in their original English and the
+section is not fully translated. The earlier local inventory found 831 distinct data strings
+across those sources; some are shadowed or identifiers, so that count is not a completion measure.
+No new rates, yields, timings, cultivar/species identities or food-use claims are introduced.
+
+The critical Tshivenda poison/tuber terms were checked against primary terminology sources:
+[DALRRD plant-health warning sticker](https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Plant-Health-Promotions/Tshivenda%20warning%20sticker%202022.pdf)
+and [DSAC natural-science terminology](https://www.dsac.gov.za/sites/default/files/2023-11/natural-sciences-and-technology-for-grade-4-to-6.pdf).
+Those lexical checks do not constitute a fluent-speaker review or approval of the sentences.
+All new wording remains explicitly unreviewed. Poison, ripe-only, child-supervision, water/frost,
+chilling/pollination and unsupported-claim cautions remain source-bound.
+
+Typecheck, 565 tests across 55 registered files, release notes and whitespace checks pass. A
+captured pre-edit fixture covers 34 cases, 103 source harvest records and all 15 livestock
+enterprises, with every climate-zone and no-zone/contradictory/frost/shade/wet/dry-water branch,
+selected/unselected housing, banana-circle inventory and a name matching authored source words.
+English models/markdown/season decisions remain exact. Native models change only declared display
+fields; all other notes, source records, months, figures, citations and order stay exact. A new
+unregistered profile clause or presentation template demonstrably fails the audit. Real mocked
+API checks require the native crop page and buying profiles in all four languages.
+
+`evidence/product-profiles/` retains browser QA for 32 static scenes at desktop and phone sizes,
+and 16 actual-viewer mocked API reports. All 48 selected native profile paragraphs plus twelve
+gap notices were checked line by line in phone reading positions: 282 lines, zero occlusion.
+Crop notes, saved bytes, language metadata and source citations remain intact. Safety, cultivar/date,
+numeric, crop, gap-notice and citation examples were visually inspected in every target language.
+
+The initial phone check caught unbroken reference URLs: an affected paragraph was 390 px wide
+with 811 px scroll width and extended the static document to 885 px. The reader now wraps citation
+paragraphs while preserving their complete copyable text, including original URLs and bibliography
+labels. This also improves English citations. Plain paragraphs and saved report text are unchanged.
+Final measured scenes have no document, native-paragraph or citation overflow. Temporary saved
+report/language storage was restored and real paid generation remained blocked.
+
+The separate complete 543-file Node 24 run at `1340afff` remains live, latest output `ok 5288`,
+and excludes this and the two preceding batches. Current full CI is pending; no merges. No PDF was
+created or modified in this batch. Remaining purchasing research, exports, wider workflows,
+lessons/media and fluent review remain under the active goal. This changes the picture;
+`PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
