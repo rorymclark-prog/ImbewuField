@@ -38,8 +38,10 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
-import { REPORT_ZU } from '@/lib/report-localisation';
+import { reportUiText, reportUiDate } from '@/lib/report-localisation';
+import LanguageDraftNote from './LanguageDraftNote';
 import { loadLocale, translate } from '@/lib/i18n';
+import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
 import { useAppLevel } from '@/lib/app-level';
@@ -296,8 +298,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [includeCropWorkingPlan, setIncludeCropWorkingPlan] = useState(false);
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const simple = useAppLevel() === 'simple';
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
-  const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  const { lang: uiLanguage, t: appT } = useLanguage();
+  const tr = (en: string, zu: string) => reportUiText(en, uiLanguage, appT, zu);
+  const label = (en: string) => reportUiText(en, uiLanguage, appT);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
   // so its locale chunk may never have been fetched — load it so translate() below has real text
   // to find rather than always falling back to English.
@@ -324,7 +327,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     return `${translate(language, startKey)}–${translate(language, endKey)}`;
   };
   const displayError = (message: string) => {
-    if (language !== 'zu') return message;
+    const httpStatus = /^HTTP (\d{3})$/.exec(message);
+    if (httpStatus) return label('The server returned code {status}.').replace('{status}', httpStatus[1]);
     const known: Record<string, string> = {
       'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
       // copy-16: reuses the same two already-translated halves above/below rather than coining
@@ -333,7 +337,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
-    return known[message] ?? message;
+    return reportUiText(message, uiLanguage, appT, known[message]);
   };
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
@@ -416,12 +420,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const selectedMapIds = mapSelection?.ids ?? plates.map(p => p.id);
   const savedMapRecords = plateSet.scope === sheetScope ? { count: allMaps.length, latestAt: plateSet.latestAt } : null;
   const chooseMaps = (ids: string[]) => {
-    if (ids.length > 12) { setError(tr('Choose up to 12 maps for this report.', 'Khetha amamephu angafika ku-12 alo mbiko.')); return; }
+    if (ids.length > 12) { setError('Choose up to 12 maps for this report.'); return; }
     const selection = { siteId: siteKey, ids };
     if (activeSaved && savedVersion) {
       const latest = loadReports().find(r => r.id === activeSaved.id) ?? activeSaved;
       const updated = { ...latest, mapSelection: selection };
-      if (!saveReport(updated).saved) { setError(tr('Could not save the map selection. Please try again.', 'Ukukhethwa kwamamephu akugcinwanga. Zama futhi.')); return; }
+      if (!saveReport(updated).saved) { setError('Could not save the map selection. Please try again.'); return; }
       setActiveSaved(updated);
     }
     setMapChoice({ scope: reportMapScope, selection });
@@ -738,7 +742,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }),
         signal: abortRef.current.signal,
       });
-      if (!res.ok) throw new Error(language === 'zu' ? `Iseva ibuyise ikhodi engu-${res.status}.` : `${res.status}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -762,9 +766,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         // message shape is matched too.
         const offline = typeof navigator !== 'undefined' && !navigator.onLine;
         const networkShaped = /failed to fetch|load failed|network/i.test(err.message);
-        setError(displayError(offline || networkShaped
+        if (!offline && !networkShaped) console.error('Report generation failed:', err.message);
+        setError(offline || networkShaped
           ? 'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.'
-          : err.message));
+          : /^HTTP \d{3}$/.test(err.message) ? err.message : 'Could not generate the report. Please try again.');
       }
     } finally {
       // The page is alive to run this line, which is the entire test. Success, an HTTP error and
@@ -773,7 +778,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       reportAttemptSurvived(window.localStorage);
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds, uiLanguage, appT]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
@@ -849,10 +854,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // whoever debugs this; the farmer only sees the translated sentence.
       if (err instanceof Error) console.error('PDF export failed:', err.message);
       setPdfState('error');
-      setError(displayError('Could not build the PDF. Check your connection and try again.'));
+      setError('Could not build the PDF. Check your connection and try again.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds, uiLanguage, appT]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -924,7 +929,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             >
               {saveFailed
                 ? (saveFailedReason === 'store-full'
-                    ? tr(`You have ${MAX_REPORTS} saved reports — delete one to save this`, `Unemibiko egciniwe engu-${MAX_REPORTS} — susa owodwa ukuze ugcine lo mbiko`)
+                    ? label('You have {count} saved reports — delete one to save this').replace('{count}', String(MAX_REPORTS))
                     : tr('Not saved — no space', 'Awugcinwanga — asikho isikhala'))
                 : justSaved ? tr('Saved', 'Kulondoloziwe') : tr('Save', 'Londoloza')}
             </button>
@@ -994,7 +999,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       </div>
       {(isWide || viewOptionsOpen) && <p className={`${styles.languageNote} no-print`}>{tr('Screen, print and summary controls change the view or export without a new AI call.', 'Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.')}</p>}
       {(isWide || viewOptionsOpen) && isSampleMode() && <p className={`${styles.languageNote} no-print`}>{tr('Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.', 'Ukukhiqiza umbiko omusha kuvuselela izeluleko ezisuselwe kulo mklamo. Imibiko egciniwe izohlala ikhona ngenkathi ubheka; ukuqala kabusha indawo yokusebenza kuyayisusa. Umbiko ophelele olungiselelwe ungowesiNgisi; izifinyezo ezihunyushiwe ziyatholakala.')}</p>}
-      {language !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
+      {uiLanguage !== contentLanguage && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{label('This report keeps its original {language} text. Controls use your app language. Choose a report language before generating a new version.').replace('{language}', LANGUAGE_OPTIONS.find(option => option.code === contentLanguage)?.label ?? contentLanguage)}</p>}
+      <div className="no-print px-3"><LanguageDraftNote lang={uiLanguage} scope="report-viewer" /></div>
       <div className="flex-1 flex overflow-hidden">
 
         {/* ── Section controls sidebar ───────────
@@ -1032,7 +1038,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                       className="min-h-11 flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
                       style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display">{reportSiteName(r, savedPlaces)}</div>
-                      <div className="text-xs">{new Date(r.savedAt).toLocaleString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { dateStyle: 'medium', timeStyle: 'medium' })} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
+                      <div className="text-xs">{reportUiDate(uiLanguage, r.savedAt)} · {tr('Ref', 'Inombolo')} {r.id.slice(-5)}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title={tr('Delete', 'Susa')}
                       className="min-h-11 px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>{tr('Delete', 'Susa')}</button>
@@ -1050,12 +1056,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Language */}
           <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
           <select
+            aria-label={label('Report language')}
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
             className="min-h-11 w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--report-panel)]"
             style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
-            {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+            {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code} lang={l.code}>{l.label}</option>)}
           </select>
           {language !== 'en' && (
             <button
@@ -1072,14 +1079,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
           {/* Tone */}
           <div className="text-xs font-sans uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
-          <div className="flex gap-1.5 mb-4">
+          <div className="flex flex-col gap-1.5 mb-4">
             {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, optionLabel]) => (
               <button key={val} aria-pressed={tone === val} onClick={() => setTone(val)}
                 className="min-h-11 flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
                 style={tone === val
                   ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
-                {language === 'zu' ? REPORT_ZU[optionLabel] ?? optionLabel : optionLabel}
+                {label(optionLabel)}
               </button>
             ))}
           </div>
@@ -1091,7 +1098,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               ['one-pager', 'Brief advice', 'Generate brief advice. Choose At a glance for a 1-page summary PDF.'] as const,
               ['standard', 'Standard', 'Core sections for the farmer'] as const,
               ['comprehensive', 'Comprehensive', 'All sections, full detail'] as const,
-            ]).map(([val, label, tip]) => (
+            ]).map(([val, optionLabel, tip]) => (
               <button key={val} aria-pressed={length === val} onClick={() => {
                 setLength(val as 'one-pager' | 'standard' | 'comprehensive');
                 if (val === 'one-pager') setSelected(new Set(['Executive Summary']));
@@ -1099,20 +1106,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 else setSelected(prev => prev.size <= 1 ? new Set(FARMER_ESSENTIALS) : prev);
               }}
                 className="min-h-11 w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
-                title={language === 'zu' ? ({
-                  'Generate brief advice. Choose At a glance for a 1-page summary PDF.': 'Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.',
-                  'Core sections for the farmer': 'Izigaba ezisemqoka zomlimi.',
-                  'All sections, full detail': 'Zonke izigaba nemininingwane ephelele.',
-                }[tip] ?? tip) : tip}
+                title={label(tip)}
                 style={length === val
                   ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--report-gold)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
-                {language === 'zu' ? REPORT_ZU[label] ?? label : label}
+                {label(optionLabel)}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center justify-between mb-2">
+          <div className="flex flex-col items-start gap-1 mb-2">
             <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
             <div className="flex gap-1">
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
@@ -1295,10 +1298,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     // here reads as a second, conflicting rainfall claim for a non-expert reader.
                     <div className="mt-1 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                       {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
-                      {' '}{tr(
-                        `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
-                        `Igama lesigodi elithi "${d.bru.nearestBrg}" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.`
-                      )}
+                      {' '}{label('Zone name "{zone}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.').replace('{zone}', d.bru.nearestBrg)}
                     </div>
                   )}
                 </>
@@ -1421,14 +1421,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
 
             {error && (
-              <div className="text-sm font-display p-4 rounded-xl" style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--report-gold)' }}>
-                {error}
+              <div role="alert" className="text-sm font-display p-4 rounded-xl" style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--report-gold)' }}>
+                {displayError(error)}
               </div>
             )}
 
             {/* Generated report */}
             {(report || reading !== 'full') && (
-              <div className={`${styles.body} report-body`}>
+              <div lang={reading === 'full' ? contentLanguage : language} className={`${styles.body} report-body`}>
                 {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}, openReportImage, tr('View full size', 'Buka ngosayizi ogcwele')) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><header><span>{String(i + 1).padStart(2, '0')}</span><div><small>{tr('FIELD NOTES', 'AMANOTHI ASENSIMINI')} · {i + 1} / {summaryPages.length}</small><h2>{page.title}</h2></div></header><ul>{page.lines.map((line, n) => <li key={n}>{line}</li>)}</ul></section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}

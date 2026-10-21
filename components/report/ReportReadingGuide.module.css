@@ -22,10 +22,11 @@
 @media(max-width:767px) {
   .guide { padding:18px 16px 0; margin-bottom:18px; }
   .heading p { display:none; }
-  .editions { gap:8px; }
-  .editions button { padding:12px 10px; }
+  /* Native titles need room for whole words on a phone, especially isiZulu compounds. */
+  .editions { grid-template-columns:1fr; gap:8px; }
+  .editions button { display:grid; grid-template-columns:24px 1fr; align-items:center; gap:12px; padding:12px; }
   .cardTop>span,.cardTop>svg:last-child:not(:first-child),.editions small { display:none; }
-  .editions strong { font-size:19px; margin:12px 0 0; }
+  .editions strong { font-size:19px; margin:0; overflow-wrap:normal; word-break:normal; }
   .contents nav { grid-template-columns:1fr; }
 }
 @media print { .guide { display:none; } }

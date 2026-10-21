@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '7c95310b', changes: [
+    'Report controls follow your app language; saved report text keeps its language.',
+    'Four draft languages: reading choices, map reviews and report version details.',
+    'Crop calendar months follow your language; crop-plan exports still say English.',
+  ], tour: [{ title: 'Choose the app language', where: 'Home → Settings', href: '/home',
+    detail: 'Open Settings to change the app language. A saved report keeps its original text and language.',
+  }, { title: 'Check report controls', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a saved report to see reading editions, map review and next-report settings in the app language.',
+  }] },
   { when: '21 October 2026', sha: 'e0802e0c', changes: [
     'Home: staff links, progress help and dates now follow all four draft languages.',
     'Sesotho, Xitsonga and Tshivenda: more site report, map and Lima controls.',

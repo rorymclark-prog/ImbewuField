@@ -99,6 +99,52 @@ The Settings full suite exposed a native-loader issue in isolated child processe
 name import now uses a relative `.ts` path; both failing isolated mutation checks pass after the
 repair. Their corruption checks and the original historical source hashes are retained.
 
+## Report viewer batch
+
+`codex/four-language-report-viewer` is stacked on Home/report controls (#1030).
+`report-viewer-drafts.json` binds 226 control sources to their keys: 805 new locale entries and
+99 existing native values kept intact. Shared Save, Settings, language, tone, Yes/No and missing
+value keys are reused. The new 198 English sources bring previously hardcoded controls into the
+main dictionary; the inventory is still not an app-completion percentage.
+
+The toolbar, next-report settings, section choices, reading editions, map review, image-opening
+controls, crop-calendar controls and saved-version details now use the app language. Saved report
+text keeps its original language; the next-generation picker remains independent and has a native
+accessible label. Stored section identities remain English identifiers for generation. The saved
+body exposes its actual language to assistive technology, while native controls have their own
+language. Error messages are announced and repaint after an app-language switch, including failed
+map-review saves, crop-export failures, HTTP failures and disconnected generation.
+
+Month words reuse the existing calendar authority. Dates, sowing months, saved crop snapshots,
+measurements, report bodies and geometry stay intact. One earlier isiZulu sowing legend omitted
+the source's tray qualifier for transplant crops and its planned-task caveat; this batch restores
+those clauses without changing the English instruction. The exact prior draft and reason are
+recorded in the packet. Crop-plan exports still explicitly say English because their document
+bodies have not yet been translated. Crop names retain their existing catalogue identities.
+
+Typecheck and the final 192-test selection of report/save/geometry/print, translation/preservation
+and error/accessibility checks pass. The tests mount the real viewer
+in all four languages, change app language without remounting, submit only mocked generation
+requests, and verify request-language/section identity and exact saved content. A map save is
+deliberately made to fail and crop-PDF export is mocked to fail; their rendered errors must change
+language too. Historical guards retain the original learning hashes and verify all four complete
+pre-batch locale sources after reversing only declared UI changes. An old ternary-shape test now
+executes the actual catch classification, retaining the no-false-offline rule, HTTP status and
+diagnostic detail. The BRU caveat test retains its source meaning and actual zone name through
+the shared placeholder.
+
+The real browser was checked at 390 × 844 and 1440 × 1000 in all four languages with an English
+saved report and the existing demo crop snapshot. The selected document language, one draft note,
+original English body and unchanged requested report language were observed, with no horizontal
+overflow. Phone reading choices now show whole words; sidebar choices have room for long native
+labels. Generation requests were intercepted and aborted locally before the server, so the native
+error states could be inspected without a paid AI call. Stored report bytes remained exact.
+Evidence is in `evidence/report-viewer/`. These checks are not fluent-speaker approval.
+
+This changes the picture. `PLAN_VERSION` stays unchanged. The complete suite and CI still need
+to finish before merging. ReportPreparation/readiness, authored summary and visual content,
+exports and other workflows remain under the whole-app goal; this batch does not complete it.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

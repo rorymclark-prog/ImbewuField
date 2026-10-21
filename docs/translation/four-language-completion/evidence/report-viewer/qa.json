@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-21",
+  "branch": "codex/four-language-report-viewer",
+  "base": "e0802e0c",
+  "stackedOn": "#1030",
+  "fixture": "Owned browser profile; existing demo design/crops, labelled Translation check · English snapshot. Original saved body and report language retained.",
+  "reading": [
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "documentLang": "zu",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "documentLang": "zu",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "zu",
+      "cropHeading": "Ikhalenda lokuhlwanyela lezinkathi zonyaka"
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "documentLang": "st",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "documentLang": "st",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "st",
+      "cropHeading": "Khalendara ya ho jala ya dihla"
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "documentLang": "ts",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "documentLang": "ts",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "ts",
+      "cropHeading": "Khalendara ya ku byala ya tinguva"
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "documentLang": "ve",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "documentLang": "ve",
+      "overflow": false,
+      "originalText": true,
+      "notes": 1,
+      "requestedLanguage": "en"
+    },
+    {
+      "lang": "ve",
+      "cropHeading": "Khalenda ya u zwala ya khalaṅwaha"
+    }
+  ],
+  "errors": {
+    "abortedBeforeServer": 4,
+    "rows": [
+      {
+        "lang": "zu",
+        "announcedError": "Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.",
+        "originalStoredBytesUnchanged": true,
+        "overflow": false
+      },
+      {
+        "lang": "st",
+        "announcedError": "Ha ho letshwao — ho ngola tlaleho ho hloka inthanete. Dikgetho tsa hao tsa dikarolo di bolokilwe; leka hape ha letshwao le kgutla.",
+        "originalStoredBytesUnchanged": true,
+        "overflow": false
+      },
+      {
+        "lang": "ts",
+        "announcedError": "A ku na netiweke — ku tsala xiviko swi lava inthanete. Swiyenge leswi u swi hlawuleke swi hlayisiwile; ringeta nakambe loko netiweke yi vuya.",
+        "originalStoredBytesUnchanged": true,
+        "overflow": false
+      },
+      {
+        "lang": "ve",
+        "announcedError": "A hu na netiweke — u ṅwala muvhigo zwi ṱoḓa inthanete. Khetho dzaṋu dza zwipiḓa dzo vhulungiwa; lingedzani hafhu musi netiweke yo vhuya.",
+        "originalStoredBytesUnchanged": true,
+        "overflow": false
+      }
+    ]
+  },
+  "reviewStatus": "Unreviewed AI drafts; no fluent-speaker approval.",
+  "limits": "No actual AI generation or PDF export. Generation errors use locally aborted requests. ReportPreparation and code-authored summary/visual/PDF content still require later translation passes; crop names and stored notes remain source data."
+}

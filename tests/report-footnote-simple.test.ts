@@ -48,8 +48,9 @@ test('All tools keeps the technical detail but routes its labels through tr(), l
   assert.match(allToolsBranch, /tr\('dry', '[^']+'\)/);
   assert.match(allToolsBranch, /tr\('BRU zone', '[^']+'\)/);
   assert.match(allToolsBranch, /tr\('parent zone', '[^']+'\)/);
-  assert.match(allToolsBranch, /is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk\.`,\s*\n\s*`/,
-    'the crosswalk caveat must be the English half of a tr() call with an isiZulu counterpart');
+  // The caveat now has one source-bound placeholder shared by all four UI languages.
+  assert.match(allToolsBranch, /label\('Zone name "\{zone\}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk\.'\)\.replace\('\{zone\}', d\.bru\.nearestBrg\)/,
+    'the caveat must remain explicit and keep the original zone name as data');
   // Codes/identifiers stay as raw interpolated data, not translated strings.
   assert.match(allToolsBranch, /\{d\.climate\.koppen\}/);
   assert.match(allToolsBranch, /\{d\.bru\.brucode\}/);
