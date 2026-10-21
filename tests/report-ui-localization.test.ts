@@ -125,6 +125,7 @@ test('real saved-report controls switch app language while saved text and the ne
   const { Ctx } = await import('../lib/i18n-context.ts');
   const { loadLocale } = await import('../lib/i18n.tsx');
   const { saveReport, loadReports, deleteReport } = await import('../lib/saved-reports.ts');
+  const { reportVisualText } = await import('../lib/report-visuals.ts');
   const { reportSummaryText } = await import('../lib/report-summary.ts');
   const { reportUiText, reportUiMonth } = await import('../lib/report-localisation.ts');
   for (const lang of codes) assert.equal(reportUiMonth(lang, 'Oct 2026'), `${recordsMonthShort(lang, 10)} 2026`);
@@ -171,6 +172,10 @@ test('real saved-report controls switch app language while saved text and the ne
         }
         assert.ok(text.includes('English'), 'the original content language must remain visible');
         assert.equal(view!.root.findAll(n => n.props.className?.includes?.('report-body'))[0].props.lang, 'en', 'assistive technology must also see the saved content language');
+        const overview = () => view!.root.findByProps({ 'data-report-visuals': true });
+        assert.equal(overview().props.lang, lang, 'new screen charts have their own native language over a saved English body');
+        assert.ok(textOf(overview()).includes(reportVisualText('Annual rainfall', lang)));
+
         const languagePicker = view!.root.findAllByType('select').find(n => n.props['aria-label'] === copy('Report language'))!;
         assert.ok(languagePicker, `${lang}: generation language needs a native accessible label`);
         assert.equal(languagePicker.props.value, 'en', 'opening a saved report must not change its requested language silently');
@@ -213,6 +218,9 @@ test('real saved-report controls switch app language while saved text and the ne
         const switchedCopy = (source: string) => reportUiText(source, switchedLanguage,
           (key: string) => locales[switchedLanguage][key] ?? english[key] ?? key);
         assert.equal(view!.root.findAllByType('select').find(n => n.props['aria-label'] === switchedCopy('Report language'))!.props.value, requestedLanguage);
+        assert.equal(overview().props.lang, switchedLanguage);
+        assert.ok(textOf(overview()).includes(reportVisualText('Annual rainfall', switchedLanguage)));
+
         assert.ok(textOf(view!.toJSON()).includes(before.report.split('\n\n')[1]));
         assert.ok(textOf(view!.toJSON()).includes(switchedCopy(mapError)));
         assert.ok(textOf(view!.toJSON()).includes(switchedCopy(cropError)));

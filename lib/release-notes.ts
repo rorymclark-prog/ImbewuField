@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '4c383743', changes: [
+    'Report metrics, tank statuses and chart calendars follow four draft languages.',
+    'Calendar descriptions keep saved months, bed names and first-season markers.',
+  ], tour: [{ title: 'Check the report charts', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Open a report and choose At a glance. Chart labels follow your app language; the saved report keeps its original text.',
+  }, { title: 'Choose a draft language', where: 'Home → Settings', href: '/home',
+    detail: 'Select a language in Settings. Charts retain the same measured values and recorded names.',
+  }] },
   { when: '21 October 2026', sha: 'a91d590d', changes: [
     'Report summary text and handouts now follow all four draft app languages.',
     'Summary PDFs preserve Tshivenda letters and show the draft-translation notice.',
