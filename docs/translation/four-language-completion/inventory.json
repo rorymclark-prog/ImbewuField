@@ -5,9 +5,9 @@
   "scope": "UI dictionary only; identical English includes intentionally source-paired text and names. Not a count of untranslated screens or lessons.",
   "languages": {
     "zu": {
-      "translated": 1972,
-      "total": 2555,
-      "ratio": 0.7718199608610568,
+      "translated": 2015,
+      "total": 2596,
+      "ratio": 0.7761941448382126,
       "complete": false,
       "gaps": [
         {
@@ -1627,14 +1627,6 @@
           "reason": "missing"
         },
         {
-          "key": "langPartialTag",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialActiveNote",
-          "reason": "missing"
-        },
-        {
           "key": "mapPrintWindowTabTitle",
           "reason": "missing"
         },
@@ -2409,9 +2401,9 @@
       ]
     },
     "st": {
-      "translated": 965,
-      "total": 2555,
-      "ratio": 0.3776908023483366,
+      "translated": 1011,
+      "total": 2596,
+      "ratio": 0.3894453004622496,
       "complete": false,
       "gaps": [
         {
@@ -5227,6 +5219,10 @@
           "reason": "missing"
         },
         {
+          "key": "settingsThemeSlate",
+          "reason": "english"
+        },
+        {
           "key": "designStudioLabel",
           "reason": "missing"
         },
@@ -5280,14 +5276,6 @@
         },
         {
           "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialTag",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialActiveNote",
           "reason": "missing"
         },
         {
@@ -7439,22 +7427,6 @@
           "reason": "missing"
         },
         {
-          "key": "settingsGuideMe",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsGuideMeDesc",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsVoiceLabel",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsVoiceDesc",
-          "reason": "missing"
-        },
-        {
           "key": "demoBannerLabel",
           "reason": "missing"
         },
@@ -8777,9 +8749,9 @@
       ]
     },
     "ts": {
-      "translated": 950,
-      "total": 2555,
-      "ratio": 0.37181996086105673,
+      "translated": 992,
+      "total": 2596,
+      "ratio": 0.38212634822804314,
       "complete": false,
       "gaps": [
         {
@@ -11595,6 +11567,10 @@
           "reason": "missing"
         },
         {
+          "key": "settingsThemeSlate",
+          "reason": "english"
+        },
+        {
           "key": "designStudioLabel",
           "reason": "missing"
         },
@@ -11648,14 +11624,6 @@
         },
         {
           "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialTag",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialActiveNote",
           "reason": "missing"
         },
         {
@@ -15205,9 +15173,9 @@
       ]
     },
     "ve": {
-      "translated": 955,
-      "total": 2555,
-      "ratio": 0.37377690802348335,
+      "translated": 1001,
+      "total": 2596,
+      "ratio": 0.3855932203389831,
       "complete": false,
       "gaps": [
         {
@@ -18027,6 +17995,10 @@
           "reason": "missing"
         },
         {
+          "key": "settingsThemeSlate",
+          "reason": "english"
+        },
+        {
           "key": "designStudioLabel",
           "reason": "missing"
         },
@@ -18080,14 +18052,6 @@
         },
         {
           "key": "siteDesignPhotoAnalysisNote",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialTag",
-          "reason": "missing"
-        },
-        {
-          "key": "langPartialActiveNote",
           "reason": "missing"
         },
         {
@@ -20275,22 +20239,6 @@
           "reason": "missing"
         },
         {
-          "key": "settingsGuideMe",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsGuideMeDesc",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsVoiceLabel",
-          "reason": "missing"
-        },
-        {
-          "key": "settingsVoiceDesc",
-          "reason": "missing"
-        },
-        {
           "key": "demoBannerLabel",
           "reason": "missing"
         },
@@ -21613,5 +21561,7 @@
       ]
     }
   },
-  "visibleLiteralCandidates": 2226
+  "visibleLiteralCandidates": 2178,
+  "batchBaseRef": "39df6174",
+  "batch": "Settings"
 }

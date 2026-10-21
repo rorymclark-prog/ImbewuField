@@ -1,3 +1,5 @@
+import { AI_FEATURES } from '@/lib/ai-features';
+
 // The Design Studio's not-yet-translated copy, split out of lib/i18n.tsx (see that file's
 // header) into its own module so every per-locale file in lib/locales/ can import just this,
 // not the whole language-switching machinery.
@@ -947,4 +949,49 @@ export const MENTOR_ENGLISH_PENDING: Dict = {
   mentorMemberSingular: 'member',
   mentorMemberPlural: 'members',
   mentorProfilePhotoAlt: 'Profile photo',
+};
+
+// Settings controls were English/isiZulu-only; the source stays shared while drafts are reviewed.
+export const SETTINGS_ENGLISH_PENDING: Dict = {
+  settingsSubtitle: "Language, text size & theme",
+  settingsClose: "Close settings",
+  settingsShowAmount: "How much to show",
+  settingsSimple: "Simple",
+  settingsSimpleDesc: "The main jobs only. Best when you are starting out.",
+  settingsAllTools: "All tools",
+  settingsAllToolsDesc: "Everything, including every planning and money tool.",
+  settingsChangeAnyTime: "You can change this any time.",
+  settingsTextSize: "Text size",
+  settingsTextNormal: "Normal",
+  settingsTextLarge: "Large",
+  settingsTextLarger: "Larger",
+  settingsTextScaleHelp: "Makes the whole app bigger — text, buttons and menus.",
+  settingsGuidance: "Guidance",
+  settingsColourTheme: "Colour theme",
+  settingsThemeEarth: "Earth",
+  settingsThemeEarthDesc: "Warm agricultural tones",
+  settingsThemeSlate: "Slate",
+  settingsThemeSlateDesc: "Clean modern professional",
+  settingsDisplayMode: "Display mode",
+  settingsModeLight: "Light",
+  settingsModeDark: "Dark",
+  settingsModeAuto: "Auto",
+  settingsModeAutoHelp: "Auto follows your device setting.",
+  settingsTourSupport: "Tour and support",
+  settingsTourSamples: "Tour & samples · 15 minutes",
+  settingsChooseWorkspace: "Choose a workspace",
+  settingsBrowseGardens: "Browse 18 gardens",
+  settingsFeedback: "Report a bug / request a feature",
+  settingsDataNote: "Farm guidance is built from South African climate, soil and terrain data.",
+  settingsSavedAutomatically: "ImbewuField · saved automatically",
+  settingsAiTitle: "Paid AI features",
+  settingsAiDescription: "Choose which AI tools this account can use on this device. Typing, phone dictation, photos and saving records still work when AI is off.",
+  settingsAiAllowAll: "Allow all paid AI tools",
+  settingsAiChat: AI_FEATURES.chat,
+  settingsAiReceipts: AI_FEATURES.receipts,
+  settingsAiReports: AI_FEATURES.reports,
+  settingsAiNotes: AI_FEATURES.notes,
+  settingsAiPhotos: AI_FEATURES.photos,
+  settingsAiDesigns: AI_FEATURES.designs,
+  settingsAiSaveError: "These settings could not be saved.",
 };
