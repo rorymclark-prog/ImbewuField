@@ -576,6 +576,57 @@ Full current-suite CI remains pending; the earlier 5,380-pass full run applies o
 predecessor `09b280ef`. The goal stays active: closing sections, full-report/crop-plan PDFs and wider
 workflows, learning and media still need work. This changes the picture; `PLAN_VERSION` stays exact.
 
+## Full monitoring and risk sections — draft batch 14
+
+Based on `013cec5286cfb6c7251e48a5907bb8548c80a25d` (draft #1040), 94 authored labels,
+explanations and dynamic templates in `report-monitoring-drafts.json` cover the full monitoring
+plan and risk register in all four languages. Language now reaches both source builders and
+markdown renderers through the actual report API. Default English and unsupported-language
+outputs retain their original rows and bytes. Risk ratings remain canonical typed values in the
+model; their printed labels use the selected language. Inputs, rule gates, thresholds, rounding,
+counts, areas, capacity, risk IDs, species identities and custom names remain unchanged.
+
+IsiZulu now receives the same full source tables, replacing its shortened monitoring prose and
+regex-based risk-trigger translation. The earlier native assessment note and risk caveat remain;
+its crop, cost and assurance blocks remain byte-exact. No already-saved report is rewritten.
+The new text is an unreviewed AI draft, not fluent-speaker approval or a new agronomic validation.
+
+The first phone renders needed 189–353px of sideways scrolling and hid later fields. Exact native
+six-column schemas now retain desktop tables and show each row as a labelled block at phone
+widths, with every field and action visible. Header cells and explicit table/row/column/cell roles
+retain the table relationship; pseudo-labels repeat the matching native column heading visually.
+English tables, cost tables, measurement tables and other schemas keep their earlier layout.
+
+Typecheck, 384 tests across 39 registered files, notes and whitespace checks pass. Eleven original
+monitoring fixtures and 25 original risk cases preserve the English source, including all trigger
+branches, source boundaries, singular/plural quantities, unknown tanks, zero-risk wording and
+recorded names containing translation-like words/placeholders. The boundary cross-product checks
+768 inputs in every native language against the same canonical decisions. Source audits reject new
+untranslated fields and unknown templates; canonical rating keys are checked against their closed
+type. Actual mocked API checks prove the full native tables reach all four outputs, including
+isiZulu. The actual reader is exercised for native field labels/roles and unchanged other tables.
+No existing test assertion was removed or weakened.
+
+An initial new fixture named “none” still raised the source missing-crop-plan risk. That case was
+retained as “no-environment-risk”; a genuinely empty case was captured by executing the original
+`013cec52` risk module with the existing saved crop-plan fixture. Its absence-of-trigger caution
+now has actual native coverage. The nine current-batch checks pass again after this correction.
+
+`evidence/report-monitoring/` retains 68 screenshots/contact sheets and QA records.
+Twenty-four complete static reader scenes include 20 phone tables and four empty registers; twelve
+actual-viewer mocked API reports include 24 further native tables. All native phone fields/labels
+were visible with no clipped cells or horizontal table/document overflow, and saved bytes remain
+exact. Separate inspected details show raw recorded names, missing trees/storage, unknown tank
+sizes, negative temperatures and empty-register cautions. Desktop tables were inspected too.
+Initial overflow captures are retained for comparison. Static scenes use the actual reader and
+served app CSS outside its fixed scrolling pane, allowing complete tall-page captures. Browser
+saved-report/language storage was restored and real paid generation was blocked. No PDF was made.
+
+Full current-suite CI is pending; the complete 5,380-pass run still applies only to climate
+predecessor `09b280ef`. This does not finish the four-language goal: cost/purchasing/assurance
+sections, exports and wider workflows, lessons and media remain. This changes the picture;
+`PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

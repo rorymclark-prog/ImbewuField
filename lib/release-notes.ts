@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '013cec52', changes: [
+    'New reports have full monitoring and risk tables in four draft languages.',
+    'Risk thresholds, ratings, quantities and recorded plant names keep their source meaning.',
+  ], tour: [{ title: 'Read monitoring and risks', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, read the full monitoring plan and risk register. Their explanations follow the report language while the site figures, rule thresholds and ratings remain the same.',
+  }] },
   { when: '21 October 2026', sha: 'ac308edb', changes: [
     'New reports use draft equipment and route labels in four languages.',
     'Your custom names, plant names and recorded quantities keep their original meaning.',
