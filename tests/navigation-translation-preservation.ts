@@ -1,3 +1,4 @@
+import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -52,4 +53,12 @@ export function beforeCoreEntryTranslations(source: string, locale: UiLocale): s
   return beforeDeclaredUiTranslations(source, locale, readPacket('core-entry-drafts'),
     '\n  // Core entry screens: unreviewed drafts; source pairs in core-entry-drafts.json.\n',
     '  // End core entry translation drafts.\n');
+}
+
+export function beforeNavigationDictionary(actual: unknown, locale: 'st' | 'ts' | 've'): unknown {
+  return beforeUiDictionary(actual, locale, readPacket('navigation-account-drafts'));
+}
+
+export function beforeCoreEntryDictionary(actual: unknown, locale: UiLocale): unknown {
+  return beforeUiDictionary(actual, locale, readPacket('core-entry-drafts'));
 }

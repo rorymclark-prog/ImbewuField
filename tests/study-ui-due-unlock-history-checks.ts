@@ -6,8 +6,8 @@ import { createHash } from 'node:crypto';
 import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-study-corrections-history-checks.ts';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { beforeCoreEntryTranslations, beforeNavigationTranslations } from './navigation-translation-preservation.ts';
-import { beforeSettingsTranslations, englishBeforeSettingsTranslations } from './settings-translation-preservation.ts';
+import { beforeCoreEntryDictionary, beforeCoreEntryTranslations, beforeNavigationDictionary, beforeNavigationTranslations } from './navigation-translation-preservation.ts';
+import { beforeSettingsDictionary, beforeSettingsTranslations, englishBeforeSettingsTranslations } from './settings-translation-preservation.ts';
 import { MENTOR_ENGLISH_PENDING, CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
 
 const folder = 'docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/';
@@ -329,6 +329,7 @@ function rewindWave13PendingDictionary(actual: unknown): unknown {
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
+  actual = beforeNavigationDictionary(beforeSettingsDictionary(beforeCoreEntryDictionary(actual, 've'), 've'), 've');
   actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);

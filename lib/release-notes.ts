@@ -41,11 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '21 October 2026', sha: 'bf338855', changes: [
+  { when: '21 October 2026', sha: 'e0802e0c', changes: [
     'Home: staff links, progress help and dates now follow all four draft languages.',
     'Sesotho, Xitsonga and Tshivenda: more site report, map and Lima controls.',
-  ] },
-  { when: '21 October 2026', sha: '39df6174', changes: [
+  ], tour: [{ title: 'See Home in your language', where: 'Home', href: '/home',
+    detail: 'Choose a draft app language in Settings, then check the date, welcome and progress help.',
+  }, { title: 'Check Site reports', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Use the native list controls; saved reports still keep their original language.',
+  }] },
+  { when: '21 October 2026', sha: '32746ee5', changes: [
     'Settings: text size, colours and AI controls now follow all four draft languages.',
     'The partly-English label now follows isiZulu, Sesotho, Xitsonga and Tshivenda.',
   ] },
