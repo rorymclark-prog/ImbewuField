@@ -5,6 +5,8 @@ import {registerHooks}from'node:module';
 import ts from'typescript';
 import {buildMonitoringPlan,monitoringMarkdown,type MonitoringRow}from'../lib/report-monitoring.ts';
 import {buildRiskRegister,riskRegisterMarkdown,type RiskInput}from'../lib/report-risk.ts';
+import {ASSURANCE_PARAGRAPHS,planAssuranceText}from'../lib/plan-assurance.ts';
+import {assuranceMarkdown}from'../lib/report-site-facts.ts';
 import {REPORT_DOCUMENT_COPY,reportDocumentText,zuluReportClosingNotes}from'../lib/report-localisation.ts';
 import {buildBillOfQuantities}from'../lib/report-boq.ts';
 import type{ReportSiteFacts}from'../lib/report-site-facts.ts';
@@ -19,7 +21,9 @@ const tokens=(s:string)=>(s.match(/\{\w+\}/g)??[]).sort();
 test('source monitoring rows, all risk boundaries and English markdown stay exact while native-only closing notes retain their original text',()=>{
  assert.equal(fx.sourceSha,'013cec5286cfb6c7251e48a5907bb8548c80a25d');for(const c of fx.monitoring){assert.deepEqual(buildMonitoringPlan(c.facts),c.rows,c.name);assert.deepEqual(buildMonitoringPlan(c.facts,'af'),c.rows);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts)),c.markdown);assert.equal(monitoringMarkdown(buildMonitoringPlan(c.facts,'af'),'af'),c.markdown);}
  for(const c of fx.risks){assert.deepEqual(buildRiskRegister(c.input),c.rows,c.name);assert.deepEqual(buildRiskRegister(c.input,'af'),c.rows);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input)),c.markdown);assert.equal(riskRegisterMarkdown(buildRiskRegister(c.input,'af'),'af'),c.markdown);}
- const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts;const notes=zuluReportClosingNotes(facts,fx.location,buildBillOfQuantities(facts));assert.equal(notes.crop,fx.legacyZulu[0]);assert.equal(notes.costs,fx.legacyZulu[1]);assert.equal(notes.assurance,fx.legacyZulu[4]);assert.ok(fx.legacyZulu[2].includes(notes.monitoringNote));assert.ok(fx.legacyZulu[3].includes(notes.riskNote));
+ const facts=fx.monitoring.find((r:any)=>r.name==='saved-design').facts;const notes=zuluReportClosingNotes(facts,fx.location,buildBillOfQuantities(facts));assert.equal(notes.crop,fx.legacyZulu[0]);assert.equal(notes.costs,fx.legacyZulu[1]);
+ // Full shared assurance now supersedes the earlier shortened native draft; retain every source paragraph.
+ for(const paragraph of ASSURANCE_PARAGRAPHS)assert.ok(assuranceMarkdown('zu').includes(planAssuranceText(paragraph,'zu')));assert.ok(fx.legacyZulu[2].includes(notes.monitoringNote));assert.ok(fx.legacyZulu[3].includes(notes.riskNote));
 });
 
 test('monitoring and risk drafts bind every source template, figure and placeholder to the review packet',()=>{

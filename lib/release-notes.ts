@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '1340afff', changes: [
+    'New reports have the full planning cautions in four draft languages.',
+    'Soil cautions follow the recorded source, including your uploaded lab test.',
+  ], tour: [{ title: 'Read the planning cautions', where: 'Menu → Site reports', href: '/reports',
+    detail: 'In a new report, the full assurance statement uses the report language. Its soil paragraph follows the recorded source, while the wider planning cautions remain.',
+  }, { title: 'Check the soil source', where: 'Menu → Atlas', href: '/atlas',
+    detail: 'Open a point in Atlas. The soil source title and caution now have draft wording in four languages; a missing source is still marked unknown.',
+  }] },
   { when: '21 October 2026', sha: '013cec52', changes: [
     'New reports have full monitoring and risk tables in four draft languages.',
     'Risk thresholds, ratings, quantities and recorded plant names keep their source meaning.',

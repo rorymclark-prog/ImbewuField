@@ -30,7 +30,7 @@ import type { PlacedPlant } from './perennial-harvest';
 // with no traced roof was given someone else's roof and a rainwater yield computed from it.
 
 import { normaliseReportCropSnapshot, type ReportCropSnapshot } from './report-crop-plan';
-import { ASSURANCE_PARAGRAPHS, ASSURANCE_TITLE } from '@/lib/plan-assurance';
+import { ASSURANCE_TITLE, planAssuranceText, planAssuranceParagraphs } from '@/lib/plan-assurance';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT, roofHarvestLitres } from '@/lib/roof-runoff';
 
 // ── Types ─────────────────────────────────────────────────────────────────────────────────────
@@ -916,6 +916,6 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
  * most likely to be handed to a funder or an extension officer — carried none of it. A generated
  * document that drops its caveats is worse than one that never had them.
  */
-export function assuranceMarkdown(): string {
-  return [`## ${ASSURANCE_TITLE}`, '', ...ASSURANCE_PARAGRAPHS.flatMap((p) => [p, ''])].join('\n');
+export function assuranceMarkdown(language='en',context?:{soilSource?:string|null}): string {
+  return [`## ${planAssuranceText(ASSURANCE_TITLE,language)}`, '', ...planAssuranceParagraphs(language,context).flatMap((p) => [p, ''])].join('\n');
 }
