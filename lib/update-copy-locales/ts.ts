@@ -81,6 +81,7 @@ const copy:UpdateCopy={
   "Update notices and recent changes now have four draft translations.": "Switiviso swa mipfuxeto ni ku cinca ka sweswinyana sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
   "Read recent updates": "Hlaya mipfuxeto ya sweswinyana",
   "Menu → What's new": "Menyu → Leswintshwa",
-  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Xitiviso xa mpfuxeto ni matimu ya sweswinyana swi tirhisa ririmi ra wena. Tirhekhodo ta khale ta ha ri ni tsalwa ro sungula ra Xinghezi loko vuhundzuluxi bya tona byi ri karhi byi hetisiwa."
+  "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Xitiviso xa mpfuxeto ni matimu ya sweswinyana swi tirhisa ririmi ra wena. Tirhekhodo ta khale ta ha ri ni tsalwa ro sungula ra Xinghezi loko vuhundzuluxi bya tona byi ri karhi byi hetisiwa.",
+  "Account controls and messages now have four draft translations.": "Swilawuri ni swiviko swa akhawunti sweswi swi ni vuhundzuluxi bya mpfampfarhuto hi tindzimi ta mune."
 };
 export default copy;

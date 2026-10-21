@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(actual,locale),locale),locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(actual,locale),locale),locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -106,4 +106,15 @@ export function beforeUpdateNoticeDictionary(actual:unknown,locale:string):unkno
 }
 export function beforeUpdateNoticeTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,updateNoticePacket(),'\n  // Update notices: unreviewed drafts; update-notice-drafts.json.\n','  // End update notices.\n');
+}
+
+let accountControls: ControlIconPacket | undefined;
+function accountPacket():ControlIconPacket {
+  return accountControls ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/account-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeAccountDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,accountPacket());
+}
+export function beforeAccountTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,accountPacket(),'\n  // Account controls: unreviewed drafts; account-drafts.json.\n','  // End account controls.\n');
 }

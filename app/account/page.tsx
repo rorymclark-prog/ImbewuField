@@ -10,6 +10,9 @@ import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { resizeFileForUpload } from '@/lib/site-evidence';
+import { accountText, accountRoleName, type AccountCopy } from '@/lib/account-copy';
+import AccountErrorText from '@/components/AccountErrorText';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import AppHeader from '@/components/layout/AppHeader';
@@ -17,7 +20,6 @@ import ThemePanel from '@/components/ThemePanel';
 import ConsentPanel from '@/components/ConsentPanel';
 import AiAllowance from '@/components/AiAllowance';
 import { Sprout, Mail, Phone, Globe, LogOut, ChevronRight, ChevronDown, ChevronUp, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
-import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import { useAppLevel } from '@/lib/app-level';
 import { exitSampleMode, getSandboxProfile } from '@/lib/sample-mode';
@@ -28,23 +30,18 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 // three drifting copies, since every captured frame for /account across phone and desktop,
 // light and dark, used to show only a faint sprout on an empty page with no way to tell
 // loading, broken and "this is the practice version" apart.
-function AccountShellHeader({ copy }: { copy: (en: string, zu: string) => string }) {
-  return <AppHeader title={copy('Account', 'I-akhawunti')} />;
+function AccountShellHeader({ copy, lang }: { copy: AccountCopy; lang:string }) {
+  return <><AppHeader title={copy('Account', 'I-akhawunti')} /><div className="px-4 pt-2"><LanguageDraftNote lang={lang} scope="account" /></div></>;
 }
 
-const ROLE_LABELS: Record<UserRole, string> = {
-  farmer: 'Farmer', mentor: 'Mentor',
-  student: 'Student', ngo: 'NGO coordinator', funder: 'Funder', admin: 'Admin',
-};
-
-function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; value: string | null }) {
+function Row({ icon: Icon, label, value,valueLang='' }: { icon: LucideIcon; label: string; value: string | null;valueLang?:string }) {
   if (!value) return null;
   return (
     <div className="flex items-center gap-3 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
       <Icon size={16} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
       <div className="flex-1 min-w-0">
         <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{label}</div>
-        <div className="text-sm font-display mt-0.5" style={{ color: 'var(--text-primary)' }}>{value}</div>
+        <div className="text-sm font-display mt-0.5" style={{ color: 'var(--text-primary)' }}><bdi lang={valueLang}>{value}</bdi></div>
       </div>
     </div>
   );
@@ -52,8 +49,8 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
 
 export default function AccountPage() {
   const { user, profile, signOutUser, changePassword, refreshProfile, loading } = useAuth();
-  const { lang, setLang } = useLanguage();
-  const copy = (en: string, zu: string) => lang === 'zu' ? zu : en;
+  const { lang, setLang,t } = useLanguage();
+  const copy:AccountCopy = (en,zu,values) => accountText(lang,en,zu,t,values);
   const router = useRouter();
   // Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools keeps this
   // page exactly as it always was. Simple shows name, photo, farm/organisation, language and
@@ -139,7 +136,7 @@ export default function AccountPage() {
     } catch (err) {
       // Stay in the edit form (not setEditing(false)) so nothing typed here is lost, and the
       // farmer sees why the save didn't happen instead of a save that just silently hung.
-      setProfileError(err instanceof Error ? err.message : copy('Could not save. Try again.', 'Akukwazanga ukulondolozwa. Zama futhi.'));
+      setProfileError(err instanceof Error ? err.message : 'Could not save. Try again.');
     } finally {
       setSaving(false);
     }
@@ -154,7 +151,7 @@ export default function AccountPage() {
       const url = await uploadPhoto(await resizeFileForUpload(file), 'avatars');
       if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
     } catch (err) {
-      setPhotoError(err instanceof Error ? err.message : copy('Could not update your photo.', 'Akukwazanga ukushintsha isithombe sakho.'));
+      setPhotoError(err instanceof Error ? err.message : 'Could not update your photo.');
     } finally {
       setPhotoUploading(false);
       if (photoInputRef.current) photoInputRef.current.value = '';
@@ -187,8 +184,8 @@ export default function AccountPage() {
 
   async function handleChangePw() {
     setPwError(null);
-    if (pwForm.next !== pwForm.confirm) { setPwError(copy('New passwords do not match.', 'Amaphasiwedi amasha awafani.')); return; }
-    if (pwForm.next.length < 6) { setPwError(copy('Password must be at least 6 characters.', 'Iphasiwedi kumele ibe nezinhlamvu okungenani eziyisi-6.')); return; }
+    if (pwForm.next !== pwForm.confirm) { setPwError('New passwords do not match.'); return; }
+    if (pwForm.next.length < 6) { setPwError('Password must be at least 6 characters.'); return; }
     setPwSaving(true);
     const err = await changePassword(pwForm.current, pwForm.next);
     setPwSaving(false);
@@ -203,8 +200,8 @@ export default function AccountPage() {
   if (loading || !user) {
     if (!samplePreview && loading && !authSlow) {
       return (
-        <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-          <AccountShellHeader copy={copy} />
+        <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+          <AccountShellHeader copy={copy} lang={lang} />
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6 text-center">
             <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
             <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{copy('Loading your account…', 'Kulayishwa i-akhawunti yakho…')}</p>
@@ -215,11 +212,11 @@ export default function AccountPage() {
     }
     if (samplePreview) {
       const sandbox = getSandboxProfile();
-      const sandboxRoleLabel = sandbox.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[sandbox.role] : ROLE_LABELS[sandbox.role]) : null;
-      const sandboxLangLabel = APP_LANGS.find((l) => l.code === sandbox.language)?.label ?? sandbox.language;
+      const sandboxRoleLabel = sandbox.role ? accountRoleName(sandbox.role,copy) : null;
+      const sandboxLangLabel = APP_LANGS.find((l) => l.code === sandbox.language)?.native ?? sandbox.language;
       return (
-        <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-          <AccountShellHeader copy={copy} />
+        <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+          <AccountShellHeader copy={copy} lang={lang} />
           <div className="flex-1 overflow-y-auto">
             <div className={`${workspace.workspace} ${workspace.formWidth} px-4 py-6 sm:px-6`}>
               <section className="min-w-0 space-y-5" aria-label={copy('Tour account', 'I-akhawunti yohambo')}>
@@ -278,8 +275,8 @@ export default function AccountPage() {
     // beats an endless spinner — the redirect effect above still fires the moment a real
     // backend resolves loading=false/!user, so this is a safety net, not the normal path.
     return (
-      <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-        <AccountShellHeader copy={copy} />
+      <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+        <AccountShellHeader copy={copy} lang={lang} />
         <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
           <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
           <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
@@ -297,17 +294,18 @@ export default function AccountPage() {
   }
 
   const displayName = profile?.full_name ?? user.displayName;
-  const langLabel = profile?.language ? (APP_LANGS.find((l) => l.code === profile.language)?.label ?? profile.language) : null;
-  const roleLabel = profile?.role ? (lang === 'zu' ? ({ farmer: 'Umlimi', mentor: 'Umeluleki', student: 'Umfundi', ngo: 'Umxhumanisi we-NGO', funder: 'Umxhasi', admin: 'Umphathi' } as Record<UserRole, string>)[profile.role] : ROLE_LABELS[profile.role]) : null;
+  const langLabel = profile?.language ? (APP_LANGS.find((l) => l.code === profile.language)?.native ?? profile.language) : null;
+  const roleLabel = profile?.role ? accountRoleName(profile.role,copy) : null;
 
   return (
-    <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <AppHeader
         title={copy('Account', 'I-akhawunti')}
         right={<LessonLink id="account:overview" label={copy('Learn', 'Funda')} />}
       />
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
           real, visible <h1> now that the old header's h1 is gone. */}
+      <div className="px-4 pt-2"><LanguageDraftNote lang={lang} scope="account" /></div>
       <h1 className="font-display font-bold px-4 sm:px-6 pt-5 m-0" style={{ fontSize: 20, color: 'var(--text-primary)' }}>
         {copy('Account', 'I-akhawunti')}
       </h1>
@@ -320,7 +318,7 @@ export default function AccountPage() {
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="relative flex-shrink-0">
               {profile?.photo_url ? (
-                <img data-photo-preview src={profile.photo_url} alt={displayName ?? 'Avatar'}
+                <img data-photo-preview src={profile.photo_url} alt={displayName ?? copy('Avatar','Isithombe somsebenzisi')}
                   className="rounded-full object-cover"
                   style={{ width: 64, height: 64 }} />
               ) : (
@@ -339,10 +337,10 @@ export default function AccountPage() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
-                {displayName ?? 'ImbewuField user'}
+                {displayName ?? copy('ImbewuField user','Umsebenzisi we-ImbewuField')}
               </div>
               {photoError && (
-                <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}>{photoError}</div>
+                <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}><AccountErrorText source={photoError}/></div>
               )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
@@ -426,7 +424,7 @@ export default function AccountPage() {
                       )}
                     </div>
                     <div className="text-xs font-sans" style={{ color: logoError ? 'var(--danger)' : 'var(--text-muted)' }}>
-                      {logoError ?? copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
+                      {logoError ? <AccountErrorText source={logoError}/> : copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
                     </div>
                   </div>
                 </div>
@@ -438,13 +436,13 @@ export default function AccountPage() {
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
                   className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
-                  {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
+                  {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.native}</option>)}
                 </select>
               </label>
 
               {profileError && (
                 <div className="text-xs font-sans rounded-lg px-3 py-2" style={{ color: 'var(--danger)', background: 'var(--danger-soft)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}>
-                  {profileError}
+                  <AccountErrorText source={profileError}/>
                 </div>
               )}
 
@@ -467,7 +465,7 @@ export default function AccountPage() {
               <Row icon={Phone} label={copy('Phone', 'Ucingo')} value={profile?.phone ?? null} />
               <Row icon={Sprout} label={copy('Farm / organisation', 'Ipulazi / inhlangano')} value={profile?.farm_name ?? orgName ?? null} />
               <Row icon={Globe} label={copy('Language', 'Ulimi')} value={langLabel} />
-              {(!simple || moreOpen) && <Row icon={User} label={copy('Role', 'Isikhundla')} value={roleLabel} />}
+              {(!simple || moreOpen) && <Row icon={User} label={copy('Role', 'Isikhundla')} value={roleLabel} valueLang={lang} />}
             </div>
           )}
 
@@ -491,10 +489,7 @@ export default function AccountPage() {
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
           {profile?.role === 'farmer' && profile?.org_id && (
             <>
-              {lang === 'zu' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">
-                <strong>isiZulu machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
-                <span className="block mt-1"><strong>Imibhalo yesiZulu eyisivivinyo yomshini — ayikabuyekezwa.</strong> Umbhalo wesiNgisi uboniswa eduze kwayo kuze kuqedwe ukubuyekezwa ngumuntu okhuluma isiZulu njengolimi lokuqala nokuhlolwa kwencazelo yemvume. <span className="font-semibold">(isiZulu machine draft)</span></span>
-              </p>}
+
               <ConsentPanel orgName={orgName} />
             </>
           )}
@@ -537,7 +532,7 @@ export default function AccountPage() {
                       )}
                     </div>
                   ))}
-                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: 'var(--orange)' }}>{pwError}</p>}
+                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: 'var(--orange)' }}><AccountErrorText source={pwError}/></p>}
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
