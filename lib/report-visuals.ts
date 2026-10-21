@@ -3018,6 +3018,13 @@ export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: str
     "st": "Mola wa ho thibela moya",
     "ts": "Layini yo sivela moya",
     "ve": "Muduba wa u thivhela muya"
+  },
+  {
+    "english": "Swale (on-contour earthwork)",
+    "zu": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo)",
+    "st": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo)",
+    "ts": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka)",
+    "ve": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho)"
   }
 ];
 
@@ -3030,12 +3037,15 @@ export function reportElementDisplayName(name:string,defId:string|undefined,lang
   return reportVisualText(def.name,language);
 }
 
-/** The header has always shortened the route's parenthetical explanation. Keep that exact English
- * behaviour, and translate only the summary producer's own label on its recorded route kind. */
-export function reportRouteShortName(label:string,kind:string|undefined,language:string):string {
-  const short=label.replace(/ \(.*\)$/, '');
+/** A full cost line retains the route explanation; the header keeps its established short form.
+ * Only the producer's default label on its recorded route kind may change language. */
+export function reportRouteDisplayName(label:string,kind:string|undefined,language:string,compact=false):string {
+  const shown=compact?label.replace(/ \(.*\)$/, ''):label;
   const source=kind&&Object.hasOwn(ROUTE_LABELS,kind)?ROUTE_LABELS[kind as keyof typeof ROUTE_LABELS]:undefined;
-  return source===label?reportVisualText(short,language):short;
+  return source===label?reportVisualText(shown,language):shown;
+}
+export function reportRouteShortName(label:string,kind:string|undefined,language:string):string {
+  return reportRouteDisplayName(label,kind,language,true);
 }
 
 const visualCopy = new Map(REPORT_VISUAL_COPY.map(row => [row.english, row]));

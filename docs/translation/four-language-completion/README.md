@@ -679,6 +679,63 @@ stable checkout and excludes this batch. Current full CI is pending; no merges. 
 exports, wider workflows, lessons/media and fluent review remain. The goal stays active. This
 changes the picture; `PLAN_VERSION` remains unchanged.
 
+## Full measured costs and summary parity — draft batch 16
+
+Source: `84278474`, stacked on draft #1042. The full bill of quantities now carries the selected
+language through the measured-line builder and markdown writer in isiZulu, Sesotho, Xitsonga
+and Tshivenda. The packet contains 25 document drafts and the complete swale-route explanation.
+Existing summary drafts still own bed/plot/regulated-plant descriptions; the visual registry still
+owns equipment and group wording. These are unreviewed AI drafts, not fluent-speaker approval.
+
+The bill includes native table fields, count/unit words, measurement provenance, all unpriced
+reasons, the priced subtotal, missing-price and existing-item explanations, and the original dated
+VAT-inclusive price disclaimer. No rate, arithmetic, source date, quantity, group/reason ID,
+existing exclusion, or regulated-plant purchasing restriction changes. Full route explanations
+are retained. Equipment translates only when its recorded catalogue ID and exact default name
+match. Plants, custom names and legacy names without IDs stay canonical. No saved geometry or
+report bytes change. English and unsupported-language output is source-exact.
+
+The API now uses that complete shared bill for all four targets, replacing the earlier abbreviated
+isiZulu cost table. Its crop and assessment/risk notes remain. Five-page summaries and sample
+inventories use the same identity-aware equipment and full route names. One-page summary content
+stays exact. The previous native closing-cost assertion was rewritten upward: complete measured
+lines are now required, with dedicated tests for the entire shared bill and real API output.
+
+Initial phone renders hid the source column by 88–135 px. Exact native five-field cost tables now
+reuse the reader's labelled phone cards, retaining all columns in the desktop view. Each cost
+group has a separate accessible rowgroup with one spanning heading, rather than four empty
+labelled fields. English and unrelated tables retain their earlier rendering.
+
+Typecheck, 442 tests in 48 registered files, release notes and whitespace checks pass. Twelve
+captured source cases cover empty/saved/crop/single-bed-and-plot records, every catalogue
+definition and route, existing/mixed status, custom/legacy names, unknown capacity and source-word
+collisions. Checks retain exact English models/markdown/summaries, every printed number, numeric
+and rate decisions, row order, source metadata and original records. Catalogue checks prohibit
+species renaming, identity inferred from words and loss of full route explanations. The source
+audit also demonstrably rejects newly unregistered authored wording and unpriced reasons.
+
+`evidence/report-costs/` retains 73 screenshots/contact sheets and QA for 36 static scenes,
+16 actual-viewer mocked API reports and four actual five-page summaries. Final phone costs have
+zero horizontal scroll range, matching field labels, unchanged desktop/phone cell content and
+no clipped value/source text. Separate native regulated-plant rows and financial caveats were
+inspected. Summary reading-position captures hit-test every chosen tank/route line without
+occlusion; all five page models match the actual viewer. Returning to the saved English full
+report retains its body and language. Temporary saved-report/language storage was restored;
+paid generation was blocked in the browser and provider/auth/metering/fetch were mocked.
+
+Four new five-page PDFs were generated with the actual summary exporter and all twenty pages
+rendered and inspected. Native glyphs, changed water/cost pages, footers and the explicit long-bill
+omission notices remain readable. Actual viewer/PDF fixtures pass through the existing saved-fact
+normaliser, including its element cap, duplicate exclusions and recomputed tank totals; raw
+catalogue cases separately exercise the full builder. The normalisation rules were not changed.
+PDFs remain local QA artifacts under `output/pdf/`; page images and hashes are retained here.
+Full/crop PDF export paths are still unfinished and this does not claim a whole export pass.
+
+The 543-file Node 24 run at monitoring predecessor `1340afff` is still live in its stable separate
+checkout and excludes this batch and #1042. Current full CI is pending. No merges. Crop/purchasing
+text, other exports, wider workflows, lessons/media and fluent review remain; the goal stays
+active. This changes the picture; `PLAN_VERSION` remains unchanged.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility

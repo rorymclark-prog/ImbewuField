@@ -830,7 +830,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     },
   },langCode);
 
-  const boq = buildBillOfQuantities(facts);
+  const boq = buildBillOfQuantities(facts,langCode);
   const risks = buildRiskRegister({
     facts,
     rainfallMm: d.rainfall.annual,
@@ -840,7 +840,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     unpricedBoqLines: boq.unpricedCount,
   },langCode);
 
-  const zuluClosing = langCode === 'zu' ? zuluReportClosingNotes(facts, d, boq) : null;
+  const zuluClosing = langCode === 'zu' ? zuluReportClosingNotes(facts, d) : null;
   const assembled = assembleReportDocument({
     language: langCode,
     cover,
@@ -849,7 +849,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     backMatter: [
       zuluClosing?.crop ?? `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
       ...(!zuluClosing && purchasingGuidance ? [purchasingGuidance] : []),
-      zuluClosing?.costs ?? billOfQuantitiesMarkdown(boq),
+      billOfQuantitiesMarkdown(boq,langCode),
       monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
       riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
       assuranceMarkdown(langCode,{soilSource:d.soil.soilSource}),

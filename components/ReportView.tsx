@@ -209,30 +209,48 @@ function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {
           ['#','Risk','What raised it','Likelihood','Impact','What to do about it'],
         ].some(labels => headers.length === labels.length && labels.every((source,index) =>
           headers[index].trim() === reportDocumentText(source,language))));
+      const nativeCostTable = REPORT_DOCUMENT_LANGUAGES.some(language =>
+        headers.length === 5 && ['Item','Quantity','Rate','Amount','Measured from'].every((source,index) =>
+          headers[index].trim() === reportDocumentText(source,language)));
+      const nativeFieldTable = nativeChecklistTable || nativeCostTable;
       const rows = body.map(splitRow);
+      const groups: { heading?: string; rows: { cells: string[]; index: number }[] }[] = [];
+      // A cost heading must name only its own rows for assistive readers, not all later groups.
+      rows.forEach((row, index) => {
+        if (nativeCostTable && row.length === headers.length && /^\s*\*\*.+\*\*\s*$/.test(row[0]) && row.slice(1).every(cell => !cell.trim())) {
+          groups.push({ heading: row[0], rows: [] });
+        } else {
+          if (!groups.length) groups.push({ rows: [] });
+          groups[groups.length - 1].rows.push({ cells: row, index });
+        }
+      });
+      if (!groups.length) groups.push({ rows: [] });
       elements.push(
         <div key={`table-${i}`} className="overflow-x-auto my-4">
-          <table data-native-checklist={nativeChecklistTable || undefined} role={nativeChecklistTable ? 'table' : undefined} className="w-full text-xs font-display border-collapse">
-            <thead role={nativeChecklistTable ? 'rowgroup' : undefined}>
-              <tr role={nativeChecklistTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)' }}>
+          <table data-native-costs={nativeCostTable || undefined} data-native-checklist={nativeFieldTable || undefined} role={nativeFieldTable ? 'table' : undefined} className="w-full text-xs font-display border-collapse">
+            <thead role={nativeFieldTable ? 'rowgroup' : undefined}>
+              <tr role={nativeFieldTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)' }}>
                 {headers.map((h, j) => (
-                  <th key={j} scope={nativeChecklistTable ? 'col' : undefined} role={nativeChecklistTable ? 'columnheader' : undefined} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)', overflowWrap: nativeMeasurementTable && j !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[j] : undefined }}>
+                  <th key={j} scope={nativeFieldTable ? 'col' : undefined} role={nativeFieldTable ? 'columnheader' : undefined} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)', overflowWrap: nativeMeasurementTable && j !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[j] : undefined }}>
                     {h.trim()}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody role={nativeChecklistTable ? 'rowgroup' : undefined}>
-              {rows.map((row, ri) => (
-                <tr key={ri} role={nativeChecklistTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
+            {groups.map((group, gi) => <tbody key={gi} role={nativeFieldTable ? 'rowgroup' : undefined}>
+              {group.heading && <tr data-section-row role="row">
+                <th colSpan={headers.length} scope="rowgroup" role="rowheader" className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-green)' }}>{stripInlineMarkdown(group.heading)}</th>
+              </tr>}
+              {group.rows.map(({ cells: row, index: ri }) => (
+                <tr key={ri} role={nativeFieldTable ? 'row' : undefined} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} role={nativeChecklistTable ? 'cell' : undefined} data-label={nativeChecklistTable ? stripInlineMarkdown(headers[ci] ?? '') : undefined} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
+                    <td key={ci} role={nativeFieldTable ? 'cell' : undefined} data-label={nativeFieldTable ? stripInlineMarkdown(headers[ci] ?? '') : undefined} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)', overflowWrap: nativeMeasurementTable && ci !== 1 ? 'anywhere' : undefined, minWidth: nativeMeasurementTable ? measurementWidths[ci] : undefined }}>
                       {stripInlineMarkdown(cell)}
                     </td>
                   ))}
                 </tr>
               ))}
-            </tbody>
+            </tbody>)}
           </table>
         </div>
       );

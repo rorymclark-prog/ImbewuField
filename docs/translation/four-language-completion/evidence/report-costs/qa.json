@@ -1,0 +1,1724 @@
+{
+  "sourceSha": "842784742bbfc0a474b1275f0e2a2b50e345170b",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. No changed financial figures, species or geometry.",
+  "screenshots": [
+    "api-st-desktop.png",
+    "api-st-phone-source.png",
+    "api-st-phone-top.png",
+    "api-ts-desktop.png",
+    "api-ts-phone-source.png",
+    "api-ts-phone-top.png",
+    "api-ve-desktop.png",
+    "api-ve-phone-source.png",
+    "api-ve-phone-top.png",
+    "api-zu-desktop.png",
+    "api-zu-phone-source.png",
+    "api-zu-phone-top.png",
+    "final-cautions-contact.png",
+    "final-desktop-contact.png",
+    "final-phone-contact.png",
+    "final-regulated-contact.png",
+    "final-summary-reading-contact.png",
+    "first-st.png",
+    "first-ts.png",
+    "first-ve.png",
+    "first-zu.png",
+    "pdf-st-contact.png",
+    "pdf-st-page-3.png",
+    "pdf-st-page-4.png",
+    "pdf-ts-contact.png",
+    "pdf-ts-page-3.png",
+    "pdf-ts-page-4.png",
+    "pdf-ve-contact.png",
+    "pdf-ve-page-3.png",
+    "pdf-ve-page-4.png",
+    "pdf-zu-contact.png",
+    "pdf-zu-page-3.png",
+    "pdf-zu-page-4.png",
+    "st-cost-cautions.png",
+    "st-empty-phone.png",
+    "st-regulated-row.png",
+    "st-unknown-capacity-phone.png",
+    "summary-st-cost-route-desktop-reading.png",
+    "summary-st-cost-route-phone-reading.png",
+    "summary-st-cost-tank-phone-reading.png",
+    "summary-st-water-route-desktop-reading.png",
+    "summary-st-water-route-phone-reading.png",
+    "summary-st-water-tank-phone-reading.png",
+    "summary-ts-cost-route-desktop-reading.png",
+    "summary-ts-cost-route-phone-reading.png",
+    "summary-ts-cost-tank-phone-reading.png",
+    "summary-ts-water-route-desktop-reading.png",
+    "summary-ts-water-route-phone-reading.png",
+    "summary-ts-water-tank-phone-reading.png",
+    "summary-ve-cost-route-desktop-reading.png",
+    "summary-ve-cost-route-phone-reading.png",
+    "summary-ve-cost-tank-phone-reading.png",
+    "summary-ve-water-route-desktop-reading.png",
+    "summary-ve-water-route-phone-reading.png",
+    "summary-ve-water-tank-phone-reading.png",
+    "summary-zu-cost-route-desktop-reading.png",
+    "summary-zu-cost-route-phone-reading.png",
+    "summary-zu-cost-tank-phone-reading.png",
+    "summary-zu-water-route-desktop-reading.png",
+    "summary-zu-water-route-phone-reading.png",
+    "summary-zu-water-tank-phone-reading.png",
+    "ts-cost-cautions.png",
+    "ts-empty-phone.png",
+    "ts-regulated-row.png",
+    "ts-unknown-capacity-phone.png",
+    "ve-cost-cautions.png",
+    "ve-empty-phone.png",
+    "ve-regulated-row.png",
+    "ve-unknown-capacity-phone.png",
+    "zu-cost-cautions.png",
+    "zu-empty-phone.png",
+    "zu-regulated-row.png",
+    "zu-unknown-capacity-phone.png"
+  ],
+  "browser": {
+    "statics": [
+      {
+        "lang": "zu",
+        "name": "empty",
+        "hasTable": 0,
+        "desktop": null,
+        "phone": null,
+        "documentOverflow": false
+      },
+      {
+        "lang": "zu",
+        "name": "saved-design",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "28adc233acda13ba0a10f023eeab5d2db9eb98c5954e6d6f589039992f0d6af4"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "28adc233acda13ba0a10f023eeab5d2db9eb98c5954e6d6f589039992f0d6af4"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "catalogue",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "df153445c26c5d638799fa826107d1809ee5fd43b9699c89021ec40cb6e60dda"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "df153445c26c5d638799fa826107d1809ee5fd43b9699c89021ec40cb6e60dda"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "existing",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bd5bd123fcb5536c7fe36dbfddd89eec34737cd46978cb814a0396c6b38ce83b"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bd5bd123fcb5536c7fe36dbfddd89eec34737cd46978cb814a0396c6b38ce83b"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "mixed",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "df153445c26c5d638799fa826107d1809ee5fd43b9699c89021ec40cb6e60dda"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "df153445c26c5d638799fa826107d1809ee5fd43b9699c89021ec40cb6e60dda"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "custom",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "06572aeeed32d70d6d8aebc4cfcae66b6a1e0da9251a432e89f89dcecfc809fa"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "06572aeeed32d70d6d8aebc4cfcae66b6a1e0da9251a432e89f89dcecfc809fa"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "legacy",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "dc4a63be7139527c80658b0ba398a48661fa0f057bbec037eabf88204deb7a92"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "dc4a63be7139527c80658b0ba398a48661fa0f057bbec037eabf88204deb7a92"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "unknown-capacity",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f72b3fb29f88d1e29be6491346a9180a0073b19e65f845a953a9455fbb2910f2"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f72b3fb29f88d1e29be6491346a9180a0073b19e65f845a953a9455fbb2910f2"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "zu",
+        "name": "source-word-collisions",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "941d71fc01768450f75b8e909bc00156664bcdf8a394852eb2d858c32adb2a0f"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "941d71fc01768450f75b8e909bc00156664bcdf8a394852eb2d858c32adb2a0f"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "empty",
+        "hasTable": 0,
+        "desktop": null,
+        "phone": null,
+        "documentOverflow": false
+      },
+      {
+        "lang": "st",
+        "name": "saved-design",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bd50f6991a634c15d59910fd6cdb46075dde6f0655c80da0bee5fd66e447df2a"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bd50f6991a634c15d59910fd6cdb46075dde6f0655c80da0bee5fd66e447df2a"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "catalogue",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "1327669b626b89e36234e10f2954d5b7194f5b516eaf534b81817e39c3875bde"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "1327669b626b89e36234e10f2954d5b7194f5b516eaf534b81817e39c3875bde"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "existing",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "0ddd1af11228dffd6cd45c831aee716372c24281bde96cbe7adb5a9551860069"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "0ddd1af11228dffd6cd45c831aee716372c24281bde96cbe7adb5a9551860069"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "mixed",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "1327669b626b89e36234e10f2954d5b7194f5b516eaf534b81817e39c3875bde"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "1327669b626b89e36234e10f2954d5b7194f5b516eaf534b81817e39c3875bde"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "custom",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2a25b1f9a5455b852f6d552fc1a598bfceb107c40c407ace571f5d99809b33b0"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2a25b1f9a5455b852f6d552fc1a598bfceb107c40c407ace571f5d99809b33b0"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "legacy",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "4e3b035523e64f6f886ea3b6de1327fa2920a802f0bf04cb6a6226101a964a64"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "4e3b035523e64f6f886ea3b6de1327fa2920a802f0bf04cb6a6226101a964a64"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "unknown-capacity",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "a96ab10a3101862e92816555341758c993b917a84246c9b09ccb070ad705e2c5"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "a96ab10a3101862e92816555341758c993b917a84246c9b09ccb070ad705e2c5"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "st",
+        "name": "source-word-collisions",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "13d2c04761e731ff6100850f921234d7a7cf62daa7a02f4bf287cad7430b221f"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "13d2c04761e731ff6100850f921234d7a7cf62daa7a02f4bf287cad7430b221f"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "empty",
+        "hasTable": 0,
+        "desktop": null,
+        "phone": null,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ts",
+        "name": "saved-design",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "c473e56107aea8351faf488a5610427649fb92b78920f4da0bca3dd23de1a11f"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "c473e56107aea8351faf488a5610427649fb92b78920f4da0bca3dd23de1a11f"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "catalogue",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bae9b852ce7980b6ea4a918265db339f7cc71636ab16805233bd9aa1c0c47607"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bae9b852ce7980b6ea4a918265db339f7cc71636ab16805233bd9aa1c0c47607"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "existing",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "908ca1e72f4d0995b4a12196ec34c159980df73bbd61e4a30004805c014a05fd"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "908ca1e72f4d0995b4a12196ec34c159980df73bbd61e4a30004805c014a05fd"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "mixed",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bae9b852ce7980b6ea4a918265db339f7cc71636ab16805233bd9aa1c0c47607"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "bae9b852ce7980b6ea4a918265db339f7cc71636ab16805233bd9aa1c0c47607"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "custom",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "fce2cb78c7b46c9a413b12c4ad5f231af6964acbc7427c900ba0d7ca1599e279"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "fce2cb78c7b46c9a413b12c4ad5f231af6964acbc7427c900ba0d7ca1599e279"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "legacy",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "434b36e5aec5909df88cb1c31def01ca2af23b6f99bb7d9f00639ead21041d8c"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "434b36e5aec5909df88cb1c31def01ca2af23b6f99bb7d9f00639ead21041d8c"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "unknown-capacity",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2d45a5a0fc575a180fb3bbd4fee3e20e528f03edc4a232323111beeffc3374b4"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2d45a5a0fc575a180fb3bbd4fee3e20e528f03edc4a232323111beeffc3374b4"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ts",
+        "name": "source-word-collisions",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2d771519358ceddc3bdc1d4874cd28ea28e1d72b641897e811d564f4d1e0c067"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "2d771519358ceddc3bdc1d4874cd28ea28e1d72b641897e811d564f4d1e0c067"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "empty",
+        "hasTable": 0,
+        "desktop": null,
+        "phone": null,
+        "documentOverflow": false
+      },
+      {
+        "lang": "ve",
+        "name": "saved-design",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "83b13cb7c2771a3b2dddedcca985fb6189aeaa97be4ff01ce52e5651529b2609"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "83b13cb7c2771a3b2dddedcca985fb6189aeaa97be4ff01ce52e5651529b2609"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "catalogue",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f86379f6b67ca494f3f31312b3ec751f2efa17e1c9981ede0f85a73533c8fb9c"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f86379f6b67ca494f3f31312b3ec751f2efa17e1c9981ede0f85a73533c8fb9c"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "existing",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "c441435cadb1737e736c6b116b511b7df45ae5bd6d4c1d6f783b69224c7dd03d"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 10,
+          "groups": 2,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "c441435cadb1737e736c6b116b511b7df45ae5bd6d4c1d6f783b69224c7dd03d"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "mixed",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f86379f6b67ca494f3f31312b3ec751f2efa17e1c9981ede0f85a73533c8fb9c"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "f86379f6b67ca494f3f31312b3ec751f2efa17e1c9981ede0f85a73533c8fb9c"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "custom",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "ea50c5aeb4e4cb2f3bfed22cc1b8265d8c100f67b94b604da767ad2baf904ac0"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 88,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "ea50c5aeb4e4cb2f3bfed22cc1b8265d8c100f67b94b604da767ad2baf904ac0"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "legacy",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "376d52f22c756e8a7ad0133904a1fd03e5c3207ceefa8f8cd6386650dc6757cb"
+        },
+        "phone": {
+          "width": 351,
+          "scrollRange": 0,
+          "rows": 97,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "376d52f22c756e8a7ad0133904a1fd03e5c3207ceefa8f8cd6386650dc6757cb"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "unknown-capacity",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "d4aaffddb3ae61a3430700e46608479c6c5c6fc177e0198c45a7bd9e3728a3a4"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 11,
+          "groups": 4,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "d4aaffddb3ae61a3430700e46608479c6c5c6fc177e0198c45a7bd9e3728a3a4"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      },
+      {
+        "lang": "ve",
+        "name": "source-word-collisions",
+        "hasTable": 1,
+        "desktop": {
+          "width": 763.5546875,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": false,
+          "labelsVisible": false,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "3232f31d7477fb974645366333f3a7f7c3d497b3f5306b117735a9cd1cbe5a65"
+        },
+        "phone": {
+          "width": 354,
+          "scrollRange": 0,
+          "rows": 7,
+          "groups": 3,
+          "stacked": true,
+          "labelsVisible": true,
+          "clipped": [],
+          "lastFieldVisible": true,
+          "cellTextSha256": "3232f31d7477fb974645366333f3a7f7c3d497b3f5306b117735a9cd1cbe5a65"
+        },
+        "documentOverflow": false,
+        "sameCellTextAtBothWidths": true
+      }
+    ],
+    "actual": [
+      {
+        "lang": "zu",
+        "name": "empty",
+        "hasTable": false,
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "zu",
+        "name": "saved-design",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "28adc233acda13ba0a10f023eeab5d2db9eb98c5954e6d6f589039992f0d6af4"
+      },
+      {
+        "lang": "zu",
+        "name": "unknown-capacity",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "f72b3fb29f88d1e29be6491346a9180a0073b19e65f845a953a9455fbb2910f2"
+      },
+      {
+        "lang": "zu",
+        "name": "source-word-collisions",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 7,
+        "groups": 3,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "zu",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "941d71fc01768450f75b8e909bc00156664bcdf8a394852eb2d858c32adb2a0f"
+      },
+      {
+        "lang": "st",
+        "name": "empty",
+        "hasTable": false,
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "st",
+        "name": "saved-design",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "bd50f6991a634c15d59910fd6cdb46075dde6f0655c80da0bee5fd66e447df2a"
+      },
+      {
+        "lang": "st",
+        "name": "unknown-capacity",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "a96ab10a3101862e92816555341758c993b917a84246c9b09ccb070ad705e2c5"
+      },
+      {
+        "lang": "st",
+        "name": "source-word-collisions",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 7,
+        "groups": 3,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "st",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "13d2c04761e731ff6100850f921234d7a7cf62daa7a02f4bf287cad7430b221f"
+      },
+      {
+        "lang": "ts",
+        "name": "empty",
+        "hasTable": false,
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ts",
+        "name": "saved-design",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "c473e56107aea8351faf488a5610427649fb92b78920f4da0bca3dd23de1a11f"
+      },
+      {
+        "lang": "ts",
+        "name": "unknown-capacity",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "2d45a5a0fc575a180fb3bbd4fee3e20e528f03edc4a232323111beeffc3374b4"
+      },
+      {
+        "lang": "ts",
+        "name": "source-word-collisions",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 7,
+        "groups": 3,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ts",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "2d771519358ceddc3bdc1d4874cd28ea28e1d72b641897e811d564f4d1e0c067"
+      },
+      {
+        "lang": "ve",
+        "name": "empty",
+        "hasTable": false,
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true
+      },
+      {
+        "lang": "ve",
+        "name": "saved-design",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "83b13cb7c2771a3b2dddedcca985fb6189aeaa97be4ff01ce52e5651529b2609"
+      },
+      {
+        "lang": "ve",
+        "name": "unknown-capacity",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 11,
+        "groups": 4,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "d4aaffddb3ae61a3430700e46608479c6c5c6fc177e0198c45a7bd9e3728a3a4"
+      },
+      {
+        "lang": "ve",
+        "name": "source-word-collisions",
+        "hasTable": true,
+        "width": 351,
+        "scrollRange": 0,
+        "rows": 7,
+        "groups": 3,
+        "stacked": true,
+        "labelsVisible": true,
+        "clipped": [],
+        "lastFieldVisible": true,
+        "contentLanguage": "ve",
+        "documentOverflow": false,
+        "savedBytesUnchanged": true,
+        "cellTextSha256": "3232f31d7477fb974645366333f3a7f7c3d497b3f5306b117735a9cd1cbe5a65"
+      }
+    ]
+  },
+  "summary": [
+    {
+      "lang": "zu",
+      "pages": 5,
+      "summaryExact": true,
+      "screenshots": [
+        {
+          "size": "desktop",
+          "name": "water-tank",
+          "text": "Ithangi le-JoJo 1000L ×1 · ihleliwe",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "water-route",
+          "text": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-tank",
+          "text": "Ithangi le-JoJo 1000L (1 000 L) · inani 1 · kudingeka intengo / isilinganiso",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-route",
+          "text": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-tank",
+          "text": "Ithangi le-JoJo 1000L ×1 · ihleliwe",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-route",
+          "text": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-tank",
+          "text": "Ithangi le-JoJo 1000L (1 000 L) · inani 1 · kudingeka intengo / isilinganiso",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-route",
+          "text": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        }
+      ],
+      "overflow": false,
+      "savedBytesUnchanged": true,
+      "fullOriginalLanguage": "en"
+    },
+    {
+      "lang": "st",
+      "pages": 5,
+      "summaryExact": true,
+      "screenshots": [
+        {
+          "size": "desktop",
+          "name": "water-tank",
+          "text": "Tanka ya JoJo 1000L ×1 · e rerilweng",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "water-route",
+          "text": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-tank",
+          "text": "Tanka ya JoJo 1000L (1 000 L) · palo 1 · ho hlokahala theko / tekanyo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-route",
+          "text": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-tank",
+          "text": "Tanka ya JoJo 1000L ×1 · e rerilweng",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-route",
+          "text": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-tank",
+          "text": "Tanka ya JoJo 1000L (1 000 L) · palo 1 · ho hlokahala theko / tekanyo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-route",
+          "text": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        }
+      ],
+      "overflow": false,
+      "savedBytesUnchanged": true,
+      "fullOriginalLanguage": "en"
+    },
+    {
+      "lang": "ts",
+      "pages": 5,
+      "summaryExact": true,
+      "screenshots": [
+        {
+          "size": "desktop",
+          "name": "water-tank",
+          "text": "Thangi ya JoJo 1000L ×1 · lexi kunguhatiweke",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "water-route",
+          "text": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-tank",
+          "text": "Thangi ya JoJo 1000L (1 000 L) · nhlayo 1 · ku laveka nxavo / mpimo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-route",
+          "text": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-tank",
+          "text": "Thangi ya JoJo 1000L ×1 · lexi kunguhatiweke",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-route",
+          "text": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-tank",
+          "text": "Thangi ya JoJo 1000L (1 000 L) · nhlayo 1 · ku laveka nxavo / mpimo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-route",
+          "text": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        }
+      ],
+      "overflow": false,
+      "savedBytesUnchanged": true,
+      "fullOriginalLanguage": "en"
+    },
+    {
+      "lang": "ve",
+      "pages": 5,
+      "summaryExact": true,
+      "screenshots": [
+        {
+          "size": "desktop",
+          "name": "water-tank",
+          "text": "Thannga ya JoJo 1000L ×1 · tsho dzudzanywaho",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "water-route",
+          "text": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-tank",
+          "text": "Thannga ya JoJo 1000L (1 000 L) · tshivhalo 1 · hu ṱoḓea mutengo / muṅwelo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "desktop",
+          "name": "cost-route",
+          "text": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-tank",
+          "text": "Thannga ya JoJo 1000L ×1 · tsho dzudzanywaho",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "water-route",
+          "text": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho): 34 m",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-tank",
+          "text": "Thannga ya JoJo 1000L (1 000 L) · tshivhalo 1 · hu ṱoḓea mutengo / muṅwelo",
+          "visible": true,
+          "occluded": false
+        },
+        {
+          "size": "phone",
+          "name": "cost-route",
+          "text": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho) · 34 m · R 2 040",
+          "visible": true,
+          "occluded": false
+        }
+      ],
+      "overflow": false,
+      "savedBytesUnchanged": true,
+      "fullOriginalLanguage": "en"
+    }
+  ],
+  "detail": [
+    {
+      "lang": "zu",
+      "legal": "Isitshalo esisohlwini olulawulwayo ohlelweni olugciniwe\ninani 1\n—\nisitshalo esisohlwini esisepulanini eligciniwe — thola izeluleko zomthetho nezemvelo endaweni; ungathengi noma usandise izitshalo ngalolu hlu\nKubekwe eSitudiyo somklamo",
+      "disclaimer": "Zonke izintengo ziyizilinganiso zokuqala zokuhlela ezisekelwe kumanani okuthengisa aseNingizimu Afrika ngasekupheleni kuka-2025/ekuqaleni kuka-2026, kuhlanganisa i-VAT, futhi zizohluka ngesifunda, umhlinzeki nokufinyeleleka kwendawo — thola amanani endawo ngaphambi kokuzibophezela ngebhajethi.",
+      "allLegalCells": 5,
+      "cautionClipped": false
+    },
+    {
+      "lang": "st",
+      "legal": "Semela se lenaneng le laolwang moralong o bolokilweng\npalo 1\n—\nsemela se lenaneng moralong o bolokilweng — fumana keletso ya lehae ya molao le ya tikoloho; o se ke wa reka kapa wa atisa dimela ho latela lenane lena\nHo behilwe ho Studio sa moralo",
+      "disclaimer": "Ditheko tsohle ke dikhakanyo tsa ho rera tse thehilweng dithekong tsa mabenkele tsa Afrika Borwa tsa mafelong a 2025/mathwasong a 2026, ho kenyeletsa VAT, mme di tla fapana ho ya ka sebaka, mofani le ho fihlelleha ha sebaka — fumana dikhotheishene tsa lehae pele o itlama ka tekanyetso.",
+      "allLegalCells": 5,
+      "cautionClipped": false
+    },
+    {
+      "lang": "ts",
+      "legal": "Ximilana lexi nga eka nxaxamelo lowu lawuriwaka eka pulani leyi hlayisiweke\nnhlayo 1\n—\nximilana lexi nxaxametiweke eka pulani leyi hlayisiweke — kuma switsundzuxo swa nawu ni swa mbango swa laha kusuhi; u nga xavi kumbe u andzisa swimilana hi nxaxamelo lowu\nSwi vekiwe eka Xitudio xa dizayini",
+      "disclaimer": "Minxavo hinkwaya i mimpimanyeto yo pulana leyi sekeriweke eka minxavo ya mavhengele ya Afrika-Dzonga ya ekuheleni ka 2025/eku sunguleni ka 2026, ku katsa VAT, naswona yi ta hambana hi ndhawu, muxavisi ni ku ngheneka ka ndhawu — kuma minxavo ya laha kusuhi u nga si tiboha eka mpimanyeto.",
+      "allLegalCells": 5,
+      "cautionClipped": false
+    },
+    {
+      "lang": "ve",
+      "legal": "Tshimela tshi re kha mutevhe wo laedzwaho kha pulane yo vhulungwaho\ntshivhalo 1\n—\ntshimela tshi re kha mutevhe kha pulane yo vhulungwaho — wanani nyeletshedzo ya mulayo na ya mupo ya henefho; ni songo renga kana u andisa zwimela nga mutevhe uyu\nZwo vhewa kha Studio ya nyolo",
+      "disclaimer": "Mitengo yoṱhe ndi ndinganyelo dza u pulana dzo ḓitikaho nga mitengo ya mavhengeleni ya Afurika Tshipembe ya mafheloni a 2025/mathomoni a 2026, hu katelwa VAT, nahone i ḓo fhambana nga dzingu, murengisi na u swikelea ha fhethu — wanani khotheisheni dza henefho musi ni sa athu ḓivhofha kha mugaganyagwama.",
+      "allLegalCells": 5,
+      "cautionClipped": false
+    }
+  ],
+  "pdfs": [
+    {
+      "file": "report-costs-summary-zu-5.pdf",
+      "sha256": "ca54792b1bbf71b8c20a4095cf2b21f093524ece979444bc4e6df2ffee19299b",
+      "pages": 5,
+      "checks": [
+        {
+          "page": 1,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 2,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 3,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 4,
+          "titlePresent": true,
+          "contentChecked": "cost totals/caveat and explicit full-report omission notice; fixed-page exporter intentionally limits long inventories"
+        },
+        {
+          "page": 5,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        }
+      ]
+    },
+    {
+      "file": "report-costs-summary-st-5.pdf",
+      "sha256": "ba44f1277b4d56490b02ef9e0aa13cd8a1b8ccdbd10d763bcd7c164625e9bb0b",
+      "pages": 5,
+      "checks": [
+        {
+          "page": 1,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 2,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 3,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 4,
+          "titlePresent": true,
+          "contentChecked": "cost totals/caveat and explicit full-report omission notice; fixed-page exporter intentionally limits long inventories"
+        },
+        {
+          "page": 5,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        }
+      ]
+    },
+    {
+      "file": "report-costs-summary-ts-5.pdf",
+      "sha256": "c39a942302204bd5d688712fb1990735360eaecb01bba82c1d47bb60b475b2c6",
+      "pages": 5,
+      "checks": [
+        {
+          "page": 1,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 2,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 3,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 4,
+          "titlePresent": true,
+          "contentChecked": "cost totals/caveat and explicit full-report omission notice; fixed-page exporter intentionally limits long inventories"
+        },
+        {
+          "page": 5,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        }
+      ]
+    },
+    {
+      "file": "report-costs-summary-ve-5.pdf",
+      "sha256": "69ada98a0e010a1fdc34fb6f345a15a40f54919a3af7eedf55eb59aefe421507",
+      "pages": 5,
+      "checks": [
+        {
+          "page": 1,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 2,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 3,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        },
+        {
+          "page": 4,
+          "titlePresent": true,
+          "contentChecked": "cost totals/caveat and explicit full-report omission notice; fixed-page exporter intentionally limits long inventories"
+        },
+        {
+          "page": 5,
+          "titlePresent": true,
+          "contentChecked": "all lines"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "typecheckExit": 0,
+    "registeredFocusedFiles": 48,
+    "pass": 442,
+    "fail": 0,
+    "notesExit": 0,
+    "diffCheckExit": 0,
+    "fullSuite": "543-file predecessor 1340afff still live in stable separate Settings checkout; current full CI pending, no merge."
+  },
+  "notes": [
+    "Initial phone source column was offscreen by 88–135 px; final responsive native field cards keep every value and source visible.",
+    "Each native cost group has its own accessible tbody and one spanning rowgroup heading. English and unrelated tables retain original rendering.",
+    "Static source catalogue exercises all definitions. Actual saved-viewer and PDF fixtures use the existing normaliser, including its original element cap, bed/tank exclusions and recomputed water totals. No normalisation rules changed.",
+    "PDFs rendered through the actual summary exporter, all twenty pages visually inspected. Noto glyphs, cost/water pages, footers and omission notices checked. Full/crop PDF paths remain separate unfinished work.",
+    "Saved report and language storage restored after real-viewer checks; paid browser route blocked; actual API provider/auth/metering/fetch mocked.",
+    "The new source audit is checked against deliberately unregistered cost wording and unpriced reasons. Existing source English fixture outputs and native one-page summaries remain exact."
+  ]
+}
