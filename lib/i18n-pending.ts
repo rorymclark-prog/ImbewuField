@@ -1,4 +1,4 @@
-import { AI_FEATURES } from '@/lib/ai-features';
+import { AI_FEATURES } from './ai-features.ts';
 
 // The Design Studio's not-yet-translated copy, split out of lib/i18n.tsx (see that file's
 // header) into its own module so every per-locale file in lib/locales/ can import just this,
@@ -994,4 +994,36 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
   settingsAiPhotos: AI_FEATURES.photos,
   settingsAiDesigns: AI_FEATURES.designs,
   settingsAiSaveError: "These settings could not be saved.",
+};
+
+// Home and report controls share their exact English source while local drafts are reviewed.
+export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  homeTaskMarkNotDone: "Mark not done",
+  homeTaskMarkDone: "Mark done",
+  homeTaskAddCalendar: "Add to calendar",
+  homePricesLabel: "Prices",
+  homePricesDescription: "Wholesale & retail",
+  homeLearnAction: "Learn",
+  homeTourDescription: "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+  homeMentorHeroTitle: "Your mentor dashboard",
+  homeMentorHeroDescription: "Review your assigned farmers, garden visits and training records.",
+  homeMentorHeroOpen: "Open mentor dashboard",
+  homeOrganisationHeroTitle: "Your organisation dashboard",
+  homeOrganisationHeroDescription: "Review gardens, assessments and reports across your programme.",
+  homeOrganisationHeroOpen: "Open organisation dashboard",
+  homeFunderHeroTitle: "Your funder dashboard",
+  homeFunderHeroDescription: "Review the programme summaries shared with you.",
+  homeFunderHeroOpen: "Open funder dashboard",
+  homeSproutAria: "About your farm plan sprout",
+  homeSproutTitle: "Your farm plan sprout",
+  homeSproutDescription: "It grows as you find your land, trace its boundary, survey it, design it and plan crops.",
+  homeSproutStatus: "{completed} of {total} steps done · {percent}% complete",
+  homeWeekdaySun: "Sunday",
+  homeWeekdayMon: "Monday",
+  homeWeekdayTue: "Tuesday",
+  homeWeekdayWed: "Wednesday",
+  homeWeekdayThu: "Thursday",
+  homeWeekdayFri: "Friday",
+  homeWeekdaySat: "Saturday",
+  reportsEnglishSavedNote: "Some saved reports have their full text in English. These controls use {language}.",
 };

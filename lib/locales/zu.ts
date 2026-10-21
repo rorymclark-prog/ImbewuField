@@ -2232,6 +2232,29 @@ const dict: Dict = {
   langPartialTag: "Okunye kusesiNgisini",
   langPartialActiveNote: "Okunye kolimi lwe-{lang} kusaboniswa ngesiNgisi ngesikhathi ukuhumusha kusaqhubeka.",
   // End Settings translation drafts.
+  // Core entry screens: unreviewed drafts; source pairs in core-entry-drafts.json.
+  homeTaskMarkNotDone: "Susa uphawu lokwenziwe",
+  homeTaskMarkDone: "Maka njengokwenziwe",
+  homeTaskAddCalendar: "Faka ekhalendeni",
+  homePricesLabel: "Amanani",
+  homePricesDescription: "Izintengo zezitolo ezinkulu nezokuthengisa",
+  homeLearnAction: "Funda",
+  homeTourDescription: "Bheka amamephu akho, izinhlelo zezitshalo, izivuno, ukuthengisa nama-invoyisi ngokuqondiswa. Zilolonge e-Ubhejane Crèche Garden, bese ubuyela emsebenzini wakho.",
+  homeMentorHeroTitle: "Ideshibhodi yakho yomeluleki",
+  homeMentorHeroDescription: "Buyekeza abalimi ababelwe wena, ukuvakashelwa kwezingadi namarekhodi okuqeqeshwa.",
+  homeMentorHeroOpen: "Vula ideshibhodi yomeluleki",
+  homeOrganisationHeroTitle: "Ideshibhodi yenhlangano yakho",
+  homeOrganisationHeroDescription: "Buyekeza izingadi, ukuhlola nemibiko kulo lonke uhlelo lwakho.",
+  homeOrganisationHeroOpen: "Vula ideshibhodi yenhlangano",
+  homeFunderHeroTitle: "Ideshibhodi yakho yomxhasi",
+  homeFunderHeroDescription: "Buyekeza izifinyezo zohlelo esabelwane nawe.",
+  homeFunderHeroOpen: "Vula ideshibhodi yomxhasi",
+  homeSproutAria: "Mayelana nehlumela lohlelo lwepulazi lakho",
+  homeSproutTitle: "Ihlumela lohlelo lwepulazi lakho",
+  homeSproutDescription: "Liyakhula njengoba uthola indawo yakho, ulandelela umngcele wayo, uyihlola, uyiklama futhi uhlele izitshalo.",
+  homeSproutStatus: "Izinyathelo ezingu-{completed} kwezingu-{total} seziqediwe · {percent}% kuqediwe",
+  reportsEnglishSavedNote: "Eminye imibiko egciniwe inombhalo ophelele wesiNgisi. Izilawuli zalapha zisebenzisa {language}.",
+  // End core entry translation drafts.
 };
 
 export default dict;
