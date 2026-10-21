@@ -1,3 +1,4 @@
+import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { beforeDeclaredUiTranslations, type UiTranslationPacket } from './navigation-translation-preservation.ts';
@@ -18,4 +19,8 @@ export function englishBeforeSettingsTranslations(source: string): string {
     source = source.replace(line, '');
   }
   return source;
+}
+
+export function beforeSettingsDictionary(actual: unknown, locale: 'zu' | 'st' | 'ts' | 've'): unknown {
+  return beforeUiDictionary(actual, locale, packet);
 }

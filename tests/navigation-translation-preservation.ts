@@ -1,3 +1,4 @@
+import { beforeUiDictionary } from './ui-dictionary-preservation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -58,4 +59,16 @@ export function beforeReportViewerTranslations(source: string, locale: UiLocale)
   return beforeDeclaredUiTranslations(source, locale, readPacket('report-viewer-drafts'),
     '\n  // Report viewer controls: unreviewed drafts; source pairs in report-viewer-drafts.json.\n',
     '  // End report viewer translation drafts.\n');
+}
+
+export function beforeNavigationDictionary(actual: unknown, locale: 'st' | 'ts' | 've'): unknown {
+  return beforeUiDictionary(actual, locale, readPacket('navigation-account-drafts'));
+}
+
+export function beforeCoreEntryDictionary(actual: unknown, locale: UiLocale): unknown {
+  return beforeUiDictionary(actual, locale, readPacket('core-entry-drafts'));
+}
+
+export function beforeReportViewerDictionary(actual: unknown, locale: UiLocale): unknown {
+  return beforeUiDictionary(actual, locale, readPacket('report-viewer-drafts'));
 }
