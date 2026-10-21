@@ -886,8 +886,8 @@ restored. Source/trial, missing-timing and actual-reader examples were visually 
 four languages. These checks do not constitute fluent-speaker approval.
 
 The long full run at `6446f1cb` is still in progress. It caught two release-note lines over the
-existing 90-character phone limit, from the two preceding batches. They are shortened here without
-changing the test. No full-suite success is claimed for this branch; current CI must finish before
+existing 90-character phone limit, from the two preceding batches. Follow-up commits on #1044 and
+#1045 shorten those lines without changing the test. No full-suite success is claimed for this branch; current CI must finish before
 merge. This changes the picture; `PLAN_VERSION` stays unchanged. No PDF was created or modified.
 
 Established-production/yield explanations, supplementary and regional research, livestock notes,

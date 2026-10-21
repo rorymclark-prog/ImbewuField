@@ -27,6 +27,6 @@ Final focused validation: typecheck clean; 369 tests passed across 41 registered
 including the original farmer-facing release-note length test. Release-note and whitespace
 checks are clean.
 
-The previous complete suite at #1045 remains live with a known release-note length failure.
-This branch shortens the two offending lines and retains the original test. No full green result
+The complete suite at the older `6446f1cb` remains live with a known release-note length failure.
+Follow-up commits on #1044 and #1045 shorten the two lines and retain the original test. No full green result
 or fluent-speaker approval is claimed from this evidence. `PLAN_VERSION` remains unchanged.
