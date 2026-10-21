@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { X } from 'lucide-react';
 import {
@@ -8,12 +8,19 @@ import {
 } from '@/lib/update-tour';
 import { translate, useLanguage } from '@/lib/i18n';
 import styles from './UpdateGuide.module.css';
+import { isUpdateCopyLanguage,updateDescription } from '@/lib/update-copy';
+import { useUpdateCopy } from '@/lib/use-update-copy';
+import UpdateCopyText from './UpdateCopyText';
 
 export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string | null }) {
   const pathname = usePathname();
   const { lang, t } = useLanguage();
   const [guide, setGuide] = useState<UpdateGuideState | null>(null);
   const [minimized, setMinimized] = useState(false);
+  const panel = useRef<HTMLElement>(null);
+  // Source-paired drafts can scroll. A new stop must start at its heading and close control.
+  useEffect(() => { if (panel.current) panel.current.scrollTop = 0; }, [guide?.phase, guide?.index, minimized]);
+  const nativeCopy = useUpdateCopy(lang, !!guide?.stops.length);
 
   useEffect(() => {
     try {
@@ -52,7 +59,7 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   if (!guide || !guide.stops.length) return null;
   const stop = guide.stops[guide.index];
   const onPage = pathname === stop.href.split('#')[0];
-  const draftLocale = lang === 'st' || lang === 've';
+  const draftLocale = isUpdateCopyLanguage(lang);
   const source = (key: string) => translate('en', key);
   const withCount = (value: string) => value.replace('{index}', String(guide.index + 1))
     .replace('{total}', String(guide.stops.length));
@@ -61,12 +68,12 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
     const local = count ? withCount(t(key)) : t(key);
     const english = count ? withCount(source(key)) : source(key);
     return <><span lang={draftLocale ? lang : undefined}>{local}</span>
-      {draftLocale && local !== english && <small className={styles.source} lang="en">English: {english}</small>}</>;
+      {draftLocale && local !== english && <small className={styles.source} lang="en"><span lang={lang}>{t('offlineSourceLabel')}: </span>{english}</small>}</>;
   };
 
   if (minimized && guide.phase === 'tour') {
-    return <section className={styles.mini} role="region" aria-label={t('updateGuideRegionAria')}>
-      <button type="button" onClick={() => setMinimized(false)}>
+    return <section ref={panel} lang={lang} className={styles.mini} role="region" aria-label={t('updateGuideRegionAria')}>
+      <button type="button" aria-label={withCount(t('updateGuideContinue'))} onClick={() => setMinimized(false)}>
         {paired('updateGuideContinue', true)}
       </button>
       <button type="button" onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={16} aria-hidden /></button>
@@ -74,37 +81,38 @@ export default function UpdateGuide({ loadedBuildSha }: { loadedBuildSha: string
   }
 
   return (
-    <section className={styles.guide} role="region" aria-label={t('updateGuideRegionAria')}>
+    <section ref={panel} lang={lang} className={styles.guide} role="region" aria-label={t('updateGuideRegionAria')}>
       <div className={styles.head}>
         <span>{guide.phase === 'offer' ? t('updateGuideOfferBadge') : withCount(t('updateGuideTourBadge'))}</span>
         <button type="button" className={styles.close} onClick={() => save(null)} aria-label={t('updateGuideCloseAria')}><X size={18} aria-hidden /></button>
       </div>
-      {draftLocale && <p className={styles.draftNotice} role="note">Unreviewed {lang === 'st' ? 'Sesotho' : 'Tshivenda'} machine draft. English is shown with drafted controls.</p>}
+      {draftLocale && <p className={styles.draftNotice} lang={lang} role="note">{t('updatesDraftNotice')}</p>}
       {guide.phase === 'offer' ? (
         <>
           <h2>{paired('updateGuideOfferTitle')}</h2>
-          <p>{t('updateGuideOfferBody')}</p>
+          <p>{paired('updateGuideOfferBody')}</p>
           <div className={styles.actions}>
             <button type="button" className={styles.primary} onClick={() => save({ ...guide, phase: 'tour' })}>{t('settingsGuideMe')}</button>
-            <button type="button" onClick={() => save(null)}>{paired('updateGuideNotNow')}</button>
+            <button type="button" aria-label={t('updateGuideNotNow')} onClick={() => save(null)}>{paired('updateGuideNotNow')}</button>
           </div>
         </>
       ) : (
         <>
-          <h2>{stop.title}</h2>
-          <p className={styles.where}>{stop.where}</p>
-          <p>{stop.detail}</p>
+          <h2><UpdateCopyText source={stop.title} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/></h2>
+          <p className={styles.where}><UpdateCopyText source={stop.where} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/></p>
+          <p><UpdateCopyText source={stop.detail} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/></p>
+          {draftLocale&&[stop.title,stop.where,stop.detail].some(text=>updateDescription(nativeCopy.copy,text)===text)&&<p role="note" lang={lang}>{t(nativeCopy.pending?'updatesLoadingTranslations':nativeCopy.failed?'updatesTranslationsUnavailable':'updatesEnglishGap')}</p>}
           <div className={styles.actions}>
-            {!onPage && <a className={styles.primary} href={stop.href}>{paired('updateGuideOpenPage')}</a>}
+            {!onPage && <a aria-label={t('updateGuideOpenPage')} className={styles.primary} href={stop.href}>{paired('updateGuideOpenPage')}</a>}
             {onPage && <span className={styles.arrived}>{t('updateGuideArrived')}</span>}
           </div>
           <div className={styles.actions}>
-            {guide.index > 0 && <button type="button" onClick={() => save({ ...guide, index: guide.index - 1 })}>{paired('updateGuidePrevious')}</button>}
-            <button type="button" onClick={() => guide.index + 1 < guide.stops.length
+            {guide.index > 0 && <button type="button" aria-label={t('updateGuidePrevious')} onClick={() => save({ ...guide, index: guide.index - 1 })}>{paired('updateGuidePrevious')}</button>}
+            <button type="button" aria-label={t(guide.index+1<guide.stops.length?'updateGuideNext':'updateGuideFinish')} onClick={() => guide.index + 1 < guide.stops.length
               ? save({ ...guide, index: guide.index + 1 }) : save(null)}>
               {guide.index + 1 < guide.stops.length ? paired('updateGuideNext') : paired('updateGuideFinish')}
             </button>
-            <button type="button" onClick={() => save(null)}>{paired('updateGuideStop')}</button>
+            <button type="button" aria-label={t('updateGuideStop')} onClick={() => save(null)}>{paired('updateGuideStop')}</button>
           </div>
         </>
       )}

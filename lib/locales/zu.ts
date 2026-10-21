@@ -1322,7 +1322,7 @@ const dict: Dict = {
   updateGuideOfferBody: 'Uhambo olufushane luzokuyisa emakhasini alesi sibuyekezo. Ungama noma nini.',
   updateGuideNotNow: 'Hhayi manje',
   updateGuideOpenPage: 'Vula leli khasi',
-  updateGuideArrived: 'Usekulesi khasi. Buka izwe elikuzungezile.',
+  updateGuideArrived: "Usukuleli khasi. Bheka okukhona kulo.",
   updateGuidePrevious: 'Okwedlule',
   updateGuideNext: 'Isinyathelo esilandelayo',
   updateGuideFinish: 'Qeda uhambo',
@@ -2486,6 +2486,17 @@ const dict: Dict = {
   offlineErrorServerUnconfirmed: "Iseva ayikuqinisekisanga lokhu kugcinwa.",
   offlineErrorWaitingConnection: "Kulindwe uxhumano.",
   // End offline device controls.
+  // Update notices: unreviewed drafts; update-notice-drafts.json.
+  updatesIntro: "Zonke izinguquko ezifike ku-app, ezintsha kuqala — amanothi afanayo nalawo akwisibhengezo sokuvuselela, agcinwe lapha ukuze anganyamalali lapho kufika isibuyekezo esilandelayo.",
+  updatesGuideAction: "Ngikhombise izinguquko zakamuva",
+  updatesShowFewer: "Bonisa izibuyekezo ezimbalwa",
+  updatesShowOlder: "Bonisa izibuyekezo ezindala",
+  updatesDraftNotice: "Ukuhumusha akukabuyekezwa. Umbhalo wokuqala wesiNgisi uboniswa nezincazelo ezihunyushiwe.",
+  updatesEnglishGap: "Ezinye izincazelo zezinguquko zisasebenzisa umbhalo wokuqala wesiNgisi; ukuhumusha kwazo akukapheli.",
+  updatesLoadingTranslations: "Kulayishwa izincazelo ezihunyushiwe…",
+  updatesTranslationsUnavailable: "Izincazelo ezihunyushiwe azikwazanga ukulayishwa. Umbhalo wokuqala wesiNgisi usatholakala.",
+  updatesTranslationDraft: "Ukuhumusha okusaluhlaka",
+  // End update notices.
 };
 
 export default dict;

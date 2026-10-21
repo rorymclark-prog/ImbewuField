@@ -1,0 +1,33 @@
+{
+  "sourceSha": "2a86dd295ca86e96aed7abc984b7f8b2e666be1e",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "coreRows": 39,
+  "coreNativeValues": 115,
+  "bodySources": 81,
+  "bodyNativeValues": 324,
+  "nativeValues": 439,
+  "olderHistorySourcesRemaining": 1733,
+  "registeredFiles": 552,
+  "selectedFiles": 70,
+  "selectedTests": 603,
+  "selectedFailures": 0,
+  "browserStates": 48,
+  "scrolledReadingLines": 4521,
+  "guideScrollResetStates": 8,
+  "pendingCsvRows": 1073,
+  "humanApproval": false,
+  "productionMerged": false,
+  "planVersionChanged": false,
+  "limits": [
+    "Browser contexts use explicit synthetic guest onboarding/consent preconditions; no claim of real consent or signed-in journey coverage.",
+    "Banner browser checks use existing development force-update to exercise local fallback; actual API/new-build authority and manual reload are exercised separately through real source/component handlers.",
+    "Historical English archive is retained, with a visible native missing-translation notice.",
+    "Prior full run remains live on 2a86dd29; selected tests are not a current full-suite result.",
+    "Representative screenshots were inspected. Browser checks can measure layout and source binding, not fluent translation accuracy."
+  ]
+}

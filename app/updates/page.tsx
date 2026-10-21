@@ -11,6 +11,11 @@ import AppHeader from '@/components/layout/AppHeader';
 import { RELEASE_NOTES } from '@/lib/release-notes';
 import { OPEN_UPDATE_GUIDE_EVENT } from '@/lib/update-tour';
 import { useAppLevel } from '@/lib/app-level';
+import { useLanguage } from '@/lib/i18n';
+import { useUpdateCopy } from '@/lib/use-update-copy';
+import { isUpdateCopyLanguage,updateDescription } from '@/lib/update-copy';
+import { updateDateLabel } from '@/lib/update-copy-date';
+import UpdateCopyText from '@/components/UpdateCopyText';
 
 // A farmer does not need 150+ dated entries or the git short SHA that used to sit beside each
 // one — that is a "should I refresh" note, not a changelog (see lib/release-notes.ts). Simple
@@ -36,6 +41,8 @@ const RECENT_DAYS_SIMPLE = 3;
 const RECENT_DAYS_ALL = 5;
 
 export default function UpdatesPage() {
+  const {t,lang} = useLanguage();
+  const nativeCopy = useUpdateCopy(lang,true);
   const simple = useAppLevel() === 'simple';
   const [showAll, setShowAll] = useState(false);
   const dayGroups = groupNotesByDay(RELEASE_NOTES);
@@ -44,38 +51,39 @@ export default function UpdatesPage() {
   const visibleDays = showAll && !simple ? dayGroups : dayGroups.slice(0, recentDays);
 
   return (
-    <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <AppHeader title={'What’s new'} backFallback="/home" />
+    <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+      <AppHeader title={t('navWhatsNew')} backFallback="/home" />
 
       <main className="flex-1 overflow-y-auto" style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
         <div className="mx-auto max-w-2xl px-4 py-6">
           {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old header's h1 is gone. */}
           <h1 className="text-sm font-display font-semibold m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
-            What&rsquo;s new
+            {t('navWhatsNew')}
           </h1>
           <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>
-            Every change that reached the app, newest first — the same notes the refresh
-            banner shows, kept here so they don&rsquo;t disappear when the next update lands.
+            {t('updatesIntro')}
           </p>
           <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_UPDATE_GUIDE_EVENT))}
             className="mb-6 px-4 rounded-lg font-semibold"
             style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
-            Guide me to recent changes
+            {t('updatesGuideAction')}
           </button>
 
-          {visibleDays.map((day) => (
-            <section key={day.when} className="mb-7">
+          {isUpdateCopyLanguage(lang)&&<p role="note" className="text-xs mb-4">{t('updatesDraftNotice')}</p>}
+          {isUpdateCopyLanguage(lang)&&visibleDays.some(day=>day.changes.some(line=>updateDescription(nativeCopy.copy,line)===line))&&<p role="note" className="text-xs mb-4">{t(nativeCopy.pending?'updatesLoadingTranslations':nativeCopy.failed?'updatesTranslationsUnavailable':'updatesEnglishGap')}</p>}
+          {visibleDays.map((day,groupIndex) => (
+            <section key={`${groupIndex}-${day.when}`} className="mb-7">
               <div className="flex items-baseline gap-2 mb-2">
                 <h2 className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
-                  {day.when}
+                  <span lang={updateDateLabel(day.when,lang)===day.when?'en':lang}>{updateDateLabel(day.when,lang)}</span>
                 </h2>
               </div>
               <ul className="space-y-1.5">
                 {day.changes.map((line, i) => (
                   <li key={`${day.when}-${i}`} className="flex gap-2 text-[13px] leading-snug" style={{ color: 'var(--text-primary)' }}>
                     <span aria-hidden style={{ color: 'var(--color-forest-800)' }}>•</span>
-                    <span>{line}</span>
+                    <span><UpdateCopyText source={line} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/></span>
                   </li>
                 ))}
               </ul>
@@ -89,7 +97,7 @@ export default function UpdatesPage() {
               className="mb-6 px-4 rounded-lg font-semibold"
               style={{ minHeight: 44, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             >
-              {showAll ? 'Show fewer updates' : 'Show older updates'}
+              {showAll ? t('updatesShowFewer') : t('updatesShowOlder')}
             </button>
           )}
         </div>

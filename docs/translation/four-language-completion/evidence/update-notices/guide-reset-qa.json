@@ -1,0 +1,90 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "scrollTop": 0,
+    "close": {
+      "x": 314,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "scrollTop": 0,
+    "close": {
+      "x": 1364,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "scrollTop": 0,
+    "close": {
+      "x": 314,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "scrollTop": 0,
+    "close": {
+      "x": 1364,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "scrollTop": 0,
+    "close": {
+      "x": 314,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "scrollTop": 0,
+    "close": {
+      "x": 1364,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "scrollTop": 0,
+    "close": {
+      "x": 314,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "scrollTop": 0,
+    "close": {
+      "x": 1364,
+      "y": 27.3984375,
+      "width": 44,
+      "height": 44
+    }
+  }
+]
