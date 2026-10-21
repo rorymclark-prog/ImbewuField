@@ -449,7 +449,7 @@ function HomeLandingInner() {
         <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />
         <button
           onClick={() => setSettingsOpen(true)}
-          aria-label={localUi(lang, 'Settings', 'Izilungiselelo')}
+          aria-label={t('settingsButtonAriaLabel')}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >

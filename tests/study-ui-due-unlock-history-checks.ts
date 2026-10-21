@@ -7,6 +7,7 @@ import { readBlindReviewedHistoryFile as readFileSync } from './blind-reviewed-s
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { beforeNavigationDictionary, beforeNavigationTranslations } from './navigation-translation-preservation.ts';
+import { beforeSettingsDictionary, beforeSettingsTranslations, englishBeforeSettingsTranslations } from './settings-translation-preservation.ts';
 import { MENTOR_ENGLISH_PENDING, CHAT_PANEL_ENGLISH_PENDING, NETWORK_FAILURE_ENGLISH_PENDING, PHOTO_UPLOAD_ENGLISH_PENDING, PROFILE_SHEET_ENGLISH_PENDING } from '../lib/i18n-pending.ts';
 
 const folder = 'docs/study-translation-reviews/study-ui-due-unlock-2026-10-08/';
@@ -229,7 +230,7 @@ export function ensureStudyUiDueUnlockCurrent() {
   // sheet, network failure) into every locale and adds unreviewed isiZulu drafts for them, all
   // outside Studies. Check each complete new file, then rewind exactly those additions so the
   // earlier whole-file pins below still bind byte for byte.
-  const liveSource = beforeNavigationTranslations(readFileSync(path('lib/locales/ve.ts'), 'utf8'), 've');
+  const liveSource = beforeNavigationTranslations(beforeSettingsTranslations(readFileSync(path('lib/locales/ve.ts'), 'utf8'), 've'), 've');
   assert.equal(sha(liveSource), 'bb0983d867888c06e799cf8f82d4ef97332f0a47184e5f1ce8b8725ffd67be04', 'complete live VE source bytes after the wave 11 pending spreads');
   assert.equal(sha(rewindWave11Locale(liveSource.toString())), '0062c005b859e3723ce3ca24923cd8880d7f078c09f2b8c67f3df91a92790a69', 'complete live VE source bytes for the newest accepted layer');
   // Main #990 adds report-footnote keys to the shared app dictionary, outside
@@ -245,7 +246,7 @@ export function ensureStudyUiDueUnlockCurrent() {
   // Wave 14 (isiZulu and study tracks) adds the shared language-draft note, BRU zone wording and
   // the Home date names, and keeps four Study action arrows from wrapping alone. Check the complete new file,
   // then bind the wave 13 proof to the exact pre-wave-14 fixture so it still holds byte for byte.
-  const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
+  const liveEnglish = englishBeforeSettingsTranslations(readFileSync(path('lib/i18n.tsx'), 'utf8'));
   assert.equal(sha(liveEnglish), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits');
   const englishBefore14 = readFileSync(path('tests/fixtures/i18n-before-wave-14.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore14), '9d96cbcd3986b7955c1a326491a8c3bf5cbb9fe63d5185b2d4e05307f205a27b', 'complete app dictionary after the wave 13 edits remains exact');
@@ -261,7 +262,7 @@ export function ensureStudyUiDueUnlockCurrent() {
     .replace('  ...REPORT_FOOTNOTE_ENGLISH_PENDING,\n', '');
   assert.equal(sha(predecessor), 'e59b3c22b8d89455c3862be6f418e52b3f47762ad504bcfa4e7f35cb1cc22318', 'canonical English Study source dictionary remains exact after only the two reviewed non-Study additions');
   assert.equal(sha(readFileSync(path('lib/learner-ui-english.ts'))), '7d29b6d32a551a57070489ad33ccee003a2ebdd84a13874360e976af20e6fe74', 'canonical English learner UI source remains exact');
-  const liveZulu = readFileSync(path('lib/locales/zu.ts'), 'utf8');
+  const liveZulu = beforeSettingsTranslations(readFileSync(path('lib/locales/zu.ts'), 'utf8'), 'zu');
   assert.equal(sha(liveZulu), '85491dec24d841716c326c009a1f772a8f44e18ebe259bb940b49652691a2bcf', 'complete isiZulu locale source after the wave 14 edits');
   const zuluBefore14 = readFileSync(path('tests/fixtures/zu-before-wave-14.ts.txt'), 'utf8');
   assert.equal(sha(zuluBefore14), '6d2d7aabb38ed86ff6fc114357bc9b767e9bccf7fc4ba3b54858c83c49c00046', 'complete isiZulu locale source after the wave 13 edits remains exact');
@@ -328,7 +329,7 @@ function rewindWave13PendingDictionary(actual: unknown): unknown {
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
-  actual = beforeNavigationDictionary(actual, 've');
+  actual = beforeNavigationDictionary(beforeSettingsDictionary(actual, 've'), 've');
   actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);

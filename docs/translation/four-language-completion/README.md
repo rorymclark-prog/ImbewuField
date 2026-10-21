@@ -5,7 +5,7 @@ Requested by Rory on 21 October 2026. **In progress, not complete.**
 Targets: isiZulu (`zu`), Sesotho (`st`), Xitsonga (`ts`), Tshivenda (`ve`). The source is English.
 The app also offers other languages; this goal does not remove them.
 
-## Evidence and current batch
+## Navigation and account batch
 
 The audit started from `origin/main` at `d99108f1`. Its English UI dictionary has 2,555 keys,
 including inherited pending blocks. Before this batch, 583 isiZulu, 1,691 Sesotho, 1,706 Xitsonga
@@ -33,6 +33,38 @@ The initial syntax-tree scan found 2,226 literal-text candidates outside the dic
 includes other languages, names and intentional English source text. It also misses text built
 in ordinary data objects, server-generated strings and document generators. It is a work list
 requiring review, not an exhaustive measure of remaining translations.
+
+## Settings batch
+
+`codex/four-language-settings` is stacked on the navigation/account branch (#1028); merge that
+branch first. `settings-drafts.json` pairs 43 Settings entries with all four target languages.
+Four already-existing guidance keys also gain Sesotho and Tshivenda wording. The existing
+isiZulu Settings sentences and existing Xitsonga guidance remain intact.
+
+The actual panel now reads its language context for text size, Simple/All tools, theme choices,
+display mode, guidance, support links, save status, paid-AI controls and save errors. The Home
+settings launcher also uses the shared translated accessibility label. The six English AI
+feature names derive from `AI_FEATURES`, rather than a second independent list. The matching
+pending-source CSV has been regenerated.
+
+The partial-language captions also have marked drafts in all four targets. Slate remains the
+existing theme's proper name, with a translated description. Language names and each listed
+language's partial-status caption deliberately follow that listed language; other languages
+outside this goal retain their existing English fallback.
+
+`tests/settings-localization.test.ts` renders the real Settings and AI controls in each target
+language, including accessibility labels and every switch. Its deliberately hardcoded-English
+variant proves an unwired label is detectable. Source-pair, figure, placeholder and historical
+preservation checks retain the source and all unrelated learning content. Old tests that pinned
+an English-only caption or the former bilingual close-label expression now guard their actual
+rules: explicit draft status, source variables, translated labels and the same 44-pixel target.
+
+Browser evidence in `evidence/settings/` covers all four targets at phone and desktop sizes.
+The panel was inspected visually; the seven AI checkboxes and two display-level choices remain.
+The tests and browser checks do not claim linguistic approval.
+
+These remain **unreviewed AI drafts**, not fluent-speaker-approved translations. The whole-app
+goal remains open; this batch does not complete Home, other workflows, lessons or exports.
 
 ## Remaining work
 

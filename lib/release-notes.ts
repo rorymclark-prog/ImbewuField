@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '21 October 2026', sha: '32746ee5', changes: [
+    'Settings: text size, colours and AI controls now follow all four draft languages.',
+    'The partly-English label now follows isiZulu, Sesotho, Xitsonga and Tshivenda.',
+  ] },
   { when: '21 October 2026', sha: 'd99108f1', changes: [
     'Sesotho, Xitsonga and Tshivenda: more menus, site progress and sign-in messages.',
     'Draft notices now cover all four languages and can open the English source page.',
