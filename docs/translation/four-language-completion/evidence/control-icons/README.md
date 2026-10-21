@@ -36,3 +36,10 @@ The previous complete run at `1340afff` finished with 5,418 passed, one failed a
 TODO. Its one failure was the unchanged icon audit, reproduced before and passing after this fix.
 That old run is not proof for the current stack. A fresh registered full run and CI are still
 required before merge. `PLAN_VERSION` is unchanged; this changes the picture.
+
+The ongoing complete run later found a second obsolete source-shape guard in
+`design-simple-mode.test.ts`: it pinned the removed `toolGlyph` helper name. The three
+helper-name regexes are replaced by execution of the real caller JSX in English and all four
+targets. Tidy/Snap/Cleanup must be absent in Simple and present in All tools; intentionally
+feeding the All-tools row to the Simple audit must throw. Existing Layers and multi-select
+guards stay intact. No product code or pixels change in this follow-up.
