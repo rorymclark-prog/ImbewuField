@@ -7,12 +7,17 @@ import { isDifferentBuild } from '@/lib/pwa-update';
 import { cleanUpdateTour, UPDATE_GUIDE_KEY } from '@/lib/update-tour';
 import type { UpdateTourStop } from '@/lib/release-notes';
 import { useLanguage } from '@/lib/i18n';
+import { cleanUpdateCopy, isUpdateCopyLanguage, updateDescription, updateTourSources, type UpdateCopy } from '@/lib/update-copy';
+import { useUpdateCopy } from '@/lib/use-update-copy';
+import UpdateCopyText from './UpdateCopyText';
 
 interface BuildInfo {
   sha?: string | null;
   /** The new build's own release notes — see the comment in app/api/build-info/route.ts. */
   notes?: unknown;
   tour?: unknown;
+  copyLanguage?: unknown;
+  copy?: unknown;
 }
 
 interface PWAUpdateNotifierProps {
@@ -35,7 +40,10 @@ const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
  */
 export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateNotifierProps) {
   const pathname = usePathname() || '';
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const languageRef = useRef(lang);
+  languageRef.current = lang;
+  const [servedCopies,setServedCopies] = useState<Record<string,{sha:string|null;copy:UpdateCopy|null}>>({});
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   // Null until the server tells us; the local copy is the offline/older-server fallback.
@@ -73,7 +81,8 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
 
   const checkBuild = useCallback(async () => {
     try {
-      const res = await fetch(`/api/build-info?update-check=${Date.now()}`, {
+      const requestedLanguage = languageRef.current;
+      const res = await fetch(`/api/build-info?update-check=${Date.now()}&language=${encodeURIComponent(requestedLanguage)}`, {
         cache: 'no-store',
         headers: { 'Cache-Control': 'no-cache' },
       });
@@ -89,13 +98,21 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           ? data.notes.filter((n): n is string => typeof n === 'string' && n.trim().length > 0)
           : [];
         setNextBuildNotes(served.length > 0 ? served : null);
-        setNextBuildTour(cleanUpdateTour(data.tour));
+        const stops = cleanUpdateTour(data.tour);
+        setNextBuildTour(stops);
+        const published = data.copyLanguage===requestedLanguage&&isUpdateCopyLanguage(requestedLanguage)&&!!data.copy&&typeof data.copy==='object'&&!Array.isArray(data.copy);
+        const copy = published ? cleanUpdateCopy(data.copy, [...served,...updateTourSources(stops)], data.copyLanguage, requestedLanguage) : null;
+        setServedCopies(current=>({...current,[requestedLanguage]:{sha:latestSha,copy}}));
         markUpdateAvailable(latestSha);
       }
     } catch {
       // Update checks must never interrupt normal app use.
     }
   }, [markUpdateAvailable]);
+
+  useEffect(() => {
+    if (updateAvailable) void checkBuild();
+  }, [lang, updateAvailable, checkBuild]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -265,6 +282,11 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   // should not put an "Update ready" pill on a projected slide; the presenter refreshes after.
   const onPitchDeck = pathname.startsWith('/pitch');
 
+  const nativeCopy = useUpdateCopy(lang, updateAvailable && !dismissed && !onPitchDeck);
+  const publishedCopy = servedCopies[lang]?.sha === nextBuildSha ? servedCopies[lang].copy : null;
+  // A new build can deliberately leave a description in English; never restore an older draft.
+  const copy = publishedCopy ?? nativeCopy.copy;
+  const draftLocale = isUpdateCopyLanguage(lang);
   if (!updateAvailable || dismissed || onPitchDeck) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
@@ -304,6 +326,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           padding: '4px 6px 4px 12px',
           fontSize: '0.75rem',
           boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          width: 'max-content',
           maxWidth: 'min(92vw, 24rem)',
         }}
       >
@@ -311,15 +334,16 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           type="button"
           onClick={refreshToUpdate}
           disabled={refreshing}
-          style={{ background: 'transparent', border: 'none', color: '#fff', font: 'inherit', fontWeight: 700, cursor: refreshing ? 'wait' : 'pointer', padding: '4px 2px' }}
+          style={{ background: 'transparent', border: 'none', color: '#fff', font: 'inherit', fontWeight: 700, cursor: refreshing ? 'wait' : 'pointer', minHeight:44, minWidth:0, padding: '4px 2px' }}
         >
-          {refreshing ? t('updateBannerRefreshing') : t('updateBannerReady').replace('{sha}', nextBuildSha ? ` · ${nextBuildSha}` : '')}
+          <span lang={lang}>{refreshing ? t('updateBannerRefreshing') : t('updateBannerReady').replace('{sha}', nextBuildSha ? ` · ${nextBuildSha}` : '')}</span>
+          {draftLocale&&<small lang={lang} style={{display:'block',fontWeight:400,fontSize:12}}>{t('updatesTranslationDraft')}</small>}
         </button>
         <button
           type="button"
           onClick={() => setExpanded(true)}
           aria-label={t('updateBannerWhatChangedAria')}
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 6px', font: 'inherit', display: 'flex', alignItems: 'center' }}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', minHeight:44, minWidth:44, flexShrink:0, padding: '4px 6px', font: 'inherit', display: 'flex', alignItems: 'center' }}
         >
           <ChevronUp size={16} aria-hidden />
         </button>
@@ -327,7 +351,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           type="button"
           onClick={() => setDismissed(true)}
           aria-label={t('updateBannerDismissAria')}
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 8px', font: 'inherit', display: 'flex', alignItems: 'center' }}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', minHeight:44, minWidth:44, flexShrink:0, padding: '4px 8px', font: 'inherit', display: 'flex', alignItems: 'center' }}
         >
           <X size={14} aria-hidden />
         </button>
@@ -352,19 +376,23 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
         flexDirection: 'column',
         alignItems: 'flex-start',
         gap: '0.5rem',
+        width: 'min(92vw, 27rem)',
         maxWidth: 'min(92vw, 27rem)',
+        maxHeight: 'calc(100dvh - var(--bottom-nav-height) - env(safe-area-inset-bottom, 0px) - 1rem)',
+        overflowY: 'auto',
         zIndex: 10000,
         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
         fontSize: '0.875rem',
       }}
     >
+      {draftLocale&&<p role="note" lang={lang} style={{margin:0,fontSize:12,lineHeight:1.4}}>{t('updatesDraftNotice')}</p>}
       <span style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'stretch' }}>
         <span style={{ flex: 1 }}>{t('updateBannerNewVersion').replace('{sha}', nextBuildSha ? ` ${nextBuildSha}` : '')}</span>
         <button
           type="button"
           onClick={() => setExpanded(false)}
           aria-label={t('updateBannerCollapseAria')}
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', minHeight:44, minWidth:44, flexShrink:0, padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
         >
           <ChevronUp size={16} aria-hidden />
         </button>
@@ -372,7 +400,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           type="button"
           onClick={() => setDismissed(true)}
           aria-label={t('updateBannerDismissAria')}
-          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer', minHeight:44, minWidth:44, flexShrink:0, padding: '2px 4px', font: 'inherit', lineHeight: 1, display: 'flex', alignItems: 'center' }}
         >
           <X size={14} aria-hidden />
         </button>
@@ -386,6 +414,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           border: 'none',
           borderRadius: '0.375rem',
           padding: '0.25rem 0.75rem',
+          minHeight:44,
           cursor: refreshing ? 'wait' : 'pointer',
           fontWeight: 600,
           opacity: refreshing ? 0.7 : 1,
@@ -399,6 +428,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           what-you-will-see terms. Capped to VISIBLE_NOTES_CAP lines by default, with an honest
           "and X more" expansion — this whole card is already a step past the collapsed pill
           someone tapped open on purpose, so it earns a couple of lines but not a wall of text. */}
+      {draftLocale&&displayedNotes.some(n=>updateDescription(copy,n)===n)&&<p role="note" lang={lang} style={{margin:0,fontSize:12}}>{t(publishedCopy!==null?'updatesEnglishGap':nativeCopy.pending?'updatesLoadingTranslations':nativeCopy.failed?'updatesTranslationsUnavailable':'updatesEnglishGap')}</p>}
       {notes && notes.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', width: '100%' }}>
           <ul
@@ -417,7 +447,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
             {displayedNotes.map((n) => (
               <li key={n} style={{ display: 'flex', gap: '0.4rem' }}>
                 <span aria-hidden style={{ opacity: 0.6 }}>·</span>
-                <span>{n}</span>
+                <span><UpdateCopyText source={n} lang={lang} copy={copy} sourceLabel={t('offlineSourceLabel')}/></span>
               </li>
             ))}
           </ul>
@@ -432,6 +462,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
                 fontSize: '0.75rem',
                 cursor: 'pointer',
                 padding: '2px 0 0 0',
+                minHeight:44,
                 textAlign: 'left',
                 font: 'inherit',
                 textDecoration: 'underline',

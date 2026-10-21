@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: '2a86dd29', changes: [
+    'Update notices and recent changes now have four draft translations.',
+  ], tour: [{ title: 'Read recent updates', where: "Menu → What's new", href: '/updates',
+    detail: 'The update notice and recent history use your language. Older entries still have English source text while their translations are completed.',
+  }] },
   { when: '21 October 2026', sha: '991ab513', changes: [
     'Offline saving and sending messages now have drafts in all four languages.',
   ] },

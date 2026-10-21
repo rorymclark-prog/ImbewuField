@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import { NextRequest, NextResponse } from 'next/server';
 import { visibleNotes, visibleUpdateTour } from '@/lib/release-notes';
 import { RateLimiter, clientIp } from '@/lib/api-rate-limit';
+import { cleanUpdateCopy, isUpdateCopyLanguage, loadUpdateCopy, updateTourSources } from '@/lib/update-copy';
 
 export const dynamic = 'force-dynamic';
 
@@ -64,6 +65,17 @@ export async function GET(req: NextRequest) {
     shortSha(fallbackGitSha()) ||
     null;
 
+  const notes = visibleNotes(), tour = visibleUpdateTour();
+  const language = new URL(req.url).searchParams.get('language') ?? '';
+  let localized: { copyLanguage?: string; copy?: Readonly<Record<string,string>> } = {};
+  if (isUpdateCopyLanguage(language)) {
+    try {
+      // The installing build owns its descriptions; send only the lines this notice can show.
+      localized = { copyLanguage: language, copy: cleanUpdateCopy(await loadUpdateCopy(language),
+        [...notes, ...updateTourSources(tour)], language, language) };
+    } catch { /* The original source remains usable if this optional language chunk is unavailable. */ }
+  }
+
   return NextResponse.json(
     {
       branch,
@@ -74,8 +86,9 @@ export async function GET(req: NextRequest) {
       // Structurally one build stale, every time ("still show stale update info"). This route
       // runs on the deployment being announced, so its import of lib/release-notes is the new
       // one; the client prefers these and only falls back to its own copy if they are missing.
-      notes: visibleNotes(),
-      tour: visibleUpdateTour(),
+      notes,
+      tour,
+      ...localized,
       source: branch && sha ? (process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA ? 'env' : 'git') : 'fallback',
     },
     {

@@ -1021,9 +1021,64 @@ run. A fresh complete run is required at the finished head; the older result is 
 proof. Study pack/media, other service messages, wider workflows, exports and fluent review
 remain under the whole-app goal. This changes the picture; `PLAN_VERSION` is unchanged.
 
+## Batch 23 — update notices, guides and recent history
+
+Update/discovery controls and history chrome now have four-language draft coverage. The
+[source packet](update-notice-drafts.json) binds 39 control rows (115 added/corrected native
+values) and 81 description sources (324 native values): **439 native values** in this batch.
+The description set includes the 72 most recent archived change descriptions, current guided
+stops, and this batch's own note/tour. The full older archive remains accessible: **1,733 unique
+older change descriptions still need translation**. This batch does not complete the whole app.
+
+The running client asks the installing build for compact exact source/native pairs. New-build
+English remains authoritative, including a deliberately empty native set; an old local draft
+cannot silently replace that hold. Older servers/offline notices can use a lazy local language
+chunk. Wrong-language, unknown-source, altered-number/placeholder and inherited entries are
+rejected. Language changes discard late chunks from the previous language. Optional chunk
+failure leaves English source with an explicit native explanation; shared-layout imports stay
+lazy. No canonical tour title, destination, SHA, phase or index is translated in storage.
+
+Actual update/history/guide descriptions display native drafts with their exact English source
+and native unreviewed status. Dates reuse the shared record-month authority while preserving
+source days, years, ordering and grouping. All pre-existing release-note objects remain exact;
+repeated historical day labels get unique React keys without regrouping them. The history
+heading reuses `navWhatsNew`, aligning its apostrophe with the shared English label. The current
+isiZulu arrival label now describes arriving on a page instead of walking around land. Existing
+native controls outside that declared correction remain exact. New English handoff rows retain
+blank human-review cells; the unchanged CSV generator reports 1,073 rows.
+
+Visual review exposed a half-width phone notice and retained scroll when moving from a long
+guide offer to its first stop. The notice now uses its intended viewport margin, remains
+scrollable, and its controls meet the 44px target rule. Each guide stop opens at its heading and
+close control. The original manual-only reload, collapse timeout, dismiss/pitch behaviour,
+Simple/All tools limits, account-specific discovery count and menu actions remain.
+
+Typecheck is clean; **603 tests pass across 70 selected registered files**. Tests render the
+actual callers/hooks and API, including onboarding CTA actions, source archive order, deliberate
+native holds, delayed language chunks, damaged entries and source-preserving guide progress.
+Historical dictionary/source hashes remain unchanged, with exact all-or-nothing projection of
+only this declared draft layer and negative alteration checks. A filename/directory collision
+found by the existing build-info test was repaired by naming the lazy assets directory
+`update-copy-locales`; the original resolver and assertions remain.
+
+[Browser evidence](evidence/update-notices/verification.json) covers 48 real browser states,
+4,521 scrolled/hit-tested reading lines, phone/desktop in all four languages, and eight further
+guide scroll-reset states. No tested line was clipped/occluded at its reading position, and no
+document overflow or unresolved placeholder was found. Representative screenshots were
+visually inspected. Contexts used synthetic guest onboarding/consent preconditions and the
+existing development force-update switch for local fallback; they do not claim real account,
+consent, new deployment or paid-render coverage. Exact new-build responses are separately
+verified through the actual API/component handlers.
+
+The full 551-file run on predecessor `2a86dd29` remains active and cannot prove this head. A
+current full-suite/CI pass is still required. These are unreviewed AI drafts; the cited primary
+lexical dictionaries support narrow word choices, not approval of complete sentences. No
+lesson source, species identity, farming figure, geometry, PDF, audio or media asset changes.
+This changes the picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
+
 ## Remaining work
 
-1. Finish shared app chrome beyond the checked Settings panel: onboarding, updates, account, dialogs, accessibility
+1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, account, dialogs, accessibility
    text, confirmations and failure states. Replace English/isiZulu-only branches with the shared
    language context. Verify phone layouts and language changes without stale text.
 2. Complete the farmer workflows: map, survey, evidence, designs, crop planning, tasks, records,

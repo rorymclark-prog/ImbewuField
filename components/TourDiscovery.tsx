@@ -6,7 +6,8 @@ import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { dismissTourMenuTip, recordTourOpening, TOUR_INVITATION_LIMIT, type TourDiscovery } from '@/lib/tour-discovery';
 import { announceOverlay } from '@/lib/overlay-signal';
-import { useLanguage } from '@/lib/i18n';
+import { translate,useLanguage } from '@/lib/i18n';
+import { isUpdateCopyLanguage } from '@/lib/update-copy';
 
 const Context = createContext(false);
 export const useTourInvitation = () => useContext(Context);
@@ -14,7 +15,7 @@ export default function TourDiscoveryProvider({ children }: { children: React.Re
   const { user, loading } = useAuth();
   const sample = useSampleRole();
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t,lang } = useLanguage();
   const key = `imbewu-tour-discovery:${encodeURIComponent(user?.uid ?? 'guest')}`;
   const [record, setRecord] = useState<{ key: string; value: TourDiscovery } | null>(null);
   const [menuRect, setMenuRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
@@ -46,11 +47,13 @@ export default function TourDiscoveryProvider({ children }: { children: React.Re
   // The farm photo is now a permanent Home feature; the opening count only times the menu tip.
   return <Context.Provider value={!sample}>
     {children}
-    {showTip && <dialog ref={dialog} onCancel={event => { event.preventDefault(); dismiss(); }} aria-labelledby="tour-menu-tip-title" style={{ position: 'fixed', inset: 0, width: '100vw', maxWidth: 'none', height: '100dvh', maxHeight: 'none', margin: 0, padding: 24, border: 0, background: 'rgba(0,0,0,.82)', color: 'var(--text-primary)' }}>
+    {showTip && <dialog ref={dialog} onCancel={event => { event.preventDefault(); dismiss(); }} lang={lang} aria-label={t('tourMenuTipTitle')} style={{ position: 'fixed', inset: 0, width: '100vw', maxWidth: 'none', height: '100dvh', maxHeight: 'none', margin: 0, padding: 24, border: 0, background: 'rgba(0,0,0,.82)', color: 'var(--text-primary)' }}>
       {menuRect && <button type="button" aria-label={t('tourMenuTipOpenMenuAria')} onClick={() => dismiss(true)} style={{ position: 'fixed', ...menuRect, borderRadius: 99, background: 'var(--bg-1)', color: 'var(--text-primary)', border: '3px solid var(--color-harvest)', boxShadow: '0 0 0 8px rgba(192,122,30,.25)', fontSize: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Menu size={24} aria-hidden /></button>}
       <div style={{ maxWidth: 440, margin: 'max(110px, 20vh) auto 0', padding: 28, borderRadius: 22, background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
         <h2 id="tour-menu-tip-title" style={{ fontSize: 25, fontWeight: 700 }}>{t('tourMenuTipTitle')}</h2>
+        {isUpdateCopyLanguage(lang)&&<><p role="note" style={{fontSize:12,lineHeight:1.4}}>{t('updatesDraftNotice')}</p><small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en','tourMenuTipTitle')}</small></>}
         <p style={{ margin: '16px 0', lineHeight: 1.6 }}>{t('tourMenuTipBodyBefore')}<strong>{t('navTour')}</strong>{t('tourMenuTipBodyAfter')}</p>
+        {isUpdateCopyLanguage(lang)&&<p lang="en" style={{fontSize:12,lineHeight:1.4,margin:'12px 0'}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en','tourMenuTipBodyBefore')}{translate('en','navTour')}{translate('en','tourMenuTipBodyAfter')}</p>}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
           {/* A real fill under fixed white type — not var(--color-harvest) (the text-only
               dim-ochre token) under var(--text-primary), which measured ~2.1:1 in light and

@@ -998,6 +998,16 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  updatesIntro: "Every change that reached the app, newest first — the same notes the refresh banner shows, kept here so they don’t disappear when the next update lands.",
+  updatesGuideAction: "Guide me to recent changes",
+  updatesShowFewer: "Show fewer updates",
+  updatesShowOlder: "Show older updates",
+  updatesDraftNotice: "Unreviewed translation. English source is shown with translated descriptions.",
+  updatesEnglishGap: "Some change descriptions still use English source text; their translations are unfinished.",
+  updatesLoadingTranslations: "Loading translated descriptions…",
+  updatesTranslationsUnavailable: "Translated descriptions could not be loaded. The English source remains available.",
+  updatesTranslationDraft: "Translation draft",
+
   offlineDraftNotice: "Unreviewed translation. Check the English source beside save, send and remove actions.",
   offlineSourceLabel: "English source",
   offlineBadgeOffline: "Offline",
