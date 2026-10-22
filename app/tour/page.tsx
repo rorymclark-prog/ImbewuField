@@ -50,7 +50,7 @@ export default function TourPage() {
         <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>{tourUi('continue', `Continue tour · stop ${tour.current+1}`, { current: tour.current + 1 })}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? tourUi('loading', 'Getting the tour ready…') : tried ? tourUi('tryAgain', 'Try the tour again') : tourUi('start', 'Start the 15-minute tour')}</button>}
         <Link href="/samples/gardens">{tourUi('browseGardens', 'Browse the gardens')}</Link></div>
       </div>
-      <figure><img src="/demo/harvest.webp" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
+      <figure><img src="/demo/harvest.webp" width={512} height={512} loading="lazy" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
     </section>
     {tour?.error && <p role="alert">{productTourError(tour.error, lang)}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>

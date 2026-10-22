@@ -24,7 +24,7 @@ export default function ExchangeHeader() {
           it out; the sample-data notice on the board itself already says the same thing in
           plain words for every reader. */}
       {!simple && (
-        <span className="font-mono hidden sm:block" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: EX.amberText, whiteSpace: 'nowrap' }}>
+        <span className="hidden sm:block" style={{ fontSize: 12, padding: '2px 8px', borderRadius: 100, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: EX.amberText, whiteSpace: 'nowrap' }}>
           {zu ? 'umbukiso · amarekhodi okubonisa' : 'preview · demonstration records'}
         </span>
       )}

@@ -43,7 +43,7 @@ function MatchedRow({ row }: { row: CropRow }) {
           )}{' '}
           {row.cropName}
         </p>
-        <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs " style={{ color: 'var(--text-muted)' }}>
           {recordsTemplate(lang, 'Harvested {harvested} · Sold {sold}', 'Kuvunyiwe {harvested} · Kuthengisiwe {sold}', { harvested: fmtKg(row.harvestedKg), sold: fmtKg(row.soldKg) })}
         </p>
       </div>
@@ -102,7 +102,7 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
     <div className="px-4 py-2.5">
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
         <p className="text-sm font-display" style={{ color: 'var(--text-primary)' }}>{row.label}</p>
-        <p className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs " style={{ color: 'var(--text-muted)' }}>
           {row.harvestedKg > 0 && recordsTemplate(lang, 'Harvested {kg}', 'Kuvunyiwe {kg}', { kg: fmtKg(row.harvestedKg) })}
           {row.harvestedKg > 0 && row.soldKg > 0 && ' · '}
           {row.soldKg > 0 && recordsTemplate(lang, 'Sold {kg}', 'Kuthengisiwe {kg}', { kg: fmtKg(row.soldKg) })}
@@ -154,7 +154,7 @@ export default function HarvestReconciliation({ production, sales, period, now, 
     <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border)' }}>
         <ClipboardList size={14} style={{ color: 'var(--text-secondary)' }} />
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+        <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
           {tx('Harvest reconciliation', 'Ukuqhathanisa isivuno nerekhodi')}
         </span>
       </div>

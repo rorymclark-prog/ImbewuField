@@ -144,7 +144,7 @@ export default function FinanceGraphs({
                 type="button"
                 onClick={() => { setWindowMonths(n); setPicked(null); }}
                 aria-pressed={windowMonths === n}
-                className="font-mono rounded-full px-2 py-0.5"
+                className="tabular-nums rounded-full px-2 py-0.5"
                 style={{
                   fontSize: 12,
                   border: `1px solid ${windowMonths === n ? SOLD : HAIRLINE}`,
@@ -565,7 +565,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
         <span className="font-sans truncate min-w-0" style={{ fontSize: 12.5, color: INK }}>
           <span aria-hidden="true">{row.icon}</span> {row.cropName}
         </span>
-        <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: MUTED }}
+        <span className="font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: MUTED }}
           title={lang === 'zu' ? `English source: ${kgLabel(row.harvestedKg)} harvested of ${kgLabel(row.benchmarkKg)} benchmark` : undefined}>
           {lang === 'zu'
             ? <>Kuvunyiwe {kgLabel(row.harvestedKg)} · isilinganiso {kgLabel(row.benchmarkKg)}</>
@@ -604,7 +604,7 @@ function PlanRow({ row, pct, lossPercent, clipped, lang }: {
 function Figure({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
     <span className="flex flex-col">
-      <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
+      <span className="font-display tabular-nums font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
@@ -617,7 +617,7 @@ function Chip({ dot, label, value, title }: { dot: string; label: string; value:
         width: 7, height: 7, borderRadius: 2, display: 'inline-block',
         background: dot, border: dot === 'transparent' ? `1px solid ${HAIRLINE}` : undefined,
       }} />
-      {value && <span className="font-mono" style={{ fontSize: 12, color: INK }}>{value}</span>}
+      {value && <span className="font-display tabular-nums" style={{ fontSize: 12, color: INK }}>{value}</span>}
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );

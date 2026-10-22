@@ -576,7 +576,7 @@ function HomeLandingInner() {
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
                 {q.art ? (
-                  <img src={q.art} alt="" aria-hidden style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                  <img src={q.art} alt="" aria-hidden width={38} height={38} style={{ width: 38, height: 38, objectFit: 'contain' }} />
                 ) : (
                   <q.Icon size={20} strokeWidth={1.6} />
                 )}
@@ -613,6 +613,8 @@ function HomeLandingInner() {
             src="/home-images/sample-farm-landscape.webp"
             alt=""
             aria-hidden="true"
+            width={720}
+            height={405}
             loading="lazy"
             decoding="async"
             style={{

@@ -468,3 +468,13 @@ test('the /home next-step coach gradient and /example completeness card follow t
   assert.match(read('app/example/page.tsx'), /<CompletionScore inputs=\{DEMO_COMPLETION\} surface \/>/);
   assert.match(read('components/report/CompletionScore.tsx'), /bg: 'var\(--bg-1\)'/);
 });
+
+// code-12 (wave 15): `font-mono` is only harmless while --font-mono is aliased to Public Sans.
+// Chart numbers are Newsreader (`font-display tabular-nums`); everything else inherits the body font.
+test('the farmer charts and exchange header carry no font-mono (code-12)', () => {
+  for (const f of ['components/FinanceGraphs.tsx', 'components/CashflowChart.tsx', 'components/RainfallChart.tsx',
+    'components/ComingUpHarvests.tsx', 'components/AreaPanel.tsx', 'components/HarvestReconciliation.tsx',
+    'components/InsightsPanel.tsx', 'components/exchange/ExchangeHeader.tsx']) {
+    assert.doesNotMatch(read(f), /font-mono/, `${f} should not use font-mono`);
+  }
+});

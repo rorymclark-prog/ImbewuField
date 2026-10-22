@@ -175,7 +175,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
           // before decode) reserves this box before the sketch loads, so the upload zone does
           // not resize under the farmer's cursor once it has. object-fit: contain, not cover —
           // unlike a cropped photo preview, a sketch's shape is the content being reviewed.
-          <img src={preview} alt="sketch" className="mx-auto rounded-lg" style={{ height: 160, objectFit: 'contain', border: '1px solid var(--border)' }} />
+          <img src={preview} alt="sketch" height={160} width={240} className="mx-auto rounded-lg" style={{ height: 160, objectFit: 'contain', border: '1px solid var(--border)' }} />
         ) : (
           <div>
             <PenLine size={22} className="mx-auto mb-1.5" style={{ color: 'var(--color-forest-800)' }} />

@@ -113,7 +113,7 @@ export default function InsightsPanel({ locationData }: Props) {
       {/* Generate button */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="text-xs font-mono uppercase tracking-wider mb-0.5" style={{ color: 'var(--text-secondary)' }}>
+          <div className="text-xs uppercase tracking-wider mb-0.5" style={{ color: 'var(--text-secondary)' }}>
             {t('insightsReportTitle')}
           </div>
           {!insights && !loading && (
@@ -149,7 +149,7 @@ export default function InsightsPanel({ locationData }: Props) {
 
       {error && (
         <div
-          className="text-xs font-mono px-3 py-2 rounded-lg mb-3"
+          className="text-xs px-3 py-2 rounded-lg mb-3"
           style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--gold)' }}
         >
           {error}
