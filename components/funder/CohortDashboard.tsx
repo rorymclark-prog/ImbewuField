@@ -69,19 +69,19 @@ import type { GardenStatus } from '@/lib/db/types';
 /* Programme surfaces match the assessment cards; chart meanings retain their colours.
    Theme-aware (var(--token, fallback)) so this dashboard follows dark mode instead of
    staying a light sheet between a dark header and dark bottom nav. */
-const INK = 'var(--text-primary, #183427)';
-const INK_SOFT = 'var(--text-secondary, #44574B)';
-const INK_MUTED = 'var(--text-muted, #506158)';
-const LINE = 'var(--border, #D7E3D9)';
-const PAPER = 'var(--bg-1, #FFFFFF)';
-const FIELD = 'var(--bg-0, #EFF4EF)';
-const FOREST = 'var(--emerald, #1F4D2B)';
-const ATTENTION = 'var(--orange, #C0531E)';
+const INK = 'var(--text-primary)';
+const INK_SOFT = 'var(--text-secondary)';
+const INK_MUTED = 'var(--text-muted)';
+const LINE = 'var(--border)';
+const PAPER = 'var(--bg-1)';
+const FIELD = 'var(--bg-0)';
+const FOREST = 'var(--emerald)';
+const ATTENTION = 'var(--orange)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: 'var(--emerald, #1F4D2B)',
-  establishing: 'var(--gold, #9E5C08)',
-  support: 'var(--orange, #C0531E)',
+  thriving: 'var(--emerald)',
+  establishing: 'var(--gold)',
+  support: 'var(--orange)',
 };
 
 /** Micro-label floor. Nothing in this file goes under it. */
@@ -424,7 +424,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           className="font-sans font-semibold"
                           style={{
                             fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
-                            background: on ? FOREST : 'rgba(32,25,15,0.05)',
+                            background: on ? FOREST : 'var(--bg-2)',
                             color: on ? 'var(--on-forest)' : INK_SOFT,
                             border: `1px solid ${on ? FOREST : LINE}`,
                           }}
@@ -440,7 +440,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       className="flex items-center gap-1.5 font-sans font-semibold"
                       style={{
                         fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
-                        background: attentionOnly ? 'rgba(192,83,30,0.12)' : 'rgba(32,25,15,0.05)',
+                        background: attentionOnly ? 'rgba(192,83,30,0.12)' : 'var(--bg-2)',
                         color: attentionOnly ? ATTENTION : INK_SOFT,
                         border: `1px solid ${attentionOnly ? 'rgba(192,83,30,0.45)' : LINE}`,
                       }}
@@ -583,7 +583,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
             <div
               className="md:hidden absolute left-1/2 -translate-x-1/2 top-2"
-              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong, #D5C9AE)' }}
+              style={{ width: 40, height: 4, borderRadius: 2, background: 'var(--border-strong)' }}
             />
             <span
               className="font-sans font-bold uppercase"
@@ -596,7 +596,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               onClick={() => setSelectedId(null)}
               aria-label={ui('Close farmer record','Vala irekhodi lomlimi')}
               style={{
-                background: 'rgba(32,25,15,0.06)', border: `1px solid ${LINE}`, borderRadius: 8,
+                background: 'var(--bg-2)', border: `1px solid ${LINE}`, borderRadius: 8,
                 padding: 6, cursor: 'pointer', color: INK_SOFT, display: 'flex', marginTop: 4,
               }}
             >
