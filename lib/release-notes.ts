@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: 'd99108f1', changes: [
+    'The printable plan fits a phone screen again when you open More options.',
+    'Screen readers now pause between an isiZulu label and its English source.',
+    'The Account page has a proper page heading in the practice version.',
+  ] },
   { when: '17 October 2026', sha: '5acf084c', changes: [
     'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',
     'Farmer pages share one header and leave room for the Lima button; Home fills a laptop.',
