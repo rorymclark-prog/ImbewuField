@@ -17,7 +17,8 @@ import {
   listOrgEnrollments, enrolLearner, setEnrollmentStatus,
   getAssignmentsForProfiles, assignModule, unassignModule,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
+import { CATEGORY_TEXT_COLORS } from '@/lib/category-text-colors';
 import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';

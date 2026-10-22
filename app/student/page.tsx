@@ -14,7 +14,8 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { CATEGORY_TEXT_COLORS } from '@/lib/category-text-colors';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
