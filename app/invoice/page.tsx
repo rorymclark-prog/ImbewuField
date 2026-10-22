@@ -1191,7 +1191,7 @@ export default function InvoicePage() {
                       />
                     </div>
                     <button onClick={() => removeItem(it.id)} aria-label={ui('Remove item')}
-                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
+                      className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity relative before:absolute before:-inset-3.5 before:content-['']"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)' }}>
                       <Trash2 size={14} />
                     </button>

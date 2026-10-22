@@ -128,7 +128,7 @@ export default function NgoPage() {
             </Link>
           )}
           <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
+          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold inline-flex items-center min-h-[44px]">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
           <RoleSwitcher current="ngo" />
         </>}
       />

@@ -434,7 +434,7 @@ export default function ContactPage() {
                   type="button"
                   onClick={() => setShowSubject(true)}
                   className="font-sans font-semibold text-left"
-                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, minHeight: 44 }}
                 >
                   + {ui('Add a subject', 'Engeza isihloko')}
                 </button>
