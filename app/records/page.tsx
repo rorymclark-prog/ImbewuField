@@ -160,7 +160,7 @@ function Skeleton({ className = '', style }: { className?: string; style?: React
   return (
     <div
       className={`animate-pulse rounded-lg ${className}`}
-      style={{ background: 'rgba(226,216,196,0.55)', ...style }}
+      style={{ background: 'color-mix(in srgb, var(--border) 55%, transparent)', ...style }}
     />
   );
 }
@@ -799,7 +799,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           </p>
         ) : (
           /* Money in / out toggle */
-          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
+          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', border: '1px solid var(--color-border)' }}>
             {([['in', recordsText(lang, 'Money in', 'Imali engenayo')], ['out', recordsText(lang, 'Money out', 'Imali ephumayo')]] as const).map(([k, label]) => (
               <button key={k} type="button" disabled={form.loading} onClick={() => { clearReceiptDraft(); setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
@@ -1131,7 +1131,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               <Sparkles size={15} />{recordsText(lang, 'Try My Records', 'Zama Amarekhodi Ami')}
             </button>
           )}
-          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
+          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', border: '1px solid var(--color-border)' }}>
             {(['month', 'season', 'year'] as Period[]).map((p) => (
               <button key={p} onClick={() => setPeriod(p)} aria-pressed={period === p}
                 className="px-3 py-1.5 rounded-md font-sans font-semibold capitalize transition-all"

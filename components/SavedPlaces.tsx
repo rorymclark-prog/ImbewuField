@@ -147,7 +147,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               <button
                 onClick={() => setSaving(false)}
                 className="px-3 py-1.5 rounded-lg text-xs transition-all"
-                style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
+                style={{ background: 'color-mix(in srgb, var(--border) 55%, transparent)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
               >
                 {t('cancelBtn')}
               </button>

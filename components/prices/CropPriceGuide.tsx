@@ -72,7 +72,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
       >
         {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : recommended ? <Calculator size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {lang === 'zu' ? <><span className="block">{t(confidenceKey)}</span><span className="block mt-1" style={{ fontSize: 11, fontWeight: 500 }}>{translate('en', confidenceKey)}</span></> : t(confidenceKey)}
+          {lang === 'zu' ? <><span className="block">{t(confidenceKey)}</span><span className="block mt-1" style={{ fontSize: 12, fontWeight: 500 }}>{translate('en', confidenceKey)}</span></> : t(confidenceKey)}
         </span>
       </div>
       {/* Methodology/freshness footnote — the confidence badge above already carries the safety-
@@ -92,7 +92,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'rgba(247,242,233,0.78)', letterSpacing: '0.1em' }}
           >
-            {lang === 'zu' ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
+            {lang === 'zu' ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
           </div>
           <div
             className="font-display font-bold"
@@ -117,7 +117,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}
           >
-            {lang === 'zu' ? <>{t('priceRetail')}<span className="block mt-1" style={{ fontSize: 10, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceRetail')}</span></> : t('priceRetail')}
+            {lang === 'zu' ? <>{t('priceRetail')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceRetail')}</span></> : t('priceRetail')}
           </div>
           <div
             className="font-display font-bold"

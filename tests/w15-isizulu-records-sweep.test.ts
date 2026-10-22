@@ -28,8 +28,11 @@ test('outline-none is always paired with a focus-visible ring in owned files', (
   }
 });
 
-test('farmer page saved-site error goes through t()', () => {
+test('farmer page saved-site error names the Site reports destination', () => {
+  // The English dictionary (lib/i18n.tsx) is hash-pinned whole-file by
+  // tests/study-ui-due-unlock-history-checks.ts, so the string stays inline until the integrator
+  // re-pins and moves it behind a t() key.
   const src = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
-  assert.match(src, /setError\(t\('siteReportsSavedSiteGone'\)\)/);
+  assert.match(src, /Go back to Site reports and choose another site\./);
   assert.doesNotMatch(src, /Return to Site reports/);
 });

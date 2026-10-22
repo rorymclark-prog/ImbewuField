@@ -277,7 +277,7 @@ function Stat({ label, value, sub, color, contextPct }: { label: string; value: 
         {value}
       </div>
       {contextPct !== undefined && (
-        <div style={{ height: 3, background: 'rgba(226,216,196,0.6)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
+        <div style={{ height: 3, background: 'color-mix(in srgb, var(--border) 60%, transparent)', borderRadius: 2, marginTop: 8, overflow: 'hidden' }}>
           <div style={{
             height: '100%',
             width: `${Math.min(100, Math.max(4, contextPct))}%`,
@@ -359,14 +359,14 @@ function EmptyState() {
 function Skeleton() {
   return (
     <div className="p-5 space-y-3">
-      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
-      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'rgba(226,216,196,0.5)' }} />
+      <div className="h-6 w-40 rounded-lg animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
+      <div className="h-3 w-56 rounded animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
       <div className="grid grid-cols-2 gap-2 mt-4">
         {[1,2,3,4].map(i => (
-          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'rgba(226,216,196,0.5)', animationDelay: `${i*80}ms` }} />
+          <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', animationDelay: `${i*80}ms` }} />
         ))}
       </div>
-      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'rgba(226,216,196,0.5)' }} />
+      <div className="h-28 rounded-xl animate-pulse mt-2" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)' }} />
     </div>
   );
 }
@@ -1157,7 +1157,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   ? { color: 'var(--gold)', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: 'var(--color-forest-800)', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (
-                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'rgba(255,254,250,0.8)', border: '1px solid rgba(226,216,196,0.5)', color: '#3A2E22' }}>
+                <div key={i} className="flex gap-2 items-start text-xs font-display leading-relaxed py-1.5 px-2.5 rounded-lg" style={{ background: 'color-mix(in srgb, var(--bg-1) 80%, transparent)', border: '1px solid color-mix(in srgb, var(--border) 50%, transparent)', color: '#3A2E22' }}>
                   <span className="flex-shrink-0 font-bold mt-px" style={{ color: ins.color }}>→</span>
                   <span>{ins.text}</span>
                 </div>
@@ -1200,7 +1200,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     return (
                       <div key={i} className="flex-1 flex flex-col items-center gap-0.5" title={`${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][i]}: ${label} (${rain}mm, ${temp.toFixed(0)}°C)`}>
                         <div className="w-full rounded-sm" style={{ height: 26, background: bg }} />
-                        <span style={{ fontSize: 7.5, color: 'var(--text-muted)' }}>{m}</span>
+                        <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{m}</span>
                       </div>
                     );
                   })}
@@ -1364,7 +1364,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <span>{name}</span>
                       <span style={{ color }}>{pct}%</span>
                     </div>
-                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(226,216,196,0.6)' }}>
+                    <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
                       <div
                         className="h-full rounded-full transition-all duration-700"
                         style={{ width: `${pct}%`, background: color, opacity: 0.8 }}
@@ -1416,7 +1416,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                       <span className="font-sans font-semibold ml-1" style={{ fontSize: 12, color: scoreColor }}>{scoreLabel}</span>
                     </div>
                   </div>
-                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(226,216,196,0.6)' }}>
+                  <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'color-mix(in srgb, var(--border) 60%, transparent)' }}>
                     <div className="h-full rounded-full" style={{ width: `${total * 10}%`, background: scoreColor, transition: 'width 0.6s ease' }} />
                   </div>
                   {improvements.length > 0 && (

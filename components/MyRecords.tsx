@@ -230,7 +230,7 @@ function SubmitBtn({
 }
 
 function Divider() {
-  return <div className="h-px my-4" style={{ background: '#E2D8C4' }} />;
+  return <div className="h-px my-4" style={{ background: 'var(--border)' }} />;
 }
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
