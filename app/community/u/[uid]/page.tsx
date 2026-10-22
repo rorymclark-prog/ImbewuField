@@ -191,7 +191,7 @@ export default function PublicCommunityProfilePage() {
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
                   placeholder={t('communityReportReasonPlaceholder')}
                   rows={3}
-                  className="w-full rounded-xl px-3 py-2.5 font-sans"
+                  className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                   style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 10 }}
                 />
                 <button

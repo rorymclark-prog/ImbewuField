@@ -343,7 +343,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
             className="px-4 rounded-xl font-display font-semibold flex-shrink-0 flex items-center justify-center transition-all"
             style={{ minHeight: 46,
               background: isDisabled ? 'rgba(226,216,196,0.4)' : '#1F4D2B',
-              border: isDisabled ? '1px solid #E2D8C4' : 'none',
+              border: isDisabled ? '1px solid var(--border)' : 'none',
               color: isDisabled ? '#755942' : 'var(--on-forest)' }}>
             {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
           </button>
