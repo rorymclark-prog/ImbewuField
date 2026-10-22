@@ -44,7 +44,7 @@ export default function SiteCropPlanPreview({ siteId, siteName }: { siteId: stri
       <div><strong>{t('cropPlanTitle')}</strong><span>{preview ? counts || t('cropPlanAddGrowingAreas') : t('cropPlanLoading')}</span><span className={styles.action}>{preview?.crops.length ? t('cropPlanPlannedCount').replace('{count}', String(preview.crops.length)) : t('cropPlanStartAction')} <ArrowUpRight size={15} aria-hidden="true" /></span></div>
     </div>
     {!!preview?.crops.length && <div className={styles.crops}>
-      {preview.crops.slice(0, 4).map(key => { const crop = cropByKey(key); const art = getCropArt(key); const name = crop?.name ?? key; return <span key={key} title={name} className={styles.crop}>{art ? <img src={art} alt={name} width={44} height={44} loading="lazy" /> : <span role="img" aria-label={name}>{crop?.icon ?? '🌱'}</span>}</span>; })}
+      {preview.crops.slice(0, 4).map(key => { const crop = cropByKey(key); const art = getCropArt(key); const name = crop?.name ?? key; return <span key={key} title={name} className={styles.crop}>{art ? <img src={art} alt={name} width={44} height={44} loading="lazy" /> : <span role="img" aria-label={name}><Sprout size={28} aria-hidden /></span>}</span>; })}
       {preview.crops.length > 4 && <span className={styles.more}>+{preview.crops.length - 4}</span>}
     </div>}
   </Link>;
