@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(actual,locale),locale),locale),locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(actual,locale),locale),locale),locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -117,4 +117,15 @@ export function beforeAccountDictionary(actual:unknown,locale:string):unknown {
 }
 export function beforeAccountTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,accountPacket(),'\n  // Account controls: unreviewed drafts; account-drafts.json.\n','  // End account controls.\n');
+}
+
+let communityProfileControls: ControlIconPacket | undefined;
+function communityProfilePacket():ControlIconPacket {
+  return communityProfileControls ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/community-profile-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeCommunityProfileDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,communityProfilePacket());
+}
+export function beforeCommunityProfileTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,communityProfilePacket(),'\n  // Community profile controls: unreviewed drafts; community-profile-drafts.json.\n','  // End community profile controls.\n');
 }

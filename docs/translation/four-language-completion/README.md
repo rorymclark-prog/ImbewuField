@@ -1134,6 +1134,70 @@ labels. Wider workflows, community profile, older update history, exports and St
 under the whole-app goal. This changes the picture; `PLAN_VERSION` is unchanged. No production
 merge has occurred.
 
+## Batch 25 — community profile, location sharing and deletion
+
+The [community profile packet](community-profile-drafts.json) binds **33 source rows and 108 new
+native values**, plus 16 translated release/guide values. Every existing isiZulu field remains
+exact. Fifteen English controls/statuses that were previously inline or absent now share the
+existing dictionary authority; the pending-review CSV is regenerated with blank reviewer fields.
+The legacy isiZulu-only review notice remains historical data; this page uses the shared native
+review notice for all four languages.
+
+The actual profile editor now translates headings, examples, hints, save feedback, More crops,
+photo names/actions/progress, native switch names and location/error states. Privacy explanations
+and failure messages retain exact English beside the native draft. The delete question includes
+native choices, exact English and its own unreviewed disclosure. The shared confirmation provider
+accepts an optional caller-declared language/source pair; existing callers, focus on Cancel,
+Escape/backdrop cancellation and promise outcomes retain their behaviour. A dark phone render
+exposed low-contrast cancellation text on white; the Cancel background now follows the theme.
+Both buttons exceed 4.5:1 in the checked light and dark dialog renders.
+The visible guide now links to Account sharing permissions, with native descriptions and exact
+English. Community profile sharing is explicitly a separate choice; the guide avoids directing
+users into the feature-gated editor. This also preserves a useful destination beyond the update
+list when older release stops leave the five-note window.
+
+A failed profile read now withholds the editable form and offers Retry instead of presenting a
+blank profile that could overwrite an unknown saved record. Superseded reads cannot populate the
+next owner's form, and an acknowledged empty record resets the sharing fields. Photo failures
+and deletion failures receive native feedback; pending deletion cannot claim success. Known
+error keys repaint when the language changes without clearing the farmer's draft.
+
+The source catalogue names/IDs remain exact English with explicit language markup. Owned names,
+area text, biography and photos remain verbatim; the canonical empty-name fallback stays
+`A farmer`. The 240-character biography boundary, four-photo limit, six common crops and
+selected-extra behaviour remain. Saving retains the original trim/payload rules, opt-in sharing,
+coarse-coordinate authority, geolocation options and 2,500 ms feedback delay. Profile queries,
+feature gates, photo resize/upload services, permissions and coordinate rounding are unchanged;
+four recorded service/source hashes were compared during verification. No species identity or
+saved geometry changed.
+
+Typecheck and whitespace checks are clean. **902 tests pass across 106 selected registered files** covers source/locale preservation
+with negative altered/partial-layer checks, actual form/hooks, retries, owner switches, precise
+save payloads, native error repainting, photo limits/progress, map opt-in/failures and real
+confirmation outcomes. Existing whole-dictionary source hashes remain; their bounded projection
+removes only this declared layer before checking the historical bytes. No assertion is deleted.
+
+[Browser evidence](evidence/community-profile/verification.json) covers **128 phone/desktop states**:
+eight actual signed-out redirects to login and 120 isolated actual-component states in all four
+languages, including Simple, selected extra crops, four photos, loading, read failure, location
+pending/denied/unsupported, photo/save/delete errors, pending deletion and light/dark confirmation.
+The 4,174 scrolled/hit-tested reading lines had no clipping, occlusion, document overflow or
+unresolved placeholders. Sixteen extra phone field captures expose the photos, switch and errors.
+Eight additional guide renders bring the total to **136 browser states and 4,416 checked
+reading lines**. Representative forms, dialogs, guide panels and recovery states were visually
+inspected. Real signed-out
+contexts use synthetic onboarding/consent preconditions and the documented browser-only community
+preview flag. Editor fixtures use the actual component/hooks/dialog and source CSS with isolated
+services, QA photo placeholders and stub navigation/header. This is not live Firebase, device
+location, consent-flow or signed-in end-to-end verification.
+
+The predecessor **552-file full run at `11de9538` completed with 5,500 passes, zero failures and
+one pre-existing TODO**, exit 0. It does not prove this head. A fresh complete run must cover the
+554 registered files. Native sentences remain unreviewed AI drafts with no fluent-speaker or
+consent-meaning approval. Other community screens, wider workflows, older update history,
+exports and Study/media remain under the active whole-app goal. This changes the picture;
+`PLAN_VERSION` is unchanged. No production merge has occurred.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility

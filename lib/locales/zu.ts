@@ -2497,6 +2497,17 @@ const dict: Dict = {
   updatesTranslationsUnavailable: "Izincazelo ezihunyushiwe azikwazanga ukulayishwa. Umbhalo wokuqala wesiNgisi usatholakala.",
   updatesTranslationDraft: "Ukuhumusha okusaluhlaka",
   // End update notices.
+  // Community profile controls: unreviewed drafts; community-profile-drafts.json.
+  communityMoreCrops: "+ Ezinye izitshalo",
+  communityProfilePhotoAlt: "Isithombe sephrofayela {number}",
+  communityRemovePhotoAria: "Susa isithombe {number}",
+  communityAddPhotoAria: "Faka isithombe",
+  communityPhotoUploading: "Isithombe siyalayishwa…",
+  communityPhotoUploadError: "Akukwazanga ukufaka leso sithombe. Zama futhi.",
+  communityProfileLoadError: "Akukwazanga ukulayisha iphrofayela yakho yomphakathi. Hlola uxhumano lwakho bese uzama futhi.",
+  communityProfileDeleteError: "Akukwazanga ukuqinisekisa ukususwa. Hlola uxhumano lwakho bese uzama futhi.",
+  communityProfileDeleting: "Kuyasuswa…",
+  // End community profile controls.
 };
 
 export default dict;

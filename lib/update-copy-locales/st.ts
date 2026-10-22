@@ -82,6 +82,10 @@ const copy:UpdateCopy={
   "Read recent updates": "Bala dintlafatso tsa moraorao",
   "Menu → What's new": "Menyu → Tse ntjha",
   "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Tsebiso ya ntlafatso le nalane ya moraorao di sebedisa puo ya hao. Dintlha tsa kgale di ntse di na le mongolo wa pele wa Senyesemane ha diphetolelo tsa tsona di ntse di phethwa.",
-  "Account controls and messages now have four draft translations.": "Ditaolo le melaetsa ya akhaonto jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
+  "Account controls and messages now have four draft translations.": "Ditaolo le melaetsa ya akhaonto jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Community profile controls now have four draft translations.": "Ditaolo tsa profaele ya setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Review sharing choices": "Hlahloba dikgetho tsa ho arolelana",
+  "Menu → Account": "Menyu → Akhaonto",
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ho Akhaonto, hlahloba ditumello tsa ho arolelana pela mongolo wa tsona wa pele wa Senyesemane. Ho arolelana profaele ya setjhaba ke kgetho e arohaneng ha Setjhaba se fumaneha."
 };
 export default copy;

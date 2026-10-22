@@ -82,6 +82,10 @@ const copy:UpdateCopy={
   "Read recent updates": "Vhalani khwiniso dza zwenezwino",
   "Menu → What's new": "Menyu → Zwiswa",
   "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Nḓivhadzo ya khwiniso na ḓivhazwakale ya zwenezwino zwi shumisa luambo lwaṋu. Rekhodo dza kale dzi kha ḓi vha na maṅwalwa a u thoma a English musi ṱhalutshedzelo dzadzo dzi tshi kha ḓi fhedziswa.",
-  "Account controls and messages now have four draft translations.": "Zwilangi na milaedza zwa akhaunthu zwino zwi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa."
+  "Account controls and messages now have four draft translations.": "Zwilangi na milaedza zwa akhaunthu zwino zwi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa.",
+  "Community profile controls now have four draft translations.": "Zwilangi zwa phurofaiḽi ya tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
+  "Review sharing choices": "Ṱolani khetho dza u kovhana",
+  "Menu → Account": "Menyu → Akhaunthu",
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Kha Akhaunthu, ṱolani thendelo dza u kovhana tsini na maṅwalwa adzo a u thoma a English. U kovhana phurofaiḽi ya tshitshavha ndi khetho yo fhambanaho musi Tshitshavha tshi tshi wanala."
 };
 export default copy;

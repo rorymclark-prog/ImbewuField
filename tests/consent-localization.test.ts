@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { actualConsent, consentRecord } from './consent-renderer.ts';
 import { controlLocales, controlT, type ControlLanguage } from './control-icon-renderers.ts';
-import { beforeConsentDictionary, beforeConsentTranslations, beforeOfflineDeviceTranslations, beforeUpdateNoticeTranslations, beforeAccountTranslations } from './ui-dictionary-preservation.ts';
+import { beforeConsentDictionary, beforeConsentTranslations, beforeOfflineDeviceTranslations, beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations } from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/consent-drafts.json'));
 const languages=['zu','st','ts','ve'] as const;
@@ -25,7 +25,7 @@ test('consent drafts bind to exact prior wording and retain every original Engli
       if(!packet.entries.some((e:any)=>e.key===row.key&&typeof e[lang]==='string'))
         assert.equal(Object.hasOwn(controlLocales[lang],row.key)?t(row.key):null,row[lang]);
     }
-    const source=beforeOfflineDeviceTranslations(beforeUpdateNoticeTranslations(beforeAccountTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang);
+    const source=beforeOfflineDeviceTranslations(beforeUpdateNoticeTranslations(beforeAccountTranslations(beforeCommunityProfileTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang),lang);
     assert.notEqual(beforeConsentTranslations(source,lang),source);
     assert.equal(createHash('sha256').update(beforeConsentTranslations(source,lang)).digest('hex'),packet.localeSourceSha256[lang],'every undeclared locale byte retains its pre-consent hash');
     const bad=source.replace(JSON.stringify(t('popiaShareLabel')),JSON.stringify(t('popiaShareLabel')+' CHANGED'));

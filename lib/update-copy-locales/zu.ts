@@ -82,6 +82,10 @@ const copy:UpdateCopy={
   "Read recent updates": "Funda izibuyekezo zakamuva",
   "Menu → What's new": "Imenyu → Yini entsha",
   "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Isaziso sesibuyekezo nomlando wakamuva kusebenzisa ulimi lwakho. Okubhalwe ngaphambili kusenombhalo wokuqala wesiNgisi ngenkathi ukuhumusha kwazo kuqedelwa.",
-  "Account controls and messages now have four draft translations.": "Izinkinobho nemilayezo ye-akhawunti manje kunokuhumusha okusaluhlaka ngezilimi ezine."
+  "Account controls and messages now have four draft translations.": "Izinkinobho nemilayezo ye-akhawunti manje kunokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Community profile controls now have four draft translations.": "Izinkinobho zephrofayela yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Review sharing choices": "Buyekeza izinketho zokwabelana",
+  "Menu → Account": "Imenyu → I-akhawunti",
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ku-Akhawunti, buyekeza izimvume zokwabelana eceleni kombhalo wazo wokuqala wesiNgisi. Ukwabelana ngephrofayela yomphakathi kuyisinqumo esihlukile lapho Umphakathi utholakala."
 };
 export default copy;

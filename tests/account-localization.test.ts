@@ -8,7 +8,7 @@ import{accountText,accountErrorText,accountRoleName,allowanceResetLabel,fillAcco
 import{ACCOUNT_DRAFTS,ACCOUNT_KEYS}from'../lib/account-copy-data.ts';
 import{loadUpdateCopy,updateDescription}from'../lib/update-copy.ts';
 import{AUTH_ERROR_KEYS}from'../lib/auth-error-copy.ts';
-import{beforeAccountDictionary,beforeAccountTranslations}from'./ui-dictionary-preservation.ts';
+import{beforeAccountDictionary,beforeAccountTranslations,beforeCommunityProfileTranslations}from'./ui-dictionary-preservation.ts';
 import{recordsMonthLong}from'../lib/records-months.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/account-drafts.json'));
@@ -20,7 +20,7 @@ test('account drafts retain exact sources, inline isiZulu and shared controls wi
  for(const lang of langs){
   for(const row of packet.entries){assert.equal(controlT('en')(row.key),row.english);if(row[lang])assert.equal(controlT(lang)(row.key),row[lang]);}
   for(const row of packet.bodyEntries){assert.equal(ACCOUNT_DRAFTS[row.english][lang],row[lang]);assert.equal(local(lang,row.english),row[lang],'the runtime must select this language, not just retain unused draft data');assert.deepEqual(tokens(row[lang]),tokens(row.english));if(!(row.english==='dashboard'&&lang==='ts'))assert.notEqual(row[lang],row.english);}
-  const source=read(`lib/locales/${lang}.ts`),hash=createHash('sha256').update(beforeAccountTranslations(source,lang)).digest('hex');assert.equal(hash,packet.sourceSha256[`lib/locales/${lang}.ts`]);
+  const source=beforeCommunityProfileTranslations(read(`lib/locales/${lang}.ts`),lang),hash=createHash('sha256').update(beforeAccountTranslations(source,lang)).digest('hex');assert.equal(hash,packet.sourceSha256[`lib/locales/${lang}.ts`]);
   if(lang!=='zu'){const broken=source.replace(JSON.stringify(controlT(lang)('profileChangePhoto')),JSON.stringify('Unlisted edit'));assert.equal(beforeAccountTranslations(broken,lang),broken);const partial={...controlLocales[lang]};delete partial.profileChangePhoto;assert.equal(beforeAccountDictionary(partial,lang),partial);}
  }
  for(const[source,key]of Object.entries(packet.authSourceKeys)){assert.equal(AUTH_ERROR_KEYS[source],key);for(const lang of langs)assert.notEqual(controlT(lang)(key as string),controlT('en')(key as string),'a known auth message must use a native description');}

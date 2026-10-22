@@ -82,6 +82,10 @@ const copy:UpdateCopy={
   "Read recent updates": "Hlaya mipfuxeto ya sweswinyana",
   "Menu → What's new": "Menyu → Leswintshwa",
   "The update notice and recent history use your language. Older entries still have English source text while their translations are completed.": "Xitiviso xa mpfuxeto ni matimu ya sweswinyana swi tirhisa ririmi ra wena. Tirhekhodo ta khale ta ha ri ni tsalwa ro sungula ra Xinghezi loko vuhundzuluxi bya tona byi ri karhi byi hetisiwa.",
-  "Account controls and messages now have four draft translations.": "Swilawuri ni swiviko swa akhawunti sweswi swi ni vuhundzuluxi bya mpfampfarhuto hi tindzimi ta mune."
+  "Account controls and messages now have four draft translations.": "Swilawuri ni swiviko swa akhawunti sweswi swi ni vuhundzuluxi bya mpfampfarhuto hi tindzimi ta mune.",
+  "Community profile controls now have four draft translations.": "Swilawuri swa phurofayili ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+  "Review sharing choices": "Kambisisa swihlawulekisi swo avelana",
+  "Menu → Account": "Menyu → Akhawunti",
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Eka Akhawunti, kambisisa mpfumelelo wo avelana ekusuhi ni tsalwa ra wona ro sungula ra Xinghezi. Ku avelana phurofayili ya vaaki i xihlawulekisi lexi hambaneke loko Vaaki va kumeka."
 };
 export default copy;
