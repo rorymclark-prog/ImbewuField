@@ -1,0 +1,60 @@
+{
+  "sourceSha": "6cb476bcb9abb385b6970c0f643f9188a4d7bf05",
+  "status": "Unreviewed AI drafts; no fluent-speaker, privacy or moderation approval.",
+  "states": 400,
+  "realGuestRedirects": 16,
+  "isolatedActualComponentStates": 384,
+  "languages": [
+    {
+      "lang": "zu",
+      "states": 100,
+      "realGuestRedirects": 4,
+      "readingLines": 2205,
+      "minimumVisibleTextContrast": 4.703280541523846
+    },
+    {
+      "lang": "st",
+      "states": 100,
+      "realGuestRedirects": 4,
+      "readingLines": 2170,
+      "minimumVisibleTextContrast": 4.703280541523846
+    },
+    {
+      "lang": "ts",
+      "states": 100,
+      "realGuestRedirects": 4,
+      "readingLines": 2221,
+      "minimumVisibleTextContrast": 4.703280541523846
+    },
+    {
+      "lang": "ve",
+      "states": 100,
+      "realGuestRedirects": 4,
+      "readingLines": 2175,
+      "minimumVisibleTextContrast": 4.703280541523846
+    }
+  ],
+  "checks": [
+    "scrolled reading-line hit tests",
+    "document overflow",
+    "unresolved placeholders",
+    "visible text contrast >= 4.5"
+  ],
+  "fixtures": "Actual components/hooks and source CSS; isolated services, synthetic QA photos, stub header/navigation and map runtime. Real signed-out routes use synthetic onboarding/consent preconditions and documented browser preview flag.",
+  "limits": [
+    "No signed-in Firebase end-to-end delivery, actual moderation, device location or live map tiles.",
+    "Global photo viewer and static document metadata titles remain English pending later batches.",
+    "No fluent-speaker, privacy or moderation-meaning approval."
+  ],
+  "observedRepairs": [
+    "Listener failure no longer extends beyond phone width.",
+    "Short-screen report/listener/send errors share a scroll area; composer remains reachable.",
+    "Board kind controls and error/delete text pass contrast; Free uses theme-aware gold tint and body ink."
+  ],
+  "unchangedServiceAndCalendarSha256": {
+    "lib/records-months.ts": "fdcb819e8e7aab300ceb787e0edeb39be0f01202bf35e32bf73eff2a76999e4a",
+    "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
+    "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188"
+  },
+  "rerun": "After the last action-error wording check and the final Free theme correction, all 400 states were rerun. Contrast sampling resolves computed CSS colours through canvas, including color-mix, before alpha composition."
+}

@@ -87,6 +87,7 @@ const copy:UpdateCopy={
   "Review sharing choices": "Kambisisa swihlawulekisi swo avelana",
   "Menu → Account": "Menyu → Akhawunti",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Eka Akhawunti, kambisisa mpfumelelo wo avelana ekusuhi ni tsalwa ra wona ro sungula ra Xinghezi. Ku avelana phurofayili ya vaaki i xihlawulekisi lexi hambaneke loko Vaaki va kumeka.",
-  "Farmer profile and report controls now have four draft translations.": "Swilawuri swa phurofayili ya murimi ni xiviko sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune."
+  "Farmer profile and report controls now have four draft translations.": "Swilawuri swa phurofayili ya murimi ni xiviko sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+  "Community messages, board and map controls now have four draft translations.": "Swilawuri swa marungula, bodo ni mepe ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune."
 };
 export default copy;
