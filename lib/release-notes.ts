@@ -42,9 +42,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '22 October 2026', sha: 'd99108f1', changes: [
-    'The printable plan fits a phone screen again when you open More options.',
-    'Screen readers now pause between an isiZulu label and its English source.',
-    'The Account page has a proper page heading in the practice version.',
+    'The printable plan fits a phone; screen readers pause between isiZulu and English.',
+    'Buttons and page titles use plain sentence case; journal days open with one line.',
+    'Study arrows are proper icons; staff charts and dashboards follow dark mode.',
+    'On a laptop, Vision and Example fill the screen and farmer text is never below 12px.',
+    'Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.',
   ] },
   { when: '17 October 2026', sha: '5acf084c', changes: [
     'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',

@@ -308,6 +308,7 @@ export function ensureStudyUiDueUnlockCurrent() {
   // the Home date names, and keeps four Study action arrows from wrapping alone. Check the complete new file,
   // then bind the wave 13 proof to the exact pre-wave-14 fixture so it still holds byte for byte.
   const liveEnglish = readFileSync(path('lib/i18n.tsx'), 'utf8');
+  assert.equal(sha(liveEnglish), '737049f60cfd7ea083460c212c5f3f7b985e8177ec03045f34619b7627331512', 'complete app dictionary after the wave 15 edits');
   const englishBefore15 = readFileSync(path('tests/fixtures/i18n-before-wave-15.tsx.txt'), 'utf8');
   assert.equal(sha(englishBefore15), '2485d3cc34a6b8e0b5bf964b8c8fd20ac8ec341be769ebf1094bce3987cdc282', 'complete app dictionary after the wave 14 edits remains exact');
   assertOnlyWaveChanges(englishBefore15, liveEnglish, WAVE_15_ENGLISH_REWORDED, WAVE_14_REMOVED, 'app dictionary', 'wave 15');
@@ -388,11 +389,47 @@ function rewindWave13PendingDictionary(actual: unknown): unknown {
   return before;
 }
 
+/** Wave 15 (copy-07, 22 Oct 2026) put 17 English-pending labels into sentence case. Locales that
+ * still spread those groups untranslated carry the new wording, so dated owners see the exact
+ * pre-wave-15 label again. Each after value must be the live line in lib/i18n-pending.ts. */
+const WAVE_15_PENDING_REWORDED: Record<string, { before: string; after: string }> = {
+  journalOpenRecords: { before: 'Open My Records', after: 'Open my records' },
+  speciesPickerTitle: { before: 'Plant Catalog', after: 'Plant catalog' },
+  designPaletteElementsDragTitle: { before: 'Drag Elements panel', after: 'Drag elements panel' },
+  designPrintTitle: { before: 'Print / Export', after: 'Print / export' },
+  designPrintSheetBase: { before: 'Existing Site & Base', after: 'Existing site & base' },
+  designPrintSheetSector: { before: 'Sector Analysis', after: 'Sector analysis' },
+  designPrintSheetZones: { before: 'Permaculture Zones', after: 'Permaculture zones' },
+  designPrintSheetWater: { before: 'Water & Irrigation', after: 'Water & irrigation' },
+  designPrintSheetEarthworks: { before: 'Earthworks & Contour Setting-Out', after: 'Earthworks & contour setting-out' },
+  designPrintSheetPlanting: { before: 'Planting & Agroforestry', after: 'Planting & agroforestry' },
+  designPrintSheetStructures: { before: 'Livestock & Infrastructure', after: 'Livestock & infrastructure' },
+  designPrintSheetAll: { before: 'Integrated Masterplan', after: 'Integrated masterplan' },
+  designPrintSheetImplementation: { before: 'Implementation & Phasing', after: 'Implementation & phasing' },
+  designGlossyPreviewTitle: { before: 'Preview & Export', after: 'Preview & export' },
+  designGlossyExportShare: { before: 'Export & Share', after: 'Export & share' },
+  designGlossyExactCanvas: { before: 'Design Map', after: 'Design map' },
+  designGlossyAiHybrid: { before: 'AI Polished', after: 'AI polished' },
+};
+function rewindWave15PendingDictionary(actual: unknown): unknown {
+  if (!actual || typeof actual !== 'object') return actual;
+  const dict = actual as Record<string, unknown>;
+  const keys = Object.keys(WAVE_15_PENDING_REWORDED).filter(key => Object.hasOwn(dict, key) && dict[key] === WAVE_15_PENDING_REWORDED[key].after);
+  if (!keys.length) return actual;
+  const pendingSource = readFileSync(path('lib/i18n-pending.ts'), 'utf8');
+  const before = { ...dict };
+  for (const key of keys) {
+    assert.ok(pendingSource.includes(`\n  ${key}: '${WAVE_15_PENDING_REWORDED[key].after}',\n`), `${key}: live English pending source holds the exact wave 15 wording`);
+    before[key] = WAVE_15_PENDING_REWORDED[key].before;
+  }
+  return before;
+}
+
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
-  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
+  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(rewindWave15PendingDictionary(actual)));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);
