@@ -76,3 +76,5 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
   async dispose(){await act(async()=>renderer.unmount());},
  };
 }
+
+export {compile as compileActualComponent,APP_LANGS as actualAppLanguages};

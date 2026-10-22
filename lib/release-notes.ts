@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: '40b81b78', changes: [
+    'Community profile controls now have four draft translations.',
+  ], tour: [{ title: 'Review sharing choices', where: 'Menu → Account', href: '/account',
+    detail: 'In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.',
+  }] },
   { when: '22 October 2026', sha: '11de9538', changes: [
     'Account controls and messages now have four draft translations.',
   ] },

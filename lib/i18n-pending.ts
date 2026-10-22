@@ -998,6 +998,22 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  // Existing profile-only branches and newly named accessible/error controls.
+  communityLocationUnsupported: "This device can't share a location.",
+  communityLocationDenied: "Could not get your location — map visibility left off.",
+  communityProfileSaveError: "Could not save — try again.",
+  communityLoadingStatus: "Loading community profile",
+  communityLocationPending: "Getting your approximate area…",
+  communityProfileSaved: "Saved",
+  communityMoreCrops: "+ More crops",
+  communityProfilePhotoAlt: "Profile photo {number}",
+  communityRemovePhotoAria: "Remove photo {number}",
+  communityAddPhotoAria: "Add a photo",
+  communityPhotoUploading: "Uploading photo…",
+  communityPhotoUploadError: "Could not add that photo. Try again.",
+  communityProfileLoadError: "Could not load your community profile. Check your connection and try again.",
+  communityProfileDeleteError: "Could not confirm deletion. Check your connection and try again.",
+  communityProfileDeleting: "Deleting…",
   updatesIntro: "Every change that reached the app, newest first — the same notes the refresh banner shows, kept here so they don’t disappear when the next update lands.",
   updatesGuideAction: "Guide me to recent changes",
   updatesShowFewer: "Show fewer updates",
