@@ -96,7 +96,7 @@ export default function ListingCard({
         <span
           className="font-sans font-bold uppercase"
           style={{
-            fontSize: 10,
+            fontSize: 12,
             padding: '3px 9px',
             borderRadius: 100,
             background: KIND_COLOR[listing.kind],
@@ -106,11 +106,11 @@ export default function ListingCard({
         >
           {zu ? ZU_KIND_LABEL[listing.kind] : KIND_LABEL[listing.kind]}
         </span>
-        <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint }}>
+        <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
           {zu ? ZU_CATEGORY_LABEL[listing.category] : CATEGORY_LABEL[listing.category]}
         </span>
         {crop && (
-          <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <span className="font-sans" style={{ fontSize: 12, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             {getCropArt(listing.cropKey ?? '') ? (
               <img className="produce-art" src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
             ) : (
@@ -124,7 +124,7 @@ export default function ListingCard({
           <span
             className="font-sans font-semibold"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(31,77,43,0.1)',
@@ -139,7 +139,7 @@ export default function ListingCard({
           <span
             className="font-sans font-semibold"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(192,122,30,0.12)',
@@ -151,7 +151,7 @@ export default function ListingCard({
           </span>
         )}
         {posted && (
-        <span className="font-sans" style={{ fontSize: 11, color: EX.faint }}>{posted}</span>
+        <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{posted}</span>
         )}
       </div>
 
@@ -169,7 +169,7 @@ export default function ListingCard({
         {qty && (
           <span
             className="font-sans font-semibold rounded-lg"
-            style={{ fontSize: 12.5, padding: '4px 10px', background: 'rgba(226,216,196,0.55)', color: EX.ink }}
+            style={{ fontSize: 12.5, padding: '4px 10px', background: 'var(--bg-2)', color: EX.ink }}
           >
             {qty}
           </span>

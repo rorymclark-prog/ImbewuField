@@ -211,7 +211,7 @@ export default function ExchangeBoard() {
         style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.28)', padding: '10px 12px' }}
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
-        <p className="font-sans" style={{ fontSize: 11.5, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
@@ -397,7 +397,7 @@ export default function ExchangeBoard() {
         {!origin && (
           <p
             className="font-sans"
-            style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
+            style={{ fontSize: 12, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
           >
             {sort === 'nearest'
               ? tx('Sorting by distance needs a starting point — choose a town above, or save your site on the map.', 'Ukuhlela ngebanga kudinga indawo yokuqala — khetha idolobha ngenhla noma ugcine indawo yakho kumephu.')
@@ -475,7 +475,7 @@ export default function ExchangeBoard() {
               style={{ background: 'var(--bg-2)', padding: '8px 10px' }}
             >
               <Info size={12} strokeWidth={1.9} style={{ color: EX.muted, marginTop: 1.5, flexShrink: 0 }} />
-              <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, lineHeight: 1.45 }}>
+              <span className="font-sans" style={{ fontSize: 12, color: EX.muted, lineHeight: 1.45 }}>
                 {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
               </span>
             </div>
@@ -542,7 +542,7 @@ function ChipRow({ label, children }: { label: string; children: React.ReactNode
     <div>
       <div
         className="font-sans uppercase"
-        style={{ fontSize: 10, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
+        style={{ fontSize: 12, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
       >
         {label}
       </div>
