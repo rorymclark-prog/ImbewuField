@@ -528,3 +528,81 @@ export function saveSurvey(survey: SiteSurvey): SiteSurvey | null {
   if (uid) upsertSurvey(uid, stamped).catch(() => {});
   return stamped;
 }
+
+
+/** Drafts stay on this browser. Reports and sync read only the explicitly saved survey. */
+export interface SiteSurveyDraft {
+  version: 1;
+  answers: SiteSurvey;
+  inputs: { roofMain: string; roofSecondary: string; growingArea: string; layingHens: string; productionYear: string };
+  mode: 'short' | 'full';
+  step: number;
+  started: boolean;
+  baseRevision: string;
+}
+
+export function surveyRevision(survey: SiteSurvey | null): string {
+  return JSON.stringify(survey);
+}
+
+export function surveyDraftScope(siteId: string): string {
+  const canonical = canonicalSurveySiteId(siteId);
+  return canonical ? activeAccountLocalStorageKey(`imbewu_survey_draft_${canonical}`) : '';
+}
+
+export function surveyDraftScopeIsActive(scope: string, siteId: string): boolean {
+  return !!scope && scope === surveyDraftScope(siteId);
+}
+
+export function readSurveyDraft(scope: string): { draft: SiteSurveyDraft | null; token: string | null; error: boolean } {
+  if (!scope || typeof window === 'undefined') return { draft: null, token: null, error: false };
+  let token: string | null = null;
+  try {
+    token = window.localStorage.getItem(scope);
+    if (!token) return { draft: null, token, error: false };
+    const draft = JSON.parse(token) as SiteSurveyDraft;
+    const a = draft.answers;
+    const arrays = ['goals', 'waterSource', 'waterDelivery', 'waterStorage', 'soilAmendments', 'existingCrops', 'livestock', 'otherInfra', 'challenges'] as const;
+    const strings = ['placeId', 'savedAt', 'adults', 'landPrepMethod', 'soilCondition', 'hasFencing', 'farmingPractice', 'notes'] as const;
+    const inputs = ['roofMain', 'roofSecondary', 'growingArea', 'layingHens', 'productionYear'] as const;
+    if (draft.version !== 1 || !a || scope !== surveyDraftScope(a.siteId)
+      || !['homestead', 'community'].includes(a.siteType)
+      || !arrays.every(k => Array.isArray(a[k]) && a[k].every(v => typeof v === 'string'))
+      || !strings.every(k => typeof a[k] === 'string')
+      || !draft.inputs || !inputs.every(k => typeof draft.inputs[k] === 'string')
+      || !['short', 'full'].includes(draft.mode) || !Number.isInteger(draft.step) || draft.step < 0 || draft.step > 7
+      || typeof draft.started !== 'boolean' || typeof draft.baseRevision !== 'string'
+      || (a.reportedProduction !== undefined && (!Array.isArray(a.reportedProduction) || !a.reportedProduction.every(row =>
+        row && PRODUCTION_CATEGORIES.includes(row.category) && typeof row.unit === 'string'
+        && (row.name === undefined || typeof row.name === 'string')
+        && (row.harvestMonths === undefined || (Array.isArray(row.harvestMonths) && row.harvestMonths.every(m => Number.isInteger(m) && m >= 1 && m <= 12)))
+        && ['quantityPerYear', 'usedByHousehold', 'sold', 'incomeZar'].every(k => {
+          const value = row[k as keyof ReportedProduction];
+          return value === null || (typeof value === 'number' && Number.isFinite(value));
+        }))))) throw new Error('Unreadable survey draft');
+    return { draft, token, error: false };
+  } catch {
+    // Keep an unreadable row available for an explicit discard; never erase it on read.
+    return { draft: null, token, error: true };
+  }
+}
+
+/** Compare the exact row so another open tab's newer answers cannot be silently erased. */
+export function writeSurveyDraft(scope: string, draft: SiteSurveyDraft, expectedToken: string | null): string | null {
+  if (typeof window === 'undefined' || !surveyDraftScopeIsActive(scope, draft.answers.siteId)) return null;
+  try {
+    if (window.localStorage.getItem(scope) !== expectedToken) return null;
+    const token = JSON.stringify(draft);
+    window.localStorage.setItem(scope, token);
+    return token;
+  } catch { return null; }
+}
+
+export function clearSurveyDraft(scope: string, siteId: string, expectedToken: string | null): boolean {
+  if (typeof window === 'undefined' || !surveyDraftScopeIsActive(scope, siteId)) return false;
+  try {
+    if (window.localStorage.getItem(scope) !== expectedToken) return false;
+    window.localStorage.removeItem(scope);
+    return true;
+  } catch { return false; }
+}
