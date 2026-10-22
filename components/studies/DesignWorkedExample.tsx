@@ -7,6 +7,8 @@ import DesignWorkedDiagram from './DesignWorkedDiagram';
 import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
 import styles from './FinanceCourse.module.css';
+import ArrowLabel from './ArrowLabel';
+import { ArrowRight } from 'lucide-react';
 
 type View = 'source' | 'A' | 'B' | 'revision';
 const views: { id: View; label: string }[] = [
@@ -14,6 +16,9 @@ const views: { id: View; label: string }[] = [
   { id: 'B', label: 'Concept B' }, { id: 'revision', label: 'Revised A · R2' },
 ];
 const viewZu: Record<View, string> = { source: 'Ubufakazi obukhona', A: 'Umqondo A · R1', B: 'Umqondo B', revision: 'U-A obuyekeziwe · R2' };
+
+/** R1 → R2 revision rows: a Lucide arrow, with "to" for screen readers. */
+function ChangeArrow() { return <><span className="sr-only"> to </span><ArrowRight aria-hidden className="mx-1 inline h-4 w-4" /></>; }
 
 export default function DesignWorkedExample() {
   const [view, setView] = useState<View>('source');
@@ -105,7 +110,7 @@ export default function DesignWorkedExample() {
       <p className={styles.eyebrow}>5 · Make work and care feasible</p><h2>Keep each feature connected to its next task</h2>
       <p>Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied.</p>
       {pack.dependencies.map(row => <article className={styles.practice} key={row.item}><h3>{row.item}</h3><p><strong>Drawing references:</strong> {row.featureIds.join(', ')}</p><p><strong>Before physical work:</strong> {row.before}.</p><p><strong>Cost:</strong> {row.cost}.</p><p><strong>R1 record:</strong> {row.R1.phase}. {row.R1.quantity}. {row.R1.careStatus}.</p><p><strong>Who discusses the next check:</strong> {row.owner}.</p></article>)}
-      <p>Use <OfflinePageLink href="/student/finance">Farm Finance</OfflinePageLink> to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.</p><OfflinePageLink href="/student/design/folder#folder-d5">Record work, costs and agreed care →</OfflinePageLink>
+      <p>Use <OfflinePageLink href="/student/finance">Farm Finance</OfflinePageLink> to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.</p><OfflinePageLink href="/student/design/folder#folder-d5"><ArrowLabel>Record work, costs and agreed care</ArrowLabel></OfflinePageLink>
     </section>
 
     <section className={styles.section} id="revision">
