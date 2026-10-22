@@ -15,6 +15,13 @@ const PROPER = new Set([
   'Karoo', 'Succulent', 'Albany', 'Thicket', 'Indian', 'Ocean', 'Coastal', 'Belt', 'Afromontane',
   'Generate', 'Farmer', 'Mentor', 'Student', 'Funder', 'Organisation', 'Sesotho', 'South', 'African', 'Africa', 'English', 'isiZulu', 'Zulu',
 ]);
+// Keys whose exact English string is paired with reviewed or drafted translations (the Study and
+// survey packets embed it as the visible source), so a case change would orphan those pairings.
+const PAIRED_WITH_TRANSLATIONS = new Set([
+  'studentMyStudies', 'studentOpenDesignStudio',
+  'surveyStepHouseholdInfo', 'surveyStepLandLocation', 'surveyStepCurrentProduction',
+  'surveyStepLivestockPoultry', 'surveyStepIncomeSales', 'surveyStepResourcesInputs',
+]);
 const KEY_PREFIX = /^(nav|tab|home|student|survey|stat|step|allSection|report|myRecords|offlinePage)/;
 
 function titleCaseLabels(file: string, upToLine = Infinity) {
@@ -24,7 +31,7 @@ function titleCaseLabels(file: string, upToLine = Infinity) {
     const m = line.match(/^\s+([A-Za-z0-9_]+): '((?:[^'\\]|\\.)*)',?\s*$/);
     if (!m) return;
     const [, key, value] = m;
-    if (!KEY_PREFIX.test(key)) return;
+    if (!KEY_PREFIX.test(key) || PAIRED_WITH_TRANSLATIONS.has(key)) return;
     // Labels only: sentences (full stops, commas, placeholders) are out of scope.
     if (/[.,{]/.test(value) || value.split(' ').length > 6) return;
     const words = value.split(' ').slice(1).map((w) => w.replace(/[^A-Za-z]/g, ''));

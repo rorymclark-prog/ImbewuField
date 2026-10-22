@@ -335,7 +335,7 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
 // out deliberately rather than fixed, because their exact string is pinned by another, unowned
 // test or by a reviewed-translation pairing — see the wave-13 PR body for the list.
 const TITLE_CASE_NAV_TAB_HOME_ALLOWLIST = new Set([
-  'navPlantingCalendar', // tests/nav-menu-links.test.ts asserts the literal 'Planting Calendar'
+  'navPlantingCalendar', // tests/nav-menu-links.test.ts asserts the literal 'Planting calendar'
   'homeQuickMyRecords', // "My Records" is the deliberately-chosen name (copy-04)
   'homeRoleNGOLabel', 'navNGOLabel', // "NGO" is an initialism, not a Title Case violation
   'homeQuickContactDesc', // 'Mentor · Organisation' — a role list, each word a proper role name
