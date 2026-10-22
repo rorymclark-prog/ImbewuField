@@ -451,6 +451,7 @@ export const T_en: Dict = {
   // 'Saved sites & reports' as the page h1, 'Your Sites'/'Saved Reports' as list headers,
   // 'Site Analysis Report' on the toolbar). Settled on 'Site reports' everywhere, sentence case.
   siteReportOverline: 'Site reports',
+  savedSiteUnavailable: 'This saved site is no longer available. Go back to Site reports and choose another site.',
   // Plain-English names for the farmer-facing biome report (lib/biome.ts's BIOME_I18N_KEYS,
   // shown by components/DataPanel.tsx). BIOMES in lib/biome.ts keeps the same English text as the
   // source other callers (app/api/* prompts) still read; these keys exist so DataPanel can
