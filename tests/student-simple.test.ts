@@ -11,6 +11,7 @@ import { readFileSync } from 'node:fs';
 const STUDENT_SOURCE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 const OFFLINE_DOWNLOAD_SOURCE = readFileSync(new URL('../components/course/OfflineDownload.tsx', import.meta.url), 'utf8');
 const COURSE_MODULES_SOURCE = readFileSync(new URL('../lib/course-modules.ts', import.meta.url), 'utf8');
+const GLOBALS_CSS_SOURCE = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
 const COURSE_GATING_SOURCE = readFileSync(new URL('../lib/course-gating.ts', import.meta.url), 'utf8');
 const COURSE_ASSIGNMENTS_SOURCE = readFileSync(new URL('../lib/course-assignments.ts', import.meta.url), 'utf8');
 const DESIGN_SOURCE = readFileSync(new URL('../app/student/design/page.tsx', import.meta.url), 'utf8');
@@ -121,7 +122,8 @@ test('ochre is never painted as readable text: the due-soon tone and the categor
   // text-safe ochre value (#7A4408), now theme-token-based so it keeps 4.5:1 contrast in dark mode
   // too instead of staying the fixed earth-light hex.
   assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: 'var\(--gold-dim\)'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
-  assert.match(COURSE_MODULES_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design: "#7A4408"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre');
+  assert.match(COURSE_MODULES_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design:\s*"var\(--cat-design-text\)"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre token');
+  assert.match(GLOBALS_CSS_SOURCE, /--cat-design-text: #7A4408;/, 'the earth-light design text token keeps the text-safe ochre');
   // Every site that paints the category colour as text (not a fill/border/icon) must use the
   // text-safe variant, not the raw CATEGORY_COLORS/`color` fill value.
   assert.match(STUDENT_SOURCE, /style=\{\{ color: textColor \}\}>\{t\('studentKeyPoints'\)\}/);

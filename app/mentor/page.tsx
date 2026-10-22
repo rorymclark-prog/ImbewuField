@@ -17,7 +17,7 @@ import {
   listOrgEnrollments, enrolLearner, setEnrollmentStatus,
   getAssignmentsForProfiles, assignModule, unassignModule,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS } from '@/lib/course-modules';
 import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -321,7 +321,7 @@ function TraineeCard({
                     {mod.title}
                   </span>
                   <span className="text-xs font-display tabular-nums px-1.5 py-0.5 rounded flex-shrink-0"
-                    style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_COLORS[mod.category] }}>
+                    style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_TEXT_COLORS[mod.category] }}>
                     {mod.durationMins}m
                   </span>
                   {enrollment && (assignment ? (
@@ -713,7 +713,7 @@ export default function MentorPage() {
             <div className="flex flex-wrap gap-1.5">
               {COURSE_MODULES.map((m) => (
                 <span key={m.id} className="text-xs font-sans px-2 py-0.5 rounded-full"
-                  style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
+                  style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_TEXT_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
                   {m.title}
                 </span>
               ))}

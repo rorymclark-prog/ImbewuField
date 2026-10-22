@@ -251,7 +251,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
       >
         {hasInfographic
           ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
-          : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
+          : <BookOpen size={24} style={{ color: textColor, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
           <span className={`font-display ${styles.lessonTitle}`}>{lessonContent.title}</span>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -317,7 +317,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                   className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left"
                   style={{ border: `1px solid ${color}33`, background: `${color}0C` }}
                 >
-                  <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
+                  <PlayCircle size={18} style={{ color: textColor, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                       {t(silentDeckEntry ? 'studentViewSilentSlides' : 'studentWatchAndListen')}
@@ -1335,14 +1335,14 @@ export default function StudentPage() {
                       className="w-full flex items-center gap-2 px-3.5 py-2.5 mt-3 rounded-xl transition-colors"
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
-                      <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
+                      <ClipboardList size={13} style={{ color: textColor, flexShrink: 0 }} />
                       <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
                         {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
-                      {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
+                      {submission && <CheckCircle size={13} style={{ color: textColor, flexShrink: 0 }} />}
                       {submissionOpen
-                        ? <ChevronUp size={12} style={{ color, flexShrink: 0 }} />
-                        : <ChevronDown size={12} style={{ color, flexShrink: 0 }} />}
+                        ? <ChevronUp size={12} style={{ color: textColor, flexShrink: 0 }} />
+                        : <ChevronDown size={12} style={{ color: textColor, flexShrink: 0 }} />}
                     </button>
                     {submissionOpen && (
                       <div className="mt-2">
