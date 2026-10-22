@@ -1589,6 +1589,21 @@ const dict: Dict = {
   communityProfileDeleteError: "A swi kotekanga ku tiyisisa ku susiwa. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
   communityProfileDeleting: "Swa susiwa…",
   // End community profile controls.
+  // Community member controls: unreviewed drafts; community-member-drafts.json.
+  communityProfileUnavailable: "Phurofayili leyi a ya ha kumeki.",
+  communityLessLabel: "Switsongo",
+  communityMoreLabel: "Swin’wana",
+  communityMessageButton: "Rhumela rungula",
+  communityReportButton: "Vika",
+  communityContactError: "A swi kotekanga ku pfula mbulavurisano — kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+  communityReportReasonPlaceholder: "Ku hoxeke yini?",
+  communityReportSent: "Xiviko xi rhumeriwile. Ha khensa.",
+  communityReportSubmit: "Rhumela xiviko",
+  communityReportError: "A swi kotekanga ku rhumela xiviko — kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+  communityMemberTitle: "Phurofayili",
+  communityMemberPhotoAlt: "Xifaniso xa {name}, {number} eka {total}",
+  communityMemberLoadError: "A swi kotekanga ku layicha phurofayili leyi. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+  // End community member controls.
 };
 
 export default dict;

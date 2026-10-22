@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(actual,locale),locale),locale),locale),locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(beforeCommunityMemberDictionary(actual,locale),locale),locale),locale),locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -128,4 +128,15 @@ export function beforeCommunityProfileDictionary(actual:unknown,locale:string):u
 }
 export function beforeCommunityProfileTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,communityProfilePacket(),'\n  // Community profile controls: unreviewed drafts; community-profile-drafts.json.\n','  // End community profile controls.\n');
+}
+
+let communityMemberControls: ControlIconPacket | undefined;
+function communityMemberPacket():ControlIconPacket {
+  return communityMemberControls ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/community-member-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeCommunityMemberDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,communityMemberPacket());
+}
+export function beforeCommunityMemberTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,communityMemberPacket(),'\n  // Community member controls: unreviewed drafts; community-member-drafts.json.\n','  // End community member controls.\n');
 }

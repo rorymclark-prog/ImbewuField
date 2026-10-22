@@ -7,7 +7,7 @@ import{loadUpdateCopy,updateDescription}from'../lib/update-copy.ts';
 import{RELEASE_NOTES}from'../lib/release-notes.ts';
 import{actualCommunityProfile,actualCommunityRounding,QA_COMMUNITY_PHOTO,communityNodeText}from'./community-profile-renderer.ts';
 import{controlT,controlLocales}from'./control-icon-renderers.ts';
-import{beforeCommunityProfileDictionary,beforeCommunityProfileTranslations}from'./ui-dictionary-preservation.ts';
+import{beforeCommunityProfileDictionary,beforeCommunityProfileTranslations,beforeCommunityMemberTranslations}from'./ui-dictionary-preservation.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/community-profile-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -19,7 +19,7 @@ test('community drafts bind every source, figure, placeholder and prior locale b
  for(const lang of langs){
   for(const row of packet.entries){assert.equal(controlT('en')(row.key),row.english);if(row[lang]){assert.equal(controlT(lang)(row.key),row[lang]);assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));}}
   for(const old of packet.sourceControls)if(!packet.entries.some((r:any)=>r.key===old.key&&r[lang]))assert.equal(controlLocales[lang][old.key]??null,old[lang]);
-  const source=read(`lib/locales/${lang}.ts`);assert.equal(createHash('sha256').update(beforeCommunityProfileTranslations(source,lang)).digest('hex'),packet.sourceSha256[`lib/locales/${lang}.ts`]);
+  const source=beforeCommunityMemberTranslations(read(`lib/locales/${lang}.ts`),lang);assert.equal(createHash('sha256').update(beforeCommunityProfileTranslations(source,lang)).digest('hex'),packet.sourceSha256[`lib/locales/${lang}.ts`]);
   const changed=source.replace(JSON.stringify(controlT(lang)('communityPhotoUploadError')),JSON.stringify('Unlisted change'));assert.equal(beforeCommunityProfileTranslations(changed,lang),changed);
   const partial={...controlLocales[lang]};delete partial.communityPhotoUploadError;assert.equal(beforeCommunityProfileDictionary(partial,lang),partial);
   const learning={...controlLocales[lang],studentContinue:'changed lesson'};assert.equal((beforeCommunityProfileDictionary(learning,lang)as any).studentContinue,'changed lesson');
@@ -78,7 +78,7 @@ test('Simple keeps selected catalogue identities visible, and original feature/a
  const signedOut=await actualCommunityProfile('zu',{signedOut:true});try{assert.deepEqual(signedOut.calls.replacements,['/login']);assert.equal(signedOut.calls.reads.length,0);}finally{await signedOut.dispose();}
 });
 
- test('the community profile release keeps its exact source and four native draft descriptions',async()=>{assert.ok(RELEASE_NOTES[0].changes.includes(packet.releasePair.english));assert.equal(RELEASE_NOTES[0].tour?.[0]?.href,packet.guideRoute);for(const lang of langs)for(const row of[packet.releasePair,...packet.guidePairs])assert.equal(updateDescription(await loadUpdateCopy(lang),row.english),row[lang]);});
+ test('the community profile release keeps its exact source and four native draft descriptions',async()=>{const note=RELEASE_NOTES.find(n=>n.sha===packet.sourceSha.slice(0,8));assert.ok(note?.changes.includes(packet.releasePair.english));assert.equal(note?.tour?.[0]?.href,packet.guideRoute);for(const lang of langs)for(const row of[packet.releasePair,...packet.guidePairs])assert.equal(updateDescription(await loadUpdateCopy(lang),row.english),row[lang]);});
 
 for(const lang of langs)test(`${lang}: an outstanding photo upload announces native progress and cannot offer another photo yet`,async()=>{
  const h=await actualCommunityProfile(lang,{deferUpload:true}),t=controlT(lang);try{await h.upload({name:'qa-photo'});const busy=h.renderer.root.findAllByType('button').find(n=>n.props['aria-label']===t('communityPhotoUploading'));assert.ok(busy?.props.disabled);assert.equal(busy?.props['aria-busy'],true);assert.equal(h.renderer.root.findAllByType('img').length,0);await h.finishUpload();assert.equal(h.renderer.root.findByType('img').props.alt,t('communityProfilePhotoAlt').replace('{number}','1'));assert.ok(h.renderer.root.findAllByType('button').some(n=>n.props['aria-label']===t('communityAddPhotoAria')&&!n.props.disabled));}finally{await h.dispose();}

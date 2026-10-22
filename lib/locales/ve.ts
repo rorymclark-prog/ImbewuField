@@ -1593,6 +1593,21 @@ const dict: Dict = {
   communityProfileDeleteError: "A zwo ngo konadzea u khwaṱhisedza u bviswa. Ṱolani vhuṱumani haṋu ni lingedze hafhu.",
   communityProfileDeleting: "I khou bviswa…",
   // End community profile controls.
+  // Community member controls: unreviewed drafts; community-member-drafts.json.
+  communityProfileUnavailable: "Phurofaiḽi iyi a i tsha wanala.",
+  communityLessLabel: "Zwiṱuku",
+  communityMoreLabel: "Zwiṅwe",
+  communityMessageButton: "Rumelani mulaedza",
+  communityReportButton: "Vhigani",
+  communityContactError: "A zwo ngo konadzea u vula nyambedzano — ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+  communityReportReasonPlaceholder: "Ho khakhea mini?",
+  communityReportSent: "Muvhigo wo rumelwa. Ri a livhuwa.",
+  communityReportSubmit: "Rumelani muvhigo",
+  communityReportError: "A zwo ngo konadzea u rumela muvhigo — ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+  communityMemberTitle: "Phurofaiḽi",
+  communityMemberPhotoAlt: "Tshifanyiso tsha {name}, {number} kha {total}",
+  communityMemberLoadError: "A zwo ngo konadzea u laisa phurofaiḽi iyi. Ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+  // End community member controls.
 };
 
 export default dict;

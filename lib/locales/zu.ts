@@ -2508,6 +2508,11 @@ const dict: Dict = {
   communityProfileDeleteError: "Akukwazanga ukuqinisekisa ukususwa. Hlola uxhumano lwakho bese uzama futhi.",
   communityProfileDeleting: "Kuyasuswa…",
   // End community profile controls.
+  // Community member controls: unreviewed drafts; community-member-drafts.json.
+  communityMemberTitle: "Iphrofayela",
+  communityMemberPhotoAlt: "Isithombe sika-{name}, {number} kwezingu-{total}",
+  communityMemberLoadError: "Akukwazanga ukulayisha le phrofayela. Hlola uxhumano lwakho bese uzama futhi.",
+  // End community member controls.
 };
 
 export default dict;

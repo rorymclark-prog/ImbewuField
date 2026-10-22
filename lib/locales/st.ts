@@ -1598,6 +1598,21 @@ const dict: Dict = {
   communityProfileDeleteError: "Ha ho a kgoneha ho netefatsa ho hlakolwa. Hlahloba kgokahano ya hao mme o leke hape.",
   communityProfileDeleting: "E a hlakolwa…",
   // End community profile controls.
+  // Community member controls: unreviewed drafts; community-member-drafts.json.
+  communityProfileUnavailable: "Profaele ena ha e sa fumaneha.",
+  communityLessLabel: "Tse fokolang",
+  communityMoreLabel: "Tse ding",
+  communityMessageButton: "Romela molaetsa",
+  communityReportButton: "Tlaleha",
+  communityContactError: "Ha ho a kgoneha ho bula moqoqo — hlahloba kgokahano ya hao mme o leke hape.",
+  communityReportReasonPlaceholder: "Phoso ke eng?",
+  communityReportSent: "Tlaleho e rometswe. Re a leboha.",
+  communityReportSubmit: "Romela tlaleho",
+  communityReportError: "Ha ho a kgoneha ho romela tlaleho — hlahloba kgokahano ya hao mme o leke hape.",
+  communityMemberTitle: "Profaele",
+  communityMemberPhotoAlt: "Setshwantsho sa {name}, {number} ho tse {total}",
+  communityMemberLoadError: "Ha ho a kgoneha ho kenya profaele ena. Hlahloba kgokahano ya hao mme o leke hape.",
+  // End community member controls.
 };
 
 export default dict;
