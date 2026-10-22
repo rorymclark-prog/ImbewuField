@@ -12,6 +12,7 @@ import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import UpdateGuide from '@/components/UpdateGuide';
 import SampleModeBanner from '@/components/SampleModeBanner';
 import PhotoViewer from '@/components/PhotoViewer';
+import LocalizedPageTitle from '@/components/LocalizedPageTitle';
 import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
 
@@ -133,6 +134,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <UpdateGuide loadedBuildSha={loadedBuildSha} />
                 <SampleModeBanner />
                 <PhotoViewer />
+                <LocalizedPageTitle />
                 </ProductTourProvider>
               </AppConfirmProvider>
             </LanguageProvider>

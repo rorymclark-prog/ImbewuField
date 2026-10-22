@@ -91,6 +91,7 @@ const copy:UpdateCopy={
   "Community messages, board and map controls now have four draft translations.": "Ditaolo tsa melaetsa, boto le mmappa wa setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Photo viewer controls now have four draft translations.": "Ditaolo tsa sebohi sa ditshwantsho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Open a saved photograph": "Bula setshwantsho se bolokilweng",
-  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Haeba akhaonto ya hao e na le setshwantsho, se bule. Ditaolo tsa sebohi sa ditshwantsho di sebedisa puo ya hao; mongolo wa pele wa setshwantsho o sala o le jwalo ka ha o ngotswe."
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Haeba akhaonto ya hao e na le setshwantsho, se bule. Ditaolo tsa sebohi sa ditshwantsho di sebedisa puo ya hao; mongolo wa pele wa setshwantsho o sala o le jwalo ka ha o ngotswe.",
+  "App page titles now have four draft translations.": "Dihlooho tsa maqephe a app jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
 };
 export default copy;

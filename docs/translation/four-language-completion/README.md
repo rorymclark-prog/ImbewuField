@@ -1396,6 +1396,53 @@ drafts without fluent-speaker approval. Static metadata titles, wider workflows,
 history, exports and Study/media remain under the active whole-app goal. This changes the picture;
 `PLAN_VERSION` is unchanged. No production merge has occurred.
 
+## Batch 29 — browser page titles
+
+The [title packet](page-title-drafts.json) records **51 static metadata declarations and 47
+unique title identities**. Twenty-nine bindings reuse the existing shared UI dictionary at
+runtime, choosing exact source meaning rather than the first similar label: for example,
+`offlineTitle` retains “Saved on this phone”, while isiZulu `navOfflineSync` means offline/sync.
+Native role labels use the complete Home-role authority. Eighteen full title drafts and three
+regional values for each of two existing headings add **78 native values**; four release values
+bring the batch total to **82**. Product identities Lima Vision, Atlas and ImbewuField remain
+explicitly recorded exceptions. ACT Teach the Teachers and NGO identities remain exact.
+
+One client lifecycle owner under the language provider localizes only exact known metadata
+identities. It observes real title-node/text replacement after Next navigation, remembers only
+its own last presentation, and changes words again after language/dictionary updates. A mutation
+caused by its own write becomes a no-op. Unrecognized/private titles are never templates. Manual
+subroutes retain the URL-selected document language, and Pitch keeps its existing title owner.
+Other app languages retain the original English metadata behavior. The server's English metadata
+and all lesson bodies remain exact; there is no saved-content, geometry, figure or species edit.
+
+[Runtime evidence](evidence/page-titles/verification.json) covers **28 actual public route loads**
+in all four languages, each checking both raw English SSR title and the live native title;
+**188 synthetic title text/node replacements** against the actual global component; twelve
+unknown-name/manual/Pitch ownership checks; and eight live English/native language changes.
+Four real Next link/history conditions verify eight forward/Back transitions, retaining a window
+marker to prove the document was not replaced. The eight phone/desktop release previews were
+inspected in every language. Titles were read from actual `document.title` and SSR HTML;
+page-content screenshots do not capture the browser chrome. This is not an authenticated visit
+to every protected route: those titles have source bindings plus synthetic head-replacement
+coverage. Fifty-three original metadata/manual body source files also retain exact bytes; root
+changes only mount the lifecycle component, and its English metadata is separately asserted.
+
+Typecheck, release-note and whitespace checks are clean; **1,047 tests pass across 115 selected
+registered files**. The actual-component
+tests cover late dictionaries, route/head replacement, self-notification, language reversal,
+ownership and observer cleanup. The source guard walks current app metadata, so adding a new
+static title without its source-bound translation fails, rather than pinning a stale catalogue
+size. Existing title-distinction and language tests remain. The visible update guide retains its
+two Account actions; no guide source or prior dictionary layer was rewritten for this batch.
+
+The complete **556-file** run remains active at `2b8f58cf` in its frozen checkout. It does not
+prove this head's **558-file** registration. Existing test/rules CI is checked separately; no
+main merge has occurred. These are unreviewed machine drafts, not fluent-speaker approval.
+Browser tab labels change; `PLAN_VERSION` is unchanged. Runtime screenshots also reveal the
+small MenuButton caption still hardcodes “Tour” outside isiZulu, which is the next shared-control
+item. Wider page bodies/workflows, older update history, social/share metadata, exports and
+Study/manual media remain under the whole-app goal.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility

@@ -91,6 +91,7 @@ const copy:UpdateCopy={
   "Community messages, board and map controls now have four draft translations.": "Swilawuri swa marungula, bodo ni mepe ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
   "Photo viewer controls now have four draft translations.": "Swilawuri swa xilanguti xa swifaniso sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
   "Open a saved photograph": "Pfula xifaniso lexi hlayisiweke",
-  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Loko akhawunti ya wena yi ri ni xifaniso, xi pfule. Swilawuri swa xilanguti xa swifaniso swi tirhisa ririmi ra wena; nhlamuselo yo sungula ya xifaniso yi sala yi ri leswi yi tsariweke swona."
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Loko akhawunti ya wena yi ri ni xifaniso, xi pfule. Swilawuri swa xilanguti xa swifaniso swi tirhisa ririmi ra wena; nhlamuselo yo sungula ya xifaniso yi sala yi ri leswi yi tsariweke swona.",
+  "App page titles now have four draft translations.": "Tinhlokomhaka ta matluka ya app sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune."
 };
 export default copy;
