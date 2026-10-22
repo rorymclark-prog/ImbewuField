@@ -1,5 +1,5 @@
 {
-  "status": "Implemented unreviewed drafts; source and actual browser/PDF checks pass. Final release/full verification pending.",
+  "status": "Implemented source-bound unreviewed drafts. Local typecheck, selected/broader/release checks and browser/PDF checks pass; final full suite remains pending.",
   "sourceSha": "68d143c7af00eec76428871296eece9a38846cd8",
   "languages": [
     "zu",
@@ -2893,7 +2893,16 @@
     },
     "selected": "90 passing tests across six files; latest /tmp/imbewu-garden-final-selected.txt. Node24 typecheck clean.",
     "full": "Exact Tour predecessor68d143c7 is terminal with5688passes/0fail/1existingTODO; this newer garden branch still needs its own full run.",
-    "evidence": "docs/translation/four-language-completion/evidence/garden-programme"
+    "evidence": "docs/translation/four-language-completion/evidence/garden-programme",
+    "release": {
+      "conditions": 8,
+      "lines": 232,
+      "tests": 89,
+      "files": 5,
+      "typecheck": "clean",
+      "notes": "No user-facing drift at code7f7e4c98; release rows native in all4.",
+      "minimumContrast": 6.631273255371509
+    }
   },
   "broaderVerification": {
     "files": 18,
@@ -2907,5 +2916,36 @@
       "log": "/tmp/imbewu-garden-final-selected.txt"
     },
     "note": "File sets overlap; do not add their test counts. Native metadata-only lang attributes were added after layout captures; no changed pixels."
-  }
+  },
+  "releaseRows": [
+    {
+      "english": "Garden examples and programme reports now have unreviewed draft translations in four languages.",
+      "zu": "Izibonelo zezingadi nemibiko yohlelo manje zinokuhumusha okusaluhlaka okungakabuyekezwa ngezilimi ezine.",
+      "st": "Mehlala ya ditshimo le ditlaleho tsa lenaneo jwale di na le meralo ya diphetolelo e so hlahlojwe ka dipuo tse nne.",
+      "ts": "Swikombiso swa mintanga ni swiviko swa nongonoko sweswi swi ni vuhundzuluxi bya mpfapfarhuto leswi nga si kamberiwaka hi tindzimi ta mune.",
+      "ve": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwino zwi na ṱhalutshedzelo dza mvetamveto dzi sa athu u sedzuluswa nga nyambo nṋa."
+    },
+    {
+      "english": "See garden examples in your language",
+      "zu": "Bona izibonelo zezingadi ngolimi lwakho",
+      "st": "Bona mehlala ya ditshimo ka puo ya hao",
+      "ts": "Vona swikombiso swa mintanga hi ririmi ra wena",
+      "ve": "Vhonani tsumbo dza ngade nga luambo lwaṋu"
+    },
+    {
+      "english": "Tour → Gardens",
+      "zu": "Uhambo → Izingadi",
+      "st": "Leeto → Ditshimo",
+      "ts": "Riendzo → Mintanga",
+      "ve": "Lwendo → Ngade"
+    },
+    {
+      "english": "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.",
+      "zu": "Vula ingadi. Umbiko nokuhleleka kwayo kunokuhumusha okungakabuyekezwa kanye nombhalo wokuqala wesiNgisi. Ama-PDF omthombo agciniwe amakwe ngokuthi angesiNgisi.",
+      "st": "Bula tshimo. Tlaleho le moralo wa yona di na le diphetolelo tse so hlahlojwe le mongolo wa pele wa Senyesemane. Di-PDF tsa mohlodi tse bolokilweng di tshwailwe e le tsa Senyesemane.",
+      "ts": "Pfula ntanga. Xiviko ni pulani ya wona swi ni vuhundzuluxi leswi nga si kamberiwaka ni tsalwa ro sungula ra Xinghezi. Ti-PDF ta xihlovo leti hlayisiweke ti funghiwile leswaku i ta Xinghezi.",
+      "ve": "Vhulani ngade. Muvhigo na mveledziso yayo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa na maṅwalwa a u thoma a Tshiisimane. PDF dza tshiko dzo vhulungwaho dzo swaiwa uri ndi dza Tshiisimane."
+    }
+  ],
+  "releaseSha": "7f7e4c98"
 }

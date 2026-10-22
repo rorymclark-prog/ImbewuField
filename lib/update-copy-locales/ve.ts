@@ -96,6 +96,10 @@ const copy:UpdateCopy={
   "Tour and practice controls now have draft translations in four languages.": "Zwilangi zwa Lwendo na u ḓiḓowedza zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
   "Explore the practice views": "Ṱolani mbonalo dza u ḓiḓowedza",
   "Menu → Practice views": "Menyu → Mbonalo dza u ḓiḓowedza",
-  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Vulani fhethu ha u nanga na Lwendo. Ndaela na zwilangi zwi na mvetamveto dzi sa athu u sedzuluswa; maṅwalwa a u thoma a English a a wanala."
+  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Vulani fhethu ha u nanga na Lwendo. Ndaela na zwilangi zwi na mvetamveto dzi sa athu u sedzuluswa; maṅwalwa a u thoma a English a a wanala.",
+  "Garden examples and programme reports now have unreviewed draft translations in four languages.": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwino zwi na ṱhalutshedzelo dza mvetamveto dzi sa athu u sedzuluswa nga nyambo nṋa.",
+  "See garden examples in your language": "Vhonani tsumbo dza ngade nga luambo lwaṋu",
+  "Tour → Gardens": "Lwendo → Ngade",
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vhulani ngade. Muvhigo na mveledziso yayo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa na maṅwalwa a u thoma a Tshiisimane. PDF dza tshiko dzo vhulungwaho dzo swaiwa uri ndi dza Tshiisimane."
 };
 export default copy;

@@ -1,0 +1,98 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "lines": 29,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "lines": 29,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "lines": 27,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "lines": 27,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "lines": 30,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "lines": 30,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "lines": 30,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "lines": 30,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 6.631273255371509,
+      "failed": []
+    }
+  }
+]
