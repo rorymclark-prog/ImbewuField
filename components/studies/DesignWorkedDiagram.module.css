@@ -1,13 +1,13 @@
 .figure {
   margin: 1.5rem 0;
-  color: #25372b;
+  color: var(--text-primary);
 }
 
 .viewport {
   overflow-x: auto;
-  border: 1px solid #d5c8af;
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
-  background: #f7f1e3;
+  background: #F7F1E3; /* fixed paper: DesignWorkedDiagram.tsx draws in fixed dark inks */
 }
 
 .diagram {
