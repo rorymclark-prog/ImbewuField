@@ -60,6 +60,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 15 rendered re-capture of the wave 14 build: 50 of 54 rows verified, 3 regressions fixed — 22 October 2026](2026-10-22/wave-15-recapture-claude.md).
+
 - [Wave 14 integration close-out: 166 findings dispositioned, five tracks folded — 17 October 2026](2026-10-17/wave-14-integration-claude.md).
 
 - [Wave 14 rendered re-capture of the wave 13 build: 120 rows verified, 3 regressions fixed — 17 October 2026](2026-10-17/wave-14-recapture-claude.md).

@@ -16,6 +16,13 @@ test('the sheet scales down to fit a narrow screen via zoom, not just horizontal
   assert.match(PAGE, /Math\.min\(1, el\.clientWidth \/ SHEET_WIDTH_PX\)/, 'the sheet must only ever scale DOWN to fit, never up past true size on a wide screen');
 });
 
+test('w15-01: the zoom is measured on an outer box that is never zoomed itself', () => {
+  // Measuring the zoomed element made its clientWidth depend on its own zoom, so ResizeObserver
+  // flipped the zoom between 1 and the fit value and phones got a 297mm-wide page.
+  assert.match(PAGE, /<div ref=\{wrapRef\}>\s*\n\s*<div className="sheetScaler" style=\{\{ zoom \}\}>/, 'the measured box and the zoomed box must be different elements');
+  assert.doesNotMatch(PAGE, /ref=\{wrapRef\} className="sheetScaler"/, 'the zoomed box is measuring itself again');
+});
+
 test('both printed sheets (the full design and each layer page) are wrapped in SheetScaler', () => {
   const sheetDivs = PAGE.match(/<div className="sheet" style=\{SHEET_STYLE\}>/g) ?? [];
   assert.equal(sheetDivs.length, 2, 'expected exactly two .sheet renders (full design + the per-layer map)');

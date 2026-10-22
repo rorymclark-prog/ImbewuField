@@ -28,8 +28,14 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 // three drifting copies, since every captured frame for /account across phone and desktop,
 // light and dark, used to show only a faint sprout on an empty page with no way to tell
 // loading, broken and "this is the practice version" apart.
+// w15-03: AppHeader's title is a <span>, so these three states had no <h1> at all (every
+// sample-mode /account frame in the wave 15 capture). The visible header already says
+// "Account"; the heading is for screen readers, as on /community.
 function AccountShellHeader({ copy }: { copy: (en: string, zu: string) => string }) {
-  return <AppHeader title={copy('Account', 'I-akhawunti')} />;
+  return <>
+    <AppHeader title={copy('Account', 'I-akhawunti')} />
+    <h1 className="sr-only">{copy('Account', 'I-akhawunti')}</h1>
+  </>;
 }
 
 const ROLE_LABELS: Record<UserRole, string> = {
