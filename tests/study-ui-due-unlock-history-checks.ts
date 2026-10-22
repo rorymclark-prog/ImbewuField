@@ -388,11 +388,42 @@ function rewindWave13PendingDictionary(actual: unknown): unknown {
   return before;
 }
 
+/** Wave 15 (copy-07, 22 Oct 2026) put English-pending Design labels in sentence case. Locales that
+ * still spread them untranslated carry the new wording, so dated owners see the exact wave 14 label. */
+const WAVE_15_PENDING_REWORDED: Record<string, { before: string; after: string }> = {
+  journalOpenRecords: { before: "Open My Records", after: "Open my records" },
+  speciesPickerTitle: { before: "Plant Catalog", after: "Plant catalog" },
+  designPaletteElementsDragTitle: { before: "Drag Elements panel", after: "Drag elements panel" },
+  designPrintTitle: { before: "Print / Export", after: "Print / export" },
+  designPrintSheetBase: { before: "Existing Site & Base", after: "Existing site & base" },
+  designPrintSheetSector: { before: "Sector Analysis", after: "Sector analysis" },
+  designPrintSheetZones: { before: "Permaculture Zones", after: "Permaculture zones" },
+  designPrintSheetWater: { before: "Water & Irrigation", after: "Water & irrigation" },
+  designPrintSheetEarthworks: { before: "Earthworks & Contour Setting-Out", after: "Earthworks & contour setting-out" },
+  designPrintSheetPlanting: { before: "Planting & Agroforestry", after: "Planting & agroforestry" },
+  designPrintSheetStructures: { before: "Livestock & Infrastructure", after: "Livestock & infrastructure" },
+  designPrintSheetAll: { before: "Integrated Masterplan", after: "Integrated masterplan" },
+  designPrintSheetImplementation: { before: "Implementation & Phasing", after: "Implementation & phasing" },
+  designGlossyPreviewTitle: { before: "Preview & Export", after: "Preview & export" },
+  designGlossyExportShare: { before: "Export & Share", after: "Export & share" },
+  designGlossyExactCanvas: { before: "Design Map", after: "Design map" },
+  designGlossyAiHybrid: { before: "AI Polished", after: "AI polished" },
+};
+function rewindWave15PendingDictionary(actual: unknown): unknown {
+  if (!actual || typeof actual !== 'object') return actual;
+  const dict = actual as Record<string, unknown>;
+  const keys = Object.keys(WAVE_15_PENDING_REWORDED).filter(key => Object.hasOwn(dict, key) && dict[key] === WAVE_15_PENDING_REWORDED[key].after);
+  if (!keys.length) return actual;
+  const before = { ...dict };
+  for (const key of keys) before[key] = WAVE_15_PENDING_REWORDED[key].before;
+  return before;
+}
+
 /** Project the exact prior dictionary; callers compare that result in the older history layer. */
 export function studyUiDueUnlockLocaleBefore(actual: unknown): unknown {
   return withBlindReviewedCorrectionReadScope(() => {
   ensureStudyUiDueUnlockCurrent();
-  actual = rewindWave13PendingDictionary(rewindWave11Dictionary(actual));
+  actual = rewindWave13PendingDictionary(rewindWave15PendingDictionary(rewindWave11Dictionary(actual)));
   assert.deepEqual(currentLocale, JSON.parse(currentLocaleBytes.toString()));
   if (JSON.stringify(actual) === JSON.stringify(predecessorLocale)) return structuredClone(actual);
   if (JSON.stringify(actual) === JSON.stringify(currentLocale)) return structuredClone(predecessorLocale);
