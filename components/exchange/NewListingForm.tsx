@@ -267,7 +267,7 @@ export default function NewListingForm({
               fontSize: 13,
               cursor: 'pointer',
               background: kind === k ? KIND_COLOR[k] : EX.chip,
-              color: kind === k ? 'var(--on-forest)' : EX.muted,
+              color: kind === k ? 'var(--bg-1)' : EX.muted,
               border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
             }}
           >
@@ -293,7 +293,7 @@ export default function NewListingForm({
               fontSize: 12.5,
               cursor: 'pointer',
               background: category === c ? EX.green : EX.chip,
-              color: category === c ? 'var(--on-forest)' : EX.muted,
+              color: category === c ? 'var(--bg-1)' : EX.muted,
               border: `1px solid ${category === c ? EX.green : EX.border}`,
             }}
           >
@@ -397,7 +397,7 @@ export default function NewListingForm({
               fontSize: 12.5,
               cursor: 'pointer',
               background: priceMode === m ? 'var(--color-ochre-dark)' : EX.chip,
-              color: priceMode === m ? 'var(--on-forest)' : EX.muted,
+              color: priceMode === m ? 'var(--bg-1)' : EX.muted,
               border: `1px solid ${priceMode === m ? 'var(--color-ochre-dark)' : EX.border}`,
             }}
           >
@@ -626,7 +626,7 @@ export default function NewListingForm({
             padding: 11,
             fontSize: 14,
             background: canPost ? EX.green : 'rgba(32,25,15,0.1)',
-            color: canPost ? 'var(--on-forest)' : '#755942',
+            color: canPost ? 'var(--bg-1)' : '#755942',
             border: 'none',
             cursor: canPost ? 'pointer' : 'default',
           }}

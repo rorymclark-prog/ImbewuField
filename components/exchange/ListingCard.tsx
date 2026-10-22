@@ -100,7 +100,7 @@ export default function ListingCard({
             padding: '3px 9px',
             borderRadius: 100,
             background: KIND_COLOR[listing.kind],
-            color: 'var(--on-forest)',
+            color: 'var(--bg-1)',
             letterSpacing: '0.05em',
           }}
         >

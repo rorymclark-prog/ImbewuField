@@ -206,7 +206,7 @@ export default function VisionPage() {
             <Link
               href="/home"
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--bg-1)', textDecoration: 'none' }}
             >
               {t('Back to my dashboard', 'Buyela kwideshibhodi yami')}
             </Link>
@@ -259,7 +259,7 @@ export default function VisionPage() {
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
                   style={{
                     background: on ? '#1F4D2B' : 'transparent',
-                    color: on ? 'var(--on-forest)' : '#5C5040',
+                    color: on ? 'var(--on-forest)' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
                   }}
