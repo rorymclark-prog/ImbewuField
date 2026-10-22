@@ -86,7 +86,8 @@ test('the internal stage name is untouched, so paid sheets keep their provenance
   // Only the words on the button changed. 'hybrid' is the stage name in the render queue, in stored
   // resultKind and in every gallery entry already written to a farmer's device — renaming it would
   // strand sheets that have already been paid for behind a label nothing looks up.
-  assert.match(i18n, /designGlossyAiHybrid: 'AI Polished'/, 'the farmer-facing name is the result, not the plumbing');
+  // copy-07 (wave 15) put the label in sentence case with every other button.
+  assert.match(i18n, /designGlossyAiHybrid: 'AI polished'/, 'the farmer-facing name is the result, not the plumbing');
   const jobs = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
   assert.match(jobs, /'hybrid' \| 'ai-polished' \| 'legacy-ai'/, 'stored provenance must not be renamed');
 });

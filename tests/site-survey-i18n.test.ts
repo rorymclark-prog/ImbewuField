@@ -321,7 +321,7 @@ test('the rewired SiteSurveySheet keys were already fully translated in every lo
 
 test('the current production step shows draft choices beside their exact English source', () => {
   const pairedKeys = [
-    ['surveyStepCurrentProduction', 'Current Production'],
+    ['surveyStepCurrentProduction', 'Current production'],
     ['surveyGrowingResources', 'Growing & resources'],
     ['sectionCropsGrowing', 'Crops already growing (select all)'],
     ['cropVegetables', 'Vegetables'], ['cropFruitTrees', 'Fruit trees'], ['cropHerbsMedicinal', 'Herbs / medicinal'],
@@ -385,7 +385,7 @@ test('Livestock & Poultry choices and help show each isiZulu draft beside its ex
 
 test('Income & Sales choices and help show isiZulu drafts beside exact English sources', () => {
   const pairedSources = [
-    ['surveyStepIncomeSales', 'Income & Sales'],
+    ['surveyStepIncomeSales', 'Income & sales'],
     ['toggleSellProduceLabel', 'We sell or plan to sell produce'],
     ['surveyToggleSellProduceSub', 'Your production rows can record what was sold and income earned'],
     ['sectionCurrentOrTargetMarket', 'Current or target market'],
@@ -406,7 +406,7 @@ test('Income & Sales choices and help show isiZulu drafts beside exact English s
 
 test('Resources & Inputs choices show isiZulu drafts beside exact English sources and keep uncertain guidance in English', () => {
   const pairedSources = [
-    ['surveyStepResourcesInputs', 'Resources & Inputs'],
+    ['surveyStepResourcesInputs', 'Resources & inputs'],
     ['surveyFieldGuide', 'Along the way'], ['surveyObserveFirst', 'Look, then record.'],
     ['sectionWaterSources', 'Water sources available on this site (select all)'],
     ['waterSourceMunicipalTap', 'Municipal tap'], ['waterSourceBorehole', 'Borehole'],
