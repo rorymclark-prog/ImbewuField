@@ -305,7 +305,7 @@ must provision — not buildable from code alone).
 Rory asked for a 5-day farmer course for ACT·SEF-type beneficiaries (09:00–16:00, taught from posters
 and a phone, optional slides), a mentor course (in person or online, a visit schedule with group visits,
 the app's finance/invoice mentoring switchable on/off), and Teach the Teachers (posters or PowerPoint,
-inspired by — not copied from — the Morrow-based TTT he sat); then added Farmer Money and AI Literacy.
+inspired by — not copied from — the Morrow-based TTT Rory sat); then added Farmer Money and AI Literacy.
 All five live in `courses/` (README = the pathway). ~230k words, 351 slides, 90 posters, 412 media items.
 - `courses/shared/`: FORMAT (parsed syntax), poster standards, facilitation toolkit, forms, PRODUCTION-GUIDE.
 - Courses: `farmer-5day/` (93 slides, 21 posters), `mentor-3day/` (61, 16; Visit Hand, visit playbook,
@@ -315,9 +315,14 @@ All five live in `courses/` (README = the pathway). ~230k words, 351 slides, 90 
   `courses/media-manifest.json` (Codex's work list: NEW vs REUSE of existing clips). `--check` = 0 problems.
 - Field lessons from the 2022/2023 reports are design rules (groups of 5, no demo-only practicals,
   ≤30% teacher talk, Day 0, registers, max 30 learners).
-- **Next:** Codex makes the NEW art/animations/posters per PRODUCTION-GUIDE.md and re-runs the build;
-  helpline numbers and Rand prices are marked "check locally"; decks not visually previewed here
-  (no LibreOffice Impress in the container).
+- **Deck redesign (2026-10-22):** one layout grid for all five courses with a per-course `motif` in
+  `style.md` (linocut · photo · chalk · clay · comic) that sets frames, bullet markers and the
+  section-slide ornament. Day kicker, numbered steps on "Your turn" slides, poster pill + page count in
+  the footer, APP/PAPER track pills, titles and bullets shrink to fit (isiZulu runs long), and
+  picture placeholders show only a title — the full brief moved to the speaker notes. Previewed by
+  installing LibreOffice Impress in the container (`apt-get install libreoffice-impress`).
+- **Next:** Rory makes images/posters in ChatGPT and animations in Flow (PRODUCTION-GUIDE.md), then
+  re-run the build; helpline numbers and Rand prices are marked "check locally".
 
 ### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to

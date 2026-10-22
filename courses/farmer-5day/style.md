@@ -72,5 +72,5 @@ No dialogue, no voice-over, no music (silent clip).
 ```json
 {"bg": "EFE6D2", "ink": "1B1A17", "accent": "B24E2A", "accent2": "2F5D34",
  "section_bg": "2F5D34", "section_ink": "EFE6D2", "head_font": "Zilla Slab", "body_font": "Atkinson Hyperlegible",
- "fallback_head": "Rockwell", "fallback_body": "Verdana"}
+ "fallback_head": "Rockwell", "fallback_body": "Verdana", "motif": "linocut"}
 ```

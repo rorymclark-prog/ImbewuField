@@ -67,5 +67,5 @@ No readable text or letters on screen. No dialogue, no voice-over, no music (sil
 ```json
 {"bg": "C9A77C", "ink": "1C1C1C", "accent": "D2452C", "accent2": "2C6FB7",
  "section_bg": "2F3A33", "section_ink": "F2EFE6", "head_font": "Kalam", "body_font": "Nunito",
- "fallback_head": "Segoe Print", "fallback_body": "Trebuchet MS"}
+ "fallback_head": "Segoe Print", "fallback_body": "Trebuchet MS", "motif": "chalk"}
 ```

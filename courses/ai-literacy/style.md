@@ -71,5 +71,5 @@ No readable text or letters on screen. No dialogue, no voice-over, no music (sil
 ```json
 {"bg": "FFFFFF", "ink": "111111", "accent": "1FA3C8", "accent2": "D6336C",
  "section_bg": "1B1F3B", "section_ink": "F7C948", "head_font": "Bangers", "body_font": "Atkinson Hyperlegible",
- "fallback_head": "Impact", "fallback_body": "Verdana"}
+ "fallback_head": "Impact", "fallback_body": "Verdana", "motif": "comic"}
 ```

@@ -306,11 +306,38 @@ def validate(course_dirs: list[Path], catalog: dict) -> list[str]:
 
 # ── PowerPoint ───────────────────────────────────────────────────────────────────────────────
 
+def _mix(a: str, b: str, t: float) -> str:
+    """Blend two hex colours: t=0 → a, t=1 → b."""
+    ca = [int(a[i:i + 2], 16) for i in (0, 2, 4)]
+    cb = [int(b[i:i + 2], 16) for i in (0, 2, 4)]
+    return "".join(f"{round(x + (y - x) * t):02X}" for x, y in zip(ca, cb))
+
+
+def _deck_kicker(deck: Deck, lang: str) -> str:
+    """'Day 1 — Why we farm this way' → 'DAY 1' (isiZulu: 'USUKU 1')."""
+    head = re.split(r"\s+[—-]\s+", deck.title, maxsplit=1)[0].strip()
+    if lang == "zu":
+        head = re.sub(r"^Day\b", "Usuku", head)
+    return head.upper()
+
+
+# Per-course decoration (style.md "motif"): every course shares one layout grid, and the motif
+# decides frames, bullet markers and the section-slide ornament.
+MOTIFS = {
+    "linocut": {"marker": "■", "round": False, "frame_w": 4.0},
+    "photo":   {"marker": "—", "round": False, "frame_w": 0.0},
+    "chalk":   {"marker": "›", "round": False, "frame_w": 0.0},
+    "clay":    {"marker": "●", "round": True,  "frame_w": 0.0},
+    "comic":   {"marker": "■", "round": False, "frame_w": 4.5},
+}
+
+
 def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: bool, lang: str = "en") -> None:
     from pptx import Presentation
     from pptx.dml.color import RGBColor
     from pptx.enum.shapes import MSO_SHAPE
     from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
+    from pptx.oxml.ns import qn
     from pptx.util import Emu, Pt
 
     def rgb(h: str) -> RGBColor:
@@ -319,133 +346,330 @@ def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: b
     style = load_style(course)
     T = style["theme"]
     # Shadow the house palette with this course's own look (see style.md).
-    PAPER, INK, OCHRE, WATER = T["bg"], T["ink"], T["accent"], T["accent2"]
-    SEC_BG, SEC_INK, HEADC = T["section_bg"], T["section_ink"], T["ink"]
-    CARD, HAIR, LEAF = T.get("card", T["bg"]), T.get("rule", T["accent2"]), T["section_ink"]
+    PAPER, INK, ACC, ACC2 = T["bg"], T["ink"], T["accent"], T["accent2"]
+    SEC_BG, SEC_INK = T["section_bg"], T["section_ink"]
+    MUTED = _mix(INK, PAPER, 0.45)
+    CARD = T.get("card", _mix(PAPER, "FFFFFF", 0.55))
     HEAD_FONT, BODY_FONT = T["fallback_head"], T["fallback_body"]
+    MOTIF = T.get("motif", "linocut")
+    MO = MOTIFS.get(MOTIF, MOTIFS["linocut"])
     tr = (load_i18n(course, lang).get("slides") or {}) if lang != "en" else {}
+    kicker = _deck_kicker(deck, lang)
 
     prs = Presentation()
     prs.slide_width, prs.slide_height = Emu(12192000), Emu(6858000)  # 16:9, 13.333 × 7.5 in
     W, H = prs.slide_width, prs.slide_height
     blank = prs.slide_layouts[6]
     IN = 914400
+    M = 0.65 * IN  # outer margin
 
-    def box(slide, x, y, w, h, fill=None, line=None, shape=MSO_SHAPE.RECTANGLE):
+    def alpha(shape, opacity: float) -> None:
+        fill = shape.fill._xPr.find(qn("a:solidFill"))
+        if fill is not None and len(fill):
+            el = fill[0].makeelement(qn("a:alpha"), {"val": str(int(opacity * 100000))})
+            fill[0].append(el)
+
+    def box(slide, x, y, w, h, fill=None, line=None, lw=1.25, shape=None, rot=0.0, radius=None):
+        if shape is None:
+            shape = MSO_SHAPE.ROUNDED_RECTANGLE if MO["round"] else MSO_SHAPE.RECTANGLE
         s = slide.shapes.add_shape(shape, Emu(int(x)), Emu(int(y)), Emu(int(w)), Emu(int(h)))
         if fill:
             s.fill.solid(); s.fill.fore_color.rgb = rgb(fill)
         else:
             s.fill.background()
         if line:
-            s.line.color.rgb = rgb(line); s.line.width = Pt(1.25)
+            s.line.color.rgb = rgb(line); s.line.width = Pt(lw)
         else:
             s.line.fill.background()
+        if shape == MSO_SHAPE.ROUNDED_RECTANGLE:
+            s.adjustments[0] = radius if radius is not None else 0.12
+        if rot:
+            s.rotation = rot
         s.shadow.inherit = False
         return s
 
     def text(slide, x, y, w, h, runs, size=24, color=INK, font=BODY_FONT, bold=False,
-             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, bullets=False, spacing=8):
+             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, marker=None, marker_color=None, spacing=8,
+             line_spacing=None):
         tb = slide.shapes.add_textbox(Emu(int(x)), Emu(int(y)), Emu(int(w)), Emu(int(h)))
         tf = tb.text_frame
         tf.word_wrap = True
         tf.vertical_anchor = anchor
         tf.margin_left = tf.margin_right = Emu(int(0.05 * IN))
+        tf.margin_top = tf.margin_bottom = Emu(0)
         for i, r in enumerate(runs if isinstance(runs, list) else [runs]):
             p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
             p.alignment = align
             p.space_after = Pt(spacing)
+            if line_spacing:
+                p.line_spacing = line_spacing
+            if marker:
+                hang = int(size * 1.25 * 12700)  # hanging indent so wrapped lines align with the text
+                pPr = p._p.get_or_add_pPr()
+                pPr.set("marL", str(hang)); pPr.set("indent", str(-hang))
+                m = p.add_run()
+                m.text = marker + "  "
+                m.font.size = Pt(size); m.font.bold = True; m.font.name = font
+                m.font.color.rgb = rgb(marker_color or ACC)
             run = p.add_run()
-            run.text = ("•  " + r) if bullets else r
+            run.text = r
             run.font.size = Pt(size); run.font.bold = bold; run.font.name = font
             run.font.color.rgb = rgb(color)
         return tb
 
-    def place_media(slide, mid: str, x, y, w, h):
+    def pill(slide, x, y, label, fill, ink, size=12, w=None, outline=False):
+        w = w or (0.32 * IN + len(label) * size * 0.62 * IN / 72)
+        h = size * 2.1 * IN / 72
+        if MOTIF == "comic" and not outline:
+            box(slide, x + 0.05 * IN, y + 0.05 * IN, w, h, fill=INK)
+            b = box(slide, x, y, w, h, fill=fill, line=INK, lw=2.0)
+        else:
+            b = box(slide, x, y, w, h, fill=None if outline else fill, line=fill if outline else None,
+                    lw=1.25, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.5)
+        text(slide, x, y, w, h, label, size=size, color=fill if outline else ink, bold=True,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        return w
+
+    # ── frames: one per motif ────────────────────────────────────────────────────────────────
+    def frame(slide, x, y, w, h, dark=False):
+        """Draw the course's picture frame; return the inner box the picture sits in."""
+        ink = SEC_INK if dark else INK
+        if MOTIF == "linocut":
+            box(slide, x, y, w, h, fill=CARD, line=ink, lw=MO["frame_w"])
+            return x + 0.12 * IN, y + 0.12 * IN, w - 0.24 * IN, h - 0.24 * IN
+        if MOTIF == "photo":
+            sh = box(slide, x + 0.09 * IN, y + 0.11 * IN, w, h, fill=_mix(INK, PAPER, 0.75))
+            alpha(sh, 0.55)
+            box(slide, x, y, w, h, fill="FFFFFF", line=_mix(INK, PAPER, 0.8), lw=0.75)
+            return x + 0.16 * IN, y + 0.16 * IN, w - 0.32 * IN, h - 0.56 * IN
+        if MOTIF == "chalk":
+            box(slide, x, y, w, h, fill="FBF8F1", rot=-1.2)
+            for tx, rot in ((x + 0.25 * IN, -18), (x + w - 1.15 * IN, 14)):
+                tape = box(slide, tx, y - 0.14 * IN, 0.9 * IN, 0.3 * IN, fill="F3E6A6", rot=rot)
+                alpha(tape, 0.8)
+            return x + 0.2 * IN, y + 0.2 * IN, w - 0.4 * IN, h - 0.4 * IN
+        if MOTIF == "clay":
+            box(slide, x, y, w, h, fill=CARD, line=_mix(ACC, PAPER, 0.4), lw=3.0, radius=0.08)
+            return x + 0.18 * IN, y + 0.18 * IN, w - 0.36 * IN, h - 0.36 * IN
+        # comic: hard offset shadow + heavy ink border
+        box(slide, x + 0.13 * IN, y + 0.13 * IN, w, h, fill=INK)
+        box(slide, x, y, w, h, fill="FFFFFF", line=INK, lw=MO["frame_w"])
+        return x + 0.12 * IN, y + 0.12 * IN, w - 0.24 * IN, h - 0.24 * IN
+
+    def place_media(slide, mid: str, x, y, w, h, dark=False):
         item = catalog.get(mid)
         if item is None:
             return
+        ix, iy, iw, ih = frame(slide, x, y, w, h, dark)
         f = existing_file(item)
         if embed_video and f is not None and f.suffix.lower() == ".mp4":
             poster = still_for(item)
-            slide.shapes.add_movie(str(f), Emu(int(x)), Emu(int(y)), Emu(int(w)), Emu(int(h)),
+            slide.shapes.add_movie(str(f), Emu(int(ix)), Emu(int(iy)), Emu(int(iw)), Emu(int(ih)),
                                    poster_frame_image=str(poster) if poster else None, mime_type="video/mp4")
             return
         still = still_for(item)
         if still is not None:
             from PIL import Image
             with Image.open(still) as im:
-                iw, ih = im.size
-            scale = min(w / iw, h / ih)
-            pw, ph = iw * scale, ih * scale
-            slide.shapes.add_picture(str(still), Emu(int(x + (w - pw) / 2)), Emu(int(y + (h - ph) / 2)),
+                pw0, ph0 = im.size
+            scale = min(iw / pw0, ih / ph0)
+            pw, ph = pw0 * scale, ph0 * scale
+            slide.shapes.add_picture(str(still), Emu(int(ix + (iw - pw) / 2)), Emu(int(iy + (ih - ph) / 2)),
                                      Emu(int(pw)), Emu(int(ph)))
             if item["kind"] == "animation":
                 rel = (item.get("reuse_path") or item.get("target") or "")
-                tag = box(slide, x, y + h - 0.45 * IN, w, 0.45 * IN, fill=INK)
-                tag.fill.transparency = 0.2
-                text(slide, x + 0.1 * IN, y + h - 0.44 * IN, w - 0.2 * IN, 0.42 * IN,
-                     f"▶  Clip {mid} · play from the tablet: {Path(rel).name}", size=11, color=PAPER,
-                     anchor=MSO_ANCHOR.MIDDLE)
+                tag = box(slide, ix, iy + ih - 0.45 * IN, iw, 0.45 * IN, fill=INK)
+                alpha(tag, 0.8)
+                text(slide, ix + 0.12 * IN, iy + ih - 0.45 * IN, iw - 0.24 * IN, 0.45 * IN,
+                     f"▶  Play clip · {Path(rel).name}", size=12, color="FFFFFF", anchor=MSO_ANCHOR.MIDDLE)
             return
-        # Placeholder: teachable today, replaced automatically when the art lands.
-        box(slide, x, y, w, h, fill=CARD, line=HAIR)
-        kind = {"animation": "ANIMATION", "poster-art": "POSTER ART", "photo": "PHOTO"}.get(item["kind"], "IMAGE")
-        text(slide, x + 0.25 * IN, y + 0.2 * IN, w - 0.5 * IN, 0.4 * IN, f"{kind} · {mid} · coming",
-             size=12, color=OCHRE, bold=True)
-        text(slide, x + 0.25 * IN, y + 0.62 * IN, w - 0.5 * IN, 0.5 * IN, item["title"], size=18,
-             color=HEADC, font=HEAD_FONT, bold=True)
-        brief = re.sub(r"\s+", " ", item.get("brief") or "")
-        if len(brief) > 360:
-            brief = brief[:357].rsplit(" ", 1)[0] + "…"
-        text(slide, x + 0.25 * IN, y + 1.2 * IN, w - 0.5 * IN, h - 1.4 * IN, brief, size=11, color=INK)
+        # Placeholder until the art lands: a quiet, labelled frame (the full brief is in the notes).
+        kind = {"animation": "CLIP", "poster-art": "POSTER ART", "photo": "PHOTO"}.get(item["kind"], "PICTURE")
+        if lang == "zu":
+            kind = {"CLIP": "IVIDIYO", "PHOTO": "ISITHOMBE", "PICTURE": "ISITHOMBE"}.get(kind, kind)
+        mark = box(slide, ix + iw / 2 - 0.45 * IN, iy + ih / 2 - 1.05 * IN, 0.9 * IN, 0.9 * IN,
+                   fill=None, line=_mix(ACC, CARD, 0.35), lw=2.0,
+                   shape=MSO_SHAPE.OVAL if kind in ("CLIP", "IVIDIYO") else
+                   (MSO_SHAPE.ROUNDED_RECTANGLE if MO["round"] else MSO_SHAPE.RECTANGLE))
+        text(slide, ix + iw / 2 - 0.45 * IN, iy + ih / 2 - 1.05 * IN, 0.9 * IN, 0.9 * IN,
+             "▶" if kind in ("CLIP", "IVIDIYO") else "✦", size=26, color=_mix(ACC, CARD, 0.2),
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+        text(slide, ix + 0.3 * IN, iy + ih / 2 + 0.05 * IN, iw - 0.6 * IN, 0.9 * IN, item["title"], size=20,
+             color=_mix(INK, CARD, 0.15), font=HEAD_FONT, bold=True, align=PP_ALIGN.CENTER)
+        text(slide, ix + 0.3 * IN, iy + ih - 0.5 * IN, iw - 0.6 * IN, 0.3 * IN, f"{kind} · {mid}", size=10,
+             color=MUTED, align=PP_ALIGN.CENTER)
 
-    for s in deck.slides:
+    # ── ornaments ────────────────────────────────────────────────────────────────────────────
+    def ornament_section(slide):
+        if MOTIF == "linocut":
+            box(slide, 0.22 * IN, 0.22 * IN, W - 0.44 * IN, H - 0.44 * IN, line=SEC_INK, lw=2.5)
+            n, tw = 22, (W - 0.44 * IN) / 22
+            for i in range(n):
+                t = box(slide, 0.22 * IN + i * tw, H - 0.62 * IN, tw, 0.4 * IN, fill=ACC,
+                        shape=MSO_SHAPE.ISOSCELES_TRIANGLE)
+        elif MOTIF == "photo":
+            for yy in (0.5 * IN, 0.58 * IN, H - 0.62 * IN, H - 0.54 * IN):
+                box(slide, M, yy, W - 2 * M, Emu(int(0.012 * IN)), fill=ACC)
+        elif MOTIF == "chalk":
+            smudge = box(slide, -0.6 * IN, H - 2.1 * IN, 5.5 * IN, 2.6 * IN, fill=SEC_INK, shape=MSO_SHAPE.OVAL)
+            alpha(smudge, 0.05)
+            smudge = box(slide, W - 4.5 * IN, -0.8 * IN, 5.2 * IN, 2.4 * IN, fill=SEC_INK, shape=MSO_SHAPE.OVAL)
+            alpha(smudge, 0.04)
+        elif MOTIF == "clay":
+            for cx, cy, d, col, a in ((-1.1, -1.0, 3.4, ACC, 0.9), (W / IN - 1.5, 2.4, 2.9, ACC2, 0.85),
+                                      (W / IN - 3.2, -0.6, 1.3, SEC_INK, 0.18), (5.6, -0.45, 0.95, ACC2, 0.7)):
+                blob = box(slide, cx * IN, cy * IN, d * IN, d * 0.92 * IN, fill=col, shape=MSO_SHAPE.OVAL)
+                alpha(blob, a)
+        else:  # comic: halftone corner + burst
+            for r in range(6):
+                for c in range(10 - r):
+                    d = (0.16 - 0.022 * r) * IN
+                    dot = box(slide, W - (c + 1) * 0.3 * IN, (0.25 + r * 0.3) * IN, d, d, fill=ACC, shape=MSO_SHAPE.OVAL)
+                    alpha(dot, 0.6)
+
+    def ornament_content(slide, activity: bool):
+        if MOTIF == "linocut":
+            box(slide, 0.22 * IN, 0.22 * IN, W - 0.44 * IN, H - 0.44 * IN, line=INK, lw=1.5)
+        if activity:
+            band = box(slide, 0, 0, 0.3 * IN, H, fill=ACC, shape=MSO_SHAPE.RECTANGLE)
+            if MOTIF == "comic":
+                box(slide, 0.3 * IN, 0, Emu(int(0.05 * IN)), H, fill=INK, shape=MSO_SHAPE.RECTANGLE)
+
+    def title_rule(slide, x, y, w):
+        if MOTIF == "chalk":
+            box(slide, x, y, 2.6 * IN, 0.07 * IN, fill=ACC, rot=-0.8)
+            box(slide, x + 0.3 * IN, y + 0.1 * IN, 1.8 * IN, 0.04 * IN, fill=ACC, rot=0.6)
+        elif MOTIF == "clay":
+            box(slide, x, y, 1.4 * IN, 0.12 * IN, fill=ACC, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.5)
+        elif MOTIF == "comic":
+            box(slide, x, y, 1.6 * IN, 0.12 * IN, fill=ACC2, shape=MSO_SHAPE.RECTANGLE)
+        elif MOTIF == "photo":
+            box(slide, x, y, w, Emu(int(0.012 * IN)), fill=_mix(INK, PAPER, 0.7))
+        else:
+            box(slide, x, y, 1.2 * IN, 0.1 * IN, fill=ACC)
+
+    def lines(s_: str, w, size, bold=False) -> int:
+        cpl = max(1, int((w / IN) * 72 / (size * (0.66 if bold else 0.56))))
+        if max((len(wd) for wd in s_.split()), default=0) > cpl:
+            return 99  # a single word would break mid-word
+        n, cur = 1, 0
+        for word in s_.split():
+            if cur and cur + 1 + len(word) > cpl:
+                n, cur = n + 1, len(word)
+            else:
+                cur += (1 if cur else 0) + len(word)
+        return n
+
+    def number_badge(slide, x, y, n: int):
+        d = 0.62 * IN
+        if MOTIF == "comic":
+            box(slide, x + 0.05 * IN, y + 0.05 * IN, d, d, fill=INK, shape=MSO_SHAPE.OVAL)
+            box(slide, x, y, d, d, fill=ACC, line=INK, lw=2.0, shape=MSO_SHAPE.OVAL)
+        else:
+            box(slide, x, y, d, d, fill=ACC, shape=MSO_SHAPE.OVAL)
+        text(slide, x, y, d, d, str(n), size=22, color="FFFFFF", font=HEAD_FONT, bold=True,
+             align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+
+    total = len(deck.slides)
+    for idx, s in enumerate(deck.slides, start=1):
         t = tr.get(s.id) or {}
         title = t.get("title") or s.title
         screen = t.get("screen") if t.get("screen") and len(t["screen"]) == len(s.screen) else s.screen
+        # "[APP] Record visit" / "[PAPER] The visit form": the track shows as a pill instead.
+        mt = re.match(r"^\[(APP|PAPER)\]\s*", title)
+        track = (mt.group(1) if mt else ("APP" if s.track == "app" else "")).upper()
+        title = title[mt.end():] if mt else title
         slide = prs.slides.add_slide(blank)
+        section = s.type == "section"
+        activity = s.type == "activity"
         bg = slide.background.fill
-        bg.solid(); bg.fore_color.rgb = rgb(SEC_BG if s.type == "section" else PAPER)
+        bg.solid(); bg.fore_color.rgb = rgb(SEC_BG if section else PAPER)
+        ink = SEC_INK if section else INK
+        muted = _mix(SEC_INK, SEC_BG, 0.4) if section else MUTED
 
-        # footer: slide id + poster to switch to
-        foot = f"{s.id}" + (f"   ·   Poster {', '.join(s.posters)}" if s.posters else "")
-        text(slide, 0.5 * IN, H - 0.45 * IN, 8 * IN, 0.35 * IN, foot, size=10,
-             color=LEAF if s.type == "section" else INK)
-        text(slide, W - 4.5 * IN, H - 0.45 * IN, 4 * IN, 0.35 * IN, COURSE_TITLES.get(course, course),
-             size=10, color=LEAF if s.type == "section" else INK, align=PP_ALIGN.RIGHT)
-        if s.track == "app":
-            b = box(slide, W - 1.6 * IN, 0.3 * IN, 1.1 * IN, 0.4 * IN, fill=WATER, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
-            text(slide, W - 1.6 * IN, 0.3 * IN, 1.1 * IN, 0.4 * IN, "APP", size=12, color=PAPER, bold=True,
-                 align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-
-        if s.type == "section":
-            text(slide, 0.9 * IN, 1.6 * IN, 7 * IN, 1.8 * IN, title, size=48, color=SEC_INK, font=HEAD_FONT,
-                 bold=True, anchor=MSO_ANCHOR.BOTTOM)
-            box(slide, 0.9 * IN, 3.55 * IN, 1.6 * IN, 0.08 * IN, fill=OCHRE)
-            text(slide, 0.9 * IN, 3.8 * IN, 6.6 * IN, 2 * IN, screen, size=24, color=LEAF)
-            if s.media:
-                place_media(slide, s.media[0], 8.2 * IN, 1.0 * IN, 4.6 * IN, 5.2 * IN)
+        if section:
+            ornament_section(slide)
         else:
-            if s.type == "activity":
-                b = box(slide, 0.5 * IN, 0.35 * IN, 1.9 * IN, 0.45 * IN, fill=OCHRE, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
-                text(slide, 0.5 * IN, 0.35 * IN, 1.9 * IN, 0.45 * IN, ("SEBENZANI" if lang == "zu" else "YOUR TURN"), size=14, color=PAPER, bold=True,
-                     align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
-                ty = 0.9 * IN
+            ornament_content(slide, activity)
+
+        # footer: course · poster to switch to · page
+        fy = H - 0.62 * IN
+        if MOTIF == "linocut" and section:
+            fy = H - 1.05 * IN
+        fx = M
+        if s.posters:
+            label = ("IPHOSTA " if lang == "zu" else "POSTER ") + ", ".join(s.posters)
+            fx += pill(slide, fx, fy - 0.02 * IN, label, ACC2 if not section else SEC_INK, PAPER, size=10,
+                       outline=True) + 0.15 * IN
+        text(slide, fx, fy, 6 * IN, 0.3 * IN, f"{COURSE_TITLES.get(course, course)}  ·  {s.id}", size=10,
+             color=muted, anchor=MSO_ANCHOR.MIDDLE)
+        text(slide, W - M - 2 * IN, fy, 2 * IN, 0.3 * IN, f"{idx} / {total}", size=10, color=muted,
+             align=PP_ALIGN.RIGHT, anchor=MSO_ANCHOR.MIDDLE)
+        if track:
+            label = {"APP": "APP", "PAPER": "IPHEPHA" if lang == "zu" else "PAPER"}[track]
+            pill(slide, W - M - 1.25 * IN, 0.45 * IN, label, ACC2, "FFFFFF", size=12, w=1.25 * IN,
+                 outline=(track == "PAPER"))
+
+        if section:
+            tx, tw = M + 0.25 * IN, (7.0 if s.media else 11.5) * IN
+            text(slide, tx, 1.05 * IN, tw, 0.4 * IN, kicker, size=16, color=_mix(SEC_INK, SEC_BG, 0.25),
+                 bold=True)
+            ssize = next((z for z, mx in ((54, 2), (48, 2), (42, 2), (38, 3), (34, 3), (30, 3))
+                          if lines(title, tw, z, True) <= mx), 30)
+            text(slide, tx, 1.5 * IN, tw, 2.3 * IN, title, size=ssize, color=SEC_INK, font=HEAD_FONT, bold=True,
+                 anchor=MSO_ANCHOR.BOTTOM, line_spacing=0.95)
+            if MOTIF == "clay":
+                box(slide, tx, 3.98 * IN, 1.6 * IN, 0.14 * IN, fill=ACC, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.5)
+            elif MOTIF == "chalk":
+                box(slide, tx, 3.98 * IN, 2.8 * IN, 0.07 * IN, fill=ACC, rot=-0.8)
             else:
-                ty = 0.45 * IN
-            text(slide, 0.5 * IN, ty, 12.3 * IN, 1.1 * IN, title, size=38, color=HEADC, font=HEAD_FONT, bold=True)
-            box(slide, 0.5 * IN, ty + 1.15 * IN, 12.3 * IN, Emu(9525), fill=HAIR)
+                box(slide, tx, 3.98 * IN, 1.6 * IN, 0.1 * IN, fill=ACC if MOTIF != "comic" else SEC_INK)
+            text(slide, tx, 4.3 * IN, tw, 1.8 * IN, screen, size=24, color=_mix(SEC_INK, SEC_BG, 0.15))
+            if s.media:
+                place_media(slide, s.media[0], 8.15 * IN, 1.0 * IN, 4.5 * IN, 4.6 * IN, dark=True)
+        else:
+            x0 = M + (0.15 * IN if activity else 0)
+            ty = 0.5 * IN
+            if activity:
+                lab = "SEBENZANI" if lang == "zu" else "YOUR TURN"
+                pill(slide, x0, ty, lab, ACC, "FFFFFF", size=13)
+                ty += 0.55 * IN
+            else:
+                text(slide, x0, ty, 9 * IN, 0.35 * IN, kicker, size=13, color=ACC, bold=True)
+                ty += 0.38 * IN
+            right = W - M - (1.4 * IN if track else 0)
+            tsize = next((z for z, mx in ((40, 1), (36, 1), (32, 1), (32, 2), (28, 2)) if lines(title, right - x0, z, True) <= mx), 28)
+            tl = min(lines(title, right - x0, tsize, True), 3)
+            th = tl * tsize * 1.05 * IN / 72
+            text(slide, x0, ty, right - x0, th + 0.1 * IN, title, size=tsize, color=INK, font=HEAD_FONT, bold=True,
+                 anchor=MSO_ANCHOR.TOP, line_spacing=0.95)
+            title_rule(slide, x0 + 0.05 * IN, ty + th + 0.22 * IN, right - x0)
+            by = ty + th + 0.62 * IN
+            avail = H - by - 0.95 * IN
             has_media = bool(s.media)
-            s_screen = screen
-            tw = 5.6 * IN if has_media else 12.3 * IN
-            size = 30 if s.type == "activity" else 28
-            if has_media and max((len(b) for b in screen), default=0) > 30:
-                size -= 4  # half-width column: keep long bullets to two lines
-            text(slide, 0.5 * IN, ty + 1.45 * IN, tw, H - ty - 2.3 * IN, s_screen, size=size, color=INK,
-                 bold=(s.type == "activity"), bullets=True, spacing=16)
+            cw = (5.55 * IN if has_media else W - M - x0) - (0.15 * IN if activity else 0)
+            if activity:
+                for size in ((26, 24, 22, 20) if has_media else (30, 28, 26, 24)):
+                    rows = [max(0.78 * IN, lines(ln, cw - 0.85 * IN, size, True) * size * 1.12 * IN / 72 + 0.28 * IN)
+                            for ln in screen]
+                    if sum(rows) <= avail:
+                        break
+                ry = by
+                for n, (line, rh) in enumerate(zip(screen, rows), start=1):
+                    number_badge(slide, x0, ry, n)
+                    text(slide, x0 + 0.85 * IN, ry + 0.05 * IN, cw - 0.85 * IN, rh - 0.1 * IN, line, size=size,
+                         color=INK, bold=True, line_spacing=0.95)
+                    ry += rh
+            else:
+                for size in ((26, 24, 22, 20) if has_media else (32, 30, 28, 24)):
+                    need = sum(lines(b, cw - size * 1.25 * IN / 72, size) * size * 1.2 * IN / 72 + 18 * IN / 72
+                               for b in screen)
+                    if need <= avail:
+                        break
+                text(slide, x0, by, cw, avail, screen, size=size, color=INK, marker=MO["marker"], spacing=18)
             if has_media:
-                place_media(slide, s.media[0], 6.4 * IN, ty + 1.4 * IN, 6.4 * IN, H - ty - 2.1 * IN)
+                fx0 = 6.55 * IN
+                place_media(slide, s.media[0], fx0, by - 0.1 * IN, W - M - fx0, avail + 0.05 * IN)
 
         notes = s.notes
         extra = []
@@ -453,10 +677,15 @@ def build_deck(course: str, deck: Deck, catalog: dict, out: Path, embed_video: b
             extra.append("Poster: " + ", ".join(s.posters))
         if len(s.media) > 1:
             extra.append("Also: " + ", ".join(s.media[1:]))
-        clips = [m for m in s.media if catalog.get(m, {}).get("kind") == "animation"]
-        for c in clips:
-            it = catalog[c]
-            extra.append(f"Clip {c}: {it.get('reuse_path') or it.get('target')}")
+        for m in s.media:
+            it = catalog.get(m)
+            if it is None:
+                continue
+            if it.get("kind") == "animation":
+                extra.append(f"Clip {m}: {it.get('reuse_path') or it.get('target')}")
+            if existing_file(it) is None and it.get("brief"):
+                brief = re.sub(r"\s+", " ", it["brief"]).strip()
+                extra.append(f"Picture {m} (coming) — {it['title']}: {brief}")
         slide.notes_slide.notes_text_frame.text = (notes + ("\n\n" + "\n".join(extra) if extra else "")).strip()
 
     out.parent.mkdir(parents=True, exist_ok=True)

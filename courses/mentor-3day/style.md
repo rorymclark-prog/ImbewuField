@@ -73,5 +73,5 @@ No dialogue, no voice-over, no music (silent clip; ambient sound will be removed
 ```json
 {"bg": "FAF7F0", "ink": "232323", "accent": "D9622B", "accent2": "6E9CC4",
  "section_bg": "2E3440", "section_ink": "FAF7F0", "head_font": "Lora", "body_font": "Source Sans 3",
- "fallback_head": "Georgia", "fallback_body": "Calibri"}
+ "fallback_head": "Georgia", "fallback_body": "Calibri", "motif": "photo"}
 ```
