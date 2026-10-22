@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import typescript from 'typescript';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
@@ -101,12 +102,52 @@ test('every section of the report now names the site from one resolver', () => {
     'the old coarse-name fire test is back');
 });
 
+function assertSavedReportFilenames(source: string): void {
+  const tree = typescript.createSourceFile('ReportView.tsx', source, typescript.ScriptTarget.Latest, true, typescript.ScriptKind.TSX);
+  let callback: typescript.Node | undefined;
+  const findCallback = (node: typescript.Node) => {
+    if (typescript.isVariableDeclaration(node) && typescript.isIdentifier(node.name) && node.name.text === 'exportPdf') callback = node.initializer;
+    typescript.forEachChild(node, findCallback);
+  };
+  findCallback(tree);
+  assert.ok(callback, 'the actual PDF export callback must exist');
+  const namedCalls = (root: typescript.Node, name: string): typescript.CallExpression[] => {
+    const calls: typescript.CallExpression[] = [];
+    const visit = (node: typescript.Node) => {
+      if (typescript.isCallExpression(node) && typescript.isIdentifier(node.expression) && node.expression.text === name) calls.push(node);
+      typescript.forEachChild(node, visit);
+    };
+    visit(root);
+    return calls;
+  };
+  const deliveries = namedCalls(callback, 'deliverPdf');
+  assert.ok(deliveries.length >= 2, 'both the summary and full report must deliver a file');
+  for (const delivery of deliveries) {
+    const filenameArgument = delivery.arguments[1];
+    assert.ok(filenameArgument, 'each delivered file needs its report filename');
+    const filenames = namedCalls(filenameArgument, 'reportPdfFilename');
+    assert.equal(filenames.length, 1, 'each delivery must derive its filename from the saved report');
+    const [site, date] = filenames[0].arguments;
+    assert.ok(site && typescript.isIdentifier(site) && site.text === 'siteName', 'the filename must use the displayed garden name');
+    assert.ok(date && typescript.isNewExpression(date) && typescript.isIdentifier(date.expression) && date.expression.text === 'Date'
+      && date.arguments?.length === 1 && typescript.isIdentifier(date.arguments[0]) && date.arguments[0].text === 'reportDate',
+    'the filename must use the report version date');
+  }
+}
+
 test('the download is named after the site, not the wrong biome', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
   // Rory's saved Ubhejane report must use the garden identity, even when the regional
   // classification is correct. Pinning ecology.placeName preserved the naming defect.
-  assert.ok(/reportPdfFilename\(siteName, new Date\(reportDate\)\)/.test(view),
-    'the PDF must use the displayed garden name and the report version date');
+  // A presentation-language argument does not change the site's identity or date.
+  // Inspect actual delivery calls so a comment or unused example cannot satisfy this guard.
+  assertSavedReportFilenames(view);
+  assert.throws(() => assertSavedReportFilenames(view.replaceAll('reportPdfFilename(siteName,', 'reportPdfFilename(ecology.placeName,')), /displayed garden name/);
+  assert.throws(() => assertSavedReportFilenames(view.replaceAll('new Date(reportDate)', 'new Date()')), /report version date/);
+  assertSavedReportFilenames(`const exportPdf = useCallback(async () => {
+    await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)));
+    await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate), contentLanguage), contentLanguage);
+  }, []);`);
   assert.ok(/reportSiteName\(activeSaved, savedPlaces\)/.test(view),
     'the displayed identity must resolve from the saved report, not a regional label');
   assert.ok(!/\bd\.biome\.name\b/.test(view),

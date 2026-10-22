@@ -517,7 +517,7 @@
       "ve": "PDF dza fhethu dzi vhulunga maḽeḓere a luambo na dzilebulu dzo ṱalutshedzelwaho dzi sa athu u sedzuluswa."
     }
   ],
-  "releaseSha": "3ef6b2fe",
+  "releaseSha": "c3ddc207",
   "verification": {
     "typecheck": "pass on Node24.19.0",
     "focusedTests": {
@@ -536,11 +536,18 @@
     "fullNativeCautionAndDraftStatus": "Verified on all188nativepages with whitespace-normalized extracted text. Canonical PLAN_ASSURANCE_COPY owns the full caution.",
     "englishRegression": "Before/after ink, colour and working-plan outputs: all30 corresponding pages have identical pixels and extracted text. Baseline source is recorded separately and was not regenerated.",
     "visual": "Viewed rendered contact sheets for all20native PDFs plus enlarged all4 sowing calendars and8phone/desktop release states (34readinglines). No clipped/overlapping layouts observed; wording is still an unreviewed draft.",
-    "fullSuite": "Not yet run on this site-export head; do not claim a full-suite pass. Garden correction3ef6b2fe is running independently in the frozen settings worktree."
+    "fullSuite": "Original c3ddc207 full562 run TERMINAL FAILED:5726tests/5724pass/1failure/1existing shape-sync TODO. The remaining failure was the filename guard pinning the old two-argument call; its claim is now checked on actual delivery ASTs with wrong-site and wrong-date negative controls. Correction recheck pending."
   },
   "remaining": [
     "Translate standalone and attached crop-plan furniture; its English labels remain explicitly labelled English in ReportCropPlan controls. This increment preserves saved native records in that appendix.",
     "Complete feedback-form and final app-wide source/runtime coverage audits.",
     "All new wording remains an unreviewed draft; no paid AI generation, live account action, merge or rules deployment was performed."
-  ]
+  ],
+  "filenameGuardCorrection": {
+    "originalHead": "c3ddc2070ed1b5afe4bb68634363f5b92c13fc04",
+    "originalTest": "tests/site-ecology.test.ts:104",
+    "reason": "The rule is saved site identity and report-version date, independent of an optional presentation-language argument. The previous regex pinned the old call arity. The replacement inspects actual full/summary delivery arguments and must reject a regional name or current date. No PDF rendering behavior changed.",
+    "oldRun": "39768852686 rules119791017305 SUCCESS/test119791016990 FAILURE",
+    "recheck": "Pending; no corrected full-pass claim."
+  }
 }
