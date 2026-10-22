@@ -795,14 +795,14 @@ export default function SurveysPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
         title={localUi('Surveys', 'Izinhlolovo', lang)}
         right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
       />
 
       {/* code-14: no max-width at all, so content ran edge to edge at 1280px. */}
-      <main className={`flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
+      <main className={`flex-1 overflow-y-auto lg:flex-none lg:overflow-visible px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
 
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
