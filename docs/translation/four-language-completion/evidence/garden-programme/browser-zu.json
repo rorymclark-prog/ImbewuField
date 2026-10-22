@@ -1,0 +1,1320 @@
+{
+  "languages": [
+    {
+      "language": "zu",
+      "states": [
+        {
+          "id": "g1",
+          "size": "phone",
+          "theme": "light",
+          "lines": 355,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 355,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 188,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 188,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g2",
+          "size": "phone",
+          "theme": "light",
+          "lines": 361,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 361,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 190,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 190,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g3",
+          "size": "phone",
+          "theme": "light",
+          "lines": 357,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 357,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 189,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 189,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g4",
+          "size": "phone",
+          "theme": "light",
+          "lines": 356,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 356,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g5",
+          "size": "phone",
+          "theme": "light",
+          "lines": 360,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 360,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 189,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 189,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g6",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g7",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g8",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g9",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g10",
+          "size": "phone",
+          "theme": "light",
+          "lines": 353,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 353,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g11",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g12",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g13",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g14",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g15",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g16",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g17",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g18",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        }
+      ]
+    }
+  ],
+  "svg": [
+    {
+      "language": "zu",
+      "id": "g1",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 85.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 340.6015625,
+          "y": 367,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 330.52734375,
+          "y": 441.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Indawoyokuhlangana",
+          "x": 73.49609375,
+          "y": 270.5,
+          "width": 137.0078125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g2",
+      "rows": [
+        {
+          "text": "Inkulisa",
+          "x": 137.703125,
+          "y": 118,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawo yokudlala",
+          "x": 99.99609375,
+          "y": 273,
+          "width": 170.0078125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 363.6015625,
+          "y": 354,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 363.02734375,
+          "y": 421.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g3",
+      "rows": [
+        {
+          "text": "Isikole",
+          "x": 203.8203125,
+          "y": 113,
+          "width": 62.359375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawoyokufunda",
+          "x": 89.234375,
+          "y": 255,
+          "width": 101.53125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 327.6015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshalo eziyinhloko",
+          "x": 301.0625,
+          "y": 430,
+          "width": 177.875,
+          "height": 22.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g4",
+      "rows": [
+        {
+          "text": "Ikhaya",
+          "x": 107.08984375,
+          "y": 115,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Igceke",
+          "x": 102.58984375,
+          "y": 258,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 318.1015625,
+          "y": 280,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 333.02734375,
+          "y": 419,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g5",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 385.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 170.1015625,
+          "y": 434,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 398.02734375,
+          "y": 316.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 229.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g6",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 85.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 320.1015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 330.52734375,
+          "y": 441.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Indawoyokuhlangana",
+          "x": 73.49609375,
+          "y": 270.5,
+          "width": 137.0078125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g7",
+      "rows": [
+        {
+          "text": "Ikhaya",
+          "x": 107.08984375,
+          "y": 115,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Igceke",
+          "x": 102.58984375,
+          "y": 258,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 321.1015625,
+          "y": 316,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 333.02734375,
+          "y": 419,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g8",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 85.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 322.1015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 330.52734375,
+          "y": 441.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Indawoyokuhlangana",
+          "x": 73.49609375,
+          "y": 270.5,
+          "width": 137.0078125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g9",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 385.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 174.1015625,
+          "y": 434,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 398.02734375,
+          "y": 316.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 229.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g10",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 83.05859375,
+          "y": 108,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 88.6015625,
+          "y": 330,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Ihlathi lokudla",
+          "x": 322.73046875,
+          "y": 503,
+          "width": 134.5390625,
+          "height": 24.5
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g11",
+      "rows": [
+        {
+          "text": "Isikole",
+          "x": 203.8203125,
+          "y": 113,
+          "width": 62.359375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawoyokufunda",
+          "x": 89.234375,
+          "y": 255,
+          "width": 101.53125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 335.6015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshalo eziyinhloko",
+          "x": 301.0625,
+          "y": 430,
+          "width": 177.875,
+          "height": 22.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g12",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 85.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 326.1015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 330.52734375,
+          "y": 441.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Indawoyokuhlangana",
+          "x": 73.49609375,
+          "y": 270.5,
+          "width": 137.0078125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g13",
+      "rows": [
+        {
+          "text": "Inkulisa",
+          "x": 137.703125,
+          "y": 118,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawo yokudlala",
+          "x": 99.99609375,
+          "y": 273,
+          "width": 170.0078125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 363.6015625,
+          "y": 365,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 363.02734375,
+          "y": 421.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g14",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 85.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 328.1015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 330.52734375,
+          "y": 441.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Indawoyokuhlangana",
+          "x": 73.49609375,
+          "y": 270.5,
+          "width": 137.0078125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g15",
+      "rows": [
+        {
+          "text": "Inqolobane",
+          "x": 385.55859375,
+          "y": 105.5,
+          "width": 108.8828125,
+          "height": 24.5
+        },
+        {
+          "text": "Imifino",
+          "x": 180.1015625,
+          "y": 434,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 398.02734375,
+          "y": 316.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 229.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g16",
+      "rows": [
+        {
+          "text": "Ikhaya",
+          "x": 107.08984375,
+          "y": 115,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Igceke",
+          "x": 102.58984375,
+          "y": 258,
+          "width": 64.8203125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 330.1015625,
+          "y": 280,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 333.02734375,
+          "y": 419,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g17",
+      "rows": [
+        {
+          "text": "Isikole",
+          "x": 203.8203125,
+          "y": 113,
+          "width": 62.359375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawoyokufunda",
+          "x": 89.234375,
+          "y": 255,
+          "width": 101.53125,
+          "height": 48.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 341.6015625,
+          "y": 331,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshalo eziyinhloko",
+          "x": 301.0625,
+          "y": 430,
+          "width": 177.875,
+          "height": 22.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "zu",
+      "id": "g18",
+      "rows": [
+        {
+          "text": "Inkulisa",
+          "x": 137.703125,
+          "y": 118,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Indawo yokudlala",
+          "x": 99.99609375,
+          "y": 273,
+          "width": 170.0078125,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Imifino",
+          "x": 363.6015625,
+          "y": 370,
+          "width": 64.796875,
+          "height": 24.5
+        },
+        {
+          "text": "Izitshaloeziyinhloko",
+          "x": 363.02734375,
+          "y": 421.5,
+          "width": 98.9453125,
+          "height": 44.208984375
+        },
+        {
+          "text": "Amanzi",
+          "x": 449.9619140625,
+          "y": 133.5,
+          "width": 60.0498046875,
+          "height": 20.5
+        },
+        {
+          "text": "Ukuhleleka okuyisibonelo \u00b7 akulinganisiwe",
+          "x": 122.5625,
+          "y": 564,
+          "width": 354.875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    }
+  ],
+  "exports": [
+    {
+      "language": "zu",
+      "mode": "colour",
+      "file": "ImbewuField-Siyazama-Community-Garden-umbiko-wengadi.pdf"
+    },
+    {
+      "language": "zu",
+      "mode": "ink",
+      "file": "ImbewuField-Siyazama-Community-Garden-umbiko-wengadi.pdf"
+    },
+    {
+      "language": "zu",
+      "mode": "summary",
+      "file": "ImbewuField-Siyazama-Community-Garden-umbiko-wengadi.pdf"
+    }
+  ]
+}

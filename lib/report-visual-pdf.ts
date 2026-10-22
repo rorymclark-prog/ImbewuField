@@ -1,3 +1,5 @@
+import { programmeReportText, isProgrammeDraftLanguage } from './programme-report-copy';
+import { reportPdfText } from './report-pdf-font';
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
 import { reportChartSvg, type ReportVisuals } from './report-visuals';
@@ -8,7 +10,7 @@ export type VisualImage = { image: string; caption: string };
 export type ChapterImage = { image:string; title:string; caption:string; maxHeight?:number };
 export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[]; chapters?:Record<string,ChapterImage[]> };
 
-async function svgImage(svg: string): Promise<string> {
+export async function svgImage(svg: string): Promise<string> {
   const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   try {
     const img = new Image();
@@ -122,22 +124,23 @@ export function packReportCards(cards: ReportCardBox[], start: { y: number; fres
 
 /** The PDF reuses the screen's exact chart artwork and data, at print resolution.
  * The caller owns page numbering, branding and the full narrative that follows. */
-export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: 'en' | 'zu' = 'en'): void {
-  const label = (en: string, zu: string) => language === 'zu' ? zu : en;
+export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: string = 'en', font = 'helvetica'): void {
+  const label = (en: string, zu: string) => programmeReportText(en,language,{},zu);
   const standardLabel = (value: string) => ({
     'IMBEWUFIELD / SITE REPORT': label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA'),
     'The site at a glance': label('The site at a glance','Indawo le njengoba injalo'),
+    'The garden in view': programmeReportText('The garden in view',language),
     'Report basis': label('Report basis','Isisekelo sombiko'),
     'Planting through the year': label('Planting through the year','Ukutshala phakathi nonyaka'),
   } as Record<string,string>)[value] ?? value;
   const scale = doc.internal.pageSize.getWidth() / 600;
   const u = (v: number) => v * scale;
   // A figure such as "R 15 890" must not break across two lines: its spaces become non-breaking ones.
-  const safe = (value: string) => pdfSafe(value).replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0').replace(/\bR (?=\d)/g, 'R\u00a0');
+  const safe = (value: string) => (isProgrammeDraftLanguage(language)?reportPdfText(value):pdfSafe(value)).replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0').replace(/\bR (?=\d)/g, 'R\u00a0');
   let y = 46;
   const rect = (x: number, top: number, w: number, h: number, fill: string) => { doc.setFillColor(fill); doc.rect(u(x), u(top), u(w), u(h), 'F'); };
   const write = (value: string, x: number, top: number, width: number, size: number, colour = '#1b3024', bold = false) => {
-    doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(colour);
+    doc.setFont(font, bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor(colour);
     const rows = doc.splitTextToSize(safe(value), u(width)) as string[];
     doc.text(rows, u(x), u(top));
     return rows.length * size * 1.3;
@@ -150,7 +153,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     rect(x, top, width, height, '#f0f4f1');
     doc.addImage(photo.image, data.fileType, u(x + (width - w) / 2), u(top + (height - h) / 2), u(w), u(h), undefined, 'FAST');
   };
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(30);
+  doc.setFont(font, 'bold'); doc.setFontSize(30);
   const titleRows = doc.splitTextToSize(safe(visuals.title), u(494)) as string[];
   // The cover picture: the farmer's own photograph or map when there is one. Without it, the site
   // plan drawn from the saved design takes the cover instead of leaving most of the page blank.
@@ -168,7 +171,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   if (assets.photos[0]) { image(assets.photos[0], 44, y, 512, 310); y += 327; y += write(assets.photos[0].caption, 44, y, 512, 8, '#526258') + 18; }
   else if (coverPlan) {
     const drawing = reportChartSvg(coverPlan);
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
+    doc.setFont(font, 'normal'); doc.setFontSize(8);
     const captionHeight = (doc.splitTextToSize(safe(coverPlan.note), u(512)) as string[]).length * 8 * 1.3;
     const room = doc.internal.pageSize.getHeight() / scale - 62 - y - captionHeight - 12;
     const fit = Math.min(512 / drawing.width, room / drawing.height);
@@ -199,9 +202,9 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   const cards = visuals.charts.filter(chart => chart !== coverPlan).map(chart => {
     const drawing = reportChartSvg(chart);
     const beside = chart.kind === 'bars' || chart.kind === 'progress';
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(17);
+    doc.setFont(font, 'bold'); doc.setFontSize(17);
     const titleHeight = doc.splitTextToSize(safe(chart.title), u(476)).length * 22;
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    doc.setFont(font, 'normal'); doc.setFontSize(9);
     const noteHeight = doc.splitTextToSize(safe(chart.note), u(beside ? 476 - SIDE - 22 : 476)).length * 12;
     const natural = drawing.height / drawing.width * (beside ? SIDE : 476);
     const box: ReportCardBox = beside

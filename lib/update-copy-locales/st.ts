@@ -96,6 +96,10 @@ const copy:UpdateCopy={
   "Tour and practice controls now have draft translations in four languages.": "Ditaolo tsa Leeto le boitlwaetso jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Explore the practice views": "Lekola dipono tsa boitlwaetso",
   "Menu → Practice views": "Menyu → Dipono tsa boitlwaetso",
-  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Bula sebaka sa ho kgetha le Leeto. Ditaelo le ditaolo di na le meralo e so hlahlojwe; mongolo wa pele wa Senyesemane o a fumaneha."
+  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Bula sebaka sa ho kgetha le Leeto. Ditaelo le ditaolo di na le meralo e so hlahlojwe; mongolo wa pele wa Senyesemane o a fumaneha.",
+  "Garden examples and programme reports have unreviewed translations in four languages.": "Mehlala ya ditshimo le ditlaleho tsa lenaneo di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+  "See garden examples in your language": "Bona mehlala ya ditshimo ka puo ya hao",
+  "Tour → Gardens": "Leeto → Ditshimo",
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Bula tshimo. Tlaleho le moralo wa yona di na le diphetolelo tse so hlahlojwe le mongolo wa pele wa Senyesemane. Di-PDF tsa mohlodi tse bolokilweng di tshwailwe e le tsa Senyesemane."
 };
 export default copy;

@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: 'f75f928f', changes: [
+    "Garden examples and programme reports have unreviewed translations in four languages.",
+  ], tour: [{ title: "See garden examples in your language", where: "Tour → Gardens", href: '/samples/gardens',
+    detail: "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.",
+  }] },
   { when: '22 October 2026', sha: 'c6fa5f44', changes: [
     "Tour and practice controls now have draft translations in four languages.",
   ], tour: [{ title: "Explore the practice views", where: "Menu → Practice views", href: '/samples',

@@ -55,6 +55,8 @@
 .evidence { margin: 24px 0; padding: 18px; border: 1px solid var(--vr-line); border-radius: 12px; break-inside: avoid; }
 .evidence img { display: block; width: 100%; max-height: 620px; object-fit: contain; }
 .evidence figcaption { margin-top: 12px; font-size: 13px; color: var(--vr-muted); line-height: 1.65; }
+/* The surrounding sample page uses pale dark-mode captions; this report stays on white. */
+.report .heroFigure figcaption, .report .evidence figcaption { color: var(--vr-muted); }
 .partners { display: flex; flex-wrap: wrap; gap: 24px; margin: 26px 0; border-top: 1px solid var(--vr-line); padding-top: 22px; }
 .partners > div { display: flex; align-items: center; gap: 12px; flex: 1 1 200px; }
 .partners img { width: 58px; height: 58px; object-fit: contain; }

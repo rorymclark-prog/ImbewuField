@@ -1,0 +1,74 @@
+[
+  {
+    "path": "output/pdf/garden-browser-qa/garden-st-colour.pdf",
+    "pages": 10,
+    "bytes": 595780,
+    "contact": "output/pdf/garden-browser-qa/garden-st-colour-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-st-ink.pdf",
+    "pages": 7,
+    "bytes": 252129,
+    "contact": "output/pdf/garden-browser-qa/garden-st-ink-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-st-summary.pdf",
+    "pages": 10,
+    "bytes": 595418,
+    "contact": "output/pdf/garden-browser-qa/garden-st-summary-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ts-colour.pdf",
+    "pages": 10,
+    "bytes": 609566,
+    "contact": "output/pdf/garden-browser-qa/garden-ts-colour-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ts-ink.pdf",
+    "pages": 7,
+    "bytes": 252647,
+    "contact": "output/pdf/garden-browser-qa/garden-ts-ink-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ts-summary.pdf",
+    "pages": 10,
+    "bytes": 609241,
+    "contact": "output/pdf/garden-browser-qa/garden-ts-summary-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ve-colour.pdf",
+    "pages": 10,
+    "bytes": 601591,
+    "contact": "output/pdf/garden-browser-qa/garden-ve-colour-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ve-ink.pdf",
+    "pages": 7,
+    "bytes": 253091,
+    "contact": "output/pdf/garden-browser-qa/garden-ve-ink-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-ve-summary.pdf",
+    "pages": 10,
+    "bytes": 601254,
+    "contact": "output/pdf/garden-browser-qa/garden-ve-summary-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-zu-colour.pdf",
+    "pages": 10,
+    "bytes": 599925,
+    "contact": "output/pdf/garden-browser-qa/garden-zu-colour-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-zu-ink.pdf",
+    "pages": 7,
+    "bytes": 252433,
+    "contact": "output/pdf/garden-browser-qa/garden-zu-ink-contact.png"
+  },
+  {
+    "path": "output/pdf/garden-browser-qa/garden-zu-summary.pdf",
+    "pages": 10,
+    "bytes": 599577,
+    "contact": "output/pdf/garden-browser-qa/garden-zu-summary-contact.png"
+  }
+]

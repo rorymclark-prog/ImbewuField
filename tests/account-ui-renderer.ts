@@ -8,8 +8,10 @@ import{controlT,type ControlLanguage}from'./control-icon-renderers.ts';
 import{accountText,accountRoleName,accountErrorText,allowanceResetLabel,fillAccountText,isAccountDraftLanguage}from'../lib/account-copy.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const cache=new Map<string,string>();
+// A type-only re-export carries no runtime declaration; retaining its stripped export keyword
+// made ReportComposer execute a fabricated `type` identifier rather than its real component.
 function compile(path:string,result:string,scope:Record<string,unknown>):any {
- let code=cache.get(path);if(!code){const tree=ts.createSourceFile(path,read(path),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);code=ts.transpileModule(tree.statements.filter(n=>!ts.isImportDeclaration(n)).map(n=>n.getText(tree)).join('\n').replace(/^export\s+default\s+/gm,'').replace(/^export\s+/gm,''),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None,jsx:ts.JsxEmit.React}}).outputText;cache.set(path,code);}return new Function('scope',`with(scope){${code};return ${result};}`)(scope);
+ let code=cache.get(path);if(!code){const tree=ts.createSourceFile(path,read(path),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);code=ts.transpileModule(tree.statements.filter(n=>!ts.isImportDeclaration(n)&&!(ts.isExportDeclaration(n)&&n.isTypeOnly)).map(n=>n.getText(tree)).join('\n').replace(/^export\s+default\s+/gm,'').replace(/^export\s+/gm,''),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.None,jsx:ts.JsxEmit.React}}).outputText;cache.set(path,code);}return new Function('scope',`with(scope){${code};return ${result};}`)(scope);
 }
 const languageTree=ts.createSourceFile('i18n',read('lib/i18n.tsx'),ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
 const declaration=languageTree.statements.filter(ts.isVariableStatement).flatMap(n=>n.declarationList.declarations).find(n=>ts.isIdentifier(n.name)&&n.name.text==='APP_LANGS');

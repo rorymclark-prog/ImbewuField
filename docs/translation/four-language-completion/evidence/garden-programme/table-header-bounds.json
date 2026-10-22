@@ -1,0 +1,66 @@
+[
+  {
+    "lang": "ts",
+    "state": "before",
+    "columnBoundaryPt": 263.6220472440945,
+    "headers": [
+      "ID",
+      "/",
+      "nomboro",
+      "ya",
+      "nkombisoKu"
+    ],
+    "overlaps": [
+      {
+        "text": "nkombisoKu",
+        "xMin": 236.948677,
+        "xMax": 278.538339
+      }
+    ]
+  },
+  {
+    "lang": "ts",
+    "state": "after",
+    "columnBoundaryPt": 263.6220472440945,
+    "headers": [
+      "ID",
+      "/",
+      "nomboro",
+      "ya",
+      "nkombiso"
+    ],
+    "overlaps": []
+  },
+  {
+    "lang": "ve",
+    "state": "before",
+    "columnBoundaryPt": 263.6220472440945,
+    "headers": [
+      "ID",
+      "/",
+      "nomboro",
+      "ya",
+      "ndaedzi"
+    ],
+    "overlaps": [
+      {
+        "text": "ndaedzi",
+        "xMin": 236.948677,
+        "xMax": 264.325677
+      }
+    ]
+  },
+  {
+    "lang": "ve",
+    "state": "after",
+    "columnBoundaryPt": 263.6220472440945,
+    "headers": [
+      "ID",
+      "/",
+      "nomboro",
+      "ya",
+      "ndaedzi"
+    ],
+    "overlaps": []
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "lines": 6,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Izibonelo zezingadi nemibiko yohlelo zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "lines": 4,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Izibonelo zezingadi nemibiko yohlelo zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "lines": 6,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Mehlala ya ditshimo le ditlaleho tsa lenaneo di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "lines": 4,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Mehlala ya ditshimo le ditlaleho tsa lenaneo di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "lines": 7,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Swikombiso swa mintanga ni swiviko swa nongonoko swi ni vuhundzuluxi lebyi nga si kamberiwaka hi tindzimi ta mune.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Swikombiso swa mintanga ni swiviko swa nongonoko swi ni vuhundzuluxi lebyi nga si kamberiwaka hi tindzimi ta mune.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "lines": 7,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwi na \u1e71halutshedzelo dzi sa athu u sedzuluswa nga nyambo n\u1e4ba.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwi na \u1e71halutshedzelo dzi sa athu u sedzuluswa nga nyambo n\u1e4ba.",
+    "source": "Garden examples and programme reports have unreviewed translations in four languages."
+  }
+]
