@@ -261,8 +261,8 @@ export default function ExchangeBoard() {
           style={{
             flex: simple ? 1 : undefined,
             justifyContent: simple ? 'center' : undefined,
-            background: showForm ? 'transparent' : EX.green,
-            color: showForm ? EX.muted : 'var(--bg-1)',
+            background: showForm ? 'transparent' : EX.fill,
+            color: showForm ? EX.muted : 'var(--on-forest)',
             border: showForm ? `1px solid ${EX.inputBorder}` : 'none',
             cursor: 'pointer',
             padding: '10px 14px',
@@ -298,8 +298,8 @@ export default function ExchangeBoard() {
               borderRadius: 10,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: kind === value ? EX.ink : EX.chip,
-              color: kind === value ? 'var(--bg-1)' : EX.muted,
+              background: kind === value ? EX.fillInk : EX.chip,
+              color: kind === value ? 'var(--on-forest)' : EX.muted,
               border: `1px solid ${kind === value ? EX.ink : EX.border}`,
             }}
           >
@@ -574,8 +574,8 @@ function Chip({
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.4 : 1,
-        background: on ? EX.green : EX.chip,
-        color: on ? 'var(--bg-1)' : EX.muted,
+        background: on ? EX.fill : EX.chip,
+        color: on ? 'var(--on-forest)' : EX.muted,
         border: `1px solid ${on ? EX.green : EX.border}`,
         whiteSpace: 'nowrap',
       }}

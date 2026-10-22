@@ -56,7 +56,7 @@ export default function ShareListingButton({
           fontSize: 12,
           padding: '6px 12px',
           background: 'var(--color-forest-800)',
-          color: 'var(--bg-1)',
+          color: 'var(--on-forest)',
           border: 'none',
           cursor: 'pointer',
         }}
@@ -69,7 +69,7 @@ export default function ShareListingButton({
           className="rounded-lg"
           style={{ marginTop: 8, padding: '8px 10px', background: 'var(--bg-2)', border: `1px solid ${EX.border}` }}
         >
-          <p className="font-sans" style={{ fontSize: 12, color: EX.faint, margin: '0 0 6px', lineHeight: 1.45 }}>
+          <p className="font-sans" style={{ fontSize: 11.5, color: EX.faint, margin: '0 0 6px', lineHeight: 1.45 }}>
             {zu ? <ExchangeSourceCopy en="Could not share on this device. Copy this yourself and send it:" zu="Ayikwazanga ukwabelana kule divayisi. Kopisha lokhu wena bese ukuthumela:" /> : 'Could not share on this device. Copy this yourself and send it:'}
           </p>
           <textarea
