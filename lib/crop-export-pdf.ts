@@ -57,8 +57,12 @@ import { projectedKgLabel, treeAgeProjection, type AgeProjection, type Productio
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 import type { ExpectedSeason } from '@/lib/production-product-guidance';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
+import { registerReportPdfFont, reportPdfText } from './report-pdf-font';
+import { isNativePdfLanguage, sitePdfAssurance, sitePdfText, SITE_PDF_REVIEW_SOURCE } from './site-pdf-copy';
 
 export interface CropPlanPdfMeta {
+  /** The language of the document labels, independently of saved farmer notes. */
+  language?: string;
   /** The design/site this plan belongs to. */
   planTitle: string;
   /** Optional page-level notice for clearly identified demonstrations and other special documents. */
@@ -314,6 +318,12 @@ interface Column {
   align?: 'left' | 'right';
 }
 
+export interface CropPlanPdfPresentation {
+  language?: string;
+  /** Already registered on the document when appending to a site report. */
+  font?: string;
+}
+
 /**
  * The page. jsPDF has one cursor and no concept of a layout, so this wraps it:
  * orientation-aware margins, a cursor, a footer stamped on every page, and a
@@ -327,36 +337,69 @@ class Sheet {
   private footerNote: string;
   private documentNotice?: string;
   private format: CropPlanPageFormat;
+  readonly language: string;
+  private pdfFont: string;
+  private footerCache = new Map<number, string[]>();
 
-  constructor(doc: Doc, footerNote: string, format: CropPlanPageFormat = 'a4', documentNotice?: string) {
+  constructor(doc: Doc, footerNote: string, format: CropPlanPageFormat = 'a4', documentNotice?: string, presentation: CropPlanPdfPresentation = {}) {
     this.doc = doc;
     this.footerNote = footerNote;
     this.documentNotice = documentNotice;
     this.format = format;
+    this.language = presentation.language ?? 'en';
+    this.pdfFont = presentation.font ?? 'helvetica';
   }
 
   get width(): number { return this.doc.internal.pageSize.getWidth(); }
   get height(): number { return this.doc.internal.pageSize.getHeight(); }
   get contentWidth(): number { return this.width - this.margin * 2; }
-  get bottom(): number { return this.height - 46; }
+  get bottom(): number {
+    return isNativePdfLanguage(this.language) ? this.footerTop() - 30 : this.height - 46;
+  }
+
+  safe(value: string): string { return isNativePdfLanguage(this.language) ? reportPdfText(value) : pdfSafe(value); }
+
+  private footerRows(): string[] {
+    let rows = this.footerCache.get(this.width);
+    if (rows) return rows;
+    const font = this.doc.getFont(), size = this.doc.getFontSize();
+    this.font(7);
+    rows = [this.documentNotice, sitePdfAssurance(this.language), sitePdfText(SITE_PDF_REVIEW_SOURCE, this.language)]
+      .filter((value): value is string => Boolean(value))
+      .flatMap(value => this.doc.splitTextToSize(this.safe(value), this.contentWidth) as string[]);
+    this.doc.setFont(font.fontName, font.fontStyle); this.doc.setFontSize(size);
+    this.footerCache.set(this.width, rows);
+    return rows;
+  }
+
+  private footerTop(): number { return this.height - 20 - Math.max(0, this.footerRows().length - 1) * 8.5; }
 
   ink(c: readonly number[]): void { this.doc.setTextColor(c[0], c[1], c[2]); }
   fill(c: readonly number[]): void { this.doc.setFillColor(c[0], c[1], c[2]); }
   stroke(c: readonly number[]): void { this.doc.setDrawColor(c[0], c[1], c[2]); }
   font(size: number, bold = false): void {
-    this.doc.setFont('helvetica', bold ? 'bold' : 'normal');
+    this.doc.setFont(this.pdfFont, bold ? 'bold' : 'normal');
     this.doc.setFontSize(size);
   }
 
   /** Stamp the running foot. Called once per page, as the page is left. */
   stampFooter(): void {
+    if (isNativePdfLanguage(this.language)) {
+      const top = this.footerTop();
+      this.font(7.5); this.ink(INK.faint);
+      this.doc.text(truncateToWidth(this.doc, this.safe(this.footerNote), this.contentWidth - 35), this.margin, top - 12);
+      this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, top - 12, { align: 'right' });
+      this.font(7);
+      this.footerRows().forEach((row, index) => this.doc.text(row, this.margin, top + index * 8.5));
+      return;
+    }
     this.font(7.5);
     this.ink(INK.faint);
     // A fictional example can be printed page by page; its status must survive a lost cover.
     if (this.documentNotice) {
       this.font(7.5, true);
       this.ink(INK.muted);
-      this.doc.text(truncateToWidth(this.doc, pdfSafe(this.documentNotice), this.contentWidth), this.margin, this.height - 37);
+      this.doc.text(truncateToWidth(this.doc, this.safe(this.documentNotice), this.contentWidth), this.margin, this.height - 37);
       this.font(7.5);
       this.ink(INK.faint);
     }
@@ -366,12 +409,12 @@ class Sheet {
     // default) — so the left string is truncated to whatever room is
     // actually free before the fixed centred assurance line begins, rather
     // than assumed to always be short enough.
-    const assuranceText = pdfSafe(ASSURANCE_ONE_LINE);
+    const assuranceText = this.safe(ASSURANCE_ONE_LINE);
     const assuranceLeft = this.width / 2 - this.doc.getTextWidth(assuranceText) / 2;
     const noteMaxW = Math.max(0, assuranceLeft - this.margin - 12);
     // A portrait appendix can leave no room beside the assurance line. Its
     // page heading already identifies the site; omit the footer name instead of overlapping.
-    const note = noteMaxW >= 24 ? truncateToWidth(this.doc, pdfSafe(this.footerNote), noteMaxW) : '';
+    const note = noteMaxW >= 24 ? truncateToWidth(this.doc, this.safe(this.footerNote), noteMaxW) : '';
     this.doc.text(note, this.margin, this.height - 26);
     this.doc.text(assuranceText, this.width / 2, this.height - 26, { align: 'center' });
     this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, this.height - 26, { align: 'right' });
@@ -406,7 +449,7 @@ class Sheet {
   text(s: string, x: number, opts: { size?: number; bold?: boolean; ink?: readonly number[]; align?: 'left' | 'right' | 'center' } = {}): void {
     this.font(opts.size ?? 9.5, opts.bold);
     this.ink(opts.ink ?? INK.text);
-    this.doc.text(pdfSafe(s), x, this.y, { align: opts.align ?? 'left' });
+    this.doc.text(this.safe(s), x, this.y, { align: opts.align ?? 'left' });
   }
 
   /** Wrapped paragraph; advances the cursor. */
@@ -415,7 +458,7 @@ class Sheet {
     const lead = size * 1.4;
     this.font(size, opts.bold);
     this.ink(opts.ink ?? INK.text);
-    const lines = this.doc.splitTextToSize(pdfSafe(s), opts.width ?? this.contentWidth) as string[];
+    const lines = this.doc.splitTextToSize(this.safe(s), opts.width ?? this.contentWidth) as string[];
     this.need(lines.length * lead);
     this.doc.text(lines, this.margin, this.y);
     this.y += lines.length * lead + (opts.gap ?? 0);
@@ -440,7 +483,7 @@ function masthead(s: Sheet, band: string): void {
   s.doc.rect(bandX, s.y - 15, bandW, 26, 'F');
   s.font(7.5, true);
   s.ink(INK.white);
-  s.doc.text(pdfSafe(band.toUpperCase()), s.width - s.margin - 12, s.y - 0.5, { align: 'right' });
+  s.doc.text(s.safe(band.toUpperCase()), s.width - s.margin - 12, s.y - 0.5, { align: 'right' });
   s.y += 28;
 }
 
@@ -449,13 +492,13 @@ function pageTitle(s: Sheet, eyebrow: string, title: string, standfirst?: string
   if (eyebrow) {
     s.font(7.5, true);
     s.ink(INK.gold);
-    const lines = s.doc.splitTextToSize(pdfSafe(eyebrow.toUpperCase()), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(eyebrow.toUpperCase()), s.contentWidth) as string[];
     s.doc.text(lines, s.margin, s.y, { lineHeightFactor: 1.25 });
     s.y += Math.max(16, lines.length * 7.5 * 1.25 + 6);
   }
   s.font(19, true);
   s.ink(INK.text);
-  s.doc.text(pdfSafe(title), s.margin, s.y);
+  s.doc.text(s.safe(title), s.margin, s.y);
   s.y += 16;
   if (standfirst) {
     s.paragraph(standfirst, { size: 9, ink: INK.muted, gap: 8 });
@@ -475,7 +518,7 @@ function panel(
   const innerW = w - pad * 2 - (opts.accent ? 4 : 0);
 
   s.font(8.5);
-  const paras = opts.body.map((b) => s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]);
+  const paras = opts.body.map((b) => s.doc.splitTextToSize(s.safe(b), innerW) as string[]);
   const h = pad * 2 + (opts.title ? 14 : 0) + panelBodyHeight(paras.map((p) => p.length));
 
   s.fill(opts.bg);
@@ -489,7 +532,7 @@ function panel(
   if (opts.title) {
     s.font(9, true);
     s.ink(opts.accent ?? INK.green);
-    s.doc.text(pdfSafe(opts.title), tx, ty);
+    s.doc.text(s.safe(opts.title), tx, ty);
     ty += 14;
   }
   s.font(8.5);
@@ -519,13 +562,13 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
 
   s.font(7.5, true);
   s.ink(INK.gold);
-  s.doc.text(pdfSafe('A PRACTICAL PLAN FOR THE GARDEN TEAM'), s.margin, s.y);
+  s.doc.text(s.safe('A PRACTICAL PLAN FOR THE GARDEN TEAM'), s.margin, s.y);
   s.y += 18;
   // A farm name plus a place ("Ubhejane Creche - KZN Midlands (Pietermaritzburg)") ran straight
   // off the right edge at 21pt; wrap to two lines and only then truncate.
   s.font(21, true);
   s.ink(INK.text);
-  const titleLines = s.doc.splitTextToSize(pdfSafe(`Production plan - ${meta.planTitle}`), s.contentWidth) as string[];
+  const titleLines = s.doc.splitTextToSize(s.safe(`Production plan - ${meta.planTitle}`), s.contentWidth) as string[];
   const shownTitle = titleLines.length > 2
     ? [titleLines[0], truncateToWidth(s.doc, titleLines.slice(1).join(' '), s.contentWidth)]
     : titleLines;
@@ -535,7 +578,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   const period = `${monthYearLabel(months[0], now)} to ${monthYearLabel(months[11], now)}`;
   s.font(10);
   s.ink(INK.muted);
-  s.doc.text(pdfSafe(period), s.margin, s.y);
+  s.doc.text(s.safe(period), s.margin, s.y);
   s.y += 18;
 
   // Site strip — four facts, evenly spread, in the benchmark's header band.
@@ -553,10 +596,10 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     const x = s.margin + i * factW + 10;
     s.font(6.5, true);
     s.ink(INK.muted);
-    s.doc.text(pdfSafe(f.k), x, s.y + 14);
+    s.doc.text(s.safe(f.k), x, s.y + 14);
     s.font(8.5, true);
     s.ink(INK.text);
-    const lines = s.doc.splitTextToSize(pdfSafe(f.v), factW - 18) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(f.v), factW - 18) as string[];
     s.doc.text(lines.slice(0, 2), x, s.y + 26);
   });
   s.y += stripH + 14;
@@ -587,9 +630,9 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   const textW = tileW - 20;
   const wrapped = dash.stats.map((stat) => {
     s.font(8, true);
-    const label = s.doc.splitTextToSize(pdfSafe(stat.label), textW) as string[];
+    const label = s.doc.splitTextToSize(s.safe(stat.label), textW) as string[];
     s.font(7.5);
-    const detail = s.doc.splitTextToSize(pdfSafe(stat.detail), textW) as string[];
+    const detail = s.doc.splitTextToSize(s.safe(stat.detail), textW) as string[];
     return { label, detail };
   });
   const maxLabel = Math.max(...wrapped.map((w) => w.label.length));
@@ -609,12 +652,12 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     const valueMaxW = textW;
     let valueSize = 17;
     s.font(valueSize, true);
-    while (valueSize > 10 && s.doc.getTextWidth(pdfSafe(stat.value)) > valueMaxW) {
+    while (valueSize > 10 && s.doc.getTextWidth(s.safe(stat.value)) > valueMaxW) {
       valueSize -= 1;
       s.font(valueSize, true);
     }
     s.ink(values[i % values.length]);
-    s.doc.text(pdfSafe(stat.value), x + 10, s.y + 30);
+    s.doc.text(s.safe(stat.value), x + 10, s.y + 30);
     s.font(8, true);
     s.ink(INK.text);
     s.doc.text(wrapped[i].label, x + 10, s.y + labelY, { lineHeightFactor: 1.2 });
@@ -674,7 +717,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   // here: the crop plan, the site report and the in-app view must not each grow
   // their own version, because the weakest one becomes the promise the product
   // is judged on. See lib/plan-assurance.ts for the full reasoning.
-  const assuranceBody = [...ASSURANCE_PARAGRAPHS.map(pdfSafe), pdfSafe(SUCCESSION_TIMING_GUIDANCE)];
+  const assuranceBody = [...ASSURANCE_PARAGRAPHS.map(value => s.safe(value)), s.safe(SUCCESSION_TIMING_GUIDANCE)];
   // panel() never checks the page; a long title and a wrapped tile row once pushed this panel's
   // last line under the footer.
   s.need(panelHeight(s, assuranceBody, true, true));
@@ -697,7 +740,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     // foot of page 1 with the text it introduces starting page 2 unheaded.
     s.font(8.8);
     const firstLines = comparison.slice(0, 2)
-      .reduce((n, para) => n + (s.doc.splitTextToSize(pdfSafe(para), s.contentWidth) as string[]).length, 0);
+      .reduce((n, para) => n + (s.doc.splitTextToSize(s.safe(para), s.contentWidth) as string[]).length, 0);
     s.need(10 * 1.4 + 6 + firstLines * 8.8 * 1.4 + 5);
     s.paragraph('Planned crop comparison', { size: 10, bold: true, ink: INK.green, gap: 6 });
     for (const para of comparison) s.paragraph(para, { size: 8.8, ink: INK.muted, gap: 5 });
@@ -711,7 +754,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
 function panelHeight(s: Sheet, body: string[], hasTitle: boolean, accent: boolean): number {
   const innerW = s.contentWidth - 20 - (accent ? 4 : 0);
   s.font(8.5);
-  const counts = body.map((b) => (s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]).length);
+  const counts = body.map((b) => (s.doc.splitTextToSize(s.safe(b), innerW) as string[]).length);
   return 20 + (hasTitle ? 14 : 0) + panelBodyHeight(counts);
 }
 
@@ -782,13 +825,13 @@ function barChart(
   s.need(h + 52 + extraLabelHeight);
   s.font(11, true);
   s.ink(INK.text);
-  s.doc.text(pdfSafe(opts.title), s.margin, s.y);
+  s.doc.text(s.safe(opts.title), s.margin, s.y);
   // The unit sits on the title line, clear of the tick labels: drawn above the value axis it
   // collided with the chart title (2026-09-29 regional PDF audit).
-  const titleW = s.doc.getTextWidth(pdfSafe(opts.title));
+  const titleW = s.doc.getTextWidth(s.safe(opts.title));
   s.font(7.5);
   s.ink(INK.faint);
-  s.doc.text(pdfSafe(`(${opts.axis})`), s.margin + titleW + 5, s.y);
+  s.doc.text(s.safe(`(${opts.axis})`), s.margin + titleW + 5, s.y);
   // Headroom so the tallest bar's value label never touches the title.
   s.y += 18;
 
@@ -810,7 +853,7 @@ function barChart(
     s.doc.line(plotX, gy, plotX + plotW, gy);
     s.font(6.5);
     s.ink(INK.faint);
-    s.doc.text(pdfSafe(String(Number((step * i).toFixed(2)))), plotX - 5, gy + 2, { align: 'right' });
+    s.doc.text(s.safe(String(Number((step * i).toFixed(2)))), plotX - 5, gy + 2, { align: 'right' });
   }
 
   const slot = plotW / opts.values.length;
@@ -823,10 +866,10 @@ function barChart(
     s.font(6.5, true);
     s.ink(INK.muted);
     if (opts.missing?.[i]) s.doc.text('?', x + barW / 2, base - 4, { align: 'center' });
-    else if (v > 0 || opts.showZero) s.doc.text(pdfSafe((opts.format ?? ((n) => n.toFixed(0)))(v)), x + barW / 2, base - bh - 4, { align: 'center' });
+    else if (v > 0 || opts.showZero) s.doc.text(s.safe((opts.format ?? ((n) => n.toFixed(0)))(v)), x + barW / 2, base - bh - 4, { align: 'center' });
     s.font(7);
     s.ink(INK.muted);
-    s.doc.text(pdfSafe(opts.labels[i]), x + barW / 2, base + 11, { align: 'center' });
+    s.doc.text(s.safe(opts.labels[i]), x + barW / 2, base + 11, { align: 'center' });
   });
 
   s.y = base + 26 + extraLabelHeight;
@@ -891,7 +934,7 @@ function drawYearInNumbers(
     s.need(top.length * 16 + 40);
     s.font(11, true);
     s.ink(INK.text);
-    s.doc.text(pdfSafe('Largest crops by known benchmark volume'), s.margin, s.y);
+    s.doc.text(s.safe('Largest crops by known benchmark volume'), s.margin, s.y);
     s.y += 14;
     const labelW = 96;
     const trackX = s.margin + labelW;
@@ -900,13 +943,13 @@ function drawYearInNumbers(
     for (const crop of top) {
       s.font(8);
       s.ink(INK.text);
-      s.doc.text(pdfSafe(crop.name), s.margin + labelW - 6, s.y + 7, { align: 'right' });
+      s.doc.text(s.safe(crop.name), s.margin + labelW - 6, s.y + 7, { align: 'right' });
       const bw = (crop.kg / maxKg) * trackW;
       s.fill(GROUP_INK[crop.group]);
       s.doc.roundedRect(trackX, s.y, Math.max(1, bw), 9, 2, 2, 'F');
       s.font(7.5, true);
       s.ink(INK.muted);
-      s.doc.text(pdfSafe(`${crop.kg.toFixed(1)} kg`), trackX + bw + 5, s.y + 7);
+      s.doc.text(s.safe(`${crop.kg.toFixed(1)} kg`), trackX + bw + 5, s.y + 7);
       s.y += 15;
     }
     s.y += 6;
@@ -955,7 +998,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       s.doc.roundedRect(lx, s.y - 8, 17, 9, 2, 2, 'F');
       s.font(9);
       s.ink(INK.text);
-      s.doc.text(pdfSafe(item.label), lx + 23, s.y);
+      s.doc.text(s.safe(item.label), lx + 23, s.y);
       lx += item.width;
     }
     s.y += 13;
@@ -970,7 +1013,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
       const x = s.margin + labelW + i * colW + colW / 2;
       s.font(9.5, true);
-      s.doc.text(pdfSafe(monthShort(m)), x, s.y + 12, { align: 'center' });
+      s.doc.text(s.safe(monthShort(m)), x, s.y + 12, { align: 'center' });
       s.font(7.5);
       s.doc.text(String(date.getFullYear()), x, s.y + 24, { align: 'center' });
     });
@@ -985,10 +1028,10 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     s.doc.rect(s.margin, s.y, s.contentWidth, bedHeadH, 'F');
     s.font(11, true);
     s.ink(conflict ? INK.terracotta : INK.green);
-    const area = pdfSafe(`${numberLabel(row.areaM2)} m²`);
+    const area = s.safe(`${numberLabel(row.areaM2)} m²`);
     const suffix = `${continued ? ' - continued' : ''}${conflict ? ' - CHECK SPACE: crop shares conflict' : ''}`;
     const room = s.contentWidth - s.doc.getTextWidth(area) - 28;
-    s.doc.text(truncateToWidth(s.doc, pdfSafe(row.label + suffix), room), s.margin + 8, s.y + 18);
+    s.doc.text(truncateToWidth(s.doc, s.safe(row.label + suffix), room), s.margin + 8, s.y + 18);
     s.font(10);
     s.ink(INK.muted);
     s.doc.text(area, s.width - s.margin - 8, s.y + 18, { align: 'right' });
@@ -1003,7 +1046,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     const varietyLinesFor = (planting: Planting) => {
       s.font(8.5);
       return planting.variety?.trim()
-        ? s.doc.splitTextToSize(pdfSafe(`Variety: ${planting.variety.trim()}`), labelW - 44) as string[] : [];
+        ? s.doc.splitTextToSize(s.safe(`Variety: ${planting.variety.trim()}`), labelW - 44) as string[] : [];
     };
     const firstLaneHeight = rowH + (lanes[0] ? varietyLinesFor(lanes[0]).length * 11 : 0);
     if (!s.fits(bedHeadH + firstLaneHeight)) newCalendarPage();
@@ -1041,7 +1084,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       drawIconOrCode(s, { iconKey: `crop:${crop.key}`, code: entry.abbr }, s.margin + 6, s.y + 5, 24, input.icons);
       s.font(10, true);
       s.ink(INK.text);
-      s.doc.text(truncateToWidth(s.doc, pdfSafe(crop.name), labelW - 44), s.margin + 36, s.y + 14);
+      s.doc.text(truncateToWidth(s.doc, s.safe(crop.name), labelW - 44), s.margin + 36, s.y + 14);
       s.font(8.5);
       s.ink(INK.muted);
       const fraction = planting.areaFraction ?? 1;
@@ -1051,7 +1094,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       const sowOffset = bedStart - (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
       const sowDate = new Date(start.getFullYear(), start.getMonth() + sowOffset, 1);
       const detail = `${share} - sow ${monthShort(planting.sowMonth)} ${sowDate.getFullYear()}`;
-      s.doc.text(truncateToWidth(s.doc, pdfSafe(detail), labelW - 44), s.margin + 36, s.y + 27);
+      s.doc.text(truncateToWidth(s.doc, s.safe(detail), labelW - 44), s.margin + 36, s.y + 27);
       if (varietyLines.length) s.doc.text(varietyLines, s.margin + 36, s.y + 38, { lineHeightFactor: 11 / 8.5 });
       const continues = bedStart + occupiedMonthsForPlanting(planting).length > 12;
 
@@ -1223,7 +1266,7 @@ function drawIconOrCode(s: Sheet, entry: { iconKey: string; code: string }, x: n
   s.doc.roundedRect(x, y, size, size, 1.5, 1.5, 'FD');
   s.font(Math.max(4.5, size * 0.42), true);
   s.ink(INK.text);
-  s.doc.text(pdfSafe(entry.code), x + size / 2, y + size / 2 + size * 0.15, { align: 'center' });
+  s.doc.text(s.safe(entry.code), x + size / 2, y + size / 2 + size * 0.15, { align: 'center' });
 }
 
 function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
@@ -1268,7 +1311,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     s.fill(mixWithWhite(band.rgb, 0.16));
     s.doc.rect(s.margin, s.y, s.contentWidth, bandHeaderHeight, 'F');
     s.font(10.5, true); s.ink(INK.text);
-    s.doc.text(pdfSafe(`${band.title}${continued ? ' (continued)' : ''}`), s.margin + 8, s.y + 16);
+    s.doc.text(s.safe(`${band.title}${continued ? ' (continued)' : ''}`), s.margin + 8, s.y + 16);
     if (band.key === 'forest') {
       s.font(7.5); s.ink(INK.green);
       s.doc.text('When established', s.width - s.margin - 8, s.y + 16, { align: 'right' });
@@ -1286,7 +1329,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     if (!rows.length) {
       s.font(10);
       const note = band.emptyNote ?? 'No picking months marked yet.';
-      const noteLines = s.doc.splitTextToSize(pdfSafe(note), s.contentWidth) as string[];
+      const noteLines = s.doc.splitTextToSize(s.safe(note), s.contentWidth) as string[];
       if (!s.fits(36 + noteLines.length * 14 + 10)) { s.page('portrait'); heading(); monthHead(); }
       bandHead(band);
       s.y += 12;
@@ -1296,10 +1339,10 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     const measuredRows = rows.map(e => {
       const monthsUnknown = !band.cells.some((cell) => cell.some((entry) => entry.iconKey === e.iconKey));
       s.font(10, true);
-      const label = s.doc.splitTextToSize(pdfSafe(e.label), labelW - 39) as string[];
+      const label = s.doc.splitTextToSize(s.safe(e.label), labelW - 39) as string[];
       const planLabel = planningLabel(e);
       s.font(8);
-      const planLines = planLabel ? s.doc.splitTextToSize(pdfSafe(planLabel), labelW - 39) as string[] : [];
+      const planLines = planLabel ? s.doc.splitTextToSize(s.safe(planLabel), labelW - 39) as string[] : [];
       const rowH = Math.max(minimumRowHeight, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? 24 : 10));
       return {e,monthsUnknown,label,planLines,rowH};
     });
@@ -1354,7 +1397,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       });
       if (!marks.some(Boolean)) {
         s.font(8); s.ink(INK.muted);
-        s.doc.text(pdfSafe(e.ageNote ?? (band.key === 'animals' ? 'Confirm stock and production dates' : 'Dates to confirm · see plant ages and food sources')), s.margin + labelW + 8, s.y + rowH / 2 + 3);
+        s.doc.text(s.safe(e.ageNote ?? (band.key === 'animals' ? 'Confirm stock and production dates' : 'Dates to confirm · see plant ages and food sources')), s.margin + labelW + 8, s.y + rowH / 2 + 3);
       }
       s.stroke(INK.hair);
       s.doc.line(s.margin, s.y + rowH, s.width - s.margin, s.y + rowH);
@@ -1364,7 +1407,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   }
   const calendarNote = 'Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Gold rows require each crop’s storage conditions; check the full plan or app. Red space figures mean the plan needs more growing space than is mapped.';
   s.font(10);
-  const calendarNoteLines = s.doc.splitTextToSize(pdfSafe(calendarNote), s.contentWidth) as string[];
+  const calendarNoteLines = s.doc.splitTextToSize(s.safe(calendarNote), s.contentWidth) as string[];
   if (!s.fits(56 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
   s.fill(INK.panelGrey);
   s.doc.rect(s.margin, s.y, s.contentWidth, 44, 'F');
@@ -1392,12 +1435,12 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       'These are on your design. Their picking or production months still need checking on site.');
     for (const e of undated) {
       s.font(10.5);
-      const lines = s.doc.splitTextToSize(pdfSafe(e.detail), s.contentWidth - 60) as string[];
+      const lines = s.doc.splitTextToSize(s.safe(e.detail), s.contentWidth - 60) as string[];
       const h = Math.max(64, 32 + lines.length * 14);
       if (s.need(h + 10)) { masthead(s, 'On your map'); pageTitle(s, input.meta.planTitle, 'Food sources to check (continued)'); }
       s.fill(INK.panelGreen); s.doc.roundedRect(s.margin, s.y, s.contentWidth, h, 5, 5, 'F');
       drawIconOrCode(s, { ...e, code: fallbackCode(e.label) }, s.margin + 10, s.y + 12, 32, input.icons);
-      s.font(12, true); s.ink(INK.green); s.doc.text(pdfSafe(e.label), s.margin + 52, s.y + 20);
+      s.font(12, true); s.ink(INK.green); s.doc.text(s.safe(e.label), s.margin + 52, s.y + 20);
       s.font(10.5); s.ink(INK.text); s.doc.text(lines, s.margin + 52, s.y + 38, { lineHeightFactor: 1.33 });
       s.y += h + 10;
     }
@@ -1409,7 +1452,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     for (const entry of refs) {
       const lines = [`${entry.label} - ${entry.planning!.label}`, entry.planning!.basis, ...(entry.planning!.source ? [`Source: ${entry.planning!.source.label}`] : [])];
       s.font(9);
-      const height = lines.reduce((total, line) => total + (s.doc.splitTextToSize(pdfSafe(line), s.contentWidth) as string[]).length * 13 + 5, 0);
+      const height = lines.reduce((total, line) => total + (s.doc.splitTextToSize(s.safe(line), s.contentWidth) as string[]).length * 13 + 5, 0);
       if (s.need(height + 12)) { masthead(s, 'Season references'); pageTitle(s, input.meta.planTitle, 'Season references (continued)'); }
       for (const [index, line] of lines.entries()) s.paragraph(line, { size: 9, bold: index === 0, ink: index === 2 ? INK.teal : INK.text, gap: 5 });
       if (entry.planning!.source) s.doc.link(s.margin, s.y - 18, s.contentWidth, 16, { url: entry.planning!.source.url });
@@ -1435,12 +1478,12 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     for (const crop of storage) {
       if (!crop) continue;
       s.font(10.5);
-      const lines = s.doc.splitTextToSize(pdfSafe(crop.storageConditions ?? ''), s.contentWidth - 26) as string[];
+      const lines = s.doc.splitTextToSize(s.safe(crop.storageConditions ?? ''), s.contentWidth - 26) as string[];
       const h = 48 + lines.length * 14;
       if (s.need(h + 10)) { masthead(s, 'Keeping food'); pageTitle(s, input.meta.planTitle, 'Stored food (continued)'); }
       s.fill(INK.panelCream); s.doc.roundedRect(s.margin, s.y, s.contentWidth, h, 5, 5, 'F');
       s.font(12, true); s.ink(INK.brown);
-      s.doc.text(pdfSafe(`${crop.name} - sourced storage window: ${crop.storageMonths} months`), s.margin + 12, s.y + 20);
+      s.doc.text(s.safe(`${crop.name} - sourced storage window: ${crop.storageMonths} months`), s.margin + 12, s.y + 20);
       s.font(10.5); s.ink(INK.text);
       s.doc.text(lines, s.margin + 12, s.y + 39, { lineHeightFactor: 1.33 });
       if (crop.storageSourceUrl) {
@@ -1475,17 +1518,17 @@ function stackedMonthChart(
   const extraLabelHeight = (Math.max(1, ...opts.labels.map(label => label.split('\n').length)) - 1) * 12;
   s.need(opts.height + 72 + extraLabelHeight);
   s.font(11, true); s.ink(INK.text);
-  s.doc.text(pdfSafe(opts.title), s.margin, s.y);
-  const titleW = s.doc.getTextWidth(pdfSafe(opts.title));
+  s.doc.text(s.safe(opts.title), s.margin, s.y);
+  const titleW = s.doc.getTextWidth(s.safe(opts.title));
   s.font(7.5); s.ink(INK.faint);
-  s.doc.text(pdfSafe('(' + opts.axis + ')'), s.margin + titleW + 5, s.y);
+  s.doc.text(s.safe('(' + opts.axis + ')'), s.margin + titleW + 5, s.y);
   s.y += 16;
   let keyX = s.margin + 30;
   for (const series of opts.series) {
     s.fill(series.ink); s.doc.rect(keyX, s.y - 6, 8, 8, 'F');
     s.font(7.5); s.ink(INK.muted);
-    s.doc.text(pdfSafe(series.label), keyX + 12, s.y);
-    keyX += 24 + s.doc.getTextWidth(pdfSafe(series.label));
+    s.doc.text(s.safe(series.label), keyX + 12, s.y);
+    keyX += 24 + s.doc.getTextWidth(s.safe(series.label));
   }
   s.y += 16;
   const plotX = s.margin + 30;
@@ -1500,7 +1543,7 @@ function stackedMonthChart(
     const y = base - opts.height * i / gridlines;
     s.doc.line(plotX, y, plotX + plotW, y);
     s.font(6.5); s.ink(INK.faint);
-    s.doc.text(pdfSafe(String(Number((step * i).toFixed(2)))), plotX - 5, y + 2, { align: 'right' });
+    s.doc.text(s.safe(String(Number((step * i).toFixed(2)))), plotX - 5, y + 2, { align: 'right' });
   }
   const slot = plotW / opts.labels.length;
   const width = Math.min(slot * 0.62, 26);
@@ -1515,9 +1558,9 @@ function stackedMonthChart(
     }
     s.font(6.5, true); s.ink(INK.muted);
     const value = opts.labelValues[i];
-    if (value > 0) s.doc.text(pdfSafe((opts.format ?? ((n) => String(n)))(value)), x + width / 2, bottom - 4, { align: 'center' });
+    if (value > 0) s.doc.text(s.safe((opts.format ?? ((n) => String(n)))(value)), x + width / 2, bottom - 4, { align: 'center' });
     s.font(7); s.ink(INK.muted);
-    s.doc.text(pdfSafe(label), x + width / 2, base + 11, { align: 'center' });
+    s.doc.text(s.safe(label), x + width / 2, base + 11, { align: 'center' });
   });
   s.y = base + 26 + extraLabelHeight;
 }
@@ -1570,7 +1613,7 @@ function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
   }
   const note = (text: string) => {
     s.font(8);
-    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
     if (s.need(lines.length * 11.2 + 5)) heading();
     s.paragraph(text, { size: 8, ink: INK.muted, gap: 5 });
   };
@@ -1587,7 +1630,7 @@ function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
     for (const record of preservedRecords) {
       const copy = record.label + ' (' + record.method + '): ' + record.dates.map(date => monthShort(date.month) + ' ' + date.year).join(', ') + '. ' + record.note;
       s.font(8);
-      const lines = s.doc.splitTextToSize(pdfSafe(copy), s.contentWidth - 31) as string[];
+      const lines = s.doc.splitTextToSize(s.safe(copy), s.contentWidth - 31) as string[];
       const height = Math.max(28, lines.length * 11.2 + 4);
       if (s.need(height)) heading();
       drawIconOrCode(s, { iconKey: preservedFoodIconKey(record), code: fallbackCode(record.label) }, s.margin, s.y - 7, 23, input.icons);
@@ -1623,7 +1666,7 @@ function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
   heading();
   const note = (text: string) => {
     s.font(8.5);
-    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
     if (s.need(lines.length * 11.9 + 6)) heading();
     s.paragraph(text, { size: 8.5, ink: INK.muted, gap: 6 });
   };
@@ -1704,8 +1747,8 @@ function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
   s.paragraph('Green = vegetable and staple crop cycles. Gold = your tree yield schedule. Striped ends show harvest that changes as plants age during the year. * = known subtotal only; missing yields are not zero.', { size: 9, ink: INK.muted, gap: 12 });
   for (const year of projection.years) {
     if (s.need(44)) head();
-    s.font(9, true); s.ink(INK.text); s.doc.text(pdfSafe(year.label), s.margin, s.y + 12);
-    s.doc.text(pdfSafe(`${projectedKgLabel(year.combinedKg)}${year.partial ? ' *' : ''}`), s.width - s.margin, s.y + 12, { align: 'right' });
+    s.font(9, true); s.ink(INK.text); s.doc.text(s.safe(year.label), s.margin, s.y + 12);
+    s.doc.text(s.safe(`${projectedKgLabel(year.combinedKg)}${year.partial ? ' *' : ''}`), s.width - s.margin, s.y + 12, { align: 'right' });
     const x = s.margin, w = s.contentWidth, y = s.y + 20;
     s.fill(INK.hair); s.doc.roundedRect(x, y, w, 9, 3, 3, 'F');
     const veg = w * (year.vegetableKg ?? 0) / maximum;
@@ -1726,7 +1769,7 @@ function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
   }
   s.y += 12;
   s.font(9);
-  const assumptionsHeight = projection.assumptions.reduce((height, note) => height + (s.doc.splitTextToSize(pdfSafe(note), s.contentWidth) as string[]).length * 9 * 1.4 + 8, 0);
+  const assumptionsHeight = projection.assumptions.reduce((height, note) => height + (s.doc.splitTextToSize(s.safe(note), s.contentWidth) as string[]).length * 9 * 1.4 + 8, 0);
   if (!s.fits(assumptionsHeight)) {
     s.page('portrait'); masthead(s, 'Projection assumptions');
     pageTitle(s, input.meta.planTitle, 'What this forecast assumes');
@@ -1740,7 +1783,7 @@ function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
     s.fill(INK.green); s.doc.rect(s.margin, s.y, s.contentWidth, 30, 'F'); s.font(8, true); s.ink(INK.white);
     s.doc.text('PLANT / AGE GROUPS', s.margin + 8, s.y + 19);
     const width = (s.contentWidth - 150) / projection.years.length;
-    projection.years.forEach((year, i) => s.doc.text(pdfSafe(year.label.split(' – ')[0]), s.margin + 150 + (i + 0.5) * width, s.y + 19, { align: 'center' }));
+    projection.years.forEach((year, i) => s.doc.text(s.safe(year.label.split(' – ')[0]), s.margin + 150 + (i + 0.5) * width, s.y + 19, { align: 'center' }));
     s.y += 30;
   };
   tableHead();
@@ -1750,16 +1793,16 @@ function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
   const drawAgeRow = (name: string, count: string, speciesId: string, periods: AgeProjection[], total: boolean) => {
     const width = (s.contentWidth - 150) / projection.years.length;
     s.font(7.5);
-    const cells = periods.map(t => s.doc.splitTextToSize(pdfSafe(`${total ? 'Species total' : t.ages}
+    const cells = periods.map(t => s.doc.splitTextToSize(s.safe(`${total ? 'Species total' : t.ages}
 ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.knownKg)} *` : '? kg'}`), width - 6) as string[]);
     s.font(9, true);
-    const names = s.doc.splitTextToSize(pdfSafe(name), 111) as string[];
+    const names = s.doc.splitTextToSize(s.safe(name), 111) as string[];
     const height = Math.max(46, names.length * 11 + 24, ...cells.map(c => c.length * 10 + 12));
     if (!s.fits(height)) { s.page('landscape'); tableHead(); }
     if (total || rowIndex % 2 === 0) { s.fill(total ? INK.panelGreen : INK.panelGrey); s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F'); }
     drawIconOrCode(s, { iconKey: `tree:${speciesId}`, code: fallbackCode(name) }, s.margin + 4, s.y + 8, 26, input.icons);
     s.font(9, true); s.ink(INK.text); s.doc.text(names, s.margin + 35, s.y + 15, { lineHeightFactor: 1.22 });
-    s.font(7.5); s.ink(INK.muted); s.doc.text(pdfSafe(count), s.margin + 35, s.y + height - 10);
+    s.font(7.5); s.ink(INK.muted); s.doc.text(s.safe(count), s.margin + 35, s.y + height - 10);
     cells.forEach((cell, i) => { s.font(7.5); s.ink(INK.text); s.doc.text(cell, s.margin + 150 + (i + 0.5) * width, s.y + 15, { align: 'center', lineHeightFactor: 1.33 }); });
     s.stroke(INK.hair); s.doc.line(s.margin, s.y + height, s.width - s.margin, s.y + height);
     s.y += height; rowIndex++;
@@ -1803,7 +1846,7 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
   notesHead();
   const ageNote = (text: string, gap = 6, reserveAfter = 0) => {
     s.font(8.5);
-    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
     for (const [index, line] of lines.entries()) {
       if (s.need(8.5 * 1.4 + (index === lines.length - 1 ? gap + reserveAfter : 4))) notesHead();
       s.text(line, s.margin, { size: 8.5, ink: INK.muted }); s.y += 8.5 * 1.4;
@@ -1879,7 +1922,7 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
     masthead(s, 'Task summary');
     s.font(11, true);
     s.ink(INK.text);
-    s.doc.text(pdfSafe('Tasks by month (continued)'), s.margin, s.y);
+    s.doc.text(s.safe('Tasks by month (continued)'), s.margin, s.y);
     s.y += 16;
   };
 
@@ -1887,7 +1930,7 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
     let first = true;
     for (const phrase of group.lines) {
       s.font(7.5);
-      const lines = s.doc.splitTextToSize(pdfSafe(phrase), textColW) as string[];
+      const lines = s.doc.splitTextToSize(s.safe(phrase), textColW) as string[];
       const rowH = Math.max(11, lines.length * 10.5);
       if (s.need(rowH + (first ? 4 : 0))) { continued(); first = true; }
 
@@ -1898,7 +1941,7 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
         s.doc.line(s.margin, s.y - 2, s.margin + s.contentWidth, s.y - 2);
         s.font(7.5, true);
         s.ink(INK.green);
-        s.doc.text(pdfSafe(monthShort(group.month)), s.margin, s.y + 7);
+        s.doc.text(s.safe(monthShort(group.month)), s.margin, s.y + 7);
       }
 
       s.font(7.5);
@@ -1940,7 +1983,7 @@ function table(
     let x = s.margin;
     columns.forEach((c, i) => {
       const tx = c.align === 'right' ? x + widths[i] - 8 : x + 8;
-      s.doc.text(pdfSafe(c.header), tx, s.y + 13, { align: c.align === 'right' ? 'right' : 'left' });
+      s.doc.text(s.safe(c.header), tx, s.y + 13, { align: c.align === 'right' ? 'right' : 'left' });
       x += widths[i];
     });
     s.y += headH;
@@ -1958,7 +2001,7 @@ function table(
       const lines = columns.map((c, i) => {
         s.font(size, groupStart && i === 0);
         const shown = opts.groupKey !== undefined && i === 0 && !groupStart ? '' : row[c.key] ?? '';
-        return s.doc.splitTextToSize(pdfSafe(shown), widths[i] - 16) as string[];
+        return s.doc.splitTextToSize(s.safe(shown), widths[i] - 16) as string[];
       });
       return { groupStart, lines, height: Math.max(18, Math.max(...lines.map(cell => cell.length)) * leading + 12) };
     };
@@ -1969,7 +2012,7 @@ function table(
       if (opts.title) {
         s.font(11, true);
         s.ink(INK.text);
-        s.doc.text(pdfSafe(`${opts.title} (continued)`), s.margin, s.y);
+        s.doc.text(s.safe(`${opts.title} (continued)`), s.margin, s.y);
         s.y += 14;
       }
       drawHead();
@@ -2140,7 +2183,7 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     const size = opts.size ?? 9.5;
     const leading = size * 1.4;
     s.font(size, opts.bold);
-    const lines = s.doc.splitTextToSize(pdfSafe(text), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
     for (const line of lines) {
       ensure(leading + 4);
       s.text(line, s.margin, { size, bold: opts.bold, ink: opts.ink });
@@ -2161,7 +2204,7 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
   const sourceLine = (label: string, url: string | null) => {
     const size = 8;
     s.font(size);
-    const lines = s.doc.splitTextToSize(pdfSafe(`Source: ${label}`), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(s.safe(`Source: ${label}`), s.contentWidth) as string[];
     for (const line of lines) {
       ensure(15);
       s.text(line, s.margin, { size, ink: INK.teal });
@@ -2172,11 +2215,11 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
   };
   const entryHeight = (entry: ProductionGuideItem): number => {
     s.font(10.5, true);
-    const titleHeight = (s.doc.splitTextToSize(pdfSafe(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
+    const titleHeight = (s.doc.splitTextToSize(s.safe(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
     s.font(9.5);
-    const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(pdfSafe(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
+    const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(s.safe(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
     s.font(8);
-    const sourcesHeight = (entry.sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(pdfSafe(`Source: ${source.label}`), s.contentWidth) as string[]).length * 11.2 + 4, 0);
+    const sourcesHeight = (entry.sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(s.safe(`Source: ${source.label}`), s.contentWidth) as string[]).length * 11.2 + 4, 0);
     return titleHeight + bodyHeight + sourcesHeight + (entry.expectedSeason ? 50 : 0) + 10;
   };
   const guideItem = (entry: ProductionGuideItem) => {
@@ -2296,7 +2339,7 @@ function drawFieldSheets(
 
     s.font(9.5, true); s.ink(INK.green);
     const addedRows = extraSections.reduce((count, section) => count + section.rows.length, 0);
-    s.doc.text(pdfSafe(`${sheet.workRows + addedRows} jobs - ${sheet.plantingFocus} sowing / planting - ${sheet.harvestFocus + forest.length + animals.length} harvest / recording`), s.margin, s.y);
+    s.doc.text(s.safe(`${sheet.workRows + addedRows} jobs - ${sheet.plantingFocus} sowing / planting - ${sheet.harvestFocus + forest.length + animals.length} harvest / recording`), s.margin, s.y);
     s.y += 18;
     if (!(input.sections ?? ALL_SECTIONS).includes('availability')) {
       s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9, ink: INK.muted, gap: 8 });
@@ -2315,7 +2358,7 @@ function drawFieldSheets(
       masthead(s, 'Field sheet');
       s.font(11, true);
       s.ink(INK.text);
-      s.doc.text(pdfSafe(`${sheet.monthLabel} field sheet (continued)`), s.margin, s.y);
+      s.doc.text(s.safe(`${sheet.monthLabel} field sheet (continued)`), s.margin, s.y);
       s.y += 16;
     };
     const headRow = () => {
@@ -2323,10 +2366,10 @@ function drawFieldSheets(
       s.doc.rect(s.margin, s.y, s.contentWidth, 18, 'F');
       s.font(9, true);
       s.ink(INK.white);
-      s.doc.text(pdfSafe('DONE'), s.margin + 4, s.y + 12);
-      s.doc.text(pdfSafe('PLACE'), s.margin + cTick + 4, s.y + 12);
-      s.doc.text(pdfSafe('WORK TO COMPLETE'), s.margin + cTick + cPlace + 4, s.y + 12);
-      s.doc.text(pdfSafe('DATE / NOTE'), s.margin + cTick + cPlace + cWork + 4, s.y + 12);
+      s.doc.text(s.safe('DONE'), s.margin + 4, s.y + 12);
+      s.doc.text(s.safe('PLACE'), s.margin + cTick + 4, s.y + 12);
+      s.doc.text(s.safe('WORK TO COMPLETE'), s.margin + cTick + cPlace + 4, s.y + 12);
+      s.doc.text(s.safe('DATE / NOTE'), s.margin + cTick + cPlace + cWork + 4, s.y + 12);
       s.y += 18;
     };
     headRow();
@@ -2336,18 +2379,18 @@ function drawFieldSheets(
         s.fill(INK.panelGreen);
         s.doc.rect(s.margin, s.y, s.contentWidth, 24, 'F');
         s.font(10.5, true); s.ink(INK.green);
-        s.doc.text(pdfSafe(`${section.title}${repeat ? ' (continued)' : ''}`), s.margin + 6, s.y + 16);
+        s.doc.text(s.safe(`${section.title}${repeat ? ' (continued)' : ''}`), s.margin + 6, s.y + 16);
         s.y += 24;
       };
       const measureRow = (row: { place: string; work: string }) => {
         s.font(10.5);
-        const work = s.doc.splitTextToSize(pdfSafe(row.work), cWork - 14) as string[];
+        const work = s.doc.splitTextToSize(s.safe(row.work), cWork - 14) as string[];
         s.font(10.5, true);
-        const place = s.doc.splitTextToSize(pdfSafe(row.place), cPlace - 10) as string[];
+        const place = s.doc.splitTextToSize(s.safe(row.place), cPlace - 10) as string[];
         return { work, place, height: Math.max(34, work.length * 14 + 14, place.length * 14 + 14) };
       };
       s.font(9.5);
-      const noteLines = section.note ? s.doc.splitTextToSize(pdfSafe(section.note), s.contentWidth - cTick - 12) as string[] : [];
+      const noteLines = section.note ? s.doc.splitTextToSize(s.safe(section.note), s.contentWidth - cTick - 12) as string[] : [];
       const noteH = noteLines.length ? noteLines.length * 13 + 12 : 0;
       const firstH = section.rows[0] ? measureRow(section.rows[0]).height : 0;
       // A heading must travel with its guidance and first job; a row alone on a
@@ -2398,7 +2441,7 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     s.font(7.5, true);
     s.ink(INK.white);
     let x = s.margin;
-    cols.forEach((c, i) => { s.doc.text(pdfSafe(c.header), x + 6, s.y + 12); x += widths[i]; });
+    cols.forEach((c, i) => { s.doc.text(s.safe(c.header), x + 6, s.y + 12); x += widths[i]; });
     s.y += 18;
     for (let r = 0; r < count; r++) {
       s.stroke(INK.rule);
@@ -2415,7 +2458,7 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
   };
 
   s.font(10, true); s.ink(INK.text);
-  s.doc.text(pdfSafe('Harvest record'), s.margin, s.y); s.y += 10;
+  s.doc.text(s.safe('Harvest record'), s.margin, s.y); s.y += 10;
   blankRows([
     { key: 'a', header: 'Date', width: 48 },
     { key: 'b', header: 'Crop / bed', width: 132 },
@@ -2450,7 +2493,7 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
   ], 10, 29);
 
   s.font(10, true); s.ink(INK.text);
-  s.doc.text(pdfSafe('Weekly observation'), s.margin, s.y); s.y += 10;
+  s.doc.text(s.safe('Weekly observation'), s.margin, s.y); s.y += 10;
   blankRows([
     { key: 'w', header: 'Week', width: 40 },
     { key: 'r', header: 'Rainfall', width: 70 },
@@ -2461,13 +2504,13 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
   ], 4, 27);
 
   s.font(10, true); s.ink(INK.text);
-  s.doc.text(pdfSafe('Decision for next month'), s.margin, s.y); s.y += 10;
+  s.doc.text(s.safe('Decision for next month'), s.margin, s.y); s.y += 10;
   s.fill(INK.panelCream);
   s.doc.rect(s.margin, s.y, s.contentWidth, 54, 'F');
   s.y += 62;
   s.font(8.5);
   s.ink(INK.muted);
-  s.doc.text(pdfSafe('Observe. Adjust. Write it down.'), s.margin, s.y);
+  s.doc.text(s.safe('Observe. Adjust. Write it down.'), s.margin, s.y);
 }
 
 // ── Assembly ────────────────────────────────────────────────────────────────
@@ -2478,17 +2521,24 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   const pageFormat: CropPlanPageFormat = input.pageFormat ?? 'a4';
   const doc = new jsPDF({ unit: 'pt', format: pageFormat });
 
-  drawCropPlanPages(doc, input);
+  const language = input.meta.language ?? 'en';
+  const font = isNativePdfLanguage(language) ? await registerReportPdfFont(doc) : 'helvetica';
+  drawCropPlanPages(doc, input, false, { language, font });
   return doc.output('blob');
 }
 
 /** The site report attaches the same working document, with continuous page numbers. */
-export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = false): void {
+export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = false, presentation: CropPlanPdfPresentation = {}): void {
+  const language = presentation.language ?? input.meta.language ?? 'en';
+  const font = presentation.font ?? (isNativePdfLanguage(language) ? 'ImbewuSans' : 'helvetica');
+  if (isNativePdfLanguage(language) && (!doc.getFontList()[font]?.includes('normal') || !doc.getFontList()[font]?.includes('bold'))) {
+    throw new Error('Register the native report font before appending crop-plan pages.');
+  }
   const pageFormat = input.pageFormat ?? 'a4';
   const now = input.now ?? new Date();
   const nowMonth = now.getMonth() + 1;
   const want = new Set(input.sections ?? ALL_SECTIONS);
-  const s = new Sheet(doc, input.meta.planTitle, pageFormat, input.meta.documentNotice);
+  const s = new Sheet(doc, input.meta.planTitle, pageFormat, input.meta.documentNotice, { language, font });
 
   const workload = buildWorkloadSeries(input.tasks, nowMonth, input.plantings, input.beds);
   const calendar = buildOccupancyCalendar(input.plantings, input.beds, nowMonth);

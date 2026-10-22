@@ -100,6 +100,7 @@ const copy:UpdateCopy={
   "Garden examples and programme reports have unreviewed translations in four languages.": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa nga nyambo nṋa.",
   "See garden examples in your language": "Vhonani tsumbo dza ngade nga luambo lwaṋu",
   "Tour → Gardens": "Lwendo → Ngade",
-  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vhulani ngade. Muvhigo na mveledziso yayo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa na maṅwalwa a u thoma a Tshiisimane. PDF dza tshiko dzo vhulungwaho dzo swaiwa uri ndi dza Tshiisimane."
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vhulani ngade. Muvhigo na mveledziso yayo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa na maṅwalwa a u thoma a Tshiisimane. PDF dza tshiko dzo vhulungwaho dzo swaiwa uri ndi dza Tshiisimane.",
+  "Site PDFs now keep native letters and have unreviewed translated labels.": "PDF dza fhethu dzi vhulunga maḽeḓere a luambo na dzilebulu dzo ṱalutshedzelwaho dzi sa athu u sedzuluswa."
 };
 export default copy;

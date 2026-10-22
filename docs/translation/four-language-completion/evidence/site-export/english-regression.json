@@ -1,0 +1,20 @@
+[
+  {
+    "mode": "ink",
+    "textMatches": true,
+    "pages": 3,
+    "samePixels": true
+  },
+  {
+    "mode": "working",
+    "textMatches": true,
+    "pages": 22,
+    "samePixels": true
+  },
+  {
+    "mode": "colour",
+    "textMatches": true,
+    "pages": 5,
+    "samePixels": true
+  }
+]

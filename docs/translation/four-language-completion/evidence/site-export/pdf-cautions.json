@@ -1,0 +1,142 @@
+[
+  {
+    "file": "st-colour.pdf",
+    "pages": 11,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "st-ink.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "st-legacy.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "st-overflow.pdf",
+    "pages": 7,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": true
+  },
+  {
+    "file": "st-working.pdf",
+    "pages": 23,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ts-colour.pdf",
+    "pages": 11,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ts-ink.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ts-legacy.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ts-overflow.pdf",
+    "pages": 7,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": true
+  },
+  {
+    "file": "ts-working.pdf",
+    "pages": 23,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ve-colour.pdf",
+    "pages": 11,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ve-ink.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ve-legacy.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "ve-overflow.pdf",
+    "pages": 7,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": true
+  },
+  {
+    "file": "ve-working.pdf",
+    "pages": 23,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "zu-colour.pdf",
+    "pages": 11,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "zu-ink.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "zu-legacy.pdf",
+    "pages": 3,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  },
+  {
+    "file": "zu-overflow.pdf",
+    "pages": 7,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": true
+  },
+  {
+    "file": "zu-working.pdf",
+    "pages": 23,
+    "completeCautionOnEveryPage": true,
+    "draftStatusOnEveryPage": true,
+    "longNoteEndPreserved": null
+  }
+]

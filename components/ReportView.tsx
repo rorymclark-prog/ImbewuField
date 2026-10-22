@@ -23,6 +23,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, SlidersHorizontal, FileText } from 'lucide-react';
 import { buildReportPdf, deliverPdf, reportPdfFilename, sheetPlate, stripInlineMarkdown } from '@/lib/report-pdf';
+import { sitePdfText } from '@/lib/site-pdf-copy';
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { loadSheetMetas, loadSheetImage, type StoredSheetMeta } from '@/lib/sheet-store';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
@@ -835,7 +836,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     try {
       if (reading !== 'full') {
         const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, uiLanguage), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), uiLanguage);
-        await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`));
+        await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate), uiLanguage).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`), uiLanguage);
         setPdfState('done');
         setTimeout(() => setPdfState('idle'), 2500);
         return;
@@ -856,16 +857,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const coverImages: Array<{ image: string; caption: string }> = [];
       if (presentation !== 'print' && includeImages) {
         if (coverPhoto) {
-          coverImages.push({ image: coverPhoto.dataUrl, caption: `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` });
+          coverImages.push({ image: coverPhoto.dataUrl, caption: `${coverPhoto.label} · ${sitePdfText('Current site evidence; it may postdate saved report text.', contentLanguage)}` });
         } else if (captureCover) {
-          coverImages.push({ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' });
+          coverImages.push({ image: `data:image/jpeg;base64,${mapCapture}`, caption: sitePdfText('Captured site satellite view', contentLanguage) });
         } else if (useCoverMap && coverMap) {
           // Match the screen's saved-map cover, but keep only its print-sized copy while
           // the appendix loads originals sequentially on phones with limited memory.
           let original = await loadSheetImage(coverMap.id).catch(() => null);
           const cover = original ? await sheetPlate(original) : null;
           original = null;
-          if (cover) coverImages.push({ image: cover.dataUrl, caption: `Saved design: ${stripInlineMarkdown(coverMap.label)}` });
+          if (cover) coverImages.push({ image: cover.dataUrl, caption: `${sitePdfText('Saved design', contentLanguage)}: ${stripInlineMarkdown(coverMap.label)}` });
         }
       }
       const blob = await buildReportPdf(report, {
@@ -882,14 +883,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        dateLabel: REPORT_DOCUMENT_LANGUAGES.includes(contentLanguage as typeof REPORT_DOCUMENT_LANGUAGES[number])
+          ? reportUiDate(contentLanguage, reportDate, false)
+          : new Date(reportDate).toLocaleDateString(contentLanguage === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
         // farmer hands to a funder carries the evidence the advice was drawn from.
         photos: includeImages ? photoGallery.shown.map((p) => ({ label: p.label, note: p.note, dataUrl: p.dataUrl })) : [],
       });
-      await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate)));
+      await deliverPdf(blob, reportPdfFilename(siteName, new Date(reportDate), contentLanguage), contentLanguage);
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
     } catch (err) {
