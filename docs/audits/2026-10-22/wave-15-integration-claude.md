@@ -38,6 +38,11 @@ Integrator changes on top of the folds:
   "Printable plan — ImbewuField". It also came off `tests/page-titles.test.ts`'s out-of-scope list.
 - Release note rewritten for the folded build (five lines, `sha: 'd99108f1'`), plus the
   `PROGRESS.md` entry, this record and the archive index.
+- `main` moved to `1fb671ea` (Codex's survey draft recovery, #1066) before the merge, so `main`
+  was merged in. The release note is re-stamped `sha: '1fb671ea'`, so the gate on `main` sees one
+  unnoted commit (the squash) and not two. It is four lines plus two tour stops (/prices,
+  /student), so Codex's survey line still shows and `tests/update-tour.test.ts` passes. The
+  five-line note with no tour had pushed every tour stop out of the banner, which fails that test.
 
 ### Track summaries
 
