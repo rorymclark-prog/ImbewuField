@@ -88,6 +88,9 @@ const copy:UpdateCopy={
   "Menu → Account": "Menyu → Akhaonto",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ho Akhaonto, hlahloba ditumello tsa ho arolelana pela mongolo wa tsona wa pele wa Senyesemane. Ho arolelana profaele ya setjhaba ke kgetho e arohaneng ha Setjhaba se fumaneha.",
   "Farmer profile and report controls now have four draft translations.": "Ditaolo tsa profaele ya molemi le tlaleho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
-  "Community messages, board and map controls now have four draft translations.": "Ditaolo tsa melaetsa, boto le mmappa wa setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
+  "Community messages, board and map controls now have four draft translations.": "Ditaolo tsa melaetsa, boto le mmappa wa setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Photo viewer controls now have four draft translations.": "Ditaolo tsa sebohi sa ditshwantsho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Open a saved photograph": "Bula setshwantsho se bolokilweng",
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Haeba akhaonto ya hao e na le setshwantsho, se bule. Ditaolo tsa sebohi sa ditshwantsho di sebedisa puo ya hao; mongolo wa pele wa setshwantsho o sala o le jwalo ka ha o ngotswe."
 };
 export default copy;

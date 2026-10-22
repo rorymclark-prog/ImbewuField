@@ -1,0 +1,29 @@
+{
+  "lang": "zu",
+  "size": "phone",
+  "mode": "long",
+  "theme": "light",
+  "lines": 8,
+  "failed": [
+    {
+      "text": "QA verylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaptionverylongcaption",
+      "line": 1,
+      "x": 27.6015625,
+      "y": 221.90625,
+      "width": 1430.6953125
+    },
+    {
+      "text": "Vala \u00d7",
+      "line": 0,
+      "x": 1491.296875,
+      "y": 208.90625,
+      "width": 45.046875
+    }
+  ],
+  "overflow": false,
+  "placeholders": false,
+  "contrast": {
+    "minimum": 6.375347473743871,
+    "failed": []
+  }
+}

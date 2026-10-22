@@ -88,6 +88,9 @@ const copy:UpdateCopy={
   "Menu → Account": "Imenyu → I-akhawunti",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ku-Akhawunti, buyekeza izimvume zokwabelana eceleni kombhalo wazo wokuqala wesiNgisi. Ukwabelana ngephrofayela yomphakathi kuyisinqumo esihlukile lapho Umphakathi utholakala.",
   "Farmer profile and report controls now have four draft translations.": "Izinkinobho zephrofayela yomlimi nemibiko manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
-  "Community messages, board and map controls now have four draft translations.": "Izinkinobho zemiyalezo, zebhodi nezemephu yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine."
+  "Community messages, board and map controls now have four draft translations.": "Izinkinobho zemiyalezo, zebhodi nezemephu yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Photo viewer controls now have four draft translations.": "Izinkinobho zesibukeli sezithombe manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Open a saved photograph": "Vula isithombe esigciniwe",
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Uma i-akhawunti yakho inesithombe, sivule. Izinkinobho zesibukeli sezithombe zisebenzisa ulimi lwakho; umbhalo wesithombe wokuqala uhlala njengoba uqoshiwe."
 };
 export default copy;

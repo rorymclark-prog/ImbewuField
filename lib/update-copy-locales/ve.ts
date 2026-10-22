@@ -88,6 +88,9 @@ const copy:UpdateCopy={
   "Menu → Account": "Menyu → Akhaunthu",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Kha Akhaunthu, ṱolani thendelo dza u kovhana tsini na maṅwalwa adzo a u thoma a English. U kovhana phurofaiḽi ya tshitshavha ndi khetho yo fhambanaho musi Tshitshavha tshi tshi wanala.",
   "Farmer profile and report controls now have four draft translations.": "Zwilangi zwa phurofaiḽi ya mulimi na muvhigo zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
-  "Community messages, board and map controls now have four draft translations.": "Zwilangi zwa milaedza, bodo na mapa wa tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+  "Community messages, board and map controls now have four draft translations.": "Zwilangi zwa milaedza, bodo na mapa wa tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
+  "Photo viewer controls now have four draft translations.": "Zwilangi zwa tshivhoni tsha zwifanyiso zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
+  "Open a saved photograph": "Vulani tshifanyiso tsho vhulungwaho",
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Arali akhaunthu yaṋu i na tshifanyiso, tshi vuleni. Zwilangi zwa tshivhoni tsha zwifanyiso zwi shumisa luambo lwaṋu; ṱhaluso ya u thoma ya tshifanyiso i sala nga nḓila ye ya ṅwalwa ngayo."
 };
 export default copy;

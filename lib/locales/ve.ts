@@ -1667,6 +1667,17 @@ const dict: Dict = {
   communityTimeHoursAgo: "awara dza {count} dzo fhiraho",
   profileClose: "Valani",
   // End community conversations and hub.
+  // Photo viewer: unreviewed drafts; photo-viewer-drafts.json.
+  photoViewerOpen: "Vulani tshifanyiso: {caption}",
+  photoViewerTriggerFallback: "tshifanyiso tsha phurofaiḽi kana tsha fhethu",
+  photoViewerCaptionFallback: "Tshifanyiso",
+  photoViewerSampleLabel: "Tshifanyiso tsho olwa",
+  photoViewerDialogTitle: "Tshivhoni tsha zwifanyiso",
+  photoViewerClose: "Valani ×",
+  photoViewerLoadError: "Tshifanyiso itshi a tsho ngo konadzea u laisiwa. Valani ni lingedze hafhu musi no ṱumanywa.",
+  photoViewerFit: "Linganyisani na tshikirini",
+  photoViewerEnlarge: "Hulisani",
+  // End photo viewer.
 };
 
 export default dict;

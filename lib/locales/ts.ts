@@ -1663,6 +1663,17 @@ const dict: Dict = {
   communityTimeHoursAgo: "tiawara ta {count} leti hundzeke",
   profileClose: "Pfala",
   // End community conversations and hub.
+  // Photo viewer: unreviewed drafts; photo-viewer-drafts.json.
+  photoViewerOpen: "Pfula xifaniso: {caption}",
+  photoViewerTriggerFallback: "xifaniso xa phurofayili kumbe xa ndhawu",
+  photoViewerCaptionFallback: "Xifaniso",
+  photoViewerSampleLabel: "Xifaniso lexi dirowiweke",
+  photoViewerDialogTitle: "Xilanguti xa swifaniso",
+  photoViewerClose: "Pfala ×",
+  photoViewerLoadError: "Xifaniso lexi a xi kotanga ku layicha. Pfala kutani u ringeta nakambe loko u hlanganisiwile.",
+  photoViewerFit: "Ringanisa ni xikirini",
+  photoViewerEnlarge: "Kurisa",
+  // End photo viewer.
 };
 
 export default dict;

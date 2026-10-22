@@ -7,7 +7,7 @@ import{loadUpdateCopy,updateDescription}from'../lib/update-copy.ts';
 import{RELEASE_NOTES}from'../lib/release-notes.ts';
 import{actualCommunityProfile,actualCommunityRounding,QA_COMMUNITY_PHOTO,communityNodeText}from'./community-profile-renderer.ts';
 import{controlT,controlLocales}from'./control-icon-renderers.ts';
-import{beforeCommunityProfileDictionary,beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations}from'./ui-dictionary-preservation.ts';
+import{beforeCommunityProfileDictionary,beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations,beforePhotoViewerTranslations}from'./ui-dictionary-preservation.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/community-profile-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -19,7 +19,7 @@ test('community drafts bind every source, figure, placeholder and prior locale b
  for(const lang of langs){
   for(const row of packet.entries){assert.equal(controlT('en')(row.key),row.english);if(row[lang]){assert.equal(controlT(lang)(row.key),row[lang]);assert.notEqual(row[lang],row.english);assert.deepEqual(tokens(row[lang]),tokens(row.english));}}
   for(const old of packet.sourceControls)if(!packet.entries.some((r:any)=>r.key===old.key&&r[lang]))assert.equal(controlLocales[lang][old.key]??null,old[lang]);
-  const source=beforeCommunityMemberTranslations(beforeCommunityThreadTranslations(read(`lib/locales/${lang}.ts`),lang),lang);assert.equal(createHash('sha256').update(beforeCommunityProfileTranslations(source,lang)).digest('hex'),packet.sourceSha256[`lib/locales/${lang}.ts`]);
+  const source=beforeCommunityMemberTranslations(beforeCommunityThreadTranslations(beforePhotoViewerTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang);assert.equal(createHash('sha256').update(beforeCommunityProfileTranslations(source,lang)).digest('hex'),packet.sourceSha256[`lib/locales/${lang}.ts`]);
   const changed=source.replace(JSON.stringify(controlT(lang)('communityPhotoUploadError')),JSON.stringify('Unlisted change'));assert.equal(beforeCommunityProfileTranslations(changed,lang),changed);
   const partial={...controlLocales[lang]};delete partial.communityPhotoUploadError;assert.equal(beforeCommunityProfileDictionary(partial,lang),partial);
   const learning={...controlLocales[lang],studentContinue:'changed lesson'};assert.equal((beforeCommunityProfileDictionary(learning,lang)as any).studentContinue,'changed lesson');

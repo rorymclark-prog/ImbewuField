@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: '2b8f58cf', changes: [
+    'Photo viewer controls now have four draft translations.',
+  ], tour: [{ title: 'Open a saved photograph', where: 'Menu → Account', href: '/account',
+    detail: 'If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.',
+  }] },
   { when: '22 October 2026', sha: '6cb476bc', changes: [
     'Community messages, board and map controls now have four draft translations.',
   ] },
