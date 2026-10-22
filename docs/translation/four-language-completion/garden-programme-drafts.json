@@ -1,0 +1,1881 @@
+{
+  "sourceSha": "68d143c7af00eec76428871296eece9a38846cd8",
+  "status": "Unreviewed machine drafts. IN PROGRESS: shared controls/PDF foundation implemented; garden UI/schematic/narrative/source-backed export and full browser/PDF verification still required.",
+  "sourceFileSha256": {
+    "app/samples/gardens/page.tsx": "d25ac4e69185f6df3da922dfee2fb3f1ac53c5fb726193c5c3fc6388a69f6db5",
+    "components/SampleGardenVisual.tsx": "7eec07e58ee72a4ff5892d4b8ba05c6ff5a01d0fb2e9dbce52d6bb4793dc21b1",
+    "lib/sample-garden-layout.ts": "28af91a02c9494246380bf60e4935f52b23e93eca29a87995f74c0c25fb90581",
+    "lib/sample-garden-reports.ts": "f13353aa99c4f21e092825d6dfb81e0f41f6601b77d7b9079e8a1bbb9bbfa6c4",
+    "lib/sample-gardens.ts": "63e9b4b27bd5693f0c48340649698621ef64095b162011d76a9ae7272b02aa15",
+    "lib/sample-orchard.ts": "f67faf827a7d905f9036c8b68538f7ef31d8fd727670ba4e28da065cc90de4c7",
+    "components/ReportComposer.tsx": "e750831f8516a52c24c09e351adda32c011003db1a2192fcbd6c40cd3149b60e",
+    "lib/programme-report-pdf.ts": "6c8e259a15fcbf2c870ee8bad185f7992d0b485a2176d29499750168f0c84f8d",
+    "lib/report-visual-pdf.ts": "ceb4c357cb5e554460818adc3b360d7ee5c460bf5d399cbd5ee99eb14aa737d2",
+    "components/report/ReportVisualOverview.tsx": "8830b20212aac9b5ff870aacb6a426840388ced1a6fbf847acf3d9c9bc395977",
+    "lib/report-visuals.ts": "f6ba2b6ffd120275fb9afb94fffbb0c39563dca250b6c944574db67c46ffe620",
+    "components/TrainingFeedback.tsx": "ad2e9cb51f06182761481619ae7f125b314d089b81ab09d9a7013389fd826716",
+    "lib/mel-templates.ts": "36d8533db600c3c861e510c617dc0c102a74ffefce792b917564d2082be925b7",
+    "lib/report-pdf-font.ts": "3744a1bfc47ed2d64c4d00f96a2f402cc150418d35846772ff1c2d40579fd9ac",
+    "lib/programme-evidence.ts": "45b65019918581c6b787859c0a92d0131aec6d2299b7a97a861b7e0bec6c40e3"
+  },
+  "programmeSource": {
+    "sourceSha": "68d143c7af00eec76428871296eece9a38846cd8",
+    "pdfZulu": {
+      "Full report": "Umbiko ogcwele",
+      "Brief summary": "Isifinyezo esifushane",
+      "Tour workspace": "Indawo yokuhlola",
+      "Attendance": "Ukuba khona",
+      "No register yet": "Alukho uhlu okwamanje",
+      "Signed register": "Uhlu olusayiniwe",
+      "Attendance signatures": "Amasiginesha okuba khona",
+      "Feedback": "Impendulo",
+      "Responses / attendees": "Izimpendulo / abebehambele",
+      "Photographs": "Izithombe",
+      "Session evidence": "Ubufakazi beseshini",
+      "Implemented by": "Kwenziwe ngu",
+      "Community / project": "Umphakathi / iphrojekthi",
+      "Supported by": "Kwesekwe ngu",
+      "Facilitator": "Umqeqeshi",
+      "Training feedback": "Impendulo ngokuqeqeshwa",
+      "Venue map / directions": "Imephu yendawo / izikhombisi-ndlela",
+      "Up to five items per section. The full report includes every record.": "Kufika ezintweni ezinhlanu esigabeni ngasinye. Umbiko ogcwele uhlanganisa wonke amarekhodi.",
+      "Attendance register": "Uhlu lokuba khona",
+      "Name": "Igama",
+      "ID / reference": "I-ID / inkomba",
+      "Nothing recorded yet.": "Akukho okuqoshiwe okwamanje.",
+      "Signature": "Isiginesha",
+      "Certificate": "Isitifiketi",
+      "Present": "Ukhona",
+      "Absent": "Akekho",
+      "Not signed": "Akusayinwanga",
+      "No feedback recorded yet.": "Akukho mpendulo eqoshiwe okwamanje.",
+      "Detailed findings are withheld for this small group.": "Imininingwane ayiboniswa ngoba leli qembu lincane.",
+      "Results withheld for this small group.": "Imiphumela ayiboniswa ngoba leli qembu lincane.",
+      "answered": "baphendulile",
+      "skipped": "beqile",
+      "First action": "Isenzo sokuqala",
+      "Suggested improvement": "Isiphakamiso sokuthuthukisa",
+      "Programme report": "Umbiko wohlelo",
+      "Internal session record": "Irekhodi leseshini yangaphakathi"
+    },
+    "composerZulu": {
+      "Attendance": "Ukuba khona",
+      "Signed register": "Uhlu olusayiniwe",
+      "Feedback": "Impendulo",
+      "Photographs": "Izithombe",
+      "No register yet": "Alukho uhlu okwamanje",
+      "Attendance signatures": "Amasiginesha okuba khona",
+      "Responses / attendees": "Izimpendulo / abebehambele",
+      "Session evidence": "Ubufakazi beseshini",
+      "Programme evidence": "Ubufakazi bohlelo",
+      "Site photographs": "Izithombe zesayithi",
+      "Implemented by": "Kwenziwe ngu",
+      "Community / project": "Umphakathi / iphrojekthi",
+      "Supported by": "Kwesekwe ngu"
+    },
+    "feedbackTemplate": {
+      "stage": "course_after",
+      "en": "After the in-person course",
+      "zu": "Ngemva kwesifundo esifundwa ndawonye",
+      "timing": "On the final day. These are self-reported skills; use observed practical work separately.",
+      "questions": [
+        {
+          "id": "course_clear",
+          "en": "How clear were the explanations?",
+          "zu": "Izincazelo bezicace kangakanani?",
+          "kind": "choice",
+          "options": [
+            {
+              "value": "1",
+              "en": "Very poor",
+              "zu": "Kubi kakhulu"
+            },
+            {
+              "value": "2",
+              "en": "Poor",
+              "zu": "Kubi"
+            },
+            {
+              "value": "3",
+              "en": "Okay",
+              "zu": "Kuyanelisa"
+            },
+            {
+              "value": "4",
+              "en": "Good",
+              "zu": "Kuhle"
+            },
+            {
+              "value": "5",
+              "en": "Very good",
+              "zu": "Kuhle kakhulu"
+            },
+            {
+              "value": "na",
+              "en": "Not used / not applicable",
+              "zu": "Angikusebenzisanga / akungithinti"
+            }
+          ],
+          "private": false
+        },
+        {
+          "id": "course_practice",
+          "en": "How useful were the practical activities?",
+          "zu": "Imisebenzi eyenziwe ngezandla ibiwusizo kangakanani?",
+          "kind": "choice",
+          "options": [
+            {
+              "value": "1",
+              "en": "Very poor",
+              "zu": "Kubi kakhulu"
+            },
+            {
+              "value": "2",
+              "en": "Poor",
+              "zu": "Kubi"
+            },
+            {
+              "value": "3",
+              "en": "Okay",
+              "zu": "Kuyanelisa"
+            },
+            {
+              "value": "4",
+              "en": "Good",
+              "zu": "Kuhle"
+            },
+            {
+              "value": "5",
+              "en": "Very good",
+              "zu": "Kuhle kakhulu"
+            },
+            {
+              "value": "na",
+              "en": "Not used / not applicable",
+              "zu": "Angikusebenzisanga / akungithinti"
+            }
+          ],
+          "private": false
+        },
+        {
+          "id": "course_language",
+          "en": "Could you follow the language used by the trainer?",
+          "zu": "Ukwazile ukulandela ulimi olusetshenziswe umqeqeshi?",
+          "kind": "choice",
+          "options": [
+            {
+              "value": "yes",
+              "en": "Yes",
+              "zu": "Yebo"
+            },
+            {
+              "value": "no",
+              "en": "No",
+              "zu": "Cha"
+            },
+            {
+              "value": "unsure",
+              "en": "Not sure",
+              "zu": "Angiqiniseki"
+            }
+          ],
+          "private": false
+        },
+        {
+          "id": "course_change",
+          "en": "What would make this course better?",
+          "zu": "Yini engenza lesi sifundo sibe ngcono?",
+          "kind": "text",
+          "private": true
+        },
+        {
+          "id": "course_apply",
+          "en": "What will you try first in your garden?",
+          "zu": "Yini ozoyizama kuqala engadini yakho?",
+          "kind": "text",
+          "private": true
+        }
+      ],
+      "version": 1
+    },
+    "photoKinds": {
+      "activity": "Training activities",
+      "group": "Group photograph",
+      "certificates": "Certificates of attendance",
+      "venue": "Training venue",
+      "register": "Signed paper register"
+    },
+    "rows": [
+      {
+        "english": "Screen",
+        "zuluVariants": [
+          "Isikrini"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 76,
+            "source": "ui('Screen','Isikrini')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 88,
+            "source": "ui('Screen','Isikrini')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Screen','Isikrini')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Screen','Isikrini')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Print · full colour",
+        "zuluVariants": [
+          "Phrinta · umbala ogcwele"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 76,
+            "source": "ui('Print · full colour','Phrinta · umbala ogcwele')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 88,
+            "source": "ui('Print · full colour','Phrinta · umbala ogcwele')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Print · full colour','Phrinta · umbala ogcwele')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Print · full colour','Phrinta · umbala ogcwele')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Print · save ink",
+        "zuluVariants": [
+          "Phrinta · yonga uyinki"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 76,
+            "source": "ui('Print · save ink','Phrinta · yonga uyinki')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 88,
+            "source": "ui('Print · save ink','Phrinta · yonga uyinki')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Print · save ink','Phrinta · yonga uyinki')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Print · save ink','Phrinta · yonga uyinki')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Preparing…",
+        "zuluVariants": [
+          "Kuyalungiswa…"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 77,
+            "source": "ui('Preparing…','Kuyalungiswa…')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Preparing…','Kuyalungiswa…')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Download ink-saving PDF",
+        "zuluVariants": [
+          "Landa i-PDF eyonga uyinki"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 77,
+            "source": "ui('Download ink-saving PDF','Landa i-PDF eyonga uyinki')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Download ink-saving PDF','Landa i-PDF eyonga uyinki')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Download full-colour PDF",
+        "zuluVariants": [
+          "Landa i-PDF enombala ogcwele"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 77,
+            "source": "ui('Download full-colour PDF','Landa i-PDF enombala ogcwele')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Download full-colour PDF','Landa i-PDF enombala ogcwele')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Brief summary",
+        "zuluVariants": [
+          "Isifinyezo esifushane"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 79,
+            "source": "ui('Brief summary','Isifinyezo esifushane')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 89,
+            "source": "ui('Brief summary','Isifinyezo esifushane')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 103,
+            "source": "ui('Brief summary','Isifinyezo esifushane')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Brief summary','Isifinyezo esifushane')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Brief summary','Isifinyezo esifushane')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Brief summary','Isifinyezo esifushane')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Full report",
+        "zuluVariants": [
+          "Umbiko ogcwele"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 79,
+            "source": "ui('Full report','Umbiko ogcwele')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 89,
+            "source": "ui('Full report','Umbiko ogcwele')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 103,
+            "source": "ui('Full report','Umbiko ogcwele')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Full report','Umbiko ogcwele')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Full report','Umbiko ogcwele')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Full report','Umbiko ogcwele')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Include photographs and layout",
+        "zuluVariants": [
+          "Faka izithombe nokuhlelwa"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 79,
+            "source": "ui('Include photographs and layout','Faka izithombe nokuhlelwa')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Include photographs and layout','Faka izithombe nokuhlelwa')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "The PDF could not be created. Your records have not changed.",
+        "zuluVariants": [
+          "I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga."
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 81,
+            "source": "ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 91,
+            "source": "ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Brief summary: up to five items per section. Use the full report for every item.",
+        "zuluVariants": [
+          "Isifinyezo esifushane: kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone yonke imininingwane."
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 83,
+            "source": "ui('Brief summary: up to five items per section. Use the full report for every item.','Isifinyezo esifushane: kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone yonke imininingwane.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Brief summary: up to five items per section. Use the full report for every item.','Isifinyezo esifushane: kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone yonke imininingwane.')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Nothing recorded yet.",
+        "zuluVariants": [
+          "Akukho okuqoshiwe okwamanje."
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 84,
+            "source": "ui('Nothing recorded yet.','Akukho okuqoshiwe okwamanje.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 99,
+            "source": "ui('Nothing recorded yet.','Akukho okuqoshiwe okwamanje.')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Nothing recorded yet.','Akukho okuqoshiwe okwamanje.')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Nothing recorded yet.','Akukho okuqoshiwe okwamanje.')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Download report PDF",
+        "zuluVariants": [
+          "Landa umbiko we-PDF"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 88,
+            "source": "ui('Download report PDF','Landa umbiko we-PDF')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Download report PDF','Landa umbiko we-PDF')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Include photographs",
+        "zuluVariants": [
+          "Faka izithombe"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 89,
+            "source": "ui('Include photographs','Faka izithombe')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Include photographs','Faka izithombe')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Programme evidence",
+        "zuluVariants": [
+          "Ubufakazi bohlelo"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 92,
+            "source": "ui('Programme evidence','Ubufakazi bohlelo')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Programme evidence','Ubufakazi bohlelo')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Showing up to five items per section. Select Full report for every record.",
+        "zuluVariants": [
+          "Kuboniswa kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone wonke amarekhodi."
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 96,
+            "source": "ui('Showing up to five items per section. Select Full report for every record.','Kuboniswa kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone wonke amarekhodi.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Showing up to five items per section. Select Full report for every record.','Kuboniswa kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone wonke amarekhodi.')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Participation",
+        "zuluVariants": [
+          "Ukubamba iqhaza"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 98,
+            "source": "ui('Participation','Ukubamba iqhaza')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Participation','Ukubamba iqhaza')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Present",
+        "zuluVariants": [
+          "Ukhona"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 98,
+            "source": "ui('Present','Ukhona')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Present','Ukhona')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Present','Ukhona')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Present','Ukhona')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Attendance register",
+        "zuluVariants": [
+          "Uhlu lokuba khona"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Attendance register','Uhlu lokuba khona')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Attendance register','Uhlu lokuba khona')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Name",
+        "zuluVariants": [
+          "Igama"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Name','Igama')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Name','Igama')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "ID / reference",
+        "zuluVariants": [
+          "I-ID / inkomba"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('ID / reference','I-ID / inkomba')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('ID / reference','I-ID / inkomba')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Attendance",
+        "zuluVariants": [
+          "Ukuba khona"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Attendance','Ukuba khona')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Attendance','Ukuba khona')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Signature",
+        "zuluVariants": [
+          "Isiginesha"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Signature','Isiginesha')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Signature','Isiginesha')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Certificate",
+        "zuluVariants": [
+          "Isitifiketi"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Certificate','Isitifiketi')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Certificate','Isitifiketi')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Absent",
+        "zuluVariants": [
+          "Akekho"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Absent','Akekho')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Absent','Akekho')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Not signed",
+        "zuluVariants": [
+          "Akusayinwanga"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 100,
+            "source": "ui('Not signed','Akusayinwanga')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Not signed','Akusayinwanga')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "What participants said",
+        "zuluVariants": [
+          "Okushiwo ababambiqhaza"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 101,
+            "source": "ui('What participants said','Okushiwo ababambiqhaza')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('What participants said','Okushiwo ababambiqhaza')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "{n} responses from {m} attendees.",
+        "zuluVariants": [
+          "Izimpendulo ezingu-{n} ezivela kubantu abangu-{m} abebehambele."
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 101,
+            "source": "ui('{n} responses from {m} attendees.','Izimpendulo ezingu-{n} ezivela kubantu abangu-{m} abebehambele.')"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('{n} responses from {m} attendees.','Izimpendulo ezingu-{n} ezivela kubantu abangu-{m} abebehambele.')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Internal session record",
+        "zuluVariants": [
+          "Irekhodi leseshini yangaphakathi"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 103,
+            "source": "ui('Internal session record','Irekhodi leseshini yangaphakathi')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Internal session record','Irekhodi leseshini yangaphakathi')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Programme report",
+        "zuluVariants": [
+          "Umbiko wohlelo"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "line": 103,
+            "source": "ui('Programme report','Umbiko wohlelo')"
+          },
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui('Programme report','Umbiko wohlelo')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "IMBEWUFIELD / SITE REPORT",
+        "zuluVariants": [
+          "IMBEWUFIELD / UMBIKO WESIZA"
+        ],
+        "callers": [
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "line": 128,
+            "source": "label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA')"
+          },
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "source": "label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": {
+          "english": "IMBEWUFIELD / SITE REPORT",
+          "zu": "IMBEWUFIELD / UMBIKO WESIZA",
+          "st": "IMBEWUFIELD / TLALEHO YA SEBAKA",
+          "ts": "IMBEWUFIELD / XIVIKO XA NDHAWU",
+          "ve": "IMBEWUFIELD / MUVHIGO WA FHETHU"
+        }
+      },
+      {
+        "english": "The site at a glance",
+        "zuluVariants": [
+          "Indawo le njengoba injalo"
+        ],
+        "callers": [
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "line": 129,
+            "source": "label('The site at a glance','Indawo le njengoba injalo')"
+          },
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "source": "label('The site at a glance','Indawo le njengoba injalo')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": {
+          "english": "The site at a glance",
+          "zu": "Indawo le njengoba injalo",
+          "st": "Sebaka ka bokgutshwanyane",
+          "ts": "Ndhawu hi ku languta kan’we",
+          "ve": "Fhethu nga u tou lavhelesa"
+        }
+      },
+      {
+        "english": "Report basis",
+        "zuluVariants": [
+          "Isisekelo sombiko"
+        ],
+        "callers": [
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "line": 130,
+            "source": "label('Report basis','Isisekelo sombiko')"
+          },
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "source": "label('Report basis','Isisekelo sombiko')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Planting through the year",
+        "zuluVariants": [
+          "Ukutshala phakathi nonyaka"
+        ],
+        "callers": [
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "line": 131,
+            "source": "label('Planting through the year','Ukutshala phakathi nonyaka')"
+          },
+          {
+            "path": "lib/report-visual-pdf.ts",
+            "source": "label('Planting through the year','Ukutshala phakathi nonyaka')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Tour workspace",
+        "zuluVariants": [
+          "Indawo yokuhlola"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "No register yet",
+        "zuluVariants": [
+          "Alukho uhlu okwamanje"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Signed register",
+        "zuluVariants": [
+          "Uhlu olusayiniwe"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Attendance signatures",
+        "zuluVariants": [
+          "Amasiginesha okuba khona"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Feedback",
+        "zuluVariants": [
+          "Impendulo"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Responses / attendees",
+        "zuluVariants": [
+          "Izimpendulo / abebehambele"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Photographs",
+        "zuluVariants": [
+          "Izithombe"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Session evidence",
+        "zuluVariants": [
+          "Ubufakazi beseshini"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Implemented by",
+        "zuluVariants": [
+          "Kwenziwe ngu"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key === 'organisation' ? 'Implemented by' : key === 'garden' ? 'Community / project' : 'Supported by',key === 'organisation' ? 'Kwenziwe ngu' : key === 'garden' ? 'Umphakathi / iphrojekthi' : 'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',key==='organisation'?'Kwenziwe ngu':key==='garden'?'Umphakathi / iphrojekthi':'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Community / project",
+        "zuluVariants": [
+          "Umphakathi / iphrojekthi"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key === 'organisation' ? 'Implemented by' : key === 'garden' ? 'Community / project' : 'Supported by',key === 'organisation' ? 'Kwenziwe ngu' : key === 'garden' ? 'Umphakathi / iphrojekthi' : 'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',key==='organisation'?'Kwenziwe ngu':key==='garden'?'Umphakathi / iphrojekthi':'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Supported by",
+        "zuluVariants": [
+          "Kwesekwe ngu"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key === 'organisation' ? 'Implemented by' : key === 'garden' ? 'Community / project' : 'Supported by',key === 'organisation' ? 'Kwenziwe ngu' : key === 'garden' ? 'Umphakathi / iphrojekthi' : 'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',key==='organisation'?'Kwenziwe ngu':key==='garden'?'Umphakathi / iphrojekthi':'Kwesekwe ngu')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Facilitator",
+        "zuluVariants": [
+          "Umqeqeshi"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Training feedback",
+        "zuluVariants": [
+          "Impendulo ngokuqeqeshwa"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Venue map / directions",
+        "zuluVariants": [
+          "Imephu yendawo / izikhombisi-ndlela"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Up to five items per section. The full report includes every record.",
+        "zuluVariants": [
+          "Kufika ezintweni ezinhlanu esigabeni ngasinye. Umbiko ogcwele uhlanganisa wonke amarekhodi."
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "No feedback recorded yet.",
+        "zuluVariants": [
+          "Akukho mpendulo eqoshiwe okwamanje."
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Detailed findings are withheld for this small group.",
+        "zuluVariants": [
+          "Imininingwane ayiboniswa ngoba leli qembu lincane."
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Results withheld for this small group.",
+        "zuluVariants": [
+          "Imiphumela ayiboniswa ngoba leli qembu lincane."
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "answered",
+        "zuluVariants": [
+          "baphendulile"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "skipped",
+        "zuluVariants": [
+          "beqile"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "First action",
+        "zuluVariants": [
+          "Isenzo sokuqala"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Suggested improvement",
+        "zuluVariants": [
+          "Isiphakamiso sokuthuthukisa"
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "pdfLabel"
+          },
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(k==='course_apply'?'First action in the garden':'Suggested improvement',k==='course_apply'?'Isenzo sokuqala engadini':'Isiphakamiso sokuthuthukisa')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Site photographs",
+        "zuluVariants": [
+          "Izithombe zesayithi"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "kind": "metric"
+          },
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "How clear were the explanations?",
+        "zuluVariants": [
+          "Izincazelo bezicace kangakanani?"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackQuestion",
+            "id": "course_clear"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Very poor",
+        "zuluVariants": [
+          "Kubi kakhulu"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "1"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "1"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Poor",
+        "zuluVariants": [
+          "Kubi"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "2"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "2"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Okay",
+        "zuluVariants": [
+          "Kuyanelisa"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "3"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "3"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Good",
+        "zuluVariants": [
+          "Kuhle"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "4"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "4"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Very good",
+        "zuluVariants": [
+          "Kuhle kakhulu"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "5"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "5"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Not used / not applicable",
+        "zuluVariants": [
+          "Angikusebenzisanga / akungithinti"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_clear",
+            "value": "na"
+          },
+          {
+            "kind": "feedbackOption",
+            "id": "course_practice",
+            "value": "na"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "How useful were the practical activities?",
+        "zuluVariants": [
+          "Imisebenzi eyenziwe ngezandla ibiwusizo kangakanani?"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackQuestion",
+            "id": "course_practice"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Could you follow the language used by the trainer?",
+        "zuluVariants": [
+          "Ukwazile ukulandela ulimi olusetshenziswe umqeqeshi?"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackQuestion",
+            "id": "course_language"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Yes",
+        "zuluVariants": [
+          "Yebo"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_language",
+            "value": "yes"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "No",
+        "zuluVariants": [
+          "Cha"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_language",
+            "value": "no"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Not sure",
+        "zuluVariants": [
+          "Angiqiniseki"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackOption",
+            "id": "course_language",
+            "value": "unsure"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "What would make this course better?",
+        "zuluVariants": [
+          "Yini engenza lesi sifundo sibe ngcono?"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackQuestion",
+            "id": "course_change"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "What will you try first in your garden?",
+        "zuluVariants": [
+          "Yini ozoyizama kuqala engadini yakho?"
+        ],
+        "callers": [
+          {
+            "kind": "feedbackQuestion",
+            "id": "course_apply"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Training activities",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "photoKind",
+            "key": "activity"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Group photograph",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "photoKind",
+            "key": "group"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Certificates of attendance",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "photoKind",
+            "key": "certificates"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Training venue",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "photoKind",
+            "key": "venue"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Signed paper register",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "photoKind",
+            "key": "register"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Training evidence",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Preparing PDF…",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Data availability",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "{count}% present",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "{count} responses from {total} attendees.",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "{count} answered · {missing} skipped",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "organisation logo",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "garden logo",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "funder logo",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "English source",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "These translated headings and controls are unreviewed. Evidence and participant answers remain in the language recorded.",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "This report contains unreviewed translations of the prepared English example. The original English narrative is included for comparison.",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Original English narrative",
+        "zuluVariants": [],
+        "callers": [
+          {
+            "kind": "explicitSourceOrTemplate"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "Translated headings are unreviewed; evidence stays in its recorded language.",
+        "zuluVariants": [
+          "Izihloko zesiZulu azikabuyekezwa; umbhalo wobufakazi ugcinwa ngolimi oqoshwe ngalo."
+        ],
+        "callers": [
+          {
+            "path": "lib/programme-report-pdf.ts",
+            "kind": "authoredEnglishMeaningOfOriginalZuluNotice"
+          }
+        ],
+        "reuse": null
+      },
+      {
+        "english": "First action in the garden",
+        "zuluVariants": [
+          "Isenzo sokuqala engadini"
+        ],
+        "callers": [
+          {
+            "path": "components/ReportComposer.tsx",
+            "source": "ui(k==='course_apply'?'First action in the garden':'Suggested improvement',k==='course_apply'?'Isenzo sokuqala engadini':'Isiphakamiso sokuthuthukisa')",
+            "kind": "branchSourceAudit"
+          }
+        ],
+        "reuse": null
+      }
+    ],
+    "sourceAliases": {
+      "Screen": "reportUiScreen",
+      "Print · full colour": "reportUiPrintFullColour",
+      "Print · save ink": "reportUiPrintSaveInk",
+      "Yes": "surveyAnswerYes",
+      "No": "surveyAnswerNo",
+      "Not sure": "soilConditionUnknown",
+      "English source": "offlineSourceLabel"
+    },
+    "aliasPolicy": "Existing complete UI translations are authoritative for shared controls/answers. The data module is a generated snapshot, guarded against the current locale values. Source-paired isiZulu call sites retain their own exact previous wording. Preparing… and skipped have pending English keys, so they are not reused as native authority. The complete Not sure response uses soilConditionUnknown: its exact English label and first-person uncertainty meaning match this response."
+  },
+  "englishSourcePolicy": "English inputs, report records and unknown/private evidence remain unchanged. Original context-specific isiZulu is passed by its existing caller. The legacy PDF and metric maps are retained exactly. Explicitly authored English review sentences are recorded as new review-status sources, not as existing UI literals.",
+  "fontPolicy": "Regional exports reuse bundled Noto Sans and reportPdfText. Default English export keeps Helvetica/pdfSafe behavior. Source report records and arrays are not mutated. Native title/review header rows are measured before the body.",
+  "remaining": [
+    "Garden index/detail source pairs and language metadata",
+    "Schematic and image/caption controls with source geometry preserved",
+    "Garden narrative contexts/templates translated faithfully with original English backing",
+    "Explicit original-English static report links alongside generated native report",
+    "Actual end-to-end browser capture of all4 generated PDF/color/ink/summary modes and glyph/layout/source checks",
+    "UI controller/funder/privacy/file actions and failure recovery",
+    "Release/notes, broad/full checks and final one-time branch push",
+    "Main site-analysis lib/report-pdf.ts is still Helvetica/pdfSafe and calls the visual-front renderer without its language; full native site-analysis export font/furniture is an additional whole-goal requirement.",
+    "TrainingFeedback entry form and MelResponse/record validators still en/zu only; this batch changes report findings/read presentation, not saved-response language schemas. Continue in the wider workflow work."
+  ],
+  "currentCheckpoints": {
+    "tsc": "/tmp/imbewu-garden-alias-tsc.txt clean",
+    "existingTests": "/tmp/imbewu-garden-shared-report-tests.txt 54 pass, zero fail",
+    "pdfPilot": "12 actual buildProgrammePdf full/ink/summary exports (24 total pages), source inputs and Unicode data preserved. Both full-report pages inspected in all4 languages; native ID/reference headings initially overlapped adjacent column, now wrap. Actual pdftotext bbox negative distinguishes before/after for ts/ve. Colour/ink/summary latest complete browser workflow and visual-front PDF still pending.",
+    "aliases": "Seven shared UI phrases now reuse complete canonical locale values. Generated snapshot/sourceKey bindings are tested against current dictionaries; all earlier context-specific Zu literals remain as caller overrides. Pending English keys are not treated as native coverage.",
+    "tests": "/tmp/imbewu-garden-alias-tests.txt: 109 pass, zero fail across five selected files; programme source/controller/Unicode/summary/funder guards, old English export and source/visual guards included.",
+    "sourceController": "Actual ReportComposer state transitions, busy/snapshot language, photos/format/presentation, errors, private source data and funder projection verified in react-test-renderer. This is not browser layout verification.",
+    "testHarnessReason": "The shared actual-component compiler now excludes type-only re-exports: stripping only the export keyword produced a fake runtime type identifier for ReportComposer. Assertions retained; account/controller tests pass.",
+    "fullRun": "Tour predecessor68d143c7 (registration559) still running in frozen Settings; current branch registration560 and these changes are not covered by that run. Do not mutate or restart frozen run."
+  },
+  "partialEvidence": {
+    "pdfGeneration": "output/garden-examples-qa/programme-pdf-generation.json",
+    "tableHeaderBounds": "output/garden-examples-qa/table-header-bounds.json",
+    "inspection": "Both full pages seen for zu/st/ts/ve; after-wrap ts page2 seen, ve bounds prove no overlap, representative final ve/ink/summary still to inspect before delivery."
+  }
+}

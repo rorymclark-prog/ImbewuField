@@ -1,3 +1,4 @@
+import { PROGRAMME_REPORT_COPY } from './programme-report-copy-data';
 import { ELEMENTS_BY_ID } from './design-elements';
 import { plantTakesCode } from './plant-codes';
 import { ROUTE_LABELS } from './design-studio-report';
@@ -135,6 +136,7 @@ export function reportChartSvg(chart: ReportChart, ink = false): { svg: string; 
 
 /** Unreviewed AI drafts. Source quantities, stored labels and catalogue names are never translated by inference. */
 export const REPORT_VISUAL_COPY: readonly { english: string; zu: string; st: string; ts: string; ve: string }[] = [
+  ...PROGRAMME_REPORT_COPY,
   {
     "english": "Mapped site",
     "zu": "Indawo ebalazwe",

@@ -1,4 +1,5 @@
 'use client';
+import { programmeReportText } from '@/lib/programme-report-copy';
 import { useEffect, useState } from 'react';
 import { TRAINING_FEEDBACK_TEMPLATE, trainingFeedbackSummary, type TrainingRecord } from '@/lib/programme-evidence';
 import styles from './MelDashboard.module.css';
@@ -25,10 +26,11 @@ export default function TrainingFeedback({session,onChange,funder=false}:{sessio
 }
 
 
-export function TrainingFeedbackFindings({summary,zu=false}:{summary:ReturnType<typeof trainingFeedbackSummary>;zu?:boolean}) {
-  if(summary.metrics.length&&summary.metrics.every(m=>m.suppressed))return <p>Detailed findings are withheld for this small group.</p>;
+export function TrainingFeedbackFindings({summary,zu=false,language=zu?'zu':'en'}:{summary:ReturnType<typeof trainingFeedbackSummary>;zu?:boolean;language?:string}) {
+  const copy=(source:string,legacyZulu?:string)=>programmeReportText(source,language,{},legacyZulu);
+  if(summary.metrics.length&&summary.metrics.every(m=>m.suppressed))return <p>{copy('Detailed findings are withheld for this small group.')}</p>;
   return <div className={styles.grid}>{summary.metrics.map(m=><section key={m.id} className={styles.card}>
-    <h4 style={{fontSize:15,fontWeight:700,lineHeight:1.4,marginBottom:8}}>{zu?m.zu:m.en}</h4>
-    {m.suppressed?<p>Results withheld for this small group.</p>:<><p>{m.n} answered · {m.missing} skipped</p>{m.choices?.filter(c=>c.count>0).map(c=><div key={c.value}><div className={styles.row} style={{justifyContent:'space-between',fontSize:14}}><span>{zu?c.zu:c.en}</span><strong>{c.count}</strong></div><div className={styles.bar}><span style={{width:`${m.n?c.count/m.n*100:0}%`}}/></div></div>)}</>}
+    <h4 style={{fontSize:15,fontWeight:700,lineHeight:1.4,marginBottom:8}}>{copy(m.en,m.zu)}</h4>
+    {m.suppressed?<p>{copy('Results withheld for this small group.')}</p>:<><p>{programmeReportText('{count} answered · {missing} skipped',language,{count:m.n,missing:m.missing})}</p>{m.choices?.filter(c=>c.count>0).map(c=><div key={c.value}><div className={styles.row} style={{justifyContent:'space-between',fontSize:14}}><span>{copy(c.en,c.zu)}</span><strong>{c.count}</strong></div><div className={styles.bar}><span style={{width:`${m.n?c.count/m.n*100:0}%`}}/></div></div>)}</>}
   </section>)}</div>;
 }
