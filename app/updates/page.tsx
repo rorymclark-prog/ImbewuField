@@ -32,6 +32,11 @@ function groupNotesByDay(notes: typeof RELEASE_NOTES): DayGroup[] {
   }
   return groups;
 }
+// Long internal lines read shorter as their first sentence (split at the first '. ').
+function firstSentence(line: string): string {
+  const i = line.indexOf('. ');
+  return i > 0 ? line.slice(0, i + 1) : line;
+}
 const RECENT_DAYS_SIMPLE = 3;
 const RECENT_DAYS_ALL = 5;
 
@@ -41,7 +46,7 @@ export default function UpdatesPage() {
   const dayGroups = groupNotesByDay(RELEASE_NOTES);
   const recentDays = simple ? RECENT_DAYS_SIMPLE : RECENT_DAYS_ALL;
   const hasOlder = dayGroups.length > recentDays;
-  const visibleDays = showAll && !simple ? dayGroups : dayGroups.slice(0, recentDays);
+  const visibleDays = showAll ? dayGroups : dayGroups.slice(0, recentDays);
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -75,21 +80,21 @@ export default function UpdatesPage() {
                 {day.changes.map((line, i) => (
                   <li key={`${day.when}-${i}`} className="flex gap-2 text-[13px] leading-snug" style={{ color: 'var(--text-primary)' }}>
                     <span aria-hidden style={{ color: 'var(--color-forest-800)' }}>•</span>
-                    <span>{line}</span>
+                    <span>{firstSentence(line)}</span>
                   </li>
                 ))}
               </ul>
             </section>
           ))}
 
-          {!simple && hasOlder && (
+          {hasOlder && (
             <button
               type="button"
               onClick={() => setShowAll((v) => !v)}
               className="mb-6 px-4 rounded-lg font-semibold"
               style={{ minHeight: 44, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             >
-              {showAll ? 'Show fewer updates' : 'Show older updates'}
+              {showAll ? 'Show fewer' : 'Show more'}
             </button>
           )}
         </div>
