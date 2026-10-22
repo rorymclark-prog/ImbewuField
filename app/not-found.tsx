@@ -29,7 +29,7 @@ export default function NotFound() {
       )}
       <Link
         href="/home"
-        style={{ height: 44, padding: '0 24px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
+        style={{ height: 44, padding: '0 24px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', borderRadius: 10, fontSize: 14, fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
       >
         {copy.goHome}
       </Link>

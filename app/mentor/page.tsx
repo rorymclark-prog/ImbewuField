@@ -229,7 +229,7 @@ function TraineeCard({
               </p>
               <button onClick={() => onEnrol(trainee.id)} disabled={busy}
                 className="flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
-                style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
                 {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
                 {tr(lang, 'Enrol on the course', 'Mbhalise esifundweni')}
               </button>
@@ -579,7 +579,7 @@ export default function MentorPage() {
             <button
               onClick={() => router.push(role==='funder'?'/funder':'/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}
             >
               <Home size={15} />
               {role==='funder' ? tr(lang, 'Open funder workspace', 'Vula indawo yabaxhasi') : tr(lang, 'Back to my home', 'Buyela ekhasini lami lasekhaya')}
@@ -651,7 +651,7 @@ export default function MentorPage() {
               <span className="flex items-center justify-center rounded-full font-display tabular-nums"
                 // Same fix already applied to this exact badge on /ngo: fontSize 9 was under the
                 // 12px micro-label floor; the pill grows to 19px to fit a 12px digit.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}>
                 {badge}
               </span>
             )}

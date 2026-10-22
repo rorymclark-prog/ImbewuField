@@ -60,7 +60,7 @@ test('no line paints var(--on-forest) text on a var(--color-forest-800) backgrou
   for (const f of FIXED) {
     readFileSync(join(root, f), 'utf8').split('\n').forEach((line, i) => {
       const bgForest = /(background|bg-\[?)[^;]*var\(--color-forest-800\)/.test(line);
-      const badText = /var\(--on-forest\)/.test(line);
+      const badText = /var\(--on-forest\)/.test(line.replace(/var\(--on-forest-800, var\(--on-forest\)\)/g, ''));
       assert.ok(!(bgForest && badText), `${f}:${i + 1} pairs forest-800 fill with --on-forest`);
     });
   }

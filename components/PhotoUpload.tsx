@@ -289,7 +289,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
             style={{
               background: loading ? 'color-mix(in srgb, var(--border) 60%, transparent)' : 'var(--color-forest-800)',
               border: loading ? '1px solid var(--border)' : 'none',
-              color: loading ? 'var(--text-muted)' : 'var(--on-forest-800)',
+              color: loading ? 'var(--text-muted)' : 'var(--on-forest-800, var(--on-forest))',
             }}
           >
             {loading

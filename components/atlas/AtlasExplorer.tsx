@@ -161,7 +161,7 @@ export default function AtlasExplorer() {
                   }} />
                   <div style={{
                     position: 'absolute', inset: 3, borderRadius: '50%',
-                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest-800)',
+                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest-800, var(--on-forest))',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
                   }} />
                 </div>
@@ -310,7 +310,7 @@ export default function AtlasExplorer() {
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}
                   className="font-display font-semibold"
                   style={{
-                    background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', borderRadius: 999,
+                    background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', borderRadius: 999,
                     padding: '8px 18px', fontSize: 13, cursor: 'pointer',
                   }}
                 >
