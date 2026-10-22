@@ -4,6 +4,8 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { accessibleSourceLabel } from '@/lib/accessible-label';
+import { actualPracticeUi } from './tour-practice-renderers.ts';
+import { controlT } from './control-icon-renderers.ts';
 
 // Rory: "lets have a burger menu option on every screen."
 //
@@ -83,7 +85,8 @@ test('the menu button keeps the touch floor and the theme tokens', () => {
     fileURLToPath(new URL('../components/MenuButton.tsx', import.meta.url)),
     'utf8',
   );
-  assert.match(src, /width:\s*44/, 'a 44 px touch target, like BackButton');
+  // A native caption may grow wider, but must never shrink below the touch floor.
+  assert.match(src, /(?:minWidth|width):\s*44/, 'at least a 44 px touch target, like BackButton');
   assert.match(src, /height:\s*44/);
   assert.match(src, /var\(--bg-1\)/, 'themed background, not a hardcoded hex');
   assert.match(src, /var\(--border\)/);
@@ -110,8 +113,12 @@ test('isiZulu navigation exposes the English source and visibly marks unreviewed
       `${name} must use the shared accessible name`);
   }
   const drawer = readComponent('NavDrawer');
-  assert.match(drawer, /isZulu && \([\s\S]*role="note" lang="en"[\s\S]*ISIZULU MACHINE DRAFT[\s\S]*reviewed by a fluent isiZulu speaker/,
-    'the drawer must visibly identify the navigation as an unreviewed machine draft');
+  // The English-only isiZulu warning became the shared native-first notice for all four drafts.
+  for (const lang of ['zu', 'st', 'ts', 've'] as const) {
+    const h = await actualPracticeUi(lang, { kind: 'nav' });
+    try { assert.ok(h.text().includes(controlT(lang)('languageDraftNoticeText'))); }
+    finally { await h.dispose(); }
+  }
   assert.match(drawer, /aria-label=\{accessibleSourceLabel\(lang, t\('navCloseMenu'\), translate\('en', 'navCloseMenu'\)\)\}/,
     'the close-menu control must use the shared accessible name');
 });

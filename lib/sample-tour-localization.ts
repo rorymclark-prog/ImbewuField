@@ -1,3 +1,4 @@
+import { sampleWorkspaceDraft } from './sample-workspace-copy';
 import { REGIONAL_TOUR } from './sample-tour-regional';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
 
@@ -171,4 +172,10 @@ export function productTourLocalizationIsComplete(language = 'zu'): boolean {
 /** The source uses min; regional duration labels keep that unit and number instead of isiZulu words. */
 export function productTourDuration(minutes:number,language:string):string {
   return language==='zu'?(minutes===1?'umzuzu':`imizuzu engu-${minutes}`):`${minutes} min`;
+}
+
+/** Raw shell copy shares one source identity; supplied isiZulu clauses keep their exact original wording. */
+export function sampleWorkspaceText(language:string,english:string,zulu:string,values:Record<string,string|number>={}):string {
+  const template=language==='zu'?zulu:sampleWorkspaceDraft(english,language)??english;
+  return template.replace(/\{([^{}]+)\}/g,(match,name)=>Object.hasOwn(values,name)?String(values[name]):match);
 }

@@ -1,7 +1,7 @@
 {
   "sourceSha": "44d3e090839b3fc991fee3de7f37e18d221a8b9b",
   "status": "Unreviewed machine drafts; no fluent-speaker or farming/app-meaning approval.",
-  "phase": "IN PROGRESS: regional guide steps/tips/UI/errors and source/draft presentation are wired; 55 raw shell source groups, chooser holds and shared controls still require completion and browser evidence. Do not claim connected-flow or whole-app completion.",
+  "phase": "IN PROGRESS — connected shell implemented; runtime/visual verification and release evidence pending",
   "sourceSteps": [
     {
       "id": "garden",
@@ -408,21 +408,21 @@
     "tryNow": "Try it now",
     "openView": "Open this view",
     "hint": "Tap Tour beside the menu whenever you want these tips back.",
-    "exploredNext": "I\u2019ve explored this \u00b7 Next",
+    "exploredNext": "I’ve explored this · Next",
     "skip": "Skip this stop",
     "previous": "Previous stop",
     "overview": "Tour overview",
     "end": "End tour",
     "stopAria": "Open stop {current}: {title}",
     "buttonAria": "Tour guide, stop {current} of {total}",
-    "continue": "Continue tour \u00b7 stop {current}",
+    "continue": "Continue tour · stop {current}",
     "tryAgain": "Try the tour again",
     "start": "Start the 15-minute tour",
-    "loading": "Getting the tour ready\u2026",
+    "loading": "Getting the tour ready…",
     "browseGardens": "Browse the gardens",
     "unavailable": "Unavailable for this account",
-    "opening": "Opening\u2026",
-    "gettingReady": "Getting ready\u2026",
+    "opening": "Opening…",
+    "gettingReady": "Getting ready…",
     "draftDisclosure": "Unreviewed machine draft: titles, tasks and tips follow the English source. They need review by a fluent speaker and someone familiar with this app."
   },
   "originalUiCallerVariants": [
@@ -606,7 +606,7 @@
       "fn": "tourUi",
       "args": [
         "'exploredNext'",
-        "'I\u2019ve explored this \u00b7 Next'"
+        "'I’ve explored this · Next'"
       ]
     },
     {
@@ -659,8 +659,8 @@
       "line": 46,
       "fn": "ui",
       "args": [
-        "'FARMERS \u00b7 MENTORS \u00b7 ORGANISATIONS \u00b7 FUNDERS'",
-        "'ABALIMI \u00b7 ABELULEKI \u00b7 IZINHLANGANO \u00b7 ABAXHASI'"
+        "'FARMERS · MENTORS · ORGANISATIONS · FUNDERS'",
+        "'ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI'"
       ]
     },
     {
@@ -696,7 +696,7 @@
       "fn": "tourUi",
       "args": [
         "'continue'",
-        "`Continue tour \u00b7 stop ${tour.current+1}`",
+        "`Continue tour · stop ${tour.current+1}`",
         "{ current: tour.current + 1 }"
       ]
     },
@@ -706,7 +706,7 @@
       "fn": "tourUi",
       "args": [
         "'loading'",
-        "'Getting the tour ready\u2026'"
+        "'Getting the tour ready…'"
       ]
     },
     {
@@ -750,8 +750,8 @@
       "line": 53,
       "fn": "ui",
       "args": [
-        "'Garden harvest \u00b7 AI-generated illustration'",
-        "'Isivuno sengadi \u00b7 umdwebo owenziwe nge-AI'"
+        "'Garden harvest · AI-generated illustration'",
+        "'Isivuno sengadi · umdwebo owenziwe nge-AI'"
       ]
     },
     {
@@ -777,7 +777,7 @@
       "line": 58,
       "fn": "ui",
       "args": [
-        "'You\u2019ve explored the whole tour.'",
+        "'You’ve explored the whole tour.'",
         "'Usuhlole lonke uhambo.'"
       ]
     },
@@ -858,8 +858,8 @@
       "line": 69,
       "fn": "ui",
       "args": [
-        "' \u00b7 Explored'",
-        "' \u00b7 Kuhloliwe'"
+        "' · Explored'",
+        "' · Kuhloliwe'"
       ]
     },
     {
@@ -878,7 +878,7 @@
       "fn": "tourUi",
       "args": [
         "'opening'",
-        "'Opening\u2026'"
+        "'Opening…'"
       ]
     },
     {
@@ -887,7 +887,7 @@
       "fn": "tourUi",
       "args": [
         "'gettingReady'",
-        "'Getting ready\u2026'"
+        "'Getting ready…'"
       ]
     },
     {
@@ -994,8 +994,8 @@
       "line": 75,
       "fn": "ui",
       "args": [
-        "'Checking available views\u2026'",
-        "'Kubhekwa izindawo ezitholakalayo\u2026'"
+        "'Checking available views…'",
+        "'Kubhekwa izindawo ezitholakalayo…'"
       ]
     },
     {
@@ -1048,8 +1048,8 @@
       "line": 78,
       "fn": "ui",
       "args": [
-        "'Checking access\u2026'",
-        "'Kubhekwa ukufinyelela\u2026'"
+        "'Checking access…'",
+        "'Kubhekwa ukufinyelela…'"
       ]
     },
     {
@@ -1075,7 +1075,7 @@
       "line": 79,
       "fn": "ui",
       "args": [
-        "'Homesteads, commercial plots, cr\u00e8ches, schools and community gardens. Choose one to see its layout, participants and report.'",
+        "'Homesteads, commercial plots, crèches, schools and community gardens. Choose one to see its layout, participants and report.'",
         "'Amakhaya, amapulazi okuhweba, izinkulisa, izikole nezingadi zomphakathi. Khetha eyodwa ukuze ubone isakhiwo sayo, ababambiqhaza nombiko.'"
       ]
     },
@@ -1084,8 +1084,8 @@
       "line": 79,
       "fn": "ui",
       "args": [
-        "'Browse 18 gardens \u2192'",
-        "'Hlola izingadi ezingu-18 \u2192'"
+        "'Browse 18 gardens →'",
+        "'Hlola izingadi ezingu-18 →'"
       ]
     },
     {
@@ -1093,8 +1093,8 @@
       "line": 80,
       "fn": "ui",
       "args": [
-        "'Editable farm workspace \u00b7 Ubhejane'",
-        "'Indawo yepulazi ehlelekayo \u00b7 Ubhejane'"
+        "'Editable farm workspace · Ubhejane'",
+        "'Indawo yepulazi ehlelekayo · Ubhejane'"
       ]
     },
     {
@@ -1147,8 +1147,8 @@
       "line": 81,
       "fn": "ui",
       "args": [
-        "'Open the complete example \u2192'",
-        "'Vula isibonelo esiphelele \u2192'"
+        "'Open the complete example →'",
+        "'Vula isibonelo esiphelele →'"
       ]
     },
     {
@@ -1186,8 +1186,8 @@
       "field": "task",
       "english": "Browse garden photos, layouts and grower profiles. The next stops follow one editable farm.",
       "st": "Sheba ditshwantsho tsa dirapa, meralo ya tsona le diprofaele tsa balemi. Mehato e latelang e latela polasi e le nngwe eo o ka e fetolang.",
-      "ts": "Languta swifaniso swa swirhapa, mapulanelo ni tiphurofayili ta varimi. Switichi leswi landzelaka swi landzela purasi rin\u2019we leri u nga ri hundzulaka.",
-      "ve": "Sedzani zwifanyiso zwa ngade, mivhekanyo yadzo na phurofai\u1e3di dza vhalimi. Zwititshi zwi tevhelaho zwi tevhela bulasi \u1e3dithihi \u1e3dine na nga \u1e3di shandula."
+      "ts": "Languta swifaniso swa swirhapa, mapulanelo ni tiphurofayili ta varimi. Switichi leswi landzelaka swi landzela purasi rin’we leri u nga ri hundzulaka.",
+      "ve": "Sedzani zwifanyiso zwa ngade, mivhekanyo yadzo na phurofaiḽi dza vhalimi. Zwititshi zwi tevhelaho zwi tevhela bulasi ḽithihi ḽine na nga ḽi shandula."
     },
     {
       "kind": "step",
@@ -1205,7 +1205,7 @@
       "english": "Plan the growing season",
       "st": "Rala sehla sa ho lema",
       "ts": "Pulana nguva yo byala",
-      "ve": "Pulanani khala\u1e45waha ya u zwala"
+      "ve": "Pulanani khalaṅwaha ya u zwala"
     },
     {
       "kind": "step",
@@ -1213,8 +1213,8 @@
       "field": "task",
       "english": "Start on Planting in Design Studio. Select a bed or tree, move it and try Undo. Then open the crop plan to compare vegetable beds, staple plots and planting months.",
       "st": "Qala ho Ho lema ho Design Studio. Kgetha bethe kapa sefate, se suthise mme o leke Kgutlisa. Ebe o bula moralo wa dijalo ho bapisa dibethe tsa meroho, masimo a dijalo tsa motheo le dikgwedi tsa ho lema.",
-      "ts": "Sungula eka Ku byala eka Design Studio. Hlawula mubedo kumbe murhi, wu susumete kutani u ringeta Tlherisela. Kutani pfula pulani ya swibyariwa ku pimanisa mibedo ya matsavu, masimu ya swibyariwa swa swakudya swa nkoka ni tin\u2019hweti to byala.",
-      "ve": "Thomani kha U zwala kha Design Studio. Nangani mubete kana muri, ni u sudzuluse ni lingedze Humisela murahu. Ni kone u vula pulane ya zwilimwa u vhambedza mibete ya miroho, masimu a zwilimwa zwa zwi\u1e3diwa zwa ndeme na mi\u1e45wedzi ya u zwala."
+      "ts": "Sungula eka Ku byala eka Design Studio. Hlawula mubedo kumbe murhi, wu susumete kutani u ringeta Tlherisela. Kutani pfula pulani ya swibyariwa ku pimanisa mibedo ya matsavu, masimu ya swibyariwa swa swakudya swa nkoka ni tin’hweti to byala.",
+      "ve": "Thomani kha U zwala kha Design Studio. Nangani mubete kana muri, ni u sudzuluse ni lingedze Humisela murahu. Ni kone u vula pulane ya zwilimwa u vhambedza mibete ya miroho, masimu a zwilimwa zwa zwiḽiwa zwa ndeme na miṅwedzi ya u zwala."
     },
     {
       "kind": "step",
@@ -1241,7 +1241,7 @@
       "english": "Open Seeds and Seed Sovereignty and try a lesson, narrated slide or quiz. Then open Ask Lima, review the problem photo and tap its follow-up question.",
       "st": "Bula Seeds and Seed Sovereignty mme o leke thuto, selaete se nang le tlhaloso ya lentswe kapa dipotso. Ebe o bula Botsa Lima, o shebe setshwantsho sa bothata mme o tobetse potso e latelang.",
       "ts": "Pfula Seeds and Seed Sovereignty kutani u ringeta dyondzo, xilayidi lexi hlamuseriwaka hi rito kumbe swivutiso. Kutani pfula Vutisa Lima, u languta xifaniso xa xiphiqo kutani u khumba xivutiso lexi landzelaka.",
-      "ve": "Vulani Seeds and Seed Sovereignty ni lingedze ngudo, si\u1e3daidi i re na \u1e71halutshedzo ya ipfi kana mbudziso. Ni kone u vula Vhudzisani Lima, ni sedze tshifanyiso tsha thaidzo ni kwame mbudziso i tevhelaho."
+      "ve": "Vulani Seeds and Seed Sovereignty ni lingedze ngudo, siḽaidi i re na ṱhalutshedzo ya ipfi kana mbudziso. Ni kone u vula Vhudzisani Lima, ni sedze tshifanyiso tsha thaidzo ni kwame mbudziso i tevhelaho."
     },
     {
       "kind": "step",
@@ -1250,7 +1250,7 @@
       "english": "Explore Ask Lima",
       "st": "Lekola Botsa Lima",
       "ts": "Kambela Vutisa Lima",
-      "ve": "\u1e70olani Vhudzisani Lima"
+      "ve": "Ṱolani Vhudzisani Lima"
     },
     {
       "kind": "step",
@@ -1268,7 +1268,7 @@
       "english": "Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.",
       "st": "Bapisa kotulo, thekiso le ditshenyehelo ho Dikerafo. Bula diinvoyese, kgetha Bolokilwe mme o bule invoyese e teng ho fumana Arolelana PDF le Printa. Bona kamoo molemi a bolokang rekoto ya dijithale; ha ho hlokahale hore o romele letho ho moreki.",
       "ts": "Pimanisa ntshovelo, ku xavisa ni tihakelo eka Tichati. Pfula ti-invoyisi, hlawula Hlayisiwile kutani u pfula invoyisi leyi nga kona ku kuma Avelana PDF ni Printa. Vona ndlela leyi murimi a hlayisaka rhekhodo ya xidijitali ha yona; a swi bohi ku rhumela xanchumu eka muxavi.",
-      "ve": "Vhambedzani kha\u1e4bo, thengiso na mbadelo kha Zwitshati. Vulani invoisi, nangani Zwo vhulungwa ni vule invoisi i re hone u wana Kovhani PDF na Gandisani. Vhonani n\u1e13ila ine mulimi a vhulunga ngayo rekhodo ya didzhithala; a ni tei u rumela tshithu kha murengi."
+      "ve": "Vhambedzani khaṋo, thengiso na mbadelo kha Zwitshati. Vulani invoisi, nangani Zwo vhulungwa ni vule invoisi i re hone u wana Kovhani PDF na Gandisani. Vhonani nḓila ine mulimi a vhulunga ngayo rekhodo ya didzhithala; a ni tei u rumela tshithu kha murengi."
     },
     {
       "kind": "step",
@@ -1277,7 +1277,7 @@
       "english": "Explore an invoice",
       "st": "Lekola invoyese",
       "ts": "Kambela invoyisi",
-      "ve": "\u1e70olani invoisi"
+      "ve": "Ṱolani invoisi"
     },
     {
       "kind": "step",
@@ -1294,8 +1294,8 @@
       "field": "task",
       "english": "Start in Fieldwork to review due actions and assigned gardens. Record a visit, check a practical skill and agree the next action. Use Training for attendance and feedback, Learning for modules, and Messages for follow-up.",
       "st": "Qala ho Mosebetsi wa masimong ho hlahloba mesebetsi e lokelang ho etswa le dirapa tseo o di abetsweng. Rekota ketelo, hlahloba bokgoni bo sebetsang mme le dumellane ka kgato e latelang. Sebelisa Thupelo bakeng sa boteng le maikutlo, Ho ithuta bakeng sa dimojule, le Melaetsa bakeng sa ho latella.",
-      "ts": "Sungula eka Ntirho wa le masin\u2019wini ku kambela mintirho leyi faneleke ku endliwa ni swirhapa leswi u averiweke swona. Rekhoda riendzo, kambela vuswikoti bya ku tirha kutani mi twanana hi goza leri landzelaka. Tirhisa Ndzetelo eka ku va kona ni mavonelo, Ku dyondza eka mimojulu, ni Marungula ku landzelerisa.",
-      "ve": "Thomani kha Mushumo wa masimuni u \u1e71ola mishumo ine ya tea u itwa na ngade dze na avhelwa. Rekhodani lwendo, \u1e71olani vhukoni ha nyito ni tendelane nga nyito i tevhelaho. Shumisani Vhugudisi kha u vha hone na mbuyedzedzo, U guda kha mimo\u1e13ulu, na Milaedza kha u tevhelela."
+      "ts": "Sungula eka Ntirho wa le masin’wini ku kambela mintirho leyi faneleke ku endliwa ni swirhapa leswi u averiweke swona. Rekhoda riendzo, kambela vuswikoti bya ku tirha kutani mi twanana hi goza leri landzelaka. Tirhisa Ndzetelo eka ku va kona ni mavonelo, Ku dyondza eka mimojulu, ni Marungula ku landzelerisa.",
+      "ve": "Thomani kha Mushumo wa masimuni u ṱola mishumo ine ya tea u itwa na ngade dze na avhelwa. Rekhodani lwendo, ṱolani vhukoni ha nyito ni tendelane nga nyito i tevhelaho. Shumisani Vhugudisi kha u vha hone na mbuyedzedzo, U guda kha mimoḓulu, na Milaedza kha u tevhelela."
     },
     {
       "kind": "step",
@@ -1304,7 +1304,7 @@
       "english": "Follow the whole programme",
       "st": "Latela lenaneo lohle",
       "ts": "Landzela nongonoko hinkwawo",
-      "ve": "Tevhelani mbekanyamushumo yo\u1e71he"
+      "ve": "Tevhelani mbekanyamushumo yoṱhe"
     },
     {
       "kind": "step",
@@ -1313,7 +1313,7 @@
       "english": "Open Training & progress, then Training register. Review the attendance signatures, certificates, venue map, photographs and short feedback survey. Open Reports to compare programme results.",
       "st": "Bula Thupelo le tswelopele, ebe o bula Rejisetara ya thupelo. Hlahloba ditshaeno tsa boteng, disetifikeiti, mmapa wa sebaka, ditshwantsho le dipatlisiso tse kgutshwane tsa maikutlo. Bula Ditlaleho ho bapisa diphetho tsa lenaneo.",
       "ts": "Pfula Ndzetelo ni nhluvuko, kutani Rhejistara ya ndzetelo. Kambela tisayini ta ku va kona, switifikheti, mepe wa ndhawu, swifaniso ni swivutiso swo koma swa mavonelo. Pfula Swiviko ku pimanisa mbuyelo wa nongonoko.",
-      "ve": "Vulani Vhugudisi na mvelaphan\u1e13a, ni kone u vula Redzhisitara ya vhugudisi. \u1e70olani tsaino dza u vha hone, \u1e71hanziela, mapa wa fhethu, zwifanyiso na mbudziso pfufhi dza mbuyedzedzo. Vulani Mivhigo u vhambedza mvelelo dza mbekanyamushumo."
+      "ve": "Vulani Vhugudisi na mvelaphanḓa, ni kone u vula Redzhisitara ya vhugudisi. Ṱolani tsaino dza u vha hone, ṱhanziela, mapa wa fhethu, zwifanyiso na mbudziso pfufhi dza mbuyedzedzo. Vulani Mivhigo u vhambedza mvelelo dza mbekanyamushumo."
     },
     {
       "kind": "step",
@@ -1322,7 +1322,7 @@
       "english": "See progress as a funder",
       "st": "Bona tswelopele jwaloka motshehetsi",
       "ts": "Vona nhluvuko u ri museketeri wa mali",
-      "ve": "Vhonani mvelaphan\u1e13a sa mulambedzi"
+      "ve": "Vhonani mvelaphanḓa sa mulambedzi"
     },
     {
       "kind": "step",
@@ -1331,7 +1331,7 @@
       "english": "Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports.",
       "st": "Hlahloba dipalo tsa sehlopha le dikerafo, ebe o kgetha Tswelopele le diketsahalo tsa bohlokwa. Bapisa tswelopele e rekotilweng le dipheo mme o bule ditekolo kapa ditlaleho tse arolelanweng.",
       "ts": "Kambela tinhlayo ta ntlawa ni tichati, kutani u hlawula Nhluvuko ni magoza ya nkoka. Pimanisa nhluvuko lowu rekhodiweke ni swikongomelo kutani u pfula mikambelo kumbe swiviko leswi avelaniweke.",
-      "ve": "\u1e70olani mbalo dza tshigwada na zwitshati, ni kone u nanga Mvelaphan\u1e13a na zwiga zwa ndeme. Vhambedzani mvelaphan\u1e13a yo rekhodiwaho na zwipikwa ni vule \u1e71ha\u1e71huvho kana mivhigo yo kovhiwaho."
+      "ve": "Ṱolani mbalo dza tshigwada na zwitshati, ni kone u nanga Mvelaphanḓa na zwiga zwa ndeme. Vhambedzani mvelaphanḓa yo rekhodiwaho na zwipikwa ni vule ṱhaṱhuvho kana mivhigo yo kovhiwaho."
     },
     {
       "kind": "step",
@@ -1340,7 +1340,7 @@
       "english": "Turn site evidence into a report",
       "st": "Fetola bopaki ba sebaka hore e be tlaleho",
       "ts": "Endla xiviko hi vumbhoni bya ndhawu",
-      "ve": "Shandulani vhu\u1e71anzi ha fhethu vhu vhe muvhigo"
+      "ve": "Shandulani vhuṱanzi ha fhethu vhu vhe muvhigo"
     },
     {
       "kind": "step",
@@ -1349,7 +1349,7 @@
       "english": "Choose Download evidence report for a branded PDF with the assessment, visit notes, photos and soil results. Then explore Saved sites & reports: choose a site to see which photos, tests, survey answers and design work would improve its full report.",
       "st": "Kgetha Kopitsa tlaleho ya bopaki bakeng sa PDF e nang le letshwao la lenaneo, tekolo, dintlha tsa ketelo, ditshwantsho le diphetho tsa mobu. Ebe o lekola Dibaka le ditlaleho tse bolokilweng: kgetha sebaka ho bona hore na ke ditshwantsho, diteko, dikarabo tsa dipatlisiso le mosebetsi ofe wa ho rala tse ka ntlafatsang tlaleho ya sona e felletseng.",
       "ts": "Hlawula Kopa xiviko xa vumbhoni leswaku u kuma PDF leyi nga ni mfungho wa nongonoko, nkambelo, tinotsi ta riendzo, swifaniso ni mbuyelo wa misava. Kutani kambela Tindhawu ni swiviko leswi hlayisiweke: hlawula ndhawu ku vona leswaku hi swihi swifaniso, swikambelo, tinhlamulo ta swivutiso ni mintirho yo dizayina leswi nga antswisaka xiviko xa yona lexi heleleke.",
-      "ve": "Nangani Kopololani muvhigo wa vhu\u1e71anzi u wana PDF i re na luswayo lwa mbekanyamushumo, \u1e71ha\u1e71huvho, notsi dza lwendo, zwifanyiso na mvelelo dza mavu. Ni kone u \u1e71ola Fhethu na mivhigo zwo vhulungwaho: nangani fhethu u vhona uri ndi zwifanyiso zwifhio, milingo, phindulo dza mbudziso na mushumo wa u pulana zwine zwa nga khwinisa muvhigo waho wo fhelelaho."
+      "ve": "Nangani Kopololani muvhigo wa vhuṱanzi u wana PDF i re na luswayo lwa mbekanyamushumo, ṱhaṱhuvho, notsi dza lwendo, zwifanyiso na mvelelo dza mavu. Ni kone u ṱola Fhethu na mivhigo zwo vhulungwaho: nangani fhethu u vhona uri ndi zwifanyiso zwifhio, milingo, phindulo dza mbudziso na mushumo wa u pulana zwine zwa nga khwinisa muvhigo waho wo fhelelaho."
     },
     {
       "kind": "step",
@@ -1358,7 +1358,7 @@
       "english": "Explore saved sites & reports",
       "st": "Lekola dibaka le ditlaleho tse bolokilweng",
       "ts": "Kambela tindhawu ni swiviko leswi hlayisiweke",
-      "ve": "\u1e70olani fhethu na mivhigo zwo vhulungwaho"
+      "ve": "Ṱolani fhethu na mivhigo zwo vhulungwaho"
     },
     {
       "kind": "step",
@@ -1367,7 +1367,7 @@
       "english": "Shape it for your programme",
       "st": "E etse hore e tshwanele lenaneo la hao",
       "ts": "Xi endle xi ringanela nongonoko wa wena",
-      "ve": "I iteni uri i fanele mbekanyamushumo ya\u1e4bu"
+      "ve": "I iteni uri i fanele mbekanyamushumo yaṋu"
     },
     {
       "kind": "step",
@@ -1375,8 +1375,8 @@
       "field": "task",
       "english": "Choose Request a feature to see how you can describe a change that would help your programme. Explore the form only: sending it contacts the real developer. Customisation scope and pricing are agreed together.",
       "st": "Kgetha Kopa tshebetso ho bona kamoo o ka hlalosang phetoho e ka thusang lenaneo la hao. Lekola foromo feela: ho e romela ho ikopanya le moetsi wa app wa nnete. Boholo ba mosebetsi wa ho e fetola le ditheko di dumellanwa mmoho.",
-      "ts": "Hlawula Kombela xitirhisiwa ku vona ndlela yo hlamusela ku cinca loku nga pfunaka nongonoko wa wena. Kambela fomo ntsena: ku yi rhumela swi tihlanganisa ni muendli wa app wa xiviri. Vukulu bya ku cinca loku lavekaka ni minxavo swi twananiwa swin\u2019we.",
-      "ve": "Nangani Humbelani tshumelo u vhona n\u1e13ila ya u \u1e71alutshedza tshanduko ine ya nga thusa mbekanyamushumo ya\u1e4bu. \u1e70olani fomo fhedzi: u i rumela zwi kwama mu\u1e13ivhi wa app wa vhukuma. Vhuhulu ha mushumo wa u shandula na mitengo zwi tendelanwa zwo\u1e71he."
+      "ts": "Hlawula Kombela xitirhisiwa ku vona ndlela yo hlamusela ku cinca loku nga pfunaka nongonoko wa wena. Kambela fomo ntsena: ku yi rhumela swi tihlanganisa ni muendli wa app wa xiviri. Vukulu bya ku cinca loku lavekaka ni minxavo swi twananiwa swin’we.",
+      "ve": "Nangani Humbelani tshumelo u vhona nḓila ya u ṱalutshedza tshanduko ine ya nga thusa mbekanyamushumo yaṋu. Ṱolani fomo fhedzi: u i rumela zwi kwama muḓivhi wa app wa vhukuma. Vhuhulu ha mushumo wa u shandula na mitengo zwi tendelanwa zwoṱhe."
     },
     {
       "kind": "feature",
@@ -1396,7 +1396,7 @@
       "english": "Open a garden card to see its grower, photographs and growing areas. Use the map to explore where it is.",
       "st": "Bula karete ya serapa ho bona molemi wa sona, ditshwantsho le dibaka tsa ho lema. Sebelisa mmapa ho lekola moo se leng teng.",
       "ts": "Pfula khadi ra xirhapa leswaku u vona murimi wa xona, swifaniso ni tindhawu to byala. Tirhisa mepe ku kambela laha xi nga kona.",
-      "ve": "Vulani gara\u1e71a ya ngade u vhona mulimi wayo, zwifanyiso na fhethu ha u zwala. Shumisani mapa u \u1e71ola hune ya vha hone."
+      "ve": "Vulani garaṱa ya ngade u vhona mulimi wayo, zwifanyiso na fhethu ha u zwala. Shumisani mapa u ṱola hune ya vha hone."
     },
     {
       "kind": "feature",
@@ -1405,8 +1405,8 @@
       "field": "title",
       "english": "Follow the same farm",
       "st": "Latela polasi yona eo",
-      "ts": "Landzela purasi rero rin\u2019we",
-      "ve": "Tevhelani bulasi \u1e3dene\u1e3do \u1e3dithihi"
+      "ts": "Landzela purasi rero rin’we",
+      "ve": "Tevhelani bulasi ḽeneḽo ḽithihi"
     },
     {
       "kind": "feature",
@@ -1416,7 +1416,7 @@
       "english": "The next stops connect a garden design with its studies, harvests, sales and programme reports.",
       "st": "Mehato e latelang e hokahanya moralo wa serapa le dithuto tsa sona, kotulo, thekiso le ditlaleho tsa lenaneo.",
       "ts": "Switichi leswi landzelaka swi hlanganisa dizayini ya xirhapa ni tidyondzo ta xona, ntshovelo, ku xavisa ni swiviko swa nongonoko.",
-      "ve": "Zwititshi zwi tevhelaho zwi \u1e71umanya pulane ya ngade na ngudo dzayo, kha\u1e4bo, thengiso na mivhigo ya mbekanyamushumo."
+      "ve": "Zwititshi zwi tevhelaho zwi ṱumanya pulane ya ngade na ngudo dzayo, khaṋo, thengiso na mivhigo ya mbekanyamushumo."
     },
     {
       "kind": "feature",
@@ -1426,7 +1426,7 @@
       "english": "See the ground beneath your plan",
       "st": "Bona mobu o ka tlasa moralo wa hao",
       "ts": "Vona misava ehansi ka pulani ya wena",
-      "ve": "Vhonani mavu a re fhasi ha pulane ya\u1e4bu"
+      "ve": "Vhonani mavu a re fhasi ha pulane yaṋu"
     },
     {
       "kind": "feature",
@@ -1436,7 +1436,7 @@
       "english": "The Base step holds the site image. In Glossy, use Underlay to switch between your photo, satellite and plain paper.",
       "st": "Mohato wa Motheo o na le setshwantsho sa sebaka. Ho Glossy, sebelisa Lera le ka tlase ho fapanyetsana pakeng tsa setshwantsho sa hao, sa sathelaete le pampiri e sa ngolwang.",
       "ts": "Goza ra Masungulo ri ni xifaniso xa ndhawu. Eka Glossy, tirhisa Leyara ya le hansi ku cinca phakathi ka xifaniso xa wena, xa sathelayiti ni phepha leri nga tsariwangiki.",
-      "ve": "Nyito ya Mutheo i na tshifanyiso tsha fhethu. Kha Glossy, shumisani Leyara ya fhasi u shandula vhukati ha tshifanyiso tsha\u1e4bu, tsha satha\u1e3daithi na bammbiri \u1e3di si na tshithu."
+      "ve": "Nyito ya Mutheo i na tshifanyiso tsha fhethu. Kha Glossy, shumisani Leyara ya fhasi u shandula vhukati ha tshifanyiso tshaṋu, tsha sathaḽaithi na bammbiri ḽi si na tshithu."
     },
     {
       "kind": "feature",
@@ -1476,7 +1476,7 @@
       "english": "Choose a Gate in Structures. Drag its green move handle to position it; the gold end handle changes its length. The finished map shows the gate open and leaves an opening in the fence.",
       "st": "Kgetha Heke ho Mehaho. Hula motshwari wa yona o motala ho e beha; motshwari wa kgauta o qetellong o fetola bolelele ba yona. Mmapa o felileng o bontsha heke e butswe mme o siya sekgeo terateng.",
       "ts": "Hlawula Gede eka Miako. Koka xikhomo xa yona xa rihlaza leswaku u yi veka; xikhomo xa nsuku emakumu xi cinca ku leha ka yona. Mepe lowu heleleke wu komba gede yi pfulekile naswona wu siya xivandla erihlampfungwini.",
-      "ve": "Nangani Gethe kha Zwifha\u1e71o. Kokodzani tshifaro tshayo tsha mudala u i vhea; tshifaro tsha musuku tsha magumoni tshi shandula vhulapfu hayo. Mapa wo fhelelaho u sumbedza gethe yo vulea na u sia tshikhala kha luhura."
+      "ve": "Nangani Gethe kha Zwifhaṱo. Kokodzani tshifaro tshayo tsha mudala u i vhea; tshifaro tsha musuku tsha magumoni tshi shandula vhulapfu hayo. Mapa wo fhelelaho u sumbedza gethe yo vulea na u sia tshikhala kha luhura."
     },
     {
       "kind": "feature",
@@ -1496,7 +1496,7 @@
       "english": "Open Glossy, choose a sheet and its underlay, then create a Design Map. Inspect the result full screen and use Export & Share for your selected sheets.",
       "st": "Bula Glossy, kgetha leqephe le lera la lona le ka tlase, ebe o etsa Mmapa wa Moralo. Hlahloba sephetho sekirining se felletseng mme o sebedise Romela le Arolelana bakeng sa maqephe ao o a kgethileng.",
       "ts": "Pfula Glossy, hlawula pheji ni leyara ya yona ya le hansi, kutani u endla Mepe wa Dizayini. Kambela mbuyelo eka xikirini hinkwaxo kutani u tirhisa Humesa ni Avelana eka mapheji lawa u ma hlawuleke.",
-      "ve": "Vulani Glossy, nangani sia\u1e71ari na leyara ya\u1e3do ya fhasi, ni kone u ita Mapa wa Pulane. \u1e70olani mvelelo kha tshikirini tsho\u1e71he ni shumise Rumelani na Kovhani kha masia\u1e71ari e na nanga."
+      "ve": "Vulani Glossy, nangani siaṱari na leyara yaḽo ya fhasi, ni kone u ita Mapa wa Pulane. Ṱolani mvelelo kha tshikirini tshoṱhe ni shumise Rumelani na Kovhani kha masiaṱari e na nanga."
     },
     {
       "kind": "feature",
@@ -1506,7 +1506,7 @@
       "english": "Your studies start here",
       "st": "Dithuto tsa hao di qala mona",
       "ts": "Tidyondzo ta wena ti sungula laha",
-      "ve": "Ngudo dza\u1e4bu dzi thoma hafha"
+      "ve": "Ngudo dzaṋu dzi thoma hafha"
     },
     {
       "kind": "feature",
@@ -1516,7 +1516,7 @@
       "english": "Use Start studying or Continue learning to open your next module. Illustrated cards show the topics and your progress.",
       "st": "Sebelisa Qala ho ithuta kapa Tswela pele ho ithuta ho bula mojule wa hao o latelang. Dikarete tse nang le ditshwantsho di bontsha dihlooho le tswelopele ya hao.",
       "ts": "Tirhisa Sungula ku dyondza kumbe Yana mahlweni u dyondza ku pfula mojulu wa wena lowu landzelaka. Makhadi ya swifaniso ma komba tinhlokomhaka ni nhluvuko wa wena.",
-      "ve": "Shumisani Thomani u guda kana Bvelani phan\u1e13a ni tshi guda u vula mo\u1e13ulu wa\u1e4bu u tevhelaho. Gara\u1e71a dza zwifanyiso dzi sumbedza \u1e71hoho na mvelaphan\u1e13a ya\u1e4bu."
+      "ve": "Shumisani Thomani u guda kana Bvelani phanḓa ni tshi guda u vula moḓulu waṋu u tevhelaho. Garaṱa dza zwifanyiso dzi sumbedza ṱhoho na mvelaphanḓa yaṋu."
     },
     {
       "kind": "feature",
@@ -1536,7 +1536,7 @@
       "english": "Open Seeds and Seed Sovereignty to try a finished module. Choose a lesson picture or title to read, listen, watch slides and answer a quiz.",
       "st": "Bula Seeds and Seed Sovereignty ho leka mojule o felileng. Kgetha setshwantsho kapa sehlooho sa thuto ho bala, ho mamela, ho sheba diselaete le ho araba dipotso.",
       "ts": "Pfula Seeds and Seed Sovereignty leswaku u ringeta mojulu lowu heleleke. Hlawula xifaniso kumbe nhlokomhaka ya dyondzo leswaku u hlaya, u yingisela, u hlalela swilayidi ni ku hlamula swivutiso.",
-      "ve": "Vulani Seeds and Seed Sovereignty u lingedza mo\u1e13ulu wo fhelelaho. Nangani tshifanyiso kana \u1e71hoho ya ngudo u vhala, u thetshelesa, u sedza si\u1e3daidi na u fhindula mbudziso."
+      "ve": "Vulani Seeds and Seed Sovereignty u lingedza moḓulu wo fhelelaho. Nangani tshifanyiso kana ṱhoho ya ngudo u vhala, u thetshelesa, u sedza siḽaidi na u fhindula mbudziso."
     },
     {
       "kind": "feature",
@@ -1546,7 +1546,7 @@
       "english": "Take the course home",
       "st": "Tsamaya le thupelo hae",
       "ts": "Teka khoso u ya na yona ekaya",
-      "ve": "\u1e70uwani na khoso hayani"
+      "ve": "Ṱuwani na khoso hayani"
     },
     {
       "kind": "feature",
@@ -1555,8 +1555,8 @@
       "field": "text",
       "english": "Open Study offline while you have signal. Choose the download quality and save the course or a single module to this phone.",
       "st": "Bula Ithute ntle le inthanete ha o sa na le kgokahano. Kgetha boleng ba ho kopitsa mme o boloke thupelo kapa mojule o le mong fonong ena.",
-      "ts": "Pfula Dyondza handle ka inthanete loko wa ha ri ni vuhlanganisi. Hlawula khwalithi yo kopa kutani u hlayisa khoso kumbe mojulu wun\u2019we eka riqingho leri.",
-      "ve": "Vulani Gudani ni si na inthanethe musi ni tshe na vhu\u1e71umani. Nangani vhuvha ha u kopolola ni vhulunge khoso kana mo\u1e13ulu muthihi kha founu iyi."
+      "ts": "Pfula Dyondza handle ka inthanete loko wa ha ri ni vuhlanganisi. Hlawula khwalithi yo kopa kutani u hlayisa khoso kumbe mojulu wun’we eka riqingho leri.",
+      "ve": "Vulani Gudani ni si na inthanethe musi ni tshe na vhuṱumani. Nangani vhuvha ha u kopolola ni vhulunge khoso kana moḓulu muthihi kha founu iyi."
     },
     {
       "kind": "feature",
@@ -1566,7 +1566,7 @@
       "english": "Four pages in your farm book",
       "st": "Maqephe a mane bukeng ya polasi ya hao",
       "ts": "Mapheji ya mune ebukwini ya purasi ra wena",
-      "ve": "Masia\u1e71ari ma\u1e4ba kha bugu ya bulasi \u1e3da\u1e4bu"
+      "ve": "Masiaṱari maṋa kha bugu ya bulasi ḽaṋu"
     },
     {
       "kind": "feature",
@@ -1576,7 +1576,7 @@
       "english": "Picked records harvests; Sold records sales; Spent holds costs; Charts brings the figures together. Switch tabs to follow the work from crop to cash.",
       "st": "Kotutswe e rekota kotulo; Rekisitswe e rekota thekiso; Sebediswe e boloka ditshenyehelo; Dikerafo e kopanya dipalo. Fetola dithepo ho latela mosebetsi ho tloha sejalong ho ya tjheleteng.",
       "ts": "Ntshovelo swi rekhoda ntshovelo; Ku xavisa swi rekhoda ku xavisa; Tihakelo swi hlayisa tihakelo; Tichati ti hlanganisa tinhlayo. Cinca tithebhu ku landzela umsebenzi ku suka eka xibyariwa ku ya eka mali.",
-      "ve": "Kha\u1e4bo i rekhoda kha\u1e4bo; Thengiso i rekhoda thengiso; Mbadelo i vhulunga mbadelo; Zwitshati dzi \u1e71anganya mbalo. Shandulani thebu u tevhela mushumo u bva kha tshilimwa u ya kha mali."
+      "ve": "Khaṋo i rekhoda khaṋo; Thengiso i rekhoda thengiso; Mbadelo i vhulunga mbadelo; Zwitshati dzi ṱanganya mbalo. Shandulani thebu u tevhela mushumo u bva kha tshilimwa u ya kha mali."
     },
     {
       "kind": "feature",
@@ -1585,8 +1585,8 @@
       "field": "title",
       "english": "Keep the paperwork together",
       "st": "Boloka ditokomane mmoho",
-      "ts": "Hlayisa maphepha swin\u2019we",
-      "ve": "Vhulungani mabammbiri o\u1e71he fhethu huthihi"
+      "ts": "Hlayisa maphepha swin’we",
+      "ve": "Vhulungani mabammbiri oṱhe fhethu huthihi"
     },
     {
       "kind": "feature",
@@ -1596,7 +1596,7 @@
       "english": "Open Invoice, then Saved, to inspect a document. In Spent, open a receipt to see the purchase details behind a cost.",
       "st": "Bula Invoyese, ebe Bolokilwe, ho hlahloba tokomane. Ho Sebediswe, bula rasiti ho bona dintlha tsa theko tse amanang le tshenyehelo.",
       "ts": "Pfula Invoyisi, kutani Hlayisiwile, leswaku u kambela tsalwa. Eka Tihakelo, pfula risiti ku vona vuxokoxoko bya ku xava loku khumbaka mali leyi tirhisiweke.",
-      "ve": "Vulani Invoisi, ni kone Zwo vhulungwa, u \u1e71ola \u1e3di\u1e45walo. Kha Mbadelo, vulani rasithi u vhona zwidodombedzwa zwa u renga zwi tshimbidzanaho na mbadelo."
+      "ve": "Vulani Invoisi, ni kone Zwo vhulungwa, u ṱola ḽiṅwalo. Kha Mbadelo, vulani rasithi u vhona zwidodombedzwa zwa u renga zwi tshimbidzanaho na mbadelo."
     },
     {
       "kind": "feature",
@@ -1616,7 +1616,7 @@
       "english": "In Picked, open Records for a lender to view harvest, income and cost history and export the summary.",
       "st": "Ho Kotutswe, bula Direkoto bakeng sa mobolekisi ho bona nalane ya kotulo, lekeno le ditshenyehelo mme o romele kakaretso e le faele.",
       "ts": "Eka Ntshovelo, pfula Tirhekhodo ta ku nyika mubolekisi leswaku u vona matimu ya ntshovelo, mali leyi nghenaka ni leyi tirhisiwaka kutani u humesa nkatsakanyo wu va fayili.",
-      "ve": "Kha Kha\u1e4bo, vulani Rekhodo dza mubolekisi u vhona \u1e13ivhazwakale ya kha\u1e4bo, masheleni a dzhenaho na mbadelo ni rumele manweledzo sa faela."
+      "ve": "Kha Khaṋo, vulani Rekhodo dza mubolekisi u vhona ḓivhazwakale ya khaṋo, masheleni a dzhenaho na mbadelo ni rumele manweledzo sa faela."
     },
     {
       "kind": "feature",
@@ -1635,8 +1635,8 @@
       "field": "text",
       "english": "Fieldwork opens your due actions, participant coverage and food-security visit guide. Open People & gardens to start a visit with the participant already selected.",
       "st": "Mosebetsi wa masimong o bula mesebetsi ya hao e lokelang ho etswa, hore na ke barupeluoa bafe ba seng ba fihletswe, le tataiso ya ketelo ya tshireletso ya dijo. Bula Batho le dirapa ho qala ketelo morupeluoa a se a kgethilwe.",
-      "ts": "Ntirho wa le masin\u2019wini wu pfula mintirho leyi faneleke ku endliwa, leswaku hi vahi vatekaxiave lava se va fikeleriweke, ni nkongomiso wa riendzo ra vuhlayiseki bya swakudya. Pfula Vanhu ni swirhapa ku sungula riendzo mutekaxiave a ri se a hlawuriwile.",
-      "ve": "Mushumo wa masimuni u vula mishumo ine ya tea u itwa, uri ndi vhafhio vhashelamulenzhe vho no swikelwaho, na vhulivhisi ha lwendo lwa tsireledzo ya zwi\u1e3diwa. Vulani Vhathu na ngade u thoma lwendo mushelamulenzhe o no nangwa."
+      "ts": "Ntirho wa le masin’wini wu pfula mintirho leyi faneleke ku endliwa, leswaku hi vahi vatekaxiave lava se va fikeleriweke, ni nkongomiso wa riendzo ra vuhlayiseki bya swakudya. Pfula Vanhu ni swirhapa ku sungula riendzo mutekaxiave a ri se a hlawuriwile.",
+      "ve": "Mushumo wa masimuni u vula mishumo ine ya tea u itwa, uri ndi vhafhio vhashelamulenzhe vho no swikelwaho, na vhulivhisi ha lwendo lwa tsireledzo ya zwiḽiwa. Vulani Vhathu na ngade u thoma lwendo mushelamulenzhe o no nangwa."
     },
     {
       "kind": "feature",
@@ -1655,8 +1655,8 @@
       "field": "text",
       "english": "Use Learning for module progress and Training for attendance, certificates and feedback. In a field visit, record the skill observed and the next action, owner and date.",
       "st": "Sebelisa Ho ithuta bakeng sa tswelopele ya dimojule le Thupelo bakeng sa boteng, disetifikeiti le maikutlo. Ketelong ya masimong, rekota bokgoni boo o bo boneng le kgato e latelang, ya e ikarabellang le letsatsi.",
-      "ts": "Tirhisa Ku dyondza eka nhluvuko wa mimojulu ni Ndzetelo eka ku va kona, switifikheti ni mavonelo. Eka riendzo ra le masin\u2019wini, rekhoda vuswikoti leswi voniweke ni goza leri landzelaka, loyi a nga ni vutihlamuleri ni siku.",
-      "ve": "Shumisani U guda kha mvelaphan\u1e13a ya mimo\u1e13ulu na Vhugudisi kha u vha hone, \u1e71hanziela na mbuyedzedzo. Kha lwendo lwa masimuni, rekhodani vhukoni ho vhonwaho na nyito i tevhelaho, ane a \u1e13o i ita na datumu."
+      "ts": "Tirhisa Ku dyondza eka nhluvuko wa mimojulu ni Ndzetelo eka ku va kona, switifikheti ni mavonelo. Eka riendzo ra le masin’wini, rekhoda vuswikoti leswi voniweke ni goza leri landzelaka, loyi a nga ni vutihlamuleri ni siku.",
+      "ve": "Shumisani U guda kha mvelaphanḓa ya mimoḓulu na Vhugudisi kha u vha hone, ṱhanziela na mbuyedzedzo. Kha lwendo lwa masimuni, rekhodani vhukoni ho vhonwaho na nyito i tevhelaho, ane a ḓo i ita na datumu."
     },
     {
       "kind": "feature",
@@ -1665,8 +1665,8 @@
       "field": "title",
       "english": "See the programme together",
       "st": "Bona lenaneo mmoho",
-      "ts": "Vona nongonoko swin\u2019we",
-      "ve": "Vhonani mbekanyamushumo yo\u1e71he fhethu huthihi"
+      "ts": "Vona nongonoko swin’we",
+      "ve": "Vhonani mbekanyamushumo yoṱhe fhethu huthihi"
     },
     {
       "kind": "feature",
@@ -1676,7 +1676,7 @@
       "english": "Compare groups, gardens and recorded activity. Open Assessments to review the survey stages and responses.",
       "st": "Bapisa dihlopha, dirapa le mosebetsi o rekotilweng. Bula Ditekolo ho hlahloba mekhahlelo ya dipatlisiso le dikarabo.",
       "ts": "Pimanisa mintlawa, swirhapa ni mintirho leyi rekhodiweke. Pfula Mikambelo ku kambela magoza ya swivutiso ni tinhlamulo.",
-      "ve": "Vhambedzani zwigwada, ngade na mushumo wo rekhodiwaho. Vulani \u1e70ha\u1e71huvho u \u1e71ola maga a mbudziso na phindulo."
+      "ve": "Vhambedzani zwigwada, ngade na mushumo wo rekhodiwaho. Vulani Ṱhaṱhuvho u ṱola maga a mbudziso na phindulo."
     },
     {
       "kind": "feature",
@@ -1686,7 +1686,7 @@
       "english": "Follow progress into reports",
       "st": "Latela tswelopele ho ya ditlalehong",
       "ts": "Landzela nhluvuko ku ya eka swiviko",
-      "ve": "Tevhelani mvelaphan\u1e13a u ya kha mivhigo"
+      "ve": "Tevhelani mvelaphanḓa u ya kha mivhigo"
     },
     {
       "kind": "feature",
@@ -1696,7 +1696,7 @@
       "english": "Training & progress brings training and project evidence together. Reports prepares the programme record for review and sharing.",
       "st": "Thupelo le tswelopele e kopanya bopaki ba thupelo le ba projeke. Ditlaleho e lokisetsa rekoto ya lenaneo hore e hlahlojwe le ho arolelanwa.",
       "ts": "Ndzetelo ni nhluvuko swi hlanganisa vumbhoni bya ndzetelo ni bya phurojeke. Swiviko swi lunghisa rhekhodo ya nongonoko leswaku yi kambisisiwa ni ku avelaniwa.",
-      "ve": "Vhugudisi na mvelaphan\u1e13a zwi \u1e71anganya vhu\u1e71anzi ha vhugudisi na ha thandela. Mivhigo i lugisela rekhodo ya mbekanyamushumo uri i \u1e71olwe na u kovhiwa."
+      "ve": "Vhugudisi na mvelaphanḓa zwi ṱanganya vhuṱanzi ha vhugudisi na ha thandela. Mivhigo i lugisela rekhodo ya mbekanyamushumo uri i ṱolwe na u kovhiwa."
     },
     {
       "kind": "feature",
@@ -1716,7 +1716,7 @@
       "english": "Explore cohort totals and charts, then Progress & milestones for the wider programme record.",
       "st": "Lekola dipalo tsa sehlopha le dikerafo, ebe Tswelopele le diketsahalo tsa bohlokwa bakeng sa rekoto e batsi ya lenaneo.",
       "ts": "Kambela tinhlayo ta ntlawa ni tichati, kutani Nhluvuko ni magoza ya nkoka leswaku u vona rhekhodo yo anama ya nongonoko.",
-      "ve": "\u1e70olani mbalo dza tshigwada na zwitshati, ni kone Mvelaphan\u1e13a na zwiga zwa ndeme u wana rekhodo yo \u1e71an\u1e13avhuwaho ya mbekanyamushumo."
+      "ve": "Ṱolani mbalo dza tshigwada na zwitshati, ni kone Mvelaphanḓa na zwiga zwa ndeme u wana rekhodo yo ṱanḓavhuwaho ya mbekanyamushumo."
     },
     {
       "kind": "feature",
@@ -1726,7 +1726,7 @@
       "english": "Inspect the evidence",
       "st": "Hlahloba bopaki",
       "ts": "Kambela vumbhoni",
-      "ve": "\u1e70olani vhu\u1e71anzi"
+      "ve": "Ṱolani vhuṱanzi"
     },
     {
       "kind": "feature",
@@ -1736,7 +1736,7 @@
       "english": "Open shared assessments and reports to see the records supporting the totals and the work still to be completed.",
       "st": "Bula ditekolo le ditlaleho tse arolelanweng ho bona direkoto tse tshehetsang dipalo le mosebetsi o sa ntseng o lokela ho phethwa.",
       "ts": "Pfula mikambelo ni swiviko leswi avelaniweke ku vona tirhekhodo leti seketelaka tinhlayo ni mintirho leyi faneleke ku hetisiwa.",
-      "ve": "Vulani \u1e71ha\u1e71huvho na mivhigo yo kovhiwaho u vhona rekhodo dzi tikedzaho mbalo na mushumo u sa athu u fhedzwa."
+      "ve": "Vulani ṱhaṱhuvho na mivhigo yo kovhiwaho u vhona rekhodo dzi tikedzaho mbalo na mushumo u sa athu u fhedzwa."
     },
     {
       "kind": "feature",
@@ -1755,8 +1755,8 @@
       "field": "text",
       "english": "Saved sites & reports connects each site to its reports. Choose a site to create a report from its current information.",
       "st": "Dibaka le ditlaleho tse bolokilweng e hokahanya sebaka ka seng le ditlaleho tsa sona. Kgetha sebaka ho etsa tlaleho ka lesedi la sona la jwale.",
-      "ts": "Tindhawu ni swiviko leswi hlayisiweke swi hlanganisa ndhawu yin\u2019wana ni yin\u2019wana ni swiviko swa yona. Hlawula ndhawu leswaku u endla xiviko hi vuxokoxoko bya yona bya sweswi.",
-      "ve": "Fhethu na mivhigo zwo vhulungwaho zwi \u1e71umanya fhethu hu\u1e45we na hu\u1e45we na mivhigo yaho. Nangani fhethu u ita muvhigo nga mafhungo aho a zwino."
+      "ts": "Tindhawu ni swiviko leswi hlayisiweke swi hlanganisa ndhawu yin’wana ni yin’wana ni swiviko swa yona. Hlawula ndhawu leswaku u endla xiviko hi vuxokoxoko bya yona bya sweswi.",
+      "ve": "Fhethu na mivhigo zwo vhulungwaho zwi ṱumanya fhethu huṅwe na huṅwe na mivhigo yaho. Nangani fhethu u ita muvhigo nga mafhungo aho a zwino."
     },
     {
       "kind": "feature",
@@ -1766,7 +1766,7 @@
       "english": "Make the next report stronger",
       "st": "Matlafatsa tlaleho e latelang",
       "ts": "Tiyisa xiviko lexi landzelaka",
-      "ve": "Khwa\u1e71hisani muvhigo u tevhelaho"
+      "ve": "Khwaṱhisani muvhigo u tevhelaho"
     },
     {
       "kind": "feature",
@@ -1776,7 +1776,7 @@
       "english": "Review the site checklist for photographs, soil and water tests, survey answers and design work. Download the evidence report to see the finished document.",
       "st": "Hlahloba lenane la sebaka bakeng sa ditshwantsho, diteko tsa mobu le metsi, dikarabo tsa dipatlisiso le mosebetsi wa ho rala. Kopitsa tlaleho ya bopaki ho bona tokomane e felileng.",
       "ts": "Kambela nxaxamelo wa ndhawu wa swifaniso, swikambelo swa misava ni mati, tinhlamulo ta swivutiso ni mintirho yo dizayina. Kopa xiviko xa vumbhoni ku vona tsalwa leri heleleke.",
-      "ve": "\u1e70olani mutevhe wa fhethu wa zwifanyiso, milingo ya mavu na ma\u1e13i, phindulo dza mbudziso na mushumo wa u pulana. Kopololani muvhigo wa vhu\u1e71anzi u vhona \u1e3di\u1e45walo \u1e3do fhelelaho."
+      "ve": "Ṱolani mutevhe wa fhethu wa zwifanyiso, milingo ya mavu na maḓi, phindulo dza mbudziso na mushumo wa u pulana. Kopololani muvhigo wa vhuṱanzi u vhona ḽiṅwalo ḽo fhelelaho."
     },
     {
       "kind": "feature",
@@ -1786,7 +1786,7 @@
       "english": "Tell us what your programme needs",
       "st": "Re bolelle hore lenaneo la hao le hloka eng",
       "ts": "Hi byele leswi nongonoko wa wena wu swi lavaka",
-      "ve": "Ri vhudzeni zwine mbekanyamushumo ya\u1e4bu ya \u1e71o\u1e13a"
+      "ve": "Ri vhudzeni zwine mbekanyamushumo yaṋu ya ṱoḓa"
     },
     {
       "kind": "feature",
@@ -1796,7 +1796,7 @@
       "english": "Choose Request a feature to describe the change and the app page. Download a copy of your draft, or sign in to send it to the developer.",
       "st": "Kgetha Kopa tshebetso ho hlalosa phetoho le leqephe la app. Kopitsa faele ya moralo wa hao, kapa kena ho e romela ho moetsi wa app.",
       "ts": "Hlawula Kombela xitirhisiwa ku hlamusela ku cinca ni pheji ya app. Kopa fayili ya mpfapfarhuto wa wena, kumbe u nghena ku wu rhumela eka muendli wa app.",
-      "ve": "Nangani Humbelani tshumelo u \u1e71alutshedza tshanduko na sia\u1e71ari \u1e3da app. Kopololani faela ya mvetamveto ya\u1e4bu, kana ni dzhene u i rumela kha mu\u1e13ivhi wa app."
+      "ve": "Nangani Humbelani tshumelo u ṱalutshedza tshanduko na siaṱari ḽa app. Kopololani faela ya mvetamveto yaṋu, kana ni dzhene u i rumela kha muḓivhi wa app."
     },
     {
       "kind": "ui",
@@ -1832,7 +1832,7 @@
       "originalZulu": "Cishe {duration}",
       "st": "Hoo e ka bang {duration}",
       "ts": "Kwalomu ka {duration}",
-      "ve": "Hu \u1e71o\u1e13aho u vha {duration}"
+      "ve": "Hu ṱoḓaho u vha {duration}"
     },
     {
       "kind": "ui",
@@ -1877,16 +1877,16 @@
       "originalZulu": "Thinta Uhambo eduze kwemenyu ukuze ubuye kulawa macebiso.",
       "st": "Tobetsa Leeto pela menyu ha o batla ho kgutlela dikeletsong tsena.",
       "ts": "Khumba Riendzo ekusuhi ni menyu loko u lava ku vuya eka switsundzuxo leswi.",
-      "ve": "Kwamani Lwendo tsini na menyu musi ni tshi \u1e71o\u1e13a u vhuya kha ngeletshedzo idzi."
+      "ve": "Kwamani Lwendo tsini na menyu musi ni tshi ṱoḓa u vhuya kha ngeletshedzo idzi."
     },
     {
       "kind": "ui",
       "id": "exploredNext",
-      "english": "I\u2019ve explored this \u00b7 Next",
-      "originalZulu": "Sengikuhlolile \u00b7 Okulandelayo",
-      "st": "Ke se ke lekotse sena \u00b7 E latelang",
-      "ts": "Se ndzi kambelile leswi \u00b7 Lexi landzelaka",
-      "ve": "Ndo no \u1e71ola izwi \u00b7 I tevhelaho"
+      "english": "I’ve explored this · Next",
+      "originalZulu": "Sengikuhlolile · Okulandelayo",
+      "st": "Ke se ke lekotse sena · E latelang",
+      "ts": "Se ndzi kambelile leswi · Lexi landzelaka",
+      "ve": "Ndo no ṱola izwi · I tevhelaho"
     },
     {
       "kind": "ui",
@@ -1945,11 +1945,11 @@
     {
       "kind": "ui",
       "id": "continue",
-      "english": "Continue tour \u00b7 stop {current}",
-      "originalZulu": "Qhubeka nohambo \u00b7 isigaba {current}",
-      "st": "Tswela pele ka leeto \u00b7 mohato wa {current}",
-      "ts": "Yana mahlweni ni riendzo \u00b7 xitichi xa {current}",
-      "ve": "Bvelani phan\u1e13a na lwendo \u00b7 tshititshi tsha {current}"
+      "english": "Continue tour · stop {current}",
+      "originalZulu": "Qhubeka nohambo · isigaba {current}",
+      "st": "Tswela pele ka leeto · mohato wa {current}",
+      "ts": "Yana mahlweni ni riendzo · xitichi xa {current}",
+      "ve": "Bvelani phanḓa na lwendo · tshititshi tsha {current}"
     },
     {
       "kind": "ui",
@@ -1972,11 +1972,11 @@
     {
       "kind": "ui",
       "id": "loading",
-      "english": "Getting the tour ready\u2026",
-      "originalZulu": "Kulungiselelwa uhambo\u2026",
-      "st": "Ho lokiswa leeto\u2026",
-      "ts": "Ku lunghisiwa riendzo\u2026",
-      "ve": "Hu lugiselwa lwendo\u2026"
+      "english": "Getting the tour ready…",
+      "originalZulu": "Kulungiselelwa uhambo…",
+      "st": "Ho lokiswa leeto…",
+      "ts": "Ku lunghisiwa riendzo…",
+      "ve": "Hu lugiselwa lwendo…"
     },
     {
       "kind": "ui",
@@ -1999,20 +1999,20 @@
     {
       "kind": "ui",
       "id": "opening",
-      "english": "Opening\u2026",
-      "originalZulu": "Kuyavulwa\u2026",
-      "st": "Ho a bulwa\u2026",
-      "ts": "Ku pfuriwa\u2026",
-      "ve": "Hu khou vulwa\u2026"
+      "english": "Opening…",
+      "originalZulu": "Kuyavulwa…",
+      "st": "Ho a bulwa…",
+      "ts": "Ku pfuriwa…",
+      "ve": "Hu khou vulwa…"
     },
     {
       "kind": "ui",
       "id": "gettingReady",
-      "english": "Getting ready\u2026",
-      "originalZulu": "Kuyalungiswa\u2026",
-      "st": "Ho a lokiswa\u2026",
-      "ts": "Ku lunghisiwa\u2026",
-      "ve": "Hu khou lugiselwa\u2026"
+      "english": "Getting ready…",
+      "originalZulu": "Kuyalungiswa…",
+      "st": "Ho a lokiswa…",
+      "ts": "Ku lunghisiwa…",
+      "ve": "Hu khou lugiselwa…"
     },
     {
       "kind": "ui",
@@ -2021,7 +2021,7 @@
       "originalZulu": "Uhlaka lwesiZulu olungakabuyekezwa: izihloko, imisebenzi namacebiso kuhunyushwe ngokuhambisana nombhalo wesiNgisi. Kudinga ukubuyekezwa umuntu okhuluma isiZulu kahle futhi owazi ukusetshenziswa kwalolu hlelo.",
       "st": "Moralo wa Sesotho o so hlahlojwe: dihlooho, mesebetsi le dikeletso di fetoletswe ho latela mongolo wa pele wa Senyesemane. Di hloka ho hlahlojwa ke motho ya buang Sesotho hantle le ya tsebang tshebediso ya app ena.",
       "ts": "Mpfapfarhuto wa Xitsonga lowu nga kambisisiwangiki: tinhlokomhaka, mintirho ni switsundzuxo swi hundzuluxiwe hi ku landzela tsalwa ra Xinghezi. Swi fanele ku kambisisiwa hi muvulavuri wa Xitsonga la xi tivaka kahle ni la tivaka ku tirhisa app leyi.",
-      "ve": "Mvetamveto ya Tshiven\u1e13a i sa athu \u1e71olwa: \u1e71hoho, mishumo na ngeletshedzo zwo \u1e71alutshedzelwa hu tshi tevhelwa ma\u1e45walwa a u thoma a English. Zwi \u1e71o\u1e13a u \u1e71olwa nga muambi wa Tshiven\u1e13a a lu ambaho zwavhu\u1e13i ane a dovha a \u1e13ivha u shumisa app iyi."
+      "ve": "Mvetamveto ya Tshivenḓa i sa athu ṱolwa: ṱhoho, mishumo na ngeletshedzo zwo ṱalutshedzelwa hu tshi tevhelwa maṅwalwa a u thoma a English. Zwi ṱoḓa u ṱolwa nga muambi wa Tshivenḓa a lu ambaho zwavhuḓi ane a dovha a ḓivha u shumisa app iyi."
     },
     {
       "kind": "error",
@@ -2029,7 +2029,7 @@
       "english": "Your browser could not save tour progress. You can still explore the views.",
       "st": "Sebatli sa hao ha se a kgona ho boloka tswelopele ya leeto. O ntse o ka lekola dipono.",
       "ts": "Xisecha xa wena a xi kotanga ku hlayisa nhluvuko wa riendzo. Wa ha kota ku kambela mavonelo.",
-      "ve": "Burausara ya\u1e4bu a yo ngo kona u vhulunga mvelaphan\u1e13a ya lwendo. Ni kha \u1e13i kona u \u1e71ola mbonalo."
+      "ve": "Burausara yaṋu a yo ngo kona u vhulunga mvelaphanḓa ya lwendo. Ni kha ḓi kona u ṱola mbonalo."
     },
     {
       "kind": "error",
@@ -2053,7 +2053,7 @@
       "english": "The example farm could not load. Please try again.",
       "st": "Polasi ya mohlala ha e a kgona ho kena. Ka kopo leka hape.",
       "ts": "Purasi ra xikombiso a ri kotanga ku layicha. Hi kombela u ringeta nakambe.",
-      "ve": "Bulasi \u1e3da tsumbo a \u1e3do ngo kona u laisiwa. Ri humbela ni lingedze hafhu."
+      "ve": "Bulasi ḽa tsumbo a ḽo ngo kona u laisiwa. Ri humbela ni lingedze hafhu."
     },
     {
       "kind": "error",
@@ -2089,7 +2089,7 @@
   "scope": "Connected Tour/practice translation; keep source routes/roles/IDs/minutes/counts/gates/sample isolation/progress and real account data unchanged. No real feedback submit, real sign-out, paid render or external farmer message.",
   "uiSourceNotes": {
     "draftDisclosure": "Authored English review-status sentence for the new regional notices, rather than a claimed existing English UI literal. Original isiZulu review notice is unchanged.",
-    "variants": "uiSource is the canonical meaning/template for each key; originalUiCallerVariants records every original exact fallback expression, including context-specific uppercase and omitted-total variants. English runtime keeps each caller\u2019s original fallback unchanged."
+    "variants": "uiSource is the canonical meaning/template for each key; originalUiCallerVariants records every original exact fallback expression, including context-specific uppercase and omitted-total variants. English runtime keeps each caller’s original fallback unchanged."
   },
   "existingZuluErrors": {
     "Your browser could not save tour progress. You can still explore the views.": "Isiphequluli asikwazanga ukugcina inqubekelaphambili yohambo. Usengaqhubeka nokuhlola izikrini.",
@@ -2113,5 +2113,1467 @@
       "Lima"
     ],
     "publication": "Do not push the branch until the connected Tour/practice shell, disclosure, controls and verification are finished; one deployment-bearing push for the completed item."
+  },
+  "workspace": {
+    "status": "Unreviewed drafts, including replacements for previously held English chooser fields. Not fluent-reviewed.",
+    "originalRawSources": [
+      {
+        "english": "My Account",
+        "zuluVariants": [
+          "I-akhawunti yami"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 130,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Offline and sync",
+        "zuluVariants": [
+          "Akukho-inthanethi nokuvumelanisa"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 131,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Practice views",
+        "zuluVariants": [
+          "Izikrini zokuzilolonga"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 132,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Browse gardens",
+        "zuluVariants": [
+          "Bheka izingadi"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 133,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Main navigation",
+        "zuluVariants": [
+          "Ukuzulazula okuyinhloko"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 227,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Practice workspace",
+        "zuluVariants": [
+          "Indawo yokuzilolonga"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 234,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "You are viewing demonstration records. Your account permissions stay unchanged.",
+        "zuluVariants": [
+          "Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo."
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 234,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Choose a view",
+        "zuluVariants": [
+          "Khetha isikrini",
+          "Khetha indawo yokusebenza"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 234,
+            "enVars": {},
+            "zuVars": {}
+          },
+          {
+            "file": "app/samples/page.tsx",
+            "line": 72,
+            "enVars": {},
+            "zuVars": {}
+          },
+          {
+            "file": "app/samples/page.tsx",
+            "line": 73,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Page controls",
+        "zuluVariants": [
+          "Izilawuli zekhasi"
+        ],
+        "callers": [
+          {
+            "file": "components/NavDrawer.tsx",
+            "line": 235,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Tour",
+        "zuluVariants": [
+          "Uhambo"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 44,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "FARMERS · MENTORS · ORGANISATIONS · FUNDERS",
+        "zuluVariants": [
+          "ABALIMI · ABELULEKI · IZINHLANGANO · ABAXHASI"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 46,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "See what ImbewuField can do.",
+        "zuluVariants": [
+          "Bona okungenziwa yi-ImbewuField."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 47,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.",
+        "zuluVariants": [
+          "Hlola uhlelo cishe ngemizuzu engu-{minutes}: hlela ingadi, funda ikhono, landela ukuthengisa, sekela abalimi futhi ubone ubufakazi bohlelo."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 48,
+            "enVars": {
+              "minutes": "minutes"
+            },
+            "zuVars": {
+              "minutes": "minutes"
+            }
+          }
+        ]
+      },
+      {
+        "english": "Explore at your own pace. No sign-in needed.",
+        "zuluVariants": [
+          "Hlola ngejubane lakho. Akudingeki ungene ngemvume."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 49,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Illustrated example of a garden harvest",
+        "zuluVariants": [
+          "Umdwebo wesibonelo sesivuno sengadi"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 53,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Garden harvest · AI-generated illustration",
+        "zuluVariants": [
+          "Isivuno sengadi · umdwebo owenziwe nge-AI"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 53,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Try the app with prepared records. Your own project stays unchanged.",
+        "zuluVariants": [
+          "Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 56,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "You’ve explored the whole tour.",
+        "zuluVariants": [
+          "Usuhlole lonke uhambo."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 58,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Keep exploring at your own pace.",
+        "zuluVariants": [
+          "Qhubeka uhlole ngejubane lakho."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 58,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.",
+        "zuluVariants": [
+          "Izindawo ezingu-{tried} kwezingu-{total} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 58,
+            "enVars": {
+              "tried": "tried",
+              "total": "PRODUCT_TOUR.length"
+            },
+            "zuVars": {
+              "tried": "tried",
+              "total": "PRODUCT_TOUR.length"
+            }
+          }
+        ]
+      },
+      {
+        "english": "Explore another role",
+        "zuluVariants": [
+          "Hlola enye indima"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 58,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Request a feature or ask about customisation",
+        "zuluVariants": [
+          "Cela isici noma ubuze ngokwenza uhlelo lufanele wena"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 58,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Nine stops, one connected story.",
+        "zuluVariants": [
+          "Izindawo eziyisishiyagalolunye, indaba eyodwa exhunyiwe."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 59,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.",
+        "zuluVariants": [
+          "Khetha noma iyiphi indawo ngezansi ukuze uvule isikrini nomhlahlandlela wayo. Sebenzisa inkinobho ethi Tour eduze kwemenyu ukuze ubuyele emacebisweni noma uye kwenye indawo."
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 60,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "{tried} of {total} stops explored",
+        "zuluVariants": [
+          "Kuhlolwe izindawo ezingu-{tried} kwezingu-{total}"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 61,
+            "enVars": {
+              "tried": "tried",
+              "total": "PRODUCT_TOUR.length"
+            },
+            "zuVars": {
+              "tried": "tried",
+              "total": "PRODUCT_TOUR.length"
+            }
+          }
+        ]
+      },
+      {
+        "english": "Tour progress",
+        "zuluVariants": [
+          "Inqubekela phambili yohambo"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 61,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": " · Explored",
+        "zuluVariants": [
+          " · Kuhloliwe"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 69,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Open stop",
+        "zuluVariants": [
+          "Vula indawo"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 72,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Full farm evidence pack",
+        "zuluVariants": [
+          "Iphakethe eligcwele lobufakazi bepulazi"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "All role workspaces",
+        "zuluVariants": [
+          "Zonke izindawo zokusebenza"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Feature requests & programme customisation",
+        "zuluVariants": [
+          "Izicelo zezici nokwenza uhlelo lufaneleke"
+        ],
+        "callers": [
+          {
+            "file": "app/tour/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "EXPLORE",
+        "zuluVariants": [
+          "HLOLA"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 73,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Explore each workspace. Use Tour in the menu to return here.",
+        "zuluVariants": [
+          "Hlola indawo ngayinye yokusebenza. Sebenzisa uHambo kumenyu ukuze ubuyele lapha."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 73,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "All views",
+        "zuluVariants": [
+          "Zonke izindawo"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Choose your workspace",
+        "zuluVariants": [
+          "Khetha indawo yakho yokusebenza"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Checking available views…",
+        "zuluVariants": [
+          "Kubhekwa izindawo ezitholakalayo…"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Your account role could not be confirmed. Refresh your access in Account, then return here.",
+        "zuluVariants": [
+          "Indima ye-akhawunti yakho ayiqinisekisiwe. Vuselela ukufinyelela kwakho ku-I-akhawunti, bese ubuya lapha."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Your {role} account opens its matching example view. Other roles are shown below so the full set is visible.",
+        "zuluVariants": [
+          "I-akhawunti yakho ye-{role} ivula indawo yesibonelo ehambisana nayo. Ezinye izindima ziboniswe ngezansi ukuze ubone zonke."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {
+              "role": "accountRole"
+            },
+            "zuVars": {
+              "role": "accountRole"
+            }
+          }
+        ]
+      },
+      {
+        "english": "Choose any of the five workspaces.",
+        "zuluVariants": [
+          "Khetha noma iyiphi yezindawo ezinhlanu zokusebenza."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 75,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "The example workspace could not start. Please allow session storage and try again.",
+        "zuluVariants": [
+          "Indawo yesibonelo ayikwazanga ukuqala. Vumela ukugcinwa kolwazi lweseshini bese uzama futhi."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 78,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Open {label}",
+        "zuluVariants": [
+          "Vula: {label}"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 78,
+            "enVars": {
+              "label": "lang === 'st' || lang === 've' ? englishLabel : label"
+            },
+            "zuVars": {
+              "label": "label"
+            }
+          }
+        ]
+      },
+      {
+        "english": "Checking access…",
+        "zuluVariants": [
+          "Kubhekwa ukufinyelela…"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 78,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Not available for this account",
+        "zuluVariants": [
+          "Akutholakali kule akhawunti"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 78,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Browse 18 different gardens",
+        "zuluVariants": [
+          "Hlola izingadi ezingu-18 ezahlukene"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 79,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Homesteads, commercial plots, crèches, schools and community gardens. Choose one to see its layout, participants and report.",
+        "zuluVariants": [
+          "Amakhaya, amapulazi okuhweba, izinkulisa, izikole nezingadi zomphakathi. Khetha eyodwa ukuze ubone isakhiwo sayo, ababambiqhaza nombiko."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 79,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Browse 18 gardens →",
+        "zuluVariants": [
+          "Hlola izingadi ezingu-18 →"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 79,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Editable farm workspace · Ubhejane",
+        "zuluVariants": [
+          "Indawo yepulazi ehlelekayo · Ubhejane"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 80,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Ubhejane is currently the connected editable farm. The 18 garden profiles above are overview examples. Try the map and editable design, review a completed assessment, review the household interview and soil record, then download an evidence report.",
+        "zuluVariants": [
+          "I-Ubhejane iyipulazi elixhunyiwe nelihlelekayo njengamanje. Amaphrofayela ezingadi angu-18 angenhla ayizibonelo zokubuka konke. Zama imephu nomklamo ohlelekayo, buyekeza ukuhlola okuqediwe, ingxoxo yasekhaya nerekhodi lomhlabathi, bese ulanda umbiko wobufakazi."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 80,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Start the 15-minute tour",
+        "zuluVariants": [
+          "Qala uhambo lwemizuzu engu-15"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 80,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Open the farm evidence pack",
+        "zuluVariants": [
+          "Vula iphakethe lobufakazi bepulazi"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 80,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Complete production example",
+        "zuluVariants": [
+          "Isibonelo sohlelo oluphelele lokukhiqiza"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 81,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.",
+        "zuluVariants": [
+          "Ipulazi lesibonelo endaweni efudumele e-KZN elinemifino, izitshalo eziyisisekelo, izithelo, amantongomane, amajikijolo, amaqanda, ubisi, uju nezinhlanzi. Buka ikhalenda lanyanga zonke, izihlahla ezisencane nohlelo oluphrintekayo. Kuboniswa ngesiNgisi."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 81,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Open the complete example →",
+        "zuluVariants": [
+          "Vula isibonelo esiphelele →"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 81,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Reset tour records",
+        "zuluVariants": [
+          "Setha kabusha amarekhodi ohambo"
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 82,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      },
+      {
+        "english": "Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.",
+        "zuluVariants": [
+          "Izinguquko zihlala kulesi seshini sohambo. Ukusetha kabusha noma ukulayisha kabusha kuqala kabusha. Akudingeki ungene ngemvume futhi ukushintsha izindawo akuguquli izimvume ze-akhawunti yakho yangempela."
+        ],
+        "callers": [
+          {
+            "file": "app/samples/page.tsx",
+            "line": 83,
+            "enVars": {},
+            "zuVars": {}
+          }
+        ]
+      }
+    ],
+    "sourceRoleCards": [
+      [
+        "ngo",
+        "Organisation",
+        "Run a programme",
+        "Explore gardens, assessments, reports and the organisation Control centre."
+      ],
+      [
+        "funder",
+        "Funder",
+        "Review what is shared",
+        "See the same programme through its published summaries."
+      ],
+      [
+        "farmer",
+        "Farmer",
+        "Explore Ubhejane Crèche",
+        "Open the farm map, crop plan, harvests and example sales."
+      ],
+      [
+        "mentor",
+        "Mentor",
+        "Support a grower",
+        "Explore assigned farmers, organisation guidance, visits and reports."
+      ],
+      [
+        "student",
+        "Student",
+        "Try the learning workspace",
+        "Explore the existing course and progress."
+      ]
+    ],
+    "existingZuluRoleCards": [
+      [
+        "ngo",
+        "Inhlangano",
+        "Qalisa uhlelo",
+        "Hlola izingadi, ukuhlola, imibiko kanye nesikhungo sokulawula inhlangano."
+      ],
+      [
+        "funder",
+        "Umxhasi",
+        "Buyekeza okwabiwe",
+        "Bona uhlelo olufanayo ngezifinyezo zalo ezishicilelwe."
+      ],
+      [
+        "farmer",
+        "Umlimi",
+        "Hlola i-Ubhejane Crèche",
+        "Vula imephu yepulazi, uhlelo lwezitshalo, izivuno nezibonelo zokuthengisa."
+      ],
+      [
+        "mentor",
+        "Umeluleki",
+        "Sekela umlimi",
+        "Hlola abalimi ababelwe wena, isiqondiso senhlangano, ukuvakashela nemibiko."
+      ],
+      [
+        "student",
+        "Umfundi",
+        "Zama indawo yokufunda",
+        "Hlola izifundo nenqubekela-phambili ekhona."
+      ]
+    ],
+    "entries": [
+      {
+        "english": "My Account",
+        "st": "Akhaonto ya ka",
+        "ts": "Akhawunti ya mina",
+        "ve": "Akhaunthu yanga"
+      },
+      {
+        "english": "Offline and sync",
+        "st": "Ntle le inthanete le ho nyalanya",
+        "ts": "Handle ka inthanete ni ku fambelanisa",
+        "ve": "Ni si na inthanethe na u pfhumbanya"
+      },
+      {
+        "english": "Practice views",
+        "st": "Dipono tsa boitlwaetso",
+        "ts": "Mavonelo yo titoloveta",
+        "ve": "Mbonalo dza u ḓiḓowedza"
+      },
+      {
+        "english": "Browse gardens",
+        "st": "Sheba dirapa",
+        "ts": "Languta swirhapa",
+        "ve": "Sedzani ngade"
+      },
+      {
+        "english": "Main navigation",
+        "st": "Tsamaiso e kgolo",
+        "ts": "Ku fambafamba lokukulu",
+        "ve": "U tshimbila huhulwane"
+      },
+      {
+        "english": "Practice workspace",
+        "st": "Sebaka sa mosebetsi sa boitlwaetso",
+        "ts": "Ndhawu ya ku tirhela yo titoloveta",
+        "ve": "Fhethu ha mushumo ha u ḓiḓowedza"
+      },
+      {
+        "english": "You are viewing demonstration records. Your account permissions stay unchanged.",
+        "st": "O shebile direkoto tsa pontsho. Ditumello tsa akhaonto ya hao ha di fetohe.",
+        "ts": "U langutile tirhekhodo ta nkombiso. Mpfumelelo wa akhawunti ya wena a wu cinci.",
+        "ve": "Ni khou sedza rekhodo dza tsumbo. Thendelo dza akhaunthu yaṋu a dzi shanduki."
+      },
+      {
+        "english": "Choose a view",
+        "st": "Khetha pono",
+        "ts": "Hlawula mavonelo",
+        "ve": "Khethani fhethu ha u shuma"
+      },
+      {
+        "english": "Page controls",
+        "st": "Ditaolo tsa leqephe",
+        "ts": "Swilawuri swa pheji",
+        "ve": "Zwilangi zwa siaṱari"
+      },
+      {
+        "english": "Tour",
+        "st": "Leeto",
+        "ts": "Riendzo",
+        "ve": "Lwendo"
+      },
+      {
+        "english": "FARMERS · MENTORS · ORGANISATIONS · FUNDERS",
+        "st": "BALEMI · BAELETSI · MEKGATLO · BATSHEHETSI",
+        "ts": "VARIMI · VULETERI · TINHLANGANO · VASEKETERI VA MALI",
+        "ve": "VHALIMI · VHAELETSHEDZI · MADZANGANO · VHALAMBEDZI"
+      },
+      {
+        "english": "See what ImbewuField can do.",
+        "st": "Bona seo ImbewuField e ka se etsang.",
+        "ts": "Vona leswi ImbewuField yi nga swi endlelaka wena.",
+        "ve": "Vhonani zwine ImbewuField ya nga zwi ita."
+      },
+      {
+        "english": "Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.",
+        "st": "Lekola app ka metsotso e ka bang {minutes}: rala serapa, ithute bokgoni, latela thekiso, tshehetsa balemi mme o bone bopaki ba lenaneo.",
+        "ts": "Kambela app hi timinete ta kwalomu ka {minutes}: pulana xirhapa, dyondza vuswikoti, landzela ku xavisa, seketela varimi u tlhela u vona vumbhoni bya nongonoko.",
+        "ve": "Ṱolani app nga minetse i ṱoḓaho u vha {minutes}: pulanani ngade, gudani vhukoni, tevhelani thengiso, tikhedzani vhalimi ni vhone vhuṱanzi ha mbekanyamushumo."
+      },
+      {
+        "english": "Explore at your own pace. No sign-in needed.",
+        "st": "Lekola ka lebelo la hao. Ha ho hlokahale ho kena.",
+        "ts": "Kambela hi rivilo ra wena. A swi bohi ku nghena.",
+        "ve": "Ṱolani nga luvhilo lwaṋu. A zwi ṱoḓi uri ni dzhene."
+      },
+      {
+        "english": "Illustrated example of a garden harvest",
+        "st": "Setshwantsho se takilweng sa mohlala wa kotulo ya serapa",
+        "ts": "Xifaniso lexi dirowiweke xa ntshovelo wa xirhapa",
+        "ve": "Tshifanyiso tsho olwa tsha tsumbo ya khaṋo ya ngade"
+      },
+      {
+        "english": "Garden harvest · AI-generated illustration",
+        "st": "Kotulo ya serapa · setshwantsho se takilweng se entsweng ke AI",
+        "ts": "Ntshovelo wa xirhapa · xifaniso lexi endliweke hi AI",
+        "ve": "Khaṋo ya ngade · tshifanyiso tsho itwaho nga AI"
+      },
+      {
+        "english": "Try the app with prepared records. Your own project stays unchanged.",
+        "st": "Leka app ka direkoto tse lokisitsweng. Projeke ya hao ha e fetohe.",
+        "ts": "Ringeta app hi tirhekhodo leti lunghisiweke. Phurojeke ya wena a yi cinci.",
+        "ve": "Lingedzani app nga rekhodo dzo lugiselwaho. Thandela yaṋu a i shanduki."
+      },
+      {
+        "english": "You’ve explored the whole tour.",
+        "st": "O lekotse leeto lohle.",
+        "ts": "U kamberile riendzo hinkwaro.",
+        "ve": "No ṱola lwendo lwoṱhe."
+      },
+      {
+        "english": "Keep exploring at your own pace.",
+        "st": "Tswela pele ho lekola ka lebelo la hao.",
+        "ts": "Yana mahlweni u kambela hi rivilo ra wena.",
+        "ve": "Bvelani phanḓa ni tshi ṱola nga luvhilo lwaṋu."
+      },
+      {
+        "english": "{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.",
+        "st": "Mehato e {tried} ho e {total} e tshwailwe e le e lekotsweng. Tsena ke dikgetho tsa hao lenaneng la ho hlahloba, e seng setifikeiti sa thupelo.",
+        "ts": "Switichi swa {tried} eka {total} swi funghiwile leswaku swi kamberiwile. I leswi u swi hlawuleke eka nxaxamelo wa wena wo kambela, a hi xitifikheti xa ndzetelo.",
+        "ve": "Zwititshi zwa {tried} kha {total} zwo swaiwa sa zwo ṱolwaho. Idzi ndi khetho dzaṋu kha mutevhe wa u ṱola, a si ṱhanziela ya vhugudisi."
+      },
+      {
+        "english": "Explore another role",
+        "st": "Lekola karolo e nngwe",
+        "ts": "Kambela vutihlamuleri byin’wana",
+        "ve": "Ṱolani iṅwe ndima"
+      },
+      {
+        "english": "Request a feature or ask about customisation",
+        "st": "Kopa tshebetso kapa botsa ka ho e fetola hore e o tshwanele",
+        "ts": "Kombela xitirhisiwa kumbe u vutisa hi ku xi cinca leswaku xi ku ringanela",
+        "ve": "Humbelani tshumelo kana ni vhudzise nga u shandula uri zwi ni fanele"
+      },
+      {
+        "english": "Nine stops, one connected story.",
+        "st": "Mehato e robong, pale e le nngwe e hokahaneng.",
+        "ts": "Switichi swa kaye, xitori xin’we lexi hlanganeke.",
+        "ve": "Zwititshi zwa ṱahe, tshiṱori tshithihi tsho ṱumanaho."
+      },
+      {
+        "english": "Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.",
+        "st": "Kgetha mohato ofe kapa ofe ka tlase ho bula sekirini le tataiso ya wona. Sebelisa konopo ya Leeto pela menyu ho kgutlela dikeletsong kapa ho ya mohatong o mong.",
+        "ts": "Hlawula xitichi xihi na xihi laha hansi ku pfula xikirini ni nkongomiso wa xona. Tirhisa batheni ya Riendzo ekusuhi ni menyu ku vuya eka switsundzuxo kumbe ku ya eka xitichi xin’wana.",
+        "ve": "Nangani tshititshi tshiṅwe na tshiṅwe afho fhasi u vula tshikirini na vhulivhisi hatsho. Shumisani gunubu ya Lwendo tsini na menyu u vhuya kha ngeletshedzo kana u ya kha tshiṅwe tshititshi."
+      },
+      {
+        "english": "{tried} of {total} stops explored",
+        "st": "Mehato e {tried} ho e {total} e lekotswe",
+        "ts": "Switichi swa {tried} eka {total} swi kamberiwile",
+        "ve": "Zwititshi zwa {tried} kha {total} zwo ṱolwa"
+      },
+      {
+        "english": "Tour progress",
+        "st": "Tswelopele ya leeto",
+        "ts": "Nhluvuko wa riendzo",
+        "ve": "Mvelaphanḓa ya lwendo"
+      },
+      {
+        "english": " · Explored",
+        "st": " · E lekotswe",
+        "ts": " · Ku kamberiwile",
+        "ve": " · Ho ṱolwa"
+      },
+      {
+        "english": "Open stop",
+        "st": "Bula mohato",
+        "ts": "Pfula xitichi",
+        "ve": "Vulani tshititshi"
+      },
+      {
+        "english": "Full farm evidence pack",
+        "st": "Sephuthelo se felletseng sa bopaki ba polasi",
+        "ts": "Phakheji leyi heleleke ya vumbhoni bya purasi",
+        "ve": "Phakhethe yo fhelelaho ya vhuṱanzi ha bulasi"
+      },
+      {
+        "english": "All role workspaces",
+        "st": "Dibaka tsa mosebetsi tsa dikarolo tsohle",
+        "ts": "Tindhawu to tirhela ta vutihlamuleri hinkwabyo",
+        "ve": "Fhethu ha mushumo ha ndima dzoṱhe"
+      },
+      {
+        "english": "Feature requests & programme customisation",
+        "st": "Dikopo tsa ditshebetso le ho fetola lenaneo hore le o tshwanele",
+        "ts": "Swikombelo swa switirhisiwa ni ku cinca nongonoko leswaku wu ku ringanela",
+        "ve": "Khumbelo dza tshumelo na u shandula mbekanyamushumo uri i ni fanele"
+      },
+      {
+        "english": "EXPLORE",
+        "st": "LEKOLA",
+        "ts": "KAMBELA",
+        "ve": "Vhonani"
+      },
+      {
+        "english": "Explore each workspace. Use Tour in the menu to return here.",
+        "st": "Lekola sebaka ka seng sa mosebetsi. Sebelisa Leeto lenaneng ho khutlela mona.",
+        "ts": "Kambela ndhawu yin’wana ni yin’wana yo tirhela. Tirhisa Riendzo eka menyu ku vuya laha.",
+        "ve": "Ṱolani fhethu huṅwe na huṅwe ha mushumo. Shumisani Lwendo kha menyu u vhuya hafha."
+      },
+      {
+        "english": "All views",
+        "st": "Libaka tsohle",
+        "ts": "Mavonelo hinkwawo",
+        "ve": "Mbonalo dzoṱhe"
+      },
+      {
+        "english": "Choose your workspace",
+        "st": "Khetha sebaka sa hao sa mosebetsi",
+        "ts": "Hlawula ndhawu ya wena yo tirhela",
+        "ve": "Nangani fhethu haṋu ha mushumo"
+      },
+      {
+        "english": "Checking available views…",
+        "st": "Ho hlahlojwa dipono tse fumanehang…",
+        "ts": "Ku kamberiwa mavonelo lama kumekaka…",
+        "ve": "Hu khou ṱolwa mbonalo dzi re hone…"
+      },
+      {
+        "english": "Your account role could not be confirmed. Refresh your access in Account, then return here.",
+        "st": "Karolo ya akhaonto ya hao ha e a kgona ho netefatswa. Ntjhafatsa phihlello ya hao ho Akhaonto, ebe o kgutlela mona.",
+        "ts": "Vutihlamuleri bya akhawunti ya wena a byi kotanga ku tiyisisiwa. Pfuxeta mfikelelo wa wena eka Akhawunti, kutani u vuya laha.",
+        "ve": "Ndima ya akhaunthu yaṋu a yo ngo kona u khwaṱhisedzwa. Vusuludzani u swikelela haṋu kha Akhaunthu, ni kone u vhuya hafha."
+      },
+      {
+        "english": "Your {role} account opens its matching example view. Other roles are shown below so the full set is visible.",
+        "st": "Akhaonto ya hao ya {role} e bula pono ya mohlala e tsamaelanang le yona. Dikarolo tse ding di bontshwa ka tlase hore o bone kaofela.",
+        "ts": "Akhawunti ya wena ya {role} yi pfula mavonelo ya nkombiso lama fambelanaka na yona. Vutihlamuleri byin’wana byi kombiwa laha hansi leswaku hinkwabyo byi vonaka.",
+        "ve": "Akhaunthu yaṋu ya {role} i vula mbonalo ya tsumbo i tshimbidzanaho nayo. Dziṅwe ndima dzi sumbedzwa afho fhasi uri dzoṱhe dzi vhonale."
+      },
+      {
+        "english": "Choose any of the five workspaces.",
+        "st": "Kgetha sefe kapa sefe sa dibaka tse hlano tsa mosebetsi.",
+        "ts": "Hlawula yin’wana ni yin’wana ya tindhawu ta ntlhanu to tirhela.",
+        "ve": "Nangani huṅwe na huṅwe ha fhethu ha mushumo huṱanu."
+      },
+      {
+        "english": "The example workspace could not start. Please allow session storage and try again.",
+        "st": "Sebaka sa mosebetsi sa mohlala ha se a kgona ho qala. Dumella polokelo ya seshene mme o leke hape.",
+        "ts": "Ndhawu yo tirhela ya nkombiso a yi kotanga ku sungula. Pfumelela vuhlayiselo bya sexini kutani u ringeta nakambe.",
+        "ve": "Fhethu ha mushumo ha tsumbo a ho ngo kona u thoma. Tendelani u vhulunga ha sesheni ni lingedze hafhu."
+      },
+      {
+        "english": "Open {label}",
+        "st": "Bula {label}",
+        "ts": "Pfula {label}",
+        "ve": "Vulani {label}"
+      },
+      {
+        "english": "Checking access…",
+        "st": "Ho hlahlojwa phihlello…",
+        "ts": "Ku kamberiwa mfikelelo…",
+        "ve": "Hu khou ṱolwa u swikelela…"
+      },
+      {
+        "english": "Not available for this account",
+        "st": "Ha e fumanehe bakeng sa akhaonto ena",
+        "ts": "A swi kumeki eka akhawunti leyi",
+        "ve": "A zwi wanali kha akhaunthu iyi"
+      },
+      {
+        "english": "Browse 18 different gardens",
+        "st": "Sheba dirapa tse fapaneng tse 18",
+        "ts": "Languta swirhapa swa 18 leswi hambaneke",
+        "ve": "Sedzani ngade dza 18 dzo fhambanaho"
+      },
+      {
+        "english": "Homesteads, commercial plots, crèches, schools and community gardens. Choose one to see its layout, participants and report.",
+        "st": "Malapa, masimo a kgwebo, dikeretjhe, dikolo le dirapa tsa setjhaba. Kgetha se le seng ho bona moralo wa sona, barupeluoa le tlaleho.",
+        "ts": "Miti, masimu ya mabindzu, tikhirexi, swikolo ni swirhapa swa vaaki. Hlawula xin’we ku vona pulani ya xona, vatekaxiave ni xiviko.",
+        "ve": "Miḓi, masimu a vhubindudzi, khiretshi, zwikolo na ngade dza tshitshavha. Nangani nthihi u vhona mveledziso yayo, vhashelamulenzhe na muvhigo."
+      },
+      {
+        "english": "Browse 18 gardens →",
+        "st": "Sheba dirapa tse 18 →",
+        "ts": "Languta swirhapa swa 18 →",
+        "ve": "Sedzani ngade dza 18 →"
+      },
+      {
+        "english": "Editable farm workspace · Ubhejane",
+        "st": "Sebaka sa mosebetsi sa polasi se ka fetolwang · Ubhejane",
+        "ts": "Ndhawu yo tirhela ya purasi leyi nga hundzuluxiwaka · Ubhejane",
+        "ve": "Fhethu ha mushumo ha bulasi hune ha nga shandulwa · Ubhejane"
+      },
+      {
+        "english": "Ubhejane is currently the connected editable farm. The 18 garden profiles above are overview examples. Try the map and editable design, review a completed assessment, review the household interview and soil record, then download an evidence report.",
+        "st": "Ubhejane ke polasi e hokahaneng e ka fetolwang ha jwale. Diprofaele tsa dirapa tse 18 tse ka hodimo ke mehlala ya kakaretso. Leka mmapa le moralo o ka fetolwang, hlahloba tekolo e phethilweng, puisano ya lelapa le rekoto ya mobu, ebe o kopitsa tlaleho ya bopaki.",
+        "ts": "Sweswi Ubhejane i purasi leri hlanganisiweke leri nga hundzuluxiwaka. Tiphurofayili ta swirhapa swa 18 laha henhla i swikombiso swa nkatsakanyo. Ringeta mepe ni dizayini leyi nga hundzuluxiwaka, kambela nkambelo lowu heleke, mbulavurisano wa muti ni rhekhodo ya misava, kutani u kopa xiviko xa vumbhoni.",
+        "ve": "Zwino Ubhejane ndi bulasi ḽo ṱumanaho ḽine ḽa nga shandulwa. Phurofaiḽi dza ngade dza 18 dzi re afho nṱha ndi tsumbo dza manweledzo. Lingedzani mapa na pulane ine ya nga shandulwa, ṱolani ṱhaṱhuvho yo fhedzwaho, nyambedzano ya muṱa na rekhodo ya mavu, ni kone u kopolola muvhigo wa vhuṱanzi."
+      },
+      {
+        "english": "Start the 15-minute tour",
+        "st": "Qala leeto la metsotso e 15",
+        "ts": "Sungula riendzo ra timinete ta 15",
+        "ve": "Thomani lwendo lwa minetse ya 15"
+      },
+      {
+        "english": "Open the farm evidence pack",
+        "st": "Bula sephuthelo sa bopaki ba polasi",
+        "ts": "Pfula phakheji ya vumbhoni bya purasi",
+        "ve": "Vulani phakhethe ya vhuṱanzi ha bulasi"
+      },
+      {
+        "english": "Complete production example",
+        "st": "Mohlala o felletseng wa tlhahiso",
+        "ts": "Xikombiso lexi heleleke xa vuhumelerisi",
+        "ve": "Tsumbo yo fhelelaho ya vhubveledzi"
+      },
+      {
+        "english": "A fictional warm KZN farm with vegetables, staples, fruit, nuts, berries, eggs, milk, honey and fish. View its monthly calendar, young trees and printable plan. Shown in English.",
+        "st": "Polasi e iqapetsweng e sebakeng se futhumetseng sa KZN e nang le meroho, dijalo tsa motheo, ditholwana, “nuts”, monokotsoai, mahe, lebese, mahe a dinotshi le ditlhapi. Sheba khalendara ya yona ya kgwedi le kgwedi, difate tse nyane le moralo o ka printwang. E bontshwa ka Senyesemane.",
+        "ts": "Purasi ro ehleketeleriwa ra KZN leyi kufumelaka leri nga ni matsavu, swibyariwa swa swakudya swa nkoka, mihandzu, “nuts”, “berries”, matandza, masi, vulombe ni tinhlampfi. Languta khalendara ya rona ya n’hweti ni n’hweti, mirhi leyitsongo ni pulani leyi nga printiwaka. Swi kombiwa hi Xinghezi.",
+        "ve": "Bulasi ḽa khumbulelo kha fhethu hu dudelaho ha KZN ḽi re na miroho, zwilimwa zwa zwiḽiwa zwa ndeme, mitshelo, “nuts”, mitshelo miṱuku ya maberi, makumba, mafhi, mutoli na khovhe. Sedzani khalanḓara yaḽo ya ṅwedzi muṅwe na muṅwe, miri miṱuku na pulane ine ya nga gandiswa. Zwi sumbedzwa nga English."
+      },
+      {
+        "english": "Open the complete example →",
+        "st": "Bula mohlala o felletseng →",
+        "ts": "Pfula xikombiso lexi heleleke →",
+        "ve": "Vulani tsumbo yo fhelelaho →"
+      },
+      {
+        "english": "Reset tour records",
+        "st": "Seta botjha direkoto tsa leeto",
+        "ts": "Vuyisela tirhekhodo ta riendzo eku sunguleni",
+        "ve": "Vusuludzani rekhodo dza lwendo"
+      },
+      {
+        "english": "Changes stay in this tour session. Resetting or reloading starts fresh. Signing in is not required and switching views never changes your real account permissions.",
+        "st": "Diphetoho di sala sesheneng ena ya leeto. Ho seta botjha kapa ho kenya leqephe hape ho qala botjha. Ha ho hlokahale ho kena mme ho fetola dipono ha ho fetole ditumello tsa akhaonto ya hao ya nnete.",
+        "ts": "Ku cinca ku sala eka sexini leyi ya riendzo. Ku vuyisela eku sunguleni kumbe ku layicha nakambe swi sungula hi vuntshwa. A swi bohi ku nghena naswona ku cinca mavonelo a swi cinci mpfumelelo wa akhawunti ya wena ya xiviri.",
+        "ve": "Tshanduko dzi sala kha sesheni iyi ya lwendo. U vusuludza kana u laisa hafhu zwi thoma hafhu. A zwi ṱoḓi uri ni dzhene nahone u shandula mbonalo a zwi shanduli thendelo dza akhaunthu yaṋu ya vhukuma."
+      },
+      {
+        "english": "Organisation",
+        "st": "Mokgatlo",
+        "ts": "Nhlangano",
+        "ve": "Dzangano"
+      },
+      {
+        "english": "Run a programme",
+        "st": "Tsamaisa lenaneo",
+        "ts": "Fambisa nongonoko",
+        "ve": "Tshimbidzani mbekanyamushumo"
+      },
+      {
+        "english": "Explore gardens, assessments, reports and the organisation Control centre.",
+        "st": "Lekola dirapa, ditekolo, ditlaleho le Setsi sa taolo sa mokgatlo.",
+        "ts": "Kambela swirhapa, mikambelo, swiviko ni Senthara ya vulawuri ya nhlangano.",
+        "ve": "Ṱolani ngade, ṱhaṱhuvho, mivhigo na Senthara ya ndangulo ya dzangano."
+      },
+      {
+        "english": "Funder",
+        "st": "Motshehetsi",
+        "ts": "Museketeri wa mali",
+        "ve": "Mulambedzi"
+      },
+      {
+        "english": "Review what is shared",
+        "st": "Hlahloba se arolelanoang",
+        "ts": "Kambela leswi avelaniweke",
+        "ve": "Ṱolani zwo kovhiwaho"
+      },
+      {
+        "english": "See the same programme through its published summaries.",
+        "st": "Bona lenaneo lona leo ka likakaretso tsa lona tse phatlalalitsoeng.",
+        "ts": "Vona nongonoko wolowo hi minkatsakanyo ya wona leyi kandziyisiweke.",
+        "ve": "Vhonani mbekanyamushumo yeneyo nga manweledzo ayo o anḓadziwaho."
+      },
+      {
+        "english": "Farmer",
+        "st": "Molemi",
+        "ts": "Murimi",
+        "ve": "Mulimi"
+      },
+      {
+        "english": "Explore Ubhejane Crèche",
+        "st": "Lekola Ubhejane Crèche",
+        "ts": "Kambela Ubhejane Crèche",
+        "ve": "Vhonani Ubhejane Crèche"
+      },
+      {
+        "english": "Open the farm map, crop plan, harvests and example sales.",
+        "st": "Bula 'mapa oa polasi, moralo oa lijalo, kotulo le mehlala ea thekiso.",
+        "ts": "Pfula mepe wa purasi, pulani ya swibyariwa, ntshovelo ni swikombiso swa ku xavisa.",
+        "ve": "Vulani mapa wa bulasi, pulane ya zwilimwa, khaṋo na tsumbo dza thengiso."
+      },
+      {
+        "english": "Mentor",
+        "st": "Moeletsi",
+        "ts": "Muleteri",
+        "ve": "Mueletshedzi"
+      },
+      {
+        "english": "Support a grower",
+        "st": "Tšehetsa molemi",
+        "ts": "Seketela murimi",
+        "ve": "Thusani mulimi"
+      },
+      {
+        "english": "Explore assigned farmers, organisation guidance, visits and reports.",
+        "st": "Lekola balemi bao u ba abetsoeng, tataiso ea mokhatlo, maeto le litlaleho.",
+        "ts": "Kambela varimi lava u averiweke vona, nkongomiso wa nhlangano, maendzo ni swiviko.",
+        "ve": "Ṱolani vhalimi vhe na avhelwa, vhulivhisi ha dzangano, nyendo na mivhigo."
+      },
+      {
+        "english": "Student",
+        "st": "Moithuti",
+        "ts": "Mudyondzi",
+        "ve": "Mugudi"
+      },
+      {
+        "english": "Try the learning workspace",
+        "st": "Leka sebaka sa ho ithuta",
+        "ts": "Ringeta ndhawu yo dyondza",
+        "ve": "Lingedzani fhethu ha ngudo"
+      },
+      {
+        "english": "Explore the existing course and progress.",
+        "st": "Lekola thupelo e teng le tsoelo-pele.",
+        "ts": "Kambela khoso leyi nga kona ni nhluvuko.",
+        "ve": "Vhonani khoso i re hone na mvelaphanḓa."
+      },
+      {
+        "english": "Tour — open choices and exit",
+        "st": "Leeto — bula dikgetho mme o tswe",
+        "ts": "Riendzo — pfula leswi hlawuriwaka u tlhela u huma",
+        "ve": "Lwendo — vulani khetho ni bve"
+      },
+      {
+        "english": "Tour — choose a view",
+        "st": "Leeto — kgetha pono",
+        "ts": "Riendzo — hlawula mavonelo",
+        "ve": "Lwendo — nangani mbonalo"
+      },
+      {
+        "english": "Signing out ends access to this account on this device. Sign in again to continue.",
+        "st": "Ho tswa ho emisa phihlello ya akhaonto ena sesebedisweng sena. Kena hape ho tswela pele.",
+        "ts": "Ku huma swi herisa mfikelelo wa akhawunti leyi eka xitirhisiwa lexi. Nghena nakambe ku ya mahlweni.",
+        "ve": "U bva zwi fhelisa u swikelela akhaunthu iyi kha tshishumiswa itshi. Dzhenani hafhu u bvela phanḓa."
+      },
+      {
+        "english": "{label} (current)",
+        "st": "{label} (ya jwale)",
+        "ts": "{label} (ya sweswi)",
+        "ve": "{label} (ya zwino)"
+      },
+      {
+        "english": "{label} (coming soon)",
+        "st": "{label} (e tla haufinyane)",
+        "ts": "{label} (yi ta ta ku nga ri khale)",
+        "ve": "{label} (i khou ḓa hu si kale)"
+      },
+      {
+        "english": "Coming soon",
+        "st": "E tla haufinyane",
+        "ts": "Yi ta ta ku nga ri khale",
+        "ve": "I khou ḓa hu si kale"
+      },
+      {
+        "english": "Design map is the Mentor toolkit",
+        "st": "Mmapa wa moralo ke sesebediswa sa Moeletsi",
+        "ts": "Mepe ya dizayini i switirhisiwa swa Muleteri",
+        "ve": "Mapa wa pulane ndi tshishumiswa tsha Mueletshedzi"
+      },
+      {
+        "english": "View as with demonstration records",
+        "st": "Sheba ka karolo e nngwe ka direkoto tsa pontsho",
+        "ts": "Languta hi vutihlamuleri byin’wana hi tirhekhodo ta nkombiso",
+        "ve": "Sedzani nga iṅwe ndima nga rekhodo dza tsumbo"
+      },
+      {
+        "english": "Switch view…",
+        "st": "Fetola pono…",
+        "ts": "Cinca mavonelo…",
+        "ve": "Shandulani mbonalo…"
+      },
+      {
+        "english": "Switch practice view…",
+        "st": "Fetola pono ya boitlwaetso…",
+        "ts": "Cinca mavonelo yo titoloveta…",
+        "ve": "Shandulani mbonalo ya u ḓiḓowedza…"
+      }
+    ],
+    "preservation": "Earlier machine-draft Sesotho and Tshivenda values remain authoritative over new drafts. Their historical tables and hold status remain unchanged. Previously held runtime fields now use separately recorded unreviewed native drafts; English source remains visibly paired.",
+    "nativeCorrections": [
+      {
+        "language": "st",
+        "source": "Explore each workspace. Use Tour in the menu to return here.",
+        "reason": "The newly translated menu caption is Leeto, so the existing native instruction must name that same control.",
+        "before": "Lekola sebaka ka seng sa mosebetsi. Sebelisa Tour lenaneng ho khutlela mona.",
+        "after": "Lekola sebaka ka seng sa mosebetsi. Sebelisa Leeto lenaneng ho khutlela mona."
+      }
+    ],
+    "technicalHolds": [
+      {
+        "languages": [
+          "st",
+          "ts",
+          "ve"
+        ],
+        "source": "nuts",
+        "reason": "Keep the generic English category rather than substitute a specific species name."
+      },
+      {
+        "languages": [
+          "ts"
+        ],
+        "source": "berries",
+        "reason": "Keep the source category pending a reliable generic term; do not narrow it to one species."
+      }
+    ],
+    "sourceControlReferences": [
+      "Tour",
+      "Account",
+      "Open",
+      "Reset tour records"
+    ],
+    "scope": "Tour overview, chooser cards/session and access errors, raw NavDrawer practice/account labels, shared MenuButton caption/tooltip, fallback banner aria, and account sign-in/out/privacy labels. Existing role gates and canonical IDs/routes remain unchanged. The nested RoleSwitcher now translates status suffixes, tooltips and staff practice-view chooser wording through the same authority; its active theme uses tokens after an observed dark-mode contrast failure.",
+    "roleSwitcher": {
+      "sourceSha": "44d3e090839b3fc991fee3de7f37e18d221a8b9b",
+      "sourceSha256": "3f38b199c043788edcf3c92307e61126cee85ba4424c1927957107addda3b2a3",
+      "originalSource": "'use client';\n\nimport Link from 'next/link';\nimport { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';\nimport { useLanguage } from '@/lib/i18n';\nimport { useRouter } from 'next/navigation';\nimport { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';\nimport { visibleRoleTabs } from '@/lib/role-navigation';\n\nconst ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; ready: boolean }[] = [\n  { key: 'farmer',  labelKey: 'homeRoleFarmerLabel',  Icon: Sprout,        href: '/farmer',  ready: true },\n  { key: 'mentor',  labelKey: 'homeRoleMentorLabel',  Icon: Users,         href: '/mentor',  ready: true },\n  { key: 'student', labelKey: 'homeRoleStudentLabel', Icon: GraduationCap, href: '/student', ready: true },\n  { key: 'ngo',     labelKey: 'homeRoleNGOLabel',     Icon: BarChart3,     href: '/ngo',     ready: true },\n  { key: 'funder',  labelKey: 'homeRoleFunderLabel',  Icon: Building2,     href: '/funder',  ready: true },\n];\n\n// 'facilitator' (the Design Studio's power-user tool, app/facilitator/page.tsx) has\n// no dedicated role tab of its own — it's the mentor-side tool, so it highlights Mentor.\nconst ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };\n\nexport default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {\n  const { t } = useLanguage();\n  const router = useRouter();\n  const { accountRole, navigationRole, sample } = useRoleNavigation();\n  const visible = visibleRoleTabs(navigationRole);\n  const effectiveCurrent = ROLE_ALIASES[current] ?? current;\n  return (\n    <div data-header-secondary className=\"flex items-center gap-1 px-1.5 py-1 rounded-full\"\n      style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', ...(inMenu ? { width: '100%', flexWrap: 'wrap', borderRadius: 12 } : {}) }}>\n      {ROLES.filter(r => visible.includes(r.key)).map((r) => {\n        const active = r.key === effectiveCurrent;\n        const isAliasMatch = active && current !== r.key;\n        // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).\n        const base = `flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-sans font-semibold text-[15px] lg:text-base transition-all whitespace-nowrap${inMenu ? ' min-h-[44px]' : ''}`;\n        const style = active\n          ? { background: inMenu ? '#e9f1e9' : 'var(--badge-bg)', border: '1px solid #1F4D2B', color: 'var(--color-forest-700)' }\n          : r.ready\n          ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }\n          : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };\n        const ariaLabel = `${t(r.labelKey)}${active ? ' (current)' : ''}`;\n\n        if (!r.ready) {\n          return (\n            <span key={r.key} className={base} style={style} title=\"Coming soon\" aria-label={`${t(r.labelKey)} (coming soon)`}>\n              <r.Icon size={16} />\n              <span className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>\n            </span>\n          );\n        }\n        return (\n          <Link\n            key={r.key}\n            href={r.href}\n            onClick={onNavigate}\n            className={base}\n            style={style}\n            aria-label={ariaLabel}\n            aria-current={active ? 'page' : undefined}\n            title={isAliasMatch ? 'Design map is the Mentor toolkit' : undefined}\n          >\n            <r.Icon size={16} />\n            <span className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>\n          </Link>\n        );\n      })}\n      {(accountRole === 'ngo' || accountRole === 'admin') && <label className=\"font-sans text-sm\" style={{ padding: '4px 8px', color: '#243d2d' }}>\n        <span className=\"sr-only\">View as with demonstration records</span>\n        <select aria-label=\"View as with demonstration records\" value=\"\" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>\n          <option value=\"\">{sample ? 'Switch view…' : 'Switch practice view…'}</option>\n          {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}\n        </select>\n      </label>}\n    </div>\n  );\n}\n",
+      "sourceTemplateNotes": "The original role aria templates become {label} (current) / {label} (coming soon) without changing their English output. All five canonical role keys, label keys, icons, destinations, ready flags, visibility rules, alias and account gates stay the same."
+    },
+    "newZuluControls": [
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "{label} (current)",
+        "zu": "{label} (yamanje)",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "Coming soon",
+        "zu": "Iyeza maduze",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "{label} (coming soon)",
+        "zu": "{label} (iyeza maduze)",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "Design map is the Mentor toolkit",
+        "zu": "Imephu yomklamo iyithuluzi lomeluleki",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "View as with demonstration records",
+        "zu": "Buka njengendima ethile ngamarekhodi okubonisa",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "View as with demonstration records",
+        "zu": "Buka njengendima ethile ngamarekhodi okubonisa",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "Switch view…",
+        "zu": "Shintsha isikrini…",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/RoleSwitcher.tsx",
+        "english": "Switch practice view…",
+        "zu": "Shintsha isikrini sokuzilolonga…",
+        "status": "Unreviewed machine draft; previously English-only control."
+      },
+      {
+        "file": "components/SampleModeBanner.tsx",
+        "english": "Tour — choose a view",
+        "zu": "Uhambo — khetha indawo yokusebenza",
+        "status": "Unreviewed machine draft; previously English-only control."
+      }
+    ],
+    "pictureChanges": [
+      "The chooser uses a scoped hero so its instructions and review warning are visible below 1100px.",
+      "Native/source button text wraps together with a readable source size.",
+      "Menu and guide captions grow from their 44px touch floor at 12px instead of spilling or shrinking to 10px.",
+      "Tour card source toggles remain above the transparent card action layer.",
+      "The active role chip and staff view selector follow theme tokens."
+    ]
   }
 }

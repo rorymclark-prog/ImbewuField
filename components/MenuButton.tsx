@@ -26,6 +26,7 @@ import { ProductTourButton } from './ProductTourProvider';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { accessibleSourceLabel } from '@/lib/accessible-label';
 import { translate, useLanguage } from '@/lib/i18n';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 export default function MenuButton() {
   const [open, setOpen] = useState(false);
@@ -39,13 +40,14 @@ export default function MenuButton() {
         onClick={() => setOpen(true)}
         aria-label={accessibleSourceLabel(lang, t('openNavigationAriaLabel'), translate('en', 'openNavigationAriaLabel'))}
         aria-expanded={open}
-        title={sample ? (lang === 'zu' ? 'Uhambo — vula izinketho bese uphuma' : 'Tour — open choices and exit') : t('openNavigationAriaLabel')}
+        title={sample ? sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma') : t('openNavigationAriaLabel')}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
           // dropped into a dozen page headers is exactly the one that must follow
           // the theme, or dark mode has a bright chip in the corner of every screen.
-          width: 44,
+          minWidth: 44,
+          padding: '0 6px',
           height: 44,
           background: 'var(--bg-1)',
           border: sample ? '1px solid var(--color-harvest)' : '1px solid var(--border)',
@@ -56,8 +58,8 @@ export default function MenuButton() {
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {/* "Uhambo" measured wider than the 44px phone button at 12px. */}
-        {sample && <span style={{fontSize:lang === 'zu' ? 10 : 12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{lang === 'zu' ? 'Uhambo' : 'Tour'}</span>}
+        {/* Native captions need their measured width while retaining the touch floor. */}
+        {sample && <span lang={lang} style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>{t('tourPill')}</span>}
       </button>
       <FieldSyncBadge />
       <ProductTourButton />
