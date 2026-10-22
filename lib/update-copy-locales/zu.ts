@@ -97,7 +97,7 @@ const copy:UpdateCopy={
   "Explore the practice views": "Hlola izikrini zokuzilolonga",
   "Menu → Practice views": "Imenyu → Izikrini zokuzilolonga",
   "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Vula isikrini sokukhetha noHambo. Imiyalelo nezilawuli kunemibhalo esaluhlaka engakabuyekezwa; umbhalo wokuqala wesiNgisi uyatholakala.",
-  "Garden examples and programme reports now have unreviewed draft translations in four languages.": "Izibonelo zezingadi nemibiko yohlelo manje zinokuhumusha okusaluhlaka okungakabuyekezwa ngezilimi ezine.",
+  "Garden examples and programme reports have unreviewed translations in four languages.": "Izibonelo zezingadi nemibiko yohlelo zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
   "See garden examples in your language": "Bona izibonelo zezingadi ngolimi lwakho",
   "Tour → Gardens": "Uhambo → Izingadi",
   "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vula ingadi. Umbiko nokuhleleka kwayo kunokuhumusha okungakabuyekezwa kanye nombhalo wokuqala wesiNgisi. Ama-PDF omthombo agciniwe amakwe ngokuthi angesiNgisi."

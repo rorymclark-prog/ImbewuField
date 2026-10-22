@@ -2919,11 +2919,11 @@
   },
   "releaseRows": [
     {
-      "english": "Garden examples and programme reports now have unreviewed draft translations in four languages.",
-      "zu": "Izibonelo zezingadi nemibiko yohlelo manje zinokuhumusha okusaluhlaka okungakabuyekezwa ngezilimi ezine.",
-      "st": "Mehlala ya ditshimo le ditlaleho tsa lenaneo jwale di na le meralo ya diphetolelo e so hlahlojwe ka dipuo tse nne.",
-      "ts": "Swikombiso swa mintanga ni swiviko swa nongonoko sweswi swi ni vuhundzuluxi bya mpfapfarhuto leswi nga si kamberiwaka hi tindzimi ta mune.",
-      "ve": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwino zwi na ṱhalutshedzelo dza mvetamveto dzi sa athu u sedzuluswa nga nyambo nṋa."
+      "english": "Garden examples and programme reports have unreviewed translations in four languages.",
+      "zu": "Izibonelo zezingadi nemibiko yohlelo zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
+      "st": "Mehlala ya ditshimo le ditlaleho tsa lenaneo di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+      "ts": "Swikombiso swa mintanga ni swiviko swa nongonoko swi ni vuhundzuluxi lebyi nga si kamberiwaka hi tindzimi ta mune.",
+      "ve": "Tsumbo dza ngade na mivhigo ya mbekanyamushumo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa nga nyambo nṋa."
     },
     {
       "english": "See garden examples in your language",
@@ -2947,5 +2947,30 @@
       "ve": "Vhulani ngade. Muvhigo na mveledziso yayo zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa na maṅwalwa a u thoma a Tshiisimane. PDF dza tshiko dzo vhulungwaho dzo swaiwa uri ndi dza Tshiisimane."
     }
   ],
-  "releaseSha": "7f7e4c98"
+  "releaseSha": "f75f928f",
+  "fullVerificationFailure": {
+    "head": "f75f928f995b40a33133487db188325de964f6f5",
+    "pass": 5719,
+    "fail": 1,
+    "todo": 1,
+    "test": "tests/canvas-labels.test.ts: release notes are written for the farmer, not the repo",
+    "reason": "The95-character English release sentence exceeded the90-character phone-scan rule. Shortened source and all4 regional dictionary entries; assertion unchanged.",
+    "replacementSourceCharacters": 85,
+    "priorExactRun": "/tmp/imbewu-garden-programme-full-run.json",
+    "correctionChecks": {
+      "typecheck": "clean",
+      "selected": {
+        "files": 5,
+        "pass": 91,
+        "fail": 0
+      },
+      "browser": {
+        "states": 8,
+        "lines": 44,
+        "scope": "Actual /updates changed release row on phone/desktop, all4; source/local wording and reading bounds checked."
+      },
+      "notes": "Clean atf75f928f before correction commit.",
+      "testAssertion": "90-character source phone-scanning rule retained unchanged."
+    }
+  }
 }

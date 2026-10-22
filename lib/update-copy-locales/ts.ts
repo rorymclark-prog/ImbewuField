@@ -97,7 +97,7 @@ const copy:UpdateCopy={
   "Explore the practice views": "Kambela mavonelo yo titoloveta",
   "Menu → Practice views": "Menyu → Mavonelo yo titoloveta",
   "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Pfula ndhawu yo hlawula ni Riendzo. Swileriso ni swilawuri swi ni switsalwana leswi nga si kamberiwaka; tsalwa ro sungula ra Xinghezi ra kumeka.",
-  "Garden examples and programme reports now have unreviewed draft translations in four languages.": "Swikombiso swa mintanga ni swiviko swa nongonoko sweswi swi ni vuhundzuluxi bya mpfapfarhuto leswi nga si kamberiwaka hi tindzimi ta mune.",
+  "Garden examples and programme reports have unreviewed translations in four languages.": "Swikombiso swa mintanga ni swiviko swa nongonoko swi ni vuhundzuluxi lebyi nga si kamberiwaka hi tindzimi ta mune.",
   "See garden examples in your language": "Vona swikombiso swa mintanga hi ririmi ra wena",
   "Tour → Gardens": "Riendzo → Mintanga",
   "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Pfula ntanga. Xiviko ni pulani ya wona swi ni vuhundzuluxi leswi nga si kamberiwaka ni tsalwa ro sungula ra Xinghezi. Ti-PDF ta xihlovo leti hlayisiweke ti funghiwile leswaku i ta Xinghezi."

@@ -70,6 +70,46 @@
     "bytes": 68337
   },
   {
+    "file": "garden-release-fix-row-st-desktop.png",
+    "sha256": "50439ec67445c48550b79ec18b124f5e9ef3ec5b58d099f46bdba2eb1f9deb3c",
+    "bytes": 12243
+  },
+  {
+    "file": "garden-release-fix-row-st-phone.png",
+    "sha256": "ff5c6282a2cd093d8f314bc294b0a72e8c38d823ab380a3db62704152c65afd1",
+    "bytes": 13196
+  },
+  {
+    "file": "garden-release-fix-row-ts-desktop.png",
+    "sha256": "d9b71d3dcc85faf0f8a8c51268d5b5b50318649a2c7e6ca14beb307092a3615a",
+    "bytes": 14527
+  },
+  {
+    "file": "garden-release-fix-row-ts-phone.png",
+    "sha256": "cc69f020d80b33908c0b62b0f633689589cfc71c5f115ecf3f77333386ce98fa",
+    "bytes": 15216
+  },
+  {
+    "file": "garden-release-fix-row-ve-desktop.png",
+    "sha256": "fdd01f50bc2566dbfd17f967ec536111149ff1f9d383ccfe87bca32629ad43f2",
+    "bytes": 15139
+  },
+  {
+    "file": "garden-release-fix-row-ve-phone.png",
+    "sha256": "e047a973c414e3e08f710409c7864a55b23f32fa07d673e7d0786f64cc63dd96",
+    "bytes": 15306
+  },
+  {
+    "file": "garden-release-fix-row-zu-desktop.png",
+    "sha256": "30cdd9f81087991aefaf85eaba039af6ee9fdd7f13c24c0256c8dbeef27d6f03",
+    "bytes": 12905
+  },
+  {
+    "file": "garden-release-fix-row-zu-phone.png",
+    "sha256": "4a397335ceb33b68b7260fbe68cf6fead0a9c82710fbec768405ee3d49226403",
+    "bytes": 13583
+  },
+  {
     "file": "garden-st-colour-contact.png",
     "sha256": "e32f8e93e3ff3c7022587fd32002c637b1825458d9bc8f2ec368b1c8c92617a2",
     "bytes": 813383
@@ -293,6 +333,11 @@
     "file": "release-browser.json",
     "sha256": "cc0dde6622cbabd8714a4e9219598a418c783892b7e40e72cc967f54a1823082",
     "bytes": 1707
+  },
+  {
+    "file": "release-fix-browser.json",
+    "sha256": "9ed4de233f63c75da9d7a286aae88c43f5074f46929fb8cbb3e11156f9bcdebd",
+    "bytes": 3511
   },
   {
     "file": "table-header-bounds.json",
