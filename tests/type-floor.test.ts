@@ -268,7 +268,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + 'are 11-11.5px secondary text (error banners, chip labels, roster meta), within the '
       + '11px floor CLAUDE.md sets for non-farmer screens generally, just not this file\'s own '
       + 'zero-tolerance 12px floor yet.',
-    budget: 9,
+    budget: 0,
   },
   'components/NgoDashboard.tsx': {
     reason: 'the NGO/funder gardens-and-gardeners dashboard (PR #371). Its two sub-floor lines '
@@ -288,8 +288,8 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/network/NetworkMap.tsx': {
     reason: 'the funder/NGO portfolio map canvas, legend and chip controls — laptop-first staff '
       + 'tool. Owned by a different swarm track (map fallback / chrome-and-states) this wave, so '
-      + 'its sub-floor captions are classified here, not fixed.',
-    budget: 12,
+      + 'its sub-floor captions were raised to 12px in wave 16 (w16-06).',
+    budget: 0,
   },
   // w16-05: the worked-example farm at /samples/production mounts Codex-owned crop components.
   // They are classified at their current counts so the ratchet holds; this track does not edit them.
