@@ -86,6 +86,7 @@ const copy:UpdateCopy={
   "Community profile controls now have four draft translations.": "Ditaolo tsa profaele ya setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Review sharing choices": "Hlahloba dikgetho tsa ho arolelana",
   "Menu → Account": "Menyu → Akhaonto",
-  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ho Akhaonto, hlahloba ditumello tsa ho arolelana pela mongolo wa tsona wa pele wa Senyesemane. Ho arolelana profaele ya setjhaba ke kgetho e arohaneng ha Setjhaba se fumaneha."
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ho Akhaonto, hlahloba ditumello tsa ho arolelana pela mongolo wa tsona wa pele wa Senyesemane. Ho arolelana profaele ya setjhaba ke kgetho e arohaneng ha Setjhaba se fumaneha.",
+  "Farmer profile and report controls now have four draft translations.": "Ditaolo tsa profaele ya molemi le tlaleho jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
 };
 export default copy;

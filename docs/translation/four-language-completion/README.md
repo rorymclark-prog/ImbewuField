@@ -1198,6 +1198,65 @@ consent-meaning approval. Other community screens, wider workflows, older update
 exports and Study/media remain under the active whole-app goal. This changes the picture;
 `PLAN_VERSION` is unchanged. No production merge has occurred.
 
+## Batch 26 — other farmers’ profiles, conversations and reports
+
+The [member-profile packet](community-member-drafts.json) binds **13 source rows and 42 new native
+values**, plus four native release descriptions. Existing isiZulu controls and the previously
+inline isiZulu title remain exact. Four missing English status/caption entries now share the
+existing dictionary authority; the reviewer CSV is regenerated with its handoff fields blank.
+
+The actual public profile now follows all four languages for its heading, loading/unavailable
+states, Simple disclosure, photo descriptions, message/report controls, form label, success and
+failure feedback. A shared native review notice makes the draft status explicit. Report labels,
+errors and unavailable messages retain exact English source. Farmer names, area, biography,
+crop identities, photos and report text remain verbatim with unknown-language markup. Photo
+caption interpolation inserts each value once, so a farmer name containing braces or `$&` is
+never reinterpreted as a template.
+
+A failed read now offers Retry instead of falsely claiming the profile no longer exists.
+Superseded target reads cannot populate the next farmer's page. New target reads clear the old
+profile/report display, while language changes keep the farmer's edited report text. Conversation
+creation keeps the original recipient UID/name and thread destination. Reporting keeps the
+original profile kind, target/owner IDs, 300-character boundary, trimmed reason and 2,000 ms
+success-close delay. Empty/busy submissions and self-contact remain blocked. No profile query,
+thread/report service, permissions or auth/feature gate changed.
+
+Dark renders exposed pale Message text on a bright forest accent and dark error text on the
+page. This page now uses the existing stable action fill with its light caption; error paragraphs
+use readable body text and a red border. Report action borders retain their meaning and both
+report actions have a 44 px minimum height. These are local presentation changes; global theme
+values remain. Enabled action captions and alert text are measured against their rendered
+backgrounds in the browser, and the check rejects ratios below 4.5:1.
+
+Typecheck and whitespace checks are clean; **921 tests pass across 107 selected registered files**. Source preservation reverses only the complete exact declared member layer
+before checking the original locale hashes; partial/altered layers and unrelated learning changes
+remain detectable. The profile release assertion now locates its own source SHA rather than
+assuming it stays at index zero when newer releases prepend; its source/route/native assertions
+remain. An initial new test accidentally counted the shared review notice's own controls as
+profile actions. The corrected rule explicitly checks that missing/own profiles have no contact
+or report action, retaining the protection that matters.
+
+[Browser evidence](evidence/community-member/verification.json) covers **112 phone/desktop states**
+in all four languages: eight real signed-out redirects and 104 isolated actual-component states,
+with 1,338 scrolled/hit-tested reading lines and 12 extra phone field captures. Normal/Simple/
+expanded/own profiles, loading, missing/failed reads, messaging, reporting, failure/sent states and
+dark report errors were checked. No tested reading position was clipped/occluded, and no document
+overflow or unresolved photo-caption placeholder was found. The minimum enabled-action/alert
+contrast was 5.74:1. A disposable negative control restored the old Message pair and measured
+1.83:1, while the corrected pair measured 8.74:1; the guard can distinguish the observed defect.
+Representative forms, recovery, report and dark screenshots were inspected. Fixtures use actual
+component/hooks/source CSS with isolated services, QA photo placeholders and stub header/nav.
+The real signed-out route uses synthetic onboarding/consent preconditions and a documented browser
+preview flag; neither setup claims live Firebase, device location, consent-flow, actual moderation
+or signed-in end-to-end coverage.
+
+The complete 554-file `npm test` run at predecessor `a1f931db` is active in a frozen checkout and
+does not prove this head's 555-file registration. The earlier 552-file run at `11de9538` completed
+with 5,500 passes, zero failures and one pre-existing TODO. These remain unreviewed AI drafts with
+no fluent-speaker or moderation-meaning approval. Community board/messages, wider workflows,
+older update history, exports and Study/media remain under the whole-app goal. This changes the
+picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility

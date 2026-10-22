@@ -1,0 +1,323 @@
+{
+  "sourceSha": "a1f931dbd434bc1b2177892d9b509a6a520bd67a",
+  "status": "Unreviewed AI drafts; no fluent-speaker or moderation-meaning approval.",
+  "entries": [
+    {
+      "key": "communityProfileUnavailable",
+      "english": "This profile is no longer available.",
+      "st": "Profaele ena ha e sa fumaneha.",
+      "ts": "Phurofayili leyi a ya ha kumeki.",
+      "ve": "Phurofaiḽi iyi a i tsha wanala."
+    },
+    {
+      "key": "communityLessLabel",
+      "english": "Less",
+      "st": "Tse fokolang",
+      "ts": "Switsongo",
+      "ve": "Zwiṱuku"
+    },
+    {
+      "key": "communityMoreLabel",
+      "english": "More",
+      "st": "Tse ding",
+      "ts": "Swin’wana",
+      "ve": "Zwiṅwe"
+    },
+    {
+      "key": "communityMessageButton",
+      "english": "Message",
+      "st": "Romela molaetsa",
+      "ts": "Rhumela rungula",
+      "ve": "Rumelani mulaedza"
+    },
+    {
+      "key": "communityReportButton",
+      "english": "Report",
+      "st": "Tlaleha",
+      "ts": "Vika",
+      "ve": "Vhigani"
+    },
+    {
+      "key": "communityContactError",
+      "english": "Couldn't open the conversation — check your connection and try again.",
+      "st": "Ha ho a kgoneha ho bula moqoqo — hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku pfula mbulavurisano — kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u vula nyambedzano — ṱolani vhuṱumani haṋu ni lingedze hafhu."
+    },
+    {
+      "key": "communityReportReasonPlaceholder",
+      "english": "What's wrong?",
+      "st": "Phoso ke eng?",
+      "ts": "Ku hoxeke yini?",
+      "ve": "Ho khakhea mini?"
+    },
+    {
+      "key": "communityReportSent",
+      "english": "Report sent. Thank you.",
+      "st": "Tlaleho e rometswe. Re a leboha.",
+      "ts": "Xiviko xi rhumeriwile. Ha khensa.",
+      "ve": "Muvhigo wo rumelwa. Ri a livhuwa."
+    },
+    {
+      "key": "communityReportSubmit",
+      "english": "Submit report",
+      "st": "Romela tlaleho",
+      "ts": "Rhumela xiviko",
+      "ve": "Rumelani muvhigo"
+    },
+    {
+      "key": "communityReportError",
+      "english": "Couldn't send the report — check your connection and try again.",
+      "st": "Ha ho a kgoneha ho romela tlaleho — hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku rhumela xiviko — kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u rumela muvhigo — ṱolani vhuṱumani haṋu ni lingedze hafhu."
+    },
+    {
+      "key": "communityMemberTitle",
+      "english": "Profile",
+      "st": "Profaele",
+      "ts": "Phurofayili",
+      "ve": "Phurofaiḽi",
+      "zu": "Iphrofayela"
+    },
+    {
+      "key": "communityMemberPhotoAlt",
+      "english": "Photo of {name}, {number} of {total}",
+      "st": "Setshwantsho sa {name}, {number} ho tse {total}",
+      "ts": "Xifaniso xa {name}, {number} eka {total}",
+      "ve": "Tshifanyiso tsha {name}, {number} kha {total}",
+      "zu": "Isithombe sika-{name}, {number} kwezingu-{total}"
+    },
+    {
+      "key": "communityMemberLoadError",
+      "english": "Could not load this profile. Check your connection and try again.",
+      "st": "Ha ho a kgoneha ho kenya profaele ena. Hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku layicha phurofayili leyi. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u laisa phurofaiḽi iyi. Ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+      "zu": "Akukwazanga ukulayisha le phrofayela. Hlola uxhumano lwakho bese uzama futhi."
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "communityMemberTitle": null,
+      "communityMemberPhotoAlt": null,
+      "communityMemberLoadError": null
+    },
+    "st": {
+      "communityProfileUnavailable": null,
+      "communityLessLabel": null,
+      "communityMoreLabel": null,
+      "communityMessageButton": null,
+      "communityReportButton": null,
+      "communityContactError": null,
+      "communityReportReasonPlaceholder": null,
+      "communityReportSent": null,
+      "communityReportSubmit": null,
+      "communityReportError": null,
+      "communityMemberTitle": null,
+      "communityMemberPhotoAlt": null,
+      "communityMemberLoadError": null
+    },
+    "ts": {
+      "communityProfileUnavailable": null,
+      "communityLessLabel": null,
+      "communityMoreLabel": null,
+      "communityMessageButton": null,
+      "communityReportButton": null,
+      "communityContactError": null,
+      "communityReportReasonPlaceholder": null,
+      "communityReportSent": null,
+      "communityReportSubmit": null,
+      "communityReportError": null,
+      "communityMemberTitle": null,
+      "communityMemberPhotoAlt": null,
+      "communityMemberLoadError": null
+    },
+    "ve": {
+      "communityProfileUnavailable": null,
+      "communityLessLabel": null,
+      "communityMoreLabel": null,
+      "communityMessageButton": null,
+      "communityReportButton": null,
+      "communityContactError": null,
+      "communityReportReasonPlaceholder": null,
+      "communityReportSent": null,
+      "communityReportSubmit": null,
+      "communityReportError": null,
+      "communityMemberTitle": null,
+      "communityMemberPhotoAlt": null,
+      "communityMemberLoadError": null
+    }
+  },
+  "beforeLines": {
+    "zu": {
+      "communityMemberTitle": [],
+      "communityMemberPhotoAlt": [],
+      "communityMemberLoadError": []
+    },
+    "st": {
+      "communityProfileUnavailable": [],
+      "communityLessLabel": [],
+      "communityMoreLabel": [],
+      "communityMessageButton": [],
+      "communityReportButton": [],
+      "communityContactError": [],
+      "communityReportReasonPlaceholder": [],
+      "communityReportSent": [],
+      "communityReportSubmit": [],
+      "communityReportError": [],
+      "communityMemberTitle": [],
+      "communityMemberPhotoAlt": [],
+      "communityMemberLoadError": []
+    },
+    "ts": {
+      "communityProfileUnavailable": [],
+      "communityLessLabel": [],
+      "communityMoreLabel": [],
+      "communityMessageButton": [],
+      "communityReportButton": [],
+      "communityContactError": [],
+      "communityReportReasonPlaceholder": [],
+      "communityReportSent": [],
+      "communityReportSubmit": [],
+      "communityReportError": [],
+      "communityMemberTitle": [],
+      "communityMemberPhotoAlt": [],
+      "communityMemberLoadError": []
+    },
+    "ve": {
+      "communityProfileUnavailable": [],
+      "communityLessLabel": [],
+      "communityMoreLabel": [],
+      "communityMessageButton": [],
+      "communityReportButton": [],
+      "communityContactError": [],
+      "communityReportReasonPlaceholder": [],
+      "communityReportSent": [],
+      "communityReportSubmit": [],
+      "communityReportError": [],
+      "communityMemberTitle": [],
+      "communityMemberPhotoAlt": [],
+      "communityMemberLoadError": []
+    }
+  },
+  "sourceSha256": {
+    "app/community/u/[uid]/page.tsx": "70bc59cc62c8a0645003e6e6a00f300cec95e24465fdff3889e2504462989d90",
+    "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
+    "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
+    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37",
+    "lib/i18n-pending.ts": "459aab2af36273c52140e6d0a8b80c5835a11442e65af61360fd04dfe5e82d31",
+    "lib/locales/zu.ts": "8c792a0885ac933b373de42fbf5ad1d6f513b930ccbb5c072fd1cf5fba7761b4",
+    "lib/locales/st.ts": "6ec934a70e2b48b1123d6c2f823b650aa2bf65ea97ae66af2bdfc6e8edacbe9e",
+    "lib/locales/ts.ts": "2eb89008decf48506727a8a2582117960487818fb9ea4f4ada9126f965a2ac35",
+    "lib/locales/ve.ts": "e113f9b745c8a18bbe212c2c40ef44d7c200eee80d08e92934d3dd39e0436f8a"
+  },
+  "englishAdditions": {
+    "communityProfileUnavailable": "This profile is no longer available.",
+    "communityMemberTitle": "Profile",
+    "communityMemberPhotoAlt": "Photo of {name}, {number} of {total}",
+    "communityMemberLoadError": "Could not load this profile. Check your connection and try again."
+  },
+  "sourceControls": [
+    {
+      "key": "communityLoadingStatus",
+      "english": "Loading community profile",
+      "zu": "Kulayishwa umphakathi…",
+      "st": "Profaele ya setjhaba e a kenngwa…",
+      "ts": "Phurofayili ya vaaki ya layicha…",
+      "ve": "Phurofaiḽi ya tshitshavha i khou laisiwa…"
+    },
+    {
+      "key": "communityProfileUnavailable",
+      "english": null,
+      "zu": "Le phrofayela ayisatholakali.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityLessLabel",
+      "english": "Less",
+      "zu": "Okuncane",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityMoreLabel",
+      "english": "More",
+      "zu": "Okwengeziwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityMessageButton",
+      "english": "Message",
+      "zu": "Thumela umyalezo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityReportButton",
+      "english": "Report",
+      "zu": "Bika",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityContactError",
+      "english": "Couldn't open the conversation — check your connection and try again.",
+      "zu": "Kuhluleke ukuvula ingxoxo — hlola uxhumano lwakho bese uzama futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityReportReasonPlaceholder",
+      "english": "What's wrong?",
+      "zu": "Kwenzenjani?",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityReportSent",
+      "english": "Report sent. Thank you.",
+      "zu": "Umbiko uthunyelwe. Siyabonga.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityReportSubmit",
+      "english": "Submit report",
+      "zu": "Thumela umbiko",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityReportError",
+      "english": "Couldn't send the report — check your connection and try again.",
+      "zu": "Kuhluleke ukuthumela umbiko — hlola uxhumano lwakho bese uzama futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    }
+  ],
+  "scope": "Other farmer profile, message/report actions, accessible photo captions, read/messaging/report recovery. Preserve owned text, crop identities, report reason boundary and trimming, identifiers, message/report payloads, Simple disclosures, auth/feature gates, source wording and success delay.",
+  "releasePair": {
+    "english": "Farmer profile and report controls now have four draft translations.",
+    "zu": "Izinkinobho zephrofayela yomlimi nemibiko manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+    "st": "Ditaolo tsa profaele ya molemi le tlaleho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+    "ts": "Swilawuri swa phurofayili ya murimi ni xiviko sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+    "ve": "Zwilangi zwa phurofaiḽi ya mulimi na muvhigo zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+  },
+  "inlineTitle": {
+    "english": "Profile",
+    "zu": "Iphrofayela"
+  }
+}

@@ -998,6 +998,11 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  // Public profile status and accessible photo captions share their original source.
+  communityProfileUnavailable: "This profile is no longer available.",
+  communityMemberTitle: "Profile",
+  communityMemberPhotoAlt: "Photo of {name}, {number} of {total}",
+  communityMemberLoadError: "Could not load this profile. Check your connection and try again.",
   // Existing profile-only branches and newly named accessible/error controls.
   communityLocationUnsupported: "This device can't share a location.",
   communityLocationDenied: "Could not get your location — map visibility left off.",

@@ -86,6 +86,7 @@ const copy:UpdateCopy={
   "Community profile controls now have four draft translations.": "Zwilangi zwa phurofaiḽi ya tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
   "Review sharing choices": "Ṱolani khetho dza u kovhana",
   "Menu → Account": "Menyu → Akhaunthu",
-  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Kha Akhaunthu, ṱolani thendelo dza u kovhana tsini na maṅwalwa adzo a u thoma a English. U kovhana phurofaiḽi ya tshitshavha ndi khetho yo fhambanaho musi Tshitshavha tshi tshi wanala."
+  "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Kha Akhaunthu, ṱolani thendelo dza u kovhana tsini na maṅwalwa adzo a u thoma a English. U kovhana phurofaiḽi ya tshitshavha ndi khetho yo fhambanaho musi Tshitshavha tshi tshi wanala.",
+  "Farmer profile and report controls now have four draft translations.": "Zwilangi zwa phurofaiḽi ya mulimi na muvhigo zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
 };
 export default copy;
