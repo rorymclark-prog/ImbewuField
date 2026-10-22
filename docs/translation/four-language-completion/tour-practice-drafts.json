@@ -1,7 +1,7 @@
 {
   "sourceSha": "44d3e090839b3fc991fee3de7f37e18d221a8b9b",
   "status": "Unreviewed machine drafts; no fluent-speaker or farming/app-meaning approval.",
-  "phase": "IN PROGRESS — connected shell implemented; runtime/visual verification and release evidence pending",
+  "phase": "CONNECTED BATCH IMPLEMENTED AND VISUALLY CHECKED — translations unreviewed; whole-app goal remains incomplete.",
   "sourceSteps": [
     {
       "id": "garden",
@@ -3575,5 +3575,37 @@
       "Tour card source toggles remain above the transparent card action layer.",
       "The active role chip and staff view selector follow theme tokens."
     ]
-  }
+  },
+  "releaseRows": [
+    {
+      "english": "Tour and practice controls now have draft translations in four languages.",
+      "zu": "Uhambo nezilawuli zokuzilolonga manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+      "st": "Ditaolo tsa Leeto le boitlwaetso jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+      "ts": "Swilawuri swa Riendzo ni ku titoloveta sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+      "ve": "Zwilangi zwa Lwendo na u ḓiḓowedza zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+    },
+    {
+      "english": "Explore the practice views",
+      "zu": "Hlola izikrini zokuzilolonga",
+      "st": "Lekola dipono tsa boitlwaetso",
+      "ts": "Kambela mavonelo yo titoloveta",
+      "ve": "Ṱolani mbonalo dza u ḓiḓowedza"
+    },
+    {
+      "english": "Menu → Practice views",
+      "zu": "Imenyu → Izikrini zokuzilolonga",
+      "st": "Menyu → Dipono tsa boitlwaetso",
+      "ts": "Menyu → Mavonelo yo titoloveta",
+      "ve": "Menyu → Mbonalo dza u ḓiḓowedza"
+    },
+    {
+      "english": "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.",
+      "zu": "Vula isikrini sokukhetha noHambo. Imiyalelo nezilawuli kunemibhalo esaluhlaka engakabuyekezwa; umbhalo wokuqala wesiNgisi uyatholakala.",
+      "st": "Bula sebaka sa ho kgetha le Leeto. Ditaelo le ditaolo di na le meralo e so hlahlojwe; mongolo wa pele wa Senyesemane o a fumaneha.",
+      "ts": "Pfula ndhawu yo hlawula ni Riendzo. Swileriso ni swilawuri swi ni switsalwana leswi nga si kamberiwaka; tsalwa ro sungula ra Xinghezi ra kumeka.",
+      "ve": "Vulani fhethu ha u nanga na Lwendo. Ndaela na zwilangi zwi na mvetamveto dzi sa athu u sedzuluswa; maṅwalwa a u thoma a English a a wanala."
+    }
+  ],
+  "releaseSha": "c6fa5f44",
+  "verification": "evidence/tour-practice/verification.json"
 }

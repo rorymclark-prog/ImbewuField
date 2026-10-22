@@ -98,3 +98,17 @@ for(const lang of allDrafts)test(`${lang}: the actual staff role selector keeps 
  const ordinary=await actualPracticeUi(lang,{kind:'nav',sample:true,role:'farmer'});try{assert.equal(ordinary.renderer.root.findAllByType('select').length,0);}finally{await ordinary.dispose();}
  const refusal=await actualPracticeUi(lang,{kind:'nav',role:'ngo',previewFails:true});try{await refusal.renderer.root.findByType('select').props.onChange({target:{value:'funder'}});assert.deepEqual(refusal.calls.routes,[]);}finally{await refusal.dispose();}
 });
+
+import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
+import { visibleNotes, visibleUpdateTour } from '../lib/release-notes.ts';
+test('the announced practice change retains native source-bound release text and a real guide action in every language',async()=>{
+ assert.ok(visibleNotes().includes(packet.releaseRows[0].english));assert.ok(visibleUpdateTour().some(s=>s.href==='/samples'&&s.title===packet.releaseRows[1].english));assert.ok(visibleUpdateTour().length>=2);
+ for(const lang of allDrafts){const copy=await loadUpdateCopy(lang);for(const row of packet.releaseRows)assert.equal(updateDescription(copy,row.english),row[lang]);}
+});
+
+test('native role wording never changes a role key, icon, readiness flag, destination or mentor alias',()=>{
+ function declarations(source:string){const tree=ts.createSourceFile('RoleSwitcher.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);const wanted=new Set(['ROLES','ROLE_ALIASES']);return Object.fromEntries(tree.statements.filter(ts.isVariableStatement).flatMap(s=>s.declarationList.declarations).filter(d=>wanted.has(d.name.getText(tree))).map(d=>[d.name.getText(tree),d.initializer!.getText(tree)]));}
+ assert.deepEqual(declarations(read('components/RoleSwitcher.tsx')),declarations(packet.workspace.roleSwitcher.originalSource));
+ assert.equal(createHash('sha256').update(packet.workspace.roleSwitcher.originalSource).digest('hex'),packet.workspace.roleSwitcher.sourceSha256);
+ for(const row of packet.workspace.newZuluControls)assert.equal(sampleWorkspaceText('zu',row.english,row.zu),row.zu);
+});

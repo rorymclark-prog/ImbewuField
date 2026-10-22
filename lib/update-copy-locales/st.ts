@@ -92,6 +92,10 @@ const copy:UpdateCopy={
   "Photo viewer controls now have four draft translations.": "Ditaolo tsa sebohi sa ditshwantsho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
   "Open a saved photograph": "Bula setshwantsho se bolokilweng",
   "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Haeba akhaonto ya hao e na le setshwantsho, se bule. Ditaolo tsa sebohi sa ditshwantsho di sebedisa puo ya hao; mongolo wa pele wa setshwantsho o sala o le jwalo ka ha o ngotswe.",
-  "App page titles now have four draft translations.": "Dihlooho tsa maqephe a app jwale di na le diphetolelo tsa moralo ka dipuo tse nne."
+  "App page titles now have four draft translations.": "Dihlooho tsa maqephe a app jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Tour and practice controls now have draft translations in four languages.": "Ditaolo tsa Leeto le boitlwaetso jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+  "Explore the practice views": "Lekola dipono tsa boitlwaetso",
+  "Menu → Practice views": "Menyu → Dipono tsa boitlwaetso",
+  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Bula sebaka sa ho kgetha le Leeto. Ditaelo le ditaolo di na le meralo e so hlahlojwe; mongolo wa pele wa Senyesemane o a fumaneha."
 };
 export default copy;

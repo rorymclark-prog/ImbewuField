@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: 'c6fa5f44', changes: [
+    "Tour and practice controls now have draft translations in four languages.",
+  ], tour: [{ title: "Explore the practice views", where: "Menu → Practice views", href: '/samples',
+    detail: "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.",
+  }] },
   { when: '22 October 2026', sha: '3ba05f10', changes: [
     'App page titles now have four draft translations.',
   ] },
