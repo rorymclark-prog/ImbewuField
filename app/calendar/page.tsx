@@ -5,6 +5,7 @@ import { Sprout, Leaf, Droplets, Sun, Snowflake, ChevronDown } from 'lucide-reac
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import AppHeader from '@/components/layout/AppHeader';
 import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
@@ -14,7 +15,6 @@ import { produceLabel } from '@/lib/produce-label';
 import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { loadCropPlan } from '@/lib/crop-plan';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
@@ -320,7 +320,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        fontFamily: 'var(--font-mono, monospace)',
         fontSize: 12,
         fontWeight: 700,
         letterSpacing: '0.10em',
@@ -468,15 +467,10 @@ export default function CalendarPage() {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ ...APP_HEADER_INSET, background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
-        <MenuButton /><BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--border)' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--text-secondary)' }}>{localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}</h1>
-        <div className="flex-1" />
-        <LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
+        right={<LessonLink id="crops:calendar" label={localUi('Learn', 'Funda', lang)} />}
+      />
 
       {/* Scrollable body */}
       <main
@@ -486,6 +480,9 @@ export default function CalendarPage() {
           background: 'var(--bg-0)',
         }}
       >
+        <h1 className="font-display font-semibold m-0" style={{ padding: '14px 14px 0', fontSize: 'clamp(20px, 2vw, 26px)', color: 'var(--text-primary)' }}>
+          {localUi('Planting Calendar', 'Ikhalenda lokutshala', lang)}
+        </h1>
         {lang === 'zu' && (
           <p role="note" style={{ margin: '12px 14px 0', padding: '9px 12px', borderRadius: 10, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', fontSize: 12 }}>
             Imisebenzi yanyanga zonke neseluleko sikaLima sinombhalo wesiZulu ongakabuyekezwa nomthombo wesiNgisi. Eminye imiyalo yokulima isasele ngesiNgisi ukuze ibuyekezwe.
@@ -533,7 +530,6 @@ export default function CalendarPage() {
                       : idx === currentMonth ? '1px solid var(--gold-dim)' : '1px solid var(--border)',
                     borderRadius: 8,
                     color: active ? 'var(--color-canvas)' : idx === currentMonth ? 'var(--gold-dim)' : 'var(--text-secondary)',
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 'clamp(12px, 1vw, 13px)',
                     fontWeight: active || idx === currentMonth ? 700 : 500,
                     padding: '5px 11px',
@@ -596,7 +592,6 @@ export default function CalendarPage() {
                     alignItems: 'center',
                     gap: 5,
                     marginTop: 4,
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 12,
                     color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
@@ -746,7 +741,6 @@ export default function CalendarPage() {
             <div>
               <div
                 style={{
-                  fontFamily: 'var(--font-mono, monospace)',
                   fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: '0.10em',
@@ -830,7 +824,6 @@ export default function CalendarPage() {
                   <span
                     style={{
                       fontSize: 12,
-                      fontFamily: 'var(--font-mono, monospace)',
                       color: 'var(--text-secondary)',
                     }}
                   >
@@ -843,7 +836,6 @@ export default function CalendarPage() {
                 <span
                   style={{
                     fontSize: 12,
-                    fontFamily: 'var(--font-mono, monospace)',
                     color: 'var(--text-secondary)',
                   }}
                 >
@@ -911,7 +903,6 @@ export default function CalendarPage() {
                       style={{
                         padding: '7px 14px',
                         textAlign: 'left',
-                        fontFamily: 'var(--font-mono, monospace)',
                         fontSize: 12,
                         fontWeight: 700,
                         letterSpacing: '0.08em',
@@ -934,7 +925,6 @@ export default function CalendarPage() {
                         style={{
                           padding: '7px 4px',
                           textAlign: 'center',
-                          fontFamily: 'var(--font-mono, monospace)',
                           fontSize: 'clamp(12px, 1vw, 13px)',
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
@@ -1023,7 +1013,7 @@ export default function CalendarPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

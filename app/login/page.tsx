@@ -218,7 +218,10 @@ function LoginPageInner() {
               </svg>
             </div>
           </div>
-          <h1 className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</h1>
+          <p className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 2 }}>ImbewuField</p>
+          <h1 className="font-sans font-semibold" style={{ margin: 0, marginBottom: 6, fontSize: 16, color: 'var(--color-ink)' }}>
+            {mode === 'create' ? t('loginCreateAccount') : mode === 'reset' ? t('loginForgotPassword') : t('loginSignIn')}
+          </h1>
           <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>
             {mode === 'signin' && t('loginSubtitleSignIn')}
             {mode === 'create' && t('loginSubtitleCreate')}
@@ -323,7 +326,7 @@ function LoginPageInner() {
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={{ fontSize: 13, color: 'var(--gold-dim)' }}>{displayAuthError(error)}{lang === 'zu' && AUTH_ERROR_KEYS[error] ? <span className="block mt-1">{translate('en', AUTH_ERROR_KEYS[error])}</span> : null}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}

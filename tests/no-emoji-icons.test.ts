@@ -37,6 +37,9 @@ const ROUTES = [
   'app/exchange/page.tsx',
   'app/prices/page.tsx',
   'app/vision/page.tsx',
+  // code-11 (wave 15): MyRecords' 🌱 fallback prop and BrandLogo's ✦ icon prop are gone.
+  'components/MyRecords.tsx',
+  'components/BrandLogo.tsx',
 ];
 
 /**

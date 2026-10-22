@@ -329,11 +329,11 @@ function HomeInner() {
     if (!siteId || siteParamHandled.current === siteId) return;
     siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) { setError('This saved site is no longer available. Return to Site reports and choose another site.'); return; }
+    if (!p) { setError('This saved site is no longer available. Go back to Site reports and choose another site.'); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
-    const t = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
-    return () => clearTimeout(t);
+    const jumpTimer = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
+    return () => clearTimeout(jumpTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey, authLoading]);
 
@@ -573,6 +573,7 @@ function HomeInner() {
           <MenuButton /><BackButton fallback="/home" />
 
           <BrandLogo />
+          <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
           <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
@@ -633,7 +634,7 @@ function HomeInner() {
             className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
-              background: 'rgba(226,216,196,0.35)',
+              background: 'color-mix(in srgb, var(--border) 35%, transparent)',
               border: '1px solid var(--border)',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
