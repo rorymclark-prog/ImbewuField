@@ -289,6 +289,14 @@ html[data-theme="earth"] {
   --gold-dim: #7A4408;
   --blue: #1C5A9E;
   --orange: #B83A18;
+  /* Study course category colours as TEXT (lib/course-modules.ts CATEGORY_TEXT_COLORS): >=4.5:1 on this column's card */
+  --cat-foundation-text: #1F4D2B;
+  --cat-water-text: #235E86;
+  --cat-soil-text: #7F5435;
+  --cat-plants-text: #2D6B3C;
+  --cat-design-text: #7A4408;
+  --cat-business-text: #5C5040;
+  --cat-seeds-text: #7A5A06;
   --teal: #1A7868;
   /* the violet a field journal's "visitor / training" entries are inked in. Added when the
      journal's kind inks moved off fixed light-mode hexes — see lib/field-journal.ts. */
@@ -373,6 +381,14 @@ html[data-theme="earth"].dark {
   --gold-dim: #B49040;   /* was #8C6C20 — 3.79:1 on the card; this is 6.20 / 6.59 / 5.77 */
   --blue: #58A0DC;
   --orange: #E07850;
+  /* Study course category colours as TEXT (lib/course-modules.ts CATEGORY_TEXT_COLORS): >=4.5:1 on this column's card */
+  --cat-foundation-text: #9CD672;
+  --cat-water-text: #7CB8E0;
+  --cat-soil-text: #D4A074;
+  --cat-plants-text: #8CCB7E;
+  --cat-design-text: #D8A840;
+  --cat-business-text: #C2B195;
+  --cat-seeds-text: #E0B84A;
   --teal: #58B8A0;
   --violet: #B79CE0;
 
@@ -444,6 +460,14 @@ html[data-theme="slate"] {
   --gold-dim: #7A4008;
   --blue: #1555AA;
   --orange: #C03C18;
+  /* Study course category colours as TEXT (lib/course-modules.ts CATEGORY_TEXT_COLORS): >=4.5:1 on this column's card */
+  --cat-foundation-text: #1F4D2B;
+  --cat-water-text: #235E86;
+  --cat-soil-text: #7F5435;
+  --cat-plants-text: #2D6B3C;
+  --cat-design-text: #7A4408;
+  --cat-business-text: #5C5040;
+  --cat-seeds-text: #7A5A06;
   --teal: #0A6E6A;
   --violet: #6042A0;
 
@@ -516,6 +540,14 @@ html[data-theme="slate"].dark {
   --gold-dim: #B49040;   /* slate dark, same fix as earth dark above */
   --blue: #4890DC;
   --orange: #DC7050;
+  /* Study course category colours as TEXT (lib/course-modules.ts CATEGORY_TEXT_COLORS): >=4.5:1 on this column's card */
+  --cat-foundation-text: #9CD672;
+  --cat-water-text: #7CB8E0;
+  --cat-soil-text: #D4A074;
+  --cat-plants-text: #8CCB7E;
+  --cat-design-text: #D8A840;
+  --cat-business-text: #C2B195;
+  --cat-seeds-text: #E0B84A;
   --teal: #40A8A4;
   --violet: #AE9CE8;
 
