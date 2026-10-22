@@ -65,3 +65,11 @@ test('no line paints var(--on-forest) text on a var(--color-forest-800) backgrou
     });
   }
 });
+
+test('w16-02: LessonLink and the Design labels paint text with the themed forest token, not the fixed green', () => {
+  const lesson = readFileSync(join(root, 'components/design/LessonLink.tsx'), 'utf8');
+  assert.match(lesson, /const GREEN = 'var\(--color-forest-800\)'/);
+  const design = readFileSync(join(root, 'app/design/page.tsx'), 'utf8');
+  assert.match(design, /textTransform: 'uppercase', color: 'var\(--color-forest-800\)'/);
+  assert.match(design, /color: 'var\(--color-forest-800\)', fontWeight: 600, flexShrink: 0 \}\}>\{isZulu \? 'Klama →'/);
+});

@@ -521,11 +521,11 @@ function EmptyState() {
         textAlign: 'center',
       }}
     >
-      <Compass size={40} color={GREEN} />
+      <Compass size={40} color="var(--color-forest-800)" />
       {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
           h1 matching the nav label ("Design studio"), small so it doesn't compete with the
           instructional copy below. */}
-      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: GREEN, margin: 0 }}>
+      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--color-forest-800)', margin: 0 }}>
         {isZulu ? 'Isitudiyo Sokuklama' : 'Design studio'}
       </h1>
       {places.length > 0 ? (
@@ -561,7 +561,7 @@ function EmptyState() {
                     <span style={{ display: 'block', fontSize: 11.5, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
               </Link>
             ))}
           </div>
