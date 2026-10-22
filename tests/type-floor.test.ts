@@ -86,6 +86,8 @@ const STAFF_ROUTES = [
   // which is how FarmerPanel.tsx's EXPERT_SURFACES ratchet quietly let a 12px caption regress to
   // 9px with nothing here to catch it.
   'app/network/page.tsx',
+  // Added with wave 16 (w16-05): the worked-example farm. A farmer opens it from /samples.
+  'app/samples/production/page.tsx',
 ];
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
@@ -289,6 +291,13 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
       + 'its sub-floor captions are classified here, not fixed.',
     budget: 12,
   },
+  // w16-05: the worked-example farm at /samples/production mounts Codex-owned crop components.
+  // They are classified at their current counts so the ratchet holds; this track does not edit them.
+  'app/samples/production/page.tsx': { reason: 'the worked-example farm page; no sub-12px type', budget: 0 },
+  'components/crops/CropPlanExportCard.tsx': { reason: 'crop-plan export card mounted on the example (Codex-owned)', budget: 2 },
+  'components/crops/ProductArtworkGallery.tsx': { reason: 'product artwork gallery on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionAvailabilityGraphs.tsx': { reason: 'availability graphs on the example (Codex-owned)', budget: 0 },
+  'components/crops/ProductionRecordsEditor.tsx': { reason: 'production records editor on the example (Codex-owned)', budget: 0 },
   'components/partners/Screenshot.tsx': {
     reason: 'a captioned screenshot tile on the public /partners showcase',
     budget: 0,
