@@ -48,6 +48,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'On a laptop, Vision and Example fill the screen and farmer text is never below 12px.',
     'Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.',
   ] },
+  { when: '22 October 2026', sha: '7f689e73', changes: [
+    'Resume an unfinished site survey after reopening this browser, or discard its draft.',
+    'Close and keep draft lets you pause. Your report uses answers you explicitly save.',
+  ] },
   { when: '17 October 2026', sha: '5acf084c', changes: [
     'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',
     'Farmer pages share one header and leave room for the Lima button; Home fills a laptop.',

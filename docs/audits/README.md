@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
-1. [Current continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
+Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
+
+1. [Previous continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
 2. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
 3. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
@@ -63,6 +65,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Wave 15 integration close-out: five tracks folded, 21 assigned IDs dispositioned, w15-04 opened — 22 October 2026](2026-10-22/wave-15-integration-claude.md).
 
 - [Wave 15 rendered re-capture of the wave 14 build: 50 of 54 rows verified, 3 regressions fixed — 22 October 2026](2026-10-22/wave-15-recapture-claude.md).
+
+- [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
 - [Wave 14 integration close-out: 166 findings dispositioned, five tracks folded — 17 October 2026](2026-10-17/wave-14-integration-claude.md).
 
