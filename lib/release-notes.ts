@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '22 October 2026', sha: '7f689e73', changes: [
+    'Resume an unfinished site survey after reopening this browser, or discard its draft.',
+    'Close and keep draft lets you pause. Your report uses answers you explicitly save.',
+  ] },
   { when: '17 October 2026', sha: '5acf084c', changes: [
     'Dark mode now reaches the Design studio, invoices, print preview and sample pages.',
     'Farmer pages share one header and leave room for the Lima button; Home fills a laptop.',
