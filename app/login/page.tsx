@@ -218,7 +218,10 @@ function LoginPageInner() {
               </svg>
             </div>
           </div>
-          <h1 className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</h1>
+          <p className="u-display-md" style={{ margin: 0, color: 'var(--color-ink)', marginBottom: 2 }}>ImbewuField</p>
+          <h1 className="font-sans font-semibold" style={{ margin: 0, marginBottom: 6, fontSize: 16, color: 'var(--color-ink)' }}>
+            {mode === 'create' ? t('loginCreateAccount') : mode === 'reset' ? t('loginForgotPassword') : t('loginSignIn')}
+          </h1>
           <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>
             {mode === 'signin' && t('loginSubtitleSignIn')}
             {mode === 'create' && t('loginSubtitleCreate')}

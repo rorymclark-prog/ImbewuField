@@ -735,7 +735,7 @@ function HarvestCropPicture({ name }: { name: string }) {
   if (photo) return <img src={photo} alt={`${lookup} · ${recordsFill(lang, 'AI-generated reference')}`} title={recordsFill(lang, 'AI-generated crop reference, not harvest evidence')} width={40} height={40} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} data-photo-preview="true" />;
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
-    ? <CropIcon cropKey={key} icon="🌱" size={32} />
+    ? <CropIcon cropKey={key} icon="" size={32} />
     : <Leaf size={18} style={{ color: 'var(--color-forest-800)' }} />;
 }
 

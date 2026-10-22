@@ -573,6 +573,7 @@ function HomeInner() {
           <MenuButton /><BackButton fallback="/home" />
 
           <BrandLogo />
+          <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
           <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
