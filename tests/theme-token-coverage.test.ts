@@ -447,3 +447,34 @@ test('app/design/page.tsx has exactly one h1 in each of its two render states (n
   const matches = src.match(/<h1\b/g) ?? [];
   assert.equal(matches.length, 2, 'expected exactly two <h1> sites — EmptyState (no site) and the loaded studio header — never both in the same render');
 });
+
+// sdesk-03 / desk-13 (wave 15): pale literal fills kept their cream under theme-coloured text in
+// dark. The exchange and atlas components paint with theme tokens; the /home coach gradient
+// mixes gold into --bg-1; /example's completeness card follows the theme instead of a dark slab.
+test('exchange and atlas components paint no literal paper/card fill (sdesk-03)', () => {
+  const files = [
+    'components/exchange/ExchangeBoard.tsx', 'components/exchange/ExchangeGuide.tsx',
+    'components/exchange/ListingCard.tsx', 'components/exchange/NewListingForm.tsx',
+    'components/exchange/ExchangeHeader.tsx', 'components/atlas/AtlasExplorer.tsx',
+  ];
+  const banned = /rgba\(\s*255\s*,\s*254\s*,\s*250|rgba\(\s*226\s*,\s*216\s*,\s*196\s*,\s*0\.[3-9]\d*\)\s*['"]\s*[,}]|#FFFEFA|#E2D8C4|#E4DCC6|#FBF6EC/i;
+  const offenders: string[] = [];
+  for (const f of files) read(f).split('\n').forEach((l, i) => { if (banned.test(l) && /background|fill/.test(l)) offenders.push(`${f}:${i + 1}`); });
+  assert.deepEqual(offenders, []);
+});
+
+test('the /home next-step coach gradient and /example completeness card follow the theme', () => {
+  assert.match(read('app/home/page.tsx'), /linear-gradient\(135deg, color-mix\(in srgb, var\(--gold\) 14%, var\(--bg-1\)\)/);
+  assert.match(read('app/example/page.tsx'), /<CompletionScore inputs=\{DEMO_COMPLETION\} surface \/>/);
+  assert.match(read('components/report/CompletionScore.tsx'), /bg: 'var\(--bg-1\)'/);
+});
+
+// code-12 (wave 15): `font-mono` is only harmless while --font-mono is aliased to Public Sans.
+// Chart numbers are Newsreader (`font-display tabular-nums`); everything else inherits the body font.
+test('the farmer charts and exchange header carry no font-mono (code-12)', () => {
+  for (const f of ['components/FinanceGraphs.tsx', 'components/CashflowChart.tsx', 'components/RainfallChart.tsx',
+    'components/ComingUpHarvests.tsx', 'components/AreaPanel.tsx', 'components/HarvestReconciliation.tsx',
+    'components/InsightsPanel.tsx', 'components/exchange/ExchangeHeader.tsx']) {
+    assert.doesNotMatch(read(f), /font-mono/, `${f} should not use font-mono`);
+  }
+});

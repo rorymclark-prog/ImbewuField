@@ -77,7 +77,7 @@ test('Messages thread: Simple keeps the conversation and the send box, and tucks
 test('Messages thread: per-message timestamps (metadata not needed to read and reply) are hidden in Simple', () => {
   assert.match(
     THREAD,
-    /\{!simple && \(\s*<div className="font-sans" style=\{\{ fontSize: 10\.5,[\s\S]{0,200}\{timeAgo\(m\.created_at, lang\)\}/,
+    /\{!simple && \(\s*<div className="font-sans" style=\{\{ fontSize: 12,[\s\S]{0,200}\{timeAgo\(m\.created_at, lang\)\}/,
     'per-message timeAgo must be gated by !simple',
   );
 });

@@ -71,7 +71,7 @@ export default function ComingUpHarvests({
 
   const header = (
     <div className="px-4 py-3" style={{ borderBottom: '1px solid var(--border)' }}>
-      <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
+      <p className="text-xs uppercase tracking-wider flex items-center gap-1.5" style={{ color: 'var(--text-secondary)' }}>
         <CalendarClock size={13} /> {text('Coming up', 'Okuzayo')}
       </p>
       <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
@@ -190,7 +190,7 @@ export default function ComingUpHarvests({
 function Figure({ label, value, tone = 'var(--text-primary)' }: { label: string; value: string; tone?: string }) {
   return (
     <span className="flex flex-col">
-      <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
+      <span className="font-display tabular-nums font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{label}</span>
     </span>
   );
@@ -217,7 +217,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
         </span>
         <span className="flex items-center gap-1.5 flex-shrink-0">
           {/* An em-dash, not "0 kg": nothing starting is not a harvest of nothing. */}
-          <span className="font-mono" style={{ fontSize: 13, color: empty ? 'var(--text-muted)' : 'var(--text-primary)' }}>
+          <span className="font-display tabular-nums" style={{ fontSize: 13, color: empty ? 'var(--text-muted)' : 'var(--text-primary)' }}>
             {empty ? '—' : kgLabel(month.kg)}
           </span>
           {!empty && (
@@ -236,7 +236,7 @@ function MonthRow({ month, open, onToggle, lang }: { month: ForwardHarvestMonth;
                   <span style={{ color: 'var(--text-muted)' }}> · {recordsTemplate(lang, 'picking runs into {month}', 'ukukha kuqhubeka kuze kube u-{month}', { month: lang === 'zu' ? MONTH_ZU[h.endMonth] : isRecordsRegionalLang(lang) ? recordsMonthLong(lang, h.endMonth) : MONTH_NAME[h.endMonth] })}</span>
                 )}
               </span>
-              <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{kgLabel(h.kg)}</span>
+              <span className="font-display tabular-nums flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{kgLabel(h.kg)}</span>
             </li>
           ))}
         </ul>

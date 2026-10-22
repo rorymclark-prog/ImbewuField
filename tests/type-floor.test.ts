@@ -56,6 +56,14 @@ const ROUTES = [
   'app/journal/page.tsx',
   'app/calendar/page.tsx',
   'app/cropplan/page.tsx',
+  // Added with wave 15 (code-10): the exchange, community, contact and prices captions sat at
+  // 10-11.5px because none of these routes was scanned.
+  'app/exchange/page.tsx',
+  'app/community/page.tsx',
+  'app/community/profile/page.tsx',
+  'app/community/messages/[threadId]/page.tsx',
+  'app/contact/page.tsx',
+  'app/prices/page.tsx',
 ];
 
 // The NGO, funder and public-showcase routes — added 29 August after the same audit found
@@ -82,6 +90,23 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
+  'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
+  'app/community/page.tsx': 'wave 15 code-10: the community board; no sub-12px type',
+  'app/community/profile/page.tsx': 'wave 15 code-10: the community profile; no sub-12px type',
+  'app/contact/page.tsx': 'wave 15 code-10: the contact page; no sub-12px type',
+  'app/exchange/page.tsx': 'wave 15 code-10: the exchange route; no sub-12px type',
+  'app/prices/page.tsx': 'wave 15 code-10: the crop prices route; no sub-12px type',
+  'components/community/NearbyMap.tsx': 'wave 15 code-10: the nearby-farmers map popup; no sub-12px type',
+  'components/exchange/ExchangeBoard.tsx': 'wave 15 code-10: the seed and produce exchange board; no sub-12px type',
+  'components/exchange/ExchangeCopy.tsx': 'wave 15 code-10: exchange disclaimers; no sub-12px type',
+  'components/exchange/ExchangeGuide.tsx': 'wave 15 code-10: the exchange how-to guide; no sub-12px type',
+  'components/exchange/ExchangeHeader.tsx': 'wave 15 code-10: the exchange header; no sub-12px type',
+  'components/exchange/ExchangeLede.tsx': 'wave 15 code-10: the exchange lede; no sub-12px type',
+  'components/exchange/ListingCard.tsx': 'wave 15 code-10: an exchange listing card; no sub-12px type',
+  'components/exchange/NewListingForm.tsx': 'wave 15 code-10: the new-listing form; no sub-12px type',
+  'components/exchange/ShareListingButton.tsx': 'wave 15 code-10: the share-a-listing menu; no sub-12px type',
+  'components/prices/CropPriceGuide.tsx': 'wave 15 code-10: the crop price guide; no sub-12px type',
   'components/LanguageDraftNote.tsx': 'the shared isiZulu-draft notice (wave 14, zu-04) is read on farmer-facing phones',
   'components/records/RecordQuantityFields.tsx': 'a farmer must read the production quantity and its unit before saving',
   'components/records/RecordQuantitySummary.tsx': 'eggs and packages need readable separate totals beside weighed harvests',
@@ -214,7 +239,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/report/CompletionScore.tsx': {
     reason: 'the report scorecard, same print scale',
-    budget: 1,
+    budget: 0,
   },
   'components/design/LessonPanel.tsx': { reason: 'design studio, laptop tool', budget: 3 },
   'components/AreaPanel.tsx': { reason: 'the drawing tool\'s measurement readout', budget: 0 },
@@ -271,7 +296,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/ContactInbox.tsx': {
     reason: 'the mentor/org side of the farmer contact inbox, mounted on /ngo — staff reading and '
       + 'replying, not the farmer\'s own /contact screen',
-    budget: 2,
+    budget: 0,
   },
 };
 

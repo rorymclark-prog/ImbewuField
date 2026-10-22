@@ -102,7 +102,7 @@ export default function CashflowChart({
               type="button"
               onClick={() => { setWindowMonths(n); setPicked(null); }}
               aria-pressed={windowMonths === n}
-              className="font-mono rounded-full px-2 py-0.5"
+              className="tabular-nums rounded-full px-2 py-0.5"
               style={{
                 fontSize: 12,
                 border: `1px solid ${windowMonths === n ? IN : HAIRLINE}`,
@@ -196,7 +196,7 @@ export default function CashflowChart({
 function Figure({ label, value, tone }: { label: string; value: string; tone: string }) {
   return (
     <span className="flex flex-col">
-      <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
+      <span className="font-display tabular-nums font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
@@ -406,7 +406,7 @@ function Chip({ dot, label, value }: { dot: string; label: string; value: string
   return (
     <span className="flex items-baseline gap-1.5">
       <span aria-hidden="true" style={{ width: 7, height: 7, borderRadius: 2, background: dot, display: 'inline-block' }} />
-      <span className="font-mono" style={{ fontSize: 12, color: INK }}>{value}</span>
+      <span className="font-display tabular-nums" style={{ fontSize: 12, color: INK }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
