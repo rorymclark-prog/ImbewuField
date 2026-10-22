@@ -114,7 +114,7 @@ test('Simple labels each companion link clearly, with its one-line description a
 
 test('the companion link labels are real i18n keys, placed next to their related preview strings', () => {
   assert.match(I18N_SOURCE, /studentDesignPreviewSimpleLabel: 'Design course',/);
-  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm Finance course',/);
+  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm finance course',/);
 });
 
 test('ochre is never painted as readable text: the due-soon tone and the category text-colour variant', () => {
