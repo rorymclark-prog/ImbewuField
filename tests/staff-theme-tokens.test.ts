@@ -29,6 +29,8 @@ const FILES = [
   '../app/surveys/page.tsx',
   '../app/funder/page.tsx',
   '../app/farmer/page.tsx',
+  '../components/funder/CohortCharts.tsx',
+  '../components/funder/CohortDashboard.tsx',
 ].map((p) => fileURLToPath(new URL(p, import.meta.url)));
 
 // Solid brand fills (forest / ochre) and the fixed light type painted on top of them, kept
@@ -37,6 +39,7 @@ const ALLOWED_HEX = new Set([
   '#1F4D2B', '#2D6B3C', // forest fill (solid button/badge backgrounds, active-toggle fills)
   '#C07A1E',            // ochre fill (the survey "Send" button)
   '#FFF', '#F7F2E9', '#EAF3E2', // fixed light type/icons painted on a forest or ochre fill
+  '#C4A46A', // CohortCharts KEPT: the harvest-kept bar fill, a fixed chart-series colour
   '#805416', '#235E86', // app/mentor/page.tsx ProgressBar track-fill only, not text — see above
 ]);
 
@@ -109,3 +112,37 @@ for (const file of FILES) {
     );
   });
 }
+
+// dark-01: the shared CSS modules behind /assessments, /ngo, /funder, /mentor, /samples and
+// /reports once painted page bodies, cards and tab strips with literal light hex, so a dark theme
+// showed a bright sheet between two dark bars. Print rules and the `.ink` print variant are the
+// only places a white surface is meant to stay white.
+const CSS_FILES = [
+  '../components/MelDashboard.module.css',
+  '../components/DashboardTabs.module.css',
+  '../components/FieldWork.module.css',
+  '../components/ProgrammeProgress.module.css',
+  '../components/ProgrammeReport.module.css',
+].map((p) => fileURLToPath(new URL(p, import.meta.url)));
+
+const LIGHT_SURFACE = /(?:background(?:-color)?|border(?:-[a-z]+)*)\s*:[^;}]*(?:#fff(?:fff)?\b|\bwhite\b|#eff4ef|#d7e3d9|#fffaf0|#fffefa|#e4dcc6|#e2d8c4)/i;
+
+for (const file of CSS_FILES) {
+  const label = file.split('/').pop();
+  test(`${label} paints no literal light surface outside print and the .ink variant`, () => {
+    const lines = readFileSync(file, 'utf8')
+      .replace(/@media print\s*\{.*$/gm, '')
+      .replace(/\.ink [^{]*\{[^}]*\}/g, '')
+      .split('\n');
+    const offenders = lines
+      .map((text, i) => ({ line: i + 1, text: text.trim() }))
+      .filter(({ text }) => LIGHT_SURFACE.test(text));
+    assert.deepEqual(offenders, [], 'Use --bg-0/1/2, --border or --input-bg instead of a light literal.');
+  });
+}
+
+test('CohortCharts chart-note disclosures are 44px with a Lucide chevron (staff-16)', () => {
+  const src = readFileSync(fileURLToPath(new URL('../components/funder/CohortCharts.tsx', import.meta.url)), 'utf8');
+  assert.match(src, /function CountedSummary[\s\S]*minHeight: 44[\s\S]*<ChevronDown/);
+  assert.equal(/minHeight: 32/.test(src), false, 'no 32px disclosure summaries');
+});
