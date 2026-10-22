@@ -87,6 +87,7 @@ const copy:UpdateCopy={
   "Review sharing choices": "Buyekeza izinketho zokwabelana",
   "Menu → Account": "Imenyu → I-akhawunti",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Ku-Akhawunti, buyekeza izimvume zokwabelana eceleni kombhalo wazo wokuqala wesiNgisi. Ukwabelana ngephrofayela yomphakathi kuyisinqumo esihlukile lapho Umphakathi utholakala.",
-  "Farmer profile and report controls now have four draft translations.": "Izinkinobho zephrofayela yomlimi nemibiko manje zinokuhumusha okusaluhlaka ngezilimi ezine."
+  "Farmer profile and report controls now have four draft translations.": "Izinkinobho zephrofayela yomlimi nemibiko manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Community messages, board and map controls now have four draft translations.": "Izinkinobho zemiyalezo, zebhodi nezemephu yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine."
 };
 export default copy;

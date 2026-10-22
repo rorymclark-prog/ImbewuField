@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(beforeCommunityMemberDictionary(actual,locale),locale),locale),locale),locale),locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(beforeCommunityMemberDictionary(beforeCommunityThreadDictionary(actual,locale),locale),locale),locale),locale),locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -139,4 +139,15 @@ export function beforeCommunityMemberDictionary(actual:unknown,locale:string):un
 }
 export function beforeCommunityMemberTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,communityMemberPacket(),'\n  // Community member controls: unreviewed drafts; community-member-drafts.json.\n','  // End community member controls.\n');
+}
+
+let communityThreadControls: ControlIconPacket | undefined;
+function communityThreadPacket():ControlIconPacket {
+  return communityThreadControls ??= JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/community-thread-drafts.json',import.meta.url),'utf8'));
+}
+export function beforeCommunityThreadDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,communityThreadPacket());
+}
+export function beforeCommunityThreadTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,communityThreadPacket(),'\n  // Community conversations and hub: unreviewed drafts; community-thread-drafts.json.\n','  // End community conversations and hub.\n');
 }

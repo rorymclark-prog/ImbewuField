@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { act } from 'react-test-renderer';
 import { actualOfflineUi,offlineNodeText,offlineQaRows } from './offline-ui-renderer.ts';
 import { controlLocales,controlT,type ControlLanguage } from './control-icon-renderers.ts';
-import { beforeOfflineDeviceDictionary,beforeOfflineDeviceTranslations,beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations } from './ui-dictionary-preservation.ts';
+import { beforeOfflineDeviceDictionary,beforeOfflineDeviceTranslations,beforeUpdateNoticeTranslations, beforeAccountTranslations, beforeCommunityProfileTranslations,beforeCommunityMemberTranslations,beforeCommunityThreadTranslations } from './ui-dictionary-preservation.ts';
 const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const packet=JSON.parse(read('docs/translation/four-language-completion/offline-device-drafts.json'));
 const langs=['zu','st','ts','ve']as const;
@@ -17,7 +17,7 @@ test('device-page drafts keep exact English, existing isiZulu, placeholders and 
   for(const lang of langs){
     for(const row of packet.entries){if(typeof row[lang]!=='string')continue;assert.equal(controlT(lang)(row.key),row[lang]);assert.equal(controlT('en')(row.key),row.english);assert.notEqual(row[lang],row.english);assert.deepEqual(placeholders(row[lang]),placeholders(row.english));assert.deepEqual(row[lang].match(/\d+/g)??[],row.english.match(/\d+/g)??[]);}
     for(const row of packet.sourceControls)if(!packet.entries.some((e:any)=>e.key===row.key&&typeof e[lang]==='string'))assert.equal(controlLocales[lang][row.key]??null,row[lang]);
-    const original=beforeUpdateNoticeTranslations(beforeAccountTranslations(beforeCommunityProfileTranslations(beforeCommunityMemberTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang),lang),rewound=beforeOfflineDeviceTranslations(original,lang);
+    const original=beforeUpdateNoticeTranslations(beforeAccountTranslations(beforeCommunityProfileTranslations(beforeCommunityMemberTranslations(beforeCommunityThreadTranslations(read(`lib/locales/${lang}.ts`),lang),lang),lang),lang),lang),rewound=beforeOfflineDeviceTranslations(original,lang);
     assert.equal(hash(rewound),packet.sourceSha256[`lib/locales/${lang}.ts`]);
     const broken=original.replace(JSON.stringify(controlT(lang)('offlineBadgeOffline')),JSON.stringify('Broken draft'));
     assert.equal(beforeOfflineDeviceTranslations(broken,lang),broken,'changed draft cannot be hidden by a historical projection');

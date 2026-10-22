@@ -1257,6 +1257,84 @@ no fluent-speaker or moderation-meaning approval. Community board/messages, wide
 older update history, exports and Study/media remain under the whole-app goal. This changes the
 picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
 
+## Batch 27 — connected community controls and conversation recovery
+
+The [community packet](community-thread-drafts.json) binds **57 source rows and 202 new native
+values**, plus four native release descriptions. Thirty-one English controls/statuses now use
+one dictionary authority. Existing native isiZulu values and the hub's original inline wording
+remain exact; the map retains its original contextual profile-link spelling. Three regional
+`profileClose` values previously inherited English “Close” and now have native drafts. The
+reviewer CSV is regenerated without claiming human review.
+
+The hub, board, message list, conversation and nearby map now follow the selected language for
+headings, controls, accessibility labels, loading/empty/failure states, posting/uploading status,
+photo descriptions and elapsed timestamps. Privacy, reporting and error wording retains the
+exact English source beside the draft. Farmer names, messages, biographies, listing content,
+areas and report reasons remain verbatim with unknown-language markup. Canonical category/kind
+IDs, the existing plant example, its count of 20, posting payloads, photo folder, character limit,
+report target/owner IDs and success-close delay remain. No service, feature gate, permission,
+map coordinate or saved geometry changed.
+
+The shared elapsed-time helper replaces two copies while preserving their distinct English
+compact/full wording, original isiZulu phrases, thresholds, floor arithmetic and local dates.
+Regional date labels use the existing records-month authority. Original source functions are
+recorded for boundary equivalence tests; invalid dates fail quietly. The Tshivenda minute/hour
+word roots have an [official DBE lexical reference](https://www.education.gov.za/Portals/0/Documents/MTbBE/Grade%204%20Maths%20Teacher%20Guides%20Term%203%20and%204/2025_Tshivenda_Grade%204_Mathematics_Teacher%20Gude_Term%203%20and%2041.pdf?ver=2025-08-13-105244-917),
+which does not approve these full phrases.
+
+Failed conversation reads offer Retry separately from a genuinely unavailable thread; an
+unverified thread cannot expose an active composer. Obsolete reads/listeners and late send/report
+acknowledgments cannot replace the next conversation's state. Pending fields retain the submitted
+text and block duplicate actions. Healthy hub reads remain usable when another tab fails; a
+rejected collection read no longer claims it is empty. An owner/refresh guard rejects the prior
+account's late private conversation list. New close/delete errors say the action could not be
+confirmed: the existing bounded write can reject after the server applied it. These checks use
+isolated service failures and deferred replies; they do not prove live delivery or exactly-once
+writes.
+
+The map pin is now a keyboard button with native purpose and popup actions. Closing restores
+focus to its pin. Its image no longer opts into the global photo viewer, whose capture handler
+would otherwise swallow the map action. Other marked photographs retain the viewer behavior.
+
+[Browser evidence](evidence/community-conversations/verification.json) covers **400 states**:
+16 real signed-out redirects and 384 isolated actual-component states across all four languages,
+phone/desktop, light/dark, Simple, loading/empty, form/disclosure, sending/reporting and failures.
+There are **8,771 scrolled/hit-tested reading lines**, with no tested reading position clipped or
+occluded, document overflow or unresolved placeholder. The minimum visible-text contrast is
+**4.70:1**. After the final close/delete wording change, the affected 16 states were checked again.
+All 400 states were then rerun after the final theme correction; totals count each state once. Representative thread, dark form, popup, short-phone
+errors and revised board failure images were inspected.
+
+The browser checks first exposed a listener panel wider than its phone and combined errors that
+pushed the composer below a short viewport. The panel now fits; one conversation scroll area
+keeps the composer reachable. Before/after screenshots are retained. Dark Have/Free/unselected
+kind labels and delete/error text also failed contrast; local colour pairs now pass, with a themed gold tint for Free and the existing red cues. Fixtures use actual components/hooks/source CSS with isolated
+services, QA photographs, stub header/nav and map runtime. Real guest checks use synthetic
+onboarding/consent preconditions plus the documented preview flag. This is not signed-in
+Firebase, live tile, device-location, consent-flow or moderation end-to-end verification.
+
+Typecheck is clean; **1,021 tests pass across 113 selected registered files**. The first broad
+run caught a root-only Free text token; its replacement uses themed ink and a gold-tinted
+background, and the unchanged theme guard now passes. Older Simple/listener/photo checks were
+rewritten upward with their reason: the same behavior and original English output must survive
+native JSX, associated labels and guarded callbacks. No assertion was deleted to make tests pass.
+The photo check additionally rejects decorative, anonymous and wrong-ordinal captions. Historical
+dictionary guards reverse only this complete exact declared layer before applying original hashes;
+partial/corrupt changes remain detectable. Release text binds its source and the visible guide
+still has two real destinations.
+
+The older complete 554-file run at `a1f931db` ended with **5,563 passes, one failure and one
+pre-existing TODO**. Its failure pinned literal English photo-alt JSX. The semantic repair was
+checked against both predecessor snapshots, pushed to #1052 at `5f4ec58b` and merged into #1053
+at `ac1a8843`; each has clean typecheck and four passing targeted checks. Their CI rules jobs
+passed; full test jobs were still running when last inspected. This older full run does not prove
+the current 556-file head. The unrelated shape-sync TODO is unchanged.
+
+These remain unreviewed machine drafts. The global photo viewer and static document metadata
+titles still need translation, so this is core community control coverage, not whole-community
+end-to-end completion. Wider workflows, older update history, exports and Study/media remain.
+This changes the picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility

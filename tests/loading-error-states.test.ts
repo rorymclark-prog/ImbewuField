@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { actualCommunityConversation } from './community-conversations-renderer.ts';
+import { controlT } from './control-icon-renderers.ts';
 
 // This file guards a single defect class across several screens: a failed READ that renders
 // exactly like a genuinely empty or genuinely zero result, offline or on a weak signal — the
@@ -175,7 +177,7 @@ test('community writes (board posts, threads, messages, reports) are bounded by 
   }
 });
 
-test('the community message listener reports a failure instead of leaving the thread silently empty', () => {
+test('the community message listener reports a failure instead of leaving the thread silently empty', async () => {
   const queries = source('../lib/db/community-queries.ts');
   // bug-14: onSnapshot was given only a success callback, so a denied or dropped listener never
   // told the caller anything went wrong — the thread just stayed empty forever.
@@ -184,13 +186,20 @@ test('the community message listener reports a failure instead of leaving the th
   assert.match(queries, /onSnapshot\(q, \(snap\) => cb\(rows<ThreadMessage>\(snap\)\), \(err\) => onError\?\.\(err\)\)/,
     'subscribeMessages must forward onSnapshot\'s error argument, not just the success one');
 
-  const page = source('../app/community/messages/[threadId]/page.tsx');
-  assert.match(page, /const \[listenError, setListenError\] = useState/,
-    'the thread page must track a listener failure as its own state');
-  assert.match(page, /subscribeMessages\(threadId, setMessages, \(\) => setListenError\(true\)\)/,
-    'the thread page must pass an error callback into subscribeMessages');
-  assert.match(page, /\{listenError && \(/, 'a listener failure must render a visible, retryable banner');
-  assert.match(page, /setListenRetryKey\(\(k\) => k \+ 1\)/, 'the retry button must be able to force a resubscribe');
+  // A current-listener guard may wrap the callback; its syntax is not the failure/retry contract.
+  const h=await actualCommunityConversation('en','thread'),t=controlT('en');
+  try{
+    assert.ok(!h.text().includes(t('communityMessagesListenError')));
+    await h.listenerError(0);
+    assert.ok(h.text().includes(t('communityMessagesListenError')),'a denied/dropped listener must show the actual error banner');
+    assert.equal(h.renderer.root.findAllByProps({role:'alert'}).length,1);
+    await h.button(t('communityRetry'));
+    assert.equal(h.calls.subscriptions.length,2,'Retry must create a fresh subscription');
+    assert.equal(h.calls.subscriptions[0].closed,true,'Retry must retire the failed listener');
+    assert.ok(!h.text().includes(t('communityMessagesListenError')));
+    await h.listenerError(0);
+    assert.ok(!h.text().includes(t('communityMessagesListenError')),'an obsolete listener cannot repaint a recovered conversation');
+  }finally{await h.dispose();}
 
   const i18n = source('../lib/i18n.tsx');
   assert.match(i18n, /communityMessagesListenError:/, 'communityMessagesListenError must exist in the translation dictionary');
