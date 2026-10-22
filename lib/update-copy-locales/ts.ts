@@ -100,6 +100,7 @@ const copy:UpdateCopy={
   "Garden examples and programme reports have unreviewed translations in four languages.": "Swikombiso swa mintanga ni swiviko swa nongonoko swi ni vuhundzuluxi lebyi nga si kamberiwaka hi tindzimi ta mune.",
   "See garden examples in your language": "Vona swikombiso swa mintanga hi ririmi ra wena",
   "Tour → Gardens": "Riendzo → Mintanga",
-  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Pfula ntanga. Xiviko ni pulani ya wona swi ni vuhundzuluxi leswi nga si kamberiwaka ni tsalwa ro sungula ra Xinghezi. Ti-PDF ta xihlovo leti hlayisiweke ti funghiwile leswaku i ta Xinghezi."
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Pfula ntanga. Xiviko ni pulani ya wona swi ni vuhundzuluxi leswi nga si kamberiwaka ni tsalwa ro sungula ra Xinghezi. Ti-PDF ta xihlovo leti hlayisiweke ti funghiwile leswaku i ta Xinghezi.",
+  "Site PDFs now keep native letters and have unreviewed translated labels.": "Ti-PDF ta ndhawu ti hlayisa maletere ya ririmi ni malebulu lama hundzuluxiweke lama nga si kamberiwaka."
 };
 export default copy;

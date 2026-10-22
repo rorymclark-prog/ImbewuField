@@ -100,6 +100,7 @@ const copy:UpdateCopy={
   "Garden examples and programme reports have unreviewed translations in four languages.": "Izibonelo zezingadi nemibiko yohlelo zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
   "See garden examples in your language": "Bona izibonelo zezingadi ngolimi lwakho",
   "Tour → Gardens": "Uhambo → Izingadi",
-  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vula ingadi. Umbiko nokuhleleka kwayo kunokuhumusha okungakabuyekezwa kanye nombhalo wokuqala wesiNgisi. Ama-PDF omthombo agciniwe amakwe ngokuthi angesiNgisi."
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Vula ingadi. Umbiko nokuhleleka kwayo kunokuhumusha okungakabuyekezwa kanye nombhalo wokuqala wesiNgisi. Ama-PDF omthombo agciniwe amakwe ngokuthi angesiNgisi.",
+  "Site PDFs now keep native letters and have unreviewed translated labels.": "Ama-PDF endawo agcina izinhlamvu zolimi futhi anamalebula ahunyushiwe angakabuyekezwa."
 };
 export default copy;

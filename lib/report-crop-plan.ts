@@ -1,3 +1,5 @@
+import { recordsDate, recordsMonthShort } from './records-months';
+import { sitePdfText, isNativePdfLanguage } from './site-pdf-copy';
 import type { DesignCanvasState } from './design-canvas';
 import { bedsFromDesignCanvas, canvasMetreExtent } from './design-beds-bridge';
 import { ELEMENTS_BY_ID } from './design-elements';
@@ -52,9 +54,9 @@ export function normaliseReportCropSnapshot(value: unknown): ReportCropSnapshot 
   return { siteId: v.siteId, capturedAt: v.capturedAt, planUpdatedAt: v.planUpdatedAt, planNotes: Array.isArray(v.planNotes) ? v.planNotes.filter(n => n && ['warning', 'choice', 'gap', 'basis'].includes(n.kind) && typeof n.text === 'string').slice(0, 100).map(n => ({ kind: n.kind, text: n.text.slice(0, 4000), bedIds: Array.isArray(n.bedIds) ? n.bedIds.filter(id => ids.has(id)) : undefined })) : undefined, planNotesAt: Number.isFinite(v.planNotesAt) ? v.planNotesAt : undefined, beds: v.beds.map(b => ({ id: b.id, label: b.label, areaM2: b.areaM2, kind: b.kind === 'plot' ? 'plot' : 'bed', ...(Number.isFinite(b.minDimM) ? { minDimM: b.minDimM } : {}) })), plantings: v.plantings.map(p => ({ id: p.id, bedId: p.bedId, cropKey: p.cropKey, sowMonth: p.sowMonth, areaFraction: p.areaFraction, existing: p.existing === true, once: p.once, inNursery: p.inNursery, variety: p.variety?.trim().slice(0, 120) || undefined })), outlines: v.outlines.map(o => ({ bedId: o.bedId, points: o.points.map(p => [...p] as [number, number]) })) };
 }
 
-export function reportCropMonths(s: ReportCropSnapshot) {
+export function reportCropMonths(s: ReportCropSnapshot, language='en') {
   const start = new Date(s.capturedAt);
-  return Array.from({ length: 12 }, (_, i) => new Date(start.getFullYear(), start.getMonth() + i, 1).toLocaleDateString('en-ZA', { month: 'short', year: 'numeric' }));
+  return Array.from({ length: 12 }, (_, i) => {const date=new Date(start.getFullYear(),start.getMonth()+i,1);return isNativePdfLanguage(language)?`${recordsMonthShort(language,date.getMonth()+1)} ${date.getFullYear()}`:date.toLocaleDateString('en-ZA',{month:'short',year:'numeric'});});
 }
 export function reportCropCalendar(s: ReportCropSnapshot) {
   return buildOccupancyCalendar(s.plantings, s.beds, new Date(s.capturedAt).getMonth() + 1);
@@ -103,9 +105,9 @@ export function reportCropMapSvg(s: ReportCropSnapshot, offset: number): string 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="410" viewBox="0 0 800 410"><title>${xml(`Saved growing spaces - ${reportCropMonths(s)[offset]}`)}</title><rect width="800" height="410" fill="white"/>${body}</svg>`;
 }
 
-export function reportCropWorkingInput(s: ReportCropSnapshot, title: string): CropPlanPdfInput {
+export function reportCropWorkingInput(s: ReportCropSnapshot, title: string, language='en'): CropPlanPdfInput {
   const now = new Date(s.capturedAt);
-  return { plantings: s.plantings, beds: s.beds, tasks: tasksForPlan(s.plantings, s.beds, now.getMonth() + 1), now, planNotes: s.planNotes, planNotesAt: s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, siteLine: 'Saved site report crop plan', locationLine: title, climateLine: '', bedsSummary: `${s.beds.length} beds / plots`, dateLabel: now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
+  return { plantings: s.plantings, beds: s.beds, tasks: tasksForPlan(s.plantings, s.beds, now.getMonth() + 1), now, planNotes: s.planNotes, planNotesAt: s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, language, siteLine: sitePdfText('Saved site report crop plan',language), locationLine: title, climateLine: '', bedsSummary: sitePdfText('{count} beds / plots',language,{count:s.beds.length}), dateLabel: isNativePdfLanguage(language)?recordsDate(language,now,true):now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
 }
 
 export interface ReportSowingRow {
@@ -115,7 +117,7 @@ export interface ReportSowingRow {
 }
 /** The report explains when to start crops. Reuse the working plan's task dates,
  * including nursery carry-over and absolute first-season stamps, without bed duplication. */
-export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[]; rows: ReportSowingRow[]; unscheduled: string[] } {
+export function reportSowingCalendar(s: ReportCropSnapshot, language='en'): { months: string[]; rows: ReportSowingRow[]; unscheduled: string[] } {
   const now = new Date(s.capturedAt), startIndex = now.getFullYear() * 12 + now.getMonth();
   const plantings = new Map(s.plantings.map(p => [p.id, p]));
   const grouped = new Map<string, ReportSowingRow>();
@@ -135,5 +137,5 @@ export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[];
     grouped.set(task.cropKey, row);
   }
   const unscheduled = [...new Set(s.plantings.filter(p => !grouped.has(p.cropKey)).map(p => cropByKey(p.cropKey)?.name ?? p.cropKey))];
-  return { months: reportCropMonths(s), rows: [...grouped.values()], unscheduled };
+  return { months: reportCropMonths(s,language), rows: [...grouped.values()], unscheduled };
 }

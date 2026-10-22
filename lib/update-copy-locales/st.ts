@@ -100,6 +100,7 @@ const copy:UpdateCopy={
   "Garden examples and programme reports have unreviewed translations in four languages.": "Mehlala ya ditshimo le ditlaleho tsa lenaneo di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
   "See garden examples in your language": "Bona mehlala ya ditshimo ka puo ya hao",
   "Tour → Gardens": "Leeto → Ditshimo",
-  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Bula tshimo. Tlaleho le moralo wa yona di na le diphetolelo tse so hlahlojwe le mongolo wa pele wa Senyesemane. Di-PDF tsa mohlodi tse bolokilweng di tshwailwe e le tsa Senyesemane."
+  "Open a garden. Its report and layout have unreviewed translations with the English source. Saved source PDFs are labelled English.": "Bula tshimo. Tlaleho le moralo wa yona di na le diphetolelo tse so hlahlojwe le mongolo wa pele wa Senyesemane. Di-PDF tsa mohlodi tse bolokilweng di tshwailwe e le tsa Senyesemane.",
+  "Site PDFs now keep native letters and have unreviewed translated labels.": "Di-PDF tsa sebaka di boloka ditlhaku tsa puo mme di na le dileibole tse fetoletsweng tse so hlahlojwe."
 };
 export default copy;

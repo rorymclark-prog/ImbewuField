@@ -124,7 +124,7 @@ export function packReportCards(cards: ReportCardBox[], start: { y: number; fres
 
 /** The PDF reuses the screen's exact chart artwork and data, at print resolution.
  * The caller owns page numbering, branding and the full narrative that follows. */
-export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: string = 'en', font = 'helvetica'): void {
+export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets: VisualPdfAssets, date: string, language: string = 'en', font = 'helvetica', bottom?: number): void {
   const label = (en: string, zu: string) => programmeReportText(en,language,{},zu);
   const standardLabel = (value: string) => ({
     'IMBEWUFIELD / SITE REPORT': label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA'),
@@ -135,6 +135,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   } as Record<string,string>)[value] ?? value;
   const scale = doc.internal.pageSize.getWidth() / 600;
   const u = (v: number) => v * scale;
+  const limit = bottom === undefined ? 786 : Math.min(786, bottom / scale);
   // A figure such as "R 15 890" must not break across two lines: its spaces become non-breaking ones.
   const safe = (value: string) => (isProgrammeDraftLanguage(language)?reportPdfText(value):pdfSafe(value)).replace(/(\d) (?=\d{3}(?!\d))/g, '$1\u00a0').replace(/\bR (?=\d)/g, 'R\u00a0');
   let y = 46;
@@ -173,7 +174,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     const drawing = reportChartSvg(coverPlan);
     doc.setFont(font, 'normal'); doc.setFontSize(8);
     const captionHeight = (doc.splitTextToSize(safe(coverPlan.note), u(512)) as string[]).length * 8 * 1.3;
-    const room = doc.internal.pageSize.getHeight() / scale - 62 - y - captionHeight - 12;
+    const room = (bottom === undefined ? doc.internal.pageSize.getHeight() / scale - 62 : limit) - y - captionHeight - 12;
     const fit = Math.min(512 / drawing.width, room / drawing.height);
     const w = drawing.width * fit, h = drawing.height * fit;
     doc.addImage(assets.charts[coverPlan.id], 'PNG', u(44 + (512 - w) / 2), u(y), u(w), u(h), undefined, 'FAST');
@@ -183,7 +184,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   const columns = visuals.metrics.length > 2 ? 4 : 2;
   const cell = 526 / columns;
   const metricRows = Math.ceil(visuals.metrics.length / columns);
-  if (y + metricRows * 100 > 750) { page(glance); onGlancePage = true; }
+  if (y + metricRows * 100 > Math.min(750,limit)) { page(glance); onGlancePage = true; }
   visuals.metrics.forEach((metric, i) => {
     const x = 44 + (i % columns) * cell, top = y + Math.floor(i / columns) * 100;
     rect(x, top - 10, 3, 78, '#af6b24');
@@ -192,12 +193,14 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     write(metric.note, x + 10, top + 53, cell - 24, 8, '#526258');
   });
   y += metricRows * 100 + 4;
-  if (y + 55 > 765) { page('Report basis'); onGlancePage = false; }
+  doc.setFont(font,'normal');doc.setFontSize(9);
+  const basisHeight=bottom===undefined?55:(doc.splitTextToSize(safe(visuals.basis),u(512)) as string[]).length*9*1.3+22;
+  if (y + basisHeight > Math.min(765,limit)) { page('Report basis'); onGlancePage = false; }
   y += write(visuals.basis, 44, y, 512, 9, '#526258') + 22;
 
   // The cards carry straight on under the figures when that page is already "the site at a glance";
   // after a photograph cover they open on a page of their own, as before.
-  const LIMIT = 786; // the page footer is written at about 807
+  const LIMIT = limit;
   const SIDE = 320; // a short bar chart is set at this width with its note beside it, not stretched across the card
   const cards = visuals.charts.filter(chart => chart !== coverPlan).map(chart => {
     const drawing = reportChartSvg(chart);

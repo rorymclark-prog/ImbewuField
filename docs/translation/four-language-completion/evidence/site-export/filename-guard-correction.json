@@ -1,0 +1,7 @@
+{
+  "originalHead": "c3ddc2070ed1b5afe4bb68634363f5b92c13fc04",
+  "originalTest": "tests/site-ecology.test.ts:104",
+  "reason": "The rule is saved site identity and report-version date, independent of an optional presentation-language argument. The previous regex pinned the old call arity. The replacement inspects actual full/summary delivery arguments and must reject a regional name or current date. No PDF rendering behavior changed.",
+  "oldRun": "39768852686 rules119791017305 SUCCESS/test119791016990 FAILURE",
+  "recheck": "Pending; no corrected full-pass claim."
+}

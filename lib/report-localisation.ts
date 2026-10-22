@@ -1,4 +1,5 @@
 import { REPORT_UI_KEYS } from './i18n-pending.ts';
+import { SITE_PDF_COPY } from './site-pdf-copy-data';
 import { recordsDate, recordsMonthShort } from './records-months.ts';
 import { numberLabel } from '@/lib/format-figures';
 import type { LocationData } from './types';
@@ -7,6 +8,7 @@ import { reportSummaryPages } from './report-summary';
 
 /** Unreviewed AI drafts for code-authored document furniture; saved values are only interpolated. */
 export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;ts:string;ve:string}[] = [
+  ...SITE_PDF_COPY,
   {
     "english": "Permaculture Site Report",
     "zu": "Umbiko wendawo ye-permaculture",

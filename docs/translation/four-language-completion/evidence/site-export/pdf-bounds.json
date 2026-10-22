@@ -1,0 +1,158 @@
+[
+  {
+    "file": "en-after-colour.pdf",
+    "pages": 5,
+    "words": 695,
+    "clipped": []
+  },
+  {
+    "file": "en-after-ink.pdf",
+    "pages": 3,
+    "words": 614,
+    "clipped": []
+  },
+  {
+    "file": "en-after-working.pdf",
+    "pages": 22,
+    "words": 3992,
+    "clipped": []
+  },
+  {
+    "file": "en-before-colour.pdf",
+    "pages": 5,
+    "words": 695,
+    "clipped": []
+  },
+  {
+    "file": "en-before-ink.pdf",
+    "pages": 3,
+    "words": 614,
+    "clipped": []
+  },
+  {
+    "file": "en-before-working.pdf",
+    "pages": 22,
+    "words": 3992,
+    "clipped": []
+  },
+  {
+    "file": "st-colour.pdf",
+    "pages": 11,
+    "words": 2470,
+    "clipped": []
+  },
+  {
+    "file": "st-ink.pdf",
+    "pages": 3,
+    "words": 951,
+    "clipped": []
+  },
+  {
+    "file": "st-legacy.pdf",
+    "pages": 3,
+    "words": 930,
+    "clipped": []
+  },
+  {
+    "file": "st-overflow.pdf",
+    "pages": 7,
+    "words": 3682,
+    "clipped": []
+  },
+  {
+    "file": "st-working.pdf",
+    "pages": 23,
+    "words": 4953,
+    "clipped": []
+  },
+  {
+    "file": "ts-colour.pdf",
+    "pages": 11,
+    "words": 2455,
+    "clipped": []
+  },
+  {
+    "file": "ts-ink.pdf",
+    "pages": 3,
+    "words": 953,
+    "clipped": []
+  },
+  {
+    "file": "ts-legacy.pdf",
+    "pages": 3,
+    "words": 929,
+    "clipped": []
+  },
+  {
+    "file": "ts-overflow.pdf",
+    "pages": 7,
+    "words": 3684,
+    "clipped": []
+  },
+  {
+    "file": "ts-working.pdf",
+    "pages": 23,
+    "words": 4955,
+    "clipped": []
+  },
+  {
+    "file": "ve-colour.pdf",
+    "pages": 11,
+    "words": 2494,
+    "clipped": []
+  },
+  {
+    "file": "ve-ink.pdf",
+    "pages": 3,
+    "words": 962,
+    "clipped": []
+  },
+  {
+    "file": "ve-legacy.pdf",
+    "pages": 3,
+    "words": 940,
+    "clipped": []
+  },
+  {
+    "file": "ve-overflow.pdf",
+    "pages": 7,
+    "words": 3703,
+    "clipped": []
+  },
+  {
+    "file": "ve-working.pdf",
+    "pages": 23,
+    "words": 5024,
+    "clipped": []
+  },
+  {
+    "file": "zu-colour.pdf",
+    "pages": 11,
+    "words": 1956,
+    "clipped": []
+  },
+  {
+    "file": "zu-ink.pdf",
+    "pages": 3,
+    "words": 815,
+    "clipped": []
+  },
+  {
+    "file": "zu-legacy.pdf",
+    "pages": 3,
+    "words": 792,
+    "clipped": []
+  },
+  {
+    "file": "zu-overflow.pdf",
+    "pages": 7,
+    "words": 3414,
+    "clipped": []
+  },
+  {
+    "file": "zu-working.pdf",
+    "pages": 23,
+    "words": 4217,
+    "clipped": []
+  }
+]

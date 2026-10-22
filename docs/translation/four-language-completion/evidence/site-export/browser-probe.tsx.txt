@@ -1,0 +1,35 @@
+'use client';
+import {useEffect} from 'react';
+import {buildReportPdf} from '@/lib/report-pdf';
+import {siteReportVisuals} from '@/lib/report-visuals';
+import {prepareVisualPdfAssets} from '@/lib/report-visual-pdf';
+import {reportUiDate,reportDocumentText} from '@/lib/report-localisation';
+import type {ReportSiteFacts} from '@/lib/report-site-facts';
+import type {LocationData} from '@/lib/types';
+import fixtures from '@/tests/fixtures/report-visuals-translation/source-cases.json';
+
+export default function Page(){
+ useEffect(()=>{
+  const run=async(language:string,mode:string)=>{
+   const source=fixtures.cases[1],facts=structuredClone(source.facts) as unknown as ReportSiteFacts,location=source.location as LocationData;
+   const crop=facts.crop!,snapshot=crop.snapshot!;
+   snapshot.capturedAt='2026-12-05T08:00:00Z';snapshot.beds[0].label='Ṱanḓa {count} $&';
+   snapshot.plantings[0].variety='Original ṋḓḽ';
+   snapshot.planNotes=[{kind:'warning',text:'Original saved ṱḓḽ record: 6 m². Private wording stays as recorded.'}];
+   const privateRecord='Original saved Ṱanḓa ṋḓḽ record, {count} $&, 6 m².';
+   const t=(source:string)=>reportDocumentText(source,language);
+   const heading=t('Site'),tableHeading=t('Crop');
+   const markdown=(mode==='legacy'?'':'# Ṱanḓa saved report\n\n')+`## ${heading}\n${privateRecord}\n\n### ${t('Saved plan')}\n`+Array.from({length:9},()=>privateRecord).join(' ')+'\n\n| '+tableHeading+' | '+t('Detail')+' |\n|---|---|\n'+Array.from({length:48},(_,i)=>`| ${i+1} | ${privateRecord} |`).join('\n')+'\n\n'+privateRecord;
+   const photo=await new Promise<string>((resolve,reject)=>{const image=new Image();image.onload=()=>{const canvas=document.createElement('canvas');canvas.width=400;canvas.height=300;const context=canvas.getContext('2d')!;context.fillStyle='#fff';context.fillRect(0,0,400,300);context.drawImage(image,50,0,300,300);resolve(canvas.toDataURL('image/jpeg'));};image.onerror=reject;image.src='/element-art/tree_marula.png';});
+   const visuals=siteReportVisuals(facts,location,language);
+   visuals.title='Ṱanḓa saved report';visuals.subtitle='';
+   const assets=mode==='colour'?await prepareVisualPdfAssets(visuals,[{image:photo,caption:privateRecord}],[],{}):undefined;
+   if(assets)assets.chapters={[heading]:[{image:photo,title:t('Captured site satellite view')+' — '+privateRecord,caption:privateRecord}]};
+   const cropInput=mode==='legacy'?{...crop,snapshot:undefined}:crop;
+   const blob=await buildReportPdf(markdown,{language,siteName:'Ṱanḓa saved report',biome:'Original saved site',lat:location.lat,lon:location.lon,rainfallMm:location.rainfall.annual,meanTempC:location.climate.meanTemp,dateLabel:reportUiDate(language,snapshot.capturedAt,false),cropPlan:cropInput,includeCropWorkingPlan:mode==='working',visuals:assets?visuals:undefined,visualAssets:assets,sheets:mode==='colour'?[{id:'synthetic-sheet',label:privateRecord.repeat(3)}]:[],loadSheetImage:async()=>photo,photos:['colour','overflow'].includes(mode)?[{label:privateRecord.repeat(3),note:privateRecord.repeat(mode==='overflow'?300:75)+(mode==='overflow'?' END OF ORIGINAL ṱḓḽ NOTE.':''),dataUrl:photo},{label:privateRecord,note:privateRecord,dataUrl:photo}]:[]});
+   return{bytes:Array.from(new Uint8Array(await blob.arrayBuffer())),unchangedRecords:snapshot.beds[0].label==='Ṱanḓa {count} $&'&&snapshot.plantings[0].variety==='Original ṋḓḽ',sourceRecord:privateRecord};
+  };
+  (window as unknown as {sitePdfQA:typeof run}).sitePdfQA=run;
+ },[]);
+ return <main>Temporary local PDF verification fixture</main>;
+}

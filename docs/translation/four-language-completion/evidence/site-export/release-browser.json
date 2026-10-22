@@ -1,0 +1,114 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Ama-PDF endawo agcina izinhlamvu zolimi futhi anamalebula ahunyushiwe angakabuyekezwa.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "lines": 3,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Ama-PDF endawo agcina izinhlamvu zolimi futhi anamalebula ahunyushiwe angakabuyekezwa.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Di-PDF tsa sebaka di boloka ditlhaku tsa puo mme di na le dileibole tse fetoletsweng tse so hlahlojwe.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "lines": 3,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Di-PDF tsa sebaka di boloka ditlhaku tsa puo mme di na le dileibole tse fetoletsweng tse so hlahlojwe.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Ti-PDF ta ndhawu ti hlayisa maletere ya ririmi ni malebulu lama hundzuluxiweke lama nga si kamberiwaka.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "lines": 4,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "Ti-PDF ta ndhawu ti hlayisa maletere ya ririmi ni malebulu lama hundzuluxiweke lama nga si kamberiwaka.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "lines": 5,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "PDF dza fhethu dzi vhulunga maḽeḓere a luambo na dzilebulu dzo ṱalutshedzelwaho dzi sa athu u sedzuluswa.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "lines": 4,
+    "failed": [],
+    "overflow": false,
+    "placeholders": false,
+    "contrast": {
+      "minimum": 12.314028956741739,
+      "failed": []
+    },
+    "native": "PDF dza fhethu dzi vhulunga maḽeḓere a luambo na dzilebulu dzo ṱalutshedzelwaho dzi sa athu u sedzuluswa.",
+    "source": "Site PDFs now keep native letters and have unreviewed translated labels."
+  }
+]
