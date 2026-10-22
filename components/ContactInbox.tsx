@@ -318,7 +318,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     className="mt-2 flex items-center gap-1.5 font-display font-semibold text-xs px-4 py-2 rounded-xl"
                     style={{
                       background: replyText[msg.id]?.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.08)',
-                      color: replyText[msg.id]?.trim() ? 'var(--on-forest)' : 'var(--text-muted)',
+                      color: replyText[msg.id]?.trim() ? 'var(--on-forest-800)' : 'var(--text-muted)',
                       border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
                     }}
                   >

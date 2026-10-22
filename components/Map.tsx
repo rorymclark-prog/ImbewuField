@@ -2149,7 +2149,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
           message={t('mapUnsupportedMessage')}
           actions={
             <>
-              <Link href="/reports" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display font-semibold" style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+              <Link href="/reports" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display font-semibold" style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
                 {t('mapUnsupportedOpenReports')}
               </Link>
               <Link href="/design/lite" className="inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-display" style={{ minHeight: 44, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
@@ -2828,7 +2828,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </button>
             <button onClick={finishReticleEdit}
               className="flex flex-col items-center justify-center rounded-2xl font-display font-bold transition-all active:scale-95"
-              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest)' }}>
+              style={{ flex: '0 1 50px', minWidth: 0, padding: '9px 0', background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest-800)' }}>
               <Check size={17} />
               <span style={{ fontSize: 11, marginTop: 3 }}>{t('editDoneButton')}</span>
             </button>
@@ -3364,7 +3364,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </button>
               <button onClick={finishEditing}
                 className="min-h-11 flex items-center gap-1 px-3 py-1 rounded-lg text-xs font-display font-semibold transition-all"
-                style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest)', minHeight: 32 }}>
+                style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.6)', color: 'var(--on-forest-800)', minHeight: 32 }}>
                 <Check size={12} className="inline mr-1" />{t('nativeEditSaveButton')}
               </button>
             </>
@@ -4121,7 +4121,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {t('savePlaceCancelButton')}
                 </button>
                 <button onClick={confirmSavePlace}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest)', cursor: 'pointer' }}>
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                   <Check size={15} />{t('savePlaceConfirmButton')}
                 </button>
               </div>
@@ -4188,7 +4188,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   {t('shapeNamingSkipButton')}
                 </button>
                 <button onClick={confirmShapeNaming}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest)', cursor: 'pointer' }}>
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-sans font-semibold" style={{ fontSize: 14, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                   <Check size={15} />{t('shapeNamingConfirmButton')}
                 </button>
               </div>
@@ -4438,7 +4438,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
               <button onClick={() => setGuideOpen(false)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-sans font-semibold"
-                style={{ fontSize: 15, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest)', cursor: 'pointer' }}>
+                style={{ fontSize: 15, background: 'var(--color-forest-800)', border: 'none', color: 'var(--on-forest-800)', cursor: 'pointer' }}>
                 <Check size={15} />{t('mapGuideClose')}
               </button>
             </div>

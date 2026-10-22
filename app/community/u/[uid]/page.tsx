@@ -161,7 +161,7 @@ export default function PublicCommunityProfilePage() {
                   onClick={handleMessage}
                   disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
+                  style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
                   {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
                   {t('communityMessageButton')}
