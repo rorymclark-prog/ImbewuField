@@ -1,0 +1,338 @@
+{
+  "lang": "ts",
+  "routes": [
+    {
+      "route": "/login",
+      "source": "Sign in \u2014 ImbewuField",
+      "ssr": "Sign in \u2014 ImbewuField",
+      "browserTitle": "Nghena \u2014 ImbewuField"
+    },
+    {
+      "route": "/tips",
+      "source": "Tips and help \u2014 ImbewuField",
+      "ssr": "Tips and help \u2014 ImbewuField",
+      "browserTitle": "Switsundzuxo ni mpfuno \u2014 ImbewuField"
+    },
+    {
+      "route": "/updates",
+      "source": "What's new \u2014 ImbewuField",
+      "ssr": "What's new \u2014 ImbewuField",
+      "browserTitle": "Leswintshwa \u2014 ImbewuField"
+    },
+    {
+      "route": "/exchange",
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "ssr": "Farmer exchange \u2014 ImbewuField",
+      "browserTitle": "Ku cincana ka varimi \u2014 ImbewuField"
+    },
+    {
+      "route": "/partners",
+      "source": "ImbewuField for NGOs and funders",
+      "ssr": "ImbewuField for NGOs and funders",
+      "browserTitle": "ImbewuField ya ti-NGO ni vaseketeri va mali"
+    },
+    {
+      "route": "/student/design",
+      "source": "Design a working homestead \u2014 teaching preview",
+      "ssr": "Design a working homestead \u2014 teaching preview",
+      "browserTitle": "Dizayina muti lowu tirhaka \u2014 nkombiso wo dyondzisa"
+    },
+    {
+      "route": "/student/design/scale",
+      "source": "Read the scale, check the space \u2014 design practice",
+      "ssr": "Read the scale, check the space \u2014 design practice",
+      "browserTitle": "Hlaya xikalo, kambela ndhawu \u2014 ku titoloveta ku dizayina"
+    }
+  ],
+  "replacements": [
+    {
+      "source": "Reports \u2014 ImbewuField",
+      "value": "Swiviko \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Saved on this phone \u2014 ImbewuField",
+      "value": "Leswi hlayisiweke eka riqingho leri \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Funder \u2014 ImbewuField",
+      "value": "Museketeri wa mali \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Planting calendar \u2014 ImbewuField",
+      "value": "Khalendara yo byala \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Network \u2014 ImbewuField",
+      "value": "Netiweke \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "My Records \u2014 ImbewuField",
+      "value": "Tirhekhodo ta Mina \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "What's new \u2014 ImbewuField",
+      "value": "Leswintshwa \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Example farm \u2014 ImbewuField",
+      "value": "Purasi ra xikombiso \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Map \u2014 ImbewuField",
+      "value": "Mepe \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Contact \u2014 ImbewuField",
+      "value": "Vulavurisana \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Sign in \u2014 ImbewuField",
+      "value": "Nghena \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farm-gate prices \u2014 ImbewuField",
+      "value": "Minxavo ya le nyangweni wa purasi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Community \u2014 ImbewuField",
+      "value": "Vaaki \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Lima Vision \u2014 ImbewuField",
+      "value": "Lima Vision \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Profile \u2014 ImbewuField",
+      "value": "Phurofayili \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Project assessments \u2014 ImbewuField",
+      "value": "Mikambelo ya phurojeke \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Take a tour \u2014 ImbewuField",
+      "value": "Valanga app hi ku kongomisiwa \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Design studio \u2014 ImbewuField",
+      "value": "Ndhawu ya ku dizayina \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Tips and help \u2014 ImbewuField",
+      "value": "Switsundzuxo ni mpfuno \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Study \u2014 ImbewuField",
+      "value": "Dyondza \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Home \u2014 ImbewuField",
+      "value": "Kaya \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Mentor \u2014 ImbewuField",
+      "value": "Muleteri \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture manual \u2014 ImbewuField",
+      "value": "Buku ya Permaculture \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Surveys \u2014 ImbewuField",
+      "value": "Mipapa ya swivutiso \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Field journal \u2014 ImbewuField",
+      "value": "Buku ya Nsimu \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Messages \u2014 ImbewuField",
+      "value": "Marungula \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Atlas \u2014 ImbewuField",
+      "value": "Atlas \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Organisation \u2014 ImbewuField",
+      "value": "Nhlangano \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Account \u2014 ImbewuField",
+      "value": "Akhawunti \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Invoice \u2014 ImbewuField",
+      "value": "Invhoyisi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance \u2014 ImbewuField teaching preview",
+      "value": "Timali ta purasi \u2014 nkombiso wo dyondzisa wa ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "value": "Ku cincana ka varimi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance lesson \u2014 ImbewuField teaching preview",
+      "value": "Dyondzo ya timali ta purasi \u2014 nkombiso wo dyondzisa wa ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "ACT Teach the Teachers | two-day facilitator refresher",
+      "value": "ACT Teach the Teachers | mpfuxeto wa vafambisi va tidyondzo wa masiku mambirhi",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField \u2014 permaculture planning for South African farmers",
+      "value": "ImbewuField \u2014 ku pulana ka permaculture ka varimi va Afrika Dzonga",
+      "method": "text"
+    },
+    {
+      "source": "Farm Finance practical project \u2014 teaching preview",
+      "value": "Phurojeke yo titoloveta ya timali ta purasi \u2014 nkombiso wo dyondzisa",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField for NGOs and funders",
+      "value": "ImbewuField ya ti-NGO ni vaseketeri va mali",
+      "method": "text"
+    },
+    {
+      "source": "Design a working homestead \u2014 teaching preview",
+      "value": "Dizayina muti lowu tirhaka \u2014 nkombiso wo dyondzisa",
+      "method": "replace"
+    },
+    {
+      "source": "The busy yard \u2014 design practice case",
+      "value": "Rivala leri nga ni migingiriko \u2014 mhaka yo titoloveta ku dizayina",
+      "method": "text"
+    },
+    {
+      "source": "Report a bug or suggest a feature \u2014 ImbewuField",
+      "value": "Vika xihoxo kumbe ringanyeta xitirhisiwa \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture design lesson \u2014 teaching preview",
+      "value": "Dyondzo yo dizayina permaculture \u2014 nkombiso wo dyondzisa",
+      "method": "text"
+    },
+    {
+      "source": "Choose a view \u2014 ImbewuField",
+      "value": "Hlawula mavonelo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example gardens \u2014 ImbewuField",
+      "value": "Swirhapa swa swikombiso \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Your design learning folder \u2014 ImbewuField",
+      "value": "Foludara ya wena yo dyondza ku dizayina \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example production \u2014 ImbewuField",
+      "value": "Vuhumelerisi bya xikombiso \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Worked design demonstration \u2014 teaching preview",
+      "value": "Nkombiso wa dizayini leyi tirhiweke \u2014 nkombiso wo dyondzisa",
+      "method": "replace"
+    },
+    {
+      "source": "Read the scale, check the space \u2014 design practice",
+      "value": "Hlaya xikalo, kambela ndhawu \u2014 ku titoloveta ku dizayina",
+      "method": "text"
+    }
+  ],
+  "owners": [
+    {
+      "kind": "unknown/private",
+      "value": "QA Farmer\u2019s {name} $& report"
+    },
+    {
+      "kind": "manual URL language",
+      "value": "Permaculture Manual \u00b7 ImbewuField"
+    },
+    {
+      "kind": "Pitch",
+      "value": "ImbewuField \u2014 partner deck"
+    }
+  ],
+  "languageChanges": [
+    {
+      "language": "en",
+      "title": "Home \u2014 ImbewuField"
+    },
+    {
+      "language": "ts",
+      "title": "Kaya \u2014 ImbewuField"
+    }
+  ],
+  "release": [
+    {
+      "size": "phone",
+      "text": "Tinhlokomhaka ta matluka ya app sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+      "measured": {
+        "left": 28.1171875,
+        "right": 339.4296875,
+        "top": 367.0625,
+        "bottom": 400.4375,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    },
+    {
+      "size": "desktop",
+      "text": "Tinhlokomhaka ta matluka ya app sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+      "measured": {
+        "left": 410.6171875,
+        "right": 998.9609375,
+        "top": 348.21875,
+        "bottom": 363.71875,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      }
+    }
+  ]
+}

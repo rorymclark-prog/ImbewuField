@@ -91,6 +91,7 @@ const copy:UpdateCopy={
   "Community messages, board and map controls now have four draft translations.": "Izinkinobho zemiyalezo, zebhodi nezemephu yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
   "Photo viewer controls now have four draft translations.": "Izinkinobho zesibukeli sezithombe manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
   "Open a saved photograph": "Vula isithombe esigciniwe",
-  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Uma i-akhawunti yakho inesithombe, sivule. Izinkinobho zesibukeli sezithombe zisebenzisa ulimi lwakho; umbhalo wesithombe wokuqala uhlala njengoba uqoshiwe."
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Uma i-akhawunti yakho inesithombe, sivule. Izinkinobho zesibukeli sezithombe zisebenzisa ulimi lwakho; umbhalo wesithombe wokuqala uhlala njengoba uqoshiwe.",
+  "App page titles now have four draft translations.": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine."
 };
 export default copy;

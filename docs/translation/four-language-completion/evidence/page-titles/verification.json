@@ -1,0 +1,26 @@
+{
+  "sourceSha": "3ba05f1029928a9bd95b2f19d1daaf7de23db7e3",
+  "staticDeclarations": 51,
+  "distinctSourceTitles": 47,
+  "existingUiBindings": 29,
+  "newNativeValues": 82,
+  "realPublicRouteLoads": 28,
+  "syntheticHeadReplacementsOnActualGlobalComponent": 188,
+  "protectedOwnerChecks": 12,
+  "liveLanguageChanges": 8,
+  "clientNavigation": {
+    "conditions": 4,
+    "forwardAndBackTransitions": 8,
+    "sameDocumentMarkerRetained": true
+  },
+  "releasePreviewStates": 8,
+  "sourcePreservation": "All 51 static English metadata identities match their source; 53 metadata/manual body files retain exact bytes. Root changes only add the client title component; its English metadata is separately verified.",
+  "status": "Unreviewed machine drafts; no fluent-speaker approval. Lima Vision/Atlas and other declared names remain identities.",
+  "scope": "Actual app root/language provider/Next metadata and native DOM observer. Seven public routes per language, known-title text/node replacement, language toggles, unknown names, English manual URL and Pitch owner. Real Next client link and history Back keep the same document and update title in every language.",
+  "limits": [
+    "Title strings were read from real document.title and SSR HTML; screenshots of page content do not capture browser chrome.",
+    "Private/signed-in routes are covered by source bindings and synthetic metadata replacement, not authenticated end-to-end visits.",
+    "Manual document body/output languages, English social metadata and remaining page body translations are separate outstanding scope."
+  ],
+  "remainingObserved": "The tiny MenuButton caption still hardcodes Tour outside isiZulu; seen in update screenshots. Translate through its shared control authority in the next batch."
+}

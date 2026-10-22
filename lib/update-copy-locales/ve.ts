@@ -91,6 +91,7 @@ const copy:UpdateCopy={
   "Community messages, board and map controls now have four draft translations.": "Zwilangi zwa milaedza, bodo na mapa wa tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
   "Photo viewer controls now have four draft translations.": "Zwilangi zwa tshivhoni tsha zwifanyiso zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
   "Open a saved photograph": "Vulani tshifanyiso tsho vhulungwaho",
-  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Arali akhaunthu yaṋu i na tshifanyiso, tshi vuleni. Zwilangi zwa tshivhoni tsha zwifanyiso zwi shumisa luambo lwaṋu; ṱhaluso ya u thoma ya tshifanyiso i sala nga nḓila ye ya ṅwalwa ngayo."
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Arali akhaunthu yaṋu i na tshifanyiso, tshi vuleni. Zwilangi zwa tshivhoni tsha zwifanyiso zwi shumisa luambo lwaṋu; ṱhaluso ya u thoma ya tshifanyiso i sala nga nḓila ye ya ṅwalwa ngayo.",
+  "App page titles now have four draft translations.": "Ṱhoho dza masiaṱari a app zwino dzi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
 };
 export default copy;

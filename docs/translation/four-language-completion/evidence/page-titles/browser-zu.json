@@ -1,0 +1,338 @@
+{
+  "lang": "zu",
+  "routes": [
+    {
+      "route": "/login",
+      "source": "Sign in \u2014 ImbewuField",
+      "ssr": "Sign in \u2014 ImbewuField",
+      "browserTitle": "Ngena \u2014 ImbewuField"
+    },
+    {
+      "route": "/tips",
+      "source": "Tips and help \u2014 ImbewuField",
+      "ssr": "Tips and help \u2014 ImbewuField",
+      "browserTitle": "Amacebo nosizo \u2014 ImbewuField"
+    },
+    {
+      "route": "/updates",
+      "source": "What's new \u2014 ImbewuField",
+      "ssr": "What's new \u2014 ImbewuField",
+      "browserTitle": "Yini entsha \u2014 ImbewuField"
+    },
+    {
+      "route": "/exchange",
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "ssr": "Farmer exchange \u2014 ImbewuField",
+      "browserTitle": "Ukuhwebelana kwabalimi \u2014 ImbewuField"
+    },
+    {
+      "route": "/partners",
+      "source": "ImbewuField for NGOs and funders",
+      "ssr": "ImbewuField for NGOs and funders",
+      "browserTitle": "ImbewuField yama-NGO nabaxhasi"
+    },
+    {
+      "route": "/student/design",
+      "source": "Design a working homestead \u2014 teaching preview",
+      "ssr": "Design a working homestead \u2014 teaching preview",
+      "browserTitle": "Klama ikhaya elisebenzayo \u2014 umbukiso wokufundisa"
+    },
+    {
+      "route": "/student/design/scale",
+      "source": "Read the scale, check the space \u2014 design practice",
+      "ssr": "Read the scale, check the space \u2014 design practice",
+      "browserTitle": "Funda isikali, hlola indawo \u2014 ukuzijwayeza ukuklama"
+    }
+  ],
+  "replacements": [
+    {
+      "source": "Reports \u2014 ImbewuField",
+      "value": "Imibiko \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Saved on this phone \u2014 ImbewuField",
+      "value": "Okugcinwe kule foni \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Funder \u2014 ImbewuField",
+      "value": "Umxhasi \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Planting calendar \u2014 ImbewuField",
+      "value": "Ikhalenda lokutshala \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Network \u2014 ImbewuField",
+      "value": "Inethiwekhi \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "My Records \u2014 ImbewuField",
+      "value": "Amarekhodi Ami \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "What's new \u2014 ImbewuField",
+      "value": "Yini entsha \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Example farm \u2014 ImbewuField",
+      "value": "Ipulazi eliyisibonelo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Map \u2014 ImbewuField",
+      "value": "Imephu \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Contact \u2014 ImbewuField",
+      "value": "Xhumana \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Sign in \u2014 ImbewuField",
+      "value": "Ngena \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farm-gate prices \u2014 ImbewuField",
+      "value": "Amanani asesangweni lepulazi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Community \u2014 ImbewuField",
+      "value": "Umphakathi \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Lima Vision \u2014 ImbewuField",
+      "value": "Lima Vision \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Profile \u2014 ImbewuField",
+      "value": "Iphrofayela \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Project assessments \u2014 ImbewuField",
+      "value": "Ukuhlolwa kwamaphrojekthi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Take a tour \u2014 ImbewuField",
+      "value": "Buka uhambo lokufundisa \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Design studio \u2014 ImbewuField",
+      "value": "Isitudiyo Sokuklama \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Tips and help \u2014 ImbewuField",
+      "value": "Amacebo nosizo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Study \u2014 ImbewuField",
+      "value": "Funda \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Home \u2014 ImbewuField",
+      "value": "Ikhaya \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Mentor \u2014 ImbewuField",
+      "value": "Imeluleki \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture manual \u2014 ImbewuField",
+      "value": "Incwadi ye-Permaculture \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Surveys \u2014 ImbewuField",
+      "value": "Izinhlolovo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Field journal \u2014 ImbewuField",
+      "value": "Ijenali Yasensimu \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Messages \u2014 ImbewuField",
+      "value": "Imiyalezo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Atlas \u2014 ImbewuField",
+      "value": "I-Atlas \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Organisation \u2014 ImbewuField",
+      "value": "Inhlangano \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Account \u2014 ImbewuField",
+      "value": "I\u2011akhawunti \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Invoice \u2014 ImbewuField",
+      "value": "I-invoyisi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance \u2014 ImbewuField teaching preview",
+      "value": "Izimali zepulazi \u2014 umbukiso wokufundisa we-ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "value": "Ukuhwebelana kwabalimi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance lesson \u2014 ImbewuField teaching preview",
+      "value": "Isifundo sezimali zepulazi \u2014 umbukiso wokufundisa we-ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "ACT Teach the Teachers | two-day facilitator refresher",
+      "value": "ACT Teach the Teachers | ukubuyekeza kwabagqugquzeli kwezinsuku ezimbili",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField \u2014 permaculture planning for South African farmers",
+      "value": "ImbewuField \u2014 ukuhlelwa kwe-permaculture kwabalimi baseNingizimu Afrika",
+      "method": "text"
+    },
+    {
+      "source": "Farm Finance practical project \u2014 teaching preview",
+      "value": "Iphrojekthi yokuzijwayeza izimali zepulazi \u2014 umbukiso wokufundisa",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField for NGOs and funders",
+      "value": "ImbewuField yama-NGO nabaxhasi",
+      "method": "text"
+    },
+    {
+      "source": "Design a working homestead \u2014 teaching preview",
+      "value": "Klama ikhaya elisebenzayo \u2014 umbukiso wokufundisa",
+      "method": "replace"
+    },
+    {
+      "source": "The busy yard \u2014 design practice case",
+      "value": "Igceke elimatasa \u2014 isibonelo sokuzijwayeza ukuklama",
+      "method": "text"
+    },
+    {
+      "source": "Report a bug or suggest a feature \u2014 ImbewuField",
+      "value": "Bika iphutha noma uphakamise isici \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture design lesson \u2014 teaching preview",
+      "value": "Isifundo sokuklama i-permaculture \u2014 umbukiso wokufundisa",
+      "method": "text"
+    },
+    {
+      "source": "Choose a view \u2014 ImbewuField",
+      "value": "Khetha ukubuka \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example gardens \u2014 ImbewuField",
+      "value": "Izingadi eziyisibonelo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Your design learning folder \u2014 ImbewuField",
+      "value": "Ifolda yakho yokufunda ukuklama \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example production \u2014 ImbewuField",
+      "value": "Ukukhiqiza okuyisibonelo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Worked design demonstration \u2014 teaching preview",
+      "value": "Umbukiso wesibonelo esenziwe sokuklama \u2014 umbukiso wokufundisa",
+      "method": "replace"
+    },
+    {
+      "source": "Read the scale, check the space \u2014 design practice",
+      "value": "Funda isikali, hlola indawo \u2014 ukuzijwayeza ukuklama",
+      "method": "text"
+    }
+  ],
+  "owners": [
+    {
+      "kind": "unknown/private",
+      "value": "QA Farmer\u2019s {name} $& report"
+    },
+    {
+      "kind": "manual URL language",
+      "value": "Permaculture Manual \u00b7 ImbewuField"
+    },
+    {
+      "kind": "Pitch",
+      "value": "ImbewuField \u2014 partner deck"
+    }
+  ],
+  "languageChanges": [
+    {
+      "language": "en",
+      "title": "Home \u2014 ImbewuField"
+    },
+    {
+      "language": "zu",
+      "title": "Ikhaya \u2014 ImbewuField"
+    }
+  ],
+  "release": [
+    {
+      "size": "phone",
+      "text": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+      "measured": {
+        "left": 28.1171875,
+        "right": 316.09375,
+        "top": 367.0625,
+        "bottom": 400.4375,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    },
+    {
+      "size": "desktop",
+      "text": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+      "measured": {
+        "left": 410.6171875,
+        "right": 876.109375,
+        "top": 310.53125,
+        "bottom": 326.03125,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      }
+    }
+  ]
+}
