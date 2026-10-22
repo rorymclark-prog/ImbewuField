@@ -32,3 +32,13 @@ test('w16-06: /network text is 12px+ and ochre/orange text follows the theme', (
   }
   assert.match(src('app/network/page.tsx'), /color: sort === key \? 'var\(--emerald\)'/);
 });
+
+test('w16-07: /example paints full-opacity white on the ochre fill and theme tokens for text', () => {
+  const s = src('app/example/page.tsx');
+  assert.match(s, /background: '#9A6018'/);
+  assert.doesNotMatch(s, /rgba\(255,\s*255,\s*255,\s*0\.85\)/);
+  assert.doesNotMatch(s, /color: 'var\(--text-muted\)'/);
+  assert.doesNotMatch(s, /color: '#235E86'/);
+  assert.doesNotMatch(s, /\? '#235E86'/);
+  assert.match(s, /minTemp < 2 \? 'var\(--blue\)'/);
+});
