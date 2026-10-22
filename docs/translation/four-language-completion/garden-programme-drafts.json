@@ -1,6 +1,6 @@
 {
   "sourceSha": "68d143c7af00eec76428871296eece9a38846cd8",
-  "status": "Unreviewed machine drafts. IN PROGRESS: shared controls/PDF foundation implemented; garden UI/schematic/narrative/source-backed export and full browser/PDF verification still required.",
+  "status": "Implemented unreviewed programme/report controls and garden example translations. Source/controller and actual browser/PDF verification pass; release/full checks pending.",
   "sourceFileSha256": {
     "app/samples/gardens/page.tsx": "d25ac4e69185f6df3da922dfee2fb3f1ac53c5fb726193c5c3fc6388a69f6db5",
     "components/SampleGardenVisual.tsx": "7eec07e58ee72a4ff5892d4b8ba05c6ff5a01d0fb2e9dbce52d6bb4793dc21b1",
@@ -1853,29 +1853,37 @@
   "englishSourcePolicy": "English inputs, report records and unknown/private evidence remain unchanged. Original context-specific isiZulu is passed by its existing caller. The legacy PDF and metric maps are retained exactly. Explicitly authored English review sentences are recorded as new review-status sources, not as existing UI literals.",
   "fontPolicy": "Regional exports reuse bundled Noto Sans and reportPdfText. Default English export keeps Helvetica/pdfSafe behavior. Source report records and arrays are not mutated. Native title/review header rows are measured before the body.",
   "remaining": [
-    "Garden index/detail source pairs and language metadata",
-    "Schematic and image/caption controls with source geometry preserved",
-    "Garden narrative contexts/templates translated faithfully with original English backing",
-    "Explicit original-English static report links alongside generated native report",
-    "Actual end-to-end browser capture of all4 generated PDF/color/ink/summary modes and glyph/layout/source checks",
-    "UI controller/funder/privacy/file actions and failure recovery",
-    "Release/notes, broad/full checks and final one-time branch push",
-    "Main site-analysis lib/report-pdf.ts is still Helvetica/pdfSafe and calls the visual-front renderer without its language; full native site-analysis export font/furniture is an additional whole-goal requirement.",
-    "TrainingFeedback entry form and MelResponse/record validators still en/zu only; this batch changes report findings/read presentation, not saved-response language schemas. Continue in the wider workflow work."
+    "Final release-note/registered broader and full checks; push finished branch once.",
+    "Main site-analysis lib/report-pdf.ts still needs Unicode font and native furniture throughout its actual exported pages.",
+    "TrainingFeedback entry form and MelResponse/saved-feedback language validators remain en/zu only. Report findings/read presentation is translated here.",
+    "Wider app workflows, older update history, social/share metadata and Study/manual media remain under the whole-app goal."
   ],
   "currentCheckpoints": {
     "tsc": "/tmp/imbewu-garden-alias-tsc.txt clean",
     "existingTests": "/tmp/imbewu-garden-shared-report-tests.txt 54 pass, zero fail",
-    "pdfPilot": "12 actual buildProgrammePdf full/ink/summary exports (24 total pages), source inputs and Unicode data preserved. Both full-report pages inspected in all4 languages; native ID/reference headings initially overlapped adjacent column, now wrap. Actual pdftotext bbox negative distinguishes before/after for ts/ve. Colour/ink/summary latest complete browser workflow and visual-front PDF still pending.",
+    "pdfPilot": "All24 pilot pages inspected including final native table-wrap, colour/ink/summary. In addition12 actual browser garden downloads/108pages inspected, no clipped words.",
     "aliases": "Seven shared UI phrases now reuse complete canonical locale values. Generated snapshot/sourceKey bindings are tested against current dictionaries; all earlier context-specific Zu literals remain as caller overrides. Pending English keys are not treated as native coverage.",
     "tests": "/tmp/imbewu-garden-alias-tests.txt: 109 pass, zero fail across five selected files; programme source/controller/Unicode/summary/funder guards, old English export and source/visual guards included.",
     "sourceController": "Actual ReportComposer state transitions, busy/snapshot language, photos/format/presentation, errors, private source data and funder projection verified in react-test-renderer. This is not browser layout verification.",
     "testHarnessReason": "The shared actual-component compiler now excludes type-only re-exports: stripping only the export keyword produced a fake runtime type identifier for ReportComposer. Assertions retained; account/controller tests pass.",
-    "fullRun": "Tour predecessor68d143c7 (registration559) still running in frozen Settings; current branch registration560 and these changes are not covered by that run. Do not mutate or restart frozen run."
+    "fullRun": "Tour predecessor68d143c7 completed: clean tsc,5688pass/0fail/1existingTODO,clean diff,exit0. Garden registration561 is not covered by that run.",
+    "garden": "See garden-example-drafts.json: all18 source bodies/diagrams preserved, native4 UI/narratives/SVG and source-backed exports implemented."
   },
   "partialEvidence": {
-    "pdfGeneration": "output/garden-examples-qa/programme-pdf-generation.json",
-    "tableHeaderBounds": "output/garden-examples-qa/table-header-bounds.json",
-    "inspection": "Both full pages seen for zu/st/ts/ve; after-wrap ts page2 seen, ve bounds prove no overlap, representative final ve/ink/summary still to inspect before delivery."
+    "evidence": "docs/translation/four-language-completion/evidence/garden-programme",
+    "inspection": "All24 programme pilot pages and108 browser garden PDF pages inspected. Actual UI reading conditions pass all4. No claim about untranslated entry form/site-analysis export."
+  },
+  "broaderVerification": {
+    "files": 18,
+    "pass": 224,
+    "fail": 0,
+    "log": "/tmp/imbewu-garden-broad.txt",
+    "selectedSeparately": {
+      "files": 6,
+      "pass": 90,
+      "fail": 0,
+      "log": "/tmp/imbewu-garden-final-selected.txt"
+    },
+    "note": "File sets overlap; do not add their test counts. Native metadata-only lang attributes were added after layout captures; no changed pixels."
   }
 }

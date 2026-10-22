@@ -1,4 +1,4 @@
-import { programmePdfLabel, programmeReportText, isProgrammeDraftLanguage, type ProgrammeReportLanguage } from './programme-report-copy';
+import { programmePdfLabel, programmeReportText, isProgrammeDraftLanguage, EXAMPLE_REPORT_REVIEW_SOURCE, type ProgrammeReportLanguage } from './programme-report-copy';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font';
 import { numberLabel } from '@/lib/format-figures';
 import { trainingEvidenceSummary, trainingFeedbackSummary, type ProgrammeBranding, type VenuePhoto, type TrainingRecord } from './programme-evidence';
@@ -7,7 +7,7 @@ import { pdfSafe } from '@/lib/crop-export-pdf';
 export type ReportSection = { title: string; lines: string[] };
 export type ReportMetric = { label: string; value: string; detail?: string };
 export type ReportChart = { title: string; rows: { label: string; value: number; display?: string }[]; suffix?: string; minimumScale?:number };
-export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: ProgrammeReportLanguage };
+export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: ProgrammeReportLanguage; sourceSections?: ReportSection[] };
 const pdfLabel = programmePdfLabel;
 export function programmeReportMetrics(p: ProgrammePresentation): ReportMetric[] {
   if(!p.session)return p.metrics??[];
@@ -22,6 +22,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ compress: true });
   const draft=isProgrammeDraftLanguage(presentation.language ?? 'en');
+  const exampleSource=draft && sample && !presentation.session ? presentation.sourceSections : undefined;
   const font=draft?await registerReportPdfFont(doc):'helvetica';
   const textSafe=draft?reportPdfText:pdfSafe;
   const ink=presentation.ink===true;
@@ -43,7 +44,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   const shownTitle=draft?titleRows:titleRows.slice(0,2);
   const metaY=draft?Math.max(38,22+(shownTitle.length-1)*doc.getLineHeight()/doc.internal.scaleFactor+9):38;
   doc.setFont(font,'normal');doc.setFontSize(7);
-  const review=draft?programmeReportText('Translated headings are unreviewed; evidence stays in its recorded language.',presentation.language!):'';
+  const review=draft?programmeReportText(exampleSource?EXAMPLE_REPORT_REVIEW_SOURCE:'Translated headings are unreviewed; evidence stays in its recorded language.',presentation.language!):'';
   const reviewRows=review?doc.splitTextToSize(textSafe(review),174) as string[]:[];
   const reviewY=metaY+13;
   const headerHeight=draft?Math.max(58,reviewY+reviewRows.length*doc.getLineHeight()/doc.internal.scaleFactor+4):49;
@@ -105,6 +106,10 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     write(`${String(++chapter).padStart(2,'0')}  ${section.title}`,14,true);
     const lines=format==='summary'?section.lines.slice(0,5):section.lines;
     (lines.length?lines:[pdfLabel('Nothing recorded yet.',presentation.language)]).forEach(text=>write(text));y+=4;
+  }
+  if(exampleSource){
+    page();write(pdfLabel('English source',presentation.language),16,true);
+    for(const section of exampleSource){ensure(24);write(section.title,14,true);const lines=format==='summary'?section.lines.slice(0,5):section.lines;lines.forEach(line=>write(line));y+=4;}
   }
   const session=presentation.session;
   if(session&&!presentation.funder){

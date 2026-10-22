@@ -1,0 +1,1320 @@
+{
+  "languages": [
+    {
+      "language": "st",
+      "states": [
+        {
+          "id": "g1",
+          "size": "phone",
+          "theme": "light",
+          "lines": 348,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 348,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g1",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g2",
+          "size": "phone",
+          "theme": "light",
+          "lines": 353,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 353,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 188,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 188,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g2",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g3",
+          "size": "phone",
+          "theme": "light",
+          "lines": 349,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 349,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g3",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g4",
+          "size": "phone",
+          "theme": "light",
+          "lines": 348,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 348,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 187,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g4",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g5",
+          "size": "phone",
+          "theme": "light",
+          "lines": 347,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 347,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g5",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g6",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g7",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g8",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g9",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g10",
+          "size": "phone",
+          "theme": "light",
+          "lines": 349,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "phone",
+          "theme": "dark",
+          "lines": 349,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "desktop",
+          "theme": "light",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 4.241271821296949,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "size": "desktop",
+          "theme": "dark",
+          "lines": 186,
+          "failed": [],
+          "overflow": false,
+          "placeholders": false,
+          "contrast": {
+            "minimum": 3.056407459469937,
+            "failed": []
+          }
+        },
+        {
+          "id": "g10",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g11",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g12",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g13",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g14",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g15",
+          "sourceParagraphs": 40,
+          "svgLabels": 5,
+          "overflow": false
+        },
+        {
+          "id": "g16",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g17",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        },
+        {
+          "id": "g18",
+          "sourceParagraphs": 40,
+          "svgLabels": 6,
+          "overflow": false
+        }
+      ]
+    }
+  ],
+  "svg": [
+    {
+      "language": "st",
+      "id": "g1",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 97.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 335.703125,
+          "y": 367,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 302.73828125,
+          "y": 452.5,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Sebaka sakopano",
+          "x": 90.015625,
+          "y": 270.5,
+          "width": 103.96875,
+          "height": 48.5
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g2",
+      "rows": [
+        {
+          "text": "Kretjhe",
+          "x": 140.14453125,
+          "y": 118,
+          "width": 69.7109375,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Sebaka sa hobapala",
+          "x": 117.7265625,
+          "y": 261,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 358.703125,
+          "y": 354,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 371.37109375,
+          "y": 421.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g3",
+      "rows": [
+        {
+          "text": "Sekolo",
+          "x": 201.36328125,
+          "y": 113,
+          "width": 67.2734375,
+          "height": 24.5
+        },
+        {
+          "text": "Sebaka sa hoithuta",
+          "x": 72.7265625,
+          "y": 255,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 322.703125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 312.73828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g4",
+      "rows": [
+        {
+          "text": "Lehae",
+          "x": 108.91015625,
+          "y": 115,
+          "width": 61.1796875,
+          "height": 24.5
+        },
+        {
+          "text": "Lebala",
+          "x": 101.96484375,
+          "y": 258,
+          "width": 66.0703125,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 313.203125,
+          "y": 280,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 305.23828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g5",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 397.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 165.203125,
+          "y": 434,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 406.37109375,
+          "y": 316.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 238.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g6",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 97.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 315.203125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 302.73828125,
+          "y": 452.5,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Sebaka sakopano",
+          "x": 90.015625,
+          "y": 270.5,
+          "width": 103.96875,
+          "height": 48.5
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g7",
+      "rows": [
+        {
+          "text": "Lehae",
+          "x": 108.91015625,
+          "y": 115,
+          "width": 61.1796875,
+          "height": 24.5
+        },
+        {
+          "text": "Lebala",
+          "x": 101.96484375,
+          "y": 258,
+          "width": 66.0703125,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 316.203125,
+          "y": 316,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 305.23828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g8",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 97.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 317.203125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 302.73828125,
+          "y": 452.5,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Sebaka sakopano",
+          "x": 90.015625,
+          "y": 270.5,
+          "width": 103.96875,
+          "height": 48.5
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g9",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 397.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 169.203125,
+          "y": 434,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 406.37109375,
+          "y": 316.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 238.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g10",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 95.3046875,
+          "y": 108,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 83.703125,
+          "y": 330,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Morung wa dijo",
+          "x": 315.40625,
+          "y": 503,
+          "width": 149.1875,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g11",
+      "rows": [
+        {
+          "text": "Sekolo",
+          "x": 201.36328125,
+          "y": 113,
+          "width": 67.2734375,
+          "height": 24.5
+        },
+        {
+          "text": "Sebaka sa hoithuta",
+          "x": 72.7265625,
+          "y": 255,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 330.703125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 312.73828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g12",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 97.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 321.203125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 302.73828125,
+          "y": 452.5,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Sebaka sakopano",
+          "x": 90.015625,
+          "y": 270.5,
+          "width": 103.96875,
+          "height": 48.5
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g13",
+      "rows": [
+        {
+          "text": "Kretjhe",
+          "x": 140.14453125,
+          "y": 118,
+          "width": 69.7109375,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Sebaka sa hobapala",
+          "x": 117.7265625,
+          "y": 261,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 358.703125,
+          "y": 365,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 371.37109375,
+          "y": 421.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g14",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 97.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 323.203125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 302.73828125,
+          "y": 452.5,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Sebaka sakopano",
+          "x": 90.015625,
+          "y": 270.5,
+          "width": 103.96875,
+          "height": 48.5
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g15",
+      "rows": [
+        {
+          "text": "Polokelo",
+          "x": 397.8046875,
+          "y": 105.5,
+          "width": 84.390625,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 175.203125,
+          "y": 434,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 406.37109375,
+          "y": 316.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 238.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g16",
+      "rows": [
+        {
+          "text": "Lehae",
+          "x": 108.91015625,
+          "y": 115,
+          "width": 61.1796875,
+          "height": 24.5
+        },
+        {
+          "text": "Lebala",
+          "x": 101.96484375,
+          "y": 258,
+          "width": 66.0703125,
+          "height": 24.5
+        },
+        {
+          "text": "Meroho",
+          "x": 325.203125,
+          "y": 280,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 305.23828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g17",
+      "rows": [
+        {
+          "text": "Sekolo",
+          "x": 201.36328125,
+          "y": 113,
+          "width": 67.2734375,
+          "height": 24.5
+        },
+        {
+          "text": "Sebaka sa hoithuta",
+          "x": 72.7265625,
+          "y": 255,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 336.703125,
+          "y": 331,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsa motheo",
+          "x": 312.73828125,
+          "y": 430,
+          "width": 154.5234375,
+          "height": 22.208984375
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    },
+    {
+      "language": "st",
+      "id": "g18",
+      "rows": [
+        {
+          "text": "Kretjhe",
+          "x": 140.14453125,
+          "y": 118,
+          "width": 69.7109375,
+          "height": 24.6298828125
+        },
+        {
+          "text": "Sebaka sa hobapala",
+          "x": 117.7265625,
+          "y": 261,
+          "width": 134.546875,
+          "height": 48.5
+        },
+        {
+          "text": "Meroho",
+          "x": 358.703125,
+          "y": 370,
+          "width": 74.59375,
+          "height": 24.5
+        },
+        {
+          "text": "Dijalo tsamotheo",
+          "x": 371.37109375,
+          "y": 421.5,
+          "width": 82.2578125,
+          "height": 44
+        },
+        {
+          "text": "Metsi",
+          "x": 458.49609375,
+          "y": 133.5,
+          "width": 43.0078125,
+          "height": 20.5
+        },
+        {
+          "text": "Moralo wa mohlala \u00b7 ha o a lekanngwa",
+          "x": 137.3515625,
+          "y": 564,
+          "width": 325.296875,
+          "height": 21
+        }
+      ],
+      "clipped": [],
+      "collisions": []
+    }
+  ],
+  "exports": [
+    {
+      "language": "st",
+      "mode": "colour",
+      "file": "ImbewuField-Siyazama-Community-Garden-tlaleho-ya-tshimo.pdf"
+    },
+    {
+      "language": "st",
+      "mode": "ink",
+      "file": "ImbewuField-Siyazama-Community-Garden-tlaleho-ya-tshimo.pdf"
+    },
+    {
+      "language": "st",
+      "mode": "summary",
+      "file": "ImbewuField-Siyazama-Community-Garden-tlaleho-ya-tshimo.pdf"
+    }
+  ]
+}

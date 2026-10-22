@@ -10,7 +10,7 @@ export type VisualImage = { image: string; caption: string };
 export type ChapterImage = { image:string; title:string; caption:string; maxHeight?:number };
 export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[]; chapters?:Record<string,ChapterImage[]> };
 
-async function svgImage(svg: string): Promise<string> {
+export async function svgImage(svg: string): Promise<string> {
   const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   try {
     const img = new Image();
@@ -129,6 +129,7 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
   const standardLabel = (value: string) => ({
     'IMBEWUFIELD / SITE REPORT': label('IMBEWUFIELD / SITE REPORT','IMBEWUFIELD / UMBIKO WESIZA'),
     'The site at a glance': label('The site at a glance','Indawo le njengoba injalo'),
+    'The garden in view': programmeReportText('The garden in view',language),
     'Report basis': label('Report basis','Isisekelo sombiko'),
     'Planting through the year': label('Planting through the year','Ukutshala phakathi nonyaka'),
   } as Record<string,string>)[value] ?? value;
