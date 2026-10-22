@@ -14,12 +14,12 @@ const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
 export default function AssessmentsPage() {
   const { lang } = useLanguage();
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
         title={tr(lang, 'Assessments', 'Ukuhlola')}
         right={<LessonLink id="assessments:overview" label={tr(lang, 'Learn', 'Funda')} />}
       />
-      <main className="flex-1 overflow-y-auto" style={{ paddingBottom: 80 }}>
+      <main className="flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
         <MelDashboard />
       </main>
       <TabBar hideAtDesktop />
