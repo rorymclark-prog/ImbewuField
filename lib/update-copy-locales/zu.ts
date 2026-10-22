@@ -92,6 +92,10 @@ const copy:UpdateCopy={
   "Photo viewer controls now have four draft translations.": "Izinkinobho zesibukeli sezithombe manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
   "Open a saved photograph": "Vula isithombe esigciniwe",
   "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Uma i-akhawunti yakho inesithombe, sivule. Izinkinobho zesibukeli sezithombe zisebenzisa ulimi lwakho; umbhalo wesithombe wokuqala uhlala njengoba uqoshiwe.",
-  "App page titles now have four draft translations.": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine."
+  "App page titles now have four draft translations.": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Tour and practice controls now have draft translations in four languages.": "Uhambo nezilawuli zokuzilolonga manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+  "Explore the practice views": "Hlola izikrini zokuzilolonga",
+  "Menu → Practice views": "Imenyu → Izikrini zokuzilolonga",
+  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Vula isikrini sokukhetha noHambo. Imiyalelo nezilawuli kunemibhalo esaluhlaka engakabuyekezwa; umbhalo wokuqala wesiNgisi uyatholakala."
 };
 export default copy;

@@ -1443,6 +1443,75 @@ small MenuButton caption still hardcodes “Tour” outside isiZulu, which is th
 item. Wider page bodies/workflows, older update history, social/share metadata, exports and
 Study/manual media remain under the whole-app goal.
 
+## Batch 30 — Tour, practice chooser and shared navigation
+
+The [source packet](tour-practice-drafts.json) binds **95 guide fields** (nine stops,
+21 tips, 25 controls and five errors) to **285 Sesotho/Xitsonga/Tshivenda values**. It also
+binds **80 shell fields** to **240 regional values**, covering the overview, chooser cards,
+access/session messages, navigation, account controls and nested role switcher. Earlier native
+Sesotho/Tshivenda drafts remain authoritative; previously held English fields gain separately
+recorded unreviewed drafts. The one declared Sesotho correction changes the referenced menu
+caption from Tour to Leeto, matching the now-native control. Eight formerly English-only
+isiZulu controls are recorded across nine callers. Four release/guide sources add 16 values.
+These are source bindings, including reused earlier wording, not a count of newly translated
+sentences or fluent-speaker approval.
+
+The existing localization authority now resolves the connected shell without changing role
+IDs, destinations, permission gates, checklist arithmetic or session isolation. Literal braces
+and dollar sequences in values are inserted once. Known errors repaint after a language change;
+unknown diagnostics remain verbatim. English source, existing isiZulu stop/tip/role wording,
+15 exploration minutes and 18 gardens remain exact. Course/product identities are recorded.
+The generic English category “nuts” remains held in the three new regional production-example
+paragraphs, and “berries” remains held in Xitsonga, rather than substituting a species. The
+worked production page is still explicitly described as English. No course body, quiz, species,
+farming figure, geometry, paid render or PLAN_VERSION was changed.
+
+This changes the picture. A scoped chooser hero keeps the instructions and native draft warning
+visible on phones; the reused dashboard style hid all its paragraphs below 1100px. Native/source
+button text wraps together at a readable size. Menu and guide captions grow from the 44px touch
+floor instead of spilling or shrinking to 10px. Source-text toggles sit above the Tour card’s
+transparent action layer. The active role chip and staff practice selector follow theme tokens.
+Source/disclosure status remains explicit, including English backing for access and privacy copy.
+
+[Runtime evidence](evidence/tour-practice/verification.json) records **88 shell states and 5,219
+scrolled reading lines**, **568 guide states and 14,515 lines**, and **eight update-guide previews
+and 212 lines**, in all four languages. Minimum measured contrast is respectively 4.85:1,
+6.09:1 and 6.63:1. Representative chooser, dark menu, phone guide and update previews were
+inspected in every language. Negative controls reproduce hidden instructions, an intercepted
+source toggle and the original role-chip contrast failure (1.27:1 versus 10.80:1 after repair).
+The caption check also caught Xitsonga extending beyond the old fixed guide circle; the measured
+current Tour guide uses 12px text and keeps both caption and progress inside its 44px height.
+Eight additional active-chooser checks also pass in all four languages and both themes: the
+dashboard inherits larger 14px text, but the native caption and progress still fit.
+
+The guide checks mount the real global provider. Each language includes one genuine Next
+navigation through Open this view to the garden page; other tip arrivals use synthetic history
+pathname changes while retaining the underlying page. They exercise all nine previews, 21 tips,
+Next-tip/pagination/source controls and an actual refused progress-save handler, rather than
+claiming authenticated end-to-end visits to every protected screen. The account-button layout
+uses actual JSX with fixture-only authentication. Disposable contexts supplied explicit
+onboarding/consent preconditions; no real sign-out, consent change, feedback message or backend
+write occurred. Temporary routes/generated types were removed; the task browser and dev server
+were stopped.
+
+Typecheck is clean; **1,265 tests pass across 143 selected registered files**, plus a final
+**48-test** source/role/release recheck including the final added source-binding assertion.
+Historical hold/source assertions remain; source-regex tests that required English-only holds
+or a fixed-width caption were rewritten into the rendered rule, with their reasons retained.
+The initial broad run correctly rejected the temporary QA route’s missing title; it was removed
+before the clean final run, without adding a test exemption. Release/diff checks are recorded
+with the final branch report.
+
+The exact **558-file** default-concurrency full run at predecessor/title head `44d3e090` is now
+terminal: **5,654 passes, zero failures, one unchanged shape-sync TODO**, after clean typecheck
+and diff checks, exit 0, 3,939.54 seconds. Its wrapper and workers were reaped. This includes the
+photo and title batches and supersedes the earlier in-progress status above; both PR descriptions
+have been updated. The current **559-file** Tour registration needs its own full result; a
+predecessor pass is not proof of these changes. Community #1054 has both CI jobs green; later
+CI is checked separately. No main merge has occurred. Wider workflows/page bodies, old update
+history, social/share metadata, exports and Study/manual media remain under the active whole-app
+goal. All new translations remain unreviewed machine drafts.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility

@@ -92,6 +92,10 @@ const copy:UpdateCopy={
   "Photo viewer controls now have four draft translations.": "Zwilangi zwa tshivhoni tsha zwifanyiso zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
   "Open a saved photograph": "Vulani tshifanyiso tsho vhulungwaho",
   "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Arali akhaunthu yaṋu i na tshifanyiso, tshi vuleni. Zwilangi zwa tshivhoni tsha zwifanyiso zwi shumisa luambo lwaṋu; ṱhaluso ya u thoma ya tshifanyiso i sala nga nḓila ye ya ṅwalwa ngayo.",
-  "App page titles now have four draft translations.": "Ṱhoho dza masiaṱari a app zwino dzi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+  "App page titles now have four draft translations.": "Ṱhoho dza masiaṱari a app zwino dzi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
+  "Tour and practice controls now have draft translations in four languages.": "Zwilangi zwa Lwendo na u ḓiḓowedza zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa.",
+  "Explore the practice views": "Ṱolani mbonalo dza u ḓiḓowedza",
+  "Menu → Practice views": "Menyu → Mbonalo dza u ḓiḓowedza",
+  "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.": "Vulani fhethu ha u nanga na Lwendo. Ndaela na zwilangi zwi na mvetamveto dzi sa athu u sedzuluswa; maṅwalwa a u thoma a English a a wanala."
 };
 export default copy;
