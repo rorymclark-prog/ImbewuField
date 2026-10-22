@@ -179,7 +179,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
+      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] transition-all ${props.className ?? ''}`}
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
@@ -421,7 +421,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   });
                   if (fileRef.current) fileRef.current.value = '';
                 }}
-                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
+                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs"
                 style={{ background: 'rgba(31,25,15,0.12)', color: 'var(--text-primary)' }}
               >
                 <X size={14} />
@@ -449,7 +449,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
             {recordsPaired(lang, form.error)}
           </p>
         )}
@@ -613,7 +613,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
             {recordsPaired(lang, form.error)}
           </p>
         )}
@@ -746,7 +746,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -768,7 +768,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {recordsFill(lang, EXAMPLE_PRODUCTION.crop)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
@@ -813,7 +813,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             >
               {harvestCropLabel(item.crop, lang)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {fmtDate(item.logged_at, lang)}
             </p>
           </div>
@@ -836,7 +836,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -859,7 +859,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
               {recordsFill(lang, EXAMPLE_SALE.crop)}
               <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {recordsFill(lang, EXAMPLE_SALE.dateLabel)}
             </p>
           </div>
@@ -900,7 +900,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at, lang)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
@@ -924,7 +924,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   const { t } = useRecordsT();
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs text-center py-4" style={{ color: 'var(--text-muted)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -953,7 +953,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -1100,7 +1100,7 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
+        <p className="text-xs mt-2" style={{ color: 'var(--danger)' }}>
           {recordsPaired(lang, error)}
         </p>
       )}

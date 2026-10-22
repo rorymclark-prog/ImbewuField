@@ -23,11 +23,11 @@ export default function RecordQuantityFields({ idPrefix, quantity, unit, onQuant
   return <div className="grid grid-cols-2 gap-2" data-record-quantity-fields>
     <div>
       <label htmlFor={quantityId} className="block text-xs font-sans font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsFill(lang, label)}</label>
-      <input id={quantityId} type="text" inputMode={unit === 'eggs' || unit === 'each' ? 'numeric' : 'decimal'} value={quantity} placeholder={unit === 'kg' ? '0.0' : '0'} onChange={(event) => onQuantityChange(event.target.value)} className="dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none" style={controlStyle} />
+      <input id={quantityId} type="text" inputMode={unit === 'eggs' || unit === 'each' ? 'numeric' : 'decimal'} value={quantity} placeholder={unit === 'kg' ? '0.0' : '0'} onChange={(event) => onQuantityChange(event.target.value)} className="dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={controlStyle} />
     </div>
     <div>
       <label htmlFor={unitId} className="block text-xs font-sans font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsFill(lang, 'Unit')}</label>
-      <select id={unitId} value={unit} onChange={(event) => onUnitChange(event.target.value as RecordUnit)} className="dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none" style={controlStyle}>
+      <select id={unitId} value={unit} onChange={(event) => onUnitChange(event.target.value as RecordUnit)} className="dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]" style={controlStyle}>
         {RECORD_UNITS.map((value) => <option key={value} value={value}>{recordsUnitWord(value, lang)}</option>)}
       </select>
     </div>

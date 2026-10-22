@@ -110,7 +110,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
 
   return (
     <div className="space-y-3">
-      <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+      <div className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
         {t('savedPlacesHeader')}
       </div>
 
@@ -124,7 +124,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               value={name}
               onChange={e => setName(e.target.value)}
               placeholder={t('savedPlacesNamePlaceholder')}
-              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none"
+              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             />
             <textarea
@@ -132,7 +132,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               onChange={e => setNotes(e.target.value)}
               placeholder={t('savedPlacesNotesPlaceholder')}
               rows={2}
-              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none resize-none"
+              className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] resize-none"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
             />
             <div className="flex gap-2">
@@ -146,7 +146,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
               </button>
               <button
                 onClick={() => setSaving(false)}
-                className="px-3 py-1.5 rounded-lg text-xs font-mono transition-all"
+                className="px-3 py-1.5 rounded-lg text-xs transition-all"
                 style={{ background: 'rgba(226,216,196,0.55)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
               >
                 {t('cancelBtn')}
@@ -189,11 +189,11 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       <span className="text-xs font-display font-semibold truncate" style={{ color: 'var(--text-primary)' }}>
                         {place.name}
                       </span>
-                      <span className="text-xs font-mono flex-shrink-0" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
+                      <span className="text-xs flex-shrink-0" style={{ color: 'var(--text-secondary)', opacity: 0.7 }}>
                         {timeAgo(place.savedAt, t)}
                       </span>
                     </div>
-                    <div className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                    <div className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                       {place.biome} · {place.elevation}m · {place.rainfall}mm
                     </div>
                     {place.notes && (
@@ -211,7 +211,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
                       </button>
                       <button
                         onClick={() => handleDelete(place.id)}
-                        className="px-2.5 py-1 rounded-lg text-xs font-mono transition-all"
+                        className="px-2.5 py-1 rounded-lg text-xs transition-all"
                         style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}
                       >
                         {t('savedPlacesRemove')}
@@ -226,7 +226,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
       ) : (
         <div className="text-center py-6">
           <p className="text-xs font-display" style={{ color: 'var(--text-secondary)' }}>{t('savedPlacesEmptyTitle')}</p>
-          <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)', opacity: 0.6 }}>
             {t('savedPlacesEmptyHint')}
           </p>
         </div>

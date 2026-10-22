@@ -145,8 +145,8 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
     <div className="space-y-3">
       {/* Heading */}
       <div className="flex items-center justify-between">
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
-        <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
+        <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--blue)' }}>{t('waterBalanceTitle')}</span>
+        <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
 
       {lang === 'zu' && (
@@ -220,21 +220,21 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
       <div className="flex flex-wrap gap-x-4 gap-y-1">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(35,94,134,0.55)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendRoofCatchment')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendRoofCatchment')}</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ background: 'rgba(192,122,30,0.45)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTotalDemand')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTotalDemand')}</span>
         </div>
         {capacity > 0 && (
           <div className="flex items-center gap-1.5">
             <div className="w-8 h-0.5 flex-shrink-0" style={{ background: '#1F4D2B' }} />
-            <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTankLevel')}</span>
+            <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendTankLevel')}</span>
           </div>
         )}
         <div className="flex items-center gap-1.5">
           <div className="w-8 flex-shrink-0" style={{ borderTop: '1.5px dashed rgba(192,60,30,0.7)' }} />
-          <span className="text-xs font-mono" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendMinSafe')}</span>
+          <span className="text-xs" style={{ color: 'var(--text-secondary)' }}>{t('waterBalanceLegendMinSafe')}</span>
         </div>
       </div>
 
@@ -284,9 +284,9 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
 function StatBox({ label, value, sub, color }: { label: string; value: string; sub: string; color: string }) {
   return (
     <div className="rounded-xl p-3" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-      <p className="text-xs font-mono" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
+      <p className="text-xs" style={{ color: 'var(--text-muted)', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs font-mono mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
+      <p className="text-xs mt-1" style={{ color: 'var(--text-muted)', fontSize: 12 }}>{sub}</p>
     </div>
   );
 }

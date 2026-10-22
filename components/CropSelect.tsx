@@ -92,7 +92,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
         aria-label={ariaLabel}
         value={adding ? '__add__' : selected}
         onChange={(event) => choose(event.target.value)}
-        className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+        className="dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
       >
         <option value="">{recordsFill(lang, 'Choose produce / product')}</option>
@@ -143,7 +143,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
               }
             }}
             placeholder={recordsFill(lang, 'Type the product name')}
-            className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none"
+            className="dark-input flex-1 min-w-0 rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' }}
           />
           <button

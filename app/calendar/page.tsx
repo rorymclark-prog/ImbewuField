@@ -320,7 +320,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
-        fontFamily: 'var(--font-mono, monospace)',
         fontSize: 12,
         fontWeight: 700,
         letterSpacing: '0.10em',
@@ -533,7 +532,6 @@ export default function CalendarPage() {
                       : idx === currentMonth ? '1px solid var(--gold-dim)' : '1px solid var(--border)',
                     borderRadius: 8,
                     color: active ? 'var(--color-canvas)' : idx === currentMonth ? 'var(--gold-dim)' : 'var(--text-secondary)',
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 'clamp(12px, 1vw, 13px)',
                     fontWeight: active || idx === currentMonth ? 700 : 500,
                     padding: '5px 11px',
@@ -596,7 +594,6 @@ export default function CalendarPage() {
                     alignItems: 'center',
                     gap: 5,
                     marginTop: 4,
-                    fontFamily: 'var(--font-mono, monospace)',
                     fontSize: 12,
                     color: 'var(--text-muted)',
                     letterSpacing: '0.06em',
@@ -746,7 +743,6 @@ export default function CalendarPage() {
             <div>
               <div
                 style={{
-                  fontFamily: 'var(--font-mono, monospace)',
                   fontSize: 12,
                   fontWeight: 700,
                   letterSpacing: '0.10em',
@@ -830,7 +826,6 @@ export default function CalendarPage() {
                   <span
                     style={{
                       fontSize: 12,
-                      fontFamily: 'var(--font-mono, monospace)',
                       color: 'var(--text-secondary)',
                     }}
                   >
@@ -843,7 +838,6 @@ export default function CalendarPage() {
                 <span
                   style={{
                     fontSize: 12,
-                    fontFamily: 'var(--font-mono, monospace)',
                     color: 'var(--text-secondary)',
                   }}
                 >
@@ -911,7 +905,6 @@ export default function CalendarPage() {
                       style={{
                         padding: '7px 14px',
                         textAlign: 'left',
-                        fontFamily: 'var(--font-mono, monospace)',
                         fontSize: 12,
                         fontWeight: 700,
                         letterSpacing: '0.08em',
@@ -934,7 +927,6 @@ export default function CalendarPage() {
                         style={{
                           padding: '7px 4px',
                           textAlign: 'center',
-                          fontFamily: 'var(--font-mono, monospace)',
                           fontSize: 'clamp(12px, 1vw, 13px)',
                           fontWeight: idx === selectedMonth ? 700 : 500,
                           letterSpacing: '0.06em',
