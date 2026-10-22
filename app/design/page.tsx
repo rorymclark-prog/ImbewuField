@@ -558,7 +558,7 @@ function EmptyState() {
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: 'var(--text-muted)' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
                 <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
@@ -3932,7 +3932,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <span><span style={{ fontWeight: 800 }}>{tr('Drip all beds', 'Faka imigqa yokunisela kuyo yonke imibhede')}</span> — {tr('one line down the centre of each', 'umugqa owodwa phakathi nendawo embhedeni ngamunye')}</span>
           </button>
           {dripNote && (
-            <span style={{ fontSize: 11.5, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
+            <span style={{ fontSize: 12, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
           )}
         </div>
       )}
@@ -4040,7 +4040,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                     background: 'transparent',
                     border: 'none',
                     color: '#8A7C63',
-                    fontSize: 11.5,
+                    fontSize: 12,
                     fontWeight: 600,
                     cursor: 'pointer',
                     flexShrink: 0,
