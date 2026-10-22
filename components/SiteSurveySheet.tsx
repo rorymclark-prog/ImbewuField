@@ -7,6 +7,8 @@ import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
 import {
   saveSurvey,
+  readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyDraftScopeIsActive, surveyRevision,
+  type SiteSurveyDraft,
   loadSurvey,
   reportedFoodGroups,
   toggleSurveyChoice,
@@ -281,7 +283,52 @@ function AutoFillNote({ areaM2, english }: { areaM2: number; english?: string })
   );
 }
 
-export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onSaved, onClose }: Props) {
+export default function SiteSurveySheet(props: Props) {
+  const place = loadPlaces().find(p => p.id === props.placeId);
+  const loc = props.coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
+  const siteId = designSiteIdFromLocation(loc as LocationData | null);
+  const scope = surveyDraftScope(siteId);
+  return <SurveyRecoverySession key={scope} {...props} siteId={siteId} scope={scope}/>;
+}
+
+function SurveyRecoverySession(props: Props & { siteId: string; scope: string }) {
+  const [stored] = useState(() => readSurveyDraft(props.scope));
+  const [choice, setChoice] = useState<'resume' | 'discard' | null>(null);
+  const [discardError, setDiscardError] = useState(false);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const pending = choice === null && (!!stored.draft || stored.error);
+  useEffect(() => {
+    if (!pending) return;
+    const prior = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialog.current?.showModal();
+    return () => { document.body.style.overflow = overflow; prior?.focus(); };
+  }, [pending]);
+  if (pending) return typeof document === 'undefined' ? null : createPortal(
+    <dialog ref={dialog} className={styles.recovery} aria-labelledby="survey-recovery-title" lang="en"
+      onCancel={event => { event.preventDefault(); props.onClose(); }}>
+      <h1 id="survey-recovery-title">Continue your unfinished survey?</h1>
+      <p>Your unfinished answers are kept on this browser. They are separate from your saved survey and report.</p>
+      {stored.error && <p role="alert">This browser could not read the draft. Close this screen to keep it, or discard it to use your saved answers.</p>}
+      {stored.draft && stored.draft.baseRevision !== surveyRevision(loadSurvey(props.siteId)) && <p role="note">Your saved survey has changed since this draft began. Check the answers carefully before saving a resumed draft.</p>}
+      {discardError && <p role="alert">The draft could not be discarded, or changed in another tab. Close this screen and reopen the survey to try again.</p>}
+      <div className={styles.recoveryActions}>
+        {stored.draft && <button className={styles.primary} onClick={() => setChoice('resume')}>Resume draft</button>}
+        <button className={styles.back} onClick={() => {
+          if (clearSurveyDraft(props.scope, props.siteId, stored.token)) setChoice('discard');
+          else setDiscardError(true);
+        }}>Discard draft and use saved answers</button>
+        <button className={styles.back} aria-label="Close and keep draft" onClick={props.onClose}>Close and keep draft</button>
+      </div>
+    </dialog>, document.body);
+  return <SurveyEditor {...props} initialDraft={choice === 'resume' ? stored.draft : null}
+    initialDraftToken={choice === 'resume' ? stored.token : null}/>;
+}
+
+function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
+  scope: string; initialDraft: SiteSurveyDraft | null; initialDraftToken: string | null;
+}) {
   const { lang, t } = useLanguage();
   const paired = (key: string, english: string): ReactNode => {
     const zulu = t(key);
@@ -297,7 +344,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   // Prefer the live pin's coords (per-site canonical key); fall back to the place lookup.
   const siteLoc = coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
   const siteId = designSiteIdFromLocation(siteLoc ? ({ lat: siteLoc.lat, lon: siteLoc.lon } as LocationData) : null);
-  const [existing] = useState(() => loadSurvey(siteId));
+  const [savedSurvey] = useState(() => loadSurvey(siteId));
+  const [existing] = useState(() => initialDraft?.answers ?? savedSurvey);
+  const savedRevision = useRef(surveyRevision(savedSurvey));
+  const draftToken = useRef(initialDraftToken);
+  const completed = useRef(false);
+  const [draftError, setDraftError] = useState(false);
+  const [saveConflict, setSaveConflict] = useState(false);
   const tracedAreas = computeTracedAreaTotals(siteId, siteLoc?.lat ?? null, siteLoc?.lon ?? null);
   // computeTracedAreaTotals can only see main-map shapes and the legacy design blob, so a roof
   // traced in the Design Studio left this field empty while the Water sheet was already sizing a
@@ -308,9 +361,9 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   // Every building beyond the largest — the store room, the shed — sums into "Secondary roofs".
   const secondaryRoofM2 = studioRoofAreasM2(studioCanvas).secondaryM2;
 
-  const [step, setStep] = useState(0);
-  const [mode, setMode] = useState<'short' | 'full'>('short');
-  const [started, setStarted] = useState(false);
+  const [step, setStep] = useState(initialDraft?.step ?? 0);
+  const [mode, setMode] = useState<'short' | 'full'>(initialDraft?.mode ?? 'short');
+  const [started, setStarted] = useState(initialDraft?.started ?? false);
   const [saveError, setSaveError] = useState(false);
   const [openProduction, setOpenProduction] = useState<ProductionCategory | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -343,12 +396,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
     (existing.roofAreaSource == null && (((existing.roofMainM2 ?? 0) !== 0) || ((existing.roofSecondaryM2 ?? 0) !== 0)))
   );
   const [roofMain, setRoofMain] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.roofMain;
     if (existing?.roofMainM2 != null && roofAreaSourceIsManual) return existing.roofMainM2.toString();
     if (roofAreaM2 > 0) return String(Math.round(roofAreaM2));
     return existing?.roofMainM2?.toString() ?? '';
   });
   const [roofSource, setRoofSource] = useState<'auto' | 'manual' | undefined>(() =>
-    roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.roofAreaSource : roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
   );
   // Same manual-first contract as the main roof: a figure the farmer typed (or any pre-source
   // saved value) is never clobbered by auto-fill.
@@ -357,12 +411,13 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
     (existing.roofSecondarySource == null && ((existing.roofSecondaryM2 ?? 0) !== 0))
   );
   const [roofSecondary, setRoofSecondary] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.roofSecondary;
     if (existing?.roofSecondaryM2 != null && roofSecondarySourceIsManual) return existing.roofSecondaryM2.toString();
     if (secondaryRoofM2 > 0) return String(Math.round(secondaryRoofM2));
     return existing?.roofSecondaryM2?.toString() ?? '';
   });
   const [roofSecondarySource, setRoofSecondarySource] = useState<'auto' | 'manual' | undefined>(() =>
-    roofSecondarySourceIsManual ? 'manual' : (secondaryRoofM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.roofSecondarySource : roofSecondarySourceIsManual ? 'manual' : (secondaryRoofM2 > 0 ? 'auto' : undefined)
   );
   const [hasGutters, setHasGutters] = useState(existing?.hasGutters ?? false);
 
@@ -376,19 +431,20 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   // Step 4 — What exists
   const [crops, setCrops] = useState<string[]>(existing?.existingCrops ?? []);
   const [existingGrowingArea, setExistingGrowingArea] = useState(() => {
+    if (initialDraft) return initialDraft.inputs.growingArea;
     if (existing?.existingGrowingAreaM2 != null && existing.existingGrowingAreaSource === 'manual') return existing.existingGrowingAreaM2.toString();
     if (tracedAreas.cultivationAreaM2 > 0) return String(Math.round(tracedAreas.cultivationAreaM2));
     return existing?.existingGrowingAreaM2?.toString() ?? '';
   });
   const [growingAreaSource, setGrowingAreaSource] = useState<'auto' | 'manual' | undefined>(() =>
-    (existing?.existingGrowingAreaSource === 'manual' || (existing?.existingGrowingAreaSource == null && existing?.existingGrowingAreaM2 != null)) ? 'manual' : (tracedAreas.cultivationAreaM2 > 0 ? 'auto' : undefined)
+    initialDraft ? existing?.existingGrowingAreaSource : (existing?.existingGrowingAreaSource === 'manual' || (existing?.existingGrowingAreaSource == null && existing?.existingGrowingAreaM2 != null)) ? 'manual' : (tracedAreas.cultivationAreaM2 > 0 ? 'auto' : undefined)
   );
   const [livestock, setLivestock] = useState<string[]>(existing?.livestock ?? []);
   const [poultryManagement, setPoultryManagement] = useState<PoultryManagement>(existing?.poultryManagement ?? {});
-  const [layingHens, setLayingHens] = useState(existing?.poultryManagement?.layingHens?.toString() ?? '');
+  const [layingHens, setLayingHens] = useState(initialDraft?.inputs.layingHens ?? existing?.poultryManagement?.layingHens?.toString() ?? '');
   const [otherInfra, setOtherInfra] = useState<string[]>(existing?.otherInfra ?? []);
   const [reportedProduction, setReportedProduction] = useState<ReportedProduction[]>(existing?.reportedProduction ?? []);
-  const [productionYear, setProductionYear] = useState(existing?.productionYear?.toString() ?? '');
+  const [productionYear, setProductionYear] = useState(initialDraft?.inputs.productionYear ?? existing?.productionYear?.toString() ?? '');
   const productionRow = (category: ProductionCategory): ReportedProduction =>
     reportedProduction.find((row) => row.category === category) ?? {
       category,
@@ -470,7 +526,28 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       notes,
     };
   const fingerprint = JSON.stringify(survey);
-  const initialFingerprint = useRef(fingerprint);
+  const initialFingerprint = useRef(initialDraft ? '' : fingerprint);
+  const draft: SiteSurveyDraft = {
+    version: 1, answers: { ...survey, memberCount, marketType, reportedProduction },
+    inputs: { roofMain, roofSecondary, growingArea: existingGrowingArea, layingHens, productionYear },
+    mode, step, started, baseRevision: savedRevision.current,
+  };
+  const draftFingerprint = JSON.stringify(draft);
+  // Preserve raw inputs too: an unfinished or invalid number still belongs to the farmer.
+  const initialDraftFingerprint = useRef(initialDraft ? '' : JSON.stringify({ ...draft, mode: 'short', step: 0, started: false }));
+  const draftDirty = JSON.stringify({ ...draft, mode: 'short', step: 0, started: false }) !== initialDraftFingerprint.current;
+  useEffect(() => {
+    if (completed.current) return;
+    if (draftDirty) {
+      const token = writeSurveyDraft(scope, JSON.parse(draftFingerprint), draftToken.current);
+      if (token !== null) draftToken.current = token;
+      setDraftError(token === null);
+    } else if (draftToken.current !== null) {
+      const cleared = clearSurveyDraft(scope, siteId, draftToken.current);
+      if (cleared) draftToken.current = null;
+      setDraftError(!cleared);
+    }
+  }, [draftFingerprint, draftDirty, scope, siteId]);
   const dirty = fingerprint !== initialFingerprint.current;
   const invalidProduction = survey.reportedProduction?.filter(productionNeedsReview) ?? [];
   const invalidArea = [roofMain, roofSecondary, existingGrowingArea].some(value =>
@@ -486,18 +563,30 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
   const canSave = !invalidArea && !invalidLayingHens && !invalidProductionYear && invalidProduction.length === 0 && missingSections.length === 0;
   const handleSave = () => {
     if (!canSave) return;
+    if (!surveyDraftScopeIsActive(scope, siteId) || surveyRevision(loadSurvey(siteId)) !== savedRevision.current) {
+      setSaveConflict(true); return;
+    }
     const saved = saveSurvey({ ...survey, savedAt: new Date().toISOString() });
-    if (saved) { initialFingerprint.current = fingerprint; onSaved(saved); }
+    if (saved) {
+      completed.current = true;
+      clearSurveyDraft(scope, siteId, draftToken.current);
+      initialFingerprint.current = fingerprint;
+      onSaved(saved);
+    }
     else setSaveError(true);
   };
   const closeWithConfirm = useCallback(async () => {
-    if (dirty && !(await appConfirm({
+    if ((dirty || draftDirty) && !(await appConfirm({
       message: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardConfirm'), SURVEY_DISCARD_CONFIRM_ENGLISH) : t('surveyDiscardConfirm'),
       confirmLabel: lang === 'zu' ? surveyZuluConfirmDraft(t('surveyDiscardBtn'), SURVEY_DISCARD_BUTTON_ENGLISH) : t('surveyDiscardBtn'),
       cancelLabel: t('cancelBtn'), destructive: true,
     }))) return;
+    if (dirty || draftDirty) {
+      if (!clearSurveyDraft(scope, siteId, draftToken.current)) { setDraftError(true); return; }
+      completed.current = true;
+    }
     onClose();
-  }, [dirty, onClose, t, appConfirm]);
+  }, [dirty, draftDirty, scope, siteId, onClose, t, appConfirm]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -513,11 +602,11 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
       }
     };
-    const beforeUnload = (e: BeforeUnloadEvent) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } };
+    const beforeUnload = (e: BeforeUnloadEvent) => { if (dirty || draftDirty) { e.preventDefault(); e.returnValue = ''; } };
     window.addEventListener('keydown', onKey);
     window.addEventListener('beforeunload', beforeUnload);
     return () => { window.removeEventListener('keydown', onKey); window.removeEventListener('beforeunload', beforeUnload); };
-  }, [closeWithConfirm, dirty]);
+  }, [closeWithConfirm, dirty, draftDirty]);
   useEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
     headingRef.current?.focus({ preventScroll: true });
@@ -1143,6 +1232,19 @@ export default function SiteSurveySheet({ placeId, coords, annualRainfallMm, onS
       </div>
 
       <footer className={styles.footer}>
+        {draftError && <p lang="en" role="alert" className={styles.warning}>Your unfinished answers could not be kept on this browser, or changed in another tab. Keep this screen open. <button onClick={() => {
+          const token = writeSurveyDraft(scope, draft, draftToken.current);
+          if (token !== null) draftToken.current = token;
+          setDraftError(token === null);
+        }}>Try keeping the draft again</button></p>}
+        {saveConflict && <p lang="en" role="alert" className={styles.warning}>Your saved survey changed while this screen was open. Your draft is separate. Close and reopen the survey to check the newer saved answers before saving.</p>}
+        {draftDirty && !draftError && <p lang="en" role="status" className={styles.smallNote}>Unfinished answers kept on this browser. Your report changes only after Save &amp; continue. <button className={styles.back} aria-label="Close and keep draft" onClick={() => {
+          const token = writeSurveyDraft(scope, draft, draftToken.current);
+          if (token === null) { setDraftError(true); return; }
+          draftToken.current = token;
+          completed.current = true;
+          onClose();
+        }}>Close and keep draft</button></p>}
         {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}><RegionalWelcomeCopy language={lang} field={dirty || existing ? 'continue' : 'begin'}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}</RegionalWelcomeCopy><ArrowRight size={18}/></button></div>}
         {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
         {started && invalidLayingHens && <p lang="en" role="alert" className={styles.warning}>Check the laying-hen count before saving. Enter a whole number, zero, or leave it blank.</p>}
