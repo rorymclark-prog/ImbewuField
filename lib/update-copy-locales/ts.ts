@@ -88,6 +88,9 @@ const copy:UpdateCopy={
   "Menu → Account": "Menyu → Akhawunti",
   "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.": "Eka Akhawunti, kambisisa mpfumelelo wo avelana ekusuhi ni tsalwa ra wona ro sungula ra Xinghezi. Ku avelana phurofayili ya vaaki i xihlawulekisi lexi hambaneke loko Vaaki va kumeka.",
   "Farmer profile and report controls now have four draft translations.": "Swilawuri swa phurofayili ya murimi ni xiviko sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
-  "Community messages, board and map controls now have four draft translations.": "Swilawuri swa marungula, bodo ni mepe ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune."
+  "Community messages, board and map controls now have four draft translations.": "Swilawuri swa marungula, bodo ni mepe ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+  "Photo viewer controls now have four draft translations.": "Swilawuri swa xilanguti xa swifaniso sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+  "Open a saved photograph": "Pfula xifaniso lexi hlayisiweke",
+  "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.": "Loko akhawunti ya wena yi ri ni xifaniso, xi pfule. Swilawuri swa xilanguti xa swifaniso swi tirhisa ririmi ra wena; nhlamuselo yo sungula ya xifaniso yi sala yi ri leswi yi tsariweke swona."
 };
 export default copy;

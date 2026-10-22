@@ -1672,6 +1672,17 @@ const dict: Dict = {
   communityTimeHoursAgo: "dihora tse {count} tse fetileng",
   profileClose: "Kwala",
   // End community conversations and hub.
+  // Photo viewer: unreviewed drafts; photo-viewer-drafts.json.
+  photoViewerOpen: "Bula setshwantsho: {caption}",
+  photoViewerTriggerFallback: "setshwantsho sa profaele kapa sa sebaka",
+  photoViewerCaptionFallback: "Setshwantsho",
+  photoViewerSampleLabel: "Setshwantsho se takilweng",
+  photoViewerDialogTitle: "Sebohi sa ditshwantsho",
+  photoViewerClose: "Kwala ×",
+  photoViewerLoadError: "Setshwantsho sena ha se a kgona ho kena. Kwala mme o leke hape ha o hokahane.",
+  photoViewerFit: "Lekanya le sekirini",
+  photoViewerEnlarge: "Hodisa",
+  // End photo viewer.
 };
 
 export default dict;

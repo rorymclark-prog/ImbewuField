@@ -2546,6 +2546,17 @@ const dict: Dict = {
   communityTimeHours: "Emahoreni angu-{count} edlule",
   communityTimeHoursAgo: "Emahoreni angu-{count} edlule",
   // End community conversations and hub.
+  // Photo viewer: unreviewed drafts; photo-viewer-drafts.json.
+  photoViewerOpen: "Vula isithombe: {caption}",
+  photoViewerTriggerFallback: "isithombe sephrofayela noma sendawo",
+  photoViewerCaptionFallback: "Isithombe",
+  photoViewerSampleLabel: "Umdwebo",
+  photoViewerDialogTitle: "Isibukeli sezithombe",
+  photoViewerClose: "Vala ×",
+  photoViewerLoadError: "Lesi sithombe asikwazanga ukulayishwa. Vala bese uzama futhi uma usuxhumekile.",
+  photoViewerFit: "Linganisa nesikrini",
+  photoViewerEnlarge: "Khulisa",
+  // End photo viewer.
 };
 
 export default dict;

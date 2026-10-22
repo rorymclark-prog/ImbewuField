@@ -12,7 +12,7 @@ interface DictionaryPacket {
 export function beforeUiDictionary(actual: unknown, locale: string, packet: DictionaryPacket): unknown {
   if (!actual || typeof actual !== 'object' || Array.isArray(actual)) return actual;
   const original = actual;
-  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(beforeCommunityMemberDictionary(beforeCommunityThreadDictionary(actual,locale),locale),locale),locale),locale),locale),locale),locale);
+  actual = beforeControlIconDictionary(beforeConsentDictionary(beforeOfflineDeviceDictionary(beforeUpdateNoticeDictionary(beforeAccountDictionary(beforeCommunityProfileDictionary(beforeCommunityMemberDictionary(beforeCommunityThreadDictionary(beforePhotoViewerDictionary(actual,locale),locale),locale),locale),locale),locale),locale),locale),locale);
   const expected: Record<string, string> = {};
   for (const entry of [...packet.entries, ...(packet.supplementalEntries ?? [])]) {
     if (typeof entry[locale] === 'string') expected[entry.key] = entry[locale];
@@ -150,4 +150,15 @@ export function beforeCommunityThreadDictionary(actual:unknown,locale:string):un
 }
 export function beforeCommunityThreadTranslations(source:string,locale:string):string {
   return beforeExactUiSource(source,locale,communityThreadPacket(),'\n  // Community conversations and hub: unreviewed drafts; community-thread-drafts.json.\n','  // End community conversations and hub.\n');
+}
+
+let photoViewer:ControlIconPacket|undefined;
+function photoViewerPacket():ControlIconPacket {
+  return photoViewer??=JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/photo-viewer-drafts.json',import.meta.url),'utf8'));
+}
+export function beforePhotoViewerDictionary(actual:unknown,locale:string):unknown {
+  return beforeExactUiDictionary(actual,locale,photoViewerPacket());
+}
+export function beforePhotoViewerTranslations(source:string,locale:string):string {
+  return beforeExactUiSource(source,locale,photoViewerPacket(),'\n  // Photo viewer: unreviewed drafts; photo-viewer-drafts.json.\n','  // End photo viewer.\n');
 }

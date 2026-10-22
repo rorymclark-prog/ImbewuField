@@ -998,6 +998,16 @@ export const SETTINGS_ENGLISH_PENDING: Dict = {
 
 // Home and report controls share their exact English source while local drafts are reviewed.
 export const CORE_ENTRY_ENGLISH_PENDING: Dict = {
+  // Shared photo controls retain the original source text.
+  photoViewerOpen: "Open photo: {caption}",
+  photoViewerTriggerFallback: "profile or site photograph",
+  photoViewerCaptionFallback: "Photograph",
+  photoViewerSampleLabel: "Illustration",
+  photoViewerDialogTitle: "Photo viewer",
+  photoViewerClose: "Close ×",
+  photoViewerLoadError: "This photo could not load. Close and try again when connected.",
+  photoViewerFit: "Fit to screen",
+  photoViewerEnlarge: "Enlarge",
   // Community messages and hub controls retain their original source wording.
   communitySendingStatus: "Sending…",
   communityHubTitle: "Community",

@@ -1335,6 +1335,67 @@ titles still need translation, so this is core community control coverage, not w
 end-to-end completion. Wider workflows, older update history, exports and Study/media remain.
 This changes the picture; `PLAN_VERSION` is unchanged. No production merge has occurred.
 
+## Batch 28 — shared photograph viewer
+
+The [photo-viewer packet](photo-viewer-drafts.json) binds **nine original control sources and
+36 native values**, plus **12 native release/guide values**. The viewer now names its dialog,
+open action, Close, enlargement, fit, illustration marker, missing-caption fallback and load
+recovery in all four languages. A shared draft notice appears inside the viewer; failed-load
+wording retains the exact English source. The reviewer CSV adds the nine source keys without
+claiming review.
+
+Original image URLs and owned captions remain verbatim. Caption interpolation inserts the
+value once, including literal braces and `$&`. The viewer stores the source caption and sample
+flag separately, so switching language repaints controls, illustration/fallback text and image
+trigger labels while preserving the photograph and owned words. Original English captions and
+control output remain exact. Unmarked maps/controls keep their own action. Enter/Space and the
+capture handler retain the existing directory-row behavior; no uploads, account writes or saved
+photographs changed.
+
+The modal opens after its controls mount. Real browser checks confirm initial Close focus for
+the tested ordinary-photo conditions, button/backdrop/Escape dismissal and focus return to the
+original photograph. A removed trigger is not focused. Zoom and failure state reset on reopening.
+The draft notice can switch the open viewer to English without changing the caption or source.
+
+[Browser evidence](evidence/photo-viewer/verification.json) covers **144 actual app-level dialog
+states**, using the real language provider, notice, CSS and native dialog through a temporary QA
+route: all four languages, phone/short-phone/desktop and earth light/dark, with owned/empty/sample/
+failed/long captions and enlargement. **1,242 scrolled/hit-tested reading lines** passed, with no
+tested line clipped/occluded or document overflow. Minimum visible-text contrast was **5.34:1**.
+Eight additional language/theme conditions checked Close focus, button/backdrop closure, restored
+focus and the notice's English switch. Eight actual update-guide previews also passed in all four
+languages on short phone and desktop; their new optional photo stop was inspected. Representative images were inspected in every language.
+Synthetic SVGs and guest onboarding/consent preconditions were confined to a disposable context;
+the temporary route, SVG and its generated type file were removed. This does not claim upload,
+device-photo or signed-in Firebase coverage.
+
+The first long-caption render put Close beyond the phone edge. The header caption now shrinks
+and wraps within its flex row, retaining every character. The measured original failure is saved;
+a browser negative control restoring the old caption CSS puts Close's right edge at 1,553 px on
+a 390 px viewport, while the corrected control is reachable. This check can detect the observed
+problem. The dialog remains scrollable on a short phone.
+
+Typecheck and release-note/whitespace checks are clean; **1038 tests pass across 114 selected
+registered files**. The final viewer-only recheck also passes all 17 tests, including unknown-
+language markup on owned image captions. The new actual-component
+checks cover all control languages, literal caption preservation, fallback/illustration changes,
+zoom, failure/source feedback, keyboard/capture/observer cleanup, close/focus behavior and exact
+source hashes. Historical dictionary guards reverse only this complete exact declared layer;
+partial/corrupt layers and unrelated learning changes still fail their original checks. The new
+optional Account-photo guide stop retains two visible guide actions at the real Account destination as the older Updates
+stop leaves the five-note window; it explicitly handles accounts without a photograph. An older
+guide test assumed consecutive stops had different routes. It now checks the existing native
+Continue/reopen behavior when both stops visit Account, then retains every progress, Previous,
+storage and stop assertion. The four failures were first observed and all 38 focused checks pass
+after this semantic extension.
+
+A full **556-file** run is active at predecessor `2b8f58cf` in a frozen checkout, after its clean
+typecheck. It does not prove this head's **557-file** registration. The earlier 554-file terminal
+result and semantic photo-alt repair are recorded in Batch 27. All translations remain machine
+drafts without fluent-speaker approval. Static metadata titles, wider workflows, old update
+history, exports and Study/media remain under the active whole-app goal. This changes the picture;
+`PLAN_VERSION` is unchanged. No production merge has occurred.
+
 ## Remaining work
 
 1. Finish shared app chrome beyond checked Settings/consent/offline/update controls: onboarding, remaining dialogs, accessibility
