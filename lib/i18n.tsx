@@ -103,7 +103,6 @@ export const T_en: Dict = {
   tabRecords: 'Records',
   tabDashboard: 'Dashboard',
   tabStudies: 'Studies',
-  tabAssessments: 'Assessments',
   toolbarMinButton: 'Find your land',
   toolbarHeader: 'Find your land',
   toolbarHideButton: 'Hide',

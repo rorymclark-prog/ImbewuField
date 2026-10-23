@@ -33,7 +33,7 @@ const STAFF_TABS = {
   mentor: [
     { href: '/home',   key: 'tabHome',      Icon: Home },
     { href: '/mentor', key: 'tabDashboard', Icon: BarChart3 },
-    { href: '/assessments', key: 'tabAssessments', Icon: ClipboardList },
+    { href: '/assessments', key: 'offlinePageAssessments', Icon: ClipboardList },
     { href: '/account', key: 'tabAccount',  Icon: User },
   ],
   ngo: [
