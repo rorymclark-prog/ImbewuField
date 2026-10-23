@@ -1257,7 +1257,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             >
               <Sprout size={16} />
               {t('generateFullReport')}
-              {siteMetrics.land && <span className="font-normal" style={{ fontSize: 12, color: 'rgba(234,243,226,0.7)', marginLeft: 4 }}>{siteMetrics.land.areaHa} ha</span>}
+              {siteMetrics.land && <span className="font-normal" style={{ fontSize: 12, color: 'inherit', marginLeft: 4 }}>{siteMetrics.land.areaHa} ha</span>}
             </button>
 
             {/* (Saving is the Save-this-site hero at the top of a scouting pin; no second

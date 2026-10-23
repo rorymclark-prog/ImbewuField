@@ -23,7 +23,7 @@ const DARK = '#0B120B';
  *  slab in light mode. */
 const DARK_PALETTE = {
   bg: DARK, border: GREEN, accent: GOLD, strong: GOLD, soft: 'rgba(247,201,126,0.8)',
-  faint: 'rgba(247,201,126,0.55)', mid: 'rgba(247,201,126,0.7)', track: 'rgba(247,201,126,0.15)',
+  faint: 'rgba(247,201,126,0.7)', mid: 'rgba(247,201,126,0.7)', track: 'rgba(247,201,126,0.15)',
   tick: GREEN, tickFg: GOLD, dashed: GOLD, idle: 'rgba(247,201,126,0.45)', idleBorder: 'rgba(247,201,126,0.35)',
 };
 const SURFACE_PALETTE = {
