@@ -88,9 +88,9 @@ const PAPER = 'var(--bg-1)';
 const ATTENTION = 'var(--orange)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: '#1F4D2B',
-  establishing: '#9E5C08',
-  support: '#C0531E',
+  thriving: 'var(--emerald)',
+  establishing: 'var(--gold)',
+  support: 'var(--orange)',
 };
 
 const DASH = '—';
@@ -314,7 +314,7 @@ export default function NetworkPage() {
               // borders on the wrapped rows); the divider and spacing return at sm+.
               className="flex flex-col justify-center min-w-0 sm:flex-shrink-0 sm:min-w-[92px] sm:border-r sm:mr-4 sm:pr-4"
               style={{
-                padding: '9px 0',
+                paddingBlock: 9,
                 borderColor: LINE,
               }}
             >
@@ -504,7 +504,7 @@ export default function NetworkPage() {
                   style={{
                     display: 'block',
                     background: on ? PAPER : 'transparent',
-                    border: `1px solid ${on ? '#1F4D2B' : 'transparent'}`,
+                    border: `1px solid ${on ? 'var(--color-forest-800)' : 'transparent'}`,
                     borderRadius: 10,
                     padding: '8px 9px',
                     marginBottom: 3,
@@ -513,37 +513,42 @@ export default function NetworkPage() {
                 >
                   <div className="flex items-center gap-2">
                     {farmer.photoUrl && <img data-photo-preview src={farmer.photoUrl} alt="" width={44} height={44} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />}
-                    <span
-                      style={{
-                        width: 9,
-                        height: 9,
-                        borderRadius: '50%',
-                        background: STATUS_COLOR[farmer.status],
-                        flexShrink: 0,
-                      }}
-                    />
-                    <span
-                      className="font-display font-semibold"
-                      style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
-                    >
-                      {farmer.name}
-                    </span>
-                    {flags.length > 0 && (
-                      <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
-                    )}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
-                  >
-                    {farmer.siteName} · {farmer.district}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
-                  >
-                    {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
-                    {group(farmer.plotSizeM2)} m²
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: '50%',
+                            background: STATUS_COLOR[farmer.status],
+                            boxShadow: `0 0 0 1.5px ${LINE}`,
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span
+                          className="font-display font-semibold"
+                          style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
+                        >
+                          {farmer.name}
+                        </span>
+                        {flags.length > 0 && (
+                          <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
+                        )}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
+                      >
+                        {farmer.siteName} · {farmer.district}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
+                      >
+                        {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
+                        {group(farmer.plotSizeM2)} m²
+                      </div>
+                    </div>
                   </div>
                 </button>
               );
