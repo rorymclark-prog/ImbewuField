@@ -1284,7 +1284,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>{t('cardMainChallenges')}</Label>
               <div className="space-y-1.5">
                 {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
-                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                  <div key={i} className="flex gap-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
                     {c}
                   </div>
