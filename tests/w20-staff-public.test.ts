@@ -38,3 +38,10 @@ test('w20-40: mentor follow-up date is formatted; metric numbers are primary tex
   assert.doesNotMatch(css, /\.metric strong \{[^}]*var\(--emerald\)/);
   assert.match(css, /\.personHeading strong \{ font-family:var\(--font-display\)/);
 });
+
+test('w20-41: vision toggle never wraps and has equal segments; h1 is centred with the column', () => {
+  const v = read('app/vision/page.tsx');
+  assert.match(v, /grid grid-cols-2 rounded-2xl p-1 gap-1 w-fit mx-auto/);
+  assert.match(v, /font-sans font-semibold whitespace-nowrap transition-all/);
+  assert.match(v, /<h1 className="font-display text-center"/);
+});
