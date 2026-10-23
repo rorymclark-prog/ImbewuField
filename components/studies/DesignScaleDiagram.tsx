@@ -1,4 +1,5 @@
 import type { RefObject } from 'react';
+import styles from './DesignScalePractice.module.css';
 import { scaleNumber as n, type ScaleArrangement } from '@/lib/design-scale';
 
 export default function DesignScaleDiagram({ model, svgRef, scenario }: { model: ScaleArrangement; svgRef?: RefObject<SVGSVGElement>; scenario: string }) {
@@ -16,10 +17,10 @@ export default function DesignScaleDiagram({ model, svgRef, scenario }: { model:
     <path d={`M${x1} ${y - 6}v12M${x1} ${y}H${x2}M${x2} ${y - 6}v12`} fill="none" />
     <text x={(x1+x2)/2} y={y-12} textAnchor="middle" stroke="none" fill="#293b2e" fontSize="23">{label}</text>
   </g>;
-  return <svg ref={svgRef} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 550" width="500" height="550" role="img" aria-labelledby="scale-plan-title scale-plan-description" style={{ display: 'block', width: '100%', height: 'auto' }} fontFamily="Arial, sans-serif">
+  return <svg ref={svgRef} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 550" width="500" height="550" role="img" aria-labelledby="scale-plan-title scale-plan-description" className={styles.diagram} style={{ display: 'block', width: '100%', height: 'auto' }} fontFamily="Arial, sans-serif">
     <title id="scale-plan-title">{`${scenario}: two sample bed outlines with model dimensions`}</title>
     <desc id="scale-plan-description">{a.label} and {b.label} are each {n(a.widthM)} metres wide and {n(a.lengthM)} metres long. {model.overlapM > 0 ? `Their outlines overlap by ${n(model.overlapM)} metres.` : `The gap is ${n(model.gapM)} ${model.gapM === 1 ? 'metre' : 'metres'}.`} The outer rectangle is {n(model.outerWidthM)} metres wide. Model data only; no site survey or recommended spacing.</desc>
-    <rect width="500" height="550" fill="#faf7ee" />
+    <rect className={styles.paper} width="500" height="550" fill="#faf7ee" />
     <text x="250" y="29" textAnchor="middle" fill="#4f6148" fontSize="20" letterSpacing="1">{scenario.toUpperCase()}</text>
     <rect x={left} y={top} width={model.outerWidthM*unit} height={a.lengthM*unit} fill="#eee3c8" stroke="#8b7653" strokeDasharray="7 5" strokeWidth="2" />
     {model.beds.map(bed => <g key={bed.reference}>

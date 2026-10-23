@@ -61,14 +61,14 @@ export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?
   return <figure className={styles.figure}>
     <div className={styles.controls}><button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(current => !current)}>{enlarged ? 'Fit diagram to screen' : 'Enlarge diagram'}</button></div>
     <div className={styles.viewport} tabIndex={0} role="region" aria-label="Scrollable fictional classroom yard-plan diagram">
-      <svg ref={svgRef} className={`${styles.diagram}${enlarged ? ` ${styles.enlarged}` : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 802" width="720" height="802" role="img" aria-labelledby="worked-diagram-title worked-diagram-description" fontFamily="Arial, sans-serif">
+      <svg ref={svgRef} className={`${styles.diagram}${enlarged ? ` ${styles.enlarged}` : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 818" width="720" height="818" role="img" aria-labelledby="worked-diagram-title worked-diagram-description" fontFamily="Arial, sans-serif">
         <title id="worked-diagram-title">{`${DESIGN_WORKED.title}: ${title}`}</title>
         <desc id="worked-diagram-description">A fictional classroom plan in metres. Existing evidence stays visible in every view. Concept A retains the existing growing area and shows a proposed compost area before revision. Concept B shows a separate alternative growing area while retaining the original growing area. Revision R2 visibly defers compost because no care role is agreed. The outer frame is a teaching frame, not a land-rights boundary, and the reported eastern water issue has unmeasured extent and levels.</desc>
         <defs>
           <pattern id="compost-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#7a4d20" strokeWidth="2" opacity="0.7" /></pattern>
         </defs>
-        <rect width="720" height="802" fill="#f7f1e3" />
-        <text x="32" y="34" fill="#23382a" fontSize="20" fontWeight="700">{DESIGN_WORKED.caseId} · {title}</text>
+        <rect className={styles.paper} width="720" height="818" fill="#f7f1e3" />
+        <text x="32" y="34" fill="#23382a" fontSize="20" fontWeight="700">{title}</text>
         <text x="32" y="54" fill="#536651" fontSize="12">Metres · x increases right; y increases down</text>
         <text x="32" y="70" fill="#536651" fontSize="12">Top edge is model north by classroom convention only</text>
         <text x="32" y="90" fill="#8b4226" fontSize="12" fontWeight="700">FICTIONAL CLASSROOM MODEL · VIEW {viewRevision} · CURRENT PACK {DESIGN_WORKED.currentRevision} · NOT A SURVEY OR CONSTRUCTION DRAWING</text>
@@ -100,9 +100,9 @@ export default function DesignWorkedDiagram({ view = 'source', svgRef }: { view?
           <text x="456" y={plan.y + plan.height + 57} fill="#8b4226">No physical print scale is claimed</text>
         </g>
 
-        <g aria-label="Reported water observation note" fill="#31566c"><text x="56" y={plan.y + plan.height + 70} fontSize="12" fontWeight="700">W-OBS: reported eastern-yard water issue</text><text x="56" y={plan.y + plan.height + 85} fontSize="12">Water reportedly crosses the eastern yard in heavy rain.</text><text x="56" y={plan.y + plan.height + 100} fontSize="12">Extent and levels are unmeasured; this is not a flood boundary.</text></g>
+        <g aria-label="Reported water observation note" fill="#31566c"><text x="56" y={plan.y + plan.height + 86} fontSize="12" fontWeight="700">W-OBS: reported eastern-yard water issue</text><text x="56" y={plan.y + plan.height + 101} fontSize="12">Water reportedly crosses the eastern yard in heavy rain.</text><text x="56" y={plan.y + plan.height + 116} fontSize="12">Extent and levels are unmeasured; this is not a flood boundary.</text></g>
 
-        <g aria-label="Legend and provenance" transform="translate(32 590)">
+        <g aria-label="Legend and provenance" transform="translate(32 606)">
           <rect x="0" y="0" width="656" height="190" rx="8" fill="#fffdf7" stroke="#d5c8af" />
           <text x="16" y="22" fill="#23382a" fontSize="14" fontWeight="700">Legend · marks are references to source cards, not proof of suitability</text>
           <rect x="16" y="36" width="14" height="14" fill="#cfe1c0" stroke="#31593a" strokeWidth="2" /><text x="38" y="48" fill="#274d36" fontSize="12">1 Existing growing area · E-PLOT-A · W-MAP</text>
