@@ -1,7 +1,7 @@
 'use client';
 import { useEffect,useState } from 'react';
 import Link from 'next/link';
-import { Wifi,WifiOff } from 'lucide-react';
+import { ChevronDown,Wifi,WifiOff } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useAuth } from '@/lib/auth';
@@ -54,7 +54,7 @@ export default function OfflinePage(){
     const key = OFFLINE_ERROR_KEYS[message];
     return key ? t(key) : message;
   };
-  const source = (key: string) => lang==='zu' ? <details style={{marginTop:6}}><summary style={{minHeight:44,display:'flex',alignItems:'center',cursor:'pointer'}}>English source</summary><p style={{margin:'4px 0'}}>{translate('en',key)}</p></details> : null;
+  const source = (key: string) => lang==='zu' ? <details style={{marginTop:6}}><summary className="offline-summary" style={{minHeight:44}}>English source<ChevronDown size={16} aria-hidden className="offline-chevron"/></summary><p style={{margin:'4px 0'}}>{translate('en',key)}</p></details> : null;
   const actionLabel = (key: string) => lang==='zu' ? `${t(key)} (${translate('en',key)})` : t(key);
   const englishError = lang==='zu' ? Object.entries(OFFLINE_ERROR_KEYS).find(([,key])=>t(key)===error)?.[0] : undefined;
   const messageKey = OFFLINE_PROGRESS_KEYS.find(key=>t(key)===message);
@@ -107,31 +107,34 @@ export default function OfflinePage(){
   async function discard(row:DeviceRow){const id=fieldIdentity();if(!id||row.scope!==fieldScope(id))return;await fieldDeviceStore.change(row.key,current=>{if(current?.value.state==='sending'&&current.value.leaseUntil>Date.now())throw Error('This entry is sending. Wait before removing it.');return undefined;});setConfirmDiscard('');await refresh();window.dispatchEvent(new Event(FIELD_CHANGED));window.dispatchEvent(new Event(FIELD_SYNCED));}
   const identity=fieldIdentity(),activeScope=identity?fieldScope(identity):null;
   const writes=rows.filter(row=>row.scope===activeScope&&row.kind==='write'),cached=rows.filter(row=>row.scope===activeScope&&row.kind==='cache');
-  const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:18,background:'var(--bg-1)'};
-  const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8};
+  const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:0,background:'var(--bg-1)'};
+  const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8,marginTop:4};
   return <div className="flex flex-col overflow-hidden" style={{height:'100dvh',background:'var(--bg-0)'}}>
-    <AppHeader title={t('offlineTitle')} />
+    <style>{'.offline-summary{list-style:none;min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer}.offline-summary::-webkit-details-marker{display:none}.offline-chevron{transition:transform .15s;transform:rotate(-90deg)}details[open]>.offline-summary .offline-chevron{transform:none}'}</style>
+    <AppHeader title={lang==='zu'?t('offlineTitle'):'Saved on this device'} />
   <main style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',color:'var(--text-primary)'}}><div style={{flex:1,overflowY:'auto'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'calc(max(90px, var(--lima-fab-clearance, 0px)) + var(--bottom-nav-height, 0px))'}}>
     {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own real h1. */}
-    <h1 style={{fontSize:18,lineHeight:'20px',margin:0}}>{t('offlineTitle')}</h1>
-    {lang==='zu'&&<p role="note" style={{...card,marginTop:12,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
+    <h1 className="t-h1" style={{margin:0,color:'var(--text-primary)'}}>{lang==='zu'?t('offlineTitle'):'Saved on this device'}</h1>
+    <div className="space-y-4 mt-4">
+    {lang==='zu'&&<p role="note" style={{...card,marginTop:0,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     {/* nav-06: was just the bold word "Connected" with no icon and no sentence, which read like
         a leftover label rather than a status. */}
-    <div role="status" style={{...card,marginTop:12,display:'flex',alignItems:'flex-start',gap:10}}>
+    <div role="status" style={{...card,marginTop:0,display:'flex',alignItems:'flex-start',gap:10}}>
       {online?<Wifi size={18} style={{color:'var(--color-forest-800)',flexShrink:0,marginTop:2}}/>:<WifiOff size={18} style={{color:'var(--text-muted)',flexShrink:0,marginTop:2}}/>}
       <div>
         <strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}
         {online&&<p style={{margin:'4px 0 0',fontSize:13,color:'var(--text-secondary)'}}>{t('offlineConnectedSentence')}</p>}
       </div>
     </div>
-    <section style={card}><h2>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p>{source('offlinePrepareDescription')}<button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?actionLabel('offlineWorking'):actionLabel('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{actionLabel('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>{source('offlineLessonDownloads')}{source('offlineOpenToolsOnce')}
-      {!simple && <details><summary style={{minHeight:44,cursor:'pointer'}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}</summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}{source(pages[path]?.ready?'offlineStartupFilesSaved':'offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p>{source('offlineReadinessLimit')}</details>}
+    <section className="space-y-3" style={card}><h2 className="t-h2" style={{margin:0}}>{t('offlineBeforeLeavingSignal')}</h2><p>{t('offlinePrepareDescription')}</p>{source('offlinePrepareDescription')}<button style={button} disabled={!online||busy} onClick={()=>void prepare()}>{busy?actionLabel('offlineWorking'):actionLabel('offlinePrepareButton')}</button><p>{t('offlineLessonDownloads')} <Link href="/student">{actionLabel('offlineStudyLink')}</Link>. {t('offlineOpenToolsOnce')}</p>{source('offlineLessonDownloads')}{source('offlineOpenToolsOnce')}
+      {!simple && <details><summary className="offline-summary" style={{minHeight:44}}>{t('offlinePageReadiness').replace('{ready}',String(paths.filter(path=>pages[path]?.ready).length)).replace('{total}',String(paths.length))}<ChevronDown size={16} aria-hidden className="offline-chevron"/></summary><ul>{paths.map(path=><li key={path}><a href={path}>{pageName(path)}</a> — {pages[path]?.ready?t('offlineStartupFilesSaved'):t('offlineNotConfirmed')}{source(pages[path]?.ready?'offlineStartupFilesSaved':'offlineNotConfirmed')}</li>)}</ul><p>{t('offlineReadinessLimit')}</p>{source('offlineReadinessLimit')}</details>}
     </section>
-    <section style={card}><h2>{t('offlineSavedEntriesTitle')}</h2>{source('offlineSavedEntriesTitle')}<p>{t('offlineSavedEntriesDescription')}</p>{source('offlineSavedEntriesDescription')}<button style={button} disabled={!online||busy||!user||isSampleMode()} onClick={()=>void sync()}>{actionLabel('offlineSyncNow')}</button>{!writes.length&&<><p>{t('offlineQueueEmpty')}</p>{source('offlineQueueEmpty')}</>}
-      {writes.map(row=>{const w=row.value as FieldWrite;const stateKey=w.state==='review'?'offlineNeedsReview':w.state==='sending'?'offlineSending':'offlineWaitingToSend';const errorSource=Object.entries(OFFLINE_ERROR_KEYS).find(([message])=>message===w.error)?.[1];return <article key={row.key} style={{borderTop:'1px solid var(--border)',marginTop:16,paddingTop:12}}><h3>{writeLabel(w.label)}</h3><p>{t(stateKey)}</p>{source(stateKey)}{w.error&&<><p>{showError(w.error)}</p>{errorSource&&source(errorSource)}</>}{!simple&&<button style={button} onClick={()=>download(row)}>{actionLabel('offlineDownloadCopy')}</button>}{confirmDiscard===row.key?<><p>{t('offlineRemoveConfirm')}</p>{source('offlineRemoveConfirm')}<button style={button} onClick={()=>void discard(row).catch(e=>setError(showError(e.message)))}>{actionLabel('offlineRemoveQueuedChange')}</button><button style={button} onClick={()=>setConfirmDiscard('')}>{actionLabel('offlineKeepEntry')}</button></>:<button style={button} onClick={()=>setConfirmDiscard(row.key)}>{actionLabel('offlineReviewRemove')}</button>}{w.state==='review'&&<><p>{t('offlineConflictHelp')}</p>{source('offlineConflictHelp')}</>}</article>;})}
+    <section className="space-y-3" style={card}><h2 className="t-h2" style={{margin:0}}>{t('offlineSavedEntriesTitle')}</h2>{source('offlineSavedEntriesTitle')}<p>{t('offlineSavedEntriesDescription')}</p>{source('offlineSavedEntriesDescription')}<button style={button} disabled={!online||busy||!user||isSampleMode()} onClick={()=>void sync()}>{actionLabel('offlineSyncNow')}</button>{!writes.length&&<><p>{t('offlineQueueEmpty')}</p>{source('offlineQueueEmpty')}</>}
+      {writes.map(row=>{const w=row.value as FieldWrite;const stateKey=w.state==='review'?'offlineNeedsReview':w.state==='sending'?'offlineSending':'offlineWaitingToSend';const errorSource=Object.entries(OFFLINE_ERROR_KEYS).find(([message])=>message===w.error)?.[1];return <article key={row.key} style={{borderTop:'1px solid var(--border)',marginTop:16,paddingTop:12}}><h3 className="font-display font-semibold" style={{margin:0,fontSize:15}}>{writeLabel(w.label)}</h3><p>{t(stateKey)}</p>{source(stateKey)}{w.error&&<><p>{showError(w.error)}</p>{errorSource&&source(errorSource)}</>}{!simple&&<button style={button} onClick={()=>download(row)}>{actionLabel('offlineDownloadCopy')}</button>}{confirmDiscard===row.key?<><p>{t('offlineRemoveConfirm')}</p>{source('offlineRemoveConfirm')}<button style={button} onClick={()=>void discard(row).catch(e=>setError(showError(e.message)))}>{actionLabel('offlineRemoveQueuedChange')}</button><button style={button} onClick={()=>setConfirmDiscard('')}>{actionLabel('offlineKeepEntry')}</button></>:<button style={button} onClick={()=>setConfirmDiscard(row.key)}>{actionLabel('offlineReviewRemove')}</button>}{w.state==='review'&&<><p>{t('offlineConflictHelp')}</p>{source('offlineConflictHelp')}</>}</article>;})}
     </section>
-    <section style={card}><h2>{t('offlineAvailableTitle')}</h2><p>{t('offlineCachedCount').replace('{count}',String(cached.length))}</p>{source('offlineCachedCount')}<p>{t('offlineAvailableDescription')}</p>{source('offlineAvailableDescription')}<p>{t('offlineDeviceSafety')}</p>{source('offlineDeviceSafety')}</section>
+    <section className="space-y-3" style={card}><h2 className="t-h2" style={{margin:0}}>{t('offlineAvailableTitle')}</h2><p>{t('offlineCachedCount').replace('{count}',String(cached.length))}</p>{source('offlineCachedCount')}<p>{t('offlineAvailableDescription')}</p>{source('offlineAvailableDescription')}<p>{t('offlineDeviceSafety')}</p>{source('offlineDeviceSafety')}</section>
     {message&&<><p role="status" style={card}>{message}</p>{messageKey&&source(messageKey)}</>}{error&&<div role="alert" style={{...card,whiteSpace:'pre-wrap'}}>{error}{englishError&&source(OFFLINE_ERROR_KEYS[englishError])}</div>}
+    </div>
   </div></div>
   </main>
   {/* nav-03: without this, /offline was one of the secondary pages that lost the farmer's way home. */}

@@ -62,6 +62,7 @@
 
 import { CROPS, cropByKey } from './crop-catalog';
 import type { BoardCategory, BoardKind } from './db/types';
+import { randCentsLabel } from './format-figures';
 import { coarsenCoords, formatDistanceKm, haversineKm, type LatLon } from './network';
 import { DEMO_NETWORK } from './network-demo';
 
@@ -252,7 +253,10 @@ export function toBoardPostFields(listing: Listing): Record<string, unknown> {
  * ──────────────────────────────────────────────────────────────────────────*/
 
 function zar(n: number): string {
-  return `R${n % 1 === 0 ? n.toFixed(0) : n.toFixed(2)}`;
+  // w18-47: the app's shared rand convention — space-grouped thousands, comma decimals
+  // (randCentsLabel) — so "R8.50/kg" reads like "R8 172,00" elsewhere. Whole rand stay compact.
+  if (n % 1 === 0) return `R${n.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}`;
+  return randCentsLabel(n);
 }
 
 // A price is quoted per ONE of something, so the basis reads in the singular:

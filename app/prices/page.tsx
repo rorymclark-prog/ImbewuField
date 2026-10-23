@@ -69,7 +69,7 @@ export default function PricesPage() {
       />
 
       <main className={`flex-1 overflow-y-auto lg:overflow-visible px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
-        <h1 className="font-display font-semibold m-0 mb-3" style={{ fontSize: 'clamp(20px, 2vw, 26px)', color: 'var(--color-ink)' }}>{t('pricesFarmGateTitle')}</h1>
+        <h1 className="t-h1 m-0 mb-3" style={{ color: 'var(--text-primary)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="mb-3"><LanguageDraftNote lang={lang} scope="prices" /></div>
         <style jsx global>{`
           .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
