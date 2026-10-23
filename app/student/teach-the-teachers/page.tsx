@@ -16,7 +16,7 @@ export default function TeachTheTeachersPage() {
   return <div className={styles.page}>
     <header className={styles.header}>
       <MenuButton /><BackButton fallback="/student" />
-      <Link href="/student">My Studies</Link><span>Facilitator refresher</span>
+      <Link href="/student">My Studies</Link><span data-header-secondary>Facilitator refresher</span>
     </header>
     <main className={styles.main}>
       <section className={styles.hero}>

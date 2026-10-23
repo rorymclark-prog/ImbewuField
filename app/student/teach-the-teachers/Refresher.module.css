@@ -2,14 +2,15 @@
 /* The global draggable Lima launcher sits over the left edge of lesson copy on a phone.
    This reading page already links to the app exercises where Lima remains available. */
 .page ~ :global(button[aria-label^="Open Lima"]) { display: none; }
-.header { display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 10px max(16px, env(safe-area-inset-left)); background: var(--bg-1); border-bottom: 1px solid var(--border); }
+/* Same centred header as FinanceCourse.module.css. */
+.header { padding: 16px max(20px, calc((100% - 1120px) / 2)); display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 12px; background: var(--bg-1); border-bottom: 1px solid var(--border); }
 .header > a { color: var(--color-forest-800); font-weight: 700; text-decoration: none; }
-.header > span { margin-left: auto; color: var(--text-secondary); font-size: 13px; }
+.header > :last-child { margin-left: auto; }
 .main { width: min(100%, 1080px); margin: 0 auto; padding: 20px 16px var(--lima-fab-clearance, 96px); }
 .hero, .panel, .day, .notice { border: 1px solid var(--border); border-radius: 20px; background: var(--bg-1); }
 .hero { padding: clamp(24px, 6vw, 48px); background: linear-gradient(145deg, color-mix(in srgb, var(--color-forest-800) 8%, var(--bg-1)), var(--bg-1) 70%); }
 .eyebrow { margin: 0 0 10px; color: var(--gold-dim); font: 700 12px/1.4 var(--font-sans), sans-serif; letter-spacing: .1em; text-transform: uppercase; }
-.hero h1 { margin: 0; color: var(--color-forest-800); font: 600 clamp(32px, 4vw, 52px)/1.12 var(--font-display), Georgia, serif; }
+.hero h1 { margin: 0; color: var(--color-forest-800); font: 400 clamp(32px, 4vw, 52px)/1.12 var(--font-display), Georgia, serif; }
 .lead { max-width: 72ch; color: var(--text-primary); font-size: clamp(17px, 3vw, 21px); line-height: 1.5; }
 .heroLinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
 .heroLinks a { display: inline-flex; align-items: center; min-height: 44px; padding: 9px 14px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg-1); color: var(--text-primary); font-weight: 700; text-decoration: none; }
@@ -22,12 +23,13 @@
 .notice summary .chevron { margin-left: 0; position: static; }
 .notice details[open] > summary .chevron { transform: rotate(180deg); }
 .panel, .day { margin-top: 16px; padding: clamp(20px, 4vw, 30px); scroll-margin-top: 20px; }
-.panel h2, .day h2 { margin: 0 0 12px; color: var(--color-forest-800); font: 600 clamp(25px, 3.4vw, 35px)/1.15 var(--font-display), Georgia, serif; }
+.panel h2, .day h2 { margin: 0 0 12px; color: var(--color-forest-800); font: 400 clamp(25px, 3.4vw, 35px)/1.15 var(--font-display), Georgia, serif; }
 .panel p, .panel li { line-height: 1.55; }
 .panel p, .panel ul, .panel ol:not(.moduleList), .sessionBody { max-width: 72ch; }
 .panel li + li { margin-top: 8px; }
 .panel > a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-forest-800); font-weight: 700; text-underline-offset: 3px; }
-.moduleList { columns: 2; column-gap: 28px; }
+.panel ol { list-style: decimal; padding-left: 1.5em; margin: 12px 0 16px; }
+.moduleList { margin-top: 12px; columns: 2; column-gap: 28px; }
 .moduleList li { break-inside: avoid; }
 .dayHeading { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
 .dayHeading > span { flex: 0 0 auto; border-radius: 999px; padding: 7px 11px; background: var(--color-forest-800); color: var(--on-forest-800); font-weight: 700; }
@@ -49,5 +51,5 @@
 .appTask p { margin-bottom: 10px; }
 .appTask a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-forest-800); font-weight: 700; text-underline-offset: 3px; }
 .footer { display: grid; gap: 12px; justify-items: start; margin-top: 20px; color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
-@media (max-width: 480px) { .header > span { display: none; } .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; position: relative; padding-right: 44px; } .chevron { position: absolute; right: 14px; top: 14px; } .moduleList { columns: 1; } }
+@media (max-width: 480px) { .header > span:not([data-header-secondary]) { display: none; } .dayHeading { display: block; } .dayHeading > span { display: inline-block; margin-bottom: 12px; } .session summary { align-items: flex-start; flex-direction: column; gap: 3px; position: relative; padding-right: 44px; } .chevron { position: absolute; right: 14px; top: 14px; } .moduleList { columns: 1; } }
 @media print { .header, .heroLinks, .appTask a, .footer a { display: none; } .page { height: auto; overflow: visible; background: white; } .main { width: 100%; padding: 0; } .hero, .panel, .day, .notice { box-shadow: none; } .session { break-inside: avoid; } .session > .sessionBody { display: block !important; } }
