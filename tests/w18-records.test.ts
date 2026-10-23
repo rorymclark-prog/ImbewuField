@@ -43,3 +43,10 @@ test('w18-40 sample Account shows the active language and no duplicate setting l
   assert.match(s, /code === lang\)\?\.label/);
   assert.match(s, /copy\('Appearance', 'Ukubukeka'\)/);
 });
+
+test('w18-41 isiZulu invoice dates use the month table, not zu-ZA', () => {
+  const s = read('lib/invoice-document.ts');
+  assert.doesNotMatch(s, /zu-ZA/);
+  assert.match(s, /recordsMonthLong\('zu'/);
+  assert.match(s, /recordsMonthShort\('zu'/);
+});
