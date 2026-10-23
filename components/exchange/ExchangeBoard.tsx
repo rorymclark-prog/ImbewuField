@@ -61,6 +61,7 @@ import {
 import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { produceLabel } from '@/lib/produce-label';
 import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
 const SORT_LABEL: Record<ListingSort, string> = {
@@ -337,7 +338,7 @@ export default function ExchangeBoard() {
               ) : (
                 c.icon
               )}{' '}
-              {c.name} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {produceLabel(c.cropKey, lang)} <span style={{ opacity: 0.65 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>

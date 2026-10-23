@@ -1,6 +1,7 @@
 'use client';
 
 import { useLanguage } from '@/lib/i18n';
+import { produceLabel } from '@/lib/produce-label';
 import { useAppLevel } from '@/lib/app-level';
 import { EX } from './theme';
 
@@ -29,7 +30,7 @@ export default function ExchangeLede({ summary, crops }: { summary: Summary; cro
           {crops.map((crop) => (
             <span key={crop.cropKey} style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
               {crop.art ? <img className="produce-art produce-art--inline" src={crop.art} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} /> : <span>{crop.icon}</span>}
-              {crop.name}
+              {produceLabel(crop.cropKey, lang)}
             </span>
           ))}
         </p>
