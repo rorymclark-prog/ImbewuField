@@ -1960,7 +1960,7 @@ export default function RecordsPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

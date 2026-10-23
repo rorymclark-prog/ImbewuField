@@ -1366,7 +1366,7 @@ export default function InvoicePage() {
         </div>
       </div>
 
-      <div className="no-print"><TabBar /></div>
+      <div className="no-print"><TabBar hideAtDesktop /></div>
 
       {/* Print styles — see the note in components/invoice/InvoiceDocument.tsx.
           The old rules whitened <body> but not this page's own beige wrapper, and left the 28rem
