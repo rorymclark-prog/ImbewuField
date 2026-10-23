@@ -1008,7 +1008,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             )}
 
             {/* Site-lifecycle completion leaderboard — only once this is your saved site */}
-            {isSaved && <CompletionScore inputs={completionInputs} />}
+            {isSaved && <CompletionScore surface inputs={completionInputs} />}
 
             {/* Guided "next step" card — the ONE thing to do next (the checklist above says
                 where you are; this says what to do). Self-hides when guided mode is off/retired. */}
