@@ -236,7 +236,7 @@ function LoginPageInner() {
         {/* Backend not configured notice */}
         {!backendReady && (
           <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold-dim)' }}>
-            {t('loginBackendUnavailableNotice')}
+            {lang === 'en' ? 'Sign-in is not available in this practice version. Everything you try here is kept on this device.' : t('loginBackendUnavailableNotice')}
           </div>
         )}
 

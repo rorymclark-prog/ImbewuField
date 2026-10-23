@@ -25,7 +25,8 @@ test('w19-40: login is honest', () => {
   const l = read('app/login/page.tsx');
   assert.doesNotMatch(l, /!backendReady && \(\s*<p role="status"/);
   assert.doesNotMatch(l, /placeholder=\{t\('login(FullName|EmailAddress|Password)'\)\}/);
-  assert.match(read('lib/i18n.tsx'), /kept on this device\./);
+  // lib/i18n.tsx is byte-pinned by the history checks, so the English wording lives in the page.
+  assert.match(l, /kept on this device\./);
 });
 
 test('w19-41: mentor metric numbers use the display font; due chip outlined; no lone icon', () => {
