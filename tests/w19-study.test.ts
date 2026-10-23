@@ -59,7 +59,7 @@ test('w19-34: manual header is the shared AppHeader', () => {
 
 test('w19-35: balanced headings, one action size and weight', () => {
   assert.match(fin, /\.page h1, \.page h2, \.page h3, \.page h4 \{[^}]*text-wrap: balance/);
-  assert.match(read('components/ProductTour.module.css'), /\.page h1\{text-wrap:balance/);
+  assert.match(read('components/ProductTour.module.css'), /\.page h1\{[^}]*text-wrap:balance\}/);
   assert.match(fin, /\.actions a, \.actions button \{[^}]*font-size: 16px; font-weight: 600/);
   assert.doesNotMatch(fin, /\.actions \.primary \{[^}]*font-size/);
 });
