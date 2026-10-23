@@ -14,7 +14,9 @@
 .root h2 { font-size:21px; font-weight:600; margin:0 0 12px; }
 .root h3 { font-size:17px; font-weight:600; margin:0 0 10px; }
 .root p { font-size:14px; line-height:1.6; }
-.row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+.row { display:flex; gap:12px; row-gap:6px; align-items:center; flex-wrap:wrap; }
+/* w20-22: paragraphs inside a chip row (mentor plan cards) get a small even margin. */
+.row p { margin:8px 0; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; margin:18px 0; }
 .card { background:var(--bg-1); padding:20px; border:1px solid var(--border); border-radius:16px; min-width:0; }
 .stat { font-family:var(--font-display),serif; font-size:30px; font-weight:700; display:block; margin:8px 0; }
@@ -31,7 +33,8 @@
 .root :is(button,a).primary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:var(--color-forest-800); color:var(--on-forest-800); border:1px solid var(--color-forest-800); font-weight:600; font-size:14px; text-decoration:none; }
 .root :is(button,a).secondary { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:9px 18px; border-radius:10px; background:transparent; color:var(--text-primary); border:1px solid var(--border); font-weight:600; font-size:14px; text-decoration:none; }
 .stack { display:grid; gap:16px; margin:16px 0; }
-.root button[aria-pressed=true] { box-shadow:0 0 0 2px var(--emerald); }
+/* w20-22: selected = filled --badge-bg + emerald text and border; a 2px ring read as keyboard focus. */
+.root button[aria-pressed=true] { background:var(--badge-bg); color:var(--emerald); border-color:var(--emerald); font-weight:600; }
 .root :focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
 .error { padding:15px; background:color-mix(in srgb, var(--orange) 14%, var(--bg-0)); color:var(--orange); border:1px solid color-mix(in srgb, var(--orange) 40%, var(--border)); border-radius:10px; }
 .notice { position:relative; padding:15px 15px 15px 46px; background:var(--bg-1); color:var(--text-primary); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:10px; margin:14px 0; }
