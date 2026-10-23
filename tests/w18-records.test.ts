@@ -29,7 +29,8 @@ test('w18-37 lender figures never break mid-number; both buttons are sans', () =
 test('w18-38 Picked keeps the summary cards on desktop and caps the form', () => {
   const s = read('app/records/page.tsx');
   assert.match(s, /className=\{tab === 'picked' \? undefined : 'lg:hidden'\}/);
-  assert.match(s, /tab === 'picked' \? ' lg:max-w-\[640px\]'/);
+  // w19-11: the Picked form is now full width like the other tabs (no 640px cap).
+  assert.doesNotMatch(s, /lg:max-w-\[640px\]/);
 });
 
 test('w18-39 kg quantities use the shared kg formatter', () => {

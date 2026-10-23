@@ -19,7 +19,7 @@ import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib
 import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
-import { formatInvoiceZar as fmtZAR } from '@/lib/invoice-document';
+import { formatInvoiceZar } from '@/lib/invoice-document';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -66,6 +66,11 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+
+// w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
+// across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
+// cannot encode U+00A0 and the same formatter feeds the PDF.
+const fmtZAR = (n: number): string => formatInvoiceZar(n).replace(/ /g, '\u00A0');
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -264,12 +269,12 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           ) : (
             <>
               <p
-                className="font-display font-bold text-sm leading-tight"
+                className="font-display font-bold text-sm leading-tight whitespace-nowrap"
                 style={{ color: 'var(--color-ink)' }}
               >
                 {card.value}
               </p>
-              <p className="text-xs leading-tight" style={{ color: 'var(--color-muted-strong)' }}>
+              <p className="text-xs leading-tight break-words hyphens-auto min-w-0" style={{ color: 'var(--color-muted-strong)' }}>
                 {card.label}
               </p>
             </>
@@ -466,7 +471,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
               </div>
               <div className="flex-shrink-0 text-right">
                 <p
-                  className="text-sm font-display font-semibold"
+                  className="text-sm font-display font-semibold whitespace-nowrap"
                   style={{ color: item.positive ? 'var(--record-positive)' : 'var(--record-negative)' }}
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
