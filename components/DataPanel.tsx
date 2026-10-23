@@ -1270,7 +1270,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 {biomeList(data.biome.code, 'species', data.biome.keySpecies, t).slice(0, 6).map((s) => (
                   <span
                     key={s}
-                    className="px-2 py-0.5 rounded-full text-xs font-display"
+                    className="px-2 py-0.5 rounded-full text-xs font-sans"
                     style={{ background: 'var(--badge-bg)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}
                   >
                     {s}
@@ -1284,7 +1284,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               <Label>{t('cardMainChallenges')}</Label>
               <div className="space-y-1.5">
                 {biomeList(data.biome.code, 'challenges', data.biome.challenges, t).slice(0, 4).map((c, i) => (
-                  <div key={i} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                  <div key={i} className="flex gap-2 text-xs font-sans leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                     <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold)' }}><AlertTriangle size={12} /></span>
                     {c}
                   </div>

@@ -576,7 +576,7 @@ function HomeInner() {
           <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
-          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          <span className="hidden lg:block font-sans whitespace-nowrap" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
           <div className="flex-1" />
 
           <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
@@ -620,13 +620,6 @@ function HomeInner() {
           <div className="hidden md:block"><LangSwitcher /></div>
           <div className="hidden md:block"><AccountButton /></div>
 
-          {error && (
-            <span className="text-xs px-3 py-1 rounded-full font-sans flex-shrink-0 flex items-center"
-                  style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>
-              <AlertTriangle size={13} className="inline mr-1" /> {error}
-            </span>
-          )}
-
           <button
             onClick={() => setSettingsOpen(true)}
             aria-label={lang === 'zu' ? 'Izilungiselelo zokubukeka' : 'Appearance settings'}
@@ -643,6 +636,15 @@ function HomeInner() {
             <Settings size={18} />
           </button>
         </header>
+
+        {/* w19-02: the error used to be a flex-shrink-0 chip inside the overflow-hidden header,
+            clipped and pushing Settings off-screen. A full-width banner under the header instead. */}
+        {error && (
+          <div role="alert" className="flex items-start gap-2 px-3 md:px-5 py-2 font-sans"
+               style={{ background: 'var(--bg-2)', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+            <AlertTriangle size={16} aria-hidden className="flex-shrink-0 mt-0.5" /> <span>{error}</span>
+          </div>
+        )}
 
         {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'var(--bg-1)',borderBottom:'1px solid var(--border)',fontSize:14}}>
           <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : 'Choose a site for your report') : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : 'Opening your site report')}</strong>
@@ -915,7 +917,7 @@ function HomeInner() {
           </div>
         </div>
 
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
 
       <ProfileSheet

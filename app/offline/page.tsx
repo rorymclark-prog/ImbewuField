@@ -107,21 +107,21 @@ export default function OfflinePage(){
   async function discard(row:DeviceRow){const id=fieldIdentity();if(!id||row.scope!==fieldScope(id))return;await fieldDeviceStore.change(row.key,current=>{if(current?.value.state==='sending'&&current.value.leaseUntil>Date.now())throw Error('This entry is sending. Wait before removing it.');return undefined;});setConfirmDiscard('');await refresh();window.dispatchEvent(new Event(FIELD_CHANGED));window.dispatchEvent(new Event(FIELD_SYNCED));}
   const identity=fieldIdentity(),activeScope=identity?fieldScope(identity):null;
   const writes=rows.filter(row=>row.scope===activeScope&&row.kind==='write'),cached=rows.filter(row=>row.scope===activeScope&&row.kind==='cache');
-  const card={border:'1px solid var(--border)',borderRadius:16,padding:20,marginTop:0,background:'var(--bg-1)'};
+  const card={border:'1px solid var(--border)',borderRadius:16,padding:20,background:'var(--bg-1)'};
   const button={minHeight:44,padding:'8px 14px',border:'1px solid var(--border)',borderRadius:10,marginRight:8,marginTop:4};
   return <div className="flex flex-col overflow-hidden" style={{height:'100dvh',background:'var(--bg-0)'}}>
     {/* Raw HTML, not a text child: the server escapes '>' in a text child to &gt;, which breaks the
         open-state rule and makes React throw a hydration mismatch (#425) on every load. */}
-    <style dangerouslySetInnerHTML={{__html:'.offline-summary{list-style:none;min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer}.offline-summary::-webkit-details-marker{display:none}.offline-chevron{transition:transform .15s;transform:rotate(-90deg)}details[open]>.offline-summary .offline-chevron{transform:none}'}} />
+    <style dangerouslySetInnerHTML={{__html:'.offline-summary{list-style:none;min-height:44px;display:flex;align-items:center;gap:6px;cursor:pointer}.offline-summary::-webkit-details-marker{display:none}main button:disabled{opacity:.5;cursor:not-allowed}.offline-chevron{transition:transform .15s;transform:rotate(-90deg)}details[open]>.offline-summary .offline-chevron{transform:none}'}} />
     <AppHeader title={lang==='zu'?t('offlineTitle'):'Saved on this device'} />
   <main style={{flex:1,display:'flex',flexDirection:'column',overflow:'hidden',color:'var(--text-primary)'}}><div style={{flex:1,overflowY:'auto'}}><div style={{maxWidth:880,margin:'0 auto',padding:'18px 18px 0',paddingBottom:'calc(max(90px, var(--lima-fab-clearance, 0px)) + var(--bottom-nav-height, 0px))'}}>
     {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own real h1. */}
     <h1 className="t-h1" style={{margin:0,color:'var(--text-primary)'}}>{lang==='zu'?t('offlineTitle'):'Saved on this device'}</h1>
     <div className="space-y-4 mt-4">
-    {lang==='zu'&&<p role="note" style={{...card,marginTop:0,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
+    {lang==='zu'&&<p role="note" style={{...card,background:'var(--bg-2)'}}>{t('offlineZuluDraftNotice')}</p>}
     {/* nav-06: was just the bold word "Connected" with no icon and no sentence, which read like
         a leftover label rather than a status. */}
-    <div role="status" style={{...card,marginTop:0,display:'flex',alignItems:'flex-start',gap:10}}>
+    <div role="status" style={{...card,display:'flex',alignItems:'flex-start',gap:10}}>
       {online?<Wifi size={18} style={{color:'var(--color-forest-800)',flexShrink:0,marginTop:2}}/>:<WifiOff size={18} style={{color:'var(--text-muted)',flexShrink:0,marginTop:2}}/>}
       <div>
         <strong>{online?(lang==='zu'?`${t('offlineConnected')} (Connected)`:t('offlineConnected')):t('offlineUsingSavedCopies')}</strong>{!online&&source('offlineUsingSavedCopies')}{writes.length?<> · {t('offlineEntriesWaiting').replace('{count}',String(writes.length))}{source('offlineEntriesWaiting')}</>:''}

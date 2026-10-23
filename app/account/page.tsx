@@ -238,7 +238,7 @@ export default function AccountPage() {
                     <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: 'var(--text-primary)' }}>{sandbox.full_name ?? copy('Tour account', 'I-akhawunti yohambo')}</div>
                     {sandboxRoleLabel && (
                       <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
-                        style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                        style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}>
                         <Sprout size={11} />{sandboxRoleLabel}
                       </div>
                     )}
@@ -249,7 +249,7 @@ export default function AccountPage() {
                   <Row icon={Globe} label={copy('Language', 'Ulimi')} value={sandboxLangLabel} />
                 </div>
                 <button onClick={() => setSettingsOpen(true)}
-                  className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+                  className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
                   style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
                   <span>{copy('Appearance', 'Ukubukeka')}</span>
                   <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
@@ -260,12 +260,12 @@ export default function AccountPage() {
                   </p>
                   <div className="flex gap-2 flex-wrap">
                     <button onClick={() => router.push('/login')}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display font-semibold"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans font-semibold"
                       style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
                       {copy('Sign in', 'Ngena ngemvume')}
                     </button>
                     <button onClick={() => { exitSampleMode(); router.push('/home'); }}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans"
                       style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       {copy('Exit tour', 'Phuma ohambo')}
                     </button>
@@ -352,7 +352,7 @@ export default function AccountPage() {
               )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
-                  style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                  style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}>
                   <Sprout size={11} />{roleLabel}
                 </div>
               )}
@@ -484,7 +484,7 @@ export default function AccountPage() {
               collapsed. All tools renders it open with no toggle, exactly as before. */}
           {simple && (
             <button onClick={() => setMoreOpen((o) => !o)} aria-expanded={moreOpen}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span>{copy('More account settings', 'Ezinye izilungiselelo ze-akhawunti')}</span>
               {moreOpen ? <ChevronUp size={16} style={{ color: 'var(--text-muted)' }} /> : <ChevronDown size={16} style={{ color: 'var(--text-muted)' }} />}
@@ -508,7 +508,7 @@ export default function AccountPage() {
           {/* Change password */}
           {(!simple || moreOpen) && (!changingPw ? (
             <button onClick={() => setChangingPw(true)}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span className="flex items-center gap-2"><Lock size={14} style={{ color: 'var(--text-muted)' }} />{copy('Change password', 'Shintsha iphasiwedi')}</span>
               <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
@@ -566,7 +566,7 @@ export default function AccountPage() {
               it as a second, always-visible entry point exactly as before. */}
           {(!simple || moreOpen) && (
             <button onClick={() => setSettingsOpen(true)}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
               <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />

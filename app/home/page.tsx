@@ -29,6 +29,7 @@ import { useTourInvitation } from '@/components/TourDiscovery';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
+import AppHeader from '@/components/layout/AppHeader';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
@@ -416,11 +417,11 @@ function HomeLandingInner() {
     { href: '/prices',            Icon: Tag,           label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
   const STAFF_LINKS = !staffRole ? [] : [
-    { href: `/${staffRole}`, Icon: staffRole === 'mentor' ? Users : staffRole === 'ngo' ? BarChart3 : Building2,
-      label: staffRole === 'mentor' ? t('homeRoleMentorLabel') : staffRole === 'ngo' ? t('homeRoleNGOLabel') : t('homeRoleFunderLabel') },
-    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments') },
-    { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
-    { href: '/network', Icon: Users, label: t('navNetwork') },
+    // w19-09: the role dashboard link is gone — the hero CTA and the Dashboard tab already go there.
+    // isiZulu descriptions are not drafted: lang zu shows the English line until a reviewed one exists.
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: 'Check how farms and learners are doing' },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: 'Site analysis reports you can open or share' },
+    { href: '/network', Icon: Users, label: t('navNetwork'), desc: 'Farmers, mentors and partners near you' },
   ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
@@ -429,8 +430,16 @@ function HomeLandingInner() {
       className="h-[100dvh] flex flex-col font-sans overflow-hidden"
       style={{ background: 'var(--bg-0)', color: 'var(--color-ink)' }}
     >
+      {/* w19-09: staff roles get the shared AppHeader (brand, Back, Settings, desktop nav) instead of
+          the phone-only bar; the h1 moves into the page body below. */}
+      {staffRole && (
+        <AppHeader
+          title={getDayDate(lang)}
+          right={<LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />}
+        />
+      )}
       {/* ── Header ── */}
-      <header
+      {!staffRole && <header
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
@@ -462,7 +471,7 @@ function HomeLandingInner() {
         >
           <Settings size={16} strokeWidth={1.6} />
         </button>
-      </header>
+      </header>}
 
       <style jsx global>{`
         /* Home scrolls vertically; flex shrinking used to squash the tour's 209px card to
@@ -540,6 +549,12 @@ function HomeLandingInner() {
       {/* ── Main content ── */}
       <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
 
+        {staffRole && (
+          <h1 className="t-h1 m-0" style={{ color: 'var(--text-primary)' }}>
+            {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
+          </h1>
+        )}
+
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
             ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.
@@ -588,7 +603,10 @@ function HomeLandingInner() {
                 <span className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 40, height: 40, color: 'var(--emerald)', background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' }}>
                   <l.Icon size={20} strokeWidth={1.6} aria-hidden />
                 </span>
-                <span className="flex-1 min-w-0 font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>{l.label}</span>
+                <span className="flex-1 min-w-0 font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
+                  {l.label}
+                  <span className="block font-sans font-normal" style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 1 }}>{l.desc}</span>
+                </span>
                 <ChevronRight size={16} strokeWidth={1.6} aria-hidden style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
               </Link>
             ))}
@@ -751,7 +769,7 @@ function HomeLandingInner() {
       </main>
 
       <LimaBar />
-      <TabBar />
+      <TabBar hideAtDesktop />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );
