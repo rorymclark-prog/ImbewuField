@@ -68,7 +68,8 @@
   .statsGrid { gap:8px; margin:10px 0 14px; }
   .statsGrid .card { padding:10px; font-size:13px; }
   .statsGrid .stat { font-size:25px; line-height:1.1; margin:6px 0 0; }
-  .notice { padding:10px; margin:10px 0; }
+  .notice { padding:10px 10px 10px 40px; margin:10px 0; }
+  .notice::before { left:10px; top:11px; }
 }
 @media print { .root { background:white; padding:0; color:black; } .hero { background:white; color:black; padding:0; } .root button,.root select { display:none; } .card { break-inside:avoid; box-shadow:none; } }
 
