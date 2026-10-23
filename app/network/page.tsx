@@ -193,7 +193,7 @@ export default function NetworkPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* ── Header ── */}
       <AppHeader
-        title={tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
+        title={tr('Network', 'Inethiwekhi')}
         right={
           <>
             {/* The org picker only appears for a caller entitled to more than one org — a
@@ -248,7 +248,7 @@ export default function NetworkPage() {
       {/* nav-17: AppHeader's title is a <span>; keep a real h1 for the page since the old
           header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
           stays visually quiet (matches the previous text-xs treatment). */}
-      <h1 className="sr-only">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</h1>
+      <h1 className="sr-only">{tr('Network', 'Inethiwekhi')}</h1>
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean

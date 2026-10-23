@@ -3,8 +3,10 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen } from 'lucide-react';
+import { Home, Map, DollarSign, User, Users, BarChart3, BookOpen, ClipboardList } from 'lucide-react';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
+import { canSeeNavLink } from '@/lib/role-access';
+import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
 import styles from './TabBar.module.css';
 
@@ -31,7 +33,7 @@ const STAFF_TABS = {
   mentor: [
     { href: '/home',   key: 'tabHome',      Icon: Home },
     { href: '/mentor', key: 'tabDashboard', Icon: BarChart3 },
-    { href: '/network', key: 'navNetwork',  Icon: Users },
+    { href: '/assessments', key: 'tabAssessments', Icon: ClipboardList },
     { href: '/account', key: 'tabAccount',  Icon: User },
   ],
   ngo: [
@@ -57,9 +59,11 @@ const STAFF_TABS = {
 /** Shared with components/layout/AppHeader.tsx, which shows the same four destinations as
  *  16px text links at lg+ instead of this bar (desk-07) rather than keeping its own copy. */
 export function tabsForRole(navigationRole: string | null) {
-  return navigationRole && navigationRole in STAFF_TABS
+  const set = navigationRole && navigationRole in STAFF_TABS
     ? STAFF_TABS[navigationRole as keyof typeof STAFF_TABS]
     : FARMER_TABS;
+  // w18-27: the same gate the menu uses, so a tab can never point at a page that refuses the role.
+  return set.filter(({ href }) => canSeeNavLink(navigationRole as UserRole | null, href));
 }
 
 export default function TabBar({ hideAtDesktop = false }: { hideAtDesktop?: boolean }) {
