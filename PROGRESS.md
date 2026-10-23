@@ -52,6 +52,22 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — Wave 18: re-capture, then eight swarm tracks (PRs #1077–#1081, #1083–#1085, folded on one branch)
+- **Re-capture first:** the wave 17 build (`4cad7c53`) rendered again with a full visual review; new IDs `w18-01`…`w18-59`
+  across eight tracks — `docs/audits/2026-10-23/wave-18-recapture-claude.md`.
+- **Samples and MEL:** /samples header and tab bar edge to edge, no leaking file input, real buttons, one back control on
+  /samples/production, MEL tiles, states, dates and disclosures tidied.
+- **Teach the Teachers, tour, Tips:** app fonts, chevron disclosures, themed tiles and buttons.
+- **Courses:** diagrams follow theme and font; preview cards share a surface; raw record id gone (closes w17-08).
+- **Staff chrome:** mentor tab bar offers Assessments, tabs gated by role, one tab style, one tour entry on /ngo and /funder.
+- **Records and account:** closed ThemePanel no shadow band; themed fields; shared kg formatter; isiZulu invoice dates.
+- **Home and titles:** one page-title style, Home quick tiles on one Lucide chip, staff links card, /offline hierarchy.
+- **Public and map:** /contact, /login, /pitch, /vision, atlas, design picker, reports, /example and /surveys on theme tokens.
+- **Integrator:** /vision Ask Lima label on `--on-forest-800`; /offline hydration error fixed (inline `<style>` escaped
+  by the server — new `tests/inline-style-hydration.test.ts`); tour `.scroll` rule reordered for the nav-03 pin; two
+  older pins re-baselined to w18-29. No byte-pinned file changed. Close-out:
+  `docs/audits/2026-10-23/wave-18-integration-claude.md`. Open next: wave 19 re-capture; translator on two isiZulu drafts.
+
 ### 23 Oct 2026 — Wave 17: re-capture, then three swarm tracks (PRs #1073, #1075, #1076, folded on one branch)
 - **Re-capture first:** the wave 16 build (`2bddc451`) rendered again; new IDs `w17-01`…`w17-08`, /farmer `w17-04`
   fixed in place — `docs/audits/2026-10-23/wave-17-recapture-claude.md`.

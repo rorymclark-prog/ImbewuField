@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: '0d8445cc', changes: [
+    'Sample pages, Teach the Teachers, the tour and Tips now match the rest of the app.',
+    'Records, Finances, Contact, Sign in and the Design picker read clearly in dark mode.',
+    'Page titles, tabs and Home tiles share one style; mentors get an Assessments tab.',
+    'Course diagrams follow dark mode; numbers and dates are tidier on Records and invoices.',
+  ], tour: [{ title: 'Open the sample hub',
+    where: 'Menu → Samples', href: '/samples',
+    detail: 'The header and tabs now run edge to edge and the tour and evidence pack are real buttons.',
+  }, { title: 'Open your Records in dark mode',
+    where: 'Menu → Records', href: '/records',
+    detail: 'Form fields follow the theme and weights in kg line up with one decimal.',
+  }] },
   { when: '23 October 2026', sha: '2bddc451', changes: [
     'Green buttons in Study, the refresher course and chat messages stay readable in dark.',
     'Grey text on Records and Finances is darker in dark mode; Network chips are clearer.',
