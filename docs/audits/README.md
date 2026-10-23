@@ -62,6 +62,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 17 integration close-out: three tracks folded, w17-01 to w17-08 dispositioned, focus and on-forest guards tightened — 23 October 2026](2026-10-23/wave-17-integration-claude.md).
+
 - [Wave 17 rendered re-capture of the wave 16 build: new IDs w17-01 to w17-08, /farmer w17-04 fixed — 23 October 2026](2026-10-23/wave-17-recapture-claude.md).
 
 - [Wave 16 integration close-out: five tracks folded, 16 IDs dispositioned, /farmer w16-07 finished — 23 October 2026](2026-10-23/wave-16-integration-claude.md).

@@ -52,6 +52,21 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 23 Oct 2026 — Wave 17: re-capture, then three swarm tracks (PRs #1073, #1075, #1076, folded on one branch)
+- **Re-capture first:** the wave 16 build (`2bddc451`) rendered again; new IDs `w17-01`…`w17-08`, /farmer `w17-04`
+  fixed in place — `docs/audits/2026-10-23/wave-17-recapture-claude.md`.
+- **Dark forest, part 2:** `.studyButton`, the refresher course links and day headings, four /student fills and the
+  /funder CSV button and chips on `--on-forest-800`; own chat bubbles too. `tests/on-forest-contrast.test.ts` now scans
+  every `*.tsx` and `*.module.css` under `app/` and `components/`, with an empty allow-list.
+- **Text, taps, focus:** /records captions on `--text-secondary` in dark, /network sort chip on forest-800,
+  /samples/production print and source links 44px; focus-visible rings on the six named inputs plus the site survey and
+  design canvas fields (`tests/w17-text-taps-focus.test.ts`, no allow-list); scale diagram labels at least 12px.
+- **Desktop interiors:** MEL assessment cards three to a row at 1280, bars capped at 480px; staff journal filters already
+  sit in the sidebar.
+- **Proof layer:** `tests/wave-17-history-checks.ts` pins `app/student/page.tsx` over its wave 16 bytes. Close-out:
+  `docs/audits/2026-10-23/wave-17-integration-claude.md`. Open next: wave 18 re-capture; Rory on farmer journal filters
+  at lg+.
+
 ### 23 Oct 2026 — Wave 16: re-capture, then five swarm tracks (PRs #1067–#1071, folded on one branch)
 - **Re-capture first:** the wave 15 build (`b260f337`) rendered again, 600 frames paired with wave 15; new IDs
   `w16-01`…`w16-11` — `docs/audits/2026-10-22/wave-16-recapture-claude.md`.
