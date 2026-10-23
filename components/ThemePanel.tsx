@@ -265,7 +265,13 @@ export default function ThemePanel({ open, onClose }: Props) {
                 <span lang="en">/ Unreviewed Xitsonga draft.</span>
               </p>
             )}
-            {lang !== 'ts' && isPartialLang(lang) && (
+            {lang === 'xh' && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                <span lang="xh">{t('xhosaUiDraftNotice')}</span>{' '}
+                <span lang="en">/ Unreviewed isiXhosa machine draft.</span>
+              </p>
+            )}
+            {lang !== 'ts' && lang !== 'xh' && isPartialLang(lang) && (
               <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
                 {translate(lang, 'langPartialActiveNote').replace('{lang}', APP_LANGS.find((l) => l.code === lang)?.native ?? lang)}
               </p>

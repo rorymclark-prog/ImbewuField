@@ -78,6 +78,12 @@ function getDayDate(lang: string, now: Date = new Date()) {
     const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
     return `${day} · ${now.getDate()} ${month}`;
   }
+  // xh-ZA has the same missing-Intl problem as zu-ZA, so isiXhosa reads the same key tables.
+  if (lang === 'xh') {
+    const day = translate('xh', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('xh', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
   const day = now.toLocaleDateString(locale, { weekday: 'long' });
   const date = now.toLocaleDateString(locale, { day: 'numeric', month: 'long' });

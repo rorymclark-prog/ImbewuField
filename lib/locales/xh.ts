@@ -722,6 +722,28 @@ const dict: Dict = {
   popiaGoalSoilLabel: 'Buyisela umhlaba wam',
   popiaGoalSoilDesc: 'Iizityalo zosekelo nezimbumba ukubuyisa umhlaba',
   popiaGetStarted: 'Qala',
+  // isiXhosa machine-draft notice (components/ThemePanel.tsx) and the Home header date tables
+  // (app/home/page.tsx getDayDate) — xh-ZA, like zu-ZA, has no Intl date data in most browsers.
+  xhosaUiDraftNotice: 'Amagama esiXhosa kule app aguqulelwe ngomatshini, akakahlolwa.',
+  homeWeekdaySun: 'iCawa',
+  homeWeekdayMon: 'uMvulo',
+  homeWeekdayTue: 'uLwesibini',
+  homeWeekdayWed: 'uLwesithathu',
+  homeWeekdayThu: 'uLwesine',
+  homeWeekdayFri: 'uLwesihlanu',
+  homeWeekdaySat: 'uMgqibelo',
+  homeMonthJan: 'Janyuwari',
+  homeMonthFeb: 'Februwari',
+  homeMonthMar: 'Matshi',
+  homeMonthApr: 'Epreli',
+  homeMonthMay: 'Meyi',
+  homeMonthJun: 'Juni',
+  homeMonthJul: 'Julayi',
+  homeMonthAug: 'Agasti',
+  homeMonthSep: 'Septemba',
+  homeMonthOct: 'Okthobha',
+  homeMonthNov: 'Novemba',
+  homeMonthDec: 'Disemba',
 };
 
 export default dict;
