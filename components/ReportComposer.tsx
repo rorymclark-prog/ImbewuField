@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { deliverFile } from '@/lib/file-delivery';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { fieldApi } from '@/lib/field-api';
 import { fieldDataReportNote } from '@/lib/field-request-model';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -23,7 +24,7 @@ export type { ReportSection } from '@/lib/programme-report-pdf';
 export default function ReportComposer({ title, sample, sections: suppliedSections, deviceData, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false }: { title: string; sample: boolean; sections: ReportSection[]; deviceData?: unknown; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const ui = (en: string, zuText: string) => zu ? zuText : en;
+  const ui = (en: string, zuText: string) => inlineText(lang, en, zuText);
   const localizedPhotoHeading = photoHeading === 'Site photographs' ? ui(photoHeading,'Izithombe zesayithi') : photoHeading;
   const note=fieldDataReportNote(deviceData);
   const sections=note?[{title:'Data availability',lines:[note]},...suppliedSections]:suppliedSections;
@@ -44,13 +45,15 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
   const [format, setFormat] = useState<'summary' | 'full'>('full');
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
   const reportMetrics=programmeReportMetrics({metrics,session,funder});
+  // isiXhosa has no per-metric table here: the English labels below are the keys of its drafts.
+  const xhMetric = (value: string) => { const present = /^(\d+)% present$/.exec(value); return present ? inlineTemplate(lang, '{n}% present', null, { n: present[1] }) : inlineText(lang, value); };
   const zuluMetric = (value: string) => zu ? ({
     'Attendance':'Ukuba khona', 'Signed register':'Uhlu olusayiniwe', 'Feedback':'Impendulo', 'Photographs':'Izithombe',
     'No register yet':'Alukho uhlu okwamanje', 'Attendance signatures':'Amasiginesha okuba khona',
     'Responses / attendees':'Izimpendulo / abebehambele', 'Session evidence':'Ubufakazi beseshini',
     'Programme evidence':'Ubufakazi bohlelo', 'Site photographs':'Izithombe zesayithi',
     'Implemented by':'Kwenziwe ngu', 'Community / project':'Umphakathi / iphrojekthi', 'Supported by':'Kwesekwe ngu',
-  } as Record<string,string>)[value] ?? value.replace(/^(\d+)% present$/, '$1% bakhona') : value;
+  } as Record<string,string>)[value] ?? value.replace(/^(\d+)% present$/, '$1% bakhona') : lang === 'xh' ? xhMetric(value) : value;
   const reportChart=chart;
   const feedback=session?trainingFeedbackSummary(session,funder):null;
   const visible = sections.filter(s=>!session||!['Attendance register','Attendance summary'].includes(s.title)).map(s => ({ ...s, lines: format === 'summary' ? s.lines.slice(0, 5) : s.lines }));
@@ -66,7 +69,7 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
         return { ...photo, image };
       })) : [];
       const visual = visuals && presentation !== 'ink' ? { visuals, assets: await prepareVisualPdfAssets(visuals, attached), date: reportDate ?? new Date().toISOString().slice(0, 10) } : undefined;
-      const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':'en'});
+      const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':lang==='xh'?'xh':'en'});
       await deliverFile(doc.output('blob'), `ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
     } catch { setError('The PDF could not be created. Your records have not changed.'); }
     finally { setBusy(false); }
@@ -78,6 +81,7 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
     </div>
     <div className={visualStyles.controls}><button type="button" aria-pressed={format === 'summary'} onClick={() => setFormat('summary')}>{ui('Brief summary','Isifinyezo esifushane')}</button><button type="button" aria-pressed={format === 'full'} onClick={() => setFormat('full')}>{ui('Full report','Umbiko ogcwele')}</button>{photos.length > 0 && <label className={visualStyles.option}><input type="checkbox" checked={includePhotos} onChange={e => setIncludePhotos(e.target.checked)} />{ui('Include photographs and layout','Faka izithombe nokuhlelwa')}</label>}</div>
     {zu && <p role="note">Lezi izihloko nezilawuli zesiZulu ezingakabuyekezwa isikhulumi esinolwazi. Umbhalo wobufakazi nezimpendulo zabahlanganyeli ugcinwa ngolimi oqoshwe ngalo.</p>}
+    {lang === 'xh' && <p role="note">{inlineText(lang, 'These isiXhosa headings and controls have not yet been reviewed by a fluent speaker. Evidence text and participant responses are kept in the language they were written in.')}</p>}
     {error && <p role="alert">{ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')}</p>}
     <ReportVisualOverview visuals={visuals} language={lang} ink={presentation === 'ink'} compact={presentation === 'ink'} image={includePhotos && presentation !== 'ink' ? photos[0]?.image : undefined} imageCaption={photos[0]?.caption} stamp={reportDate} />
       {format === 'summary' && <p className={visualStyles.basis}>{ui('Brief summary: up to five items per section. Use the full report for every item.','Isifinyezo esifushane: kufika ezintweni ezinhlanu esigabeni ngasinye. Khetha umbiko ogcwele ukuze ubone yonke imininingwane.')}</p>}
@@ -88,6 +92,7 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
     <div className={reportStyles.controls}>{([['screen',ui('Screen','Isikrini')],['colour',ui('Print · full colour','Phrinta · umbala ogcwele')],['ink',ui('Print · save ink','Phrinta · yonga uyinki')]] as const).map(([value,label])=><button key={value} type="button" aria-pressed={presentation===value} onClick={()=>{setPresentation(value);setIncludePhotos(value!=='ink');}}>{label}</button>)}<button type="button" className={styles.primary} disabled={busy} onClick={()=>void download()}>{busy?'Preparing PDF…':ui('Download report PDF','Landa umbiko we-PDF')}</button></div>
     <div className={reportStyles.controls}><button type="button" aria-pressed={format==='summary'} onClick={()=>setFormat('summary')}>{ui('Brief summary','Isifinyezo esifushane')}</button><button type="button" aria-pressed={format==='full'} onClick={()=>setFormat('full')}>{ui('Full report','Umbiko ogcwele')}</button>{photos.length>0&&<label className={styles.option}><input type="checkbox" checked={includePhotos} onChange={e=>setIncludePhotos(e.target.checked)}/>{ui('Include photographs','Faka izithombe')}</label>}</div>
     {zu&&<p role="note">Lezi izihloko nezilawuli zesiZulu ezingakabuyekezwa isikhulumi esinolwazi. Umbhalo wobufakazi nezimpendulo zabahlanganyeli ugcinwa ngolimi oqoshwe ngalo.</p>}
+    {lang==='xh'&&<p role="note">{inlineText(lang,'These isiXhosa headings and controls have not yet been reviewed by a fluent speaker. Evidence text and participant responses are kept in the language they were written in.')}</p>}
     {error&&<p role="alert" className={styles.error}>{ui('The PDF could not be created. Your records have not changed.','I-PDF ayikwazanga ukwenziwa. Amarekhodi akho awashintshanga.')}</p>}
     <header className={reportStyles.head}><p>{session?`${session.date} · ${session.project}`:`${ui('Programme evidence','Ubufakazi bohlelo')} · ${reportDate??new Date().toISOString().slice(0,10)}`}</p><h2>{session?.title??title}</h2>{session&&<p style={{marginTop:10}}>{session.venue}{session.facilitator?` · ${session.facilitator}`:''}</p>}</header>
     {branding&&<div className={reportStyles.partners}>{(['organisation','garden','funder'] as const).map(key=>branding[key].label||branding[key].image?<div className={reportStyles.partner} key={key}>{branding[key].image&&<img src={branding[key].image} alt={`${key} logo`}/>}<div><small>{ui(key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',key==='organisation'?'Kwenziwe ngu':key==='garden'?'Umphakathi / iphrojekthi':'Kwesekwe ngu')}</small><p>{branding[key].label}</p></div></div>:null)}</div>}

@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowDown, BookOpen, Check, FileText, LayoutDashboard } from 'lucide-react';
+import { inlineText } from '@/lib/xh-inline';
 import styles from './ReportReadingGuide.module.css';
 
 export type ReportReadingDepth = 'one' | 'five' | 'full';
@@ -12,7 +13,7 @@ export default function ReportReadingGuide({ reading, onChange, language, chapte
   chapters: { id: string; title: string }[];
   onChapter: (id: string) => void;
 }) {
-  const t = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const t = (en: string, zu: string) => inlineText(language, en, zu);
   const editions = [
     { id: 'one', Icon: LayoutDashboard, title: t('At a glance', 'Ngokubheka nje'), note: t('The essentials, clearly laid out.', 'Okubalulekile, kubekwe ngokucacile.'), detail: t('1-page summary PDF', 'I-PDF yesifinyezo sekhasi elilodwa') },
     { id: 'five', Icon: FileText, title: t('Field guide', 'Umhlahlandlela wasensimini'), note: t('The site, resources and next actions.', 'Indawo, izinsiza nezinyathelo ezilandelayo.'), detail: t('5-page summary PDF', 'I-PDF yesifinyezo samakhasi amahlanu') },

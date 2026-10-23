@@ -8,13 +8,14 @@ import { getCropArt } from '@/lib/crop-art';
 import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanSection } from '@/lib/crop-export-pdf';
 import { deliverPdf } from '@/lib/report-pdf';
 import type { ReportChart } from '@/lib/report-visuals';
+import { inlineText } from '@/lib/xh-inline';
 import styles from './ReportCropPlan.module.css';
 
 export default function ReportCropPlan({ crop, siteName, includeWorking, onIncludeWorking, language = 'en' }: {
   crop: FactCropPlan; siteName: string; includeWorking: boolean; onIncludeWorking: (v: boolean) => void;
   language?: string; month?: number; onMonth?: (v: number) => void; legacyCharts?: ReportChart[];
 }) {
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const tr = (en: string, zu: string) => inlineText(language, en, zu);
   const s = crop.snapshot;
   const [changed, setChanged] = useState(false), [exporting, setExporting] = useState(false), [error, setError] = useState('');
   useEffect(() => {

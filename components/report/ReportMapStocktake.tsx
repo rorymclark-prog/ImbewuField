@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { StoredSheetMeta } from '@/lib/sheet-store';
 import { REPORT_MAP_TYPES, groupReportMaps, loadSiteMapReview, saveSiteMapReview, emptyMapReview, type SiteMapReview, type MapReview } from '@/lib/report-map-selection';
+import { inlineText } from '@/lib/xh-inline';
 import styles from './ReportMapStocktake.module.css';
 
 export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, designUrl, onSelect, onOpen, language = 'en', busy = false }: {
@@ -11,14 +12,14 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
   const [review, setReview] = useState<SiteMapReview>(emptyMapReview);
   const [error, setError] = useState('');
   const [readyScope, setReadyScope] = useState('');
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const tr = (en: string, zu: string) => inlineText(language, en, zu);
   useEffect(() => {
     const refresh = () => { setReview(loadSiteMapReview(siteId)); setReadyScope(scope); };
     refresh(); window.addEventListener('focus', refresh);
     return () => window.removeEventListener('focus', refresh);
   }, [siteId, scope]);
   const groups = groupReportMaps(maps);
-  const types = [...REPORT_MAP_TYPES.map(t => ({ ...t, label: language === 'zu' ? t.zu : t.label })),
+  const types = [...REPORT_MAP_TYPES.map(t => ({ ...t, label: inlineText(language, t.label, t.zu) })),
     ...[...groups.keys()].filter(k => k.startsWith('other:')).map(key => ({ key, label: groups.get(key)![0].label.split('·')[0], zu: '', step: 'glossy' }))];
   const covered = REPORT_MAP_TYPES.filter(t => groups.has(t.key)).length;
   const required = REPORT_MAP_TYPES.filter(t => !review.notNeeded.includes(t.key));

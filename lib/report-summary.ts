@@ -3,11 +3,11 @@ import type { LocationData } from './types';
 import type { ReportSiteFacts } from './report-site-facts';
 import { buildBillOfQuantities } from './report-boq';
 import { pdfSafe } from './crop-export-pdf';
+import { inlineText } from '@/lib/xh-inline';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
-  const zu = language === 'zu';
-  const t = (en: string, zulu: string) => zu ? zulu : en;
+  const t = (en: string, zulu: string) => inlineText(language, en, zulu);
   const unknown = t('Not recorded', 'Akubhaliwe');
   const area = (value?: number) => value === undefined ? unknown : `${numberLabel(value, 1)} m²`;
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
@@ -68,10 +68,10 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
       if (y + wrapped.length * 13 + 8 > 744) { omitted = true; break; }
       doc.text(wrapped, 46, y); y += wrapped.length * 13 + 8;
     }
-    if (omitted) { doc.setFont('helvetica', 'bold'); doc.text(language === 'zu' ? 'Eminye imininingwane isembikweni ogcwele.' : 'Additional detail is in the full report.', 46, 764); }
+    if (omitted) { doc.setFont('helvetica', 'bold'); doc.text(language === 'zu' ? 'Eminye imininingwane isembikweni ogcwele.' : inlineText(language, 'Additional detail is in the full report.'), 46, 764); }
     doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
     doc.text(pdfSafe(`ImbewuField · ${stamp} · ${i + 1}/${pages.length}`), 46, 798);
-    doc.text(language === 'zu' ? 'Qinisekisa izilinganiso nezindleko ngaphambi kokusebenza.' : 'Verify measurements and costs before acting.', 46, 812);
+    doc.text(language === 'zu' ? 'Qinisekisa izilinganiso nezindleko ngaphambi kokusebenza.' : inlineText(language, 'Verify measurements and costs before acting.'), 46, 812);
   }
   return doc.output('blob');
 }
@@ -80,12 +80,12 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
  * This is deliberately not presented as a freshly generated AI assessment. */
 export function sampleFullSiteReport(facts: ReportSiteFacts | null, location: LocationData, language = 'en'): string {
   const zu = language === 'zu';
-  const t = (en: string, zulu: string) => zu ? zulu : en;
+  const t = (en: string, zulu: string) => inlineText(language, en, zulu);
   const pages = reportSummaryPages(facts, location, 5, language);
   const sections = pages.map(page => `## ${page.title}\n\n${page.lines.map(line => `- ${line}`).join('\n')}`);
   const status = (value: 'existing' | 'proposed' | 'mixed') => zu
     ? value === 'existing' ? 'okukhona' : value === 'proposed' ? 'okuhleliwe' : 'isimo esixubile'
-    : value;
+    : inlineText(language, value);
   const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${status(item.status)}`) ?? [];
   const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${numberLabel(bed.areaM2)} m² · ${t(bed.kind, bed.kind === 'bed' ? 'umbhede' : 'isiza')}`) ?? [];
   return [

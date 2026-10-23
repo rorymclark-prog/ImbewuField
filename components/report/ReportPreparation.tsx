@@ -12,6 +12,7 @@ import { loadCanvasState } from '@/lib/design-canvas';
 import { savePlace, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import type { LocationData } from '@/lib/types';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from './ReportPreparation.module.css';
 
 const EvidenceSheet=dynamic(()=>import('../EvidenceSheet'),{ssr:false});
@@ -40,9 +41,10 @@ export default function ReportPreparation({language,location,place,onSavedPlace,
   function refresh(){setEvidence(place?getSiteEvidence(evidenceSiteId(place.id)):{});setChanged(true);onChanged();}
   const items=progress?reportPreparation(progress.inputs,evidence,{facts:currentFacts,maps}):[];
   const zu=language==='zu';
+  const ui=(en:string,zuText:string)=>inlineText(language,en,zuText);
   const sectionTitle:Record<string,string>={photos:'Izithombe zendawo',soil:'Amasampula omhlabathi nemiphumela yokuhlola',water:'Amasampula amanzi nemiphumela yokuhlola',survey:'Ukuhlola indawo nomndeni',boundary:'Imingcele nezilinganiso',design:'Uhlelo lwendawo',crops:'Uhlelo lokutshala'};
   const actionLabel=(action:string)=>{
-    if(!zu)return action;
+    if(!zu)return language==='xh'?inlineText(language,action):action;
     const labels:Record<string,string>={
       'Add site photos':'Faka izithombe zendawo',
       'Add soil test results':'Faka imiphumela yokuhlola umhlabathi',
@@ -62,17 +64,18 @@ export default function ReportPreparation({language,location,place,onSavedPlace,
     if(id==='photos')setSheet({group:{key:'site_photos',label:'Site photographs',color:'#285c3e',bg:'#eef5ed',iconBg:'#e3efdf',items:[]}});
     else {const group=EVIDENCE_CATALOGUE.find(g=>g.key===id)!;setSheet({group,item:group.items.find(i=>i.key==='lab_result')});}
   }
-  return <section className={`${styles.preparation} no-print`} aria-label={zu?'Yengeza ulwazi kulo mbiko':'Improve this report'}>
-    <details><summary><strong>{zu?'Yengeza ulwazi kulo mbiko':'Improve this report'}</strong><span>{zu?`${items.filter(i=>i.hasRecord).length} kwezingu-7 izigaba zinamarekhodi · bheka ongakwengeza noma okubuyekezayo`:`${items.filter(i=>i.hasRecord).length} of 7 areas have records · see what to add or review`}</span></summary>
+  return <section className={`${styles.preparation} no-print`} aria-label={ui('Improve this report','Yengeza ulwazi kulo mbiko')}>
+    <details><summary><strong>{ui('Improve this report','Yengeza ulwazi kulo mbiko')}</strong><span>{inlineTemplate(language,'{n} of 7 areas have records · see what to add or review','{n} kwezingu-7 izigaba zinamarekhodi · bheka ongakwengeza noma okubuyekezayo',{n:items.filter(i=>i.hasRecord).length})}</span></summary>
       {zu&&<p role="note">Umbhalo wesiZulu lapha uwuhlaka olulindele ukubuyekezwa. Izimo zamarekhodi, imininingwane yobufakazi nezaziso ezingezansi zisagcinwe ngesiNgisi ukuze incazelo yazo ihlale inembile.</p>}
+      {language==='xh'&&<p role="note">{inlineText(language,'The isiXhosa text here is an unreviewed draft. Record statuses, evidence details and the notes below stay in English so their meaning remains accurate.')}</p>}
       <p>Generate with the information you have, or add more evidence first. Records present do not mean the information has been checked or the design is finished.</p>
       {snapshot&&<p>This checklist describes your current site. The saved report remains an earlier snapshot; generate a new report to use updated evidence.</p>}
       {!place&&<form className={styles.save} onSubmit={e=>{e.preventDefault();try{
         const saved:SavedPlace={id:crypto.randomUUID(),name:name.trim(),lat:location.lat,lon:location.lon,biome:location.biome.name,rainfall:location.rainfall.annual,elevation:location.elevation.elevation,savedAt:new Date().toISOString(),label:'field'};
         savePlace(saved);onSavedPlace(saved);setError('');
-      }catch{setError('The site could not be saved. Keep this page open and try again.');}}}><label>{zu?'Nike igama lale ndawo uyigcine ukuze unamathisele ubufakazi bayo':'Name and save this site to attach its evidence'}<input required maxLength={120} value={name} onChange={e=>setName(e.target.value)} placeholder={zu?'Igama lengadi noma lendawo yakho':'Your garden or site name'}/></label><button>{zu?'Gcina indawo':'Save site'}</button></form>}
+      }catch{setError('The site could not be saved. Keep this page open and try again.');}}}><label>{ui('Name and save this site to attach its evidence','Nike igama lale ndawo uyigcine ukuze unamathisele ubufakazi bayo')}<input required maxLength={120} value={name} onChange={e=>setName(e.target.value)} placeholder={ui('Your garden or site name','Igama lengadi noma lendawo yakho')}/></label><button>{ui('Save site','Gcina indawo')}</button></form>}
       {error&&<p role="alert">{error}</p>}
-      <div className={styles.grid}>{items.map(item=>{const Icon=icons[item.id];return <article key={item.id}><div className={styles.title}><Icon size={22}/><h3>{zu?sectionTitle[item.id]??item.title:item.title}</h3></div><strong className={styles.status}>{item.status}</strong><p>{item.detail}</p>
+      <div className={styles.grid}>{items.map(item=>{const Icon=icons[item.id];return <article key={item.id}><div className={styles.title}><Icon size={22}/><h3>{zu?sectionTitle[item.id]??item.title:inlineText(language,item.title)}</h3></div><strong className={styles.status}>{item.status}</strong><p>{item.detail}</p>
         {item.id==='design'&&(maps?.count??0)>0?<button onClick={onViewMaps}>{actionLabel(item.action)} →</button>:item.id==='survey'?<button disabled={!place} onClick={()=>setSurvey(true)}>{actionLabel(item.action)}</button>:['photos','soil','water'].includes(item.id)?<button disabled={!place} onClick={()=>addEvidence(item.id)}>{actionLabel(item.action)}</button>:<Link href={item.id==='crops'?`/facilitator/crops?canvasSite=${encodeURIComponent(designSiteIdFromLocation(location))}`:design}>{actionLabel(item.action)} →</Link>}
       </article>;})}</div>
       <p>Climate and regional soil layers provide context. They do not replace your site observations or laboratory measurements.</p>

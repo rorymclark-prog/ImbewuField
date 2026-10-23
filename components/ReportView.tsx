@@ -39,6 +39,7 @@ import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
 import { REPORT_ZU } from '@/lib/report-localisation';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { loadLocale, translate } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
@@ -296,8 +297,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [includeCropWorkingPlan, setIncludeCropWorkingPlan] = useState(false);
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const simple = useAppLevel() === 'simple';
-  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
-  const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  const tr = (en: string, zu: string) => inlineText(language, en, zu);
+  const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : inlineText(language, en);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
   // so its locale chunk may never have been fetched — load it so translate() below has real text
   // to find rather than always falling back to English.
@@ -324,7 +325,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     return `${translate(language, startKey)}–${translate(language, endKey)}`;
   };
   const displayError = (message: string) => {
-    if (language !== 'zu') return message;
+    if (language !== 'zu') return language === 'xh' ? inlineText(language, message) : message;
     const known: Record<string, string> = {
       'Could not build the PDF.': 'Umbiko we-PDF awukwazanga ukwakhiwa.',
       // copy-16: reuses the same two already-translated halves above/below rather than coining
@@ -738,7 +739,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }),
         signal: abortRef.current.signal,
       });
-      if (!res.ok) throw new Error(language === 'zu' ? `Iseva ibuyise ikhodi engu-${res.status}.` : `${res.status}`);
+      if (!res.ok) throw new Error(language === 'zu' ? `Iseva ibuyise ikhodi engu-${res.status}.` : language === 'xh' ? inlineTemplate(language, 'The server returned code {status}.', null, { status: res.status }) : `${res.status}`);
       const reader = res.body!.getReader();
       const dec = new TextDecoder();
       let text = '';
@@ -924,7 +925,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             >
               {saveFailed
                 ? (saveFailedReason === 'store-full'
-                    ? tr(`You have ${MAX_REPORTS} saved reports — delete one to save this`, `Unemibiko egciniwe engu-${MAX_REPORTS} — susa owodwa ukuze ugcine lo mbiko`)
+                    ? inlineTemplate(language, 'You have {max} saved reports — delete one to save this', 'Unemibiko egciniwe engu-{max} — susa owodwa ukuze ugcine lo mbiko', { max: MAX_REPORTS })
                     : tr('Not saved — no space', 'Awugcinwanga — asikho isikhala'))
                 : justSaved ? tr('Saved', 'Kulondoloziwe') : tr('Save', 'Londoloza')}
             </button>
@@ -1079,7 +1080,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 style={tone === val
                   ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
-                {language === 'zu' ? REPORT_ZU[optionLabel] ?? optionLabel : optionLabel}
+                {language === 'zu' ? REPORT_ZU[optionLabel] ?? optionLabel : inlineText(language, optionLabel)}
               </button>
             ))}
           </div>
@@ -1103,11 +1104,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   'Generate brief advice. Choose At a glance for a 1-page summary PDF.': 'Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.',
                   'Core sections for the farmer': 'Izigaba ezisemqoka zomlimi.',
                   'All sections, full detail': 'Zonke izigaba nemininingwane ephelele.',
-                }[tip] ?? tip) : tip}
+                }[tip] ?? tip) : inlineText(language, tip)}
                 style={length === val
                   ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--report-gold)' }
                   : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
-                {language === 'zu' ? REPORT_ZU[label] ?? label : label}
+                {language === 'zu' ? REPORT_ZU[label] ?? label : inlineText(language, label)}
               </button>
             ))}
           </div>
@@ -1295,9 +1296,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     // here reads as a second, conflicting rainfall claim for a non-expert reader.
                     <div className="mt-1 text-xs font-sans" style={{ color: 'var(--report-muted)' }}>
                       {d.bru.attribution} — {tr('BRU zone', 'Isigodi se-BRU')} {d.bru.brucode} ({tr('parent zone', 'isigodi esiyisisekelo')} {d.bru.bruParent}): {d.bru.tmean}°C {tr('mean', 'isilinganiso')} ({d.bru.tmin}–{d.bru.tmax}°C).
-                      {' '}{tr(
-                        `Zone name "${d.bru.nearestBrg}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
-                        `Igama lesigodi elithi "${d.bru.nearestBrg}" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.`
+                      {' '}{inlineTemplate(
+                        language,
+                        `Zone name "{name}" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.`,
+                        `Igama lesigodi elithi "{name}" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.`,
+                        { name: d.bru.nearestBrg }
                       )}
                     </div>
                   )}

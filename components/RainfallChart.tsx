@@ -5,6 +5,7 @@ import {
 } from 'recharts';
 import { useLanguage } from '@/lib/i18n';
 import type { MonthlyRainfall } from '@/lib/types';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 const MONTHS = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
 const MONTH_FULL = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -13,27 +14,44 @@ const ZU_MONTH_FULL = [
   'uNtulikazi', 'uNcwaba', 'uMandulo', 'uMfumfu', 'uLwezi', 'uZibandlela',
 ];
 
+// isiXhosa month names come from the dictionary (waterBalanceMonth*), so they track the reviewed wording.
+const XH_MONTH_KEYS = [
+  'waterBalanceMonthJan', 'waterBalanceMonthFeb', 'waterBalanceMonthMar', 'waterBalanceMonthApr',
+  'waterBalanceMonthMay', 'waterBalanceMonthJun', 'waterBalanceMonthJul', 'waterBalanceMonthAug',
+  'waterBalanceMonthSep', 'waterBalanceMonthOct', 'waterBalanceMonthNov', 'waterBalanceMonthDec',
+] as const;
+
 interface Props { rainfall: MonthlyRainfall }
 
 export default function RainfallChart({ rainfall }: Props) {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
-  const text = (en: string, zu: string) => isZulu ? zu : en;
+  const isXhosa = lang === 'xh';
+  // Both unreviewed drafts are shown beside their English source, so a reader can check the figures.
+  const bilingual = isZulu || isXhosa;
+  const text = (en: string, zu: string) => inlineText(lang, en, zu);
   if (!rainfall?.monthly?.length) return null;
   const maxVal = Math.max(...rainfall.monthly, 10);
   const data = rainfall.monthly.map((v, i) => ({
-    month: isZulu ? String(i + 1) : MONTHS[i],
-    full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
+    month: bilingual ? String(i + 1) : MONTHS[i],
+    full: isZulu ? `${ZU_MONTH_FULL[i]} · ${MONTH_FULL[i]}` : isXhosa ? `${t(XH_MONTH_KEYS[i])} · ${MONTH_FULL[i]}` : MONTH_FULL[i],
     mm: Math.round(v),
   }));
   // Source pairs: winter / Winter rainfall; summer / Summer rainfall; year-round / Year-round rain.
   // lib/nasa-power.ts supplies only Oct–Mar / May–Aug, May–Sep / Nov–Mar, or year-round / none.
-  const pattern = isZulu
+  const pattern = bilingual
     ? rainfall.pattern === 'winter' ? `${t('climatePatternWinter')} · Winter rainfall`
       : rainfall.pattern === 'summer' ? `${t('climatePatternSummer')} · Summer rainfall`
         : `${t('climatePatternYearRound')} · Year-round rain`
     : rainfall.pattern;
   const seasonValue = (value: string) => {
+    if (isXhosa) {
+      if (value === 'year-round') return `${t('reportSeasonYearRound')} · year-round`;
+      if (value === 'none') return `${t('reportSeasonNone')} · none`;
+      const [from, to] = value.split('–');
+      const fromKey = XH_MONTH_KEYS[MONTH_FULL.indexOf(from)], toKey = XH_MONTH_KEYS[MONTH_FULL.indexOf(to)];
+      return fromKey && toKey ? `${t(fromKey)}–${t(toKey)} · ${value}` : value;
+    }
     if (!isZulu) return value;
     const translated: Record<string, string> = {
       'Oct–Mar': 'uMfumfu–uNdasa · Oct–Mar',
@@ -48,15 +66,16 @@ export default function RainfallChart({ rainfall }: Props) {
 
   return (
     <div>
-      <div className={`mb-3 ${isZulu ? 'flex flex-col items-start gap-1' : 'flex items-center justify-between'}`}>
+      <div className={`mb-3 ${bilingual ? 'flex flex-col items-start gap-1' : 'flex items-center justify-between'}`}>
         <div>
           <span className="text-xs text-text-muted uppercase tracking-wider">
             {text('Monthly rainfall (mm)', 'Imvula yenyanga (mm) · Monthly rainfall (mm)')}
           </span>
           {isZulu && <div className="text-xs text-text-muted">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
+          {isXhosa && <div className="text-xs text-text-muted">{inlineText(lang, 'Unreviewed isiXhosa draft')}</div>}
         </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
-          <span className="text-accent-blue">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
+          <span className="text-accent-blue">{inlineTemplate(lang, '{annual}mm/yr', '{annual} mm/ngonyaka · mm/yr', { annual: rainfall.annual })}</span>
           <span className="text-text-muted">{pattern}</span>
         </div>
       </div>
@@ -101,7 +120,7 @@ export default function RainfallChart({ rainfall }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className={`${isZulu ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs text-text-muted`}>
+      <div className={`${bilingual ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs text-text-muted`}>
         <span>{text('Wet season:', 'Isikhathi semvula · Wet season:')} <span className="text-text-secondary">{seasonValue(rainfall.wetSeason)}</span></span>
         <span>{text('Dry season:', 'Isikhathi esomile · Dry season:')} <span className="text-text-secondary">{seasonValue(rainfall.drySeason)}</span></span>
       </div>
