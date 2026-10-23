@@ -228,7 +228,7 @@ export default function NetworkPage() {
                 // track what the rows actually are. Leaving it on real data would be
                 // the same failure in the other direction: a funder discounting real
                 // programme results as a mock-up.
-                className="font-sans font-semibold"
+                className="font-sans font-semibold whitespace-nowrap shrink-0"
                 style={{
                   fontSize: 12,
                   color: 'var(--gold-dim)',
@@ -306,16 +306,16 @@ export default function NetworkPage() {
             cut 'Needs attention' off at a phone's right edge. It now wraps onto a second row
             below sm, rather than clipping silently; md+ keeps the original single-row strip,
             which already has the width for it. */}
-        <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-y-1.5 sm:overflow-x-auto px-3 md:px-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 py-1 sm:flex sm:flex-nowrap items-stretch sm:gap-0 sm:py-0 sm:overflow-x-auto px-3 md:px-4">
           {stats.map((s) => (
             <div
               key={s.label}
-              className="flex flex-col justify-center flex-shrink-0"
+              // w18-32: a 2-up grid on phone with no per-cell divider (they left orphan right
+              // borders on the wrapped rows); the divider and spacing return at sm+.
+              className="flex flex-col justify-center min-w-0 sm:flex-shrink-0 sm:min-w-[92px] sm:border-r sm:mr-4 sm:pr-4"
               style={{
-                padding: '9px 16px 9px 0',
-                marginRight: 16,
-                borderRight: `1px solid ${LINE}`,
-                minWidth: 92,
+                padding: '9px 0',
+                borderColor: LINE,
               }}
             >
               <span
