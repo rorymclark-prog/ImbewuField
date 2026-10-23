@@ -18,3 +18,10 @@ test('w18-36 records inputs follow the theme tokens without !important', () => {
   assert.doesNotMatch(line, /!important|#fffdf7|#302c24/);
   assert.match(s, /::placeholder[^}]*var\(--text-muted\)/);
 });
+
+test('w18-37 lender figures never break mid-number; both buttons are sans', () => {
+  const s = read('components/MyRecords.tsx');
+  assert.match(s, /grid grid-cols-1 min-\[420px\]:grid-cols-3 gap-2 my-3/);
+  assert.match(s, /font-display text-lg mt-1 whitespace-nowrap tabular-nums/);
+  assert.match(s, /py-2 rounded-xl text-xs font-sans font-semibold flex items-center justify-center gap-2 transition-all/);
+});
